@@ -1,11 +1,14 @@
 package WayofTime.bloodmagic.item.armour;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.model.ModelElytra;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
@@ -16,10 +19,12 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
@@ -39,6 +44,9 @@ import com.google.common.collect.Multimap;
 
 public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshProvider
 {
+    private static Field _FLAGS = ReflectionHelper.findField(Entity.class, "FLAGS", "field_184240_ax");
+
+    private static DataParameter<Byte> FLAGS = null;
     public static String[] names = { "helmet", "chest", "legs", "boots" };
 
     public static final boolean useSpecialArmourCalculation = true;
@@ -257,8 +265,42 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     {
         super.onArmorTick(world, player, stack);
 
-        if (world.isRemote)
+        if (world.isRemote && this == ModItems.livingArmourChest)
         {
+
+            if (player instanceof EntityPlayerSP) //Sanity check
+            {
+                EntityPlayerSP spPlayer = (EntityPlayerSP) player;
+
+                if (FLAGS == null)
+                {
+                    ModelElytra d;
+                    try
+                    {
+                        FLAGS = (DataParameter<Byte>) _FLAGS.get(null);
+                    } catch (IllegalArgumentException e)
+                    {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (FLAGS != null)
+                {
+                    if (spPlayer.movementInput.jump && !spPlayer.onGround && spPlayer.motionY < 0.0D && !spPlayer.isElytraFlying() && !spPlayer.capabilities.isFlying)
+                    {
+                        byte b0 = player.getDataManager().get(FLAGS);
+                        player.getDataManager().set(FLAGS, (byte) (b0 | 1 << 7));
+                    } else if (spPlayer.isElytraFlying() && !spPlayer.movementInput.jump && !spPlayer.onGround)
+                    {
+                        byte b0 = player.getDataManager().get(FLAGS);
+                        player.getDataManager().set(FLAGS, (byte) (b0 & ~(1 << 7)));
+                    }
+                }
+            }
+
             return;
         }
 
@@ -274,9 +316,6 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             {
                 this.setIsEnabled(stack, true);
                 armour.onTick(world, player);
-            } else
-            {
-                this.setIsEnabled(stack, false);
             }
 
             setLivingArmour(stack, armour, false);

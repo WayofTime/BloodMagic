@@ -6,6 +6,7 @@ Version 2.0.0-35
 - Started adding in the Alchemy Table... not really started.
 - Changed it so that the Mending enchantment consumes the EXP before the Tome of Peritia does
 - Added fall distance mitigation to the jump upgrade
+- Fixed Lava Crystals... again.
 
 ------------------------------------------------------
 Version 2.0.0-34

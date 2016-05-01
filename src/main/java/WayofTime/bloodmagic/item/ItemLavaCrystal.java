@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
@@ -15,6 +14,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 
@@ -31,7 +31,7 @@ public class ItemLavaCrystal extends ItemBindableBase implements IFuelHandler, I
     @Override
     public ItemStack getContainerItem(ItemStack itemStack)
     {
-        NetworkHelper.getSoulNetwork(this.getOwnerName(itemStack)).syphon(25);
+        NetworkHelper.getSoulNetwork(this.getOwnerUUID(itemStack)).syphon(25);
         ItemStack copiedStack = itemStack.copy();
         copiedStack.setItemDamage(copiedStack.getItemDamage());
         copiedStack.stackSize = 1;
@@ -61,6 +61,7 @@ public class ItemLavaCrystal extends ItemBindableBase implements IFuelHandler, I
 //            {
 //                return 200;
 //            }
+//            System.out.println(FMLCommonHandler.instance().getSide());
 
             if (NetworkHelper.canSyphonFromContainer(fuel, 25))
             {
