@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import WayofTime.bloodmagic.client.gui.GuiSoulForge;
+import WayofTime.bloodmagic.item.ItemComponent;
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
@@ -73,6 +74,11 @@ public class BloodMagicPlugin extends BlankModPlugin
         }
 
         registry.addRecipeClickArea(GuiSoulForge.class, 115, 15, 16, 88, Constants.Compat.JEI_CATEGORY_SOULFORGE);
+
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.altar), Constants.Compat.JEI_CATEGORY_ALTAR);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.soulForge), Constants.Compat.JEI_CATEGORY_SOULFORGE);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.arcaneAshes), Constants.Compat.JEI_CATEGORY_ALCHEMYARRAY);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.arcaneAshes), Constants.Compat.JEI_CATEGORY_BINDING);
 
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_UUID);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_NAME);

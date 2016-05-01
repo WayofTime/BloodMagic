@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.compat.jei.alchemyArray;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,7 +12,7 @@ import net.minecraft.item.ItemStack;
 public class AlchemyArrayCraftingRecipeJEI extends BlankRecipeWrapper
 {
     @Nonnull
-    private final Object inputs;
+    private final List<ItemStack> inputs;
 
     @Nullable
     private final ItemStack catalyst;
@@ -21,7 +20,6 @@ public class AlchemyArrayCraftingRecipeJEI extends BlankRecipeWrapper
     @Nonnull
     private final ItemStack output;
 
-    @SuppressWarnings("unchecked")
     public AlchemyArrayCraftingRecipeJEI(@Nonnull List<ItemStack> input, @Nullable ItemStack catalyst, @Nonnull ItemStack output)
     {
         this.inputs = input;
@@ -30,9 +28,10 @@ public class AlchemyArrayCraftingRecipeJEI extends BlankRecipeWrapper
     }
 
     @Override
-    public List getInputs()
+    @Nonnull
+    public List<ItemStack> getInputs()
     {
-        return Arrays.asList(inputs, catalyst);
+        return inputs;
     }
 
     public ItemStack getCatalyst()
@@ -41,7 +40,8 @@ public class AlchemyArrayCraftingRecipeJEI extends BlankRecipeWrapper
     }
 
     @Override
-    public List getOutputs()
+    @Nonnull
+    public List<ItemStack> getOutputs()
     {
         return Collections.singletonList(output);
     }

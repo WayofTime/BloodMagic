@@ -57,7 +57,6 @@ public class AlchemyArrayCraftingCategory implements IRecipeCategory
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
     {
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 0, 5);
@@ -67,7 +66,7 @@ public class AlchemyArrayCraftingCategory implements IRecipeCategory
         if (recipeWrapper instanceof AlchemyArrayCraftingRecipeJEI)
         {
             AlchemyArrayCraftingRecipeJEI alchemyArrayWrapper = (AlchemyArrayCraftingRecipeJEI) recipeWrapper;
-            recipeLayout.getItemStacks().set(INPUT_SLOT, alchemyArrayWrapper.getInputs().subList(0, alchemyArrayWrapper.getInputs().size() - 1));
+            recipeLayout.getItemStacks().set(INPUT_SLOT, alchemyArrayWrapper.getInputs());
             recipeLayout.getItemStacks().set(CATALYST_SLOT, alchemyArrayWrapper.getCatalyst());
             recipeLayout.getItemStacks().set(OUTPUT_SLOT, alchemyArrayWrapper.getOutputs());
         }

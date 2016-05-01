@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.compat.jei.binding;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,9 +28,10 @@ public class BindingRecipeJEI extends BlankRecipeWrapper
     }
 
     @Override
-    public List getInputs()
+    @Nonnull
+    public List<ItemStack> getInputs()
     {
-        return Arrays.asList(inputs, catalyst);
+        return inputs;
     }
 
     public ItemStack getCatalyst()
@@ -40,7 +40,8 @@ public class BindingRecipeJEI extends BlankRecipeWrapper
     }
 
     @Override
-    public List getOutputs()
+    @Nonnull
+    public List<ItemStack> getOutputs()
     {
         return Collections.singletonList(output);
     }
