@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.model.ModelElytra;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
@@ -36,6 +35,7 @@ import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeElytra;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -267,14 +267,12 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 
         if (world.isRemote && this == ModItems.livingArmourChest)
         {
-
             if (player instanceof EntityPlayerSP) //Sanity check
             {
                 EntityPlayerSP spPlayer = (EntityPlayerSP) player;
 
                 if (FLAGS == null)
                 {
-                    ModelElytra d;
                     try
                     {
                         FLAGS = (DataParameter<Byte>) _FLAGS.get(null);
@@ -289,14 +287,22 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 
                 if (FLAGS != null)
                 {
-                    if (spPlayer.movementInput.jump && !spPlayer.onGround && spPlayer.motionY < 0.0D && !spPlayer.isElytraFlying() && !spPlayer.capabilities.isFlying)
+                    if (LivingArmour.hasFullSet(player))
                     {
-                        byte b0 = player.getDataManager().get(FLAGS);
-                        player.getDataManager().set(FLAGS, (byte) (b0 | 1 << 7));
-                    } else if (spPlayer.isElytraFlying() && !spPlayer.movementInput.jump && !spPlayer.onGround)
-                    {
-                        byte b0 = player.getDataManager().get(FLAGS);
-                        player.getDataManager().set(FLAGS, (byte) (b0 & ~(1 << 7)));
+                        ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.elytra", chestStack);
+                        if (upgrade instanceof LivingArmourUpgradeElytra)
+                        {
+                            if (spPlayer.movementInput.jump && !spPlayer.onGround && spPlayer.motionY < 0.0D && !spPlayer.isElytraFlying() && !spPlayer.capabilities.isFlying)
+                            {
+                                byte b0 = player.getDataManager().get(FLAGS);
+                                player.getDataManager().set(FLAGS, (byte) (b0 | 1 << 7));
+                            } else if (spPlayer.isElytraFlying() && !spPlayer.movementInput.jump && !spPlayer.onGround)
+                            {
+                                byte b0 = player.getDataManager().get(FLAGS);
+                                player.getDataManager().set(FLAGS, (byte) (b0 & ~(1 << 7)));
+                            }
+                        }
                     }
                 }
             }
@@ -461,5 +467,19 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         NBTHelper.checkNBT(stack);
         NBTTagCompound tag = stack.getTagCompound();
         return tag.getBoolean("enabled");
+    }
+
+    public void setIsElytra(ItemStack stack, boolean bool)
+    {
+        NBTHelper.checkNBT(stack);
+        NBTTagCompound tag = stack.getTagCompound();
+        tag.setBoolean("elytra", bool);
+    }
+
+    public boolean isElytra(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getBoolean("elytra");
     }
 }
