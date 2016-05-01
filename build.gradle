@@ -60,9 +60,9 @@ repositories {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
-//    deobfCompile "info.amerifrance.guideapi:Guide-API:${mc_version}-${guideapi_version}"
+    deobfCompile "mcp.mobius.waila:Waila:${waila_version}_${mc_version}:dev"
 
-//    compile "mcp.mobius.waila:Waila:${waila_version}_1.8.8:dev"
+//    deobfCompile "info.amerifrance.guideapi:Guide-API:${mc_version}-${guideapi_version}"
 //    compile name: "Thaumcraft", version: "${mc_version}-${thaumcraft_version}", ext: "jar"
 //    compile name: 'Baubles', version: "${baubles_version}", ext: 'jar'
 }
