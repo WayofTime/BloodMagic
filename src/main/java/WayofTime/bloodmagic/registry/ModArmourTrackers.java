@@ -22,6 +22,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerStepAssist;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeCriticalStrike;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeElytra;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeFallProtect;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGraveDigger;
@@ -79,5 +80,6 @@ public class ModArmourTrackers
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeGraveDigger(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSprintAttack(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeCriticalStrike(0));
+        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeElytra(0));
     }
 }

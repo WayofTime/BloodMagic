@@ -19,7 +19,10 @@ public class LivingArmourUpgradeElytra extends LivingArmourUpgrade
     @Override
     public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
     {
-
+        if (!world.isRemote && player.motionY > -0.5)
+        {
+            player.fallDistance = 1;
+        }
     }
 
     @Override

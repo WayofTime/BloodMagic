@@ -18,6 +18,7 @@ public class BloodMagicPacketHandler
         INSTANCE.registerMessage(ChatUtil.PacketNoSpamChat.Handler.class, ChatUtil.PacketNoSpamChat.class, 0, Side.CLIENT);
         INSTANCE.registerMessage(ItemRouterButtonPacketProcessor.class, ItemRouterButtonPacketProcessor.class, 1, Side.SERVER);
         INSTANCE.registerMessage(PlayerVelocityPacketProcessor.class, PlayerVelocityPacketProcessor.class, 2, Side.CLIENT);
+        INSTANCE.registerMessage(PlayerFallDistancePacketProcessor.class, PlayerFallDistancePacketProcessor.class, 3, Side.SERVER);
     }
 
     public static void sendToAllAround(IMessage message, TileEntity te, int range)

@@ -376,6 +376,19 @@ public class EventHandler
             }
         }
 
+        if (event.getLeft().getItem() == Items.BOOK && event.getRight().getItem() == Items.ELYTRA && !event.getRight().isItemDamaged())
+        {
+            ItemStack output = new ItemStack(ModItems.upgradeTome);
+            output = NBTHelper.checkNBT(output);
+            ItemHelper.LivingUpgrades.setKey(output, Constants.Mod.MODID + ".upgrade.elytra");
+            ItemHelper.LivingUpgrades.setLevel(output, 1);
+            event.setCost(30);
+
+            event.setOutput(output);
+
+            return;
+        }
+
         if (event.getLeft().getItem() == ModItems.upgradeTome && event.getRight().getItem() == ModItems.upgradeTome)
         {
             LivingArmourUpgrade leftUpgrade = ItemHelper.LivingUpgrades.getUpgrade(event.getLeft());

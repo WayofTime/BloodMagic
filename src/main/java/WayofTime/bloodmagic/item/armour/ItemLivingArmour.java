@@ -36,6 +36,8 @@ import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeElytra;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.network.PlayerFallDistancePacketProcessor;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -293,10 +295,23 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                         LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.elytra", chestStack);
                         if (upgrade instanceof LivingArmourUpgradeElytra)
                         {
-                            if (spPlayer.movementInput.jump && !spPlayer.onGround && spPlayer.motionY < 0.0D && !spPlayer.isElytraFlying() && !spPlayer.capabilities.isFlying)
+                            if (spPlayer.motionY > -0.5D)
                             {
-                                byte b0 = player.getDataManager().get(FLAGS);
-                                player.getDataManager().set(FLAGS, (byte) (b0 | 1 << 7));
+                                BloodMagicPacketHandler.INSTANCE.sendToServer(new PlayerFallDistancePacketProcessor(1));
+                            }
+
+                            if (spPlayer.movementInput.jump && !spPlayer.onGround && spPlayer.motionY < 0.0D && !spPlayer.capabilities.isFlying)
+                            {
+                                if (spPlayer.motionY > -0.5D)
+                                {
+                                    BloodMagicPacketHandler.INSTANCE.sendToServer(new PlayerFallDistancePacketProcessor(1));
+                                }
+
+                                if (!spPlayer.isElytraFlying())
+                                {
+                                    byte b0 = player.getDataManager().get(FLAGS);
+                                    player.getDataManager().set(FLAGS, (byte) (b0 | 1 << 7));
+                                }
                             } else if (spPlayer.isElytraFlying() && !spPlayer.movementInput.jump && !spPlayer.onGround)
                             {
                                 byte b0 = player.getDataManager().get(FLAGS);

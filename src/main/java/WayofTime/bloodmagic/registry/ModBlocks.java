@@ -35,6 +35,7 @@ import WayofTime.bloodmagic.block.BlockRitualStone;
 import WayofTime.bloodmagic.block.BlockSoulForge;
 import WayofTime.bloodmagic.block.BlockSpectral;
 import WayofTime.bloodmagic.block.BlockTeleposer;
+import WayofTime.bloodmagic.item.block.ItemBlockAlchemyTable;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodStoneBrick;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodTank;
@@ -46,6 +47,7 @@ import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
 import WayofTime.bloodmagic.item.block.ItemBlockRoutingNode;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
+import WayofTime.bloodmagic.tile.TileAlchemyTable;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileBloodTank;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
@@ -133,7 +135,7 @@ public class ModBlocks
         demonCrystallizer = registerBlock(new BlockDemonCrystallizer(), Constants.BloodMagicBlock.DEMON_CRYSTALLIZER.getRegName());
         demonCrystal = registerBlock(new ItemBlockDemonCrystal(new BlockDemonCrystal()), Constants.BloodMagicBlock.DEMON_CRYSTAL.getRegName());
 
-        alchemyTable = registerBlock(new BlockAlchemyTable(), Constants.BloodMagicBlock.ALCHEMY_TABLE.getRegName());
+        alchemyTable = registerBlock(new ItemBlockAlchemyTable(new BlockAlchemyTable()), Constants.BloodMagicBlock.ALCHEMY_TABLE.getRegName());
 
         dimensionalPortal = registerBlock(new BlockDimensionalPortal(), Constants.BloodMagicBlock.DIMENSIONAL_PORTAL.getRegName());
         bloodTank = registerBlock(new ItemBlockBloodTank(new BlockBloodTank()), Constants.BloodMagicBlock.BLOOD_TANK.getRegName());
@@ -168,6 +170,7 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TileDemonPylon.class, Constants.Mod.MODID + ":" + TileDemonPylon.class.getSimpleName());
         GameRegistry.registerTileEntity(TileDemonCrystallizer.class, Constants.Mod.MODID + ":" + TileDemonCrystallizer.class.getSimpleName());
         GameRegistry.registerTileEntity(TileDemonCrystal.class, Constants.Mod.MODID + ":" + TileDemonCrystal.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileAlchemyTable.class, Constants.Mod.MODID + ":" + TileAlchemyTable.class.getSimpleName());
 
         GameRegistry.registerTileEntity(TileDimensionalPortal.class, Constants.Mod.MODID + ":" + TileDimensionalPortal.class.getSimpleName());
         GameRegistry.registerTileEntity(TileBloodTank.class, Constants.Mod.MODID + ":" + TileBloodTank.class.getSimpleName());
@@ -188,6 +191,7 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(inputRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(masterRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(itemRoutingNode));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(alchemyTable));
         renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(demonCrystal), 0, "ItemBlockDemonCrystal", "default");
         renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(demonCrystal), 1, "ItemBlockDemonCrystal", "corrosive");
         renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(demonCrystal), 2, "ItemBlockDemonCrystal", "destructive");
