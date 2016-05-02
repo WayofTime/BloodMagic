@@ -1,19 +1,21 @@
 package WayofTime.bloodmagic.client.gui;
 
+import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.tile.TileAlchemyTable;
 import WayofTime.bloodmagic.tile.TileSoulForge;
 import WayofTime.bloodmagic.tile.TileTeleposer;
+import WayofTime.bloodmagic.tile.container.ContainerAlchemyTable;
 import WayofTime.bloodmagic.tile.container.ContainerItemRoutingNode;
 import WayofTime.bloodmagic.tile.container.ContainerMasterRoutingNode;
 import WayofTime.bloodmagic.tile.container.ContainerSoulForge;
 import WayofTime.bloodmagic.tile.container.ContainerTeleposer;
 import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -32,6 +34,8 @@ public class GuiHandler implements IGuiHandler
             return new ContainerItemRoutingNode(player.inventory, (TileFilteredRoutingNode) world.getTileEntity(pos));
         case Constants.Gui.MASTER_ROUTING_NODE_GUI:
             return new ContainerMasterRoutingNode(player.inventory, (TileMasterRoutingNode) world.getTileEntity(pos));
+        case Constants.Gui.ALCHEMY_TABLE_GUI:
+            return new ContainerAlchemyTable(player.inventory, (TileAlchemyTable) world.getTileEntity(pos));
         }
 
         return null;
@@ -54,6 +58,8 @@ public class GuiHandler implements IGuiHandler
                 return new GuiItemRoutingNode(player.inventory, (TileFilteredRoutingNode) world.getTileEntity(pos));
             case Constants.Gui.MASTER_ROUTING_NODE_GUI:
                 return new GuiMasterRoutingNode(player.inventory, (TileMasterRoutingNode) world.getTileEntity(pos));
+            case Constants.Gui.ALCHEMY_TABLE_GUI:
+                return new GuiAlchemyTable(player.inventory, (TileAlchemyTable) world.getTileEntity(pos));
             }
         }
 

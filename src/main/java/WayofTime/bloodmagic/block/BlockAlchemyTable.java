@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.block;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -7,10 +8,13 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -112,43 +116,54 @@ public class BlockAlchemyTable extends BlockContainer
         return new TileAlchemyTable();
     }
 
-//    @Override
-//    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
-//    {
-//        TileDemonCrucible crucible = (TileDemonCrucible) world.getTileEntity(pos);
-//
-//        if (crucible == null || player.isSneaking())
-//            return false;
-//
-//        if (heldItem != null)
-//        {
-//            if (!(heldItem.getItem() instanceof IDiscreteDemonWill) && !(heldItem.getItem() instanceof IDemonWillGem))
-//            {
-//                return false;
-//            }
-//        }
-//
-//        Utils.insertItemToTile(crucible, player);
-//
-//        world.notifyBlockUpdate(pos, state, state, 3);
-//        return true;
-//    }
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
+        BlockPos position = pos;
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileAlchemyTable)
+        {
+            if (((TileAlchemyTable) tile).isSlave())
+            {
+                position = ((TileAlchemyTable) tile).getConnectedPos();
+                tile = world.getTileEntity(position);
+                if (!(tile instanceof TileAlchemyTable))
+                {
+                    return false;
+                }
+            }
+        }
+
+        player.openGui(BloodMagic.instance, Constants.Gui.ALCHEMY_TABLE_GUI, world, position.getX(), position.getY(), position.getZ());
+
+        return true;
+    }
 
     @Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
+    public void breakBlock(World world, BlockPos pos, IBlockState blockState)
     {
-        TileAlchemyTable tile = (TileAlchemyTable) world.getTileEntity(blockPos);
-        if (tile != null)
+        TileAlchemyTable tile = (TileAlchemyTable) world.getTileEntity(pos);
+        if (tile != null && !tile.isSlave())
+        {
             tile.dropItems();
+        }
 
-        super.breakBlock(world, blockPos, blockState);
+        super.breakBlock(world, pos, blockState);
     }
-//
-//    @Override
-//    public List<Pair<Integer, String>> getVariants()
-//    {
-//        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-//        ret.add(new ImmutablePair<Integer, String>(0, "normal"));
-//        return ret;
-//    }
+
+    @Override
+    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock)
+    {
+        TileAlchemyTable tile = (TileAlchemyTable) world.getTileEntity(pos);
+        if (tile != null)
+        {
+            BlockPos connectedPos = tile.getConnectedPos();
+            TileEntity connectedTile = world.getTileEntity(connectedPos);
+            if (!(connectedTile instanceof TileAlchemyTable && ((TileAlchemyTable) connectedTile).getConnectedPos().equals(pos)))
+            {
+                this.breakBlock(world, pos, state);
+                world.setBlockToAir(pos);
+            }
+        }
+    }
 }

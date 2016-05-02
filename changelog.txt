@@ -7,6 +7,8 @@ Version 2.0.0-35
 - Changed it so that the Mending enchantment consumes the EXP before the Tome of Peritia does
 - Added fall distance mitigation to the jump upgrade
 - Fixed Lava Crystals... again.
+- Worked on the Alchemy Table
+- Added the Elytra upgrade - craft the tome in an anvil by using a book and a full Elytra.
 
 ------------------------------------------------------
 Version 2.0.0-34

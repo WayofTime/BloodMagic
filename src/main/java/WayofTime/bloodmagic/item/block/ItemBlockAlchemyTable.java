@@ -38,9 +38,14 @@ public class ItemBlockAlchemyTable extends ItemBlock
 //        newState = block.getDefaultState().withProperty(BlockAlchemyTable.DIRECTION, direction).withProperty(BlockAlchemyTable.INVISIBLE, true);
 
         if (!world.setBlockState(pos, newState, 3))
+        {
             return false;
+        }
 
-        world.setBlockState(pos.offset(direction), Blocks.LAPIS_BLOCK.getDefaultState());
+        if (!world.setBlockState(pos.offset(direction), newState, 3))
+        {
+            return false;
+        }
 
         IBlockState state = world.getBlockState(pos);
         if (state.getBlock() == this.block)
@@ -50,6 +55,13 @@ public class ItemBlockAlchemyTable extends ItemBlock
             {
                 ((TileAlchemyTable) tile).setInitialTableParameters(direction, false, pos.offset(direction));
             }
+
+            TileEntity slaveTile = world.getTileEntity(pos.offset(direction));
+            if (slaveTile instanceof TileAlchemyTable)
+            {
+                ((TileAlchemyTable) slaveTile).setInitialTableParameters(direction, true, pos);
+            }
+
             setTileEntityNBT(world, player, pos, stack);
             this.block.onBlockPlacedBy(world, pos, state, player, stack);
         }

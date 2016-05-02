@@ -128,6 +128,7 @@ public class Constants
         public static final int SOUL_FORGE_GUI = 1;
         public static final int ROUTING_NODE_GUI = 2;
         public static final int MASTER_ROUTING_NODE_GUI = 3;
+        public static final int ALCHEMY_TABLE_GUI = 4;
     }
 
     public static class Compat
