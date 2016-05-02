@@ -4,8 +4,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import WayofTime.bloodmagic.client.gui.GuiSoulForge;
-import WayofTime.bloodmagic.item.ItemComponent;
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
@@ -15,9 +13,13 @@ import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
+import WayofTime.bloodmagic.client.gui.GuiSoulForge;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingCategory;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingRecipeMaker;
+import WayofTime.bloodmagic.compat.jei.alchemyTable.AlchemyTableRecipeCategory;
+import WayofTime.bloodmagic.compat.jei.alchemyTable.AlchemyTableRecipeHandler;
+import WayofTime.bloodmagic.compat.jei.alchemyTable.AlchemyTableRecipeMaker;
 import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeCategory;
 import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeMaker;
@@ -42,14 +44,15 @@ public class BloodMagicPlugin extends BlankModPlugin
     {
         jeiHelper = registry.getJeiHelpers();
 
-        registry.addRecipeCategories(new AltarRecipeCategory(), new BindingRecipeCategory(), new AlchemyArrayCraftingCategory(), new TartaricForgeRecipeCategory());
+        registry.addRecipeCategories(new AltarRecipeCategory(), new BindingRecipeCategory(), new AlchemyArrayCraftingCategory(), new TartaricForgeRecipeCategory(), new AlchemyTableRecipeCategory());
 
-        registry.addRecipeHandlers(new AltarRecipeHandler(), new BindingRecipeHandler(), new AlchemyArrayCraftingRecipeHandler(), new TartaricForgeRecipeHandler(), new ShapedOrbRecipeHandler(), new ShapelessOrbRecipeHandler());
+        registry.addRecipeHandlers(new AltarRecipeHandler(), new BindingRecipeHandler(), new AlchemyArrayCraftingRecipeHandler(), new TartaricForgeRecipeHandler(), new AlchemyTableRecipeHandler(), new ShapedOrbRecipeHandler(), new ShapelessOrbRecipeHandler());
 
         registry.addRecipes(AltarRecipeMaker.getRecipes());
         registry.addRecipes(BindingRecipeMaker.getRecipes());
         registry.addRecipes(AlchemyArrayCraftingRecipeMaker.getRecipes());
         registry.addRecipes(TartaricForgeRecipeMaker.getRecipes());
+        registry.addRecipes(AlchemyTableRecipeMaker.getRecipes());
 
         registry.addDescription(new ItemStack(ModItems.altarMaker), "jei.BloodMagic.desc.altarBuilder");
         registry.addDescription(new ItemStack(ModItems.monsterSoul), "jei.BloodMagic.desc.demonicWill");
@@ -79,6 +82,7 @@ public class BloodMagicPlugin extends BlankModPlugin
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.soulForge), Constants.Compat.JEI_CATEGORY_SOULFORGE);
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.arcaneAshes), Constants.Compat.JEI_CATEGORY_ALCHEMYARRAY);
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.arcaneAshes), Constants.Compat.JEI_CATEGORY_BINDING);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.alchemyTable), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
 
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_UUID);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_NAME);

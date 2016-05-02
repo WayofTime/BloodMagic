@@ -195,6 +195,7 @@ tile.BloodMagic.incenseAltar.name=Incense Altar
 
 tile.BloodMagic.teleposer.name=Teleposer
 tile.BloodMagic.soulForge.name=Hellfire Forge
+tile.BloodMagic.alchemyTable.name=Alchemy Table
 tile.BloodMagic.demonCrucible.name=Demon Crucible
 tile.BloodMagic.demonPylon.name=Demon Pylon
 tile.BloodMagic.demonCrystallizer.name=Demon Crystallizer
@@ -560,12 +561,15 @@ jei.BloodMagic.recipe.altar=Blood Altar
 jei.BloodMagic.recipe.binding=Alchemy Array (Binding)
 jei.BloodMagic.recipe.alchemyArrayCrafting=Alchemy Array
 jei.BloodMagic.recipe.soulForge=Hellfire Forge
+jei.BloodMagic.recipe.alchemyTable=Alchemy Table
 jei.BloodMagic.recipe.requiredLP=LP: %d
 jei.BloodMagic.recipe.requiredTier=Tier: %d
 jei.BloodMagic.recipe.consumptionRate=Consumption: %d LP/t
 jei.BloodMagic.recipe.drainRate=Drain: %d LP/t
 jei.BloodMagic.recipe.minimumSouls=Minimum: %1$,.2f Will
 jei.BloodMagic.recipe.soulsDrained=Drained: %1$,.2f Will
+jei.BloodMagic.recipe.lpDrained=Drained: %,d LP
+jei.BloodMagic.recipe.ticksRequired=Time: %,d Ticks
 
 jei.BloodMagic.desc.altarBuilder=A creative-only item for use in debugging and testing.\n\nShift + Right click to change the tier to build. Right click an Altar to initiate the build.\n\nBreak an Altar while holding to dismantle it.
 jei.BloodMagic.desc.demonicWill=An imprint of a demonic entity attached to a creature.\n\nCan be obtained by killing a mob with a sentient weapon or by throwing a snare at a mob and killing it while it has white particles.

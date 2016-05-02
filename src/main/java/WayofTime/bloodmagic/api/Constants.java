@@ -137,6 +137,7 @@ public class Constants
         public static final String JEI_CATEGORY_BINDING = Mod.MODID + ":binding";
         public static final String JEI_CATEGORY_ALCHEMYARRAY = Mod.MODID + ":alchemyArray";
         public static final String JEI_CATEGORY_SOULFORGE = Mod.MODID + ":soulForge";
+        public static final String JEI_CATEGORY_ALCHEMYTABLE = Mod.MODID + ":salchemyTable";
 
         public static final String WAILA_CONFIG_BYPASS_SNEAK = Mod.MODID + ".bypassSneak";
         public static final String WAILA_CONFIG_ALTAR = Mod.MODID + ".bloodAltar";
