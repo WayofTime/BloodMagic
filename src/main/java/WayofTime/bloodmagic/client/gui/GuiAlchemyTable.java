@@ -8,6 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.tile.TileAlchemyTable;
 import WayofTime.bloodmagic.tile.container.ContainerAlchemyTable;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -47,8 +48,7 @@ public class GuiAlchemyTable extends GuiContainer
 
     public int getCookProgressScaled(int scale)
     {
-//        double progress = ((TileAlchemyTable) tileTable).getProgressForGui();
-//        return (int) (progress * scale);
-        return scale / 2;
+        double progress = ((TileAlchemyTable) tileTable).getProgressForGui();
+        return (int) (progress * scale);
     }
 }

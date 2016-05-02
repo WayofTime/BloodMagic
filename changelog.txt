@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.0.0-36
+------------------------------------------------------
+
+
+------------------------------------------------------
 Version 2.0.0-35
 ------------------------------------------------------
 - Changed Living Armour so that it is now damagable. The Living Armour Chestplate will be damaged, but will not break. If it gets to ~0 durability, it will damage your LP network heavily.
