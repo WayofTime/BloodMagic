@@ -112,7 +112,15 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     @Override
     public int[] getSlotsForFace(EnumFacing side)
     {
-        return new int[0];
+        switch (side)
+        {
+        case DOWN:
+            return new int[] { outputSlot };
+        case UP:
+            return new int[] { orbSlot, toolSlot };
+        default:
+            return new int[] { 0, 1, 2, 3, 4, 5 };
+        }
     }
 
     @Override
@@ -122,10 +130,21 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         {
         case DOWN:
             return index != outputSlot && index != orbSlot && index != toolSlot;
+        case UP:
+            if (index == orbSlot && stack != null && stack.getItem() instanceof IBloodOrb)
+            {
+                return true;
+            } else if (index == toolSlot)
+            {
+                return true; //TODO:
+            } else
+            {
+                return true;
+            }
         default:
             break;
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -135,18 +154,19 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         {
         case DOWN:
             return index == outputSlot;
-//        case EAST:
-//            break;
-//        case NORTH:
-//            break;
-//        case SOUTH:
-//            break;
-//        case UP:
-//            break;
-//        case WEST:
-//            break;
+        case UP:
+            if (index == orbSlot && stack != null && stack.getItem() instanceof IBloodOrb)
+            {
+                return true;
+            } else if (index == toolSlot)
+            {
+                return true; //TODO:
+            } else
+            {
+                return true;
+            }
         default:
-            return false;
+            return true;
         }
     }
 
