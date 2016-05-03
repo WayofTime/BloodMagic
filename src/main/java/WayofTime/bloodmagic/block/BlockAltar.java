@@ -43,7 +43,7 @@ public class BlockAltar extends BlockContainer implements IVariantProvider
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);
-        setHarvestLevel("pickaxe", 2);
+        setHarvestLevel("pickaxe", 1);
     }
 
     @Override
