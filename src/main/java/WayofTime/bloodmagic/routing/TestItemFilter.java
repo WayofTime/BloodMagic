@@ -144,6 +144,7 @@ public class TestItemFilter implements IItemFilter
                     }
                 }
             }
+
         }
 
         Iterator<ItemStack> iterator = requestList.iterator();

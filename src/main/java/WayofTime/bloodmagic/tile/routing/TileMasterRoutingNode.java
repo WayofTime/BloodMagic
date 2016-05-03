@@ -1,10 +1,12 @@
 package WayofTime.bloodmagic.tile.routing;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.routing.*;
-import WayofTime.bloodmagic.tile.TileInventory;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
@@ -12,12 +14,16 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.routing.IInputItemRoutingNode;
+import WayofTime.bloodmagic.routing.IItemFilter;
+import WayofTime.bloodmagic.routing.IMasterRoutingNode;
+import WayofTime.bloodmagic.routing.IOutputItemRoutingNode;
+import WayofTime.bloodmagic.routing.IRoutingNode;
+import WayofTime.bloodmagic.routing.NodeHelper;
+import WayofTime.bloodmagic.tile.TileInventory;
 
 public class TileMasterRoutingNode extends TileInventory implements IMasterRoutingNode, ITickable
 {
@@ -381,15 +387,21 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     @Override
     public void removeAllConnections()
     {
-        for (BlockPos testPos : generalNodeList)
+        List<BlockPos> list = generalNodeList.subList(0, generalNodeList.size());
+        Iterator<BlockPos> itr = list.iterator();
+        while (itr.hasNext())
         {
+            BlockPos testPos = itr.next();
             TileEntity tile = worldObj.getTileEntity(testPos);
             if (tile instanceof IRoutingNode)
             {
                 ((IRoutingNode) tile).removeConnection(pos);
-                this.removeConnection(testPos);
                 getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(testPos), getWorld().getBlockState(testPos), 3);
             }
+
+            itr.remove();
+            inputNodeList.remove(testPos);
+            outputNodeList.remove(testPos);
         }
     }
 }

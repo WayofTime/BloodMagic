@@ -1,10 +1,11 @@
 package WayofTime.bloodmagic.tile.routing;
 
-import WayofTime.bloodmagic.api.Constants;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import WayofTime.bloodmagic.api.Constants;
 
 public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedInventory
 {
@@ -90,10 +91,14 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     public void incrementCurrentPriotiryToMaximum(int max)
     {
         priorities[currentActiveSlot] = Math.min(priorities[currentActiveSlot] + 1, max);
+        IBlockState state = worldObj.getBlockState(pos);
+        worldObj.notifyBlockUpdate(pos, state, state, 3);
     }
 
     public void decrementCurrentPriority()
     {
         priorities[currentActiveSlot] = Math.max(priorities[currentActiveSlot] - 1, 0);
+        IBlockState state = worldObj.getBlockState(pos);
+        worldObj.notifyBlockUpdate(pos, state, state, 3);
     }
 }
