@@ -184,10 +184,13 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public ItemMeshDefinition getMeshDefinition() {
-        return new ItemMeshDefinition() {
+    public ItemMeshDefinition getMeshDefinition()
+    {
+        return new ItemMeshDefinition()
+        {
             @Override
-            public ModelResourceLocation getModelLocation(ItemStack stack) {
+            public ModelResourceLocation getModelLocation(ItemStack stack)
+            {
                 String variant = "type=normal";
                 if (stack.getItemDamage() != 0)
                     variant = "type=creative";
@@ -201,7 +204,8 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
     }
 
     @Override
-    public List<String> getVariants() {
+    public List<String> getVariants()
+    {
         List<String> variants = new ArrayList<String>();
         variants.add("type=normal");
         variants.add("type=creative");
@@ -211,7 +215,8 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
 
     @Nullable
     @Override
-    public ResourceLocation getCustomLocation() {
+    public ResourceLocation getCustomLocation()
+    {
         return null;
     }
 }

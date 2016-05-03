@@ -18,7 +18,7 @@ public class ItemHelper
     {
         /**
          * Attempts to fill an altar with the contained LP
-         *
+         * 
          * @param altar
          *        - The altar in question
          * @param itemStack
@@ -27,7 +27,7 @@ public class ItemHelper
          *        - The world
          * @param altarPos
          *        - The position of the altar
-         *
+         * 
          * @return Whether or not the altar was filled (or at least attempted)
          */
         public static boolean tryAndFillAltar(IBloodAltar altar, ItemStack itemStack, World world, BlockPos altarPos)
@@ -55,14 +55,14 @@ public class ItemHelper
 
         /**
          * Adds the given LP into the {@link IItemLPContainer}'s storage
-         *
+         * 
          * @param stack
          *        - The item in question
          * @param toAdd
          *        - How much LP should be added to the item
          * @param maxCapacity
          *        - The item's maximum holding capacity
-         *
+         * 
          * @return Whether or not LP was added to the item
          */
         public static boolean addLPToItem(ItemStack stack, int toAdd, int maxCapacity)

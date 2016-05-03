@@ -72,7 +72,7 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider
         if (!getActivated(stack))
             return 1.0F;
 
-        return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL&& state.getMaterial() != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
+        return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL && state.getMaterial() != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
     }
 
     @Override

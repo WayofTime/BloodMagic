@@ -44,11 +44,12 @@ public class PlayerSacrificeHelper
     }
 
     /**
-     * Sacrifices a player's health while the player is under the influence of incense
-     *
+     * Sacrifices a player's health while the player is under the influence of
+     * incense
+     * 
      * @param player
      *        - The player sacrificing
-     *
+     * 
      * @return Whether or not the health sacrificing succeeded
      */
     public static boolean sacrificePlayerHealth(EntityPlayer player)
@@ -90,16 +91,17 @@ public class PlayerSacrificeHelper
 
     /**
      * Finds the nearest {@link IBloodAltar} and attempts to fill it
-     *
+     * 
      * @param world
      *        - The world
      * @param sacrificingEntity
-     *        - The entity having the sacrifice done on (can be {@link EntityPlayer} for self-sacrifice)
+     *        - The entity having the sacrifice done on (can be
+     *        {@link EntityPlayer} for self-sacrifice)
      * @param amount
      *        - The amount of which the altar should be filled
      * @param isSacrifice
      *        - Whether this is a Sacrifice or a Self-Sacrifice
-     *
+     * 
      * @return Whether the altar is found and (attempted) filled
      */
     public static boolean findAndFillAltar(World world, EntityLivingBase sacrificingEntity, int amount, boolean isSacrifice)
@@ -117,13 +119,15 @@ public class PlayerSacrificeHelper
 
     /**
      * Gets the nearest {@link IBloodAltar}
-     *
+     * 
      * @param world
      *        - The world
      * @param blockPos
-     *        - The position of where the check should be in (in a 2 block radius from this)
-     *
-     * @return The nearest altar, if no altar is found, then this will return null
+     *        - The position of where the check should be in (in a 2 block
+     *        radius from this)
+     * 
+     * @return The nearest altar, if no altar is found, then this will return
+     *         null
      */
     public static IBloodAltar getAltar(World world, BlockPos blockPos)
     {

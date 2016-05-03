@@ -64,8 +64,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
         if (position == null)
         {
             return super.onItemRightClick(stack, world, player, EnumHand.MAIN_HAND);
-        }
-        else
+        } else
         {
             if (position.typeOfHit == RayTraceResult.Type.BLOCK)
             {

@@ -71,10 +71,10 @@ public class PlayerHelper
 
     /**
      * Checks whether or not the given player is an "actual" player
-     *
+     * 
      * @param player
      *        - The player in question
-     *
+     * 
      * @return If the player is fake or not
      */
     public static boolean isFakePlayer(EntityPlayer player)

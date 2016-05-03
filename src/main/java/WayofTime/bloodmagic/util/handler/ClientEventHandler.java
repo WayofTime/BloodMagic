@@ -105,14 +105,17 @@ public class ClientEventHandler
         return textureMap.registerSprite(new ResourceLocation(Constants.Mod.DOMAIN + dir + "/" + name));
     }
 
-    private void renderRitualInformation(EntityPlayerSP player, float partialTicks) {
+    private void renderRitualInformation(EntityPlayerSP player, float partialTicks)
+    {
         World world = player.worldObj;
         TileMasterRitualStone mrs = (TileMasterRitualStone) world.getTileEntity(minecraft.objectMouseOver.getBlockPos());
         Ritual ritual = mrs.getCurrentRitual();
 
-        if (ritual != null) {
+        if (ritual != null)
+        {
             List<String> ranges = ritual.getListOfRanges();
-            for (String range : ranges) {
+            for (String range : ranges)
+            {
                 AreaDescriptor areaDescriptor = ritual.getBlockRange(range);
 
                 for (BlockPos pos : areaDescriptor.getContainedPositions(minecraft.objectMouseOver.getBlockPos()))
@@ -121,7 +124,8 @@ public class ClientEventHandler
         }
     }
 
-    private void renderRitualStones(EntityPlayerSP player, float partialTicks) {
+    private void renderRitualStones(EntityPlayerSP player, float partialTicks)
+    {
         World world = player.worldObj;
         ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getCurrentItem().getItem();
         EnumFacing direction = ritualDiviner.getDirection(player.inventory.getCurrentItem());
@@ -152,27 +156,27 @@ public class ClientEventHandler
 
                 switch (ritualComponent.getRuneType())
                 {
-                    case BLANK:
-                        texture = ritualStoneBlank;
-                        break;
-                    case WATER:
-                        texture = ritualStoneWater;
-                        break;
-                    case FIRE:
-                        texture = ritualStoneFire;
-                        break;
-                    case EARTH:
-                        texture = ritualStoneEarth;
-                        break;
-                    case AIR:
-                        texture = ritualStoneAir;
-                        break;
-                    case DAWN:
-                        texture = ritualStoneDawn;
-                        break;
-                    case DUSK:
-                        texture = ritualStoneDusk;
-                        break;
+                case BLANK:
+                    texture = ritualStoneBlank;
+                    break;
+                case WATER:
+                    texture = ritualStoneWater;
+                    break;
+                case FIRE:
+                    texture = ritualStoneFire;
+                    break;
+                case EARTH:
+                    texture = ritualStoneEarth;
+                    break;
+                case AIR:
+                    texture = ritualStoneAir;
+                    break;
+                case DAWN:
+                    texture = ritualStoneDawn;
+                    break;
+                case DUSK:
+                    texture = ritualStoneDusk;
+                    break;
                 }
 
                 RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);

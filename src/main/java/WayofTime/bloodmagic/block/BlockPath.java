@@ -46,7 +46,8 @@ public class BlockPath extends BlockString implements IIncensePath, IVariantProv
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    {
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.decoration.safe"));
         super.addInformation(stack, player, tooltip, advanced);
     }
