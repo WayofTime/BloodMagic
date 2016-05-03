@@ -100,6 +100,8 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.experienceTome), "ses", "lbl", "gog", 'o', OrbRegistry.getOrbStack(ModItems.orbMagician), 'e', Blocks.LAPIS_BLOCK, 'l', new ItemStack(ModItems.slate, 1, 2), 'b', Items.ENCHANTED_BOOK, 's', Items.STRING, 'g', "ingotGold"));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.ritualReader), "gog", "isi", " s ", 's', new ItemStack(ModItems.slate, 1, 3), 'g', "blockGlass", 'i', "ingotGold", 'o', OrbRegistry.getOrbStack(ModItems.orbMaster)));
 
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.alchemyTable), "sss", "wbw", "gog", 's', "stone", 'w', Blocks.WOOL, 'b', Items.BLAZE_ROD, 'g', "ingotGold", 'o', OrbRegistry.getOrbStack(ModItems.orbWeak)));
+
         for (int i = 1; i < BlockBloodRune.names.length; i++)
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.bloodRune), new ItemStack(ModBlocks.bloodRune, 1, i)));
 
@@ -259,6 +261,15 @@ public class ModRecipes
 
     public static void addAlchemyTableRecipes()
     {
-        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.STRING, 4), 0, 100, 0, Blocks.WOOL);
+        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.STRING, 4), 0, 100, 0, Blocks.WOOL, Items.FLINT);
+        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.FLINT, 2), 0, 20, 0, Blocks.GRAVEL, Items.FLINT);
+        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.LEATHER, 4), 100, 200, 1, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.FLINT, Items.WATER_BUCKET);
+
+        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.BREAD), 100, 200, 1, Items.WHEAT, Items.SUGAR);
+        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Blocks.GRASS), 200, 200, 1, Blocks.DIRT, new ItemStack(Items.DYE, 1, 15), Items.WHEAT_SEEDS);
+        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Blocks.SAND, 2), 50, 50, 1, "cobblestone", Items.GUNPOWDER);
+        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.CLAY_BALL, 4), 50, 100, 2, Items.WATER_BUCKET, "sand");
+        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Blocks.CLAY, 5), 200, 200, 1, Items.WATER_BUCKET, Blocks.HARDENED_CLAY, Blocks.HARDENED_CLAY, Blocks.HARDENED_CLAY, Blocks.HARDENED_CLAY, Blocks.HARDENED_CLAY);
+        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Blocks.OBSIDIAN), 50, 50, 1, Items.WATER_BUCKET, Items.LAVA_BUCKET);
     }
 }

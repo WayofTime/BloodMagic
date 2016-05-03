@@ -33,8 +33,8 @@ public class ContainerItemRoutingNode extends Container
                 addSlotToContainer(new SlotGhostItem(itemInventory, j + i * 3, 26 + j * 18, 15 + i * 18));
             }
         }
+
         slotsOccupied = 10;
-//        this.addSlotToContainer(new SlotOutput(tileItemRoutingNode, TileSoulForge.outputSlot, 44, 51));
 
         for (int i = 0; i < 3; i++)
         {
@@ -64,7 +64,6 @@ public class ContainerItemRoutingNode extends Container
         InventoryPlayer inventoryPlayer = player.inventory;
 //        if (!player.worldObj.isRemote)
         {
-
             if (slotId >= 0)
             {
                 Slot slot = this.inventorySlots.get(slotId);

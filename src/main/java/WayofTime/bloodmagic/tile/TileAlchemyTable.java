@@ -37,6 +37,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     public int ticksRequired = 1;
 
     public BlockPos connectedPos = BlockPos.ORIGIN;
+    public List<Integer> blockedSlots = new ArrayList<Integer>();
 
     public TileAlchemyTable()
     {
@@ -59,6 +60,30 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         return isSlave();
     }
 
+    public boolean isInputSlotAccessible(int slot)
+    {
+        if (slot < 6 && slot >= 0)
+        {
+            return !blockedSlots.contains(slot);
+        }
+
+        return true;
+    }
+
+    public void toggleInputSlotAccessible(int slot)
+    {
+        if (slot < 6 && slot >= 0)
+        {
+            if (blockedSlots.contains(slot))
+            {
+                blockedSlots.remove((Object) slot);
+            } else
+            {
+                blockedSlots.add(slot);
+            }
+        }
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
@@ -70,6 +95,13 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
         burnTime = tag.getInteger("burnTime");
         ticksRequired = tag.getInteger("ticksRequired");
+
+        blockedSlots.clear();
+        int[] blockedSlotArray = tag.getIntArray("blockedSlots");
+        for (int blocked : blockedSlotArray)
+        {
+            blockedSlots.add(blocked);
+        }
     }
 
     @Override
@@ -85,6 +117,14 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
         tag.setInteger("burnTime", burnTime);
         tag.setInteger("ticksRequired", ticksRequired);
+
+        int[] blockedSlotArray = new int[blockedSlots.size()];
+        for (int i = 0; i < blockedSlots.size(); i++)
+        {
+            blockedSlotArray[i] = blockedSlots.get(i);
+        }
+
+        tag.setIntArray("blockedSlots", blockedSlotArray);
     }
 
     @SuppressWarnings("unchecked")
@@ -136,15 +176,14 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
                 return true;
             } else if (index == toolSlot)
             {
-                return true; //TODO:
+                return false; //TODO:
             } else
             {
                 return true;
             }
         default:
-            break;
+            return getAccessibleInputSlots(direction).contains(index);
         }
-        return true;
     }
 
     @Override
@@ -166,8 +205,23 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
                 return true;
             }
         default:
-            return true;
+            return getAccessibleInputSlots(direction).contains(index);
         }
+    }
+
+    public List<Integer> getAccessibleInputSlots(EnumFacing direction)
+    {
+        List<Integer> list = new ArrayList<Integer>();
+
+        for (int i = 0; i < 6; i++)
+        {
+            if (isInputSlotAccessible(i))
+            {
+                list.add(i);
+            }
+        }
+
+        return list;
     }
 
     @Override

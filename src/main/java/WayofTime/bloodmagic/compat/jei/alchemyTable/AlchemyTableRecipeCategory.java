@@ -83,7 +83,7 @@ public class AlchemyTableRecipeCategory implements IRecipeCategory
             for (int x = 0; x < 3; ++x)
             {
                 int index = INPUT_SLOT + x + (y * 3);
-                guiItemStacks.init(index, true, x * 18, y * 18);
+                guiItemStacks.init(index, true, x * 18, y * 18 - 18);
             }
         }
 
@@ -92,7 +92,7 @@ public class AlchemyTableRecipeCategory implements IRecipeCategory
             AlchemyTableRecipeJEI recipe = (AlchemyTableRecipeJEI) recipeWrapper;
             guiItemStacks.set(ORB_SLOT, (ArrayList<ItemStack>) recipe.getInputs().get(1));
             craftingGridHelper.setOutput(guiItemStacks, recipe.getOutputs());
-            craftingGridHelper.setInput(guiItemStacks, (List) recipe.getInputs().get(0), 2, 3);
+            craftingGridHelper.setInput(guiItemStacks, (List) recipe.getInputs().get(0), 3, 2);
         }
     }
 }

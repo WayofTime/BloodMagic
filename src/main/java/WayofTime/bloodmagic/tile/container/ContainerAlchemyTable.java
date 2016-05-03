@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.tile.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -38,6 +39,23 @@ public class ContainerAlchemyTable extends Container
         {
             addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 181));
         }
+    }
+
+    @Override
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
+    {
+        InventoryPlayer inventoryPlayer = player.inventory;
+
+        if (slotId < 6 && slotId >= 0)
+        {
+            Slot slot = this.getSlot(slotId);
+            if (!slot.getHasStack() && inventoryPlayer.getItemStack() == null)
+            {
+                ((TileAlchemyTable) tileTable).toggleInputSlotAccessible(slotId);
+            }
+        }
+
+        return super.slotClick(slotId, dragType, clickTypeIn, player);
     }
 
     @Override

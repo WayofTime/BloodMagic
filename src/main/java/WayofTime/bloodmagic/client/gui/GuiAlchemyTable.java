@@ -4,6 +4,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -44,6 +45,16 @@ public class GuiAlchemyTable extends GuiContainer
 
         int l = this.getCookProgressScaled(90);
         this.drawTexturedModalRect(i + 115, j + 14 + 90 - l, 176, 90 - l, 18, l);
+
+        for (int slotId = 0; slotId < 6; slotId++)
+        {
+            if (!((TileAlchemyTable) tileTable).isInputSlotAccessible(slotId))
+            {
+                Slot slot = this.inventorySlots.getSlot(slotId);
+
+                this.drawTexturedModalRect(i + slot.xDisplayPosition, j + slot.yDisplayPosition, 195, 1, 16, 16);
+            }
+        }
     }
 
     public int getCookProgressScaled(int scale)
