@@ -1,25 +1,32 @@
 package WayofTime.bloodmagic.item.routing;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.inventory.ItemInventory;
-import WayofTime.bloodmagic.routing.*;
+import WayofTime.bloodmagic.routing.DefaultItemFilter;
+import WayofTime.bloodmagic.routing.IItemFilter;
+import WayofTime.bloodmagic.routing.IgnoreNBTItemFilter;
+import WayofTime.bloodmagic.routing.ModIdItemFilter;
+import WayofTime.bloodmagic.routing.OreDictItemFilter;
+import WayofTime.bloodmagic.routing.TestItemFilter;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ItemRouterFilter extends Item implements IItemFilterProvider, IVariantProvider
 {
@@ -58,7 +65,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     }
 
     @Override
-    public IItemFilter getInputItemFilter(ItemStack filterStack, IInventory inventory, EnumFacing syphonDirection)
+    public IItemFilter getInputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
     {
         IItemFilter testFilter = new TestItemFilter();
 
@@ -96,12 +103,12 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
             filteredList.add(ghostStack);
         }
 
-        testFilter.initializeFilter(filteredList, inventory, syphonDirection, false);
+        testFilter.initializeFilter(filteredList, tile, handler, false);
         return testFilter;
     }
 
     @Override
-    public IItemFilter getOutputItemFilter(ItemStack filterStack, IInventory inventory, EnumFacing syphonDirection)
+    public IItemFilter getOutputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
     {
         IItemFilter testFilter = new TestItemFilter();
 
@@ -143,7 +150,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
             filteredList.add(ghostStack);
         }
 
-        testFilter.initializeFilter(filteredList, inventory, syphonDirection, true);
+        testFilter.initializeFilter(filteredList, tile, handler, true);
         return testFilter;
     }
 

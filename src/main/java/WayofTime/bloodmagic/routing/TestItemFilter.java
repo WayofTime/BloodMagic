@@ -1,13 +1,14 @@
 package WayofTime.bloodmagic.routing;
 
-import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-
 import java.util.Iterator;
 import java.util.List;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandler;
+import WayofTime.bloodmagic.util.Utils;
 
 /**
  * This particular implementation of IItemFilter checks to make sure that a) as
@@ -26,17 +27,19 @@ public class TestItemFilter implements IItemFilter
      * filter, it keeps track of how many can be removed.
      */
     protected List<ItemStack> requestList;
-    protected IInventory accessedInventory;
-    protected EnumFacing accessedSide;
+    protected TileEntity accessedTile;
+    protected IItemHandler itemHandler;
 
     /**
      * Initializes the filter so that it knows what it wants to fulfill.
      * 
      * @param filteredList
      *        - The list of ItemStacks that the filter is set to.
-     * @param inventory
+     * @param tile
      *        - The inventory that is being accessed. This inventory is either
      *        being pulled from or pushed to.
+     * @param itemHandler
+     *        - The item handler
      * @param side
      *        - The side that the inventory is being accessed from. Used for
      *        pulling/pushing from/to the inventory.
@@ -46,37 +49,17 @@ public class TestItemFilter implements IItemFilter
      *        initialized as an input filter.
      */
     @Override
-    public void initializeFilter(List<ItemStack> filteredList, IInventory inventory, EnumFacing side, boolean isFilterOutput)
+    public void initializeFilter(List<ItemStack> filteredList, TileEntity tile, IItemHandler itemHandler, boolean isFilterOutput)
     {
-        this.accessedInventory = inventory;
-        this.accessedSide = side;
+        this.accessedTile = tile;
+        this.itemHandler = itemHandler;
         if (isFilterOutput)
         {
             requestList = filteredList;
-            boolean[] canAccessSlot = new boolean[inventory.getSizeInventory()];
-            if (inventory instanceof ISidedInventory)
-            {
-                int[] slots = ((ISidedInventory) inventory).getSlotsForFace(side);
-                for (int slot : slots)
-                {
-                    canAccessSlot[slot] = true;
-                }
-            } else
-            {
-                for (int slot = 0; slot < inventory.getSizeInventory(); slot++)
-                {
-                    canAccessSlot[slot] = true;
-                }
-            }
 
-            for (int slot = 0; slot < inventory.getSizeInventory(); slot++)
+            for (int slot = 0; slot < itemHandler.getSlots(); slot++)
             {
-                if (!canAccessSlot[slot])
-                {
-                    continue;
-                }
-
-                ItemStack checkedStack = inventory.getStackInSlot(slot);
+                ItemStack checkedStack = itemHandler.getStackInSlot(slot);
                 if (checkedStack == null)
                 {
                     continue;
@@ -105,30 +88,9 @@ public class TestItemFilter implements IItemFilter
                 filterStack.stackSize *= -1; //Invert the stack size so that 
             }
 
-            boolean[] canAccessSlot = new boolean[inventory.getSizeInventory()];
-            if (inventory instanceof ISidedInventory)
+            for (int slot = 0; slot < itemHandler.getSlots(); slot++)
             {
-                int[] slots = ((ISidedInventory) inventory).getSlotsForFace(side);
-                for (int slot : slots)
-                {
-                    canAccessSlot[slot] = true;
-                }
-            } else
-            {
-                for (int slot = 0; slot < inventory.getSizeInventory(); slot++)
-                {
-                    canAccessSlot[slot] = true;
-                }
-            }
-
-            for (int slot = 0; slot < inventory.getSizeInventory(); slot++)
-            {
-                if (!canAccessSlot[slot])
-                {
-                    continue;
-                }
-
-                ItemStack checkedStack = inventory.getStackInSlot(slot);
+                ItemStack checkedStack = itemHandler.getStackInSlot(slot);
                 if (checkedStack == null)
                 {
                     continue;
@@ -144,7 +106,6 @@ public class TestItemFilter implements IItemFilter
                     }
                 }
             }
-
         }
 
         Iterator<ItemStack> iterator = requestList.iterator();
@@ -188,7 +149,7 @@ public class TestItemFilter implements IItemFilter
 
         ItemStack testStack = inputStack.copy();
         testStack.stackSize = allowedAmount;
-        ItemStack remainderStack = Utils.insertStackIntoInventory(testStack, accessedInventory, accessedSide);
+        ItemStack remainderStack = Utils.insertStackIntoTile(testStack, itemHandler);
 
         int changeAmount = allowedAmount - (remainderStack == null ? 0 : remainderStack.stackSize);
         testStack = inputStack.copy();
@@ -208,6 +169,10 @@ public class TestItemFilter implements IItemFilter
             }
         }
 
+        World world = accessedTile.getWorld();
+        BlockPos pos = accessedTile.getPos();
+        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+
         return testStack;
     }
 
@@ -218,31 +183,10 @@ public class TestItemFilter implements IItemFilter
     @Override
     public int transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer)
     {
-        boolean[] canAccessSlot = new boolean[accessedInventory.getSizeInventory()];
-        if (accessedInventory instanceof ISidedInventory)
+        for (int slot = 0; slot < itemHandler.getSlots(); slot++)
         {
-            int[] slots = ((ISidedInventory) accessedInventory).getSlotsForFace(accessedSide);
-            for (int slot : slots)
-            {
-                canAccessSlot[slot] = true;
-            }
-        } else
-        {
-            for (int slot = 0; slot < accessedInventory.getSizeInventory(); slot++)
-            {
-                canAccessSlot[slot] = true;
-            }
-        }
-
-        for (int slot = 0; slot < accessedInventory.getSizeInventory(); slot++)
-        {
-            if (!canAccessSlot[slot])
-            {
-                continue;
-            }
-
-            ItemStack inputStack = accessedInventory.getStackInSlot(slot);
-            if (inputStack == null || (accessedInventory instanceof ISidedInventory && !((ISidedInventory) accessedInventory).canExtractItem(slot, inputStack, accessedSide)))
+            ItemStack inputStack = itemHandler.getStackInSlot(slot);
+            if (inputStack == null || itemHandler.extractItem(slot, inputStack.stackSize, true) == null)//(accessedInventory instanceof ISidedInventory && !((ISidedInventory) accessedInventory).canExtractItem(slot, inputStack, accessedSide)))
             {
                 continue;
             }
@@ -252,7 +196,7 @@ public class TestItemFilter implements IItemFilter
             {
                 if (doStacksMatch(filterStack, inputStack))
                 {
-                    allowedAmount = Math.min(maxTransfer, Math.min(filterStack.stackSize, inputStack.stackSize));
+                    allowedAmount = Math.min(maxTransfer, Math.min(filterStack.stackSize, itemHandler.extractItem(slot, inputStack.stackSize, true).stackSize));
                     break;
                 }
             }
@@ -273,10 +217,9 @@ public class TestItemFilter implements IItemFilter
                 continue;
             }
 
-            inputStack.stackSize -= changeAmount;
             maxTransfer -= changeAmount;
 
-            accessedInventory.setInventorySlotContents(slot, inputStack.stackSize <= 0 ? null : inputStack); //Sets the slot in the inventory
+            itemHandler.extractItem(slot, changeAmount, false);
 
             Iterator<ItemStack> itr = requestList.iterator();
             while (itr.hasNext())
@@ -291,6 +234,10 @@ public class TestItemFilter implements IItemFilter
                     }
                 }
             }
+
+            World world = accessedTile.getWorld();
+            BlockPos pos = accessedTile.getPos();
+            world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
             return changeAmount;
         }

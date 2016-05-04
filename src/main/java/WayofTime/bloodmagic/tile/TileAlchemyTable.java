@@ -379,7 +379,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
                 currentOutputStack.stackSize += outputStack.stackSize;
             }
 
-            consumeInventory();
+            consumeInventory(recipe);
         }
     }
 
@@ -401,26 +401,38 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         return 0;
     }
 
-    public void consumeInventory()
+    public void consumeInventory(AlchemyTableRecipe recipe)
     {
+        ItemStack[] input = new ItemStack[6];
+
         for (int i = 0; i < 6; i++)
         {
-            ItemStack inputStack = getStackInSlot(i);
-            if (inputStack != null)
-            {
-                if (inputStack.getItem().hasContainerItem(inputStack))
-                {
-                    setInventorySlotContents(i, inputStack.getItem().getContainerItem(inputStack));
-                    continue;
-                }
-
-                inputStack.stackSize--;
-                if (inputStack.stackSize <= 0)
-                {
-                    setInventorySlotContents(i, null);
-                    continue;
-                }
-            }
+            input[i] = getStackInSlot(i);
         }
+
+        ItemStack[] result = recipe.getRemainingItems(input);
+        for (int i = 0; i < 6; i++)
+        {
+            setInventorySlotContents(i, result[i]);
+        }
+//        for (int i = 0; i < 6; i++)
+//        {
+//            ItemStack inputStack = getStackInSlot(i);
+//            if (inputStack != null)
+//            {
+//                if (inputStack.getItem().hasContainerItem(inputStack))
+//                {
+//                    setInventorySlotContents(i, inputStack.getItem().getContainerItem(inputStack));
+//                    continue;
+//                }
+//
+//                inputStack.stackSize--;
+//                if (inputStack.stackSize <= 0)
+//                {
+//                    setInventorySlotContents(i, null);
+//                    continue;
+//                }
+//            }
+//        }
     }
 }

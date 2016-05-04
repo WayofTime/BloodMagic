@@ -8,6 +8,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IOutputItemRoutingNode
 {
@@ -26,20 +28,23 @@ public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IO
     public IItemFilter getOutputFilterForSide(EnumFacing side)
     {
         TileEntity tile = worldObj.getTileEntity(pos.offset(side));
-        if (tile instanceof IInventory)
+        if (tile != null)
         {
-            ItemStack filterStack = this.getFilterStack(side);
-
-            if (filterStack == null || !(filterStack.getItem() instanceof IItemFilterProvider))
+            if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite()))
             {
-                IItemFilter filter = new DefaultItemFilter();
-                filter.initializeFilter(null, (IInventory) tile, side.getOpposite(), true);
-                return filter;
+                IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+                ItemStack filterStack = this.getFilterStack(side);
+
+                if (filterStack == null || !(filterStack.getItem() instanceof IItemFilterProvider))
+                {
+                    IItemFilter filter = new DefaultItemFilter();
+                    filter.initializeFilter(null, tile, handler, true);
+                    return filter;
+                }
+
+                IItemFilterProvider filter = (IItemFilterProvider) filterStack.getItem();
+                return filter.getOutputItemFilter(filterStack, tile, handler);
             }
-
-            IItemFilterProvider filter = (IItemFilterProvider) filterStack.getItem();
-
-            return filter.getOutputItemFilter(filterStack, (IInventory) tile, side.getOpposite());
         }
 
         return null;

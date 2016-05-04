@@ -8,6 +8,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileInputRoutingNode extends TileFilteredRoutingNode implements IInputItemRoutingNode
 {
@@ -26,19 +28,23 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
     public IItemFilter getInputFilterForSide(EnumFacing side)
     {
         TileEntity tile = worldObj.getTileEntity(pos.offset(side));
-        if (tile instanceof IInventory)
+        if (tile != null)
         {
-            ItemStack filterStack = this.getFilterStack(side);
-
-            if (filterStack == null || !(filterStack.getItem() instanceof IItemFilterProvider))
+            if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite()))
             {
-                IItemFilter filter = new DefaultItemFilter();
-                filter.initializeFilter(null, (IInventory) tile, side.getOpposite(), false);
-                return filter;
-            }
+                IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+                ItemStack filterStack = this.getFilterStack(side);
 
-            IItemFilterProvider filter = (IItemFilterProvider) filterStack.getItem();
-            return filter.getInputItemFilter(filterStack, (IInventory) tile, side.getOpposite());
+                if (filterStack == null || !(filterStack.getItem() instanceof IItemFilterProvider))
+                {
+                    IItemFilter filter = new DefaultItemFilter();
+                    filter.initializeFilter(null, tile, handler, false);
+                    return filter;
+                }
+
+                IItemFilterProvider filter = (IItemFilterProvider) filterStack.getItem();
+                return filter.getInputItemFilter(filterStack, tile, handler);
+            }
         }
 
         return null;

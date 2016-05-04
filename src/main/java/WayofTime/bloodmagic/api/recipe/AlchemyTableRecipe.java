@@ -1,5 +1,9 @@
 package WayofTime.bloodmagic.api.recipe;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -7,10 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class AlchemyTableRecipe
 {
@@ -143,5 +143,39 @@ public class AlchemyTableRecipe
     public ArrayList<Object> getInput()
     {
         return this.input;
+    }
+
+    public ItemStack[] getRemainingItems(ItemStack[] inventory)
+    {
+        ItemStack[] ret = inventory.clone();
+        for (int i = 0; i < ret.length; i++)
+        {
+            ret[i] = getContainerItem(inventory[i]);
+        }
+
+        return ret;
+    }
+
+    protected ItemStack getContainerItem(ItemStack stack)
+    {
+        if (stack == null)
+        {
+            return null;
+        }
+
+        ItemStack copyStack = stack.copy();
+
+        if (copyStack.getItem().hasContainerItem(stack))
+        {
+            return copyStack.getItem().getContainerItem(copyStack);
+        }
+
+        copyStack.stackSize--;
+        if (copyStack.stackSize <= 0)
+        {
+            return null;
+        }
+
+        return copyStack;
     }
 }

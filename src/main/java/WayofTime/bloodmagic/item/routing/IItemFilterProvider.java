@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.item.routing;
 
-import WayofTime.bloodmagic.routing.IItemFilter;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.items.IItemHandler;
+import WayofTime.bloodmagic.routing.IItemFilter;
 
 public interface IItemFilterProvider
 {
-    IItemFilter getInputItemFilter(ItemStack stack, IInventory inventory, EnumFacing syphonDirection);
+    IItemFilter getInputItemFilter(ItemStack stack, TileEntity tile, IItemHandler handler);
 
-    IItemFilter getOutputItemFilter(ItemStack stack, IInventory inventory, EnumFacing syphonDirection);
+    IItemFilter getOutputItemFilter(ItemStack stack, TileEntity tile, IItemHandler handler);
 }

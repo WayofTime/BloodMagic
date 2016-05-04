@@ -1,15 +1,13 @@
 package WayofTime.bloodmagic.routing;
 
-import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
+import java.util.List;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.List;
+import net.minecraftforge.items.IItemHandler;
+import WayofTime.bloodmagic.util.Utils;
 
 /**
  * This particular implementation of IItemFilter allows any item to be drained
@@ -21,8 +19,8 @@ import java.util.List;
  */
 public class DefaultItemFilter implements IItemFilter
 {
-    private IInventory accessedInventory;
-    private EnumFacing accessedSide;
+    protected TileEntity accessedTile;
+    protected IItemHandler itemHandler;
 
     /**
      * Initializes the filter so that it knows what it wants to fulfill.
@@ -41,10 +39,10 @@ public class DefaultItemFilter implements IItemFilter
      *        initialized as an input filter.
      */
     @Override
-    public void initializeFilter(List<ItemStack> filteredList, IInventory inventory, EnumFacing side, boolean isFilterOutput)
+    public void initializeFilter(List<ItemStack> filteredList, TileEntity tile, IItemHandler itemHandler, boolean isFilterOutput)
     {
-        accessedInventory = inventory;
-        accessedSide = side;
+        this.accessedTile = tile;
+        this.itemHandler = itemHandler;
     }
 
     /**
@@ -70,15 +68,14 @@ public class DefaultItemFilter implements IItemFilter
 
         ItemStack testStack = inputStack.copy();
         testStack.stackSize = allowedAmount;
-        ItemStack remainderStack = Utils.insertStackIntoInventory(testStack, accessedInventory, accessedSide);
+        ItemStack remainderStack = Utils.insertStackIntoTile(testStack, itemHandler);
 
         int changeAmount = allowedAmount - (remainderStack == null ? 0 : remainderStack.stackSize);
         testStack = inputStack.copy();
         testStack.stackSize -= changeAmount;
 
-        TileEntity tile = (TileEntity) accessedInventory;
-        World world = tile.getWorld();
-        BlockPos pos = tile.getPos();
+        World world = accessedTile.getWorld();
+        BlockPos pos = accessedTile.getPos();
         world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
         return testStack;
@@ -91,36 +88,15 @@ public class DefaultItemFilter implements IItemFilter
     @Override
     public int transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer)
     {
-        boolean[] canAccessSlot = new boolean[accessedInventory.getSizeInventory()];
-        if (accessedInventory instanceof ISidedInventory)
+        for (int slot = 0; slot < itemHandler.getSlots(); slot++)
         {
-            int[] slots = ((ISidedInventory) accessedInventory).getSlotsForFace(accessedSide);
-            for (int slot : slots)
-            {
-                canAccessSlot[slot] = true;
-            }
-        } else
-        {
-            for (int slot = 0; slot < accessedInventory.getSizeInventory(); slot++)
-            {
-                canAccessSlot[slot] = true;
-            }
-        }
-
-        for (int slot = 0; slot < accessedInventory.getSizeInventory(); slot++)
-        {
-            if (!canAccessSlot[slot])
+            ItemStack inputStack = itemHandler.getStackInSlot(slot);
+            if (inputStack == null || itemHandler.extractItem(slot, inputStack.stackSize, true) == null)//(accessedInventory instanceof ISidedInventory && !((ISidedInventory) accessedInventory).canExtractItem(slot, inputStack, accessedSide)))
             {
                 continue;
             }
 
-            ItemStack inputStack = accessedInventory.getStackInSlot(slot);
-            if (inputStack == null || (accessedInventory instanceof ISidedInventory && !((ISidedInventory) accessedInventory).canExtractItem(slot, inputStack, accessedSide)))
-            {
-                continue;
-            }
-
-            int allowedAmount = Math.min(inputStack.stackSize, maxTransfer);
+            int allowedAmount = Math.min(itemHandler.extractItem(slot, inputStack.stackSize, true).stackSize, maxTransfer);
 
             ItemStack testStack = inputStack.copy();
             testStack.stackSize = allowedAmount;
@@ -133,15 +109,13 @@ public class DefaultItemFilter implements IItemFilter
                 continue;
             }
 
-            TileEntity tile = (TileEntity) accessedInventory;
-            World world = tile.getWorld();
-            BlockPos pos = tile.getPos();
-            world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-
-            inputStack.stackSize -= changeAmount;
             maxTransfer -= changeAmount;
 
-            accessedInventory.setInventorySlotContents(slot, inputStack.stackSize <= 0 ? null : inputStack); //Sets the slot in the inventory
+            itemHandler.extractItem(slot, changeAmount, false);
+
+            World world = accessedTile.getWorld();
+            BlockPos pos = accessedTile.getPos();
+            world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
             return changeAmount;
         }

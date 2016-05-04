@@ -373,26 +373,32 @@ public class Utils
         if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir))
         {
             IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
-            int numberOfSlots = handler.getSlots();
 
-            ItemStack copyStack = stack.copy();
-
-            for (int slot = 0; slot < numberOfSlots; slot++)
-            {
-                copyStack = handler.insertItem(slot, copyStack, false);
-                if (copyStack == null)
-                {
-                    return null;
-                }
-            }
-
-            return copyStack;
+            return insertStackIntoTile(stack, handler);
         } else if (tile instanceof IInventory)
         {
             return insertStackIntoInventory(stack, (IInventory) tile, dir);
         }
 
         return stack;
+    }
+
+    public static ItemStack insertStackIntoTile(ItemStack stack, IItemHandler handler)
+    {
+        int numberOfSlots = handler.getSlots();
+
+        ItemStack copyStack = stack.copy();
+
+        for (int slot = 0; slot < numberOfSlots; slot++)
+        {
+            copyStack = handler.insertItem(slot, copyStack, false);
+            if (copyStack == null)
+            {
+                return null;
+            }
+        }
+
+        return copyStack;
     }
 
     /**

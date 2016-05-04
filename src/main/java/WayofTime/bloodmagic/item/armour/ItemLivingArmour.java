@@ -450,7 +450,8 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         tag.setTag(Constants.NBT.LIVING_ARMOUR, livingTag);
     }
 
-    public static LivingArmourUpgrade getUpgrade(String uniqueIdentifier, ItemStack stack)
+  //TODO: Add the ability to have the armour give an upgrade with a higher level
+    public static LivingArmourUpgrade getUpgrade(String uniqueIdentifier, ItemStack stack) 
     {
         if (!armourMap.containsKey(stack))
         {
