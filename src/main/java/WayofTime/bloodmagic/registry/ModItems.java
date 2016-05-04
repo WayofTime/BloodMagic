@@ -33,6 +33,7 @@ import WayofTime.bloodmagic.item.ItemSlate;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import WayofTime.bloodmagic.item.ItemUpgradeTrainer;
+import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
@@ -150,6 +151,8 @@ public class ModItems
     public static Item nodeRouter;
     public static Item baseItemFilter;
 
+    public static Item cuttingFluid;
+
     public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 1, 10, 8, 50);
     public static Item.ToolMaterial soulToolMaterial = EnumHelper.addToolMaterial("SoulToolMaterial", 4, 520, 7, 8, 50);
 
@@ -244,6 +247,8 @@ public class ModItems
 
         nodeRouter = registerItem(new ItemNodeRouter(), Constants.BloodMagicItem.NODE_ROUTER.getRegName());
         baseItemFilter = registerItem(new ItemRouterFilter(), Constants.BloodMagicItem.ROUTER_FILTER.getRegName());
+
+        cuttingFluid = registerItem(new ItemCuttingFluid(), Constants.BloodMagicItem.CUTTING_FLUID.getRegName());
     }
 
     public static void initRenders()

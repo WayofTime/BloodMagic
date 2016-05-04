@@ -1,20 +1,22 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.registry.ModItems;
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.registry.ModItems;
 
 public class ItemComponent extends Item implements IVariantProvider
 {
@@ -40,6 +42,9 @@ public class ItemComponent extends Item implements IVariantProvider
     public static final String REAGENT_SEVERANCE = "reagentSeverance";
     public static final String REAGENT_TELEPOSITION = "reagentTeleposition";
     public static final String REAGENT_TRANSPOSITION = "reagentTransposition";
+    public static final String SAND_IRON = "ironSand";
+    public static final String SAND_GOLD = "goldSand";
+    public static final String SAND_COAL = "coalSand";
 
     public ItemComponent()
     {
@@ -73,6 +78,9 @@ public class ItemComponent extends Item implements IVariantProvider
         names.add(16, REAGENT_SEVERANCE);
         names.add(17, REAGENT_TELEPOSITION);
         names.add(18, REAGENT_TRANSPOSITION);
+        names.add(19, SAND_IRON);
+        names.add(20, SAND_GOLD);
+        names.add(21, SAND_COAL);
     }
 
     @Override
@@ -101,5 +109,13 @@ public class ItemComponent extends Item implements IVariantProvider
         for (String name : names)
             ret.add(new ImmutablePair<Integer, String>(names.indexOf(name), "type=" + name));
         return ret;
+    }
+
+    public static ItemStack getStack(String key, int stackSize)
+    {
+        ItemStack stack = getStack(key);
+        stack.stackSize = stackSize;
+
+        return stack;
     }
 }

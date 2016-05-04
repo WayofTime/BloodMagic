@@ -87,6 +87,12 @@ item.BloodMagic.baseComponent.reagentSeverance.name=Severance Reagent
 item.BloodMagic.baseComponent.reagentTeleposition.name=Teleposition Reagent
 item.BloodMagic.baseComponent.reagentTransposition.name=Transposition Reagent
 
+item.BloodMagic.baseComponent.ironSand.name=Iron Sand
+item.BloodMagic.baseComponent.goldSand.name=Gold Sand
+item.BloodMagic.baseComponent.coalSand.name=Coal Sand
+
+item.BloodMagic.cuttingFluid.basicCuttingFluid.name=Basic Cutting Fluid
+
 item.BloodMagic.demonCrystal.crystalDefault.name=Demon Will Crystal
 item.BloodMagic.demonCrystal.crystalCorrosive.name=Corrosive Will Crystal
 item.BloodMagic.demonCrystal.crystalDestructive.name=Destructive Will Crystal
@@ -373,6 +379,8 @@ tooltip.BloodMagic.experienceTome.expLevel=Level: %d
 
 tooltip.BloodMagic.decoration.safe=Safe for decoration
 tooltip.BloodMagic.decoration.notSafe=Dangerous for decoration
+
+tooltip.BloodMagic.cuttingFluidRatio=%d/%d uses remaining
 
 # Ritual
 ritual.BloodMagic.blockRange.tooBig=The block range given is too big! Needs to be at most %s blocks.

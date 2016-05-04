@@ -166,6 +166,7 @@ public class Constants
         BOUND_SWORD("ItemBoundSword"),
         BUCKET_ESSENCE("ItemBucketEssence"),
         COMPONENT("ItemComponent"),
+        CUTTING_FLUID("ItemCuttingFluid"),
         DEMON_CRYSTAL("ItemDemonCrystal"),
         DAGGER_OF_SACRIFICE("ItemDaggerOfSacrifice"),
         INSCRIPTION_TOOL("ItemInscriptionTool"),

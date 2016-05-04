@@ -1,10 +1,21 @@
 package WayofTime.bloodmagic.registry;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBinding;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.compress.CompressionRegistry;
+import WayofTime.bloodmagic.api.recipe.AlchemyTableCustomRecipe;
 import WayofTime.bloodmagic.api.recipe.ShapedBloodOrbRecipe;
 import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
@@ -20,18 +31,10 @@ import WayofTime.bloodmagic.compress.BaseCompressionHandler;
 import WayofTime.bloodmagic.compress.StorageBlockCraftingManager;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
+import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 
 import com.google.common.base.Stopwatch;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.RecipeSorter;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class ModRecipes
 {
@@ -40,11 +43,26 @@ public class ModRecipes
         RecipeSorter.register(Constants.Mod.DOMAIN + "shapedorb", ShapedBloodOrbRecipe.class, RecipeSorter.Category.SHAPED, "before:minecraft:shapeless");
         RecipeSorter.register(Constants.Mod.DOMAIN + "shapelessorb", ShapelessBloodOrbRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
 
+        initOreDict();
+        addFurnaceRecipes();
         addCraftingRecipes();
         addAltarRecipes();
         addAlchemyArrayRecipes();
         addSoulForgeRecipes();
         addAlchemyTableRecipes();
+    }
+
+    public static void initOreDict()
+    {
+        OreDictionary.registerOre("dustIron", ItemComponent.getStack(ItemComponent.SAND_IRON));
+        OreDictionary.registerOre("dustGold", ItemComponent.getStack(ItemComponent.SAND_GOLD));
+        OreDictionary.registerOre("dustCoal", ItemComponent.getStack(ItemComponent.SAND_COAL));
+    }
+
+    public static void addFurnaceRecipes()
+    {
+        FurnaceRecipes.instance().addSmeltingRecipe(ItemComponent.getStack(ItemComponent.SAND_IRON), new ItemStack(Items.IRON_INGOT), (float) 0.15);
+        FurnaceRecipes.instance().addSmeltingRecipe(ItemComponent.getStack(ItemComponent.SAND_GOLD), new ItemStack(Items.GOLD_INGOT), (float) 0.15);
     }
 
     public static void addCraftingRecipes()
@@ -100,7 +118,7 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.experienceTome), "ses", "lbl", "gog", 'o', OrbRegistry.getOrbStack(ModItems.orbMagician), 'e', Blocks.LAPIS_BLOCK, 'l', new ItemStack(ModItems.slate, 1, 2), 'b', Items.ENCHANTED_BOOK, 's', Items.STRING, 'g', "ingotGold"));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.ritualReader), "gog", "isi", " s ", 's', new ItemStack(ModItems.slate, 1, 3), 'g', "blockGlass", 'i', "ingotGold", 'o', OrbRegistry.getOrbStack(ModItems.orbMaster)));
 
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.alchemyTable), "sss", "wbw", "gog", 's', "stone", 'w', Blocks.WOOL, 'b', Items.BLAZE_ROD, 'g', "ingotGold", 'o', OrbRegistry.getOrbStack(ModItems.orbWeak)));
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.alchemyTable), "sss", "wbw", "gog", 's', "stone", 'w', "plankWood", 'b', Items.BLAZE_ROD, 'g', "ingotGold", 'o', OrbRegistry.getOrbStack(ModItems.orbWeak)));
 
         for (int i = 1; i < BlockBloodRune.names.length; i++)
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.bloodRune), new ItemStack(ModBlocks.bloodRune, 1, i)));
@@ -271,5 +289,10 @@ public class ModRecipes
         AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.CLAY_BALL, 4), 50, 100, 2, Items.WATER_BUCKET, "sand");
         AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Blocks.CLAY, 5), 200, 200, 1, Items.WATER_BUCKET, Blocks.HARDENED_CLAY, Blocks.HARDENED_CLAY, Blocks.HARDENED_CLAY, Blocks.HARDENED_CLAY, Blocks.HARDENED_CLAY);
         AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Blocks.OBSIDIAN), 50, 50, 1, Items.WATER_BUCKET, Items.LAVA_BUCKET);
+
+        AlchemyTableRecipeRegistry.registerRecipe(ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC), 1000, 400, 1, "dustCoal", Items.GUNPOWDER, Items.REDSTONE, Items.SUGAR, Items.WHEAT, new ItemStack(Items.POTIONITEM));
+
+        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(ItemComponent.getStack(ItemComponent.SAND_IRON, 2), 100, 200, 1, "oreIron", ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC)));
+        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(ItemComponent.getStack(ItemComponent.SAND_GOLD, 2), 100, 200, 1, "oreGold", ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC)));
     }
 }

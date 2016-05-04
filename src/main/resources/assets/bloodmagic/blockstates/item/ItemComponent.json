@@ -101,29 +101,19 @@
           "layer0": "bloodmagic:items/ReagentTransposition"
         }
       },
-      "crystaldefault": {
+      "ironsand": {
         "textures": {
-          "layer0": "bloodmagic:items/DefaultCrystal"
+          "layer0": "bloodmagic:items/IronSand"
         }
       },
-      "crystalcorrosive": {
+      "goldsand": {
         "textures": {
-          "layer0": "bloodmagic:items/CorrosiveCrystal"
+          "layer0": "bloodmagic:items/GoldSand"
         }
       },
-      "crystalvengeful": {
+      "coalsand": {
         "textures": {
-          "layer0": "bloodmagic:items/VengefulCrystal"
-        }
-      },
-      "crystaldestructive": {
-        "textures": {
-          "layer0": "bloodmagic:items/DestructiveCrystal"
-        }
-      },
-      "crystalsteadfast": {
-        "textures": {
-          "layer0": "bloodmagic:items/SteadfastCrystal"
+          "layer0": "bloodmagic:items/CoalSand"
         }
       }
     }
