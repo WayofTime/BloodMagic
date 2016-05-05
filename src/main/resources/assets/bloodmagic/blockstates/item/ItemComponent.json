@@ -115,6 +115,11 @@
         "textures": {
           "layer0": "bloodmagic:items/CoalSand"
         }
+      },
+      "plantoil": {
+        "textures": {
+          "layer0": "bloodmagic:items/PlantOil"
+        }
       }
     }
   }

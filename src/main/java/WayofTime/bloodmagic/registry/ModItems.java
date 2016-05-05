@@ -4,6 +4,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.common.IFuelHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
@@ -187,7 +188,7 @@ public class ModItems
         ritualReader = registerItem(new ItemRitualReader(), Constants.BloodMagicItem.RITUAL_READER.getRegName());
 
         lavaCrystal = registerItem(new ItemLavaCrystal(), Constants.BloodMagicItem.LAVA_CRYSTAL.getRegName());
-        GameRegistry.registerFuelHandler(new ItemLavaCrystal());
+        GameRegistry.registerFuelHandler((IFuelHandler) lavaCrystal);
 
         boundSword = registerItem(new ItemBoundSword(), Constants.BloodMagicItem.BOUND_SWORD.getRegName());
         boundPickaxe = registerItem(new ItemBoundPickaxe(), Constants.BloodMagicItem.BOUND_PICKAXE.getRegName());

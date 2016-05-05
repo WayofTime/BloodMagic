@@ -90,6 +90,7 @@ item.BloodMagic.baseComponent.reagentTransposition.name=Transposition Reagent
 item.BloodMagic.baseComponent.ironSand.name=Iron Sand
 item.BloodMagic.baseComponent.goldSand.name=Gold Sand
 item.BloodMagic.baseComponent.coalSand.name=Coal Sand
+item.BloodMagic.baseComponent.plantOil.name=Plant Oil
 
 item.BloodMagic.cuttingFluid.basicCuttingFluid.name=Basic Cutting Fluid
 
