@@ -5,6 +5,7 @@ Version 2.0.0-36
 - Changed the Item Routing system so that it used capabilities instead
 - Updated the Alchemy Table recipe system so that it can provide better custom recipes.
 - Added some more recipes (like rudimentary ore doubling) to the alchemy table.
+- Added Explosive Powder, which is used to reduce cobblestone into gravel and gravel into sand (64 uses)
 
 ------------------------------------------------------
 Version 2.0.0-35
