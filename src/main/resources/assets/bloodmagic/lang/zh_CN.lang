@@ -204,9 +204,9 @@ tile.BloodMagic.incenseAltar.name=熏香祭坛
 tile.BloodMagic.teleposer.name=传送器
 tile.BloodMagic.soulForge.name=狱火熔炉
 tile.BloodMagic.alchemyTable.name=炼金术桌
-tile.BloodMagic.demonCrucible.name=恶魔坩埚
-tile.BloodMagic.demonPylon.name=恶魔集能塔
-tile.BloodMagic.demonCrystallizer.name=恶魔结晶坛
+tile.BloodMagic.demonCrucible.name=邪灵坩埚
+tile.BloodMagic.demonPylon.name=邪灵导能塔
+tile.BloodMagic.demonCrystallizer.name=邪灵结晶坛
 
 tile.BloodMagic.masterRouting.name=主路由节点
 tile.BloodMagic.outputRouting.name=输出路由节点
