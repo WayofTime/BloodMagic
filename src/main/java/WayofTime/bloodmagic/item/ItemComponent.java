@@ -46,6 +46,8 @@ public class ItemComponent extends Item implements IVariantProvider
     public static final String SAND_GOLD = "goldSand";
     public static final String SAND_COAL = "coalSand";
     public static final String PLANT_OIL = "plantOil";
+    public static final String SULFUR = "sulfur";
+    public static final String SALTPETER = "saltpeter";
 
     public ItemComponent()
     {
@@ -83,6 +85,8 @@ public class ItemComponent extends Item implements IVariantProvider
         names.add(20, SAND_GOLD);
         names.add(21, SAND_COAL);
         names.add(22, PLANT_OIL);
+        names.add(23, SULFUR);
+        names.add(24, SALTPETER);
     }
 
     @Override
