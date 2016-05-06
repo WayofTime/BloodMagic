@@ -145,11 +145,11 @@ item.BloodMagic.upgradeTome.name=束灵盔甲强化手册
 item.BloodMagic.upgradeTrainer.name=束灵盔甲训练手镯
 
 item.BloodMagic.sentientSword.name=感知之剑
-item.BloodMagic.soulGem.petty.name=[微小]醇酒之晶
-item.BloodMagic.soulGem.lesser.name=[细块]醇酒之晶
-item.BloodMagic.soulGem.common.name=[普通]醇酒之晶
-item.BloodMagic.soulGem.greater.name=[较大]醇酒之晶
-item.BloodMagic.soulGem.grand.name=[精制]醇酒之晶
+item.BloodMagic.soulGem.petty.name=[微小]冥界宝石
+item.BloodMagic.soulGem.lesser.name=[细块]冥界宝石
+item.BloodMagic.soulGem.common.name=[普通]冥界宝石
+item.BloodMagic.soulGem.greater.name=[较大]冥界宝石
+item.BloodMagic.soulGem.grand.name=[精制]冥界宝石
 item.BloodMagic.soulSnare.base.name=原始投网
 item.BloodMagic.sentientBow.name=感知之弓
 item.BloodMagic.sentientArmourGem.name=感知盔甲宝石
