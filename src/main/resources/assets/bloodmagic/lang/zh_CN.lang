@@ -87,6 +87,14 @@ item.BloodMagic.baseComponent.reagentSeverance.name=隔绝试剂
 item.BloodMagic.baseComponent.reagentTeleposition.name=传送试剂
 item.BloodMagic.baseComponent.reagentTransposition.name=移位试剂
 
+item.BloodMagic.baseComponent.ironSand.name=铁矿砂
+item.BloodMagic.baseComponent.goldSand.name=金矿砂
+item.BloodMagic.baseComponent.coalSand.name=煤矿砂
+item.BloodMagic.baseComponent.plantOil.name=植物油
+
+item.BloodMagic.cuttingFluid.basicCuttingFluid.name=基础切削油
+item.BloodMagic.cuttingFluid.explosive.name=爆炸火药
+
 item.BloodMagic.demonCrystal.crystalDefault.name=邪灵魂魄晶体
 item.BloodMagic.demonCrystal.crystalCorrosive.name=腐蚀魂魄晶体
 item.BloodMagic.demonCrystal.crystalDestructive.name=恶意魂魄晶体
@@ -195,6 +203,7 @@ tile.BloodMagic.incenseAltar.name=熏香祭坛
 
 tile.BloodMagic.teleposer.name=传送器
 tile.BloodMagic.soulForge.name=狱火熔炉
+tile.BloodMagic.alchemyTable.name=炼金术桌
 tile.BloodMagic.demonCrucible.name=恶魔坩埚
 tile.BloodMagic.demonPylon.name=恶魔集能塔
 tile.BloodMagic.demonCrystallizer.name=恶魔结晶坛
@@ -335,6 +344,7 @@ tooltip.BloodMagic.livingArmour.upgrade.fallProtect=柔和落叶
 tooltip.BloodMagic.livingArmour.upgrade.graveDigger=掘墓者
 tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=冲撞击打
 tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=精准击打
+tooltip.BloodMagic.livingArmour.upgrade.elytra=鞘翅
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6强化点数: %s / %s
 
@@ -369,8 +379,10 @@ tooltip.BloodMagic.experienceTome=用于储存经验的书
 tooltip.BloodMagic.experienceTome.exp=经验值: %0.3f
 tooltip.BloodMagic.experienceTome.expLevel=等级: %d
 
-tooltip.BloodMagic.decoration.safe=Safe for decoration
-tooltip.BloodMagic.decoration.notSafe=Dangerous for decoration
+tooltip.BloodMagic.decoration.safe=安全装潢
+tooltip.BloodMagic.decoration.notSafe=危险装潢
+
+tooltip.BloodMagic.cuttingFluidRatio=%d/%d 所剩可用
 
 # Ritual
 ritual.BloodMagic.blockRange.tooBig=提供的方块范围过大! 最多不超过 %s 个方块.
@@ -409,7 +421,7 @@ ritual.BloodMagic.placerRitual=铺设仪式
 ritual.BloodMagic.fellingRitual=伐林仪式
 ritual.BloodMagic.pumpRitual=虹吸圣曲
 ritual.BloodMagic.altarBuilderRitual=祭坛集结号
-ritual.BloodMagic.portalRitual=折域大门
+ritual.BloodMagic.portalRitual=折域之门
 
 
 ritual.BloodMagic.waterRitual.info=通过主仪式石生成一个水源方块.
@@ -559,12 +571,15 @@ jei.BloodMagic.recipe.altar=血之祭坛
 jei.BloodMagic.recipe.binding=炼金矩阵 (绑定)
 jei.BloodMagic.recipe.alchemyArrayCrafting=炼金矩阵
 jei.BloodMagic.recipe.soulForge=狱火熔炉
+jei.BloodMagic.recipe.alchemyTable=炼金术桌
 jei.BloodMagic.recipe.requiredLP=LP: %,d
 jei.BloodMagic.recipe.requiredTier=层级: %d
 jei.BloodMagic.recipe.consumptionRate=消耗率: %,d LP/t
 jei.BloodMagic.recipe.drainRate=消耗率: %,d LP/t
-jei.BloodMagic.recipe.minimumSouls=Minimum: %1$,.2f Will
-jei.BloodMagic.recipe.soulsDrained=Drained: %1$,.2f Will
+jei.BloodMagic.recipe.minimumSouls=最小值: %1$,.2f Will
+jei.BloodMagic.recipe.soulsDrained=消耗: %1$,.2f Will
+jei.BloodMagic.recipe.lpDrained=消耗: %,d LP
+jei.BloodMagic.recipe.ticksRequired=时间: %,d 刻
 
 jei.BloodMagic.desc.altarBuilder=该物品仅限创造模式，用于调试测试.\n\nShift + 右键 改变层级. 右键祭坛开始搭建.\n\n手持破坏祭坛时将全部移除.
 jei.BloodMagic.desc.demonicWill=一个由恶魔附身于生物而形成的纹刻.\n\n可以通过用感知武器杀死生物掉落, 或是对着生物抛掷原始投网, 当它出现白色颗粒时杀了它.
@@ -585,4 +600,4 @@ tc.research_category.BLOODMAGIC=血红奥术
 # Thaumcraft Research
 bloodmagic.research_name.BLOODMAGIC=血魔法
 bloodmagic.research_text.BLOODMAGIC=血红奥术
-bloodmagic.research_page.BLOODMAGIC.1=The realm of the Blood Magics has always appeared to be a more solitary and "individual" art with blood mages being notoriously reclusive and a bit insane at times. However, the powers of self-sacrifice and life essence have uses even beyond a normal blood mage's sight, in fact, it is quite apparent that it may have some uses in thaumaturgy after all!
+bloodmagic.research_page.BLOODMAGIC.1=血魔法的领域总是似乎有些孤立且像是"个人"艺术, 同众所周知的喜爱隐居有时还有点疯癫的血魔法师. 然而, 自我牺牲与生命本质的力量甚至拥有超出一般血魔法师所见的用途, 事实上, 这种力量显然终究能应用于神秘学.
