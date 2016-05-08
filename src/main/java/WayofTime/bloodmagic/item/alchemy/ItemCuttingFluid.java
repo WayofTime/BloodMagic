@@ -29,6 +29,7 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
     private static ArrayList<String> names = new ArrayList<String>();
 
     public static final String BASIC = "basicCuttingFluid";
+    public static final String EXPLOSIVE = "explosive";
 
     public ItemCuttingFluid()
     {
@@ -53,6 +54,7 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
     private void buildItemList()
     {
         names.add(0, BASIC);
+        names.add(1, EXPLOSIVE);
     }
 
     @Override
@@ -105,6 +107,8 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
         {
         case 0:
             return 16;
+        case 1:
+            return 64;
         default:
             return 1;
         }

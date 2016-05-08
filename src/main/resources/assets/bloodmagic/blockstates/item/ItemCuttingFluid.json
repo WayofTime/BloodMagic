@@ -10,7 +10,12 @@
         "textures": {
           "layer0": "bloodmagic:items/BasicCuttingFluid"
         }
-	}
+	  },
+	  "explosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/ExplosivePowder"
+        }
+	  }
     }
   }
 }
