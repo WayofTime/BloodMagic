@@ -89,7 +89,7 @@ public class TranquilityHandlers
         @Override
         public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state)
         {
-            if (block == Blocks.POTATOES || block == Blocks.CARROTS || block == Blocks.WHEAT || block == Blocks.NETHER_WART)
+            if (block == Blocks.POTATOES || block == Blocks.CARROTS || block == Blocks.WHEAT || block == Blocks.NETHER_WART || block == Blocks.BEETROOTS)
             {
                 return new TranquilityStack(EnumTranquilityType.CROP, 1);
             }
