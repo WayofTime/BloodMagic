@@ -30,6 +30,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -798,7 +799,7 @@ public class EventHandler
         DamageSource source = event.getSource();
         Entity entity = source.getEntity();
 
-        if (attackedEntity.isPotionActive(ModPotions.soulSnare) && attackedEntity instanceof EntityMob)
+        if (attackedEntity.isPotionActive(ModPotions.soulSnare) && (attackedEntity instanceof EntityMob || attackedEntity.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL))
         {
             PotionEffect eff = attackedEntity.getActivePotionEffect(ModPotions.soulSnare);
             int lvl = eff.getAmplifier();
