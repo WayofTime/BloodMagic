@@ -47,7 +47,6 @@ public class PlayerFallDistancePacketProcessor implements IMessage, IMessageHand
         return null;
     }
 
-    @SideOnly(Side.CLIENT)
     public void onMessageFromClient(EntityPlayer player)
     {
         player.fallDistance = fallDistance;
