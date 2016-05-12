@@ -217,6 +217,11 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     {
         if (this == ModItems.livingArmourChest)
         {
+            if (source.isUnblockable())
+            {
+                return;
+            }
+
             if (damage > this.getMaxDamage(stack) - this.getDamage(stack))
             {
                 //TODO: Syphon a load of LP.
