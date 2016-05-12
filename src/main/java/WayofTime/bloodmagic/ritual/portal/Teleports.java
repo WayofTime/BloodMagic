@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.ritual.portal;
 
+import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.teleport.Teleport;
 import WayofTime.bloodmagic.api.teleport.TeleporterBloodMagic;
@@ -18,6 +19,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class Teleports
@@ -47,9 +50,11 @@ public class Teleports
                     {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
                         if (network.getCurrentEssence() < getTeleportCost())
-                        {
                             return;
-                        }
+
+                        if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z))))
+                            return;
+
                         network.syphon(getTeleportCost());
 
                         EntityPlayerMP player = (EntityPlayerMP) entity;
@@ -60,13 +65,16 @@ public class Teleports
                         player.timeUntilPortal = 150;
 
                         player.worldObj.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+                        MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z)));
                     } else
                     {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
                         if (network.getCurrentEssence() < (getTeleportCost() / 10))
-                        {
                             return;
-                        }
+
+                        if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z))))
+                            return;
+
                         network.syphon(getTeleportCost() / 10);
 
                         WorldServer world = (WorldServer) entity.worldObj;
@@ -76,6 +84,7 @@ public class Teleports
                         world.resetUpdateEntityTick();
 
                         entity.worldObj.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+                        MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z)));
                     }
                 }
             }
@@ -128,9 +137,11 @@ public class Teleports
                         {
                             SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
                             if (network.getCurrentEssence() < getTeleportCost())
-                            {
                                 return;
-                            }
+
+                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z))))
+                                return;
+
                             network.syphon(getTeleportCost());
 
                             player.changeDimension(newWorldID); //TODO: UNTESTED
@@ -138,15 +149,18 @@ public class Teleports
                             player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
                             player.worldObj.updateEntityWithOptionalForce(player, false);
                             player.playerNetServerHandler.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
+                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
                         }
 
                     } else if (!entity.worldObj.isRemote)
                     {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
                         if (network.getCurrentEssence() < (getTeleportCost() / 10))
-                        {
                             return;
-                        }
+
+                        if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z))))
+                            return;
+
                         network.syphon(getTeleportCost() / 10);
 
                         NBTTagCompound tag = new NBTTagCompound();
@@ -167,6 +181,7 @@ public class Teleports
 
                         oldWorldServer.resetUpdateEntityTick();
                         newWorldServer.resetUpdateEntityTick();
+                        MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
                     }
                     entity.timeUntilPortal = entity instanceof EntityLiving ? 150 : 20;
                     newWorldServer.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);

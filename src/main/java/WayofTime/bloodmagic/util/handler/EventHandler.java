@@ -483,6 +483,17 @@ public class EventHandler
     }
 
     @SubscribeEvent
+    public void onTeleposeEntity(TeleposeEvent.Ent event) {
+        if (ConfigHandler.teleposerBlacklistEntity.contains(event.entity.getClass().getSimpleName()))
+            event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public void onTeleposeEntityPost(TeleposeEvent.Ent.Post event) {
+        event.entity.timeUntilPortal = 5;
+    }
+
+    @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent event)
     {
         if (event.getModID().equals(Constants.Mod.MODID))

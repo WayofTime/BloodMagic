@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.api.event;
 
 import WayofTime.bloodmagic.api.BlockStack;
+import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -42,5 +43,44 @@ public class TeleposeEvent extends Event
     public TileEntity getFinalTile()
     {
         return finalWorld.getTileEntity(finalBlockPos);
+    }
+
+    /**
+     * Fired when a Teleposer attempts to move an Entity between locations. Can be cancelled to
+     * stop transposition.
+     */
+    @Cancelable
+    public static class Ent extends TeleposeEvent
+    {
+        public final Entity entity;
+
+        public Ent(Entity entity, World initialWorld, BlockPos initialBlockPos, World finalWorld, BlockPos finalBlockPos)
+        {
+            super(initialWorld, initialBlockPos, finalWorld, finalBlockPos);
+
+            this.entity = entity;
+        }
+
+        @Override
+        public TileEntity getInitialTile() throws IllegalArgumentException
+        {
+            throw new IllegalArgumentException("Attempted to get a TileEntity from an Entity Telepose Event.");
+        }
+
+        @Override
+        public TileEntity getFinalTile() throws IllegalArgumentException
+        {
+            throw new IllegalArgumentException("Attempted to get a TileEntity from an Entity Telepose Event.");
+        }
+
+        /**
+         * Called after the entity has been transposed.
+         */
+        public static class Post extends Ent {
+
+            public Post(Entity entity, World initialWorld, BlockPos initialBlockPos, World finalWorld, BlockPos finalBlockPos) {
+                super(entity, initialWorld, initialBlockPos, finalWorld, finalBlockPos);
+            }
+        }
     }
 }

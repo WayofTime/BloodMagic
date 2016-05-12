@@ -9,7 +9,6 @@ import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.File;
@@ -23,6 +22,7 @@ public class ConfigHandler
     // Teleposer
     public static String[] teleposerBlacklisting;
     public static ArrayList<BlockStack> teleposerBlacklist = new ArrayList<BlockStack>();
+    public static List<String> teleposerBlacklistEntity;
 
     // Transposition Sigil
     public static String[] transpositionBlacklisting;
@@ -163,6 +163,7 @@ public class ConfigHandler
         config.addCustomCategoryComment(category, "Block blacklisting");
         teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[] { "minecraft:bedrock", "minecraft:mob_spawner" }, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
         buildBlacklist(teleposerBlacklisting, teleposerBlacklist);
+        teleposerBlacklistEntity = Arrays.asList(config.getStringList("teleposerBlacklistEntity", category, new String[]{}, "Entity class names listed here will not be able to be teleposed."));
 
         category = "Transposition Sigil Blacklist";
         config.addCustomCategoryComment(category, "Block blacklisting");
