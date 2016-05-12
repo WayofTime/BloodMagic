@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.registry.ModBlocks;
 
 public class ItemSigilPhantomBridge extends ItemSigilToggleableBase
@@ -17,7 +16,7 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase
     @Override
     public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
     {
-        if (!player.onGround && !player.isSneaking())
+        if ((!player.onGround && !player.isRiding()) && !player.isSneaking())
             return;
 
         int range = 2;
