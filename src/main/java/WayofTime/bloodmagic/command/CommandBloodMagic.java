@@ -40,7 +40,7 @@ public class CommandBloodMagic extends CommandBase
     @Override
     public int getRequiredPermissionLevel()
     {
-        return 3;
+        return 2;
     }
 
     @Override
