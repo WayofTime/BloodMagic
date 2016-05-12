@@ -20,9 +20,9 @@ public class StatTrackerSelfSacrifice extends StatTracker
 
     public int totalSacrifices = 0;
 
-    public static void incrementCounter(LivingArmour armour)
+    public static void incrementCounter(LivingArmour armour, int hearts)
     {
-        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + 1 : 1);
+        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + hearts : hearts);
     }
 
     @Override

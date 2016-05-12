@@ -76,6 +76,12 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
 
+    @Override
+    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+    {
+        return ModItems.itemDemonCrystal == repair.getItem() ? true : super.getIsRepairable(toRepair, repair);
+    }
+
     public void recalculatePowers(ItemStack stack, World world, EntityPlayer player)
     {
         EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);

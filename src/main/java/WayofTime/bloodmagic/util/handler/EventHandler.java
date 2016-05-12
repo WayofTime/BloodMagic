@@ -483,13 +483,15 @@ public class EventHandler
     }
 
     @SubscribeEvent
-    public void onTeleposeEntity(TeleposeEvent.Ent event) {
+    public void onTeleposeEntity(TeleposeEvent.Ent event)
+    {
         if (ConfigHandler.teleposerBlacklistEntity.contains(event.entity.getClass().getSimpleName()))
             event.setCanceled(true);
     }
 
     @SubscribeEvent
-    public void onTeleposeEntityPost(TeleposeEvent.Ent.Post event) {
+    public void onTeleposeEntityPost(TeleposeEvent.Ent.Post event)
+    {
         event.entity.timeUntilPortal = 5;
     }
 
@@ -577,7 +579,7 @@ public class EventHandler
             LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
             if (armour != null)
             {
-                StatTrackerSelfSacrifice.incrementCounter(armour);
+                StatTrackerSelfSacrifice.incrementCounter(armour, event.healthDrained / 2);
                 LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.selfSacrifice", chestStack);
 
                 if (upgrade instanceof LivingArmourUpgradeSelfSacrifice)
