@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -43,6 +42,12 @@ public class BlockPhantom extends BlockContainer implements IVariantProvider
     }
 
     @Override
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
+
+    @Override
     public boolean isFullCube(IBlockState state)
     {
         return false;
@@ -69,16 +74,8 @@ public class BlockPhantom extends BlockContainer implements IVariantProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
-    {
-        Block block = state.getBlock();
-
-        if (world.getBlockState(pos.offset(side.getOpposite())) != state)
-        {
-            return true;
-        }
-
-        return block != this && super.shouldSideBeRendered(state, world, pos, side);
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+        return world.getBlockState(pos.offset(side)) != state || state.getBlock() != this && super.shouldSideBeRendered(state, world, pos, side);
     }
 
     @Override
