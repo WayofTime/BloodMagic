@@ -233,6 +233,9 @@ tile.BloodMagic.demonCrystalDESTRUCTIVE.name=Destructive Will Crystal Cluster
 tile.BloodMagic.demonCrystalVENGEFUL.name=Vengeful Will Crystal Cluster
 tile.BloodMagic.demonCrystalSTEADFAST.name=Steadfast Will Crystal Cluster
 
+# Fluids
+fluid.lifeEssence=Life Essence
+
 # Tooltips
 tooltip.BloodMagic.extraInfo=&9-Hold shift for more info-
 
