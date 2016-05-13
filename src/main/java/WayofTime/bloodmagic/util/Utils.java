@@ -44,6 +44,8 @@ import WayofTime.bloodmagic.tile.TileInventory;
 
 import com.google.common.collect.Iterables;
 
+import javax.annotation.Nullable;
+
 public class Utils
 {
     public static NBTTagCompound getPersistentDataTag(EntityPlayer player)
@@ -684,6 +686,59 @@ public class Utils
     public static boolean isBlockLiquid(IBlockState state)
     {
         return (state instanceof IFluidBlock || state.getMaterial().isLiquid());
+    }
+
+    public static boolean spawnStackAtBlock(World world, BlockPos pos, @Nullable EnumFacing pushDirection, ItemStack stack)
+    {
+        EntityItem entityItem = new EntityItem(world);
+        BlockPos spawnPos = new BlockPos(pos);
+        double velocity = 0.15D;
+        if (pushDirection != null)
+        {
+            spawnPos.offset(pushDirection);
+
+            switch (pushDirection) {
+                case DOWN:
+                {
+                    entityItem.motionY = -velocity;
+                    entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() - 1.0D, spawnPos.getZ() + 0.5D);
+                    break;
+                }
+                case UP:
+                {
+                    entityItem.motionY = velocity;
+                    entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 1.0D, spawnPos.getZ() + 0.5D);
+                    break;
+                }
+                case NORTH:
+                {
+                    entityItem.motionZ = -velocity;
+                    entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 0.5D, spawnPos.getZ() - 1.0D);
+                    break;
+                }
+                case SOUTH:
+                {
+                    entityItem.motionZ = velocity;
+                    entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 1.0D);
+                    break;
+                }
+                case WEST:
+                {
+                    entityItem.motionX = -velocity;
+                    entityItem.setPosition(spawnPos.getX() - 1.0D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 0.5D);
+                    break;
+                }
+                case EAST:
+                {
+                    entityItem.motionX = velocity;
+                    entityItem.setPosition(spawnPos.getX() + 1.0D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 0.5D);
+                    break;
+                }
+            }
+        }
+
+        entityItem.setEntityItemStack(stack);
+        return world.spawnEntityInWorld(entityItem);
     }
 
     public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos)

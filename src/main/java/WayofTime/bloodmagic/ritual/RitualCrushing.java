@@ -78,11 +78,14 @@ public class RitualCrushing extends Ritual
                 ItemStack item = new ItemStack(block, 1, meta);
                 ItemStack copyStack = ItemStack.copyItemStack(item);
 
-                Utils.insertStackIntoTile(copyStack, tile, EnumFacing.DOWN);
+                if (tile != null)
+                    Utils.insertStackIntoTile(copyStack, tile, EnumFacing.DOWN);
+                else
+                    Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
 
                 if (copyStack.stackSize > 0)
                 {
-                    world.spawnEntityInWorld(new EntityItem(world, pos.getX() + 0.5, pos.getY() + 2, pos.getZ() + 0.5, copyStack));
+                    Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
                 }
             } else
             {
@@ -94,10 +97,17 @@ public class RitualCrushing extends Ritual
                     {
                         ItemStack copyStack = ItemStack.copyItemStack(item);
 
-                        copyStack = Utils.insertStackIntoTile(copyStack, tile, EnumFacing.DOWN);
+                        if (tile != null)
+                        {
+                            copyStack = Utils.insertStackIntoTile(copyStack, tile, EnumFacing.DOWN);
+                        } else
+                        {
+                            Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
+                            continue;
+                        }
                         if (copyStack != null && copyStack.stackSize > 0)
                         {
-                            world.spawnEntityInWorld(new EntityItem(world, pos.getX() + 0.5, pos.getY() + 2, pos.getZ() + 0.5, copyStack));
+                            Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
                         }
                     }
                 }
