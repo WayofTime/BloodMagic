@@ -20,7 +20,7 @@ item.BloodMagic.bound.pickaxe.name=束缚之镐
 item.BloodMagic.bound.axe.name=束缚之斧
 item.BloodMagic.bound.shovel.name=束缚之锹
 
-item.BloodMagic.bucket.lifeEssence.name=生命本质桶
+item.BloodMagic.bucket.lifeEssence.name=生命源质桶
 
 item.BloodMagic.scribe.water.name=元素铭文工具: 水
 item.BloodMagic.scribe.fire.name=元素铭文工具: 火
@@ -165,7 +165,7 @@ item.BloodMagic.itemFilter.oreDict.name=矿物物品筛选器
 item.BloodMagic.experienceTome.name=经验手册
 
 # Blocks
-tile.BloodMagic.fluid.lifeEssence.name=生命本质
+tile.BloodMagic.fluid.lifeEssence.name=生命源质
 
 tile.BloodMagic.stone.ritual.master.name=主仪式石
 tile.BloodMagic.stone.ritual.imperfect.name=不完善的仪式石
@@ -234,12 +234,12 @@ tile.BloodMagic.demonCrystalVENGEFUL.name=复仇魂魄晶簇
 tile.BloodMagic.demonCrystalSTEADFAST.name=坚定魂魄晶簇
 
 # Fluids
-fluid.lifeEssence=生命本质
+fluid.lifeEssence=生命源质
 
 # Tooltips
 tooltip.BloodMagic.extraInfo=&9-按住 shift 了解更多信息-
 
-tooltip.BloodMagic.orb.desc=储存原生的生命本质
+tooltip.BloodMagic.orb.desc=储存原生的生命源质
 tooltip.BloodMagic.orb.owner=来源: %s
 tooltip.BloodMagic.currentOwner=当前所有者: %s
 tooltip.BloodMagic.currentTier=当前层级: %d
@@ -254,7 +254,7 @@ tooltip.BloodMagic.sigil.compression.desc=&o钻石之手
 tooltip.BloodMagic.sigil.divination.desc=&o窥视灵魂
 tooltip.BloodMagic.sigil.divination.otherNetwork=窥视 %s 的灵魂
 tooltip.BloodMagic.sigil.divination.currentAltarTier=当前层级: %d
-tooltip.BloodMagic.sigil.divination.currentEssence=当前本质: %,d LP
+tooltip.BloodMagic.sigil.divination.currentEssence=当前源质: %,d LP
 tooltip.BloodMagic.sigil.divination.currentAltarCapacity=当前容量: %,d LP
 tooltip.BloodMagic.sigil.divination.currentTranquility=当前静谧: %,d
 tooltip.BloodMagic.sigil.divination.currentBonus=当前效益: +%,d%%
@@ -272,7 +272,7 @@ tooltip.BloodMagic.sigil.seer.currentAltarProgress=当前进度: %,d LP/ %s LP
 tooltip.BloodMagic.sigil.seer.currentAltarProgress.percent=当前进度: %s
 tooltip.BloodMagic.sigil.seer.currentAltarConsumptionRate=消耗率: %,d LP
 tooltip.BloodMagic.sigil.seer.currentAltarTier=当前层级: %d
-tooltip.BloodMagic.sigil.seer.currentEssence=当前本质: %,d LP
+tooltip.BloodMagic.sigil.seer.currentEssence=当前源质: %,d LP
 tooltip.BloodMagic.sigil.seer.currentAltarCapacity=当前容量: %,d LP
 tooltip.BloodMagic.sigil.seer.currentCharge=当前耗能: %,d
 tooltip.BloodMagic.sigil.seer.currentTranquility=当前静谧: %,d
@@ -605,4 +605,4 @@ tc.research_category.BLOODMAGIC=血红奥术
 # Thaumcraft Research
 bloodmagic.research_name.BLOODMAGIC=血魔法
 bloodmagic.research_text.BLOODMAGIC=血红奥术
-bloodmagic.research_page.BLOODMAGIC.1=血魔法的领域总是似乎有些孤立且像是"个人"艺术, 同众所周知的喜爱隐居有时还有点疯癫的血魔法师. 然而, 自我牺牲与生命本质的力量甚至拥有超出一般血魔法师所见的用途, 事实上, 这种力量显然终究能应用于神秘学.
+bloodmagic.research_page.BLOODMAGIC.1=血魔法的领域总是似乎有些孤立且像是"个人"艺术, 同众所周知的喜爱隐居有时还有点疯癫的血魔法师. 然而, 自我牺牲与生命源质的力量甚至拥有超出一般血魔法师所见的用途, 事实上, 这种力量显然终究能应用于神秘学.
