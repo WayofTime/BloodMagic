@@ -210,7 +210,7 @@ tile.BloodMagic.demonCrucible.name=邪灵坩埚
 tile.BloodMagic.demonPylon.name=邪灵导能塔
 tile.BloodMagic.demonCrystallizer.name=邪灵结晶坛
 
-tile.BloodMagic.masterRouting.name=主路由节点
+tile.BloodMagic.masterRouting.name=主控路由节点
 tile.BloodMagic.outputRouting.name=输出路由节点
 tile.BloodMagic.inputRouting.name=输入路由节点
 tile.BloodMagic.itemRouting.name=路由节点
@@ -232,6 +232,9 @@ tile.BloodMagic.demonCrystalCORROSIVE.name=腐蚀魂魄晶簇
 tile.BloodMagic.demonCrystalDESTRUCTIVE.name=恶意魂魄晶簇
 tile.BloodMagic.demonCrystalVENGEFUL.name=复仇魂魄晶簇
 tile.BloodMagic.demonCrystalSTEADFAST.name=坚定魂魄晶簇
+
+# Fluids
+fluid.lifeEssence=生命本质
 
 # Tooltips
 tooltip.BloodMagic.extraInfo=&9-按住 shift 了解更多信息-
@@ -350,14 +353,14 @@ tooltip.BloodMagic.livingArmour.upgrade.elytra=鞘翅
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6强化点数: %s / %s
 
-tooltip.BloodMagic.will=魂魄品质: %1$,.2f
+tooltip.BloodMagic.will=魂魄意识: %1$,.2f
 tooltip.BloodMagic.sentientSword.desc=以怨念之魂魄唤起其最大潜能.
 tooltip.BloodMagic.soulGem.petty=用于存储微量魂魄的晶石
 tooltip.BloodMagic.soulGem.lesser=用于存储少量魂魄的晶石
 tooltip.BloodMagic.soulGem.common=用于存储更多魂魄的晶石
 tooltip.BloodMagic.soulGem.greater=用于存储大量魂魄的晶石
 tooltip.BloodMagic.soulGem.grand=用于存储极大数量魂魄的晶石
-tooltip.BloodMagic.soulSnare.desc=投掷向怪物并消灭它们来获取其失神的灵魂
+tooltip.BloodMagic.soulSnare.desc=投掷向怪物并消灭它们来获取附于其身的邪灵之魂
 
 tooltip.BloodMagic.itemFilter.exact=魂魄将确保物品精确匹配
 tooltip.BloodMagic.itemFilter.ignoreNBT=忽视筛选的NBT
@@ -584,7 +587,7 @@ jei.BloodMagic.recipe.lpDrained=消耗: %,d LP
 jei.BloodMagic.recipe.ticksRequired=时间: %,d 刻
 
 jei.BloodMagic.desc.altarBuilder=该物品仅限创造模式，用于调试测试.\n\nShift + 右键 改变层级. 右键祭坛开始搭建.\n\n手持破坏祭坛时将全部移除.
-jei.BloodMagic.desc.demonicWill=一个由邪灵附身于生物而形成的纹刻.\n\n可以通过用感知武器杀死生物掉落, 或是对着生物抛掷原始投网, 当它出现白色颗粒时杀了它.
+jei.BloodMagic.desc.demonicWill=附身于生物的邪灵意念之体现.\n\n可以通过用感知武器杀死生物掉落, 或是对着生物抛掷原始投网, 当它出现白色颗粒时杀了它.
 
 # WAILA
 waila.BloodMagic.sneak=&o潜行查看信息
