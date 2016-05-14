@@ -8,13 +8,17 @@ import java.util.Set;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import com.google.common.base.Strings;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
@@ -68,7 +72,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
     {
-        return oldStack.getItem() != newStack.getItem();
+        return slotChanged;
     }
 
     @Override
@@ -200,6 +204,11 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     public Set<String> getToolClasses(ItemStack stack)
     {
         return ImmutableSet.of(name);
+    }
+
+    public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot)
+    {
+        return ArrayListMultimap.create(); // No-op
     }
 
     @Override
