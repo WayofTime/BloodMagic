@@ -55,15 +55,15 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
         if (player.isSneaking())
             setActivatedState(stack, !getActivated(stack));
 
-        if (!player.isSneaking() && getActivated(stack))
-        {
-            BoundToolEvent.Charge event = new BoundToolEvent.Charge(player, stack);
-            if (MinecraftForge.EVENT_BUS.post(event))
-                return new ActionResult<ItemStack>(EnumActionResult.FAIL, event.result);
-
-            player.setActiveHand(hand);
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
-        }
+//        if (!player.isSneaking() && getActivated(stack))
+//        {
+//            BoundToolEvent.Charge event = new BoundToolEvent.Charge(player, stack);
+//            if (MinecraftForge.EVENT_BUS.post(event))
+//                return new ActionResult<ItemStack>(EnumActionResult.FAIL, event.result);
+//
+//            player.setActiveHand(hand);
+//            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+//        }
 
         return super.onItemRightClick(stack, world, player, hand);
     }
