@@ -67,7 +67,7 @@ public class RitualCrushing extends Ritual
 
             IBlockState state = world.getBlockState(newPos);
             Block block = state.getBlock();
-            if (block.equals(ModBlocks.ritualController) || block.equals(ModBlocks.ritualStone))
+            if (block.equals(ModBlocks.ritualController) || block.equals(ModBlocks.ritualStone) || block.getBlockHardness(state, world, newPos) == -1.0F)
             {
                 continue;
             }
@@ -113,7 +113,7 @@ public class RitualCrushing extends Ritual
                 }
             }
 
-            world.setBlockToAir(newPos);
+            world.destroyBlock(newPos, false);
             network.syphon(getRefreshCost());
 
             break;
