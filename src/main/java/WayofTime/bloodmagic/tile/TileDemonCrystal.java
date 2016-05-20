@@ -186,7 +186,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
 
@@ -194,6 +194,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable
         tag.setInteger("crystalCount", crystalCount);
         tag.setInteger("placement", placement.getIndex());
         tag.setDouble("progress", progressToNextCrystal);
+        return tag;
     }
 
     @Override
@@ -203,7 +204,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable
     }
 
     @Override
-    public Packet getDescriptionPacket()
+    public SPacketUpdateTileEntity getUpdatePacket()
     {
         NBTTagCompound nbt = new NBTTagCompound();
         writeToNBT(nbt);

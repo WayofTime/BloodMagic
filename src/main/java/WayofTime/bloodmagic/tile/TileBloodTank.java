@@ -61,11 +61,12 @@ public class TileBloodTank extends TileEntity implements IFluidHandler
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tagCompound)
+    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
     {
         super.writeToNBT(tagCompound);
         if (tank.getFluidAmount() != 0)
             tagCompound.setTag("tank", tank.writeToNBT(new NBTTagCompound()));
         tagCompound.setInteger("capacity", capacity);
+        return tagCompound;
     }
 }

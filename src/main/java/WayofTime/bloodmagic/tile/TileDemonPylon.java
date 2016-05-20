@@ -56,11 +56,12 @@ public class TileDemonPylon extends TileEntity implements ITickable, IDemonWillC
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
 
         holder.writeToNBT(tag, "Will");
+        return tag;
     }
 
     // IDemonWillConduit

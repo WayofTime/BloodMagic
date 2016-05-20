@@ -41,11 +41,12 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
 
         tag.setInteger(Constants.NBT.SOUL_FORGE_BURN, burnTime);
+        return tag;
     }
 
     @Override

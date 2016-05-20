@@ -128,7 +128,7 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
 
@@ -136,6 +136,7 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
         {
             tag.setDouble("EnumWill" + entry.getKey().getName(), entry.getValue());
         }
+        return tag;
     }
 
     // IDemonWillConduit

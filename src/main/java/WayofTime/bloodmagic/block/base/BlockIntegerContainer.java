@@ -29,9 +29,9 @@ public abstract class BlockIntegerContainer extends BlockInteger implements ITil
     }
 
     @Override
-    public boolean onBlockEventReceived(World worldIn, BlockPos pos, IBlockState state, int eventID, int eventParam)
+    public boolean eventReceived(IBlockState state, World worldIn, BlockPos pos, int eventID, int eventParam)
     {
-        super.onBlockEventReceived(worldIn, pos, state, eventID, eventParam);
+        super.eventReceived(state, worldIn, pos, eventID, eventParam);
         TileEntity tileentity = worldIn.getTileEntity(pos);
         return tileentity != null && tileentity.receiveClientEvent(eventID, eventParam);
     }

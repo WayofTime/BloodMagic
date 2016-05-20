@@ -30,7 +30,6 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     public TileMasterRoutingNode()
     {
         super(0, "masterRoutingNode");
-        // TODO Auto-generated constructor stub
     }
 
     // A list of connections
@@ -146,7 +145,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
 
@@ -182,6 +181,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
             tags.appendTag(posTag);
         }
         tag.setTag(Constants.NBT.ROUTING_MASTER_OUTPUT, tags);
+        return tag;
     }
 
     @Override

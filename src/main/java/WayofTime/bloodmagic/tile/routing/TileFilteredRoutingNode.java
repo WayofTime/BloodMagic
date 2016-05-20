@@ -48,11 +48,12 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
         tag.setInteger("currentSlot", currentActiveSlot);
         tag.setIntArray(Constants.NBT.ROUTING_PRIORITY, priorities);
+        return tag;
     }
 
     public void swapFilters(int requestedSlot)

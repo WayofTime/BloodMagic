@@ -513,6 +513,11 @@ chat.BloodMagic.routing.set=Setting node location
 chat.BloodMagic.routing.link.master=Linked node to master!
 chat.BloodMagic.routing.link=Linked nodes together
 
+# sekrit
+
+secret.BloodMagic.bread.bloody=&r&cBloody Bread
+secret.BloodMagic.bread.bloody.desc=Only for &odire &r&7emergencies.
+
 # Commands
 commands.error.arg.invalid=Invalid arguments
 commands.error.arg.missing=Not enough arguments

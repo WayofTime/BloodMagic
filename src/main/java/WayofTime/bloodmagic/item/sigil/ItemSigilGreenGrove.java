@@ -24,7 +24,7 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
     {
         if (applyBonemeal(stack, world, blockPos))
         {
-            world.playAuxSFX(2005, blockPos, 0);
+            world.destroyBlock(blockPos, false);
             return true;
         }
 
@@ -59,7 +59,7 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
                                 block.updateTick(worldIn, blockPos, worldIn.getBlockState(blockPos), worldIn.rand);
 
                                 if (!worldIn.getBlockState(blockPos).equals(preBlockState))
-                                    worldIn.playAuxSFX(2005, blockPos, 0);
+                                    worldIn.destroyBlock(blockPos, false);
                             }
                         }
                     }

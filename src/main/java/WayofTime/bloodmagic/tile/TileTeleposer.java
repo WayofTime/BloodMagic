@@ -42,10 +42,11 @@ public class TileTeleposer extends TileInventory implements ITickable
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tagCompound)
+    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
     {
         super.writeToNBT(tagCompound);
         tagCompound.setInteger(Constants.NBT.PREVIOUS_INPUT, previousInput);
+        return tagCompound;
     }
 
     @Override

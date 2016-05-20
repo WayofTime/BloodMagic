@@ -24,8 +24,12 @@ import WayofTime.bloodmagic.util.handler.ClientEventHandler;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -33,6 +37,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import org.apache.commons.lang3.tuple.Pair;
+
+import java.awt.*;
 
 public class ClientProxy extends CommonProxy
 {
@@ -84,7 +90,14 @@ public class ClientProxy extends CommonProxy
     @Override
     public void init()
     {
-//        RenderingRegistry.registerEntityRenderingHandler(EntityBloodLight.class, new RenderEntityBloodLight(Minecraft.getMinecraft().getRenderManager()));
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor()
+        {
+            @Override
+            public int getColorFromItemstack(ItemStack stack, int tintIndex)
+            {
+                return stack.hasTagCompound() && stack.getTagCompound().hasKey("bloody") ? new Color(0x8B191B).getRGB() : 16777215;
+            }
+        }, Items.BREAD);
     }
 
     @Override

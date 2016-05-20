@@ -774,7 +774,7 @@ public class Utils
 
         if (initialTile != null)
         {
-            TileEntity newTileInitial = TileEntity.createTileEntity(FMLCommonHandler.instance().getMinecraftServerInstance(), initialTag);
+            TileEntity newTileInitial = TileEntity.create(initialTag);
 
             finalWorld.setTileEntity(finalPos, newTileInitial);
             newTileInitial.setPos(finalPos);
@@ -785,7 +785,7 @@ public class Utils
 
         if (finalTile != null)
         {
-            TileEntity newTileFinal = TileEntity.createTileEntity(FMLCommonHandler.instance().getMinecraftServerInstance(), finalTag);
+            TileEntity newTileFinal = TileEntity.create(finalTag);
 
             initialWorld.setTileEntity(initialPos, newTileFinal);
             newTileFinal.setPos(initialPos);

@@ -82,11 +82,12 @@ public class TileIncenseAltar extends TileInventory implements ITickable
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
         tag.setDouble("tranquility", tranquility);
         tag.setDouble("incenseAddition", incenseAddition);
+        return tag;
     }
 
     public void recheckConstruction()

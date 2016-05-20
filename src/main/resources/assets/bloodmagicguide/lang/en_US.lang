@@ -1,8 +1,8 @@
 # Book Information
-guide.BloodMagic.book.title=Sanguine Scientiem
-guide.BloodMagic.book.display=Sanguine Scientiem
-guide.BloodMagic.book.author=Blood Magic
-guide.BloodMagic.book.welcome=Blood Magic
+guide.BloodMagic.title=Sanguine Scientiem
+guide.BloodMagic.display=Sanguine Scientiem
+guide.BloodMagic.author=Blood Magic
+guide.BloodMagic.welcome=Blood Magic
 
 # Page Information
 guide.BloodMagic.page.bloodAltar=Blood Altar Recipe
@@ -10,11 +10,11 @@ guide.BloodMagic.page.tier=Tier: %d
 guide.BloodMagic.page.lp=LP: %d
 
 # Categories
-guide.BloodMagic.category.architect.name=The Architect
-guide.BloodMagic.category.ritual.name=The Ritual Master
-guide.BloodMagic.category.demon.name=The Demon Kin
-guide.BloodMagic.category.spell.name=The Battle Mage
-guide.BloodMagic.category.alchemy.name=The Alchemist
+guide.BloodMagic.category.architect=The Architect
+guide.BloodMagic.category.ritual=The Ritual Master
+guide.BloodMagic.category.demon=The Demon Kin
+guide.BloodMagic.category.spell=The Battle Mage
+guide.BloodMagic.category.alchemy=The Alchemist
 
 # Architect Entries
 guide.BloodMagic.entry.architect.intro=A Classic Tragic Back-story

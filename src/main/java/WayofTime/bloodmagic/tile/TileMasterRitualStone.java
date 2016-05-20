@@ -103,7 +103,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
         String ritualId = RitualRegistry.getIdForRitual(getCurrentRitual());
@@ -119,6 +119,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         tag.setInteger(Constants.NBT.RUNTIME, getActiveTime());
         tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
         tag.setBoolean(Constants.NBT.IS_REDSTONED, redstoned);
+        return tag;
     }
 
     @Override
@@ -274,7 +275,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     }
 
     @Override
-    public Packet getDescriptionPacket()
+    public SPacketUpdateTileEntity getUpdatePacket()
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         writeToNBT(nbttagcompound);

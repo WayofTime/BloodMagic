@@ -152,7 +152,7 @@ public class BlockAlchemyTable extends BlockContainer
     }
 
     @Override
-    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock)
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block neighborBlock)
     {
         TileAlchemyTable tile = (TileAlchemyTable) world.getTileEntity(pos);
         if (tile != null)

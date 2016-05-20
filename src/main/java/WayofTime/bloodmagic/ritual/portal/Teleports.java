@@ -61,7 +61,7 @@ public class Teleports
 
                         player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
                         player.worldObj.updateEntityWithOptionalForce(player, false);
-                        player.playerNetServerHandler.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
+                        player.connection.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
                         player.timeUntilPortal = 150;
 
                         player.worldObj.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
@@ -148,7 +148,7 @@ public class Teleports
 //                            server.getConfigurationManager().transferPlayerToDimension(player, newWorldID, new TeleporterBloodMagic(newWorldServer));
                             player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
                             player.worldObj.updateEntityWithOptionalForce(player, false);
-                            player.playerNetServerHandler.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
+                            player.connection.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
                             MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
                         }
 

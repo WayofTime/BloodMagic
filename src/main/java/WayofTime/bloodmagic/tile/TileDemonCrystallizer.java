@@ -96,12 +96,13 @@ public class TileDemonCrystallizer extends TileEntity implements ITickable, IDem
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
 
         holder.writeToNBT(tag, "Will");
         tag.setDouble("internalCounter", internalCounter);
+        return tag;
     }
 
     // IDemonWillConduit

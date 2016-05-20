@@ -33,12 +33,13 @@ public class TileSpectralBlock extends TileEntity implements ITickable
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tagCompound)
+    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
     {
         super.writeToNBT(tagCompound);
         tagCompound.setInteger(Constants.NBT.TICKS_REMAINING, ticksRemaining);
         tagCompound.setString(Constants.NBT.CONTAINED_BLOCK_NAME, Strings.isNullOrEmpty(containedBlockName) ? "" : containedBlockName);
         tagCompound.setInteger(Constants.NBT.CONTAINED_BLOCK_META, containedBlockMeta);
+        return tagCompound;
     }
 
     @Override

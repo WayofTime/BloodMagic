@@ -30,10 +30,11 @@ public class TilePhantomBlock extends TileEntity implements ITickable
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tagCompound)
+    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
     {
         super.writeToNBT(tagCompound);
         tagCompound.setInteger(Constants.NBT.TICKS_REMAINING, ticksRemaining);
+        return tagCompound;
     }
 
     @Override
@@ -49,7 +50,7 @@ public class TilePhantomBlock extends TileEntity implements ITickable
     }
 
     @Override
-    public Packet getDescriptionPacket()
+    public SPacketUpdateTileEntity getUpdatePacket()
     {
         NBTTagCompound nbt = new NBTTagCompound();
         writeToNBT(nbt);

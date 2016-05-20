@@ -38,7 +38,7 @@ public class NetworkHelper
             return new SoulNetwork(uuid);
         }
 
-        SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, uuid);
+        SoulNetwork network = (SoulNetwork) world.getMapStorage().getOrLoadData(SoulNetwork.class, uuid);
 
         if (network == null)
         {

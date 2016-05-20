@@ -33,7 +33,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tagCompound)
+    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
     {
         super.writeToNBT(tagCompound);
 
@@ -41,6 +41,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
         this.bloodAltar.writeToNBT(altarTag);
 
         tagCompound.setTag("bloodAltar", altarTag);
+        return tagCompound;
     }
 
     @Override

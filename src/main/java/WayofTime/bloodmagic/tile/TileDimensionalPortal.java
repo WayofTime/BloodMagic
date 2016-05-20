@@ -29,7 +29,7 @@ public class TileDimensionalPortal extends TileEntity
         masterStoneZ = tagCompound.getInteger("masterStoneZ");
     }
 
-    public void writeToNBT(NBTTagCompound tagCompound)
+    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
     {
         super.writeToNBT(tagCompound);
 
@@ -38,6 +38,7 @@ public class TileDimensionalPortal extends TileEntity
         tagCompound.setInteger("masterStoneX", masterStoneX);
         tagCompound.setInteger("masterStoneY", masterStoneY);
         tagCompound.setInteger("masterStoneZ", masterStoneZ);
+        return tagCompound;
     }
 
     public BlockPos getMasterStonePos()

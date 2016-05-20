@@ -28,8 +28,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -212,7 +212,7 @@ public class EventHandler
                 }
             }
 
-            this.serverTicks.put(Integer.valueOf(dim), Integer.valueOf(ticks + 1));
+            this.serverTicks.put(dim, ticks + 1);
         }
 
     }
@@ -221,7 +221,7 @@ public class EventHandler
     public void chunkSave(ChunkDataEvent.Save event)
     {
         int dim = event.getWorld().provider.getDimension();
-        ChunkCoordIntPair loc = event.getChunk().getChunkCoordIntPair();
+        ChunkPos loc = event.getChunk().getChunkCoordIntPair();
 
         NBTTagCompound nbt = new NBTTagCompound();
         event.getData().setTag("BloodMagic", nbt);

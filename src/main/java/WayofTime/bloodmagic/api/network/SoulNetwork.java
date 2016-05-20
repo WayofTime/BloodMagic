@@ -48,10 +48,11 @@ public class SoulNetwork extends WorldSavedData
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbttagcompound)
+    public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound)
     {
         nbttagcompound.setInteger(Constants.NBT.CURRENT_ESSENCE, currentEssence);
         nbttagcompound.setInteger(Constants.NBT.ORB_TIER, orbTier);
+        return nbttagcompound;
     }
 
     public int addLifeEssence(int toAdd, int maximum)

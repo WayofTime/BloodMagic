@@ -60,7 +60,7 @@ public class BlockDemonCrystal extends BlockContainer
     }
 
     @Override
-    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock)
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block neighborBlock)
     {
         TileDemonCrystal tile = (TileDemonCrystal) world.getTileEntity(pos);
         EnumFacing placement = tile.getPlacement();

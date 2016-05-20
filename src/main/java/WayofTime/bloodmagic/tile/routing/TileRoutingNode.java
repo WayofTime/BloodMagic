@@ -28,7 +28,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     private List<BlockPos> connectionList = new LinkedList<BlockPos>();
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
         NBTTagCompound masterTag = new NBTTagCompound();
@@ -47,6 +47,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
             tags.appendTag(posTag);
         }
         tag.setTag(Constants.NBT.ROUTING_CONNECTION, tags);
+        return tag;
     }
 
     @Override
@@ -137,12 +138,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     public boolean isMaster(IMasterRoutingNode master)
     {
         BlockPos checkPos = master.getBlockPos();
-        if (checkPos.equals(getMasterPos()))
-        {
-            return true;
-        }
-
-        return false;
+        return checkPos.equals(getMasterPos());
     }
 
     @Override

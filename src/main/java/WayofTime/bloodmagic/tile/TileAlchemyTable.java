@@ -105,7 +105,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
 
@@ -125,6 +125,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         }
 
         tag.setIntArray("blockedSlots", blockedSlotArray);
+        return tag;
     }
 
     @SuppressWarnings("unchecked")
