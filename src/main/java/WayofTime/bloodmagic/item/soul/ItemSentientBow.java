@@ -246,8 +246,15 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
                         //Need to do some stuffs
 //                        ItemArrow itemarrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.arrow));
 //                        EntityArrow entityArrow = itemarrow.createArrow(world, itemstack, player);
+                        float newArrowVelocity = arrowVelocity * getVelocityOfArrow(stack);
                         EntityArrow entityArrow = new EntitySentientArrow(world, entityLiving, type);
-                        entityArrow.setAim(player, player.rotationPitch, player.rotationYaw, 0.0F, arrowVelocity * getVelocityOfArrow(stack), 1.0F);
+                        entityArrow.setAim(player, player.rotationPitch, player.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
+
+                        if (newArrowVelocity == 0)
+                        {
+                            world.playSound(null, player.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.NEUTRAL, 0.4F, 1.0F);
+                            return;
+                        }
 
                         if (arrowVelocity == 1.0F)
                         {
