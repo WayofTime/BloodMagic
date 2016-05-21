@@ -110,36 +110,36 @@ public class TileTeleposer extends TileInventory implements ITickable
 
                     if (focusWorld.equals(worldObj))
                     {
-                        if (originalWorldEntities != null && !originalWorldEntities.isEmpty())
+                        if (!originalWorldEntities.isEmpty())
                         {
                             for (Entity entity : originalWorldEntities)
                             {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID)));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), true));
                             }
                         }
 
-                        if (focusWorldEntities != null && !focusWorldEntities.isEmpty())
+                        if (!focusWorldEntities.isEmpty())
                         {
                             for (Entity entity : focusWorldEntities)
                             {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID)));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), true));
                             }
                         }
                     } else
                     {
-                        if (originalWorldEntities != null && !originalWorldEntities.isEmpty())
+                        if (!originalWorldEntities.isEmpty())
                         {
                             for (Entity entity : originalWorldEntities)
                             {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), worldObj, focusWorld.provider.getDimension()));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), worldObj, focusWorld.provider.getDimension(), true));
                             }
                         }
 
-                        if (focusWorldEntities != null && !focusWorldEntities.isEmpty())
+                        if (!focusWorldEntities.isEmpty())
                         {
                             for (Entity entity : focusWorldEntities)
                             {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), focusWorld, worldObj.provider.getDimension()));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), focusWorld, worldObj.provider.getDimension(), true));
                             }
                         }
                     }

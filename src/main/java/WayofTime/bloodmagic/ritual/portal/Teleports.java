@@ -28,15 +28,17 @@ public class Teleports
 
     public static class TeleportSameDim extends Teleport
     {
+        private final boolean teleposer;
 
-        public TeleportSameDim(int x, int y, int z, Entity entity, String networkToDrain)
+        public TeleportSameDim(int x, int y, int z, Entity entity, String networkToDrain, boolean teleposer)
         {
-            super(x, y, z, entity, networkToDrain);
+            this(new BlockPos(x, y, z), entity, networkToDrain, teleposer);
         }
 
-        public TeleportSameDim(BlockPos blockPos, Entity entity, String networkToDrain)
+        public TeleportSameDim(BlockPos blockPos, Entity entity, String networkToDrain, boolean teleposer)
         {
             super(blockPos, entity, networkToDrain);
+            this.teleposer = teleposer;
         }
 
         @Override
@@ -52,8 +54,9 @@ public class Teleports
                         if (network.getCurrentEssence() < getTeleportCost())
                             return;
 
-                        if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z))))
-                            return;
+                        if (teleposer)
+                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z))))
+                                return;
 
                         network.syphon(getTeleportCost());
 
@@ -65,15 +68,17 @@ public class Teleports
                         player.timeUntilPortal = 150;
 
                         player.worldObj.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
-                        MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z)));
+                        if (teleposer)
+                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z)));
                     } else
                     {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
                         if (network.getCurrentEssence() < (getTeleportCost() / 10))
                             return;
 
-                        if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z))))
-                            return;
+                        if (teleposer)
+                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z))))
+                                return;
 
                         network.syphon(getTeleportCost() / 10);
 
@@ -84,7 +89,8 @@ public class Teleports
                         world.resetUpdateEntityTick();
 
                         entity.worldObj.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
-                        MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z)));
+                        if (teleposer)
+                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z)));
                     }
                 }
             }
@@ -97,25 +103,24 @@ public class Teleports
         }
     }
 
+    @Getter
     public static class TeleportToDim extends Teleport
     {
-        @Getter
         private World oldWorld;
-        @Getter
         private int newWorldID;
+        private boolean teleposer;
 
-        public TeleportToDim(int x, int y, int z, Entity entity, String networkToDrain, World oldWorld, int newWorld)
+        public TeleportToDim(int x, int y, int z, Entity entity, String networkToDrain, World oldWorld, int newWorld, boolean teleposer)
         {
-            super(x, y, z, entity, networkToDrain);
-            this.oldWorld = oldWorld;
-            this.newWorldID = newWorld;
+            this(new BlockPos(x, y, z), entity, networkToDrain, oldWorld, newWorld, teleposer);
         }
 
-        public TeleportToDim(BlockPos blockPos, Entity entity, String networkToDrain, World oldWorld, int newWorldID)
+        public TeleportToDim(BlockPos blockPos, Entity entity, String networkToDrain, World oldWorld, int newWorldID, boolean teleposer)
         {
             super(blockPos, entity, networkToDrain);
             this.oldWorld = oldWorld;
             this.newWorldID = newWorldID;
+            this.teleposer = teleposer;
         }
 
         @Override
@@ -139,8 +144,9 @@ public class Teleports
                             if (network.getCurrentEssence() < getTeleportCost())
                                 return;
 
-                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z))))
-                                return;
+                            if (teleposer)
+                                if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z))))
+                                    return;
 
                             network.syphon(getTeleportCost());
 
@@ -149,7 +155,8 @@ public class Teleports
                             player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
                             player.worldObj.updateEntityWithOptionalForce(player, false);
                             player.connection.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
-                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
+                            if (teleposer)
+                                MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
                         }
 
                     } else if (!entity.worldObj.isRemote)
@@ -158,8 +165,9 @@ public class Teleports
                         if (network.getCurrentEssence() < (getTeleportCost() / 10))
                             return;
 
-                        if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z))))
-                            return;
+                        if (teleposer)
+                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z))))
+                                return;
 
                         network.syphon(getTeleportCost() / 10);
 
@@ -181,7 +189,8 @@ public class Teleports
 
                         oldWorldServer.resetUpdateEntityTick();
                         newWorldServer.resetUpdateEntityTick();
-                        MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
+                        if (teleposer)
+                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
                     }
                     entity.timeUntilPortal = entity instanceof EntityLiving ? 150 : 20;
                     newWorldServer.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
