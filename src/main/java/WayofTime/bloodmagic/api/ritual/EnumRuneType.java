@@ -3,18 +3,25 @@ package WayofTime.bloodmagic.api.ritual;
 import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.Locale;
 
 public enum EnumRuneType implements IStringSerializable
 {
-    BLANK,
-    WATER,
-    FIRE,
-    EARTH,
-    AIR,
-    DUSK,
-    DAWN;
+    BLANK(TextFormatting.GRAY),
+    WATER(TextFormatting.AQUA),
+    FIRE(TextFormatting.RED),
+    EARTH(TextFormatting.GREEN),
+    AIR(TextFormatting.WHITE),
+    DUSK(TextFormatting.DARK_GRAY),
+    DAWN(TextFormatting.GOLD);
+
+    public final TextFormatting colorCode;
+
+    EnumRuneType(TextFormatting colorCode) {
+        this.colorCode = colorCode;
+    }
 
     public static EnumRuneType byMetadata(int meta)
     {

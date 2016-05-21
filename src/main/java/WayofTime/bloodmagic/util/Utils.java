@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.util;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
@@ -84,6 +85,10 @@ public class Utils
         }
         // only got here if we didn't return false
         return true;
+    }
+
+    public static String toFancyCasing(String input) {
+        return String.valueOf(input.charAt(0)).toUpperCase(Locale.ENGLISH) + input.substring(1);
     }
 
     /**

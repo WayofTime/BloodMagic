@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -202,7 +203,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
             if (sneaking)
             {
-                tooltip.add(TextHelper.localize(tooltipBase + "currentDirection", getDirection(stack)));
+                tooltip.add(TextHelper.localize(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).getName())));
                 tooltip.add("");
                 ArrayList<RitualComponent> componentList = ritual.getComponents();
 
@@ -213,11 +214,10 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                 int earthRunes = 0;
                 int duskRunes = 0;
                 int dawnRunes = 0;
-                int totalRunes = 0;
+                int totalRunes = componentList.size();
 
                 for (RitualComponent component : componentList)
                 {
-                    totalRunes++;
                     switch (component.getRuneType())
                     {
                     case BLANK:
@@ -245,33 +245,19 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                 }
 
                 if (blankRunes > 0)
-                {
-                    tooltip.add(TextHelper.localize(tooltipBase + "blankRune", blankRunes));
-                }
+                    tooltip.add(EnumRuneType.BLANK.colorCode + TextHelper.localize(tooltipBase + "blankRune", blankRunes));
                 if (waterRunes > 0)
-                {
-                    tooltip.add(TextHelper.localize(tooltipBase + "waterRune", waterRunes));
-                }
+                    tooltip.add(EnumRuneType.WATER.colorCode + TextHelper.localize(tooltipBase + "waterRune", waterRunes));
                 if (airRunes > 0)
-                {
-                    tooltip.add(TextHelper.localize(tooltipBase + "airRune", airRunes));
-                }
+                    tooltip.add(EnumRuneType.AIR.colorCode + TextHelper.localize(tooltipBase + "airRune", airRunes));
                 if (fireRunes > 0)
-                {
-                    tooltip.add(TextHelper.localize(tooltipBase + "fireRune", fireRunes));
-                }
+                    tooltip.add(EnumRuneType.FIRE.colorCode + TextHelper.localize(tooltipBase + "fireRune", fireRunes));
                 if (earthRunes > 0)
-                {
-                    tooltip.add(TextHelper.localize(tooltipBase + "earthRune", earthRunes));
-                }
+                    tooltip.add(EnumRuneType.EARTH.colorCode + TextHelper.localize(tooltipBase + "earthRune", earthRunes));
                 if (duskRunes > 0)
-                {
-                    tooltip.add(TextHelper.localize(tooltipBase + "duskRune", duskRunes));
-                }
+                    tooltip.add(EnumRuneType.DUSK.colorCode + TextHelper.localize(tooltipBase + "duskRune", duskRunes));
                 if (dawnRunes > 0)
-                {
-                    tooltip.add(TextHelper.localize(tooltipBase + "dawnRune", dawnRunes));
-                }
+                    tooltip.add(EnumRuneType.DAWN.colorCode + TextHelper.localize(tooltipBase + "dawnRune", dawnRunes));
 
                 tooltip.add("");
                 tooltip.add(TextHelper.localize(tooltipBase + "totalRune", totalRunes));
