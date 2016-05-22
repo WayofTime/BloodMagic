@@ -3,6 +3,9 @@ Version 2.0.0-39
 ------------------------------------------------------
 - Updated to 1.9.4!
 - Fixed the Trick Shot upgrade
+- Fixed Gate of the Fold endless loop
+- Added rune type colors to the Ritual Diviner tooltip
+- Crusher ritual ignores unbreakable blocks
 
 ------------------------------------------------------
 Version 2.0.0-38
