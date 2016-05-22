@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 2.0.0-39
+------------------------------------------------------
+- Updated to 1.9.4!
+- Fixed the Trick Shot upgrade
+
+------------------------------------------------------
 Version 2.0.0-38
 ------------------------------------------------------
 - Fixed it so that the Sentient weaponry is actually repairable using any demon will crystals in an anvil

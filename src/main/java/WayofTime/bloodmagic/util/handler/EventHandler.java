@@ -733,6 +733,11 @@ public class EventHandler
         ItemStack stack = event.getBow();
         EntityPlayer player = event.getEntityPlayer();
 
+        if (world.isRemote)
+        {
+            return;
+        }
+
         if (LivingArmour.hasFullSet(player))
         {
             ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
@@ -761,10 +766,13 @@ public class EventHandler
                     int numberExtra = ((LivingArmourUpgradeArrowShot) upgrade).getExtraArrows();
                     for (int n = 0; n < numberExtra; n++)
                     {
-                        ItemArrow itemarrow = (ItemArrow) Items.ARROW;
-                        EntityArrow entityarrow = itemarrow.createArrow(world, new ItemStack(Items.ARROW), player);
+                        ItemStack arrowStack = new ItemStack(Items.ARROW);
+                        ItemArrow itemarrow = (ItemArrow) ((ItemArrow) (stack.getItem() instanceof ItemArrow ? arrowStack.getItem() : Items.ARROW));
+                        EntityArrow entityarrow = itemarrow.createArrow(world, arrowStack, player);
+                        entityarrow.setAim(player, player.rotationPitch, player.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 
-                        double velocityModifier = 0.6 * f;
+                        float velocityModifier = 0.6f * f;
+
                         entityarrow.motionX += (random.nextDouble() - 0.5) * velocityModifier;
                         entityarrow.motionY += (random.nextDouble() - 0.5) * velocityModifier;
                         entityarrow.motionZ += (random.nextDouble() - 0.5) * velocityModifier;
@@ -793,12 +801,12 @@ public class EventHandler
                             entityarrow.setFire(100);
                         }
 
-                        entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
-
-                        if (!world.isRemote)
+                        if (true)
                         {
-                            world.spawnEntityInWorld(entityarrow);
+                            entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
                         }
+
+                        world.spawnEntityInWorld(entityarrow);
                     }
                 }
             }
