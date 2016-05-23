@@ -254,10 +254,10 @@ tooltip.BloodMagic.sigil.compression.desc=&o钻石之手
 tooltip.BloodMagic.sigil.divination.desc=&o窥视灵魂
 tooltip.BloodMagic.sigil.divination.otherNetwork=窥视 %s 的灵魂
 tooltip.BloodMagic.sigil.divination.currentAltarTier=当前层级: %d
-tooltip.BloodMagic.sigil.divination.currentEssence=当前源质: %,d LP
-tooltip.BloodMagic.sigil.divination.currentAltarCapacity=当前容量: %,d LP
-tooltip.BloodMagic.sigil.divination.currentTranquility=当前静谧: %,d
-tooltip.BloodMagic.sigil.divination.currentBonus=当前效益: +%,d%%
+tooltip.BloodMagic.sigil.divination.currentEssence=当前源质: %d LP
+tooltip.BloodMagic.sigil.divination.currentAltarCapacity=当前容量: %d LP
+tooltip.BloodMagic.sigil.divination.currentTranquility=当前静谧: %d
+tooltip.BloodMagic.sigil.divination.currentBonus=当前效益: +%d%%
 tooltip.BloodMagic.sigil.water.desc=&o无限水源?
 tooltip.BloodMagic.sigil.lava.desc=&o噢好烫! 不要吃
 tooltip.BloodMagic.sigil.void.desc=&o胜过速易洁®!
@@ -268,15 +268,15 @@ tooltip.BloodMagic.sigil.haste.desc=&o42剂咖啡因后...
 tooltip.BloodMagic.sigil.fastMiner.desc=&o继续挖, 继续挖...
 tooltip.BloodMagic.sigil.elementalAffinity.desc=&o落入焰中的鱼儿!
 tooltip.BloodMagic.sigil.seer.desc=&o当看到的一切还不足够
-tooltip.BloodMagic.sigil.seer.currentAltarProgress=当前进度: %,d LP/ %s LP
+tooltip.BloodMagic.sigil.seer.currentAltarProgress=当前进度: %d LP/ %s LP
 tooltip.BloodMagic.sigil.seer.currentAltarProgress.percent=当前进度: %s
-tooltip.BloodMagic.sigil.seer.currentAltarConsumptionRate=消耗率: %,d LP
+tooltip.BloodMagic.sigil.seer.currentAltarConsumptionRate=消耗率: %d LP
 tooltip.BloodMagic.sigil.seer.currentAltarTier=当前层级: %d
-tooltip.BloodMagic.sigil.seer.currentEssence=当前源质: %,d LP
-tooltip.BloodMagic.sigil.seer.currentAltarCapacity=当前容量: %,d LP
-tooltip.BloodMagic.sigil.seer.currentCharge=当前耗能: %,d
-tooltip.BloodMagic.sigil.seer.currentTranquility=当前静谧: %,d
-tooltip.BloodMagic.sigil.seer.currentBonus=当前效益: +%,d%%
+tooltip.BloodMagic.sigil.seer.currentEssence=当前源质: %d LP
+tooltip.BloodMagic.sigil.seer.currentAltarCapacity=当前容量: %d LP
+tooltip.BloodMagic.sigil.seer.currentCharge=当前耗能: %d
+tooltip.BloodMagic.sigil.seer.currentTranquility=当前静谧: %d
+tooltip.BloodMagic.sigil.seer.currentBonus=当前效益: +%d%%
 tooltip.BloodMagic.sigil.phantomBridge.desc=&o御气于青空之上...
 tooltip.BloodMagic.sigil.whirlwind.desc=&o最好不要穿裙子
 tooltip.BloodMagic.sigil.enderSeverance.desc=&o使末影人遇上一个严峻形势!
@@ -294,7 +294,7 @@ tooltip.BloodMagic.inscriber.desc=在墙面上的文字...
 
 tooltip.BloodMagic.pack.selfSacrifice.desc=相当不舒适的背包...
 tooltip.BloodMagic.pack.sacrifice.desc=Description
-tooltip.BloodMagic.pack.stored=储存: %,d LP
+tooltip.BloodMagic.pack.stored=储存: %d LP
 
 tooltip.BloodMagic.activationCrystal.weak=激活低等仪式
 tooltip.BloodMagic.activationCrystal.awakened=激活更强大的仪式
@@ -322,7 +322,7 @@ tooltip.BloodMagic.ritualReader.desc.set_will_types=设置仪式将消耗的邪�
 
 tooltip.BloodMagic.arcaneAshes=用于绘制炼金矩阵的粉灰
 
-tooltip.BloodMagic.telepositionFocus.coords=当前坐标: (%,d, %,d, %,d)
+tooltip.BloodMagic.telepositionFocus.coords=当前坐标: (%d, %d, %d)
 tooltip.BloodMagic.telepositionFocus.dimension=世界ID: %d
 tooltip.BloodMagic.telepositionFocus.weak=用于在世界中转移区域
 tooltip.BloodMagic.telepositionFocus.enhanced=用于在世界中转移区域
@@ -513,6 +513,11 @@ chat.BloodMagic.routing.set=设置节点位置
 chat.BloodMagic.routing.link.master=连接到主节点!
 chat.BloodMagic.routing.link=节点连接完成
 
+# sekrit
+
+secret.BloodMagic.bread.bloody=&r&cBloody Bread
+secret.BloodMagic.bread.bloody.desc=Only for &odire &r&7emergencies.
+
 # Commands
 commands.error.arg.invalid=无效参数
 commands.error.arg.missing=参数不足
@@ -577,10 +582,10 @@ jei.BloodMagic.recipe.binding=炼金矩阵 (绑定)
 jei.BloodMagic.recipe.alchemyArrayCrafting=炼金矩阵
 jei.BloodMagic.recipe.soulForge=狱火熔炉
 jei.BloodMagic.recipe.alchemyTable=炼金术桌
-jei.BloodMagic.recipe.requiredLP=LP: %,d
+jei.BloodMagic.recipe.requiredLP=LP: %d
 jei.BloodMagic.recipe.requiredTier=层级: %d
-jei.BloodMagic.recipe.consumptionRate=消耗率: %,d LP/t
-jei.BloodMagic.recipe.drainRate=消耗率: %,d LP/t
+jei.BloodMagic.recipe.consumptionRate=消耗率: %d LP/t
+jei.BloodMagic.recipe.drainRate=消耗率: %d LP/t
 jei.BloodMagic.recipe.minimumSouls=最小值: %1$,.2f Will
 jei.BloodMagic.recipe.soulsDrained=消耗: %1$,.2f Will
 jei.BloodMagic.recipe.lpDrained=消耗: %,d LP
