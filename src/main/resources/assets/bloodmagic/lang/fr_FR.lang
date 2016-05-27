@@ -210,7 +210,7 @@ bm.string.crafting.orb.shaped=Fabrication Orbée Formée
 bm.string.crafting.orb.shapeless=Fabrication Orbée Déformée
 
 #Entities
-entity.AWWayofTime.EarthElemental.name=Elémenterrestre
+entity.AWWayofTime.EarthElemental.name=Elémentaire terrestre
 entity.AWWayofTime.FireElemental.name=Elémentaire de Feu
 entity.AWWayofTime.HolyElemental.name=Elémentaire Sacré
 entity.AWWayofTime.ShadeElemental.name=Elémentaire Nocturne
