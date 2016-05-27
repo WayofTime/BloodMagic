@@ -210,7 +210,7 @@ bm.string.crafting.orb.shaped=Fabrication Orbée Formée
 bm.string.crafting.orb.shapeless=Fabrication Orbée Déformée
 
 #Entities
-entity.AWWayofTime.EarthElemental.name=Elémenterrestre
+entity.AWWayofTime.EarthElemental.name=Elémentaire terrestre
 entity.AWWayofTime.FireElemental.name=Elémentaire de Feu
 entity.AWWayofTime.HolyElemental.name=Elémentaire Sacré
 entity.AWWayofTime.ShadeElemental.name=Elémentaire Nocturne
@@ -234,3 +234,55 @@ entity.AWWayofTime.MinorDemonGruntFire.name=Soldat Démon de Feu
 entity.AWWayofTime.MinorDemonGruntIce.name=Soldat Démon de Glace
 entity.AWWayofTime.MinorDemonGruntEarth.name=Soldat Démon de Terre
 entity.AWWayofTime.MinorDemonGrunt.name=Soldat Démon
+
+#Tooltips
+tooltip.BloodMagic.extraInfo=&9-Tenir shift pour plus d'info-
+
+tooltip.BloodMagic.orb.desc=Stock d'essence de vie crue
+tooltip.BloodMagic.orb.owner=Added by: %s
+tooltip.BloodMagic.currentOwner=Propriétaire actuel: %s
+tooltip.BloodMagic.currentTier=Niveau actuel: %d
+tooltip.BloodMagic.config.disabled=Désactivée dans cet insant dans le ficher de Config
+
+tooltip.BloodMagic.activated=Activé
+tooltip.BloodMagic.deactivated=Désactivé
+
+tooltip.BloodMagic.sigil.air.desc=&oJe me sens plus léger déjà...
+tooltip.BloodMagic.sigil.bloodLight.desc=&oJe vois une lumière!
+tooltip.BloodMagic.sigil.compression.desc=&oMains en Diamants
+tooltip.BloodMagic.sigil.divination.desc=&oDévisager l'âme
+tooltip.BloodMagic.sigil.divination.otherNetwork=Dévisager l'âme de %s
+tooltip.BloodMagic.sigil.divination.currentAltarTier=Niveau Actuel: %d
+tooltip.BloodMagic.sigil.divination.currentEssence=Essence Actuel: %d LP
+tooltip.BloodMagic.sigil.divination.currentAltarCapacity=Capacité Actuelle: %d LP
+tooltip.BloodMagic.sigil.divination.currentTranquility=Tranquillité Actuelle: %d
+tooltip.BloodMagic.sigil.divination.currentBonus=Bonus Actuel: +%d%%
+tooltip.BloodMagic.sigil.water.desc=&oUne infinité d'eau, personne?
+tooltip.BloodMagic.sigil.lava.desc=&oCHAUD! NE LE MANGER PAS
+tooltip.BloodMagic.sigil.void.desc=&oMieux que Swiffer®!
+tooltip.BloodMagic.sigil.greenGrove.desc=&oÉcologique
+tooltip.BloodMagic.sigil.magnetism.desc=&oJ'ai une personnalité très attirante
+tooltip.BloodMagic.sigil.suppression.desc=&oMieux que la télékinésie...
+tooltip.BloodMagic.sigil.haste.desc=&o42 doses de caféine plus tard...
+tooltip.BloodMagic.sigil.fastMiner.desc=&oContinue à miner, à miner...
+tooltip.BloodMagic.sigil.elementalAffinity.desc=&oDes poissons enflamées qui tombent!
+tooltip.BloodMagic.sigil.seer.desc=&oQuand voir tout n'est pas suffisant
+tooltip.BloodMagic.sigil.seer.currentAltarProgress=Progrès Actuel: %d LP/ %s LP
+tooltip.BloodMagic.sigil.seer.currentAltarProgress.percent=Progrès Actuel: %s
+tooltip.BloodMagic.sigil.seer.currentAltarConsumptionRate=Vitesse de consomation: %d LP
+tooltip.BloodMagic.sigil.seer.currentAltarTier=Niveau Actuel: %d
+tooltip.BloodMagic.sigil.seer.currentEssence=Essence Actuelle: %d LP
+tooltip.BloodMagic.sigil.seer.currentAltarCapacity=Capacité Actuelle: %d LP
+tooltip.BloodMagic.sigil.seer.currentCharge=Charge Actuelle: %d
+tooltip.BloodMagic.sigil.seer.currentTranquility=Tranquillité Actuelle: %d
+tooltip.BloodMagic.sigil.seer.currentBonus=Bonus Actuel: +%d%%
+tooltip.BloodMagic.sigil.phantomBridge.desc=&oMarcher sur de l'air fin...
+tooltip.BloodMagic.sigil.whirlwind.desc=&oMieux de ne pas porter une jupe
+tooltip.BloodMagic.sigil.enderSeverance.desc=&oMettre les Endermen dans des situations terribles!
+tooltip.BloodMagic.sigil.teleposition.desc=Je suis très proche d'ètre transporté comme ça.
+tooltip.BloodMagic.sigil.transposition.desc=Sens le pouvoir de la force, mon jeune apprenti.
+
+tooltip.BloodMagic.bound.sword.desc=&oBattre le faible
+tooltip.BloodMagic.bound.pickaxe.desc=&oDétruir les pierres sans pitié
+tooltip.BloodMagic.bound.axe.desc=&oDéforestation diabolique
+tooltip.BloodMagic.bound.shovel.desc=&oEffacer la terre du sol
