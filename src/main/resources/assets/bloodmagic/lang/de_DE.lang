@@ -1,6 +1,6 @@
 #Creative Tab
-itemGroup.BloodMagic.creativeTab=Blood Magic
-itemGroup.BloodMagic.creativeTabTome=Blood Magic Upgradeschwarte
+itemGroup.BloodMagic.creativeTab=Blutmagie
+itemGroup.BloodMagic.creativeTabTome=Blutmagie Upgrades
 
 #Items
 item.BloodMagic.activationCrystal.weak.name=Schwacher Aktivierungskristall
@@ -9,9 +9,9 @@ item.BloodMagic.activationCrystal.creative.name=Kreativer Aktivierungskristall
 
 item.BloodMagic.sacrificialDagger.normal.name=Opfermesser
 item.BloodMagic.sacrificialDagger.creative.name=Kreatives Opfermesser
-item.BloodMagic.pack.selfSacrifice.name=Rucksack des Blutlassers
-item.BloodMagic.pack.sacrifice.name=Wappen
-item.BloodMagic.daggerOfSacrifice.name=Dolch der Opferung
+item.BloodMagic.pack.selfSacrifice.name=Weste des Blutlassens
+item.BloodMagic.pack.sacrifice.name=Vampirische Weste
+item.BloodMagic.daggerOfSacrifice.name=Schwert der Opferung
 
 item.BloodMagic.lavaCrystal.name=Lavakristall
 
@@ -20,7 +20,7 @@ item.BloodMagic.bound.pickaxe.name=Gebundene Spitzhacke
 item.BloodMagic.bound.axe.name=Gebundene Axt
 item.BloodMagic.bound.shovel.name=Gebundene Schaufel
 
-item.BloodMagic.bucket.lifeEssence.name=Lebenseimer
+item.BloodMagic.bucket.lifeEssence.name=Eimer Lebensessenz
 
 item.BloodMagic.scribe.water.name=Elementar-Gravurwerkzeug: Wasser
 item.BloodMagic.scribe.fire.name=Elementar-Gravurwerkzeug: Feuer
@@ -41,7 +41,7 @@ item.BloodMagic.slate.demonic.name=Dämonische Tafel
 item.BloodMagic.slate.ethereal.name=Ätherische Tafel
 
 item.BloodMagic.orb.weak.name=Schwacher Blutorb
-item.BloodMagic.orb.apprentice.name=Lehrlingsblutorb
+item.BloodMagic.orb.apprentice.name=Blutorb des Lehrlings
 item.BloodMagic.orb.magician.name=Blutorb des Magiers
 item.BloodMagic.orb.master.name=Blutorb des Meisters
 item.BloodMagic.orb.archmage.name=Blutorb des Erzmagiers
@@ -64,13 +64,13 @@ item.BloodMagic.reagent.reductus.name=Reductus
 item.BloodMagic.reagent.potentia.name=Potentia
 
 item.BloodMagic.bloodShard.weak.name=Schwache Blutscherbe
-item.BloodMagic.bloodShard.demon.name=Dämonenblutscherbe
+item.BloodMagic.bloodShard.demon.name=Dämonische Blutscherbe
 
 item.BloodMagic.baseComponent.reagentWater.name=Wasserreagenz
 item.BloodMagic.baseComponent.reagentLava.name=Lavareagenz
 item.BloodMagic.baseComponent.reagentAir.name=Luftreagenz
-item.BloodMagic.baseComponent.reagentFastMiner.name=Abbaureagenz
-item.BloodMagic.baseComponent.reagentVoid.name=Leerenreagenz
+item.BloodMagic.baseComponent.reagentFastMiner.name=Reagenz der Eeile
+item.BloodMagic.baseComponent.reagentVoid.name=reagenz der Leere
 item.BloodMagic.baseComponent.reagentGrowth.name=Wachstumsreagenz
 item.BloodMagic.baseComponent.reagentAffinity.name=Reagenz der elementaren Verbundenheit
 item.BloodMagic.baseComponent.reagentSight.name=Sichtreagenz
@@ -85,13 +85,13 @@ item.BloodMagic.sigil.compression.name=Siegel der Kompression
 item.BloodMagic.sigil.divination.name=Wahrheitssiegel
 item.BloodMagic.sigil.water.name=Wassersiegel
 item.BloodMagic.sigil.lava.name=Lavasiegel
-item.BloodMagic.sigil.void.name=Leerensiegel
+item.BloodMagic.sigil.void.name=Siegel der Leere
 item.BloodMagic.sigil.greenGrove.name=Siegel des Grünen Hains
 item.BloodMagic.sigil.elementalAffinity.name=Siegel der elementaren Verbundenheit
-item.BloodMagic.sigil.haste.name=Siegel der Hast
+item.BloodMagic.sigil.haste.name=Siegel der Geschwindigkeit
 item.BloodMagic.sigil.suppression.name=Siegel der Unterdrückung
 item.BloodMagic.sigil.magnetism.name=Siegel des Magnetismus
-item.BloodMagic.sigil.fastMiner.name=Siegel des Schnellen Abbaus
+item.BloodMagic.sigil.fastMiner.name=Siegel des Eile
 item.BloodMagic.sigil.seer.name=Siegel der Sicht
 item.BloodMagic.sigil.phantomBridge.name=Siegel der Phantombrücke
 item.BloodMagic.sigil.whirlwind.name=Siegel des Wirbelwindes
@@ -109,22 +109,22 @@ item.BloodMagic.ritualDivinerdusk.name=Ritualrute [Morgendämmerung]
 item.BloodMagic.ritualDivinerdawn.name=Ritualrute [Abenddämmerung]
 
 item.BloodMagic.arcaneAshes.name=Arkane Asche
-item.BloodMagic.upgradeTome.name=Upgradeschwarte der Lebended Rüstung
+item.BloodMagic.upgradeTome.name=Thesis zur Verbesserung lebender Rüstung
 
-item.BloodMagic.sentientSword.name=Empfindendes Schwert
-item.BloodMagic.soulGem.petty.name=Unbedeutendes Weinsteinjuwel
-item.BloodMagic.soulGem.lesser.name=Niederes Weinsteinjuwel
-item.BloodMagic.soulGem.common.name=Gewöhnliches Weinsteinjuwel
-item.BloodMagic.soulGem.greater.name=Größeres Weinsteinjuwel
-item.BloodMagic.soulGem.grand.name=Großartiges Weinsteinjuwel
+item.BloodMagic.sentientSword.name=Intelligentes Schwert
+item.BloodMagic.soulGem.petty.name=Winziges Juwel des Tartaros
+item.BloodMagic.soulGem.lesser.name=Niederes Juwel des Tartaros
+item.BloodMagic.soulGem.common.name=Gewöhnliches Juwel des Tartaros
+item.BloodMagic.soulGem.greater.name=Größeres Juwel des Tartaros
+item.BloodMagic.soulGem.grand.name=Großartiges Juwel des Tartaros
 item.BloodMagic.soulSnare.base.name=Rudimentäre Falle
-item.BloodMagic.sentientBow.name=Empfindender Bogen
+item.BloodMagic.sentientBow.name=Intelligenter Bogen
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Lebensessenz
 
-tile.BloodMagic.stone.ritual.master.name=Meister-Ritualstein
-tile.BloodMagic.stone.ritual.imperfect.name=Fehlerhafter Ritualstein
+tile.BloodMagic.stone.ritual.master.name=Haupt-Ritualstein
+tile.BloodMagic.stone.ritual.imperfect.name=Imperfekter Ritualstein
 
 tile.BloodMagic.altar.name=Blutaltar
 tile.BloodMagic.rune.blank.name=Blutrune
@@ -132,7 +132,7 @@ tile.BloodMagic.rune.speed.name=Geschwindigkeitsrune
 tile.BloodMagic.rune.efficiency.name=Effizienzrune
 tile.BloodMagic.rune.sacrifice.name=Rune der Opferung
 tile.BloodMagic.rune.selfSacrifice.name=Rune der Selbstopferung
-tile.BloodMagic.rune.displacement.name=Rune der Vertreibung
+tile.BloodMagic.rune.displacement.name=Rune der Deplazierung
 tile.BloodMagic.rune.capacity.name=Kapazitätsrune
 tile.BloodMagic.rune.augCapacity.name=Rune der erweiterten Kapazität
 tile.BloodMagic.rune.orb.name=Orbrune
@@ -201,12 +201,12 @@ tooltip.BloodMagic.bound.axe.desc=&oDämonischer Kahlschlag
 tooltip.BloodMagic.bound.shovel.desc=&oSchrubbt den Dreck vom Boden
 
 tooltip.BloodMagic.sacrificialDagger.desc=Schon ein Stich in den Finger genügt
-tooltip.BloodMagic.slate.desc=Infundierter Stein in einem Blutaltar
+tooltip.BloodMagic.slate.desc=Stein getränkt im Blutaltar
 tooltip.BloodMagic.inscriber.desc=Die Zeichen an der Wand.
 
-tooltip.BloodMagic.pack.selfSacrifice.desc=Dieser Rucksack scheuert richtig...
+tooltip.BloodMagic.pack.selfSacrifice.desc=Es scheuert richtig...
 tooltip.BloodMagic.pack.sacrifice.desc=Beschreibung
-tooltip.BloodMagic.pack.stored=Stored: %d LP
+tooltip.BloodMagic.pack.stored=Enthält: %d LP
 
 tooltip.BloodMagic.activationCrystal.weak=Aktiviert niedrig-levelige Rituale
 tooltip.BloodMagic.activationCrystal.awakened=Aktiviert mächtigere Rituale
@@ -234,7 +234,7 @@ tooltip.BloodMagic.telepositionFocus.reinforced=Benutzt, um Blöcke zu verschieb
 tooltip.BloodMagic.telepositionFocus.demonic=Benutzt, um Blöcke zu teleportieren
 
 tooltip.BloodMagic.livingArmour.upgrade.speed=Schnelle Füße
-tooltip.BloodMagic.livingArmour.upgrade.digging=Zergenhafte Stärke
+tooltip.BloodMagic.livingArmour.upgrade.digging=Zwergenhafte Stärke
 tooltip.BloodMagic.livingArmour.upgrade.poisonResist=Giftungsresistenz
 tooltip.BloodMagic.livingArmour.upgrade.selfSacrifice=Zähe Handballen
 tooltip.BloodMagic.livingArmour.upgrade.knockback=Body Builder
@@ -297,7 +297,7 @@ jei.BloodMagic.recipe.soulForge=Höllenfeuerschmiede
 jei.BloodMagic.recipe.requiredLP=LP: %d
 jei.BloodMagic.recipe.requiredTier=Ausbaustufe: %d
 jei.BloodMagic.recipe.minimumSouls=Minimum: %d Wille
-jei.BloodMagic.recipe.soulsDrained=Entzogen: %d Wille
+jei.BloodMagic.recipe.soulsDrained=Verbraucht: %d Wille
 
 jei.BloodMagic.desc.altarBuilder=Ein Item zum Testen. Nur im Kreativmodus erhältlich.\n\nShift+Rechtsklick um die Ausbaustufe zu ändern. Rechtsklicke auf einen Altar, um den Bau zu starten.\n\nZerstöre einen Altar mit ihm in der Hand, um alles abzubauen.
 jei.BloodMagic.desc.demonicWill=Prägung eines dämonischen Wesens gebunden an eine Kreatur.\n\nKann durch das Töten eines Monsters mit einer empfindsamen Waffe, oder das Werfen einer Falle und Umbringen während as weiße Partikel aussendet, gesammelt werden.
