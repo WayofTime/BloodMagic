@@ -6,6 +6,7 @@ import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -84,11 +85,14 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
                     if (blockStack.getBlock().isAir(blockStack.getState(), world, blockPos))
                         continue;
 
+                    if (blockStack.getState().getMaterial() != Material.WOOD && !EFFECTIVE_ON.contains(blockStack.getBlock()))
+                        continue;
+
                     BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockStack.getState(), player);
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         continue;
 
-                    if (blockStack.getBlock().getBlockHardness(blockStack.getState(), world, blockPos) != -1)
+                    if (blockStack.getBlock().getBlockHardness(blockStack.getState(), world, blockPos) != -1.0F)
                     {
                         float strengthVsBlock = getStrVsBlock(stack, blockStack.getState());
 

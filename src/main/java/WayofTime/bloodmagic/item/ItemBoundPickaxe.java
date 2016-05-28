@@ -101,6 +101,9 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider
                     if (blockStack.getBlock().isAir(blockStack.getState(), world, blockPos))
                         continue;
 
+                    if (blockStack.getState().getMaterial() != Material.ROCK && !EFFECTIVE_ON.contains(blockStack.getBlock()))
+                        continue;
+
                     BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockStack.getState(), player);
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         continue;

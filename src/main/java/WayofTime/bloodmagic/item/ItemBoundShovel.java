@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -83,9 +84,14 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider
                     if (blockStack.getBlock().isAir(blockStack.getState(), world, blockPos))
                         continue;
 
+                    Material material = blockStack.getState().getMaterial();
+                    if (material != Material.GROUND && material != Material.CLAY && material != Material.GRASS && !EFFECTIVE_ON.contains(blockStack.getBlock()))
+                        continue;
+
                     BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockStack.getState(), player);
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         continue;
+
 
                     if (blockStack.getBlock() != null && blockStack.getBlock().getBlockHardness(blockStack.getState(), world, blockPos) != -1)
                     {
