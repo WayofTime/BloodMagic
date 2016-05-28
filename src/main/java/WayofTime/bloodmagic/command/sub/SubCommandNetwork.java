@@ -10,6 +10,7 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.PlayerNotFoundException;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 
@@ -40,174 +41,172 @@ public class SubCommandNetwork extends SubCommandBase
     {
         super.processSubCommand(server, commandSender, args);
 
-        if (args.length > 0)
+        if (args.length > 1)
         {
-
             if (args[0].equalsIgnoreCase("help"))
                 return;
 
             try
             {
-                String givenName = commandSender.getName();
-                EntityPlayer player = CommandBase.getCommandSenderAsPlayer(commandSender);
+                EntityPlayer player = CommandBase.getPlayer(server, commandSender, args[1]);
 
-                if (args.length > 1)
-                {
-                    givenName = args[1];
-                    player = CommandBase.getPlayer(server, commandSender, givenName);
-                }
+                try {
+                    ValidCommands command = ValidCommands.valueOf(args[0].toUpperCase(Locale.ENGLISH));
+                    command.run(player, commandSender, isBounded(0, 2, args.length), args);
+                } catch (IllegalArgumentException e) {
 
-                SoulNetwork network = NetworkHelper.getSoulNetwork(player);
-                boolean displayHelp = isBounded(0, 2, args.length);
-
-                try
-                {
-                    switch (ValidCommands.valueOf(args[0].toUpperCase(Locale.ENGLISH)))
-                    {
-                    case SYPHON:
-                    {
-                        if (displayHelp)
-                        {
-                            displayHelpString(commandSender, ValidCommands.SYPHON.help);
-                            break;
-                        }
-
-                        if (args.length == 3)
-                        {
-                            if (Utils.isInteger(args[2]))
-                            {
-                                int amount = Integer.parseInt(args[2]);
-                                NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player), player, amount);
-                                displaySuccessString(commandSender, "commands.network.syphon.success", amount, givenName);
-                            } else
-                            {
-                                displayErrorString(commandSender, "commands.error.arg.invalid");
-                            }
-                        } else
-                        {
-                            displayErrorString(commandSender, "commands.error.arg.missing");
-                        }
-
-                        break;
-                    }
-                    case ADD:
-                    {
-                        if (displayHelp)
-                        {
-                            displayHelpString(commandSender, ValidCommands.ADD.help);
-                            break;
-                        }
-
-                        if (args.length == 3)
-                        {
-                            if (Utils.isInteger(args[2]))
-                            {
-                                int amount = Integer.parseInt(args[2]);
-                                int maxOrb = NetworkHelper.getMaximumForTier(network.getOrbTier());
-                                displaySuccessString(commandSender, "commands.network.add.success", network.addLifeEssence(amount, maxOrb), givenName);
-                            } else
-                            {
-                                displayErrorString(commandSender, "commands.error.arg.invalid");
-                            }
-                        } else
-                        {
-                            displayErrorString(commandSender, "commands.error.arg.missing");
-                        }
-
-                        break;
-                    }
-                    case SET:
-                    {
-                        if (displayHelp)
-                        {
-                            displayHelpString(commandSender, ValidCommands.SET.help);
-                            break;
-                        }
-
-                        if (args.length == 3)
-                        {
-                            if (Utils.isInteger(args[2]))
-                            {
-                                int amount = Integer.parseInt(args[2]);
-                                network.setCurrentEssence(amount);
-                                displaySuccessString(commandSender, "commands.network.set.success", givenName, amount);
-                            } else
-                            {
-                                displayErrorString(commandSender, "commands.error.arg.invalid");
-                            }
-                        } else
-                        {
-                            displayErrorString(commandSender, "commands.error.arg.missing");
-                        }
-
-                        break;
-                    }
-                    case GET:
-                    {
-                        if (displayHelp)
-                        {
-                            displayHelpString(commandSender, ValidCommands.GET.help);
-                            break;
-                        }
-
-                        if (args.length > 1)
-                            commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect("message.divinationsigil.currentessence", network.getCurrentEssence())));
-
-                        break;
-                    }
-                    case FILL:
-                    {
-                        if (displayHelp)
-                        {
-                            displayHelpString(commandSender, ValidCommands.FILL.help, Integer.MAX_VALUE);
-                            break;
-                        }
-
-                        if (args.length > 1)
-                        {
-                            network.setCurrentEssence(Integer.MAX_VALUE);
-                            displaySuccessString(commandSender, "commands.network.fill.success", givenName);
-                        }
-
-                        break;
-                    }
-                    case CAP:
-                    {
-                        if (displayHelp)
-                        {
-                            displayHelpString(commandSender, ValidCommands.CAP.help);
-                            break;
-                        }
-
-                        if (args.length > 1)
-                        {
-                            int maxOrb = NetworkHelper.getMaximumForTier(network.getOrbTier());
-                            network.setCurrentEssence(maxOrb);
-                            displaySuccessString(commandSender, "commands.network.cap.success", givenName);
-                        }
-
-                        break;
-                    }
-                    }
-                } catch (IllegalArgumentException e)
-                {
-                    displayErrorString(commandSender, "commands.error.404");
                 }
             } catch (PlayerNotFoundException e)
             {
-                displayErrorString(commandSender, "commands.error.404");
+                displayErrorString(commandSender, e.getLocalizedMessage());
             }
+        } else {
+            displayErrorString(commandSender, "commands.error.arg.missing");
         }
     }
 
     private enum ValidCommands
     {
-        SYPHON("commands.network.syphon.help"),
-        ADD("commands.network.add.help"),
-        SET("commands.network.set.help"),
-        GET("commands.network.get.help"),
-        FILL("commands.network.fill.help"),
-        CAP("commands.network.cap.help");
+        SYPHON("commands.network.syphon.help") {
+            @Override
+            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args)
+            {
+                if (displayHelp)
+                {
+                    displayHelpString(sender, this.help);
+                    return;
+                }
+
+                if (args.length == 3)
+                {
+                    if (Utils.isInteger(args[2]))
+                    {
+                        int amount = Integer.parseInt(args[2]);
+                        NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player), player, amount);
+                        displaySuccessString(sender, "commands.network.syphon.success", amount, player.getDisplayName().getFormattedText());
+                    } else
+                    {
+                        displayErrorString(sender, "commands.error.arg.invalid");
+                    }
+                } else
+                {
+                    displayErrorString(sender, "commands.error.arg.missing");
+                }
+            }
+        },
+        ADD("commands.network.add.help") {
+            @Override
+            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args)
+            {
+                if (displayHelp)
+                {
+                    displayHelpString(sender, this.help);
+                    return;
+                }
+
+                SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+
+                if (args.length == 3)
+                {
+                    if (Utils.isInteger(args[2]))
+                    {
+                        int amount = Integer.parseInt(args[2]);
+                        int maxOrb = NetworkHelper.getMaximumForTier(network.getOrbTier());
+                        displaySuccessString(sender, "commands.network.add.success", network.addLifeEssence(amount, maxOrb), player.getDisplayName().getFormattedText());
+                    } else
+                    {
+                        displayErrorString(sender, "commands.error.arg.invalid");
+                    }
+                } else
+                {
+                    displayErrorString(sender, "commands.error.arg.missing");
+                }
+            }
+        },
+        SET("commands.network.set.help") {
+            @Override
+            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args)
+            {
+                if (displayHelp)
+                {
+                    displayHelpString(sender, this.help);
+                    return;
+                }
+
+                SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+
+                if (args.length == 3)
+                {
+                    if (Utils.isInteger(args[2]))
+                    {
+                        int amount = Integer.parseInt(args[2]);
+                        network.setCurrentEssence(amount);
+                        displaySuccessString(sender, "commands.network.set.success", player.getDisplayName().getFormattedText(), amount);
+                    } else
+                    {
+                        displayErrorString(sender, "commands.error.arg.invalid");
+                    }
+                } else
+                {
+                    displayErrorString(sender, "commands.error.arg.missing");
+                }
+            }
+        },
+        GET("commands.network.get.help") {
+            @Override
+            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args)
+            {
+                if (displayHelp)
+                {
+                    displayHelpString(sender, this.help);
+                    return;
+                }
+
+                SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+
+                if (args.length > 1)
+                    sender.addChatMessage(new TextComponentString(TextHelper.localizeEffect("message.divinationsigil.currentessence", network.getCurrentEssence())));
+
+            }
+        },
+        FILL("commands.network.fill.help") {
+            @Override
+            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
+                if (displayHelp)
+                {
+                    displayHelpString(sender, this.help, Integer.MAX_VALUE);
+                    return;
+                }
+
+                SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+
+                if (args.length > 1)
+                {
+                    network.setCurrentEssence(Integer.MAX_VALUE);
+                    displaySuccessString(sender, "commands.network.fill.success", player.getDisplayName().getFormattedText());
+                }
+            }
+        },
+        CAP("commands.network.cap.help") {
+            @Override
+            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
+                if (displayHelp)
+                {
+                    displayHelpString(sender, this.help);
+                    return;
+                }
+
+                SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+
+                if (args.length > 1)
+                {
+                    int maxOrb = NetworkHelper.getMaximumForTier(network.getOrbTier());
+                    network.setCurrentEssence(maxOrb);
+                    displaySuccessString(sender, "commands.network.cap.success", player.getDisplayName().getFormattedText());
+                }
+            }
+        },
+        ;
 
         public String help;
 
@@ -215,5 +214,7 @@ public class SubCommandNetwork extends SubCommandBase
         {
             this.help = help;
         }
+
+        public abstract void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args);
     }
 }

@@ -53,17 +53,17 @@ public abstract class SubCommandBase implements ISubCommand
         return given > low && given < high;
     }
 
-    protected void displayHelpString(ICommandSender commandSender, String display, Object... info)
+    public static void displayHelpString(ICommandSender commandSender, String display, Object... info)
     {
         commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
     }
 
-    protected void displayErrorString(ICommandSender commandSender, String display, Object... info)
+    public static void displayErrorString(ICommandSender commandSender, String display, Object... info)
     {
         commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
     }
 
-    protected void displaySuccessString(ICommandSender commandSender, String display, Object... info)
+    public static void displaySuccessString(ICommandSender commandSender, String display, Object... info)
     {
         commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
     }
