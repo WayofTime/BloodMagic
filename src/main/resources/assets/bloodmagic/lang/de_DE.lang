@@ -1,17 +1,17 @@
 #Creative Tab
-itemGroup.BloodMagic.creativeTab=Blutmagie
-itemGroup.BloodMagic.creativeTabTome=Blutmagie Upgrades
+itemGroup.BloodMagic.creativeTab=Blood Magic
+itemGroup.BloodMagic.creativeTabTome=Blood Magic - Upgrades
 
 #Items
 item.BloodMagic.activationCrystal.weak.name=Schwacher Aktivierungskristall
 item.BloodMagic.activationCrystal.awakened.name=Erweckter Aktivierungskristall
 item.BloodMagic.activationCrystal.creative.name=Kreativer Aktivierungskristall
 
-item.BloodMagic.sacrificialDagger.normal.name=Opfermesser
-item.BloodMagic.sacrificialDagger.creative.name=Kreatives Opfermesser
-item.BloodMagic.pack.selfSacrifice.name=Weste des Blutlassens
+item.BloodMagic.sacrificialDagger.normal.name=Opferdolch
+item.BloodMagic.sacrificialDagger.creative.name=Kreativer Opferdolch
+item.BloodMagic.pack.selfSacrifice.name=Blutweste
 item.BloodMagic.pack.sacrifice.name=Vampirische Weste
-item.BloodMagic.daggerOfSacrifice.name=Schwert der Opferung
+item.BloodMagic.daggerOfSacrifice.name=Opfermesser
 
 item.BloodMagic.lavaCrystal.name=Lavakristall
 
@@ -20,7 +20,7 @@ item.BloodMagic.bound.pickaxe.name=Gebundene Spitzhacke
 item.BloodMagic.bound.axe.name=Gebundene Axt
 item.BloodMagic.bound.shovel.name=Gebundene Schaufel
 
-item.BloodMagic.bucket.lifeEssence.name=Eimer Lebensessenz
+item.BloodMagic.bucket.lifeEssence.name=Eimer mit Lebensessenz
 
 item.BloodMagic.scribe.water.name=Elementar-Gravurwerkzeug: Wasser
 item.BloodMagic.scribe.fire.name=Elementar-Gravurwerkzeug: Feuer
@@ -69,7 +69,7 @@ item.BloodMagic.bloodShard.demon.name=Dämonische Blutscherbe
 item.BloodMagic.baseComponent.reagentWater.name=Wasserreagenz
 item.BloodMagic.baseComponent.reagentLava.name=Lavareagenz
 item.BloodMagic.baseComponent.reagentAir.name=Luftreagenz
-item.BloodMagic.baseComponent.reagentFastMiner.name=Reagenz der Eeile
+item.BloodMagic.baseComponent.reagentFastMiner.name=Reagenz der Eile
 item.BloodMagic.baseComponent.reagentVoid.name=reagenz der Leere
 item.BloodMagic.baseComponent.reagentGrowth.name=Wachstumsreagenz
 item.BloodMagic.baseComponent.reagentAffinity.name=Reagenz der elementaren Verbundenheit
@@ -88,7 +88,7 @@ item.BloodMagic.sigil.lava.name=Lavasiegel
 item.BloodMagic.sigil.void.name=Siegel der Leere
 item.BloodMagic.sigil.greenGrove.name=Siegel des Grünen Hains
 item.BloodMagic.sigil.elementalAffinity.name=Siegel der elementaren Verbundenheit
-item.BloodMagic.sigil.haste.name=Siegel der Geschwindigkeit
+item.BloodMagic.sigil.haste.name=Siegel der Hast
 item.BloodMagic.sigil.suppression.name=Siegel der Unterdrückung
 item.BloodMagic.sigil.magnetism.name=Siegel des Magnetismus
 item.BloodMagic.sigil.fastMiner.name=Siegel des Eile
