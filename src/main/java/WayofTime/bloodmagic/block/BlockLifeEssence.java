@@ -4,7 +4,9 @@ import java.awt.Color;
 
 import lombok.Getter;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -41,6 +43,12 @@ public class BlockLifeEssence extends BlockFluidClassic
         return !world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isLiquid() && super.displaceIfPossible(world, blockPos);
     }
 
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+    {
+        return null;
+    }
+
     public static class FluidLifeEssence extends Fluid
     {
 
@@ -55,7 +63,7 @@ public class BlockLifeEssence extends BlockFluidClassic
         @Override
         public int getColor()
         {
-            return Color.WHITE.getRGB();
+            return Color.RED.getRGB();
         }
 
         @Override
