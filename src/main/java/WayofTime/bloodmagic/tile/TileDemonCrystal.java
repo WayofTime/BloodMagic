@@ -218,4 +218,10 @@ public class TileDemonCrystal extends TileEntity implements ITickable
         readFromNBT(pkt.getNbtCompound());
         worldObj.markBlockRangeForRenderUpdate(getPos(), getPos());
     }
+
+    @Override
+    public NBTTagCompound getUpdateTag()
+    {
+        return writeToNBT(new NBTTagCompound());
+    }
 }

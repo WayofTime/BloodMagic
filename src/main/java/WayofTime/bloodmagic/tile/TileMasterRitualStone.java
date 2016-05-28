@@ -290,6 +290,12 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     }
 
     @Override
+    public NBTTagCompound getUpdateTag()
+    {
+        return writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
     public World getWorldObj()
     {
 

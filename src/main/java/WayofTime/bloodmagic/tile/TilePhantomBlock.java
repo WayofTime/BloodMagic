@@ -65,6 +65,12 @@ public class TilePhantomBlock extends TileEntity implements ITickable
     }
 
     @Override
+    public NBTTagCompound getUpdateTag()
+    {
+        return writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
     public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState)
     {
         return oldState.getBlock() != newState.getBlock();
