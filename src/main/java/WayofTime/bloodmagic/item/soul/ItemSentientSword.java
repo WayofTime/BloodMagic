@@ -12,7 +12,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -332,10 +333,12 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
     {
         List<ItemStack> soulList = new ArrayList<ItemStack>();
 
-        if (killedEntity.worldObj.getDifficulty() != EnumDifficulty.PEACEFUL && !(killedEntity instanceof EntityMob))
+        if (killedEntity.worldObj.getDifficulty() != EnumDifficulty.PEACEFUL && !(killedEntity instanceof IMob))
         {
             return soulList;
         }
+
+        double willModifier = killedEntity instanceof EntitySlime ? 0.67 : 1;
 
         IDemonWill soul = ((IDemonWill) ModItems.monsterSoul);
 
@@ -343,7 +346,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         {
             if (i == 0 || attackingEntity.worldObj.rand.nextDouble() < 0.4)
             {
-                ItemStack soulStack = soul.createWill(0, (this.getDropOfActivatedSword(stack) * attackingEntity.worldObj.rand.nextDouble() + this.getStaticDropOfActivatedSword(stack)) * killedEntity.getMaxHealth() / 20d);
+                ItemStack soulStack = soul.createWill(0, willModifier * (this.getDropOfActivatedSword(stack) * attackingEntity.worldObj.rand.nextDouble() + this.getStaticDropOfActivatedSword(stack)) * killedEntity.getMaxHealth() / 20d);
                 soulList.add(soulStack);
             }
         }
