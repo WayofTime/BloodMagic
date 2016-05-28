@@ -58,6 +58,11 @@ public class RitualZephyr extends Ritual
             {
                 for (EntityItem entityItem : itemList)
                 {
+                    if (entityItem.isDead)
+                    {
+                        continue;
+                    }
+
                     ItemStack copyStack = entityItem.getEntityItem().copy();
                     int originalAmount = copyStack.stackSize;
                     ItemStack newStack = Utils.insertStackIntoInventory(copyStack, (IInventory) tileInventory, EnumFacing.DOWN);

@@ -8,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 
 public class ItemSigilMagnetism extends ItemSigilToggleableBase
 {
@@ -30,7 +29,7 @@ public class ItemSigilMagnetism extends ItemSigilToggleableBase
 
         for (EntityItem entity : entities)
         {
-            if (entity != null && !world.isRemote)
+            if (entity != null && !world.isRemote && !entity.isDead)
             {
                 entity.onCollideWithPlayer(player);
             }
