@@ -374,7 +374,7 @@ tooltip.BloodMagic.fluid.capacity=Capacity
 tooltip.BloodMagic.ghost.everything=Everything
 tooltip.BloodMagic.ghost.amount=Ghost item amount: %d
 
-tooltip.BloodMagic.currentType.default=Contains: Default Will
+tooltip.BloodMagic.currentType.default=Contains: Raw Will
 tooltip.BloodMagic.currentType.corrosive=Contains: Corrosive Will
 tooltip.BloodMagic.currentType.destructive=Contains: Destructive Will
 tooltip.BloodMagic.currentType.vengeful=Contains: Vengeful Will

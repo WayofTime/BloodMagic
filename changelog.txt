@@ -1,4 +1,17 @@
 ------------------------------------------------------
+Version 2.0.1-40
+------------------------------------------------------
+- Bug fix version, and added several translations - some of these are still WIP.
+- Fixed render bug with the Alchemy Table
+- Demon WIll now drops from slimes at a reduced rate instead of not at all
+- Fixed Jesus Water effect with Life Essence
+- Added the Vengeful Will crystal cluster recipe. Oops! >.>
+- Changed the "Default" Will into "Raw" Will. 
+- Fixed an item duplication bug with how item pick-up is handled with the Zephyr ritual and the magnetism sigil.
+- Made the bound Axe function... correctly
+- Fixed a command block only issue with BM commands
+
+------------------------------------------------------
 Version 2.0.0-39
 ------------------------------------------------------
 - Updated to 1.9.4!
