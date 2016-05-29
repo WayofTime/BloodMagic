@@ -24,7 +24,8 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
     {
         if (applyBonemeal(stack, world, blockPos))
         {
-            world.destroyBlock(blockPos, false);
+            IBlockState state = world.getBlockState(blockPos);
+            world.playEvent(2001, blockPos, Block.getIdFromBlock(state.getBlock()) + (state.getBlock().getMetaFromState(state) << 12));
             return true;
         }
 
@@ -58,8 +59,9 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
                                 IBlockState preBlockState = worldIn.getBlockState(blockPos);
                                 block.updateTick(worldIn, blockPos, worldIn.getBlockState(blockPos), worldIn.rand);
 
-                                if (!worldIn.getBlockState(blockPos).equals(preBlockState))
-                                    worldIn.destroyBlock(blockPos, false);
+                                IBlockState newState = worldIn.getBlockState(blockPos);
+                                if (!newState.equals(preBlockState))
+                                    worldIn.playEvent(2001, blockPos, Block.getIdFromBlock(newState.getBlock()) + (newState.getBlock().getMetaFromState(newState) << 12));
                             }
                         }
                     }
