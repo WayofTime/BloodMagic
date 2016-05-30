@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.item.sigil.holding.ItemSigilHolding;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -115,6 +116,7 @@ public class ModItems
     public static Item sigilWhirlwind;
     public static Item sigilPhantomBridge;
     public static Item sigilCompression;
+    public static Item sigilHolding;
 
     public static Item sigilTeleposition;
     public static Item sigilTransposition;
@@ -212,6 +214,7 @@ public class ModItems
         sigilWhirlwind = registerItem(new ItemSigilWhirlwind(), Constants.BloodMagicItem.SIGIL_WHIRLWIND.getRegName());
         sigilCompression = registerItem(new ItemSigilCompression(), Constants.BloodMagicItem.SIGIL_COMPRESSION.getRegName());
         sigilEnderSeverance = registerItem(new ItemSigilEnderSeverance(), Constants.BloodMagicItem.SIGIL_ENDER_SEVERANCE.getRegName());
+        sigilHolding = registerItem(new ItemSigilHolding(), Constants.BloodMagicItem.SIGIL_HOLDING.getRegName());
 
         sigilTeleposition = registerItem(new ItemSigilTeleposition(), Constants.BloodMagicItem.SIGIL_TELEPOSITION.getRegName());
         sigilTransposition = registerItem(new ItemSigilTransposition(), Constants.BloodMagicItem.SIGIL_TRANSPOSITION.getRegName());

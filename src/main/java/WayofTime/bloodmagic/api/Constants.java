@@ -111,6 +111,11 @@ public class Constants
         public static final String ITEM_INVENTORY = "itemInventory";
 
         public static final String BLOCKPOS_CONNECTION = "connections";
+
+        public static final String CURRENT_SIGIL = "currentSigil";
+        public static String MOST_SIG = "mostSig";
+        public static String LEAST_SIG = "leastSig";
+        public static String ITEMS = "items";
     }
 
     public static class Mod
@@ -129,6 +134,7 @@ public class Constants
         public static final int ROUTING_NODE_GUI = 2;
         public static final int MASTER_ROUTING_NODE_GUI = 3;
         public static final int ALCHEMY_TABLE_GUI = 4;
+        public static final int SIGIL_HOLDING_GUI = 5;
     }
 
     public static class Compat
@@ -200,6 +206,7 @@ public class Constants
         SIGIL_FAST_MINER("ItemSigilFastMiner"),
         SIGIL_GREEN_GROVE("ItemSigilGreenGrove"),
         SIGIL_HASTE("ItemSigilHaste"),
+        SIGIL_HOLDING("ItemSigilHolding"),
         SIGIL_LAVA("ItemSigilLava"),
         SIGIL_MAGNETISM("ItemSigilMagnetism"),
         SIGIL_PHANTOM_BRIDGE("ItemSigilPhantomBridge"),
