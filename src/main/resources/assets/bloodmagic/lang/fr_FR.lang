@@ -74,18 +74,28 @@ item.BloodMagic.baseComponent.reagentVoid.name=Réactif du Vide
 item.BloodMagic.baseComponent.reagentGrowth.name=Réactif de Forestation
 item.BloodMagic.baseComponent.reagentAffinity.name=Réactif d'Affinitée Élémentaire
 item.BloodMagic.baseComponent.reagentSight.name=Réactif de Vue
-item.BloodMagic.baseComponent.reagentBinding.name=Réacitf de Sacrif
+item.BloodMagic.baseComponent.reagentBinding.name=Réacitf de Sacrifice
 item.BloodMagic.baseComponent.reagentSuppression.name=Réactif de Délétion
-item.BloodMagic.baseComponent.frameParts.name=Frame Parts
-item.BloodMagic.baseComponent.reagentBloodLight.name=Blood Lamp Reagent
-item.BloodMagic.baseComponent.reagentMagnetism.name=Magnetism Reagent
-item.BloodMagic.baseComponent.reagentHaste.name=Haste Reagent
-item.BloodMagic.baseComponent.reagentBridge.name=Phantom Bridge Reagent
-item.BloodMagic.baseComponent.reagentCompression.name=Compression Reagent
-item.BloodMagic.baseComponent.reagentSeverance.name=Severance Reagent
+item.BloodMagic.baseComponent.frameParts.name=Parties des cadres
+item.BloodMagic.baseComponent.reagentBloodLight.name=Réactif de Lampe Sanguine
+item.BloodMagic.baseComponent.reagentMagnetism.name=Réactif de Magnétisme
+item.BloodMagic.baseComponent.reagentHaste.name=Réactif de Célérité
+item.BloodMagic.baseComponent.reagentBridge.name=Réactif du Pont du Phantôme
+item.BloodMagic.baseComponent.reagentCompression.name=Réactif de Compression
+item.BloodMagic.baseComponent.reagentSeverance.name=Réactif de Sévérance
 
-item.BloodMagic.baseComponent.reagentTeleposition.name=Teleposition Reagent
-item.BloodMagic.baseComponent.reagentTransposition.name=Transposition Reagent
+item.BloodMagic.baseComponent.reagentTeleposition.name=Réactif de Téléposition
+item.BloodMagic.baseComponent.reagentTransposition.name=Réactif de Transposition
+
+item.BloodMagic.baseComponent.ironSand.name=Sable de Fer
+item.BloodMagic.baseComponent.goldSand.name=Sable d'Or
+item.BloodMagic.baseComponent.coalSand.name=Sable de Charbon
+item.BloodMagic.baseComponent.plantOil.name=Huile de Plante
+item.BloodMagic.baseComponent.sulfur.name=Soufre
+item.BloodMagic.baseComponent.saltpeter.name=Salpêtre
+
+item.BloodMagic.cuttingFluid.basicCuttingFluid.name=Basic Cutting Fluid
+item.BloodMagic.cuttingFluid.explosive.name=Poudre Explosive
 
 item.BloodMagic.demonCrystal.crystalDefault.name=Cristal d'une Volonté Diabolique
 item.BloodMagic.demonCrystal.crystalCorrosive.name=Cristal d'une Volonté Corrosive
@@ -113,33 +123,34 @@ item.BloodMagic.sigil.phantomBridge.name=Emblème du Pont du Phantôme
 item.BloodMagic.sigil.whirlwind.name=Emblème de la Tempête
 item.BloodMagic.sigil.enderSeverance.name=Emblème de l'Ender Sévérance
 
-item.BloodMagic.sigil.teleposition.name=Teleposition Sigil
-item.BloodMagic.sigil.transposition.name=Transposition Sigil
+item.BloodMagic.sigil.teleposition.name=Emblème de Téléposition
+item.BloodMagic.sigil.transposition.name=Emblème de Transposition
 
-item.BloodMagic.livingArmour.helmet.name=Living Helmet
-item.BloodMagic.livingArmour.chest.name=Living Chestplate
-item.BloodMagic.livingArmour.legs.name=Living Leggings
-item.BloodMagic.livingArmour.boots.name=Living Boots
-item.BloodMagic.sentientArmour.helmet.name=Sentient Helmet
-item.BloodMagic.sentientArmour.chest.name=Sentient Chestplate
-item.BloodMagic.sentientArmour.legs.name=Sentient Leggings
-item.BloodMagic.sentientArmour.boots.name=Sentient Boots
+item.BloodMagic.livingArmour.helmet.name=Casque Vivante
+item.BloodMagic.livingArmour.chest.name=Plastron Vivant
+item.BloodMagic.livingArmour.legs.name=Jambières Vivantes
+item.BloodMagic.livingArmour.boots.name=Bottes Vivantes
+item.BloodMagic.sentientArmour.helmet.name=Casque Sentiente
+item.BloodMagic.sentientArmour.chest.name=Plastron Sentient
+item.BloodMagic.sentientArmour.legs.name=Jambières Sentientes
+item.BloodMagic.sentientArmour.boots.name=Bottes Sentientes
 
-item.BloodMagic.altarMaker.name=Altar Maker
+item.BloodMagic.altarMaker.name=Créateur d'Autels
 
 item.BloodMagic.ritualDivinernormal.name=Ritual Diviner
 item.BloodMagic.ritualDivinerdusk.name=Ritual Diviner [Dusk]
 item.BloodMagic.ritualDivinerdawn.name=Ritual Diviner [Dawn]
+item.BloodMagic.ritualReader.name=Ritual Tinkerer
 
 item.BloodMagic.arcaneAshes.name=Arcane Ashes
-item.BloodMagic.upgradeTome.name=Living Armour Upgrade Tome
-item.BloodMagic.upgradeTrainer.name=Living Armour Training Bracelet
+item.BloodMagic.upgradeTome.name=Tablette d'Amélioration d'Armure Vivante
+item.BloodMagic.upgradeTrainer.name=Bracelet d'Entrainement d'Armure Vivante
 
-item.BloodMagic.sentientSword.name=Sentient Sword
-item.BloodMagic.soulGem.petty.name=Petty Tartaric Gem
+item.BloodMagic.sentientSword.name=Épée Sentiente
+item.BloodMagic.soulGem.petty.name=Simple Gemme Tartarique
 item.BloodMagic.soulGem.lesser.name=Lesser Tartaric Gem
-item.BloodMagic.soulGem.common.name=Common Tartaric Gem
-item.BloodMagic.soulGem.greater.name=Greater Tartaric Gem
+item.BloodMagic.soulGem.common.name=Gemme Tartarique Commune
+item.BloodMagic.soulGem.greater.name=Gemme Tartarique
 item.BloodMagic.soulGem.grand.name=Grand Tartaric Gem
 item.BloodMagic.soulSnare.base.name=Rudimentary Snare
 item.BloodMagic.sentientBow.name=Sentient Bow
@@ -150,6 +161,8 @@ item.BloodMagic.itemFilter.exact.name=Precise Item Filter
 item.BloodMagic.itemFilter.ignoreNBT.name=NBT Item Filter
 item.BloodMagic.itemFilter.modItems.name=Mod Item Filter
 item.BloodMagic.itemFilter.oreDict.name=Ore Dictionary Item Filter
+
+item.BloodMagic.experienceTome.name=Tome of Peritia
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
@@ -164,10 +177,10 @@ tile.BloodMagic.rune.blank.name=Blank Rune
 tile.BloodMagic.rune.speed.name=Speed Rune
 tile.BloodMagic.rune.efficiency.name=Efficiency Rune
 tile.BloodMagic.rune.sacrifice.name=Rune of Sacrifice
-tile.BloodMagic.rune.selfSacrifice.name=Rune of Self Sacrifice
+tile.BloodMagic.rune.selfsacrifice.name=Rune of Self Sacrifice
 tile.BloodMagic.rune.displacement.name=Displacement Rune
 tile.BloodMagic.rune.capacity.name=Rune of Capacity
-tile.BloodMagic.rune.augCapacity.name=Rune of Augmented Capacity
+tile.BloodMagic.rune.augcapacity.name=Rune of Augmented Capacity
 tile.BloodMagic.rune.orb.name=Rune of the Orb
 tile.BloodMagic.rune.acceleration.name=Acceleration Rune
 tile.BloodMagic.rune.charging.name=Charging Rune
@@ -192,6 +205,7 @@ tile.BloodMagic.incenseAltar.name=Incense Altar
 
 tile.BloodMagic.teleposer.name=Teleposer
 tile.BloodMagic.soulForge.name=Hellfire Forge
+tile.BloodMagic.alchemyTable.name=Alchemy Table
 tile.BloodMagic.demonCrucible.name=Demon Crucible
 tile.BloodMagic.demonPylon.name=Demon Pylon
 tile.BloodMagic.demonCrystallizer.name=Demon Crystallizer
@@ -202,13 +216,13 @@ tile.BloodMagic.inputRouting.name=Input Routing Node
 tile.BloodMagic.itemRouting.name=Routing Node
 
 tile.BloodMagic.path.wood.name=Wooden Path
-tile.BloodMagic.path.woodTile.name=Tiled Wooden Path
+tile.BloodMagic.path.woodtile.name=Tiled Wooden Path
 tile.BloodMagic.path.stone.name=Stone Brick Path
-tile.BloodMagic.path.stoneTile.name=Tiled Stone Path
+tile.BloodMagic.path.stonetile.name=Tiled Stone Path
 tile.BloodMagic.path.wornstone.name=Worn Stone Brick Path
-tile.BloodMagic.path.wornstoneTile.name=Tiled Worn Stone Path
+tile.BloodMagic.path.wornstonetile.name=Tiled Worn Stone Path
 tile.BloodMagic.path.obsidian.name=Obsidian Brick Path
-tile.BloodMagic.path.obsidianTile.name=Tiled Obsidian Path
+tile.BloodMagic.path.obsidiantile.name=Tiled Obsidian Path
 
 tile.BloodMagic.dimensionalPortal.name=Dimensional Portal
 tile.BloodMagic.bloodTank.name=Blood Tank
@@ -218,6 +232,9 @@ tile.BloodMagic.demonCrystalCORROSIVE.name=Corrosive Will Crystal Cluster
 tile.BloodMagic.demonCrystalDESTRUCTIVE.name=Destructive Will Crystal Cluster
 tile.BloodMagic.demonCrystalVENGEFUL.name=Vengeful Will Crystal Cluster
 tile.BloodMagic.demonCrystalSTEADFAST.name=Steadfast Will Crystal Cluster
+
+# Fluids
+fluid.lifeEssence=Life Essence
 
 #Tooltips
 tooltip.BloodMagic.extraInfo=&9-Tenir shift pour plus d'info-
@@ -277,7 +294,7 @@ tooltip.BloodMagic.inscriber.desc=The writing is on the wall...
 
 tooltip.BloodMagic.pack.selfSacrifice.desc=This pack really chafes...
 tooltip.BloodMagic.pack.sacrifice.desc=Description
-tooltip.BloodMagic.pack.stored=Stored: %,d LP
+tooltip.BloodMagic.pack.stored=Stored: %d LP
 
 tooltip.BloodMagic.activationCrystal.weak=Activates low-level rituals
 tooltip.BloodMagic.activationCrystal.awakened=Activates more powerful rituals
@@ -295,9 +312,17 @@ tooltip.BloodMagic.diviner.totalRune=Total Runes: %d
 tooltip.BloodMagic.diviner.extraInfo=Press shift for extra info
 tooltip.BloodMagic.diviner.currentDirection=Current Direction: %s
 
+tooltip.BloodMagic.ritualReader.currentState=Current mode: %s
+tooltip.BloodMagic.ritualReader.set_area=Define Area
+tooltip.BloodMagic.ritualReader.information=Information
+tooltip.BloodMagic.ritualReader.set_will_types=Set Will Consumed
+tooltip.BloodMagic.ritualReader.desc.set_area=Right click on an active Master Ritual stone to cycle what area of the ritual you want to modify. Then click on the two corners of the new range you want to set the range.
+tooltip.BloodMagic.ritualReader.desc.information=Right click on an active Master Ritual Stone to gather basic information about the ritual.
+tooltip.BloodMagic.ritualReader.desc.set_will_types=Set the types of demon will that the ritual will consume from the aura by right clicking on the MRS with the same types of crystals on your hotbar.
+
 tooltip.BloodMagic.arcaneAshes=Ashes used to draw an alchemy circle
 
-tooltip.BloodMagic.telepositionFocus.coords=Current coordinates: (%,d, %,d, %,d)
+tooltip.BloodMagic.telepositionFocus.coords=Current coordinates: (%d, %d, %d)
 tooltip.BloodMagic.telepositionFocus.dimension=Dimension ID: %d
 tooltip.BloodMagic.telepositionFocus.weak=Used to move blocks in the world
 tooltip.BloodMagic.telepositionFocus.enhanced=Used to move blocks in the world
@@ -318,6 +343,13 @@ tooltip.BloodMagic.livingArmour.upgrade.grimReaper=Grim Reaper's Sprint
 tooltip.BloodMagic.livingArmour.upgrade.solarPowered=Solar Powered
 tooltip.BloodMagic.livingArmour.upgrade.thaumRunicShielding=Runic Shielding
 tooltip.BloodMagic.livingArmour.upgrade.revealing=Revealing
+tooltip.BloodMagic.livingArmour.upgrade.experienced=Experienced
+tooltip.BloodMagic.livingArmour.upgrade.jump=Strong Legs
+tooltip.BloodMagic.livingArmour.upgrade.fallProtect=Soft Fall
+tooltip.BloodMagic.livingArmour.upgrade.graveDigger=Grave Digger
+tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=Charging Strike
+tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=True Strike
+tooltip.BloodMagic.livingArmour.upgrade.elytra=Elytra
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
 
@@ -339,7 +371,32 @@ tooltip.BloodMagic.fluid.type=Fluid Contained
 tooltip.BloodMagic.fluid.amount=Amount
 tooltip.BloodMagic.fluid.capacity=Capacity
 
+tooltip.BloodMagic.ghost.everything=Everything
+tooltip.BloodMagic.ghost.amount=Ghost item amount: %d
+
+tooltip.BloodMagic.currentType.default=Contains: Raw Will
+tooltip.BloodMagic.currentType.corrosive=Contains: Corrosive Will
+tooltip.BloodMagic.currentType.destructive=Contains: Destructive Will
+tooltip.BloodMagic.currentType.vengeful=Contains: Vengeful Will
+tooltip.BloodMagic.currentType.steadfast=Contains: Steadfast Will
+
+tooltip.BloodMagic.experienceTome=A book used to store experience
+tooltip.BloodMagic.experienceTome.exp=Exp: %0.3f
+tooltip.BloodMagic.experienceTome.expLevel=Level: %d
+
+tooltip.BloodMagic.decoration.safe=Safe for decoration
+tooltip.BloodMagic.decoration.notSafe=Dangerous for decoration
+
+tooltip.BloodMagic.cuttingFluidRatio=%d/%d uses remaining
+
 # Ritual
+ritual.BloodMagic.blockRange.tooBig=The block range given is too big! Needs to be at most %s blocks.
+ritual.BloodMagic.blockRange.tooFar=The block range given is too far! Needs to be within a vertical range of %s blocks and a horizontal range of %s blocks.
+ritual.BloodMagic.blockRange.inactive=The ritual stone is currently inactive, and cannot have its range modified.
+ritual.BloodMagic.blockRange.noRange=The range was not properly chosen.
+ritual.BloodMagic.blockRange.firstBlock=First block for new range stored.
+ritual.BloodMagic.blockRange.success=New range successfully set!
+
 ritual.BloodMagic.testRitual=Test Ritual
 ritual.BloodMagic.waterRitual=Ritual of the Full Spring
 ritual.BloodMagic.lavaRitual=Serenade of the Nether
@@ -361,13 +418,78 @@ ritual.BloodMagic.zephyrRitual=Call of the Zephyr
 ritual.BloodMagic.upgradeRemoveRitual=Sound of the Cleansing Soul
 ritual.BloodMagic.armourEvolveRitual=Ritual of Living Evolution
 ritual.BloodMagic.animalGrowthRitual=Ritual of the Shepherd
+ritual.BloodMagic.forsakenSoulRitual=Gathering of the Forsaken Souls
+ritual.BloodMagic.crystalHarvestRitual=Crack of the Fractured Crystal
 
 ritual.BloodMagic.cobblestoneRitual=Le Vulcanos Frigius
-ritual.BloodMagic.placerRitual=The Filler
-ritual.BloodMagic.fellingRitual=The Timberman
+ritual.BloodMagic.placerRitual=Laying of the Filler
+ritual.BloodMagic.fellingRitual=Crash of the Timberman
 ritual.BloodMagic.pumpRitual=Hymn of Siphoning
 ritual.BloodMagic.altarBuilderRitual=The Assembly of the High Altar
 ritual.BloodMagic.portalRitual=The Gate of the Fold
+
+
+ritual.BloodMagic.waterRitual.info=Generates a source of water from the master ritual stone.
+ritual.BloodMagic.lavaRitual.info=Generates a source of lava from the master ritual stone.
+ritual.BloodMagic.greenGroveRitual.info=Grows crops within its area.
+ritual.BloodMagic.jumpRitual.info=Causes entities to leap up into the air.
+ritual.BloodMagic.wellOfSufferingRitual.info=Attacks mobs within its damage zone and puts the LP into a nearby blood altar.
+ritual.BloodMagic.featheredKnifeRitual.info=Drains health from players in its area and puts the LP into a nearby blood altar.
+ritual.BloodMagic.regenerationRitual.info=Casts regeneration on entities within its range if they are missing health.
+ritual.BloodMagic.harvestRitual.info=Harvests plants within its range, dropping the results on the ground.
+ritual.BloodMagic.magneticRitual.info=Pulls up ores from the ground and puts them into its placement range.
+ritual.BloodMagic.crushingRitual.info=Breaks blocks within its crushing range and places the items into the linked chest.
+ritual.BloodMagic.fullStomachRitual.info=Takes food from the linked chest and fills the player's saturation with it.
+ritual.BloodMagic.interdictionRitual.info=Pushes all mobs within its area away from the master ritual stone.
+ritual.BloodMagic.containmentRitual.info=Pulls all mobs within its area towards the master ritual stone.
+ritual.BloodMagic.speedRitual.info=Launches players within its range in the direction of the ritual.
+ritual.BloodMagic.suppressionRitual.info=Suppresses fluids within its range - deactivating the ritual returns the fluids back to the world.
+ritual.BloodMagic.expulsionRitual.info=Expels players from its range that are neither the owner nor have a bound blood orb in the chest on top of the master ritual stone.
+ritual.BloodMagic.zephyrRitual.info=Picks up items within its range and places them into the linked chest.
+ritual.BloodMagic.upgradeRemoveRitual.info=Undocumented.
+ritual.BloodMagic.armourEvolveRitual.info=Undocumented.
+ritual.BloodMagic.animalGrowthRitual.info=Increases the maturity rate of baby animals within its range.
+ritual.BloodMagic.forsakenSoulRitual.info=Damages mobs within its damage range and when the mob dies a demon crystal within its crystal range will be grown.
+ritual.BloodMagic.crystalHarvestRitual.info=Breaks Demon Will crystal clusters within its range, dropping the results on top of the crystals.
+
+ritual.BloodMagic.placerRitual.info=Grabs blocks that are inside of the connected inventory and places them into the world.
+ritual.BloodMagic.fellingRitual.info=A standard tree-cutting machine, this ritual will cut down all trees and leaves within its area and collect the drops.
+ritual.BloodMagic.pumpRitual.info=Looks around the world and grabs fluids from the defined area. Will only remove and put the fluid into the connected tank if the tank has at least a bucket's worth of the same fluid.
+ritual.BloodMagic.altarBuilderRitual.info=Builds an altar out of the components inside of the connected inventory.
+ritual.BloodMagic.portalRitual.info=Creates a portal network based on the activator and the immediately surrounding blocks. Blocks can be changed after activation without changing the network of portals, and portals with the same "key" will link together.
+
+ritual.BloodMagic.waterRitual.waterRange.info=(Water) The area that the ritual will place water source blocks.
+ritual.BloodMagic.lavaRitual.lavaRange.info=(Lava) The area that the ritual will place lava source blocks.
+ritual.BloodMagic.greenGroveRitual.growing.info=(Growth) The area that the ritual will grow plants in.
+ritual.BloodMagic.jumpRitual.jumpRange.info=(Jumping) Entities in this range will be launched in the air.
+ritual.BloodMagic.wellOfSufferingRitual.altar.info=(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region.
+ritual.BloodMagic.wellOfSufferingRitual.damage.info=(Damage) This defines where the ritual will damage a mob. All mobs inside of this range (except for players) will receive damage over time.
+ritual.BloodMagic.featheredKnifeRitual.altar.info=(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region.
+ritual.BloodMagic.featheredKnifeRitual.damage.info=(Damage) This defines where the ritual will damage a player. Players inside of this range will receive damage over time up to the specified limit.
+ritual.BloodMagic.regenerationRitual.heal.info=(Healing) Mobs within this range will receive a regeneration buff.
+ritual.BloodMagic.harvestRitual.harvestRange.info=(Harvesting) Plants within this range will be harvested.
+ritual.BloodMagic.magneticRitual.placementRange.info=(Placement) The range that the ritual will place the grabbed ores into.
+ritual.BloodMagic.crushingRitual.crushingRange.info=(Crushing) The blocks that the ritual will break.
+ritual.BloodMagic.crushingRitual.chest.info=(Chest) The location of the inventory that the ritual will place the broken blocks into.
+ritual.BloodMagic.fullStomachRitual.fillRange.info=(Feeding) The range that the ritual will look at to feed players.
+ritual.BloodMagic.fullStomachRitual.chest.info=(Chest) The location of the inventory that the ritual will grab food from to feed players in range.
+ritual.BloodMagic.interdictionRitual.interdictionRange.info=(Push) The area of the ritual where mobs will be pushed. All mobs are pushed away from the master ritual stone, regardless of where this area is.
+ritual.BloodMagic.containmentRitual.containmentRange.info=(Containment) The area of the ritual where mobs will be pulled. All mobs are pulled towards the master ritual stone, regardless of where this area is.
+ritual.BloodMagic.speedRitual.sanicRange.info=(Speed) All entities within this area are launched in the direction of the arrow formed by the ritual. 
+ritual.BloodMagic.suppressionRitual.suppressionRange.info=(Suppress) All liquids within the range are suppressed.
+ritual.BloodMagic.expulsionRitual.expulsionRange.info=(Expulsion) 
+ritual.BloodMagic.zephyrRitual.zephyrRange.info=(Suction) Items within this range will be sucked into the linked chest.
+ritual.BloodMagic.zephyrRitual.chest.info=(Chest) The location of the inventory that the ritual will place the picked up items into.
+ritual.BloodMagic.animalGrowthRitual.growing.info=(Growth) Animals within this range will grow much faster.
+ritual.BloodMagic.forsakenSoulRitual.crystal.info=(Crystal) Demon Crystals in this range receive an increase in growth speed when a mob is killed by the ritual.
+ritual.BloodMagic.forsakenSoulRitual.damage.info=(Damage) Mobs within this range will be slowly damaged, and when killed will grow the crystals.
+ritual.BloodMagic.crystalHarvestRitual.crystal.info=(Crystal) All Demon Will crystal clusters have a single crystal broken off, spawning the crystal into the world. If there is only one crystal on the cluster, it will not break it.
+
+ritual.BloodMagic.placerRitual.placerRange.info=(Placement) The range that the ritual will place its blocks in. 
+ritual.BloodMagic.placerRitual.chest.info=(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.
+ritual.BloodMagic.fellingRitual.fellingRange.info=(Cutting) The range that the ritual will search out logs and leaves in order to cut down.
+ritual.BloodMagic.fellingRitual.chest.info=(Chest) The location of the inventory that the ritual will place the results into.
+ritual.BloodMagic.pumpRitual.pumpRange.info=(Pump) The region that the ritual will look for fluids to grab from the world.
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
@@ -385,6 +507,16 @@ chat.BloodMagic.ritual.notValid=You feel that these runes are not configured cor
 chat.BloodMagic.livingArmour.upgrade.poisonRemove=You are starting to feel better already!
 chat.BloodMagic.livingArmour.upgrade.grimReaper=&6A shadowy force pulls you from the brink of death!
 chat.BloodMagic.livingArmour.newUpgrade=&4Upgrade acquired!
+
+chat.BloodMagic.routing.remove=Removing contained location
+chat.BloodMagic.routing.set=Setting node location
+chat.BloodMagic.routing.link.master=Linked node to master!
+chat.BloodMagic.routing.link=Linked nodes together
+
+# sekrit
+
+secret.BloodMagic.bread.bloody=&r&cBloody Bread
+secret.BloodMagic.bread.bloody.desc=Only for &odire &r&7emergencies.
 
 # Commands
 commands.error.arg.invalid=Invalid arguments
@@ -449,12 +581,15 @@ jei.BloodMagic.recipe.altar=Blood Altar
 jei.BloodMagic.recipe.binding=Alchemy Array (Binding)
 jei.BloodMagic.recipe.alchemyArrayCrafting=Alchemy Array
 jei.BloodMagic.recipe.soulForge=Hellfire Forge
-jei.BloodMagic.recipe.requiredLP=LP: %,d
+jei.BloodMagic.recipe.alchemyTable=Alchemy Table
+jei.BloodMagic.recipe.requiredLP=LP: %d
 jei.BloodMagic.recipe.requiredTier=Tier: %d
-jei.BloodMagic.recipe.consumptionRate=Consumption: %,d LP/t
-jei.BloodMagic.recipe.drainRate=Drain: %,d LP/t
+jei.BloodMagic.recipe.consumptionRate=Consumption: %d LP/t
+jei.BloodMagic.recipe.drainRate=Drain: %d LP/t
 jei.BloodMagic.recipe.minimumSouls=Minimum: %1$,.2f Will
 jei.BloodMagic.recipe.soulsDrained=Drained: %1$,.2f Will
+jei.BloodMagic.recipe.lpDrained=Drained: %,d LP
+jei.BloodMagic.recipe.ticksRequired=Time: %,d Ticks
 
 jei.BloodMagic.desc.altarBuilder=A creative-only item for use in debugging and testing.\n\nShift + Right click to change the tier to build. Right click an Altar to initiate the build.\n\nBreak an Altar while holding to dismantle it.
 jei.BloodMagic.desc.demonicWill=An imprint of a demonic entity attached to a creature.\n\nCan be obtained by killing a mob with a sentient weapon or by throwing a snare at a mob and killing it while it has white particles.
