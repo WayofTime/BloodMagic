@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.proxy;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.client.helper.ScrollHelper;
 import WayofTime.bloodmagic.client.helper.ShaderHelper;
 import WayofTime.bloodmagic.client.render.RenderAlchemyArray;
 import WayofTime.bloodmagic.client.render.RenderAltar;
@@ -98,6 +99,8 @@ public class ClientProxy extends CommonProxy
                 return stack.hasTagCompound() && stack.getTagCompound().hasKey("bloody") ? new Color(0x8B191B).getRGB() : 16777215;
             }
         }, Items.BREAD);
+
+        MinecraftForge.EVENT_BUS.register(new ScrollHelper());
     }
 
     @Override

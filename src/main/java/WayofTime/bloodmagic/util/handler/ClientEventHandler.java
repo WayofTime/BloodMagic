@@ -44,6 +44,8 @@ public class ClientEventHandler
     public TextureAtlasSprite ritualStoneDawn;
     public TextureAtlasSprite ritualStoneDusk;
 
+    public TextureAtlasSprite[] sigilTextures;
+
     private static Minecraft minecraft = Minecraft.getMinecraft();
 
     @SubscribeEvent

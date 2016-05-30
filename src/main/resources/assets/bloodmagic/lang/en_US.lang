@@ -122,6 +122,7 @@ item.BloodMagic.sigil.seer.name=Seer's Sigil
 item.BloodMagic.sigil.phantomBridge.name=Sigil of the Phantom Bridge
 item.BloodMagic.sigil.whirlwind.name=Sigil of the Whirlwind
 item.BloodMagic.sigil.enderSeverance.name=Sigil of Ender Severance
+item.BloodMagic.sigil.holding.name=Sigil of Holding
 
 item.BloodMagic.sigil.teleposition.name=Teleposition Sigil
 item.BloodMagic.sigil.transposition.name=Transposition Sigil
@@ -280,6 +281,10 @@ tooltip.BloodMagic.sigil.seer.currentBonus=Current Bonus: +%d%%
 tooltip.BloodMagic.sigil.phantomBridge.desc=&oWalking on thin air...
 tooltip.BloodMagic.sigil.whirlwind.desc=&oBest not to wear a skirt
 tooltip.BloodMagic.sigil.enderSeverance.desc=&oPutting Endermen in Dire situations!
+tooltip.BloodMagic.sigil.holding.desc=Sigil-ception
+tooltip.BloodMagic.sigil.holding.currentSigil=Current sigil:
+tooltip.BloodMagic.sigil.holding.sigilInSlotCurrent=&l&nSlot
+tooltip.BloodMagic.sigil.holding.sigilInSlot=Slot
 tooltip.BloodMagic.sigil.teleposition.desc=I am very close to being moved by this.
 tooltip.BloodMagic.sigil.transposition.desc=Feel the power of the Force, my young apprentice.
 
