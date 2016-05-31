@@ -14,7 +14,6 @@ public class WorldDemonWillHandler
 {
     static ConcurrentHashMap<Integer, WillWorld> containedWills = new ConcurrentHashMap<Integer, WillWorld>();
     public static ConcurrentHashMap<Integer, CopyOnWriteArrayList<PosXY>> dirtyChunks = new ConcurrentHashMap<Integer, CopyOnWriteArrayList<PosXY>>();
-    public static ConcurrentHashMap<Integer, BlockPos> taintTrigger = new ConcurrentHashMap<Integer, BlockPos>();
 
     public static WillWorld getWillWorld(int dim)
     {

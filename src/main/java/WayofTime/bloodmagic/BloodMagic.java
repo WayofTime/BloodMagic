@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic;
 
+import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.LogHelper;
 import WayofTime.bloodmagic.client.gui.GuiHandler;
@@ -8,6 +9,7 @@ import WayofTime.bloodmagic.compat.ICompatibility;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.proxy.CommonProxy;
 import WayofTime.bloodmagic.registry.*;
+import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.handler.IMCHandler;
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,6 +21,7 @@ import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import java.io.File;
+import java.util.Set;
 
 @Mod(modid = Constants.Mod.MODID, name = Constants.Mod.NAME, version = Constants.Mod.VERSION, dependencies = Constants.Mod.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.config.ConfigGuiFactory")
 @Getter
@@ -68,6 +71,7 @@ public class BloodMagic
         ModCompatibility.loadCompat(ICompatibility.InitializationPhase.PRE_INIT);
         ModTranquilityHandlers.init();
 
+        Utils.registerHandlers(event.getAsmData().getAll(Handler.class.getCanonicalName()));
         proxy.preInit();
     }
 

@@ -2,7 +2,9 @@ package WayofTime.bloodmagic.util;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Set;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
@@ -29,11 +31,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import WayofTime.bloodmagic.api.BlockStack;
@@ -887,5 +891,18 @@ public class Utils
             return ret;
         }
         return largerStack ? stack : null;
+    }
+
+    public static void registerHandlers(Set<ASMDataTable.ASMData> eventHandlers) {
+        for (ASMDataTable.ASMData data : eventHandlers) {
+            try {
+                Class<?> handlerClass = Class.forName(data.getClassName());
+                Object handlerImpl = handlerClass.newInstance();
+                MinecraftForge.EVENT_BUS.register(handlerImpl);
+                BloodMagic.instance.getLogger().debug("Registering event handler for class {}", data.getClassName());
+            } catch (Exception e) {
+                // No-op
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic;
 
+import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
@@ -8,12 +9,15 @@ import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.File;
 import java.util.*;
 
+@Handler
 public class ConfigHandler
 {
     @Getter
@@ -338,5 +342,12 @@ public class ConfigHandler
             if (!entitySacrificeValues.containsKey(split[0]))
                 entitySacrificeValues.put(split[0], amount);
         }
+    }
+
+    @SubscribeEvent
+    public void onConfigChanged(ConfigChangedEvent event)
+    {
+        if (event.getModID().equals(Constants.Mod.MODID))
+            ConfigHandler.syncConfig();
     }
 }

@@ -1,5 +1,6 @@
-package WayofTime.bloodmagic.util.handler;
+package WayofTime.bloodmagic.util.handler.event;
 
+import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
@@ -27,15 +28,16 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
-public class ClientEventHandler
+@Handler
+@SideOnly(Side.CLIENT)
+public class ClientHandler
 {
-    public static int currentLP = 0;
-    public static int capacity = 0;
-
     public TextureAtlasSprite ritualStoneBlank;
     public TextureAtlasSprite ritualStoneWater;
     public TextureAtlasSprite ritualStoneFire;

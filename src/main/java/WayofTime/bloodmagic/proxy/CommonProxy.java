@@ -10,7 +10,6 @@ import WayofTime.bloodmagic.api.ritual.CapabilityRuneType;
 import WayofTime.bloodmagic.api.ritual.IRitualStone;
 import WayofTime.bloodmagic.api.teleport.TeleportQueue;
 import WayofTime.bloodmagic.fuel.FuelHandler;
-import WayofTime.bloodmagic.util.handler.EventHandler;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 
@@ -29,7 +28,6 @@ public class CommonProxy
 
     public void preInit()
     {
-        MinecraftForge.EVENT_BUS.register(new EventHandler());
         MinecraftForge.EVENT_BUS.register(TeleportQueue.getInstance());
         GameRegistry.registerFuelHandler(new FuelHandler());
         registerRenderers();

@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.api.util.helper;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.ItemBindEvent;
 import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.util.handler.event.GenericHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -86,7 +87,7 @@ public class BindableHelper
      * Deprecated.
      * 
      * Now handled automatically with
-     * {@link WayofTime.bloodmagic.util.handler.EventHandler#onInteract(PlayerInteractEvent.RightClickItem)}
+     * {@link GenericHandler#onInteract(PlayerInteractEvent.RightClickItem)}
      * 
      * @param stack
      *        - The ItemStack to bind
@@ -105,7 +106,7 @@ public class BindableHelper
      * Deprecated.
      * 
      * Now handled automatically with
-     * {@link WayofTime.bloodmagic.util.handler.EventHandler#onInteract(PlayerInteractEvent.RightClickItem)}
+     * {@link GenericHandler#onInteract(PlayerInteractEvent.RightClickItem)}
      * 
      * @param stack
      *        - The ItemStack to bind
@@ -145,7 +146,7 @@ public class BindableHelper
      * Deprecated.
      * 
      * Now handled automatically with
-     * {@link WayofTime.bloodmagic.util.handler.EventHandler#onInteract(PlayerInteractEvent.RightClickItem)}
+     * {@link GenericHandler#onInteract(PlayerInteractEvent.RightClickItem)}
      * 
      * @param stack
      *        - ItemStack to check

@@ -20,7 +20,7 @@ import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
-import WayofTime.bloodmagic.util.handler.ClientEventHandler;
+import WayofTime.bloodmagic.util.handler.event.ClientHandler;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 import net.minecraft.block.Block;
@@ -61,7 +61,7 @@ public class ClientProxy extends CommonProxy
     public void preInit()
     {
         super.preInit();
-        MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
+        MinecraftForge.EVENT_BUS.register(new ClientHandler());
 
         renderHelper = new InventoryRenderHelper(Constants.Mod.DOMAIN);
         renderHelperV2 = new InventoryRenderHelperV2(Constants.Mod.DOMAIN);
