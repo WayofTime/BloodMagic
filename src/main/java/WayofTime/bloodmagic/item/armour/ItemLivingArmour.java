@@ -477,6 +477,15 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         return null;
     }
 
+    public static boolean hasUpgrade(String id, ItemStack stack) {
+        if (!armourMap.containsKey(stack))
+            armourMap.put(stack, getLivingArmour(stack));
+
+        LivingArmour armour = armourMap.get(stack);
+
+        return armour.upgradeMap.containsKey(id);
+    }
+
     public void setIsEnabled(ItemStack stack, boolean bool)
     {
         NBTHelper.checkNBT(stack);

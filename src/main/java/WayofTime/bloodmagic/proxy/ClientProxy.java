@@ -1,13 +1,11 @@
 package WayofTime.bloodmagic.proxy;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.client.helper.ShaderHelper;
-import WayofTime.bloodmagic.client.render.RenderAlchemyArray;
-import WayofTime.bloodmagic.client.render.RenderAltar;
-import WayofTime.bloodmagic.client.render.RenderDemonCrucible;
-import WayofTime.bloodmagic.client.render.RenderItemRoutingNode;
+import WayofTime.bloodmagic.client.render.*;
 import WayofTime.bloodmagic.client.render.entity.BloodLightRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SentientArrowRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SoulSnareRenderFactory;
@@ -27,6 +25,8 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -36,9 +36,11 @@ import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.awt.*;
+import java.lang.reflect.Field;
 
 public class ClientProxy extends CommonProxy
 {
@@ -98,6 +100,8 @@ public class ClientProxy extends CommonProxy
                 return stack.hasTagCompound() && stack.getTagCompound().hasKey("bloody") ? new Color(0x8B191B).getRGB() : 16777215;
             }
         }, Items.BREAD);
+
+        addElytraLayer();
     }
 
     @Override
@@ -134,6 +138,22 @@ public class ClientProxy extends CommonProxy
             IVariantProvider variantProvider = (IVariantProvider) item;
             for (Pair<Integer, String> variant : variantProvider.getVariants())
                 ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + name), variant.getRight()));
+        }
+    }
+
+    private void addElytraLayer() {
+        RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
+        try {
+            Field renderPlayerField = RenderManager.class.getDeclaredField("playerRenderer");
+            renderPlayerField.setAccessible(true);
+            Object renderPlayerObj = renderPlayerField.get(renderManager);
+            if (renderPlayerObj instanceof RenderPlayer) {
+                RenderPlayer renderPlayer = (RenderPlayer) renderPlayerObj;
+                renderPlayer.addLayer(new LayerBloodElytra(renderPlayer));
+            }
+        } catch (Exception e) {
+            BloodMagic.instance.getLogger().error("Failed to set custom Elytra Layer for Elytra Living Armour Upgrade.");
+            BloodMagic.instance.getLogger().error(e.getLocalizedMessage());
         }
     }
 }
