@@ -22,18 +22,18 @@ public class LogHelper
     public void error(String error, Object... format)
     {
         if (BloodMagicAPI.isLoggingEnabled())
-            logger.info(error, format);
+            logger.error(error, format);
     }
 
     public void debug(String debug, Object... format)
     {
         if (BloodMagicAPI.isLoggingEnabled())
-            logger.info(debug, format);
+            logger.debug(debug, format);
     }
 
     public void fatal(String fatal, Object... format)
     {
-        logger.fatal(fatal, format);
+        logger.error(fatal, format);
     }
 
     public Logger getLogger()
