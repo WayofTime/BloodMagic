@@ -144,13 +144,9 @@ public class ClientProxy extends CommonProxy
     private void addElytraLayer() {
         RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
         try {
-            Field renderPlayerField = RenderManager.class.getDeclaredField("playerRenderer");
-            renderPlayerField.setAccessible(true);
-            Object renderPlayerObj = renderPlayerField.get(renderManager);
-            if (renderPlayerObj instanceof RenderPlayer) {
-                RenderPlayer renderPlayer = (RenderPlayer) renderPlayerObj;
-                renderPlayer.addLayer(new LayerBloodElytra(renderPlayer));
-            }
+            RenderPlayer renderPlayer = ObfuscationReflectionHelper.getPrivateValue(RenderManager.class, renderManager, "playerRenderer", "field_178637_m");
+            renderPlayer.addLayer(new LayerBloodElytra(renderPlayer));
+            BloodMagic.instance.getLogger().info("Elytra layer added");
         } catch (Exception e) {
             BloodMagic.instance.getLogger().error("Failed to set custom Elytra Layer for Elytra Living Armour Upgrade.");
             BloodMagic.instance.getLogger().error(e.getLocalizedMessage());
