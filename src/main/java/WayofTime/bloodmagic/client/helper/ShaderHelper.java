@@ -21,7 +21,6 @@ import org.lwjgl.opengl.GL11;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.function.Consumer;
 
 public final class ShaderHelper
 {
@@ -44,7 +43,7 @@ public final class ShaderHelper
         psiBar = createProgram("/assets/bloodmagic/shaders/beam", FRAG);
     }
 
-    public static void useShader(int shader, Consumer<Integer> callback, int ticks)
+    public static void useShader(int shader, int ticks)
     {
         if (!useShaders())
             return;
@@ -55,15 +54,7 @@ public final class ShaderHelper
         {
             int time = ARBShaderObjects.glGetUniformLocationARB(shader, "time");
             ARBShaderObjects.glUniform1iARB(time, ticks);
-
-            if (callback != null)
-                callback.accept(shader);
         }
-    }
-
-    public static void useShader(int shader, int ticks)
-    {
-        useShader(shader, null, ticks);
     }
 
     public static void releaseShader()
