@@ -1,6 +1,6 @@
 #Creative Tab
 itemGroup.BloodMagic.creativeTab=Blood Magic
-itemGroup.BloodMagic.creativeTabTome=Blood Magic Tômes d'améliorations
+itemGroup.BloodMagic.creativeTabTome=Blood Magic Tômes d'Améliorations
 
 #Items
 item.BloodMagic.activationCrystal.weak.name=Cristal d'Activation Faible
@@ -137,12 +137,12 @@ item.BloodMagic.sentientArmour.boots.name=Bottes Sentientes
 
 item.BloodMagic.altarMaker.name=Créateur d'Autels
 
-item.BloodMagic.ritualDivinernormal.name=Ritual Diviner
-item.BloodMagic.ritualDivinerdusk.name=Ritual Diviner [Dusk]
-item.BloodMagic.ritualDivinerdawn.name=Ritual Diviner [Dawn]
-item.BloodMagic.ritualReader.name=Ritual Tinkerer
+item.BloodMagic.ritualDivinernormal.name=Devineur de Rituels
+item.BloodMagic.ritualDivinerdusk.name=Devineur de Rituels [Crépuscule]
+item.BloodMagic.ritualDivinerdawn.name=Devineur de Rituels [Aube]
+item.BloodMagic.ritualReader.name=Bricoleur de Rituels
 
-item.BloodMagic.arcaneAshes.name=Arcane Ashes
+item.BloodMagic.arcaneAshes.name=Cendres Ésotériques
 item.BloodMagic.upgradeTome.name=Tablette d'Amélioration d'Armure Vivante
 item.BloodMagic.upgradeTrainer.name=Bracelet d'Entrainement d'Armure Vivante
 
@@ -153,7 +153,7 @@ item.BloodMagic.soulGem.common.name=Gemme Tartarique Commune
 item.BloodMagic.soulGem.greater.name=Gemme Tartarique
 item.BloodMagic.soulGem.grand.name=Grand Tartaric Gem
 item.BloodMagic.soulSnare.base.name=Rudimentary Snare
-item.BloodMagic.sentientBow.name=Sentient Bow
+item.BloodMagic.sentientBow.name=Arc Sentiente
 item.BloodMagic.sentientArmourGem.name=Sentient Armour Gem
 
 item.BloodMagic.nodeRouter.name=Node Router
@@ -234,7 +234,7 @@ tile.BloodMagic.demonCrystalVENGEFUL.name=Vengeful Will Crystal Cluster
 tile.BloodMagic.demonCrystalSTEADFAST.name=Steadfast Will Crystal Cluster
 
 # Fluids
-fluid.lifeEssence=Life Essence
+fluid.lifeEssence=Essence de Vie
 
 #Tooltips
 tooltip.BloodMagic.extraInfo=&9-Tenir shift pour plus d'info-
@@ -289,10 +289,10 @@ tooltip.BloodMagic.bound.axe.desc=&oDéforestation diabolique
 tooltip.BloodMagic.bound.shovel.desc=&oEffacer la terre du sol
 
 tooltip.BloodMagic.sacrificialDagger.desc=Juste in pîqure du doigt va suffir...
-tooltip.BloodMagic.slate.desc=Pierre 
-tooltip.BloodMagic.inscriber.desc=The writing is on the wall...
+tooltip.BloodMagic.slate.desc=Pierre infusée dans un Autel de Sang
+tooltip.BloodMagic.inscriber.desc=L'écriture est sur le mur...
 
-tooltip.BloodMagic.pack.selfSacrifice.desc=This pack really chafes...
+tooltip.BloodMagic.pack.selfSacrifice.desc=Ce sac à dos me frictionne vriament...
 tooltip.BloodMagic.pack.sacrifice.desc=Description
 tooltip.BloodMagic.pack.stored=Stored: %d LP
 
