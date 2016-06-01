@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 2.0.1-41
+------------------------------------------------------
+- Fixed Demon Crucible's weird behaviour where right-clicking it with an invalid item would still put the item in the crucible
+	and give the player an item with a stacksize of 0.
+
+------------------------------------------------------
 Version 2.0.1-40
 ------------------------------------------------------
 - Bug fix version, and added several translations - some of these are still WIP.

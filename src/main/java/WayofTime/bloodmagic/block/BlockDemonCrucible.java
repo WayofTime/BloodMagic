@@ -84,7 +84,7 @@ public class BlockDemonCrucible extends BlockContainer implements IVariantProvid
         {
             if (!(heldItem.getItem() instanceof IDiscreteDemonWill) && !(heldItem.getItem() instanceof IDemonWillGem))
             {
-                return false;
+                return true;
             }
         }
 
