@@ -11,10 +11,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import WayofTime.bloodmagic.altar.BloodAltar;
+import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
@@ -60,10 +63,10 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 
                         if (player.isSneaking())
                         {
-                            BloodAltar.PosAndComponent missingBlock = BloodAltar.getAltarMissingBlock(world, position.getBlockPos(), tier);
+                            Pair<BlockPos, EnumAltarComponent> missingBlock = BloodAltar.getAltarMissingBlock(world, position.getBlockPos(), tier);
                             if (missingBlock != null)
                             {
-                                ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.altar.nextTier", new TextComponentTranslation(missingBlock.getComponent().getKey()), prettifyBlockPosString(missingBlock.getPos())));
+                                ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.altar.nextTier", new TextComponentTranslation(missingBlock.getRight().getKey()), prettifyBlockPosString(missingBlock.getLeft())));
                             }
 
                         } else

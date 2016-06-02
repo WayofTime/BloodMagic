@@ -2,9 +2,6 @@ package WayofTime.bloodmagic.altar;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,6 +16,10 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
@@ -137,7 +138,7 @@ public class BloodAltar implements IFluidHandler
         return true;
     }
 
-    public static PosAndComponent getAltarMissingBlock(World world, BlockPos worldPos, int altarTier)
+    public static Pair<BlockPos, EnumAltarComponent> getAltarMissingBlock(World world, BlockPos worldPos, int altarTier)
     {
         if (altarTier >= EnumAltarTier.MAXTIERS)
         {
@@ -156,31 +157,22 @@ public class BloodAltar implements IFluidHandler
                     EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(worldBlock.getMeta());
                     if (component != altarComponent.getComponent())
                     {
-                        return new PosAndComponent(componentPos, altarComponent.getComponent());
+                        return new ImmutablePair<BlockPos, EnumAltarComponent>(componentPos, altarComponent.getComponent());
                     }
                 } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent()))
                 {
-                    return new PosAndComponent(componentPos, altarComponent.getComponent());
+                    return new ImmutablePair<BlockPos, EnumAltarComponent>(componentPos, altarComponent.getComponent());
                 }
             } else
             {
                 if (world.isAirBlock(componentPos))
                 {
-                    return new PosAndComponent(componentPos, altarComponent.getComponent());
+                    return new ImmutablePair<BlockPos, EnumAltarComponent>(componentPos, altarComponent.getComponent());
                 }
             }
         }
 
         return null;
-    }
-
-    @AllArgsConstructor
-    @Getter
-    @Setter
-    public static class PosAndComponent
-    {
-        public final BlockPos pos;
-        public final EnumAltarComponent component;
     }
 
     public static AltarUpgrade getUpgrades(World world, BlockPos pos, EnumAltarTier altarTier)
