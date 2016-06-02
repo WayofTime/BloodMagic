@@ -147,25 +147,25 @@ item.BloodMagic.upgradeTome.name=Tablette d'Amélioration d'Armure Vivante
 item.BloodMagic.upgradeTrainer.name=Bracelet d'Entrainement d'Armure Vivante
 
 item.BloodMagic.sentientSword.name=Épée Sentiente
-item.BloodMagic.soulGem.petty.name=Simple Gemme Tartarique
-item.BloodMagic.soulGem.lesser.name=Lesser Tartaric Gem
+item.BloodMagic.soulGem.petty.name=Faible Gemme Tartarique
+item.BloodMagic.soulGem.lesser.name=Simple Gemme Tartarique
 item.BloodMagic.soulGem.common.name=Gemme Tartarique Commune
-item.BloodMagic.soulGem.greater.name=Gemme Tartarique
-item.BloodMagic.soulGem.grand.name=Grand Tartaric Gem
+item.BloodMagic.soulGem.greater.name=Gemme Tartarique Complexe
+item.BloodMagic.soulGem.grand.name=Gemme Tartarique Puissante
 item.BloodMagic.soulSnare.base.name=Rudimentary Snare
 item.BloodMagic.sentientBow.name=Arc Sentiente
-item.BloodMagic.sentientArmourGem.name=Sentient Armour Gem
+item.BloodMagic.sentientArmourGem.name=Gemme d'Armure Sentiente
 
 item.BloodMagic.nodeRouter.name=Node Router
-item.BloodMagic.itemFilter.exact.name=Precise Item Filter
-item.BloodMagic.itemFilter.ignoreNBT.name=NBT Item Filter
-item.BloodMagic.itemFilter.modItems.name=Mod Item Filter
-item.BloodMagic.itemFilter.oreDict.name=Ore Dictionary Item Filter
+item.BloodMagic.itemFilter.exact.name=Filtre d'Objets Précis
+item.BloodMagic.itemFilter.ignoreNBT.name=Filtre d'Objets par NBT
+item.BloodMagic.itemFilter.modItems.name=Filtre d'Objets par Mod
+item.BloodMagic.itemFilter.oreDict.name=Filtre d'Objets par le Catalogue de Minerai
 
 item.BloodMagic.experienceTome.name=Tome of Peritia
 
 # Blocks
-tile.BloodMagic.fluid.lifeEssence.name=Life Essence
+tile.BloodMagic.fluid.lifeEssence.name=Essence de Vie
 
 tile.BloodMagic.stone.ritual.master.name=Master Ritual Stone
 tile.BloodMagic.stone.ritual.imperfect.name=Imperfect Ritual Stone
