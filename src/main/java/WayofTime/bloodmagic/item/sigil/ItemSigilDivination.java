@@ -3,23 +3,25 @@ package WayofTime.bloodmagic.item.sigil;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.tile.TileIncenseAltar;
 import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.helper.NumeralHelper;
 
 public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 {
@@ -55,10 +57,22 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
                     {
                         IBloodAltar altar = (IBloodAltar) tile;
                         int tier = altar.getTier().ordinal() + 1;
-                        int currentEssence = altar.getCurrentBlood();
-                        int capacity = altar.getCapacity();
-                        altar.checkTier();
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentAltarTier", NumeralHelper.toRoman(tier)), new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence), new TextComponentTranslation(tooltipBase + "currentAltarCapacity", capacity));
+
+                        if (player.isSneaking())
+                        {
+                            BloodAltar.PosAndComponent missingBlock = BloodAltar.getAltarMissingBlock(world, position.getBlockPos(), tier);
+                            if (missingBlock != null)
+                            {
+                                ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.altar.nextTier", new TextComponentTranslation(missingBlock.getComponent().getKey()), prettifyBlockPosString(missingBlock.getPos())));
+                            }
+
+                        } else
+                        {
+                            int currentEssence = altar.getCurrentBlood();
+                            int capacity = altar.getCapacity();
+                            altar.checkTier();
+                            ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentAltarTier", NumeralHelper.toRoman(tier)), new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence), new TextComponentTranslation(tooltipBase + "currentAltarCapacity", capacity));
+                        }
                     } else if (tile != null && tile instanceof TileIncenseAltar)
                     {
                         TileIncenseAltar altar = (TileIncenseAltar) tile;
@@ -75,5 +89,10 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
         }
 
         return super.onItemRightClick(stack, world, player, hand);
+    }
+
+    public String prettifyBlockPosString(BlockPos pos)
+    {
+        return "[" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + "]";
     }
 }

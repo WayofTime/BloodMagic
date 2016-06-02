@@ -513,6 +513,15 @@ chat.BloodMagic.routing.set=Setting node location
 chat.BloodMagic.routing.link.master=Linked node to master!
 chat.BloodMagic.routing.link=Linked nodes together
 
+chat.BloodMagic.altar.comp.glowstone=a block of glowstone
+chat.BloodMagic.altar.comp.bloodstone=a large bloodstone brick
+chat.BloodMagic.altar.comp.beacon=a beacon
+chat.BloodMagic.altar.comp.bloodrune=a blood rune
+chat.BloodMagic.altar.comp.crystal=an unimplemented item
+chat.BloodMagic.altar.comp.notair=a solid block
+
+chat.BloodMagic.altar.nextTier=The next tier of blood altar is missing %s at %s.
+
 # sekrit
 
 secret.BloodMagic.bread.bloody=&r&cBloody Bread
