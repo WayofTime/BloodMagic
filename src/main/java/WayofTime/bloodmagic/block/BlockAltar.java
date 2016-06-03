@@ -3,6 +3,10 @@ package WayofTime.bloodmagic.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.altar.BloodAltar;
+import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import WayofTime.bloodmagic.api.iface.IDocumentedBlock;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,6 +17,8 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -33,7 +39,7 @@ import WayofTime.bloodmagic.util.Utils;
 
 import com.google.common.base.Strings;
 
-public class BlockAltar extends BlockContainer implements IVariantProvider
+public class BlockAltar extends BlockContainer implements IVariantProvider, IDocumentedBlock
 {
     public BlockAltar()
     {
@@ -167,11 +173,27 @@ public class BlockAltar extends BlockContainer implements IVariantProvider
         super.breakBlock(world, blockPos, blockState);
     }
 
+    // IVariantProvider
+
     @Override
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "normal"));
         return ret;
+    }
+
+    // IDocumentedBlock
+
+    @Override
+    public List<ITextComponent> getDocumentation(EntityPlayer player, World world, BlockPos pos, IBlockState state)
+    {
+        List<ITextComponent> docs = new ArrayList<ITextComponent>();
+        IBloodAltar altar = ((IBloodAltar) world.getTileEntity(pos));
+        Pair<BlockPos, EnumAltarComponent> missingBlock = BloodAltar.getAltarMissingBlock(world, pos, altar.getTier().toInt());
+        if (missingBlock != null)
+            docs.add(new TextComponentTranslation("chat.BloodMagic.altar.nextTier", new TextComponentTranslation(missingBlock.getRight().getKey()), Utils.prettifyBlockPosString(missingBlock.getLeft())));
+
+        return docs;
     }
 }

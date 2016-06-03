@@ -163,6 +163,7 @@ item.BloodMagic.itemFilter.modItems.name=Mod Item Filter
 item.BloodMagic.itemFilter.oreDict.name=Ore Dictionary Item Filter
 
 item.BloodMagic.experienceTome.name=Tome of Peritia
+item.BloodMagic.sanguineBook.name=Book of Sanguine
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
@@ -388,6 +389,8 @@ tooltip.BloodMagic.decoration.safe=Safe for decoration
 tooltip.BloodMagic.decoration.notSafe=Dangerous for decoration
 
 tooltip.BloodMagic.cuttingFluidRatio=%d/%d uses remaining
+
+tooltip.BloodMagic.book.shifting=These symbols seem to be... &oshifting...
 
 # Ritual
 ritual.BloodMagic.blockRange.tooBig=The block range given is too big! Needs to be at most %s blocks.

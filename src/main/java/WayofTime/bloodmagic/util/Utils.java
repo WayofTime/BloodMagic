@@ -95,6 +95,11 @@ public class Utils
         return String.valueOf(input.charAt(0)).toUpperCase(Locale.ENGLISH) + input.substring(1);
     }
 
+    public static String prettifyBlockPosString(BlockPos pos)
+    {
+        return "[" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + "]";
+    }
+
     /**
      * @param tile
      *        - The {@link TileInventory} to input the item to

@@ -215,7 +215,9 @@ public class Constants
         SIGIL_TELEPOSITION("ItemSigilTeleposition"),
         EXPERIENCE_TOME("ItemExperienceBook"),
         SIGIL_TRANSPOSITION("ItemSigilTransposition"),
-        RITUAL_READER("ItemRitualReader");
+        RITUAL_READER("ItemRitualReader"),
+        SANGUINE_BOOK("ItemSanguineBook"),
+        ;
 
         @Getter
         private final String regName;
