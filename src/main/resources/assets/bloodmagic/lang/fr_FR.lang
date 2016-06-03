@@ -94,14 +94,14 @@ item.BloodMagic.baseComponent.plantOil.name=Huile de Plante
 item.BloodMagic.baseComponent.sulfur.name=Soufre
 item.BloodMagic.baseComponent.saltpeter.name=Salpêtre
 
-item.BloodMagic.cuttingFluid.basicCuttingFluid.name=Basic Cutting Fluid
+item.BloodMagic.cuttingFluid.basicCuttingFluid.name=Coulant Coupant Basic
 item.BloodMagic.cuttingFluid.explosive.name=Poudre Explosive
 
 item.BloodMagic.demonCrystal.crystalDefault.name=Cristal d'une Volonté Diabolique
 item.BloodMagic.demonCrystal.crystalCorrosive.name=Cristal d'une Volonté Corrosive
-item.BloodMagic.demonCrystal.crystalDestructive.name=Cristal d'une Volonté Destructif
+item.BloodMagic.demonCrystal.crystalDestructive.name=Cristal d'une Volonté Destructive
 item.BloodMagic.demonCrystal.crystalVengeful.name=Cristal d'une Volonté Vengeuse
-item.BloodMagic.demonCrystal.crystalSteadfast.name=Cristal d'une Volonté Rapide
+item.BloodMagic.demonCrystal.crystalSteadfast.name=Cristal d'une Volonté Inébranlable
 
 item.BloodMagic.monsterSoul.base.name=Volonté Diabolique
 
@@ -147,54 +147,54 @@ item.BloodMagic.upgradeTome.name=Tablette d'Amélioration d'Armure Vivante
 item.BloodMagic.upgradeTrainer.name=Bracelet d'Entrainement d'Armure Vivante
 
 item.BloodMagic.sentientSword.name=Épée Sentiente
-item.BloodMagic.soulGem.petty.name=Faible Gemme Tartarique
-item.BloodMagic.soulGem.lesser.name=Simple Gemme Tartarique
-item.BloodMagic.soulGem.common.name=Gemme Tartarique Commune
-item.BloodMagic.soulGem.greater.name=Gemme Tartarique Complexe
-item.BloodMagic.soulGem.grand.name=Gemme Tartarique Puissante
-item.BloodMagic.soulSnare.base.name=Rudimentary Snare
+item.BloodMagic.soulGem.petty.name=Faible Gemme Tartrique
+item.BloodMagic.soulGem.lesser.name=Simple Gemme Tartrique
+item.BloodMagic.soulGem.common.name=Gemme Tartrique Commune
+item.BloodMagic.soulGem.greater.name=Gemme Tartrique Complexe
+item.BloodMagic.soulGem.grand.name=Gemme Tartrique Puissante
+item.BloodMagic.soulSnare.base.name=Piège Rudimentaire
 item.BloodMagic.sentientBow.name=Arc Sentiente
 item.BloodMagic.sentientArmourGem.name=Gemme d'Armure Sentiente
 
-item.BloodMagic.nodeRouter.name=Node Router
+item.BloodMagic.nodeRouter.name=Routeur de Jonction
 item.BloodMagic.itemFilter.exact.name=Filtre d'Objets Précis
 item.BloodMagic.itemFilter.ignoreNBT.name=Filtre d'Objets par NBT
 item.BloodMagic.itemFilter.modItems.name=Filtre d'Objets par Mod
 item.BloodMagic.itemFilter.oreDict.name=Filtre d'Objets par le Catalogue de Minerai
 
-item.BloodMagic.experienceTome.name=Tome of Peritia
+item.BloodMagic.experienceTome.name=Tôme de Peritia
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Essence de Vie
 
-tile.BloodMagic.stone.ritual.master.name=Master Ritual Stone
-tile.BloodMagic.stone.ritual.imperfect.name=Imperfect Ritual Stone
+tile.BloodMagic.stone.ritual.master.name=Pierre Rituelle Maîtresse
+tile.BloodMagic.stone.ritual.imperfect.name=Pierre Rituelle Imparfaite
 
-tile.BloodMagic.altar.name=Blood Altar
-tile.BloodMagic.alchemyArray.name=&r&fAlchemy Array
+tile.BloodMagic.altar.name=Autel de Sang
+tile.BloodMagic.alchemyArray.name=&r&fÉtalage d'Alchimie
 
-tile.BloodMagic.rune.blank.name=Blank Rune
-tile.BloodMagic.rune.speed.name=Speed Rune
-tile.BloodMagic.rune.efficiency.name=Efficiency Rune
-tile.BloodMagic.rune.sacrifice.name=Rune of Sacrifice
-tile.BloodMagic.rune.selfsacrifice.name=Rune of Self Sacrifice
-tile.BloodMagic.rune.displacement.name=Displacement Rune
-tile.BloodMagic.rune.capacity.name=Rune of Capacity
-tile.BloodMagic.rune.augcapacity.name=Rune of Augmented Capacity
-tile.BloodMagic.rune.orb.name=Rune of the Orb
-tile.BloodMagic.rune.acceleration.name=Acceleration Rune
-tile.BloodMagic.rune.charging.name=Charging Rune
+tile.BloodMagic.rune.blank.name=Rune de Sang
+tile.BloodMagic.rune.speed.name=Rune de Vitesse
+tile.BloodMagic.rune.efficiency.name=Rune d'Efficacité
+tile.BloodMagic.rune.sacrifice.name=Rune de Sacrifice
+tile.BloodMagic.rune.selfsacrifice.name=Rune de l'Autosacrifice
+tile.BloodMagic.rune.displacement.name=Rune de Dislocation
+tile.BloodMagic.rune.capacity.name=Rune de Capacité
+tile.BloodMagic.rune.augcapacity.name=Rune de Capacité Supérieur
+tile.BloodMagic.rune.orb.name=Rune de l'Orbe
+tile.BloodMagic.rune.acceleration.name=Rune de Accélération
+tile.BloodMagic.rune.charging.name=Rune de Chargement
 
 
-tile.BloodMagic.ritualStone.blank.name=Ritual Stone
-tile.BloodMagic.ritualStone.water.name=Ritual Stone of Water
-tile.BloodMagic.ritualStone.fire.name=Ritual Stone of Fire
-tile.BloodMagic.ritualStone.earth.name=Ritual Stone of Earth
-tile.BloodMagic.ritualStone.air.name=Ritual Stone of Air
-tile.BloodMagic.ritualStone.dusk.name=Ritual Stone of Dusk
-tile.BloodMagic.ritualStone.dawn.name=Ritual Stone of Dawn
+tile.BloodMagic.ritualStone.blank.name=Pierre Rituelle
+tile.BloodMagic.ritualStone.water.name=Pierre Rituelle d'Eau
+tile.BloodMagic.ritualStone.fire.name=Pierre Rituelle du Feu
+tile.BloodMagic.ritualStone.earth.name=Pierre Rituelle de la Terre
+tile.BloodMagic.ritualStone.air.name=Pierre Rituelle de l'Air
+tile.BloodMagic.ritualStone.dusk.name=Pierre Rituelle du Crépuscule
+tile.BloodMagic.ritualStone.dawn.name=Pierre Rituelle de l'Aube
 
-tile.BloodMagic.bloodstonebrick.large.name=Large Bloodstone Brick
+tile.BloodMagic.bloodstonebrick.large.name=Large 
 tile.BloodMagic.bloodstonebrick.brick.name=Bloodstone Brick
 tile.BloodMagic.crystal.large.name=Crystal Cluster
 tile.BloodMagic.crystal.brick.name=Crystal Cluster Brick
@@ -224,14 +224,14 @@ tile.BloodMagic.path.wornstonetile.name=Tiled Worn Stone Path
 tile.BloodMagic.path.obsidian.name=Obsidian Brick Path
 tile.BloodMagic.path.obsidiantile.name=Tiled Obsidian Path
 
-tile.BloodMagic.dimensionalPortal.name=Dimensional Portal
-tile.BloodMagic.bloodTank.name=Blood Tank
+tile.BloodMagic.dimensionalPortal.name=Portail Dimensionnel
+tile.BloodMagic.bloodTank.name=Réservoir de Sang
 
-tile.BloodMagic.demonCrystalDEFAULT.name=Demon Will Crystal Cluster
-tile.BloodMagic.demonCrystalCORROSIVE.name=Corrosive Will Crystal Cluster
-tile.BloodMagic.demonCrystalDESTRUCTIVE.name=Destructive Will Crystal Cluster
-tile.BloodMagic.demonCrystalVENGEFUL.name=Vengeful Will Crystal Cluster
-tile.BloodMagic.demonCrystalSTEADFAST.name=Steadfast Will Crystal Cluster
+tile.BloodMagic.demonCrystalDEFAULT.name=Groupe de Cristaux d'une Volonté Diabolique
+tile.BloodMagic.demonCrystalCORROSIVE.name=Groupe de Cristaux d'une Volonté Corrosive
+tile.BloodMagic.demonCrystalDESTRUCTIVE.name=Groupe de Cristaux d'une Volonté Destructive
+tile.BloodMagic.demonCrystalVENGEFUL.name=Groupe de Cristaux d'une Volonté Vengeuse
+tile.BloodMagic.demonCrystalSTEADFAST.name=Groupe de Cristaux d'une Volonté Inébranlable
 
 # Fluids
 fluid.lifeEssence=Essence de Vie
@@ -292,7 +292,7 @@ tooltip.BloodMagic.sacrificialDagger.desc=Juste in pîqure du doigt va suffir...
 tooltip.BloodMagic.slate.desc=Pierre infusée dans un Autel de Sang
 tooltip.BloodMagic.inscriber.desc=L'écriture est sur le mur...
 
-tooltip.BloodMagic.pack.selfSacrifice.desc=Ce sac à dos me frictionne vriament...
+tooltip.BloodMagic.pack.selfSacrifice.desc=Ce sac à dos me frictionne vraiment...
 tooltip.BloodMagic.pack.sacrifice.desc=Description
 tooltip.BloodMagic.pack.stored=Stored: %d LP
 
