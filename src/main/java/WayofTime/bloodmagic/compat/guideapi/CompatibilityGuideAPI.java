@@ -6,7 +6,9 @@ import WayofTime.bloodmagic.compat.ICompatibility;
 import amerifrance.guideapi.api.GuideAPI;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class CompatibilityGuideAPI implements ICompatibility {
 
@@ -15,7 +17,11 @@ public class CompatibilityGuideAPI implements ICompatibility {
         switch (phase) {
             case PRE_INIT: {
                 GuideBloodMagic.initBook();
+                GameRegistry.register(GuideBloodMagic.guideBook);
                 AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Items.BOOK), GuideAPI.getStackFromBook(GuideBloodMagic.guideBook), EnumAltarTier.ONE, 500, 2, 0));
+                if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+                    GuideAPI.setModel(GuideBloodMagic.guideBook);
+
                 break;
             }
             case INIT: {
@@ -23,7 +29,6 @@ public class CompatibilityGuideAPI implements ICompatibility {
             }
             case POST_INIT: {
                 GuideBloodMagic.initCategories();
-                GameRegistry.register(GuideBloodMagic.guideBook);
                 break;
             }
         }
