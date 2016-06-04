@@ -3,9 +3,9 @@ itemGroup.BloodMagic.creativeTab=Blood Magic
 itemGroup.BloodMagic.creativeTabTome=Blood Magic Tômes d'Améliorations
 
 #Items
-item.BloodMagic.activationCrystal.weak.name=Cristal d'Activation Faible
+item.BloodMagic.activationCrystal.weak.name=Cristal d'Activation Affaibli
 item.BloodMagic.activationCrystal.awakened.name=Cristal d'Activation Éveillé
-item.BloodMagic.activationCrystal.creative.name=Cristal d'Activation Créative
+item.BloodMagic.activationCrystal.creative.name=Cristal d'Activation Créatif
 
 item.BloodMagic.sacrificialDagger.normal.name=Dague Sacrificielle
 item.BloodMagic.sacrificialDagger.creative.name=Dague Sacrificielle Créative
@@ -119,7 +119,7 @@ item.BloodMagic.sigil.suppression.name=Emblème de Délétion
 item.BloodMagic.sigil.magnetism.name=Emblème de Magnétisme
 item.BloodMagic.sigil.fastMiner.name=Emblème du Mineur Rapide
 item.BloodMagic.sigil.seer.name=Emblème du Voyant
-item.BloodMagic.sigil.phantomBridge.name=Emblème du Pont du Phantôme
+item.BloodMagic.sigil.phantomBridge.name=Emblème du Pont du Fantôme
 item.BloodMagic.sigil.whirlwind.name=Emblème de la Tempête
 item.BloodMagic.sigil.enderSeverance.name=Emblème de l'Ender Sévérance
 
@@ -182,7 +182,7 @@ tile.BloodMagic.rune.displacement.name=Rune de Dislocation
 tile.BloodMagic.rune.capacity.name=Rune de Capacité
 tile.BloodMagic.rune.augcapacity.name=Rune de Capacité Supérieur
 tile.BloodMagic.rune.orb.name=Rune de l'Orbe
-tile.BloodMagic.rune.acceleration.name=Rune de Accélération
+tile.BloodMagic.rune.acceleration.name=Rune d'Accélération
 tile.BloodMagic.rune.charging.name=Rune de Chargement
 
 
@@ -194,16 +194,16 @@ tile.BloodMagic.ritualStone.air.name=Pierre Rituelle de l'Air
 tile.BloodMagic.ritualStone.dusk.name=Pierre Rituelle du Crépuscule
 tile.BloodMagic.ritualStone.dawn.name=Pierre Rituelle de l'Aube
 
-tile.BloodMagic.bloodstonebrick.large.name=Large 
-tile.BloodMagic.bloodstonebrick.brick.name=Bloodstone Brick
-tile.BloodMagic.crystal.large.name=Crystal Cluster
-tile.BloodMagic.crystal.brick.name=Crystal Cluster Brick
-tile.BloodMagic.bloodLight.name=Blood Light
-tile.BloodMagic.spectralBlock.name=Spectral Block
-tile.BloodMagic.phantom.name=Phantom Block
-tile.BloodMagic.incenseAltar.name=Incense Altar
+tile.BloodMagic.bloodstonebrick.large.name=Brique Large de Roche-Sang
+tile.BloodMagic.bloodstonebrick.brick.name=Brique de Roche-Sang
+tile.BloodMagic.crystal.large.name=Groupe de Cristaux
+tile.BloodMagic.crystal.brick.name=Bloc de Groupe de Cristaux
+tile.BloodMagic.bloodLight.name=Lumière Sanguine
+tile.BloodMagic.spectralBlock.name=Bloc Spectral
+tile.BloodMagic.phantom.name=Bloc Fantôme
+tile.BloodMagic.incenseAltar.name=Autel encens
 
-tile.BloodMagic.teleposer.name=Teleposer
+tile.BloodMagic.teleposer.name=Téléposeur
 tile.BloodMagic.soulForge.name=Hellfire Forge
 tile.BloodMagic.alchemyTable.name=Alchemy Table
 tile.BloodMagic.demonCrucible.name=Demon Crucible
@@ -296,21 +296,21 @@ tooltip.BloodMagic.pack.selfSacrifice.desc=Ce sac à dos me frictionne vraiment.
 tooltip.BloodMagic.pack.sacrifice.desc=Description
 tooltip.BloodMagic.pack.stored=Stored: %d LP
 
-tooltip.BloodMagic.activationCrystal.weak=Activates low-level rituals
-tooltip.BloodMagic.activationCrystal.awakened=Activates more powerful rituals
-tooltip.BloodMagic.activationCrystal.creative=Creative Only - Activates any ritual
+tooltip.BloodMagic.activationCrystal.weak=Actionne les rituels d'un Bas Niveau
+tooltip.BloodMagic.activationCrystal.awakened=Actionne des rituels plus puissants
+tooltip.BloodMagic.activationCrystal.creative=Creative Seulement - Actionne tout les rituels
 
-tooltip.BloodMagic.diviner.currentRitual=Current Ritual: 
-tooltip.BloodMagic.diviner.blankRune=Blank Runes: %d
-tooltip.BloodMagic.diviner.waterRune=Water Runes: %d
-tooltip.BloodMagic.diviner.airRune=Air Runes: %d
-tooltip.BloodMagic.diviner.fireRune=Fire Runes: %d
-tooltip.BloodMagic.diviner.earthRune=Earth Runes: %d
-tooltip.BloodMagic.diviner.duskRune=Dusk Runes: %d
-tooltip.BloodMagic.diviner.dawnRune=Dawn Runes: %d
-tooltip.BloodMagic.diviner.totalRune=Total Runes: %d
-tooltip.BloodMagic.diviner.extraInfo=Press shift for extra info
-tooltip.BloodMagic.diviner.currentDirection=Current Direction: %s
+tooltip.BloodMagic.diviner.currentRitual=Rituel Courant: 
+tooltip.BloodMagic.diviner.blankRune=Runes Vierge: %d
+tooltip.BloodMagic.diviner.waterRune=Runes d'Eau: %d
+tooltip.BloodMagic.diviner.airRune=Runes d'Air: %d
+tooltip.BloodMagic.diviner.fireRune=Runes de Feu: %d
+tooltip.BloodMagic.diviner.earthRune=Runes de Terre: %d
+tooltip.BloodMagic.diviner.duskRune=Runes de Cépuscule: %d
+tooltip.BloodMagic.diviner.dawnRune=Runes d'Aube: %d
+tooltip.BloodMagic.diviner.totalRune=Runes Totales: %d
+tooltip.BloodMagic.diviner.extraInfo=Appuyer sur shift pour encore plus d'info
+tooltip.BloodMagic.diviner.currentDirection=Directon Courante: %s
 
 tooltip.BloodMagic.ritualReader.currentState=Current mode: %s
 tooltip.BloodMagic.ritualReader.set_area=Define Area
