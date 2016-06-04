@@ -22,7 +22,7 @@ public class CategoryDemon
         String keyBase = "guide." + Constants.Mod.MODID + ".entry.demon.";
 
         List<IPage> ritualPages = new ArrayList<IPage>();
-        ritualPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro" + ".info"), 300));
+        ritualPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro" + ".info"), 270));
 //        ritualPages.add(new PageImage(new ResourceLocation("bloodmagicguide", "textures/guide/" + ritual.getName() + ".png")));
 
         entries.put(new ResourceLocation(keyBase + "intro"), new EntryText(ritualPages, TextHelper.localize("Test"), true));
