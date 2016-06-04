@@ -15,11 +15,13 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import java.awt.Color;
 
-public class GuideBloodMagic {
+public class GuideBloodMagic
+{
 
     public static Book guideBook;
 
-    public static void initBook() {
+    public static void initBook()
+    {
         guideBook = new Book();
         guideBook.setTitle("guide.BloodMagic.title");
         guideBook.setDisplayName("guide.BloodMagic.display");
@@ -32,7 +34,8 @@ public class GuideBloodMagic {
             GuideAPI.setModel(guideBook);
     }
 
-    public static void initCategories() {
+    public static void initCategories()
+    {
         guideBook.addCategory(new CategoryItemStack(CategoryAlchemy.buildCategory(), "guide.BloodMagic.category.alchemy", new ItemStack(ModItems.arcaneAshes)));
         guideBook.addCategory(new CategoryItemStack(CategoryArchitect.buildCategory(), "guide.BloodMagic.category.architect", new ItemStack(ModItems.sigilDivination)));
         guideBook.addCategory(new CategoryItemStack(CategoryDemon.buildCategory(), "guide.BloodMagic.category.demon", new ItemStack(ModItems.bloodShard)));
@@ -40,17 +43,9 @@ public class GuideBloodMagic {
         guideBook.addCategory(new CategoryItemStack(CategorySpell.buildCategory(), "guide.BloodMagic.category.spell", new ItemStack(ModItems.ritualDiviner)));
     }
 
-    public static void initJEIBlacklist() {
+    public static void initJEIBlacklist()
+    {
         if (Loader.isModLoaded("JEI"))
-            BloodMagicPlugin.jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(
-                    GuideAPI.guideBook,
-                    NBTBookTags.BOOK_TAG,
-                    NBTBookTags.CATEGORY_PAGE_TAG,
-                    NBTBookTags.CATEGORY_TAG,
-                    NBTBookTags.ENTRY_PAGE_TAG,
-                    NBTBookTags.ENTRY_TAG,
-                    NBTBookTags.KEY_TAG,
-                    NBTBookTags.PAGE_TAG
-                    );
+            BloodMagicPlugin.jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(GuideAPI.guideBook, NBTBookTags.BOOK_TAG, NBTBookTags.CATEGORY_PAGE_TAG, NBTBookTags.CATEGORY_TAG, NBTBookTags.ENTRY_PAGE_TAG, NBTBookTags.ENTRY_TAG, NBTBookTags.KEY_TAG, NBTBookTags.PAGE_TAG);
     }
 }

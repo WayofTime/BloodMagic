@@ -1,6 +1,7 @@
 //@ParametersAreNonnullByDefault
 //@MethodsReturnNonnullByDefault
-//package WayofTime.bloodmagic.compat.guideapi;
+package WayofTime.bloodmagic.compat.guideapi;
+
 //
 //import mcp.MethodsReturnNonnullByDefault;
 //

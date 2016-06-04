@@ -16,13 +16,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CategoryRitual {
+public class CategoryRitual
+{
 
-    public static Map<ResourceLocation, EntryAbstract> buildCategory() {
+    public static Map<ResourceLocation, EntryAbstract> buildCategory()
+    {
         Map<ResourceLocation, EntryAbstract> entries = new HashMap<ResourceLocation, EntryAbstract>();
         String keyBase = Constants.Mod.DOMAIN + "ritual_";
 
-        for (Ritual ritual : RitualRegistry.getRituals()) {
+        for (Ritual ritual : RitualRegistry.getRituals())
+        {
             List<IPage> ritualPages = new ArrayList<IPage>();
             ritualPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(ritual.getUnlocalizedName() + ".info")));
             ritualPages.add(new PageImage(new ResourceLocation("bloodmagicguide", "textures/guide/" + ritual.getName() + ".png")));
