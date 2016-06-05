@@ -11,18 +11,15 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -45,7 +42,6 @@ import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
-import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -77,34 +73,6 @@ public class GenericHandler
                     ItemHelper.LPContainer.addLPToItem(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST), totalLP, pack.CAPACITY);
             }
         }
-    }
-
-    @SubscribeEvent
-    public void onBucketFill(FillBucketEvent event)
-    {
-        if (event.getEmptyBucket().getItem() != Items.BUCKET)
-            return;
-
-        ItemStack result = null;
-
-        if (event.getTarget() == null || event.getTarget().getBlockPos() == null)
-        {
-            return;
-        }
-
-        Block block = event.getWorld().getBlockState(event.getTarget().getBlockPos()).getBlock();
-
-        if (block != null && (block.equals(ModBlocks.lifeEssence)) && block.getMetaFromState(event.getWorld().getBlockState(event.getTarget().getBlockPos())) == 0)
-        {
-            event.getWorld().setBlockToAir(event.getTarget().getBlockPos());
-            result = new ItemStack(ModItems.bucketEssence);
-        }
-
-        if (result == null)
-            return;
-
-        event.setFilledBucket(result);
-        event.setResult(Event.Result.ALLOW);
     }
 
     // Handles destroying altar

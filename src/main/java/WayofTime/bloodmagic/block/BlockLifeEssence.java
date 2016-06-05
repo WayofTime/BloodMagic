@@ -12,6 +12,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
@@ -27,8 +28,8 @@ public class BlockLifeEssence extends BlockFluidClassic
         super(lifeEssence, Material.WATER);
 
         setUnlocalizedName(Constants.Mod.MODID + ".fluid.lifeEssence");
-        lifeEssence.setBlock(this);
-        BloodMagicAPI.setLifeEssence(lifeEssence);
+        getLifeEssence().setBlock(this);
+        BloodMagicAPI.setLifeEssence(getLifeEssence());
     }
 
     @Override

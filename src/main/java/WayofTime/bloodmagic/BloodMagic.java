@@ -15,6 +15,7 @@ import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.launchwrapper.Launch;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
@@ -50,6 +51,11 @@ public class BloodMagic
             return ModItems.upgradeTome;
         }
     };
+
+    static
+    {
+        FluidRegistry.enableUniversalBucket();
+    }
 
     @Getter
     private static boolean isDev = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");

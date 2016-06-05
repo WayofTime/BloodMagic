@@ -109,6 +109,7 @@ public class ModBlocks
     public static void init()
     {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
+        FluidRegistry.addBucketForFluid(BlockLifeEssence.getLifeEssence());
         lifeEssence = registerBlock(new BlockLifeEssence(), Constants.BloodMagicBlock.LIFE_ESSENCE.getRegName());
 
         altar = registerBlock(new BlockAltar(), Constants.BloodMagicBlock.ALTAR.getRegName());

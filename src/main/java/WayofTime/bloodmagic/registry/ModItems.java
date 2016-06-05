@@ -20,7 +20,6 @@ import WayofTime.bloodmagic.item.ItemBoundAxe;
 import WayofTime.bloodmagic.item.ItemBoundPickaxe;
 import WayofTime.bloodmagic.item.ItemBoundShovel;
 import WayofTime.bloodmagic.item.ItemBoundSword;
-import WayofTime.bloodmagic.item.ItemBucketEssence;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.item.ItemDaggerOfSacrifice;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
@@ -78,8 +77,6 @@ public class ModItems
     public static BloodOrb orbMaster;
     public static BloodOrb orbArchmage;
     public static BloodOrb orbTranscendent;
-
-    public static Item bucketEssence;
 
     public static Item activationCrystal;
     public static Item slate;
@@ -176,8 +173,6 @@ public class ModItems
         orbTranscendent = new BloodOrb("transcendent", 6, 30000000);
         OrbRegistry.registerOrb(orbTranscendent);
 
-        bucketEssence = registerItem(new ItemBucketEssence(), Constants.BloodMagicItem.BUCKET_ESSENCE.getRegName());
-
         activationCrystal = registerItem(new ItemActivationCrystal(), Constants.BloodMagicItem.ACTIVATION_CRYSTAL.getRegName());
         slate = registerItem(new ItemSlate(), Constants.BloodMagicItem.SLATE.getRegName());
         inscriptionTool = registerItem(new ItemInscriptionTool(), Constants.BloodMagicItem.INSCRIPTION_TOOL.getRegName());
@@ -268,8 +263,6 @@ public class ModItems
         OrbRegistry.registerOrbTexture(orbMaster, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbMaster"));
         OrbRegistry.registerOrbTexture(orbArchmage, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbArchmage"));
         OrbRegistry.registerOrbTexture(orbTranscendent, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbTranscendent"));
-
-        renderHelper.itemRender(bucketEssence);
 
         renderHelper.itemRender(sentientBow, 0, "ItemSentientBow");
 //        renderHelper.itemRender(sentientBow, 1, "ItemSentientBow_pulling_0");
