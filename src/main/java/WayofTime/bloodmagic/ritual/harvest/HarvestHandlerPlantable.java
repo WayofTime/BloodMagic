@@ -64,7 +64,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
         if (foundSeed)
         {
             world.setBlockState(pos, blockStack.getBlock().getDefaultState());
-            world.destroyBlock(pos, false);
+            world.playEvent(2001, pos, Block.getStateId(blockStack.getState()));
             for (ItemStack stack : drops)
             {
                 if (!world.isRemote)

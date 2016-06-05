@@ -30,7 +30,7 @@ public class CategoryRitual
             List<IPage> ritualPages = new ArrayList<IPage>();
             ritualPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(ritual.getUnlocalizedName() + ".info")));
             ritualPages.add(new PageImage(new ResourceLocation("bloodmagicguide", "textures/guide/" + ritual.getName() + ".png")));
-            entries.put(new ResourceLocation(keyBase + ritual.getName()), new EntryText(ritualPages, TextHelper.localize(ritual.getUnlocalizedName()), true));
+            entries.put(new ResourceLocation(keyBase + ritual.getName()), new EntryText(ritualPages, TextHelper.localize(ritual.getUnlocalizedName())));
         }
 
         for (ImperfectRitual imperfectRitual : ImperfectRitualRegistry.getRituals())
@@ -38,7 +38,7 @@ public class CategoryRitual
             List<IPage> ritualPages = new ArrayList<IPage>();
             ritualPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(imperfectRitual.getUnlocalizedName() + ".info")));
             ritualPages.add(new PageImage(new ResourceLocation("bloodmagicguide", "textures/guide/" + imperfectRitual.getName() + ".png")));
-            entries.put(new ResourceLocation(keyBase + imperfectRitual.getName()), new EntryText(ritualPages, TextHelper.localize(imperfectRitual.getUnlocalizedName()), true));
+            entries.put(new ResourceLocation(keyBase + imperfectRitual.getName()), new EntryText(ritualPages, TextHelper.localize(imperfectRitual.getUnlocalizedName())));
         }
 
         return entries;
