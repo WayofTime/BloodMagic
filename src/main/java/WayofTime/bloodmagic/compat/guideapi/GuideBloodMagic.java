@@ -17,7 +17,6 @@ import java.awt.Color;
 
 public class GuideBloodMagic
 {
-
     public static Book guideBook;
 
     public static void initBook()
