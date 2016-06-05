@@ -8,6 +8,9 @@ import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import lombok.NoArgsConstructor;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -15,6 +18,27 @@ import net.minecraft.world.World;
 @NoArgsConstructor
 public class TileImperfectRitualStone extends TileEntity implements IImperfectRitualStone
 {
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket()
+    {
+        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        writeToNBT(nbttagcompound);
+        return new SPacketUpdateTileEntity(pos, this.getBlockMetadata(), nbttagcompound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet)
+    {
+        super.onDataPacket(net, packet);
+        readFromNBT(packet.getNbtCompound());
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag()
+    {
+        return writeToNBT(new NBTTagCompound());
+    }
+
     // IImperfectRitualStone
 
     @Override
