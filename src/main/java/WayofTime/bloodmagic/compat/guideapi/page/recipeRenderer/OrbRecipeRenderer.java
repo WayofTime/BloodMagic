@@ -32,7 +32,7 @@ public class OrbRecipeRenderer implements IRecipeRenderer
 
     @Override
     public void draw(Book book, CategoryAbstract category, EntryAbstract entry, int guiLeft, int guiTop, int mouseX, int mouseY, GuiBase guiBase, FontRenderer fontRenderer) {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(GuideMod.GUITEXLOC + "recipe_elements.png"));
+        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("gudieapi", "textures/gui/recipe_elements.png"));
         guiBase.drawTexturedModalRect(guiLeft + 42, guiTop + 53, 0, 0, 105, 65);
 
         guiBase.drawCenteredString(fontRenderer, TextHelper.localize("text.recipe.shapedOrb"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);

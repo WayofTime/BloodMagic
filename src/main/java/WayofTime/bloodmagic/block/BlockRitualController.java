@@ -3,6 +3,8 @@ package WayofTime.bloodmagic.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
+import amerifrance.guideapi.api.IGuideLinked;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -11,10 +13,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+import net.minecraftforge.fml.common.Optional;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -32,7 +36,10 @@ import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.ChatUtil;
 
-public class BlockRitualController extends BlockStringContainer implements IVariantProvider
+import javax.annotation.Nullable;
+
+@Optional.Interface(modid = "guideapi", iface = "amerifrance.guideapi.api.IGuideLinked")
+public class BlockRitualController extends BlockStringContainer implements IVariantProvider, IGuideLinked
 {
     public static final String[] names = { "master", "imperfect" };
 
@@ -109,6 +116,8 @@ public class BlockRitualController extends BlockStringContainer implements IVari
         return meta == 0 ? (new TileMasterRitualStone()) : (new TileImperfectRitualStone());
     }
 
+    // IVariantProvider
+
     @Override
     public List<Pair<Integer, String>> getVariants()
     {
@@ -116,5 +125,28 @@ public class BlockRitualController extends BlockStringContainer implements IVari
         for (int i = 0; i < names.length; i++)
             ret.add(new ImmutablePair<Integer, String>(i, "type=" + names[i]));
         return ret;
+    }
+
+    // IGuideLinked
+
+    @Override
+    @Nullable
+    public ResourceLocation getLinkedEntry(World world, BlockPos pos, EntityPlayer player, ItemStack stack)
+    {
+        IBlockState state = world.getBlockState(pos);
+        if (state.getValue(getStringProp()).equals(names[0]))
+        {
+            TileMasterRitualStone mrs = (TileMasterRitualStone) world.getTileEntity(pos);
+            if (mrs == null || mrs.getCurrentRitual() == null)
+                return null;
+            else
+                return new ResourceLocation("bloodmagic", "ritual_" + mrs.getCurrentRitual().getName());
+        } else if (state.getValue(getStringProp()).equals(names[1]))
+        {
+            ImperfectRitual imperfectRitual = ImperfectRitualRegistry.getRitualForBlock(BlockStack.getStackFromPos(world, pos.up()));
+            if (imperfectRitual != null)
+                return new ResourceLocation("bloodmagic", "ritual_" + imperfectRitual.getName());
+        }
+        return null;
     }
 }
