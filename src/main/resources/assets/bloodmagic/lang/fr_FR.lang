@@ -9,7 +9,7 @@ item.BloodMagic.activationCrystal.creative.name=Cristal d'Activation Créatif
 
 item.BloodMagic.sacrificialDagger.normal.name=Dague Sacrificielle
 item.BloodMagic.sacrificialDagger.creative.name=Dague Sacrificielle Créative
-item.BloodMagic.pack.selfSacrifice.name=Blood Letter's Pack
+item.BloodMagic.pack.selfSacrifice.name=Sac à dos Sanguin 
 item.BloodMagic.pack.sacrifice.name=Manteau des Bras
 item.BloodMagic.daggerOfSacrifice.name=Dague des Sacrifices
 
@@ -201,13 +201,13 @@ tile.BloodMagic.crystal.brick.name=Bloc de Groupe de Cristaux
 tile.BloodMagic.bloodLight.name=Lumière Sanguine
 tile.BloodMagic.spectralBlock.name=Bloc Spectral
 tile.BloodMagic.phantom.name=Bloc Fantôme
-tile.BloodMagic.incenseAltar.name=Autel encens
+tile.BloodMagic.incenseAltar.name=Autel Encens
 
 tile.BloodMagic.teleposer.name=Téléposeur
 tile.BloodMagic.soulForge.name=Hellfire Forge
-tile.BloodMagic.alchemyTable.name=Alchemy Table
-tile.BloodMagic.demonCrucible.name=Demon Crucible
-tile.BloodMagic.demonPylon.name=Demon Pylon
+tile.BloodMagic.alchemyTable.name=Table d'Alchimie
+tile.BloodMagic.demonCrucible.name=Creuset Diabolique
+tile.BloodMagic.demonPylon.name=Pylône Diabolique
 tile.BloodMagic.demonCrystallizer.name=Demon Crystallizer
 
 tile.BloodMagic.masterRouting.name=Master Routing Node
@@ -312,12 +312,12 @@ tooltip.BloodMagic.diviner.totalRune=Runes Totales: %d
 tooltip.BloodMagic.diviner.extraInfo=Appuyer sur shift pour encore plus d'info
 tooltip.BloodMagic.diviner.currentDirection=Directon Courante: %s
 
-tooltip.BloodMagic.ritualReader.currentState=Current mode: %s
-tooltip.BloodMagic.ritualReader.set_area=Define Area
+tooltip.BloodMagic.ritualReader.currentState=Mode Courant: %s
+tooltip.BloodMagic.ritualReader.set_area=Endroit Déterminé
 tooltip.BloodMagic.ritualReader.information=Information
-tooltip.BloodMagic.ritualReader.set_will_types=Set Will Consumed
-tooltip.BloodMagic.ritualReader.desc.set_area=Right click on an active Master Ritual stone to cycle what area of the ritual you want to modify. Then click on the two corners of the new range you want to set the range.
-tooltip.BloodMagic.ritualReader.desc.information=Right click on an active Master Ritual Stone to gather basic information about the ritual.
+tooltip.BloodMagic.ritualReader.set_will_types=Choisir la volonté consommée
+tooltip.BloodMagic.ritualReader.desc.set_area=Clic-droit sur une Pierre Rituelle Maîtresse pour cycler l'endroit de la rituelle que vous vouleiz modifier. Ensuite, cliquez les deux coins du nouveaux endroit que vous vouliez.
+tooltip.BloodMagic.ritualReader.desc.information=Clic-droit sur une Pierre Rituelle Maîtresse pour receuillir des informations basics sur le rituel.
 tooltip.BloodMagic.ritualReader.desc.set_will_types=Set the types of demon will that the ritual will consume from the aura by right clicking on the MRS with the same types of crystals on your hotbar.
 
 tooltip.BloodMagic.arcaneAshes=Ashes used to draw an alchemy circle
