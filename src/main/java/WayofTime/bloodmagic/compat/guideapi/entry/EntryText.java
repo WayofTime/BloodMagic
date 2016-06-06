@@ -13,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Collections;
 import java.util.List;
 
 public class EntryText extends EntryResourceLocation {
@@ -30,5 +31,23 @@ public class EntryText extends EntryResourceLocation {
     public void drawExtras(Book book, CategoryAbstract category, int entryX, int entryY, int entryWidth, int entryHeight, int mouseX, int mouseY, GuiBase guiBase, FontRenderer fontRendererObj) {
         Minecraft.getMinecraft().getTextureManager().bindTexture(image);
         GuiHelper.drawSizedIconWithoutColor(entryX + 4, entryY + 2, 8, 8, 1F);
+
+        boolean startFlag = fontRendererObj.getUnicodeFlag();
+        fontRendererObj.setUnicodeFlag(false);
+
+        // Cutting code ripped from GuiButtonExt#drawButton(...)
+        int strWidth = fontRendererObj.getStringWidth(getLocalizedName());
+        boolean cutString = false;
+
+        if (strWidth > guiBase.xSize - 80 && strWidth > fontRendererObj.getStringWidth("..."))
+            cutString = true;
+
+        if (GuiHelper.isMouseBetween(mouseX, mouseY, entryX, entryY, entryWidth, entryHeight) && cutString) {
+
+            guiBase.drawHoveringText(Collections.singletonList(getLocalizedName()), entryX, entryY + 12);
+            fontRendererObj.setUnicodeFlag(unicode);
+        }
+
+        fontRendererObj.setUnicodeFlag(startFlag);
     }
 }
