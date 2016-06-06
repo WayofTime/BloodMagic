@@ -38,6 +38,8 @@ public class Constants
         public static final String INPUT_AMOUNT = "inputAmount";
         public static final String STORED_LP = "storedLP";
         public static final String RITUAL_READER = "ritualReaderState";
+        public static final String ITEMS = "Items";
+        public static final String SLOT = "Slot";
 
         public static final String ALTAR = "bloodAltar";
         public static final String ALTAR_TIER = "upgradeLevel";
@@ -111,6 +113,10 @@ public class Constants
         public static final String ITEM_INVENTORY = "itemInventory";
 
         public static final String BLOCKPOS_CONNECTION = "connections";
+
+        public static final String CURRENT_SIGIL = "currentSigil";
+        public static final String MOST_SIG = "mostSig";
+        public static final String LEAST_SIG = "leastSig";
     }
 
     public static class Mod
@@ -129,6 +135,7 @@ public class Constants
         public static final int ROUTING_NODE_GUI = 2;
         public static final int MASTER_ROUTING_NODE_GUI = 3;
         public static final int ALCHEMY_TABLE_GUI = 4;
+        public static final int SIGIL_HOLDING_GUI = 5;
     }
 
     public static class Compat
@@ -217,6 +224,7 @@ public class Constants
         SIGIL_TRANSPOSITION("ItemSigilTransposition"),
         RITUAL_READER("ItemRitualReader"),
         SANGUINE_BOOK("ItemSanguineBook"),
+        SIGIL_HOLDING("ItemSigilHolding"),
         ;
 
         @Getter

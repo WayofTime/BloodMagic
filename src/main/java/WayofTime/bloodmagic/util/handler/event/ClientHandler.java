@@ -10,28 +10,38 @@ import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.client.render.RenderFakeBlocks;
 import WayofTime.bloodmagic.item.ItemRitualDiviner;
 import WayofTime.bloodmagic.item.ItemRitualReader;
+import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.network.SigilHoldingPacketProcessor;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.GhostItemHelper;
+import WayofTime.bloodmagic.util.handler.BMKeyBinding;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Handler
@@ -46,7 +56,11 @@ public class ClientHandler
     public TextureAtlasSprite ritualStoneDawn;
     public TextureAtlasSprite ritualStoneDusk;
 
-    private static Minecraft minecraft = Minecraft.getMinecraft();
+    public static Minecraft minecraft = Minecraft.getMinecraft();
+
+    public static final List<BMKeyBinding> keyBindings = new ArrayList<BMKeyBinding>();
+
+    public static final BMKeyBinding keyOpenSigilHolding = new BMKeyBinding("openSigilHolding", Keyboard.KEY_H, BMKeyBinding.Key.OPEN_SIGIL_HOLDING);
 
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event)
@@ -100,6 +114,36 @@ public class ClientHandler
 
         if (tileEntity instanceof TileMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualReader)
             renderRitualInformation(player, event.getPartialTicks());
+    }
+
+    @SubscribeEvent
+    public void onMouseEvent(MouseEvent event)
+    {
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+
+        if (event.getDwheel() != 0 && player != null && player.isSneaking())
+        {
+            ItemStack stack = player.getHeldItemMainhand();
+
+            if (stack != null)
+            {
+                Item item = stack.getItem();
+
+                if (item instanceof ItemSigilHolding)
+                {
+                    cycleSigil(stack, player, event.getDwheel());
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
+
+    private void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel)
+    {
+        int mode = ItemSigilHolding.getCurrentItemOrdinal(stack);
+        mode = dWheel < 0 ? ItemSigilHolding.next(mode) : ItemSigilHolding.prev(mode);
+        ItemSigilHolding.cycleSigil(stack, mode);
+        BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacketProcessor(player.inventory.currentItem, mode));
     }
 
     private static TextureAtlasSprite forName(TextureMap textureMap, String name, String dir)
@@ -186,5 +230,18 @@ public class ClientHandler
         }
 
         GlStateManager.popMatrix();
+    }
+
+    @SubscribeEvent
+    public void onKey(InputEvent event)
+    {
+        if (!minecraft.inGameHasFocus)
+            return;
+
+        for (BMKeyBinding key : keyBindings)
+        {
+            if (key.isPressed())
+                key.handleKeyPress();
+        }
     }
 }

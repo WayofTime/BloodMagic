@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.item.sigil.*;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -41,25 +42,6 @@ import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
 import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
 import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
-import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
-import WayofTime.bloodmagic.item.sigil.ItemSigilBloodLight;
-import WayofTime.bloodmagic.item.sigil.ItemSigilCompression;
-import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
-import WayofTime.bloodmagic.item.sigil.ItemSigilElementalAffinity;
-import WayofTime.bloodmagic.item.sigil.ItemSigilEnderSeverance;
-import WayofTime.bloodmagic.item.sigil.ItemSigilFastMiner;
-import WayofTime.bloodmagic.item.sigil.ItemSigilGreenGrove;
-import WayofTime.bloodmagic.item.sigil.ItemSigilHaste;
-import WayofTime.bloodmagic.item.sigil.ItemSigilLava;
-import WayofTime.bloodmagic.item.sigil.ItemSigilMagnetism;
-import WayofTime.bloodmagic.item.sigil.ItemSigilPhantomBridge;
-import WayofTime.bloodmagic.item.sigil.ItemSigilSeer;
-import WayofTime.bloodmagic.item.sigil.ItemSigilSuppression;
-import WayofTime.bloodmagic.item.sigil.ItemSigilTeleposition;
-import WayofTime.bloodmagic.item.sigil.ItemSigilTransposition;
-import WayofTime.bloodmagic.item.sigil.ItemSigilVoid;
-import WayofTime.bloodmagic.item.sigil.ItemSigilWater;
-import WayofTime.bloodmagic.item.sigil.ItemSigilWhirlwind;
 import WayofTime.bloodmagic.item.soul.ItemMonsterSoul;
 import WayofTime.bloodmagic.item.soul.ItemSentientArmourGem;
 import WayofTime.bloodmagic.item.soul.ItemSentientBow;
@@ -113,6 +95,7 @@ public class ModItems
     public static Item sigilWhirlwind;
     public static Item sigilPhantomBridge;
     public static Item sigilCompression;
+    public static Item sigilHolding;
 
     public static Item sigilTeleposition;
     public static Item sigilTransposition;
@@ -210,6 +193,7 @@ public class ModItems
         sigilWhirlwind = registerItem(new ItemSigilWhirlwind(), Constants.BloodMagicItem.SIGIL_WHIRLWIND.getRegName());
         sigilCompression = registerItem(new ItemSigilCompression(), Constants.BloodMagicItem.SIGIL_COMPRESSION.getRegName());
         sigilEnderSeverance = registerItem(new ItemSigilEnderSeverance(), Constants.BloodMagicItem.SIGIL_ENDER_SEVERANCE.getRegName());
+        sigilHolding = registerItem(new ItemSigilHolding(), Constants.BloodMagicItem.SIGIL_HOLDING.getRegName());
 
         sigilTeleposition = registerItem(new ItemSigilTeleposition(), Constants.BloodMagicItem.SIGIL_TELEPOSITION.getRegName());
         sigilTransposition = registerItem(new ItemSigilTransposition(), Constants.BloodMagicItem.SIGIL_TRANSPOSITION.getRegName());
