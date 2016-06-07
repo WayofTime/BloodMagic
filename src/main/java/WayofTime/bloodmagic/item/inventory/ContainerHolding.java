@@ -168,7 +168,7 @@ public class ContainerHolding extends Container
         @Override
         public boolean isItemValid(ItemStack itemStack)
         {
-            return itemStack.getItem() instanceof ISigil;
+            return itemStack.getItem() instanceof ISigil && !(itemStack.getItem() instanceof ItemSigilHolding);
         }
     }
 
