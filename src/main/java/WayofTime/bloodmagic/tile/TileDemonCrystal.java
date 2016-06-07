@@ -111,7 +111,9 @@ public class TileDemonCrystal extends TileEntity implements ITickable
             return 0;
         }
 
-        EnumDemonWillType type = EnumDemonWillType.values()[this.getBlockMetadata()];
+        IBlockState state = worldObj.getBlockState(pos);
+        int meta = this.getBlockType().getMetaFromState(state);
+        EnumDemonWillType type = EnumDemonWillType.values()[meta];
 
         double value = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
         double percentDrain = willDrain <= 0 ? 1 : Math.min(1, value / willDrain);
