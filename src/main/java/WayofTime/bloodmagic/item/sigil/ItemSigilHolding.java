@@ -244,10 +244,9 @@ public class ItemSigilHolding extends ItemBindableBase implements IKeybindable
         if (itemStack.getItem() instanceof ItemSigilHolding)
         {
             ItemStack[] itemStacks = getInternalInventory(itemStack);
-            int currentSlot = getCurrentItemOrdinal(itemStack);
             if (itemStacks != null)
             {
-                return itemStacks[currentSlot];
+                return itemStacks[getCurrentItemOrdinal(itemStack)];
             }
         }
 
