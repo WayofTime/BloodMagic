@@ -23,7 +23,7 @@ public class BMKeyBinding extends KeyBinding
     public void handleKeyPress()
     {
         ItemStack itemStack = ClientHandler.minecraft.thePlayer.getHeldItemMainhand();
-        if (itemStack.getItem() instanceof IKeybindable)
+        if (itemStack != null && itemStack.getItem() instanceof IKeybindable)
         {
             BloodMagicPacketHandler.INSTANCE.sendToServer(new KeyProcessor(this.keyType, false));
         }
