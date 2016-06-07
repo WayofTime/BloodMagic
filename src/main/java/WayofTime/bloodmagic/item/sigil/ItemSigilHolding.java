@@ -25,16 +25,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemSigilHolding extends ItemBindableBase implements IKeybindable
+public class ItemSigilHolding extends ItemSigilBase implements IKeybindable
 {
     public static int inventorySize;
 
     public ItemSigilHolding()
     {
-        super();
+        super("holding");
 
-        setUnlocalizedName(Constants.Mod.MODID + ".sigil.holding");
-        setCreativeTab(BloodMagic.tabBloodMagic);
         inventorySize = 5;
     }
 
@@ -69,8 +67,6 @@ public class ItemSigilHolding extends ItemBindableBase implements IKeybindable
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.holding.desc"));
-
         super.addInformation(stack, player, tooltip, advanced);
 
         ItemStack[] inv = getInternalInventory(stack);

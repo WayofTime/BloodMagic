@@ -73,7 +73,7 @@ public class InventoryHolding extends ItemInventory
     @Override
     public boolean isItemValidForSlot(int slotIndex, ItemStack itemStack)
     {
-        return itemStack.getItem() instanceof ISigil;
+        return itemStack.getItem() instanceof ISigil && !(itemStack.getItem() instanceof ItemSigilHolding);
     }
 
     @Override
