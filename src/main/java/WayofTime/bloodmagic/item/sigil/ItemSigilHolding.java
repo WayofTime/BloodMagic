@@ -2,11 +2,14 @@ package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.item.inventory.InventoryHolding;
 import WayofTime.bloodmagic.util.handler.BMKeyBinding;
 import WayofTime.bloodmagic.util.handler.IKeybindable;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import com.google.common.base.Strings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -87,26 +90,6 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable
     }
 
     @Override
-    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
-    {
-        int currentSlot = getCurrentItemOrdinal(stack);
-        ItemStack[] inv = getInternalInventory(stack);
-
-        if (inv == null)
-            return EnumActionResult.PASS;
-
-        ItemStack itemUsing = inv[currentSlot];
-
-        if (itemUsing == null)
-            return EnumActionResult.PASS;
-
-        EnumActionResult result = itemUsing.getItem().onItemUseFirst(itemUsing, player, world, pos, side, hitX, hitY, hitZ, hand);
-        saveInventory(stack, inv);
-
-        return result;
-    }
-
-    @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
         int currentSlot = getCurrentItemOrdinal(stack);
@@ -117,7 +100,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable
 
         ItemStack itemUsing = inv[currentSlot];
 
-        if (itemUsing == null)
+        if (itemUsing == null || Strings.isNullOrEmpty(((IBindable) itemUsing.getItem()).getOwnerUUID(itemUsing)))
             return EnumActionResult.PASS;
 
         EnumActionResult result = itemUsing.getItem().onItemUse(itemUsing, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
@@ -137,7 +120,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable
 
         ItemStack itemUsing = inv[currentSlot];
 
-        if (itemUsing == null)
+        if (itemUsing == null || Strings.isNullOrEmpty(((IBindable) itemUsing.getItem()).getOwnerUUID(itemUsing)))
             return ActionResult.newResult(EnumActionResult.PASS, stack);
 
         itemUsing.getItem().onItemRightClick(itemUsing, world, player, hand);
