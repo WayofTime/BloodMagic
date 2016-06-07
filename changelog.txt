@@ -3,6 +3,7 @@ Version 2.0.1-43
 ------------------------------------------------------
 - Added an initial method to divine where a blood rune is missing for the next tier of altar.
 - Fixed an NPE with the Gathering of the Forsaken Souls
+- Fixed Absorption Hearts remaining after the absorption buff ends for the Steadfast Sentient Sword
 
 ------------------------------------------------------
 Version 2.0.1-42

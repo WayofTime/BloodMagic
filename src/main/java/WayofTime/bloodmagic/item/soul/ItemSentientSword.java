@@ -175,7 +175,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
             if (!target.isEntityAlive())
             {
                 float absorption = attacker.getAbsorptionAmount();
-                attacker.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, absorptionTime[willBracket]));
+                attacker.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, absorptionTime[willBracket], 127));
                 attacker.setAbsorptionAmount((float) Math.min(absorption + target.getMaxHealth() * 0.05f, maxAbsorptionHearts));
             }
             break;
