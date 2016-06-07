@@ -40,7 +40,6 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.awt.*;
-import java.lang.reflect.Field;
 
 public class ClientProxy extends CommonProxy
 {

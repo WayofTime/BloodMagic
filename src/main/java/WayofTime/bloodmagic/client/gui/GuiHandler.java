@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.client.gui;
 
+import WayofTime.bloodmagic.item.inventory.ContainerHolding;
+import WayofTime.bloodmagic.item.inventory.InventoryHolding;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -36,6 +38,8 @@ public class GuiHandler implements IGuiHandler
             return new ContainerMasterRoutingNode(player.inventory, (TileMasterRoutingNode) world.getTileEntity(pos));
         case Constants.Gui.ALCHEMY_TABLE_GUI:
             return new ContainerAlchemyTable(player.inventory, (TileAlchemyTable) world.getTileEntity(pos));
+        case Constants.Gui.SIGIL_HOLDING_GUI:
+            return new ContainerHolding(player, new InventoryHolding(player.getHeldItemMainhand()));
         }
 
         return null;
@@ -60,6 +64,8 @@ public class GuiHandler implements IGuiHandler
                 return new GuiMasterRoutingNode(player.inventory, (TileMasterRoutingNode) world.getTileEntity(pos));
             case Constants.Gui.ALCHEMY_TABLE_GUI:
                 return new GuiAlchemyTable(player.inventory, (TileAlchemyTable) world.getTileEntity(pos));
+            case Constants.Gui.SIGIL_HOLDING_GUI:
+                return new GuiHolding(player, new InventoryHolding(player.getHeldItemMainhand()));
             }
         }
 
