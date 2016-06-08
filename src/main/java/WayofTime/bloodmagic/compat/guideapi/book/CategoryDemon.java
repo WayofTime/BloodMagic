@@ -10,6 +10,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
+import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.RecipeHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -20,6 +21,7 @@ import amerifrance.guideapi.page.PageIRecipe;
 
 public class CategoryDemon
 {
+    //TODO: Add Forge recipe pages
     public static Map<ResourceLocation, EntryAbstract> buildCategory()
     {
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
@@ -42,6 +44,52 @@ public class CategoryDemon
 
         snarePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "snare" + ".info.2"), 270));
         entries.put(new ResourceLocation(keyBase + "snare"), new EntryText(snarePages, TextHelper.localize(keyBase + "snare"), false));
+
+        List<IPage> forgePages = new ArrayList<IPage>();
+        forgePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "forge" + ".info.1"), 270));
+
+        IRecipe forgeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.soulForge));
+        if (forgeRecipe != null)
+        {
+            forgePages.add(new PageIRecipe(forgeRecipe));
+        }
+
+        forgePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "forge" + ".info.2"), 270));
+        entries.put(new ResourceLocation(keyBase + "forge"), new EntryText(forgePages, TextHelper.localize(keyBase + "forge"), false));
+
+        List<IPage> pettyPages = new ArrayList<IPage>();
+        pettyPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "petty" + ".info.1"), 270));
+//        TartaricForgeRecipe pettyRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.soulGem, 1));
+//        if (pettyRecipe != null)
+//        {
+//            pettyPages.add(new PageRecipe(pettyRecipe));
+//        }
+        pettyPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "petty" + ".info.2"), 270));
+        entries.put(new ResourceLocation(keyBase + "petty"), new EntryText(pettyPages, TextHelper.localize(keyBase + "petty"), false));
+
+        List<IPage> swordPages = new ArrayList<IPage>();
+        swordPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "sword" + ".info.1"), 270));
+//        TartaricForgeRecipe swordRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.sentientSword));
+//        if (swordRecipe != null)
+//        {
+//            swordPages.add(new PageRecipe(swordRecipe));
+//        }
+        swordPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "sword" + ".info.2"), 270));
+        entries.put(new ResourceLocation(keyBase + "sword"), new EntryText(swordPages, TextHelper.localize(keyBase + "sword"), false));
+
+        List<IPage> lesserPages = new ArrayList<IPage>();
+        lesserPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lesser" + ".info.1"), 270));
+//        TartaricForgeRecipe pettyRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.soulGem, 1));
+//        if (pettyRecipe != null)
+//        {
+//            lesserPages.add(new PageRecipe(pettyRecipe));
+//        }
+        lesserPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lesser" + ".info.2"), 270));
+        entries.put(new ResourceLocation(keyBase + "lesser"), new EntryText(lesserPages, TextHelper.localize(keyBase + "lesser"), false));
+
+        List<IPage> reactionsPages = new ArrayList<IPage>();
+        reactionsPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "reactions" + ".info"), 270));
+        entries.put(new ResourceLocation(keyBase + "reactions"), new EntryText(reactionsPages, TextHelper.localize(keyBase + "reactions"), false));
 
         return entries;
     }
