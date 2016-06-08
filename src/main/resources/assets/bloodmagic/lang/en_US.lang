@@ -123,8 +123,7 @@ item.BloodMagic.sigil.phantomBridge.name=Sigil of the Phantom Bridge
 item.BloodMagic.sigil.whirlwind.name=Sigil of the Whirlwind
 item.BloodMagic.sigil.enderSeverance.name=Sigil of Ender Severance
 item.BloodMagic.sigil.holding.name=Sigil of Holding
-item.BloodMagic.sigil.holding.display=%s: &l&n%s
-
+item.BloodMagic.sigil.holding.display=&r%s: &o&n%s
 item.BloodMagic.sigil.teleposition.name=Teleposition Sigil
 item.BloodMagic.sigil.transposition.name=Transposition Sigil
 

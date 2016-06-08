@@ -83,7 +83,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable
         {
             if (inv[i] != null)
                 if (item != null && inv[i] == item)
-                    tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.holding.sigilInSlot", i + 1, "&l&n" + inv[i].getDisplayName() + "&r"));
+                    tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.holding.sigilInSlot", i + 1, "&o&n" + inv[i].getDisplayName()));
                 else
                     tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.holding.sigilInSlot", i + 1, inv[i].getDisplayName()));
         }
