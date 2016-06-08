@@ -77,7 +77,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
     {
-        if (entityLiving instanceof EntityPlayer)
+        if (entityLiving instanceof EntityPlayer && !entityLiving.worldObj.isRemote)
             PlayerSacrificeHelper.sacrificePlayerHealth((EntityPlayer) entityLiving);
     }
 
