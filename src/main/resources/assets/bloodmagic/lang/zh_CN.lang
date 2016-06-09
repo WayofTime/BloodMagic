@@ -98,10 +98,10 @@ item.BloodMagic.cuttingFluid.basicCuttingFluid.name=基础切削油
 item.BloodMagic.cuttingFluid.explosive.name=爆炸火药
 
 item.BloodMagic.demonCrystal.crystalDefault.name=邪灵魂魄晶体
-item.BloodMagic.demonCrystal.crystalCorrosive.name=腐蚀魂魄晶体
-item.BloodMagic.demonCrystal.crystalDestructive.name=恶意魂魄晶体
-item.BloodMagic.demonCrystal.crystalVengeful.name=复仇魂魄晶体
-item.BloodMagic.demonCrystal.crystalSteadfast.name=坚定魂魄晶体
+item.BloodMagic.demonCrystal.crystalCorrosive.name=腐蚀性魂魄晶体
+item.BloodMagic.demonCrystal.crystalDestructive.name=破坏性魂魄晶体
+item.BloodMagic.demonCrystal.crystalVengeful.name=复仇性魂魄晶体
+item.BloodMagic.demonCrystal.crystalSteadfast.name=坚定性魂魄晶体
 
 item.BloodMagic.monsterSoul.base.name=邪灵之魂
 
@@ -147,11 +147,11 @@ item.BloodMagic.upgradeTome.name=束灵盔甲强化手册
 item.BloodMagic.upgradeTrainer.name=束灵盔甲训练手镯
 
 item.BloodMagic.sentientSword.name=感知之剑
-item.BloodMagic.soulGem.petty.name=[微小]冥界宝石
-item.BloodMagic.soulGem.lesser.name=[细块]冥界宝石
-item.BloodMagic.soulGem.common.name=[普通]冥界宝石
-item.BloodMagic.soulGem.greater.name=[较大]冥界宝石
-item.BloodMagic.soulGem.grand.name=[精制]冥界宝石
+item.BloodMagic.soulGem.petty.name=[微小]塔尔塔宝石
+item.BloodMagic.soulGem.lesser.name=[细块]塔尔塔宝石
+item.BloodMagic.soulGem.common.name=[普通]塔尔塔宝石
+item.BloodMagic.soulGem.greater.name=[较大]塔尔塔宝石
+item.BloodMagic.soulGem.grand.name=[精制]塔尔塔宝石
 item.BloodMagic.soulSnare.base.name=原始投网
 item.BloodMagic.sentientBow.name=感知之弓
 item.BloodMagic.sentientArmourGem.name=感知盔甲宝石
@@ -163,6 +163,7 @@ item.BloodMagic.itemFilter.modItems.name=Mod物品筛选器
 item.BloodMagic.itemFilter.oreDict.name=矿物物品筛选器
 
 item.BloodMagic.experienceTome.name=经验手册
+item.BloodMagic.sanguineBook.name=血染知书
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=生命源质
@@ -228,10 +229,10 @@ tile.BloodMagic.dimensionalPortal.name=空间传送门
 tile.BloodMagic.bloodTank.name=血液槽
 
 tile.BloodMagic.demonCrystalDEFAULT.name=邪灵魂魄晶簇
-tile.BloodMagic.demonCrystalCORROSIVE.name=腐蚀魂魄晶簇
-tile.BloodMagic.demonCrystalDESTRUCTIVE.name=恶意魂魄晶簇
-tile.BloodMagic.demonCrystalVENGEFUL.name=复仇魂魄晶簇
-tile.BloodMagic.demonCrystalSTEADFAST.name=坚定魂魄晶簇
+tile.BloodMagic.demonCrystalCORROSIVE.name=腐蚀性魂魄晶簇
+tile.BloodMagic.demonCrystalDESTRUCTIVE.name=破坏性魂魄晶簇
+tile.BloodMagic.demonCrystalVENGEFUL.name=复仇性魂魄晶簇
+tile.BloodMagic.demonCrystalSTEADFAST.name=坚定性魂魄晶簇
 
 # Fluids
 fluid.lifeEssence=生命源质
@@ -337,7 +338,7 @@ tooltip.BloodMagic.livingArmour.upgrade.knockback=强劲身躯
 tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=坚韧皮肤
 tooltip.BloodMagic.livingArmour.upgrade.health=健壮体质
 tooltip.BloodMagic.livingArmour.upgrade.meleeDamage=猛烈击打
-tooltip.BloodMagic.livingArmour.upgrade.arrowShot=狙击诀窍
+tooltip.BloodMagic.livingArmour.upgrade.arrowShot=射击诀窍
 tooltip.BloodMagic.livingArmour.upgrade.stepAssist=步伐补助
 tooltip.BloodMagic.livingArmour.upgrade.grimReaper=死神竞跑
 tooltip.BloodMagic.livingArmour.upgrade.solarPowered=阳光能量
@@ -374,11 +375,11 @@ tooltip.BloodMagic.fluid.capacity=容量
 tooltip.BloodMagic.ghost.everything=任何物品
 tooltip.BloodMagic.ghost.amount=幽灵物品数量: %d
 
-tooltip.BloodMagic.currentType.default=魂魄: 默认
-tooltip.BloodMagic.currentType.corrosive=魂魄: 腐蚀
-tooltip.BloodMagic.currentType.destructive=魂魄: 恶意
-tooltip.BloodMagic.currentType.vengeful=魂魄: 复仇
-tooltip.BloodMagic.currentType.steadfast=魂魄: 坚定
+tooltip.BloodMagic.currentType.default=魂魄: 原生意识
+tooltip.BloodMagic.currentType.corrosive=魂魄: 腐蚀意识
+tooltip.BloodMagic.currentType.destructive=魂魄: 破坏意识
+tooltip.BloodMagic.currentType.vengeful=魂魄: 复仇意识
+tooltip.BloodMagic.currentType.steadfast=魂魄: 坚定意识
 
 tooltip.BloodMagic.experienceTome=用于储存经验的书
 tooltip.BloodMagic.experienceTome.exp=经验值: %0.3f
@@ -388,6 +389,8 @@ tooltip.BloodMagic.decoration.safe=安全装潢
 tooltip.BloodMagic.decoration.notSafe=危险装潢
 
 tooltip.BloodMagic.cuttingFluidRatio=%d/%d 所剩可用
+
+tooltip.BloodMagic.book.shifting=这些符号似乎... &o在变换着...
 
 # Ritual
 ritual.BloodMagic.blockRange.tooBig=提供的方块范围过大! 最多不超过 %s 个方块.
@@ -513,10 +516,19 @@ chat.BloodMagic.routing.set=设置节点位置
 chat.BloodMagic.routing.link.master=连接到主节点!
 chat.BloodMagic.routing.link=节点连接完成
 
+chat.BloodMagic.altar.comp.glowstone=一个萤石块
+chat.BloodMagic.altar.comp.bloodstone=一个大血石砖
+chat.BloodMagic.altar.comp.beacon=一个信标
+chat.BloodMagic.altar.comp.bloodrune=一个气血符文
+chat.BloodMagic.altar.comp.crystal=一个无效物品
+chat.BloodMagic.altar.comp.notair=一个实心方块
+
+chat.BloodMagic.altar.nextTier=下一层级的血之祭坛缺失 %s 在 %s.
+
 # sekrit
 
 secret.BloodMagic.bread.bloody=&r&cBloody Bread
-secret.BloodMagic.bread.bloody.desc=Only for &odire &r&7emergencies.
+secret.BloodMagic.bread.bloody.desc=仅为 &o极端的 &r&7紧急情况.
 
 # Commands
 commands.error.arg.invalid=无效参数
