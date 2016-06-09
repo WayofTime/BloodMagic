@@ -144,9 +144,13 @@ public class ModBlocks
 //        testSpellBlock = registerBlock(new BlockTestSpellBlock());
 
         BloodMagicAPI.addToTeleposerBlacklist(inputRoutingNode);
+        BloodMagicAPI.addToTranspositionBlacklist(inputRoutingNode);
         BloodMagicAPI.addToTeleposerBlacklist(outputRoutingNode);
+        BloodMagicAPI.addToTranspositionBlacklist(outputRoutingNode);
         BloodMagicAPI.addToTeleposerBlacklist(itemRoutingNode);
+        BloodMagicAPI.addToTranspositionBlacklist(itemRoutingNode);
         BloodMagicAPI.addToTeleposerBlacklist(demonCrystal);
+        BloodMagicAPI.addToTranspositionBlacklist(demonCrystal);
 
         initTiles();
     }

@@ -32,6 +32,8 @@ public class BloodMagicAPI
     @Getter
     private static final List<BlockStack> teleposerBlacklist = new ArrayList<BlockStack>();
     @Getter
+    private static final List<BlockStack> transpositionBlacklist = new ArrayList<BlockStack>();
+    @Getter
     private static final Map<String, Integer> entitySacrificeValues = new HashMap<String, Integer>();
     @Getter
     private static final ArrayList<Block> greenGroveBlacklist = new ArrayList<Block>();
@@ -146,6 +148,48 @@ public class BloodMagicAPI
     public static void addToTeleposerBlacklist(Block block)
     {
         addToTeleposerBlacklist(block, 0);
+    }
+
+    /**
+     * Used to add a {@link BlockStack} to the Transposition blacklist that cannot
+     * be changed via Configuration files.
+     *
+     * IMC:
+     * {@code FMLInterModComs.sendMessage("BloodMagic", "transpositionBlacklist", ItemStack)}
+     * Example:
+     * {@code FMLInterModComs.sendMessage("BloodMagic", "transpositionBlacklist", new ItemStack(Blocks.bedrock))}
+     *
+     * @param blockStack
+     *        - The BlockStack to blacklist.
+     */
+    public static void addToTranspositionBlacklist(BlockStack blockStack)
+    {
+        if (!transpositionBlacklist.contains(blockStack))
+            transpositionBlacklist.add(blockStack);
+    }
+
+    /**
+     * @see #addToTranspositionBlacklist(BlockStack)
+     *
+     * @param block
+     *        - The block to blacklist
+     * @param meta
+     *        - The meta of the block to blacklist
+     */
+    public static void addToTranspositionBlacklist(Block block, int meta)
+    {
+        addToTranspositionBlacklist(new BlockStack(block, meta));
+    }
+
+    /**
+     * @see #addToTranspositionBlacklist(BlockStack)
+     *
+     * @param block
+     *        - The block to blacklist
+     */
+    public static void addToTranspositionBlacklist(Block block)
+    {
+        addToTranspositionBlacklist(block, 0);
     }
 
     /**

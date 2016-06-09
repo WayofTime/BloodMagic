@@ -2,6 +2,8 @@ package WayofTime.bloodmagic.item.sigil;
 
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -13,8 +15,10 @@ import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.ConfigHandler;
@@ -54,7 +58,7 @@ public class ItemSigilTransposition extends ItemSigilBase
 
         if (tag.hasKey(Constants.NBT.CONTAINED_BLOCK_NAME) && tag.hasKey(Constants.NBT.CONTAINED_BLOCK_META))
         {
-            BlockStack blockStack = new BlockStack(Block.getBlockFromName(tag.getString(Constants.NBT.CONTAINED_BLOCK_NAME)), tag.getByte(Constants.NBT.CONTAINED_BLOCK_META));
+            BlockStack blockStack = new BlockStack(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(tag.getString(Constants.NBT.CONTAINED_BLOCK_NAME))), tag.getByte(Constants.NBT.CONTAINED_BLOCK_META));
             return super.getItemStackDisplayName(stack) + " (" + blockStack.getItemStack().getDisplayName() + ")";
         }
         return super.getItemStackDisplayName(stack);
@@ -69,9 +73,12 @@ public class ItemSigilTransposition extends ItemSigilBase
         if (!world.isRemote)
         {
             BlockStack rightClickedBlock = BlockStack.getStackFromPos(world, blockPos);
+            if (BloodMagicAPI.getTranspositionBlacklist().contains(rightClickedBlock))
+                return EnumActionResult.FAIL;
+
             if (!ConfigHandler.transpositionBlacklist.contains(rightClickedBlock) && player.isSneaking() && (!stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_NAME) || !stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_META)))
             {
-                if (rightClickedBlock.getBlock().getPlayerRelativeBlockHardness(state, player, world, blockPos) >= 0 && rightClickedBlock.getBlock().getBlockHardness(state, world, blockPos) >= 0)
+                if (rightClickedBlock.getState().getPlayerRelativeBlockHardness(player, world, blockPos) >= 0 && rightClickedBlock.getState().getBlockHardness(world, blockPos) >= 0)
                 {
                     int cost = getLpUsed();
 

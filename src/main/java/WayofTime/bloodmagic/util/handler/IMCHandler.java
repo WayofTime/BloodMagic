@@ -27,6 +27,15 @@ public class IMCHandler
                 }
             }
 
+            if (message.key.equals("transpositionBlacklist") && message.isItemStackMessage())
+            {
+                ItemStack stack = message.getItemStackValue();
+                if (stack.getItem() instanceof ItemBlock) {
+                    Block block = Block.getBlockFromItem(stack.getItem());
+                    BloodMagicAPI.addToTranspositionBlacklist(block, stack.getItemDamage());
+                }
+            }
+
             if (message.key.equals("sacrificeValue") && message.isStringMessage())
             {
                 String[] splitInfo = message.getStringValue().split(";");
