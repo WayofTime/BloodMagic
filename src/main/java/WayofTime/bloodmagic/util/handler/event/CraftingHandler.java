@@ -11,7 +11,10 @@ import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.item.ItemInscriptionTool;
 import WayofTime.bloodmagic.registry.ModItems;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemBanner;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -49,6 +52,33 @@ public class CraftingHandler {
                 output = NBTHelper.checkNBT(output);
                 ItemHelper.LivingUpgrades.setKey(output, Constants.Mod.MODID + ".upgrade.revealing");
                 ItemHelper.LivingUpgrades.setLevel(output, 1);
+                event.setCost(1);
+
+                event.setOutput(output);
+
+                return;
+            }
+        }
+
+        if (event.getLeft().getItem() == ModItems.sigilHolding) {
+            if (event.getRight().getItem() == Items.NAME_TAG) {
+                ItemStack output = event.getLeft().copy();
+                if (!output.hasTagCompound())
+                    output.setTagCompound(new NBTTagCompound());
+                output.getTagCompound().setString(Constants.NBT.COLOR, event.getRight().getDisplayName());
+                event.setCost(1);
+
+                event.setOutput(output);
+
+                return;
+            }
+
+            if (event.getRight().getItem() == Items.DYE) {
+                EnumDyeColor dyeColor = ItemBanner.getBaseColor(event.getRight());
+                ItemStack output = event.getLeft().copy();
+                if (!output.hasTagCompound())
+                    output.setTagCompound(new NBTTagCompound());
+                output.getTagCompound().setString(Constants.NBT.COLOR, String.valueOf(dyeColor.getMapColor().colorValue));
                 event.setCost(1);
 
                 event.setOutput(output);

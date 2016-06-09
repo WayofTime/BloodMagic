@@ -1,8 +1,12 @@
 package WayofTime.bloodmagic.registry;
 
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.IFuelHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -258,6 +262,23 @@ public class ModItems
     public static void initRenders()
     {
         InventoryRenderHelper renderHelper = BloodMagic.proxy.getRenderHelper();
+
+        final ResourceLocation holdingLoc = new ResourceLocation("bloodmagic", "item/ItemSigilHolding");
+        ModelLoader.setCustomMeshDefinition(
+                sigilHolding,
+                new ItemMeshDefinition()
+                {
+                    @Override
+                    public ModelResourceLocation getModelLocation(ItemStack stack)
+                    {
+                        if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.COLOR))
+                            return new ModelResourceLocation(holdingLoc, "type=color");
+                        return new ModelResourceLocation(holdingLoc, "type=normal");
+                    }
+                }
+        );
+        ModelLoader.registerItemVariants(sigilHolding, new ModelResourceLocation(holdingLoc, "type=normal"));
+        ModelLoader.registerItemVariants(sigilHolding, new ModelResourceLocation(holdingLoc, "type=color"));
 
         renderHelper.itemRenderAll(bloodOrb);
         OrbRegistry.registerOrbTexture(orbWeak, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbWeak"));

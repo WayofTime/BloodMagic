@@ -91,14 +91,24 @@ public class ClientProxy extends CommonProxy
     @Override
     public void init()
     {
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor()
-        {
-            @Override
-            public int getColorFromItemstack(ItemStack stack, int tintIndex)
-            {
-                return stack.hasTagCompound() && stack.getTagCompound().hasKey("bloody") ? new Color(0x8B191B).getRGB() : 16777215;
-            }
-        }, Items.BREAD);
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(
+                new IItemColor()
+                {
+                    @Override
+                    public int getColorFromItemstack(ItemStack stack, int tintIndex)
+                    {
+                        try {
+                            if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.COLOR))
+                                if (tintIndex == 1)
+                                    return Color.decode(stack.getTagCompound().getString(Constants.NBT.COLOR)).getRGB();
+                        } catch (NumberFormatException e) {
+                            return -1;
+                        }
+                        return -1;
+                    }
+                },
+                ModItems.sigilHolding
+        );
 
         addElytraLayer();
     }

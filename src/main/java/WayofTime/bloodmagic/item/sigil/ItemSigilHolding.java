@@ -24,7 +24,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ItemSigilHolding extends ItemSigilBase implements IKeybindable
@@ -284,5 +286,10 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable
             initModeTag(itemStack);
             itemStack.getTagCompound().setInteger(Constants.NBT.CURRENT_SIGIL, mode);
         }
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        return Collections.emptyList();
     }
 }

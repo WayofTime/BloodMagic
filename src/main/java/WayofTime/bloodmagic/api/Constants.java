@@ -117,6 +117,7 @@ public class Constants
         public static final String CURRENT_SIGIL = "currentSigil";
         public static final String MOST_SIG = "mostSig";
         public static final String LEAST_SIG = "leastSig";
+        public static final String COLOR = "color";
     }
 
     public static class Mod
