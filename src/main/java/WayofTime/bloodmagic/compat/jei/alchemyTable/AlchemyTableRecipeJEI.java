@@ -42,7 +42,7 @@ public class AlchemyTableRecipeJEI extends BlankRecipeWrapper
     @Nonnull
     public List<ItemStack> getOutputs()
     {
-        return Collections.singletonList(recipe.getRecipeOutput());
+        return Collections.singletonList(recipe.getRecipeOutput(new ArrayList<ItemStack>()));
     }
 
     @Nullable

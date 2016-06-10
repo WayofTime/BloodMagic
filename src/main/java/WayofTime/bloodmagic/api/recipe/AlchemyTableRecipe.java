@@ -74,7 +74,15 @@ public class AlchemyTableRecipe
         return input.size();
     }
 
-    public ItemStack getRecipeOutput()
+    /**
+     * Returns the output of the recipe, sensitive to the input list provided.
+     * If the input list does not technically match, the recipe should return
+     * the default output.
+     * 
+     * @param inputList
+     * @return
+     */
+    public ItemStack getRecipeOutput(List<ItemStack> inputList)
     {
         return output.copy();
     }

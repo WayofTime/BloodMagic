@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -15,6 +14,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBinding;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.compress.CompressionRegistry;
@@ -36,6 +36,7 @@ import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
+import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
 
 import com.google.common.base.Stopwatch;
 
@@ -313,5 +314,7 @@ public class ModRecipes
         AlchemyTableRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.PLANT_OIL), 100, 100, 1, Items.POTATO, Items.POTATO, new ItemStack(Items.DYE, 1, 15));
         AlchemyTableRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.PLANT_OIL), 100, 100, 1, Items.WHEAT, Items.WHEAT, new ItemStack(Items.DYE, 1, 15));
         AlchemyTableRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.PLANT_OIL), 100, 100, 1, Items.BEETROOT, Items.BEETROOT, Items.BEETROOT, new ItemStack(Items.DYE, 1, 15));
+
+        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableDyeableRecipe(0, 100, 0, new ItemStack(ModItems.sigilHolding)));
     }
 }

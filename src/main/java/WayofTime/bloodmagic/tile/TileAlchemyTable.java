@@ -254,7 +254,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
                 worldObj.notifyBlockUpdate(getPos(), state, state, 3);
             }
 
-            if (canCraft(recipe))
+            if (canCraft(inputList, recipe))
             {
                 ticksRequired = recipe.getTicksRequired();
                 burnTime++;
@@ -274,7 +274,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
                         if (!worldObj.isRemote)
                         {
-                            craftItem(recipe);
+                            craftItem(inputList, recipe);
                         }
                     }
 
@@ -301,14 +301,14 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         return ((double) burnTime) / ticksRequired;
     }
 
-    private boolean canCraft(AlchemyTableRecipe recipe)
+    private boolean canCraft(List<ItemStack> inputList, AlchemyTableRecipe recipe)
     {
         if (recipe == null)
         {
             return false;
         }
 
-        ItemStack outputStack = recipe.getRecipeOutput();
+        ItemStack outputStack = recipe.getRecipeOutput(inputList);
         ItemStack currentOutputStack = getStackInSlot(outputSlot);
         if (outputStack == null)
             return false;
@@ -365,11 +365,11 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         return 0;
     }
 
-    public void craftItem(AlchemyTableRecipe recipe)
+    public void craftItem(List<ItemStack> inputList, AlchemyTableRecipe recipe)
     {
-        if (this.canCraft(recipe))
+        if (this.canCraft(inputList, recipe))
         {
-            ItemStack outputStack = recipe.getRecipeOutput();
+            ItemStack outputStack = recipe.getRecipeOutput(inputList);
             ItemStack currentOutputStack = getStackInSlot(outputSlot);
 
             if (currentOutputStack == null)
