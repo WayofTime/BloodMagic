@@ -80,15 +80,13 @@ public class ItemExperienceBook extends Item implements IVariantProvider
         float progress = player.experience;
         int expToNext = getExperienceForNextLevel(player.experienceLevel);
 
-        float neededExp = (1 - progress) * expToNext;
+        int neededExp = (int) Math.ceil((1 - progress) * expToNext);
         float containedExp = (float) getStoredExperience(stack);
 
         if (containedExp >= neededExp)
         {
             setStoredExperience(stack, containedExp - neededExp);
-            player.experience = 0;
-            player.experienceTotal = Math.round(player.experienceTotal + neededExp);
-            player.experienceLevel++;
+            addPlayerXP(player, neededExp);
 
             if (player.experienceLevel % 5 == 0)
             {
@@ -98,30 +96,43 @@ public class ItemExperienceBook extends Item implements IVariantProvider
         } else
         {
             setStoredExperience(stack, 0);
-            progress += containedExp / expToNext;
-            player.experience = progress;
-            player.experienceTotal = Math.round(player.experienceTotal + containedExp);
+            addPlayerXP(player, (int) containedExp);
         }
     }
 
     public void absorbOneLevelExpFromPlayer(ItemStack stack, EntityPlayer player)
     {
         float progress = player.experience;
+
         if (progress > 0)
         {
-            double expDeduction = getExperienceAcquiredToNext(player.experienceLevel, player.experience);
-            player.experience = 0;
-            player.experienceTotal -= (int) (expDeduction);
-
-            addExperience(stack, expDeduction);
-        } else if (player.experienceLevel > 0)
+            int expDeduction = (int) getExperienceAcquiredToNext(player);
+            if (expDeduction > 0)
+            {
+                addPlayerXP(player, -expDeduction);
+                addExperience(stack, expDeduction);
+            }
+        } else if (progress == 0 && player.experienceLevel > 0)
         {
-            player.experienceLevel--;
-            int expDeduction = getExperienceForNextLevel(player.experienceLevel);
-            player.experienceTotal -= expDeduction;
-
+            int expDeduction = getExperienceForNextLevel(player.experienceLevel - 1);
+            addPlayerXP(player, -expDeduction);
             addExperience(stack, expDeduction);
         }
+    }
+
+    // Credits to Ender IO for some of the experience code, although now modified slightly for my convenience.
+    public static int getPlayerXP(EntityPlayer player)
+    {
+        return (int) (getExperienceForLevel(player.experienceLevel) + (player.experience * player.xpBarCap()));
+    }
+
+    public static void addPlayerXP(EntityPlayer player, int amount)
+    {
+        int experience = Math.max(0, getPlayerXP(player) + amount);
+        player.experienceTotal = experience;
+        player.experienceLevel = getLevelForExperience(experience);
+        int expForLevel = getExperienceForLevel(player.experienceLevel);
+        player.experience = (float) (experience - expForLevel) / (float) player.xpBarCap();
     }
 
     public static void setStoredExperience(ItemStack stack, double exp)
@@ -161,9 +172,28 @@ public class ItemExperienceBook extends Item implements IVariantProvider
         }
     }
 
-    public static double getExperienceAcquiredToNext(int currentLevel, double progress)
+    //TODO: Change to calculation form.
+    public static int getExperienceForLevel(int level)
     {
-        return progress * getExperienceForNextLevel(currentLevel);
+        if (level >= 21863)
+        {
+            return Integer.MAX_VALUE;
+        }
+        if (level == 0)
+        {
+            return 0;
+        }
+        int res = 0;
+        for (int i = 0; i < level; i++)
+        {
+            res += getExperienceForNextLevel(i);
+        }
+        return res;
+    }
+
+    public static double getExperienceAcquiredToNext(EntityPlayer player)
+    {
+        return player.experience * player.xpBarCap();
     }
 
     public static int getLevelForExperience(double exp)

@@ -5,6 +5,7 @@ Version 2.0.1-43
 - Fixed an NPE with the Gathering of the Forsaken Souls
 - Fixed Absorption Hearts remaining after the absorption buff ends for the Steadfast Sentient Sword
 - Updated the Guide (Woooooooooooooo........)
+- (Possibly?) fixed Tome of Peritia bug of the Negative Speed of Light
 
 ------------------------------------------------------
 Version 2.0.1-42
