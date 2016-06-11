@@ -97,13 +97,13 @@ item.BloodMagic.baseComponent.saltpeter.name=硝石
 item.BloodMagic.cuttingFluid.basicCuttingFluid.name=基础切削油
 item.BloodMagic.cuttingFluid.explosive.name=爆炸火药
 
-item.BloodMagic.demonCrystal.crystalDefault.name=邪灵魂魄晶体
-item.BloodMagic.demonCrystal.crystalCorrosive.name=腐蚀性魂魄晶体
-item.BloodMagic.demonCrystal.crystalDestructive.name=破坏性魂魄晶体
-item.BloodMagic.demonCrystal.crystalVengeful.name=复仇性魂魄晶体
-item.BloodMagic.demonCrystal.crystalSteadfast.name=坚定性魂魄晶体
+item.BloodMagic.demonCrystal.crystalDefault.name=恶魔意志晶体
+item.BloodMagic.demonCrystal.crystalCorrosive.name=腐蚀意志晶体
+item.BloodMagic.demonCrystal.crystalDestructive.name=破坏意志晶体
+item.BloodMagic.demonCrystal.crystalVengeful.name=复仇意志晶体
+item.BloodMagic.demonCrystal.crystalSteadfast.name=坚定意志晶体
 
-item.BloodMagic.monsterSoul.base.name=邪灵之魂
+item.BloodMagic.monsterSoul.base.name=恶魔意志
 
 item.BloodMagic.sigil.air.name=空气印记
 item.BloodMagic.sigil.bloodLight.name=血光印记
@@ -122,7 +122,8 @@ item.BloodMagic.sigil.seer.name=见解印记
 item.BloodMagic.sigil.phantomBridge.name=影桥印记
 item.BloodMagic.sigil.whirlwind.name=旋风印记
 item.BloodMagic.sigil.enderSeverance.name=绝影印记
-
+item.BloodMagic.sigil.holding.name=集持印记
+item.BloodMagic.sigil.holding.display=&r%s: &o&n%s
 item.BloodMagic.sigil.teleposition.name=传送印记
 item.BloodMagic.sigil.transposition.name=移位印记
 
@@ -207,9 +208,9 @@ tile.BloodMagic.incenseAltar.name=熏香祭坛
 tile.BloodMagic.teleposer.name=传送器
 tile.BloodMagic.soulForge.name=狱火熔炉
 tile.BloodMagic.alchemyTable.name=炼金术桌
-tile.BloodMagic.demonCrucible.name=邪灵坩埚
-tile.BloodMagic.demonPylon.name=邪灵导能塔
-tile.BloodMagic.demonCrystallizer.name=邪灵结晶坛
+tile.BloodMagic.demonCrucible.name=恶魔坩埚
+tile.BloodMagic.demonPylon.name=恶魔导能塔
+tile.BloodMagic.demonCrystallizer.name=恶魔结晶坛
 
 tile.BloodMagic.masterRouting.name=主控路由节点
 tile.BloodMagic.outputRouting.name=输出路由节点
@@ -228,11 +229,11 @@ tile.BloodMagic.path.obsidiantile.name=黑曜石瓦
 tile.BloodMagic.dimensionalPortal.name=空间传送门
 tile.BloodMagic.bloodTank.name=血液槽
 
-tile.BloodMagic.demonCrystalDEFAULT.name=邪灵魂魄晶簇
-tile.BloodMagic.demonCrystalCORROSIVE.name=腐蚀性魂魄晶簇
-tile.BloodMagic.demonCrystalDESTRUCTIVE.name=破坏性魂魄晶簇
-tile.BloodMagic.demonCrystalVENGEFUL.name=复仇性魂魄晶簇
-tile.BloodMagic.demonCrystalSTEADFAST.name=坚定性魂魄晶簇
+tile.BloodMagic.demonCrystalDEFAULT.name=恶魔意志晶簇
+tile.BloodMagic.demonCrystalCORROSIVE.name=腐蚀意志晶簇
+tile.BloodMagic.demonCrystalDESTRUCTIVE.name=破坏意志晶簇
+tile.BloodMagic.demonCrystalVENGEFUL.name=复仇意志晶簇
+tile.BloodMagic.demonCrystalSTEADFAST.name=坚定意志晶簇
 
 # Fluids
 fluid.lifeEssence=生命源质
@@ -283,6 +284,8 @@ tooltip.BloodMagic.sigil.whirlwind.desc=&o最好不要穿裙子
 tooltip.BloodMagic.sigil.enderSeverance.desc=&o使末影人遇上一个严峻形势!
 tooltip.BloodMagic.sigil.teleposition.desc=随时可以脱离这里.
 tooltip.BloodMagic.sigil.transposition.desc=感受原力的力量, 我年轻的学徒.
+tooltip.BloodMagic.sigil.holding.desc=印记掌控
+tooltip.BloodMagic.sigil.holding.sigilInSlot=印记 %d: %s
 
 tooltip.BloodMagic.bound.sword.desc=&o屠杀幼弱之生灵
 tooltip.BloodMagic.bound.pickaxe.desc=&o无情地凿通大地
@@ -316,10 +319,10 @@ tooltip.BloodMagic.diviner.currentDirection=当前朝向: %s
 tooltip.BloodMagic.ritualReader.currentState=当前模式: %s
 tooltip.BloodMagic.ritualReader.set_area=定义区域
 tooltip.BloodMagic.ritualReader.information=信息
-tooltip.BloodMagic.ritualReader.set_will_types=设置魂魄消耗
+tooltip.BloodMagic.ritualReader.set_will_types=设置意志消耗
 tooltip.BloodMagic.ritualReader.desc.set_area=右击已激活仪式的主仪式石, 选至你想更改的区域, 随后分别右击新区域角落的两个方块. 
 tooltip.BloodMagic.ritualReader.desc.information=右击已激活仪式的主仪式石了解仪式的基本信息.
-tooltip.BloodMagic.ritualReader.desc.set_will_types=设置仪式将消耗的邪灵魂魄类型, 工具栏中存放该类晶体右击主仪式石.
+tooltip.BloodMagic.ritualReader.desc.set_will_types=设置仪式将消耗的恶魔意志类型, 工具栏中存放该类晶体右击主仪式石.
 
 tooltip.BloodMagic.arcaneAshes=用于绘制炼金矩阵的粉灰
 
@@ -354,16 +357,16 @@ tooltip.BloodMagic.livingArmour.upgrade.elytra=鞘翅
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6强化点数: %s / %s
 
-tooltip.BloodMagic.will=魂魄意识: %1$,.2f
-tooltip.BloodMagic.sentientSword.desc=以怨念之魂魄唤起其最大潜能.
-tooltip.BloodMagic.soulGem.petty=用于存储微量魂魄的晶石
-tooltip.BloodMagic.soulGem.lesser=用于存储少量魂魄的晶石
-tooltip.BloodMagic.soulGem.common=用于存储更多魂魄的晶石
-tooltip.BloodMagic.soulGem.greater=用于存储大量魂魄的晶石
-tooltip.BloodMagic.soulGem.grand=用于存储极大数量魂魄的晶石
-tooltip.BloodMagic.soulSnare.desc=投掷向怪物并消灭它们来获取附于其身的邪灵之魂
+tooltip.BloodMagic.will=意志质量: %1$,.2f
+tooltip.BloodMagic.sentientSword.desc=以恶魔意志唤起其最大潜能.
+tooltip.BloodMagic.soulGem.petty=用于存储微量意志的晶石
+tooltip.BloodMagic.soulGem.lesser=用于存储少量意志的晶石
+tooltip.BloodMagic.soulGem.common=用于存储更多意志的晶石
+tooltip.BloodMagic.soulGem.greater=用于存储大量意志的晶石
+tooltip.BloodMagic.soulGem.grand=用于存储极大数量意志的晶石
+tooltip.BloodMagic.soulSnare.desc=投掷向怪物并消灭它们来获取附于其身的恶魔意志
 
-tooltip.BloodMagic.itemFilter.exact=魂魄将确保物品精确匹配
+tooltip.BloodMagic.itemFilter.exact=将确保物品精确匹配
 tooltip.BloodMagic.itemFilter.ignoreNBT=忽视筛选的NBT
 tooltip.BloodMagic.itemFilter.modItems=同Mod的物品全部匹配
 tooltip.BloodMagic.itemFilter.oreDict=凭借矿物辞典筛选
@@ -375,11 +378,11 @@ tooltip.BloodMagic.fluid.capacity=容量
 tooltip.BloodMagic.ghost.everything=任何物品
 tooltip.BloodMagic.ghost.amount=幽灵物品数量: %d
 
-tooltip.BloodMagic.currentType.default=魂魄: 原生意识
-tooltip.BloodMagic.currentType.corrosive=魂魄: 腐蚀意识
-tooltip.BloodMagic.currentType.destructive=魂魄: 破坏意识
-tooltip.BloodMagic.currentType.vengeful=魂魄: 复仇意识
-tooltip.BloodMagic.currentType.steadfast=魂魄: 坚定意识
+tooltip.BloodMagic.currentType.default=蕴含: 原生意志
+tooltip.BloodMagic.currentType.corrosive=蕴含: 腐蚀意志
+tooltip.BloodMagic.currentType.destructive=蕴含: 破坏意志
+tooltip.BloodMagic.currentType.vengeful=蕴含: 复仇意志
+tooltip.BloodMagic.currentType.steadfast=蕴含: 坚定意志
 
 tooltip.BloodMagic.experienceTome=用于储存经验的书
 tooltip.BloodMagic.experienceTome.exp=经验值: %0.3f
@@ -452,8 +455,8 @@ ritual.BloodMagic.zephyrRitual.info=拾取其范围内的掉落物, 并放入所
 ritual.BloodMagic.upgradeRemoveRitual.info=未有介绍.
 ritual.BloodMagic.armourEvolveRitual.info=未有介绍.
 ritual.BloodMagic.animalGrowthRitual.info=加快其范围内的幼年动物的生长速度.
-ritual.BloodMagic.forsakenSoulRitual.info=对其伤害范围内的生物造成伤害, 当生物死亡时, 其晶体范围内的邪灵晶簇将生长.
-ritual.BloodMagic.crystalHarvestRitual.info=破坏范围内的邪灵魂魄晶簇, 掉落物丢于晶簇顶部.
+ritual.BloodMagic.forsakenSoulRitual.info=对其伤害范围内的生物造成伤害, 当生物死亡时, 其晶体范围内的恶魔晶簇将生长.
+ritual.BloodMagic.crystalHarvestRitual.info=破坏范围内的恶魔意志晶簇, 掉落物丢于晶簇顶部.
 
 ritual.BloodMagic.placerRitual.info=取出所连接的容器中的方块, 并放置于世界中.
 ritual.BloodMagic.fellingRitual.info=一个伐木设施, 该仪式将砍伐其范围内所有树与叶子, 并收集掉落物.
@@ -588,6 +591,9 @@ commands.soulnetwork.notACommand=这不是有效的命令
 commands.soulnetwork.fillMax.success=成功将 %s 的灵魂网络填满至其宝珠的最大值!
 commands.soulnetwork.create.success=创建 %s 的灵魂网络成功 (宝珠等级: %d)
 
+# Keybinds
+BloodMagic.keybind.openSigilHolding=打开集持印记
+
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=血之祭坛
 jei.BloodMagic.recipe.binding=炼金矩阵 (绑定)
@@ -604,7 +610,7 @@ jei.BloodMagic.recipe.lpDrained=消耗: %,d LP
 jei.BloodMagic.recipe.ticksRequired=时间: %,d 刻
 
 jei.BloodMagic.desc.altarBuilder=该物品仅限创造模式，用于调试测试.\n\nShift + 右键 改变层级. 右键祭坛开始搭建.\n\n手持破坏祭坛时将全部移除.
-jei.BloodMagic.desc.demonicWill=附身于生物的邪灵意念之体现.\n\n可以通过用感知武器杀死生物掉落, 或是对着生物抛掷原始投网, 当它出现白色颗粒时杀了它.
+jei.BloodMagic.desc.demonicWill=附身于生物的恶魔意志之体现.\n\n可以通过用感知武器杀死生物掉落, 或是对着生物抛掷原始投网, 当它出现白色颗粒时杀了它.
 
 # WAILA
 waila.BloodMagic.sneak=&o潜行查看信息
