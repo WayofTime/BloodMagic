@@ -10,6 +10,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.IFuelHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.Constants;
@@ -33,11 +35,11 @@ import WayofTime.bloodmagic.item.ItemLavaCrystal;
 import WayofTime.bloodmagic.item.ItemRitualDiviner;
 import WayofTime.bloodmagic.item.ItemRitualReader;
 import WayofTime.bloodmagic.item.ItemSacrificialDagger;
+import WayofTime.bloodmagic.item.ItemSanguineBook;
 import WayofTime.bloodmagic.item.ItemSlate;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import WayofTime.bloodmagic.item.ItemUpgradeTrainer;
-import WayofTime.bloodmagic.item.ItemSanguineBook;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
@@ -259,24 +261,22 @@ public class ModItems
         sanguineBook = registerItem(new ItemSanguineBook(), Constants.BloodMagicItem.SANGUINE_BOOK.getRegName());
     }
 
+    @SideOnly(Side.CLIENT)
     public static void initRenders()
     {
         InventoryRenderHelper renderHelper = BloodMagic.proxy.getRenderHelper();
 
         final ResourceLocation holdingLoc = new ResourceLocation("bloodmagic", "item/ItemSigilHolding");
-        ModelLoader.setCustomMeshDefinition(
-                sigilHolding,
-                new ItemMeshDefinition()
-                {
-                    @Override
-                    public ModelResourceLocation getModelLocation(ItemStack stack)
-                    {
-                        if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.COLOR))
-                            return new ModelResourceLocation(holdingLoc, "type=color");
-                        return new ModelResourceLocation(holdingLoc, "type=normal");
-                    }
-                }
-        );
+        ModelLoader.setCustomMeshDefinition(sigilHolding, new ItemMeshDefinition()
+        {
+            @Override
+            public ModelResourceLocation getModelLocation(ItemStack stack)
+            {
+                if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.COLOR))
+                    return new ModelResourceLocation(holdingLoc, "type=color");
+                return new ModelResourceLocation(holdingLoc, "type=normal");
+            }
+        });
         ModelLoader.registerItemVariants(sigilHolding, new ModelResourceLocation(holdingLoc, "type=normal"));
         ModelLoader.registerItemVariants(sigilHolding, new ModelResourceLocation(holdingLoc, "type=color"));
 
