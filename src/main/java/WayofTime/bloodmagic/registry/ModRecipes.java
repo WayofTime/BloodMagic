@@ -1,5 +1,8 @@
 package WayofTime.bloodmagic.registry;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -42,6 +45,8 @@ import com.google.common.base.Stopwatch;
 
 public class ModRecipes
 {
+    public static ArrayList<String> addedOreRecipeList = new ArrayList<String>();
+
     public static void init()
     {
         RecipeSorter.register(Constants.Mod.DOMAIN + "shapedorb", ShapedBloodOrbRecipe.class, RecipeSorter.Category.SHAPED, "before:minecraft:shapeless");
@@ -54,6 +59,7 @@ public class ModRecipes
         addAlchemyArrayRecipes();
         addSoulForgeRecipes();
         addAlchemyTableRecipes();
+        addOreDoublingAlchemyRecipes();
     }
 
     public static void initOreDict()
@@ -307,6 +313,13 @@ public class ModRecipes
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(ItemComponent.getStack(ItemComponent.SAND_IRON, 2), 400, 200, 1, "oreIron", ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC)));
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(ItemComponent.getStack(ItemComponent.SAND_GOLD, 2), 400, 200, 1, "oreGold", ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC)));
 
+        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(new ItemStack(Items.REDSTONE, 8), 400, 200, 1, "oreRedstone", ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC)));
+
+        addedOreRecipeList.add("oreIron");
+        addedOreRecipeList.add("oreGold");
+        addedOreRecipeList.add("oreCoal");
+        addedOreRecipeList.add("oreRedstone");
+
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(new ItemStack(Blocks.GRAVEL), 50, 50, 1, "cobblestone", ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE)));
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(new ItemStack(Blocks.SAND), 50, 50, 1, Blocks.GRAVEL, ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE)));
 
@@ -316,5 +329,26 @@ public class ModRecipes
         AlchemyTableRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.PLANT_OIL), 100, 100, 1, Items.BEETROOT, Items.BEETROOT, Items.BEETROOT, new ItemStack(Items.DYE, 1, 15));
 
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableDyeableRecipe(0, 100, 0, new ItemStack(ModItems.sigilHolding)));
+    }
+
+    public static void addOreDoublingAlchemyRecipes()
+    {
+        String[] oreList = OreDictionary.getOreNames().clone();
+        for (String ore : oreList)
+        {
+            if (ore.startsWith("ore") && !addedOreRecipeList.contains(ore))
+            {
+                String dustName = ore.replaceFirst("ore", "dust");
+
+                List<ItemStack> dustList = OreDictionary.getOres(dustName);
+                if (dustList != null && dustList.size() > 0)
+                {
+                    ItemStack dustStack = dustList.get(0).copy();
+                    dustStack.stackSize = 2;
+                    AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(dustStack, 400, 200, 1, ore, ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC)));
+                    addedOreRecipeList.add(ore);
+                }
+            }
+        }
     }
 }
