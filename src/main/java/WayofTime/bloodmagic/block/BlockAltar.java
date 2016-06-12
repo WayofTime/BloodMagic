@@ -30,7 +30,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.IAltarManipulator;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;

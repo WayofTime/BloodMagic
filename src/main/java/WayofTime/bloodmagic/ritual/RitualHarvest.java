@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.ritual;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IHarvestHandler;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
 import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
@@ -43,7 +43,7 @@ public class RitualHarvest extends Ritual
 
         if (network.getCurrentEssence() < getRefreshCost())
         {
-            network.causeNauseaToPlayer();
+            network.causeNausea();
             return;
         }
 

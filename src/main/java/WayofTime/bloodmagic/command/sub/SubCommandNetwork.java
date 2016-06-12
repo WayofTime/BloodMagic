@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.command.sub;
 
-import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.command.SubCommandBase;
 import WayofTime.bloodmagic.util.Utils;
@@ -112,7 +112,7 @@ public class SubCommandNetwork extends SubCommandBase
                     {
                         int amount = Integer.parseInt(args[2]);
                         int maxOrb = NetworkHelper.getMaximumForTier(network.getOrbTier());
-                        displaySuccessString(sender, "commands.network.add.success", network.addLifeEssence(amount, maxOrb), player.getDisplayName().getFormattedText());
+                        displaySuccessString(sender, "commands.network.add.success", network.add(amount, maxOrb), player.getDisplayName().getFormattedText());
                     } else
                     {
                         displayErrorString(sender, "commands.error.arg.invalid");

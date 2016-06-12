@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.AltarComponent;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
@@ -55,7 +55,7 @@ public class RitualAltarBuilder extends Ritual
 
         if (currentEssence < getRefreshCost())
         {
-            network.causeNauseaToPlayer();
+            network.causeNausea();
             return;
         }
 

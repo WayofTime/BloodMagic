@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -38,7 +38,7 @@ public class RitualCrystalHarvest extends Ritual
 
         if (currentEssence < getRefreshCost())
         {
-            network.causeNauseaToPlayer();
+            network.causeNausea();
             return;
         }
 

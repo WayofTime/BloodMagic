@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -32,7 +32,7 @@ public class RitualAnimalGrowth extends Ritual
 
         if (currentEssence < getRefreshCost())
         {
-            network.causeNauseaToPlayer();
+            network.causeNausea();
             return;
         }
 

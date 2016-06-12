@@ -5,6 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
+import javax.annotation.Nullable;
+
 /**
  * Base event class for Soul Network related events.
  * 
@@ -64,6 +66,7 @@ public class SoulNetworkEvent extends Event
     @Cancelable
     public static class ItemDrainNetworkEvent extends PlayerDrainNetworkEvent
     {
+        @Nullable
         public final ItemStack itemStack;
         /**
          * Amount of damage that would incur if the network could not drain
@@ -84,7 +87,7 @@ public class SoulNetworkEvent extends Event
          * @param drainAmount
          *        Original drain amount - change to alter cost
          */
-        public ItemDrainNetworkEvent(EntityPlayer player, String ownerNetwork, ItemStack itemStack, int drainAmount)
+        public ItemDrainNetworkEvent(EntityPlayer player, String ownerNetwork, @Nullable ItemStack itemStack, int drainAmount)
         {
             super(player, ownerNetwork, drainAmount);
             this.itemStack = itemStack;

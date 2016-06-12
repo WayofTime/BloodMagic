@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.command.sub;
 
-import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.command.SubCommandBase;

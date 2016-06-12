@@ -18,7 +18,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -49,7 +49,7 @@ public class RitualExpulsion extends Ritual
 
         if (currentEssence < getRefreshCost())
         {
-            network.causeNauseaToPlayer();
+            network.causeNausea();
             return;
         }
 
