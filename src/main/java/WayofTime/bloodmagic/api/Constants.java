@@ -96,6 +96,7 @@ public class Constants
         public static final String SOUL_SWORD_HEALTH = "soulSwordHealth";
         public static final String SOUL_SWORD_ATTACK_SPEED = "soulSwordAttackSpeed";
         public static final String SOUL_SWORD_SPEED = "soulSwordSpeed";
+        public static final String SOUL_SWORD_DIG_SPEED = "soulSwordDigSpeed";
         public static final String WILL_TYPE = "demonWillType";
 
         public static final String SOUL_FORGE_BURN = "burnTime";
@@ -195,7 +196,10 @@ public class Constants
         SENTIENT_ARMOR_LEGS("ItemSentientArmourLegs"),
         SENTIENT_ARMOR_BOOTS("ItemSentientArmourBoots"),
         SENTIENT_ARMOR_GEM("ItemSentientArmourGem"),
+        SENTIENT_AXE("ItemSentientAxe"),
         SENTIENT_BOW("ItemSentientBow"),
+        SENTIENT_PICKAXE("ItemSentientPickaxe"),
+        SENTIENT_SHOVEL("ItemSentientShovel"),
         SENTIENT_SWORD("ItemSentientSword"),
         SOUL_GEM("ItemSoulGem"),
         SOUL_SNARE("ItemSoulSnare"),
@@ -225,8 +229,7 @@ public class Constants
         SIGIL_TRANSPOSITION("ItemSigilTransposition"),
         RITUAL_READER("ItemRitualReader"),
         SANGUINE_BOOK("ItemSanguineBook"),
-        SIGIL_HOLDING("ItemSigilHolding"),
-        ;
+        SIGIL_HOLDING("ItemSigilHolding"), ;
 
         @Getter
         private final String regName;

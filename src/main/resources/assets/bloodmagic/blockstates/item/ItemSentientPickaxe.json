@@ -1,0 +1,36 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-tool"
+  },
+  "variants": {
+    "type": {
+      "default": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulPickaxe"
+        }
+      },
+      "corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulPickaxe_corrosive"
+        }
+      },
+      "destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulPickaxe_destructive"
+        }
+      },
+      "vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulPickaxe_vengeful"
+        }
+      },
+      "steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulPickaxe_steadfast"
+        }
+      }
+    }
+  }
+}

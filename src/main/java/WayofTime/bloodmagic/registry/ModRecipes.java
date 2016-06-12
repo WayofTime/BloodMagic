@@ -247,6 +247,9 @@ public class ModRecipes
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 3), 1000, 100, new ItemStack(ModItems.soulGem, 1, 2), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.bloodShard), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT));
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 4), 4000, 500, new ItemStack(ModItems.soulGem, 1, 3), Items.NETHER_STAR);
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientSword), 0, 0, new ItemStack(ModItems.soulGem), new ItemStack(Items.IRON_SWORD));
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientAxe), 0, 0, new ItemStack(ModItems.soulGem), new ItemStack(Items.IRON_AXE));
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientPickaxe), 0, 0, new ItemStack(ModItems.soulGem), new ItemStack(Items.IRON_PICKAXE));
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientShovel), 0, 0, new ItemStack(ModItems.soulGem), new ItemStack(Items.IRON_SHOVEL));
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientBow), 70, 0, new ItemStack(Items.BOW), new ItemStack(ModItems.soulGem, 1, 1), Items.STRING, Items.STRING);
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.arcaneAshes), 0, 0, "dustRedstone", "dyeWhite", new ItemStack(Items.GUNPOWDER), Items.COAL);
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_WATER), 10, 3, new ItemStack(Items.SUGAR), new ItemStack(Items.WATER_BUCKET), new ItemStack(Items.WATER_BUCKET));

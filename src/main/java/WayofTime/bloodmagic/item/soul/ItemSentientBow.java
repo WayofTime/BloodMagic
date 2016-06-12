@@ -236,7 +236,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
 
                 if ((double) arrowVelocity >= 0.1D)
                 {
-                    boolean flag1 = flag && itemstack.getItem() instanceof ItemArrow; //Forge: Fix consuming custom arrows.
+                    boolean flag1 = flag && itemstack.getItem() == Items.ARROW; //Forge: Fix consuming custom arrows.
 
                     if (!world.isRemote)
                     {
@@ -247,7 +247,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
 //                        ItemArrow itemarrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.arrow));
 //                        EntityArrow entityArrow = itemarrow.createArrow(world, itemstack, player);
                         float newArrowVelocity = arrowVelocity * getVelocityOfArrow(stack);
-                        EntityArrow entityArrow = new EntitySentientArrow(world, entityLiving, type);
+                        EntitySentientArrow entityArrow = new EntitySentientArrow(world, entityLiving, type);
                         entityArrow.setAim(player, player.rotationPitch, player.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
 
                         if (newArrowVelocity == 0)

@@ -69,7 +69,10 @@ import WayofTime.bloodmagic.item.sigil.ItemSigilWater;
 import WayofTime.bloodmagic.item.sigil.ItemSigilWhirlwind;
 import WayofTime.bloodmagic.item.soul.ItemMonsterSoul;
 import WayofTime.bloodmagic.item.soul.ItemSentientArmourGem;
+import WayofTime.bloodmagic.item.soul.ItemSentientAxe;
 import WayofTime.bloodmagic.item.soul.ItemSentientBow;
+import WayofTime.bloodmagic.item.soul.ItemSentientPickaxe;
+import WayofTime.bloodmagic.item.soul.ItemSentientShovel;
 import WayofTime.bloodmagic.item.soul.ItemSentientSword;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.item.soul.ItemSoulSnare;
@@ -154,6 +157,9 @@ public class ModItems
     public static Item sentientSword;
     public static Item sentientBow;
     public static Item sentientArmourGem;
+    public static Item sentientAxe;
+    public static Item sentientPickaxe;
+    public static Item sentientShovel;
 
     public static Item nodeRouter;
     public static Item baseItemFilter;
@@ -252,6 +258,9 @@ public class ModItems
         sentientSword = registerItem(new ItemSentientSword(), Constants.BloodMagicItem.SENTIENT_SWORD.getRegName());
         sentientBow = registerItem(new ItemSentientBow(), Constants.BloodMagicItem.SENTIENT_BOW.getRegName());
         sentientArmourGem = registerItem(new ItemSentientArmourGem(), Constants.BloodMagicItem.SENTIENT_ARMOR_GEM.getRegName());
+        sentientAxe = registerItem(new ItemSentientAxe(), Constants.BloodMagicItem.SENTIENT_AXE.getRegName());
+        sentientPickaxe = registerItem(new ItemSentientPickaxe(), Constants.BloodMagicItem.SENTIENT_PICKAXE.getRegName());
+        sentientShovel = registerItem(new ItemSentientShovel(), Constants.BloodMagicItem.SENTIENT_SHOVEL.getRegName());
 
         nodeRouter = registerItem(new ItemNodeRouter(), Constants.BloodMagicItem.NODE_ROUTER.getRegName());
         baseItemFilter = registerItem(new ItemRouterFilter(), Constants.BloodMagicItem.ROUTER_FILTER.getRegName());

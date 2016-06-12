@@ -1,0 +1,36 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-tool"
+  },
+  "variants": {
+    "type": {
+      "default": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulAxe"
+        }
+      },
+      "corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulAxe_corrosive"
+        }
+      },
+      "destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulAxe_destructive"
+        }
+      },
+      "vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulAxe_vengeful"
+        }
+      },
+      "steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulAxe_steadfast"
+        }
+      }
+    }
+  }
+}

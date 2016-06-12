@@ -156,6 +156,9 @@ item.BloodMagic.soulGem.grand.name=Grand Tartaric Gem
 item.BloodMagic.soulSnare.base.name=Rudimentary Snare
 item.BloodMagic.sentientBow.name=Sentient Bow
 item.BloodMagic.sentientArmourGem.name=Sentient Armour Gem
+item.BloodMagic.sentientAxe.name=Sentient Axe
+item.BloodMagic.sentientPickaxe.name=Sentient Pickaxe
+item.BloodMagic.sentientShovel.name=Sentient Shovel
 
 item.BloodMagic.nodeRouter.name=Node Router
 item.BloodMagic.itemFilter.exact.name=Precise Item Filter
@@ -359,6 +362,9 @@ tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
 
 tooltip.BloodMagic.will=Will Quality: %1$,.2f
 tooltip.BloodMagic.sentientSword.desc=Uses demon will to unleash its full potential.
+tooltip.BloodMagic.sentientAxe.desc=Uses demon will to unleash its full potential.
+tooltip.BloodMagic.sentientPickaxe.desc=Uses demon will to unleash its full potential.
+tooltip.BloodMagic.sentientShovel.desc=Uses demon will to unleash its full potential.
 tooltip.BloodMagic.soulGem.petty=A gem used to contain a little will
 tooltip.BloodMagic.soulGem.lesser=A gem used to contain some will
 tooltip.BloodMagic.soulGem.common=A gem used to contain more will
