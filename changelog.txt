@@ -7,6 +7,8 @@ Version 2.0.1-43
 - Updated the Guide (Woooooooooooooo........)
 - (Possibly?) fixed Tome of Peritia bug of the Negative Speed of Light
 - Added recipes for all ores -> dust in the alchemy table.
+- Added the recipes for the Sentient Tools - yes, they all drop Will.
+- Fixed the bow so that it now gives you Will when you kill a mob - it does not drop the Will, it goes directly to you.
 
 ------------------------------------------------------
 Version 2.0.1-42

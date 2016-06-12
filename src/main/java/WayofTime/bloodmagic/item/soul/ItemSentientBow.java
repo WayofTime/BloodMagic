@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item.soul;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
@@ -34,6 +35,9 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
     public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000 };
     public static double[] defaultDamageAdded = new double[] { 0.25, 0.5, 0.75, 1, 1.25 };
     public static float[] velocityAdded = new float[] { 0.25f, 0.5f, 0.75f, 1, 1.25f };
+    public static double[] soulDrainPerSwing = new double[] { 0.05, 0.1, 0.2, 0.4, 0.75 }; //TODO
+    public static double[] soulDrop = new double[] { 2, 4, 7, 10, 13 };
+    public static double[] staticDrop = new double[] { 1, 1, 2, 3, 3 };
 
     public ItemSentientBow()
     {
@@ -86,6 +90,11 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
         this.setCurrentType(stack, soulsRemaining > 0 ? type : EnumDemonWillType.DEFAULT);
         int level = getLevel(stack, soulsRemaining);
 //
+        double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
+
+        setDrainOfActivatedBow(stack, drain);
+        setStaticDropOfActivatedBow(stack, level >= 0 ? staticDrop[level] : 1);
+        setDropOfActivatedBow(stack, level >= 0 ? soulDrop[level] : 0);
 //        double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
 //        double extraDamage = level >= 0 ? damageAdded[level] : 0;
 //
@@ -204,6 +213,57 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
         tag.setString(Constants.NBT.WILL_TYPE, type.toString());
     }
 
+    public double getDrainOfActivatedBow(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN);
+    }
+
+    public void setDrainOfActivatedBow(ItemStack stack, double drain)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN, drain);
+    }
+
+    public double getStaticDropOfActivatedBow(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP);
+    }
+
+    public void setStaticDropOfActivatedBow(ItemStack stack, double drop)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP, drop);
+    }
+
+    public double getDropOfActivatedBow(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble(Constants.NBT.SOUL_SWORD_DROP);
+    }
+
+    public void setDropOfActivatedBow(ItemStack stack, double drop)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble(Constants.NBT.SOUL_SWORD_DROP, drop);
+    }
+
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
@@ -246,8 +306,11 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
                         //Need to do some stuffs
 //                        ItemArrow itemarrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.arrow));
 //                        EntityArrow entityArrow = itemarrow.createArrow(world, itemstack, player);
+
+                        double amount = (this.getDropOfActivatedBow(stack) * world.rand.nextDouble() + this.getStaticDropOfActivatedBow(stack));
+
                         float newArrowVelocity = arrowVelocity * getVelocityOfArrow(stack);
-                        EntitySentientArrow entityArrow = new EntitySentientArrow(world, entityLiving, type);
+                        EntitySentientArrow entityArrow = new EntitySentientArrow(world, entityLiving, type, amount);
                         entityArrow.setAim(player, player.rotationPitch, player.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
 
                         if (newArrowVelocity == 0)

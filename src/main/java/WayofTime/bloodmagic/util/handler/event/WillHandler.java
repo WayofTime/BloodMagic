@@ -1,13 +1,9 @@
 package WayofTime.bloodmagic.util.handler.event;
 
-import WayofTime.bloodmagic.annot.Handler;
-import WayofTime.bloodmagic.api.soul.*;
-import WayofTime.bloodmagic.demonAura.PosXY;
-import WayofTime.bloodmagic.demonAura.WillChunk;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
-import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.registry.ModPotions;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -17,36 +13,49 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.EnumDifficulty;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import WayofTime.bloodmagic.annot.Handler;
+import WayofTime.bloodmagic.api.soul.DemonWillHolder;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.IDemonWill;
+import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.demonAura.PosXY;
+import WayofTime.bloodmagic.demonAura.WillChunk;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
+import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.ModPotions;
 
 @Handler
-public class WillHandler {
+public class WillHandler
+{
 
     private final HashMap<Integer, Integer> serverTicks = new HashMap<Integer, Integer>();
 
     // Adds Will to player
     @SubscribeEvent
-    public void onItemPickup(EntityItemPickupEvent event) {
+    public void onItemPickup(EntityItemPickupEvent event)
+    {
         ItemStack stack = event.getItem().getEntityItem();
-        if (stack != null && stack.getItem() instanceof IDemonWill) {
+        if (stack != null && stack.getItem() instanceof IDemonWill)
+        {
             EntityPlayer player = event.getEntityPlayer();
 
             ItemStack remainder = PlayerDemonWillHandler.addDemonWill(player, stack);
 
-            if (remainder == null || ((IDemonWill) stack.getItem()).getWill(stack) < 0.0001 || PlayerDemonWillHandler.isDemonWillFull(EnumDemonWillType.DEFAULT, player)) {
+            if (remainder == null || ((IDemonWill) stack.getItem()).getWill(stack) < 0.0001 || PlayerDemonWillHandler.isDemonWillFull(EnumDemonWillType.DEFAULT, player))
+            {
                 stack.stackSize = 0;
                 event.setResult(Event.Result.ALLOW);
             }
@@ -54,12 +63,17 @@ public class WillHandler {
     }
 
     @SubscribeEvent
-    public void onEntityAttacked(LivingHurtEvent event)
+    public void onEntityAttacked(LivingDeathEvent event)
     {
-        Entity sourceEntity = event.getSource().getEntity();
+        if (event.getSource() instanceof EntityDamageSourceIndirect)
+        {
+            Entity sourceEntity = ((EntityDamageSourceIndirect) event.getSource()).getSourceOfDamage();
 
-        if (sourceEntity instanceof EntitySentientArrow)
-            ((EntitySentientArrow) sourceEntity).reimbursePlayer();
+            if (sourceEntity instanceof EntitySentientArrow)
+            {
+                ((EntitySentientArrow) sourceEntity).reimbursePlayer(event.getEntityLiving(), event.getEntityLiving().getMaxHealth());
+            }
+        }
     }
 
     // Add/Drop Demon Will for Player

@@ -1,11 +1,13 @@
 package WayofTime.bloodmagic.entity.projectile;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
@@ -26,18 +28,23 @@ public class EntitySentientArrow extends EntityTippedArrow
         super(worldIn, x, y, z);
     }
 
-    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type)
+    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reinburseAmount)
     {
         super(worldIn, shooter);
-        this.reimbursedAmountOnHit = 0;
+        this.reimbursedAmountOnHit = reinburseAmount;
         this.type = type;
     }
 
-    public void reimbursePlayer()
+    public void reimbursePlayer(EntityLivingBase hitEntity, float damage)
     {
         if (this.shootingEntity instanceof EntityPlayer)
         {
-            PlayerDemonWillHandler.addDemonWill(EnumDemonWillType.DEFAULT, (EntityPlayer) this.shootingEntity, reimbursedAmountOnHit);
+            if (hitEntity.worldObj.getDifficulty() != EnumDifficulty.PEACEFUL && !(hitEntity instanceof IMob))
+            {
+                return;
+            }
+
+            PlayerDemonWillHandler.addDemonWill(type, (EntityPlayer) this.shootingEntity, reimbursedAmountOnHit * damage / 20f);
         }
     }
 
