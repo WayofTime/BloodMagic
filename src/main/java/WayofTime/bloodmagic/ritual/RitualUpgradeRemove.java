@@ -92,6 +92,7 @@ public class RitualUpgradeRemove extends Ritual
                     if (removedUpgrade)
                     {
                         ((ItemLivingArmour) chestStack.getItem()).setLivingArmour(chestStack, armour, true);
+                        ItemLivingArmour.armourMap.put(chestStack, armour);
 
                         masterRitualStone.setActive(false);
 

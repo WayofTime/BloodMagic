@@ -41,6 +41,7 @@ import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import WayofTime.bloodmagic.item.ItemUpgradeTrainer;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
+import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
@@ -168,6 +169,8 @@ public class ModItems
 
     public static Item sanguineBook;
 
+    public static Item itemPointsUpgrade;
+
     public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 1, 10, 8, 50);
     public static Item.ToolMaterial soulToolMaterial = EnumHelper.addToolMaterial("SoulToolMaterial", 4, 520, 7, 8, 50);
 
@@ -268,6 +271,8 @@ public class ModItems
         cuttingFluid = registerItem(new ItemCuttingFluid(), Constants.BloodMagicItem.CUTTING_FLUID.getRegName());
 
         sanguineBook = registerItem(new ItemSanguineBook(), Constants.BloodMagicItem.SANGUINE_BOOK.getRegName());
+
+        itemPointsUpgrade = registerItem(new ItemLivingArmourPointsUpgrade(), Constants.BloodMagicItem.ARMOUR_POINTS_UPGRADE.getRegName());
     }
 
     @SideOnly(Side.CLIENT)

@@ -93,6 +93,8 @@ item.BloodMagic.baseComponent.coalSand.name=Coal Sand
 item.BloodMagic.baseComponent.plantOil.name=Plant Oil
 item.BloodMagic.baseComponent.sulfur.name=Sulfur
 item.BloodMagic.baseComponent.saltpeter.name=Saltpeter
+item.BloodMagic.baseComponent.neurotoxin.name=Neuro Toxin
+item.BloodMagic.baseComponent.antiseptic.name=Antiseptic
 
 item.BloodMagic.cuttingFluid.basicCuttingFluid.name=Basic Cutting Fluid
 item.BloodMagic.cuttingFluid.explosive.name=Explosive Powder
@@ -168,6 +170,8 @@ item.BloodMagic.itemFilter.oreDict.name=Ore Dictionary Item Filter
 
 item.BloodMagic.experienceTome.name=Tome of Peritia
 item.BloodMagic.sanguineBook.name=Book of Sanguine
+
+item.BloodMagic.livingPointUpgrade.draftAngelus.name=Draft of Angelus
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
@@ -289,6 +293,8 @@ tooltip.BloodMagic.sigil.teleposition.desc=I am very close to being moved by thi
 tooltip.BloodMagic.sigil.transposition.desc=Feel the power of the Force, my young apprentice.
 tooltip.BloodMagic.sigil.holding.desc=Sigil-ception
 tooltip.BloodMagic.sigil.holding.sigilInSlot=Slot %d: %s
+
+tooltip.BloodMagic.livingArmourPointsUpgrade.desc=Increases the max points of Living Armour to %d.
 
 tooltip.BloodMagic.bound.sword.desc=&oCulling the weak
 tooltip.BloodMagic.bound.pickaxe.desc=&oDestroying stone without mercy

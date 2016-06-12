@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.ResourceLocation;
@@ -38,6 +39,7 @@ import WayofTime.bloodmagic.compress.StorageBlockCraftingManager;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
+import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
 
@@ -330,6 +332,11 @@ public class ModRecipes
         AlchemyTableRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.PLANT_OIL), 100, 100, 1, Items.POTATO, Items.POTATO, new ItemStack(Items.DYE, 1, 15));
         AlchemyTableRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.PLANT_OIL), 100, 100, 1, Items.WHEAT, Items.WHEAT, new ItemStack(Items.DYE, 1, 15));
         AlchemyTableRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.PLANT_OIL), 100, 100, 1, Items.BEETROOT, Items.BEETROOT, Items.BEETROOT, new ItemStack(Items.DYE, 1, 15));
+
+        AlchemyTableRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.NEURO_TOXIN), 1000, 100, 2, new ItemStack(Items.FISH, 1, 3));
+        AlchemyTableRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.ANTISEPTIC, 2), 1000, 200, 2, ItemComponent.getStack(ItemComponent.PLANT_OIL), "nuggetGold", Items.WHEAT, Items.SUGAR, Blocks.BROWN_MUSHROOM, Blocks.RED_MUSHROOM);
+
+        AlchemyTableRecipeRegistry.registerRecipe(ItemLivingArmourPointsUpgrade.getStack(ItemLivingArmourPointsUpgrade.DRAFT_ANGELUS), 20000, 400, 3, ItemComponent.getStack(ItemComponent.NEURO_TOXIN), ItemComponent.getStack(ItemComponent.ANTISEPTIC), ItemComponent.getStack(ItemComponent.SAND_GOLD), Items.FERMENTED_SPIDER_EYE, new ItemStack(ModItems.bloodShard, 1, 0), Items.GHAST_TEAR);
 
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableDyeableRecipe(0, 100, 0, new ItemStack(ModItems.sigilHolding)));
     }

@@ -229,7 +229,8 @@ public class Constants
         SIGIL_TRANSPOSITION("ItemSigilTransposition"),
         RITUAL_READER("ItemRitualReader"),
         SANGUINE_BOOK("ItemSanguineBook"),
-        SIGIL_HOLDING("ItemSigilHolding"), ;
+        SIGIL_HOLDING("ItemSigilHolding"),
+        ARMOUR_POINTS_UPGRADE("ItemLivingArmourPointsUpgrade"), ;
 
         @Getter
         private final String regName;

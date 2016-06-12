@@ -130,6 +130,16 @@
         "textures": {
           "layer0": "bloodmagic:items/Saltpeter"
         }
+      },
+      "neurotoxin": {
+        "textures": {
+          "layer0": "bloodmagic:items/NeuroToxin"
+        }
+      },
+      "antiseptic": {
+        "textures": {
+          "layer0": "bloodmagic:items/Antiseptic"
+        }
       }
     }
   }

@@ -48,6 +48,8 @@ public class ItemComponent extends Item implements IVariantProvider
     public static final String PLANT_OIL = "plantOil";
     public static final String SULFUR = "sulfur";
     public static final String SALTPETER = "saltpeter";
+    public static final String NEURO_TOXIN = "neurotoxin";
+    public static final String ANTISEPTIC = "antiseptic";
 
     public ItemComponent()
     {
@@ -87,6 +89,8 @@ public class ItemComponent extends Item implements IVariantProvider
         names.add(22, PLANT_OIL);
         names.add(23, SULFUR);
         names.add(24, SALTPETER);
+        names.add(25, NEURO_TOXIN);
+        names.add(26, ANTISEPTIC);
     }
 
     @Override
