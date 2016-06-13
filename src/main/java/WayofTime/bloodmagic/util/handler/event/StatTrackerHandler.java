@@ -28,7 +28,8 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Handler
-public class StatTrackerHandler {
+public class StatTrackerHandler
+{
 
     private static float lastPlayerSwingStrength = 0;
 
@@ -91,7 +92,8 @@ public class StatTrackerHandler {
 
     // Tracks: Fall Protect, Arrow Protect, Physical Protect, Grave Digger, Sprint Attack, Critical Strike,
     @SubscribeEvent
-    public void entityHurt(LivingHurtEvent event) {
+    public void entityHurt(LivingHurtEvent event)
+    {
         DamageSource source = event.getSource();
         Entity sourceEntity = event.getSource().getEntity();
         EntityLivingBase attackedEntity = event.getEntityLiving();
@@ -137,7 +139,8 @@ public class StatTrackerHandler {
             {
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
-                if (armour != null) {
+                if (armour != null)
+                {
                     ItemStack mainWeapon = player.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
 
                     event.setAmount((float) (event.getAmount() + lastPlayerSwingStrength * armour.getAdditionalDamageOnHit(event.getAmount(), player, attackedEntity, mainWeapon)));
@@ -168,7 +171,7 @@ public class StatTrackerHandler {
     }
 
     // Tracks: Experienced
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent(priority = EventPriority.LOW)
     public void onExperiencePickup(PlayerPickupXpEvent event)
     {
         EntityPlayer player = event.getEntityPlayer();

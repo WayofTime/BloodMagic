@@ -2,6 +2,8 @@
 Version 2.0.2-44
 ------------------------------------------------------
 - Added the Draft of Angelus, which increases the max number of upgrade points for Living Armour. It's strawberry flavoured!
+- Fixed the Tome of Peritia again - <= and < are the same, right?
+- Fixed an interaction between the Tome of Peritia and the Experienced upgrade
 
 ------------------------------------------------------
 Version 2.0.1-43

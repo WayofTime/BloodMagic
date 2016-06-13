@@ -83,6 +83,8 @@ public class ItemExperienceBook extends Item implements IVariantProvider
         int neededExp = (int) Math.ceil((1 - progress) * expToNext);
         float containedExp = (float) getStoredExperience(stack);
 
+        System.out.println("Needed: " + neededExp + ", contained: " + containedExp + ", exp to next: " + expToNext);
+
         if (containedExp >= neededExp)
         {
             setStoredExperience(stack, containedExp - neededExp);
@@ -160,10 +162,10 @@ public class ItemExperienceBook extends Item implements IVariantProvider
 
     public static int getExperienceForNextLevel(int currentLevel)
     {
-        if (currentLevel <= 16)
+        if (currentLevel < 16)
         {
             return 2 * currentLevel + 7;
-        } else if (currentLevel <= 31)
+        } else if (currentLevel < 31)
         {
             return 5 * currentLevel - 38;
         } else
