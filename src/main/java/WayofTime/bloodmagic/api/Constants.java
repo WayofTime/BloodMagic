@@ -173,7 +173,8 @@ public class Constants
         BOUND_PICKAXE("ItemBoundPickaxe"),
         BOUND_SHOVEL("ItemBoundShovel"),
         BOUND_SWORD("ItemBoundSword"),
-        BUCKET_ESSENCE("ItemBucketEssence"),
+        /** @deprecated - Use {@code UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, BloodMagicAPI.getLifeEssence())} **/
+        @Deprecated BUCKET_ESSENCE("ItemBucketEssence"),
         COMPONENT("ItemComponent"),
         CUTTING_FLUID("ItemCuttingFluid"),
         DEMON_CRYSTAL("ItemDemonCrystal"),
