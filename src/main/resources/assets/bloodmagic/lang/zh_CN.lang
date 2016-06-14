@@ -363,7 +363,7 @@ tooltip.BloodMagic.livingArmour.upgrade.graveDigger=掘墓者
 tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=冲撞击打
 tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=精准击打
 tooltip.BloodMagic.livingArmour.upgrade.elytra=鞘翅
-
+tooltip.BloodMagic.livingArmour.upgrade.level=%s (等级 %d)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6强化点数: %s / %s
 
 tooltip.BloodMagic.will=意志质量: %1$,.2f
@@ -543,7 +543,7 @@ chat.BloodMagic.altar.nextTier=下一层级的血之祭坛缺失 %s 在 %s.
 # sekrit
 
 
-secret.BloodMagic.bread.bloody.desc=仅为 &o极端的 &r&7紧急情况.
+
 
 # Commands
 commands.error.arg.invalid=无效参数
