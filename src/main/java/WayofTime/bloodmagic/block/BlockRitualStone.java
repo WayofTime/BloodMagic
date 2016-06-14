@@ -53,6 +53,12 @@ public class BlockRitualStone extends BlockString implements IRitualStone, IVari
     }
 
     @Override
+    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player)
+    {
+        return false;
+    }
+
+    @Override
     public boolean isRuneType(World world, BlockPos pos, EnumRuneType runeType)
     {
         return runeType.toString().equals(names[getMetaFromState(world.getBlockState(pos))]);
