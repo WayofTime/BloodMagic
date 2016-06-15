@@ -93,6 +93,8 @@ item.BloodMagic.baseComponent.coalSand.name=煤矿砂
 item.BloodMagic.baseComponent.plantOil.name=植物油
 item.BloodMagic.baseComponent.sulfur.name=硫磺
 item.BloodMagic.baseComponent.saltpeter.name=硝石
+item.BloodMagic.baseComponent.neurotoxin.name=神经毒素
+item.BloodMagic.baseComponent.antiseptic.name=防腐剂
 
 item.BloodMagic.cuttingFluid.basicCuttingFluid.name=基础切削油
 item.BloodMagic.cuttingFluid.explosive.name=爆炸火药
@@ -123,7 +125,7 @@ item.BloodMagic.sigil.phantomBridge.name=影桥印记
 item.BloodMagic.sigil.whirlwind.name=旋风印记
 item.BloodMagic.sigil.enderSeverance.name=绝影印记
 item.BloodMagic.sigil.holding.name=集持印记
-item.BloodMagic.sigil.holding.display=&r%s: &o&n%s
+
 item.BloodMagic.sigil.teleposition.name=传送印记
 item.BloodMagic.sigil.transposition.name=移位印记
 
@@ -156,6 +158,9 @@ item.BloodMagic.soulGem.grand.name=[精制]塔尔塔宝石
 item.BloodMagic.soulSnare.base.name=原始投网
 item.BloodMagic.sentientBow.name=感知之弓
 item.BloodMagic.sentientArmourGem.name=感知盔甲宝石
+item.BloodMagic.sentientAxe.name=感知之斧
+item.BloodMagic.sentientPickaxe.name=感知之镐
+item.BloodMagic.sentientShovel.name=感知之锹
 
 item.BloodMagic.nodeRouter.name=节点连接工具
 item.BloodMagic.itemFilter.exact.name=精确物品筛选器
@@ -165,6 +170,8 @@ item.BloodMagic.itemFilter.oreDict.name=矿物物品筛选器
 
 item.BloodMagic.experienceTome.name=经验手册
 item.BloodMagic.sanguineBook.name=血染知书
+
+item.BloodMagic.livingPointUpgrade.draftAngelus.name=祷告之始
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=生命源质
@@ -287,6 +294,8 @@ tooltip.BloodMagic.sigil.transposition.desc=感受原力的力量, 我年轻的�
 tooltip.BloodMagic.sigil.holding.desc=印记掌控
 tooltip.BloodMagic.sigil.holding.sigilInSlot=印记 %d: %s
 
+tooltip.BloodMagic.livingArmourPointsUpgrade.desc=提升感知盔甲的最大点数至 %d.
+
 tooltip.BloodMagic.bound.sword.desc=&o屠杀幼弱之生灵
 tooltip.BloodMagic.bound.pickaxe.desc=&o无情地凿通大地
 tooltip.BloodMagic.bound.axe.desc=&o恶魔般的滥砍滥伐
@@ -297,7 +306,7 @@ tooltip.BloodMagic.slate.desc=在祭坛中将石头转化
 tooltip.BloodMagic.inscriber.desc=在墙面上的文字...
 
 tooltip.BloodMagic.pack.selfSacrifice.desc=相当不舒适的背包...
-tooltip.BloodMagic.pack.sacrifice.desc=Description
+
 tooltip.BloodMagic.pack.stored=储存: %d LP
 
 tooltip.BloodMagic.activationCrystal.weak=激活低等仪式
@@ -354,12 +363,15 @@ tooltip.BloodMagic.livingArmour.upgrade.graveDigger=掘墓者
 tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=冲撞击打
 tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=精准击打
 tooltip.BloodMagic.livingArmour.upgrade.elytra=鞘翅
-tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
+tooltip.BloodMagic.livingArmour.upgrade.level=%s (等级 %d)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6强化点数: %s / %s
 
 tooltip.BloodMagic.will=意志质量: %1$,.2f
 tooltip.BloodMagic.sentientSword.desc=以恶魔意志唤起其最大潜能.
 tooltip.BloodMagic.soulGem.petty=用于存储微量意志的晶石
+tooltip.BloodMagic.sentientAxe.desc=以恶魔意志唤起其最大潜能.
+tooltip.BloodMagic.sentientPickaxe.desc=以恶魔意志唤起其最大潜能.
+tooltip.BloodMagic.sentientShovel.desc=以恶魔意志唤起其最大潜能.
 tooltip.BloodMagic.soulGem.lesser=用于存储少量意志的晶石
 tooltip.BloodMagic.soulGem.common=用于存储更多意志的晶石
 tooltip.BloodMagic.soulGem.greater=用于存储大量意志的晶石
@@ -452,8 +464,8 @@ ritual.BloodMagic.speedRitual.info=将其范围内的玩家以仪式方向抛射
 ritual.BloodMagic.suppressionRitual.info=抑制其范围内的液体 - 停用仪式时恢复.
 ritual.BloodMagic.expulsionRitual.info=驱逐其范围内, 非激活者或主仪式石上方箱子中无绑定血宝珠的玩家, 离开该区域.
 ritual.BloodMagic.zephyrRitual.info=拾取其范围内的掉落物, 并放入所连接的箱子.
-ritual.BloodMagic.upgradeRemoveRitual.info=未有介绍.
-ritual.BloodMagic.armourEvolveRitual.info=未有介绍.
+
+
 ritual.BloodMagic.animalGrowthRitual.info=加快其范围内的幼年动物的生长速度.
 ritual.BloodMagic.forsakenSoulRitual.info=对其伤害范围内的生物造成伤害, 当生物死亡时, 其晶体范围内的恶魔晶簇将生长.
 ritual.BloodMagic.crystalHarvestRitual.info=破坏范围内的恶魔意志晶簇, 掉落物丢于晶簇顶部.
@@ -530,8 +542,8 @@ chat.BloodMagic.altar.nextTier=下一层级的血之祭坛缺失 %s 在 %s.
 
 # sekrit
 
-secret.BloodMagic.bread.bloody=&r&cBloody Bread
-secret.BloodMagic.bread.bloody.desc=仅为 &o极端的 &r&7紧急情况.
+
+
 
 # Commands
 commands.error.arg.invalid=无效参数
