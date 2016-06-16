@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.item.inventory.ContainerHolding;
 import WayofTime.bloodmagic.item.inventory.InventoryHolding;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
+import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -27,14 +28,14 @@ public class GuiHolding extends GuiContainer
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int param1, int param2)
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         //the parameters for drawString are: string, x, y, color
         fontRendererObj.drawString(TextHelper.localize("item.BloodMagic.sigil.holding.name"), 53, 4, 4210752);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouse)
     {
         //draw your Gui here, only thing you need to change is the path
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -42,15 +43,10 @@ public class GuiHolding extends GuiContainer
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-
-        if (player != null && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
+        if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == ModItems.sigilHolding)
         {
-            if (ItemSigilHolding.getCurrentSigil(player.getHeldItemMainhand()) != null)
-            {
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                this.mc.getTextureManager().bindTexture(texture);
-                this.drawTexturedModalRect(4 + x + 36 * ItemSigilHolding.getCurrentItemOrdinal(player.getHeldItemMainhand()), y + 13, 0, 123, 24, 24);
-            }
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            this.drawTexturedModalRect(4 + x + 36 * ItemSigilHolding.getCurrentItemOrdinal(player.getHeldItemMainhand()), y + 13, 0, 123, 24, 24);
         }
     }
 }
