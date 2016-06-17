@@ -48,7 +48,7 @@ public class SigilHoldingPacketProcessor implements IMessage, IMessageHandler<Si
 
         if (itemStack != null)
         {
-            ItemSigilHolding.cycleSigil(itemStack, message.mode);
+            ItemSigilHolding.cycleToNextSigil(itemStack, message.mode);
         }
 
         return null;
