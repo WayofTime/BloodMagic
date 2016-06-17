@@ -138,6 +138,7 @@ public class ConfigHandler
 
     // General
     public static int sacrificialPackConversion;
+    public static boolean sigilHoldingSkipsEmptySlots;
 
     // Client
     public static boolean alwaysRenderRoutingLines;
@@ -285,6 +286,7 @@ public class ConfigHandler
         config.addCustomCategoryComment(category, "General settings");
         BloodMagicAPI.setLoggingEnabled(config.getBoolean("enableLogging", category, true, "Allows logging information to the console. Fatal errors will bypass this"));
         sacrificialPackConversion = config.getInt("sacrificialPackConversion", category, 20, 0, 100, "Base multiplier for the Coat of Arms. DamageDealt * sacrificialPackConversion");
+        sigilHoldingSkipsEmptySlots = config.get(category, "sigilHoldingSkipsEmptySlots", false, "The Sigil of Holding will skip empty sigil slots if set to true. [default: false]").getBoolean();
 
         category = "Client";
         config.addCustomCategoryComment(category, "Client only settings");

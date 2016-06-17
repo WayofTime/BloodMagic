@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.ConfigHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
@@ -168,9 +169,14 @@ public class ClientHandler
 
     private void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel)
     {
-        int mode = ItemSigilHolding.getCurrentItemOrdinal(stack);
-        mode = dWheel < 0 ? ItemSigilHolding.next(mode) : ItemSigilHolding.prev(mode);
-        ItemSigilHolding.cycleSigil(stack, mode);
+        int mode = dWheel;
+        if (ConfigHandler.sigilHoldingSkipsEmptySlots)
+        {
+            mode = ItemSigilHolding.getCurrentItemOrdinal(stack);
+            mode = dWheel < 0 ? ItemSigilHolding.next(mode) : ItemSigilHolding.prev(mode);
+        }
+
+        ItemSigilHolding.cycleToNextSigil(stack, mode);
         BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacketProcessor(player.inventory.currentItem, mode));
     }
 

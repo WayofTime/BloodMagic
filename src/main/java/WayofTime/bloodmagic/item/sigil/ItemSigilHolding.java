@@ -219,15 +219,14 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable
         }
     }
 
-    public static ItemStack getCurrentSigil(ItemStack itemStack)
+    public static ItemStack getItemStackInSlot(ItemStack itemStack, int slot)
     {
         if (itemStack.getItem() instanceof ItemSigilHolding)
         {
             ItemStack[] itemStacks = getInternalInventory(itemStack);
             if (itemStacks != null)
-            {
-                return itemStacks[getCurrentItemOrdinal(itemStack)];
-            }
+                return itemStacks[slot == 5 ? 4 : slot];
+            else return null;
         }
 
         return null;
@@ -279,12 +278,41 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable
         return inv;
     }
 
-    public static void cycleSigil(ItemStack itemStack, int mode)
+    public static void cycleToNextSigil(ItemStack itemStack, int mode)
     {
         if (itemStack.getItem() instanceof ItemSigilHolding)
         {
             initModeTag(itemStack);
-            itemStack.getTagCompound().setInteger(Constants.NBT.CURRENT_SIGIL, mode);
+
+            int index;
+            int currentIndex = getCurrentItemOrdinal(itemStack);
+            ItemStack currentItemStack = getItemStackInSlot(itemStack, currentIndex);
+            if (currentItemStack == null)
+                return;
+            if (mode < 0)
+            {
+                index = next(currentIndex);
+                currentItemStack = getItemStackInSlot(itemStack, index);
+
+                while (currentItemStack == null)
+                {
+                    index = next(index);
+                    currentItemStack = getItemStackInSlot(itemStack, index);
+                }
+            }
+            else
+            {
+                index = prev(currentIndex);
+                currentItemStack = getItemStackInSlot(itemStack, index);
+
+                while (currentItemStack == null)
+                {
+                    index = prev(index);
+                    currentItemStack = getItemStackInSlot(itemStack, index);
+                }
+            }
+
+            itemStack.getTagCompound().setInteger(Constants.NBT.CURRENT_SIGIL, index);
         }
     }
 
