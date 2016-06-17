@@ -165,6 +165,11 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
             connectionList.remove(pos1);
             getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
         }
+
+        if (pos1.equals(masterPos))
+        {
+            this.masterPos = BlockPos.ORIGIN;
+        }
     }
 
     @Override

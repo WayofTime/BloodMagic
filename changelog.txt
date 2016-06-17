@@ -2,6 +2,7 @@
 Version 2.0.2-45
 ------------------------------------------------------
 - Changed the recipe of the Sanguine Scientiem
+- Fixed the Routing system so that it properly eliminates the connection to the Master node when the Master node is broken.
 
 ------------------------------------------------------
 Version 2.0.2-44
