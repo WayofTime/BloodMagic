@@ -138,11 +138,11 @@ public class ConfigHandler
 
     // General
     public static int sacrificialPackConversion;
-    public static boolean sigilHoldingSkipsEmptySlots;
 
     // Client
     public static boolean alwaysRenderRoutingLines;
     public static boolean invisibleSpectralBlocks;
+    public static boolean sigilHoldingSkipsEmptySlots;
 
     // Compat
     public static int wailaAltarDisplayMode;
@@ -286,12 +286,12 @@ public class ConfigHandler
         config.addCustomCategoryComment(category, "General settings");
         BloodMagicAPI.setLoggingEnabled(config.getBoolean("enableLogging", category, true, "Allows logging information to the console. Fatal errors will bypass this"));
         sacrificialPackConversion = config.getInt("sacrificialPackConversion", category, 20, 0, 100, "Base multiplier for the Coat of Arms. DamageDealt * sacrificialPackConversion");
-        sigilHoldingSkipsEmptySlots = config.get(category, "sigilHoldingSkipsEmptySlots", false, "The Sigil of Holding will skip empty sigil slots if set to true. [default: false]").getBoolean();
 
         category = "Client";
         config.addCustomCategoryComment(category, "Client only settings");
         alwaysRenderRoutingLines = config.getBoolean("alwaysRenderRoutingLines", category, false, "Always renders the beams between routing nodes. If false, only renders while a Node Router is being held.");
         invisibleSpectralBlocks = config.get(category, "invisibleSpectralBlocks", true, "Spectral Blocks (Used by the Suppression Sigil to store fluids) will not render at all. If false, a see through texture will render. [default: true]").setRequiresMcRestart(true).getBoolean();
+        sigilHoldingSkipsEmptySlots = config.get(category, "sigilHoldingSkipsEmptySlots", false, "The Sigil of Holding will skip empty sigil slots if set to true. [default: false]").getBoolean();
 
         category = "Compatibility";
         config.addCustomCategoryComment(category, "Compatibility settings");
