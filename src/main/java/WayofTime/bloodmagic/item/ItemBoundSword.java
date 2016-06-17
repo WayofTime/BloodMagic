@@ -3,6 +3,8 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,17 +15,14 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.BoundToolEvent;
 import WayofTime.bloodmagic.api.iface.IActivatable;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
@@ -37,8 +36,6 @@ import com.google.common.base.Strings;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import javax.annotation.Nullable;
-
 public class ItemBoundSword extends ItemSword implements IBindable, IActivatable, IMeshProvider
 {
     public ItemBoundSword()
@@ -47,6 +44,7 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
 
         setUnlocalizedName(Constants.Mod.MODID + ".bound.sword");
         setCreativeTab(BloodMagic.tabBloodMagic);
+        setMaxDamage(0);
     }
 
     @Override
