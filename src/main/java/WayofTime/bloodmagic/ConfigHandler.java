@@ -291,7 +291,7 @@ public class ConfigHandler
         config.addCustomCategoryComment(category, "Client only settings");
         alwaysRenderRoutingLines = config.getBoolean("alwaysRenderRoutingLines", category, false, "Always renders the beams between routing nodes. If false, only renders while a Node Router is being held.");
         invisibleSpectralBlocks = config.get(category, "invisibleSpectralBlocks", true, "Spectral Blocks (Used by the Suppression Sigil to store fluids) will not render at all. If false, a see through texture will render. [default: true]").setRequiresMcRestart(true).getBoolean();
-        sigilHoldingSkipsEmptySlots = config.getBoolean( "sigilHoldingSkipsEmptySlots", category, false, "The Sigil of Holding will skip empty sigil slots if set to true. [default: false]");
+        sigilHoldingSkipsEmptySlots = config.getBoolean( "sigilHoldingSkipsEmptySlots", category, false, "The Sigil of Holding will skip empty sigil slots if set to true.");
 
         category = "Compatibility";
         config.addCustomCategoryComment(category, "Compatibility settings");
