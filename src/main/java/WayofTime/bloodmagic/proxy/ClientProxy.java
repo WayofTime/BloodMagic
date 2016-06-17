@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.client.helper.ShaderHelper;
+import WayofTime.bloodmagic.client.hud.HUDElementHolding;
 import WayofTime.bloodmagic.client.render.*;
 import WayofTime.bloodmagic.client.render.entity.BloodLightRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SentientArrowRenderFactory;
@@ -27,7 +28,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -116,7 +116,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public void postInit()
     {
-
+        new HUDElementHolding();
     }
 
     @Override

@@ -7,23 +7,20 @@ import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.client.hud.HUDElement;
 import WayofTime.bloodmagic.client.render.RenderFakeBlocks;
 import WayofTime.bloodmagic.item.ItemRitualDiviner;
 import WayofTime.bloodmagic.item.ItemRitualReader;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.SigilHoldingPacketProcessor;
-import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.handler.BMKeyBinding;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,7 +40,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
@@ -63,10 +59,8 @@ public class ClientHandler
     public TextureAtlasSprite ritualStoneDusk;
 
     public static Minecraft minecraft = Minecraft.getMinecraft();
-
     public static final List<BMKeyBinding> keyBindings = new ArrayList<BMKeyBinding>();
-
-    public static final BMKeyBinding keyOpenSigilHolding = new BMKeyBinding("openSigilHolding", Keyboard.KEY_H, BMKeyBinding.Key.OPEN_SIGIL_HOLDING);
+    public static final List<HUDElement> hudElements = new ArrayList<HUDElement>();
 
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event)
@@ -158,45 +152,10 @@ public class ClientHandler
     }
 
     @SubscribeEvent
-    public void onGuiRender(RenderGameOverlayEvent.Pre event)
-    {
-        if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR)
-        {
-            ItemStack sigilHolding = minecraft.thePlayer.getHeldItemMainhand();
-            // TODO - Clean this mess
-            // Check mainhand for Sigil of Holding
-            if (sigilHolding == null)
-                return;
-            if (sigilHolding.getItem() != ModItems.sigilHolding)
-                sigilHolding = minecraft.thePlayer.getHeldItemOffhand();
-            // Check offhand for Sigil of Holding
-            if (sigilHolding == null)
-                return;
-            if (sigilHolding.getItem() != ModItems.sigilHolding)
-                return;
-
-            Gui ingameGui = minecraft.ingameGUI;
-
-            minecraft.getTextureManager().bindTexture(new ResourceLocation(Constants.Mod.MODID, "textures/gui/widgets.png"));
-            GlStateManager.color(1.0F, 1.0F, 1.0F);
-            ingameGui.drawTexturedModalRect(event.getResolution().getScaledWidth() / 2 + 100, event.getResolution().getScaledHeight() - 22, 0, 0, 102, 22);
-            int currentSlot = ItemSigilHolding.getCurrentItemOrdinal(sigilHolding);
-            ingameGui.drawTexturedModalRect(event.getResolution().getScaledWidth() / 2 + 99 + (currentSlot * 20), event.getResolution().getScaledHeight() - 23, 0, 22, 24, 24);
-
-            RenderHelper.enableGUIStandardItemLighting();
-            ItemStack[] holdingInv = ItemSigilHolding.getInternalInventory(sigilHolding);
-            int xOffset = 0;
-            if (holdingInv != null)
-            {
-                for (ItemStack sigil : holdingInv)
-                {
-                    renderHotbarItem(event.getResolution().getScaledWidth() / 2 + 103 + xOffset, event.getResolution().getScaledHeight() - 18, event.getPartialTicks(), minecraft.thePlayer, sigil);
-                    xOffset += 20;
-                }
-            }
-
-            RenderHelper.disableStandardItemLighting();
-        }
+    public void onHudRender(RenderGameOverlayEvent.Pre event) {
+        for (HUDElement element : hudElements)
+            if (element.getElementType() == event.getType() && element.shouldRender(minecraft))
+                element.render(minecraft, event.getResolution(), event.getPartialTicks());
     }
 
     private void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel)
