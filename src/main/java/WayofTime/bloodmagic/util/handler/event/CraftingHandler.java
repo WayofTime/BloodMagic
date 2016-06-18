@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.annot.Handler;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.AltarCraftedEvent;
 import WayofTime.bloodmagic.api.iface.IUpgradeTrainer;
@@ -15,7 +16,9 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBanner;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -37,6 +40,11 @@ public class CraftingHandler {
         {
             NBTHelper.checkNBT(event.getOutput());
             event.getOutput().getTagCompound().setInteger(Constants.NBT.USES, 10);
+        }
+
+        if (event.getOutput().getItem() == ForgeModContainer.getInstance().universalBucket && event.getAltarRecipe().getSyphon() == 1000) {
+            NBTTagCompound bucketTags = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, BloodMagicAPI.getLifeEssence()).getTagCompound();
+            event.getOutput().setTagCompound(bucketTags);
         }
     }
 
