@@ -24,6 +24,11 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import javax.annotation.Nullable;
 
 @Getter
+@Deprecated
+/**
+ * Deprecated in favor of new system in {@link WayofTime.bloodmagic.api.saving.BMWorldSavedData} and
+ * {@link WayofTime.bloodmagic.api.saving.SoulNetwork}
+ */
 public class SoulNetwork extends WorldSavedData
 {
     @Nullable

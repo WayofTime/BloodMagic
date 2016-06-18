@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
  * This class provides several helper methods in order to handle soul
  * consumption and use for a player. This refers to the Soul System, meaning
  * Monster Souls and Soul Gems, etc. The Soul Network's helper methods are found
- * in {@link WayofTime.bloodmagic.api.network.SoulNetwork}
+ * in {@link WayofTime.bloodmagic.api.util.helper.NetworkHelper}
  */
 public class PlayerDemonWillHandler
 {
