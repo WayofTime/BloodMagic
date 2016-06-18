@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -91,7 +91,7 @@ public class RitualFullStomach extends Ritual
 
             if (totalEffects >= maxEffects)
             {
-                network.causeNauseaToPlayer();
+                network.causeNausea();
 
                 break;
             }
