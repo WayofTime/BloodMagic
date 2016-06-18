@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerCriticalStrike;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerDigging;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerExperience;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFallProtect;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFireResist;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFood;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGraveDigger;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
@@ -25,6 +26,7 @@ import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeElytra;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeFallProtect;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeFireResist;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGraveDigger;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeHealthboost;
@@ -61,6 +63,7 @@ public class ModArmourTrackers
         LivingArmourHandler.registerStatTracker(StatTrackerStepAssist.class);
         LivingArmourHandler.registerStatTracker(StatTrackerSprintAttack.class);
         LivingArmourHandler.registerStatTracker(StatTrackerCriticalStrike.class);
+        LivingArmourHandler.registerStatTracker(StatTrackerFireResist.class);
 
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSpeed(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeDigging(0));
@@ -81,5 +84,6 @@ public class ModArmourTrackers
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSprintAttack(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeCriticalStrike(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeElytra(0));
+        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeFireResist(0));
     }
 }

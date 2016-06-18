@@ -87,6 +87,7 @@ public class Constants
         public static final String HELD_DOWN = "heldDown";
 
         public static final String UPGRADE_POISON_TIMER = "poisonTimer";
+        public static final String UPGRADE_FIRE_TIMER = "fireTimer";
 
         public static final String SOULS = "souls";
         public static final String SOUL_SWORD_DAMAGE = "soulSwordDamage";
@@ -173,8 +174,12 @@ public class Constants
         BOUND_PICKAXE("ItemBoundPickaxe"),
         BOUND_SHOVEL("ItemBoundShovel"),
         BOUND_SWORD("ItemBoundSword"),
-        /** @deprecated - Use {@code UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, BloodMagicAPI.getLifeEssence())} **/
-        @Deprecated BUCKET_ESSENCE("ItemBucketEssence"),
+        /**
+         * @deprecated - Use
+         *             {@code UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, BloodMagicAPI.getLifeEssence())}
+         **/
+        @Deprecated
+        BUCKET_ESSENCE("ItemBucketEssence"),
         COMPONENT("ItemComponent"),
         CUTTING_FLUID("ItemCuttingFluid"),
         DEMON_CRYSTAL("ItemDemonCrystal"),

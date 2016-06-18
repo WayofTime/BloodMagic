@@ -4,51 +4,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePoisonResist;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeFireResist;
 
-public class StatTrackerPoison extends StatTracker
+public class StatTrackerFireResist extends StatTracker
 {
-    public int totalPoisonTicks = 0;
+    public int totalFireTicks = 0;
 
-    public static int[] poisonTicksRequired = new int[] { 60 * 20, 3 * 60 * 20, 10 * 60 * 20, 20 * 60 * 20, 25 * 60 * 20 };
+    public static int[] fireTicksRequired = new int[] { 60 * 20, 3 * 60 * 20, 10 * 60 * 20, 20 * 60 * 20, 25 * 60 * 20 };
 
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.poison";
+        return Constants.Mod.MODID + ".tracker.fire";
     }
 
     @Override
     public void resetTracker()
     {
-        this.totalPoisonTicks = 0;
+        this.totalFireTicks = 0;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalPoisonTicks = tag.getInteger(Constants.Mod.MODID + ".tracker.poison");
+        totalFireTicks = tag.getInteger(Constants.Mod.MODID + ".tracker.fire");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setInteger(Constants.Mod.MODID + ".tracker.poison", totalPoisonTicks);
+        tag.setInteger(Constants.Mod.MODID + ".tracker.fire", totalFireTicks);
     }
 
     @Override
     public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour)
     {
-        if (player.isPotionActive(MobEffects.POISON))
+        if (player.isBurning())
         {
-            totalPoisonTicks++;
+            totalFireTicks++;
             this.markDirty();
             return true;
         }
@@ -69,9 +68,9 @@ public class StatTrackerPoison extends StatTracker
 
         for (int i = 0; i < 5; i++)
         {
-            if (totalPoisonTicks >= poisonTicksRequired[i])
+            if (totalFireTicks >= fireTicksRequired[i])
             {
-                upgradeList.add(new LivingArmourUpgradePoisonResist(i));
+                upgradeList.add(new LivingArmourUpgradeFireResist(i));
             }
         }
 
@@ -81,6 +80,6 @@ public class StatTrackerPoison extends StatTracker
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.poisonResist");
+        return key.equals(Constants.Mod.MODID + ".upgrade.fireResist");
     }
 }

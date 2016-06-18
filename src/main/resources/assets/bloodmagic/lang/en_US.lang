@@ -345,6 +345,7 @@ tooltip.BloodMagic.telepositionFocus.demonic=Used to move blocks in the world
 tooltip.BloodMagic.livingArmour.upgrade.speed=Quick Feet
 tooltip.BloodMagic.livingArmour.upgrade.digging=Dwarven Might
 tooltip.BloodMagic.livingArmour.upgrade.poisonResist=Poison Resistance
+tooltip.BloodMagic.livingArmour.upgrade.fireResist=Gift of Ignis
 tooltip.BloodMagic.livingArmour.upgrade.selfSacrifice=Tough Palms
 tooltip.BloodMagic.livingArmour.upgrade.knockback=Body Builder
 tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=Tough Skin
@@ -523,6 +524,7 @@ chat.BloodMagic.ritual.activate=A rush of energy flows through the ritual!
 chat.BloodMagic.ritual.notValid=You feel that these runes are not configured correctly...
 
 chat.BloodMagic.livingArmour.upgrade.poisonRemove=You are starting to feel better already!
+chat.BloodMagic.livingArmour.upgrade.fireRemove=&6A cool feeling envelopes you as the burning subsides.
 chat.BloodMagic.livingArmour.upgrade.grimReaper=&6A shadowy force pulls you from the brink of death!
 chat.BloodMagic.livingArmour.newUpgrade=&4Upgrade acquired!
 
