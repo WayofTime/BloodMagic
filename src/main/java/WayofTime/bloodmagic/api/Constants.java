@@ -31,6 +31,9 @@ public class Constants
         public static final String IS_REDSTONED = "isStoned";
         public static final String RUNTIME = "runtime";
         public static final String DIRECTION = "direction";
+        public static final String CURRENT_DISPLAYED_RITUAL = "currentDisplayedRitual";
+        public static final String CURRENT_DISPLAYED_DIRECTION = "currentDisplayedDirection";
+        public static final String DISPLAY = "display";
         public static final String REAGENT_TANKS = "reagentTanks";
         public static final String CURRENT_INCENSE = "BM:CurrentIncense";
         public static final String EMPTY = "Empty";
@@ -68,6 +71,7 @@ public class Constants
         public static final String ALTAR_MAX_CHARGE = "maxCharge";
         public static final String ALTAR_CHARGE_RATE = "chargeRate";
         public static final String ALTAR_CHARGE_FREQUENCY = "chargeFrequency";
+        public static final String ALTAR_CURRENT_TIER_DISPLAYED = "currentTierDisplayed";
 
         public static final String ALTARMAKER_CURRENT_TIER = "currentTier";
 

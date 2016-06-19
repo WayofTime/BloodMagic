@@ -224,4 +224,14 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
     {
         return bloodAltar.getChargingFrequency();
     }
+
+    public EnumAltarTier getCurrentTierDisplayed()
+    {
+        return bloodAltar.getCurrentTierDisplayed();
+    }
+
+    public boolean setCurrentTierDisplayed(EnumAltarTier altarTier)
+    {
+        return bloodAltar.setCurrentTierDisplayed(altarTier);
+    }
 }

@@ -284,31 +284,34 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable
         {
             initModeTag(itemStack);
 
-            int index;
-            int currentIndex = getCurrentItemOrdinal(itemStack);
-            ItemStack currentItemStack = getItemStackInSlot(itemStack, currentIndex);
-            if (currentItemStack == null)
-                return;
-            if (mode < 0)
+            int index = mode;
+            if (mode == 120 || mode == -120)
             {
-                index = next(currentIndex);
-                currentItemStack = getItemStackInSlot(itemStack, index);
-
-                while (currentItemStack == null)
+                int currentIndex = getCurrentItemOrdinal(itemStack);
+                ItemStack currentItemStack = getItemStackInSlot(itemStack, currentIndex);
+                if (currentItemStack == null)
+                    return;
+                if (mode < 0)
                 {
-                    index = next(index);
+                    index = next(currentIndex);
                     currentItemStack = getItemStackInSlot(itemStack, index);
+
+                    while (currentItemStack == null)
+                    {
+                        index = next(index);
+                        currentItemStack = getItemStackInSlot(itemStack, index);
+                    }
                 }
-            }
-            else
-            {
-                index = prev(currentIndex);
-                currentItemStack = getItemStackInSlot(itemStack, index);
-
-                while (currentItemStack == null)
+                else
                 {
-                    index = prev(index);
+                    index = prev(currentIndex);
                     currentItemStack = getItemStackInSlot(itemStack, index);
+
+                    while (currentItemStack == null)
+                    {
+                        index = prev(index);
+                        currentItemStack = getItemStackInSlot(itemStack, index);
+                    }
                 }
             }
 

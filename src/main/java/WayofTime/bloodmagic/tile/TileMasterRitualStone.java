@@ -36,6 +36,8 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.ChatUtil;
 
 import com.google.common.base.Strings;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Getter
 @NoArgsConstructor
@@ -49,6 +51,10 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     private Ritual currentRitual;
     @Setter
     private EnumFacing direction = EnumFacing.NORTH;
+    private Ritual currentDisplayedRitual;
+    private EnumFacing currentDisplayedDirection = EnumFacing.NORTH;
+    @Getter
+    private boolean display;
 
     @Override
     public void update()
@@ -100,6 +106,9 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         activeTime = tag.getInteger(Constants.NBT.RUNTIME);
         direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
         redstoned = tag.getBoolean(Constants.NBT.IS_REDSTONED);
+        currentDisplayedRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_DISPLAYED_RITUAL));
+        currentDisplayedDirection = EnumFacing.VALUES[tag.getInteger(Constants.NBT.CURRENT_DISPLAYED_DIRECTION)];
+        display = tag.getBoolean(Constants.NBT.DISPLAY);
     }
 
     @Override
@@ -119,6 +128,10 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         tag.setInteger(Constants.NBT.RUNTIME, getActiveTime());
         tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
         tag.setBoolean(Constants.NBT.IS_REDSTONED, redstoned);
+        String ritualDisplayedID = RitualRegistry.getIdForRitual(getCurrentDisplayedRitual());
+        tag.setString(Constants.NBT.CURRENT_DISPLAYED_RITUAL, Strings.isNullOrEmpty(ritualDisplayedID) ? "" : ritualDisplayedID);
+        tag.setInteger(Constants.NBT.CURRENT_DISPLAYED_DIRECTION, currentDisplayedDirection.getIndex());
+        tag.setBoolean(Constants.NBT.DISPLAY, isDisplay());
         return tag;
     }
 
@@ -130,8 +143,9 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
 
         activationCrystal = NBTHelper.checkNBT(activationCrystal);
         String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_UUID);
-//        crystalOwner = PlayerHelper.getUUIDFromPlayer(activator).toString(); //Temporary patch job 
+//        crystalOwner = PlayerHelper.getUUIDFromPlayer(activator).toString(); //Temporary patch job
 
+        setDisplay(false);
         if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null)
         {
             if (activationCrystal.getItem() instanceof ItemActivationCrystal)
@@ -220,6 +234,40 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         }
     }
 
+    public Ritual getCurrentDisplayedRitual()
+    {
+        return currentDisplayedRitual;
+    }
+
+    public boolean setCurrentDisplayedRitual(Ritual ritual)
+    {
+        if (currentDisplayedRitual != null && currentDisplayedRitual.getName().equals(ritual.getName()))
+            return false;
+        else
+            this.currentDisplayedRitual = ritual;
+
+        return true;
+    }
+
+    public EnumFacing getCurrentDisplayedDirection()
+    {
+        return currentDisplayedDirection;
+    }
+
+    public boolean setCurrentDisplayedDirection(EnumFacing direction)
+    {
+        if (currentDisplayedDirection == direction)
+            return false;
+        else
+            currentDisplayedDirection = direction;
+        return true;
+    }
+
+    public boolean setDisplay(boolean display)
+    {
+        return this.display != display && (this.display = display);
+    }
+
     @Override
     public int getCooldown()
     {
@@ -298,7 +346,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Override
     public World getWorldObj()
     {
-
         return getWorld();
     }
 

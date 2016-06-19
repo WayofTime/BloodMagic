@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -73,7 +74,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        if (addRuneToRitual(stack, world, pos, player))
+        if (trySetDisplayedRitual(stack, world, pos) && addRuneToRitual(stack, world, pos, player))
         {
             if (world.isRemote)
             {
@@ -89,7 +90,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     /**
      * Adds a single rune to the ritual.
-     * 
+     *
      * @param stack
      *        - The Ritual Diviner stack
      * @param world
@@ -98,7 +99,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
      *        - Block Position of the MRS.
      * @param player
      *        - The Player attempting to place the ritual
-     * 
+     *
      * @return - True if a rune was successfully added
      */
     public boolean addRuneToRitual(ItemStack stack, World world, BlockPos pos, EntityPlayer player)
@@ -145,13 +146,32 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                     } else
                     {
                         return false; // TODO: Possibly replace the block with a
-                                      // ritual stone
+                        // ritual stone
                     }
                 }
             }
         }
 
         return false;
+    }
+
+    public boolean trySetDisplayedRitual(ItemStack itemStack, World world, BlockPos pos)
+    {
+        TileEntity tile = world.getTileEntity(pos);
+
+        if (tile instanceof TileMasterRitualStone)
+        {
+            Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(itemStack));
+            TileMasterRitualStone masterRitualStone = (TileMasterRitualStone) tile;
+
+            if (ritual != null)
+            {
+                EnumFacing direction = getDirection(itemStack);
+                return !masterRitualStone.setCurrentDisplayedRitual(ritual) && !masterRitualStone.setCurrentDisplayedDirection(direction) && !masterRitualStone.setDisplay(true);
+            }
+        }
+
+        return true;
     }
 
     // TODO: Make this work for any IRitualStone
@@ -220,27 +240,27 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                 {
                     switch (component.getRuneType())
                     {
-                    case BLANK:
-                        blankRunes++;
-                        break;
-                    case AIR:
-                        airRunes++;
-                        break;
-                    case EARTH:
-                        earthRunes++;
-                        break;
-                    case FIRE:
-                        fireRunes++;
-                        break;
-                    case WATER:
-                        waterRunes++;
-                        break;
-                    case DUSK:
-                        duskRunes++;
-                        break;
-                    case DAWN:
-                        dawnRunes++;
-                        break;
+                        case BLANK:
+                            blankRunes++;
+                            break;
+                        case AIR:
+                            airRunes++;
+                            break;
+                        case EARTH:
+                            earthRunes++;
+                            break;
+                        case FIRE:
+                            fireRunes++;
+                            break;
+                        case WATER:
+                            waterRunes++;
+                            break;
+                        case DUSK:
+                            duskRunes++;
+                            break;
+                        case DAWN:
+                            dawnRunes++;
+                            break;
                     }
                 }
 
@@ -335,20 +355,20 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         EnumFacing newDirection;
         switch (direction)
         {
-        case NORTH:
-            newDirection = EnumFacing.EAST;
-            break;
-        case EAST:
-            newDirection = EnumFacing.SOUTH;
-            break;
-        case SOUTH:
-            newDirection = EnumFacing.WEST;
-            break;
-        case WEST:
-            newDirection = EnumFacing.NORTH;
-            break;
-        default:
-            newDirection = EnumFacing.NORTH;
+            case NORTH:
+                newDirection = EnumFacing.EAST;
+                break;
+            case EAST:
+                newDirection = EnumFacing.SOUTH;
+                break;
+            case SOUTH:
+                newDirection = EnumFacing.WEST;
+                break;
+            case WEST:
+                newDirection = EnumFacing.NORTH;
+                break;
+            default:
+                newDirection = EnumFacing.NORTH;
         }
 
         setDirection(stack, newDirection);
@@ -357,7 +377,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     public void notifyDirectionChange(EnumFacing direction, EntityPlayer player)
     {
-        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentDirection", direction.getName()));
+        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentDirection", Utils.toFancyCasing(direction.getName())));
     }
 
     public void setDirection(ItemStack stack, EnumFacing direction)
@@ -393,7 +413,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     /**
      * Cycles the selected ritual to the next available ritual that is enabled.
-     * 
+     *
      * @param stack
      *        - The ItemStack of the ritual diviner
      * @param player
@@ -446,7 +466,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     /**
      * Does the same as cycleRitual but instead cycles backwards.
-     * 
+     *
      * @param stack
      * @param player
      */
@@ -552,16 +572,16 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         int meta = stack.getItemDamage();
         switch (rune)
         {
-        case BLANK:
-        case AIR:
-        case EARTH:
-        case FIRE:
-        case WATER:
-            return true;
-        case DUSK:
-            return meta >= 1;
-        case DAWN:
-            return meta >= 2;
+            case BLANK:
+            case AIR:
+            case EARTH:
+            case FIRE:
+            case WATER:
+                return true;
+            case DUSK:
+                return meta >= 1;
+            case DAWN:
+                return meta >= 2;
         }
 
         return false;
