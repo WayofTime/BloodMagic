@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.altar.IAltarManipulator;
+import WayofTime.bloodmagic.api.iface.IDocumentedBlock;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.client.IVariantProvider;
@@ -11,6 +12,7 @@ import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,6 +23,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -47,19 +50,17 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
         if (world.isRemote)
             return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
 
-//        IBlockState hitState = world.getBlockState(pos);
-//        if (player.isSneaking() && hitState.getBlock() instanceof IDocumentedBlock)
-//        {
-//            IDocumentedBlock documentedBlock = (IDocumentedBlock) hitState.getBlock();
-//            List<ITextComponent> docs = documentedBlock.getDocumentation(player, world, pos, hitState);
-//            if (!docs.isEmpty())
-//            {
-//                ChatUtil.sendNoSpam(player, docs.toArray(new ITextComponent[docs.size()]));
-//                return EnumActionResult.SUCCESS;
-//            }
-//        }
-
-//        trySetDisplayedTier(world, pos);
+        IBlockState hitState = world.getBlockState(pos);
+        if (player.isSneaking() && hitState.getBlock() instanceof IDocumentedBlock)
+        {
+            IDocumentedBlock documentedBlock = (IDocumentedBlock) hitState.getBlock();
+            List<ITextComponent> docs = documentedBlock.getDocumentation(player, world, pos, hitState);
+            if (!docs.isEmpty())
+            {
+                ChatUtil.sendNoSpam(player, docs.toArray(new ITextComponent[docs.size()]));
+                return EnumActionResult.SUCCESS;
+            }
+        }
 
         return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
