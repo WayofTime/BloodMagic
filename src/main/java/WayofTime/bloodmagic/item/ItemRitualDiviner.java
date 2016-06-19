@@ -240,27 +240,27 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                 {
                     switch (component.getRuneType())
                     {
-                        case BLANK:
-                            blankRunes++;
-                            break;
-                        case AIR:
-                            airRunes++;
-                            break;
-                        case EARTH:
-                            earthRunes++;
-                            break;
-                        case FIRE:
-                            fireRunes++;
-                            break;
-                        case WATER:
-                            waterRunes++;
-                            break;
-                        case DUSK:
-                            duskRunes++;
-                            break;
-                        case DAWN:
-                            dawnRunes++;
-                            break;
+                    case BLANK:
+                        blankRunes++;
+                        break;
+                    case AIR:
+                        airRunes++;
+                        break;
+                    case EARTH:
+                        earthRunes++;
+                        break;
+                    case FIRE:
+                        fireRunes++;
+                        break;
+                    case WATER:
+                        waterRunes++;
+                        break;
+                    case DUSK:
+                        duskRunes++;
+                        break;
+                    case DAWN:
+                        dawnRunes++;
+                        break;
                     }
                 }
 
@@ -355,20 +355,20 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         EnumFacing newDirection;
         switch (direction)
         {
-            case NORTH:
-                newDirection = EnumFacing.EAST;
-                break;
-            case EAST:
-                newDirection = EnumFacing.SOUTH;
-                break;
-            case SOUTH:
-                newDirection = EnumFacing.WEST;
-                break;
-            case WEST:
-                newDirection = EnumFacing.NORTH;
-                break;
-            default:
-                newDirection = EnumFacing.NORTH;
+        case NORTH:
+            newDirection = EnumFacing.EAST;
+            break;
+        case EAST:
+            newDirection = EnumFacing.SOUTH;
+            break;
+        case SOUTH:
+            newDirection = EnumFacing.WEST;
+            break;
+        case WEST:
+            newDirection = EnumFacing.NORTH;
+            break;
+        default:
+            newDirection = EnumFacing.NORTH;
         }
 
         setDirection(stack, newDirection);
@@ -572,16 +572,16 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         int meta = stack.getItemDamage();
         switch (rune)
         {
-            case BLANK:
-            case AIR:
-            case EARTH:
-            case FIRE:
-            case WATER:
-                return true;
-            case DUSK:
-                return meta >= 1;
-            case DAWN:
-                return meta >= 2;
+        case BLANK:
+        case AIR:
+        case EARTH:
+        case FIRE:
+        case WATER:
+            return true;
+        case DUSK:
+            return meta >= 1;
+        case DAWN:
+            return meta >= 2;
         }
 
         return false;

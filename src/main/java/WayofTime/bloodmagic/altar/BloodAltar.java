@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.altar;
 
 import java.util.List;
 
+import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -82,6 +83,7 @@ public class BloodAltar implements IFluidHandler
     private AltarRecipe recipe;
     private ItemStack result;
 
+    @Getter
     private EnumAltarTier currentTierDisplayed = EnumAltarTier.ONE;
 
     public BloodAltar(TileAltar tileAltar)
@@ -722,11 +724,6 @@ public class BloodAltar implements IFluidHandler
     public int getBufferCapacity()
     {
         return bufferCapacity;
-    }
-
-    public EnumAltarTier getCurrentTierDisplayed()
-    {
-        return currentTierDisplayed;
     }
 
     public boolean setCurrentTierDisplayed(EnumAltarTier altarTier)

@@ -252,27 +252,27 @@ public class ClientHandler
 
                 switch (ritualComponent.getRuneType())
                 {
-                    case BLANK:
-                        texture = ClientHandler.ritualStoneBlank;
-                        break;
-                    case WATER:
-                        texture = ClientHandler.ritualStoneWater;
-                        break;
-                    case FIRE:
-                        texture = ClientHandler.ritualStoneFire;
-                        break;
-                    case EARTH:
-                        texture = ClientHandler.ritualStoneEarth;
-                        break;
-                    case AIR:
-                        texture = ClientHandler.ritualStoneAir;
-                        break;
-                    case DAWN:
-                        texture = ClientHandler.ritualStoneDawn;
-                        break;
-                    case DUSK:
-                        texture = ClientHandler.ritualStoneDusk;
-                        break;
+                case BLANK:
+                    texture = ClientHandler.ritualStoneBlank;
+                    break;
+                case WATER:
+                    texture = ClientHandler.ritualStoneWater;
+                    break;
+                case FIRE:
+                    texture = ClientHandler.ritualStoneFire;
+                    break;
+                case EARTH:
+                    texture = ClientHandler.ritualStoneEarth;
+                    break;
+                case AIR:
+                    texture = ClientHandler.ritualStoneAir;
+                    break;
+                case DAWN:
+                    texture = ClientHandler.ritualStoneDawn;
+                    break;
+                case DUSK:
+                    texture = ClientHandler.ritualStoneDusk;
+                    break;
                 }
 
                 RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);

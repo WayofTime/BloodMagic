@@ -51,7 +51,9 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     private Ritual currentRitual;
     @Setter
     private EnumFacing direction = EnumFacing.NORTH;
+    @Getter
     private Ritual currentDisplayedRitual;
+    @Getter
     private EnumFacing currentDisplayedDirection = EnumFacing.NORTH;
     @Getter
     private boolean display;
@@ -234,11 +236,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         }
     }
 
-    public Ritual getCurrentDisplayedRitual()
-    {
-        return currentDisplayedRitual;
-    }
-
     public boolean setCurrentDisplayedRitual(Ritual ritual)
     {
         if (currentDisplayedRitual != null && currentDisplayedRitual.getName().equals(ritual.getName()))
@@ -247,11 +244,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
             this.currentDisplayedRitual = ritual;
 
         return true;
-    }
-
-    public EnumFacing getCurrentDisplayedDirection()
-    {
-        return currentDisplayedDirection;
     }
 
     public boolean setCurrentDisplayedDirection(EnumFacing direction)
