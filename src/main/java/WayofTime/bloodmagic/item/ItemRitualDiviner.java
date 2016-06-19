@@ -3,8 +3,8 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.util.handler.event.ClientHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -167,7 +167,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
             if (ritual != null)
             {
                 EnumFacing direction = getDirection(itemStack);
-                return !masterRitualStone.setCurrentDisplayedRitual(ritual) && !masterRitualStone.setCurrentDisplayedDirection(direction) && !masterRitualStone.setDisplay(true);
+                return ClientHandler.setRitualHolo(masterRitualStone, ritual, direction, true);
             }
         }
 

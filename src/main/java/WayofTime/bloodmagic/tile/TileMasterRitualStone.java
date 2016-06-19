@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.tile;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.util.handler.event.ClientHandler;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -36,8 +36,6 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.ChatUtil;
 
 import com.google.common.base.Strings;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Getter
 @NoArgsConstructor
@@ -51,12 +49,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     private Ritual currentRitual;
     @Setter
     private EnumFacing direction = EnumFacing.NORTH;
-    @Getter
-    private Ritual currentDisplayedRitual;
-    @Getter
-    private EnumFacing currentDisplayedDirection = EnumFacing.NORTH;
-    @Getter
-    private boolean display;
 
     @Override
     public void update()
@@ -108,9 +100,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         activeTime = tag.getInteger(Constants.NBT.RUNTIME);
         direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
         redstoned = tag.getBoolean(Constants.NBT.IS_REDSTONED);
-        currentDisplayedRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_DISPLAYED_RITUAL));
-        currentDisplayedDirection = EnumFacing.VALUES[tag.getInteger(Constants.NBT.CURRENT_DISPLAYED_DIRECTION)];
-        display = tag.getBoolean(Constants.NBT.DISPLAY);
     }
 
     @Override
@@ -130,10 +119,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         tag.setInteger(Constants.NBT.RUNTIME, getActiveTime());
         tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
         tag.setBoolean(Constants.NBT.IS_REDSTONED, redstoned);
-        String ritualDisplayedID = RitualRegistry.getIdForRitual(getCurrentDisplayedRitual());
-        tag.setString(Constants.NBT.CURRENT_DISPLAYED_RITUAL, Strings.isNullOrEmpty(ritualDisplayedID) ? "" : ritualDisplayedID);
-        tag.setInteger(Constants.NBT.CURRENT_DISPLAYED_DIRECTION, currentDisplayedDirection.getIndex());
-        tag.setBoolean(Constants.NBT.DISPLAY, isDisplay());
         return tag;
     }
 
@@ -147,7 +132,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 //        crystalOwner = PlayerHelper.getUUIDFromPlayer(activator).toString(); //Temporary patch job
 
-        setDisplay(false);
+        ClientHandler.setRitualHolo(null, null, EnumFacing.NORTH, false);
         if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null)
         {
             if (activationCrystal.getItem() instanceof ItemActivationCrystal)
@@ -234,30 +219,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                 this.activeTime = 0;
             }
         }
-    }
-
-    public boolean setCurrentDisplayedRitual(Ritual ritual)
-    {
-        if (currentDisplayedRitual != null && currentDisplayedRitual.getName().equals(ritual.getName()))
-            return false;
-        else
-            this.currentDisplayedRitual = ritual;
-
-        return true;
-    }
-
-    public boolean setCurrentDisplayedDirection(EnumFacing direction)
-    {
-        if (currentDisplayedDirection == direction)
-            return false;
-        else
-            currentDisplayedDirection = direction;
-        return true;
-    }
-
-    public boolean setDisplay(boolean display)
-    {
-        return this.display != display && (this.display = display);
     }
 
     @Override

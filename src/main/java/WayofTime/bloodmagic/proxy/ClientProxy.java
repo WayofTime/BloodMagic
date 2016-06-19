@@ -18,7 +18,6 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
-import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import WayofTime.bloodmagic.util.handler.event.ClientHandler;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
@@ -77,7 +76,6 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileAltar.class, new RenderAltar());
         ClientRegistry.bindTileEntitySpecialRenderer(TileRoutingNode.class, new RenderItemRoutingNode());
         ClientRegistry.bindTileEntitySpecialRenderer(TileDemonCrucible.class, new RenderDemonCrucible());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileMasterRitualStone.class, new RenderMasterRitualStone());
     }
 
     @Override
