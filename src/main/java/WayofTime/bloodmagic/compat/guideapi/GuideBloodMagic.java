@@ -35,11 +35,11 @@ public class GuideBloodMagic
 
     public static void initCategories()
     {
-        guideBook.addCategory(new CategoryItemStack(CategoryAlchemy.buildCategory(), "guide.BloodMagic.category.alchemy", new ItemStack(ModItems.arcaneAshes)));
+//        guideBook.addCategory(new CategoryItemStack(CategoryAlchemy.buildCategory(), "guide.BloodMagic.category.alchemy", new ItemStack(ModItems.arcaneAshes)));
         guideBook.addCategory(new CategoryItemStack(CategoryArchitect.buildCategory(), "guide.BloodMagic.category.architect", new ItemStack(ModItems.sigilDivination)));
         guideBook.addCategory(new CategoryItemStack(CategoryDemon.buildCategory(), "guide.BloodMagic.category.demon", new ItemStack(ModItems.bloodShard)));
         guideBook.addCategory(new CategoryItemStack(CategoryRitual.buildCategory(), "guide.BloodMagic.category.ritual", new ItemStack(ModBlocks.ritualController)));
-        guideBook.addCategory(new CategoryItemStack(CategorySpell.buildCategory(), "guide.BloodMagic.category.spell", new ItemStack(ModItems.ritualDiviner)));
+//        guideBook.addCategory(new CategoryItemStack(CategorySpell.buildCategory(), "guide.BloodMagic.category.spell", new ItemStack(ModItems.ritualDiviner)));
     }
 
     public static void initJEIBlacklist()
