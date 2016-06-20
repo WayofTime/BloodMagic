@@ -10,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -22,10 +21,10 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.RitualEvent;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
@@ -189,14 +188,20 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Override
     public void performRitual(World world, BlockPos pos)
     {
-        if (!world.isRemote && getCurrentRitual() != null && RitualRegistry.ritualEnabled(getCurrentRitual()) && RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), getDirection()))
+        if (!world.isRemote && getCurrentRitual() != null && RitualRegistry.ritualEnabled(getCurrentRitual()))
         {
-            RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
+            if (RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), getDirection()))
+            {
+                RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
 
-            if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
-                return;
+                if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
+                    return;
 
-            getCurrentRitual().performRitual(this);
+                getCurrentRitual().performRitual(this);
+            } else
+            {
+                stopRitual(Ritual.BreakType.BREAK_STONE);
+            }
         }
     }
 
@@ -205,6 +210,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     {
         if (!getWorld().isRemote && getCurrentRitual() != null)
         {
+            System.out.println("Hai! I stopped");
             RitualEvent.RitualStopEvent event = new RitualEvent.RitualStopEvent(this, getOwner(), getCurrentRitual(), breakType);
 
             if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)

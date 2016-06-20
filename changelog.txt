@@ -7,6 +7,7 @@ Version 2.0.2-45
 - Made it so that the bound tools are (supposedly more so) unbreakable. This will probably come bite me on the ehem later, but we'll see.
 - Added Fire Resistance Living Armour Upgrade, "Gift of Ignis."
 - Updated The Architect section of the documentation.
+- Fixed it so the Ritual will call stopRitual when a ritual stone is broken.
 
 ------------------------------------------------------
 Version 2.0.2-44
