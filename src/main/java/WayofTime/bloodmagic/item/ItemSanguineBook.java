@@ -44,6 +44,31 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
     }
 
     @Override
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        if (world.isRemote)
+            return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
+
+        IBlockState hitState = world.getBlockState(pos);
+        if (player.isSneaking())
+        {
+            if (hitState.getBlock() instanceof IDocumentedBlock)
+            {
+                trySetDisplayedTier(world, pos);
+                IDocumentedBlock documentedBlock = (IDocumentedBlock) hitState.getBlock();
+                List<ITextComponent> docs = documentedBlock.getDocumentation(player, world, pos, hitState);
+                if (!docs.isEmpty())
+                {
+                    ChatUtil.sendNoSpam(player, docs.toArray(new ITextComponent[docs.size()]));
+                    return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
+                }
+            }
+        }
+
+        return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
+    }
+
+    @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (world.isRemote)
@@ -63,22 +88,6 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)));
 
             return super.onItemRightClick(stack, world, player, hand);
-        }
-
-        IBlockState hitState = world.getBlockState(rayTrace.getBlockPos());
-        if (player.isSneaking())
-        {
-            if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK && hitState.getBlock() instanceof IDocumentedBlock)
-            {
-                trySetDisplayedTier(world, rayTrace.getBlockPos());
-                IDocumentedBlock documentedBlock = (IDocumentedBlock) hitState.getBlock();
-                List<ITextComponent> docs = documentedBlock.getDocumentation(player, world, rayTrace.getBlockPos(), hitState);
-                if (!docs.isEmpty())
-                {
-                    ChatUtil.sendNoSpam(player, docs.toArray(new ITextComponent[docs.size()]));
-                    return super.onItemRightClick(stack, world, player, hand);
-                }
-            }
         }
 
         return super.onItemRightClick(stack, world, player, hand);
