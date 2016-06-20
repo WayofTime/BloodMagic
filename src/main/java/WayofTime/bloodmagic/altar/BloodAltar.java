@@ -121,7 +121,7 @@ public class BloodAltar implements IFluidHandler
             {
                 if (worldBlock.getBlock() instanceof IAltarComponent)
                 {
-                    EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(worldBlock.getMeta());
+                    EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(world, worldBlock.getState(), componentPos);
                     if (component != altarComponent.getComponent())
                         return false;
                 } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent()))
@@ -154,7 +154,7 @@ public class BloodAltar implements IFluidHandler
             {
                 if (worldBlock.getBlock() instanceof IAltarComponent)
                 {
-                    EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(worldBlock.getMeta());
+                    EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(world, worldBlock.getState(), componentPos);
                     if (component != altarComponent.getComponent())
                     {
                         return new ImmutablePair<BlockPos, EnumAltarComponent>(componentPos, altarComponent.getComponent());
