@@ -82,7 +82,7 @@ item.BloodMagic.baseComponent.reagentMagnetism.name=磁力の試薬
 item.BloodMagic.baseComponent.reagentHaste.name=迅速の試薬
 item.BloodMagic.baseComponent.reagentBridge.name=幻影橋の試薬
 item.BloodMagic.baseComponent.reagentCompression.name=圧縮の試薬
-item.BloodMagic.baseComponent.reagentSeverance.name=エンダーの試薬
+item.BloodMagic.baseComponent.reagentSeverance.name=断絶の試薬
 
 item.BloodMagic.baseComponent.reagentTeleposition.name=テレポートの試薬
 item.BloodMagic.baseComponent.reagentTransposition.name=転位の試薬
@@ -93,6 +93,8 @@ item.BloodMagic.baseComponent.coalSand.name=石炭の砂
 item.BloodMagic.baseComponent.plantOil.name=植物油
 item.BloodMagic.baseComponent.sulfur.name=硫黄
 item.BloodMagic.baseComponent.saltpeter.name=硝石
+item.BloodMagic.baseComponent.neurotoxin.name=神経毒
+item.BloodMagic.baseComponent.antiseptic.name=防腐剤
 
 item.BloodMagic.cuttingFluid.basicCuttingFluid.name=基礎切削液
 item.BloodMagic.cuttingFluid.explosive.name=爆薬
@@ -121,8 +123,9 @@ item.BloodMagic.sigil.fastMiner.name=鉱夫の印章
 item.BloodMagic.sigil.seer.name=識別の印章
 item.BloodMagic.sigil.phantomBridge.name=幻影橋の印章
 item.BloodMagic.sigil.whirlwind.name=旋風の印章
-item.BloodMagic.sigil.enderSeverance.name=エンダーの印章
-
+item.BloodMagic.sigil.enderSeverance.name=エンダー断絶の印章
+item.BloodMagic.sigil.holding.name=貯蔵の印章
+item.BloodMagic.sigil.holding.display=&r%s： &o&n%s
 item.BloodMagic.sigil.teleposition.name=テレポートの印章
 item.BloodMagic.sigil.transposition.name=転位の印章
 
@@ -155,6 +158,9 @@ item.BloodMagic.soulGem.grand.name=巨大なタルタリックジェム
 item.BloodMagic.soulSnare.base.name=簡素な投げ罠
 item.BloodMagic.sentientBow.name=理力の弓
 item.BloodMagic.sentientArmourGem.name=理力のアーマージェム
+item.BloodMagic.sentientAxe.name=理力の斧
+item.BloodMagic.sentientPickaxe.name=理力のツルハシ
+item.BloodMagic.sentientShovel.name=理力のシャベル
 
 item.BloodMagic.nodeRouter.name=ノード設定器
 item.BloodMagic.itemFilter.exact.name=精密アイテムフィルタ
@@ -163,6 +169,9 @@ item.BloodMagic.itemFilter.modItems.name=MODアイテムフィルタ
 item.BloodMagic.itemFilter.oreDict.name=鉱石辞書フィルタ
 
 item.BloodMagic.experienceTome.name=ペリティアの書
+item.BloodMagic.sanguineBook.name=血紅の書
+
+item.BloodMagic.livingPointUpgrade.draftAngelus.name=祈りの一飲み
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=ライフエッセンス
@@ -233,6 +242,9 @@ tile.BloodMagic.demonCrystalDESTRUCTIVE.name=破壊性ウィル結晶株
 tile.BloodMagic.demonCrystalVENGEFUL.name=報復性ウィル結晶株
 tile.BloodMagic.demonCrystalSTEADFAST.name=不活性ウィル結晶株
 
+# Fluids
+fluid.lifeEssence=ライフエッセンス
+
 # Tooltips
 tooltip.BloodMagic.extraInfo=&9-Siftキーで詳細表示-
 
@@ -279,6 +291,10 @@ tooltip.BloodMagic.sigil.whirlwind.desc=&oスカートは履かないほうが�
 tooltip.BloodMagic.sigil.enderSeverance.desc=&oエンダーマンは悲惨な事になる！
 tooltip.BloodMagic.sigil.teleposition.desc=わずかな距離なら移動できそうだ。
 tooltip.BloodMagic.sigil.transposition.desc=フォースの力を感じるのだ、若き弟子よ。
+tooltip.BloodMagic.sigil.holding.desc=多重化印章
+tooltip.BloodMagic.sigil.holding.sigilInSlot=スロット %d： %s
+
+tooltip.BloodMagic.livingArmourPointsUpgrade.desc=生体アーマーの強化ポイントの最大値を%dに増加させる。
 
 tooltip.BloodMagic.bound.sword.desc=&o弱者の淘汰
 tooltip.BloodMagic.bound.pickaxe.desc=&o石への無慈悲な破壊
@@ -329,6 +345,7 @@ tooltip.BloodMagic.telepositionFocus.demonic=ワールド内のブロックの�
 tooltip.BloodMagic.livingArmour.upgrade.speed=迅速
 tooltip.BloodMagic.livingArmour.upgrade.digging=ドワーフの力
 tooltip.BloodMagic.livingArmour.upgrade.poisonResist=毒抵抗
+tooltip.BloodMagic.livingArmour.upgrade.fireResist=イグニスの恩恵
 tooltip.BloodMagic.livingArmour.upgrade.selfSacrifice=頑丈な指
 tooltip.BloodMagic.livingArmour.upgrade.knockback=ボディービルダー
 tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=強固な身体
@@ -351,7 +368,10 @@ tooltip.BloodMagic.livingArmour.upgrade.level=%s (Lv %d)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6強化ポイント： %s / %s
 
 tooltip.BloodMagic.will=ウィルの含有量： %1$,.2f
-tooltip.BloodMagic.sentientSword.desc=ウィルを入手するには潜在能力を開放する必要があります
+tooltip.BloodMagic.sentientSword.desc=デーモンウィルを使用することで潜在能力が開放されます
+tooltip.BloodMagic.sentientAxe.desc=デーモンウィルを使用することで潜在能力が開放されます
+tooltip.BloodMagic.sentientPickaxe.desc=デーモンウィルを使用することで潜在能力が開放されます
+tooltip.BloodMagic.sentientShovel.desc=デーモンウィルを使用することで潜在能力が開放されます
 tooltip.BloodMagic.soulGem.petty=この宝石は微量のウィルを貯蔵できます
 tooltip.BloodMagic.soulGem.lesser=この宝石は少量のウィルを貯蔵できます
 tooltip.BloodMagic.soulGem.common=この宝石はそこそこのウィルを貯蔵できます
@@ -385,6 +405,8 @@ tooltip.BloodMagic.decoration.safe=安全な装飾
 tooltip.BloodMagic.decoration.notSafe=危険な装飾
 
 tooltip.BloodMagic.cuttingFluidRatio=%d/%d 回使用可能
+
+tooltip.BloodMagic.book.shifting=このシンボルは... &o変容して...
 
 # Ritual
 ritual.BloodMagic.blockRange.tooBig=指定されたブロック範囲が広すぎます！最大%sブロックの範囲内である必要があります。
@@ -502,6 +524,7 @@ chat.BloodMagic.ritual.activate=エネルギーの奔流が儀式に流れ込む
 chat.BloodMagic.ritual.notValid=あなたはルーンの配置が正しくないように感じた...
 
 chat.BloodMagic.livingArmour.upgrade.poisonRemove=あなたは良い効果を感じた！
+chat.BloodMagic.livingArmour.upgrade.fireRemove=&6清涼感があなたを包み込み、炎上が収まった。
 chat.BloodMagic.livingArmour.upgrade.grimReaper=&6闇の力があなたを死のふちに引き込む！
 chat.BloodMagic.livingArmour.newUpgrade=&4強化ポイントを取得しました！
 
@@ -509,6 +532,20 @@ chat.BloodMagic.routing.remove=記録された座標情報を消去しました
 chat.BloodMagic.routing.set=ノードの座標を設定しました
 chat.BloodMagic.routing.link.master=マスターのノードとリンクさせました！
 chat.BloodMagic.routing.link=ノードをお互いにリンクさせました
+
+chat.BloodMagic.altar.comp.glowstone=グロウストーンのブロック
+chat.BloodMagic.altar.comp.bloodstone=大きなブラッドストーンレンガ
+chat.BloodMagic.altar.comp.beacon=ビーコン
+chat.BloodMagic.altar.comp.bloodrune=血のルーン
+chat.BloodMagic.altar.comp.crystal=未実装のアイテム
+chat.BloodMagic.altar.comp.notair=固体ブロック
+
+chat.BloodMagic.altar.nextTier=次のグレードの血の祭壇は%sの%sが不足しています。
+
+# sekrit
+
+secret.BloodMagic.bread.bloody=&r&c血のパン
+secret.BloodMagic.bread.bloody.desc=&o切迫した&r&7緊急時専用
 
 # Commands
 commands.error.arg.invalid=無効な引数です
@@ -568,6 +605,9 @@ commands.soulnetwork.notACommand=有効なコマンドではありません
 commands.soulnetwork.fillMax.success=正常に%sのソウルネットワークにオーブの最大値までLPを供給しました！
 commands.soulnetwork.create.success=正常に%sのソウルネットワークを構築しました(オーブのグレード： %d)
 
+# Keybinds
+BloodMagic.keybind.openSigilHolding=貯蔵の印章を開く
+
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=血の祭壇
 jei.BloodMagic.recipe.binding=錬金術魔法陣(結合)
@@ -576,12 +616,12 @@ jei.BloodMagic.recipe.soulForge=業火のかまど
 jei.BloodMagic.recipe.alchemyTable=錬金術テーブル
 jei.BloodMagic.recipe.requiredLP=LP： %d
 jei.BloodMagic.recipe.requiredTier=ｸﾞﾚｰﾄﾞ: %d
-jei.BloodMagic.recipe.consumptionRate=消費： %d LP/t
-jei.BloodMagic.recipe.drainRate=排出： %d LP/t
+jei.BloodMagic.recipe.consumptionRate=消費率： %d LP/t
+jei.BloodMagic.recipe.drainRate=消費率： %d LP/t
 jei.BloodMagic.recipe.minimumSouls=最小： %1$,.2fウィル
-jei.BloodMagic.recipe.soulsDrained=排出： %1$,.2fウィル
-jei.BloodMagic.recipe.lpDrained=排出： %,d LP
-jei.BloodMagic.recipe.ticksRequired=時間： %,d Ticks
+jei.BloodMagic.recipe.soulsDrained=消費： %1$,.2fウィル
+jei.BloodMagic.recipe.lpDrained=消費： %,d LP
+jei.BloodMagic.recipe.ticksRequired=時間: %,d Ticks
 
 jei.BloodMagic.desc.altarBuilder=デバッグやテストに利用するクリエイティブモード専用アイテム。\n\nShift＋右クリックで作成するグレードの変更を行い、右クリックで祭壇を構築。\n\n血の祭壇を左クリックで儀式石ごと破壊されます。
 jei.BloodMagic.desc.demonicWill=生物が内包する悪魔の因子。\n\nMobを理力の剣によって殺害する、または簡素な投げ罠を投げ、白いパーティクルが発生している間に殺害することで入手ができる。
