@@ -210,7 +210,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     {
         if (!getWorld().isRemote && getCurrentRitual() != null)
         {
-            System.out.println("Hai! I stopped");
             RitualEvent.RitualStopEvent event = new RitualEvent.RitualStopEvent(this, getOwner(), getCurrentRitual(), breakType);
 
             if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
