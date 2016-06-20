@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.item.inventory.InventoryHolding;
@@ -28,7 +29,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.Collections;
 import java.util.List;
 
-public class ItemSigilHolding extends ItemSigilBase implements IKeybindable
+public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAltarReader
 {
     public static int inventorySize;
 

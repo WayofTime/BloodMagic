@@ -153,16 +153,6 @@ public class BlockAltar extends BlockContainer implements IVariantProvider, IDoc
                 playerItem.getItem().onItemRightClick(playerItem, world, player, hand);
                 return true;
             }
-
-            if (playerItem.getItem() instanceof ItemSigilHolding)
-            {
-                ItemStack currentSigil = ItemSigilHolding.getItemStackInSlot(playerItem, ItemSigilHolding.getCurrentItemOrdinal(playerItem));
-                if (currentSigil != null && (currentSigil.getItem() instanceof IAltarReader || currentSigil.getItem() instanceof IAltarManipulator))
-                {
-                    currentSigil.getItem().onItemRightClick(playerItem, world, player, hand);
-                    return true;
-                }
-            }
         }
 
         if (Utils.insertItemToTile(altar, player))
