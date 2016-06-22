@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.item.routing.IItemFilterProvider;
 import WayofTime.bloodmagic.routing.DefaultItemFilter;
 import WayofTime.bloodmagic.routing.IInputItemRoutingNode;
 import WayofTime.bloodmagic.routing.IItemFilter;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -30,9 +31,9 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
         TileEntity tile = worldObj.getTileEntity(pos.offset(side));
         if (tile != null)
         {
-            if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite()))
+            IItemHandler handler = Utils.getInventory(tile, side.getOpposite());
+            if (handler != null)
             {
-                IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
                 ItemStack filterStack = this.getFilterStack(side);
 
                 if (filterStack == null || !(filterStack.getItem() instanceof IItemFilterProvider))

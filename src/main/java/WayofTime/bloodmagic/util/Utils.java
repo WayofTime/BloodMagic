@@ -48,6 +48,8 @@ import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileInventory;
 
 import com.google.common.collect.Iterables;
+import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nullable;
 
@@ -150,6 +152,24 @@ public class Utils
         }
 
         return false;
+    }
+
+    @Nullable
+    public static IItemHandler getInventory(TileEntity tile, @Nullable EnumFacing facing)
+    {
+        if (facing == null)
+            facing = EnumFacing.DOWN;
+
+        IItemHandler itemHandler = null;
+
+        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing))
+            itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
+        else if (tile instanceof ISidedInventory)
+            itemHandler = ((ISidedInventory) tile).getSlotsForFace(facing).length != 0 ? new SidedInvWrapper((ISidedInventory) tile, facing) : null;
+        else if (tile instanceof IInventory)
+            itemHandler = new InvWrapper((IInventory) tile);
+
+        return itemHandler;
     }
 
     /**
