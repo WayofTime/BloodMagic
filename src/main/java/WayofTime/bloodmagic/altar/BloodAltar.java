@@ -125,8 +125,8 @@ public class BloodAltar implements IFluidHandler
             {
                 if (worldBlock.getBlock() instanceof IAltarComponent)
                 {
-                    EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(worldBlock.getMeta());
-                    if (component != altarComponent.getComponent())
+                    EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(world, worldBlock.getState(), componentPos);
+                    if (component == null || component != altarComponent.getComponent())
                         return false;
                 } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent()))
                 {
@@ -158,10 +158,10 @@ public class BloodAltar implements IFluidHandler
             {
                 if (worldBlock.getBlock() instanceof IAltarComponent)
                 {
-                    EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(worldBlock.getMeta());
-                    if (component != altarComponent.getComponent())
+                    EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(world, worldBlock.getState(), componentPos);
+                    if (component == null || component != altarComponent.getComponent())
                     {
-                        return new ImmutablePair<BlockPos, EnumAltarComponent>(componentPos, altarComponent.getComponent());
+                        return Pair.of(componentPos, altarComponent.getComponent());
                     }
                 } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent()))
                 {
@@ -171,7 +171,7 @@ public class BloodAltar implements IFluidHandler
             {
                 if (world.isAirBlock(componentPos))
                 {
-                    return new ImmutablePair<BlockPos, EnumAltarComponent>(componentPos, altarComponent.getComponent());
+                    return Pair.of(componentPos, altarComponent.getComponent());
                 }
             }
         }

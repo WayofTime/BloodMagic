@@ -6,6 +6,10 @@ Version 2.0.2-45
 - Fixed an issue where the Spectral Blocks (from the Sigil of Suppression) would return the liquid on the client side before the sigil was deactivated.
 - Made it so that the bound tools are (supposedly more so) unbreakable. This will probably come bite me on the ehem later, but we'll see.
 - Added Fire Resistance Living Armour Upgrade, "Gift of Ignis."
+- Updated The Architect section of the documentation.
+- Fixed it so the Ritual will call stopRitual when a ritual stone is broken.
+- Added the recipe for the Inspectoris Scandalum (I had to check if I spelled that right) which acts as a helper for Altar Building
+- Right-clicking a MRS with the Ritual Diviner will affix the ritual hologram to the MRS.
 
 ------------------------------------------------------
 Version 2.0.2-44

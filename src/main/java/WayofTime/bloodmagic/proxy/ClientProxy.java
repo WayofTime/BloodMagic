@@ -62,7 +62,6 @@ public class ClientProxy extends CommonProxy
     public void preInit()
     {
         super.preInit();
-        MinecraftForge.EVENT_BUS.register(new ClientHandler());
 
         renderHelper = new InventoryRenderHelper(Constants.Mod.DOMAIN);
         renderHelperV2 = new InventoryRenderHelperV2(Constants.Mod.DOMAIN);
