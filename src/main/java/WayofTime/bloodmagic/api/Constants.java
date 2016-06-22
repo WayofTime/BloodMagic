@@ -68,6 +68,7 @@ public class Constants
         public static final String ALTAR_MAX_CHARGE = "maxCharge";
         public static final String ALTAR_CHARGE_RATE = "chargeRate";
         public static final String ALTAR_CHARGE_FREQUENCY = "chargeFrequency";
+        public static final String ALTAR_CURRENT_TIER_DISPLAYED = "currentTierDisplayed";
 
         public static final String ALTARMAKER_CURRENT_TIER = "currentTier";
 

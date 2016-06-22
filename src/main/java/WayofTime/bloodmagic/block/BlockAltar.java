@@ -7,6 +7,7 @@ import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.iface.IDocumentedBlock;
+import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

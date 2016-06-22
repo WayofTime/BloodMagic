@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.altar;
 
 import java.util.List;
 
+import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -81,6 +82,9 @@ public class BloodAltar implements IFluidHandler
 
     private AltarRecipe recipe;
     private ItemStack result;
+
+    @Getter
+    private EnumAltarTier currentTierDisplayed = EnumAltarTier.ONE;
 
     public BloodAltar(TileAltar tileAltar)
     {
@@ -287,6 +291,7 @@ public class BloodAltar implements IFluidHandler
         chargingFrequency = tagCompound.getInteger(Constants.NBT.ALTAR_CHARGE_FREQUENCY);
         totalCharge = tagCompound.getInteger(Constants.NBT.ALTAR_TOTAL_CHARGE);
         maxCharge = tagCompound.getInteger(Constants.NBT.ALTAR_MAX_CHARGE);
+        currentTierDisplayed = Enums.getIfPresent(EnumAltarTier.class, tagCompound.getString(Constants.NBT.ALTAR_CURRENT_TIER_DISPLAYED)).or(EnumAltarTier.ONE);
     }
 
     public void writeToNBT(NBTTagCompound tagCompound)
@@ -330,6 +335,7 @@ public class BloodAltar implements IFluidHandler
         tagCompound.setInteger(Constants.NBT.ALTAR_CHARGE_FREQUENCY, chargingFrequency);
         tagCompound.setInteger(Constants.NBT.ALTAR_TOTAL_CHARGE, totalCharge);
         tagCompound.setInteger(Constants.NBT.ALTAR_MAX_CHARGE, maxCharge);
+        tagCompound.setString(Constants.NBT.ALTAR_CURRENT_TIER_DISPLAYED, currentTierDisplayed.name());
     }
 
     public void startCycle()
@@ -549,6 +555,9 @@ public class BloodAltar implements IFluidHandler
 
         upgrade = BloodAltar.getUpgrades(tileAltar.getWorld(), tileAltar.getPos(), tier);
 
+        if (tier.equals(currentTierDisplayed))
+            currentTierDisplayed = EnumAltarTier.ONE;
+
         if (tier.equals(EnumAltarTier.ONE))
         {
             upgrade = null;
@@ -715,6 +724,15 @@ public class BloodAltar implements IFluidHandler
     public int getBufferCapacity()
     {
         return bufferCapacity;
+    }
+
+    public boolean setCurrentTierDisplayed(EnumAltarTier altarTier)
+    {
+        if (currentTierDisplayed == altarTier)
+            return false;
+        else
+            currentTierDisplayed = altarTier;
+        return true;
     }
 
     public void addToDemonBloodDuration(int dur)

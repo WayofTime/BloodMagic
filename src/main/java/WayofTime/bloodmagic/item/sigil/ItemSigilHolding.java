@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.item.inventory.InventoryHolding;
 import WayofTime.bloodmagic.util.handler.BMKeyBinding;
@@ -29,7 +29,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.Collections;
 import java.util.List;
 
-public class ItemSigilHolding extends ItemSigilBase implements IKeybindable
+public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAltarReader
 {
     public static int inventorySize;
 
@@ -284,31 +284,34 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable
         {
             initModeTag(itemStack);
 
-            int index;
-            int currentIndex = getCurrentItemOrdinal(itemStack);
-            ItemStack currentItemStack = getItemStackInSlot(itemStack, currentIndex);
-            if (currentItemStack == null)
-                return;
-            if (mode < 0)
+            int index = mode;
+            if (mode == 120 || mode == -120)
             {
-                index = next(currentIndex);
-                currentItemStack = getItemStackInSlot(itemStack, index);
-
-                while (currentItemStack == null)
+                int currentIndex = getCurrentItemOrdinal(itemStack);
+                ItemStack currentItemStack = getItemStackInSlot(itemStack, currentIndex);
+                if (currentItemStack == null)
+                    return;
+                if (mode < 0)
                 {
-                    index = next(index);
+                    index = next(currentIndex);
                     currentItemStack = getItemStackInSlot(itemStack, index);
+
+                    while (currentItemStack == null)
+                    {
+                        index = next(index);
+                        currentItemStack = getItemStackInSlot(itemStack, index);
+                    }
                 }
-            }
-            else
-            {
-                index = prev(currentIndex);
-                currentItemStack = getItemStackInSlot(itemStack, index);
-
-                while (currentItemStack == null)
+                else
                 {
-                    index = prev(index);
+                    index = prev(currentIndex);
                     currentItemStack = getItemStackInSlot(itemStack, index);
+
+                    while (currentItemStack == null)
+                    {
+                        index = prev(index);
+                        currentItemStack = getItemStackInSlot(itemStack, index);
+                    }
                 }
             }
 

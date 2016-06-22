@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
@@ -35,9 +36,7 @@ import org.lwjgl.opengl.GL11;
 
 import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.client.hud.HUDElement;
@@ -56,17 +55,29 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 @SideOnly(Side.CLIENT)
 public class ClientHandler
 {
-    public TextureAtlasSprite ritualStoneBlank;
-    public TextureAtlasSprite ritualStoneWater;
-    public TextureAtlasSprite ritualStoneFire;
-    public TextureAtlasSprite ritualStoneEarth;
-    public TextureAtlasSprite ritualStoneAir;
-    public TextureAtlasSprite ritualStoneDawn;
-    public TextureAtlasSprite ritualStoneDusk;
+    public static TextureAtlasSprite ritualStoneBlank;
+    public static TextureAtlasSprite ritualStoneWater;
+    public static TextureAtlasSprite ritualStoneFire;
+    public static TextureAtlasSprite ritualStoneEarth;
+    public static TextureAtlasSprite ritualStoneAir;
+    public static TextureAtlasSprite ritualStoneDawn;
+    public static TextureAtlasSprite ritualStoneDusk;
+
+    public static TextureAtlasSprite blankBloodRune;
+    public static TextureAtlasSprite stoneBrick;
+    public static TextureAtlasSprite glowstone;
+    public static TextureAtlasSprite bloodStoneBrick;
+    public static TextureAtlasSprite beacon;
+    public static TextureAtlasSprite crystalCluster;
 
     public static Minecraft minecraft = Minecraft.getMinecraft();
     public static final List<BMKeyBinding> keyBindings = new ArrayList<BMKeyBinding>();
     public static final List<HUDElement> hudElements = new ArrayList<HUDElement>();
+
+    private static TileMasterRitualStone mrsHoloTile;
+    private static Ritual mrsHoloRitual;
+    private static EnumFacing mrsHoloDirection;
+    private static boolean mrsHoloDisplay;
 
     public static final BMKeyBinding keyOpenSigilHolding = new BMKeyBinding("openSigilHolding", Keyboard.KEY_H, BMKeyBinding.Key.OPEN_SIGIL_HOLDING);
 
@@ -104,6 +115,13 @@ public class ClientHandler
         ritualStoneAir = forName(event.getMap(), "AirRitualStone", BLOCKS);
         ritualStoneDawn = forName(event.getMap(), "LightRitualStone", BLOCKS);
         ritualStoneDusk = forName(event.getMap(), "DuskRitualStone", BLOCKS);
+
+        blankBloodRune = forName(event.getMap(), "BlankRune", BLOCKS);
+        stoneBrick = event.getMap().registerSprite(new ResourceLocation("minecraft:blocks/stonebrick"));
+        glowstone = event.getMap().registerSprite(new ResourceLocation("minecraft:blocks/glowstone"));
+        bloodStoneBrick = forName(event.getMap(), "BloodStoneBrick", BLOCKS);
+        beacon = event.getMap().registerSprite(new ResourceLocation("minecraft:blocks/beacon"));
+        crystalCluster = forName(event.getMap(), "ShardCluster", BLOCKS);
     }
 
     @SubscribeEvent
@@ -112,12 +130,27 @@ public class ClientHandler
         EntityPlayerSP player = minecraft.thePlayer;
         World world = player.worldObj;
 
+        if (mrsHoloTile != null)
+        {
+            if (world.getTileEntity(mrsHoloTile.getPos()) instanceof TileMasterRitualStone)
+            {
+                if (mrsHoloDisplay)
+                    renderRitualStones(mrsHoloTile, event.getPartialTicks());
+                else
+                    ClientHandler.setRitualHolo(null, null, EnumFacing.NORTH, false);
+            }
+            else
+            {
+                ClientHandler.setRitualHolo(null, null, EnumFacing.NORTH, false);
+            }
+        }
+
         if (minecraft.objectMouseOver == null || minecraft.objectMouseOver.typeOfHit != RayTraceResult.Type.BLOCK)
             return;
 
         TileEntity tileEntity = world.getTileEntity(minecraft.objectMouseOver.getBlockPos());
 
-        if (tileEntity instanceof IMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner)
+        if (tileEntity instanceof TileMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner && !mrsHoloDisplay)
             renderRitualStones(player, event.getPartialTicks());
 
         if (tileEntity instanceof TileMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualReader)
@@ -170,7 +203,7 @@ public class ClientHandler
     private void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel)
     {
         int mode = dWheel;
-        if (ConfigHandler.sigilHoldingSkipsEmptySlots)
+        if (!ConfigHandler.sigilHoldingSkipsEmptySlots)
         {
             mode = ItemSigilHolding.getCurrentItemOrdinal(stack);
             mode = dWheel < 0 ? ItemSigilHolding.next(mode) : ItemSigilHolding.prev(mode);
@@ -217,15 +250,17 @@ public class ClientHandler
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.color(1F, 1F, 1F, 0.6125F);
 
-        BlockPos vec3 = new BlockPos(minecraft.objectMouseOver.getBlockPos().getX(), minecraft.objectMouseOver.getBlockPos().getY(), minecraft.objectMouseOver.getBlockPos().getZ());
+        BlockPos vec3, vX;
+        vec3 = minecraft.objectMouseOver.getBlockPos();
         double posX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
         double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
         double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
 
         for (RitualComponent ritualComponent : ritual.getComponents())
         {
-            BlockPos vX = vec3.add(new BlockPos(ritualComponent.getX(direction), ritualComponent.getY(), ritualComponent.getZ(direction)));
+            vX = vec3.add(ritualComponent.getOffset(direction));
             double minX = vX.getX() - posX;
             double minY = vX.getY() - posY;
             double minZ = vX.getZ() - posZ;
@@ -264,6 +299,84 @@ public class ClientHandler
         }
 
         GlStateManager.popMatrix();
+    }
+
+    public static void renderRitualStones(TileMasterRitualStone masterRitualStone, float partialTicks)
+    {
+        EntityPlayerSP player = minecraft.thePlayer;
+        World world = player.worldObj;
+        EnumFacing direction = mrsHoloDirection;
+        Ritual ritual = mrsHoloRitual;
+
+        if (ritual == null)
+            return;
+
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.color(1F, 1F, 1F, 0.5F);
+
+        BlockPos vec3, vX;
+        vec3 = masterRitualStone.getPos();
+        double posX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
+        double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
+        double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
+
+        for (RitualComponent ritualComponent : ritual.getComponents())
+        {
+            vX = vec3.add(ritualComponent.getOffset(direction));
+            double minX = vX.getX() - posX;
+            double minY = vX.getY() - posY;
+            double minZ = vX.getZ() - posZ;
+
+            if (!world.getBlockState(vX).isOpaqueCube())
+            {
+                TextureAtlasSprite texture = null;
+
+                switch (ritualComponent.getRuneType())
+                {
+                    case BLANK:
+                        texture = ritualStoneBlank;
+                        break;
+                    case WATER:
+                        texture = ritualStoneWater;
+                        break;
+                    case FIRE:
+                        texture = ritualStoneFire;
+                        break;
+                    case EARTH:
+                        texture = ritualStoneEarth;
+                        break;
+                    case AIR:
+                        texture = ritualStoneAir;
+                        break;
+                    case DAWN:
+                        texture = ritualStoneDawn;
+                        break;
+                    case DUSK:
+                        texture = ritualStoneDusk;
+                        break;
+                }
+
+                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);
+            }
+        }
+
+        GlStateManager.popMatrix();
+    }
+
+    public static boolean setRitualHolo(TileMasterRitualStone masterRitualStone, Ritual ritual, EnumFacing direction, boolean displayed)
+    {
+        mrsHoloDisplay = displayed;
+        if (mrsHoloTile != masterRitualStone || mrsHoloRitual != ritual || mrsHoloDirection != direction)
+        {
+            mrsHoloTile = masterRitualStone;
+            mrsHoloRitual = ritual;
+            mrsHoloDirection = direction;
+            return false;
+        }
+
+        return true;
     }
 
     protected void renderHotbarItem(int x, int y, float partialTicks, EntityPlayer player, @Nullable ItemStack stack)

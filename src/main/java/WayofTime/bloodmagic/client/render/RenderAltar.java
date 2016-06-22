@@ -1,8 +1,12 @@
 package WayofTime.bloodmagic.client.render;
 
+import WayofTime.bloodmagic.api.altar.AltarComponent;
+import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.util.handler.event.ClientHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -12,9 +16,11 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import org.lwjgl.opengl.GL11;
 
 public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
 {
@@ -35,6 +41,11 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
         this.renderFluid(getWorld(), level);
         this.renderItem(tileAltar.getWorld(), inputStack, partialTicks);
         GlStateManager.popMatrix();
+
+        if (tileAltar.getCurrentTierDisplayed() != EnumAltarTier.ONE)
+        {
+            renderHologram(tileAltar, tileAltar.getCurrentTierDisplayed(), partialTicks);
+        }
     }
 
     private void renderFluid(World world, float fluidLevel)
@@ -108,5 +119,64 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
             GlStateManager.enableLighting();
             GlStateManager.popMatrix();
         }
+    }
+
+    private void renderHologram(TileAltar altar, EnumAltarTier tier, float partialTicks)
+    {
+        EntityPlayerSP player = mc.thePlayer;
+        World world = player.worldObj;
+
+        if (tier == EnumAltarTier.ONE)
+            return;
+
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.color(1F, 1F, 1F, 0.6125F);
+
+        BlockPos vec3, vX;
+        vec3 = altar.getPos();
+        double posX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
+        double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
+        double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
+
+        for (AltarComponent altarComponent : tier.getAltarComponents())
+        {
+            vX = vec3.add(altarComponent.getOffset());
+            double minX = vX.getX() - posX;
+            double minY = vX.getY() - posY;
+            double minZ = vX.getZ() - posZ;
+
+            if (!world.getBlockState(vX).isOpaqueCube())
+            {
+                TextureAtlasSprite texture = null;
+
+                switch (altarComponent.getComponent())
+                {
+                    case BLOODRUNE:
+                        texture = ClientHandler.blankBloodRune;
+                        break;
+                    case NOTAIR:
+                        texture = ClientHandler.stoneBrick;
+                        break;
+                    case GLOWSTONE:
+                        texture = ClientHandler.glowstone;
+                        break;
+                    case BLOODSTONE:
+                        texture = ClientHandler.bloodStoneBrick;
+                        break;
+                    case BEACON:
+                        texture = ClientHandler.beacon;
+                        break;
+                    case CRYSTAL:
+                        texture = ClientHandler.crystalCluster;
+                        break;
+                }
+
+                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);
+            }
+        }
+
+        GlStateManager.popMatrix();
     }
 }
