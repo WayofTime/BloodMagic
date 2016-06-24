@@ -58,7 +58,6 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
         super(damage, 1, ModItems.boundToolMaterial, effectiveBlocks);
         setUnlocalizedName(Constants.Mod.MODID + ".bound." + name);
         setCreativeTab(BloodMagic.tabBloodMagic);
-        setMaxDamage(0);
 
         this.name = name;
         this.tooltipBase = "tooltip.BloodMagic.bound." + name + ".";
