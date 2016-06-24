@@ -44,7 +44,6 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
 
         setUnlocalizedName(Constants.Mod.MODID + ".bound.sword");
         setCreativeTab(BloodMagic.tabBloodMagic);
-        setMaxDamage(0);
     }
 
     @Override
