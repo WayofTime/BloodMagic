@@ -74,7 +74,12 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        if (trySetDisplayedRitual(stack, world, pos) && addRuneToRitual(stack, world, pos, player))
+        if (player.isSneaking())
+        {
+            trySetDisplayedRitual(stack, world, pos);
+            return EnumActionResult.SUCCESS;
+        }
+        else if (addRuneToRitual(stack, world, pos, player))
         {
             if (world.isRemote)
             {
@@ -90,7 +95,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     /**
      * Adds a single rune to the ritual.
-     * 
+     *
      * @param stack
      *        - The Ritual Diviner stack
      * @param world
@@ -99,7 +104,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
      *        - Block Position of the MRS.
      * @param player
      *        - The Player attempting to place the ritual
-     * 
+     *
      * @return - True if a rune was successfully added
      */
     public boolean addRuneToRitual(ItemStack stack, World world, BlockPos pos, EntityPlayer player)
@@ -126,7 +131,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                     {
                         if (RitualHelper.isRuneType(world, newPos, component.getRuneType()))
                         {
-                            continue;
+                            undisplayHologram();
                         } else
                         {
                             // Replace existing ritual stone
@@ -155,7 +160,8 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         return false;
     }
 
-    public boolean trySetDisplayedRitual(ItemStack itemStack, World world, BlockPos pos)
+    @SideOnly(Side.CLIENT)
+    public void trySetDisplayedRitual(ItemStack itemStack, World world, BlockPos pos)
     {
         TileEntity tile = world.getTileEntity(pos);
 
@@ -167,11 +173,15 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
             if (ritual != null)
             {
                 EnumFacing direction = getDirection(itemStack);
-                return ClientHandler.setRitualHolo(masterRitualStone, ritual, direction, true);
+                ClientHandler.setRitualHolo(masterRitualStone, ritual, direction, true);
             }
         }
+    }
 
-        return true;
+    @SideOnly(Side.CLIENT)
+    public void undisplayHologram()
+    {
+        ClientHandler.setRitualHoloToNull();
     }
 
     // TODO: Make this work for any IRitualStone

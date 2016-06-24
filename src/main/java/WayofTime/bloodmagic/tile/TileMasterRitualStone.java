@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.util.handler.event.ClientHandler;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -132,7 +131,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 //        crystalOwner = PlayerHelper.getUUIDFromPlayer(activator).toString(); //Temporary patch job
 
-        ClientHandler.setRitualHolo(null, null, EnumFacing.NORTH, false);
         if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null)
         {
             if (activationCrystal.getItem() instanceof ItemActivationCrystal)

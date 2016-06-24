@@ -137,10 +137,10 @@ public class ClientHandler
                 if (mrsHoloDisplay)
                     renderRitualStones(mrsHoloTile, event.getPartialTicks());
                 else
-                    ClientHandler.setRitualHolo(null, null, EnumFacing.NORTH, false);
+                    ClientHandler.setRitualHoloToNull();
             } else
             {
-                ClientHandler.setRitualHolo(null, null, EnumFacing.NORTH, false);
+                ClientHandler.setRitualHoloToNull();
             }
         }
 
@@ -149,7 +149,7 @@ public class ClientHandler
 
         TileEntity tileEntity = world.getTileEntity(minecraft.objectMouseOver.getBlockPos());
 
-        if (tileEntity instanceof TileMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner && !mrsHoloDisplay)
+        if (tileEntity instanceof TileMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner)
             renderRitualStones(player, event.getPartialTicks());
 
         if (tileEntity instanceof TileMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualReader)
@@ -364,18 +364,20 @@ public class ClientHandler
         GlStateManager.popMatrix();
     }
 
-    public static boolean setRitualHolo(TileMasterRitualStone masterRitualStone, Ritual ritual, EnumFacing direction, boolean displayed)
+    public static void setRitualHolo(TileMasterRitualStone masterRitualStone, Ritual ritual, EnumFacing direction, boolean displayed)
     {
         mrsHoloDisplay = displayed;
-        if (mrsHoloTile != masterRitualStone || mrsHoloRitual != ritual || mrsHoloDirection != direction)
-        {
-            mrsHoloTile = masterRitualStone;
-            mrsHoloRitual = ritual;
-            mrsHoloDirection = direction;
-            return false;
-        }
+        mrsHoloTile = masterRitualStone;
+        mrsHoloRitual = ritual;
+        mrsHoloDirection = direction;
+    }
 
-        return true;
+    public static void setRitualHoloToNull()
+    {
+        mrsHoloDisplay = false;
+        mrsHoloTile = null;
+        mrsHoloRitual = null;
+        mrsHoloDirection = EnumFacing.NORTH;
     }
 
     protected void renderHotbarItem(int x, int y, float partialTicks, EntityPlayer player, @Nullable ItemStack stack)
