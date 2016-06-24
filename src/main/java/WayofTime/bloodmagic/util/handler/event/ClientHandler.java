@@ -149,7 +149,7 @@ public class ClientHandler
 
         TileEntity tileEntity = world.getTileEntity(minecraft.objectMouseOver.getBlockPos());
 
-        if (tileEntity instanceof TileMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner && !mrsHoloDisplay)
+        if (tileEntity instanceof TileMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner)
             renderRitualStones(player, event.getPartialTicks());
 
         if (tileEntity instanceof TileMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualReader)
@@ -367,13 +367,9 @@ public class ClientHandler
     public static void setRitualHolo(TileMasterRitualStone masterRitualStone, Ritual ritual, EnumFacing direction, boolean displayed)
     {
         mrsHoloDisplay = displayed;
-        if (mrsHoloTile != minecraft.theWorld.getTileEntity(masterRitualStone.getPos()) || !mrsHoloRitual.getName().equals(ritual.getName()) || mrsHoloDirection != direction)
-        {
-            System.out.println("RITUAL: " + mrsHoloTile + " AND " + masterRitualStone);
-            mrsHoloTile = masterRitualStone;
-            mrsHoloRitual = ritual;
-            mrsHoloDirection = direction;
-        }
+        mrsHoloTile = masterRitualStone;
+        mrsHoloRitual = ritual;
+        mrsHoloDirection = direction;
     }
 
     public static void setRitualHoloToNull()

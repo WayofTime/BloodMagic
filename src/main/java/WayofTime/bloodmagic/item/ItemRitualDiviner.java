@@ -131,7 +131,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                     {
                         if (RitualHelper.isRuneType(world, newPos, component.getRuneType()))
                         {
-                            continue;
+                            undisplayHologram();
                         } else
                         {
                             // Replace existing ritual stone
@@ -160,6 +160,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         return false;
     }
 
+    @SideOnly(Side.CLIENT)
     public void trySetDisplayedRitual(ItemStack itemStack, World world, BlockPos pos)
     {
         TileEntity tile = world.getTileEntity(pos);
@@ -175,6 +176,12 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                 ClientHandler.setRitualHolo(masterRitualStone, ritual, direction, true);
             }
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void undisplayHologram()
+    {
+        ClientHandler.setRitualHoloToNull();
     }
 
     // TODO: Make this work for any IRitualStone
