@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
@@ -171,6 +172,12 @@ public class Utils
             itemHandler = new InvWrapper((IInventory) tile);
 
         return itemHandler;
+    }
+
+    public static ItemStack setUnbreakable(ItemStack stack) {
+        NBTHelper.checkNBT(stack);
+        stack.getTagCompound().setBoolean("Unbreakable", true);
+        return stack;
     }
 
     /**
