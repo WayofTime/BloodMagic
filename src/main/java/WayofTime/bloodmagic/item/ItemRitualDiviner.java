@@ -76,10 +76,13 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     {
         if (player.isSneaking())
         {
-            trySetDisplayedRitual(stack, world, pos);
+            if (world.isRemote)
+            {
+                trySetDisplayedRitual(stack, world, pos);
+            }
+
             return EnumActionResult.SUCCESS;
-        }
-        else if (addRuneToRitual(stack, world, pos, player))
+        } else if (addRuneToRitual(stack, world, pos, player))
         {
             if (world.isRemote)
             {
@@ -95,7 +98,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     /**
      * Adds a single rune to the ritual.
-     *
+     * 
      * @param stack
      *        - The Ritual Diviner stack
      * @param world
@@ -104,7 +107,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
      *        - Block Position of the MRS.
      * @param player
      *        - The Player attempting to place the ritual
-     *
+     * 
      * @return - True if a rune was successfully added
      */
     public boolean addRuneToRitual(ItemStack stack, World world, BlockPos pos, EntityPlayer player)
@@ -131,7 +134,10 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                     {
                         if (RitualHelper.isRuneType(world, newPos, component.getRuneType()))
                         {
-                            undisplayHologram();
+                            if (world.isRemote)
+                            {
+                                undisplayHologram();
+                            }
                         } else
                         {
                             // Replace existing ritual stone
