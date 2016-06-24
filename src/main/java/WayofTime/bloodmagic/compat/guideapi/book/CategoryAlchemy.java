@@ -14,8 +14,6 @@ public class CategoryAlchemy
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
         String keyBase = Constants.Mod.DOMAIN + "alchemy_";
 
-
-
         return entries;
     }
 }

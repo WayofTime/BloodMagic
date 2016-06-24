@@ -27,7 +27,8 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Handler
-public class LivingArmourHandler {
+public class LivingArmourHandler
+{
 
     // Applies: Grim Reaper
     @SubscribeEvent(priority = EventPriority.HIGHEST)

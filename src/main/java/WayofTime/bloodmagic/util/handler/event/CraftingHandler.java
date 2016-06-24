@@ -25,7 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Handler
-public class CraftingHandler {
+public class CraftingHandler
+{
 
     // Sets the uses of crafted Inscription Tools to 10
     @SubscribeEvent
@@ -42,7 +43,8 @@ public class CraftingHandler {
             event.getOutput().getTagCompound().setInteger(Constants.NBT.USES, 10);
         }
 
-        if (event.getOutput().getItem() == ForgeModContainer.getInstance().universalBucket && event.getAltarRecipe().getSyphon() == 1000) {
+        if (event.getOutput().getItem() == ForgeModContainer.getInstance().universalBucket && event.getAltarRecipe().getSyphon() == 1000)
+        {
             NBTTagCompound bucketTags = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, BloodMagicAPI.getLifeEssence()).getTagCompound();
             event.getOutput().setTagCompound(bucketTags);
         }
@@ -68,8 +70,10 @@ public class CraftingHandler {
             }
         }
 
-        if (event.getLeft().getItem() == ModItems.sigilHolding) {
-            if (event.getRight().getItem() == Items.NAME_TAG) {
+        if (event.getLeft().getItem() == ModItems.sigilHolding)
+        {
+            if (event.getRight().getItem() == Items.NAME_TAG)
+            {
                 ItemStack output = event.getLeft().copy();
                 if (!output.hasTagCompound())
                     output.setTagCompound(new NBTTagCompound());
@@ -81,7 +85,8 @@ public class CraftingHandler {
                 return;
             }
 
-            if (event.getRight().getItem() == Items.DYE) {
+            if (event.getRight().getItem() == Items.DYE)
+            {
                 EnumDyeColor dyeColor = ItemBanner.getBaseColor(event.getRight());
                 ItemStack output = event.getLeft().copy();
                 if (!output.hasTagCompound())

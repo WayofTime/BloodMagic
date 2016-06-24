@@ -50,24 +50,28 @@ public class SubCommandNetwork extends SubCommandBase
             {
                 EntityPlayer player = CommandBase.getPlayer(server, commandSender, args[1]);
 
-                try {
+                try
+                {
                     ValidCommands command = ValidCommands.valueOf(args[0].toUpperCase(Locale.ENGLISH));
                     command.run(player, commandSender, isBounded(0, 2, args.length), args);
-                } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException e)
+                {
 
                 }
             } catch (PlayerNotFoundException e)
             {
                 displayErrorString(commandSender, e.getLocalizedMessage());
             }
-        } else {
+        } else
+        {
             displayErrorString(commandSender, "commands.error.arg.missing");
         }
     }
 
     private enum ValidCommands
     {
-        SYPHON("commands.network.syphon.help") {
+        SYPHON("commands.network.syphon.help")
+        {
             @Override
             public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args)
             {
@@ -94,7 +98,8 @@ public class SubCommandNetwork extends SubCommandBase
                 }
             }
         },
-        ADD("commands.network.add.help") {
+        ADD("commands.network.add.help")
+        {
             @Override
             public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args)
             {
@@ -123,7 +128,8 @@ public class SubCommandNetwork extends SubCommandBase
                 }
             }
         },
-        SET("commands.network.set.help") {
+        SET("commands.network.set.help")
+        {
             @Override
             public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args)
             {
@@ -152,7 +158,8 @@ public class SubCommandNetwork extends SubCommandBase
                 }
             }
         },
-        GET("commands.network.get.help") {
+        GET("commands.network.get.help")
+        {
             @Override
             public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args)
             {
@@ -169,9 +176,11 @@ public class SubCommandNetwork extends SubCommandBase
 
             }
         },
-        FILL("commands.network.fill.help") {
+        FILL("commands.network.fill.help")
+        {
             @Override
-            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
+            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args)
+            {
                 if (displayHelp)
                 {
                     displayHelpString(sender, this.help, Integer.MAX_VALUE);
@@ -187,9 +196,11 @@ public class SubCommandNetwork extends SubCommandBase
                 }
             }
         },
-        CAP("commands.network.cap.help") {
+        CAP("commands.network.cap.help")
+        {
             @Override
-            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
+            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args)
+            {
                 if (displayHelp)
                 {
                     displayHelpString(sender, this.help);

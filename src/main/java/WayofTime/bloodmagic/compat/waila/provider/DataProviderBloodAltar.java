@@ -120,7 +120,8 @@ public class DataProviderBloodAltar implements IWailaDataProvider
         return false;
     }
 
-    private static boolean holdingSeerSigil(EntityPlayer player) {
+    private static boolean holdingSeerSigil(EntityPlayer player)
+    {
         if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemSigilSeer)
             return true;
 
@@ -130,7 +131,8 @@ public class DataProviderBloodAltar implements IWailaDataProvider
         return false;
     }
 
-    private static boolean holdingDivinationSigil(EntityPlayer player) {
+    private static boolean holdingDivinationSigil(EntityPlayer player)
+    {
         if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemSigilDivination)
             return true;
 

@@ -151,14 +151,14 @@ public class BloodMagicAPI
     }
 
     /**
-     * Used to add a {@link BlockStack} to the Transposition blacklist that cannot
-     * be changed via Configuration files.
-     *
+     * Used to add a {@link BlockStack} to the Transposition blacklist that
+     * cannot be changed via Configuration files.
+     * 
      * IMC:
      * {@code FMLInterModComs.sendMessage("BloodMagic", "transpositionBlacklist", ItemStack)}
      * Example:
      * {@code FMLInterModComs.sendMessage("BloodMagic", "transpositionBlacklist", new ItemStack(Blocks.bedrock))}
-     *
+     * 
      * @param blockStack
      *        - The BlockStack to blacklist.
      */
@@ -170,7 +170,7 @@ public class BloodMagicAPI
 
     /**
      * @see #addToTranspositionBlacklist(BlockStack)
-     *
+     * 
      * @param block
      *        - The block to blacklist
      * @param meta
@@ -183,7 +183,7 @@ public class BloodMagicAPI
 
     /**
      * @see #addToTranspositionBlacklist(BlockStack)
-     *
+     * 
      * @param block
      *        - The block to blacklist
      */

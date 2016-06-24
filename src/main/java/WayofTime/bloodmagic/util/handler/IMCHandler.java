@@ -30,7 +30,8 @@ public class IMCHandler
             if (message.key.equals("transpositionBlacklist") && message.isItemStackMessage())
             {
                 ItemStack stack = message.getItemStackValue();
-                if (stack.getItem() instanceof ItemBlock) {
+                if (stack.getItem() instanceof ItemBlock)
+                {
                     Block block = Block.getBlockFromItem(stack.getItem());
                     BloodMagicAPI.addToTranspositionBlacklist(block, stack.getItemDamage());
                 }

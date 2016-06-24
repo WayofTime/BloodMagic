@@ -46,8 +46,8 @@ public class TeleposeEvent extends Event
     }
 
     /**
-     * Fired when a Teleposer attempts to move an Entity between locations. Can be cancelled to
-     * stop transposition.
+     * Fired when a Teleposer attempts to move an Entity between locations. Can
+     * be cancelled to stop transposition.
      */
     @Cancelable
     public static class Ent extends TeleposeEvent
@@ -76,9 +76,11 @@ public class TeleposeEvent extends Event
         /**
          * Called after the entity has been transposed.
          */
-        public static class Post extends Ent {
+        public static class Post extends Ent
+        {
 
-            public Post(Entity entity, World initialWorld, BlockPos initialBlockPos, World finalWorld, BlockPos finalBlockPos) {
+            public Post(Entity entity, World initialWorld, BlockPos initialBlockPos, World finalWorld, BlockPos finalBlockPos)
+            {
                 super(entity, initialWorld, initialBlockPos, finalWorld, finalBlockPos);
             }
         }

@@ -93,7 +93,8 @@ public class Utils
         return true;
     }
 
-    public static String toFancyCasing(String input) {
+    public static String toFancyCasing(String input)
+    {
         return String.valueOf(input.charAt(0)).toUpperCase(Locale.ENGLISH) + input.substring(1);
     }
 
@@ -731,43 +732,44 @@ public class Utils
         {
             spawnPos.offset(pushDirection);
 
-            switch (pushDirection) {
-                case DOWN:
-                {
-                    entityItem.motionY = -velocity;
-                    entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() - 1.0D, spawnPos.getZ() + 0.5D);
-                    break;
-                }
-                case UP:
-                {
-                    entityItem.motionY = velocity;
-                    entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 1.0D, spawnPos.getZ() + 0.5D);
-                    break;
-                }
-                case NORTH:
-                {
-                    entityItem.motionZ = -velocity;
-                    entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 0.5D, spawnPos.getZ() - 1.0D);
-                    break;
-                }
-                case SOUTH:
-                {
-                    entityItem.motionZ = velocity;
-                    entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 1.0D);
-                    break;
-                }
-                case WEST:
-                {
-                    entityItem.motionX = -velocity;
-                    entityItem.setPosition(spawnPos.getX() - 1.0D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 0.5D);
-                    break;
-                }
-                case EAST:
-                {
-                    entityItem.motionX = velocity;
-                    entityItem.setPosition(spawnPos.getX() + 1.0D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 0.5D);
-                    break;
-                }
+            switch (pushDirection)
+            {
+            case DOWN:
+            {
+                entityItem.motionY = -velocity;
+                entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() - 1.0D, spawnPos.getZ() + 0.5D);
+                break;
+            }
+            case UP:
+            {
+                entityItem.motionY = velocity;
+                entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 1.0D, spawnPos.getZ() + 0.5D);
+                break;
+            }
+            case NORTH:
+            {
+                entityItem.motionZ = -velocity;
+                entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 0.5D, spawnPos.getZ() - 1.0D);
+                break;
+            }
+            case SOUTH:
+            {
+                entityItem.motionZ = velocity;
+                entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 1.0D);
+                break;
+            }
+            case WEST:
+            {
+                entityItem.motionX = -velocity;
+                entityItem.setPosition(spawnPos.getX() - 1.0D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 0.5D);
+                break;
+            }
+            case EAST:
+            {
+                entityItem.motionX = velocity;
+                entityItem.setPosition(spawnPos.getX() + 1.0D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 0.5D);
+                break;
+            }
             }
         }
 
@@ -918,14 +920,18 @@ public class Utils
         return largerStack ? stack : null;
     }
 
-    public static void registerHandlers(Set<ASMDataTable.ASMData> eventHandlers) {
-        for (ASMDataTable.ASMData data : eventHandlers) {
-            try {
+    public static void registerHandlers(Set<ASMDataTable.ASMData> eventHandlers)
+    {
+        for (ASMDataTable.ASMData data : eventHandlers)
+        {
+            try
+            {
                 Class<?> handlerClass = Class.forName(data.getClassName());
                 Object handlerImpl = handlerClass.newInstance();
                 MinecraftForge.EVENT_BUS.register(handlerImpl);
                 BloodMagic.instance.getLogger().debug("Registering event handler for class {}", data.getClassName());
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 // No-op
             }
         }

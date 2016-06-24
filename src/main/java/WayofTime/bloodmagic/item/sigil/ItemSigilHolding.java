@@ -226,7 +226,8 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
             ItemStack[] itemStacks = getInternalInventory(itemStack);
             if (itemStacks != null)
                 return itemStacks[slot == 5 ? 4 : slot];
-            else return null;
+            else
+                return null;
         }
 
         return null;
@@ -301,8 +302,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
                         index = next(index);
                         currentItemStack = getItemStackInSlot(itemStack, index);
                     }
-                }
-                else
+                } else
                 {
                     index = prev(currentIndex);
                     currentItemStack = getItemStackInSlot(itemStack, index);
@@ -320,7 +320,8 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
+    public List<Pair<Integer, String>> getVariants()
+    {
         return Collections.emptyList();
     }
 }

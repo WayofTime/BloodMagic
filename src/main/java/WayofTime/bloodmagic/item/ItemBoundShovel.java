@@ -92,7 +92,6 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         continue;
 
-
                     if (blockStack.getBlock() != null && blockStack.getBlock().getBlockHardness(blockStack.getState(), world, blockPos) != -1)
                     {
                         float strengthVsBlock = getStrVsBlock(stack, blockStack.getState());

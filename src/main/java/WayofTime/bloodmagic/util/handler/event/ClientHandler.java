@@ -138,8 +138,7 @@ public class ClientHandler
                     renderRitualStones(mrsHoloTile, event.getPartialTicks());
                 else
                     ClientHandler.setRitualHolo(null, null, EnumFacing.NORTH, false);
-            }
-            else
+            } else
             {
                 ClientHandler.setRitualHolo(null, null, EnumFacing.NORTH, false);
             }
@@ -335,27 +334,27 @@ public class ClientHandler
 
                 switch (ritualComponent.getRuneType())
                 {
-                    case BLANK:
-                        texture = ritualStoneBlank;
-                        break;
-                    case WATER:
-                        texture = ritualStoneWater;
-                        break;
-                    case FIRE:
-                        texture = ritualStoneFire;
-                        break;
-                    case EARTH:
-                        texture = ritualStoneEarth;
-                        break;
-                    case AIR:
-                        texture = ritualStoneAir;
-                        break;
-                    case DAWN:
-                        texture = ritualStoneDawn;
-                        break;
-                    case DUSK:
-                        texture = ritualStoneDusk;
-                        break;
+                case BLANK:
+                    texture = ritualStoneBlank;
+                    break;
+                case WATER:
+                    texture = ritualStoneWater;
+                    break;
+                case FIRE:
+                    texture = ritualStoneFire;
+                    break;
+                case EARTH:
+                    texture = ritualStoneEarth;
+                    break;
+                case AIR:
+                    texture = ritualStoneAir;
+                    break;
+                case DAWN:
+                    texture = ritualStoneDawn;
+                    break;
+                case DUSK:
+                    texture = ritualStoneDusk;
+                    break;
                 }
 
                 RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);

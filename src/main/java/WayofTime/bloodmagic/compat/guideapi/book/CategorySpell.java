@@ -15,8 +15,6 @@ public class CategorySpell
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
         String keyBase = Constants.Mod.DOMAIN + "spell_";
 
-
-
         return entries;
     }
 }

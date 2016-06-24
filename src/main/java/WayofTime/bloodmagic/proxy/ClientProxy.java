@@ -90,24 +90,23 @@ public class ClientProxy extends CommonProxy
     @Override
     public void init()
     {
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(
-                new IItemColor()
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor()
+        {
+            @Override
+            public int getColorFromItemstack(ItemStack stack, int tintIndex)
+            {
+                try
                 {
-                    @Override
-                    public int getColorFromItemstack(ItemStack stack, int tintIndex)
-                    {
-                        try {
-                            if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.COLOR))
-                                if (tintIndex == 1)
-                                    return Color.decode(stack.getTagCompound().getString(Constants.NBT.COLOR)).getRGB();
-                        } catch (NumberFormatException e) {
-                            return -1;
-                        }
-                        return -1;
-                    }
-                },
-                ModItems.sigilHolding
-        );
+                    if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.COLOR))
+                        if (tintIndex == 1)
+                            return Color.decode(stack.getTagCompound().getString(Constants.NBT.COLOR)).getRGB();
+                } catch (NumberFormatException e)
+                {
+                    return -1;
+                }
+                return -1;
+            }
+        }, ModItems.sigilHolding);
 
         addElytraLayer();
     }
@@ -149,13 +148,16 @@ public class ClientProxy extends CommonProxy
         }
     }
 
-    private void addElytraLayer() {
+    private void addElytraLayer()
+    {
         RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
-        try {
+        try
+        {
             RenderPlayer renderPlayer = ObfuscationReflectionHelper.getPrivateValue(RenderManager.class, renderManager, "playerRenderer", "field_178637_m");
             renderPlayer.addLayer(new LayerBloodElytra(renderPlayer));
             BloodMagic.instance.getLogger().info("Elytra layer added");
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             BloodMagic.instance.getLogger().error("Failed to set custom Elytra Layer for Elytra Living Armour Upgrade.");
             BloodMagic.instance.getLogger().error(e.getLocalizedMessage());
         }
