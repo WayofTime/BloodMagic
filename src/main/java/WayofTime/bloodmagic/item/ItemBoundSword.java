@@ -5,13 +5,16 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.ActionResult;
@@ -44,7 +47,6 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
 
         setUnlocalizedName(Constants.Mod.MODID + ".bound.sword");
         setCreativeTab(BloodMagic.tabBloodMagic);
-        setMaxDamage(0);
     }
 
     @Override
@@ -82,6 +84,13 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
     {
         return oldStack.getItem() != newStack.getItem();
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
+    {
+        subItems.add(Utils.setUnbreakable(new ItemStack(itemIn)));
     }
 
     @Override

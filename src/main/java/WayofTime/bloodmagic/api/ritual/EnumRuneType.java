@@ -19,7 +19,8 @@ public enum EnumRuneType implements IStringSerializable
 
     public final TextFormatting colorCode;
 
-    EnumRuneType(TextFormatting colorCode) {
+    EnumRuneType(TextFormatting colorCode)
+    {
         this.colorCode = colorCode;
     }
 

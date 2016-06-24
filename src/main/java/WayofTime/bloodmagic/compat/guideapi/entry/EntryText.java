@@ -16,19 +16,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Collections;
 import java.util.List;
 
-public class EntryText extends EntryResourceLocation {
+public class EntryText extends EntryResourceLocation
+{
 
-    public EntryText(List<IPage> pageList, String unlocEntryName, boolean unicode) {
+    public EntryText(List<IPage> pageList, String unlocEntryName, boolean unicode)
+    {
         super(pageList, unlocEntryName, new ResourceLocation("bloodmagicguide", "textures/gui/bullet_point.png"), unicode);
     }
 
-    public EntryText(List<IPage> pageList, String unlocEntryName) {
+    public EntryText(List<IPage> pageList, String unlocEntryName)
+    {
         this(pageList, unlocEntryName, false);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void drawExtras(Book book, CategoryAbstract category, int entryX, int entryY, int entryWidth, int entryHeight, int mouseX, int mouseY, GuiBase guiBase, FontRenderer fontRendererObj) {
+    public void drawExtras(Book book, CategoryAbstract category, int entryX, int entryY, int entryWidth, int entryHeight, int mouseX, int mouseY, GuiBase guiBase, FontRenderer fontRendererObj)
+    {
         Minecraft.getMinecraft().getTextureManager().bindTexture(image);
         GuiHelper.drawSizedIconWithoutColor(entryX + 4, entryY + 2, 8, 8, 1F);
 
@@ -42,7 +46,8 @@ public class EntryText extends EntryResourceLocation {
         if (strWidth > guiBase.xSize - 80 && strWidth > fontRendererObj.getStringWidth("..."))
             cutString = true;
 
-        if (GuiHelper.isMouseBetween(mouseX, mouseY, entryX, entryY, entryWidth, entryHeight) && cutString) {
+        if (GuiHelper.isMouseBetween(mouseX, mouseY, entryX, entryY, entryWidth, entryHeight) && cutString)
+        {
 
             guiBase.drawHoveringText(Collections.singletonList(getLocalizedName()), entryX, entryY + 12);
             fontRendererObj.setUnicodeFlag(unicode);

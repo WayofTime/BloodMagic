@@ -90,7 +90,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     /**
      * Adds a single rune to the ritual.
-     *
+     * 
      * @param stack
      *        - The Ritual Diviner stack
      * @param world
@@ -99,7 +99,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
      *        - Block Position of the MRS.
      * @param player
      *        - The Player attempting to place the ritual
-     *
+     * 
      * @return - True if a rune was successfully added
      */
     public boolean addRuneToRitual(ItemStack stack, World world, BlockPos pos, EntityPlayer player)
@@ -413,7 +413,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     /**
      * Cycles the selected ritual to the next available ritual that is enabled.
-     *
+     * 
      * @param stack
      *        - The ItemStack of the ritual diviner
      * @param player
@@ -466,7 +466,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     /**
      * Does the same as cycleRitual but instead cycles backwards.
-     *
+     * 
      * @param stack
      * @param player
      */

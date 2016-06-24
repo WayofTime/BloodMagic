@@ -41,8 +41,7 @@ public class ContainerHolding extends Container
             if (actionBarIndex == currentSlotHeldIn)
             {
                 this.addSlotToContainer(new SlotDisabled(player.inventory, actionBarIndex, 8 + actionBarIndex * 18, 99));
-            }
-            else
+            } else
             {
                 this.addSlotToContainer(new Slot(player.inventory, actionBarIndex, 8 + actionBarIndex * 18, 99));
             }
@@ -97,13 +96,11 @@ public class ContainerHolding extends Container
                     {
                         return null;
                     }
-                }
-                else if (!this.mergeItemStack(stackInSlot, 0, ItemSigilHolding.inventorySize, false))
+                } else if (!this.mergeItemStack(stackInSlot, 0, ItemSigilHolding.inventorySize, false))
                 {
                     return null;
                 }
-            }
-            else if (stack.getItem() instanceof ItemSigilHolding)
+            } else if (stack.getItem() instanceof ItemSigilHolding)
             {
                 if (slotIndex < ItemSigilHolding.inventorySize + (PLAYER_INVENTORY_ROWS * PLAYER_INVENTORY_COLUMNS))
                 {
@@ -111,8 +108,7 @@ public class ContainerHolding extends Container
                     {
                         return null;
                     }
-                }
-                else if (!this.mergeItemStack(stackInSlot, ItemSigilHolding.inventorySize, ItemSigilHolding.inventorySize + (PLAYER_INVENTORY_ROWS * PLAYER_INVENTORY_COLUMNS), false))
+                } else if (!this.mergeItemStack(stackInSlot, ItemSigilHolding.inventorySize, ItemSigilHolding.inventorySize + (PLAYER_INVENTORY_ROWS * PLAYER_INVENTORY_COLUMNS), false))
                 {
                     return null;
                 }

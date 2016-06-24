@@ -14,14 +14,17 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 import javax.annotation.Nullable;
 
-public class HUDElementHolding extends HUDElement {
+public class HUDElementHolding extends HUDElement
+{
 
-    public HUDElementHolding() {
+    public HUDElementHolding()
+    {
         super(0, 0, RenderGameOverlayEvent.ElementType.HOTBAR);
     }
 
     @Override
-    public void render(Minecraft minecraft, ScaledResolution resolution, float partialTicks) {
+    public void render(Minecraft minecraft, ScaledResolution resolution, float partialTicks)
+    {
         ItemStack sigilHolding = minecraft.thePlayer.getHeldItemMainhand();
         // TODO - Clean this mess
         // Check mainhand for Sigil of Holding
@@ -59,7 +62,8 @@ public class HUDElementHolding extends HUDElement {
     }
 
     @Override
-    public boolean shouldRender(Minecraft minecraft) {
+    public boolean shouldRender(Minecraft minecraft)
+    {
         return true;
     }
 

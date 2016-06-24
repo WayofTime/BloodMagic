@@ -153,24 +153,24 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
 
                 switch (altarComponent.getComponent())
                 {
-                    case BLOODRUNE:
-                        texture = ClientHandler.blankBloodRune;
-                        break;
-                    case NOTAIR:
-                        texture = ClientHandler.stoneBrick;
-                        break;
-                    case GLOWSTONE:
-                        texture = ClientHandler.glowstone;
-                        break;
-                    case BLOODSTONE:
-                        texture = ClientHandler.bloodStoneBrick;
-                        break;
-                    case BEACON:
-                        texture = ClientHandler.beacon;
-                        break;
-                    case CRYSTAL:
-                        texture = ClientHandler.crystalCluster;
-                        break;
+                case BLOODRUNE:
+                    texture = ClientHandler.blankBloodRune;
+                    break;
+                case NOTAIR:
+                    texture = ClientHandler.stoneBrick;
+                    break;
+                case GLOWSTONE:
+                    texture = ClientHandler.glowstone;
+                    break;
+                case BLOODSTONE:
+                    texture = ClientHandler.bloodStoneBrick;
+                    break;
+                case BEACON:
+                    texture = ClientHandler.beacon;
+                    break;
+                case CRYSTAL:
+                    texture = ClientHandler.crystalCluster;
+                    break;
                 }
 
                 RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);

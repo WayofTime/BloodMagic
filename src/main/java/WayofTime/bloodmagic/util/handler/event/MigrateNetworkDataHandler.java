@@ -17,11 +17,14 @@ import java.util.UUID;
 
 // Migrates from the old data storage system to the cleaner new one
 @Handler
-public class MigrateNetworkDataHandler {
+public class MigrateNetworkDataHandler
+{
 
     @SubscribeEvent
-    public void playerJoin(EntityJoinWorldEvent event) {
-        if (!event.getWorld().isRemote && event.getEntity() instanceof EntityPlayer) {
+    public void playerJoin(EntityJoinWorldEvent event)
+    {
+        if (!event.getWorld().isRemote && event.getEntity() instanceof EntityPlayer)
+        {
             EntityPlayer player = (EntityPlayer) event.getEntity();
             UUID playerId = PlayerHelper.getUUIDFromPlayer(player);
             Stopwatch stopwatch = Stopwatch.createStarted();
