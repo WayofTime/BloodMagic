@@ -74,7 +74,12 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        if (trySetDisplayedRitual(stack, world, pos) && addRuneToRitual(stack, world, pos, player))
+        if (player.isSneaking())
+        {
+            trySetDisplayedRitual(stack, world, pos);
+            return EnumActionResult.SUCCESS;
+        }
+        else if (addRuneToRitual(stack, world, pos, player))
         {
             if (world.isRemote)
             {
@@ -155,7 +160,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         return false;
     }
 
-    public boolean trySetDisplayedRitual(ItemStack itemStack, World world, BlockPos pos)
+    public void trySetDisplayedRitual(ItemStack itemStack, World world, BlockPos pos)
     {
         TileEntity tile = world.getTileEntity(pos);
 
@@ -167,11 +172,9 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
             if (ritual != null)
             {
                 EnumFacing direction = getDirection(itemStack);
-                return ClientHandler.setRitualHolo(masterRitualStone, ritual, direction, true);
+                ClientHandler.setRitualHolo(masterRitualStone, ritual, direction, true);
             }
         }
-
-        return true;
     }
 
     // TODO: Make this work for any IRitualStone

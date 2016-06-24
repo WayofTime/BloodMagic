@@ -137,10 +137,10 @@ public class ClientHandler
                 if (mrsHoloDisplay)
                     renderRitualStones(mrsHoloTile, event.getPartialTicks());
                 else
-                    ClientHandler.setRitualHolo(null, null, EnumFacing.NORTH, false);
+                    ClientHandler.setRitualHoloToNull();
             } else
             {
-                ClientHandler.setRitualHolo(null, null, EnumFacing.NORTH, false);
+                ClientHandler.setRitualHoloToNull();
             }
         }
 
@@ -364,18 +364,24 @@ public class ClientHandler
         GlStateManager.popMatrix();
     }
 
-    public static boolean setRitualHolo(TileMasterRitualStone masterRitualStone, Ritual ritual, EnumFacing direction, boolean displayed)
+    public static void setRitualHolo(TileMasterRitualStone masterRitualStone, Ritual ritual, EnumFacing direction, boolean displayed)
     {
         mrsHoloDisplay = displayed;
-        if (mrsHoloTile != masterRitualStone || mrsHoloRitual != ritual || mrsHoloDirection != direction)
+        if (mrsHoloTile != minecraft.theWorld.getTileEntity(masterRitualStone.getPos()) || !mrsHoloRitual.getName().equals(ritual.getName()) || mrsHoloDirection != direction)
         {
+            System.out.println("RITUAL: " + mrsHoloTile + " AND " + masterRitualStone);
             mrsHoloTile = masterRitualStone;
             mrsHoloRitual = ritual;
             mrsHoloDirection = direction;
-            return false;
         }
+    }
 
-        return true;
+    public static void setRitualHoloToNull()
+    {
+        mrsHoloDisplay = false;
+        mrsHoloTile = null;
+        mrsHoloRitual = null;
+        mrsHoloDirection = EnumFacing.NORTH;
     }
 
     protected void renderHotbarItem(int x, int y, float partialTicks, EntityPlayer player, @Nullable ItemStack stack)
