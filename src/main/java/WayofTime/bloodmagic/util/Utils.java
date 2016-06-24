@@ -174,7 +174,8 @@ public class Utils
         return itemHandler;
     }
 
-    public static ItemStack setUnbreakable(ItemStack stack) {
+    public static ItemStack setUnbreakable(ItemStack stack)
+    {
         NBTHelper.checkNBT(stack);
         stack.getTagCompound().setBoolean("Unbreakable", true);
         return stack;

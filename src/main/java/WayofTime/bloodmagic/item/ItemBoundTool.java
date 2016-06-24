@@ -81,7 +81,8 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
+    {
         subItems.add(Utils.setUnbreakable(new ItemStack(itemIn)));
     }
 
