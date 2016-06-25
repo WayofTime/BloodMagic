@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item.sigil;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -9,6 +10,7 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.TileSpectralBlock;
 import WayofTime.bloodmagic.util.Utils;
+import net.minecraftforge.fluids.BlockFluidBase;
 
 public class ItemSigilSuppression extends ItemSigilToggleableBase
 {
@@ -40,8 +42,11 @@ public class ItemSigilSuppression extends ItemSigilToggleableBase
                     BlockPos blockPos = new BlockPos(x + i, y + j, z + k);
                     IBlockState state = world.getBlockState(blockPos);
 
-                    if (Utils.isBlockLiquid(state) && world.getTileEntity(blockPos) == null)
-                        TileSpectralBlock.createSpectralBlock(world, blockPos, refresh);
+                    // TODO - Change back when BlockFluidBase overrides getStateFromMeta()
+                    // Temporary fix to avoid liquid duplication
+                    if (state.getBlock() instanceof BlockFluidBase) {/*No-op*/}
+                    else if (Utils.isBlockLiquid(state) && world.getTileEntity(blockPos) == null)
+                          TileSpectralBlock.createSpectralBlock(world, blockPos, refresh);
                     else
                     {
                         TileEntity tile = world.getTileEntity(blockPos);
