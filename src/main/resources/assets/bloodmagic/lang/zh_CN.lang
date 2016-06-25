@@ -169,7 +169,7 @@ item.BloodMagic.itemFilter.modItems.name=Mod物品筛选器
 item.BloodMagic.itemFilter.oreDict.name=矿物物品筛选器
 
 item.BloodMagic.experienceTome.name=经验手册
-item.BloodMagic.sanguineBook.name=血染知书
+item.BloodMagic.sanguineBook.name=碍视之书
 
 item.BloodMagic.livingPointUpgrade.draftAngelus.name=祷告之始
 
@@ -208,7 +208,7 @@ tile.BloodMagic.bloodstonebrick.brick.name=血石砖
 tile.BloodMagic.crystal.large.name=晶簇块
 tile.BloodMagic.crystal.brick.name=晶簇砖
 tile.BloodMagic.bloodLight.name=血之光源
-tile.BloodMagic.spectralBlock.name=影桥方块
+tile.BloodMagic.spectralBlock.name=幽灵方块
 tile.BloodMagic.phantom.name=影桥方块
 tile.BloodMagic.incenseAltar.name=熏香祭坛
 
@@ -345,6 +345,7 @@ tooltip.BloodMagic.telepositionFocus.demonic=用于在世界中转移区域
 tooltip.BloodMagic.livingArmour.upgrade.speed=迅捷双足
 tooltip.BloodMagic.livingArmour.upgrade.digging=矮人力量
 tooltip.BloodMagic.livingArmour.upgrade.poisonResist=抗毒体质
+tooltip.BloodMagic.livingArmour.upgrade.fireResist=焰火之礼
 tooltip.BloodMagic.livingArmour.upgrade.selfSacrifice=结实手心
 tooltip.BloodMagic.livingArmour.upgrade.knockback=强劲身躯
 tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=坚韧皮肤
@@ -523,6 +524,7 @@ chat.BloodMagic.ritual.activate=一股能量流经这个仪式!
 chat.BloodMagic.ritual.notValid=这些仪式石似乎有些摆放不得当...
 
 chat.BloodMagic.livingArmour.upgrade.poisonRemove=你感到已经好多了!
+chat.BloodMagic.livingArmour.upgrade.fireRemove=&6火焰抵抗随一股清凉感附着于你.
 chat.BloodMagic.livingArmour.upgrade.grimReaper=&6朦胧中一股能量使你脱离死亡边缘!
 chat.BloodMagic.livingArmour.newUpgrade=&4强化完成!
 
