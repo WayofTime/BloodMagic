@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.client.hud;
 
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
+import WayofTime.bloodmagic.registry.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -30,12 +31,12 @@ public class HUDElementHolding extends HUDElement
         // Check mainhand for Sigil of Holding
         if (sigilHolding == null)
             return;
-        if (!(sigilHolding.getItem() instanceof ItemSigilHolding))
+        if (!(sigilHolding.getItem() == ModItems.sigilHolding))
             sigilHolding = minecraft.thePlayer.getHeldItemOffhand();
         // Check offhand for Sigil of Holding
         if (sigilHolding == null)
             return;
-        if (!(sigilHolding.getItem() instanceof ItemSigilHolding))
+        if (!(sigilHolding.getItem() == ModItems.sigilHolding))
             return;
 
         Gui ingameGui = minecraft.ingameGUI;
