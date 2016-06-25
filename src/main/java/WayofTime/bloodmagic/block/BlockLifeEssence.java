@@ -32,6 +32,13 @@ public class BlockLifeEssence extends BlockFluidClassic
         BloodMagicAPI.setLifeEssence(getLifeEssence());
     }
 
+    // TODO - Remove after Forge fixes
+    // Fix for BlockFluidBase not overriding this
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return getBlockState().getBaseState().withProperty(LEVEL, meta);
+    }
+
     @Override
     public boolean canDisplace(IBlockAccess world, BlockPos blockPos)
     {
@@ -42,12 +49,6 @@ public class BlockLifeEssence extends BlockFluidClassic
     public boolean displaceIfPossible(World world, BlockPos blockPos)
     {
         return !world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isLiquid() && super.displaceIfPossible(world, blockPos);
-    }
-
-    @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
-    {
-        return null;
     }
 
     public static class FluidLifeEssence extends Fluid
