@@ -83,6 +83,7 @@ item.BloodMagic.baseComponent.reagentHaste.name=Haste Reagent
 item.BloodMagic.baseComponent.reagentBridge.name=Phantom Bridge Reagent
 item.BloodMagic.baseComponent.reagentCompression.name=Compression Reagent
 item.BloodMagic.baseComponent.reagentSeverance.name=Severance Reagent
+item.BloodMagic.baseComponent.reagentHolding.name=Holding Reagent
 
 item.BloodMagic.baseComponent.reagentTeleposition.name=Teleposition Reagent
 item.BloodMagic.baseComponent.reagentTransposition.name=Transposition Reagent

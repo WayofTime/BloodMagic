@@ -140,6 +140,11 @@
         "textures": {
           "layer0": "bloodmagic:items/Antiseptic"
         }
+      },
+      "reagentHolding": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentHolding"
+        }
       }
     }
   }
