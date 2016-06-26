@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.0.2-47
+------------------------------------------------------
+- Fixed horrible memory leak in the Living Armour.
+
+------------------------------------------------------
 Version 2.0.2-46
 ------------------------------------------------------
 - Fixed it so Ritual stones can be placed by the Ritual Diviner again. Also made it so that rituals are activateable and don't crash servers.

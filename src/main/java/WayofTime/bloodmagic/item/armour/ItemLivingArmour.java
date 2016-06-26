@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -39,6 +40,7 @@ import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeElytra;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.PlayerFallDistancePacketProcessor;
 import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.HashMultimap;
@@ -54,7 +56,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     public static final boolean useSpecialArmourCalculation = true;
 
     //TODO: Save/delete cache periodically.
-    public static Map<ItemStack, LivingArmour> armourMap = new HashMap<ItemStack, LivingArmour>();
+    public static Map<UUID, LivingArmour> armourMap = new HashMap<UUID, LivingArmour>();
 
     public ItemLivingArmour(EntityEquipmentSlot armorType)
     {
@@ -150,9 +152,9 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             {
                 double remainder = 1; // Multiply this number by the armour upgrades for protection
 
-                if (armourMap.containsKey(stack))
+                if (hasLivingArmour(stack))
                 {
-                    LivingArmour armour = armourMap.get(stack);
+                    LivingArmour armour = getLivingArmour(stack);
                     if (armour != null && isEnabled(stack))
                     {
                         for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
@@ -252,7 +254,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 
         if (this == ModItems.livingArmourChest)
         {
-            LivingArmour armour = getLivingArmour(stack);
+            LivingArmour armour = getLivingArmourFromStack(stack);
             for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
             {
                 LivingArmourUpgrade upgrade = entry.getValue();
@@ -333,12 +335,12 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 
         if (this == ModItems.livingArmourChest)
         {
-            if (!armourMap.containsKey(stack))
+            if (!hasLivingArmour(stack))
             {
-                armourMap.put(stack, getLivingArmour(stack));
+                setLivingArmour(stack, getLivingArmourFromStack(stack));
             }
 
-            LivingArmour armour = armourMap.get(stack);
+            LivingArmour armour = getLivingArmour(stack);
             if (LivingArmour.hasFullSet(player))
             {
                 this.setIsEnabled(stack, true);
@@ -354,7 +356,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     {
         if (this == ModItems.livingArmourChest && isEnabled(stack) && slot == EntityEquipmentSlot.CHEST)
         {
-            LivingArmour armour = ItemLivingArmour.getLivingArmour(stack);
+            LivingArmour armour = ItemLivingArmour.getLivingArmourFromStack(stack);
 
             return armour.getAttributeModifiers();
         }
@@ -407,7 +409,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         return ret;
     }
 
-    public static LivingArmour getLivingArmour(ItemStack stack)
+    public static LivingArmour getLivingArmourFromStack(ItemStack stack)
     {
         NBTTagCompound livingTag = getArmourTag(stack);
 
@@ -459,12 +461,12 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     //TODO: Add the ability to have the armour give an upgrade with a higher level
     public static LivingArmourUpgrade getUpgrade(String uniqueIdentifier, ItemStack stack)
     {
-        if (!armourMap.containsKey(stack))
+        if (!hasLivingArmour(stack))
         {
-            armourMap.put(stack, getLivingArmour(stack));
+            setLivingArmour(stack, getLivingArmourFromStack(stack));
         }
 
-        LivingArmour armour = armourMap.get(stack);
+        LivingArmour armour = getLivingArmour(stack);
 
         for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
         {
@@ -477,12 +479,39 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         return null;
     }
 
+    public static boolean hasLivingArmour(ItemStack stack)
+    {
+        UUID uuid = Utils.getUUID(stack);
+        return uuid != null && armourMap.containsKey(uuid);
+    }
+
+    public static LivingArmour getLivingArmour(ItemStack stack)
+    {
+        UUID uuid = Utils.getUUID(stack);
+
+        return armourMap.get(uuid);
+    }
+
+    public static void setLivingArmour(ItemStack stack, LivingArmour armour)
+    {
+        if (!Utils.hasUUID(stack))
+        {
+            Utils.setUUID(stack);
+        }
+
+        UUID uuid = Utils.getUUID(stack);
+
+        armourMap.put(uuid, armour);
+    }
+
     public static boolean hasUpgrade(String id, ItemStack stack)
     {
-        if (!armourMap.containsKey(stack))
-            armourMap.put(stack, getLivingArmour(stack));
+        if (!hasLivingArmour(stack))
+        {
+            setLivingArmour(stack, getLivingArmourFromStack(stack));
+        }
 
-        LivingArmour armour = armourMap.get(stack);
+        LivingArmour armour = getLivingArmour(stack);
 
         return armour.upgradeMap.containsKey(id);
     }

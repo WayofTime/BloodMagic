@@ -45,7 +45,7 @@ public class StatTrackerHandler
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 if (chestStack != null && chestStack.getItem() instanceof ItemLivingArmour)
                 {
-                    LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+                    LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
 
                     if (armour != null)
                     {
@@ -72,7 +72,7 @@ public class StatTrackerHandler
         if (LivingArmour.hasFullSet(player))
         {
             ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-            LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+            LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
             if (armour != null)
             {
                 StatTrackerHealthboost.incrementCounter(armour, event.getAmount());
@@ -107,7 +107,7 @@ public class StatTrackerHandler
             {
                 float amount = Math.min(Utils.getModifiedDamage(attackedPlayer, event.getSource(), event.getAmount()), attackedPlayer.getHealth());
                 ItemStack chestStack = attackedPlayer.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-                LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)
                 {
                     if (sourceEntity != null && !source.isMagicDamage() && !source.isProjectile())
@@ -138,7 +138,7 @@ public class StatTrackerHandler
             if (LivingArmour.hasFullSet(player))
             {
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-                LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)
                 {
                     ItemStack mainWeapon = player.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
@@ -179,7 +179,7 @@ public class StatTrackerHandler
         if (LivingArmour.hasFullSet(player))
         {
             ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-            LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+            LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
             if (armour != null)
             {
                 LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.experienced", chestStack);

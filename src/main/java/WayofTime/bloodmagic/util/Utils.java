@@ -3,9 +3,10 @@ package WayofTime.bloodmagic.util;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Set;
+import java.util.UUID;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
@@ -37,22 +38,22 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.PlayerVelocityPacketProcessor;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileInventory;
 
 import com.google.common.collect.Iterables;
-import net.minecraftforge.items.wrapper.InvWrapper;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-
-import javax.annotation.Nullable;
 
 public class Utils
 {
@@ -942,6 +943,33 @@ public class Utils
             {
                 // No-op
             }
+        }
+    }
+
+    public static boolean hasUUID(ItemStack stack)
+    {
+        return stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.MOST_SIG) && stack.getTagCompound().hasKey(Constants.NBT.LEAST_SIG);
+    }
+
+    public static UUID getUUID(ItemStack stack)
+    {
+        if (!hasUUID(stack))
+        {
+            return null;
+        }
+
+        return new UUID(stack.getTagCompound().getLong(Constants.NBT.MOST_SIG), stack.getTagCompound().getLong(Constants.NBT.LEAST_SIG));
+    }
+
+    public static void setUUID(ItemStack stack)
+    {
+        stack = NBTHelper.checkNBT(stack);
+
+        if (!stack.getTagCompound().hasKey(Constants.NBT.MOST_SIG) && !stack.getTagCompound().hasKey(Constants.NBT.LEAST_SIG))
+        {
+            UUID itemUUID = UUID.randomUUID();
+            stack.getTagCompound().setLong(Constants.NBT.MOST_SIG, itemUUID.getMostSignificantBits());
+            stack.getTagCompound().setLong(Constants.NBT.LEAST_SIG, itemUUID.getLeastSignificantBits());
         }
     }
 }

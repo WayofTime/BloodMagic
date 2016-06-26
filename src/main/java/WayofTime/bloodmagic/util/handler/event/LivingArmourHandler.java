@@ -41,7 +41,7 @@ public class LivingArmourHandler
             if (LivingArmour.hasFullSet(player))
             {
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-                LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)
                 {
                     StatTrackerGrimReaperSprint.incrementCounter(armour);
@@ -72,7 +72,7 @@ public class LivingArmourHandler
             if (LivingArmour.hasFullSet(player))
             {
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-                LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)
                 {
                     StatTrackerJump.incrementCounter(armour);
@@ -107,7 +107,7 @@ public class LivingArmourHandler
                 if (LivingArmour.hasFullSet(player))
                 {
                     ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-                    LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                    LivingArmour armour = ItemLivingArmour.getLivingArmourFromStack(chestStack);
                     if (armour != null)
                     {
                         LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.stepAssist", chestStack);
@@ -129,7 +129,7 @@ public class LivingArmourHandler
             if (LivingArmour.hasFullSet(player))
             {
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                LivingArmour armour = ItemLivingArmour.getLivingArmourFromStack(chestStack);
                 if (armour != null)
                 {
                     LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.movement", chestStack);
@@ -171,7 +171,7 @@ public class LivingArmourHandler
         if (LivingArmour.hasFullSet(player))
         {
             ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-            LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+            LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
             if (armour != null)
             {
                 StatTrackerArrowShot.incrementCounter(armour);

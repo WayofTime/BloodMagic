@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ItemStackWrapper;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.api.ritual.*;
@@ -8,7 +9,9 @@ import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.registry.ModItems;
+
 import com.google.common.collect.Iterables;
+
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -54,7 +57,7 @@ public class RitualUpgradeRemove extends Ritual
                 boolean removedUpgrade = false;
 
                 ItemStack chestStack = Iterables.toArray(player.getArmorInventoryList(), ItemStack.class)[2];
-                LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)
                 {
                     @SuppressWarnings("unchecked")
@@ -92,7 +95,7 @@ public class RitualUpgradeRemove extends Ritual
                     if (removedUpgrade)
                     {
                         ((ItemLivingArmour) chestStack.getItem()).setLivingArmour(chestStack, armour, true);
-                        ItemLivingArmour.armourMap.put(chestStack, armour);
+                        ItemLivingArmour.setLivingArmour(chestStack, armour);
 
                         masterRitualStone.setActive(false);
 

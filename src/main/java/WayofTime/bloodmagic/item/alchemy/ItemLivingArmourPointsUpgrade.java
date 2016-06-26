@@ -7,16 +7,12 @@ import java.util.List;
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -27,8 +23,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.google.common.collect.Iterables;
-
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
@@ -37,6 +31,8 @@ import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+
+import com.google.common.collect.Iterables;
 
 public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvider
 {
@@ -84,14 +80,14 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
             if (LivingArmour.hasFullSet(player))
             {
                 ItemStack chestStack = Iterables.toArray(player.getArmorInventoryList(), ItemStack.class)[2];
-                LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)
                 {
                     if (armour.maxUpgradePoints < 200)
                     {
                         armour.maxUpgradePoints = 200;
                         ((ItemLivingArmour) chestStack.getItem()).setLivingArmour(chestStack, armour, true);
-                        ItemLivingArmour.armourMap.put(chestStack, armour);
+                        ItemLivingArmour.setLivingArmour(chestStack, armour);
                     }
                 }
             }

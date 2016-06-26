@@ -45,7 +45,7 @@ public class RitualArmourEvolve extends Ritual
             if (LivingArmour.hasFullSet(player))
             {
                 ItemStack chestStack = Iterables.toArray(player.getArmorInventoryList(), ItemStack.class)[2];
-                LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)
                 {
                     if (armour.maxUpgradePoints < 300)

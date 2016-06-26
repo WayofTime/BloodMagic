@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.util.handler.event;
 
-import WayofTime.bloodmagic.annot.Handler;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -24,6 +23,7 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.ItemBindEvent;
@@ -31,9 +31,13 @@ import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
-import WayofTime.bloodmagic.api.util.helper.*;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
+import WayofTime.bloodmagic.api.util.helper.BindableHelper;
+import WayofTime.bloodmagic.api.util.helper.ItemHelper;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.ItemExperienceBook;
@@ -166,7 +170,7 @@ public class GenericHandler
         if (LivingArmour.hasFullSet(player))
         {
             ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-            LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+            LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
             if (armour != null)
             {
                 StatTrackerSelfSacrifice.incrementCounter(armour, event.healthDrained / 2);

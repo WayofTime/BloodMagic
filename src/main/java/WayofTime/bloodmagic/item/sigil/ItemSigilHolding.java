@@ -1,15 +1,8 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.iface.IAltarReader;
-import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.item.inventory.InventoryHolding;
-import WayofTime.bloodmagic.util.handler.BMKeyBinding;
-import WayofTime.bloodmagic.util.handler.IKeybindable;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.base.Strings;
+import java.util.Collections;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -24,10 +17,20 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Collections;
-import java.util.List;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IAltarReader;
+import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.util.handler.BMKeyBinding;
+import WayofTime.bloodmagic.util.handler.IKeybindable;
+import WayofTime.bloodmagic.util.helper.TextHelper;
+
+import com.google.common.base.Strings;
 
 public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAltarReader
 {
@@ -45,7 +48,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     {
         if (stack == player.getHeldItemMainhand() && stack.getItem() instanceof ItemSigilHolding && key.equals(BMKeyBinding.Key.OPEN_SIGIL_HOLDING))
         {
-            InventoryHolding.setUUID(stack);
+            Utils.setUUID(stack);
             player.openGui(BloodMagic.instance, Constants.Gui.SIGIL_HOLDING_GUI, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
     }

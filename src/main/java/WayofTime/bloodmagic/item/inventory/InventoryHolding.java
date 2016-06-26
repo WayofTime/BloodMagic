@@ -1,14 +1,14 @@
 package WayofTime.bloodmagic.item.inventory;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.iface.ISigil;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
+import java.util.UUID;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-
-import java.util.UUID;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.ISigil;
+import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
+import WayofTime.bloodmagic.util.Utils;
 
 public class InventoryHolding extends ItemInventory
 {
@@ -33,14 +33,14 @@ public class InventoryHolding extends ItemInventory
 
     public ItemStack findParentStack(EntityPlayer entityPlayer)
     {
-        if (hasUUID(masterStack))
+        if (Utils.hasUUID(masterStack))
         {
             UUID parentStackUUID = new UUID(masterStack.getTagCompound().getLong(Constants.NBT.MOST_SIG), masterStack.getTagCompound().getLong(Constants.NBT.LEAST_SIG));
             for (int i = 0; i < entityPlayer.inventory.getSizeInventory(); i++)
             {
                 ItemStack itemStack = entityPlayer.inventory.getStackInSlot(i);
 
-                if (itemStack != null && hasUUID(itemStack))
+                if (itemStack != null && Utils.hasUUID(itemStack))
                 {
                     if (itemStack.getTagCompound().getLong(Constants.NBT.MOST_SIG) == parentStackUUID.getMostSignificantBits() && itemStack.getTagCompound().getLong(Constants.NBT.LEAST_SIG) == parentStackUUID.getLeastSignificantBits())
                     {
@@ -80,22 +80,5 @@ public class InventoryHolding extends ItemInventory
     public int getInventoryStackLimit()
     {
         return 1;
-    }
-
-    public static boolean hasUUID(ItemStack itemStack)
-    {
-        return itemStack.hasTagCompound() && itemStack.getTagCompound().hasKey(Constants.NBT.MOST_SIG) && itemStack.getTagCompound().hasKey(Constants.NBT.LEAST_SIG);
-    }
-
-    public static void setUUID(ItemStack itemStack)
-    {
-        itemStack = NBTHelper.checkNBT(itemStack);
-
-        if (!itemStack.getTagCompound().hasKey(Constants.NBT.MOST_SIG) && !itemStack.getTagCompound().hasKey(Constants.NBT.LEAST_SIG))
-        {
-            UUID itemUUID = UUID.randomUUID();
-            itemStack.getTagCompound().setLong(Constants.NBT.MOST_SIG, itemUUID.getMostSignificantBits());
-            itemStack.getTagCompound().setLong(Constants.NBT.LEAST_SIG, itemUUID.getLeastSignificantBits());
-        }
     }
 }
