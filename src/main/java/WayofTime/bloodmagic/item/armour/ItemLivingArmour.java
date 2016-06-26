@@ -68,6 +68,15 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     }
 
     @Override
+    public void onCreated(ItemStack stack, World world, EntityPlayer player)
+    {
+        if (stack != null && !world.isRemote && stack.getItem() == ModItems.livingArmourChest)
+        {
+            Utils.setUUID(stack);
+        }
+    }
+
+    @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type)
     {
         if (this == ModItems.livingArmourChest || this == ModItems.livingArmourHelmet || this == ModItems.livingArmourBoots)

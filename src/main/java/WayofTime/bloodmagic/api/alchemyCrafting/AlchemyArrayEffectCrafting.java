@@ -37,6 +37,7 @@ public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect
             BlockPos pos = tile.getPos();
 
             ItemStack output = outputStack.copy();
+            output.onCrafting(tile.getWorld(), null, output.stackSize);
             EntityItem outputEntity = new EntityItem(tile.getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
 
             tile.getWorld().spawnEntityInWorld(outputEntity);
