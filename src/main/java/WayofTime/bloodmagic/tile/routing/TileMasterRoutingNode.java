@@ -27,6 +27,8 @@ import WayofTime.bloodmagic.tile.TileInventory;
 
 public class TileMasterRoutingNode extends TileInventory implements IMasterRoutingNode, ITickable
 {
+    private int currentInput;
+
     public TileMasterRoutingNode()
     {
         super(0, "masterRoutingNode");
@@ -43,6 +45,14 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     @Override
     public void update()
     {
+        if (!worldObj.isRemote)
+        {
+//            currentInput = worldObj.isBlockIndirectlyGettingPowered(pos);
+            currentInput = worldObj.getStrongPower(pos);
+
+//            System.out.println(currentInput);
+        }
+
         if (worldObj.isRemote || worldObj.getTotalWorldTime() % tickRate != 0) //Temporary tick rate solver
         {
             return;
@@ -262,7 +272,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     @Override
     public boolean isConnectionEnabled(BlockPos testPos)
     {
-        return true;
+        return currentInput <= 0;
     }
 
     @Override

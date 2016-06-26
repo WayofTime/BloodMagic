@@ -42,6 +42,12 @@ public abstract class BlockRoutingNode extends BlockContainer
     }
 
     @Override
+    public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
+    {
+        return true;
+    }
+
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return AABB;

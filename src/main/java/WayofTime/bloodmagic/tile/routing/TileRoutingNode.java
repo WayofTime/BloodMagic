@@ -1,27 +1,40 @@
 package WayofTime.bloodmagic.tile.routing;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.routing.IItemRoutingNode;
 import WayofTime.bloodmagic.routing.IMasterRoutingNode;
 import WayofTime.bloodmagic.routing.IRoutingNode;
 import WayofTime.bloodmagic.tile.TileInventory;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.LinkedList;
-import java.util.List;
-
-public class TileRoutingNode extends TileInventory implements IRoutingNode, IItemRoutingNode
+public class TileRoutingNode extends TileInventory implements IRoutingNode, IItemRoutingNode, ITickable
 {
+    private int currentInput;
+
     public TileRoutingNode(int size, String name)
     {
         super(size, name);
+    }
+
+    @Override
+    public void update()
+    {
+        if (!worldObj.isRemote)
+        {
+            currentInput = worldObj.isBlockIndirectlyGettingPowered(pos);
+//            currentInput = worldObj.getStrongPower(pos);
+        }
     }
 
     private BlockPos masterPos = BlockPos.ORIGIN;
@@ -144,7 +157,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     @Override
     public boolean isConnectionEnabled(BlockPos testPos)
     {
-        return true;
+        return currentInput <= 0;
     }
 
     @Override

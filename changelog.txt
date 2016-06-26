@@ -2,6 +2,7 @@
 Version 2.0.2-47
 ------------------------------------------------------
 - Fixed horrible memory leak in the Living Armour.
+- Item Nodes can now be disabled by a (weak) redstone signal.
 
 ------------------------------------------------------
 Version 2.0.2-46
