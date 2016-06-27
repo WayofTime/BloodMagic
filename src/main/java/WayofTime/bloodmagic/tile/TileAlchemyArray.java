@@ -12,7 +12,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable
     public boolean isActive = false;
     public int activeCounter = 0;
 
-    private String key = "";
+    private String key = "empty";
     private AlchemyArrayEffect arrayEffect;
 
     public TileAlchemyArray()
@@ -71,7 +71,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable
             isActive = false;
             activeCounter = 0;
             arrayEffect = null;
-            key = null;
+            key = "empty";
         }
     }
 

@@ -36,6 +36,7 @@ import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeMeleeDamage;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePoisonResist;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSlowness;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSolarPowered;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSpeed;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSprintAttack;
@@ -85,5 +86,6 @@ public class ModArmourTrackers
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeCriticalStrike(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeElytra(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeFireResist(0));
+        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSlowness(0));
     }
 }
