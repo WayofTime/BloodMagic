@@ -6,6 +6,7 @@ import lombok.Getter;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -15,8 +16,9 @@ public class AlchemyArrayEffectBinding extends AlchemyArrayEffect
     @Getter
     public final ItemStack outputStack;
 
-    public AlchemyArrayEffectBinding(ItemStack outputStack)
+    public AlchemyArrayEffectBinding(String key, ItemStack outputStack)
     {
+        super(key);
         this.outputStack = outputStack;
     }
 
@@ -64,5 +66,23 @@ public class AlchemyArrayEffectBinding extends AlchemyArrayEffect
             EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ, true);
             world.spawnEntityInWorld(lightning);
         }
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound tag)
+    {
+        //EMPTY
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag)
+    {
+        //EMPTY
+    }
+
+    @Override
+    public AlchemyArrayEffect getNewCopy()
+    {
+        return new AlchemyArrayEffectBinding(key, outputStack);
     }
 }

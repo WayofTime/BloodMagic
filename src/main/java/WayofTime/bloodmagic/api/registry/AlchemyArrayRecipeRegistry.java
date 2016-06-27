@@ -1,28 +1,32 @@
 package WayofTime.bloodmagic.api.registry;
 
-import WayofTime.bloodmagic.api.ItemStackWrapper;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffectCrafting;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+
+import javax.annotation.Nullable;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
+import WayofTime.bloodmagic.api.ItemStackWrapper;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffectCrafting;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 
-import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map.Entry;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 
 public class AlchemyArrayRecipeRegistry
 {
     public static final AlchemyCircleRenderer defaultRenderer = new AlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BaseArray.png"));
 
     private static BiMap<List<ItemStack>, AlchemyArrayRecipe> recipes = HashBiMap.create();
+    private static HashMap<String, AlchemyArrayEffect> effectMap = new HashMap<String, AlchemyArrayEffect>();
 
     /**
      * General case for creating an AlchemyArrayEffect for a given input.
@@ -41,6 +45,8 @@ public class AlchemyArrayRecipeRegistry
      */
     public static void registerRecipe(List<ItemStack> input, @Nullable ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer)
     {
+        effectMap.put(arrayEffect.getKey(), arrayEffect);
+
         for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet())
         {
             AlchemyArrayRecipe arrayRecipe = entry.getValue();
@@ -67,8 +73,11 @@ public class AlchemyArrayRecipeRegistry
         {
             recipes.put(input, new AlchemyArrayRecipe(input, catalystStack, arrayEffect, circleRenderer));
         }
+    }
 
-        recipes.put(input, new AlchemyArrayRecipe(input, catalystStack, arrayEffect, circleRenderer));
+    public static AlchemyArrayEffect getAlchemyArrayEffect(String key)
+    {
+        return effectMap.get(key);
     }
 
     public static void registerCraftingRecipe(ItemStack input, ItemStack catalystStack, ItemStack outputStack, ResourceLocation arrayResource)

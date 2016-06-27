@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.api.alchemyCrafting;
 import lombok.Getter;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
@@ -19,6 +20,12 @@ public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect
 
     public AlchemyArrayEffectCrafting(ItemStack outputStack, int tickLimit)
     {
+        this(outputStack.toString() + tickLimit, outputStack, tickLimit);
+    }
+
+    public AlchemyArrayEffectCrafting(String key, ItemStack outputStack, int tickLimit)
+    {
+        super(key);
         this.outputStack = outputStack;
         this.tickLimit = tickLimit;
     }
@@ -37,7 +44,7 @@ public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect
             BlockPos pos = tile.getPos();
 
             ItemStack output = outputStack.copy();
-            output.onCrafting(tile.getWorld(), null, output.stackSize);
+
             EntityItem outputEntity = new EntityItem(tile.getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
 
             tile.getWorld().spawnEntityInWorld(outputEntity);
@@ -46,5 +53,23 @@ public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect
         }
 
         return false;
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound tag)
+    {
+
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag)
+    {
+
+    }
+
+    @Override
+    public AlchemyArrayEffect getNewCopy()
+    {
+        return new AlchemyArrayEffectCrafting(key, outputStack, tickLimit);
     }
 }
