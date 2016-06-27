@@ -881,6 +881,6 @@ public class BloodAltar implements IFluidHandler
     @Override
     public FluidTankInfo[] getTankInfo(EnumFacing from)
     {
-        return new FluidTankInfo[] {};
+        return new FluidTankInfo[] { new FluidTankInfo(fluid, capacity) };
     }
 }
