@@ -83,6 +83,7 @@ item.BloodMagic.baseComponent.reagentHaste.name=急速试剂
 item.BloodMagic.baseComponent.reagentBridge.name=影桥试剂
 item.BloodMagic.baseComponent.reagentCompression.name=压挤试剂
 item.BloodMagic.baseComponent.reagentSeverance.name=隔绝试剂
+item.BloodMagic.baseComponent.reagentHolding.name=集持试剂
 
 item.BloodMagic.baseComponent.reagentTeleposition.name=传送试剂
 item.BloodMagic.baseComponent.reagentTransposition.name=移位试剂
