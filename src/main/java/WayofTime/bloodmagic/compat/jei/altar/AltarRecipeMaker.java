@@ -6,9 +6,12 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import net.minecraft.item.ItemStack;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
+import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.fluids.UniversalBucket;
 
 public class AltarRecipeMaker
 {
@@ -30,6 +33,9 @@ public class AltarRecipeMaker
                 int requiredLP = itemStackAltarRecipeEntry.getValue().getSyphon();
                 int consumptionRate = itemStackAltarRecipeEntry.getValue().getConsumeRate();
                 int drainRate = itemStackAltarRecipeEntry.getValue().getDrainRate();
+
+                if (output.getItem() == ForgeModContainer.getInstance().universalBucket && requiredLP == 1000)
+                    output = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, BloodMagicAPI.getLifeEssence());
 
                 AltarRecipeJEI recipe = new AltarRecipeJEI(input, output, requiredTier, requiredLP, consumptionRate, drainRate);
                 recipes.add(recipe);
