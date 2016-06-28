@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
-import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -19,6 +20,14 @@ public class TileAlchemyArray extends TileInventory implements ITickable
     public TileAlchemyArray()
     {
         super(2, "alchemyArray");
+    }
+
+    public void onEntityCollidedWithBlock(IBlockState state, Entity entity)
+    {
+        if (arrayEffect != null)
+        {
+            arrayEffect.onEntityCollidedWithBlock(worldObj, pos, state, entity);
+        }
     }
 
     @Override

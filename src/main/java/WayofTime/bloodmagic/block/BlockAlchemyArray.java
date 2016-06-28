@@ -45,6 +45,16 @@ public class BlockAlchemyArray extends BlockContainer
     }
 
     @Override
+    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity)
+    {
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileAlchemyArray)
+        {
+            ((TileAlchemyArray) tile).onEntityCollidedWithBlock(state, entity);
+        }
+    }
+
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return ARRAY_AABB;
