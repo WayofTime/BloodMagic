@@ -167,9 +167,13 @@ public class BlockAltar extends BlockContainer implements IVariantProvider, IDoc
     @Override
     public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
     {
-        TileAltar tileAltar = (TileAltar) world.getTileEntity(blockPos);
-        if (tileAltar != null)
-            tileAltar.dropItems();
+        TileEntity tile = world.getTileEntity(blockPos);
+        if (tile instanceof TileAltar)
+        {
+            TileAltar tileAltar = (TileAltar) world.getTileEntity(blockPos);
+            if (tileAltar != null)
+                tileAltar.dropItems();
+        }
 
         super.breakBlock(world, blockPos, blockState);
     }

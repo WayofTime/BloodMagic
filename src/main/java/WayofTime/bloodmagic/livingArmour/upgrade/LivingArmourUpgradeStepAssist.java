@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class LivingArmourUpgradeStepAssist extends LivingArmourUpgrade
 {
     public static final int[] costs = new int[] { 20 };
-    public static final float[] assist = new float[] { 1 };
+    public static final float[] assist = new float[] { Constants.Misc.ALTERED_STEP_HEIGHT };
 
 //    public static final double[] speedModifier = new double[] { 0.1, 0.2, 0.3, 0.4, 0.5, 0.7, 0.9, 1.1, 1.3, 1.5 };
 //    public static final int[] sprintSpeedTime = new int[] { 0, 0, 0, 0, 0, 20, 60, 60, 100, 200 };

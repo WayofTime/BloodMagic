@@ -162,6 +162,7 @@ public class Constants
     public static class Misc
     {
         public static final int POTION_ARRAY_SIZE = 256;
+        public static final float ALTERED_STEP_HEIGHT = 1.00314159f;
     }
 
     public enum BloodMagicItem

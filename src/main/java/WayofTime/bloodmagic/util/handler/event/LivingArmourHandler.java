@@ -98,12 +98,13 @@ public class LivingArmourHandler
         if (event.getEntityLiving() instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+            boolean hasAssist = false;
             if (event.getEntityLiving().isPotionActive(ModPotions.boost))
             {
-                player.stepHeight = 1.0f;
+                hasAssist = true;
+                player.stepHeight = Constants.Misc.ALTERED_STEP_HEIGHT;
             } else
             {
-                boolean hasAssist = false;
                 if (LivingArmour.hasFullSet(player))
                 {
                     ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
@@ -119,10 +120,10 @@ public class LivingArmourHandler
                         }
                     }
                 }
-
-                if (!hasAssist)
-                    player.stepHeight = 0.6f;
             }
+
+            if (!hasAssist && player.stepHeight == Constants.Misc.ALTERED_STEP_HEIGHT)
+                player.stepHeight = 0.6f;
 
             float percentIncrease = 0;
 
