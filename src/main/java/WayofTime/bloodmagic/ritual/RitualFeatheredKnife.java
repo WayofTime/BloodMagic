@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.ritual;
 
+import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.*;
@@ -19,8 +20,6 @@ public class RitualFeatheredKnife extends Ritual
 {
     public static final String ALTAR_RANGE = "altar";
     public static final String DAMAGE_RANGE = "damage";
-
-    public static final int SACRIFICE_AMOUNT = 100;
 
     public BlockPos altarOffsetPos = new BlockPos(0, 0, 0); //TODO: Save!
 
@@ -90,7 +89,7 @@ public class RitualFeatheredKnife extends Ritual
                 {
                     player.setHealth(health - 1);
 
-                    tileAltar.sacrificialDaggerCall(SACRIFICE_AMOUNT, false);
+                    tileAltar.sacrificialDaggerCall(ConfigHandler.sacrificialDaggerConversion, false);
 
                     totalEffects++;
 
