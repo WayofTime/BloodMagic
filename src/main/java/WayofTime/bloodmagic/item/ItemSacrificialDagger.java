@@ -106,7 +106,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
 
-        int lpAdded = getMetadata(stack) == 1 ? Integer.MAX_VALUE : 200;
+        int lpAdded = getMetadata(stack) == 1 ? Integer.MAX_VALUE : ConfigHandler.sacrificialDaggerConversion * ConfigHandler.sacrificialDaggerDamage;
 
         RayTraceResult rayTrace = rayTrace(world, player, false);
         if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
