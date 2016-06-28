@@ -73,6 +73,9 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced)
     {
         list.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.sacrificialDagger.desc"))));
+
+        if (stack.getItemDamage() == 1)
+            list.add(TextHelper.localizeEffect("tooltip.BloodMagic.sacrificialDagger.creative"));
     }
 
     @Override
@@ -106,7 +109,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
 
-        int lpAdded = getMetadata(stack) == 1 ? Integer.MAX_VALUE : ConfigHandler.sacrificialDaggerConversion * ConfigHandler.sacrificialDaggerDamage;
+        int lpAdded = ConfigHandler.sacrificialDaggerConversion * ConfigHandler.sacrificialDaggerDamage;
 
         RayTraceResult rayTrace = rayTrace(world, player, false);
         if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)

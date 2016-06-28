@@ -303,6 +303,7 @@ tooltip.BloodMagic.bound.axe.desc=&oDemonic deforestation
 tooltip.BloodMagic.bound.shovel.desc=&oScrubs floors clean of dirt
 
 tooltip.BloodMagic.sacrificialDagger.desc=Just a prick of the finger will suffice...
+tooltip.BloodMagic.sacrificialDagger.creative=Right click an altar while sneaking to fill it
 tooltip.BloodMagic.slate.desc=Infused stone inside of a Blood Altar
 tooltip.BloodMagic.inscriber.desc=The writing is on the wall...
 
