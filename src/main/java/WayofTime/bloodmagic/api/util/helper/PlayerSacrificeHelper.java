@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.api.util.helper;
 
+import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.registry.ModPotions;
 import net.minecraft.entity.EntityLivingBase;
@@ -70,7 +71,7 @@ public class PlayerSacrificeHelper
             {
                 float sacrificedHealth = health - maxHealth / 10.0f;
 
-                if (findAndFillAltar(player.getEntityWorld(), player, (int) (sacrificedHealth * 100f * getModifier(amount)), false))
+                if (findAndFillAltar(player.getEntityWorld(), player, (int) (sacrificedHealth * ConfigHandler.sacrificialDaggerConversion * getModifier(amount)), false))
                 {
                     player.setHealth(maxHealth / 10.0f);
                     setPlayerIncense(player, 0);
