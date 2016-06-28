@@ -158,7 +158,7 @@ public class ModRecipes
         AltarRecipeRegistry.registerFillRecipe(OrbRegistry.getOrbStack(ModItems.orbWeak), EnumAltarTier.ONE, ModItems.orbWeak.getCapacity(), 2, 1);
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Items.DIAMOND), OrbRegistry.getOrbStack(ModItems.orbWeak), EnumAltarTier.ONE, 2000, 2, 1));
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Blocks.STONE), new ItemStack(ModItems.slate), EnumAltarTier.ONE, 1000, 5, 5));
-        AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Items.BUCKET), UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, BloodMagicAPI.getLifeEssence()), EnumAltarTier.ONE, 1000, 5, 0));
+        AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Items.BUCKET), new ItemStack(ForgeModContainer.getInstance().universalBucket), EnumAltarTier.ONE, 1000, 5, 0));
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Items.BOOK), new ItemStack(ModItems.sanguineBook), EnumAltarTier.ONE, 1000, 20, 0));
 
         // TWO
