@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -118,7 +119,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
 
         if (!player.capabilities.isCreativeMode)
         {
-            SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, 2, lpAdded);
+            SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, ConfigHandler.sacrificialDaggerDamage, lpAdded);
             if (MinecraftForge.EVENT_BUS.post(evt))
                 return super.onItemRightClick(stack, world, player, hand);
 
@@ -126,7 +127,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
             {
                 player.hurtResistantTime = 0;
                 player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0.001F);
-                player.setHealth(Math.max(player.getHealth() - 2, 0.0001f));
+                player.setHealth(Math.max(player.getHealth() - ConfigHandler.sacrificialDaggerDamage, 0.0001f));
                 if (player.getHealth() <= 0.001f)
                 {
                     player.onDeath(BloodMagicAPI.getDamageSource());
