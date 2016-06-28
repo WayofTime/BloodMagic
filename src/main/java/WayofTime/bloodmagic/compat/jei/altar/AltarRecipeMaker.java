@@ -35,7 +35,7 @@ public class AltarRecipeMaker
                 int drainRate = itemStackAltarRecipeEntry.getValue().getDrainRate();
 
                 if (output.getItem() == ForgeModContainer.getInstance().universalBucket && requiredLP == 1000)
-                    output = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, BloodMagicAPI.getLifeEssence());
+                    output = BloodMagicAPI.getLifeEssenceBucket();
 
                 AltarRecipeJEI recipe = new AltarRecipeJEI(input, output, requiredTier, requiredLP, consumptionRate, drainRate);
                 recipes.add(recipe);

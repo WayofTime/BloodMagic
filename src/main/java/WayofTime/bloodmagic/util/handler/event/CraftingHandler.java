@@ -45,7 +45,7 @@ public class CraftingHandler
 
         if (event.getOutput().getItem() == ForgeModContainer.getInstance().universalBucket && event.getAltarRecipe().getSyphon() == 1000)
         {
-            NBTTagCompound bucketTags = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, BloodMagicAPI.getLifeEssence()).getTagCompound();
+            NBTTagCompound bucketTags = BloodMagicAPI.getLifeEssenceBucket().getTagCompound();
             event.getOutput().setTagCompound(bucketTags);
         }
     }

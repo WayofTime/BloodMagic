@@ -6,9 +6,12 @@ import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -51,6 +54,16 @@ public class BloodMagicAPI
     @Getter
     @Setter
     private static Fluid lifeEssence;
+    private static ItemStack lifeEssenceBucket;
+
+    public static ItemStack getLifeEssenceBucket()
+    {
+        if (lifeEssenceBucket != null)
+            return lifeEssenceBucket;
+
+        lifeEssenceBucket = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, getLifeEssence());
+        return lifeEssenceBucket;
+    }
 
     /**
      * Used to obtain Items from BloodMagic. Use
