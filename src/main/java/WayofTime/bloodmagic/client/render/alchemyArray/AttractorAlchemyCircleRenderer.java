@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.api.alchemyCrafting;
+package WayofTime.bloodmagic.client.render.alchemyArray;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -8,76 +8,60 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 
-public class AlchemyCircleRenderer
+public class AttractorAlchemyCircleRenderer extends AlchemyCircleRenderer
 {
-    public float offsetFromFace = -0.9f;
-    public final ResourceLocation arrayResource;
-
-    public AlchemyCircleRenderer()
+    public AttractorAlchemyCircleRenderer()
     {
-        this(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SightSigil.png"));
+        super(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/ZombieBeacon.png"));
     }
 
-    public AlchemyCircleRenderer(ResourceLocation arrayResource)
+    @Override
+    public float getSizeModifier(float craftTime)
     {
-        this.arrayResource = arrayResource;
+        return 1;
     }
 
+    @Override
     public float getRotation(float craftTime)
     {
         float offset = 2;
         if (craftTime >= offset)
         {
-            float modifier = (float) Math.pow(craftTime - offset, 1.5);
+            float modifier = (craftTime - offset) * 5f;
             return modifier * 1f;
         }
         return 0;
     }
 
+    @Override
     public float getSecondaryRotation(float craftTime)
     {
         float offset = 50;
+        float secondaryOffset = 150;
         if (craftTime >= offset)
         {
-            float modifier = (float) Math.pow(craftTime - offset, 1.7);
-            return modifier * 0.5f;
-        }
-        return 0;
-    }
-
-    public float getSizeModifier(float craftTime)
-    {
-        if (craftTime >= 150 && craftTime <= 250)
-        {
-            return (200 - craftTime) / 50f;
-        }
-        return 1.0f;
-    }
-
-    public float getVerticalOffset(float craftTime)
-    {
-        if (craftTime >= 5)
-        {
-            if (craftTime <= 40)
+            if (craftTime < secondaryOffset)
             {
-                return (float) ((-0.4) * Math.pow((craftTime - 5) / 35f, 3));
+                float modifier = 90 * (craftTime - offset) / (float) (secondaryOffset - offset);
+                return modifier;
             } else
             {
-                return -0.4f;
+                return 90;
             }
         }
         return 0;
     }
 
+    @Override
     public void renderAt(TileEntity tile, double x, double y, double z, float craftTime)
     {
         Tessellator tessellator = Tessellator.getInstance();
         VertexBuffer wr = tessellator.getBuffer();
 
         GlStateManager.pushMatrix();
-        // float rot = (float)(this.worldObj.provider.getWorldTime() % (360 /
-        // this.rotationspeed) * this.rotationspeed) + this.rotationspeed * f;
+
         float rot = getRotation(craftTime);
         float secondaryRot = getSecondaryRotation(craftTime);
 
@@ -127,7 +111,6 @@ public class AlchemyCircleRenderer
         GlStateManager.translate(0.5f, 0.5f, getVerticalOffset(craftTime));
         GlStateManager.rotate(rot, 0, 0, 1);
         GlStateManager.rotate(secondaryRot, 1, 0, 0);
-        GlStateManager.rotate(secondaryRot * 0.45812f, 0, 0, 1);
         double var31 = 0.0D;
         double var33 = 1.0D;
         double var35 = 0;

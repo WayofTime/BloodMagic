@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.tile;
 
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -72,6 +73,19 @@ public class TileAlchemyArray extends TileInventory implements ITickable
             activeCounter = 0;
             arrayEffect = null;
             key = "empty";
+        }
+    }
+
+    /**
+     * This occurs when the block is destroyed.
+     */
+    @Override
+    public void dropItems()
+    {
+        super.dropItems();
+        if (arrayEffect != null)
+        {
+
         }
     }
 

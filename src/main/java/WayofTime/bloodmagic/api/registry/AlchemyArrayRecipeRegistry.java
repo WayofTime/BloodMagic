@@ -174,11 +174,29 @@ public class AlchemyArrayRecipeRegistry
             if (input.size() == 1 && arrayRecipe.getInput().size() == 1)
             {
                 if (ItemStackWrapper.getHolder(arrayRecipe.getInput().get(0)).equals(ItemStackWrapper.getHolder(input.get(0))))
-                    return arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack); // TODO: Decide if a copy should be returned.
+                {
+                    AlchemyArrayEffect effect = arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack);
+                    if (effect != null)
+                    {
+                        return effect.getNewCopy();
+                    } else
+                    {
+                        return null;
+                    }
+                }
             } else
             {
                 if (input.equals(arrayRecipe.getInput()))
-                    return arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack);
+                {
+                    AlchemyArrayEffect effect = arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack);
+                    if (effect != null)
+                    {
+                        return effect.getNewCopy();
+                    } else
+                    {
+                        return null;
+                    }
+                }
             }
         }
 

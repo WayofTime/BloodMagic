@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.client.render.alchemyArray;
 
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -9,6 +8,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 
 public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer
 {

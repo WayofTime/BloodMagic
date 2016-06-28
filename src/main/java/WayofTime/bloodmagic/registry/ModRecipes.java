@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.registry;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -16,6 +15,7 @@ import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectAttractor;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBinding;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
@@ -30,6 +30,7 @@ import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.api.registry.TartaricForgeRecipeRegistry;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.block.BlockBloodRune;
+import WayofTime.bloodmagic.client.render.alchemyArray.AttractorAlchemyCircleRenderer;
 import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
 import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
 import WayofTime.bloodmagic.compress.BaseCompressionHandler;
@@ -40,6 +41,7 @@ import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
+import WayofTime.bloodmagic.util.Utils;
 
 import com.google.common.base.Stopwatch;
 
@@ -224,6 +226,7 @@ public class ModRecipes
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_TELEPOSITION), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilTeleposition), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_TRANSPOSITION), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilTransposition), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
 
+        AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new AlchemyArrayEffectAttractor("attractor"), new AttractorAlchemyCircleRenderer());
     }
 
     public static void addCompressionHandlers()
