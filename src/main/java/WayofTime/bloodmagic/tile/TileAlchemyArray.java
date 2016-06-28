@@ -43,7 +43,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable
         super.writeToNBT(tagCompound);
         tagCompound.setBoolean("isActive", isActive);
         tagCompound.setInteger("activeCounter", activeCounter);
-        tagCompound.setString("key", key == "" ? "empty" : key);
+        tagCompound.setString("key", "".equals(key) ? "empty" : key);
 
         NBTTagCompound arrayTag = new NBTTagCompound();
         if (arrayEffect != null)
