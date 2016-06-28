@@ -100,6 +100,7 @@ public class BlockAlchemyArray extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        //TODO: Right click should rotate it
         TileAlchemyArray array = (TileAlchemyArray) world.getTileEntity(pos);
 
         if (array == null || player.isSneaking())
