@@ -50,6 +50,11 @@ public class ItemStackWrapper
 
     public static ItemStackWrapper getHolder(ItemStack stack)
     {
+        if (stack == null)
+        {
+            return null;
+        }
+
         return new ItemStackWrapper(stack.getItem(), stack.stackSize, stack.getItemDamage());
     }
 
