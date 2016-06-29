@@ -56,6 +56,11 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
     @Override
     public boolean update(TileEntity tile, int ticksActive)
     {
+        if (tile.getWorld().isRemote)
+        {
+            return false;
+        }
+
         BlockPos pos = tile.getPos();
         counter++;
         if (counter < 10)

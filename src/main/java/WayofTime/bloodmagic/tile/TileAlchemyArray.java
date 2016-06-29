@@ -1,18 +1,27 @@
 package WayofTime.bloodmagic.tile;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
+import WayofTime.bloodmagic.api.iface.IAlchemyArray;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
 
-public class TileAlchemyArray extends TileInventory implements ITickable
+public class TileAlchemyArray extends TileInventory implements ITickable, IAlchemyArray
 {
     public boolean isActive = false;
     public int activeCounter = 0;
+
+    @Getter
+    @Setter
+    public EnumFacing rotation = EnumFacing.HORIZONTALS[0];;
 
     private String key = "empty";
     private AlchemyArrayEffect arrayEffect;
@@ -26,7 +35,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable
     {
         if (arrayEffect != null)
         {
-            arrayEffect.onEntityCollidedWithBlock(worldObj, pos, state, entity);
+            arrayEffect.onEntityCollidedWithBlock(this, worldObj, pos, state, entity);
         }
     }
 
@@ -37,6 +46,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable
         this.isActive = tagCompound.getBoolean("isActive");
         this.activeCounter = tagCompound.getInteger("activeCounter");
         this.key = tagCompound.getString("key");
+        this.rotation = EnumFacing.HORIZONTALS[tagCompound.getInteger(Constants.NBT.DIRECTION)];
 
         NBTTagCompound arrayTag = tagCompound.getCompoundTag("arrayTag");
         arrayEffect = AlchemyArrayRecipeRegistry.getAlchemyArrayEffect(key);
@@ -53,6 +63,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable
         tagCompound.setBoolean("isActive", isActive);
         tagCompound.setInteger("activeCounter", activeCounter);
         tagCompound.setString("key", "".equals(key) ? "empty" : key);
+        tagCompound.setInteger(Constants.NBT.DIRECTION, rotation.getHorizontalIndex());
 
         NBTTagCompound arrayTag = new NBTTagCompound();
         if (arrayEffect != null)

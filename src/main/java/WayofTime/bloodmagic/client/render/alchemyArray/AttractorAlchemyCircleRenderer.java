@@ -9,6 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
+import WayofTime.bloodmagic.tile.TileAlchemyArray;
 
 public class AttractorAlchemyCircleRenderer extends AlchemyCircleRenderer
 {
@@ -57,6 +58,13 @@ public class AttractorAlchemyCircleRenderer extends AlchemyCircleRenderer
     @Override
     public void renderAt(TileEntity tile, double x, double y, double z, float craftTime)
     {
+        if (!(tile instanceof TileAlchemyArray))
+        {
+            return;
+        }
+
+        TileAlchemyArray tileArray = (TileAlchemyArray) tile;
+
         Tessellator tessellator = Tessellator.getInstance();
         VertexBuffer wr = tessellator.getBuffer();
 
@@ -78,6 +86,7 @@ public class AttractorAlchemyCircleRenderer extends AlchemyCircleRenderer
 
         // Specify which face this "circle" is located on
         EnumFacing sideHit = EnumFacing.UP;
+        EnumFacing rotation = tileArray.getRotation();
 
         GlStateManager.translate(sideHit.getFrontOffsetX() * offsetFromFace, sideHit.getFrontOffsetY() * offsetFromFace, sideHit.getFrontOffsetZ() * offsetFromFace);
 
@@ -109,6 +118,9 @@ public class AttractorAlchemyCircleRenderer extends AlchemyCircleRenderer
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.5f, 0.5f, getVerticalOffset(craftTime));
+        GlStateManager.rotate(rotation.getHorizontalAngle() + 180, 0, 0, 1);
+
+        GlStateManager.pushMatrix();
         GlStateManager.rotate(rot, 0, 0, 1);
         GlStateManager.rotate(secondaryRot, 1, 0, 0);
         double var31 = 0.0D;
@@ -132,6 +144,7 @@ public class AttractorAlchemyCircleRenderer extends AlchemyCircleRenderer
         GlStateManager.enableCull();
         // GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
+        GlStateManager.popMatrix();
         GlStateManager.popMatrix();
     }
 }

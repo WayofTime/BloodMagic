@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -21,6 +22,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemArcaneAshes extends Item implements IVariantProvider
@@ -49,7 +51,14 @@ public class ItemArcaneAshes extends Item implements IVariantProvider
         {
             if (!world.isRemote)
             {
+                EnumFacing rotation = EnumFacing.fromAngle(player.getRotationYawHead());
                 world.setBlockState(newPos, ModBlocks.alchemyArray.getDefaultState());
+                TileEntity tile = world.getTileEntity(newPos);
+                if (tile instanceof TileAlchemyArray)
+                {
+                    ((TileAlchemyArray) tile).setRotation(rotation);
+                }
+
                 stack.damageItem(1, player);
             }
 

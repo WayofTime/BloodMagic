@@ -229,7 +229,7 @@ public class ModRecipes
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_TRANSPOSITION), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilTransposition), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
 
         AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new AlchemyArrayEffectAttractor("attractor"), new AttractorAlchemyCircleRenderer());
-        AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.GHAST_TEAR), new ItemStack(Items.GHAST_TEAR), new AlchemyArrayEffectMovement("attractor"), new StaticAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/MovementArray.png")));
+        AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.FEATHER), new ItemStack(Items.REDSTONE), new AlchemyArrayEffectMovement("movement"), new StaticAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/MovementArray.png")));
     }
 
     public static void addCompressionHandlers()

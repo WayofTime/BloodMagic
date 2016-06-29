@@ -1,22 +1,20 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
+import java.util.UUID;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
-import java.util.UUID;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
 {

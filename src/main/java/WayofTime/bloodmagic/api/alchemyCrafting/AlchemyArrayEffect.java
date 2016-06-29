@@ -8,6 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.iface.IAlchemyArray;
 
 @RequiredArgsConstructor
 public abstract class AlchemyArrayEffect
@@ -23,7 +24,7 @@ public abstract class AlchemyArrayEffect
 
     public abstract AlchemyArrayEffect getNewCopy();
 
-    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity)
+    public void onEntityCollidedWithBlock(IAlchemyArray array, World world, BlockPos pos, IBlockState state, Entity entity)
     {
 
     }
