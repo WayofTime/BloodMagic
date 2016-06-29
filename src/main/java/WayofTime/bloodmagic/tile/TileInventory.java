@@ -312,6 +312,9 @@ public class TileInventory extends TileEntity implements IInventory
             case WEST:
                 return (T) handlerWest;
             }
+        } else if (facing == null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        {
+            return (T) handlerDown;
         }
 
         return super.getCapability(capability, facing);
