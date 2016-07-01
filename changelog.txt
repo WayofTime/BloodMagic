@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Version 2.0.2-49
+------------------------------------------------------
+- All Alchemy Array recipes are WIP and are subject to change! ^.^ They are created using the Arcane Ash and are shown as first item + second item.
+- Added the Movement Array (feather + redstone)
+- Added the Mob Beacon Array (2x Zombie Flesh)
+- Added the Updraft Array (feather + glowstone)
+- Added the Skeleton Turret Array (Arrow + feather)
+
+------------------------------------------------------
 Version 2.0.2-48
 ------------------------------------------------------
 - Fixed a stupid bug by a stupid Way

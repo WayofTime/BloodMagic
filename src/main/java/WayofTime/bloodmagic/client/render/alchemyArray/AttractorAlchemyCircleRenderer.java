@@ -15,7 +15,12 @@ public class AttractorAlchemyCircleRenderer extends AlchemyCircleRenderer
 {
     public AttractorAlchemyCircleRenderer()
     {
-        super(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/ZombieBeacon.png"));
+        this(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/ZombieBeacon.png"));
+    }
+
+    public AttractorAlchemyCircleRenderer(ResourceLocation resourceLocation)
+    {
+        super(resourceLocation);
     }
 
     @Override

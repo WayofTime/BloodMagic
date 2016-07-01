@@ -60,7 +60,15 @@ public class AlchemyArrayRecipeRegistry
                 {
                     arrayRecipe.catalystMap.put(ItemStackWrapper.getHolder(catalystStack), arrayEffect);
                     if (circleRenderer != null)
-                        arrayRecipe.circleRenderer = circleRenderer;
+                    {
+                        if (arrayRecipe.defaultCircleRenderer == null)
+                        {
+                            arrayRecipe.defaultCircleRenderer = circleRenderer;
+                        } else
+                        {
+                            arrayRecipe.circleMap.put(ItemStackWrapper.getHolder(catalystStack), circleRenderer);
+                        }
+                    }
                     return;
                 }
             }
@@ -157,7 +165,7 @@ public class AlchemyArrayRecipeRegistry
         {
             AlchemyArrayRecipe arrayRecipe = entry.getValue();
             if (arrayRecipe.doesInputMatchRecipe(input))
-                arrayRecipe.circleRenderer = circleRenderer;
+                arrayRecipe.defaultCircleRenderer = circleRenderer;
         }
     }
 
@@ -208,21 +216,23 @@ public class AlchemyArrayRecipeRegistry
         return getAlchemyArrayEffect(Collections.singletonList(input), catalystStack);
     }
 
-    public static AlchemyCircleRenderer getAlchemyCircleRenderer(List<ItemStack> input)
+    public static AlchemyCircleRenderer getAlchemyCircleRenderer(List<ItemStack> input, @Nullable ItemStack catalystStack)
     {
         for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet())
         {
             AlchemyArrayRecipe arrayRecipe = entry.getValue();
             if (arrayRecipe.doesInputMatchRecipe(input))
-                return arrayRecipe.circleRenderer;
+            {
+                return arrayRecipe.getAlchemyArrayRendererForCatalyst(catalystStack);
+            }
         }
 
         return defaultRenderer;
     }
 
-    public static AlchemyCircleRenderer getAlchemyCircleRenderer(ItemStack itemStack)
+    public static AlchemyCircleRenderer getAlchemyCircleRenderer(ItemStack itemStack, @Nullable ItemStack catalystStack)
     {
-        return getAlchemyCircleRenderer(Collections.singletonList(itemStack));
+        return getAlchemyCircleRenderer(Collections.singletonList(itemStack), catalystStack);
     }
 
     @Getter
@@ -230,9 +240,10 @@ public class AlchemyArrayRecipeRegistry
     @EqualsAndHashCode
     public static class AlchemyArrayRecipe
     {
-        public AlchemyCircleRenderer circleRenderer;
+        public AlchemyCircleRenderer defaultCircleRenderer;
         public final List<ItemStack> input;
         public final BiMap<ItemStackWrapper, AlchemyArrayEffect> catalystMap = HashBiMap.create();
+        public final BiMap<ItemStackWrapper, AlchemyCircleRenderer> circleMap = HashBiMap.create();
 
         private AlchemyArrayRecipe(List<ItemStack> input, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer, boolean useless)
         {
@@ -240,7 +251,7 @@ public class AlchemyArrayRecipeRegistry
 
             catalystMap.put(ItemStackWrapper.getHolder(catalystStack), arrayEffect);
 
-            this.circleRenderer = circleRenderer;
+            this.defaultCircleRenderer = circleRenderer;
         }
 
         public AlchemyArrayRecipe(ItemStack inputStack, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer)
@@ -297,6 +308,25 @@ public class AlchemyArrayRecipeRegistry
             }
 
             return null;
+        }
+
+        public AlchemyCircleRenderer getAlchemyArrayRendererForCatalyst(@Nullable ItemStack comparedStack)
+        {
+            for (Entry<ItemStackWrapper, AlchemyCircleRenderer> entry : circleMap.entrySet())
+            {
+                ItemStack catalystStack = entry.getKey().toStack();
+
+                if (comparedStack == null && catalystStack == null)
+                    return entry.getValue();
+
+                if (comparedStack == null || catalystStack == null)
+                    continue;
+
+                if (catalystStack.isItemEqual(comparedStack))
+                    return entry.getValue();
+            }
+
+            return defaultCircleRenderer;
         }
     }
 
