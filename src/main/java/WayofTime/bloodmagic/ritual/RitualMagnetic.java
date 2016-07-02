@@ -1,11 +1,9 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.util.Utils;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockRedstoneOre;
@@ -16,10 +14,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.util.Utils;
 
 public class RitualMagnetic extends Ritual
 {
@@ -60,8 +64,18 @@ public class RitualMagnetic extends Ritual
 
     private static boolean computeIsItemOre(BlockStack type)
     {
-        ItemStack itemStack = new ItemStack(type.getBlock(), type.getMeta());
-        for (int id : OreDictionary.getOreIDs(itemStack))
+        ItemStack stack = new ItemStack(type.getBlock(), type.getMeta());
+        return isBlockOre(stack);
+    }
+
+    public static boolean isBlockOre(ItemStack stack)
+    {
+        if (stack == null)
+        {
+            return false;
+        }
+
+        for (int id : OreDictionary.getOreIDs(stack))
         {
             String oreName = OreDictionary.getOreName(id);
             if (oreName.contains("ore"))
@@ -127,9 +141,10 @@ public class RitualMagnetic extends Ritual
                         BlockPos newPos = pos.add(i, j, k);
                         IBlockState state = world.getBlockState(newPos);
                         Block block = state.getBlock();
-                        int meta = block.getMetaFromState(state);
+                        ItemStack checkStack = block.getPickBlock(state, null, world, pos, null);
+//                        int meta = block.getMetaFromState(state);
 
-                        if (isBlockOre(block, meta))
+                        if (isBlockOre(checkStack))
                         {
                             Utils.swapLocations(world, newPos, world, replacement);
                             network.syphon(getRefreshCost());
