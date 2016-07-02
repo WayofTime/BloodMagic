@@ -5,14 +5,13 @@ import java.awt.Color;
 import lombok.Getter;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
@@ -35,7 +34,8 @@ public class BlockLifeEssence extends BlockFluidClassic
     // TODO - Remove after Forge fixes
     // Fix for BlockFluidBase not overriding this
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public IBlockState getStateFromMeta(int meta)
+    {
         return getBlockState().getBaseState().withProperty(LEVEL, meta);
     }
 
@@ -49,6 +49,12 @@ public class BlockLifeEssence extends BlockFluidClassic
     public boolean displaceIfPossible(World world, BlockPos blockPos)
     {
         return !world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isLiquid() && super.displaceIfPossible(world, blockPos);
+    }
+
+    @Override
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.SOLID;
     }
 
     public static class FluidLifeEssence extends Fluid

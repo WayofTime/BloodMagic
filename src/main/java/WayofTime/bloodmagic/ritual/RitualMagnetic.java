@@ -141,7 +141,7 @@ public class RitualMagnetic extends Ritual
                         BlockPos newPos = pos.add(i, j, k);
                         IBlockState state = world.getBlockState(newPos);
                         Block block = state.getBlock();
-                        ItemStack checkStack = block.getPickBlock(state, null, world, pos, null);
+                        ItemStack checkStack = block.getPickBlock(state, null, world, newPos, null);
 //                        int meta = block.getMetaFromState(state);
 
                         if (isBlockOre(checkStack))
