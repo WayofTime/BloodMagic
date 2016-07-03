@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.Constants;
@@ -141,7 +142,7 @@ public class RitualMagnetic extends Ritual
                         BlockPos newPos = pos.add(i, j, k);
                         IBlockState state = world.getBlockState(newPos);
                         Block block = state.getBlock();
-                        ItemStack checkStack = block.getPickBlock(state, null, world, newPos, null);
+                        ItemStack checkStack = block.getItem(world, newPos, state);
 //                        int meta = block.getMetaFromState(state);
 
                         if (isBlockOre(checkStack))
