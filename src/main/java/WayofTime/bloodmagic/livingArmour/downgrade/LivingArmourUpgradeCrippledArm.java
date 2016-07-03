@@ -1,20 +1,17 @@
-package WayofTime.bloodmagic.livingArmour.upgrade;
+package WayofTime.bloodmagic.livingArmour.downgrade;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
-public class LivingArmourUpgradeSlowness extends LivingArmourUpgrade
+public class LivingArmourUpgradeCrippledArm extends LivingArmourUpgrade
 {
     public static final int[] costs = new int[] { -50 };
-    public static final int[] slownessDuration = new int[] { 30 * 20 };
 
-    public LivingArmourUpgradeSlowness(int level)
+    public LivingArmourUpgradeCrippledArm(int level)
     {
         super(level);
     }
@@ -22,13 +19,13 @@ public class LivingArmourUpgradeSlowness extends LivingArmourUpgrade
     @Override
     public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
     {
-        player.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 1, 0, true, false));
+
     }
 
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.slowness";
+        return Constants.Mod.MODID + ".upgrade.crippledArm";
     }
 
     @Override
@@ -56,6 +53,6 @@ public class LivingArmourUpgradeSlowness extends LivingArmourUpgrade
     @Override
     public String getUnlocalizedName()
     {
-        return tooltipBase + "slowness";
+        return tooltipBase + "crippledArm";
     }
 }

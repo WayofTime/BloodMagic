@@ -1,15 +1,5 @@
 package WayofTime.bloodmagic.util.handler.event;
 
-import WayofTime.bloodmagic.annot.Handler;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerJump;
-import WayofTime.bloodmagic.livingArmour.upgrade.*;
-import WayofTime.bloodmagic.registry.ModPotions;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -18,17 +8,57 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import WayofTime.bloodmagic.annot.Handler;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerJump;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeJump;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSpeed;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeStepAssist;
+import WayofTime.bloodmagic.registry.ModPotions;
 
 @Handler
 public class LivingArmourHandler
 {
+    @SubscribeEvent
+    public void onPlayerClick(PlayerInteractEvent event)
+    {
+        if (event.isCancelable() && event.getHand() == EnumHand.OFF_HAND)
+        {
+            EntityPlayer player = event.getEntityPlayer();
+
+            if (LivingArmour.hasFullSet(player))
+            {
+                ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                if (armour != null)
+                {
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.crippledArm", chestStack);
+
+                    if (upgrade instanceof LivingArmourUpgradeCrippledArm)
+                    {
+                        event.setCanceled(true);
+                    }
+                }
+            }
+        }
+    }
 
     // Applies: Grim Reaper
     @SubscribeEvent(priority = EventPriority.HIGHEST)

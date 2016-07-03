@@ -367,6 +367,7 @@ tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=Charging Strike
 tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=True Strike
 tooltip.BloodMagic.livingArmour.upgrade.elytra=Elytra
 tooltip.BloodMagic.livingArmour.upgrade.slowness=Limp Leg
+tooltip.BloodMagic.livingArmour.upgrade.crippledArm=Crippled Arm
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
 
