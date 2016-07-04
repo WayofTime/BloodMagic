@@ -303,6 +303,7 @@ tooltip.BloodMagic.bound.axe.desc=&o恶魔般的滥砍滥伐
 tooltip.BloodMagic.bound.shovel.desc=&o洗扫大地除去尘土
 
 tooltip.BloodMagic.sacrificialDagger.desc=只要轻轻划过手指...
+tooltip.BloodMagic.sacrificialDagger.creative=对着祭坛潜行右击填满
 tooltip.BloodMagic.slate.desc=在祭坛中将石头转化
 tooltip.BloodMagic.inscriber.desc=在墙面上的文字...
 
@@ -365,6 +366,8 @@ tooltip.BloodMagic.livingArmour.upgrade.graveDigger=掘墓者
 tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=冲撞击打
 tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=精准击打
 tooltip.BloodMagic.livingArmour.upgrade.elytra=鞘翅
+tooltip.BloodMagic.livingArmour.upgrade.slowness=疲瘸之腿
+tooltip.BloodMagic.livingArmour.upgrade.crippledArm=残废手臂
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (等级 %d)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6强化点数: %s / %s
 
