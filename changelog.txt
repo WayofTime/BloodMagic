@@ -6,6 +6,7 @@ Version 2.0.2-49
 - Added the Mob Beacon Array (2x Zombie Flesh)
 - Added the Updraft Array (feather + glowstone)
 - Added the Skeleton Turret Array (Arrow + feather)
+- Fixed the Lava Crystal recipe so that it can use all tiers of blood orb
 
 ------------------------------------------------------
 Version 2.0.2-48
