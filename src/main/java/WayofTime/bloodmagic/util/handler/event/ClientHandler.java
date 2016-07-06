@@ -1,15 +1,18 @@
 package WayofTime.bloodmagic.util.handler.event;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
+import com.google.common.base.Stopwatch;
+import com.google.common.collect.SetMultimap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,13 +24,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -55,6 +58,9 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 @SideOnly(Side.CLIENT)
 public class ClientHandler
 {
+    // Quick toggle for error suppression. Set to false if you wish to hide model errors.
+    public static final boolean SUPPRESS_ASSET_ERRORS = true;
+
     public static TextureAtlasSprite ritualStoneBlank;
     public static TextureAtlasSprite ritualStoneWater;
     public static TextureAtlasSprite ritualStoneFire;
@@ -79,6 +85,7 @@ public class ClientHandler
     private static EnumFacing mrsHoloDirection;
     private static boolean mrsHoloDisplay;
 
+    // Contrary to what your IDE tells you, this *is* actually needed.
     public static final BMKeyBinding keyOpenSigilHolding = new BMKeyBinding("openSigilHolding", Keyboard.KEY_H, BMKeyBinding.Key.OPEN_SIGIL_HOLDING);
 
     @SubscribeEvent
@@ -197,6 +204,75 @@ public class ClientHandler
         for (HUDElement element : hudElements)
             if (element.getElementType() == event.getType() && element.shouldRender(minecraft))
                 element.render(minecraft, event.getResolution(), event.getPartialTicks());
+    }
+
+    // Stolen from Chisel
+    @SubscribeEvent
+    public void onModelBake(ModelBakeEvent event) {
+        if (BloodMagic.isDev() && SUPPRESS_ASSET_ERRORS)
+            return;
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        Map<ResourceLocation, Exception> modelErrors = ReflectionHelper.getPrivateValue(ModelLoader.class, event.getModelLoader(), "loadingExceptions");
+        Set<ModelResourceLocation> missingVariants = ReflectionHelper.getPrivateValue(ModelLoader.class, event.getModelLoader(), "missingVariants");
+
+        // Collect all Blood Magic model errors
+        List<ResourceLocation> errored = new ArrayList<ResourceLocation>();
+        for (ResourceLocation modelError : modelErrors.keySet())
+            if (modelError.getResourceDomain().equalsIgnoreCase(Constants.Mod.MODID))
+                errored.add(modelError);
+
+        // Collect all Blood Magic variant errors
+        List<ModelResourceLocation> missing = new ArrayList<ModelResourceLocation>();
+        for (ModelResourceLocation missingVariant : missingVariants)
+            if (missingVariant.getResourceDomain().equalsIgnoreCase(Constants.Mod.MODID))
+                missing.add(missingVariant);
+
+        // Remove discovered model errors
+        for (ResourceLocation modelError : errored)
+            modelErrors.remove(modelError);
+
+        // Remove discovered variant errors
+        missingVariants.removeAll(missing);
+
+        if (errored.size() > 0)
+            BloodMagic.instance.getLogger().info("Suppressed {} model errors from Blood Magic.", errored.size());
+        if (missing.size() > 0)
+            BloodMagic.instance.getLogger().info("Suppressed {} variant errors from Blood Magic.", missing.size());
+        BloodMagic.instance.getLogger().debug("Suppressed discovered model/variant errors in {}", stopwatch.stop());
+    }
+
+    // For some reason, we need some bad textures to be listed in the Crystal and Node models. This will hide that from the end user.
+    @SubscribeEvent
+    public void onTextureStitch(TextureStitchEvent.Post event) {
+        if (BloodMagic.isDev() && SUPPRESS_ASSET_ERRORS)
+            return;
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        SetMultimap<String, ResourceLocation> missingTextures = ReflectionHelper.getPrivateValue(FMLClientHandler.class, FMLClientHandler.instance(), "missingTextures");
+        Set<String> badTextureDomains = ReflectionHelper.getPrivateValue(FMLClientHandler.class, FMLClientHandler.instance(), "badTextureDomains");
+
+        String mc = "minecraft";
+        String format = "textures/%s.png";
+        Set<ResourceLocation> toRemove = new HashSet<ResourceLocation>();
+
+        // Find our missing textures and mark them for removal. Cannot directly remove as it would cause a CME
+        if (missingTextures.containsKey(mc)) {
+            Set<ResourceLocation> missingMCTextures = missingTextures.get(mc);
+            for (ResourceLocation texture : missingMCTextures)
+                if (texture.getResourcePath().equalsIgnoreCase(String.format(format, "node")) || texture.getResourcePath().equalsIgnoreCase(String.format(format, "crystal")))
+                    toRemove.add(texture);
+        }
+
+        // Remove all our found errors
+        missingTextures.get(mc).removeAll(toRemove);
+
+        // Make sure to only remove the bad MC domain if no other textures are missing
+        if (missingTextures.get(mc).isEmpty()) {
+            missingTextures.keySet().remove(mc);
+            badTextureDomains.remove(mc);
+        }
+        BloodMagic.instance.getLogger().debug("Suppressed required texture errors in {}", stopwatch.stop());
     }
 
     private void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel)
