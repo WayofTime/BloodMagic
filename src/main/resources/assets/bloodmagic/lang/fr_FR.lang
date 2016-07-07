@@ -83,6 +83,7 @@ item.BloodMagic.baseComponent.reagentHaste.name=Réactif de Célérité
 item.BloodMagic.baseComponent.reagentBridge.name=Réactif du Pont du Phantôme
 item.BloodMagic.baseComponent.reagentCompression.name=Réactif de Compression
 item.BloodMagic.baseComponent.reagentSeverance.name=Réactif de Sévérance
+item.BloodMagic.baseComponent.reagentHolding.name=Réactif de Possession
 
 item.BloodMagic.baseComponent.reagentTeleposition.name=Réactif de Téléposition
 item.BloodMagic.baseComponent.reagentTransposition.name=Réactif de Transposition
@@ -93,8 +94,8 @@ item.BloodMagic.baseComponent.coalSand.name=Sable de Charbon
 item.BloodMagic.baseComponent.plantOil.name=Huile de Plante
 item.BloodMagic.baseComponent.sulfur.name=Soufre
 item.BloodMagic.baseComponent.saltpeter.name=Salpêtre
-item.BloodMagic.baseComponent.neurotoxin.name=Neuro Toxin
-item.BloodMagic.baseComponent.antiseptic.name=Antiseptic
+item.BloodMagic.baseComponent.neurotoxin.name=Neuro Toxine
+item.BloodMagic.baseComponent.antiseptic.name=Antiseptique
 
 item.BloodMagic.cuttingFluid.basicCuttingFluid.name=Coulant Coupant Basic
 item.BloodMagic.cuttingFluid.explosive.name=Poudre Explosive
@@ -124,7 +125,7 @@ item.BloodMagic.sigil.seer.name=Emblème du Voyant
 item.BloodMagic.sigil.phantomBridge.name=Emblème du Pont du Fantôme
 item.BloodMagic.sigil.whirlwind.name=Emblème de la Tempête
 item.BloodMagic.sigil.enderSeverance.name=Emblème de l'Ender Sévérance
-item.BloodMagic.sigil.holding.name=Sigil of Holding
+item.BloodMagic.sigil.holding.name=Emblème de Possession
 item.BloodMagic.sigil.holding.display=&r%s: &o&n%s
 item.BloodMagic.sigil.teleposition.name=Emblème de Téléposition
 item.BloodMagic.sigil.transposition.name=Emblème de Transposition
@@ -159,8 +160,8 @@ item.BloodMagic.soulSnare.base.name=Piège Rudimentaire
 item.BloodMagic.sentientBow.name=Arc Sentiente
 item.BloodMagic.sentientArmourGem.name=Gemme d'Armure Sentiente
 item.BloodMagic.sentientAxe.name=Hâche Sentiente
-item.BloodMagic.sentientPickaxe.name=Sentient Pickaxe
-item.BloodMagic.sentientShovel.name=Sentient Shovel
+item.BloodMagic.sentientPickaxe.name=Pioche Sentiente
+item.BloodMagic.sentientShovel.name=Pelle Sentiente
 
 item.BloodMagic.nodeRouter.name=Routeur de Jonction
 item.BloodMagic.itemFilter.exact.name=Filtre d'Objets Précis
@@ -302,6 +303,7 @@ tooltip.BloodMagic.bound.axe.desc=&oDéforestation diabolique
 tooltip.BloodMagic.bound.shovel.desc=&oEffacer la terre du sol
 
 tooltip.BloodMagic.sacrificialDagger.desc=Juste in pîqure du doigt va suffir...
+tooltip.BloodMagic.sacrificialDagger.creative=Faites un clic-droit sur un autel en appuyant sur le bouton 'sneak' pour le remplir
 tooltip.BloodMagic.slate.desc=Pierre infusée dans un Autel de Sang
 tooltip.BloodMagic.inscriber.desc=L'écriture est sur le mur...
 
@@ -331,18 +333,18 @@ tooltip.BloodMagic.ritualReader.information=Information
 tooltip.BloodMagic.ritualReader.set_will_types=Choisir la volonté consommée
 tooltip.BloodMagic.ritualReader.desc.set_area=Clic-droit sur une Pierre Rituelle Maîtresse pour cycler l'endroit de la rituelle que vous vouleiz modifier. Ensuite, cliquez les deux coins du nouveaux endroit que vous vouliez.
 tooltip.BloodMagic.ritualReader.desc.information=Clic-droit sur une Pierre Rituelle Maîtresse pour receuillir des informations basics sur le rituel.
-tooltip.BloodMagic.ritualReader.desc.set_will_types=Done les types de volonté diabolique que le ritual va consommer de l'aura par un Clic-Droit sur la PRM avec le même type de crystal dans votre bar chaude.
+tooltip.BloodMagic.ritualReader.desc.set_will_types=Donnez les types de volonté diabolique que le ritual va consommer de l'aura par un Clic-Droit sur la PRM avec le même type de crystal dans votre bar chaude.
 
-tooltip.BloodMagic.arcaneAshes=Ashes used to draw an alchemy circle
+tooltip.BloodMagic.arcaneAshes=Cendres sont utilisées pour dessiner un cercle d'alchimie
 
-tooltip.BloodMagic.telepositionFocus.coords=Current coordinates: (%d, %d, %d)
+tooltip.BloodMagic.telepositionFocus.coords=Coodornées courantes: (%d, %d, %d)
 tooltip.BloodMagic.telepositionFocus.dimension=Dimension ID: %d
-tooltip.BloodMagic.telepositionFocus.weak=Used to move blocks in the world
-tooltip.BloodMagic.telepositionFocus.enhanced=Used to move blocks in the world
-tooltip.BloodMagic.telepositionFocus.reinforced=Used to move blocks in the world
-tooltip.BloodMagic.telepositionFocus.demonic=Used to move blocks in the world
+tooltip.BloodMagic.telepositionFocus.weak=Utilisée pour déplacer les blocs dans le monde
+tooltip.BloodMagic.telepositionFocus.enhanced=Utilisée pour déplacer les blocs dans le monde
+tooltip.BloodMagic.telepositionFocus.reinforced=Utilisée pour déplacer les blocs dans le monde
+tooltip.BloodMagic.telepositionFocus.demonic=Utilisée pour déplacer les blocs dans le monde
 
-tooltip.BloodMagic.livingArmour.upgrade.speed=Quick Feet
+tooltip.BloodMagic.livingArmour.upgrade.speed=Pieds Rapides
 tooltip.BloodMagic.livingArmour.upgrade.digging=Dwarven Might
 tooltip.BloodMagic.livingArmour.upgrade.poisonResist=Poison Resistance
 tooltip.BloodMagic.livingArmour.upgrade.fireResist=Gift of Ignis
@@ -364,6 +366,8 @@ tooltip.BloodMagic.livingArmour.upgrade.graveDigger=Grave Digger
 tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=Charging Strike
 tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=True Strike
 tooltip.BloodMagic.livingArmour.upgrade.elytra=Elytra
+tooltip.BloodMagic.livingArmour.upgrade.slowness=Limp Leg
+tooltip.BloodMagic.livingArmour.upgrade.crippledArm=Crippled Arm
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
 
