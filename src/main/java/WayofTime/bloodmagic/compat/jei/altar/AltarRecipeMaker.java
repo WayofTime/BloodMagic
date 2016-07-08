@@ -27,7 +27,7 @@ public class AltarRecipeMaker
             // Make sure input is not a Blood Orb. If it is, the recipe is for a filling orb, and we don't want that.
             if (!(itemStackAltarRecipeEntry.getKey().get(0).toStack().getItem() instanceof IBloodOrb))
             {
-                List<ItemStack> input = ItemStackWrapper.wrapperListToStack(itemStackAltarRecipeEntry.getValue().getInput());
+                List<ItemStack> input = ItemStackWrapper.toStackList(itemStackAltarRecipeEntry.getValue().getInput());
                 ItemStack output = itemStackAltarRecipeEntry.getValue().getOutput();
                 int requiredTier = itemStackAltarRecipeEntry.getValue().getMinTier().toInt();
                 int requiredLP = itemStackAltarRecipeEntry.getValue().getSyphon();

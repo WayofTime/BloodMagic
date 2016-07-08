@@ -51,11 +51,21 @@ public class AltarRecipeRegistry
      */
     public static AltarRecipe getRecipeForInput(List<ItemStack> input)
     {
-        List<ItemStackWrapper> wrapperList = ItemStackWrapper.itemStackListToWrapper(input);
+        List<ItemStackWrapper> wrapperList = ItemStackWrapper.toWrapperList(input);
         if (recipes.keySet().contains(wrapperList))
             return recipes.get(wrapperList);
 
         return null;
+    }
+
+    public static AltarRecipe getRecipeForInput(ItemStack input)
+    {
+        return getRecipeForInput(Collections.singletonList(input));
+    }
+
+    public static AltarRecipe getRecipeForInput(String input)
+    {
+        return getRecipeForInput(OreDictionary.getOres(input));
     }
 
     public static BiMap<List<ItemStackWrapper>, AltarRecipe> getRecipes()
@@ -98,7 +108,7 @@ public class AltarRecipeRegistry
          */
         public AltarRecipe(List<ItemStack> input, ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean fillable)
         {
-            this.input = ItemStackWrapper.itemStackListToWrapper(input);
+            this.input = ItemStackWrapper.toWrapperList(input);
             this.output = output;
             this.minTier = minTier;
             this.syphon = syphon < 0 ? -syphon : syphon;

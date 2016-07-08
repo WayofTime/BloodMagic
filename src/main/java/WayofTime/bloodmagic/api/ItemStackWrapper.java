@@ -84,7 +84,7 @@ public class ItemStackWrapper
         return result;
     }
 
-    public static List<ItemStackWrapper> itemStackListToWrapper(List<ItemStack> itemStackList)
+    public static List<ItemStackWrapper> toWrapperList(List<ItemStack> itemStackList)
     {
         List<ItemStackWrapper> wrapperList = new ArrayList<ItemStackWrapper>();
         for (ItemStack stack : itemStackList)
@@ -93,7 +93,7 @@ public class ItemStackWrapper
         return wrapperList;
     }
 
-    public static List<ItemStack> wrapperListToStack(List<ItemStackWrapper> wrapperList)
+    public static List<ItemStack> toStackList(List<ItemStackWrapper> wrapperList)
     {
         List<ItemStack> stackList = new ArrayList<ItemStack>();
         for (ItemStackWrapper wrapper : wrapperList)

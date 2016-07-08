@@ -355,7 +355,7 @@ public class BloodAltar implements IFluidHandler
         if (tileAltar.getStackInSlot(0) != null)
         {
             // Do recipes
-            AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(Collections.singletonList(tileAltar.getStackInSlot(0)));
+            AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(tileAltar.getStackInSlot(0));
             if (recipe != null)
             {
                 if (recipe.doesRequiredItemMatch(tileAltar.getStackInSlot(0), altarTier))

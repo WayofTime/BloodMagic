@@ -30,7 +30,7 @@ public class PageAltarRecipe extends Page
 
     public PageAltarRecipe(AltarRecipeRegistry.AltarRecipe recipe)
     {
-        this.input = ItemStackWrapper.wrapperListToStack(recipe.getInput());
+        this.input = ItemStackWrapper.toStackList(recipe.getInput());
         this.output = recipe.getOutput();
         this.tier = recipe.getMinTier().toInt();
         this.bloodRequired = recipe.getSyphon();
