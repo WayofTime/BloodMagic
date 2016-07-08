@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.api.registry;
 
 import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.ItemStackWrapper;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class AltarRecipeRegistry
 {
-    private static BiMap<List<ItemStack>, AltarRecipe> recipes = HashBiMap.create();
+    private static BiMap<List<ItemStackWrapper>, AltarRecipe> recipes = HashBiMap.create();
 
     /**
      * Registers an {@link AltarRecipe} for the Blood Altar. This can be a
@@ -50,13 +51,24 @@ public class AltarRecipeRegistry
      */
     public static AltarRecipe getRecipeForInput(List<ItemStack> input)
     {
-        if (recipes.keySet().contains(input))
-            return recipes.get(input);
+        List<ItemStackWrapper> wrapperList = ItemStackWrapper.toWrapperList(input);
+        if (recipes.keySet().contains(wrapperList))
+            return recipes.get(wrapperList);
 
         return null;
     }
 
-    public static BiMap<List<ItemStack>, AltarRecipe> getRecipes()
+    public static AltarRecipe getRecipeForInput(ItemStack input)
+    {
+        return getRecipeForInput(Collections.singletonList(input));
+    }
+
+    public static AltarRecipe getRecipeForInput(String input)
+    {
+        return getRecipeForInput(OreDictionary.getOres(input));
+    }
+
+    public static BiMap<List<ItemStackWrapper>, AltarRecipe> getRecipes()
     {
         return HashBiMap.create(recipes);
     }
@@ -66,7 +78,7 @@ public class AltarRecipeRegistry
     @EqualsAndHashCode
     public static class AltarRecipe
     {
-        private final List<ItemStack> input;
+        private final List<ItemStackWrapper> input;
         private final ItemStack output;
         private final EnumAltarTier minTier;
         private final int syphon, consumeRate, drainRate;
@@ -96,7 +108,7 @@ public class AltarRecipeRegistry
          */
         public AltarRecipe(List<ItemStack> input, ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean fillable)
         {
-            this.input = input;
+            this.input = ItemStackWrapper.toWrapperList(input);
             this.output = output;
             this.minTier = minTier;
             this.syphon = syphon < 0 ? -syphon : syphon;
@@ -138,8 +150,8 @@ public class AltarRecipeRegistry
             if (tierCheck.ordinal() < minTier.ordinal())
                 return false;
 
-            for (ItemStack stack : input)
-                if (comparedStack.isItemEqual(stack))
+            for (ItemStackWrapper stack : input)
+                if (comparedStack.isItemEqual(stack.toStack()))
                     return true;
 
             return false;

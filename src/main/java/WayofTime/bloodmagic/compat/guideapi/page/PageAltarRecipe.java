@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.compat.guideapi.page;
 
+import WayofTime.bloodmagic.api.ItemStackWrapper;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.impl.Book;
@@ -29,7 +30,7 @@ public class PageAltarRecipe extends Page
 
     public PageAltarRecipe(AltarRecipeRegistry.AltarRecipe recipe)
     {
-        this.input = recipe.getInput();
+        this.input = ItemStackWrapper.toStackList(recipe.getInput());
         this.output = recipe.getOutput();
         this.tier = recipe.getMinTier().toInt();
         this.bloodRequired = recipe.getSyphon();

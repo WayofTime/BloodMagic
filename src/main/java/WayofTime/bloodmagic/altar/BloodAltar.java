@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.altar;
 
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Getter;
@@ -354,7 +355,8 @@ public class BloodAltar implements IFluidHandler
         if (tileAltar.getStackInSlot(0) != null)
         {
             // Do recipes
-            for (AltarRecipe recipe : AltarRecipeRegistry.getRecipes().values())
+            AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(tileAltar.getStackInSlot(0));
+            if (recipe != null)
             {
                 if (recipe.doesRequiredItemMatch(tileAltar.getStackInSlot(0), altarTier))
                 {

@@ -8,6 +8,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequiredArgsConstructor
 @EqualsAndHashCode
 public class ItemStackWrapper
@@ -79,5 +82,23 @@ public class ItemStackWrapper
         ItemStack result = new ItemStack(item, count, meta);
         result.setTagCompound(nbtTag);
         return result;
+    }
+
+    public static List<ItemStackWrapper> toWrapperList(List<ItemStack> itemStackList)
+    {
+        List<ItemStackWrapper> wrapperList = new ArrayList<ItemStackWrapper>();
+        for (ItemStack stack : itemStackList)
+            wrapperList.add(ItemStackWrapper.getHolder(stack));
+
+        return wrapperList;
+    }
+
+    public static List<ItemStack> toStackList(List<ItemStackWrapper> wrapperList)
+    {
+        List<ItemStack> stackList = new ArrayList<ItemStack>();
+        for (ItemStackWrapper wrapper : wrapperList)
+            stackList.add(wrapper.toStack());
+
+        return stackList;
     }
 }
