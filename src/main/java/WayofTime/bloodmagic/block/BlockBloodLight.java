@@ -39,6 +39,12 @@ public class BlockBloodLight extends Block
     }
 
     @Override
+    public boolean isReplaceable(IBlockAccess world, BlockPos pos)
+    {
+        return true;
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {
