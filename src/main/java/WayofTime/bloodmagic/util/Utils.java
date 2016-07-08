@@ -819,7 +819,7 @@ public class Utils
 
         if (initialTile != null)
         {
-            TileEntity newTileInitial = TileEntity.create(initialTag);
+            TileEntity newTileInitial = BloodMagic.getCrossVersionProxy().createTileFromData(finalWorld, initialTag);
 
             finalWorld.setTileEntity(finalPos, newTileInitial);
             newTileInitial.setPos(finalPos);
@@ -830,7 +830,7 @@ public class Utils
 
         if (finalTile != null)
         {
-            TileEntity newTileFinal = TileEntity.create(finalTag);
+            TileEntity newTileFinal = BloodMagic.getCrossVersionProxy().createTileFromData(initialWorld, finalTag);
 
             initialWorld.setTileEntity(initialPos, newTileFinal);
             newTileFinal.setPos(initialPos);
