@@ -8,6 +8,7 @@ Version 2.0.2-49
 - Added the Skeleton Turret Array (Arrow + feather)
 - Fixed the Lava Crystal recipe so that it can use all tiers of blood orb
 - Nerfed the Bound Blade. This is temporary, since the sword eventually will be modified.
+- Fixed Teleposers so they no longer crash 1.10 instances when teleposing tiles.
 
 ------------------------------------------------------
 Version 2.0.2-48
