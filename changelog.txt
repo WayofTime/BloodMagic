@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 2.0.2-50
+------------------------------------------------------
+- Fixed bad NPE when using the WoS. (Well, I guess all NPEs are technically bad, but I guess it depends on your perspective. That said, I don't think a changelog is the best place for a theoretical discussion about the rights and wrongs of errors, so I will stop now.)
+
+
+------------------------------------------------------
 Version 2.0.2-49
 ------------------------------------------------------
 - All Alchemy Array recipes are WIP and are subject to change! ^.^ They are created using the Arcane Ash and are shown as first item + second item.

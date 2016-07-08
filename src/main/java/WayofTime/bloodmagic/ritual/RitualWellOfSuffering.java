@@ -91,7 +91,8 @@ public class RitualWellOfSuffering extends Ritual
                 if (ConfigHandler.wellOfSufferingBlacklist.contains(entity.getClass().getSimpleName()))
                     continue;
 
-                if (BloodMagicAPI.getEntitySacrificeValues().get(entity.getClass().getSimpleName()) <= 0)
+                String simpleClassName = entity.getClass().getSimpleName();
+                if (BloodMagicAPI.getEntitySacrificeValues().containsKey(simpleClassName) && BloodMagicAPI.getEntitySacrificeValues().get(simpleClassName) <= 0)
                     continue;
 
                 if (entity.isEntityAlive() && !(entity instanceof EntityPlayer))
