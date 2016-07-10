@@ -80,9 +80,10 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
                         double currentAmount = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
                         double drainAmount = Math.min(maxWill - currentAmount, gemDrainRate);
                         double filled = WorldDemonWillHandler.fillWillToMaximum(worldObj, pos, type, drainAmount, maxWill, false);
-                        filled = gemItem.drainWill(type, stack, filled, true);
+                        filled = gemItem.drainWill(type, stack, filled, false);
                         if (filled > 0)
                         {
+                            filled = gemItem.drainWill(type, stack, filled, true);
                             WorldDemonWillHandler.fillWillToMaximum(worldObj, pos, type, filled, maxWill, true);
                         }
                     }

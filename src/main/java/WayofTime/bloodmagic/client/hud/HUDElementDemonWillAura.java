@@ -10,10 +10,12 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.proxy.ClientProxy;
 
 public class HUDElementDemonWillAura extends HUDElement
 {
@@ -34,6 +36,7 @@ public class HUDElementDemonWillAura extends HUDElement
     @Override
     public void render(Minecraft minecraft, ScaledResolution resolution, float partialTicks)
     {
+        EntityPlayer player = minecraft.thePlayer;
 //        ItemStack sigilHolding = minecraft.thePlayer.getHeldItemMainhand();
 //        // TODO - Clean this mess
 //        // Check mainhand for Sigil of Holding
@@ -61,9 +64,10 @@ public class HUDElementDemonWillAura extends HUDElement
 
         for (EnumDemonWillType type : EnumDemonWillType.values())
         {
+            GlStateManager.color(1.0F, 1.0F, 1.0F);
             minecraft.getTextureManager().bindTexture(crystalTextures.get(type));
 
-            double amount = 10 + type.ordinal() * 15;
+            double amount = ClientProxy.currentAura == null ? 0 : ClientProxy.currentAura.getWill(type);
             double ratio = Math.max(Math.min(amount / maxAmount, 1), 0);
 
             double x = getXOffset() + 8 + type.ordinal() * 6;
@@ -73,10 +77,21 @@ public class HUDElementDemonWillAura extends HUDElement
 
             vertexBuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
             vertexBuffer.pos((double) (x), (double) (y + height), 0).tex(0, 1).endVertex();
-            vertexBuffer.pos((double) (x + width), (double) (y + height), 0).tex(1d / 8d, 1).endVertex();
-            vertexBuffer.pos((double) (x + width), (double) (y), 0).tex(1d / 8d, 1 - ratio).endVertex();
+            vertexBuffer.pos((double) (x + width), (double) (y + height), 0).tex(5d / 16d, 1).endVertex();
+            vertexBuffer.pos((double) (x + width), (double) (y), 0).tex(5d / 16d, 1 - ratio).endVertex();
             vertexBuffer.pos((double) (x), (double) (y), 0).tex(0, 1 - ratio).endVertex();
             tessellator.draw();
+
+            if (player.isSneaking())
+            {
+                GlStateManager.pushMatrix();
+                String value = "" + (int) amount;
+                GlStateManager.translate(x, (y + height + 4 + value.length() * 3), 0);
+                GlStateManager.scale(0.5, 0.5, 1);
+                GlStateManager.rotate(-90, 0, 0, 1);
+                minecraft.fontRendererObj.drawStringWithShadow("" + (int) amount, 0, 2, 0xffffff);
+                GlStateManager.popMatrix();
+            }
         }
 
         minecraft.getTextureManager().bindTexture(new ResourceLocation(Constants.Mod.MODID, "textures/gui/demonWillBar.png"));

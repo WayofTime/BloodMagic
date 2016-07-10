@@ -21,6 +21,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.DemonWillHolder;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.client.helper.ShaderHelper;
@@ -48,6 +49,8 @@ import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 
 public class ClientProxy extends CommonProxy
 {
+    public static DemonWillHolder currentAura = new DemonWillHolder();
+
     private InventoryRenderHelper renderHelper;
     private InventoryRenderHelperV2 renderHelperV2;
 

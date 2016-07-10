@@ -207,7 +207,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
 
         double soulsDrained = Math.min(drainAmount, souls);
 
-        if (!doDrain)
+        if (doDrain)
         {
             setWill(type, soulGemStack, souls - soulsDrained);
         }
@@ -287,7 +287,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
 
         double filled = Math.min(fillAmount, maxWill - current);
 
-        if (filled > 0 && doFill)
+        if (doFill)
         {
             this.setWill(type, stack, filled + current);
         }

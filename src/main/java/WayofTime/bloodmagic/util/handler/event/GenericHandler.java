@@ -13,8 +13,10 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -33,12 +35,14 @@ import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.saving.SoulNetwork;
+import WayofTime.bloodmagic.api.soul.DemonWillHolder;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.ItemHelper;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.ItemExperienceBook;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
@@ -46,6 +50,8 @@ import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.network.DemonAuraPacketProcessor;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -75,6 +81,35 @@ public class GenericHandler
 
                 if (shouldSyphon)
                     ItemHelper.LPContainer.addLPToItem(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST), totalLP, pack.CAPACITY);
+            }
+        }
+    }
+
+    // Handles sending the client the Demon Will Aura updates
+    @SubscribeEvent
+    public void onLivingUpdate(LivingUpdateEvent event)
+    {
+        if (!event.getEntityLiving().worldObj.isRemote)
+        {
+            EntityLivingBase entity = event.getEntityLiving();
+            if (entity instanceof EntityPlayer && entity.worldObj.getTotalWorldTime() % 50 == 0) //TODO: Change to an incremental counter
+            {
+                sendPlayerDemonWillAura((EntityPlayer) entity);
+            }
+            return;
+        }
+    }
+
+//    @SideOnly(Side.SERVER)
+    public void sendPlayerDemonWillAura(EntityPlayer player)
+    {
+        if (player instanceof EntityPlayerMP)
+        {
+            BlockPos pos = player.getPosition();
+            DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(player.worldObj.provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);
+            if (holder != null)
+            {
+                BloodMagicPacketHandler.sendTo(new DemonAuraPacketProcessor(holder), (EntityPlayerMP) player);
             }
         }
     }

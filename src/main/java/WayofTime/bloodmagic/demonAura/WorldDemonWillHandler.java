@@ -15,6 +15,17 @@ public class WorldDemonWillHandler
     static ConcurrentHashMap<Integer, WillWorld> containedWills = new ConcurrentHashMap<Integer, WillWorld>();
     public static ConcurrentHashMap<Integer, CopyOnWriteArrayList<PosXY>> dirtyChunks = new ConcurrentHashMap<Integer, CopyOnWriteArrayList<PosXY>>();
 
+    public static DemonWillHolder getWillHolder(int dim, int x, int y)
+    {
+        WillChunk chunk = getWillChunk(dim, x, y);
+        if (chunk != null)
+        {
+            return chunk.getCurrentWill();
+        }
+
+        return null;
+    }
+
     public static WillWorld getWillWorld(int dim)
     {
         return containedWills.get(dim);
