@@ -26,7 +26,7 @@ public interface IDemonWillGem
 
     int getMaxWill(EnumDemonWillType type, ItemStack willGemStack);
 
-    double drainWill(EnumDemonWillType type, ItemStack stack, double drainAmount);
+    double drainWill(EnumDemonWillType type, ItemStack stack, double drainAmount, boolean doDrain);
 
-    double fillWill(EnumDemonWillType type, ItemStack stack, double fillAmount);
+    double fillWill(EnumDemonWillType type, ItemStack stack, double fillAmount, boolean doFill);
 }

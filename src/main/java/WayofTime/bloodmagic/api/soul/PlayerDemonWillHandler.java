@@ -119,7 +119,7 @@ public class PlayerDemonWillHandler
                         inventory[i] = null;
                 } else if (stack.getItem() instanceof IDemonWillGem)
                 {
-                    consumed += ((IDemonWillGem) stack.getItem()).drainWill(type, stack, amount - consumed);
+                    consumed += ((IDemonWillGem) stack.getItem()).drainWill(type, stack, amount - consumed, true);
                 }
             }
         }
@@ -180,7 +180,7 @@ public class PlayerDemonWillHandler
         {
             if (stack != null && stack.getItem() instanceof IDemonWillGem)
             {
-                remaining -= ((IDemonWillGem) stack.getItem()).fillWill(type, stack, remaining);
+                remaining -= ((IDemonWillGem) stack.getItem()).fillWill(type, stack, remaining, true);
                 if (remaining <= 0)
                     break;
             }
@@ -213,7 +213,7 @@ public class PlayerDemonWillHandler
         {
             if (stack != null && !stack.equals(ignored) && stack.getItem() instanceof IDemonWillGem)
             {
-                remaining -= ((IDemonWillGem) stack.getItem()).fillWill(type, stack, remaining);
+                remaining -= ((IDemonWillGem) stack.getItem()).fillWill(type, stack, remaining, true);
 
                 if (remaining <= 0)
                     break;

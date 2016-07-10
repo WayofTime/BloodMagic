@@ -231,7 +231,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
             if (soulStack.getItem() instanceof IDemonWillGem)
             {
                 IDemonWillGem soul = (IDemonWillGem) soulStack.getItem();
-                return soul.drainWill(EnumDemonWillType.DEFAULT, soulStack, requested);
+                return soul.drainWill(EnumDemonWillType.DEFAULT, soulStack, requested, true);
             }
         }
 
@@ -288,15 +288,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
 
         IDemonWillGem willGem = (IDemonWillGem) stack.getItem();
 
-        double maxWill = willGem.getMaxWill(type, stack);
-        double current = willGem.getWill(type, stack);
-
-        if (!doFill)
-        {
-            return Math.min(maxWill - current, amount);
-        }
-
-        double filled = willGem.fillWill(type, stack, amount);
+        double filled = willGem.fillWill(type, stack, amount, doFill);
 
         return filled;
     }
@@ -321,7 +313,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
 
         if (doDrain)
         {
-            drained = willGem.drainWill(type, stack, drained);
+            drained = willGem.drainWill(type, stack, drained, true);
         }
 
         return drained;

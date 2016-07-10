@@ -57,7 +57,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
         double drain = Math.min(this.getWill(type, stack), this.getMaxWill(type, stack) / 10);
 
         double filled = PlayerDemonWillHandler.addDemonWill(type, player, drain, stack);
-        this.drainWill(type, stack, filled);
+        this.drainWill(type, stack, filled, true);
 
         return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
     }
@@ -196,7 +196,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     }
 
     @Override
-    public double drainWill(EnumDemonWillType type, ItemStack soulGemStack, double drainAmount)
+    public double drainWill(EnumDemonWillType type, ItemStack soulGemStack, double drainAmount, boolean doDrain)
     {
         EnumDemonWillType currentType = this.getCurrentType(soulGemStack);
         if (currentType != type)
@@ -206,7 +206,11 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
         double souls = getWill(type, soulGemStack);
 
         double soulsDrained = Math.min(drainAmount, souls);
-        setWill(type, soulGemStack, souls - soulsDrained);
+
+        if (!doDrain)
+        {
+            setWill(type, soulGemStack, souls - soulsDrained);
+        }
 
         return soulsDrained;
     }
@@ -271,7 +275,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     }
 
     @Override
-    public double fillWill(EnumDemonWillType type, ItemStack stack, double fillAmount)
+    public double fillWill(EnumDemonWillType type, ItemStack stack, double fillAmount, boolean doFill)
     {
         if (!type.equals(getCurrentType(stack)) && this.getWill(getCurrentType(stack), stack) > 0)
         {
@@ -283,12 +287,11 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
 
         double filled = Math.min(fillAmount, maxWill - current);
 
-        if (filled > 0)
+        if (filled > 0 && doFill)
         {
             this.setWill(type, stack, filled + current);
-            return filled;
         }
 
-        return 0;
+        return filled;
     }
 }
