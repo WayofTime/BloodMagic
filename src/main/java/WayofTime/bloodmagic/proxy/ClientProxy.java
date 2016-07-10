@@ -1,12 +1,36 @@
 package WayofTime.bloodmagic.proxy;
 
+import java.awt.Color;
+
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.client.helper.ShaderHelper;
+import WayofTime.bloodmagic.client.hud.HUDElementDemonWillAura;
 import WayofTime.bloodmagic.client.hud.HUDElementHolding;
-import WayofTime.bloodmagic.client.render.*;
+import WayofTime.bloodmagic.client.render.LayerBloodElytra;
+import WayofTime.bloodmagic.client.render.RenderAlchemyArray;
+import WayofTime.bloodmagic.client.render.RenderAltar;
+import WayofTime.bloodmagic.client.render.RenderDemonCrucible;
+import WayofTime.bloodmagic.client.render.RenderItemRoutingNode;
 import WayofTime.bloodmagic.client.render.entity.BloodLightRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SentientArrowRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SoulSnareRenderFactory;
@@ -19,27 +43,8 @@ import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
-import WayofTime.bloodmagic.util.handler.event.ClientHandler;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.obj.OBJLoader;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.awt.*;
 
 public class ClientProxy extends CommonProxy
 {
@@ -115,6 +120,7 @@ public class ClientProxy extends CommonProxy
     public void postInit()
     {
         new HUDElementHolding();
+        new HUDElementDemonWillAura();
     }
 
     @Override
