@@ -47,6 +47,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.api.iface.IDemonWillViewer;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.PlayerVelocityPacketProcessor;
@@ -57,6 +58,46 @@ import com.google.common.collect.Iterables;
 
 public class Utils
 {
+    public static boolean canPlayerSeeDemonWill(EntityPlayer player)
+    {
+        ItemStack[] mainInventory = player.inventory.mainInventory;
+
+        for (ItemStack stack : mainInventory)
+        {
+            if (stack == null)
+            {
+                continue;
+            }
+
+            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.worldObj, stack, player))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static int getDemonWillResolution(EntityPlayer player)
+    {
+        ItemStack[] mainInventory = player.inventory.mainInventory;
+
+        for (ItemStack stack : mainInventory)
+        {
+            if (stack == null)
+            {
+                continue;
+            }
+
+            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.worldObj, stack, player))
+            {
+                return ((IDemonWillViewer) stack.getItem()).getDemonWillAuraResolution(player.worldObj, stack, player);
+            }
+        }
+
+        return 1;
+    }
+
     public static NBTTagCompound getPersistentDataTag(EntityPlayer player)
     {
         NBTTagCompound forgeData = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);

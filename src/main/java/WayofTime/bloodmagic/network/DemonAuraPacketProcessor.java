@@ -1,11 +1,6 @@
 package WayofTime.bloodmagic.network;
 
 import io.netty.buffer.ByteBuf;
-
-import java.io.IOException;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -13,6 +8,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.soul.DemonWillHolder;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.proxy.ClientProxy;
 
 public class DemonAuraPacketProcessor implements IMessage, IMessageHandler<DemonAuraPacketProcessor, IMessage>
@@ -33,13 +29,9 @@ public class DemonAuraPacketProcessor implements IMessage, IMessageHandler<Demon
     public void fromBytes(ByteBuf buffer)
     {
         PacketBuffer buff = new PacketBuffer(buffer);
-        try
+        for (EnumDemonWillType type : EnumDemonWillType.values())
         {
-            NBTTagCompound tag = buff.readNBTTagCompoundFromBuffer();
-            currentWill.readFromNBT(tag, "Aura");
-        } catch (IOException e)
-        {
-            e.printStackTrace();
+            currentWill.willMap.put(type, buff.readDouble());
         }
     }
 
@@ -47,9 +39,10 @@ public class DemonAuraPacketProcessor implements IMessage, IMessageHandler<Demon
     public void toBytes(ByteBuf buffer)
     {
         PacketBuffer buff = new PacketBuffer(buffer);
-        NBTTagCompound tag = new NBTTagCompound();
-        currentWill.writeToNBT(tag, "Aura");
-        buff.writeNBTTagCompoundToBuffer(tag);
+        for (EnumDemonWillType type : EnumDemonWillType.values())
+        {
+            buff.writeDouble(currentWill.willMap.get(type));
+        }
     }
 
     @Override
