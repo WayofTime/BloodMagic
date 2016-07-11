@@ -238,7 +238,8 @@ public class Constants
         RITUAL_READER("ItemRitualReader"),
         SANGUINE_BOOK("ItemSanguineBook"),
         SIGIL_HOLDING("ItemSigilHolding"),
-        ARMOUR_POINTS_UPGRADE("ItemLivingArmourPointsUpgrade"), ;
+        ARMOUR_POINTS_UPGRADE("ItemLivingArmourPointsUpgrade"),
+        DEMON_WILL_GAUGE("ItemDemonWillGauge"), ;
 
         @Getter
         private final String regName;

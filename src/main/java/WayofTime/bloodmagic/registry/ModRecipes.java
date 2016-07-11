@@ -303,6 +303,7 @@ public class ModRecipes
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrucible), 400, 100, Items.CAULDRON, "stone", "gemLapis", "gemDiamond");
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonPylon), 400, 50, "blockIron", "stone", "gemLapis", ModItems.itemDemonCrystal);
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrystallizer), 500, 100, ModBlocks.soulForge, "stone", "gemLapis", "blockGlass");
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.demonWillGauge), 400, 50, "ingotGold", "dustRedstone", "blockGlass", ModItems.itemDemonCrystal);
     }
 
     public static void addAlchemyTableRecipes()

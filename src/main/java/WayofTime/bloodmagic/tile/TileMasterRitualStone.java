@@ -49,6 +49,8 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Setter
     private EnumFacing direction = EnumFacing.NORTH;
 
+    private List<EnumDemonWillType> currentActiveWillConfig = new ArrayList<EnumDemonWillType>();
+
     @Override
     public void update()
     {
@@ -99,6 +101,14 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         activeTime = tag.getInteger(Constants.NBT.RUNTIME);
         direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
         redstoned = tag.getBoolean(Constants.NBT.IS_REDSTONED);
+
+        for (EnumDemonWillType type : EnumDemonWillType.values())
+        {
+            if (tag.getBoolean("EnumWill" + type))
+            {
+                currentActiveWillConfig.add(type);
+            }
+        }
     }
 
     @Override
@@ -118,6 +128,12 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         tag.setInteger(Constants.NBT.RUNTIME, getActiveTime());
         tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
         tag.setBoolean(Constants.NBT.IS_REDSTONED, redstoned);
+
+        for (EnumDemonWillType type : currentActiveWillConfig)
+        {
+            tag.setBoolean("EnumWill" + type, true);
+        }
+
         return tag;
     }
 
@@ -344,8 +360,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Override
     public void setActiveWillConfig(EntityPlayer player, List<EnumDemonWillType> typeList)
     {
-        // TODO Auto-generated method stub
-
+        this.currentActiveWillConfig = typeList;
     }
 
     @Override
@@ -374,8 +389,34 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     }
 
     @Override
-    public List<EnumDemonWillType> getCurrentActiveWillConfig()
+    public List<EnumDemonWillType> getActiveWillConfig()
     {
-        return new ArrayList<EnumDemonWillType>();
+        return new ArrayList<EnumDemonWillType>(currentActiveWillConfig);
+    }
+
+    @Override
+    public void provideInformationOfWillConfigToPlayer(EntityPlayer player, List<EnumDemonWillType> typeList)
+    {
+        //There is probably an easier way to make expanded chat messages
+        if (typeList.size() >= 1)
+        {
+            Object[] translations = new TextComponentTranslation[typeList.size()];
+            String constructedString = "%s";
+
+            for (int i = 1; i < typeList.size(); i++)
+            {
+                constructedString = constructedString + ", %s";
+            }
+
+            for (int i = 0; i < typeList.size(); i++)
+            {
+                translations[i] = new TextComponentTranslation("tooltip.BloodMagic.currentBaseType." + typeList.get(i).name.toLowerCase());
+            }
+
+            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.BloodMagic.willConfig.set", new TextComponentTranslation(constructedString, translations)));
+        } else
+        {
+            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.BloodMagic.willConfig.void"));
+        }
     }
 }

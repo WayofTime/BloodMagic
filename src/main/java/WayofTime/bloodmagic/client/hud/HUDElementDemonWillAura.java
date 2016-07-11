@@ -16,6 +16,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.proxy.ClientProxy;
+import WayofTime.bloodmagic.util.Utils;
 
 public class HUDElementDemonWillAura extends HUDElement
 {
@@ -37,20 +38,12 @@ public class HUDElementDemonWillAura extends HUDElement
     public void render(Minecraft minecraft, ScaledResolution resolution, float partialTicks)
     {
         EntityPlayer player = minecraft.thePlayer;
-//        ItemStack sigilHolding = minecraft.thePlayer.getHeldItemMainhand();
-//        // TODO - Clean this mess
-//        // Check mainhand for Sigil of Holding
-//        if (sigilHolding == null)
-//            return;
-//        if (!(sigilHolding.getItem() == ModItems.sigilHolding))
-//            sigilHolding = minecraft.thePlayer.getHeldItemOffhand();
-//        // Check offhand for Sigil of Holding
-//        if (sigilHolding == null)
-//            return;
-//        if (!(sigilHolding.getItem() == ModItems.sigilHolding))
-//            return;
 
-        Gui ingameGui = minecraft.ingameGUI;
+        if (!Utils.canPlayerSeeDemonWill(player))
+        {
+            return;
+        }
+
         Tessellator tessellator = Tessellator.getInstance();
         VertexBuffer vertexBuffer = tessellator.getBuffer();
 
@@ -58,9 +51,7 @@ public class HUDElementDemonWillAura extends HUDElement
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         this.drawTexturedModalRect(getXOffset(), getYOffset(), 45, 0, 45, 65);
 
-//        GlStateManager.pushMatrix();
-
-        double maxAmount = 100;
+        double maxAmount = Utils.getDemonWillResolution(player);
 
         for (EnumDemonWillType type : EnumDemonWillType.values())
         {

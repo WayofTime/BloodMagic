@@ -41,7 +41,13 @@ public class DemonAuraPacketProcessor implements IMessage, IMessageHandler<Demon
         PacketBuffer buff = new PacketBuffer(buffer);
         for (EnumDemonWillType type : EnumDemonWillType.values())
         {
-            buff.writeDouble(currentWill.willMap.get(type));
+            if (currentWill.willMap.containsKey(type))
+            {
+                buff.writeDouble(currentWill.willMap.get(type));
+            } else
+            {
+                buff.writeDouble(0);
+            }
         }
     }
 

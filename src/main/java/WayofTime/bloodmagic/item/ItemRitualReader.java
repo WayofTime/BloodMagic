@@ -27,6 +27,8 @@ import org.lwjgl.input.Keyboard;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.EnumRitualReaderState;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.ChatUtil;
@@ -119,6 +121,28 @@ public class ItemRitualReader extends Item implements IVariantProvider
                     master.provideInformationOfRangeToPlayer(player, range);
                     break;
                 case SET_WILL_TYPES:
+                    List<EnumDemonWillType> typeList = new ArrayList<EnumDemonWillType>();
+                    ItemStack[] inv = player.inventory.mainInventory;
+                    for (int i = 0; i < 9; i++)
+                    {
+                        ItemStack testStack = inv[i];
+                        if (testStack == null)
+                        {
+                            continue;
+                        }
+
+                        if (testStack.getItem() instanceof IDiscreteDemonWill)
+                        {
+                            EnumDemonWillType type = ((IDiscreteDemonWill) testStack.getItem()).getType(testStack);
+                            if (!typeList.contains(type))
+                            {
+                                typeList.add(type);
+                            }
+                        }
+                    }
+
+                    master.setActiveWillConfig(player, typeList);
+                    master.provideInformationOfWillConfigToPlayer(player, typeList);
                     break;
                 }
 

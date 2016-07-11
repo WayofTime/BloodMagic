@@ -29,6 +29,7 @@ import WayofTime.bloodmagic.item.ItemBoundSword;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.item.ItemDaggerOfSacrifice;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
+import WayofTime.bloodmagic.item.ItemDemonWillGauge;
 import WayofTime.bloodmagic.item.ItemExperienceBook;
 import WayofTime.bloodmagic.item.ItemInscriptionTool;
 import WayofTime.bloodmagic.item.ItemLavaCrystal;
@@ -171,6 +172,8 @@ public class ModItems
 
     public static Item itemPointsUpgrade;
 
+    public static Item demonWillGauge;
+
     public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 1, 10, 8, 50);
     public static Item.ToolMaterial soulToolMaterial = EnumHelper.addToolMaterial("SoulToolMaterial", 4, 520, 7, 8, 50);
 
@@ -273,6 +276,8 @@ public class ModItems
         sanguineBook = registerItem(new ItemSanguineBook(), Constants.BloodMagicItem.SANGUINE_BOOK.getRegName());
 
         itemPointsUpgrade = registerItem(new ItemLivingArmourPointsUpgrade(), Constants.BloodMagicItem.ARMOUR_POINTS_UPGRADE.getRegName());
+
+        demonWillGauge = registerItem(new ItemDemonWillGauge(), Constants.BloodMagicItem.DEMON_WILL_GAUGE.getRegName());
     }
 
     @SideOnly(Side.CLIENT)

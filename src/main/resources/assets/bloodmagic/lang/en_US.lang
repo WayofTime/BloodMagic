@@ -174,6 +174,8 @@ item.BloodMagic.sanguineBook.name=Inspectoris Scandalum
 
 item.BloodMagic.livingPointUpgrade.draftAngelus.name=Draft of Angelus
 
+item.BloodMagic.willGauge.name=Demon Will Aura Gauge
+
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
 
@@ -401,6 +403,12 @@ tooltip.BloodMagic.currentType.destructive=Contains: Destructive Will
 tooltip.BloodMagic.currentType.vengeful=Contains: Vengeful Will
 tooltip.BloodMagic.currentType.steadfast=Contains: Steadfast Will
 
+tooltip.BloodMagic.currentBaseType.default=Raw
+tooltip.BloodMagic.currentBaseType.corrosive=Corrosive
+tooltip.BloodMagic.currentBaseType.destructive=Destructive
+tooltip.BloodMagic.currentBaseType.vengeful=Vengeful
+tooltip.BloodMagic.currentBaseType.steadfast=Steadfast
+
 tooltip.BloodMagic.experienceTome=A book used to store experience
 tooltip.BloodMagic.experienceTome.exp=Exp: %0.3f
 tooltip.BloodMagic.experienceTome.expLevel=Level: %d
@@ -412,6 +420,8 @@ tooltip.BloodMagic.cuttingFluidRatio=%d/%d uses remaining
 
 tooltip.BloodMagic.book.shifting=These symbols seem to be... &oshifting...
 
+tooltip.BloodMagic.willGauge=A strange device that can measure the Demon Will in the Aura.
+
 # Ritual
 ritual.BloodMagic.blockRange.tooBig=The block range given is too big! Needs to be at most %s blocks.
 ritual.BloodMagic.blockRange.tooFar=The block range given is too far! Needs to be within a vertical range of %s blocks and a horizontal range of %s blocks.
@@ -419,6 +429,8 @@ ritual.BloodMagic.blockRange.inactive=The ritual stone is currently inactive, an
 ritual.BloodMagic.blockRange.noRange=The range was not properly chosen.
 ritual.BloodMagic.blockRange.firstBlock=First block for new range stored.
 ritual.BloodMagic.blockRange.success=New range successfully set!
+ritual.BloodMagic.willConfig.set=The ritual will use these Demon Will types: %s
+ritual.BloodMagic.willConfig.void=The ritual no longer uses Demon Will
 
 ritual.BloodMagic.testRitual=Test Ritual
 ritual.BloodMagic.waterRitual=Ritual of the Full Spring

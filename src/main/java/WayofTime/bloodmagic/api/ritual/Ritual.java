@@ -26,7 +26,7 @@ import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
  */
 @Getter
 @RequiredArgsConstructor
-@EqualsAndHashCode(exclude = { "modableRangeMap", "ritualComponents", "renderer" })
+@EqualsAndHashCode(exclude = { "modableRangeMap", "ritualComponents", "renderer", "volumeRangeMap", "horizontalRangeMap", "verticalRangeMap" })
 @ToString
 public abstract class Ritual
 {
@@ -231,7 +231,7 @@ public abstract class Ritual
 
     protected boolean canBlockRangeBeModified(String range, AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2)
     {
-        List<EnumDemonWillType> willConfig = master.getCurrentActiveWillConfig();
+        List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
         int maxVolume = getMaxVolumeForRange(range, willConfig);
         int maxVertical = getMaxVerticalRadiusForRange(range, willConfig);
         int maxHorizontal = getMaxHorizontalRadiusForRange(range, willConfig);
