@@ -83,6 +83,7 @@ item.BloodMagic.baseComponent.reagentHaste.name=迅速の試薬
 item.BloodMagic.baseComponent.reagentBridge.name=幻影橋の試薬
 item.BloodMagic.baseComponent.reagentCompression.name=圧縮の試薬
 item.BloodMagic.baseComponent.reagentSeverance.name=断絶の試薬
+item.BloodMagic.baseComponent.reagentHolding.name=貯蔵の試薬
 
 item.BloodMagic.baseComponent.reagentTeleposition.name=テレポートの試薬
 item.BloodMagic.baseComponent.reagentTransposition.name=転位の試薬
@@ -169,9 +170,11 @@ item.BloodMagic.itemFilter.modItems.name=MODアイテムフィルタ
 item.BloodMagic.itemFilter.oreDict.name=鉱石辞書フィルタ
 
 item.BloodMagic.experienceTome.name=ペリティアの書
-item.BloodMagic.sanguineBook.name=血紅の書
+item.BloodMagic.sanguineBook.name=インスペクトリス・スカンダルム
 
-item.BloodMagic.livingPointUpgrade.draftAngelus.name=祈りの一飲み
+item.BloodMagic.livingPointUpgrade.draftAngelus.name=アンジェラスの一飲み
+
+item.BloodMagic.willGauge.name=デーモンウィルオーラ計測器
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=ライフエッセンス
@@ -302,6 +305,7 @@ tooltip.BloodMagic.bound.axe.desc=&o悪魔の伐採機
 tooltip.BloodMagic.bound.shovel.desc=&o土を掃除して綺麗に
 
 tooltip.BloodMagic.sacrificialDagger.desc=指を刺すには十分な切れ味のようだ...
+tooltip.BloodMagic.sacrificialDagger.creative=スニーク状態で血の祭壇を右クリックをすることで満タンになる
 tooltip.BloodMagic.slate.desc=血の祭壇で注入された石
 tooltip.BloodMagic.inscriber.desc=壁に描くのに使うようだ...
 
@@ -364,6 +368,8 @@ tooltip.BloodMagic.livingArmour.upgrade.graveDigger=グレイヴディガー
 tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=チャージストライク
 tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=トゥルーストライク
 tooltip.BloodMagic.livingArmour.upgrade.elytra=エリトラ
+tooltip.BloodMagic.livingArmour.upgrade.slowness=引きずる足
+tooltip.BloodMagic.livingArmour.upgrade.crippledArm=不自由な腕
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Lv %d)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6強化ポイント： %s / %s
 
@@ -391,11 +397,17 @@ tooltip.BloodMagic.fluid.capacity=最大容量
 tooltip.BloodMagic.ghost.everything=全て
 tooltip.BloodMagic.ghost.amount=幻影アイテムの個数： %d個
 
-tooltip.BloodMagic.currentType.default=内容物： 通常ウィル
+tooltip.BloodMagic.currentType.default=内容物： 未精製ウィル
 tooltip.BloodMagic.currentType.corrosive=内容物： 腐食性ウィル
 tooltip.BloodMagic.currentType.destructive=内容物： 破壊性ウィル
 tooltip.BloodMagic.currentType.vengeful=内容物： 報復性ウィル
 tooltip.BloodMagic.currentType.steadfast=内容物： 不活性ウィル
+
+tooltip.BloodMagic.currentBaseType.default=未精製
+tooltip.BloodMagic.currentBaseType.corrosive=腐食性
+tooltip.BloodMagic.currentBaseType.destructive=破壊性
+tooltip.BloodMagic.currentBaseType.vengeful=報復性
+tooltip.BloodMagic.currentBaseType.steadfast=不活性
 
 tooltip.BloodMagic.experienceTome=経験値を貯蔵するのに用いる本
 tooltip.BloodMagic.experienceTome.exp=Exp: %0.3f
@@ -406,7 +418,9 @@ tooltip.BloodMagic.decoration.notSafe=危険な装飾
 
 tooltip.BloodMagic.cuttingFluidRatio=%d/%d 回使用可能
 
-tooltip.BloodMagic.book.shifting=このシンボルは... &o変容して...
+tooltip.BloodMagic.book.shifting=紋様が... &oShiftして...
+
+tooltip.BloodMagic.willGauge=大気中のデーモンウィルを測定できる奇妙な装置。
 
 # Ritual
 ritual.BloodMagic.blockRange.tooBig=指定されたブロック範囲が広すぎます！最大%sブロックの範囲内である必要があります。
@@ -415,6 +429,8 @@ ritual.BloodMagic.blockRange.inactive=儀式石は停止中であり、範囲の
 ritual.BloodMagic.blockRange.noRange=ブロック範囲は適切に設定されませんでした。
 ritual.BloodMagic.blockRange.firstBlock=効果範囲の開始ブロックを設定しました。
 ritual.BloodMagic.blockRange.success=正常に新しい効果範囲が設定されました！
+ritual.BloodMagic.willConfig.set=この儀式に以下の種類のデーモンウィルを使用: %s
+ritual.BloodMagic.willConfig.void=儀式はもうデーモンウィルを使用しません
 
 ritual.BloodMagic.testRitual=試験用儀式
 ritual.BloodMagic.waterRitual=湧水の儀式
@@ -540,7 +556,7 @@ chat.BloodMagic.altar.comp.bloodrune=血のルーン
 chat.BloodMagic.altar.comp.crystal=未実装のアイテム
 chat.BloodMagic.altar.comp.notair=固体ブロック
 
-chat.BloodMagic.altar.nextTier=次のグレードの血の祭壇は%sの%sが不足しています。
+chat.BloodMagic.altar.nextTier=次のグレードの血の祭壇にするには%sが%sの場所に不足しています。
 
 # sekrit
 
