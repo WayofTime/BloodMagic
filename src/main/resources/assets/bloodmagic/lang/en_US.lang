@@ -486,7 +486,6 @@ ritual.BloodMagic.armourEvolveRitual.info=Undocumented.
 ritual.BloodMagic.animalGrowthRitual.info=Increases the maturity rate of baby animals within its range.
 ritual.BloodMagic.forsakenSoulRitual.info=Damages mobs within its damage range and when the mob dies a demon crystal within its crystal range will be grown.
 ritual.BloodMagic.crystalHarvestRitual.info=Breaks Demon Will crystal clusters within its range, dropping the results on top of the crystals.
-
 ritual.BloodMagic.placerRitual.info=Grabs blocks that are inside of the connected inventory and places them into the world.
 ritual.BloodMagic.fellingRitual.info=A standard tree-cutting machine, this ritual will cut down all trees and leaves within its area and collect the drops.
 ritual.BloodMagic.pumpRitual.info=Looks around the world and grabs fluids from the defined area. Will only remove and put the fluid into the connected tank if the tank has at least a bucket's worth of the same fluid.

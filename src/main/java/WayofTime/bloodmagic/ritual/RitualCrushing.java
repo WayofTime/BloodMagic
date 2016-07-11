@@ -11,13 +11,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.util.Utils;
 
@@ -25,6 +27,9 @@ public class RitualCrushing extends Ritual
 {
     public static final String CRUSHING_RANGE = "crushingRange";
     public static final String CHEST_RANGE = "chest";
+
+    public static double rawWillDrain = 0.5;
+    public static double steadfastWillDrain = 0.5;
 
     public RitualCrushing()
     {
@@ -49,13 +54,18 @@ public class RitualCrushing extends Ritual
             return;
         }
 
-        TileEntity tile = world.getTileEntity(masterRitualStone.getBlockPos().up());
+        BlockPos pos = masterRitualStone.getBlockPos();
+        TileEntity tile = world.getTileEntity(pos.up());
 
-        boolean isSilkTouch = false;
+        List<EnumDemonWillType> willConfig = masterRitualStone.getActiveWillConfig();
+
+        double steadfastWill = willConfig.contains(EnumDemonWillType.STEADFAST) ? WorldDemonWillHandler.getCurrentWill(world, pos, EnumDemonWillType.STEADFAST) : 0;
+
+        boolean isSilkTouch = steadfastWill >= steadfastWillDrain;
+
         int fortune = 0;
 
         AreaDescriptor crushingRange = getBlockRange(CRUSHING_RANGE);
-        BlockPos pos = masterRitualStone.getBlockPos();
 
         for (BlockPos newPos : crushingRange.getContainedPositions(pos))
         {
@@ -73,16 +83,29 @@ public class RitualCrushing extends Ritual
 
             if (isSilkTouch && block.canSilkHarvest(world, newPos, state, null))
             {
-                int meta = block.getMetaFromState(state);
-                ItemStack item = new ItemStack(block, 1, meta);
-                ItemStack copyStack = ItemStack.copyItemStack(item);
+                ItemStack checkStack = block.getItem(world, newPos, state);
+                if (checkStack == null)
+                {
+                    continue;
+                }
+
+                ItemStack copyStack = checkStack.copy();
+
+                if (steadfastWill >= steadfastWillDrain)
+                {
+                    WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastWillDrain, true);
+                    steadfastWill -= steadfastWillDrain;
+                } else
+                {
+                    continue;
+                }
 
                 if (tile != null)
-                    Utils.insertStackIntoTile(copyStack, tile, EnumFacing.DOWN);
+                    copyStack = Utils.insertStackIntoTile(copyStack, tile, EnumFacing.DOWN);
                 else
                     Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
 
-                if (copyStack.stackSize > 0)
+                if (copyStack != null && copyStack.stackSize > 0)
                 {
                     Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
                 }
