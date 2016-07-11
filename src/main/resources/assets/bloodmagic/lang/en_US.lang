@@ -473,7 +473,11 @@ ritual.BloodMagic.featheredKnifeRitual.info=Drains health from players in its ar
 ritual.BloodMagic.regenerationRitual.info=Casts regeneration on entities within its range if they are missing health.
 ritual.BloodMagic.harvestRitual.info=Harvests plants within its range, dropping the results on the ground.
 ritual.BloodMagic.magneticRitual.info=Pulls up ores from the ground and puts them into its placement range.
-ritual.BloodMagic.crushingRitual.info=Breaks blocks within its crushing range and places the items into the linked chest. 
+ritual.BloodMagic.crushingRitual.info=Breaks blocks within its crushing range and places the items into the linked chest.
+ritual.BloodMagic.crushingRitual.destructive.info=(Destructive) Blocks are broken down forcefuly: all blocks broken are affected by Fortune III.
+ritual.BloodMagic.crushingRitual.steadfast.info=(Steadfast) Causes all blocks that are broken to be picked up with silk touch. Overrides Fortune where applicable.
+ritual.BloodMagic.crushingRitual.corrosive.info=(Corrosive) All blocks are broken to be processed with a form of cutting fluid. Overrides Silk Touch where applicable.
+
 ritual.BloodMagic.fullStomachRitual.info=Takes food from the linked chest and fills the player's saturation with it.
 ritual.BloodMagic.interdictionRitual.info=Pushes all mobs within its area away from the master ritual stone.
 ritual.BloodMagic.containmentRitual.info=Pulls all mobs within its area towards the master ritual stone.

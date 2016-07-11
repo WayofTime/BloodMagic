@@ -80,7 +80,7 @@ public class RitualCrystalHarvest extends Ritual
     @Override
     public int getRefreshCost()
     {
-        return 0;
+        return 50;
     }
 
     @Override

@@ -19,6 +19,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 
 /**
  * Abstract class for creating new rituals. Rituals need be registered with
@@ -286,9 +287,9 @@ public abstract class Ritual
         }
     }
 
-    public ITextComponent provideInformationOfRitualToPlayer(EntityPlayer player)
+    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player)
     {
-        return new TextComponentTranslation(this.getUnlocalizedName() + ".info");
+        return new ITextComponent[] { new TextComponentTranslation(this.getUnlocalizedName() + ".info") };
     }
 
     public ITextComponent provideInformationOfRangeToPlayer(EntityPlayer player, String range)
@@ -348,6 +349,11 @@ public abstract class Ritual
         ACTIVATE,
         DEACTIVATE,
         EXPLOSION,
+    }
+
+    public double getWillRespectingConfig(World world, BlockPos pos, EnumDemonWillType type, List<EnumDemonWillType> willConfig)
+    {
+        return willConfig.contains(type) ? WorldDemonWillHandler.getCurrentWill(world, pos, type) : 0;
     }
 
     public abstract Ritual getNewCopy();

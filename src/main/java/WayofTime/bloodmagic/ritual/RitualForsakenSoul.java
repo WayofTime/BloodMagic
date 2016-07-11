@@ -197,7 +197,7 @@ public class RitualForsakenSoul extends Ritual
     @Override
     public int getRefreshCost()
     {
-        return 0;
+        return 2;
     }
 
     @Override

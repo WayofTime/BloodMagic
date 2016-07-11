@@ -7,6 +7,7 @@ import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerPlantable;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerStem;
@@ -114,6 +115,9 @@ public class ModRituals
         RitualRegistry.registerRitual(altarBuilderRitual, ConfigHandler.altarBuilderRitual);
         portalRitual = new RitualPortal();
         RitualRegistry.registerRitual(portalRitual, ConfigHandler.portalRitual);
+
+        RitualCrushing.registerCuttingFluid(ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC), 250, 0.5);
+        RitualCrushing.registerCuttingFluid(ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE), 25, 0.05);
     }
 
     public static void initImperfectRituals()

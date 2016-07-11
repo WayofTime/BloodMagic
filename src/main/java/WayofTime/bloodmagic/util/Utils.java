@@ -470,6 +470,35 @@ public class Utils
         return stack;
     }
 
+    public static int getNumberOfFreeSlots(TileEntity tile, EnumFacing dir)
+    {
+        int slots = 0;
+
+        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir))
+        {
+            IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
+
+            for (int i = 0; i < handler.getSlots(); i++)
+            {
+                if (handler.getStackInSlot(i) == null)
+                {
+                    slots++;
+                }
+            }
+        } else if (tile instanceof IInventory)
+        {
+            for (int i = 0; i < ((IInventory) tile).getSizeInventory(); i++)
+            {
+                if (((IInventory) tile).getStackInSlot(i) == null)
+                {
+                    slots++;
+                }
+            }
+        }
+
+        return slots;
+    }
+
     public static ItemStack insertStackIntoTile(ItemStack stack, IItemHandler handler)
     {
         int numberOfSlots = handler.getSlots();
