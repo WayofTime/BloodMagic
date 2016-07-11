@@ -174,6 +174,8 @@ item.BloodMagic.sanguineBook.name=指示之书
 
 item.BloodMagic.livingPointUpgrade.draftAngelus.name=祷告之始
 
+item.BloodMagic.willGauge.name=恶魔意志灵域测量器
+
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=生命源质
 
@@ -401,6 +403,12 @@ tooltip.BloodMagic.currentType.destructive=蕴含: 破坏意志
 tooltip.BloodMagic.currentType.vengeful=蕴含: 复仇意志
 tooltip.BloodMagic.currentType.steadfast=蕴含: 坚定意志
 
+tooltip.BloodMagic.currentBaseType.default=原生
+tooltip.BloodMagic.currentBaseType.corrosive=腐蚀
+tooltip.BloodMagic.currentBaseType.destructive=破坏
+tooltip.BloodMagic.currentBaseType.vengeful=复仇
+tooltip.BloodMagic.currentBaseType.steadfast=坚定
+
 tooltip.BloodMagic.experienceTome=用于储存经验的书
 tooltip.BloodMagic.experienceTome.exp=经验值: %0.3f
 tooltip.BloodMagic.experienceTome.expLevel=等级: %d
@@ -412,6 +420,8 @@ tooltip.BloodMagic.cuttingFluidRatio=%d/%d 所剩可用
 
 tooltip.BloodMagic.book.shifting=这些符号似乎... &o在变换着...
 
+tooltip.BloodMagic.willGauge=一个奇怪的装置, 可以测量恶魔灵域中的恶魔意志.
+
 # Ritual
 ritual.BloodMagic.blockRange.tooBig=提供的方块范围过大! 最多不超过 %s 个方块.
 ritual.BloodMagic.blockRange.tooFar=提供的方块范围太远! 需要在垂直距离 %s , 水平距离 %s 之内.
@@ -419,6 +429,8 @@ ritual.BloodMagic.blockRange.inactive=该仪式石目前无活动, 没有可修�
 ritual.BloodMagic.blockRange.noRange=范围选择不恰当.
 ritual.BloodMagic.blockRange.firstBlock=记录新范围的第一个方块.
 ritual.BloodMagic.blockRange.success=新范围设置成功!
+ritual.BloodMagic.willConfig.set=该仪式将使用这类恶魔意志类型: %s
+ritual.BloodMagic.willConfig.void=该仪式不再会使用恶魔意志
 
 ritual.BloodMagic.testRitual=测试仪式
 ritual.BloodMagic.waterRitual=涌泉仪式
