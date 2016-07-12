@@ -498,6 +498,7 @@ ritual.BloodMagic.portalRitual.info=Creates a portal network based on the activa
 
 ritual.BloodMagic.waterRitual.waterRange.info=(Water) The area that the ritual will place water source blocks.
 ritual.BloodMagic.lavaRitual.lavaRange.info=(Lava) The area that the ritual will place lava source blocks.
+ritual.BloodMagic.lavaRitual.fireFuse.info=(Vengeful) Entities in this range are afflicted by Fire Fuse.
 ritual.BloodMagic.greenGroveRitual.growing.info=(Growth) The area that the ritual will grow plants in.
 ritual.BloodMagic.jumpRitual.jumpRange.info=(Jumping) Entities in this range will be launched in the air.
 ritual.BloodMagic.wellOfSufferingRitual.altar.info=(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region.

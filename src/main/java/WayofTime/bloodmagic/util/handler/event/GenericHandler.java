@@ -13,6 +13,7 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -53,6 +54,7 @@ import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrific
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.DemonAuraPacketProcessor;
 import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -96,7 +98,22 @@ public class GenericHandler
             {
                 sendPlayerDemonWillAura((EntityPlayer) entity);
             }
-            return;
+
+        }
+
+        EntityLivingBase entity = event.getEntityLiving();
+
+        if (entity.isPotionActive(ModPotions.fireFuse))
+        {
+            entity.worldObj.spawnParticle(EnumParticleTypes.FLAME, entity.posX + entity.worldObj.rand.nextDouble() * 0.3, entity.posY + entity.worldObj.rand.nextDouble() * 0.3, entity.posZ + entity.worldObj.rand.nextDouble() * 0.3, 0, 0.06d, 0);
+
+            int r = entity.getActivePotionEffect(ModPotions.fireFuse).getAmplifier();
+            int radius = 1 * r + 1;
+
+            if (entity.getActivePotionEffect(ModPotions.fireFuse).getDuration() <= 3)
+            {
+                entity.worldObj.createExplosion(null, entity.posX, entity.posY, entity.posZ, radius, false);
+            }
         }
     }
 

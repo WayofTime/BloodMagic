@@ -17,6 +17,7 @@ public class ModPotions
     public static Potion planarBinding;
     public static Potion soulSnare;
     public static Potion soulFray;
+    public static Potion fireFuse;
 
     public static void init()
     {
@@ -34,11 +35,13 @@ public class ModPotions
         // new ResourceLocation(resourceLocation +
         // boost.getName().toLowerCase())
 
-        whirlwind = registerPotion("Whirlwind", new ResourceLocation("whirlwind"), false, 0, 0, 0);
-        planarBinding = registerPotion("Planar Binding", new ResourceLocation("planarBinding"), false, 0, 0, 0);
-        soulSnare = registerPotion("Soul Snare", new ResourceLocation("soulSnare"), false, 0xFFFFFF, 0, 0);
-        soulFray = registerPotion("Soul Fray", new ResourceLocation("soulFray"), true, 0xFFFFFF, 0, 0);
+        whirlwind = registerPotion("Whirlwind", new ResourceLocation("whirlwind"), false, 0, 1, 0);
+        planarBinding = registerPotion("Planar Binding", new ResourceLocation("planarBinding"), false, 0, 2, 0);
+        soulSnare = registerPotion("Soul Snare", new ResourceLocation("soulSnare"), false, 0xFFFFFF, 3, 0);
+        soulFray = registerPotion("Soul Fray", new ResourceLocation("soulFray"), true, 0xFFFFFF, 4, 0);
         PlayerSacrificeHelper.soulFrayId = soulFray;
+
+        fireFuse = registerPotion("Fire Fuse", new ResourceLocation("fireFuse"), true, 0xFF3333, 5, 0);
         // heavyHeart = new PotionBloodMagic("Heavy Heart", new
         // ResourceLocation(resourceLocation +
         // heavyHeart.getName().toLowerCase()), true, 0, 0, 0);
