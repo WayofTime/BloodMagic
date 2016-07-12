@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -800,6 +801,12 @@ public class Utils
     public static boolean isBlockLiquid(IBlockState state)
     {
         return (state instanceof IFluidBlock || state.getMaterial().isLiquid());
+    }
+
+    public static boolean isFlowingLiquid(World world, BlockPos pos, IBlockState state)
+    {
+        Block block = state.getBlock();
+        return ((block instanceof IFluidBlock && Math.abs(((IFluidBlock) block).getFilledPercentage(world, pos)) == 1) || (block instanceof BlockLiquid && block.getMetaFromState(state) != 0));
     }
 
     public static boolean spawnStackAtBlock(World world, BlockPos pos, @Nullable EnumFacing pushDirection, ItemStack stack)

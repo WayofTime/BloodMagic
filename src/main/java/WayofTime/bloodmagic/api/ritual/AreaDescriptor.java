@@ -257,7 +257,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         @Override
         public boolean isWithinRange(int verticalLimit, int horizontalLimit)
         {
-            return minimumOffset.getY() >= -verticalLimit && maximumOffset.getY() < verticalLimit && minimumOffset.getX() >= -horizontalLimit && maximumOffset.getX() < horizontalLimit && minimumOffset.getZ() >= -horizontalLimit && maximumOffset.getZ() < horizontalLimit;
+            return minimumOffset.getY() >= -verticalLimit && maximumOffset.getY() <= verticalLimit + 1 && minimumOffset.getX() >= -horizontalLimit && maximumOffset.getX() <= horizontalLimit + 1 && minimumOffset.getZ() >= -horizontalLimit && maximumOffset.getZ() <= horizontalLimit + 1;
         }
     }
 

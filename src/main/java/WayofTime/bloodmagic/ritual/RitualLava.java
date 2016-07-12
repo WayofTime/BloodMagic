@@ -1,18 +1,29 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
+import WayofTime.bloodmagic.api.soul.DemonWillHolder;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.util.Utils;
 
 public class RitualLava extends Ritual
 {
     public static final String LAVA_RANGE = "lavaRange";
+    public static int destructiveWillDrain = 10;
 
     public RitualLava()
     {
@@ -34,14 +45,25 @@ public class RitualLava extends Ritual
             return;
         }
 
+        BlockPos pos = masterRitualStone.getBlockPos();
         int maxEffects = currentEssence / getRefreshCost();
         int totalEffects = 0;
 
+        List<EnumDemonWillType> willConfig = masterRitualStone.getActiveWillConfig();
+        DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, pos);
         AreaDescriptor lavaRange = getBlockRange(LAVA_RANGE);
 
-        for (BlockPos newPos : lavaRange.getContainedPositions(masterRitualStone.getBlockPos()))
+        int maxLavaVolume = getMaxVolumeForRange(LAVA_RANGE, willConfig, holder);
+        if (!lavaRange.isWithinRange(getMaxVerticalRadiusForRange(LAVA_RANGE, willConfig, holder), getMaxHorizontalRadiusForRange(LAVA_RANGE, willConfig, holder)) || (maxLavaVolume != 0 && lavaRange.getVolume() > maxLavaVolume))
         {
-            if (world.isAirBlock(newPos))
+
+            return;
+        }
+
+        for (BlockPos newPos : lavaRange.getContainedPositions(pos))
+        {
+            IBlockState state = world.getBlockState(newPos);
+            if (world.isAirBlock(newPos) || Utils.isFlowingLiquid(world, newPos, state))
             {
                 world.setBlockState(newPos, Blocks.FLOWING_LAVA.getDefaultState());
                 totalEffects++;
@@ -82,5 +104,50 @@ public class RitualLava extends Ritual
     public Ritual getNewCopy()
     {
         return new RitualLava();
+    }
+
+    @Override
+    public int getMaxVolumeForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder)
+    {
+        if (LAVA_RANGE.equals(range) && activeTypes.contains(EnumDemonWillType.DESTRUCTIVE))
+        {
+            double destructiveWill = holder.getWill(EnumDemonWillType.DESTRUCTIVE);
+            if (destructiveWill > 0)
+            {
+                return 9 + (int) Math.pow(destructiveWill / 10, 1.5);
+            }
+        }
+
+        return volumeRangeMap.get(range);
+    }
+
+    @Override
+    public int getMaxVerticalRadiusForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder)
+    {
+        if (LAVA_RANGE.equals(range) && activeTypes.contains(EnumDemonWillType.DESTRUCTIVE))
+        {
+            double destructiveWill = holder.getWill(EnumDemonWillType.DESTRUCTIVE);
+            if (destructiveWill > 0)
+            {
+                return (int) (3 + destructiveWill / 10d);
+            }
+        }
+
+        return verticalRangeMap.get(range);
+    }
+
+    @Override
+    public int getMaxHorizontalRadiusForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder)
+    {
+        if (LAVA_RANGE.equals(range) && activeTypes.contains(EnumDemonWillType.DESTRUCTIVE))
+        {
+            double destructiveWill = holder.getWill(EnumDemonWillType.DESTRUCTIVE);
+            if (destructiveWill > 0)
+            {
+                return (int) (3 + destructiveWill / 10d);
+            }
+        }
+
+        return horizontalRangeMap.get(range);
     }
 }

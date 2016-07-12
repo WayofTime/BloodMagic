@@ -26,6 +26,11 @@ public class WorldDemonWillHandler
         return null;
     }
 
+    public static DemonWillHolder getWillHolder(World world, BlockPos pos)
+    {
+        return getWillHolder(world.provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);
+    }
+
     public static WillWorld getWillWorld(int dim)
     {
         return containedWills.get(dim);

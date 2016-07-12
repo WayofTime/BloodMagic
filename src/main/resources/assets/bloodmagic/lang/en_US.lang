@@ -474,7 +474,7 @@ ritual.BloodMagic.regenerationRitual.info=Casts regeneration on entities within 
 ritual.BloodMagic.harvestRitual.info=Harvests plants within its range, dropping the results on the ground.
 ritual.BloodMagic.magneticRitual.info=Pulls up ores from the ground and puts them into its placement range.
 ritual.BloodMagic.crushingRitual.info=Breaks blocks within its crushing range and places the items into the linked chest.
-ritual.BloodMagic.crushingRitual.destructive.info=(Destructive) Blocks are broken down forcefuly: all blocks broken are affected by Fortune III.
+ritual.BloodMagic.crushingRitual.destructive.info=(Destructive) Blocks are broken down forcefully: all blocks broken are affected by Fortune III.
 ritual.BloodMagic.crushingRitual.steadfast.info=(Steadfast) Causes all blocks that are broken to be picked up with silk touch. Overrides Fortune where applicable.
 ritual.BloodMagic.crushingRitual.corrosive.info=(Corrosive) All blocks are broken to be processed with a form of cutting fluid. Overrides Silk Touch where applicable.
 

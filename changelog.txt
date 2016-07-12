@@ -3,6 +3,7 @@ Version 2.0.3-51
 ------------------------------------------------------
 - Added the Demon Will Aura Gauge to accurately determine the Will in the Aura.
 - Added the ability for rituals to have a Demon Will set on them. Now to get rituals to use them.
+- Fixed it so that the Crushing Ritual now ignores liquids
 
 ------------------------------------------------------
 Version 2.0.2-50

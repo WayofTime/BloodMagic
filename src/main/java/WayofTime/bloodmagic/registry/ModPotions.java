@@ -30,7 +30,7 @@ public class ModPotions
         // drowning = new PotionBloodMagic("Drowning", new
         // ResourceLocation(resourceLocation +
         // drowning.getName().toLowerCase()), true, 0, 0, 0);
-        boost = registerPotion("Boost", new ResourceLocation("boost"), false, 0xFFFFFF, 0, 0);
+        boost = registerPotion("Boost", new ResourceLocation("boost"), false, 0xFFFFFF, 0, 1);
         // new ResourceLocation(resourceLocation +
         // boost.getName().toLowerCase())
 

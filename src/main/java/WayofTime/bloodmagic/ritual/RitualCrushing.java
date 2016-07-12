@@ -28,7 +28,6 @@ import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.util.Utils;
 
@@ -104,7 +103,7 @@ public class RitualCrushing extends Ritual
 
             IBlockState state = world.getBlockState(newPos);
             Block block = state.getBlock();
-            if (block.equals(ModBlocks.ritualController) || block.equals(ModBlocks.ritualStone) || block.getBlockHardness(state, world, newPos) == -1.0F)
+            if (block.equals(ModBlocks.ritualController) || block.equals(ModBlocks.ritualStone) || block.getBlockHardness(state, world, newPos) == -1.0F || Utils.isBlockLiquid(state))
             {
                 continue;
             }
@@ -257,7 +256,7 @@ public class RitualCrushing extends Ritual
     {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
-        this.addParallelRunes(ritualComponents, 1, 0, EnumRuneType.EARTH);
+        this.addParallelRunes(components, 1, 0, EnumRuneType.EARTH);
         this.addParallelRunes(components, 2, 0, EnumRuneType.FIRE);
         this.addCornerRunes(components, 2, 0, EnumRuneType.DUSK);
         this.addParallelRunes(components, 2, 1, EnumRuneType.AIR);

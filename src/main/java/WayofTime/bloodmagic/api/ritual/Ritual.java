@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.soul.DemonWillHolder;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 
@@ -221,7 +222,10 @@ public abstract class Ritual
     public boolean setBlockRangeByBounds(String range, IMasterRitualStone master, BlockPos offset1, BlockPos offset2)
     {
         AreaDescriptor descriptor = this.getBlockRange(range);
-        if (canBlockRangeBeModified(range, descriptor, master, offset1, offset2))
+        World world = master.getWorldObj();
+        BlockPos masterPos = master.getBlockPos();
+        DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, masterPos);
+        if (canBlockRangeBeModified(range, descriptor, master, offset1, offset2, holder))
         {
             descriptor.modifyAreaByBlockPositions(offset1, offset2);
             return true;
@@ -230,12 +234,12 @@ public abstract class Ritual
         return false;
     }
 
-    protected boolean canBlockRangeBeModified(String range, AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2)
+    protected boolean canBlockRangeBeModified(String range, AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2, DemonWillHolder holder)
     {
         List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
-        int maxVolume = getMaxVolumeForRange(range, willConfig);
-        int maxVertical = getMaxVerticalRadiusForRange(range, willConfig);
-        int maxHorizontal = getMaxHorizontalRadiusForRange(range, willConfig);
+        int maxVolume = getMaxVolumeForRange(range, willConfig, holder);
+        int maxVertical = getMaxVerticalRadiusForRange(range, willConfig, holder);
+        int maxHorizontal = getMaxHorizontalRadiusForRange(range, willConfig, holder);
 
         return (maxVolume <= 0 || descriptor.getVolumeForOffsets(offset1, offset2) <= maxVolume) && descriptor.isWithinRange(offset1, offset2, maxVertical, maxHorizontal);
     }
@@ -252,17 +256,17 @@ public abstract class Ritual
         return descriptor.getVolume() <= maxVolume && descriptor.isWithinRange(maxVertical, maxHorizontal);
     }
 
-    public int getMaxVolumeForRange(String range, List<EnumDemonWillType> activeTypes)
+    public int getMaxVolumeForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder)
     {
         return volumeRangeMap.get(range);
     }
 
-    public int getMaxVerticalRadiusForRange(String range, List<EnumDemonWillType> activeTypes)
+    public int getMaxVerticalRadiusForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder)
     {
         return verticalRangeMap.get(range);
     }
 
-    public int getMaxHorizontalRadiusForRange(String range, List<EnumDemonWillType> activeTypes)
+    public int getMaxHorizontalRadiusForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder)
     {
         return horizontalRangeMap.get(range);
     }
@@ -274,9 +278,13 @@ public abstract class Ritual
         {
             return new TextComponentTranslation("ritual.BloodMagic.blockRange.tooBig", "?");
         }
-        int maxVolume = volumeRangeMap.get(range);
-        int maxVertical = verticalRangeMap.get(range);
-        int maxHorizontal = horizontalRangeMap.get(range);
+
+        List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
+        DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(master.getWorldObj(), master.getBlockPos());
+
+        int maxVolume = this.getMaxVolumeForRange(range, willConfig, holder);
+        int maxVertical = this.getMaxVerticalRadiusForRange(range, willConfig, holder);
+        int maxHorizontal = this.getMaxHorizontalRadiusForRange(range, willConfig, holder);
 
         if (maxVolume > 0 && descriptor.getVolumeForOffsets(offset1, offset2) > maxVolume)
         {
