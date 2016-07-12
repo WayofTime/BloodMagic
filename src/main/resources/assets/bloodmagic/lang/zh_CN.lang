@@ -382,7 +382,7 @@ tooltip.BloodMagic.sentientShovel.desc=以恶魔意志唤起其最大潜能.
 tooltip.BloodMagic.soulGem.lesser=用于存储少量意志的晶石
 tooltip.BloodMagic.soulGem.common=用于存储更多意志的晶石
 tooltip.BloodMagic.soulGem.greater=用于存储大量意志的晶石
-tooltip.BloodMagic.soulGem.grand=用于存储极大数量意志的晶石
+tooltip.BloodMagic.soulGem.grand=用于存储极大数额意志的晶石
 tooltip.BloodMagic.soulSnare.desc=投掷向怪物并消灭它们来获取附于其身的恶魔意志
 
 tooltip.BloodMagic.itemFilter.exact=将确保物品精确匹配
@@ -474,6 +474,10 @@ ritual.BloodMagic.regenerationRitual.info=治疗其范围内失去生命值的�
 ritual.BloodMagic.harvestRitual.info=收割其范围内的植物, 产物掉落于地上.
 ritual.BloodMagic.magneticRitual.info=将地底的矿石传送至其放置区域.
 ritual.BloodMagic.crushingRitual.info=破坏其挖掘范围内的方块, 并将掉落物放置于所连接的箱子.
+ritual.BloodMagic.crushingRitual.destructive.info=(破坏性) 强力的破坏方块: 所有方块破坏受 时运III 影响
+ritual.BloodMagic.crushingRitual.steadfast.info=(坚定性) 以 精准采集 获取被破坏方块. 适用情况下覆盖时运.
+ritual.BloodMagic.crushingRitual.corrosive.info=(腐蚀性) 所有被破坏方块将以基础切削油的形式处理. 适用情况下覆盖精准采集.
+
 ritual.BloodMagic.fullStomachRitual.info=从连接的箱子中获取食物, 来补充玩家的饥饿值.
 ritual.BloodMagic.interdictionRitual.info=使其范围内的所有生物推离于主仪式石.
 ritual.BloodMagic.containmentRitual.info=使其范围内的所有生物牵引向主仪式石.
@@ -486,7 +490,6 @@ ritual.BloodMagic.zephyrRitual.info=拾取其范围内的掉落物, 并放入所
 ritual.BloodMagic.animalGrowthRitual.info=加快其范围内的幼年动物的生长速度.
 ritual.BloodMagic.forsakenSoulRitual.info=对其伤害范围内的生物造成伤害, 当生物死亡时, 其晶体范围内的恶魔晶簇将生长.
 ritual.BloodMagic.crystalHarvestRitual.info=破坏范围内的恶魔意志晶簇, 掉落物丢于晶簇顶部.
-
 ritual.BloodMagic.placerRitual.info=取出所连接的容器中的方块, 并放置于世界中.
 ritual.BloodMagic.fellingRitual.info=一个伐木设施, 该仪式将砍伐其范围内所有树与叶子, 并收集掉落物.
 ritual.BloodMagic.pumpRitual.info=从规定范围获取液体. 只有当所连接的液体容器至少有一桶量的相同液体时, 移出或储入液体.
