@@ -9,6 +9,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -17,8 +18,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.common.Optional;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -104,9 +105,8 @@ public class BlockRitualController extends BlockStringContainer implements IVari
     public void onBlockDestroyedByExplosion(World world, BlockPos pos, Explosion explosion)
     {
         TileEntity tile = world.getTileEntity(pos);
-        IBlockState state = world.getBlockState(pos);
 
-        if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone)
+        if (tile instanceof TileMasterRitualStone)
             ((TileMasterRitualStone) tile).stopRitual(Ritual.BreakType.EXPLOSION);
     }
 

@@ -455,6 +455,7 @@ ritual.BloodMagic.armourEvolveRitual=Ritual of Living Evolution
 ritual.BloodMagic.animalGrowthRitual=Ritual of the Shepherd
 ritual.BloodMagic.forsakenSoulRitual=Gathering of the Forsaken Souls
 ritual.BloodMagic.crystalHarvestRitual=Crack of the Fractured Crystal
+ritual.BloodMagic.meteorRitual=Mark of the Falling Tower
 
 ritual.BloodMagic.cobblestoneRitual=Le Vulcanos Frigius
 ritual.BloodMagic.placerRitual=Laying of the Filler
@@ -495,6 +496,7 @@ ritual.BloodMagic.fellingRitual.info=A standard tree-cutting machine, this ritua
 ritual.BloodMagic.pumpRitual.info=Looks around the world and grabs fluids from the defined area. Will only remove and put the fluid into the connected tank if the tank has at least a bucket's worth of the same fluid.
 ritual.BloodMagic.altarBuilderRitual.info=Builds an altar out of the components inside of the connected inventory.
 ritual.BloodMagic.portalRitual.info=Creates a portal network based on the activator and the immediately surrounding blocks. Blocks can be changed after activation without changing the network of portals, and portals with the same "key" will link together.
+ritual.BloodMagic.meteorRitual.info=Consumes an item inside of its item range to summon a meteor full of resources from the sky, aimed directly at the ritual.
 
 ritual.BloodMagic.waterRitual.waterRange.info=(Water) The area that the ritual will place water source blocks.
 ritual.BloodMagic.lavaRitual.lavaRange.info=(Lava) The area that the ritual will place lava source blocks.

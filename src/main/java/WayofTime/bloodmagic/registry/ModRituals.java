@@ -1,5 +1,10 @@
 package WayofTime.bloodmagic.registry;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
@@ -8,7 +13,37 @@ import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
-import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.meteor.MeteorComponent;
+import WayofTime.bloodmagic.meteor.MeteorRegistry;
+import WayofTime.bloodmagic.ritual.RitualAltarBuilder;
+import WayofTime.bloodmagic.ritual.RitualAnimalGrowth;
+import WayofTime.bloodmagic.ritual.RitualArmourEvolve;
+import WayofTime.bloodmagic.ritual.RitualCobblestone;
+import WayofTime.bloodmagic.ritual.RitualContainment;
+import WayofTime.bloodmagic.ritual.RitualCrushing;
+import WayofTime.bloodmagic.ritual.RitualCrystalHarvest;
+import WayofTime.bloodmagic.ritual.RitualExpulsion;
+import WayofTime.bloodmagic.ritual.RitualFeatheredKnife;
+import WayofTime.bloodmagic.ritual.RitualFelling;
+import WayofTime.bloodmagic.ritual.RitualForsakenSoul;
+import WayofTime.bloodmagic.ritual.RitualFullStomach;
+import WayofTime.bloodmagic.ritual.RitualGreenGrove;
+import WayofTime.bloodmagic.ritual.RitualHarvest;
+import WayofTime.bloodmagic.ritual.RitualInterdiction;
+import WayofTime.bloodmagic.ritual.RitualJumping;
+import WayofTime.bloodmagic.ritual.RitualLava;
+import WayofTime.bloodmagic.ritual.RitualMagnetic;
+import WayofTime.bloodmagic.ritual.RitualMeteor;
+import WayofTime.bloodmagic.ritual.RitualPlacer;
+import WayofTime.bloodmagic.ritual.RitualPortal;
+import WayofTime.bloodmagic.ritual.RitualPump;
+import WayofTime.bloodmagic.ritual.RitualRegeneration;
+import WayofTime.bloodmagic.ritual.RitualSpeed;
+import WayofTime.bloodmagic.ritual.RitualSuppression;
+import WayofTime.bloodmagic.ritual.RitualUpgradeRemove;
+import WayofTime.bloodmagic.ritual.RitualWater;
+import WayofTime.bloodmagic.ritual.RitualWellOfSuffering;
+import WayofTime.bloodmagic.ritual.RitualZephyr;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerPlantable;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerStem;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerTall;
@@ -16,7 +51,6 @@ import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualNight;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRain;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualResistance;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualZombie;
-import net.minecraft.init.Blocks;
 
 public class ModRituals
 {
@@ -49,6 +83,8 @@ public class ModRituals
     public static Ritual pumpRitual;
     public static Ritual altarBuilderRitual;
     public static Ritual portalRitual;
+
+    public static Ritual meteorRitual;
 
     public static ImperfectRitual imperfectNight;
     public static ImperfectRitual imperfectRain;
@@ -115,9 +151,23 @@ public class ModRituals
         RitualRegistry.registerRitual(altarBuilderRitual, ConfigHandler.altarBuilderRitual);
         portalRitual = new RitualPortal();
         RitualRegistry.registerRitual(portalRitual, ConfigHandler.portalRitual);
+        meteorRitual = new RitualMeteor();
+        RitualRegistry.registerRitual(meteorRitual, true);
 
         RitualCrushing.registerCuttingFluid(ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC), 250, 0.5);
         RitualCrushing.registerCuttingFluid(ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE), 25, 0.05);
+
+        List<MeteorComponent> ironMeteorList = new ArrayList<MeteorComponent>();
+        ironMeteorList.add(new MeteorComponent(400, "oreIron"));
+        ironMeteorList.add(new MeteorComponent(200, "oreCopper"));
+        ironMeteorList.add(new MeteorComponent(140, "oreTin"));
+        ironMeteorList.add(new MeteorComponent(70, "oreSilver"));
+        ironMeteorList.add(new MeteorComponent(80, "oreLead"));
+        ironMeteorList.add(new MeteorComponent(30, "oreGold"));
+        ironMeteorList.add(new MeteorComponent(60, "oreLapis"));
+        ironMeteorList.add(new MeteorComponent(100, "oreRedstone"));
+
+        MeteorRegistry.registerMeteor(new ItemStack(Blocks.IRON_BLOCK), ironMeteorList, 15, 5, 1000);
     }
 
     public static void initImperfectRituals()
