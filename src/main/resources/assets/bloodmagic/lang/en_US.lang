@@ -326,7 +326,8 @@ tooltip.BloodMagic.diviner.earthRune=Earth Runes: %d
 tooltip.BloodMagic.diviner.duskRune=Dusk Runes: %d
 tooltip.BloodMagic.diviner.dawnRune=Dawn Runes: %d
 tooltip.BloodMagic.diviner.totalRune=Total Runes: %d
-tooltip.BloodMagic.diviner.extraInfo=Press shift for extra info
+tooltip.BloodMagic.diviner.extraInfo=&9-Hold shift for rune info-
+tooltip.BloodMagic.diviner.extraExtraInfo=&9-Hold shift + M for augmentation info-
 tooltip.BloodMagic.diviner.currentDirection=Current Direction: %s
 
 tooltip.BloodMagic.ritualReader.currentState=Current mode: %s

@@ -1,10 +1,9 @@
 package WayofTime.bloodmagic.item;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import WayofTime.bloodmagic.util.Utils;
-import WayofTime.bloodmagic.util.handler.event.ClientHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -36,11 +35,14 @@ import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.util.handler.event.ClientHandler;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemRitualDiviner extends Item implements IVariantProvider
@@ -236,8 +238,20 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
             tooltip.add(TextHelper.localize("tooltip.BloodMagic.diviner.currentRitual") + TextHelper.localize(ritual.getUnlocalizedName()));
 
             boolean sneaking = Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
+            boolean extraInfo = sneaking && Keyboard.isKeyDown(Keyboard.KEY_M);
 
-            if (sneaking)
+            if (extraInfo)
+            {
+                tooltip.add("");
+
+                for (EnumDemonWillType type : EnumDemonWillType.values())
+                {
+                    if (TextHelper.canTranslate(ritual.getUnlocalizedName() + "." + type.getName().toLowerCase() + ".info"))
+                    {
+                        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(ritual.getUnlocalizedName() + "." + type.getName().toLowerCase() + ".info"))));
+                    }
+                }
+            } else if (sneaking)
             {
                 tooltip.add(TextHelper.localize(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).getName())));
                 tooltip.add("");
@@ -300,7 +314,14 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
             } else
             {
                 tooltip.add("");
-                tooltip.add(TextHelper.localize(tooltipBase + "extraInfo"));
+                if (TextHelper.canTranslate(ritual.getUnlocalizedName() + ".info"))
+                {
+                    tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(ritual.getUnlocalizedName() + ".info"))));
+                    tooltip.add("");
+                }
+
+                tooltip.add(TextHelper.localizeEffect(tooltipBase + "extraInfo"));
+                tooltip.add(TextHelper.localizeEffect(tooltipBase + "extraExtraInfo"));
             }
         }
     }
