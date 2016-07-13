@@ -1,0 +1,138 @@
+package WayofTime.bloodmagic.entity.projectile;
+
+import lombok.Setter;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.IThrowableEntity;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.meteor.MeteorRegistry;
+
+public class EntityMeteor extends EntityThrowable implements IThrowableEntity
+{
+    protected int ticksInAir = 0;
+    protected int maxTicksInAir = 600;
+
+    @Setter
+    public ItemStack meteorStack;
+
+    public EntityMeteor(World world)
+    {
+        super(world);
+    }
+
+    public EntityMeteor(World world, double x, double y, double z, double velX, double velY, double velZ)
+    {
+        super(world);
+        this.setSize(1F, 1F);
+        this.setPosition(x, y, z);
+        motionX = velX;
+        motionY = velY;
+        motionZ = velZ;
+    }
+
+    @Override
+    protected float getGravityVelocity()
+    {
+        return 0.03F;
+    }
+
+    @Override
+    public void onUpdate()
+    {
+        super.onUpdate();
+        if (this.ticksExisted > this.maxTicksInAir)
+        {
+            setDead();
+        }
+    }
+
+    @Override
+    protected void onImpact(RayTraceResult mop)
+    {
+        if (mop.typeOfHit == RayTraceResult.Type.ENTITY && mop.entityHit != null)
+        {
+            this.onImpact(mop.entityHit);
+        } else if (mop.typeOfHit == RayTraceResult.Type.BLOCK)
+        {
+            generateMeteor(mop.getBlockPos());
+        }
+
+        this.setDead();
+    }
+
+    protected void onImpact(Entity mop)
+    {
+        if (mop instanceof EntityLivingBase)
+        {
+            doDamage(100, mop);
+        }
+
+        generateMeteor(mop.getPosition());
+
+        // spawnHitParticles("magicCrit", 8);
+        this.setDead();
+    }
+
+    protected void doDamage(int i, Entity mop)
+    {
+        mop.attackEntityFrom(this.getDamageSource(), i);
+    }
+
+    public void generateMeteor(BlockPos pos)
+    {
+        MeteorRegistry.generateMeteorForItem(meteorStack, worldObj, pos, Blocks.STONE.getDefaultState());
+    }
+
+    public DamageSource getDamageSource()
+    {
+        return DamageSource.anvil;
+    }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound nbt)
+    {
+        super.writeEntityToNBT(nbt);
+        nbt.setInteger(Constants.NBT.PROJECTILE_TICKS_IN_AIR, ticksInAir);
+        nbt.setInteger(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR, maxTicksInAir);
+
+        if (meteorStack != null)
+        {
+            meteorStack.writeToNBT(nbt);
+        }
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound nbt)
+    {
+        super.readEntityFromNBT(nbt);
+        ticksInAir = nbt.getInteger(Constants.NBT.PROJECTILE_TICKS_IN_AIR);
+        maxTicksInAir = nbt.getInteger(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR);
+        meteorStack = ItemStack.loadItemStackFromNBT(nbt);
+    }
+
+    @Override
+    protected boolean canTriggerWalking()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean canBeCollidedWith()
+    {
+        return false;
+    }
+
+    @Override
+    public void setThrower(Entity entity)
+    {
+
+    }
+}
