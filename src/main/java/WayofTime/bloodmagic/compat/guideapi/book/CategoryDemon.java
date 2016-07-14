@@ -9,7 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
+import WayofTime.bloodmagic.compat.guideapi.page.PageTartaricForgeRecipe;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.RecipeHelper;
@@ -58,31 +60,31 @@ public class CategoryDemon
 
         List<IPage> pettyPages = new ArrayList<IPage>();
         pettyPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "petty" + ".info.1"), 270));
-//        TartaricForgeRecipe pettyRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.soulGem, 1));
-//        if (pettyRecipe != null)
-//        {
-//            pettyPages.add(new PageRecipe(pettyRecipe));
-//        }
+        TartaricForgeRecipe pettyRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.soulGem, 1));
+        if (pettyRecipe != null)
+        {
+            pettyPages.add(new PageTartaricForgeRecipe(pettyRecipe));
+        }
         pettyPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "petty" + ".info.2"), 270));
         entries.put(new ResourceLocation(keyBase + "petty"), new EntryText(pettyPages, TextHelper.localize(keyBase + "petty"), false));
 
         List<IPage> swordPages = new ArrayList<IPage>();
         swordPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "sword" + ".info.1"), 270));
-//        TartaricForgeRecipe swordRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.sentientSword));
-//        if (swordRecipe != null)
-//        {
-//            swordPages.add(new PageRecipe(swordRecipe));
-//        }
+        TartaricForgeRecipe swordRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.sentientSword));
+        if (swordRecipe != null)
+        {
+            swordPages.add(new PageTartaricForgeRecipe(swordRecipe));
+        }
         swordPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "sword" + ".info.2"), 270));
         entries.put(new ResourceLocation(keyBase + "sword"), new EntryText(swordPages, TextHelper.localize(keyBase + "sword"), false));
 
         List<IPage> lesserPages = new ArrayList<IPage>();
         lesserPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lesser" + ".info.1"), 270));
-//        TartaricForgeRecipe pettyRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.soulGem, 1));
-//        if (pettyRecipe != null)
-//        {
-//            lesserPages.add(new PageRecipe(pettyRecipe));
-//        }
+        TartaricForgeRecipe lesserRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.soulGem, 1));
+        if (lesserRecipe != null)
+        {
+            lesserPages.add(new PageTartaricForgeRecipe(lesserRecipe));
+        }
         lesserPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lesser" + ".info.2"), 270));
         entries.put(new ResourceLocation(keyBase + "lesser"), new EntryText(lesserPages, TextHelper.localize(keyBase + "lesser"), false));
 
@@ -96,6 +98,33 @@ public class CategoryDemon
         entries.put(new ResourceLocation(keyBase + "sentientGem"), new EntryText(sentientGemPages, TextHelper.localize(keyBase + "sentientGem"), false));
 
         List<IPage> routingPages = new ArrayList<IPage>();
+        TartaricForgeRecipe nodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.itemRoutingNode));
+        if (nodeRecipe != null)
+        {
+            routingPages.add(new PageTartaricForgeRecipe(nodeRecipe));
+        }
+        TartaricForgeRecipe inputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.itemRoutingNode));
+        if (inputNodeRecipe != null)
+        {
+            routingPages.add(new PageTartaricForgeRecipe(inputNodeRecipe));
+        }
+        TartaricForgeRecipe outputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.outputRoutingNode));
+        if (outputNodeRecipe != null)
+        {
+            routingPages.add(new PageTartaricForgeRecipe(outputNodeRecipe));
+        }
+        TartaricForgeRecipe masterNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.masterRoutingNode));
+        if (masterNodeRecipe != null)
+        {
+            routingPages.add(new PageTartaricForgeRecipe(masterNodeRecipe));
+        }
+
+        TartaricForgeRecipe nodeRouterRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.nodeRouter));
+        if (nodeRouterRecipe != null)
+        {
+            routingPages.add(new PageTartaricForgeRecipe(nodeRouterRecipe));
+        }
+
         routingPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "routing" + ".info"), 270));
         entries.put(new ResourceLocation(keyBase + "routing"), new EntryText(routingPages, TextHelper.localize(keyBase + "routing"), false));
 

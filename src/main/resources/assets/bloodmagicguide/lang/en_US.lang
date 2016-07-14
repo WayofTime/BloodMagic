@@ -6,8 +6,14 @@ guide.BloodMagic.welcome=Blood Magic
 
 # Page Information
 guide.BloodMagic.page.bloodAltar=Blood Altar Recipe
+guide.BloodMagic.page.soulForge=Hellfire Forge Recipe
 guide.BloodMagic.page.tier=Tier: %d
 guide.BloodMagic.page.lp=LP: %d
+guide.BloodMagic.page.minimumWill=Minimum Will: %f
+guide.BloodMagic.page.drainedWill=Drained Will: %f
+guide.BloodMagic.shapelessOrb=Shapeless Orb Recipe
+guide.BloodMagic.shapedOrb=Shaped Orb Recipe
+
 
 # Categories
 guide.BloodMagic.category.architect=The Architect

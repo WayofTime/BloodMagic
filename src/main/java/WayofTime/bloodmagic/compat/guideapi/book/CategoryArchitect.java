@@ -9,10 +9,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.recipe.ShapedBloodOrbRecipe;
+import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry.AltarRecipe;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAltarRecipe;
+import WayofTime.bloodmagic.compat.guideapi.page.recipeRenderer.ShapedBloodOrbRecipeRenderer;
+import WayofTime.bloodmagic.compat.guideapi.page.recipeRenderer.ShapelessBloodOrbRecipeRenderer;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.RecipeHelper;
@@ -83,23 +87,47 @@ public class CategoryArchitect
 
         List<IPage> incensePages = new ArrayList<IPage>();
 
-//        IRecipe incenseRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.incenseAltar));
-//        if (incenseRecipe != null)
-//        {
-//            incensePages.add(new PageIRecipe(incenseRecipe));
-//        }
+        IRecipe incenseRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.incenseAltar));
+        if (incenseRecipe != null)
+        {
+            incensePages.add(getPageForRecipe(incenseRecipe));
+        }
 
         incensePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "incense" + ".info.1"), 270));
 
-//        IRecipe woodPathRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.pathBlock, 1, 0));
-//        if (woodPathRecipe != null)
-//        {
-//            incensePages.add(new PageIRecipe(woodPathRecipe));
-//        }
+        IRecipe woodPathRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.pathBlock, 1, 0));
+        if (woodPathRecipe != null)
+        {
+            incensePages.add(getPageForRecipe(woodPathRecipe));
+        }
 
         incensePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "incense" + ".info.2"), 270));
         entries.put(new ResourceLocation(keyBase + "incense"), new EntryText(incensePages, TextHelper.localize(keyBase + "incense"), false));
 
+        List<IPage> runePages = new ArrayList<IPage>();
+
+        IRecipe runeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.bloodRune, 1, 0));
+        if (runeRecipe != null)
+        {
+            runePages.add(getPageForRecipe(runeRecipe));
+        }
+
+        runePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodrune" + ".info.1"), 270));
+        entries.put(new ResourceLocation(keyBase + "bloodrune"), new EntryText(runePages, TextHelper.localize(keyBase + "bloodrune"), false));
+
         return entries;
+    }
+
+    public static PageIRecipe getPageForRecipe(IRecipe recipe)
+    {
+        if (recipe instanceof ShapedBloodOrbRecipe)
+        {
+            return new PageIRecipe(recipe, new ShapedBloodOrbRecipeRenderer((ShapedBloodOrbRecipe) recipe));
+        } else if (recipe instanceof ShapelessBloodOrbRecipe)
+        {
+            return new PageIRecipe(recipe, new ShapelessBloodOrbRecipeRenderer((ShapelessBloodOrbRecipe) recipe));
+        }
+
+        return new PageIRecipe(recipe);
     }
 }
