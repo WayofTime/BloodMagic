@@ -98,8 +98,7 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileAltar)
         {
-            if (currentDisplayedTier != EnumAltarTier.ONE)
-                return !((TileAltar) tile).setCurrentTierDisplayed(currentDisplayedTier);
+            return !((TileAltar) tile).setCurrentTierDisplayed(currentDisplayedTier);
         }
 
         return true;
