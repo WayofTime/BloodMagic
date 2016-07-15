@@ -326,7 +326,8 @@ tooltip.BloodMagic.diviner.earthRune=土之仪式石: %d
 tooltip.BloodMagic.diviner.duskRune=薄暮仪式石: %d
 tooltip.BloodMagic.diviner.dawnRune=破晓仪式石: %d
 tooltip.BloodMagic.diviner.totalRune=仪式石总数: %d
-tooltip.BloodMagic.diviner.extraInfo=按 shift 了解详细信息
+tooltip.BloodMagic.diviner.extraInfo=&9-按 shift 了解详细信息-
+tooltip.BloodMagic.diviner.extraExtraInfo=&9-按 shift + M 展开更多信息-
 tooltip.BloodMagic.diviner.currentDirection=当前朝向: %s
 
 tooltip.BloodMagic.ritualReader.currentState=当前模式: %s
@@ -455,6 +456,7 @@ ritual.BloodMagic.armourEvolveRitual=束灵进化
 ritual.BloodMagic.animalGrowthRitual=牧养仪式
 ritual.BloodMagic.forsakenSoulRitual=孤魂集会
 ritual.BloodMagic.crystalHarvestRitual=碎晶裂纹
+ritual.BloodMagic.meteorRitual=坠星标位
 
 ritual.BloodMagic.cobblestoneRitual=极寒火山
 ritual.BloodMagic.placerRitual=铺设仪式
@@ -474,7 +476,7 @@ ritual.BloodMagic.regenerationRitual.info=治疗其范围内失去生命值的�
 ritual.BloodMagic.harvestRitual.info=收割其范围内的植物, 产物掉落于地上.
 ritual.BloodMagic.magneticRitual.info=将地底的矿石传送至其放置区域.
 ritual.BloodMagic.crushingRitual.info=破坏其挖掘范围内的方块, 并将掉落物放置于所连接的箱子.
-ritual.BloodMagic.crushingRitual.destructive.info=(破坏性) 强力的破坏方块: 所有方块破坏受 时运III 影响
+ritual.BloodMagic.crushingRitual.destructive.info=(破坏性) 强力的破坏方块: 所有方块破坏受 时运III 影响.
 ritual.BloodMagic.crushingRitual.steadfast.info=(坚定性) 以 精准采集 获取被破坏方块. 适用情况下覆盖时运.
 ritual.BloodMagic.crushingRitual.corrosive.info=(腐蚀性) 所有被破坏方块将以基础切削油的形式处理. 适用情况下覆盖精准采集.
 
@@ -495,9 +497,11 @@ ritual.BloodMagic.fellingRitual.info=一个伐木设施, 该仪式将砍伐其�
 ritual.BloodMagic.pumpRitual.info=从规定范围获取液体. 只有当所连接的液体容器至少有一桶量的相同液体时, 移出或储入液体.
 ritual.BloodMagic.altarBuilderRitual.info=将所连接的容器中的祭坛部件搭建出来.
 ritual.BloodMagic.portalRitual.info=创建一个传送门网络, 以激活者及直接接触方块为基础, 两者相同的两个传送门达成连接. 激活后未修改传送网络的情况下方块可以变更.
+ritual.BloodMagic.meteorRitual.info=消耗其物品范围内的一个物品, 从天空中召唤一个充满资源的流星, 直接坠向仪式.
 
 ritual.BloodMagic.waterRitual.waterRange.info=(水源) 仪式放置水源方块的区域.
 ritual.BloodMagic.lavaRitual.lavaRange.info=(岩浆) 仪式放置岩浆方块的区域.
+ritual.BloodMagic.lavaRitual.fireFuse.info=(复仇性) 在这个区域内的实体将遭受缓燃引线效果.
 ritual.BloodMagic.greenGroveRitual.growing.info=(生长) 仪式加快植物生长的区域.
 ritual.BloodMagic.jumpRitual.jumpRange.info=(跳跃) 在这个区域内的实体将跃向高空.
 ritual.BloodMagic.wellOfSufferingRitual.altar.info=(祭坛) 规定仪式检测血之祭坛的区域. 该项修改为添加或撤销一个坐标.
