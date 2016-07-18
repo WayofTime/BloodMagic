@@ -34,7 +34,7 @@ import com.google.common.base.Strings;
 
 public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAltarReader
 {
-    public static int inventorySize = 5;
+    public static final int inventorySize = 5;
 
     public ItemSigilHolding()
     {
