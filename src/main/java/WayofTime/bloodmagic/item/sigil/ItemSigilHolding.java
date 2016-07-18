@@ -34,13 +34,11 @@ import com.google.common.base.Strings;
 
 public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAltarReader
 {
-    public static int inventorySize;
+    public static int inventorySize = 5;
 
     public ItemSigilHolding()
     {
         super("holding");
-
-        inventorySize = 5;
     }
 
     @Override
