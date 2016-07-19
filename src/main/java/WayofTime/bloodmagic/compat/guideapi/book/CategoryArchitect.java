@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -28,6 +29,7 @@ import amerifrance.guideapi.api.IPage;
 import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.page.PageIRecipe;
+import amerifrance.guideapi.page.PageText;
 
 public class CategoryArchitect
 {
@@ -37,9 +39,9 @@ public class CategoryArchitect
         String keyBase = "guide." + Constants.Mod.MODID + ".entry.architect.";
 
         List<IPage> introPages = new ArrayList<IPage>();
-        introPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro" + ".info"), 270));
+        introPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro" + ".info"), 370));
 //        introPages.add(new PageImage(new ResourceLocation("bloodmagicguide", "textures/guide/" + ritual.getName() + ".png")));
-        entries.put(new ResourceLocation(keyBase + "intro"), new EntryText(introPages, TextHelper.localize(keyBase + "intro"), false));
+        entries.put(new ResourceLocation(keyBase + "intro"), new EntryText(introPages, TextHelper.localize(keyBase + "intro"), true));
 
         List<IPage> altarPages = new ArrayList<IPage>();
 
@@ -49,7 +51,7 @@ public class CategoryArchitect
             altarPages.add(new PageIRecipe(altarRecipe));
         }
 
-        altarPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodaltar" + ".info.1"), 270));
+        altarPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodaltar" + ".info.1"), 370));
 
         IRecipe daggerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModItems.sacrificialDagger));
         if (daggerRecipe != null)
@@ -57,27 +59,27 @@ public class CategoryArchitect
             altarPages.add(new PageIRecipe(daggerRecipe));
         }
 
-        altarPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodaltar" + ".info.2"), 270));
-        entries.put(new ResourceLocation(keyBase + "bloodaltar"), new EntryText(altarPages, TextHelper.localize(keyBase + "bloodaltar"), false));
+        altarPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodaltar" + ".info.2"), 370));
+        entries.put(new ResourceLocation(keyBase + "bloodaltar"), new EntryText(altarPages, TextHelper.localize(keyBase + "bloodaltar"), true));
 
         List<IPage> ashPages = new ArrayList<IPage>();
         //TODO: Arcane Ash Recipe
 
-        ashPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "ash" + ".info"), 270));
-        entries.put(new ResourceLocation(keyBase + "ash"), new EntryText(ashPages, TextHelper.localize(keyBase + "ash"), false));
+        ashPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "ash" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "ash"), new EntryText(ashPages, TextHelper.localize(keyBase + "ash"), true));
 
         List<IPage> divinationPages = new ArrayList<IPage>();
         //TODO: Divination Sigil Recipe
-        divinationPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "divination" + ".info"), 270));
-        entries.put(new ResourceLocation(keyBase + "divination"), new EntryText(divinationPages, TextHelper.localize(keyBase + "divination"), false));
+        divinationPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "divination" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "divination"), new EntryText(divinationPages, TextHelper.localize(keyBase + "divination"), true));
 
         List<IPage> soulnetworkPages = new ArrayList<IPage>();
 
-        soulnetworkPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "soulnetwork" + ".info"), 270));
-        entries.put(new ResourceLocation(keyBase + "soulnetwork"), new EntryText(soulnetworkPages, TextHelper.localize(keyBase + "soulnetwork"), false));
+        soulnetworkPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "soulnetwork" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "soulnetwork"), new EntryText(soulnetworkPages, TextHelper.localize(keyBase + "soulnetwork"), true));
 
         List<IPage> weakorbPages = new ArrayList<IPage>();
-        weakorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakorb" + ".info.1"), 270));
+        weakorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakorb" + ".info.1"), 370));
 
         AltarRecipe weakorbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(ModItems.orbWeak));
         if (weakorbRecipe != null)
@@ -85,8 +87,8 @@ public class CategoryArchitect
             weakorbPages.add(new PageAltarRecipe(weakorbRecipe));
         }
 
-        weakorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakorb" + ".info.2"), 270));
-        entries.put(new ResourceLocation(keyBase + "weakorb"), new EntryText(weakorbPages, TextHelper.localize(keyBase + "weakorb"), false));
+        weakorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakorb" + ".info.2"), 370));
+        entries.put(new ResourceLocation(keyBase + "weakorb"), new EntryText(weakorbPages, TextHelper.localize(keyBase + "weakorb"), true));
 
         List<IPage> incensePages = new ArrayList<IPage>();
 
@@ -96,7 +98,7 @@ public class CategoryArchitect
             incensePages.add(getPageForRecipe(incenseRecipe));
         }
 
-        incensePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "incense" + ".info.1"), 270));
+        incensePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "incense" + ".info.1"), 370));
 
         IRecipe woodPathRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.pathBlock, 1, 0));
         if (woodPathRecipe != null)
@@ -104,8 +106,8 @@ public class CategoryArchitect
             incensePages.add(getPageForRecipe(woodPathRecipe));
         }
 
-        incensePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "incense" + ".info.2"), 270));
-        entries.put(new ResourceLocation(keyBase + "incense"), new EntryText(incensePages, TextHelper.localize(keyBase + "incense"), false));
+        incensePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "incense" + ".info.2"), 370));
+        entries.put(new ResourceLocation(keyBase + "incense"), new EntryText(incensePages, TextHelper.localize(keyBase + "incense"), true));
 
         List<IPage> runePages = new ArrayList<IPage>();
 
@@ -115,8 +117,8 @@ public class CategoryArchitect
             runePages.add(getPageForRecipe(runeRecipe));
         }
 
-        runePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodrune" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "bloodrune"), new EntryText(runePages, TextHelper.localize(keyBase + "bloodrune"), false));
+        runePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodrune" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "bloodrune"), new EntryText(runePages, TextHelper.localize(keyBase + "bloodrune"), true));
 
         List<IPage> inspectPages = new ArrayList<IPage>();
 
@@ -126,8 +128,8 @@ public class CategoryArchitect
             inspectPages.add(new PageAltarRecipe(inspectRecipe));
         }
 
-        inspectPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "inspectoris" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "inspectoris"), new EntryText(inspectPages, TextHelper.localize(keyBase + "inspectoris"), false));
+        inspectPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "inspectoris" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "inspectoris"), new EntryText(inspectPages, TextHelper.localize(keyBase + "inspectoris"), true));
 
         List<IPage> speedRunePages = new ArrayList<IPage>();
 
@@ -137,8 +139,8 @@ public class CategoryArchitect
             speedRunePages.add(getPageForRecipe(speedRecipe));
         }
 
-        speedRunePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeSpeed" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "runeSpeed"), new EntryText(speedRunePages, TextHelper.localize(keyBase + "runeSpeed"), false));
+        speedRunePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeSpeed" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "runeSpeed"), new EntryText(speedRunePages, TextHelper.localize(keyBase + "runeSpeed"), true));
 
         List<IPage> waterPages = new ArrayList<IPage>();
 
@@ -148,8 +150,8 @@ public class CategoryArchitect
             waterPages.add(new PageTartaricForgeRecipe(waterRecipe));
         }
 
-        waterPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "water" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "water"), new EntryText(waterPages, TextHelper.localize(keyBase + "water"), false));
+        waterPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "water" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "water"), new EntryText(waterPages, TextHelper.localize(keyBase + "water"), true));
 
         List<IPage> lavaPages = new ArrayList<IPage>();
 
@@ -159,8 +161,8 @@ public class CategoryArchitect
             lavaPages.add(new PageTartaricForgeRecipe(lavaRecipe));
         }
 
-        lavaPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lava" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "lava"), new EntryText(lavaPages, TextHelper.localize(keyBase + "lava"), false));
+        lavaPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lava" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "lava"), new EntryText(lavaPages, TextHelper.localize(keyBase + "lava"), true));
 
         List<IPage> lavaCrystalPages = new ArrayList<IPage>();
 
@@ -170,8 +172,8 @@ public class CategoryArchitect
             lavaCrystalPages.add(getPageForRecipe(lavaCrystalRecipe));
         }
 
-        lavaCrystalPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lavaCrystal" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "lavaCrystal"), new EntryText(lavaCrystalPages, TextHelper.localize(keyBase + "lavaCrystal"), false));
+        lavaCrystalPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lavaCrystal" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "lavaCrystal"), new EntryText(lavaCrystalPages, TextHelper.localize(keyBase + "lavaCrystal"), true));
 
         List<IPage> apprenticeorbPages = new ArrayList<IPage>();
 
@@ -181,8 +183,8 @@ public class CategoryArchitect
             apprenticeorbPages.add(new PageAltarRecipe(apprenticeorbRecipe));
         }
 
-        apprenticeorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "apprenticeorb" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "apprenticeorb"), new EntryText(apprenticeorbPages, TextHelper.localize(keyBase + "apprenticeorb"), false));
+        apprenticeorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "apprenticeorb" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "apprenticeorb"), new EntryText(apprenticeorbPages, TextHelper.localize(keyBase + "apprenticeorb"), true));
 
         List<IPage> daggerPages = new ArrayList<IPage>();
 
@@ -192,8 +194,8 @@ public class CategoryArchitect
             daggerPages.add(new PageAltarRecipe(daggerOfSacrificeRecipe));
         }
 
-        daggerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "dagger" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "dagger"), new EntryText(daggerPages, TextHelper.localize(keyBase + "dagger"), false));
+        daggerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "dagger" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "dagger"), new EntryText(daggerPages, TextHelper.localize(keyBase + "dagger"), true));
 
         List<IPage> runeSacrificePages = new ArrayList<IPage>();
 
@@ -203,8 +205,8 @@ public class CategoryArchitect
             runeSacrificePages.add(getPageForRecipe(runeSacrificeRecipe));
         }
 
-        runeSacrificePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeSacrifice" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "runeSacrifice"), new EntryText(runeSacrificePages, TextHelper.localize(keyBase + "runeSacrifice"), false));
+        runeSacrificePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeSacrifice" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "runeSacrifice"), new EntryText(runeSacrificePages, TextHelper.localize(keyBase + "runeSacrifice"), true));
 
         List<IPage> runeSelfSacrificePages = new ArrayList<IPage>();
 
@@ -214,8 +216,8 @@ public class CategoryArchitect
             runeSelfSacrificePages.add(getPageForRecipe(runeSelfSacrificeRecipe));
         }
 
-        runeSelfSacrificePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeSelfSacrifice" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "runeSelfSacrifice"), new EntryText(runeSelfSacrificePages, TextHelper.localize(keyBase + "runeSelfSacrifice"), false));
+        runeSelfSacrificePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeSelfSacrifice" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "runeSelfSacrifice"), new EntryText(runeSelfSacrificePages, TextHelper.localize(keyBase + "runeSelfSacrifice"), true));
 
         List<IPage> holdingPages = new ArrayList<IPage>();
 
@@ -225,8 +227,8 @@ public class CategoryArchitect
             holdingPages.add(new PageTartaricForgeRecipe(holdingRecipe));
         }
 
-        holdingPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "holding" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "holding"), new EntryText(holdingPages, TextHelper.localize(keyBase + "holding"), false));
+        holdingPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "holding" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "holding"), new EntryText(holdingPages, TextHelper.localize(keyBase + "holding"), true));
 
         List<IPage> airPages = new ArrayList<IPage>();
 
@@ -236,8 +238,8 @@ public class CategoryArchitect
             airPages.add(new PageTartaricForgeRecipe(airRecipe));
         }
 
-        airPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "air" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "air"), new EntryText(airPages, TextHelper.localize(keyBase + "air"), false));
+        airPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "air" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "air"), new EntryText(airPages, TextHelper.localize(keyBase + "air"), true));
 
         List<IPage> voidPages = new ArrayList<IPage>();
 
@@ -247,8 +249,8 @@ public class CategoryArchitect
             voidPages.add(new PageTartaricForgeRecipe(voidRecipe));
         }
 
-        voidPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "void" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "void"), new EntryText(voidPages, TextHelper.localize(keyBase + "void"), false));
+        voidPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "void" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "void"), new EntryText(voidPages, TextHelper.localize(keyBase + "void"), true));
 
         List<IPage> greenGrovePages = new ArrayList<IPage>();
 
@@ -258,8 +260,8 @@ public class CategoryArchitect
             greenGrovePages.add(new PageTartaricForgeRecipe(greenGroveRecipe));
         }
 
-        greenGrovePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "greenGrove" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "greenGrove"), new EntryText(greenGrovePages, TextHelper.localize(keyBase + "greenGrove"), false));
+        greenGrovePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "greenGrove" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "greenGrove"), new EntryText(greenGrovePages, TextHelper.localize(keyBase + "greenGrove"), true));
 
         List<IPage> fastMinerPages = new ArrayList<IPage>();
 
@@ -269,8 +271,8 @@ public class CategoryArchitect
             fastMinerPages.add(new PageTartaricForgeRecipe(fastMinerRecipe));
         }
 
-        fastMinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "fastMiner" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "fastMiner"), new EntryText(fastMinerPages, TextHelper.localize(keyBase + "fastMiner"), false));
+        fastMinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "fastMiner" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "fastMiner"), new EntryText(fastMinerPages, TextHelper.localize(keyBase + "fastMiner"), true));
 
         List<IPage> seerPages = new ArrayList<IPage>();
 
@@ -280,8 +282,8 @@ public class CategoryArchitect
             seerPages.add(new PageTartaricForgeRecipe(seerRecipe));
         }
 
-        seerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "seer" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "seer"), new EntryText(seerPages, TextHelper.localize(keyBase + "seer"), false));
+        seerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "seer" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "seer"), new EntryText(seerPages, TextHelper.localize(keyBase + "seer"), true));
 
         List<IPage> magicianOrbPages = new ArrayList<IPage>();
 
@@ -291,8 +293,8 @@ public class CategoryArchitect
             magicianOrbPages.add(new PageAltarRecipe(magicianOrbRecipe));
         }
 
-        magicianOrbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "magicianOrb" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "magicianOrb"), new EntryText(magicianOrbPages, TextHelper.localize(keyBase + "magicianOrb"), false));
+        magicianOrbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "magicianOrb" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "magicianOrb"), new EntryText(magicianOrbPages, TextHelper.localize(keyBase + "magicianOrb"), true));
 
         List<IPage> capacityPages = new ArrayList<IPage>();
 
@@ -302,8 +304,8 @@ public class CategoryArchitect
             capacityPages.add(getPageForRecipe(capacityRecipe));
         }
 
-        capacityPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "capacity" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "capacity"), new EntryText(capacityPages, TextHelper.localize(keyBase + "capacity"), false));
+        capacityPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "capacity" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "capacity"), new EntryText(capacityPages, TextHelper.localize(keyBase + "capacity"), true));
 
         List<IPage> displacementPages = new ArrayList<IPage>();
 
@@ -313,8 +315,8 @@ public class CategoryArchitect
             displacementPages.add(getPageForRecipe(displacementRecipe));
         }
 
-        displacementPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "displacement" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "displacement"), new EntryText(displacementPages, TextHelper.localize(keyBase + "displacement"), false));
+        displacementPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "displacement" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "displacement"), new EntryText(displacementPages, TextHelper.localize(keyBase + "displacement"), true));
 
         List<IPage> affinityPages = new ArrayList<IPage>();
 
@@ -324,8 +326,8 @@ public class CategoryArchitect
             affinityPages.add(new PageTartaricForgeRecipe(affinityRecipe));
         }
 
-        affinityPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "affinity" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "affinity"), new EntryText(affinityPages, TextHelper.localize(keyBase + "affinity"), false));
+        affinityPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "affinity" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "affinity"), new EntryText(affinityPages, TextHelper.localize(keyBase + "affinity"), true));
 
         List<IPage> lampPages = new ArrayList<IPage>();
 
@@ -335,8 +337,8 @@ public class CategoryArchitect
             lampPages.add(new PageTartaricForgeRecipe(lampRecipe));
         }
 
-        lampPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lamp" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "lamp"), new EntryText(lampPages, TextHelper.localize(keyBase + "lamp"), false));
+        lampPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lamp" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "lamp"), new EntryText(lampPages, TextHelper.localize(keyBase + "lamp"), true));
 
         List<IPage> magnetismPages = new ArrayList<IPage>();
 
@@ -346,8 +348,19 @@ public class CategoryArchitect
             magnetismPages.add(new PageTartaricForgeRecipe(magnetismRecipe));
         }
 
-        magnetismPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "magnetism" + ".info.1"), 270));
-        entries.put(new ResourceLocation(keyBase + "magnetism"), new EntryText(magnetismPages, TextHelper.localize(keyBase + "magnetism"), false));
+        magnetismPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "magnetism" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "magnetism"), new EntryText(magnetismPages, TextHelper.localize(keyBase + "magnetism"), true));
+
+        for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
+        {
+            for (IPage page : entry.getValue().pageList)
+            {
+                if (page instanceof PageText)
+                {
+                    ((PageText) page).setUnicodeFlag(true);
+                }
+            }
+        }
 
         return entries;
     }

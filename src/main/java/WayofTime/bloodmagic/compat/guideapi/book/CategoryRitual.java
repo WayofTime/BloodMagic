@@ -11,12 +11,14 @@ import amerifrance.guideapi.api.IPage;
 import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.page.PageImage;
+import amerifrance.guideapi.page.PageText;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class CategoryRitual
 {
@@ -28,7 +30,7 @@ public class CategoryRitual
         for (Ritual ritual : RitualRegistry.getRituals())
         {
             List<IPage> ritualPages = new ArrayList<IPage>();
-            ritualPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(ritual.getUnlocalizedName() + ".info")));
+            ritualPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(ritual.getUnlocalizedName() + ".info"), 370));
             ritualPages.add(new PageImage(new ResourceLocation("bloodmagicguide", "textures/guide/" + ritual.getName() + ".png")));
             entries.put(new ResourceLocation(keyBase + ritual.getName()), new EntryText(ritualPages, TextHelper.localize(ritual.getUnlocalizedName())));
         }
@@ -36,9 +38,20 @@ public class CategoryRitual
         for (ImperfectRitual imperfectRitual : ImperfectRitualRegistry.getRituals())
         {
             List<IPage> ritualPages = new ArrayList<IPage>();
-            ritualPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(imperfectRitual.getUnlocalizedName() + ".info")));
+            ritualPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(imperfectRitual.getUnlocalizedName() + ".info"), 370));
             ritualPages.add(new PageImage(new ResourceLocation("bloodmagicguide", "textures/guide/" + imperfectRitual.getName() + ".png")));
             entries.put(new ResourceLocation(keyBase + imperfectRitual.getName()), new EntryText(ritualPages, TextHelper.localize(imperfectRitual.getUnlocalizedName())));
+        }
+
+        for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
+        {
+            for (IPage page : entry.getValue().pageList)
+            {
+                if (page instanceof PageText)
+                {
+                    ((PageText) page).setUnicodeFlag(true);
+                }
+            }
         }
 
         return entries;
