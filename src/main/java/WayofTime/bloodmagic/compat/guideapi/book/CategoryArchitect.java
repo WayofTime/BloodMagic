@@ -10,12 +10,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 import WayofTime.bloodmagic.api.recipe.ShapedBloodOrbRecipe;
 import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
 import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
+import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry.AltarRecipe;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
+import WayofTime.bloodmagic.compat.guideapi.page.PageAlchemyArray;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAltarRecipe;
 import WayofTime.bloodmagic.compat.guideapi.page.PageTartaricForgeRecipe;
 import WayofTime.bloodmagic.compat.guideapi.page.recipeRenderer.ShapedBloodOrbRecipeRenderer;
@@ -63,13 +66,23 @@ public class CategoryArchitect
         entries.put(new ResourceLocation(keyBase + "bloodaltar"), new EntryText(altarPages, TextHelper.localize(keyBase + "bloodaltar"), true));
 
         List<IPage> ashPages = new ArrayList<IPage>();
-        //TODO: Arcane Ash Recipe
 
+        TartaricForgeRecipe ashRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.arcaneAshes));
+        if (ashRecipe != null)
+        {
+            ashPages.add(new PageTartaricForgeRecipe(ashRecipe));
+        }
         ashPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "ash" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "ash"), new EntryText(ashPages, TextHelper.localize(keyBase + "ash"), true));
 
         List<IPage> divinationPages = new ArrayList<IPage>();
-        //TODO: Divination Sigil Recipe
+
+        PageAlchemyArray divinationRecipePage = getAlchemyPage(new ItemStack(ModItems.sigilDivination));
+        if (divinationRecipePage != null)
+        {
+            divinationPages.add(divinationRecipePage);
+        }
+
         divinationPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "divination" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "divination"), new EntryText(divinationPages, TextHelper.localize(keyBase + "divination"), true));
 
@@ -150,6 +163,12 @@ public class CategoryArchitect
             waterPages.add(new PageTartaricForgeRecipe(waterRecipe));
         }
 
+        PageAlchemyArray waterRecipePage = getAlchemyPage(new ItemStack(ModItems.sigilWater));
+        if (waterRecipePage != null)
+        {
+            waterPages.add(waterRecipePage);
+        }
+
         waterPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "water" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "water"), new EntryText(waterPages, TextHelper.localize(keyBase + "water"), true));
 
@@ -159,6 +178,12 @@ public class CategoryArchitect
         if (lavaRecipe != null)
         {
             lavaPages.add(new PageTartaricForgeRecipe(lavaRecipe));
+        }
+
+        PageAlchemyArray lavaRecipePage = getAlchemyPage(new ItemStack(ModItems.sigilLava));
+        if (lavaRecipePage != null)
+        {
+            lavaPages.add(lavaRecipePage);
         }
 
         lavaPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lava" + ".info.1"), 370));
@@ -227,6 +252,12 @@ public class CategoryArchitect
             holdingPages.add(new PageTartaricForgeRecipe(holdingRecipe));
         }
 
+        PageAlchemyArray holdingRecipePage = getAlchemyPage(new ItemStack(ModItems.sigilHolding));
+        if (holdingRecipePage != null)
+        {
+            holdingPages.add(holdingRecipePage);
+        }
+
         holdingPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "holding" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "holding"), new EntryText(holdingPages, TextHelper.localize(keyBase + "holding"), true));
 
@@ -236,6 +267,12 @@ public class CategoryArchitect
         if (airRecipe != null)
         {
             airPages.add(new PageTartaricForgeRecipe(airRecipe));
+        }
+
+        PageAlchemyArray airRecipePage = getAlchemyPage(new ItemStack(ModItems.sigilAir));
+        if (airRecipePage != null)
+        {
+            airPages.add(airRecipePage);
         }
 
         airPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "air" + ".info.1"), 370));
@@ -249,6 +286,12 @@ public class CategoryArchitect
             voidPages.add(new PageTartaricForgeRecipe(voidRecipe));
         }
 
+        PageAlchemyArray voidRecipePage = getAlchemyPage(new ItemStack(ModItems.sigilVoid));
+        if (voidRecipePage != null)
+        {
+            voidPages.add(voidRecipePage);
+        }
+
         voidPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "void" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "void"), new EntryText(voidPages, TextHelper.localize(keyBase + "void"), true));
 
@@ -258,6 +301,12 @@ public class CategoryArchitect
         if (greenGroveRecipe != null)
         {
             greenGrovePages.add(new PageTartaricForgeRecipe(greenGroveRecipe));
+        }
+
+        PageAlchemyArray greenGroveRecipePage = getAlchemyPage(new ItemStack(ModItems.sigilGreenGrove));
+        if (greenGroveRecipePage != null)
+        {
+            greenGrovePages.add(greenGroveRecipePage);
         }
 
         greenGrovePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "greenGrove" + ".info.1"), 370));
@@ -271,6 +320,12 @@ public class CategoryArchitect
             fastMinerPages.add(new PageTartaricForgeRecipe(fastMinerRecipe));
         }
 
+        PageAlchemyArray fastMinerRecipePage = getAlchemyPage(new ItemStack(ModItems.sigilFastMiner));
+        if (fastMinerRecipePage != null)
+        {
+            fastMinerPages.add(fastMinerRecipePage);
+        }
+
         fastMinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "fastMiner" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "fastMiner"), new EntryText(fastMinerPages, TextHelper.localize(keyBase + "fastMiner"), true));
 
@@ -280,6 +335,12 @@ public class CategoryArchitect
         if (seerRecipe != null)
         {
             seerPages.add(new PageTartaricForgeRecipe(seerRecipe));
+        }
+
+        PageAlchemyArray seerRecipePage = getAlchemyPage(new ItemStack(ModItems.sigilSeer));
+        if (seerRecipePage != null)
+        {
+            seerPages.add(seerRecipePage);
         }
 
         seerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "seer" + ".info.1"), 370));
@@ -326,6 +387,12 @@ public class CategoryArchitect
             affinityPages.add(new PageTartaricForgeRecipe(affinityRecipe));
         }
 
+        PageAlchemyArray affinityRecipePage = getAlchemyPage(new ItemStack(ModItems.sigilElementalAffinity));
+        if (affinityRecipePage != null)
+        {
+            affinityPages.add(affinityRecipePage);
+        }
+
         affinityPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "affinity" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "affinity"), new EntryText(affinityPages, TextHelper.localize(keyBase + "affinity"), true));
 
@@ -337,6 +404,12 @@ public class CategoryArchitect
             lampPages.add(new PageTartaricForgeRecipe(lampRecipe));
         }
 
+        PageAlchemyArray lampRecipePage = getAlchemyPage(new ItemStack(ModItems.sigilBloodLight));
+        if (lampRecipePage != null)
+        {
+            lampPages.add(lampRecipePage);
+        }
+
         lampPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lamp" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "lamp"), new EntryText(lampPages, TextHelper.localize(keyBase + "lamp"), true));
 
@@ -346,6 +419,12 @@ public class CategoryArchitect
         if (magnetismRecipe != null)
         {
             magnetismPages.add(new PageTartaricForgeRecipe(magnetismRecipe));
+        }
+
+        PageAlchemyArray magnetismRecipePage = getAlchemyPage(new ItemStack(ModItems.sigilMagnetism));
+        if (magnetismRecipePage != null)
+        {
+            magnetismPages.add(magnetismRecipePage);
         }
 
         magnetismPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "magnetism" + ".info.1"), 370));
@@ -363,6 +442,42 @@ public class CategoryArchitect
         }
 
         return entries;
+    }
+
+    public static PageAlchemyArray getAlchemyPage(String key)
+    {
+        ItemStack[] recipe = AlchemyArrayRecipeRegistry.getRecipeForArrayEffect(key);
+        if (recipe[0] != null)
+        {
+            ItemStack inputStack = recipe[0];
+            ItemStack catalystStack = recipe[1];
+
+            AlchemyCircleRenderer renderer = AlchemyArrayRecipeRegistry.getAlchemyCircleRenderer(inputStack, catalystStack);
+            if (renderer != null)
+            {
+                return new PageAlchemyArray(renderer.arrayResource, inputStack, catalystStack);
+            }
+        }
+
+        return null;
+    }
+
+    public static PageAlchemyArray getAlchemyPage(ItemStack outputStack)
+    {
+        ItemStack[] recipe = AlchemyArrayRecipeRegistry.getRecipeForOutputStack(outputStack);
+        if (recipe[0] != null)
+        {
+            ItemStack inputStack = recipe[0];
+            ItemStack catalystStack = recipe[1];
+
+            AlchemyCircleRenderer renderer = AlchemyArrayRecipeRegistry.getAlchemyCircleRenderer(inputStack, catalystStack);
+            if (renderer != null)
+            {
+                return new PageAlchemyArray(renderer.arrayResource, inputStack, catalystStack, outputStack);
+            }
+        }
+
+        return null;
     }
 
     public static PageIRecipe getPageForRecipe(IRecipe recipe)

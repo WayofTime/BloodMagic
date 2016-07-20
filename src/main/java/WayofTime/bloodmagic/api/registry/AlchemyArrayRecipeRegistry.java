@@ -88,6 +88,68 @@ public class AlchemyArrayRecipeRegistry
         return effectMap.get(key);
     }
 
+    /**
+     * 
+     * @param key
+     * @return an array of two ItemStacks - first index is the input stack,
+     *         second is the catalyst stack. Returns {null, null} if no recipe
+     *         is valid.
+     */
+    public static ItemStack[] getRecipeForArrayEffect(String key)
+    {
+        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet())
+        {
+            AlchemyArrayRecipe recipe = entry.getValue();
+            if (recipe != null && entry.getKey().size() > 0)
+            {
+                for (Entry<ItemStackWrapper, AlchemyArrayEffect> effectEntry : recipe.catalystMap.entrySet())
+                {
+                    if (effectEntry.getValue() != null && effectEntry.getValue().key.equals(key))
+                    {
+                        return new ItemStack[] { entry.getKey().get(0), effectEntry.getKey().toStack() };
+                    }
+                }
+            }
+        }
+
+        return new ItemStack[] { null, null };
+    }
+
+    /**
+     * @param Output
+     *        of the recipe
+     * @return an array of two ItemStacks - first index is the input stack,
+     *         second is the catalyst stack. Returns {null, null} if no recipe
+     *         is valid.
+     */
+    public static ItemStack[] getRecipeForOutputStack(ItemStack stack)
+    {
+        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet())
+        {
+            AlchemyArrayRecipe recipe = entry.getValue();
+            if (recipe != null && entry.getKey().size() > 0)
+            {
+                for (Entry<ItemStackWrapper, AlchemyArrayEffect> effectEntry : recipe.catalystMap.entrySet())
+                {
+                    if (effectEntry.getValue() instanceof AlchemyArrayEffectCrafting)
+                    {
+                        AlchemyArrayEffectCrafting craftingEffect = (AlchemyArrayEffectCrafting) effectEntry.getValue();
+                        ItemStack resultStack = craftingEffect.getOutputStack();
+                        if (resultStack != null && resultStack.getItem() != null)
+                        {
+                            if (resultStack.getItem() == stack.getItem() && resultStack.getItemDamage() == stack.getItemDamage())
+                            {
+                                return new ItemStack[] { entry.getKey().get(0), effectEntry.getKey().toStack() };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return new ItemStack[] { null, null };
+    }
+
     public static void registerCraftingRecipe(ItemStack input, ItemStack catalystStack, ItemStack outputStack, ResourceLocation arrayResource)
     {
         registerRecipe(input, catalystStack, new AlchemyArrayEffectCrafting(outputStack), arrayResource);
