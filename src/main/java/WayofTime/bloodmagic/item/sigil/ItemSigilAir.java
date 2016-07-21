@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.iface.ISentientSwordEffectProvider;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.registry.ModPotions;
 
 public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectProvider
 {
@@ -25,28 +26,32 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        if (!world.isRemote && !isUnusable(stack))
+        boolean unusable = isUnusable(stack);
+        if (world.isRemote && !unusable)
         {
             Vec3d vec = player.getLookVec();
             double wantedVelocity = 1.7;
 
             // TODO - Revisit after potions
-            // if (player.isPotionActive(ModPotions.customPotionBoost)) {
-            // int amplifier =
-            // player.getActivePotionEffect(ModPotions.customPotionBoost).getAmplifier();
-            // wantedVelocity += (1 + amplifier) * (0.35);
-            // }
+            if (player.isPotionActive(ModPotions.boost))
+            {
+                int amplifier = player.getActivePotionEffect(ModPotions.boost).getAmplifier();
+                wantedVelocity += (1 + amplifier) * (0.35);
+            }
 
             player.motionX = vec.xCoord * wantedVelocity;
             player.motionY = vec.yCoord * wantedVelocity;
             player.motionZ = vec.zCoord * wantedVelocity;
-            player.velocityChanged = true;
             world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+        }
 
-            player.fallDistance = 0;
-
+        if (!world.isRemote)
+        {
             if (!player.capabilities.isCreativeMode)
                 this.setUnusable(stack, !NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()));
+
+            if (!unusable)
+                player.fallDistance = 0;
         }
 
         return super.onItemRightClick(stack, world, player, hand);

@@ -1,5 +1,9 @@
 package WayofTime.bloodmagic.compat.guideapi.page;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -20,15 +24,25 @@ import amerifrance.guideapi.gui.GuiBase;
 public class PageAlchemyArray extends Page
 {
     public static final double scale = 58d / 256d;
-    public ResourceLocation arrayResource;
+    public List<ResourceLocation> arrayResources = new ArrayList<ResourceLocation>();
     public final ItemStack inputStack;
     public final ItemStack catalystStack;
 
     public final ItemStack outputStack;
 
-    public PageAlchemyArray(ResourceLocation resource, ItemStack inputStack, ItemStack outputStack)
+    public PageAlchemyArray(List<ResourceLocation> resources, ItemStack inputStack, ItemStack catalystStack)
     {
-        this(resource, inputStack, outputStack, null);
+        this(resources, inputStack, catalystStack, null);
+    }
+
+    public PageAlchemyArray(ResourceLocation resource, ItemStack inputStack, ItemStack catalystStack, ItemStack outputStack)
+    {
+        this(Arrays.asList(resource), inputStack, catalystStack, outputStack);
+    }
+
+    public PageAlchemyArray(ResourceLocation resource, ItemStack inputStack, ItemStack catalystStack)
+    {
+        this(Arrays.asList(resource), inputStack, catalystStack);
     }
 
     @Override
@@ -42,13 +56,16 @@ public class PageAlchemyArray extends Page
         guiBase.drawTexturedModalRect(x, y, 0, 0, 62, 88 + (outputStack == null ? 0 : 26));
 
         guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.BloodMagic.page.alchemyArray"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
-        Minecraft.getMinecraft().getTextureManager().bindTexture(arrayResource);
 
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(x + 2, y + 28, 0);
-        GlStateManager.scale(scale, scale, scale);
-        guiBase.drawTexturedModalRect(0, 0, 0, 0, 256, 256);
-        GlStateManager.popMatrix();
+        for (ResourceLocation arrayResource : arrayResources)
+        {
+            Minecraft.getMinecraft().getTextureManager().bindTexture(arrayResource);
+            GlStateManager.pushMatrix();
+            GlStateManager.translate(x + 2, y + 28, 0);
+            GlStateManager.scale(scale, scale, scale);
+            guiBase.drawTexturedModalRect(0, 0, 0, 0, 256, 256);
+            GlStateManager.popMatrix();
+        }
 
         int inputX = x + 3;
         int inputY = y + 3;

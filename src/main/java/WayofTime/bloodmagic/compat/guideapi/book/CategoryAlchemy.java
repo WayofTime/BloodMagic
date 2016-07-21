@@ -53,6 +53,16 @@ public class CategoryAlchemy
         speedPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "speed" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "speed"), new EntryText(speedPages, TextHelper.localize(keyBase + "speed"), true));
 
+        List<IPage> turretPages = new ArrayList<IPage>();
+
+        PageAlchemyArray turretRecipePage = BookUtils.getAlchemyPage("skeletonTurret");
+        if (turretRecipePage != null)
+        {
+            turretPages.add(turretRecipePage);
+        }
+        turretPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "turret" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "turret"), new EntryText(turretPages, TextHelper.localize(keyBase + "turret"), true));
+
         for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
         {
             for (IPage page : entry.getValue().pageList)

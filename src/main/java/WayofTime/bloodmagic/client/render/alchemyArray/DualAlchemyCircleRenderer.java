@@ -14,7 +14,6 @@ import WayofTime.bloodmagic.tile.TileAlchemyArray;
 public class DualAlchemyCircleRenderer extends AlchemyCircleRenderer
 {
     public float offsetFromFace = -0.9f;
-    public final ResourceLocation arrayResource;
     public final ResourceLocation secondaryArrayResource;
 
     public DualAlchemyCircleRenderer()
@@ -24,7 +23,7 @@ public class DualAlchemyCircleRenderer extends AlchemyCircleRenderer
 
     public DualAlchemyCircleRenderer(ResourceLocation arrayResource, ResourceLocation secondaryArrayResource)
     {
-        this.arrayResource = arrayResource;
+        super(arrayResource);
         this.secondaryArrayResource = secondaryArrayResource;
     }
 

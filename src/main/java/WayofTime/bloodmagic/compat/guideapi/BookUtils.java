@@ -1,11 +1,16 @@
 package WayofTime.bloodmagic.compat.guideapi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 import WayofTime.bloodmagic.api.recipe.ShapedBloodOrbRecipe;
 import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
+import WayofTime.bloodmagic.client.render.alchemyArray.DualAlchemyCircleRenderer;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAlchemyArray;
 import WayofTime.bloodmagic.compat.guideapi.page.recipeRenderer.ShapedBloodOrbRecipeRenderer;
 import WayofTime.bloodmagic.compat.guideapi.page.recipeRenderer.ShapelessBloodOrbRecipeRenderer;
@@ -23,7 +28,13 @@ public class BookUtils
             ItemStack catalystStack = recipe[1];
 
             AlchemyCircleRenderer renderer = AlchemyArrayRecipeRegistry.getAlchemyCircleRenderer(inputStack, catalystStack);
-            if (renderer != null)
+            if (renderer instanceof DualAlchemyCircleRenderer)
+            {
+                List<ResourceLocation> resources = new ArrayList<ResourceLocation>();
+                resources.add(((DualAlchemyCircleRenderer) renderer).arrayResource);
+                resources.add(((DualAlchemyCircleRenderer) renderer).secondaryArrayResource);
+                return new PageAlchemyArray(resources, inputStack, catalystStack);
+            } else
             {
                 return new PageAlchemyArray(renderer.arrayResource, inputStack, catalystStack);
             }
@@ -43,7 +54,16 @@ public class BookUtils
             AlchemyCircleRenderer renderer = AlchemyArrayRecipeRegistry.getAlchemyCircleRenderer(inputStack, catalystStack);
             if (renderer != null)
             {
-                return new PageAlchemyArray(renderer.arrayResource, inputStack, catalystStack, outputStack);
+                if (renderer instanceof DualAlchemyCircleRenderer)
+                {
+                    List<ResourceLocation> resources = new ArrayList<ResourceLocation>();
+                    resources.add(((DualAlchemyCircleRenderer) renderer).arrayResource);
+                    resources.add(((DualAlchemyCircleRenderer) renderer).secondaryArrayResource);
+                    return new PageAlchemyArray(resources, inputStack, catalystStack, outputStack);
+                } else
+                {
+                    return new PageAlchemyArray(renderer.arrayResource, inputStack, catalystStack, outputStack);
+                }
             }
         }
 
