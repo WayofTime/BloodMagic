@@ -2,6 +2,7 @@
 Version 2.0.3-52
 ------------------------------------------------------
 - Updated the Sanguine Scientiem with Alchemy Array recipes
+- Fixed the Blood Altar so that it can (again) work on a stack size larger than 1.
 
 ------------------------------------------------------
 Version 2.0.3-51

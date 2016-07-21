@@ -58,9 +58,18 @@ public class AltarRecipeRegistry
         return null;
     }
 
+    //TODO: Determine a more time-effective method
     public static AltarRecipe getRecipeForInput(ItemStack input)
     {
-        return getRecipeForInput(Collections.singletonList(input));
+        for (AltarRecipe recipe : recipes.values())
+        {
+            if (recipe.doesRequiredItemMatch(input, recipe.getMinTier()))
+            {
+                return recipe;
+            }
+        }
+
+        return null;
     }
 
     public static AltarRecipe getRecipeForInput(String input)
