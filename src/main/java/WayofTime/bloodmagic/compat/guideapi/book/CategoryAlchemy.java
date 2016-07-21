@@ -50,7 +50,7 @@ public class CategoryAlchemy
         {
             speedPages.add(speedRecipePage);
         }
-        ashPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "speed" + ".info"), 370));
+        speedPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "speed" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "speed"), new EntryText(speedPages, TextHelper.localize(keyBase + "speed"), true));
 
         for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
