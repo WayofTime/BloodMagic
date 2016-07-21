@@ -34,7 +34,8 @@ public class CompatibilityGuideAPI implements ICompatibility
         }
         case POST_INIT:
         {
-            GuideBloodMagic.initCategories();
+            if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+                GuideBloodMagic.initCategories();
             break;
         }
         }
