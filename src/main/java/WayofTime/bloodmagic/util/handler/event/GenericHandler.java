@@ -13,6 +13,7 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
@@ -63,6 +64,20 @@ import com.google.common.base.Strings;
 @Handler
 public class GenericHandler
 {
+    @SubscribeEvent
+    public void onPlayerClick(PlayerInteractEvent event)
+    {
+        if (event.isCancelable() && event.getEntityPlayer().isPotionActive(ModPotions.constrict))
+        {
+            EntityPlayer player = event.getEntityPlayer();
+            int level = player.getActivePotionEffect(ModPotions.constrict).getAmplifier();
+            if (event.getHand() == EnumHand.OFF_HAND || level > 1)
+            {
+                event.setCanceled(true);
+            }
+        }
+    }
+
     @SubscribeEvent
     public void onEntityHurt(LivingHurtEvent event)
     {
