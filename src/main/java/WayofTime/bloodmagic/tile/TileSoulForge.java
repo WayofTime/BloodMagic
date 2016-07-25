@@ -105,13 +105,13 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
                         double requiredSouls = recipe.getSoulsDrained();
                         if (requiredSouls > 0)
                         {
-                            if (!worldObj.isRemote)
+                            if (!worldObj.isRemote && soulsInGem >= recipe.getMinimumSouls())
                             {
                                 consumeSouls(requiredSouls);
                             }
                         }
 
-                        if (!worldObj.isRemote)
+                        if (!worldObj.isRemote && soulsInGem >= recipe.getMinimumSouls())
                             craftItem(recipe);
                     }
 

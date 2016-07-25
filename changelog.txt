@@ -2,6 +2,7 @@
 Version 2.0.3-54
 ------------------------------------------------------
 - Eliminated some of the "wonkiness" from the Air Sigil
+- Fixed the Hellfire Forge so that swapping Tartaric gems will not give free stuff.
 
 ------------------------------------------------------
 Version 2.0.3-53
