@@ -121,6 +121,10 @@ public class Constants
         public static final String MOST_SIG = "mostSig";
         public static final String LEAST_SIG = "leastSig";
         public static final String COLOR = "color";
+
+        public static final String POTION_AUGMENT_LENGHT = "length:";
+        public static final String POTION_AUGMENT_STRENGTH = "strength:";
+        public static final String POTION_IMPURITY = "impurity";
     }
 
     public static class Mod
@@ -239,7 +243,8 @@ public class Constants
         SANGUINE_BOOK("ItemSanguineBook"),
         SIGIL_HOLDING("ItemSigilHolding"),
         ARMOUR_POINTS_UPGRADE("ItemLivingArmourPointsUpgrade"),
-        DEMON_WILL_GAUGE("ItemDemonWillGauge"), ;
+        DEMON_WILL_GAUGE("ItemDemonWillGauge"),
+        POTION_FLASK("ItemPotionFlask"), ;
 
         @Getter
         private final String regName;

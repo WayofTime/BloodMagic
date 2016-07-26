@@ -77,6 +77,10 @@ public class BlockDemonCrystal extends BlockContainer
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos)
     {
+        if (world.getTileEntity(pos) == null)
+        {
+            return state;
+        }
         TileDemonCrystal tile = (TileDemonCrystal) world.getTileEntity(pos);
         return state.withProperty(AGE, tile.getCrystalCountForRender()).withProperty(ATTACHED, tile.getPlacement());
     }

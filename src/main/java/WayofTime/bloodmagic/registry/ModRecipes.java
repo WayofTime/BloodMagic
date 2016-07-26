@@ -5,8 +5,10 @@ import java.util.List;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -45,7 +47,9 @@ import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
+import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
+import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionRecipe;
 import WayofTime.bloodmagic.util.Utils;
 
 import com.google.common.base.Stopwatch;
@@ -67,6 +71,7 @@ public class ModRecipes
         addSoulForgeRecipes();
         addAlchemyTableRecipes();
         addOreDoublingAlchemyRecipes();
+        addPotionRecipes();
     }
 
     public static void initOreDict()
@@ -352,6 +357,8 @@ public class ModRecipes
         AlchemyTableRecipeRegistry.registerRecipe(ItemLivingArmourPointsUpgrade.getStack(ItemLivingArmourPointsUpgrade.DRAFT_ANGELUS), 20000, 400, 3, ItemComponent.getStack(ItemComponent.NEURO_TOXIN), ItemComponent.getStack(ItemComponent.ANTISEPTIC), ItemComponent.getStack(ItemComponent.SAND_GOLD), Items.FERMENTED_SPIDER_EYE, new ItemStack(ModItems.bloodShard, 1, 0), Items.GHAST_TEAR);
 
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableDyeableRecipe(0, 100, 0, new ItemStack(ModItems.sigilHolding)));
+
+        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(ModItems.potionFlask), 1000, 200, 2, new ItemStack(Items.POTIONITEM), Items.NETHER_WART, Items.REDSTONE, Items.GLOWSTONE_DUST);
     }
 
     public static void addOreDoublingAlchemyRecipes()
@@ -373,5 +380,11 @@ public class ModRecipes
                 }
             }
         }
+    }
+
+    public static void addPotionRecipes()
+    {
+        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTablePotionRecipe(0, 100, 0, new ItemStack(Items.BLAZE_POWDER), new PotionEffect(MobEffects.STRENGTH, 3600, 0)));
+        AlchemyTableRecipeRegistry.registerRecipe(BMPotionUtils.getLengthAugmentRecipe(0, 100, 0, new ItemStack(Items.BLAZE_ROD), new PotionEffect(MobEffects.STRENGTH, 3600, 0), 1));
     }
 }

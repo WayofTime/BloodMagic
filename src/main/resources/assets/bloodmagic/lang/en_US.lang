@@ -175,6 +175,7 @@ item.BloodMagic.sanguineBook.name=Inspectoris Scandalum
 item.BloodMagic.livingPointUpgrade.draftAngelus.name=Draft of Angelus
 
 item.BloodMagic.willGauge.name=Demon Will Aura Gauge
+item.BloodMagic.potionFlask.name=Potion Flask
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence

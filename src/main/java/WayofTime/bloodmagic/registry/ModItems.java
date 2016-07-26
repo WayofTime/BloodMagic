@@ -78,6 +78,7 @@ import WayofTime.bloodmagic.item.soul.ItemSentientShovel;
 import WayofTime.bloodmagic.item.soul.ItemSentientSword;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.item.soul.ItemSoulSnare;
+import WayofTime.bloodmagic.potion.item.ItemPotionFlask;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
 public class ModItems
@@ -173,6 +174,8 @@ public class ModItems
     public static Item itemPointsUpgrade;
 
     public static Item demonWillGauge;
+
+    public static Item potionFlask;
 
     public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 1, 10, 8, 50);
     public static Item.ToolMaterial soulToolMaterial = EnumHelper.addToolMaterial("SoulToolMaterial", 4, 520, 7, 8, 50);
@@ -278,6 +281,8 @@ public class ModItems
         itemPointsUpgrade = registerItem(new ItemLivingArmourPointsUpgrade(), Constants.BloodMagicItem.ARMOUR_POINTS_UPGRADE.getRegName());
 
         demonWillGauge = registerItem(new ItemDemonWillGauge(), Constants.BloodMagicItem.DEMON_WILL_GAUGE.getRegName());
+
+        potionFlask = registerItem(new ItemPotionFlask(), Constants.BloodMagicItem.POTION_FLASK.getRegName());
     }
 
     @SideOnly(Side.CLIENT)
