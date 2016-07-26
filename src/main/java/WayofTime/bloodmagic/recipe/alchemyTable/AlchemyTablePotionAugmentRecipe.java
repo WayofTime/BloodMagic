@@ -67,7 +67,7 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe
 
             List<PotionEffect> effectList = new ArrayList<PotionEffect>();
             int potionLength = wantedPotion.isInstant() ? 1 : BMPotionUtils.getAugmentedLength(baseEffect.getDuration(), lengthAugment, powerAugment - baseEffect.getAmplifier());
-            effectList.add(new PotionEffect(wantedPotion, potionLength, baseEffect.getAmplifier()));
+            effectList.add(new PotionEffect(wantedPotion, potionLength, powerAugment - baseEffect.getAmplifier()));
 
             BMPotionUtils.setEffects(outputStack, effectList);
 
