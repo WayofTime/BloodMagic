@@ -3,6 +3,8 @@ package WayofTime.bloodmagic.item.sigil;
 import java.util.Collections;
 import java.util.List;
 
+import WayofTime.bloodmagic.util.handler.event.ClientHandler;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -15,6 +17,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -31,6 +34,7 @@ import WayofTime.bloodmagic.util.handler.IKeybindable;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.base.Strings;
+import org.lwjgl.input.Keyboard;
 
 public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAltarReader
 {
@@ -73,6 +77,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.holding.press", ClientHandler.keyOpenSigilHolding.getDisplayName()));
 
         ItemStack[] inv = getInternalInventory(stack);
 
