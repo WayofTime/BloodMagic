@@ -132,7 +132,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
     public boolean isPotionFlaskValidInput(ItemStack stack)
     {
         List<PotionEffect> effectList = PotionUtils.getEffectsFromStack(stack);
-        if (effectList.size() + 1 >= temporaryMaximumEffectsOnThePotionFlaskYesThisIsALongFieldItIsJustSoIRemember)
+        if (effectList.size() >= temporaryMaximumEffectsOnThePotionFlaskYesThisIsALongFieldItIsJustSoIRemember)
         {
             return false;
         }
@@ -164,7 +164,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
 
         ItemStack outputStack = inputStack.copy();
 
-        List<PotionEffect> effectList = new ArrayList<PotionEffect>();
+        List<PotionEffect> effectList = PotionUtils.getEffectsFromStack(outputStack);
         effectList.add(baseEffect);
 
         PotionUtils.appendEffects(outputStack, effectList);

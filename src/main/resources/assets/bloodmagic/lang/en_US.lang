@@ -100,6 +100,10 @@ item.BloodMagic.baseComponent.antiseptic.name=Antiseptic
 item.BloodMagic.cuttingFluid.basicCuttingFluid.name=Basic Cutting Fluid
 item.BloodMagic.cuttingFluid.explosive.name=Explosive Powder
 
+item.BloodMagic.baseComponent.mundaneLength.name=Simple Lengthening Catalyst
+item.BloodMagic.baseComponent.mundanePower.name=Simple Power Catalyst
+
+
 item.BloodMagic.demonCrystal.crystalDefault.name=Demon Will Crystal
 item.BloodMagic.demonCrystal.crystalCorrosive.name=Corrosive Will Crystal
 item.BloodMagic.demonCrystal.crystalDestructive.name=Destructive Will Crystal

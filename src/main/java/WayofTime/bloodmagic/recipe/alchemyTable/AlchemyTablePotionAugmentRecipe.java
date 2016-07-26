@@ -33,6 +33,7 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe
 
         this.wantedPotion = baseEffect.getPotion();
         this.lengthAugment = lengthAugment;
+        this.powerAugment = powerAugment;
     }
 
     public AlchemyTablePotionAugmentRecipe(int lpDrained, int ticksRequired, int tierRequired, ItemStack inputItem, PotionEffect baseEffect, double lengthAugment, int powerAugment)

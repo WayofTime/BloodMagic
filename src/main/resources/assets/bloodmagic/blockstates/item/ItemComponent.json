@@ -145,6 +145,16 @@
         "textures": {
           "layer0": "bloodmagic:items/ReagentHolding"
         }
+      },
+      "mundanelength": {
+        "textures": {
+          "layer0": "bloodmagic:items/MundaneLengtheningCatalyst"
+        }
+      },
+      "mundanepower": {
+        "textures": {
+          "layer0": "bloodmagic:items/MundanePowerCatalyst"
+        }
       }
     }
   }

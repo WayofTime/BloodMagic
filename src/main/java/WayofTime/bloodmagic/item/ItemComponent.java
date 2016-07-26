@@ -51,6 +51,8 @@ public class ItemComponent extends Item implements IVariantProvider
     public static final String NEURO_TOXIN = "neurotoxin";
     public static final String ANTISEPTIC = "antiseptic";
     public static final String REAGENT_HOLDING = "reagentHolding";
+    public static final String CATALYST_LENGTH_1 = "mundaneLength";
+    public static final String CATALYST_POWER_1 = "mundanePower";
 
     public ItemComponent()
     {
@@ -93,6 +95,8 @@ public class ItemComponent extends Item implements IVariantProvider
         names.add(25, NEURO_TOXIN);
         names.add(26, ANTISEPTIC);
         names.add(27, REAGENT_HOLDING);
+        names.add(28, CATALYST_LENGTH_1);
+        names.add(29, CATALYST_POWER_1);
     }
 
     @Override

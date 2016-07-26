@@ -359,6 +359,8 @@ public class ModRecipes
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableDyeableRecipe(0, 100, 0, new ItemStack(ModItems.sigilHolding)));
 
         AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(ModItems.potionFlask), 1000, 200, 2, new ItemStack(Items.POTIONITEM), Items.NETHER_WART, Items.REDSTONE, Items.GLOWSTONE_DUST);
+        AlchemyTableRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.CATALYST_LENGTH_1), 1000, 100, 2, Items.GUNPOWDER, Items.NETHER_WART, "gemLapis");
+        AlchemyTableRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.CATALYST_POWER_1), 1000, 100, 2, Items.GUNPOWDER, Items.NETHER_WART, "dustRedstone");
     }
 
     public static void addOreDoublingAlchemyRecipes()
@@ -384,7 +386,28 @@ public class ModRecipes
 
     public static void addPotionRecipes()
     {
-        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTablePotionRecipe(0, 100, 0, new ItemStack(Items.BLAZE_POWDER), new PotionEffect(MobEffects.STRENGTH, 3600, 0)));
-        AlchemyTableRecipeRegistry.registerRecipe(BMPotionUtils.getLengthAugmentRecipe(0, 100, 0, new ItemStack(Items.BLAZE_ROD), new PotionEffect(MobEffects.STRENGTH, 3600, 0), 1));
+        addPotionRecipe(1000, 1, new ItemStack(Items.GHAST_TEAR), new PotionEffect(MobEffects.REGENERATION, 450));
+        addPotionRecipe(1000, 1, new ItemStack(Items.GOLDEN_CARROT), new PotionEffect(MobEffects.NIGHT_VISION, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.MAGMA_CREAM), new PotionEffect(MobEffects.FIRE_RESISTANCE, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.WATER_BUCKET), new PotionEffect(MobEffects.WATER_BREATHING, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.SUGAR), new PotionEffect(MobEffects.SPEED, 2 * 60 * 20));
+    }
+
+    static ItemStack mundaneLengtheningStack = ItemComponent.getStack(ItemComponent.CATALYST_LENGTH_1);
+    static ItemStack mundanePowerStack = ItemComponent.getStack(ItemComponent.CATALYST_POWER_1);
+
+    public static void addPotionRecipe(int lpDrained, int tier, ItemStack inputStack, PotionEffect baseEffect)
+    {
+        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTablePotionRecipe(lpDrained, 100, tier, inputStack, baseEffect));
+
+        List<ItemStack> lengtheningList = new ArrayList<ItemStack>();
+        lengtheningList.add(inputStack);
+        lengtheningList.add(mundaneLengtheningStack);
+        AlchemyTableRecipeRegistry.registerRecipe(BMPotionUtils.getLengthAugmentRecipe(lpDrained, 100, tier, lengtheningList, baseEffect, 1));
+
+        List<ItemStack> powerList = new ArrayList<ItemStack>();
+        powerList.add(inputStack);
+        powerList.add(mundanePowerStack);
+        AlchemyTableRecipeRegistry.registerRecipe(BMPotionUtils.getPowerAugmentRecipe(lpDrained, 100, tier, powerList, baseEffect, 1));
     }
 }
