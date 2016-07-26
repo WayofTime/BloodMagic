@@ -295,6 +295,7 @@ tooltip.BloodMagic.sigil.whirlwind.desc=&oBest not to wear a skirt
 tooltip.BloodMagic.sigil.enderSeverance.desc=&oPutting Endermen in Dire situations!
 tooltip.BloodMagic.sigil.teleposition.desc=I am very close to being moved by this.
 tooltip.BloodMagic.sigil.transposition.desc=Feel the power of the Force, my young apprentice.
+tooltip.BloodMagic.sigil.holding.press=Press &o%s&r&7 to modify
 tooltip.BloodMagic.sigil.holding.desc=Sigil-ception
 tooltip.BloodMagic.sigil.holding.sigilInSlot=Slot %d: %s
 
