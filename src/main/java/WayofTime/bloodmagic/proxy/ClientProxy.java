@@ -129,11 +129,7 @@ public class ClientProxy extends CommonProxy
                 if (tintIndex != 0 && tintIndex != 2)
                     return -1;
 
-                List<PotionEffect> effects = PotionUtils.getEffectsFromStack(stack);
-                if (effects.isEmpty())
-                    return -1;
-
-                return PotionUtils.getPotionColorFromEffectList(effects);
+                return PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(stack));
             }
         }, ModItems.potionFlask);
 
