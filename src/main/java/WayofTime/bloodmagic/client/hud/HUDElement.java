@@ -47,7 +47,7 @@ public abstract class HUDElement
         this.yOffset = yOffsetDefault;
     }
 
-    public void drawTexturedModalRect(int x, int y, int textureX, int textureY, int width, int height)
+    public void drawTexturedModalRect(double x, double y, double textureX, double textureY, double width, double height)
     {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
