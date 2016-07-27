@@ -100,6 +100,10 @@ item.BloodMagic.baseComponent.antiseptic.name=防腐剂
 item.BloodMagic.cuttingFluid.basicCuttingFluid.name=基础切削油
 item.BloodMagic.cuttingFluid.explosive.name=爆炸火药
 
+item.BloodMagic.baseComponent.mundaneLength.name=简单的延时催化剂
+item.BloodMagic.baseComponent.mundanePower.name=简单的功效催化剂
+
+
 item.BloodMagic.demonCrystal.crystalDefault.name=恶魔意志晶体
 item.BloodMagic.demonCrystal.crystalCorrosive.name=腐蚀意志晶体
 item.BloodMagic.demonCrystal.crystalDestructive.name=破坏意志晶体
@@ -108,7 +112,7 @@ item.BloodMagic.demonCrystal.crystalSteadfast.name=坚定意志晶体
 
 item.BloodMagic.monsterSoul.base.name=恶魔意志
 
-item.BloodMagic.sigil.air.name=空气印记
+item.BloodMagic.sigil.air.name=风之印记
 item.BloodMagic.sigil.bloodLight.name=血光印记
 item.BloodMagic.sigil.compression.name=压挤印记
 item.BloodMagic.sigil.divination.name=占卜印记
@@ -175,6 +179,7 @@ item.BloodMagic.sanguineBook.name=指示之书
 item.BloodMagic.livingPointUpgrade.draftAngelus.name=祷告之始
 
 item.BloodMagic.willGauge.name=恶魔意志灵域测量器
+item.BloodMagic.potionFlask.name=药剂瓶
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=生命源质
@@ -234,7 +239,7 @@ tile.BloodMagic.path.stonetile.name=石瓦路面
 tile.BloodMagic.path.wornstone.name=碎石砖路面
 tile.BloodMagic.path.wornstonetile.name=碎石路面
 tile.BloodMagic.path.obsidian.name=黑曜石砖路面
-tile.BloodMagic.path.obsidiantile.name=黑曜石瓦
+tile.BloodMagic.path.obsidiantile.name=黑曜石瓦路面
 
 tile.BloodMagic.dimensionalPortal.name=空间传送门
 tile.BloodMagic.bloodTank.name=血液槽
@@ -294,6 +299,7 @@ tooltip.BloodMagic.sigil.whirlwind.desc=&o最好不要穿裙子
 tooltip.BloodMagic.sigil.enderSeverance.desc=&o使末影人遇上一个严峻形势!
 tooltip.BloodMagic.sigil.teleposition.desc=随时可以脱离这里.
 tooltip.BloodMagic.sigil.transposition.desc=感受原力的力量, 我年轻的学徒.
+tooltip.BloodMagic.sigil.holding.press=按下 &o%s&r&7 修改
 tooltip.BloodMagic.sigil.holding.desc=印记掌控
 tooltip.BloodMagic.sigil.holding.sigilInSlot=印记 %d: %s
 
@@ -468,7 +474,7 @@ ritual.BloodMagic.portalRitual=折域之门
 
 ritual.BloodMagic.waterRitual.info=通过主仪式石生成一个水源方块.
 ritual.BloodMagic.lavaRitual.info=通过主仪式石生成一个熔岩源方块.
-ritual.BloodMagic.greenGroveRitual.info=在其范围内总之农作物.
+ritual.BloodMagic.greenGroveRitual.info=在其范围内种植农作物.
 ritual.BloodMagic.jumpRitual.info=使实体跃向高空.
 ritual.BloodMagic.wellOfSufferingRitual.info=攻击其伤害范围内的生物, 并将所获LP储入邻近的血之祭坛.
 ritual.BloodMagic.featheredKnifeRitual.info=扣除其范围内的玩家生命值, 并将所获LP储入邻近的血之祭坛.
@@ -494,7 +500,7 @@ ritual.BloodMagic.forsakenSoulRitual.info=对其伤害范围内的生物造成�
 ritual.BloodMagic.crystalHarvestRitual.info=破坏范围内的恶魔意志晶簇, 掉落物丢于晶簇顶部.
 ritual.BloodMagic.placerRitual.info=取出所连接的容器中的方块, 并放置于世界中.
 ritual.BloodMagic.fellingRitual.info=一个伐木设施, 该仪式将砍伐其范围内所有树与叶子, 并收集掉落物.
-ritual.BloodMagic.pumpRitual.info=从规定范围获取液体. 只有当所连接的液体容器至少有一桶量的相同液体时, 移出或储入液体.
+ritual.BloodMagic.pumpRitual.info=从规定范围获取液体. 只有当所连接的液体容器至少有一桶量的相同液体时, 移入液体.
 ritual.BloodMagic.altarBuilderRitual.info=将所连接的容器中的祭坛部件搭建出来.
 ritual.BloodMagic.portalRitual.info=创建一个传送门网络, 以激活者及直接接触方块为基础, 两者相同的两个传送门达成连接. 激活后未修改传送网络的情况下方块可以变更.
 ritual.BloodMagic.meteorRitual.info=消耗其物品范围内的一个物品, 从天空中召唤一个充满资源的流星, 直接坠向仪式.
