@@ -126,7 +126,7 @@ public class ClientProxy extends CommonProxy
             @Override
             public int getColorFromItemstack(ItemStack stack, int tintIndex)
             {
-                if (tintIndex != 1)
+                if (tintIndex != 0 && tintIndex != 2)
                     return -1;
 
                 List<PotionEffect> effects = PotionUtils.getEffectsFromStack(stack);
