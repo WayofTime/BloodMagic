@@ -8,7 +8,8 @@
     "type": {
       "normal": {
         "textures": {
-          "layer0": "bloodmagic:items/PotionFlask"
+          "layer0": "bloodmagic:items/PotionFlask_outline",
+          "layer1": "bloodmagic:items/PotionFlask_overlay"
         }
       }
     }

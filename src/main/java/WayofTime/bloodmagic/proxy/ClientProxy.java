@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.proxy;
 
 import java.awt.Color;
+import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -10,6 +11,8 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -118,6 +121,21 @@ public class ClientProxy extends CommonProxy
                 return -1;
             }
         }, ModItems.sigilHolding);
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor()
+        {
+            @Override
+            public int getColorFromItemstack(ItemStack stack, int tintIndex)
+            {
+                if (tintIndex != 1)
+                    return -1;
+
+                List<PotionEffect> effects = PotionUtils.getEffectsFromStack(stack);
+                if (effects.isEmpty())
+                    return -1;
+
+                return PotionUtils.getPotionColorFromEffectList(effects);
+            }
+        }, ModItems.potionFlask);
 
         addElytraLayer();
     }
