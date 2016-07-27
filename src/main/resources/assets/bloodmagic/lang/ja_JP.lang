@@ -326,7 +326,8 @@ tooltip.BloodMagic.diviner.earthRune=土の儀式石： %d個
 tooltip.BloodMagic.diviner.duskRune=黄昏の儀式石： %d個
 tooltip.BloodMagic.diviner.dawnRune=暁の儀式石： %d個
 tooltip.BloodMagic.diviner.totalRune=儀式石の合計： %d個
-tooltip.BloodMagic.diviner.extraInfo=Shiftキーで詳細表示
+tooltip.BloodMagic.diviner.extraInfo=&9-Shiftキーでルーンの詳細表示-
+tooltip.BloodMagic.diviner.extraExtraInfo=&9-Shift + Mキーで機能拡張の詳細表示-
 tooltip.BloodMagic.diviner.currentDirection=現在の方角： %s
 
 tooltip.BloodMagic.ritualReader.currentState=現在のモード： %s
@@ -455,6 +456,7 @@ ritual.BloodMagic.armourEvolveRitual=生体進化の儀式
 ritual.BloodMagic.animalGrowthRitual=牧羊の儀式
 ritual.BloodMagic.forsakenSoulRitual=見放された魂の蒐集
 ritual.BloodMagic.crystalHarvestRitual=欠けた結晶の粉砕
+ritual.BloodMagic.meteorRitual=崩壊する塔の印
 
 ritual.BloodMagic.cobblestoneRitual=ル・ヴォルカノス・フィギュス
 ritual.BloodMagic.placerRitual=設置充填の儀式
@@ -464,8 +466,8 @@ ritual.BloodMagic.altarBuilderRitual=高位祭壇構築儀式
 ritual.BloodMagic.portalRitual=組み込みゲート
 
 
-ritual.BloodMagic.waterRitual.info=マスター儀式石の上に水源を生成します。
-ritual.BloodMagic.lavaRitual.info=マスター儀式石の上に溶岩源を生成します。
+ritual.BloodMagic.waterRitual.info=マスター儀式石から水源を生成します。
+ritual.BloodMagic.lavaRitual.info=マスター儀式石から溶岩源を生成します。
 ritual.BloodMagic.greenGroveRitual.info=エリア内の作物を育成させます。
 ritual.BloodMagic.jumpRitual.info=空中にはね飛ぶ効果を付与します。
 ritual.BloodMagic.wellOfSufferingRitual.info=生物にダメージを与えるエリアを生成し、付近の血の祭壇にLPを供給します。
@@ -474,6 +476,10 @@ ritual.BloodMagic.regenerationRitual.info=エリア内にHPが減少している
 ritual.BloodMagic.harvestRitual.info=エリア内の作物を刈り取り、種などの収穫物があった場合は植え直します。
 ritual.BloodMagic.magneticRitual.info=地中から鉱石を掘り起こし、指定エリアに並べます。
 ritual.BloodMagic.crushingRitual.info=指定エリアのブロックを破壊し、収集物をリンクしているチェストに格納します。
+ritual.BloodMagic.crushingRitual.destructive.info=(破壊性) ブロックを強制的に破壊します：破壊した全てのブロックは幸運IIIの効果が適用されています。
+ritual.BloodMagic.crushingRitual.steadfast.info=(不活性) 全てのブロックはシルクタッチによって破壊されます。幸運の効果は無視されます。
+ritual.BloodMagic.crushingRitual.corrosive.info=(腐食性) 全てのブロックは切削液で破壊されます。シルクタッチの効果は無視されます。
+
 ritual.BloodMagic.fullStomachRitual.info=リンクしているチェスト内にある食料を、満腹でないプレイヤーに自動的に供給します。
 ritual.BloodMagic.interdictionRitual.info=マスター儀式石の一定エリア内の生物を排除して侵入できないようにします。
 ritual.BloodMagic.containmentRitual.info=エリア内の生物をスター儀式石の周囲に引き寄せます。
@@ -486,15 +492,16 @@ ritual.BloodMagic.armourEvolveRitual.info=Undocumented.
 ritual.BloodMagic.animalGrowthRitual.info=エリア内にいる子供生物の成長速度を早めます。
 ritual.BloodMagic.forsakenSoulRitual.info=エリア内の生物にダメージを与え、生物が死んだ時にウィルを回収してデーモンウィル結晶を成長させます。
 ritual.BloodMagic.crystalHarvestRitual.info=範囲内のデーモンウィル結晶株を破壊してウィル結晶にしてドロップさせます。
-
 ritual.BloodMagic.placerRitual.info=リンクしているチェスの中からブロックとして設置可能なものを取り出し、隙間なく設置します。
 ritual.BloodMagic.fellingRitual.info=この儀式は標準的な木材伐採装置として動作し、エリア内のすべての原木及び葉を伐採および採取します。
 ritual.BloodMagic.pumpRitual.info=設定エリアから流体を吸い出し、1バケツ分以上の容量がある流体タンクへと供給します。
 ritual.BloodMagic.altarBuilderRitual.info=マスター儀式石とリンクしているチェストの中身を使用して血の祭壇を構築します。
 ritual.BloodMagic.portalRitual.info=作成し起動させると同時に周囲のブロック材質を固有の”キー”とするポータルネットワークを構築します。周囲ブロックの変更は起動後でも可能であり、ポータルは同じキー同士をリンクします。
+ritual.BloodMagic.meteorRitual.info=範囲内のアイテムを消費し、空から資源に富んだ隕石を儀式に直撃させるように召喚します。
 
 ritual.BloodMagic.waterRitual.waterRange.info=(水) 設定したエリアに水源を生成させます。
 ritual.BloodMagic.lavaRitual.lavaRange.info=(溶岩) 設定したエリアに溶岩源を生成させます。
+ritual.BloodMagic.lavaRitual.fireFuse.info=(報復性) 範囲内のエンティティは炎によって苦しめられます。
 ritual.BloodMagic.greenGroveRitual.growing.info=(成長) 設定したエリア内の植物の成長を促進させます。
 ritual.BloodMagic.jumpRitual.jumpRange.info=(跳躍) 設定したエリア内に居る生物を空中に飛び上がらせます。
 ritual.BloodMagic.wellOfSufferingRitual.altar.info=(祭壇) 儀式が血の祭壇を検索するエリアを指定します。変更することにより検索エリアを拡大したり特定の領域に制限したりすることが可能です。
