@@ -108,7 +108,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {
-        return ItemStack.areItemsEqual(repair, ItemComponent.getStack(ItemComponent.REAGENT_BINDING)) || super.getIsRepairable(toRepair, repair);
+        return ItemStack.areItemsEqual(repair, ItemComponent.getStack(ItemComponent.REAGENT_BINDING));
     }
 
     @Override
