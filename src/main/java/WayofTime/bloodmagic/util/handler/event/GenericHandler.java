@@ -142,6 +142,9 @@ public class GenericHandler
             if (holder != null)
             {
                 BloodMagicPacketHandler.sendTo(new DemonAuraPacketProcessor(holder), (EntityPlayerMP) player);
+            } else
+            {
+                BloodMagicPacketHandler.sendTo(new DemonAuraPacketProcessor(new DemonWillHolder()), (EntityPlayerMP) player);
             }
         }
     }
