@@ -148,11 +148,13 @@ public class RitualCrushing extends Ritual
                     }
 
                     if (tile != null)
+                    {
                         result = Utils.insertStackIntoTile(result, tile, EnumFacing.DOWN);
-                    else
-                        Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, result);
-
-                    if (result != null && result.stackSize > 0)
+                        if (result != null && result.stackSize > 0)
+                        {
+                            Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, result);
+                        }
+                    } else
                     {
                         Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, result);
                     }
