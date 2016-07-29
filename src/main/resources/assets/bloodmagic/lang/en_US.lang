@@ -425,6 +425,8 @@ tooltip.BloodMagic.decoration.notSafe=Dangerous for decoration
 
 tooltip.BloodMagic.cuttingFluidRatio=%d/%d uses remaining
 
+tooltip.BloodMagic.potion.uses=%d uses remaining
+
 tooltip.BloodMagic.book.shifting=These symbols seem to be... &oshifting...
 
 tooltip.BloodMagic.willGauge=A strange device that can measure the Demon Will in the Aura.

@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.potion.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -90,6 +91,8 @@ public class ItemPotionFlask extends Item implements IVariantProvider
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
+        tooltip.add("");
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.potion.uses", stack.getMaxDamage() - stack.getItemDamage()));
     }
 
 //    @Override
