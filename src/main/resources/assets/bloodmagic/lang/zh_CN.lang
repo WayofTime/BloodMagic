@@ -425,6 +425,8 @@ tooltip.BloodMagic.decoration.notSafe=危险装潢
 
 tooltip.BloodMagic.cuttingFluidRatio=%d/%d 所剩可用
 
+tooltip.BloodMagic.potion.uses=%d 使用剩余
+
 tooltip.BloodMagic.book.shifting=这些符号似乎... &o在变换着...
 
 tooltip.BloodMagic.willGauge=一个奇怪的装置, 可以测量恶魔灵域中的恶魔意志.
