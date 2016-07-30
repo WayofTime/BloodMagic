@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeKnockbackResist;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -95,6 +96,12 @@ public class StatTrackerFood extends StatTracker
         }
 
         return upgradeList;
+    }
+
+    @Override
+    public double getProgress(LivingArmour livingArmour, int currentLevel)
+    {
+        return Utils.calculateStandardProgress(foodEaten, foodRequired, currentLevel);
     }
 
     @Override

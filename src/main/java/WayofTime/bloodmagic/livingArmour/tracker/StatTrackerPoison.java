@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.livingArmour.tracker;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
@@ -76,6 +77,12 @@ public class StatTrackerPoison extends StatTracker
         }
 
         return upgradeList;
+    }
+
+    @Override
+    public double getProgress(LivingArmour livingArmour, int currentLevel)
+    {
+        return Utils.calculateStandardProgress(totalPoisonTicks, poisonTicksRequired, currentLevel);
     }
 
     @Override

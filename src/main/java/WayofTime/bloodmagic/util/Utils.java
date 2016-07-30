@@ -199,6 +199,16 @@ public class Utils
         return false;
     }
 
+    public static double calculateStandardProgress(Number currentValue, int[] requiredValues, int currentLevel)
+    {
+        int nextLevel = currentLevel + 1;
+        if (nextLevel >= requiredValues.length)
+            return 1.0D;
+
+        int required = requiredValues[nextLevel];
+        return Double.parseDouble("" + currentValue) / (double) required;
+    }
+
     @Nullable
     public static IItemHandler getInventory(TileEntity tile, @Nullable EnumFacing facing)
     {

@@ -104,6 +104,15 @@ public class StatTrackerStepAssist extends StatTracker
     }
 
     @Override
+    public double getProgress(LivingArmour livingArmour, int currentLevel)
+    {
+        if (currentLevel == 1)
+            return 1.0D;
+
+        return totalMovement / (double) blocksRequired;
+    }
+
+    @Override
     public boolean providesUpgrade(String key)
     {
         return key.equals(Constants.Mod.MODID + ".upgrade.stepAssist");

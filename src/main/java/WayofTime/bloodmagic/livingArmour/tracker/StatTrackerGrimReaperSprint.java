@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -100,6 +101,12 @@ public class StatTrackerGrimReaperSprint extends StatTracker
         }
 
         return upgradeList;
+    }
+
+    @Override
+    public double getProgress(LivingArmour livingArmour, int currentLevel)
+    {
+        return Utils.calculateStandardProgress(totalDeaths, deathsRequired, currentLevel);
     }
 
     @Override

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -22,6 +23,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -45,6 +47,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import org.lwjgl.input.Keyboard;
 
 public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshProvider
 {
@@ -269,7 +272,23 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                 LivingArmourUpgrade upgrade = entry.getValue();
                 if (upgrade != null)
                 {
-                    tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getUnlocalizedName()), (upgrade.getUpgradeLevel() + 1)));
+                    if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && Keyboard.isKeyDown(Keyboard.KEY_M))
+                    {
+                        StatTracker tracker = null;
+                        for (StatTracker searchTracker : armour.trackerMap.values()) {
+                            if (searchTracker != null && searchTracker.providesUpgrade(upgrade.getUniqueIdentifier())) {
+                                tracker = searchTracker;
+                                break;
+                            }
+                        }
+
+                        if (tracker != null) {
+                            double progress = tracker.getProgress(armour, upgrade.getUpgradeLevel());
+                            tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.progress", TextHelper.localize(upgrade.getUnlocalizedName()), MathHelper.clamp_int((int) (progress * 100D), 0, 100)));
+                        }
+                    } else {
+                        tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getUnlocalizedName()), upgrade.getUpgradeLevel() + 1));
+                    }
                 }
             }
 

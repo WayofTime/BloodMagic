@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -94,6 +95,12 @@ public class StatTrackerJump extends StatTracker
         }
 
         return upgradeList;
+    }
+
+    @Override
+    public double getProgress(LivingArmour livingArmour, int currentLevel)
+    {
+        return Utils.calculateStandardProgress(totalJumps, jumpsRequired, currentLevel);
     }
 
     @Override

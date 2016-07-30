@@ -41,6 +41,20 @@ public abstract class StatTracker
 
     public abstract List<LivingArmourUpgrade> getUpgrades();
 
+    /**
+     * Used to obtain the progress from the current level to the next level.
+     *
+     * 0.0 being 0% - 1.0 being 100%.
+     *
+     * @param livingArmour
+     *        The equipped LivingArmour
+     * @return the progress from the current level to the next level.
+     */
+    public double getProgress(LivingArmour livingArmour, int currentLevel)
+    {
+        return 1.0D;
+    }
+
     public final boolean isDirty()
     {
         return isDirty;
