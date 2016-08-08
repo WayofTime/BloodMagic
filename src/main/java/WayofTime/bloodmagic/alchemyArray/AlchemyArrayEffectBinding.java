@@ -1,8 +1,5 @@
 package WayofTime.bloodmagic.alchemyArray;
 
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
-import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
-import lombok.Getter;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -10,16 +7,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffectCrafting;
+import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
 
-public class AlchemyArrayEffectBinding extends AlchemyArrayEffect
+public class AlchemyArrayEffectBinding extends AlchemyArrayEffectCrafting
 {
-    @Getter
-    public final ItemStack outputStack;
-
     public AlchemyArrayEffectBinding(String key, ItemStack outputStack)
     {
-        super(key);
-        this.outputStack = outputStack;
+        super(key, outputStack, 200);
     }
 
     @Override

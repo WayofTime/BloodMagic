@@ -13,7 +13,6 @@ import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer
 {
     public float offsetFromFace = -0.9f;
-    public final ResourceLocation arrayResource;
     public final ResourceLocation[] arraysResources;
 
     public static final int numberOfSweeps = 5;
@@ -29,7 +28,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer
 
     public BindingAlchemyCircleRenderer()
     {
-        this.arrayResource = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BindingArray.png");
+        super(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BindingArray.png"));
         arraysResources = new ResourceLocation[5];
         arraysResources[0] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BindingLightningArray.png");
         arraysResources[1] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BindingLightningArray.png");
@@ -242,8 +241,8 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer
             GlStateManager.pushMatrix();
             Minecraft.getMinecraft().renderEngine.bindTexture(arraysResources[i]);
             float newSize = 1;
-            float distance = this.getDistanceOfCircle(i, craftTime);
-            float angle = this.getAngleOfCircle(i, craftTime);
+            float distance = BindingAlchemyCircleRenderer.getDistanceOfCircle(i, craftTime);
+            float angle = BindingAlchemyCircleRenderer.getAngleOfCircle(i, craftTime);
             float rotation = this.getRotation(i, craftTime);
 
             GlStateManager.translate(distance * Math.sin(angle), -distance * Math.cos(angle), this.getVerticalOffset(i, craftTime));

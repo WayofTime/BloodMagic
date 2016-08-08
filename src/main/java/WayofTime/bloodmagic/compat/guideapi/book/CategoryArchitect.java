@@ -425,6 +425,238 @@ public class CategoryArchitect
         magnetismPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "magnetism" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "magnetism"), new EntryText(magnetismPages, TextHelper.localize(keyBase + "magnetism"), true));
 
+        List<IPage> peritiaPages = new ArrayList<IPage>();
+
+        IRecipe peritiaRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModItems.experienceTome));
+        if (peritiaRecipe != null)
+        {
+            peritiaPages.add(BookUtils.getPageForRecipe(peritiaRecipe));
+        }
+
+        peritiaPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "peritia" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "peritia"), new EntryText(peritiaPages, TextHelper.localize(keyBase + "peritia"), true));
+
+        List<IPage> livingArmourPages = new ArrayList<IPage>();
+
+        TartaricForgeRecipe bindingRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_BINDING));
+        if (bindingRecipe != null)
+        {
+            livingArmourPages.add(new PageTartaricForgeRecipe(bindingRecipe));
+        }
+
+        PageAlchemyArray bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.livingArmourChest));
+        if (bindingRecipePage != null)
+        {
+            livingArmourPages.add(bindingRecipePage);
+        }
+
+        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.livingArmourHelmet));
+        if (bindingRecipePage != null)
+        {
+            livingArmourPages.add(bindingRecipePage);
+        }
+
+        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.livingArmourLegs));
+        if (bindingRecipePage != null)
+        {
+            livingArmourPages.add(bindingRecipePage);
+        }
+
+        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.livingArmourBoots));
+        if (bindingRecipePage != null)
+        {
+            livingArmourPages.add(bindingRecipePage);
+        }
+
+        livingArmourPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "livingArmour" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "livingArmour"), new EntryText(livingArmourPages, TextHelper.localize(keyBase + "livingArmour"), true));
+
+        List<IPage> upgradePages = new ArrayList<IPage>();
+
+        upgradePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "upgradeTome" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "upgradeTome"), new EntryText(upgradePages, TextHelper.localize(keyBase + "upgradeTome"), true));
+
+        List<IPage> teleposerPages = new ArrayList<IPage>();
+
+        AltarRecipe teleposerFocusRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(ModItems.telepositionFocus));
+        if (teleposerFocusRecipe != null)
+        {
+            teleposerPages.add(new PageAltarRecipe(teleposerFocusRecipe));
+        }
+
+        IRecipe teleposerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.teleposer));
+        if (teleposerRecipe != null)
+        {
+            teleposerPages.add(BookUtils.getPageForRecipe(teleposerRecipe));
+        }
+
+        teleposerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "teleposer" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "teleposer"), new EntryText(teleposerPages, TextHelper.localize(keyBase + "teleposer"), true));
+
+        List<IPage> boundBladePages = new ArrayList<IPage>();
+
+        PageAlchemyArray boundBladePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.boundSword));
+        if (boundBladePage != null)
+        {
+            boundBladePages.add(boundBladePage);
+        }
+
+        boundBladePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "boundBlade" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "boundBlade"), new EntryText(boundBladePages, TextHelper.localize(keyBase + "boundBlade"), true));
+
+        List<IPage> boundToolPages = new ArrayList<IPage>();
+
+        PageAlchemyArray boundToolPage = BookUtils.getAlchemyPage(new ItemStack(ModItems.boundPickaxe));
+        if (boundToolPage != null)
+        {
+            boundToolPages.add(boundToolPage);
+        }
+
+        boundToolPage = BookUtils.getAlchemyPage(new ItemStack(ModItems.boundAxe));
+        if (boundToolPage != null)
+        {
+            boundToolPages.add(boundToolPage);
+        }
+
+        boundToolPage = BookUtils.getAlchemyPage(new ItemStack(ModItems.boundShovel));
+        if (boundToolPage != null)
+        {
+            boundToolPages.add(boundToolPage);
+        }
+
+        boundToolPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "boundTool" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "boundTool"), new EntryText(boundToolPages, TextHelper.localize(keyBase + "boundTool"), true));
+
+        List<IPage> weakShardPages = new ArrayList<IPage>();
+
+        weakShardPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakShard" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "weakShard"), new EntryText(weakShardPages, TextHelper.localize(keyBase + "weakShard"), true));
+
+        List<IPage> masterOrbPages = new ArrayList<IPage>();
+
+        AltarRecipe masterOrbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(ModItems.orbMaster));
+        if (magicianOrbRecipe != null)
+        {
+            masterOrbPages.add(new PageAltarRecipe(masterOrbRecipe));
+        }
+
+        masterOrbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "masterOrb" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "masterOrb"), new EntryText(masterOrbPages, TextHelper.localize(keyBase + "masterOrb"), true));
+
+        List<IPage> orbRunePages = new ArrayList<IPage>();
+
+        IRecipe orbRuneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.bloodRune, 1, 8));
+        if (orbRuneRecipe != null)
+        {
+            orbRunePages.add(BookUtils.getPageForRecipe(orbRuneRecipe));
+        }
+
+        orbRunePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeOrb" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "runeOrb"), new EntryText(orbRunePages, TextHelper.localize(keyBase + "runeOrb"), true));
+
+        List<IPage> suppressionPages = new ArrayList<IPage>();
+
+        TartaricForgeRecipe suppressionRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION));
+        if (suppressionRecipe != null)
+        {
+            suppressionPages.add(new PageTartaricForgeRecipe(suppressionRecipe));
+        }
+
+        PageAlchemyArray suppressionRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.sigilSuppression));
+        if (suppressionRecipePage != null)
+        {
+            suppressionPages.add(suppressionRecipePage);
+        }
+
+        suppressionPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "suppression" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "suppression"), new EntryText(suppressionPages, TextHelper.localize(keyBase + "suppression"), true));
+
+        List<IPage> hastePages = new ArrayList<IPage>();
+
+        TartaricForgeRecipe hasteRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_HASTE));
+        if (hasteRecipe != null)
+        {
+            hastePages.add(new PageTartaricForgeRecipe(hasteRecipe));
+        }
+
+        PageAlchemyArray hasteRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.sigilHaste));
+        if (hasteRecipePage != null)
+        {
+            hastePages.add(hasteRecipePage);
+        }
+
+        hastePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "haste" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "haste"), new EntryText(hastePages, TextHelper.localize(keyBase + "haste"), true));
+
+        List<IPage> severancePages = new ArrayList<IPage>();
+
+        TartaricForgeRecipe severanceRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_SEVERANCE));
+        if (severanceRecipe != null)
+        {
+            severancePages.add(new PageTartaricForgeRecipe(severanceRecipe));
+        }
+
+        PageAlchemyArray severanceRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.sigilEnderSeverance));
+        if (severanceRecipePage != null)
+        {
+            severancePages.add(severanceRecipePage);
+        }
+
+        severancePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "severance" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "severance"), new EntryText(severancePages, TextHelper.localize(keyBase + "severance"), true));
+
+        List<IPage> telepositionPages = new ArrayList<IPage>();
+
+        TartaricForgeRecipe telepositionRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_TELEPOSITION));
+        if (telepositionRecipe != null)
+        {
+            telepositionPages.add(new PageTartaricForgeRecipe(telepositionRecipe));
+        }
+
+        PageAlchemyArray telepositionRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.sigilTeleposition));
+        if (telepositionRecipePage != null)
+        {
+            telepositionPages.add(telepositionRecipePage);
+        }
+
+        telepositionPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "teleposition" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "teleposition"), new EntryText(telepositionPages, TextHelper.localize(keyBase + "teleposition"), true));
+
+        List<IPage> compressionPages = new ArrayList<IPage>();
+
+        TartaricForgeRecipe compressionRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_COMPRESSION));
+        if (compressionRecipe != null)
+        {
+            compressionPages.add(new PageTartaricForgeRecipe(compressionRecipe));
+        }
+
+        PageAlchemyArray compressionRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.sigilCompression));
+        if (compressionRecipePage != null)
+        {
+            compressionPages.add(compressionRecipePage);
+        }
+
+        compressionPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "compression" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "compression"), new EntryText(compressionPages, TextHelper.localize(keyBase + "compression"), true));
+
+        List<IPage> bridgePages = new ArrayList<IPage>();
+
+        TartaricForgeRecipe bridgeRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_BRIDGE));
+        if (bridgeRecipe != null)
+        {
+            bridgePages.add(new PageTartaricForgeRecipe(bridgeRecipe));
+        }
+
+        PageAlchemyArray bridgeRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.sigilPhantomBridge));
+        if (bridgeRecipePage != null)
+        {
+            bridgePages.add(bridgeRecipePage);
+        }
+
+        bridgePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bridge" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "bridge"), new EntryText(bridgePages, TextHelper.localize(keyBase + "bridge"), true));
+
+        //TODO
         for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
         {
             for (IPage page : entry.getValue().pageList)
