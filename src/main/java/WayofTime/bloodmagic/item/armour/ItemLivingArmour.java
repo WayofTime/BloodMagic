@@ -275,18 +275,22 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                     if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && Keyboard.isKeyDown(Keyboard.KEY_M))
                     {
                         StatTracker tracker = null;
-                        for (StatTracker searchTracker : armour.trackerMap.values()) {
-                            if (searchTracker != null && searchTracker.providesUpgrade(upgrade.getUniqueIdentifier())) {
+                        for (StatTracker searchTracker : armour.trackerMap.values())
+                        {
+                            if (searchTracker != null && searchTracker.providesUpgrade(upgrade.getUniqueIdentifier()))
+                            {
                                 tracker = searchTracker;
                                 break;
                             }
                         }
 
-                        if (tracker != null) {
+                        if (tracker != null)
+                        {
                             double progress = tracker.getProgress(armour, upgrade.getUpgradeLevel());
                             tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.progress", TextHelper.localize(upgrade.getUnlocalizedName()), MathHelper.clamp_int((int) (progress * 100D), 0, 100)));
                         }
-                    } else {
+                    } else
+                    {
                         tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getUnlocalizedName()), upgrade.getUpgradeLevel() + 1));
                     }
                 }
@@ -328,7 +332,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                     if (LivingArmour.hasFullSet(player))
                     {
                         ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.elytra", chestStack);
+                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(Constants.Mod.MODID + ".upgrade.elytra", chestStack);
                         if (upgrade instanceof LivingArmourUpgradeElytra)
                         {
                             if (spPlayer.motionY > -0.5D)
@@ -495,6 +499,21 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         }
 
         LivingArmour armour = getLivingArmour(stack);
+
+        for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
+        {
+            if (entry.getKey().equals(uniqueIdentifier))
+            {
+                return entry.getValue();
+            }
+        }
+
+        return null;
+    }
+
+    public static LivingArmourUpgrade getUpgradeFromNBT(String uniqueIdentifier, ItemStack stack)
+    {
+        LivingArmour armour = getLivingArmourFromStack(stack);
 
         for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
         {

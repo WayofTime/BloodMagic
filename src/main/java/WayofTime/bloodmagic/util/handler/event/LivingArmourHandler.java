@@ -109,7 +109,7 @@ public class LivingArmourHandler
 
                     if (!player.isSneaking())
                     {
-                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.jump", chestStack);
+                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(Constants.Mod.MODID + ".upgrade.jump", chestStack);
 
                         if (upgrade instanceof LivingArmourUpgradeJump)
                         {
@@ -163,7 +163,7 @@ public class LivingArmourHandler
                 LivingArmour armour = ItemLivingArmour.getLivingArmourFromStack(chestStack);
                 if (armour != null)
                 {
-                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.movement", chestStack);
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(Constants.Mod.MODID + ".upgrade.movement", chestStack);
 
                     if (upgrade instanceof LivingArmourUpgradeSpeed)
                     {
