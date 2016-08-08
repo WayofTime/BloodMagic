@@ -656,7 +656,6 @@ public class CategoryArchitect
         bridgePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bridge" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "bridge"), new EntryText(bridgePages, TextHelper.localize(keyBase + "bridge"), true));
 
-        //TODO
         for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
         {
             for (IPage page : entry.getValue().pageList)

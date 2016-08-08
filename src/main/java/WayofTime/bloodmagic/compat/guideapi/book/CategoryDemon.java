@@ -130,6 +130,71 @@ public class CategoryDemon
         routingPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "routing" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "routing"), new EntryText(routingPages, TextHelper.localize(keyBase + "routing"), true));
 
+        List<IPage> auraPages = new ArrayList<IPage>();
+
+        auraPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "aura" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "aura"), new EntryText(auraPages, TextHelper.localize(keyBase + "aura"), true));
+
+        List<IPage> typesPages = new ArrayList<IPage>();
+
+        typesPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "types" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "types"), new EntryText(typesPages, TextHelper.localize(keyBase + "types"), true));
+
+        List<IPage> cruciblePages = new ArrayList<IPage>();
+
+        TartaricForgeRecipe crucibleRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.demonCrucible));
+        if (crucibleRecipe != null)
+        {
+            cruciblePages.add(new PageTartaricForgeRecipe(crucibleRecipe));
+        }
+
+        cruciblePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "crucible" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "crucible"), new EntryText(cruciblePages, TextHelper.localize(keyBase + "crucible"), true));
+
+        List<IPage> crystallizerPages = new ArrayList<IPage>();
+
+        TartaricForgeRecipe crystallizerRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.demonCrystallizer));
+        if (crystallizerRecipe != null)
+        {
+            crystallizerPages.add(new PageTartaricForgeRecipe(crystallizerRecipe));
+        }
+
+        crystallizerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "crystallizer" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "crystallizer"), new EntryText(crystallizerPages, TextHelper.localize(keyBase + "crystallizer"), true));
+
+        List<IPage> clusterPages = new ArrayList<IPage>();
+
+        TartaricForgeRecipe clusterRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.demonCrystal));
+        if (clusterRecipe != null)
+        {
+            clusterPages.add(new PageTartaricForgeRecipe(clusterRecipe));
+        }
+
+        clusterPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "cluster" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "cluster"), new EntryText(clusterPages, TextHelper.localize(keyBase + "cluster"), true));
+
+        List<IPage> pylonPages = new ArrayList<IPage>();
+
+        TartaricForgeRecipe pylonRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.demonPylon));
+        if (pylonRecipe != null)
+        {
+            pylonPages.add(new PageTartaricForgeRecipe(pylonRecipe));
+        }
+
+        pylonPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "pylon" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "pylon"), new EntryText(pylonPages, TextHelper.localize(keyBase + "pylon"), true));
+
+        List<IPage> gaugePages = new ArrayList<IPage>();
+
+        TartaricForgeRecipe gaugeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.demonWillGauge));
+        if (gaugeRecipe != null)
+        {
+            gaugePages.add(new PageTartaricForgeRecipe(gaugeRecipe));
+        }
+
+        gaugePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "gauge" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "gauge"), new EntryText(gaugePages, TextHelper.localize(keyBase + "gauge"), true));
+
         for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
         {
             for (IPage page : entry.getValue().pageList)

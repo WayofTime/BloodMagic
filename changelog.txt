@@ -7,6 +7,7 @@ Version 2.0.3-54
 - Fixed the Aura gauge not resetting in chunks that do not have any Aura
 - Added tooltips for the progress to the next upgrade for Living Armour (hold shift + M)
 - Finished off The Architect docs for now
+- Finished off The Demon Kin docs for the time being
 
 ------------------------------------------------------
 Version 2.0.3-53
