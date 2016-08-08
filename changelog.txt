@@ -5,6 +5,7 @@ Version 2.0.3-54
 - Fixed the Hellfire Forge so that swapping Tartaric gems will not give free stuff.
 - Added the Potion Flask and a few of the potion effects - max amount of effects that can be added to a single flask is currently 3.
 - Fixed the Aura gauge not resetting in chunks that do not have any Aura
+- Added tooltips for the progress to the next upgrade for Living Armour (hold shift + M)
 
 ------------------------------------------------------
 Version 2.0.3-53

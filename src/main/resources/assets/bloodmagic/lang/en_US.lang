@@ -381,6 +381,8 @@ tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.upgrade.progress=%s (%d/100)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
 
+tooltip.BloodMagic.livingArmour.extraExtraInfo=&9-Hold shift + M for progress info-
+
 tooltip.BloodMagic.will=Will Quality: %1$,.2f
 tooltip.BloodMagic.sentientSword.desc=Uses demon will to unleash its full potential.
 tooltip.BloodMagic.sentientAxe.desc=Uses demon will to unleash its full potential.

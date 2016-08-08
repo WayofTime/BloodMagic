@@ -297,6 +297,10 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             }
 
             tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmour.upgrade.points", armour.totalUpgradePoints, armour.maxUpgradePoints));
+            if (!(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && Keyboard.isKeyDown(Keyboard.KEY_M)))
+            {
+                tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmour.extraExtraInfo"));
+            }
         }
 
         super.addInformation(stack, player, tooltip, advanced);
