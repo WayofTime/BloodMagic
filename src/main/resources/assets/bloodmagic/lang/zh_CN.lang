@@ -333,7 +333,7 @@ tooltip.BloodMagic.diviner.duskRune=薄暮仪式石: %d
 tooltip.BloodMagic.diviner.dawnRune=破晓仪式石: %d
 tooltip.BloodMagic.diviner.totalRune=仪式石总数: %d
 tooltip.BloodMagic.diviner.extraInfo=&9-按 shift 了解详细信息-
-tooltip.BloodMagic.diviner.extraExtraInfo=&9-按 shift + M 展开更多信息-
+tooltip.BloodMagic.diviner.extraExtraInfo=&9-按住 shift + M 展开更多信息-
 tooltip.BloodMagic.diviner.currentDirection=当前朝向: %s
 
 tooltip.BloodMagic.ritualReader.currentState=当前模式: %s
@@ -378,7 +378,10 @@ tooltip.BloodMagic.livingArmour.upgrade.elytra=鞘翅
 tooltip.BloodMagic.livingArmour.upgrade.slowness=疲瘸之腿
 tooltip.BloodMagic.livingArmour.upgrade.crippledArm=残废手臂
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (等级 %d)
+
 tooltip.BloodMagic.livingArmour.upgrade.points=&6强化点数: %s / %s
+
+tooltip.BloodMagic.livingArmour.extraExtraInfo=&9-按住 shift + M 查看进展信息-
 
 tooltip.BloodMagic.will=意志质量: %1$,.2f
 tooltip.BloodMagic.sentientSword.desc=以恶魔意志唤起其最大潜能.
