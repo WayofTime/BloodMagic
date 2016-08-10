@@ -18,7 +18,7 @@ public class TileDemonCrystallizer extends TileEntity implements ITickable, IDem
     public static final int maxWill = 100;
     public static final double drainRate = 1;
 
-    public static final double willToFormCrystal = 100;
+    public static final double willToFormCrystal = 99;
     public static final double totalFormationTime = 1000;
     public double internalCounter = 0;
 

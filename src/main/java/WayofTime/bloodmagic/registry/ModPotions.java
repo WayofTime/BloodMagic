@@ -19,6 +19,7 @@ public class ModPotions
     public static Potion soulFray;
     public static Potion fireFuse;
     public static Potion constrict;
+    public static Potion plantLeech;
 
     public static void init()
     {
@@ -44,6 +45,7 @@ public class ModPotions
 
         fireFuse = registerPotion("Fire Fuse", new ResourceLocation("fireFuse"), true, 0xFF3333, 5, 0);
         constrict = registerPotion("Constriction", new ResourceLocation("constrict"), true, 0x000000, 6, 0);
+        plantLeech = registerPotion("Plant Leech", new ResourceLocation("plantLeech"), true, 0x000000, 7, 0);
         // heavyHeart = new PotionBloodMagic("Heavy Heart", new
         // ResourceLocation(resourceLocation +
         // heavyHeart.getName().toLowerCase()), true, 0, 0, 0);

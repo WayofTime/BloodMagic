@@ -54,6 +54,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.DemonAuraPacketProcessor;
+import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.util.ChatUtil;
@@ -128,6 +129,16 @@ public class GenericHandler
             if (entity.getActivePotionEffect(ModPotions.fireFuse).getDuration() <= 3)
             {
                 entity.worldObj.createExplosion(null, entity.posX, entity.posY, entity.posZ, radius, false);
+            }
+        }
+
+        if (entity.isPotionActive(ModPotions.plantLeech))
+        {
+            int amplifier = entity.getActivePotionEffect(ModPotions.plantLeech).getAmplifier();
+            int timeRemaining = entity.getActivePotionEffect(ModPotions.plantLeech).getDuration();
+            if (timeRemaining % 10 == 0)
+            {
+                BMPotionUtils.damageMobAndGrowSurroundingPlants(entity, 2 + amplifier, 1, 0.5 * 3 / (amplifier + 3), 25 * (1 + amplifier));
             }
         }
     }

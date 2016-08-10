@@ -10,7 +10,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
 
 public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 {
