@@ -1,12 +1,11 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.potion.PotionBloodMagic;
 import WayofTime.bloodmagic.potion.PotionEventHandlers;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModPotions
 {
@@ -20,6 +19,7 @@ public class ModPotions
     public static Potion fireFuse;
     public static Potion constrict;
     public static Potion plantLeech;
+    public static Potion deafness;
 
     public static void init()
     {
@@ -46,6 +46,7 @@ public class ModPotions
         fireFuse = registerPotion("Fire Fuse", new ResourceLocation("fireFuse"), true, 0xFF3333, 5, 0);
         constrict = registerPotion("Constriction", new ResourceLocation("constrict"), true, 0x000000, 6, 0);
         plantLeech = registerPotion("Plant Leech", new ResourceLocation("plantLeech"), true, 0x000000, 7, 0);
+        deafness = registerPotion("Deaf", new ResourceLocation("deafness"), true, 0x000000, 0, 1);
         // heavyHeart = new PotionBloodMagic("Heavy Heart", new
         // ResourceLocation(resourceLocation +
         // heavyHeart.getName().toLowerCase()), true, 0, 0, 0);

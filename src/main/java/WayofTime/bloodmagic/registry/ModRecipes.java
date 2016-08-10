@@ -403,7 +403,7 @@ public class ModRecipes
         addPotionRecipe(1000, 1, new ItemStack(Items.POISONOUS_POTATO), new PotionEffect(MobEffects.SATURATION, 1));
         addPotionRecipe(1000, 1, new ItemStack(ModItems.bloodShard, 1, 0), new PotionEffect(MobEffects.HEALTH_BOOST, 2 * 60 * 20));
 
-        addPotionRecipe(1000, 1, new ItemStack(Items.BEETROOT), new PotionEffect(ModPotions.plantLeech, 1 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.BEETROOT), new PotionEffect(ModPotions.deafness, 450));
     }
 
     static ItemStack mundaneLengtheningStack = ItemComponent.getStack(ItemComponent.CATALYST_LENGTH_1);

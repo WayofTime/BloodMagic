@@ -1,14 +1,13 @@
 package WayofTime.bloodmagic.util.handler.event;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.registry.RitualRegistry;
-import com.google.common.base.Stopwatch;
-import com.google.common.collect.SetMultimap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
@@ -24,7 +23,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.MouseEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -37,8 +41,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
@@ -49,10 +56,14 @@ import WayofTime.bloodmagic.item.ItemRitualReader;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.SigilHoldingPacketProcessor;
+import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.handler.BMKeyBinding;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+
+import com.google.common.base.Stopwatch;
+import com.google.common.collect.SetMultimap;
 
 @Handler
 @SideOnly(Side.CLIENT)
@@ -107,6 +118,16 @@ public class ClientHandler
             {
                 event.getToolTip().add(TextHelper.localize("tooltip.BloodMagic.ghost.amount", amount));
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onSoundEvent(PlaySoundEvent event)
+    {
+        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        if (player != null && player.isPotionActive(ModPotions.deafness))
+        {
+            event.setResultSound(null);
         }
     }
 
@@ -208,7 +229,8 @@ public class ClientHandler
 
     // Stolen from Chisel
     @SubscribeEvent
-    public void onModelBake(ModelBakeEvent event) {
+    public void onModelBake(ModelBakeEvent event)
+    {
         if (BloodMagic.isDev() && SUPPRESS_ASSET_ERRORS)
             return;
 
@@ -244,7 +266,8 @@ public class ClientHandler
 
     // For some reason, we need some bad textures to be listed in the Crystal and Node models. This will hide that from the end user.
     @SubscribeEvent
-    public void onTextureStitch(TextureStitchEvent.Post event) {
+    public void onTextureStitch(TextureStitchEvent.Post event)
+    {
         if (BloodMagic.isDev() && SUPPRESS_ASSET_ERRORS)
             return;
 
@@ -257,7 +280,8 @@ public class ClientHandler
         Set<ResourceLocation> toRemove = new HashSet<ResourceLocation>();
 
         // Find our missing textures and mark them for removal. Cannot directly remove as it would cause a CME
-        if (missingTextures.containsKey(mc)) {
+        if (missingTextures.containsKey(mc))
+        {
             Set<ResourceLocation> missingMCTextures = missingTextures.get(mc);
             for (ResourceLocation texture : missingMCTextures)
                 if (texture.getResourcePath().equalsIgnoreCase(String.format(format, "node")) || texture.getResourcePath().equalsIgnoreCase(String.format(format, "crystal")))
@@ -268,7 +292,8 @@ public class ClientHandler
         missingTextures.get(mc).removeAll(toRemove);
 
         // Make sure to only remove the bad MC domain if no other textures are missing
-        if (missingTextures.get(mc).isEmpty()) {
+        if (missingTextures.get(mc).isEmpty())
+        {
             missingTextures.keySet().remove(mc);
             badTextureDomains.remove(mc);
         }
