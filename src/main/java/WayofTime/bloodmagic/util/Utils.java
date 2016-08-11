@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.util;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
@@ -30,8 +31,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 import net.minecraftforge.common.MinecraftForge;
@@ -77,6 +80,97 @@ public class Utils
         }
 
         return false;
+    }
+
+    public static int plantSeedsInArea(World world, AxisAlignedBB aabb, int horizontalRadius, int verticalRadius)
+    {
+        int placedBlocks = 0;
+        List<EntityItem> itemEntities = world.getEntitiesWithinAABB(EntityItem.class, aabb);
+
+        for (EntityItem itemEntity : itemEntities)
+        {
+            placedBlocks += plantEntityItem(itemEntity, horizontalRadius, verticalRadius);
+        }
+
+        return placedBlocks;
+    }
+
+    public static int plantItemStack(World world, BlockPos centralPos, ItemStack stack, int horizontalRadius, int verticalRadius)
+    {
+        if (stack == null || stack.stackSize <= 0)
+        {
+            return 0;
+        }
+
+        Item item = stack.getItem();
+        if (!(item instanceof IPlantable))
+        {
+            return 0;
+        }
+
+        int planted = 0;
+
+        for (int hR = 0; hR <= horizontalRadius; hR++)
+        {
+            for (int vR = 0; vR <= verticalRadius; vR++)
+            {
+                for (int i = -hR; i <= hR; i++)
+                {
+                    for (int k = -hR; k <= hR; k++)
+                    {
+                        for (int j = -vR; j <= vR; j += 2 * vR + (vR > 0 ? 0 : 1))
+                        {
+                            if (!(Math.abs(i) == hR || Math.abs(k) == hR))
+                            {
+                                continue;
+                            }
+
+                            BlockPos newPos = centralPos.add(i, j, k);
+                            if (world.isAirBlock(newPos))
+                            {
+                                BlockPos offsetPos = newPos.offset(EnumFacing.DOWN);
+                                IBlockState state = world.getBlockState(offsetPos);
+                                if (state.getBlock().canSustainPlant(state, world, offsetPos, EnumFacing.UP, (IPlantable) item))
+                                {
+                                    IBlockState plantState = ((IPlantable) item).getPlant(world, newPos);
+                                    world.setBlockState(newPos, plantState, 3);
+                                    world.playEvent(2001, newPos, Block.getIdFromBlock(plantState.getBlock()) + (plantState.getBlock().getMetaFromState(plantState) << 12));
+                                    stack.stackSize--;
+                                    planted++;
+                                    if (stack.stackSize <= 0)
+                                    {
+                                        return planted;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return planted;
+    }
+
+    public static int plantEntityItem(EntityItem itemEntity, int horizontalRadius, int verticalRadius)
+    {
+        if (itemEntity == null || itemEntity.isDead)
+        {
+            return 0;
+        }
+
+        World world = itemEntity.worldObj;
+        BlockPos pos = itemEntity.getPosition();
+        ItemStack stack = itemEntity.getEntityItem();
+
+        int planted = plantItemStack(world, pos, stack, horizontalRadius, verticalRadius);
+
+        if (stack.stackSize <= 0)
+        {
+            itemEntity.setDead();
+        }
+
+        return planted;
     }
 
     public static int getDemonWillResolution(EntityPlayer player)

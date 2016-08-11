@@ -491,6 +491,8 @@ ritual.BloodMagic.crushingRitual.destructive.info=(Destructive) Blocks are broke
 ritual.BloodMagic.crushingRitual.steadfast.info=(Steadfast) Causes all blocks that are broken to be picked up with silk touch. Overrides Fortune where applicable.
 ritual.BloodMagic.crushingRitual.corrosive.info=(Corrosive) All blocks are broken to be processed with a form of cutting fluid. Overrides Silk Touch where applicable.
 ritual.BloodMagic.greenGroveRitual.corrosive.info=(Corrosive) Entities within range are attacked by nearby plants, leeching away their life.
+ritual.BloodMagic.greenGroveRitual.default.info=(Raw) Increases the speed of all of the ritual operations depending on the total Will in the Aura.
+ritual.BloodMagic.greenGroveRitual.steadfast.info=(Steadfast) Seeds are replanted and blocks are hydrated within the Hydration range.
 
 ritual.BloodMagic.fullStomachRitual.info=Takes food from the linked chest and fills the player's saturation with it.
 ritual.BloodMagic.interdictionRitual.info=Pushes all mobs within its area away from the master ritual stone.
@@ -516,6 +518,7 @@ ritual.BloodMagic.lavaRitual.lavaRange.info=(Lava) The area that the ritual will
 ritual.BloodMagic.lavaRitual.fireFuse.info=(Vengeful) Entities in this range are afflicted by Fire Fuse.
 ritual.BloodMagic.greenGroveRitual.growing.info=(Growth) The area that the ritual will grow plants in.
 ritual.BloodMagic.greenGroveRitual.leech.info=(Corrosive) Entities in this area have their life drained to grow nearby crops.
+ritual.BloodMagic.greenGroveRitual.hydrate.info=(Steadfast) Blocks within this range are rehydrated into farmland, and seeds within the area are planted nearby.
 ritual.BloodMagic.jumpRitual.jumpRange.info=(Jumping) Entities in this range will be launched in the air.
 ritual.BloodMagic.wellOfSufferingRitual.altar.info=(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region.
 ritual.BloodMagic.wellOfSufferingRitual.damage.info=(Damage) This defines where the ritual will damage a mob. All mobs inside of this range (except for players) will receive damage over time.
