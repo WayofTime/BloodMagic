@@ -40,10 +40,13 @@ public class RitualGreenGrove extends Ritual
 
     public static double corrosiveWillDrain = 0.2;
     public static double rawWillDrain = 0.05;
+    public static double vengefulWillDrain = 0.05;
     public static double steadfastWillDrain = 0.05;
 
     public int refreshTime = 20;
     public static int defaultRefreshTime = 20;
+
+    public static double defaultGrowthChance = 0.3;
 
     public static IBlockState farmlandState = Blocks.FARMLAND.getDefaultState().withProperty(BlockFarmland.MOISTURE, 7);
 
@@ -80,12 +83,16 @@ public class RitualGreenGrove extends Ritual
         double corrosiveWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.CORROSIVE, willConfig);
         double rawWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.DEFAULT, willConfig);
         double steadfastWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.STEADFAST, willConfig);
+        double vengefulWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.VENGEFUL, willConfig);
 
         refreshTime = getRefreshTimeForRawWill(rawWill);
+        double growthChance = getPlantGrowthChanceForWill(vengefulWill);
 
         boolean consumeRawWill = rawWill >= rawWillDrain && refreshTime != defaultRefreshTime;
+        boolean consumeVengefulWill = vengefulWill >= vengefulWillDrain && growthChance != defaultGrowthChance;
 
         double rawDrain = 0;
+        double vengefulDrain = 0;
 
         AreaDescriptor growingRange = getBlockRange(GROW_RANGE);
 
@@ -98,7 +105,7 @@ public class RitualGreenGrove extends Ritual
             {
                 if (block instanceof IPlantable || block instanceof IGrowable)
                 {
-                    if (world.rand.nextDouble() < 0.3)
+                    if (world.rand.nextDouble() < growthChance)
                     {
                         block.updateTick(world, newPos, state, new Random());
                         IBlockState newState = world.getBlockState(newPos);
@@ -110,12 +117,18 @@ public class RitualGreenGrove extends Ritual
                                 rawWill -= rawWillDrain;
                                 rawDrain += rawWillDrain;
                             }
+
+                            if (consumeVengefulWill)
+                            {
+                                vengefulWill -= vengefulWillDrain;
+                                vengefulDrain += vengefulWillDrain;
+                            }
                         }
                     }
                 }
             }
 
-            if (totalGrowths >= maxGrowths || (consumeRawWill && rawWill < rawWillDrain))
+            if (totalGrowths >= maxGrowths || (consumeRawWill && rawWill < rawWillDrain) || (consumeVengefulWill && vengefulWill < vengefulWillDrain))
             {
                 break;
             }
@@ -124,6 +137,11 @@ public class RitualGreenGrove extends Ritual
         if (rawDrain > 0)
         {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrain, true);
+        }
+
+        if (vengefulDrain > 0)
+        {
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrain, true);
         }
 
         AreaDescriptor hydrateRange = getBlockRange(HYDRATE_RANGE);
@@ -209,6 +227,16 @@ public class RitualGreenGrove extends Ritual
         }
 
         network.syphon(totalGrowths * getRefreshCost());
+    }
+
+    public double getPlantGrowthChanceForWill(double will)
+    {
+        if (will > 0)
+        {
+            return 0.5;
+        }
+
+        return defaultGrowthChance;
     }
 
     public int getRefreshTimeForRawWill(double rawWill)
