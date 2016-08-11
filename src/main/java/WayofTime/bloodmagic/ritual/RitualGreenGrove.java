@@ -35,6 +35,10 @@ public class RitualGreenGrove extends Ritual
     public static final String LEECH_RANGE = "leech";
 
     public static double corrosiveWillDrain = 0.2;
+    public static double rawWillDrain = 0.05;
+
+    public int refreshTime = 20;
+    public static int defaultRefreshTime = 20;
 
     public RitualGreenGrove()
     {
@@ -65,6 +69,13 @@ public class RitualGreenGrove extends Ritual
         List<EnumDemonWillType> willConfig = masterRitualStone.getActiveWillConfig();
 
         double corrosiveWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.CORROSIVE, willConfig);
+        double rawWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.DEFAULT, willConfig);
+
+        refreshTime = getRefreshTimeForRawWill(rawWill);
+
+        boolean consumeRawWill = rawWill >= rawWillDrain && refreshTime != defaultRefreshTime;
+
+        double rawDrain = 0;
 
         AreaDescriptor growingRange = getBlockRange(GROW_RANGE);
 
@@ -79,13 +90,23 @@ public class RitualGreenGrove extends Ritual
                 {
                     block.updateTick(world, newPos, state, new Random());
                     totalGrowths++;
+                    if (consumeRawWill)
+                    {
+                        rawWill -= rawWillDrain;
+                        rawDrain += rawWillDrain;
+                    }
                 }
             }
 
-            if (totalGrowths >= maxGrowths)
+            if (totalGrowths >= maxGrowths || (consumeRawWill && rawWill >= rawWillDrain))
             {
                 break;
             }
+        }
+
+        if (rawDrain > 0)
+        {
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrain, true);
         }
 
         double corrosiveDrain = 0;
@@ -126,10 +147,20 @@ public class RitualGreenGrove extends Ritual
         network.syphon(totalGrowths * getRefreshCost());
     }
 
+    public int getRefreshTimeForRawWill(double rawWill)
+    {
+        if (rawWill > 0)
+        {
+            return 10;
+        }
+
+        return defaultRefreshTime;
+    }
+
     @Override
     public int getRefreshTime()
     {
-        return 20;
+        return refreshTime;
     }
 
     @Override
