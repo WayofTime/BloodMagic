@@ -11,21 +11,29 @@ import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
@@ -96,6 +104,9 @@ public class ClientHandler
     private static EnumFacing mrsHoloDirection;
     private static boolean mrsHoloDisplay;
 
+    boolean doCrystalRenderTest = false;
+    public static ResourceLocation crystalResource = new ResourceLocation(Constants.Mod.DOMAIN + "textures/entities/defaultCrystalLayer.png");
+
     // Contrary to what your IDE tells you, this *is* actually needed.
     public static final BMKeyBinding keyOpenSigilHolding = new BMKeyBinding("openSigilHolding", Keyboard.KEY_H, BMKeyBinding.Key.OPEN_SIGIL_HOLDING);
 
@@ -120,6 +131,243 @@ public class ClientHandler
             }
         }
     }
+
+    public static int stateMachine = 0;
+
+    @SubscribeEvent
+    public void onLivingRenderEvent(RenderLivingEvent.Post<EntityLivingBase> event)
+    {
+        if (doCrystalRenderTest)
+            blarg(crystalResource, event.getRenderer(), event.getEntity(), event.getX(), event.getY(), event.getZ(), event.getEntity().rotationYaw, Minecraft.getMinecraft().getRenderPartialTicks());
+    }
+
+    //TODO: START
+
+    public void blarg(ResourceLocation resource, RenderLivingBase<EntityLivingBase> renderer, EntityLivingBase entity, double x, double y, double z, float entityYaw, float partialTicks)
+    {
+//        if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Pre<T>(entity, this, x, y, z))) return;
+        GlStateManager.pushMatrix();
+        GlStateManager.disableCull();
+        renderer.getMainModel().swingProgress = entity.getSwingProgress(partialTicks);
+        boolean shouldSit = entity.isRiding() && (entity.getRidingEntity() != null && entity.getRidingEntity().shouldRiderSit());
+        renderer.getMainModel().isRiding = shouldSit;
+        renderer.getMainModel().isChild = entity.isChild();
+
+        try
+        {
+            float f = this.interpolateRotation(entity.prevRenderYawOffset, entity.renderYawOffset, partialTicks);
+            float f1 = this.interpolateRotation(entity.prevRotationYawHead, entity.rotationYawHead, partialTicks);
+            float f2 = f1 - f;
+
+            if (shouldSit && entity.getRidingEntity() instanceof EntityLivingBase)
+            {
+                EntityLivingBase entitylivingbase = (EntityLivingBase) entity.getRidingEntity();
+                f = this.interpolateRotation(entitylivingbase.prevRenderYawOffset, entitylivingbase.renderYawOffset, partialTicks);
+                f2 = f1 - f;
+                float f3 = MathHelper.wrapDegrees(f2);
+
+                if (f3 < -85.0F)
+                {
+                    f3 = -85.0F;
+                }
+
+                if (f3 >= 85.0F)
+                {
+                    f3 = 85.0F;
+                }
+
+                f = f1 - f3;
+
+                if (f3 * f3 > 2500.0F)
+                {
+                    f += f3 * 0.2F;
+                }
+            }
+
+            float f7 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
+            this.renderLivingAt(entity, x, y, z);
+            float f8 = this.handleRotationFloat(entity, partialTicks);
+            this.rotateCorpse(entity, f8, f, partialTicks);
+            float f4 = this.prepareScale(entity, partialTicks);
+            float f5 = 0.0F;
+            float f6 = 0.0F;
+
+            if (!entity.isRiding())
+            {
+                f5 = entity.prevLimbSwingAmount + (entity.limbSwingAmount - entity.prevLimbSwingAmount) * partialTicks;
+                f6 = entity.limbSwing - entity.limbSwingAmount * (1.0F - partialTicks);
+
+                if (entity.isChild())
+                {
+                    f6 *= 3.0F;
+                }
+
+                if (f5 > 1.0F)
+                {
+                    f5 = 1.0F;
+                }
+            }
+
+            GlStateManager.enableAlpha();
+            renderer.getMainModel().setLivingAnimations(entity, f6, f5, partialTicks);
+            renderer.getMainModel().setRotationAngles(f6, f5, f8, f2, f7, f4, entity);
+
+//            if (this.renderOutlines)
+//            {
+//                boolean flag1 = this.setScoreTeamColor(entity);
+//                GlStateManager.enableColorMaterial();
+//                GlStateManager.enableOutlineMode(this.getTeamColor(entity));
+//
+//                if (!this.renderMarker)
+//                {
+//                    this.renderModel(resource, renderer, entity, f6, f5, f8, f2, f7, f4);
+//                }
+//
+////                if (!(entity instanceof EntityPlayer) || !((EntityPlayer) entity).isSpectator())
+////                {
+////                    this.renderLayers(entity, f6, f5, partialTicks, f8, f2, f7, f4);
+////                }
+//
+//                GlStateManager.disableOutlineMode();
+//                GlStateManager.disableColorMaterial();
+//
+////                if (flag1)
+////                {
+////                    this.unsetScoreTeamColor();
+////                }
+//            } else
+            {
+//                boolean flag = this.setDoRenderBrightness(entity, partialTicks);
+                this.renderModel(resource, renderer, entity, f6, f5, f8, f2, f7, f4);
+
+//                if (flag)
+//                {
+//                    renderer.unsetBrightness();
+//                }
+
+                GlStateManager.depthMask(true);
+
+                if (!(entity instanceof EntityPlayer) || !((EntityPlayer) entity).isSpectator())
+                {
+//                    this.renderLayers(entity, f6, f5, partialTicks, f8, f2, f7, f4);
+                }
+            }
+
+            GlStateManager.disableRescaleNormal();
+        } catch (Exception exception)
+        {
+//            LOGGER.error((String)"Couldn\'t render entity", (Throwable)exception);
+        }
+
+        GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+        GlStateManager.enableTexture2D();
+        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+        GlStateManager.enableCull();
+        GlStateManager.popMatrix();
+//        super.doRender(entity, x, y, z, entityYaw, partialTicks);
+//        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Post<T>(entity, this, x, y, z));
+    }
+
+    protected void renderModel(ResourceLocation resource, RenderLivingBase<EntityLivingBase> renderer, EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor)
+    {
+        boolean flag = !entitylivingbaseIn.isInvisible();// || this.renderOutlines;
+        boolean flag1 = !flag && !entitylivingbaseIn.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer);
+
+        if (flag || flag1)
+        {
+            renderer.bindTexture(resource);
+
+            if (flag1)
+            {
+                GlStateManager.enableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
+            }
+
+            renderer.getMainModel().render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
+
+            if (flag1)
+            {
+                GlStateManager.disableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
+            }
+        }
+    }
+
+    protected float interpolateRotation(float prevYawOffset, float yawOffset, float partialTicks)
+    {
+        float f;
+
+        for (f = yawOffset - prevYawOffset; f < -180.0F; f += 360.0F)
+        {
+            ;
+        }
+
+        while (f >= 180.0F)
+        {
+            f -= 360.0F;
+        }
+
+        return prevYawOffset + partialTicks * f;
+    }
+
+    protected void renderLivingAt(EntityLivingBase entityLivingBaseIn, double x, double y, double z)
+    {
+        GlStateManager.translate((float) x, (float) y, (float) z);
+    }
+
+    protected void rotateCorpse(EntityLivingBase entityLiving, float p_77043_2_, float p_77043_3_, float partialTicks)
+    {
+        GlStateManager.rotate(180.0F - p_77043_3_, 0.0F, 1.0F, 0.0F);
+
+        if (entityLiving.deathTime > 0)
+        {
+            float f = ((float) entityLiving.deathTime + partialTicks - 1.0F) / 20.0F * 1.6F;
+            f = MathHelper.sqrt_float(f);
+
+            if (f > 1.0F)
+            {
+                f = 1.0F;
+            }
+
+            GlStateManager.rotate(f * this.getDeathMaxRotation(entityLiving), 0.0F, 0.0F, 1.0F);
+        } else
+        {
+            String s = TextFormatting.getTextWithoutFormattingCodes(entityLiving.getName());
+
+            if (s != null && (s.equals("Dinnerbone") || s.equals("Grumm")) && (!(entityLiving instanceof EntityPlayer) || ((EntityPlayer) entityLiving).isWearing(EnumPlayerModelParts.CAPE)))
+            {
+                GlStateManager.translate(0.0F, entityLiving.height + 0.1F, 0.0F);
+                GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
+            }
+        }
+    }
+
+    protected float getDeathMaxRotation(EntityLivingBase entity)
+    {
+        return 90.0F;
+    }
+
+    public float prepareScale(EntityLivingBase entitylivingbaseIn, float partialTicks)
+    {
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.scale(-1.0F, -1.0F, 1.0F);
+//        this.preRenderCallback(entitylivingbaseIn, partialTicks);
+        float f = 0.0625F;
+        GlStateManager.translate(0.0F, -1.501F, 0.0F);
+        return f;
+    }
+
+    protected float handleRotationFloat(EntityLivingBase livingBase, float partialTicks)
+    {
+        if (livingBase instanceof EntityChicken)
+        {
+            EntityChicken chickenEntity = (EntityChicken) livingBase;
+            float f = chickenEntity.oFlap + (chickenEntity.wingRotation - chickenEntity.oFlap) * partialTicks;
+            float f1 = chickenEntity.oFlapSpeed + (chickenEntity.destPos - chickenEntity.oFlapSpeed) * partialTicks;
+            return (MathHelper.sin(f) + 1.0F) * f1;
+        }
+        return (float) livingBase.ticksExisted + partialTicks;
+    }
+
+    //TODO: END
 
     @SubscribeEvent
     public void onSoundEvent(PlaySoundEvent event)
