@@ -73,6 +73,17 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
     }
 
     @Override
+    public int getMetaFromState(IBlockState state)
+    {
+        if (state.getBlock() == this)
+        {
+            return super.getMetaFromState(state);
+        }
+
+        return state.getBlock().getMetaFromState(state);
+    }
+
+    @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         TileMimic mimic = (TileMimic) world.getTileEntity(pos);
