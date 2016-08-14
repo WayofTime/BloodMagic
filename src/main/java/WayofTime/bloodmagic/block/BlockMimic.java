@@ -20,9 +20,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -30,6 +30,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.base.BlockStringContainer;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.util.Utils;
 
@@ -47,6 +48,7 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
         setResistance(5.0F);
         setSoundType(SoundType.STONE);
         setHarvestLevel("pickaxe", 0);
+        setLightOpacity(15);
     }
 
     @Nullable
@@ -57,9 +59,11 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos) {
+    public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos)
+    {
         TileMimic tileMimic = (TileMimic) world.getTileEntity(pos);
-        if (tileMimic != null && tileMimic.getStackInSlot(0) != null) {
+        if (tileMimic != null && tileMimic.getStackInSlot(0) != null)
+        {
             Block mimicBlock = Block.getBlockFromItem(tileMimic.getStackInSlot(0).getItem());
             IBlockState mimicState = mimicBlock.getStateFromMeta(tileMimic.getStackInSlot(0).getItemDamage());
             return mimicState.getSelectedBoundingBox(world, pos);
@@ -82,7 +86,15 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
         if (mimic.getStackInSlot(0) != null && player.getHeldItem(hand) != null)
             return false;
 
+        if (!mimic.dropItemsOnBreak && !player.capabilities.isCreativeMode)
+            return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+
         Utils.insertItemToTile(mimic, player);
+
+        if (player.capabilities.isCreativeMode)
+        {
+            mimic.dropItemsOnBreak = mimic.getStackInSlot(0) == null;
+        }
 
         world.notifyBlockUpdate(pos, state, state, 3);
         return true;
@@ -134,6 +146,20 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
     public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer)
     {
         return layer == BlockRenderLayer.CUTOUT_MIPPED || layer == BlockRenderLayer.TRANSLUCENT;
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
+    {
+        TileEntity tile = world.getTileEntity(blockPos);
+        if (tile instanceof TileMimic)
+        {
+            TileMimic TileMimic = (TileMimic) world.getTileEntity(blockPos);
+            if (TileMimic != null)
+                TileMimic.dropItems();
+        }
+
+        super.breakBlock(world, blockPos, blockState);
     }
 
     @Override
