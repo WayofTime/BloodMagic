@@ -133,7 +133,7 @@ public class Constants
         public static final String DOMAIN = MODID.toLowerCase(Locale.ENGLISH) + ":";
         public static final String NAME = "Blood Magic: Alchemical Wizardry";
         public static final String VERSION = "@VERSION@";
-        public static final String DEPEND = "required-after:Forge@[12.16.0.1840,);after:JEI@[2.23.0,);after:guideapi;";
+        public static final String DEPEND = "required-after:Forge@[12.16.0.1840,);after:JEI@[2.23.0,);required-after:guideapi;";
     }
 
     public static final class Gui
