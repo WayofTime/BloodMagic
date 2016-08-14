@@ -39,6 +39,7 @@ import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionMultiWill;
+import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -68,6 +69,8 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
     public static int[] poisonLevel = new int[] { 0, 0, 0, 1, 1, 1, 1 };
 
     public static double[] movementSpeed = new double[] { 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4 };
+
+    public static final boolean spawnSpecterOnClick = false;
 
     public ItemSentientSword()
     {
@@ -160,7 +163,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         }
     }
 
-    public void applyEffectToEntity(EnumDemonWillType type, int willBracket, EntityLivingBase target, EntityPlayer attacker)
+    public void applyEffectToEntity(EnumDemonWillType type, int willBracket, EntityLivingBase target, EntityLivingBase attacker)
     {
         switch (type)
         {
@@ -244,6 +247,14 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         recalculatePowers(stack, world, player);
+        if (!world.isRemote && spawnSpecterOnClick)
+        {
+            EntitySentientSpecter specterEntity = new EntitySentientSpecter(world);
+            specterEntity.setPosition(player.posX, player.posY, player.posZ);
+            world.spawnEntityInWorld(specterEntity);
+            System.out.println("Spawning Specter...");
+            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ModItems.sentientSword));
+        }
 
         return super.onItemRightClick(stack, world, player, hand);
     }

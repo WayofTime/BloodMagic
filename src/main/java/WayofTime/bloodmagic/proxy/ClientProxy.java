@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.proxy;
 
 import java.awt.Color;
-import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -11,7 +10,6 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
@@ -38,7 +36,9 @@ import WayofTime.bloodmagic.client.render.RenderItemRoutingNode;
 import WayofTime.bloodmagic.client.render.entity.BloodLightRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.MeteorRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SentientArrowRenderFactory;
+import WayofTime.bloodmagic.client.render.entity.SentientSpecterRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SoulSnareRenderFactory;
+import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
@@ -97,6 +97,7 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerEntityRenderingHandler(EntitySentientArrow.class, new SentientArrowRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityBloodLight.class, new BloodLightRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityMeteor.class, new MeteorRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(EntitySentientSpecter.class, new SentientSpecterRenderFactory());
 
         ShaderHelper.init();
     }
