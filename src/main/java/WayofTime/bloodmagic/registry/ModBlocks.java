@@ -28,6 +28,7 @@ import WayofTime.bloodmagic.block.BlockInputRoutingNode;
 import WayofTime.bloodmagic.block.BlockItemRoutingNode;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.block.BlockMasterRoutingNode;
+import WayofTime.bloodmagic.block.BlockMimic;
 import WayofTime.bloodmagic.block.BlockOutputRoutingNode;
 import WayofTime.bloodmagic.block.BlockPath;
 import WayofTime.bloodmagic.block.BlockPedestal;
@@ -43,6 +44,7 @@ import WayofTime.bloodmagic.item.block.ItemBlockBloodStoneBrick;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodTank;
 import WayofTime.bloodmagic.item.block.ItemBlockCrystal;
 import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
+import WayofTime.bloodmagic.item.block.ItemBlockMimic;
 import WayofTime.bloodmagic.item.block.ItemBlockPath;
 import WayofTime.bloodmagic.item.block.ItemBlockPedestal;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
@@ -60,6 +62,7 @@ import WayofTime.bloodmagic.tile.TileDimensionalPortal;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileIncenseAltar;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
+import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.tile.TilePhantomBlock;
 import WayofTime.bloodmagic.tile.TilePlinth;
 import WayofTime.bloodmagic.tile.TileSoulForge;
@@ -108,6 +111,8 @@ public class ModBlocks
     public static Block dimensionalPortal;
     public static Block bloodTank;
 
+    public static Block mimic;
+
     public static void init()
     {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
@@ -142,6 +147,8 @@ public class ModBlocks
 
         dimensionalPortal = registerBlock(new BlockDimensionalPortal(), Constants.BloodMagicBlock.DIMENSIONAL_PORTAL.getRegName());
         bloodTank = registerBlock(new ItemBlockBloodTank(new BlockBloodTank()), Constants.BloodMagicBlock.BLOOD_TANK.getRegName());
+
+        mimic = registerBlock(new ItemBlockMimic(new BlockMimic()), Constants.BloodMagicBlock.MIMIC.getRegName());
 
 //        testSpellBlock = registerBlock(new BlockTestSpellBlock());
 
@@ -181,6 +188,7 @@ public class ModBlocks
 
         GameRegistry.registerTileEntity(TileDimensionalPortal.class, Constants.Mod.MODID + ":" + TileDimensionalPortal.class.getSimpleName());
         GameRegistry.registerTileEntity(TileBloodTank.class, Constants.Mod.MODID + ":" + TileBloodTank.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileMimic.class, Constants.Mod.MODID + ":" + TileMimic.class.getSimpleName());
     }
 
     @SideOnly(Side.CLIENT)

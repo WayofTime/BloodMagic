@@ -288,6 +288,7 @@ public class Constants
         DEMON_CRYSTAL("BlockDemonCrystal"),
         DIMENSIONAL_PORTAL("BlockDimensionalPortal"),
         BLOOD_TANK("BlockBloodTank"),
+        MIMIC("BlockMimic"),
         ALCHEMY_TABLE("BlockAlchemyTable");
 
         @Getter
