@@ -21,6 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -48,9 +50,22 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
     }
 
     @Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World world, BlockPos pos)
     {
         return NULL_AABB;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos) {
+        TileMimic tileMimic = (TileMimic) world.getTileEntity(pos);
+        if (tileMimic != null && tileMimic.getStackInSlot(0) != null) {
+            Block mimicBlock = Block.getBlockFromItem(tileMimic.getStackInSlot(0).getItem());
+            IBlockState mimicState = mimicBlock.getStateFromMeta(tileMimic.getStackInSlot(0).getItemDamage());
+            return mimicState.getSelectedBoundingBox(world, pos);
+        }
+
+        return FULL_BLOCK_AABB;
     }
 
     @Override
@@ -59,6 +74,12 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
         TileMimic mimic = (TileMimic) world.getTileEntity(pos);
 
         if (mimic == null || player.isSneaking())
+            return false;
+
+        if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == new ItemStack(this).getItem())
+            return false;
+
+        if (mimic.getStackInSlot(0) != null && player.getHeldItem(hand) != null)
             return false;
 
         Utils.insertItemToTile(mimic, player);
