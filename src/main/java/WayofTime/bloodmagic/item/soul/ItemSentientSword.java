@@ -70,7 +70,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
 
     public static double[] movementSpeed = new double[] { 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4 };
 
-    public static final boolean spawnSpecterOnClick = false;
+    public static final boolean spawnSpecterOnClick = true;
 
     public ItemSentientSword()
     {
@@ -253,7 +253,9 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
             specterEntity.setPosition(player.posX, player.posY, player.posZ);
             world.spawnEntityInWorld(specterEntity);
             System.out.println("Spawning Specter...");
-            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ModItems.sentientSword));
+            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ModItems.sentientBow));
+            specterEntity.setOwner(player);
+            specterEntity.setTamed(true);
         }
 
         return super.onItemRightClick(stack, world, player, hand);
