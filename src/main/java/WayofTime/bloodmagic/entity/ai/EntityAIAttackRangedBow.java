@@ -59,7 +59,6 @@ public class EntityAIAttackRangedBow extends EntityAIBase
     public void startExecuting()
     {
         super.startExecuting();
-//        this.entity.setSwingingArms(true);
     }
 
     /**
@@ -68,7 +67,6 @@ public class EntityAIAttackRangedBow extends EntityAIBase
     public void resetTask()
     {
         super.startExecuting();
-//        this.entity.setSwingingArms(false);
         this.seeTime = 0;
         this.attackTime = -1;
         this.entity.resetActiveHand();

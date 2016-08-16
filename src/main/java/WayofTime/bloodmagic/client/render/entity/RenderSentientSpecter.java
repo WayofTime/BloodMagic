@@ -23,7 +23,7 @@ public class RenderSentientSpecter extends RenderBiped<EntitySentientSpecter>
 
     public RenderSentientSpecter(RenderManager renderManager)
     {
-        super(renderManager, new ModelBiped(0.0F), 0.1F);
+        super(renderManager, new ModelBiped(0.0F), 0);
         this.addLayer(new LayerBipedArmor(this));
         this.addLayer(new LayerHeldItem(this));
         this.addLayer(new LayerArrow(this));

@@ -23,7 +23,6 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -35,7 +34,6 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.management.PreYggdrasilConverter;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -45,6 +43,8 @@ import WayofTime.bloodmagic.entity.ai.EntityAIAttackRangedBow;
 import WayofTime.bloodmagic.entity.ai.EntityAIFollowOwner;
 import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtByTarget;
 import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtTarget;
+import WayofTime.bloodmagic.item.soul.ItemSentientBow;
+import WayofTime.bloodmagic.registry.ModItems;
 
 import com.google.common.base.Optional;
 
@@ -77,7 +77,7 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
         this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true, new Class[0]));
 
         this.setCombatTask();
-//        this.targetTasks.addTask(8, new EntityAINearestAttackableTarget<EntityAnimal>(this, EntityAnimal.class, false));
+//        this.targetTasks.addTask(8, new EntityAINearestAttackableTarget<EntityCreature>(this, EntityCreature.class, true));
     }
 
     @Override
@@ -213,48 +213,55 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
         }
     }
 
-    public void attackEntityWithRangedAttack(EntityLivingBase target, float p_82196_2_)
+    public void attackEntityWithRangedAttack(EntityLivingBase target, float velocity)
     {
-        EntityTippedArrow entitytippedarrow = new EntityTippedArrow(this.worldObj, this); //TODO: Change to an arrow created by the Sentient Bow
-        double d0 = target.posX - this.posX;
-        double d1 = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - entitytippedarrow.posY;
-        double d2 = target.posZ - this.posZ;
-        double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
-        entitytippedarrow.setThrowableHeading(d0, d1 + d3 * 0.2, d2, 1.6F, (float) (14 - this.worldObj.getDifficulty().getDifficultyId() * 4));
-        int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this);
-        int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this);
-        entitytippedarrow.setDamage((double) (p_82196_2_ * 2.0F) + this.rand.nextGaussian() * 0.25D + (double) ((float) this.worldObj.getDifficulty().getDifficultyId() * 0.11F));
-
-        if (i > 0)
+        ItemStack heldStack = this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+        if (heldStack != null && heldStack.getItem() == ModItems.sentientBow)
         {
-            entitytippedarrow.setDamage(entitytippedarrow.getDamage() + (double) i * 0.5D + 0.5D);
+            EntityTippedArrow arrowEntity = ((ItemSentientBow) heldStack.getItem()).getArrowEntity(worldObj, heldStack, target, this, velocity);
+            if (arrowEntity != null)
+            {
+                this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+                this.worldObj.spawnEntityInWorld(arrowEntity);
+            }
+        } else
+        {
+            EntityTippedArrow entitytippedarrow = new EntityTippedArrow(this.worldObj, this); //TODO: Change to an arrow created by the Sentient Bow
+            double d0 = target.posX - this.posX;
+            double d1 = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - entitytippedarrow.posY;
+            double d2 = target.posZ - this.posZ;
+            double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+            entitytippedarrow.setThrowableHeading(d0, d1 + d3 * 0.2, d2, 1.6F, 0); //TODO: Yes, it is an accurate arrow. Don't be hatin'
+            int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this);
+            int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this);
+            entitytippedarrow.setDamage((double) (velocity * 2.0F) + this.rand.nextGaussian() * 0.25D + (double) ((float) this.worldObj.getDifficulty().getDifficultyId() * 0.11F));
+
+            if (i > 0)
+            {
+                entitytippedarrow.setDamage(entitytippedarrow.getDamage() + (double) i * 0.5D + 0.5D);
+            }
+
+            if (j > 0)
+            {
+                entitytippedarrow.setKnockbackStrength(j);
+            }
+
+            boolean burning = this.isBurning();
+            burning = burning || EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, this) > 0;
+
+            if (burning)
+            {
+                entitytippedarrow.setFire(100);
+            }
+
+            if (true) //TODO: Add potion effects to the arrows
+            {
+                entitytippedarrow.addEffect(new PotionEffect(MobEffects.SLOWNESS, 600));
+            }
+
+            this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+            this.worldObj.spawnEntityInWorld(entitytippedarrow);
         }
-
-        if (j > 0)
-        {
-            entitytippedarrow.setKnockbackStrength(j);
-        }
-
-        boolean burning = this.isBurning();
-        burning = burning || EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, this) > 0;
-
-        if (burning)
-        {
-            entitytippedarrow.setFire(100);
-        }
-
-        ItemStack itemstack = this.getHeldItem(EnumHand.OFF_HAND);
-
-        if (itemstack != null && itemstack.getItem() == Items.TIPPED_ARROW)
-        {
-            entitytippedarrow.setPotionEffect(itemstack);
-        } else if (true) //TODO: Add potion effects to the arrows
-        {
-            entitytippedarrow.addEffect(new PotionEffect(MobEffects.SLOWNESS, 600));
-        }
-
-        this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-        this.worldObj.spawnEntityInWorld(entitytippedarrow);
     }
 
     public boolean isTamed()

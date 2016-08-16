@@ -2,14 +2,13 @@ package WayofTime.bloodmagic.item.soul;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,6 +17,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -87,8 +87,13 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
     {
         EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);
         double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
-        this.setCurrentType(stack, soulsRemaining > 0 ? type : EnumDemonWillType.DEFAULT);
-        int level = getLevel(stack, soulsRemaining);
+        recalculatePowers(stack, type, soulsRemaining);
+    }
+
+    public void recalculatePowers(ItemStack stack, EnumDemonWillType type, double will)
+    {
+        this.setCurrentType(stack, will > 0 ? type : EnumDemonWillType.DEFAULT);
+        int level = getLevel(stack, will);
 //
         double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
 
@@ -269,6 +274,54 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
     {
         this.recalculatePowers(stack, world, player);
         return super.onItemRightClick(stack, world, player, hand);
+    }
+
+    public EntityTippedArrow getArrowEntity(World world, ItemStack stack, EntityLivingBase target, EntityLivingBase user, float velocity)
+    {
+        EnumDemonWillType type = this.getCurrentType(stack);
+
+        double amount = user instanceof EntityPlayer ? (this.getDropOfActivatedBow(stack) * world.rand.nextDouble() + this.getStaticDropOfActivatedBow(stack)) : 0;
+
+        float newArrowVelocity = velocity * getVelocityOfArrow(stack);
+        EntitySentientArrow entityArrow = new EntitySentientArrow(world, user, type, amount);
+        entityArrow.setAim(user, user.rotationPitch, user.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
+
+        double d0 = target.posX - user.posX;
+        double d1 = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - entityArrow.posY;
+        double d2 = target.posZ - user.posZ;
+        double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+        entityArrow.setThrowableHeading(d0, d1 + d3 * 0.05, d2, newArrowVelocity, 0);
+
+        if (newArrowVelocity == 0)
+        {
+            world.playSound(null, user.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.NEUTRAL, 0.4F, 1.0F);
+            return null;
+        }
+
+        if (velocity == 1.0F)
+        {
+            entityArrow.setIsCritical(true);
+        }
+
+        int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
+
+        entityArrow.setDamage(entityArrow.getDamage() + this.getDamageAdded(stack) + (j > 0 ? j * 0.5 + 0.5 : 0));
+
+        int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
+
+        if (k > 0)
+        {
+            entityArrow.setKnockbackStrength(k);
+        }
+
+        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0)
+        {
+            entityArrow.setFire(100);
+        }
+
+        entityArrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
+
+        return entityArrow;
     }
 
     @Override
