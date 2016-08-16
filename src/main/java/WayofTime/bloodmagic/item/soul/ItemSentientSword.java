@@ -259,11 +259,11 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
             world.spawnEntityInWorld(specterEntity);
             System.out.println("Spawning Specter...");
 
-//            ItemStack bowStack = new ItemStack(ModItems.sentientBow);
-//            ((ItemSentientBow) ModItems.sentientBow).recalculatePowers(bowStack, EnumDemonWillType.DEFAULT, 1025);
+            ItemStack bowStack = new ItemStack(ModItems.sentientBow);
+            ((ItemSentientBow) ModItems.sentientBow).recalculatePowers(bowStack, EnumDemonWillType.CORROSIVE, 1025);
 
-//            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, bowStack);
-            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, stack.copy());
+            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, bowStack);
+//            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, stack.copy());
 //            specterEntity.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(ModItems.sentientArmourHelmet));
 //            specterEntity.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(ModItems.sentientArmourChest));
 //            specterEntity.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(ModItems.sentientArmourLegs));

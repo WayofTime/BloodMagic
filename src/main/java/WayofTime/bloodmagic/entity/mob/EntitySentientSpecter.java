@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.entity.mob;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import lombok.Getter;
@@ -38,6 +38,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.management.PreYggdrasilConverter;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -143,7 +144,7 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
 
     public boolean canStealEffectFromOwner(EntityLivingBase owner)
     {
-        if (this.type == EnumDemonWillType.CORROSIVE)
+        if (this.type != EnumDemonWillType.CORROSIVE)
         {
             return false;
         }
@@ -161,22 +162,28 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
 
     public boolean stealEffectsFromOwner(EntityLivingBase owner)
     {
-        if (this.type == EnumDemonWillType.CORROSIVE)
+        if (this.type != EnumDemonWillType.CORROSIVE)
         {
             return false;
         }
 
         boolean hasStolenEffect = false;
-        Iterator<PotionEffect> itr = new ArrayList<PotionEffect>(owner.getActivePotionEffects()).iterator();
-        while (itr.hasNext())
+
+        List<PotionEffect> removedEffects = new ArrayList<PotionEffect>();
+
+        for (PotionEffect eff : owner.getActivePotionEffects())
         {
-            PotionEffect eff = itr.next();
             if (canStealEffectFromOwner(owner, eff))
             {
-                owner.removePotionEffect(eff.getPotion());
-                this.addPotionEffect(eff);
+                removedEffects.add(eff);
                 hasStolenEffect = true;
             }
+        }
+
+        for (PotionEffect eff : removedEffects)
+        {
+            owner.removePotionEffect(eff.getPotion());
+            this.addPotionEffect(eff);
         }
 
         return hasStolenEffect;
@@ -185,38 +192,82 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
     public boolean applyNegativeEffectsToAttacked(EntityLivingBase attackedEntity, float percentTransmitted)
     {
         boolean hasProvidedEffect = false;
-        Iterator<PotionEffect> itr = new ArrayList<PotionEffect>(this.getActivePotionEffects()).iterator();
-        while (itr.hasNext())
+        List<PotionEffect> removedEffects = new ArrayList<PotionEffect>();
+        for (PotionEffect eff : this.getActivePotionEffects())
         {
-            PotionEffect eff = itr.next();
-            if (attackedEntity.isPotionApplicable(eff))
+            if (eff.getPotion().isBadEffect() && attackedEntity.isPotionApplicable(eff))
             {
                 if (!attackedEntity.isPotionActive(eff.getPotion()))
                 {
-                    PotionEffect newEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * percentTransmitted), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
-                    attackedEntity.addPotionEffect(newEffect);
-
-                    PotionEffect newSentientEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * (1 - percentTransmitted)), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
-                    this.removePotionEffect(eff.getPotion());
-                    this.addPotionEffect(newSentientEffect);
+                    removedEffects.add(eff);
                     hasProvidedEffect = true;
                 } else
                 {
                     PotionEffect activeEffect = attackedEntity.getActivePotionEffect(eff.getPotion());
                     if (activeEffect.getAmplifier() < eff.getAmplifier() || activeEffect.getDuration() < eff.getDuration() * percentTransmitted)
                     {
-                        PotionEffect newEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * percentTransmitted), eff.getAmplifier(), activeEffect.getIsAmbient(), activeEffect.doesShowParticles());
-                        attackedEntity.addPotionEffect(newEffect);
-
-                        PotionEffect newSentientEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * (1 - percentTransmitted)), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
-                        this.removePotionEffect(eff.getPotion());
-                        this.addPotionEffect(newSentientEffect);
+                        removedEffects.add(eff);
                         hasProvidedEffect = true;
                     }
                 }
             }
         }
+
+        for (PotionEffect eff : removedEffects)
+        {
+            if (!attackedEntity.isPotionActive(eff.getPotion()))
+            {
+                PotionEffect newEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * percentTransmitted), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
+                attackedEntity.addPotionEffect(newEffect);
+
+                PotionEffect newSentientEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * (1 - percentTransmitted)), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
+                this.removePotionEffect(eff.getPotion());
+                this.addPotionEffect(newSentientEffect);
+            } else
+            {
+                PotionEffect activeEffect = attackedEntity.getActivePotionEffect(eff.getPotion());
+
+                PotionEffect newEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * percentTransmitted), eff.getAmplifier(), activeEffect.getIsAmbient(), activeEffect.doesShowParticles());
+                attackedEntity.addPotionEffect(newEffect);
+
+                PotionEffect newSentientEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * (1 - percentTransmitted)), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
+                this.removePotionEffect(eff.getPotion());
+                this.addPotionEffect(newSentientEffect);
+            }
+        }
+
         return hasProvidedEffect;
+    }
+
+    public List<PotionEffect> getPotionEffectsForArrowRemovingDuration(float percentTransmitted)
+    {
+        List<PotionEffect> arrowEffects = new ArrayList<PotionEffect>();
+
+        if (type != EnumDemonWillType.CORROSIVE)
+        {
+            return arrowEffects;
+        }
+
+        List<PotionEffect> removedEffects = new ArrayList<PotionEffect>();
+        for (PotionEffect eff : this.getActivePotionEffects())
+        {
+            if (eff.getPotion().isBadEffect())
+            {
+                removedEffects.add(eff);
+            }
+        }
+
+        for (PotionEffect eff : removedEffects)
+        {
+            PotionEffect newEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * percentTransmitted), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
+            arrowEffects.add(newEffect);
+
+            PotionEffect newSentientEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * (1 - percentTransmitted)), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
+            this.removePotionEffect(eff.getPotion());
+            this.addPotionEffect(newSentientEffect);
+        }
+
+        return arrowEffects;
     }
 
     @Override
@@ -255,14 +306,27 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
 
     public boolean absorbExplosion(Explosion explosion)
     {
-        return true;
+        if (this.type == EnumDemonWillType.DESTRUCTIVE)
+        {
+            this.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 600, 1));
+
+            explosion.doExplosionB(true);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isEntityInvulnerable(DamageSource source)
+    {
+        return super.isEntityInvulnerable(source) && (this.type == EnumDemonWillType.DESTRUCTIVE && source.isExplosion());
     }
 
     @Override
     protected boolean canDespawn()
     {
-        //TODO: Change so that it despawns if not tamed after testing.
-        return false;
+        return !this.isTamed() && super.canDespawn();
     }
 
     @Override
@@ -350,6 +414,12 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
             EntityTippedArrow arrowEntity = ((ItemSentientBow) heldStack.getItem()).getArrowEntity(worldObj, heldStack, target, this, velocity);
             if (arrowEntity != null)
             {
+                List<PotionEffect> effects = getPotionEffectsForArrowRemovingDuration(0.2f);
+                for (PotionEffect eff : effects)
+                {
+                    arrowEntity.addEffect(eff);
+                }
+
                 this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
                 this.worldObj.spawnEntityInWorld(arrowEntity);
             }
