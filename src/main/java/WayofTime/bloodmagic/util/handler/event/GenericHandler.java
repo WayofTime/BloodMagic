@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.util.handler.event;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -15,7 +17,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -23,6 +29,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
+import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -45,6 +52,7 @@ import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.ItemExperienceBook;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
@@ -75,6 +83,29 @@ public class GenericHandler
             if (event.getHand() == EnumHand.OFF_HAND || level > 1)
             {
                 event.setCanceled(true);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onExplosion(ExplosionEvent.Start event)
+    {
+        World world = event.getWorld();
+        Explosion exp = event.getExplosion();
+        Vec3d position = exp.getPosition();
+        double radius = 3;
+
+        AxisAlignedBB bb = new AxisAlignedBB(position.xCoord - radius, position.yCoord - radius, position.zCoord - radius, position.xCoord + radius, position.yCoord + radius, position.zCoord + radius);
+        List<EntitySentientSpecter> specterList = world.getEntitiesWithinAABB(EntitySentientSpecter.class, bb);
+        if (!specterList.isEmpty())
+        {
+            for (EntitySentientSpecter specter : specterList)
+            {
+                if (specter.absorbExplosion(exp))
+                {
+                    event.setCanceled(true);
+                    return;
+                }
             }
         }
     }

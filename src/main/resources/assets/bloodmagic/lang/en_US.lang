@@ -583,6 +583,9 @@ chat.BloodMagic.altar.comp.notair=a solid block
 
 chat.BloodMagic.altar.nextTier=The next tier of blood altar is missing %s at %s.
 
+# entity
+entity.BloodMagic.SentientSpecter.name=Sentient Specter
+
 # sekrit
 
 secret.BloodMagic.bread.bloody=&r&cBloody Bread

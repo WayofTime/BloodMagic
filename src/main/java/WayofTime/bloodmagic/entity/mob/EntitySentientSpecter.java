@@ -1,9 +1,14 @@
 package WayofTime.bloodmagic.entity.mob;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.UUID;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -19,7 +24,6 @@ import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Enchantments;
@@ -38,9 +42,13 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.entity.ai.EntityAIAttackRangedBow;
 import WayofTime.bloodmagic.entity.ai.EntityAIFollowOwner;
+import WayofTime.bloodmagic.entity.ai.EntityAIGrabEffectsFromOwner;
 import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtByTarget;
 import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtTarget;
 import WayofTime.bloodmagic.item.soul.ItemSentientBow;
@@ -52,6 +60,10 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
 {
     protected static final DataParameter<Byte> TAMED = EntityDataManager.<Byte>createKey(EntityTameable.class, DataSerializers.BYTE);
     protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityTameable.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+
+    @Getter
+    @Setter
+    protected EnumDemonWillType type = EnumDemonWillType.DESTRUCTIVE;
 
     private final EntityAIAttackRangedBow aiArrowAttack = new EntityAIAttackRangedBow(this, 1.0D, 20, 15.0F);
     private final EntityAIAttackMelee aiAttackOnCollide = new EntityAIAttackMelee(this, 1.0D, false);
@@ -65,7 +77,8 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
 //        ((PathNavigateGround) getNavigator()).setCanSwim(false);
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(attackPriority, aiAttackOnCollide);
-        this.tasks.addTask(3, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
+        this.tasks.addTask(3, new EntityAIGrabEffectsFromOwner(this, 2.0D, 1.0F));
+        this.tasks.addTask(4, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
         this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(7, new EntityAILookIdle(this));
@@ -123,6 +136,107 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
         }
     }
 
+    public boolean canStealEffectFromOwner(EntityLivingBase owner, PotionEffect effect)
+    {
+        return effect.getPotion().isBadEffect() && this.type == EnumDemonWillType.CORROSIVE;
+    }
+
+    public boolean canStealEffectFromOwner(EntityLivingBase owner)
+    {
+        if (this.type == EnumDemonWillType.CORROSIVE)
+        {
+            return false;
+        }
+
+        for (PotionEffect eff : owner.getActivePotionEffects())
+        {
+            if (canStealEffectFromOwner(owner, eff))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean stealEffectsFromOwner(EntityLivingBase owner)
+    {
+        if (this.type == EnumDemonWillType.CORROSIVE)
+        {
+            return false;
+        }
+
+        boolean hasStolenEffect = false;
+        Iterator<PotionEffect> itr = new ArrayList<PotionEffect>(owner.getActivePotionEffects()).iterator();
+        while (itr.hasNext())
+        {
+            PotionEffect eff = itr.next();
+            if (canStealEffectFromOwner(owner, eff))
+            {
+                owner.removePotionEffect(eff.getPotion());
+                this.addPotionEffect(eff);
+                hasStolenEffect = true;
+            }
+        }
+
+        return hasStolenEffect;
+    }
+
+    public boolean applyNegativeEffectsToAttacked(EntityLivingBase attackedEntity, float percentTransmitted)
+    {
+        boolean hasProvidedEffect = false;
+        Iterator<PotionEffect> itr = new ArrayList<PotionEffect>(this.getActivePotionEffects()).iterator();
+        while (itr.hasNext())
+        {
+            PotionEffect eff = itr.next();
+            if (attackedEntity.isPotionApplicable(eff))
+            {
+                if (!attackedEntity.isPotionActive(eff.getPotion()))
+                {
+                    PotionEffect newEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * percentTransmitted), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
+                    attackedEntity.addPotionEffect(newEffect);
+
+                    PotionEffect newSentientEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * (1 - percentTransmitted)), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
+                    this.removePotionEffect(eff.getPotion());
+                    this.addPotionEffect(newSentientEffect);
+                    hasProvidedEffect = true;
+                } else
+                {
+                    PotionEffect activeEffect = attackedEntity.getActivePotionEffect(eff.getPotion());
+                    if (activeEffect.getAmplifier() < eff.getAmplifier() || activeEffect.getDuration() < eff.getDuration() * percentTransmitted)
+                    {
+                        PotionEffect newEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * percentTransmitted), eff.getAmplifier(), activeEffect.getIsAmbient(), activeEffect.doesShowParticles());
+                        attackedEntity.addPotionEffect(newEffect);
+
+                        PotionEffect newSentientEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * (1 - percentTransmitted)), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
+                        this.removePotionEffect(eff.getPotion());
+                        this.addPotionEffect(newSentientEffect);
+                        hasProvidedEffect = true;
+                    }
+                }
+            }
+        }
+        return hasProvidedEffect;
+    }
+
+    @Override
+    public boolean attackEntityAsMob(Entity attackedEntity)
+    {
+        if (super.attackEntityAsMob(attackedEntity))
+        {
+            if (this.type == EnumDemonWillType.CORROSIVE && attackedEntity instanceof EntityLivingBase)
+            {
+//                ((EntityLivingBase) attackedEntity).addPotionEffect(new PotionEffect(MobEffects.WITHER, 200));
+                applyNegativeEffectsToAttacked((EntityLivingBase) attackedEntity, 1);
+            }
+
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
     @Override
     public void setItemStackToSlot(EntityEquipmentSlot slotIn, ItemStack stack)
     {
@@ -137,6 +251,11 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
     public boolean isStationary()
     {
         return false;
+    }
+
+    public boolean absorbExplosion(Explosion explosion)
+    {
+        return true;
     }
 
     @Override
@@ -158,6 +277,8 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
         {
             tag.setString("OwnerUUID", this.getOwnerId().toString());
         }
+
+        tag.setString(Constants.NBT.WILL_TYPE, type.toString());
     }
 
     @Override
@@ -188,6 +309,14 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
             }
         }
 
+        if (!tag.hasKey(Constants.NBT.WILL_TYPE))
+        {
+            type = EnumDemonWillType.DEFAULT;
+        } else
+        {
+            type = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
+        }
+
         this.setCombatTask();
     }
 
@@ -196,11 +325,11 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
     {
         if (!(attacker instanceof EntityCreeper) && !(attacker instanceof EntityGhast))
         {
-            if (attacker instanceof EntityWolf)
+            if (attacker instanceof IEntityOwnable)
             {
-                EntityWolf entitywolf = (EntityWolf) attacker;
+                IEntityOwnable entityOwnable = (IEntityOwnable) attacker;
 
-                if (entitywolf.isTamed() && entitywolf.getOwner() == owner)
+                if (entityOwnable.getOwner() == owner)
                 {
                     return false;
                 }

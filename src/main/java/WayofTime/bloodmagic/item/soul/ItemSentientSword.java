@@ -90,8 +90,13 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
     {
         EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);
         double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
-        this.setCurrentType(stack, soulsRemaining > 0 ? type : EnumDemonWillType.DEFAULT);
-        int level = getLevel(stack, soulsRemaining);
+        recalculatePowers(stack, type, soulsRemaining);
+    }
+
+    public void recalculatePowers(ItemStack stack, EnumDemonWillType type, double will)
+    {
+        this.setCurrentType(stack, will > 0 ? type : EnumDemonWillType.DEFAULT);
+        int level = getLevel(stack, will);
 
         double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
         double extraDamage = getExtraDamage(type, level);
@@ -254,14 +259,16 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
             world.spawnEntityInWorld(specterEntity);
             System.out.println("Spawning Specter...");
 
-            ItemStack bowStack = new ItemStack(ModItems.sentientBow);
-            ((ItemSentientBow) ModItems.sentientBow).recalculatePowers(bowStack, EnumDemonWillType.DEFAULT, 1025);
+//            ItemStack bowStack = new ItemStack(ModItems.sentientBow);
+//            ((ItemSentientBow) ModItems.sentientBow).recalculatePowers(bowStack, EnumDemonWillType.DEFAULT, 1025);
 
-            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, bowStack);
-            specterEntity.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(ModItems.sentientArmourHelmet));
-            specterEntity.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(ModItems.sentientArmourChest));
-            specterEntity.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(ModItems.sentientArmourLegs));
-            specterEntity.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(ModItems.sentientArmourBoots));
+//            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, bowStack);
+            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, stack.copy());
+//            specterEntity.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(ModItems.sentientArmourHelmet));
+//            specterEntity.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(ModItems.sentientArmourChest));
+//            specterEntity.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(ModItems.sentientArmourLegs));
+//            specterEntity.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(ModItems.sentientArmourBoots));
+            specterEntity.setType(this.getCurrentType(stack));
             specterEntity.setOwner(player);
             specterEntity.setTamed(true);
         }
