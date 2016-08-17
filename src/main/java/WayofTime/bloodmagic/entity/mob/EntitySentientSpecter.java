@@ -11,6 +11,7 @@ import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -37,6 +38,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
@@ -49,16 +51,19 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.entity.ai.EntityAIAttackRangedBow;
 import WayofTime.bloodmagic.entity.ai.EntityAIFollowOwner;
 import WayofTime.bloodmagic.entity.ai.EntityAIGrabEffectsFromOwner;
 import WayofTime.bloodmagic.entity.ai.EntityAIHurtByTargetIgnoreTamed;
 import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtByTarget;
 import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtTarget;
+import WayofTime.bloodmagic.entity.ai.EntityAIRetreatToHeal;
 import WayofTime.bloodmagic.item.soul.ItemSentientBow;
 import WayofTime.bloodmagic.registry.ModItems;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
 
 public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
 {
@@ -76,7 +81,7 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
     private final EntityAIAttackRangedBow aiArrowAttack = new EntityAIAttackRangedBow(this, 1.0D, 20, 15.0F);
     private final EntityAIAttackMelee aiAttackOnCollide = new EntityAIAttackMelee(this, 1.0D, false);
 
-    private final int attackPriority = 2;
+    private final int attackPriority = 3;
 
     public EntitySentientSpecter(World worldIn)
     {
@@ -84,12 +89,13 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
         this.setSize(0.6F, 1.95F);
 //        ((PathNavigateGround) getNavigator()).setCanSwim(false);
         this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(2, new EntityAIRetreatToHeal<EntityCreature>(this, EntityCreature.class, 6.0F, 1.0D, 1.2D));
         this.tasks.addTask(attackPriority, aiAttackOnCollide);
-        this.tasks.addTask(3, new EntityAIGrabEffectsFromOwner(this, 2.0D, 1.0F));
-        this.tasks.addTask(4, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
-        this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-        this.tasks.addTask(7, new EntityAILookIdle(this));
+        this.tasks.addTask(4, new EntityAIGrabEffectsFromOwner(this, 2.0D, 1.0F));
+        this.tasks.addTask(5, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
+        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+        this.tasks.addTask(8, new EntityAILookIdle(this));
 
         this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
         this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
@@ -98,7 +104,7 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
         this.targetTasks.addTask(4, new EntityAIHurtByTargetIgnoreTamed(this, false, new Class[0]));
 
         this.setCombatTask();
-//        this.targetTasks.addTask(8, new EntityAINearestAttackableTarget<EntityCreature>(this, EntityCreature.class, true));
+//        this.targetTasks.addTask(8, new EntityAINearestAttackableTarget<EntityMob>(this, EntityMob.class, 10, true, false, new TargetPredicate(this)));
     }
 
     @Override
@@ -142,6 +148,19 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
                 this.tasks.addTask(attackPriority, this.aiAttackOnCollide);
             }
         }
+    }
+
+    @Override
+    public boolean isPotionApplicable(PotionEffect effect)
+    {
+        Potion potion = effect.getPotion();
+
+        if (potion == MobEffects.REGENERATION || potion == MobEffects.INSTANT_HEALTH) //Specter cannot be healed by normal means
+        {
+            return false;
+        }
+
+        return super.isPotionApplicable(effect);
     }
 
     public boolean canStealEffectFromOwner(EntityLivingBase owner, PotionEffect effect)
@@ -373,6 +392,41 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
         return super.isEntityInvulnerable(source) && (this.type == EnumDemonWillType.DESTRUCTIVE && source.isExplosion());
     }
 
+    /**
+     * 
+     * @param toHeal
+     * @return Amount of Will consumed from the Aura to heal
+     */
+    public double absorbWillFromAuraToHeal(double toHeal)
+    {
+        if (worldObj.isRemote)
+        {
+            return 0;
+        }
+
+        double will = WorldDemonWillHandler.getCurrentWill(worldObj, getPosition(), getType());
+        double healthMissing = this.getMaxHealth() - this.getHealth();
+
+        toHeal = Math.min(healthMissing, Math.min(toHeal, will / getWillToHealth()));
+        if (toHeal > 0)
+        {
+            this.heal((float) toHeal);
+            return WorldDemonWillHandler.drainWill(worldObj, getPosition(), getType(), toHeal * getWillToHealth(), true);
+        }
+
+        return 0;
+    }
+
+    public boolean shouldSelfHeal()
+    {
+        return this.getHealth() < this.getMaxHealth() * 0.5 && WorldDemonWillHandler.getCurrentWill(worldObj, getPosition(), getType()) > 0;
+    }
+
+    public double getWillToHealth()
+    {
+        return 2;
+    }
+
     @Override
     protected boolean canDespawn()
     {
@@ -597,5 +651,21 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
     public void setOwner(EntityPlayer player)
     {
         setOwnerId(player.getUniqueID());
+    }
+
+    public class TargetPredicate implements Predicate<EntityMob>
+    {
+        EntitySentientSpecter entity;
+
+        public TargetPredicate(EntitySentientSpecter entity)
+        {
+            this.entity = entity;
+        }
+
+        @Override
+        public boolean apply(EntityMob input)
+        {
+            return entity.shouldAttackEntity(input, this.entity.getOwner());
+        }
     }
 }
