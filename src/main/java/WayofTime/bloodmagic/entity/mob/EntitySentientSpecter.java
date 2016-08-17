@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.block.Block;
@@ -13,7 +15,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
@@ -39,6 +40,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -50,6 +52,7 @@ import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.entity.ai.EntityAIAttackRangedBow;
 import WayofTime.bloodmagic.entity.ai.EntityAIFollowOwner;
 import WayofTime.bloodmagic.entity.ai.EntityAIGrabEffectsFromOwner;
+import WayofTime.bloodmagic.entity.ai.EntityAIHurtByTargetIgnoreTamed;
 import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtByTarget;
 import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtTarget;
 import WayofTime.bloodmagic.item.soul.ItemSentientBow;
@@ -65,6 +68,10 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
     @Getter
     @Setter
     protected EnumDemonWillType type = EnumDemonWillType.DESTRUCTIVE;
+
+    @Getter
+    @Setter
+    protected boolean wasGivenSentientArmour = false;
 
     private final EntityAIAttackRangedBow aiArrowAttack = new EntityAIAttackRangedBow(this, 1.0D, 20, 15.0F);
     private final EntityAIAttackMelee aiAttackOnCollide = new EntityAIAttackMelee(this, 1.0D, false);
@@ -88,7 +95,7 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
         this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
 
-        this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true, new Class[0]));
+        this.targetTasks.addTask(4, new EntityAIHurtByTargetIgnoreTamed(this, false, new Class[0]));
 
         this.setCombatTask();
 //        this.targetTasks.addTask(8, new EntityAINearestAttackableTarget<EntityCreature>(this, EntityCreature.class, true));
@@ -299,6 +306,17 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
         }
     }
 
+    @Override
+    public void onDeath(DamageSource cause)
+    {
+        super.onDeath(cause);
+
+        if (!worldObj.isRemote)
+        {
+            this.entityDropItem(getHeldItemMainhand(), 0);
+        }
+    }
+
     public boolean isStationary()
     {
         return false;
@@ -316,6 +334,38 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
         }
 
         return false;
+    }
+
+    @Override
+    public boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack)
+    {
+        if (this.isTamed() && player.equals(this.getOwner()) && hand == EnumHand.MAIN_HAND)
+        {
+            if (stack == null && player.isSneaking()) //Should return to the entity
+            {
+                if (!worldObj.isRemote)
+                {
+                    if (getHeldItemMainhand() != null)
+                    {
+                        this.entityDropItem(getHeldItemMainhand(), 0);
+                    }
+
+                    if (getHeldItemOffhand() != null)
+                    {
+                        this.entityDropItem(getHeldItemOffhand(), 0);
+                    }
+
+                    if (wasGivenSentientArmour)
+                    {
+                        this.entityDropItem(new ItemStack(ModItems.sentientArmourGem), 0);
+                    }
+
+                    this.setDead();
+                }
+            }
+        }
+
+        return super.processInteract(player, hand, stack);
     }
 
     public boolean isEntityInvulnerable(DamageSource source)
@@ -343,6 +393,8 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
         }
 
         tag.setString(Constants.NBT.WILL_TYPE, type.toString());
+
+        tag.setBoolean("sentientArmour", wasGivenSentientArmour);
     }
 
     @Override
@@ -380,6 +432,8 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
         {
             type = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
         }
+
+        wasGivenSentientArmour = tag.getBoolean("sentientArmour");
 
         this.setCombatTask();
     }

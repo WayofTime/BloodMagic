@@ -32,6 +32,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IMultiWillTool;
 import WayofTime.bloodmagic.api.iface.ISentientSwordEffectProvider;
+import WayofTime.bloodmagic.api.iface.ISentientTool;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
@@ -46,7 +47,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IMeshProvider, IMultiWillTool
+public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IMeshProvider, IMultiWillTool, ISentientTool
 {
     public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000, 2000, 4000 };
     public static double[] defaultDamageAdded = new double[] { 1, 1.5, 2, 2.5, 3, 3.5, 4 };
@@ -252,26 +253,6 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         recalculatePowers(stack, world, player);
-        if (!world.isRemote && spawnSpecterOnClick)
-        {
-            EntitySentientSpecter specterEntity = new EntitySentientSpecter(world);
-            specterEntity.setPosition(player.posX, player.posY, player.posZ);
-            world.spawnEntityInWorld(specterEntity);
-            System.out.println("Spawning Specter...");
-
-            ItemStack bowStack = new ItemStack(ModItems.sentientBow);
-            ((ItemSentientBow) ModItems.sentientBow).recalculatePowers(bowStack, EnumDemonWillType.CORROSIVE, 1025);
-
-            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, bowStack);
-//            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, stack.copy());
-//            specterEntity.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(ModItems.sentientArmourHelmet));
-//            specterEntity.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(ModItems.sentientArmourChest));
-//            specterEntity.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(ModItems.sentientArmourLegs));
-//            specterEntity.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(ModItems.sentientArmourBoots));
-            specterEntity.setType(this.getCurrentType(stack));
-            specterEntity.setOwner(player);
-            specterEntity.setTamed(true);
-        }
 
         return super.onItemRightClick(stack, world, player, hand);
     }
@@ -515,5 +496,38 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         NBTTagCompound tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_SPEED, speed);
+    }
+
+    @Override
+    public boolean spawnSentientEntityOnDrop(ItemStack droppedStack, EntityPlayer player)
+    {
+        World world = player.worldObj;
+        if (!world.isRemote)
+        {
+            this.recalculatePowers(droppedStack, world, player);
+
+            EnumDemonWillType type = this.getCurrentType(droppedStack);
+            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+            if (soulsRemaining < 1024)
+            {
+                return false;
+            }
+
+            PlayerDemonWillHandler.consumeDemonWill(type, player, 100);
+
+            EntitySentientSpecter specterEntity = new EntitySentientSpecter(world);
+            specterEntity.setPosition(player.posX, player.posY, player.posZ);
+            world.spawnEntityInWorld(specterEntity);
+
+            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, droppedStack.copy());
+
+            specterEntity.setType(this.getCurrentType(droppedStack));
+            specterEntity.setOwner(player);
+            specterEntity.setTamed(true);
+
+            return true;
+        }
+
+        return false;
     }
 }

@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
@@ -23,6 +24,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -41,6 +43,7 @@ import WayofTime.bloodmagic.api.event.ItemBindEvent;
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.api.iface.ISentientTool;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.saving.SoulNetwork;
@@ -83,6 +86,24 @@ public class GenericHandler
             if (event.getHand() == EnumHand.OFF_HAND || level > 1)
             {
                 event.setCanceled(true);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerDropItem(ItemTossEvent event)
+    {
+        EntityItem itemEntity = event.getEntityItem();
+        if (itemEntity != null)
+        {
+            ItemStack stack = itemEntity.getEntityItem();
+            Item item = stack.getItem();
+            if (item instanceof ISentientTool)
+            {
+                if (((ISentientTool) item).spawnSentientEntityOnDrop(stack, event.getPlayer()))
+                {
+                    event.setCanceled(true);
+                }
             }
         }
     }

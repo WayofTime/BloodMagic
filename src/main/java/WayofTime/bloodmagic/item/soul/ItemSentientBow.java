@@ -8,6 +8,7 @@ import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
@@ -24,13 +25,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IMultiWillTool;
+import WayofTime.bloodmagic.api.iface.ISentientTool;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.registry.ModItems;
 
-public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshProvider
+public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentientTool//, IMeshProvider
 {
     public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000 };
     public static double[] defaultDamageAdded = new double[] { 0.25, 0.5, 0.75, 1, 1.25 };
@@ -443,5 +446,38 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
 
             return null;
         }
+    }
+
+    @Override
+    public boolean spawnSentientEntityOnDrop(ItemStack droppedStack, EntityPlayer player)
+    {
+        World world = player.worldObj;
+        if (!world.isRemote)
+        {
+            this.recalculatePowers(droppedStack, world, player);
+
+            EnumDemonWillType type = this.getCurrentType(droppedStack);
+            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+            if (soulsRemaining < 1024)
+            {
+                return false;
+            }
+
+            PlayerDemonWillHandler.consumeDemonWill(type, player, 100);
+
+            EntitySentientSpecter specterEntity = new EntitySentientSpecter(world);
+            specterEntity.setPosition(player.posX, player.posY, player.posZ);
+            world.spawnEntityInWorld(specterEntity);
+
+            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, droppedStack.copy());
+
+            specterEntity.setType(this.getCurrentType(droppedStack));
+            specterEntity.setOwner(player);
+            specterEntity.setTamed(true);
+
+            return true;
+        }
+
+        return false;
     }
 }

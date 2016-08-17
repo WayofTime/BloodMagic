@@ -34,6 +34,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IMultiWillTool;
 import WayofTime.bloodmagic.api.iface.ISentientSwordEffectProvider;
+import WayofTime.bloodmagic.api.iface.ISentientTool;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
@@ -41,13 +42,14 @@ import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionMultiWill;
+import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-public class ItemSentientShovel extends ItemSpade implements IDemonWillWeapon, IMeshProvider, IMultiWillTool
+public class ItemSentientShovel extends ItemSpade implements IDemonWillWeapon, IMeshProvider, IMultiWillTool, ISentientTool
 {
     public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000 };
     public static double[] defaultDamageAdded = new double[] { 1, 2, 3, 3.5, 4 };
@@ -537,5 +539,38 @@ public class ItemSentientShovel extends ItemSpade implements IDemonWillWeapon, I
         NBTTagCompound tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_DIG_SPEED, speed);
+    }
+
+    @Override
+    public boolean spawnSentientEntityOnDrop(ItemStack droppedStack, EntityPlayer player)
+    {
+        World world = player.worldObj;
+        if (!world.isRemote)
+        {
+            this.recalculatePowers(droppedStack, world, player);
+
+            EnumDemonWillType type = this.getCurrentType(droppedStack);
+            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+            if (soulsRemaining < 1024)
+            {
+                return false;
+            }
+
+            PlayerDemonWillHandler.consumeDemonWill(type, player, 100);
+
+            EntitySentientSpecter specterEntity = new EntitySentientSpecter(world);
+            specterEntity.setPosition(player.posX, player.posY, player.posZ);
+            world.spawnEntityInWorld(specterEntity);
+
+            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, droppedStack.copy());
+
+            specterEntity.setType(this.getCurrentType(droppedStack));
+            specterEntity.setOwner(player);
+            specterEntity.setTamed(true);
+
+            return true;
+        }
+
+        return false;
     }
 }
