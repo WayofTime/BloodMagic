@@ -33,6 +33,7 @@ public class ItemPotionFlask extends Item implements IVariantProvider
         setCreativeTab(BloodMagic.tabBloodMagic);
         setMaxStackSize(1);
         setMaxDamage(8);
+        setNoRepair();
     }
 
     @Override
