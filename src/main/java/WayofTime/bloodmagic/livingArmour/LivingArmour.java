@@ -68,6 +68,15 @@ public class LivingArmour implements ILivingArmour
         return total;
     }
 
+    public void recalculateUpgradePoints()
+    {
+        totalUpgradePoints = 0;
+        for (LivingArmourUpgrade upgrade : upgradeMap.values())
+        {
+            totalUpgradePoints += upgrade.getCostOfUpgrade();
+        }
+    }
+
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers()
     {

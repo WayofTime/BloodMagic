@@ -2,6 +2,7 @@
 Version 2.0.4-55
 ------------------------------------------------------
 - Made Guide-API a required mod.
+- Fixed a funky issue where the Sound of the Cleansing Soul did not reset the upgrade points internally.
 
 ------------------------------------------------------
 Version 2.0.3-54
