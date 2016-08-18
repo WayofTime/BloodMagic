@@ -154,6 +154,6 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase
 
     public void healEntity()
     {
-        this.theEntity.absorbWillFromAuraToHeal(2);
+        this.theEntity.performEmergencyHeal(2);
     }
 }

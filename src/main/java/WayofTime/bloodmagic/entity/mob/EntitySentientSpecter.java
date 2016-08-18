@@ -29,9 +29,11 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Enchantments;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -43,6 +45,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -65,7 +68,7 @@ import WayofTime.bloodmagic.registry.ModItems;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 
-public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
+public class EntitySentientSpecter extends EntityCreature implements IEntityOwnable
 {
     protected static final DataParameter<Byte> TAMED = EntityDataManager.<Byte>createKey(EntityTameable.class, DataSerializers.BYTE);
     protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityTameable.class, DataSerializers.OPTIONAL_UNIQUE_ID);
@@ -119,6 +122,7 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
         getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.27D);
@@ -297,9 +301,80 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
     }
 
     @Override
+    public void onLivingUpdate()
+    {
+        this.updateArmSwingProgress();
+        float f = this.getBrightness(1.0F);
+
+        if (f > 0.5F)
+        {
+            this.entityAge += 2;
+        }
+
+        super.onLivingUpdate();
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount)
+    {
+        return this.isEntityInvulnerable(source) ? false : super.attackEntityFrom(source, amount);
+    }
+
+    /**
+     * Redone from EntityMob to prevent despawning on peaceful.
+     */
+    @Override
     public boolean attackEntityAsMob(Entity attackedEntity)
     {
-        if (super.attackEntityAsMob(attackedEntity))
+        float f = (float) this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
+        int i = 0;
+
+        if (attackedEntity instanceof EntityLivingBase)
+        {
+            f += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(), ((EntityLivingBase) attackedEntity).getCreatureAttribute());
+            i += EnchantmentHelper.getKnockbackModifier(this);
+        }
+
+        boolean flag = attackedEntity.attackEntityFrom(DamageSource.causeMobDamage(this), f);
+
+        if (flag)
+        {
+            if (i > 0 && attackedEntity instanceof EntityLivingBase)
+            {
+                ((EntityLivingBase) attackedEntity).knockBack(this, (float) i * 0.5F, (double) MathHelper.sin(this.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(this.rotationYaw * 0.017453292F)));
+                this.motionX *= 0.6D;
+                this.motionZ *= 0.6D;
+            }
+
+            int j = EnchantmentHelper.getFireAspectModifier(this);
+
+            if (j > 0)
+            {
+                attackedEntity.setFire(j * 4);
+            }
+
+            if (attackedEntity instanceof EntityPlayer)
+            {
+                EntityPlayer entityplayer = (EntityPlayer) attackedEntity;
+                ItemStack itemstack = this.getHeldItemMainhand();
+                ItemStack itemstack1 = entityplayer.isHandActive() ? entityplayer.getActiveItemStack() : null;
+
+                if (itemstack != null && itemstack1 != null && itemstack.getItem() instanceof ItemAxe && itemstack1.getItem() == Items.SHIELD)
+                {
+                    float f1 = 0.25F + (float) EnchantmentHelper.getEfficiencyModifier(this) * 0.05F;
+
+                    if (this.rand.nextFloat() < f1)
+                    {
+                        entityplayer.getCooldownTracker().setCooldown(Items.SHIELD, 100);
+                        this.worldObj.setEntityState(entityplayer, (byte) 30);
+                    }
+                }
+            }
+
+            this.applyEnchantments(this, attackedEntity);
+        }
+
+        if (flag)
         {
             if (this.type == EnumDemonWillType.CORROSIVE && attackedEntity instanceof EntityLivingBase)
             {
@@ -392,6 +467,16 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
         return super.isEntityInvulnerable(source) && (this.type == EnumDemonWillType.DESTRUCTIVE && source.isExplosion());
     }
 
+    public void performEmergencyHeal(double toHeal)
+    {
+        this.heal((float) toHeal);
+
+        double d0 = this.rand.nextGaussian() * 0.02D;
+        double d1 = this.rand.nextGaussian() * 0.02D;
+        double d2 = this.rand.nextGaussian() * 0.02D;
+        this.worldObj.spawnParticle(EnumParticleTypes.HEART, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d0, d1, d2, new int[0]);
+    }
+
     /**
      * 
      * @param toHeal
@@ -404,8 +489,13 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
             return 0;
         }
 
-        double will = WorldDemonWillHandler.getCurrentWill(worldObj, getPosition(), getType());
         double healthMissing = this.getMaxHealth() - this.getHealth();
+        if (healthMissing <= 0)
+        {
+            return 0;
+        }
+
+        double will = WorldDemonWillHandler.getCurrentWill(worldObj, getPosition(), getType());
 
         toHeal = Math.min(healthMissing, Math.min(toHeal, will / getWillToHealth()));
         if (toHeal > 0)
@@ -419,7 +509,7 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
 
     public boolean shouldSelfHeal()
     {
-        return this.getHealth() < this.getMaxHealth() * 0.5 && WorldDemonWillHandler.getCurrentWill(worldObj, getPosition(), getType()) > 0;
+        return this.getHealth() < this.getMaxHealth() * 0.5;
     }
 
     public double getWillToHealth()
@@ -431,6 +521,16 @@ public class EntitySentientSpecter extends EntityMob implements IEntityOwnable
     protected boolean canDespawn()
     {
         return !this.isTamed() && super.canDespawn();
+    }
+
+    public void onUpdate()
+    {
+        if (!this.worldObj.isRemote && this.ticksExisted % 20 == 0)
+        {
+            absorbWillFromAuraToHeal(2);
+        }
+
+        super.onUpdate();
     }
 
     @Override
