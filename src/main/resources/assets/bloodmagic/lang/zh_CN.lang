@@ -250,6 +250,8 @@ tile.BloodMagic.demonCrystalDESTRUCTIVE.name=破坏意志晶簇
 tile.BloodMagic.demonCrystalVENGEFUL.name=复仇意志晶簇
 tile.BloodMagic.demonCrystalSTEADFAST.name=坚定意志晶簇
 
+tile.BloodMagic.mimic.nohitbox.name=悬幽模仿块
+
 # Fluids
 fluid.lifeEssence=生命源质
 
@@ -580,6 +582,9 @@ chat.BloodMagic.altar.comp.crystal=一个无效物品
 chat.BloodMagic.altar.comp.notair=一个实心方块
 
 chat.BloodMagic.altar.nextTier=下一层级的血之祭坛缺失 %s 在 %s.
+
+# entity
+entity.BloodMagic.SentientSpecter.name=感知之灵
 
 # sekrit
 
