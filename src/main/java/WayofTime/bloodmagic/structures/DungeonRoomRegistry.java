@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.structures;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class DungeonRoomRegistry
 {
@@ -12,4 +13,13 @@ public class DungeonRoomRegistry
         dungeonWeightMap.put(room, weight);
     }
 
+    public static DungeonRoom getRandomDungeonRoom(Random rand)
+    {
+        for (DungeonRoom room : dungeonWeightMap.keySet())
+        {
+            return room;
+        }
+
+        return null;
+    }
 }
