@@ -6,10 +6,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
-import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.gen.structure.template.PlacementSettings;
+import net.minecraft.world.gen.structure.template.Template;
+import WayofTime.bloodmagic.api.Constants;
 
 public abstract class AreaDescriptor implements Iterator<BlockPos>
 {
@@ -57,10 +59,16 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
      */
     public abstract void modifyAreaByBlockPositions(BlockPos pos1, BlockPos pos2);
 
+    public abstract boolean intersects(AreaDescriptor descriptor);
+
+    public abstract AreaDescriptor offset(BlockPos offset);
+
+    public abstract AreaDescriptor rotateDescriptor(PlacementSettings settings);
+
     public static class Rectangle extends AreaDescriptor
     {
-        private BlockPos minimumOffset;
-        private BlockPos maximumOffset; // Non-inclusive maximum offset.
+        protected BlockPos minimumOffset;
+        protected BlockPos maximumOffset; // Non-inclusive maximum offset.
         private BlockPos currentPosition;
 
         private ArrayList<BlockPos> blockPosCache;
@@ -259,6 +267,37 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         {
             return minimumOffset.getY() >= -verticalLimit && maximumOffset.getY() <= verticalLimit + 1 && minimumOffset.getX() >= -horizontalLimit && maximumOffset.getX() <= horizontalLimit + 1 && minimumOffset.getZ() >= -horizontalLimit && maximumOffset.getZ() <= horizontalLimit + 1;
         }
+
+        @Override
+        public boolean intersects(AreaDescriptor descriptor)
+        {
+            if (descriptor instanceof AreaDescriptor.Rectangle)
+            {
+                AreaDescriptor.Rectangle rectangle = (AreaDescriptor.Rectangle) descriptor;
+
+                return !(minimumOffset.getX() >= rectangle.maximumOffset.getX() || minimumOffset.getY() >= rectangle.maximumOffset.getY() || minimumOffset.getZ() >= rectangle.maximumOffset.getZ() || rectangle.minimumOffset.getX() >= maximumOffset.getX() || rectangle.minimumOffset.getY() >= maximumOffset.getY() || rectangle.minimumOffset.getZ() >= maximumOffset.getZ());
+            }
+
+            return false;
+        }
+
+        @Override
+        public AreaDescriptor offset(BlockPos offset)
+        {
+            return new AreaDescriptor.Rectangle(this.minimumOffset.add(offset), this.maximumOffset.add(offset));
+        }
+
+        @Override
+        public AreaDescriptor rotateDescriptor(PlacementSettings settings)
+        {
+            BlockPos rotatePos1 = Template.transformedBlockPos(settings, minimumOffset);
+            BlockPos rotatePos2 = Template.transformedBlockPos(settings, maximumOffset.add(-1, -1, -1)); //It works, shut up!
+
+            AreaDescriptor.Rectangle rectangle = new AreaDescriptor.Rectangle(this.minimumOffset, 1);
+            rectangle.modifyAreaByBlockPositions(rotatePos1, rotatePos2);
+
+            return rectangle;
+        }
     }
 
     public static class HemiSphere extends AreaDescriptor
@@ -416,6 +455,26 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
             // TODO Auto-generated method stub
             return false;
         }
+
+        @Override
+        public boolean intersects(AreaDescriptor descriptor)
+        {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public AreaDescriptor offset(BlockPos offset)
+        {
+            return new AreaDescriptor.HemiSphere(minimumOffset.add(offset), radius);
+        }
+
+        @Override
+        public AreaDescriptor rotateDescriptor(PlacementSettings settings)
+        {
+            // TODO Auto-generated method stub
+            return this;
+        }
     }
 
     public static class Cross extends AreaDescriptor
@@ -536,6 +595,27 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         {
             // TODO Auto-generated method stub
             return false;
+        }
+
+        @Override
+        public boolean intersects(AreaDescriptor descriptor)
+        {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public AreaDescriptor offset(BlockPos offset)
+        {
+            // TODO Auto-generated method stub
+            return new AreaDescriptor.Cross(centerPos.add(offset), size);
+        }
+
+        @Override
+        public AreaDescriptor rotateDescriptor(PlacementSettings settings)
+        {
+            // TODO Auto-generated method stub
+            return this;
         }
     }
 }
