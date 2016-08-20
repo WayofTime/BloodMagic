@@ -158,6 +158,8 @@ public class ModRecipes
                 GameRegistry.addShapelessRecipe(newGemStack, baseGemStack, crystalStack);
             }
         }
+
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.mimic, 4, 0), "b b", " r ", "bob", 'b', new ItemStack(ModBlocks.bloodStoneBrick), 'r', new ItemStack(ModBlocks.bloodRune), 'o', OrbRegistry.getOrbStack(ModItems.orbMagician)));
     }
 
     public static void addAltarRecipes()

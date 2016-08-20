@@ -52,6 +52,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
@@ -471,10 +472,15 @@ public class EntitySentientSpecter extends EntityCreature implements IEntityOwna
     {
         this.heal((float) toHeal);
 
-        double d0 = this.rand.nextGaussian() * 0.02D;
-        double d1 = this.rand.nextGaussian() * 0.02D;
-        double d2 = this.rand.nextGaussian() * 0.02D;
-        this.worldObj.spawnParticle(EnumParticleTypes.HEART, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d0, d1, d2, new int[0]);
+//        double d0 = this.rand.nextGaussian() * 0.02D;
+//        double d1 = this.rand.nextGaussian() * 0.02D;
+//        double d2 = this.rand.nextGaussian() * 0.02D;
+        if (worldObj instanceof WorldServer)
+        {
+            WorldServer server = (WorldServer) worldObj;
+            server.spawnParticle(EnumParticleTypes.HEART, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, 7, 0.2, 0.2, 0.2, 0, new int[0]);
+        }
+//        this.worldObj.spawnParticle(EnumParticleTypes.HEART, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d0, d1, d2, new int[0]);
     }
 
     /**

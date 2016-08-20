@@ -3,6 +3,8 @@ Version 2.0.4-55
 ------------------------------------------------------
 - Made Guide-API a required mod.
 - Fixed a funky issue where the Sound of the Cleansing Soul did not reset the upgrade points internally.
+- Added Sentient Specters, which are essentially tamable companions. Drop a sentient tool if you have more than 1024 Will of a given type to summon one (at the cost of 100 Will).
+- Added Mimic Blocks!
 
 ------------------------------------------------------
 Version 2.0.3-54
