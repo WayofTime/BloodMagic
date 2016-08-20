@@ -88,7 +88,7 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase
             } else
             {
                 this.entityPathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
-                return this.entityPathEntity == null ? false : this.entityPathEntity.isDestinationSame(vec3d);
+                return this.entityPathEntity != null;
             }
         }
     }
