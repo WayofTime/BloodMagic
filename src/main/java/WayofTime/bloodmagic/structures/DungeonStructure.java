@@ -9,11 +9,10 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.minecraft.world.gen.structure.template.TemplateManager;
-import WayofTime.bloodmagic.api.Constants;
 
 public class DungeonStructure
 {
-    final ResourceLocation resource;
+    public ResourceLocation resource;
 
     public DungeonStructure(ResourceLocation resource)
     {
@@ -28,7 +27,6 @@ public class DungeonStructure
         MinecraftServer minecraftserver = world.getMinecraftServer();
         TemplateManager templatemanager = world.getStructureTemplateManager();
 
-        ResourceLocation resource = new ResourceLocation(Constants.Mod.MODID, "Corridor1");
         Template template = templatemanager.func_189942_b(minecraftserver, resource);
 
         if (template == null)

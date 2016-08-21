@@ -25,6 +25,8 @@ public class Dungeon
 {
     public static boolean placeStructureAtPosition(Random rand, WorldServer world, BlockPos pos)
     {
+        long startTime = System.nanoTime();
+
         Map<EnumFacing, List<BlockPos>> availableDoorMap = new HashMap<EnumFacing, List<BlockPos>>(); //Map of doors. The EnumFacing indicates what way this door faces.
         List<AreaDescriptor> descriptorList = new ArrayList<AreaDescriptor>();
         Map<BlockPos, Pair<DungeonRoom, PlacementSettings>> roomMap = new HashMap<BlockPos, Pair<DungeonRoom, PlacementSettings>>(); // Placement positions in terms of actual positions
@@ -157,6 +159,11 @@ public class Dungeon
                 removedDoor2 = null;
             }
         }
+
+        long endTime = System.nanoTime();
+
+        long duration = (endTime - startTime); //divide by 1000000 to get milliseconds.
+        System.out.println("Duration: " + duration + "(ns), " + duration / 1000000 + "(ms)");
 
         //Building what I've got
         for (Entry<BlockPos, Pair<DungeonRoom, PlacementSettings>> entry : roomMap.entrySet())

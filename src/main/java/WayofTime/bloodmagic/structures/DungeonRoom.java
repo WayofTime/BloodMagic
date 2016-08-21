@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
@@ -16,12 +17,12 @@ import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 
 public class DungeonRoom
 {
-    protected Map<DungeonStructure, BlockPos> structureMap = new HashMap<DungeonStructure, BlockPos>();
+    public Map<String, BlockPos> structureMap = new HashMap<String, BlockPos>();
 
-    Map<EnumFacing, List<BlockPos>> doorMap = new HashMap<EnumFacing, List<BlockPos>>(); //Map of doors. The EnumFacing indicates what way this door faces.
-    List<AreaDescriptor> descriptorList = new ArrayList<AreaDescriptor>();
+    public Map<EnumFacing, List<BlockPos>> doorMap = new HashMap<EnumFacing, List<BlockPos>>(); //Map of doors. The EnumFacing indicates what way this door faces.
+    public List<AreaDescriptor.Rectangle> descriptorList = new ArrayList<AreaDescriptor.Rectangle>();
 
-    public DungeonRoom(Map<DungeonStructure, BlockPos> structureMap, Map<EnumFacing, List<BlockPos>> doorMap, List<AreaDescriptor> descriptorList)
+    public DungeonRoom(Map<String, BlockPos> structureMap, Map<EnumFacing, List<BlockPos>> doorMap, List<AreaDescriptor.Rectangle> descriptorList)
     {
         this.structureMap = structureMap;
         this.doorMap = doorMap;
@@ -59,9 +60,10 @@ public class DungeonRoom
 
     public boolean placeStructureAtPosition(Random rand, PlacementSettings settings, WorldServer world, BlockPos pos)
     {
-        for (Entry<DungeonStructure, BlockPos> entry : structureMap.entrySet())
+        for (Entry<String, BlockPos> entry : structureMap.entrySet())
         {
-            DungeonStructure structure = entry.getKey();
+            ResourceLocation location = new ResourceLocation(entry.getKey());
+            DungeonStructure structure = new DungeonStructure(location);
             BlockPos offsetPos = Template.transformedBlockPos(settings, entry.getValue());
 
             structure.placeStructureAtPosition(rand, settings, world, pos.add(offsetPos));
