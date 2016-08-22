@@ -33,6 +33,7 @@ import WayofTime.bloodmagic.client.render.RenderAlchemyArray;
 import WayofTime.bloodmagic.client.render.RenderAltar;
 import WayofTime.bloodmagic.client.render.RenderDemonCrucible;
 import WayofTime.bloodmagic.client.render.RenderItemRoutingNode;
+import WayofTime.bloodmagic.client.render.block.RenderMimic;
 import WayofTime.bloodmagic.client.render.entity.BloodLightRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.MeteorRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.MimicRenderFactory;
@@ -50,6 +51,7 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
+import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
@@ -90,6 +92,7 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileAltar.class, new RenderAltar());
         ClientRegistry.bindTileEntitySpecialRenderer(TileRoutingNode.class, new RenderItemRoutingNode());
         ClientRegistry.bindTileEntitySpecialRenderer(TileDemonCrucible.class, new RenderDemonCrucible());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileMimic.class, new RenderMimic());
     }
 
     @Override

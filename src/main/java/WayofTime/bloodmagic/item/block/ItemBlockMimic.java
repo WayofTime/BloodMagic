@@ -6,7 +6,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -36,7 +38,7 @@ public class ItemBlockMimic extends ItemBlock
         IBlockState iblockstate = world.getBlockState(pos);
         Block block = iblockstate.getBlock();
 
-        if (player.isSneaking())
+        if (!player.isSneaking())
         {
             return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
         }
@@ -53,6 +55,10 @@ public class ItemBlockMimic extends ItemBlock
             }
 
             ItemStack replacedStack = block.getItem(world, pos, iblockstate);
+
+//            ItemStack replacedStack = new ItemStack(block, 1, block.getMetaFromState(iblockstate));
+
+            NBTTagCompound tileTag = getTagFromTileEntity(tileReplaced);
 
             if (placeBlockAt(stack, player, world, pos, facing, hitX, hitY, hitZ, iblockstate1))
             {
@@ -80,7 +86,24 @@ public class ItemBlockMimic extends ItemBlock
 
     public boolean canReplaceTile(int meta, TileEntity tile)
     {
+        if (tile instanceof TileEntityChest)
+        {
+            return true;
+        }
+
         return tile == null;
+    }
+
+    public NBTTagCompound getTagFromTileEntity(TileEntity tile)
+    {
+        NBTTagCompound tag = new NBTTagCompound();
+
+        if (tile != null)
+        {
+            return tile.writeToNBT(tag);
+        }
+
+        return tag;
     }
 
     @Override

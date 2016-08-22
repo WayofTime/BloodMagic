@@ -14,6 +14,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -30,8 +31,8 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.base.BlockStringContainer;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileMimic;
-import WayofTime.bloodmagic.util.Utils;
 
 public class BlockMimic extends BlockStringContainer implements IVariantProvider
 {
@@ -64,11 +65,25 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
         if (tileMimic != null && tileMimic.getStackInSlot(0) != null)
         {
             Block mimicBlock = Block.getBlockFromItem(tileMimic.getStackInSlot(0).getItem());
+            if (mimicBlock == null)
+            {
+                return FULL_BLOCK_AABB;
+            }
             IBlockState mimicState = mimicBlock.getStateFromMeta(tileMimic.getStackInSlot(0).getItemDamage());
-            return mimicState.getSelectedBoundingBox(world, pos);
+            if (mimicBlock != this)
+            {
+                return mimicState.getSelectedBoundingBox(world, pos);
+            }
         }
 
         return FULL_BLOCK_AABB;
+    }
+
+    @Override
+    public int getLightOpacity(IBlockState state)
+    {
+        //Overriden for now so that in the future I don't have to.
+        return this.lightOpacity;
     }
 
     @Override
@@ -87,27 +102,10 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
     {
         TileMimic mimic = (TileMimic) world.getTileEntity(pos);
 
-        if (mimic == null || player.isSneaking())
+        if (mimic == null)
             return false;
 
-        if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == new ItemStack(this).getItem())
-            return false;
-
-        if (mimic.getStackInSlot(0) != null && player.getHeldItem(hand) != null)
-            return false;
-
-        if (!mimic.dropItemsOnBreak && !player.capabilities.isCreativeMode)
-            return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
-
-        Utils.insertItemToTile(mimic, player);
-
-        if (player.capabilities.isCreativeMode)
-        {
-            mimic.dropItemsOnBreak = mimic.getStackInSlot(0) == null;
-        }
-
-        world.notifyBlockUpdate(pos, state, state, 3);
-        return true;
+        return mimic.onBlockActivated(world, pos, state, player, hand, heldItem, side);
     }
 
     @Override
@@ -122,7 +120,15 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
             {
                 Block block = ((ItemBlock) stack.getItem()).getBlock();
                 IBlockState mimicState = block.getStateFromMeta(stack.getItemDamage());
-                return block.getActualState(mimicState, world, pos);
+                if (block != this)
+                {
+                    if (block.getRenderType(mimicState) == EnumBlockRenderType.ENTITYBLOCK_ANIMATED)
+                    {
+                        return ModBlocks.bloodLight.getDefaultState(); //Small and invisible-ish, basically this is returned in order to not render over the animated block (TESR)
+                    }
+
+                    return block.getActualState(mimicState, world, pos);
+                }
             }
         }
         return state;
