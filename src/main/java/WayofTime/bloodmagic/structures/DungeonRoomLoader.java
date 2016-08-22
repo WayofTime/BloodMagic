@@ -49,10 +49,11 @@ public class DungeonRoomLoader
 
     public static void loadDungeons()
     {
-        String folder = "config/BloodMagic/schematics";
+//        String folder = "config/BloodMagic/schematics";
         Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(EnumFacing.class, Adapters.adapter).create();
 
-        File file = new File(folder);
+        File file = new File(MinecraftServer.class.getResource("/assets/" + "BloodMagic" + "/schematics").getFile());
+
         File[] files = file.listFiles();
         BufferedReader br;
 

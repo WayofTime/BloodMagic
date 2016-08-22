@@ -31,7 +31,6 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.base.BlockStringContainer;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileMimic;
-import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.util.Utils;
 
 public class BlockMimic extends BlockStringContainer implements IVariantProvider
@@ -123,7 +122,7 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
             {
                 Block block = ((ItemBlock) stack.getItem()).getBlock();
                 IBlockState mimicState = block.getStateFromMeta(stack.getItemDamage());
-                return mimicState;
+                return block.getActualState(mimicState, world, pos);
             }
         }
         return state;
