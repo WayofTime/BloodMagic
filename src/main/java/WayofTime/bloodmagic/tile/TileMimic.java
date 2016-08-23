@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
+import java.lang.reflect.Field;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
@@ -13,14 +15,18 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.util.Utils;
 
 public class TileMimic extends TileInventory
 {
+    private static Field _blockMetadata = ReflectionHelper.findField(TileEntity.class, "blockMetadata", "field_145847_g");
+
     public boolean dropItemsOnBreak = true;
     public NBTTagCompound tileTag = new NBTTagCompound();
     public TileEntity mimicedTile = null;
+    public int metaOfReplacedBlock = 0;
 
     public TileMimic()
     {
@@ -47,7 +53,7 @@ public class TileMimic extends TileInventory
             return false;
 
         Utils.insertItemToTile(this, player);
-        mimicedTile = getTileFromStackWithTag(worldObj, pos, getStackInSlot(0), tileTag);
+        this.refreshTileEntity();
 
         if (player.capabilities.isCreativeMode)
         {
@@ -63,6 +69,11 @@ public class TileMimic extends TileInventory
         return false;
     }
 
+    public void refreshTileEntity()
+    {
+        mimicedTile = getTileFromStackWithTag(worldObj, pos, getStackInSlot(0), tileTag, metaOfReplacedBlock);
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
@@ -70,7 +81,8 @@ public class TileMimic extends TileInventory
 
         dropItemsOnBreak = tag.getBoolean("dropItemsOnBreak");
         tileTag = tag.getCompoundTag("tileTag");
-        mimicedTile = getTileFromStackWithTag(worldObj, pos, getStackInSlot(0), tileTag);
+        metaOfReplacedBlock = tag.getInteger("metaOfReplacedBlock");
+        mimicedTile = getTileFromStackWithTag(worldObj, pos, getStackInSlot(0), tileTag, metaOfReplacedBlock);
     }
 
     @Override
@@ -80,6 +92,7 @@ public class TileMimic extends TileInventory
 
         tag.setBoolean("dropItemsOnBreak", dropItemsOnBreak);
         tag.setTag("tileTag", tileTag);
+        tag.setInteger("metaOfReplacedBlock", metaOfReplacedBlock);
 
         return tag;
     }
@@ -116,7 +129,7 @@ public class TileMimic extends TileInventory
         return false;
     }
 
-    public static TileEntity getTileFromStackWithTag(World world, BlockPos pos, ItemStack stack, NBTTagCompound tag)
+    public static TileEntity getTileFromStackWithTag(World world, BlockPos pos, ItemStack stack, NBTTagCompound tag, int replacementMeta)
     {
         if (stack != null && stack.getItem() instanceof ItemBlock)
         {
@@ -135,6 +148,17 @@ public class TileMimic extends TileInventory
                 }
 
                 tile.setWorldObj(world);
+
+                try
+                {
+                    _blockMetadata.setInt(tile, replacementMeta);
+                } catch (IllegalArgumentException e)
+                {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e)
+                {
+                    e.printStackTrace();
+                }
 
                 return tile;
             }

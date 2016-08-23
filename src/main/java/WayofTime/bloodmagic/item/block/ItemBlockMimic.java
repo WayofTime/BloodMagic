@@ -70,7 +70,10 @@ public class ItemBlockMimic extends ItemBlock
                 if (tile instanceof TileMimic)
                 {
                     TileMimic mimic = (TileMimic) tile;
+                    mimic.metaOfReplacedBlock = block.getMetaFromState(iblockstate);
                     mimic.setInventorySlotContents(0, replacedStack);
+                    mimic.refreshTileEntity();
+
                     if (player.capabilities.isCreativeMode)
                     {
                         mimic.dropItemsOnBreak = false;
