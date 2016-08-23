@@ -21,7 +21,7 @@ public class DataProviderMimic implements IWailaDataProvider
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
         TileMimic mimic = (TileMimic) accessor.getTileEntity();
-        return mimic != null && mimic.getStackInSlot(0) != null ? mimic.getStackInSlot(0) : new ItemStack(ModBlocks.mimic);
+        return mimic != null && mimic.getStackInSlot(0) != null ? mimic.getStackInSlot(0) : new ItemStack(ModBlocks.mimic, 1, mimic.getBlockMetadata());
     }
 
     @Override

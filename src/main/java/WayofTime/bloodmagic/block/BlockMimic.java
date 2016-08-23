@@ -36,7 +36,8 @@ import WayofTime.bloodmagic.tile.TileMimic;
 
 public class BlockMimic extends BlockStringContainer implements IVariantProvider
 {
-    public static final String[] names = { "nohitbox" };
+
+    public static final String[] names = { "nohitbox", "solidopaque", "solidclear", "solidlight", "sentient" };
 
     public BlockMimic()
     {
@@ -52,9 +53,36 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
     }
 
     @Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World world, BlockPos pos)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos)
     {
-        return NULL_AABB;
+        switch (this.getMetaFromState(state))
+        {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            TileMimic tileMimic = (TileMimic) world.getTileEntity(pos);
+            if (tileMimic != null && tileMimic.getStackInSlot(0) != null)
+            {
+                Block mimicBlock = Block.getBlockFromItem(tileMimic.getStackInSlot(0).getItem());
+                if (mimicBlock == null)
+                {
+                    return FULL_BLOCK_AABB;
+                }
+                IBlockState mimicState = mimicBlock.getStateFromMeta(tileMimic.metaOfReplacedBlock);
+                if (mimicBlock != this)
+                {
+                    return mimicState.getCollisionBoundingBox(world, pos);
+                }
+            } else
+            {
+                return FULL_BLOCK_AABB;
+            }
+        case 0:
+        default:
+            return NULL_AABB;
+        }
+
     }
 
     @Override
@@ -82,8 +110,26 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
     @Override
     public int getLightOpacity(IBlockState state)
     {
-        //Overriden for now so that in the future I don't have to.
-        return this.lightOpacity;
+        switch (this.getMetaFromState(state))
+        {
+        case 2:
+        case 4:
+            return 0;
+        default:
+            return this.lightOpacity;
+        }
+    }
+
+    @Override
+    public int getLightValue(IBlockState state)
+    {
+        switch (this.getMetaFromState(state))
+        {
+        case 3:
+            return 15;
+        default:
+            return this.lightValue;
+        }
     }
 
     @Override

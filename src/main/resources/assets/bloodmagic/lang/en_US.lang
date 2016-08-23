@@ -250,7 +250,11 @@ tile.BloodMagic.demonCrystalDESTRUCTIVE.name=Destructive Will Crystal Cluster
 tile.BloodMagic.demonCrystalVENGEFUL.name=Vengeful Will Crystal Cluster
 tile.BloodMagic.demonCrystalSTEADFAST.name=Steadfast Will Crystal Cluster
 
-tile.BloodMagic.mimic.nohitbox.name=Ethereal Mimic Block
+tile.BloodMagic.mimic.nohitbox.name=Ethereal Opaque Mimic Block
+tile.BloodMagic.mimic.solidopaque.name=Opaque Mimic Block
+tile.BloodMagic.mimic.solidclear.name=Clear Ethereal Mimic Block
+tile.BloodMagic.mimic.solidlight.name=Lighted Ethereal Mimic Block
+tile.BloodMagic.mimic.sentient.name=Sentient Mimic Block
 
 # Fluids
 fluid.lifeEssence=Life Essence

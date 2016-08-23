@@ -160,6 +160,9 @@ public class ModRecipes
         }
 
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.mimic, 4, 0), "b b", " r ", "bob", 'b', new ItemStack(ModBlocks.bloodStoneBrick), 'r', new ItemStack(ModBlocks.bloodRune), 'o', OrbRegistry.getOrbStack(ModItems.orbMagician)));
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.mimic, 4, 1), "bsb", "srs", "bob", 'b', new ItemStack(ModBlocks.bloodStoneBrick), 'r', new ItemStack(ModBlocks.bloodRune), 's', "stone", 'o', OrbRegistry.getOrbStack(ModItems.orbMagician)));
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.mimic, 4, 2), "bsb", "srs", "bob", 'b', new ItemStack(ModBlocks.bloodStoneBrick), 'r', new ItemStack(ModBlocks.bloodRune), 's', "blockGlass", 'o', OrbRegistry.getOrbStack(ModItems.orbMagician)));
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.mimic, 2, 3), "bnb", "trt", "bob", 'b', new ItemStack(ModBlocks.bloodStoneBrick), 'r', new ItemStack(ModBlocks.bloodRune), 'n', Blocks.GLOWSTONE, 't', "torch", 'o', OrbRegistry.getOrbStack(ModItems.orbMagician)));
     }
 
     public static void addAltarRecipes()
