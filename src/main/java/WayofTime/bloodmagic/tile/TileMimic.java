@@ -17,6 +17,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import WayofTime.bloodmagic.block.BlockMimic;
+import WayofTime.bloodmagic.entity.mob.EntityMimic;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.util.Utils;
 
@@ -67,6 +69,28 @@ public class TileMimic extends TileInventory
 
     public boolean performSpecialAbility()
     {
+        switch (this.getBlockMetadata())
+        {
+        case BlockMimic.sentientMimicMeta:
+            if (this.getStackInSlot(0) == null || worldObj.isRemote)
+            {
+                return false;
+            }
+
+            EntityMimic mimicEntity = new EntityMimic(worldObj);
+            mimicEntity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+
+            mimicEntity.initializeMimic(getStackInSlot(0), tileTag, dropItemsOnBreak, metaOfReplacedBlock);
+            tileTag = null;
+            mimicedTile = null;
+            this.setInventorySlotContents(0, null);
+
+            worldObj.spawnEntityInWorld(mimicEntity);
+
+            worldObj.setBlockToAir(pos);
+
+            return true;
+        }
         return false;
     }
 
@@ -107,15 +131,15 @@ public class TileMimic extends TileInventory
         World world = mimic.getWorld();
         BlockPos pos = mimic.getPos();
 
-        replaceMimicWithBlockActual(world, pos, mimic.getStackInSlot(0), mimic.tileTag);
+        replaceMimicWithBlockActual(world, pos, mimic.getStackInSlot(0), mimic.tileTag, mimic.metaOfReplacedBlock);
     }
 
-    public static boolean replaceMimicWithBlockActual(World world, BlockPos pos, ItemStack stack, NBTTagCompound tileTag)
+    public static boolean replaceMimicWithBlockActual(World world, BlockPos pos, ItemStack stack, NBTTagCompound tileTag, int replacedMeta)
     {
         if (stack != null && stack.getItem() instanceof ItemBlock)
         {
             Block block = ((ItemBlock) stack.getItem()).getBlock();
-            IBlockState state = block.onBlockPlaced(world, pos, EnumFacing.UP, 0, 0, 0, stack.getItemDamage(), null);
+            IBlockState state = block.getStateFromMeta(replacedMeta);
             if (world.setBlockState(pos, state, 3))
             {
                 TileEntity tile = world.getTileEntity(pos);
@@ -125,9 +149,9 @@ public class TileMimic extends TileInventory
                     tileTag.setInteger("y", pos.getY());
                     tileTag.setInteger("z", pos.getZ());
                     tile.readFromNBT(tileTag);
-
-                    return true;
                 }
+
+                return true;
             }
         }
 

@@ -36,7 +36,7 @@ import WayofTime.bloodmagic.tile.TileMimic;
 
 public class BlockMimic extends BlockStringContainer implements IVariantProvider
 {
-
+    public static final int sentientMimicMeta = 4;
     public static final String[] names = { "nohitbox", "solidopaque", "solidclear", "solidlight", "sentient" };
 
     public BlockMimic()

@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.entity.mob;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -15,19 +16,27 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
+import WayofTime.bloodmagic.block.BlockMimic;
+import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.tile.TileMimic;
 
 public class EntityMimic extends EntityMob
 {
@@ -35,16 +44,18 @@ public class EntityMimic extends EntityMob
      * Copy of EntitySpider's AI (should be pretty evident...)
      */
     private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(EntityMimic.class, DataSerializers.BYTE);
+//    private static final DataParameter<Optional<ItemStack>> ITEMSTACK = EntityDataManager.<Optional<ItemStack>>createKey(EntityMimic.class, DataSerializers.OPTIONAL_ITEM_STACK);
+
+    public boolean dropItemsOnBreak = true;
+    public NBTTagCompound tileTag = new NBTTagCompound();
+    public int metaOfReplacedBlock = 0;
+
+//    public ItemStack heldStack = null;
 
     public EntityMimic(World worldIn)
     {
         super(worldIn);
         this.setSize(1.4F, 0.9F);
-    }
-
-    public ItemStack getItemStack()
-    {
-        return new ItemStack(Blocks.CHEST);
     }
 
     protected void initEntityAI()
@@ -58,6 +69,127 @@ public class EntityMimic extends EntityMob
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
         this.targetTasks.addTask(2, new EntityMimic.AISpiderTarget(this, EntityPlayer.class));
         this.targetTasks.addTask(3, new EntityMimic.AISpiderTarget(this, EntityIronGolem.class));
+    }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound tag)
+    {
+        super.writeEntityToNBT(tag);
+
+        tag.setBoolean("dropItemsOnBreak", dropItemsOnBreak);
+        tag.setTag("tileTag", tileTag);
+        tag.setInteger("metaOfReplacedBlock", metaOfReplacedBlock);
+
+//        NBTTagCompound itemTag = new NBTTagCompound();
+//        if (heldStack != null)
+//        {
+//            heldStack.writeToNBT(itemTag);
+//        }
+//
+//        tag.setTag("heldItem", itemTag);
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound tag)
+    {
+        super.readEntityFromNBT(tag);
+
+        dropItemsOnBreak = tag.getBoolean("dropItemsOnBreak");
+        tileTag = tag.getCompoundTag("tileTag");
+        metaOfReplacedBlock = tag.getInteger("metaOfReplacedBlock");
+//        NBTTagCompound itemTag = tag.getCompoundTag("heldItem");
+//
+//        if (!itemTag.hasNoTags())
+//        {
+//            heldStack = ItemStack.loadItemStackFromNBT(itemTag);
+//        }
+//        mimicedTile = getTileFromStackWithTag(worldObj, pos, getStackInSlot(0), tileTag, metaOfReplacedBlock);
+    }
+
+    public ItemStack getItemStack()
+    {
+//        System.out.println(heldStack);
+        return this.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+//        return ItemStack.copyItemStack(heldStack);
+    }
+
+    public void setItemStack(ItemStack stack)
+    {
+        this.setItemStackToSlot(EntityEquipmentSlot.CHEST, stack);
+    }
+
+    public boolean spawnHeldBlockOnDeath(World world, BlockPos pos)
+    {
+        return world.isAirBlock(pos) && TileMimic.replaceMimicWithBlockActual(world, pos, getItemStack(), tileTag, metaOfReplacedBlock);
+    }
+
+    public boolean spawnMimicBlockAtPosition(World world, BlockPos pos)
+    {
+        if (world.isAirBlock(pos))
+        {
+            IBlockState mimicState = ModBlocks.mimic.getStateFromMeta(BlockMimic.sentientMimicMeta);
+            world.setBlockState(pos, mimicState, 3);
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile instanceof TileMimic)
+            {
+                TileMimic mimic = (TileMimic) tile;
+                mimic.metaOfReplacedBlock = metaOfReplacedBlock;
+                mimic.tileTag = tileTag;
+                mimic.setInventorySlotContents(0, getItemStack());
+                mimic.dropItemsOnBreak = dropItemsOnBreak;
+                mimic.refreshTileEntity();
+            }
+        }
+
+        return false;
+    }
+
+    public void initializeMimic(ItemStack heldStack, NBTTagCompound tileTag, boolean dropItemsOnBreak, int metaOfReplacedBlock)
+    {
+        this.setItemStack(heldStack);
+        this.tileTag = tileTag;
+        this.dropItemsOnBreak = dropItemsOnBreak;
+        this.metaOfReplacedBlock = metaOfReplacedBlock;
+    }
+
+    @Override
+    public void onDeath(DamageSource cause)
+    {
+        super.onDeath(cause);
+
+        if (!worldObj.isRemote)
+        {
+            BlockPos centerPos = this.getPosition();
+
+            int horizontalRadius = 1;
+            int verticalRadius = 1;
+
+            for (int hR = 0; hR <= horizontalRadius; hR++)
+            {
+                for (int vR = 0; vR <= verticalRadius; vR++)
+                {
+                    for (int i = -hR; i <= hR; i++)
+                    {
+                        for (int k = -hR; k <= hR; k++)
+                        {
+                            for (int j = -vR; j <= vR; j += 2 * vR + (vR > 0 ? 0 : 1))
+                            {
+                                if (!(Math.abs(i) == hR || Math.abs(k) == hR))
+                                {
+                                    continue;
+                                }
+
+                                BlockPos newPos = centerPos.add(i, j, k);
+                                if (spawnHeldBlockOnDeath(worldObj, newPos))
+                                {
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -84,6 +216,7 @@ public class EntityMimic extends EntityMob
     {
         super.entityInit();
         this.dataManager.register(CLIMBING, Byte.valueOf((byte) 0));
+//        this.dataManager.register(ITEMSTACK, null);
     }
 
     /**
