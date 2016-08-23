@@ -59,6 +59,14 @@ public class ItemBlockMimic extends ItemBlock
 //            ItemStack replacedStack = new ItemStack(block, 1, block.getMetaFromState(iblockstate));
 
             NBTTagCompound tileTag = getTagFromTileEntity(tileReplaced);
+            if (tileReplaced != null)
+            {
+                NBTTagCompound voidTag = new NBTTagCompound();
+                voidTag.setInteger("x", pos.getX());
+                voidTag.setInteger("y", pos.getY());
+                voidTag.setInteger("z", pos.getZ());
+                tileReplaced.readFromNBT(voidTag);
+            }
 
             if (placeBlockAt(stack, player, world, pos, facing, hitX, hitY, hitZ, iblockstate1))
             {
@@ -71,6 +79,7 @@ public class ItemBlockMimic extends ItemBlock
                 {
                     TileMimic mimic = (TileMimic) tile;
                     mimic.metaOfReplacedBlock = block.getMetaFromState(iblockstate);
+                    mimic.tileTag = tileTag;
                     mimic.setInventorySlotContents(0, replacedStack);
                     mimic.refreshTileEntity();
 
@@ -81,6 +90,9 @@ public class ItemBlockMimic extends ItemBlock
                 }
 
                 return EnumActionResult.SUCCESS;
+            } else
+            {
+                tileReplaced.readFromNBT(tileTag);
             }
         }
 

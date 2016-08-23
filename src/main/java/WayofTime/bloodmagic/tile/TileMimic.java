@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -71,6 +72,10 @@ public class TileMimic extends TileInventory
 
     public void refreshTileEntity()
     {
+        if (mimicedTile != null)
+        {
+            dropMimicedTileInventory();
+        }
         mimicedTile = getTileFromStackWithTag(worldObj, pos, getStackInSlot(0), tileTag, metaOfReplacedBlock);
     }
 
@@ -173,6 +178,16 @@ public class TileMimic extends TileInventory
         if (dropItemsOnBreak)
         {
             InventoryHelper.dropInventoryItems(getWorld(), getPos(), this);
+        }
+
+        dropMimicedTileInventory();
+    }
+
+    public void dropMimicedTileInventory()
+    {
+        if (!worldObj.isRemote && mimicedTile instanceof IInventory)
+        {
+            InventoryHelper.dropInventoryItems(getWorld(), getPos(), (IInventory) mimicedTile);
         }
     }
 
