@@ -13,6 +13,7 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,6 +34,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.ISpecialArmor;
@@ -80,6 +83,19 @@ public class Utils
         }
 
         return false;
+    }
+
+    public static boolean canEntitySeeBlock(World world, Entity entity, BlockPos pos)
+    {
+        Vec3d relativePosition = new Vec3d(entity.posX - pos.getX() - 0.5, entity.posY + (double) entity.getEyeHeight() - pos.getY() - 0.5, entity.posZ - pos.getZ() - 0.5);
+        EnumFacing dir = EnumFacing.getFacingFromVector((float) relativePosition.xCoord, (float) relativePosition.yCoord, (float) relativePosition.zCoord);
+        RayTraceResult result = world.rayTraceBlocks(new Vec3d(entity.posX, entity.posY + (double) entity.getEyeHeight(), entity.posZ), new Vec3d(pos.getX() + 0.5 + dir.getFrontOffsetX() * 0.4, pos.getY() + 0.5 + dir.getFrontOffsetY() * 0.4, pos.getZ() + 0.5 + dir.getFrontOffsetZ() * 0.4), false, true, true);
+        if (result != null)
+        {
+            return pos.equals(result.getBlockPos());
+        }
+
+        return result != null;
     }
 
     public static int plantSeedsInArea(World world, AxisAlignedBB aabb, int horizontalRadius, int verticalRadius)

@@ -29,11 +29,9 @@ import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
 import WayofTime.bloodmagic.block.BlockMimic;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileMimic;
@@ -44,18 +42,15 @@ public class EntityMimic extends EntityMob
      * Copy of EntitySpider's AI (should be pretty evident...)
      */
     private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(EntityMimic.class, DataSerializers.BYTE);
-//    private static final DataParameter<Optional<ItemStack>> ITEMSTACK = EntityDataManager.<Optional<ItemStack>>createKey(EntityMimic.class, DataSerializers.OPTIONAL_ITEM_STACK);
 
     public boolean dropItemsOnBreak = true;
     public NBTTagCompound tileTag = new NBTTagCompound();
     public int metaOfReplacedBlock = 0;
 
-//    public ItemStack heldStack = null;
-
     public EntityMimic(World worldIn)
     {
         super(worldIn);
-        this.setSize(1.4F, 0.9F);
+        this.setSize(0.9F, 0.9F);
     }
 
     protected void initEntityAI()

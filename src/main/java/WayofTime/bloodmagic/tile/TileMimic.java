@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -14,6 +15,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -22,7 +25,7 @@ import WayofTime.bloodmagic.entity.mob.EntityMimic;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.util.Utils;
 
-public class TileMimic extends TileInventory
+public class TileMimic extends TileInventory implements ITickable
 {
     private static Field _blockMetadata = ReflectionHelper.findField(TileEntity.class, "blockMetadata", "field_145847_g");
 
@@ -31,14 +34,36 @@ public class TileMimic extends TileInventory
     public TileEntity mimicedTile = null;
     public int metaOfReplacedBlock = 0;
 
+    public int spawnRadius = 5;
+
     public TileMimic()
     {
         super(1, "mimic");
     }
 
+    @Override
+    public void update()
+    {
+        if (this.getBlockMetadata() == BlockMimic.sentientMimicMeta && !(mimicedTile instanceof IInventory))
+        {
+            AxisAlignedBB bb = new AxisAlignedBB(this.getPos()).expand(spawnRadius, spawnRadius, spawnRadius);
+            List<EntityPlayer> playerList = worldObj.getEntitiesWithinAABB(EntityPlayer.class, bb);
+
+            for (EntityPlayer player : playerList)
+            {
+                if (!player.capabilities.isCreativeMode && Utils.canEntitySeeBlock(worldObj, player, getPos()))
+                {
+                    spawnMimicEntity(player);
+                    break;
+                }
+            }
+        }
+
+    }
+
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side)
     {
-        if (performSpecialAbility())
+        if (performSpecialAbility(player))
         {
             return true;
         }
@@ -67,31 +92,40 @@ public class TileMimic extends TileInventory
         return true;
     }
 
-    public boolean performSpecialAbility()
+    public boolean performSpecialAbility(EntityPlayer player)
     {
         switch (this.getBlockMetadata())
         {
         case BlockMimic.sentientMimicMeta:
-            if (this.getStackInSlot(0) == null || worldObj.isRemote)
-            {
-                return false;
-            }
-
-            EntityMimic mimicEntity = new EntityMimic(worldObj);
-            mimicEntity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-
-            mimicEntity.initializeMimic(getStackInSlot(0), tileTag, dropItemsOnBreak, metaOfReplacedBlock);
-            tileTag = null;
-            mimicedTile = null;
-            this.setInventorySlotContents(0, null);
-
-            worldObj.spawnEntityInWorld(mimicEntity);
-
-            worldObj.setBlockToAir(pos);
-
-            return true;
+            return spawnMimicEntity(player);
         }
         return false;
+    }
+
+    public boolean spawnMimicEntity(EntityPlayer target)
+    {
+        if (this.getStackInSlot(0) == null || worldObj.isRemote)
+        {
+            return false;
+        }
+
+        EntityMimic mimicEntity = new EntityMimic(worldObj);
+        mimicEntity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+
+        mimicEntity.initializeMimic(getStackInSlot(0), tileTag, dropItemsOnBreak, metaOfReplacedBlock);
+        tileTag = null;
+        mimicedTile = null;
+        this.setInventorySlotContents(0, null);
+
+        worldObj.spawnEntityInWorld(mimicEntity);
+        if (target != null)
+        {
+            mimicEntity.setAttackTarget(target);
+        }
+
+        worldObj.setBlockToAir(pos);
+
+        return true;
     }
 
     public void refreshTileEntity()
