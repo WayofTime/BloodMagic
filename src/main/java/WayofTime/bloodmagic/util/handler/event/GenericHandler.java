@@ -162,7 +162,7 @@ public class GenericHandler
         if (!event.getEntityLiving().worldObj.isRemote)
         {
             EntityLivingBase entity = event.getEntityLiving();
-            if (entity instanceof EntityPlayer && entity.worldObj.getTotalWorldTime() % 50 == 0) //TODO: Change to an incremental counter
+            if (entity instanceof EntityPlayer && entity.ticksExisted % 50 == 0) //TODO: Change to an incremental counter
             {
                 sendPlayerDemonWillAura((EntityPlayer) entity);
             }
