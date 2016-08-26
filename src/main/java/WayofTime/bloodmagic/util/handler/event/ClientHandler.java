@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,6 +31,8 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.settings.KeyConflictContext;
+import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -100,7 +103,10 @@ public class ClientHandler
     public static ResourceLocation crystalResource = new ResourceLocation(Constants.Mod.DOMAIN + "textures/entities/defaultCrystalLayer.png");
 
     // Contrary to what your IDE tells you, this *is* actually needed.
+    // TODO - Rewrite this "BMKeyBinding" thing. Arc what the heck were you thinking...
     public static final BMKeyBinding keyOpenSigilHolding = new BMKeyBinding("openSigilHolding", Keyboard.KEY_H, BMKeyBinding.Key.OPEN_SIGIL_HOLDING);
+    public static final KeyBinding KEY_HOLDING_CYCLE_POS = new KeyBinding(Constants.Mod.MODID + "cycleHoldingPos", KeyConflictContext.IN_GAME, KeyModifier.SHIFT, Keyboard.KEY_EQUALS, Constants.Mod.NAME);
+    public static final KeyBinding KEY_HOLDING_CYCLE_NEG = new KeyBinding(Constants.Mod.MODID + "cycleHoldingNeg", KeyConflictContext.IN_GAME, KeyModifier.SHIFT, Keyboard.KEY_MINUS, Constants.Mod.NAME);
 
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event)
@@ -215,10 +221,24 @@ public class ClientHandler
         if (!minecraft.inGameHasFocus)
             return;
 
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+
         for (BMKeyBinding key : keyBindings)
         {
             if (key.isPressed())
                 key.handleKeyPress();
+        }
+
+        if (player != null)
+        {
+            ItemStack stack = player.getHeldItemMainhand();
+            if (stack != null && stack.getItem() instanceof ItemSigilHolding)
+            {
+                if (KEY_HOLDING_CYCLE_POS.isPressed())
+                    cycleSigil(stack, player, -1);
+                else if (KEY_HOLDING_CYCLE_NEG.isPressed())
+                    cycleSigil(stack, player, 1);
+            }
         }
     }
 
