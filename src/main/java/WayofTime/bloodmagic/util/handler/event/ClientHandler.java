@@ -35,6 +35,7 @@ import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -105,8 +106,13 @@ public class ClientHandler
     // Contrary to what your IDE tells you, this *is* actually needed.
     // TODO - Rewrite this "BMKeyBinding" thing. Arc what the heck were you thinking...
     public static final BMKeyBinding keyOpenSigilHolding = new BMKeyBinding("openSigilHolding", Keyboard.KEY_H, BMKeyBinding.Key.OPEN_SIGIL_HOLDING);
-    public static final KeyBinding KEY_HOLDING_CYCLE_POS = new KeyBinding(Constants.Mod.MODID + "cycleHoldingPos", KeyConflictContext.IN_GAME, KeyModifier.SHIFT, Keyboard.KEY_EQUALS, Constants.Mod.NAME);
-    public static final KeyBinding KEY_HOLDING_CYCLE_NEG = new KeyBinding(Constants.Mod.MODID + "cycleHoldingNeg", KeyConflictContext.IN_GAME, KeyModifier.SHIFT, Keyboard.KEY_MINUS, Constants.Mod.NAME);
+    public static final KeyBinding KEY_HOLDING_CYCLE_POS = new KeyBinding(Constants.Mod.MODID + ".keybind.cycleHoldingPos", KeyConflictContext.IN_GAME, KeyModifier.SHIFT, Keyboard.KEY_EQUALS, Constants.Mod.NAME);
+    public static final KeyBinding KEY_HOLDING_CYCLE_NEG = new KeyBinding(Constants.Mod.MODID + ".keybind.cycleHoldingNeg", KeyConflictContext.IN_GAME, KeyModifier.SHIFT, Keyboard.KEY_MINUS, Constants.Mod.NAME);
+
+    static {
+        ClientRegistry.registerKeyBinding(KEY_HOLDING_CYCLE_POS);
+        ClientRegistry.registerKeyBinding(KEY_HOLDING_CYCLE_NEG);
+    }
 
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event)
