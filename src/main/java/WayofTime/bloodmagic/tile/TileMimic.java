@@ -353,7 +353,7 @@ public class TileMimic extends TileInventory implements ITickable
 
                 if (tag != null)
                 {
-                    NBTTagCompound copyTag = tag.copy();
+                    NBTTagCompound copyTag = (NBTTagCompound) (tag.copy());
                     copyTag.setInteger("x", pos.getX());
                     copyTag.setInteger("y", pos.getY());
                     copyTag.setInteger("z", pos.getZ());
