@@ -26,7 +26,7 @@ public class BuildTestStructure
         TemplateManager templatemanager = world.getStructureTemplateManager();
 
         ResourceLocation resource = new ResourceLocation(Constants.Mod.MODID, "Corridor1");
-        Template template = templatemanager.func_189942_b(minecraftserver, resource);
+        Template template = templatemanager.getTemplate(minecraftserver, resource);
 
         if (template == null)
         {

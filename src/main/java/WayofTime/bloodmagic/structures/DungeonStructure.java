@@ -27,7 +27,7 @@ public class DungeonStructure
         MinecraftServer minecraftserver = world.getMinecraftServer();
         TemplateManager templatemanager = world.getStructureTemplateManager();
 
-        Template template = templatemanager.func_189942_b(minecraftserver, resource);
+        Template template = templatemanager.getTemplate(minecraftserver, resource);
 
         if (template == null)
         {
