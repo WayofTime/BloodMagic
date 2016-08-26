@@ -3,8 +3,7 @@ package WayofTime.bloodmagic.item.sigil;
 import java.util.Collections;
 import java.util.List;
 
-import WayofTime.bloodmagic.util.handler.event.ClientHandler;
-import net.minecraft.client.settings.KeyBinding;
+import WayofTime.bloodmagic.client.KeyBindingBloodMagic;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -17,7 +16,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,12 +27,10 @@ import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.Utils;
-import WayofTime.bloodmagic.util.handler.BMKeyBinding;
-import WayofTime.bloodmagic.util.handler.IKeybindable;
+import WayofTime.bloodmagic.client.IKeybindable;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.base.Strings;
-import org.lwjgl.input.Keyboard;
 
 public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAltarReader
 {
@@ -46,9 +42,9 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     }
 
     @Override
-    public void onKeyPressed(ItemStack stack, EntityPlayer player, BMKeyBinding.Key key, boolean showInChat)
+    public void onKeyPressed(ItemStack stack, EntityPlayer player, KeyBindingBloodMagic.KeyBindings key, boolean showInChat)
     {
-        if (stack == player.getHeldItemMainhand() && stack.getItem() instanceof ItemSigilHolding && key.equals(BMKeyBinding.Key.OPEN_SIGIL_HOLDING))
+        if (stack == player.getHeldItemMainhand() && stack.getItem() instanceof ItemSigilHolding && key.equals(KeyBindingBloodMagic.KeyBindings.OPEN_HOLDING))
         {
             Utils.setUUID(stack);
             player.openGui(BloodMagic.instance, Constants.Gui.SIGIL_HOLDING_GUI, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
@@ -77,7 +73,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.holding.press", ClientHandler.keyOpenSigilHolding.getDisplayName()));
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.holding.press", KeyBindingBloodMagic.KeyBindings.OPEN_HOLDING.getKey().getDisplayName()));
 
         ItemStack[] inv = getInternalInventory(stack);
 

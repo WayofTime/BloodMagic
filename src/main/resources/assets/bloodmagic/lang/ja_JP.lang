@@ -629,7 +629,7 @@ commands.soulnetwork.fillMax.success=正常に%sのソウルネットワーク�
 commands.soulnetwork.create.success=正常に%sのソウルネットワークを構築しました(オーブのグレード： %d)
 
 # Keybinds
-BloodMagic.keybind.openSigilHolding=貯蔵の印章を開く
+BloodMagic.keybind.open_holding=貯蔵の印章を開く
 
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=血の祭壇

@@ -664,9 +664,9 @@ commands.soulnetwork.fillMax.success=Successfully filled %s's Soul Network to th
 commands.soulnetwork.create.success=Successfully created %s's Soul Network (Orb tier: %d)
 
 # Keybinds
-BloodMagic.keybind.openSigilHolding=Open Sigil of Holding
-BloodMagic.keybind.cycleHoldingPos=Cycle Sigil (+)
-BloodMagic.keybind.cycleHoldingNeg=Cycle Sigil (-)
+BloodMagic.keybind.open_holding=Open Sigil of Holding
+BloodMagic.keybind.cycle_holding_pos=Cycle Sigil (+)
+BloodMagic.keybind.cycle_holding_neg=Cycle Sigil (-)
 
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=Blood Altar

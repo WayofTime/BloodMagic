@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.network;
 
-import WayofTime.bloodmagic.util.handler.BMKeyBinding;
-import WayofTime.bloodmagic.util.handler.IKeybindable;
+import WayofTime.bloodmagic.client.KeyBindingBloodMagic;
+import WayofTime.bloodmagic.client.IKeybindable;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -18,7 +18,7 @@ public class KeyProcessor implements IMessage, IMessageHandler<KeyProcessor, IMe
     {
     }
 
-    public KeyProcessor(BMKeyBinding.Key key, boolean showInChat)
+    public KeyProcessor(KeyBindingBloodMagic.KeyBindings key, boolean showInChat)
     {
         this.keyId = key.ordinal();
         this.showInChat = showInChat;
@@ -48,11 +48,11 @@ public class KeyProcessor implements IMessage, IMessageHandler<KeyProcessor, IMe
             ItemStack heldStack = entityPlayer.getHeldItemMainhand();
             if (heldStack.getItem() instanceof IKeybindable)
             {
-                if (msg.keyId < 0 || msg.keyId >= BMKeyBinding.Key.values().length)
+                if (msg.keyId < 0 || msg.keyId >= KeyBindingBloodMagic.KeyBindings.values().length)
                 {
                     return null;
                 }
-                BMKeyBinding.Key key = BMKeyBinding.Key.values()[msg.keyId];
+                KeyBindingBloodMagic.KeyBindings key = KeyBindingBloodMagic.KeyBindings.values()[msg.keyId];
                 ((IKeybindable) heldStack.getItem()).onKeyPressed(heldStack, entityPlayer, key, msg.showInChat);
             }
         }
