@@ -23,6 +23,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import WayofTime.bloodmagic.block.BlockMimic;
@@ -89,7 +90,7 @@ public class TileMimic extends TileInventory implements ITickable
             }
         }
 
-        if (this.getBlockMetadata() == BlockMimic.sentientMimicMeta && !(mimicedTile instanceof IInventory))
+        if (this.getBlockMetadata() == BlockMimic.sentientMimicMeta && worldObj.getDifficulty() != EnumDifficulty.PEACEFUL && !(mimicedTile instanceof IInventory))
         {
             AxisAlignedBB bb = new AxisAlignedBB(this.getPos()).expand(playerCheckRadius, playerCheckRadius, playerCheckRadius);
             List<EntityPlayer> playerList = worldObj.getEntitiesWithinAABB(EntityPlayer.class, bb);
@@ -181,6 +182,7 @@ public class TileMimic extends TileInventory implements ITickable
 
                 return false;
             }
+
             return spawnMimicEntity(player);
         default:
             if (!player.capabilities.isCreativeMode)
@@ -241,6 +243,11 @@ public class TileMimic extends TileInventory implements ITickable
 
     public boolean spawnMimicEntity(EntityPlayer target)
     {
+        if (this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL)
+        {
+            return false;
+        }
+
         if (this.getStackInSlot(0) == null || worldObj.isRemote)
         {
             return false;

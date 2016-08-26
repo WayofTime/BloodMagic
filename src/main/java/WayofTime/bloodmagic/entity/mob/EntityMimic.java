@@ -31,6 +31,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.block.BlockMimic;
 import WayofTime.bloodmagic.registry.ModBlocks;
@@ -134,6 +135,8 @@ public class EntityMimic extends EntityMob
                 mimic.dropItemsOnBreak = dropItemsOnBreak;
                 mimic.refreshTileEntity();
             }
+
+            return true;
         }
 
         return false;
@@ -145,6 +148,40 @@ public class EntityMimic extends EntityMob
         this.tileTag = tileTag;
         this.dropItemsOnBreak = dropItemsOnBreak;
         this.metaOfReplacedBlock = metaOfReplacedBlock;
+    }
+
+    public void reformIntoMimicBlock()
+    {
+        BlockPos centerPos = this.getPosition();
+
+        int horizontalRadius = 1;
+        int verticalRadius = 1;
+
+        for (int hR = 0; hR <= horizontalRadius; hR++)
+        {
+            for (int vR = 0; vR <= verticalRadius; vR++)
+            {
+                for (int i = -hR; i <= hR; i++)
+                {
+                    for (int k = -hR; k <= hR; k++)
+                    {
+                        for (int j = -vR; j <= vR; j += 2 * vR + (vR > 0 ? 0 : 1))
+                        {
+                            if (!(Math.abs(i) == hR || Math.abs(k) == hR))
+                            {
+                                continue;
+                            }
+
+                            BlockPos newPos = centerPos.add(i, j, k);
+                            if (spawnMimicBlockAtPosition(worldObj, newPos))
+                            {
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -220,6 +257,12 @@ public class EntityMimic extends EntityMob
     @Override
     public void onUpdate()
     {
+        if (!this.worldObj.isRemote && this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL)
+        {
+            reformIntoMimicBlock();
+            this.setDead();
+        }
+
         super.onUpdate();
 
         if (!this.worldObj.isRemote)
