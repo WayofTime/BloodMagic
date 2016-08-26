@@ -43,7 +43,7 @@ public class RenderEntityMimic extends RenderLiving<EntityMimic>
         super.doRender(mimic, x, y, z, entityYaw, partialTicks);
 
         GlStateManager.pushMatrix();
-        if (mimic.getItemStack() != null)
+        if (mimic.getMimicItemStack() != null)
         {
             GlStateManager.pushMatrix();
 
@@ -55,7 +55,7 @@ public class RenderEntityMimic extends RenderLiving<EntityMimic>
 
             GlStateManager.translate(x, y, z);
 
-            ItemStack itemstack = mimic.getItemStack();
+            ItemStack itemstack = mimic.getMimicItemStack();
             Item item = itemstack.getItem();
             Minecraft minecraft = Minecraft.getMinecraft();
             GlStateManager.pushMatrix();

@@ -47,6 +47,7 @@ public class EntityMimic extends EntityMob
     public boolean dropItemsOnBreak = true;
     public NBTTagCompound tileTag = new NBTTagCompound();
     public int metaOfReplacedBlock = 0;
+    public int playerCheckRadius = 5;
 
     public EntityMimic(World worldIn)
     {
@@ -75,14 +76,7 @@ public class EntityMimic extends EntityMob
         tag.setBoolean("dropItemsOnBreak", dropItemsOnBreak);
         tag.setTag("tileTag", tileTag);
         tag.setInteger("metaOfReplacedBlock", metaOfReplacedBlock);
-
-//        NBTTagCompound itemTag = new NBTTagCompound();
-//        if (heldStack != null)
-//        {
-//            heldStack.writeToNBT(itemTag);
-//        }
-//
-//        tag.setTag("heldItem", itemTag);
+        tag.setInteger("playerCheckRadius", playerCheckRadius);
     }
 
     @Override
@@ -93,20 +87,12 @@ public class EntityMimic extends EntityMob
         dropItemsOnBreak = tag.getBoolean("dropItemsOnBreak");
         tileTag = tag.getCompoundTag("tileTag");
         metaOfReplacedBlock = tag.getInteger("metaOfReplacedBlock");
-//        NBTTagCompound itemTag = tag.getCompoundTag("heldItem");
-//
-//        if (!itemTag.hasNoTags())
-//        {
-//            heldStack = ItemStack.loadItemStackFromNBT(itemTag);
-//        }
-//        mimicedTile = getTileFromStackWithTag(worldObj, pos, getStackInSlot(0), tileTag, metaOfReplacedBlock);
+        playerCheckRadius = tag.getInteger("playerCheckRadius");
     }
 
-    public ItemStack getItemStack()
+    public ItemStack getMimicItemStack()
     {
-//        System.out.println(heldStack);
         return this.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-//        return ItemStack.copyItemStack(heldStack);
     }
 
     public void setItemStack(ItemStack stack)
@@ -116,7 +102,7 @@ public class EntityMimic extends EntityMob
 
     public boolean spawnHeldBlockOnDeath(World world, BlockPos pos)
     {
-        return world.isAirBlock(pos) && TileMimic.replaceMimicWithBlockActual(world, pos, getItemStack(), tileTag, metaOfReplacedBlock);
+        return world.isAirBlock(pos) && TileMimic.replaceMimicWithBlockActual(world, pos, getMimicItemStack(), tileTag, metaOfReplacedBlock);
     }
 
     public boolean spawnMimicBlockAtPosition(World world, BlockPos pos)
@@ -131,7 +117,7 @@ public class EntityMimic extends EntityMob
                 TileMimic mimic = (TileMimic) tile;
                 mimic.metaOfReplacedBlock = metaOfReplacedBlock;
                 mimic.tileTag = tileTag;
-                mimic.setInventorySlotContents(0, getItemStack());
+                mimic.setInventorySlotContents(0, getMimicItemStack());
                 mimic.dropItemsOnBreak = dropItemsOnBreak;
                 mimic.refreshTileEntity();
             }
@@ -142,12 +128,13 @@ public class EntityMimic extends EntityMob
         return false;
     }
 
-    public void initializeMimic(ItemStack heldStack, NBTTagCompound tileTag, boolean dropItemsOnBreak, int metaOfReplacedBlock)
+    public void initializeMimic(ItemStack heldStack, NBTTagCompound tileTag, boolean dropItemsOnBreak, int metaOfReplacedBlock, int playerCheckRadius)
     {
         this.setItemStack(heldStack);
         this.tileTag = tileTag;
         this.dropItemsOnBreak = dropItemsOnBreak;
         this.metaOfReplacedBlock = metaOfReplacedBlock;
+        this.playerCheckRadius = playerCheckRadius;
     }
 
     public void reformIntoMimicBlock()

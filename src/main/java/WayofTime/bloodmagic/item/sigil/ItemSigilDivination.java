@@ -41,20 +41,6 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 
         if (!world.isRemote)
         {
-            EntityMimic mimic = new EntityMimic(world);
-
-            mimic.setPosition(player.posX, player.posY, player.posZ);
-            world.spawnEntityInWorld(mimic);
-
-            System.out.println("Spawning Mimic");
-//            EntityZombie zombie = new EntityZombie(world);
-//            zombie.setPosition(player.posX, player.posY, player.posZ);
-//            zombie.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(Blocks.CHEST));
-//            world.spawnEntityInWorld(zombie);
-        }
-
-        if (!world.isRemote)
-        {
             super.onItemRightClick(stack, world, player, hand);
 
             RayTraceResult position = rayTrace(world, player, false);

@@ -256,7 +256,7 @@ public class TileMimic extends TileInventory implements ITickable
         EntityMimic mimicEntity = new EntityMimic(worldObj);
         mimicEntity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 
-        mimicEntity.initializeMimic(getStackInSlot(0), tileTag, dropItemsOnBreak, metaOfReplacedBlock);
+        mimicEntity.initializeMimic(getStackInSlot(0), tileTag, dropItemsOnBreak, metaOfReplacedBlock, playerCheckRadius);
         tileTag = null;
         mimicedTile = null;
         this.setInventorySlotContents(0, null);
