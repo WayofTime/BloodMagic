@@ -252,8 +252,8 @@ tile.BloodMagic.demonCrystalSTEADFAST.name=Steadfast Will Crystal Cluster
 
 tile.BloodMagic.mimic.nohitbox.name=Ethereal Opaque Mimic Block
 tile.BloodMagic.mimic.solidopaque.name=Opaque Mimic Block
-tile.BloodMagic.mimic.solidclear.name=Clear Ethereal Mimic Block
-tile.BloodMagic.mimic.solidlight.name=Lighted Ethereal Mimic Block
+tile.BloodMagic.mimic.solidclear.name=Clear Mimic Block
+tile.BloodMagic.mimic.solidlight.name=Lighted Mimic Block
 tile.BloodMagic.mimic.sentient.name=Sentient Mimic Block
 
 # Fluids
@@ -589,6 +589,12 @@ chat.BloodMagic.altar.nextTier=The next tier of blood altar is missing %s at %s.
 
 chat.BloodMagic.mimic.potionSet=Potion trap has been set.
 chat.BloodMagic.mimic.potionRemove=Potion trap has been disabled.
+chat.BloodMagic.mimic.potionInterval.up=Potion Interval has been increased to: %d ticks.
+chat.BloodMagic.mimic.potionInterval.down=Potion Interval has been decreased to: %d ticks.
+chat.BloodMagic.mimic.detectRadius.up=Player detection radius has been increased to: %d blocks.
+chat.BloodMagic.mimic.detectRadius.down=Player detection radius has been decreased to: %d blocks.
+chat.BloodMagic.mimic.potionSpawnRadius.up=Potion spawning radius has been increased to: %d blocks.
+chat.BloodMagic.mimic.potionSpawnRadius.down=Potion spawning radius has been decreased to: %d blocks.
 
 # entity
 entity.BloodMagic.SentientSpecter.name=Sentient Specter

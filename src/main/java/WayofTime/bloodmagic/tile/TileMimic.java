@@ -41,7 +41,9 @@ public class TileMimic extends TileInventory implements ITickable
     public TileEntity mimicedTile = null;
     public int metaOfReplacedBlock = 0;
 
-    public int spawnRadius = 5;
+    public int playerCheckRadius = 5;
+    public int potionSpawnRadius = 5;
+    public int potionSpawnInterval = 40;
 
     private int internalCounter = 0;
 
@@ -59,31 +61,37 @@ public class TileMimic extends TileInventory implements ITickable
         }
 
         internalCounter++;
-        if (internalCounter % 20 == 0 && this.getBlockMetadata() != BlockMimic.sentientMimicMeta)
+        if (internalCounter % potionSpawnInterval == 0 && this.getBlockMetadata() != BlockMimic.sentientMimicMeta)
         {
             ItemStack potionStack = this.getStackInSlot(1);
             if (potionStack != null)
             {
-                int potionSpawnRadius = 3;
+                AxisAlignedBB bb = new AxisAlignedBB(this.getPos()).expand(playerCheckRadius, playerCheckRadius, playerCheckRadius);
+                List<EntityPlayer> playerList = worldObj.getEntitiesWithinAABB(EntityPlayer.class, bb);
 
-                double posX = this.pos.getX() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
-                double posY = this.pos.getY() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
-                double posZ = this.pos.getZ() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
+                for (EntityPlayer player : playerList)
+                {
+                    if (!player.capabilities.isCreativeMode)
+                    {
+                        double posX = this.pos.getX() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
+                        double posY = this.pos.getY() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
+                        double posZ = this.pos.getZ() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
 
-                ItemStack newStack = new ItemStack(Items.SPLASH_POTION);
-                newStack.setTagCompound(potionStack.getTagCompound());
+                        ItemStack newStack = new ItemStack(potionStack.getItem() == ModItems.potionFlask ? Items.SPLASH_POTION : potionStack.getItem());
+                        newStack.setTagCompound(potionStack.getTagCompound());
 
-                EntityPotion potionEntity = new EntityPotion(worldObj, posX, posY, posZ, newStack);
+                        EntityPotion potionEntity = new EntityPotion(worldObj, posX, posY, posZ, newStack);
 
-//                potionEntity.setPosition(posX, posY, posZ);
-//                potionEntity.setItem(potionStack.copy());
-                worldObj.spawnEntityInWorld(potionEntity);
+                        worldObj.spawnEntityInWorld(potionEntity);
+                        break;
+                    }
+                }
             }
         }
 
         if (this.getBlockMetadata() == BlockMimic.sentientMimicMeta && !(mimicedTile instanceof IInventory))
         {
-            AxisAlignedBB bb = new AxisAlignedBB(this.getPos()).expand(spawnRadius, spawnRadius, spawnRadius);
+            AxisAlignedBB bb = new AxisAlignedBB(this.getPos()).expand(playerCheckRadius, playerCheckRadius, playerCheckRadius);
             List<EntityPlayer> playerList = worldObj.getEntitiesWithinAABB(EntityPlayer.class, bb);
 
             for (EntityPlayer player : playerList)
@@ -100,17 +108,6 @@ public class TileMimic extends TileInventory implements ITickable
 
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side)
     {
-        if (performSpecialAbility(player))
-        {
-            return true;
-        }
-
-        if (player.isSneaking())
-            return false;
-
-        if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == new ItemStack(ModBlocks.mimic).getItem())
-            return false;
-
         if (heldItem != null && player.capabilities.isCreativeMode)
         {
             List<PotionEffect> list = PotionUtils.getEffectsFromStack(heldItem);
@@ -136,13 +133,24 @@ public class TileMimic extends TileInventory implements ITickable
             }
         }
 
+        if (performSpecialAbility(player, side))
+        {
+            return true;
+        }
+
+        if (player.isSneaking())
+            return false;
+
+        if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == new ItemStack(ModBlocks.mimic).getItem())
+            return false;
+
         if (getStackInSlot(0) != null && player.getHeldItem(hand) != null)
             return false;
 
         if (!dropItemsOnBreak && !player.capabilities.isCreativeMode)
             return false;
 
-        Utils.insertItemToTile(this, player);
+        Utils.insertItemToTile(this, player, 0);
         this.refreshTileEntity();
 
         if (player.capabilities.isCreativeMode)
@@ -154,12 +162,79 @@ public class TileMimic extends TileInventory implements ITickable
         return true;
     }
 
-    public boolean performSpecialAbility(EntityPlayer player)
+    public boolean performSpecialAbility(EntityPlayer player, EnumFacing sideHit)
     {
         switch (this.getBlockMetadata())
         {
         case BlockMimic.sentientMimicMeta:
+            if (player.capabilities.isCreativeMode)
+            {
+                if (player.isSneaking())
+                {
+                    playerCheckRadius = Math.max(playerCheckRadius - 1, 0);
+                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.detectRadius.down", playerCheckRadius));
+                } else
+                {
+                    playerCheckRadius++;
+                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.detectRadius.up", playerCheckRadius));
+                }
+
+                return false;
+            }
             return spawnMimicEntity(player);
+        default:
+            if (!player.capabilities.isCreativeMode)
+            {
+                return false;
+            }
+
+            if (player.getActiveItemStack() == null && getStackInSlot(1) != null)
+            {
+                switch (sideHit)
+                {
+                case EAST: //When the block is clicked on the EAST or WEST side, potionSpawnRadius is edited.
+                case WEST:
+                    if (player.isSneaking())
+                    {
+                        potionSpawnRadius = Math.max(potionSpawnRadius - 1, 0);
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.potionSpawnRadius.down", potionSpawnRadius));
+                    } else
+                    {
+                        potionSpawnRadius++;
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.potionSpawnRadius.up", potionSpawnRadius));
+                    }
+                    break;
+                case NORTH: //When the block is clicked on the NORTH or SOUTH side, detectRadius is edited.
+                case SOUTH:
+                    if (player.isSneaking())
+                    {
+                        playerCheckRadius = Math.max(playerCheckRadius - 1, 0);
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.detectRadius.down", playerCheckRadius));
+                    } else
+                    {
+                        playerCheckRadius++;
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.detectRadius.up", playerCheckRadius));
+                    }
+                    break;
+                case UP: //When the block is clicked on the UP or DOWN side, potionSpawnInterval is edited.
+                case DOWN:
+                    if (player.isSneaking())
+                    {
+                        potionSpawnInterval = Math.max(potionSpawnInterval - 1, 1);
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.potionInterval.down", potionSpawnInterval));
+                    } else
+                    {
+                        potionSpawnInterval++;
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.potionInterval.up", potionSpawnInterval));
+                    }
+                    break;
+                default:
+                    break;
+
+                }
+
+                return true;
+            }
         }
         return false;
     }
@@ -208,6 +283,9 @@ public class TileMimic extends TileInventory implements ITickable
         tileTag = tag.getCompoundTag("tileTag");
         metaOfReplacedBlock = tag.getInteger("metaOfReplacedBlock");
         mimicedTile = getTileFromStackWithTag(worldObj, pos, getStackInSlot(0), tileTag, metaOfReplacedBlock);
+        playerCheckRadius = tag.getInteger("playerCheckRadius");
+        potionSpawnRadius = tag.getInteger("potionSpawnRadius");
+        potionSpawnInterval = Math.max(1, tag.getInteger("potionSpawnInterval"));
     }
 
     @Override
@@ -218,6 +296,9 @@ public class TileMimic extends TileInventory implements ITickable
         tag.setBoolean("dropItemsOnBreak", dropItemsOnBreak);
         tag.setTag("tileTag", tileTag);
         tag.setInteger("metaOfReplacedBlock", metaOfReplacedBlock);
+        tag.setInteger("playerCheckRadius", playerCheckRadius);
+        tag.setInteger("potionSpawnRadius", potionSpawnRadius);
+        tag.setInteger("potionSpawnInterval", potionSpawnInterval);
 
         return tag;
     }
