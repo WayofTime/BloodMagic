@@ -7,22 +7,29 @@ import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityPotion;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import WayofTime.bloodmagic.block.BlockMimic;
 import WayofTime.bloodmagic.entity.mob.EntityMimic;
 import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
 
 public class TileMimic extends TileInventory implements ITickable
@@ -36,14 +43,44 @@ public class TileMimic extends TileInventory implements ITickable
 
     public int spawnRadius = 5;
 
+    private int internalCounter = 0;
+
     public TileMimic()
     {
-        super(1, "mimic");
+        super(2, "mimic");
     }
 
     @Override
     public void update()
     {
+        if (worldObj.isRemote)
+        {
+            return;
+        }
+
+        internalCounter++;
+        if (internalCounter % 20 == 0 && this.getBlockMetadata() != BlockMimic.sentientMimicMeta)
+        {
+            ItemStack potionStack = this.getStackInSlot(1);
+            if (potionStack != null)
+            {
+                int potionSpawnRadius = 3;
+
+                double posX = this.pos.getX() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
+                double posY = this.pos.getY() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
+                double posZ = this.pos.getZ() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
+
+                ItemStack newStack = new ItemStack(Items.SPLASH_POTION);
+                newStack.setTagCompound(potionStack.getTagCompound());
+
+                EntityPotion potionEntity = new EntityPotion(worldObj, posX, posY, posZ, newStack);
+
+//                potionEntity.setPosition(posX, posY, posZ);
+//                potionEntity.setItem(potionStack.copy());
+                worldObj.spawnEntityInWorld(potionEntity);
+            }
+        }
+
         if (this.getBlockMetadata() == BlockMimic.sentientMimicMeta && !(mimicedTile instanceof IInventory))
         {
             AxisAlignedBB bb = new AxisAlignedBB(this.getPos()).expand(spawnRadius, spawnRadius, spawnRadius);
@@ -73,6 +110,31 @@ public class TileMimic extends TileInventory implements ITickable
 
         if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == new ItemStack(ModBlocks.mimic).getItem())
             return false;
+
+        if (heldItem != null && player.capabilities.isCreativeMode)
+        {
+            List<PotionEffect> list = PotionUtils.getEffectsFromStack(heldItem);
+            if (list != null && !list.isEmpty())
+            {
+                if (!world.isRemote)
+                {
+                    setInventorySlotContents(1, heldItem.copy());
+                    world.notifyBlockUpdate(pos, state, state, 3);
+                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.potionSet"));
+                }
+                return true;
+            } else if (heldItem.getItem() == ModItems.potionFlask)
+            {
+                //The potion flask is empty, therefore we have to reset the stored potion.
+                if (!world.isRemote)
+                {
+                    setInventorySlotContents(1, null);
+                    world.notifyBlockUpdate(pos, state, state, 3);
+                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.potionRemove"));
+                }
+                return true;
+            }
+        }
 
         if (getStackInSlot(0) != null && player.getHeldItem(hand) != null)
             return false;

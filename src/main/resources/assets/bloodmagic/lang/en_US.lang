@@ -587,6 +587,9 @@ chat.BloodMagic.altar.comp.notair=a solid block
 
 chat.BloodMagic.altar.nextTier=The next tier of blood altar is missing %s at %s.
 
+chat.BloodMagic.mimic.potionSet=Potion trap has been set.
+chat.BloodMagic.mimic.potionRemove=Potion trap has been disabled.
+
 # entity
 entity.BloodMagic.SentientSpecter.name=Sentient Specter
 entity.BloodMagic.Mimic.name=Mimic
