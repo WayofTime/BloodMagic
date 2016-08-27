@@ -11,11 +11,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
@@ -139,6 +135,11 @@ public class BloodMagic
         ModCompatibility.loadCompat(ICompatibility.InitializationPhase.POST_INIT);
 
         proxy.postInit();
+    }
+
+    @Mod.EventHandler
+    public void modMapping(FMLModIdMappingEvent event) {
+        ModCompatibility.loadCompat(ICompatibility.InitializationPhase.MAPPING);
     }
 
     @Mod.EventHandler

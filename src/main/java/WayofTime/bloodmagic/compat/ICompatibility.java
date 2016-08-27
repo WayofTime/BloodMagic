@@ -48,6 +48,12 @@ public interface ICompatibility
          * Represents
          * {@link net.minecraftforge.fml.common.event.FMLPostInitializationEvent}
          */
-        POST_INIT
+        POST_INIT,
+        /**
+         * Represents
+         * {@link net.minecraftforge.fml.common.event.FMLModIdMappingEvent}
+         */
+        MAPPING,
+        ;
     }
 }

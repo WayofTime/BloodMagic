@@ -3,14 +3,19 @@ package WayofTime.bloodmagic.compat.guideapi;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import WayofTime.bloodmagic.compat.ICompatibility;
 import amerifrance.guideapi.api.GuideAPI;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class CompatibilityGuideAPI implements ICompatibility
 {
+    private static IRecipe guideRecipe = null;
+    private static boolean worldFlag;
 
     @Override
     public void loadCompatibility(InitializationPhase phase)
@@ -21,8 +26,6 @@ public class CompatibilityGuideAPI implements ICompatibility
         {
             GuideBloodMagic.initBook();
             GameRegistry.register(GuideBloodMagic.guideBook);
-//            AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Items.BOOK), GuideAPI.getStackFromBook(GuideBloodMagic.guideBook), EnumAltarTier.ONE, 500, 2, 0));
-            GameRegistry.addShapelessRecipe(GuideAPI.getStackFromBook(GuideBloodMagic.guideBook), new ItemStack(Items.BOOK), Blocks.GLASS, Items.FEATHER);
             if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
                 GuideAPI.setModel(GuideBloodMagic.guideBook);
 
@@ -30,12 +33,24 @@ public class CompatibilityGuideAPI implements ICompatibility
         }
         case INIT:
         {
+            guideRecipe = new ShapelessOreRecipe(GuideAPI.getStackFromBook(GuideBloodMagic.guideBook), new ItemStack(Items.BOOK), Blocks.GLASS, Items.FEATHER);
             break;
         }
         case POST_INIT:
         {
             if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
                 GuideBloodMagic.initCategories();
+            break;
+        }
+        case MAPPING:
+        {
+            if (!worldFlag) {
+                GameRegistry.addRecipe(guideRecipe);
+                worldFlag = true;
+            } else {
+                CraftingManager.getInstance().getRecipeList().remove(guideRecipe);
+                worldFlag = false;
+            }
             break;
         }
         }
