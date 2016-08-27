@@ -138,7 +138,7 @@ public class TileIncenseAltar extends TileInventory implements ITickable
                     {
                         if (Math.abs(i) != currentDistance && Math.abs(j) != currentDistance)
                         {
-                            break; //TODO: Can make this just set j to currentDistance to speed it up.
+                            continue; //TODO: Can make this just set j to currentDistance to speed it up.
                         }
 
                         for (int y = 0 + yOffset; y <= 2 + yOffset; y++)
