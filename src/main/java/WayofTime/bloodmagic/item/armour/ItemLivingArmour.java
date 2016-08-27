@@ -339,11 +339,6 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                         LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(Constants.Mod.MODID + ".upgrade.elytra", chestStack);
                         if (upgrade instanceof LivingArmourUpgradeElytra)
                         {
-                            if (spPlayer.motionY > -0.5D)
-                            {
-                                BloodMagicPacketHandler.INSTANCE.sendToServer(new PlayerFallDistancePacketProcessor(1));
-                            }
-
                             if (spPlayer.movementInput.jump && !spPlayer.onGround && spPlayer.motionY < 0.0D && !spPlayer.capabilities.isFlying)
                             {
                                 if (spPlayer.motionY > -0.5D)
