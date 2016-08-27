@@ -250,7 +250,11 @@ tile.BloodMagic.demonCrystalDESTRUCTIVE.name=破坏意志晶簇
 tile.BloodMagic.demonCrystalVENGEFUL.name=复仇意志晶簇
 tile.BloodMagic.demonCrystalSTEADFAST.name=坚定意志晶簇
 
-tile.BloodMagic.mimic.nohitbox.name=悬幽模仿块
+tile.BloodMagic.mimic.nohitbox.name=悬幽不透明的模拟方块
+tile.BloodMagic.mimic.solidopaque.name=不透明的模拟方块
+
+tile.BloodMagic.mimic.solidlight.name=发光的悬幽模拟方块
+tile.BloodMagic.mimic.sentient.name=感知模拟方块
 
 # Fluids
 fluid.lifeEssence=生命源质
@@ -464,7 +468,7 @@ ritual.BloodMagic.speedRitual=速移仪式
 ritual.BloodMagic.suppressionRitual=抑液仪式
 ritual.BloodMagic.expulsionRitual=驱逐氛场
 ritual.BloodMagic.zephyrRitual=和风之唤
-ritual.BloodMagic.upgradeRemoveRitual=净灵之曲
+ritual.BloodMagic.upgradeRemoveRitual=净灵之音
 ritual.BloodMagic.armourEvolveRitual=束灵进化
 ritual.BloodMagic.animalGrowthRitual=牧养仪式
 ritual.BloodMagic.forsakenSoulRitual=孤魂集会
@@ -583,8 +587,18 @@ chat.BloodMagic.altar.comp.notair=一个实心方块
 
 chat.BloodMagic.altar.nextTier=下一层级的血之祭坛缺失 %s 在 %s.
 
+chat.BloodMagic.mimic.potionSet=药剂陷阱已设置.
+chat.BloodMagic.mimic.potionRemove=药剂陷阱已无效.
+chat.BloodMagic.mimic.potionInterval.up=药剂时间间隔已增加至: %d 刻.
+chat.BloodMagic.mimic.potionInterval.down=药剂时间间隔已减少至: %d 刻.
+chat.BloodMagic.mimic.detectRadius.up=玩家检测半径已增加至: %d 格方块.
+chat.BloodMagic.mimic.detectRadius.down=玩家检测半径已减少至: %d 格方块.
+chat.BloodMagic.mimic.potionSpawnRadius.up=药剂生成半径已增加至: % 格方块.
+chat.BloodMagic.mimic.potionSpawnRadius.down=药剂生成半径已减少至: % 格方块.
+
 # entity
 entity.BloodMagic.SentientSpecter.name=感知之灵
+entity.BloodMagic.Mimic.name=模拟
 
 # sekrit
 
@@ -650,7 +664,9 @@ commands.soulnetwork.fillMax.success=成功将 %s 的灵魂网络填满至其宝
 commands.soulnetwork.create.success=创建 %s 的灵魂网络成功 (宝珠等级: %d)
 
 # Keybinds
-BloodMagic.keybind.openSigilHolding=打开集持印记
+BloodMagic.keybind.open_holding=打开集持印记
+BloodMagic.keybind.cycle_holding_pos=循环选择印记 (+)
+BloodMagic.keybind.cycle_holding_neg=循环选择印记 (-)
 
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=血之祭坛
