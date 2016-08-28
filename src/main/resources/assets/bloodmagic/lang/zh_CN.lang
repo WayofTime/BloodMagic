@@ -664,7 +664,7 @@ commands.soulnetwork.fillMax.success=成功将 %s 的灵魂网络填满至其宝
 commands.soulnetwork.create.success=创建 %s 的灵魂网络成功 (宝珠等级: %d)
 
 # Keybinds
-BloodMagic.keybind.open_holding=打开集持印记
+BloodMagic.keybind.openSigilHolding=打开集持印记
 BloodMagic.keybind.cycle_holding_pos=循环选择印记 (+)
 BloodMagic.keybind.cycle_holding_neg=循环选择印记 (-)
 
