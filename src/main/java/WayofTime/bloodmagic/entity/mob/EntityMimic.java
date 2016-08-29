@@ -9,12 +9,12 @@ import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILeapAtTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
@@ -34,10 +34,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.block.BlockMimic;
+import WayofTime.bloodmagic.entity.ai.EntityAIMimicReform;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileMimic;
 
-public class EntityMimic extends EntityMob
+public class EntityMimic extends EntityDemonBase
 {
     /**
      * Copy of EntitySpider's AI (should be pretty evident...)
@@ -53,16 +54,16 @@ public class EntityMimic extends EntityMob
     {
         super(worldIn);
         this.setSize(0.9F, 0.9F);
-    }
 
-    protected void initEntityAI()
-    {
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
         this.tasks.addTask(4, new EntityMimic.AISpiderAttack(this));
-        this.tasks.addTask(5, new EntityAIWander(this, 0.8D));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(6, new EntityAILookIdle(this));
+        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1));
+        this.tasks.addTask(6, new EntityAIWander(this, 0.8D));
+        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(8, new EntityAILookIdle(this));
+        this.tasks.addTask(7, new EntityAIMimicReform(this));
+
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
         this.targetTasks.addTask(2, new EntityMimic.AISpiderTarget(this, EntityPlayer.class));
         this.targetTasks.addTask(3, new EntityMimic.AISpiderTarget(this, EntityIronGolem.class));
@@ -95,7 +96,7 @@ public class EntityMimic extends EntityMob
         return this.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
     }
 
-    public void setItemStack(ItemStack stack)
+    public void setMimicItemStack(ItemStack stack)
     {
         this.setItemStackToSlot(EntityEquipmentSlot.CHEST, stack);
     }
@@ -128,19 +129,18 @@ public class EntityMimic extends EntityMob
         return false;
     }
 
-    public void initializeMimic(ItemStack heldStack, NBTTagCompound tileTag, boolean dropItemsOnBreak, int metaOfReplacedBlock, int playerCheckRadius)
+    public void initializeMimic(ItemStack heldStack, NBTTagCompound tileTag, boolean dropItemsOnBreak, int metaOfReplacedBlock, int playerCheckRadius, BlockPos homePosition)
     {
-        this.setItemStack(heldStack);
+        this.setMimicItemStack(heldStack);
         this.tileTag = tileTag;
         this.dropItemsOnBreak = dropItemsOnBreak;
         this.metaOfReplacedBlock = metaOfReplacedBlock;
         this.playerCheckRadius = playerCheckRadius;
+        this.setHomePosAndDistance(homePosition, 2); //TODO: Save this.
     }
 
-    public void reformIntoMimicBlock()
+    public boolean reformIntoMimicBlock(BlockPos centerPos)
     {
-        BlockPos centerPos = this.getPosition();
-
         int horizontalRadius = 1;
         int verticalRadius = 1;
 
@@ -162,13 +162,15 @@ public class EntityMimic extends EntityMob
                             BlockPos newPos = centerPos.add(i, j, k);
                             if (spawnMimicBlockAtPosition(worldObj, newPos))
                             {
-                                return;
+                                return true;
                             }
                         }
                     }
                 }
             }
         }
+
+        return false;
     }
 
     @Override
@@ -246,8 +248,10 @@ public class EntityMimic extends EntityMob
     {
         if (!this.worldObj.isRemote && this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL)
         {
-            reformIntoMimicBlock();
-            this.setDead();
+            if (reformIntoMimicBlock(this.getPosition()))
+            {
+                this.setDead();
+            }
         }
 
         super.onUpdate();
@@ -366,20 +370,13 @@ public class EntityMimic extends EntityMob
         /**
          * Returns whether an in-progress EntityAIBase should continue executing
          */
+        @Override
         public boolean continueExecuting()
         {
-            float f = this.attacker.getBrightness(1.0F);
-
-            if (f >= 0.5F && this.attacker.getRNG().nextInt(100) == 0)
-            {
-                this.attacker.setAttackTarget((EntityLivingBase) null);
-                return false;
-            } else
-            {
-                return super.continueExecuting();
-            }
+            return super.continueExecuting();
         }
 
+        @Override
         protected double getAttackReachSqr(EntityLivingBase attackTarget)
         {
             return (double) (4.0F + attackTarget.width);
@@ -398,8 +395,7 @@ public class EntityMimic extends EntityMob
          */
         public boolean shouldExecute()
         {
-            float f = this.taskOwner.getBrightness(1.0F);
-            return f >= 0.5F ? false : super.shouldExecute();
+            return super.shouldExecute();
         }
     }
 }

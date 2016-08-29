@@ -12,11 +12,11 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
+import WayofTime.bloodmagic.entity.mob.EntityDemonBase;
 
 public class EntityAIFollowOwner extends EntityAIBase
 {
-    private EntitySentientSpecter thePet;
+    private EntityDemonBase thePet;
     private EntityLivingBase theOwner;
     World theWorld;
     private double followSpeed;
@@ -26,7 +26,7 @@ public class EntityAIFollowOwner extends EntityAIBase
     float minDist;
     private float oldWaterCost;
 
-    public EntityAIFollowOwner(EntitySentientSpecter thePetIn, double followSpeedIn, float minDistIn, float maxDistIn)
+    public EntityAIFollowOwner(EntityDemonBase thePetIn, double followSpeedIn, float minDistIn, float maxDistIn)
     {
         this.thePet = thePetIn;
         this.theWorld = thePetIn.worldObj;

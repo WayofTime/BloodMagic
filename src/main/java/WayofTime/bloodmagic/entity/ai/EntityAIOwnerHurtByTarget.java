@@ -2,15 +2,15 @@ package WayofTime.bloodmagic.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
-import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
+import WayofTime.bloodmagic.entity.mob.EntityDemonBase;
 
 public class EntityAIOwnerHurtByTarget extends EntityAITarget
 {
-    EntitySentientSpecter theDefendingTameable;
+    EntityDemonBase theDefendingTameable;
     EntityLivingBase theOwnerAttacker;
     private int timestamp;
 
-    public EntityAIOwnerHurtByTarget(EntitySentientSpecter theDefendingTameableIn)
+    public EntityAIOwnerHurtByTarget(EntityDemonBase theDefendingTameableIn)
     {
         super(theDefendingTameableIn, false);
         this.theDefendingTameable = theDefendingTameableIn;

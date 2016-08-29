@@ -2,7 +2,6 @@ package WayofTime.bloodmagic.entity.mob;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.Nullable;
 
@@ -13,7 +12,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -23,26 +21,17 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -66,14 +55,8 @@ import WayofTime.bloodmagic.entity.ai.EntityAIRetreatToHeal;
 import WayofTime.bloodmagic.item.soul.ItemSentientBow;
 import WayofTime.bloodmagic.registry.ModItems;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-
-public class EntitySentientSpecter extends EntityCreature implements IEntityOwnable
+public class EntitySentientSpecter extends EntityDemonBase
 {
-    protected static final DataParameter<Byte> TAMED = EntityDataManager.<Byte>createKey(EntityTameable.class, DataSerializers.BYTE);
-    protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityTameable.class, DataSerializers.OPTIONAL_UNIQUE_ID);
-
     @Getter
     @Setter
     protected EnumDemonWillType type = EnumDemonWillType.DESTRUCTIVE;
@@ -112,23 +95,15 @@ public class EntitySentientSpecter extends EntityCreature implements IEntityOwna
     }
 
     @Override
-    protected void entityInit()
-    {
-        super.entityInit();
-        this.dataManager.register(TAMED, Byte.valueOf((byte) 0));
-        this.dataManager.register(OWNER_UNIQUE_ID, Optional.<UUID>absent());
-    }
-
-    @Override
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
         getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.27D);
     }
 
+    @Override
     public void setCombatTask()
     {
         if (this.worldObj != null && !this.worldObj.isRemote)
@@ -302,20 +277,6 @@ public class EntitySentientSpecter extends EntityCreature implements IEntityOwna
     }
 
     @Override
-    public void onLivingUpdate()
-    {
-        this.updateArmSwingProgress();
-        float f = this.getBrightness(1.0F);
-
-        if (f > 0.5F)
-        {
-            this.entityAge += 2;
-        }
-
-        super.onLivingUpdate();
-    }
-
-    @Override
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
         return this.isEntityInvulnerable(source) ? false : super.attackEntityFrom(source, amount);
@@ -327,53 +288,7 @@ public class EntitySentientSpecter extends EntityCreature implements IEntityOwna
     @Override
     public boolean attackEntityAsMob(Entity attackedEntity)
     {
-        float f = (float) this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
-        int i = 0;
-
-        if (attackedEntity instanceof EntityLivingBase)
-        {
-            f += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(), ((EntityLivingBase) attackedEntity).getCreatureAttribute());
-            i += EnchantmentHelper.getKnockbackModifier(this);
-        }
-
-        boolean flag = attackedEntity.attackEntityFrom(DamageSource.causeMobDamage(this), f);
-
-        if (flag)
-        {
-            if (i > 0 && attackedEntity instanceof EntityLivingBase)
-            {
-                ((EntityLivingBase) attackedEntity).knockBack(this, (float) i * 0.5F, (double) MathHelper.sin(this.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(this.rotationYaw * 0.017453292F)));
-                this.motionX *= 0.6D;
-                this.motionZ *= 0.6D;
-            }
-
-            int j = EnchantmentHelper.getFireAspectModifier(this);
-
-            if (j > 0)
-            {
-                attackedEntity.setFire(j * 4);
-            }
-
-            if (attackedEntity instanceof EntityPlayer)
-            {
-                EntityPlayer entityplayer = (EntityPlayer) attackedEntity;
-                ItemStack itemstack = this.getHeldItemMainhand();
-                ItemStack itemstack1 = entityplayer.isHandActive() ? entityplayer.getActiveItemStack() : null;
-
-                if (itemstack != null && itemstack1 != null && itemstack.getItem() instanceof ItemAxe && itemstack1.getItem() == Items.SHIELD)
-                {
-                    float f1 = 0.25F + (float) EnchantmentHelper.getEfficiencyModifier(this) * 0.05F;
-
-                    if (this.rand.nextFloat() < f1)
-                    {
-                        entityplayer.getCooldownTracker().setCooldown(Items.SHIELD, 100);
-                        this.worldObj.setEntityState(entityplayer, (byte) 30);
-                    }
-                }
-            }
-
-            this.applyEnchantments(this, attackedEntity);
-        }
+        boolean flag = super.attackEntityAsMob(attackedEntity);
 
         if (flag)
         {
@@ -391,17 +306,6 @@ public class EntitySentientSpecter extends EntityCreature implements IEntityOwna
     }
 
     @Override
-    public void setItemStackToSlot(EntityEquipmentSlot slotIn, ItemStack stack)
-    {
-        super.setItemStackToSlot(slotIn, stack);
-
-        if (!this.worldObj.isRemote && slotIn == EntityEquipmentSlot.MAINHAND)
-        {
-            this.setCombatTask();
-        }
-    }
-
-    @Override
     public void onDeath(DamageSource cause)
     {
         super.onDeath(cause);
@@ -412,11 +316,13 @@ public class EntitySentientSpecter extends EntityCreature implements IEntityOwna
         }
     }
 
+    @Override
     public boolean isStationary()
     {
         return false;
     }
 
+    @Override
     public boolean absorbExplosion(Explosion explosion)
     {
         if (this.type == EnumDemonWillType.DESTRUCTIVE)
@@ -468,19 +374,16 @@ public class EntitySentientSpecter extends EntityCreature implements IEntityOwna
         return super.isEntityInvulnerable(source) && (this.type == EnumDemonWillType.DESTRUCTIVE && source.isExplosion());
     }
 
+    @Override
     public void performEmergencyHeal(double toHeal)
     {
         this.heal((float) toHeal);
 
-//        double d0 = this.rand.nextGaussian() * 0.02D;
-//        double d1 = this.rand.nextGaussian() * 0.02D;
-//        double d2 = this.rand.nextGaussian() * 0.02D;
         if (worldObj instanceof WorldServer)
         {
             WorldServer server = (WorldServer) worldObj;
             server.spawnParticle(EnumParticleTypes.HEART, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, 7, 0.2, 0.2, 0.2, 0, new int[0]);
         }
-//        this.worldObj.spawnParticle(EnumParticleTypes.HEART, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d0, d1, d2, new int[0]);
     }
 
     /**
@@ -513,11 +416,6 @@ public class EntitySentientSpecter extends EntityCreature implements IEntityOwna
         return 0;
     }
 
-    public boolean shouldSelfHeal()
-    {
-        return this.getHealth() < this.getMaxHealth() * 0.5;
-    }
-
     public double getWillToHealth()
     {
         return 2;
@@ -544,14 +442,6 @@ public class EntitySentientSpecter extends EntityCreature implements IEntityOwna
     {
         super.writeEntityToNBT(tag);
 
-        if (this.getOwnerId() == null)
-        {
-            tag.setString("OwnerUUID", "");
-        } else
-        {
-            tag.setString("OwnerUUID", this.getOwnerId().toString());
-        }
-
         tag.setString(Constants.NBT.WILL_TYPE, type.toString());
 
         tag.setBoolean("sentientArmour", wasGivenSentientArmour);
@@ -561,29 +451,6 @@ public class EntitySentientSpecter extends EntityCreature implements IEntityOwna
     public void readEntityFromNBT(NBTTagCompound tag)
     {
         super.readEntityFromNBT(tag);
-
-        String s = "";
-
-        if (tag.hasKey("OwnerUUID", 8))
-        {
-            s = tag.getString("OwnerUUID");
-        } else
-        {
-            String s1 = tag.getString("Owner");
-            s = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s1);
-        }
-
-        if (!s.isEmpty())
-        {
-            try
-            {
-                this.setOwnerId(UUID.fromString(s));
-                this.setTamed(true);
-            } catch (Throwable var4)
-            {
-                this.setTamed(false);
-            }
-        }
 
         if (!tag.hasKey(Constants.NBT.WILL_TYPE))
         {
@@ -599,27 +466,19 @@ public class EntitySentientSpecter extends EntityCreature implements IEntityOwna
     }
 
     //TODO: Change to fit the given AI
+    @Override
     public boolean shouldAttackEntity(EntityLivingBase attacker, EntityLivingBase owner)
     {
         if (!(attacker instanceof EntityCreeper) && !(attacker instanceof EntityGhast))
         {
-            if (attacker instanceof IEntityOwnable)
-            {
-                IEntityOwnable entityOwnable = (IEntityOwnable) attacker;
-
-                if (entityOwnable.getOwner() == owner)
-                {
-                    return false;
-                }
-            }
-
-            return attacker instanceof EntityPlayer && owner instanceof EntityPlayer && !((EntityPlayer) owner).canAttackPlayer((EntityPlayer) attacker) ? false : !(attacker instanceof EntityHorse) || !((EntityHorse) attacker).isTame();
+            return super.shouldAttackEntity(attacker, owner);
         } else
         {
             return false;
         }
     }
 
+    @Override
     public void attackEntityWithRangedAttack(EntityLivingBase target, float velocity)
     {
         ItemStack heldStack = this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
@@ -677,26 +536,6 @@ public class EntitySentientSpecter extends EntityCreature implements IEntityOwna
         }
     }
 
-    public boolean isTamed()
-    {
-        return (((Byte) this.dataManager.get(TAMED)).byteValue() & 4) != 0;
-    }
-
-    public void setTamed(boolean tamed)
-    {
-        byte b0 = ((Byte) this.dataManager.get(TAMED)).byteValue();
-
-        if (tamed)
-        {
-            this.dataManager.set(TAMED, Byte.valueOf((byte) (b0 | 4)));
-        } else
-        {
-            this.dataManager.set(TAMED, Byte.valueOf((byte) (b0 & -5)));
-        }
-
-//        this.setupTamedAI();
-    }
-
     @Override
     protected SoundEvent getAmbientSound()
     {
@@ -728,50 +567,5 @@ public class EntitySentientSpecter extends EntityCreature implements IEntityOwna
     protected float getSoundVolume()
     {
         return 0.4F;
-    }
-
-    @Override
-    public UUID getOwnerId()
-    {
-        return (UUID) (this.dataManager.get(OWNER_UNIQUE_ID)).orNull();
-    }
-
-    public void setOwnerId(UUID uuid)
-    {
-        this.dataManager.set(OWNER_UNIQUE_ID, Optional.fromNullable(uuid));
-    }
-
-    @Override
-    public EntityLivingBase getOwner()
-    {
-        try
-        {
-            UUID uuid = this.getOwnerId();
-            return uuid == null ? null : this.worldObj.getPlayerEntityByUUID(uuid);
-        } catch (IllegalArgumentException var2)
-        {
-            return null;
-        }
-    }
-
-    public void setOwner(EntityPlayer player)
-    {
-        setOwnerId(player.getUniqueID());
-    }
-
-    public class TargetPredicate implements Predicate<EntityMob>
-    {
-        EntitySentientSpecter entity;
-
-        public TargetPredicate(EntitySentientSpecter entity)
-        {
-            this.entity = entity;
-        }
-
-        @Override
-        public boolean apply(EntityMob input)
-        {
-            return entity.shouldAttackEntity(input, this.entity.getOwner());
-        }
     }
 }

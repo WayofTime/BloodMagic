@@ -11,7 +11,7 @@ import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.math.Vec3d;
-import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
+import WayofTime.bloodmagic.entity.mob.EntityDemonBase;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -20,7 +20,7 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase
 {
     private final Predicate<Entity> canBeSeenSelector;
     /** The entity we are attached to */
-    protected EntitySentientSpecter theEntity;
+    protected EntityDemonBase theEntity;
     private double farSpeed;
     private double nearSpeed;
     private double safeHealDistance = 3;
@@ -33,12 +33,12 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase
     private Class<T> classToAvoid;
     private Predicate<? super T> avoidTargetSelector;
 
-    public EntityAIRetreatToHeal(EntitySentientSpecter theEntityIn, Class<T> classToAvoidIn, float avoidDistanceIn, double farSpeedIn, double nearSpeedIn)
+    public EntityAIRetreatToHeal(EntityDemonBase theEntityIn, Class<T> classToAvoidIn, float avoidDistanceIn, double farSpeedIn, double nearSpeedIn)
     {
         this(theEntityIn, classToAvoidIn, Predicates.<T>alwaysTrue(), avoidDistanceIn, farSpeedIn, nearSpeedIn);
     }
 
-    public EntityAIRetreatToHeal(EntitySentientSpecter theEntityIn, Class<T> classToAvoidIn, Predicate<? super T> avoidTargetSelectorIn, float avoidDistanceIn, double farSpeedIn, double nearSpeedIn)
+    public EntityAIRetreatToHeal(EntityDemonBase theEntityIn, Class<T> classToAvoidIn, Predicate<? super T> avoidTargetSelectorIn, float avoidDistanceIn, double farSpeedIn, double nearSpeedIn)
     {
         this.canBeSeenSelector = new Predicate<Entity>()
         {
@@ -63,7 +63,7 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        if (!this.theEntity.shouldSelfHeal())
+        if (!this.theEntity.shouldEmergencyHeal())
         {
             return false;
         }
@@ -99,7 +99,7 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase
     @Override
     public boolean continueExecuting()
     {
-        return this.theEntity.shouldSelfHeal();//!this.entityPathNavigate.noPath();
+        return this.theEntity.shouldEmergencyHeal();//!this.entityPathNavigate.noPath();
     }
 
     /**

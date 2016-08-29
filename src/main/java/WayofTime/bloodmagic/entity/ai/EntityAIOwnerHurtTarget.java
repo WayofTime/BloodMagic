@@ -2,18 +2,18 @@ package WayofTime.bloodmagic.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
-import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
+import WayofTime.bloodmagic.entity.mob.EntityDemonBase;
 
 public class EntityAIOwnerHurtTarget extends EntityAITarget
 {
-    EntitySentientSpecter theEntitySentientSpecter;
+    EntityDemonBase theEntityDemonBase;
     EntityLivingBase theTarget;
     private int timestamp;
 
-    public EntityAIOwnerHurtTarget(EntitySentientSpecter theEntitySentientSpecterIn)
+    public EntityAIOwnerHurtTarget(EntityDemonBase theEntityDemonBaseIn)
     {
-        super(theEntitySentientSpecterIn, false);
-        this.theEntitySentientSpecter = theEntitySentientSpecterIn;
+        super(theEntityDemonBaseIn, false);
+        this.theEntityDemonBase = theEntityDemonBaseIn;
         this.setMutexBits(1);
     }
 
@@ -22,12 +22,12 @@ public class EntityAIOwnerHurtTarget extends EntityAITarget
      */
     public boolean shouldExecute()
     {
-        if (!this.theEntitySentientSpecter.isTamed())
+        if (!this.theEntityDemonBase.isTamed())
         {
             return false;
         } else
         {
-            EntityLivingBase entitylivingbase = this.theEntitySentientSpecter.getOwner();
+            EntityLivingBase entitylivingbase = this.theEntityDemonBase.getOwner();
 
             if (entitylivingbase == null)
             {
@@ -36,7 +36,7 @@ public class EntityAIOwnerHurtTarget extends EntityAITarget
             {
                 this.theTarget = entitylivingbase.getLastAttacker();
                 int i = entitylivingbase.getLastAttackerTime();
-                return i != this.timestamp && this.isSuitableTarget(this.theTarget, false) && this.theEntitySentientSpecter.shouldAttackEntity(this.theTarget, entitylivingbase);
+                return i != this.timestamp && this.isSuitableTarget(this.theTarget, false) && this.theEntityDemonBase.shouldAttackEntity(this.theTarget, entitylivingbase);
             }
         }
     }
@@ -47,7 +47,7 @@ public class EntityAIOwnerHurtTarget extends EntityAITarget
     public void startExecuting()
     {
         this.taskOwner.setAttackTarget(this.theTarget);
-        EntityLivingBase entitylivingbase = this.theEntitySentientSpecter.getOwner();
+        EntityLivingBase entitylivingbase = this.theEntityDemonBase.getOwner();
 
         if (entitylivingbase != null)
         {

@@ -4,11 +4,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.ItemBow;
 import net.minecraft.util.EnumHand;
-import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
+import WayofTime.bloodmagic.entity.mob.EntityDemonBase;
 
 public class EntityAIAttackRangedBow extends EntityAIBase
 {
-    private final EntitySentientSpecter entity;
+    private final EntityDemonBase entity;
     private final double moveSpeedAmp;
     private int attackCooldown;
     private final float maxAttackDistance;
@@ -18,9 +18,9 @@ public class EntityAIAttackRangedBow extends EntityAIBase
     private boolean strafingBackwards;
     private int strafingTime = -1;
 
-    public EntityAIAttackRangedBow(EntitySentientSpecter specter, double speedAmplifier, int delay, float maxDistance)
+    public EntityAIAttackRangedBow(EntityDemonBase entityDemonBase, double speedAmplifier, int delay, float maxDistance)
     {
-        this.entity = specter;
+        this.entity = entityDemonBase;
         this.moveSpeedAmp = speedAmplifier;
         this.attackCooldown = delay;
         this.maxAttackDistance = maxDistance * maxDistance;
