@@ -1,22 +1,20 @@
 package WayofTime.bloodmagic.tile.routing;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.items.IItemHandler;
 import WayofTime.bloodmagic.item.routing.IItemFilterProvider;
 import WayofTime.bloodmagic.routing.DefaultItemFilter;
 import WayofTime.bloodmagic.routing.IInputItemRoutingNode;
 import WayofTime.bloodmagic.routing.IItemFilter;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 public class TileInputRoutingNode extends TileFilteredRoutingNode implements IInputItemRoutingNode
 {
     public TileInputRoutingNode()
     {
-        super(7, "inputNode");
+        super(6, "inputNode");
     }
 
     @Override

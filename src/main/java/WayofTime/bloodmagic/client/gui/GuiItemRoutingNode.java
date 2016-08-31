@@ -1,21 +1,27 @@
 package WayofTime.bloodmagic.client.gui;
 
+import io.netty.buffer.Unpooled;
+
+import java.io.IOException;
+
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.client.CPacketCustomPayload;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.ItemRouterButtonPacketProcessor;
 import WayofTime.bloodmagic.tile.container.ContainerItemRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
 public class GuiItemRoutingNode extends GuiContainer
@@ -29,7 +35,10 @@ public class GuiItemRoutingNode extends GuiContainer
     private GuiButton incrementButton;
     private GuiButton decrementButton;
 
+    private GuiTextField textBox;
+
     private TileFilteredRoutingNode inventory;
+    private ContainerItemRoutingNode container;
 
     private int left, top;
 
@@ -39,6 +48,7 @@ public class GuiItemRoutingNode extends GuiContainer
         this.xSize = 176;
         this.ySize = 169;
         inventory = (TileFilteredRoutingNode) tileRoutingNode;
+        container = (ContainerItemRoutingNode) this.inventorySlots;
     }
 
     private int getCurrentActiveSlotPriority()
@@ -69,6 +79,60 @@ public class GuiItemRoutingNode extends GuiContainer
         this.buttonList.add(this.incrementButton = new GuiButton(6, left + 97, top + 14, 18, 17, "^"));
         this.buttonList.add(this.decrementButton = new GuiButton(7, left + 97, top + 50, 18, 17, "v"));
         disableDirectionalButton(inventory.currentActiveSlot);
+
+        this.textBox = new GuiTextField(0, this.fontRendererObj, left + 9, top + 73, 103, 12);
+        this.textBox.setEnableBackgroundDrawing(false);
+        this.textBox.setText("Test");
+    }
+
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException
+    {
+        if (this.textBox.textboxKeyTyped(typedChar, keyCode))
+        {
+//            System.out.println(typedChar + ", " + keyCode);
+//            this.renameItem();
+        } else
+        {
+            super.keyTyped(typedChar, keyCode);
+        }
+    }
+
+    private void renameItem()
+    {
+        String s = this.textBox.getText();
+        Slot slot = this.container.getSlot(1);
+
+        if (slot != null && slot.getHasStack() && !slot.getStack().hasDisplayName() && s.equals(slot.getStack().getDisplayName()))
+        {
+            s = "";
+        }
+
+//        this.container.updateItemName(s);
+        this.mc.thePlayer.connection.sendPacket(new CPacketCustomPayload("MC|ItemName", (new PacketBuffer(Unpooled.buffer())).writeString(s)));
+    }
+
+    /**
+     * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
+     */
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+    {
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+        this.textBox.mouseClicked(mouseX, mouseY, mouseButton);
+    }
+
+    /**
+     * Draws the screen and all the components in it.
+     */
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    {
+        super.drawScreen(mouseX, mouseY, partialTicks);
+
+        GlStateManager.disableLighting();
+        GlStateManager.disableBlend();
+        this.textBox.drawTextBox();
     }
 
     /**

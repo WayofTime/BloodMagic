@@ -7,11 +7,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.item.inventory.ItemInventory;
 
 public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedInventory
 {
     public int currentActiveSlot = 0;
     public int[] priorities = new int[6];
+
+    public ItemInventory itemInventory = new ItemInventory(null, 9, "");
 
     public TileFilteredRoutingNode(int size, String name)
     {
@@ -63,6 +66,8 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
                 }
             }
         }
+
+        itemInventory = new ItemInventory(getStackInSlot(currentActiveSlot), 9, "");
     }
 
     @Override
@@ -78,6 +83,7 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     public void swapFilters(int requestedSlot)
     {
         currentActiveSlot = requestedSlot;
+        itemInventory.initializeInventory(getStackInSlot(currentActiveSlot));
         this.markDirty();
     }
 

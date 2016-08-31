@@ -18,10 +18,12 @@ import net.minecraft.item.ItemStack;
 public class ContainerItemRoutingNode extends Container
 {
     private final IInventory tileItemRoutingNode;
-    private final ItemInventory itemInventory;
+//    private final ItemInventory itemInventory;
     private int slotsOccupied;
 
     private final TileFilteredRoutingNode inventory;
+
+    public int lastGhostSlotClicked = -1;
 
     public ContainerItemRoutingNode(InventoryPlayer inventoryPlayer, IInventory tileItemRoutingNode)
     {
@@ -29,8 +31,7 @@ public class ContainerItemRoutingNode extends Container
         inventory = (TileFilteredRoutingNode) tileItemRoutingNode;
 
         this.addSlotToContainer(new SlotItemFilter(this, tileItemRoutingNode, 0, 8, 33));
-        ItemStack masterStack = tileItemRoutingNode.getStackInSlot(inventory.currentActiveSlot);
-        itemInventory = new ItemInventory(masterStack, 9, "");
+        ItemInventory itemInventory = inventory.itemInventory;
 
         for (int i = 0; i < 3; i++)
         {
@@ -58,7 +59,7 @@ public class ContainerItemRoutingNode extends Container
 
     public void resetItemInventory(ItemStack masterStack)
     {
-        itemInventory.initializeInventory(masterStack);
+        inventory.itemInventory.initializeInventory(masterStack);
     }
 
     /**
@@ -76,6 +77,9 @@ public class ContainerItemRoutingNode extends Container
 
                 if (slot instanceof SlotGhostItem) //TODO: make the slot clicking work!
                 {
+                    lastGhostSlotClicked = slot.getSlotIndex();
+//                    System.out.println(lastGhostSlotClicked);
+
                     if ((dragType == 0 || dragType == 1) && (clickTypeIn == ClickType.PICKUP || clickTypeIn == ClickType.QUICK_MOVE))
                     {
                         ItemStack slotStack = slot.getStack();
