@@ -8,6 +8,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.item.inventory.ItemInventory;
+import WayofTime.bloodmagic.util.GhostItemHelper;
 
 public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedInventory
 {
@@ -26,6 +27,17 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
         int index = side.getIndex();
 
         return getStackInSlot(index);
+    }
+
+    public void setGhostItemAmount(int ghostItemSlot, int amount)
+    {
+        ItemStack stack = itemInventory.getStackInSlot(ghostItemSlot);
+        if (stack != null)
+        {
+            GhostItemHelper.setItemGhostAmount(stack, amount);
+        }
+
+        this.markDirty();
     }
 
     @Override

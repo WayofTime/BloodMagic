@@ -8,6 +8,7 @@ Version 2.0.4-57
 - Implemented a bit of framework for some T5 shenanigans.
 - Fixed the Incense Altar so it properly detected the south sides of the altar.
 - Updated the Filtered Item Routing Nodes' GUI so that it behaved less like ass. Also added the necessary nbt porting code.
+- Further improved the routing GUI by allowing an amount to be typed into the amount bar.
 - Updated the toggleable sigils so they drain the user's LP based on the user's total ticks existed instead of the world time. This is to solve the doDaylightCycle glitch in this scenario.
 
 ------------------------------------------------------

@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.client.gui;
 
-import io.netty.buffer.Unpooled;
-
 import java.io.IOException;
 
 import net.minecraft.client.gui.GuiButton;
@@ -9,21 +7,20 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.client.CPacketCustomPayload;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.network.ItemRouterAmountPacketProcessor;
 import WayofTime.bloodmagic.network.ItemRouterButtonPacketProcessor;
 import WayofTime.bloodmagic.tile.container.ContainerItemRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
+import WayofTime.bloodmagic.util.GhostItemHelper;
 
 @SideOnly(Side.CLIENT)
 public class GuiItemRoutingNode extends GuiContainer
@@ -82,9 +79,9 @@ public class GuiItemRoutingNode extends GuiContainer
         this.buttonList.add(this.decrementButton = new GuiButton(7, left + 133, top + 50, 9, 18, "<"));
         disableDirectionalButton(inventory.currentActiveSlot);
 
-        this.textBox = new GuiTextField(0, this.fontRendererObj, left + 90, top + 73, 64, 12);
+        this.textBox = new GuiTextField(0, this.fontRendererObj, left + 94, top + 37, 70, 12);
         this.textBox.setEnableBackgroundDrawing(false);
-        this.textBox.setText("Test");
+        this.textBox.setText("");
     }
 
     @Override
@@ -92,26 +89,38 @@ public class GuiItemRoutingNode extends GuiContainer
     {
         if (this.textBox.textboxKeyTyped(typedChar, keyCode))
         {
-//            System.out.println(typedChar + ", " + keyCode);
-//            this.renameItem();
+            if (container.lastGhostSlotClicked != -1)
+            {
+//              this.renameItem();
+                String str = this.textBox.getText();
+                int amount = 0;
+
+                if (!str.isEmpty())
+                {
+                    try
+                    {
+                        Integer testVal = Integer.decode(str);
+                        if (testVal != null)
+                        {
+                            amount = testVal.intValue();
+                        }
+                    } catch (NumberFormatException d)
+                    {
+                    }
+                }
+
+//                inventory.setGhostItemAmount(container.lastGhostSlotClicked, amount);
+                setValueOfGhostItemInSlot(container.lastGhostSlotClicked, amount);
+            }
         } else
         {
             super.keyTyped(typedChar, keyCode);
         }
     }
 
-    private void renameItem()
+    private void setValueOfGhostItemInSlot(int ghostItemSlot, int amount)
     {
-        String s = this.textBox.getText();
-        Slot slot = this.container.getSlot(1);
-
-        if (slot != null && slot.getHasStack() && !slot.getStack().hasDisplayName() && s.equals(slot.getStack().getDisplayName()))
-        {
-            s = "";
-        }
-
-//        this.container.updateItemName(s);
-        this.mc.thePlayer.connection.sendPacket(new CPacketCustomPayload("MC|ItemName", (new PacketBuffer(Unpooled.buffer())).writeString(s)));
+        BloodMagicPacketHandler.INSTANCE.sendToServer(new ItemRouterAmountPacketProcessor(ghostItemSlot, amount, inventory.getPos(), inventory.getWorld()));
     }
 
     /**
@@ -122,6 +131,19 @@ public class GuiItemRoutingNode extends GuiContainer
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
         this.textBox.mouseClicked(mouseX, mouseY, mouseButton);
+        if (container.lastGhostSlotClicked != -1)
+        {
+            Slot slot = container.getSlot(container.lastGhostSlotClicked + 1);
+            ItemStack stack = slot.getStack();
+            if (stack != null)
+            {
+                int amount = GhostItemHelper.getItemGhostAmount(stack);
+                this.textBox.setText("" + amount);
+            } else
+            {
+                this.textBox.setText("");
+            }
+        }
     }
 
     /**
@@ -131,10 +153,6 @@ public class GuiItemRoutingNode extends GuiContainer
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         super.drawScreen(mouseX, mouseY, partialTicks);
-
-        GlStateManager.disableLighting();
-        GlStateManager.disableBlend();
-        this.textBox.drawTextBox();
     }
 
     /**
@@ -183,7 +201,7 @@ public class GuiItemRoutingNode extends GuiContainer
             }
         }
 
-        this.fontRendererObj.drawStringWithShadow(s, 9, 73, 0xFFFFFF);
+        this.fontRendererObj.drawStringWithShadow(s.substring(0, Math.min(16, s.length())), 81, 19, 0xFFFFFF);
     }
 
     @Override
@@ -193,6 +211,9 @@ public class GuiItemRoutingNode extends GuiContainer
         ResourceLocation soulForgeGuiTextures = new ResourceLocation(Constants.Mod.MODID + ":textures/gui/routingNode.png");
         this.mc.getTextureManager().bindTexture(soulForgeGuiTextures);
         this.drawTexturedModalRect(left, top, 0, 0, this.xSize, this.ySize);
+        GlStateManager.disableLighting();
+        GlStateManager.disableBlend();
+        this.textBox.drawTextBox();
     }
 
 //    @Override

@@ -2,11 +2,6 @@ package WayofTime.bloodmagic.tile.container;
 
 import javax.annotation.Nullable;
 
-import WayofTime.bloodmagic.item.inventory.ItemInventory;
-import WayofTime.bloodmagic.item.routing.IItemFilterProvider;
-import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
-import WayofTime.bloodmagic.util.GhostItemHelper;
-import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
@@ -14,6 +9,10 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import WayofTime.bloodmagic.item.inventory.ItemInventory;
+import WayofTime.bloodmagic.item.routing.IItemFilterProvider;
+import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
+import WayofTime.bloodmagic.util.GhostItemHelper;
 
 public class ContainerItemRoutingNode extends Container
 {
@@ -80,70 +79,34 @@ public class ContainerItemRoutingNode extends Container
                     lastGhostSlotClicked = slot.getSlotIndex();
                     System.out.println(lastGhostSlotClicked);
 
-                    if ((dragType == 0 || dragType == 1) && (clickTypeIn == ClickType.PICKUP || clickTypeIn == ClickType.QUICK_MOVE))
+                    if ((dragType == 0 || dragType == 1))
                     {
                         ItemStack slotStack = slot.getStack();
                         ItemStack heldStack = inventoryPlayer.getItemStack();
 
-                        if (dragType == 0)
+                        if (dragType == 0) //Left mouse click-eth
                         {
-                            if (clickTypeIn == ClickType.PICKUP)
                             {
                                 if (heldStack == null && slotStack != null)
                                 {
-                                    GhostItemHelper.incrementGhostAmout(slotStack, 1);
-                                    slot.putStack(slotStack);
-                                } else if (heldStack != null)
+                                    //I clicked on the slot with an empty hand. Selecting!
+                                } else if (heldStack != null && slotStack == null)
                                 {
                                     if (!((SlotGhostItem) slot).canBeAccessed())
                                     {
                                         return super.slotClick(slotId, dragType, clickTypeIn, player);
                                     }
-                                    if (slotStack != null && Utils.canCombine(slotStack, heldStack))
-                                    {
-                                        GhostItemHelper.incrementGhostAmout(slotStack, heldStack.stackSize);
-                                        slot.putStack(slotStack);
-                                    } else
-                                    {
-                                        ItemStack copyStack = heldStack.copy();
-                                        GhostItemHelper.setItemGhostAmount(copyStack, copyStack.stackSize);
-                                        copyStack.stackSize = 1;
-                                        slot.putStack(copyStack);
-                                    }
-                                }
-                            } else
-                            {
-                                if (slotStack != null)
-                                {
-                                    GhostItemHelper.setItemGhostAmount(slotStack, GhostItemHelper.getItemGhostAmount(slotStack) / 2);
-                                    if (GhostItemHelper.getItemGhostAmount(slotStack) <= 0)
-                                    {
-                                        slot.putStack(null);
-                                    } else
-                                    {
-                                        slot.putStack(slotStack);
-                                    }
+
+                                    ItemStack copyStack = heldStack.copy();
+                                    GhostItemHelper.setItemGhostAmount(copyStack, 0);
+                                    copyStack.stackSize = 1;
+                                    slot.putStack(copyStack);
                                 }
                             }
                         } else
+                        //Right mouse click-eth away
                         {
-                            if (clickTypeIn == ClickType.PICKUP)
-                            {
-                                if (slotStack != null)
-                                {
-                                    GhostItemHelper.decrementGhostAmount(slotStack, 1);
-                                    if (GhostItemHelper.getItemGhostAmount(slotStack) < 0)
-                                    {
-                                        slot.putStack(null);
-                                    } else
-                                    {
-                                        slot.putStack(slotStack);
-                                    }
-                                }
-                            } else
-                            {
-                                slot.putStack(null);
-                            }
+                            slot.putStack(null);
                         }
                     }
                 }

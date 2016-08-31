@@ -22,6 +22,7 @@ public class BloodMagicPacketHandler
         INSTANCE.registerMessage(SigilHoldingPacketProcessor.class, SigilHoldingPacketProcessor.class, 4, Side.SERVER);
         INSTANCE.registerMessage(KeyProcessor.class, KeyProcessor.class, 5, Side.SERVER);
         INSTANCE.registerMessage(DemonAuraPacketProcessor.class, DemonAuraPacketProcessor.class, 6, Side.CLIENT);
+        INSTANCE.registerMessage(ItemRouterAmountPacketProcessor.class, ItemRouterAmountPacketProcessor.class, 7, Side.SERVER);
     }
 
     public static void sendToAllAround(IMessage message, TileEntity te, int range)
