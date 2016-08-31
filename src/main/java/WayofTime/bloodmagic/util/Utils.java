@@ -985,6 +985,11 @@ public class Utils
 
     public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos)
     {
+        return swapLocations(initialWorld, initialPos, finalWorld, finalPos, true);
+    }
+
+    public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos, boolean playSound)
+    {
         TileEntity initialTile = initialWorld.getTileEntity(initialPos);
         TileEntity finalTile = finalWorld.getTileEntity(finalPos);
         NBTTagCompound initialTag = new NBTTagCompound();
@@ -1000,8 +1005,11 @@ public class Utils
         if ((initialStack.getBlock().equals(Blocks.AIR) && finalStack.getBlock().equals(Blocks.AIR)) || initialStack.getBlock() instanceof BlockPortal || finalStack.getBlock() instanceof BlockPortal)
             return false;
 
-        initialWorld.playSound(initialPos.getX(), initialPos.getY(), initialPos.getZ(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
-        finalWorld.playSound(finalPos.getX(), finalPos.getY(), finalPos.getZ(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+        if (playSound)
+        {
+            initialWorld.playSound(initialPos.getX(), initialPos.getY(), initialPos.getZ(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+            finalWorld.playSound(finalPos.getX(), finalPos.getY(), finalPos.getZ(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+        }
 
         //Finally, we get to do something! (CLEARING TILES)
         if (finalStack.getBlock() != null)
