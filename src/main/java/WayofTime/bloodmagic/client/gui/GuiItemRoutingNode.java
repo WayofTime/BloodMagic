@@ -75,8 +75,8 @@ public class GuiItemRoutingNode extends GuiContainer
         this.buttonList.add(this.southButton = new GuiButton(3, left + 176, top + 68, 18, 18, "S"));
         this.buttonList.add(this.westButton = new GuiButton(4, left + 176, top + 86, 18, 18, "W"));
         this.buttonList.add(this.eastButton = new GuiButton(5, left + 176, top + 104, 18, 18, "E"));
-        this.buttonList.add(this.incrementButton = new GuiButton(6, left + 160, top + 50, 9, 18, ">"));
-        this.buttonList.add(this.decrementButton = new GuiButton(7, left + 133, top + 50, 9, 18, "<"));
+        this.buttonList.add(this.incrementButton = new GuiButton(6, left + 160, top + 50, 10, 18, ">"));
+        this.buttonList.add(this.decrementButton = new GuiButton(7, left + 132, top + 50, 10, 18, "<"));
         disableDirectionalButton(inventory.currentActiveSlot);
 
         this.textBox = new GuiTextField(0, this.fontRendererObj, left + 94, top + 37, 70, 12);
