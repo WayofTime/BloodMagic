@@ -1,7 +1,10 @@
 package WayofTime.bloodmagic.tile.container;
 
+import javax.annotation.Nullable;
+
 import WayofTime.bloodmagic.item.inventory.ItemInventory;
 import WayofTime.bloodmagic.item.routing.IItemFilterProvider;
+import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,12 +21,15 @@ public class ContainerItemRoutingNode extends Container
     private final ItemInventory itemInventory;
     private int slotsOccupied;
 
+    private final TileFilteredRoutingNode inventory;
+
     public ContainerItemRoutingNode(InventoryPlayer inventoryPlayer, IInventory tileItemRoutingNode)
     {
         this.tileItemRoutingNode = tileItemRoutingNode;
+        inventory = (TileFilteredRoutingNode) tileItemRoutingNode;
 
         this.addSlotToContainer(new SlotItemFilter(this, tileItemRoutingNode, 0, 8, 33));
-        ItemStack masterStack = tileItemRoutingNode.getStackInSlot(0);
+        ItemStack masterStack = tileItemRoutingNode.getStackInSlot(inventory.currentActiveSlot);
         itemInventory = new ItemInventory(masterStack, 9, "");
 
         for (int i = 0; i < 3; i++)
@@ -211,11 +217,13 @@ public class ContainerItemRoutingNode extends Container
     private class SlotItemFilter extends Slot
     {
         public ContainerItemRoutingNode container;
+        public TileFilteredRoutingNode inventory;
 
         public SlotItemFilter(ContainerItemRoutingNode container, IInventory inventory, int slotIndex, int x, int y)
         {
             super(inventory, slotIndex, x, y);
             this.container = container;
+            this.inventory = (TileFilteredRoutingNode) inventory;
         }
 
         @Override
@@ -234,6 +242,30 @@ public class ContainerItemRoutingNode extends Container
                 Slot slot = container.getSlot(i);
                 slot.onSlotChanged();
             }
+        }
+
+        @Override
+        public ItemStack getStack()
+        {
+            return this.inventory.getStackInSlot(getActiveSlot());
+        }
+
+        @Override
+        public void putStack(@Nullable ItemStack stack)
+        {
+            this.inventory.setInventorySlotContents(getActiveSlot(), stack);
+            this.onSlotChanged();
+        }
+
+        @Override
+        public ItemStack decrStackSize(int amount)
+        {
+            return this.inventory.decrStackSize(getActiveSlot(), amount);
+        }
+
+        public int getActiveSlot()
+        {
+            return inventory.currentActiveSlot;
         }
     }
 

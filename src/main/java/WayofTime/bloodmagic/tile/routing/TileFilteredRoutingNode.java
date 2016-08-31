@@ -4,6 +4,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import WayofTime.bloodmagic.api.Constants;
 
@@ -20,13 +21,8 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     public ItemStack getFilterStack(EnumFacing side)
     {
         int index = side.getIndex();
-        if (currentActiveSlot == index)
-        {
-            return getStackInSlot(0);
-        } else
-        {
-            return getStackInSlot(index + 1);
-        }
+
+        return getStackInSlot(index);
     }
 
     @Override
@@ -45,6 +41,28 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
         {
             priorities = new int[6];
         }
+
+        if (!tag.getBoolean("updated"))
+        {
+            NBTTagList tags = tag.getTagList("Items", 10);
+            inventory = new ItemStack[getSizeInventory()];
+            for (int i = 0; i < tags.tagCount(); i++)
+            {
+                if (!isSyncedSlot(i))
+                {
+                    NBTTagCompound data = tags.getCompoundTagAt(i);
+                    byte j = data.getByte("Slot");
+
+                    if (j == 0)
+                    {
+                        inventory[currentActiveSlot] = ItemStack.loadItemStackFromNBT(data);
+                    } else if (j >= 1 && j < inventory.length + 1)
+                    {
+                        inventory[j - 1] = ItemStack.loadItemStackFromNBT(data);
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -53,14 +71,12 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
         super.writeToNBT(tag);
         tag.setInteger("currentSlot", currentActiveSlot);
         tag.setIntArray(Constants.NBT.ROUTING_PRIORITY, priorities);
+        tag.setBoolean("updated", true);
         return tag;
     }
 
     public void swapFilters(int requestedSlot)
     {
-        this.setInventorySlotContents(currentActiveSlot + 1, this.getStackInSlot(0));
-        this.setInventorySlotContents(0, this.getStackInSlot(requestedSlot + 1));
-        this.setInventorySlotContents(requestedSlot + 1, null);
         currentActiveSlot = requestedSlot;
         this.markDirty();
     }

@@ -83,6 +83,7 @@ public class GuiItemRoutingNode extends GuiContainer
             BloodMagicPacketHandler.INSTANCE.sendToServer(new ItemRouterButtonPacketProcessor(button.id, inventory.getPos(), inventory.getWorld()));
             if (button.id < 6)
             {
+                inventory.currentActiveSlot = button.id;
                 enableAllDirectionalButtons();
                 button.enabled = false;
             }

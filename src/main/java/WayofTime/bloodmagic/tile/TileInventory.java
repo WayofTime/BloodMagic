@@ -26,7 +26,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 public class TileInventory extends TileEntity implements IInventory
 {
     protected int[] syncedSlots = new int[0];
-    private ItemStack[] inventory;
+    protected ItemStack[] inventory;
     private int size;
     private String name;
 
@@ -38,7 +38,7 @@ public class TileInventory extends TileEntity implements IInventory
         initializeItemHandlers();
     }
 
-    private boolean isSyncedSlot(int slot)
+    protected boolean isSyncedSlot(int slot)
     {
         for (int s : this.syncedSlots)
         {
