@@ -9,8 +9,10 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.CPacketCustomPayload;
 import net.minecraft.util.EnumFacing;
@@ -45,7 +47,7 @@ public class GuiItemRoutingNode extends GuiContainer
     public GuiItemRoutingNode(InventoryPlayer playerInventory, IInventory tileRoutingNode)
     {
         super(new ContainerItemRoutingNode(playerInventory, tileRoutingNode));
-        this.xSize = 176;
+        this.xSize = 201;
         this.ySize = 169;
         inventory = (TileFilteredRoutingNode) tileRoutingNode;
         container = (ContainerItemRoutingNode) this.inventorySlots;
@@ -70,17 +72,17 @@ public class GuiItemRoutingNode extends GuiContainer
         top = (this.height - this.ySize) / 2;
 
         this.buttonList.clear();
-        this.buttonList.add(this.downButton = new GuiButton(0, left + 133, top + 50, 18, 17, "D"));
-        this.buttonList.add(this.upButton = new GuiButton(1, left + 133, top + 14, 18, 18, "U"));
-        this.buttonList.add(this.northButton = new GuiButton(2, left + 150, top + 14, 18, 18, "N"));
-        this.buttonList.add(this.southButton = new GuiButton(3, left + 150, top + 50, 18, 17, "S"));
-        this.buttonList.add(this.westButton = new GuiButton(4, left + 133, top + 32, 18, 18, "W"));
-        this.buttonList.add(this.eastButton = new GuiButton(5, left + 150, top + 32, 18, 18, "E"));
+        this.buttonList.add(this.downButton = new GuiButton(0, left + 176, top + 14, 18, 18, "D"));
+        this.buttonList.add(this.upButton = new GuiButton(1, left + 176, top + 32, 18, 18, "U"));
+        this.buttonList.add(this.northButton = new GuiButton(2, left + 176, top + 50, 18, 18, "N"));
+        this.buttonList.add(this.southButton = new GuiButton(3, left + 176, top + 68, 18, 18, "S"));
+        this.buttonList.add(this.westButton = new GuiButton(4, left + 176, top + 86, 18, 18, "W"));
+        this.buttonList.add(this.eastButton = new GuiButton(5, left + 176, top + 104, 18, 18, "E"));
         this.buttonList.add(this.incrementButton = new GuiButton(6, left + 97, top + 14, 18, 17, "^"));
         this.buttonList.add(this.decrementButton = new GuiButton(7, left + 97, top + 50, 18, 17, "v"));
         disableDirectionalButton(inventory.currentActiveSlot);
 
-        this.textBox = new GuiTextField(0, this.fontRendererObj, left + 9, top + 73, 103, 12);
+        this.textBox = new GuiTextField(0, this.fontRendererObj, left + 90, top + 73, 64, 12);
         this.textBox.setEnableBackgroundDrawing(false);
         this.textBox.setText("Test");
     }
@@ -171,6 +173,17 @@ public class GuiItemRoutingNode extends GuiContainer
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         this.fontRendererObj.drawString("" + getCurrentActiveSlotPriority(), 98 + 5, 33 + 4, 0xFFFFFF);
+        String s = "";
+        if (container.lastGhostSlotClicked != -1)
+        {
+            ItemStack clickedStack = inventorySlots.getSlot(1 + container.lastGhostSlotClicked).getStack();
+            if (clickedStack != null)
+            {
+                s = clickedStack.getDisplayName();
+            }
+        }
+
+        this.fontRendererObj.drawStringWithShadow(s, 9, 73, 0xFFFFFF);
     }
 
     @Override
@@ -181,4 +194,19 @@ public class GuiItemRoutingNode extends GuiContainer
         this.mc.getTextureManager().bindTexture(soulForgeGuiTextures);
         this.drawTexturedModalRect(left, top, 0, 0, this.xSize, this.ySize);
     }
+
+//    @Override
+//    public void sendSlotContents(Container containerToSend, int slotInd, ItemStack stack)
+//    {
+//        if (slotInd == 0)
+//        {
+//            this.nameField.setText(stack == null ? "" : stack.getDisplayName());
+//            this.nameField.setEnabled(stack != null);
+//
+//            if (stack != null)
+//            {
+//                this.renameItem();
+//            }
+//        }
+//    }
 }
