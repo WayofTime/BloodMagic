@@ -18,7 +18,6 @@ import WayofTime.bloodmagic.meteor.MeteorRegistry;
 import WayofTime.bloodmagic.ritual.RitualAltarBuilder;
 import WayofTime.bloodmagic.ritual.RitualAnimalGrowth;
 import WayofTime.bloodmagic.ritual.RitualArmourEvolve;
-import WayofTime.bloodmagic.ritual.RitualCobblestone;
 import WayofTime.bloodmagic.ritual.RitualContainment;
 import WayofTime.bloodmagic.ritual.RitualCrushing;
 import WayofTime.bloodmagic.ritual.RitualCrystalHarvest;
@@ -77,7 +76,7 @@ public class ModRituals
     public static Ritual forsakenSoulRitual;
     public static Ritual crystalHarvestRitual;
 
-    public static Ritual cobblestoneRitual;
+//    public static Ritual cobblestoneRitual;
     public static Ritual placerRitual;
     public static Ritual fellingRitual;
     public static Ritual pumpRitual;
@@ -139,8 +138,8 @@ public class ModRituals
         crystalHarvestRitual = new RitualCrystalHarvest();
         RitualRegistry.registerRitual(crystalHarvestRitual, ConfigHandler.ritualCrystalHarvest);
 
-        cobblestoneRitual = new RitualCobblestone();
-        RitualRegistry.registerRitual(cobblestoneRitual, ConfigHandler.cobblestoneRitual);
+//        cobblestoneRitual = new RitualCobblestone();
+//        RitualRegistry.registerRitual(cobblestoneRitual, ConfigHandler.cobblestoneRitual);
         placerRitual = new RitualPlacer();
         RitualRegistry.registerRitual(placerRitual, ConfigHandler.placerRitual);
         fellingRitual = new RitualFelling();
