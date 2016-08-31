@@ -73,7 +73,7 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
     {
         if (!worldIn.isRemote && entityIn instanceof EntityPlayerMP && getActivated(stack))
         {
-            if (worldIn.getWorldTime() % 100 == 0)
+            if (entityIn.ticksExisted % 100 == 0)
             {
                 if (!NetworkHelper.getSoulNetwork((EntityPlayerMP) entityIn).syphonAndDamage((EntityPlayer) entityIn, getLpUsed()))
                 {

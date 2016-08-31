@@ -78,8 +78,8 @@ public class GuiItemRoutingNode extends GuiContainer
         this.buttonList.add(this.southButton = new GuiButton(3, left + 176, top + 68, 18, 18, "S"));
         this.buttonList.add(this.westButton = new GuiButton(4, left + 176, top + 86, 18, 18, "W"));
         this.buttonList.add(this.eastButton = new GuiButton(5, left + 176, top + 104, 18, 18, "E"));
-        this.buttonList.add(this.incrementButton = new GuiButton(6, left + 97, top + 14, 18, 17, "^"));
-        this.buttonList.add(this.decrementButton = new GuiButton(7, left + 97, top + 50, 18, 17, "v"));
+        this.buttonList.add(this.incrementButton = new GuiButton(6, left + 160, top + 50, 9, 18, ">"));
+        this.buttonList.add(this.decrementButton = new GuiButton(7, left + 133, top + 50, 9, 18, "<"));
         disableDirectionalButton(inventory.currentActiveSlot);
 
         this.textBox = new GuiTextField(0, this.fontRendererObj, left + 90, top + 73, 64, 12);
@@ -172,7 +172,7 @@ public class GuiItemRoutingNode extends GuiContainer
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        this.fontRendererObj.drawString("" + getCurrentActiveSlotPriority(), 98 + 5, 33 + 4, 0xFFFFFF);
+        this.fontRendererObj.drawString("" + getCurrentActiveSlotPriority(), 143 + 5, 51 + 4, 0xFFFFFF);
         String s = "";
         if (container.lastGhostSlotClicked != -1)
         {
