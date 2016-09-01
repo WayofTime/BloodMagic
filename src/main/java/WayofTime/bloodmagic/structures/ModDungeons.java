@@ -23,6 +23,6 @@ public class ModDungeons
 //
 //        DungeonRoomLoader.saveDungeons();
 
-//        DungeonRoomLoader.loadDungeons();
+        DungeonRoomLoader.loadDungeons();
     }
 }

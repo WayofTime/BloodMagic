@@ -1,16 +1,17 @@
 package WayofTime.bloodmagic.structures;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.net.URL;
+import java.util.List;
 import java.util.Random;
 
-import net.minecraft.server.MinecraftServer;
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+import com.google.common.reflect.TypeToken;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
@@ -54,25 +55,20 @@ public class DungeonRoomLoader
 
     public static void loadDungeons()
     {
-//        String folder = "config/BloodMagic/schematics";
         Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(EnumFacing.class, Adapters.adapter).create();
-
-        File file = new File(MinecraftServer.class.getResource("/assets/" + "BloodMagic" + "/schematics").getFile());
-
-        File[] files = file.listFiles();
-        BufferedReader br;
 
         try
         {
-            for (File f : files)
+            URL schematicURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(new ResourceLocation("bloodmagic:Schematics")));
+            List<String> schematics = gson.fromJson(Resources.toString(schematicURL, Charsets.UTF_8), new TypeToken<List<String>>(){}.getType());
+            for (String schematicKey : schematics)
             {
-                System.out.println("File: " + f);
-                br = new BufferedReader(new FileReader(f));
-
-                DungeonRoom room = gson.fromJson(br, DungeonRoom.class);
-                DungeonRoomRegistry.registerDungeonRoom(room, Math.max(1, room.dungeonWeight));
+                ResourceLocation schematic = new ResourceLocation(schematicKey);
+                URL dungeonURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(schematic));
+                DungeonRoom dungeonRoom = gson.fromJson(Resources.toString(dungeonURL, Charsets.UTF_8), DungeonRoom.class);
+                DungeonRoomRegistry.registerDungeonRoom(dungeonRoom, Math.max(1, dungeonRoom.dungeonWeight));
             }
-        } catch (FileNotFoundException e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -87,7 +83,7 @@ public class DungeonRoomLoader
 
         try
         {
-            inputstream = MinecraftServer.class.getResourceAsStream("/assets/" + s + "/schematics/" + s1 + ".nbt");
+            inputstream = DungeonRoomLoader.class.getResourceAsStream("/assets/" + s + "/schematics/" + s1 + ".nbt");
 //            this.readTemplateFromStream(s1, inputstream);
             return;
         } catch (Throwable var10)
@@ -97,5 +93,10 @@ public class DungeonRoomLoader
         {
             IOUtils.closeQuietly(inputstream);
         }
+    }
+
+    public static String resLocToResourcePath(ResourceLocation resourceLocation)
+    {
+        return "/assets/" + resourceLocation.getResourceDomain() + "/schematics/" + resourceLocation.getResourcePath() + ".json";
     }
 }
