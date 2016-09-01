@@ -28,22 +28,27 @@ public class DungeonRoomLoader
     {
         for (DungeonRoom room : DungeonRoomRegistry.dungeonWeightMap.keySet())
         {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(room);
+            saveSingleDungeon(room);
+        }
+    }
 
-            Writer writer;
-            try
-            {
-                File file = new File("config/BloodMagic/schematics");
-                file.mkdirs();
+    public static void saveSingleDungeon(DungeonRoom room)
+    {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(room);
 
-                writer = new FileWriter("config/BloodMagic/schematics/" + new Random().nextInt() + ".json");
-                writer.write(json);
-                writer.close();
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+        Writer writer;
+        try
+        {
+            File file = new File("config/BloodMagic/schematics");
+            file.mkdirs();
+
+            writer = new FileWriter("config/BloodMagic/schematics/" + new Random().nextInt() + ".json");
+            writer.write(json);
+            writer.close();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -65,7 +70,7 @@ public class DungeonRoomLoader
                 br = new BufferedReader(new FileReader(f));
 
                 DungeonRoom room = gson.fromJson(br, DungeonRoom.class);
-                DungeonRoomRegistry.registerDungeonRoom(room, 1);
+                DungeonRoomRegistry.registerDungeonRoom(room, Math.max(1, room.dungeonWeight));
             }
         } catch (FileNotFoundException e)
         {

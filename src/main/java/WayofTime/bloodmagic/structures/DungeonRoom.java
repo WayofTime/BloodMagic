@@ -17,6 +17,7 @@ import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 
 public class DungeonRoom
 {
+    public int dungeonWeight = 1;
     public Map<String, BlockPos> structureMap = new HashMap<String, BlockPos>();
 
     public Map<EnumFacing, List<BlockPos>> doorMap = new HashMap<EnumFacing, List<BlockPos>>(); //Map of doors. The EnumFacing indicates what way this door faces.

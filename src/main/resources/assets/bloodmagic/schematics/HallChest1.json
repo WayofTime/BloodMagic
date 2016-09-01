@@ -1,6 +1,6 @@
 {
   "structureMap": {
-    "bloodmagic:Corridor1": {
+    "bloodmagic:HallChest1": {
       "x": 0,
       "y": 0,
       "z": 0
@@ -11,21 +11,14 @@
       {
         "x": 0,
         "y": 0,
-        "z": 3
+        "z": 4
       }
     ],
-    "south": [
+    "east": [
       {
-        "x": 3,
+        "x": 11,
         "y": 0,
-        "z": 6
-      }
-    ],
-    "north": [
-      {
-        "x": 3,
-        "y": 0,
-        "z": 0
+        "z": 4
       }
     ]
   },
@@ -37,9 +30,9 @@
         "z": 0
       },
       "maximumOffset": {
-        "x": 5,
-        "y": 3,
-        "z": 7
+        "x": 12,
+        "y": 5,
+        "z": 9
       },
       "blockPosCache": [],
       "cache": true

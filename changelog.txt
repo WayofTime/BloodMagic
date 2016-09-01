@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.0.4-58
+------------------------------------------------------
+- Temporarily removed the dungeon stuff so that it doesn't crash.
+
+------------------------------------------------------
 Version 2.0.4-57
 ------------------------------------------------------
 - Changed the Demon Will Aura Gauge so it refreshes based on the player's ticks existed
