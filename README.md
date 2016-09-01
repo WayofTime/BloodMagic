@@ -1,4 +1,4 @@
-#Blood Magic: Alchemical Wizardry
+#Blood Magic: Alchemical Wizardry [![](http://cf.way2muchnoise.eu/full_blood-magic_downloads.svg)](https://minecraft.curseforge.com/projects/blood-magic)
 
 ###Gruesome? Probably. Worth it? Definitely!
 ###[Downloads](http://minecraft.curseforge.com/mc-mods/224791-blood-magic/files)
