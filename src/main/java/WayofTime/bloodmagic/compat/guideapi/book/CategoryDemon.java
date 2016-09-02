@@ -105,7 +105,7 @@ public class CategoryDemon
         {
             routingPages.add(new PageTartaricForgeRecipe(nodeRecipe));
         }
-        TartaricForgeRecipe inputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.itemRoutingNode));
+        TartaricForgeRecipe inputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.inputRoutingNode));
         if (inputNodeRecipe != null)
         {
             routingPages.add(new PageTartaricForgeRecipe(inputNodeRecipe));
