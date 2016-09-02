@@ -1,6 +1,7 @@
 {
     "pools": [
         {
+            "name": "Testing",
             "rolls": 1,
             "entries": [
                 {
@@ -11,6 +12,10 @@
                         {
                             "function": "set_data",
                             "data": 0
+                        },
+                        {
+                            "function": "set_count",
+                            "count": 1
                         }
                     ]
                 }
