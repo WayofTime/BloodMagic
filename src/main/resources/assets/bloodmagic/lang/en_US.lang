@@ -703,3 +703,6 @@ tc.research_category.BLOODMAGIC=Sanguine Arcana
 bloodmagic.research_name.BLOODMAGIC=Blood Magic
 bloodmagic.research_text.BLOODMAGIC=Sanguine Arcana
 bloodmagic.research_page.BLOODMAGIC.1=The realm of the Blood Magics has always appeared to be a more solitary and "individual" art with blood mages being notoriously reclusive and a bit insane at times. However, the powers of self-sacrifice and life essence have uses even beyond a normal blood mage's sight, in fact, it is quite apparent that it may have some uses in thaumaturgy after all!
+
+# Buttons
+button.bloodmagic.tooltip.fill=Fill network
