@@ -381,6 +381,9 @@ tooltip.BloodMagic.livingArmour.upgrade.graveDigger=Grave Digger
 tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=Charging Strike
 tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=True Strike
 tooltip.BloodMagic.livingArmour.upgrade.elytra=Elytra
+tooltip.BloodMagic.livingArmour.upgrade.nightSight=Nocturnal Prowess
+
+
 tooltip.BloodMagic.livingArmour.upgrade.slowness=Limp Leg
 tooltip.BloodMagic.livingArmour.upgrade.crippledArm=Crippled Arm
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)

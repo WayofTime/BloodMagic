@@ -12,6 +12,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Enchantments;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -166,10 +167,18 @@ public class GenericHandler
             {
                 sendPlayerDemonWillAura((EntityPlayer) entity);
             }
-
         }
 
         EntityLivingBase entity = event.getEntityLiving();
+
+        if (entity.isPotionActive(MobEffects.NIGHT_VISION))
+        {
+            int duration = entity.getActivePotionEffect(MobEffects.NIGHT_VISION).getDuration();
+            if (duration == Constants.Misc.NIGHT_VISION_CONSTANT_END)
+            {
+                entity.removePotionEffect(MobEffects.NIGHT_VISION);
+            }
+        }
 
         if (entity.isPotionActive(ModPotions.fireFuse))
         {

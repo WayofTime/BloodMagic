@@ -39,7 +39,7 @@ public class LivingArmourUpgradeGrimReaperSprint extends LivingArmourUpgrade
     @Override
     public int getMaxTier()
     {
-        return 1;
+        return 10;
     }
 
     @Override

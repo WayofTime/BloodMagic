@@ -90,7 +90,7 @@ public class StatTrackerHandler
         lastPlayerSwingStrength = event.getEntityPlayer().getCooledAttackStrength(0);
     }
 
-    // Tracks: Fall Protect, Arrow Protect, Physical Protect, Grave Digger, Sprint Attack, Critical Strike,
+    // Tracks: Fall Protect, Arrow Protect, Physical Protect, Grave Digger, Sprint Attack, Critical Strike, Nocturnal Prowess
     @SubscribeEvent
     public void entityHurt(LivingHurtEvent event)
     {
@@ -150,6 +150,9 @@ public class StatTrackerHandler
                     if (!source.isProjectile())
                     {
                         StatTrackerMeleeDamage.incrementCounter(armour, amount);
+
+                        if (player.worldObj.getLight(player.getPosition()) <= 9)
+                            StatTrackerNightSight.incrementCounter(armour, amount);
 
                         if (mainWeapon != null && mainWeapon.getItem() instanceof ItemSpade)
                             StatTrackerGraveDigger.incrementCounter(armour, amount);

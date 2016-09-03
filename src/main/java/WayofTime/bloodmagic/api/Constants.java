@@ -167,6 +167,8 @@ public class Constants
     {
         public static final int POTION_ARRAY_SIZE = 256;
         public static final float ALTERED_STEP_HEIGHT = 1.00314159f;
+        public static final int NIGHT_VISION_CONSTANT_BEGIN = 30002;
+        public static final int NIGHT_VISION_CONSTANT_END = 30000;
     }
 
     public enum BloodMagicItem
