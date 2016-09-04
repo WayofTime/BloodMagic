@@ -291,7 +291,8 @@ public class Constants
         DIMENSIONAL_PORTAL("BlockDimensionalPortal"),
         BLOOD_TANK("BlockBloodTank"),
         MIMIC("BlockMimic"),
-        ALCHEMY_TABLE("BlockAlchemyTable");
+        ALCHEMY_TABLE("BlockAlchemyTable"),
+        DEMON_BRICK_1("BlockDemonBricks1");
 
         @Getter
         private final String regName;

@@ -18,6 +18,7 @@ import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockBloodStoneBrick;
 import WayofTime.bloodmagic.block.BlockBloodTank;
 import WayofTime.bloodmagic.block.BlockCrystal;
+import WayofTime.bloodmagic.block.BlockDemonBase;
 import WayofTime.bloodmagic.block.BlockDemonCrucible;
 import WayofTime.bloodmagic.block.BlockDemonCrystal;
 import WayofTime.bloodmagic.block.BlockDemonCrystallizer;
@@ -43,6 +44,7 @@ import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodStoneBrick;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodTank;
 import WayofTime.bloodmagic.item.block.ItemBlockCrystal;
+import WayofTime.bloodmagic.item.block.ItemBlockDemonBase;
 import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
 import WayofTime.bloodmagic.item.block.ItemBlockMimic;
 import WayofTime.bloodmagic.item.block.ItemBlockPath;
@@ -113,6 +115,8 @@ public class ModBlocks
 
     public static Block mimic;
 
+    public static Block demonBrick1;
+
     public static void init()
     {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
@@ -149,6 +153,8 @@ public class ModBlocks
         bloodTank = registerBlock(new ItemBlockBloodTank(new BlockBloodTank()), Constants.BloodMagicBlock.BLOOD_TANK.getRegName());
 
         mimic = registerBlock(new ItemBlockMimic(new BlockMimic()), Constants.BloodMagicBlock.MIMIC.getRegName());
+
+        demonBrick1 = registerBlock(new ItemBlockDemonBase(new BlockDemonBase("bricks1", new String[] { "brick1_raw", "brick1_corrosive", "brick1_destructive", "brick1_vengeful", "brick1_steadfast", "brick2_raw", "brick2_corrosive", "brick2_destructive", "brick2_vengeful", "brick2_steadfast", "brick3_raw", "brick3_corrosive", "brick3_destructive", "brick3_vengeful", "brick3_steadfast" })), Constants.BloodMagicBlock.DEMON_BRICK_1.getRegName());
 
 //        testSpellBlock = registerBlock(new BlockTestSpellBlock());
 

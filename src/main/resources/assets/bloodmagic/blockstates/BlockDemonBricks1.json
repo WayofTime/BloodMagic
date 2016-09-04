@@ -1,0 +1,87 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "brick1_raw": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick1"
+        }
+      },
+      "brick1_corrosive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick1_c"
+        }
+      },
+      "brick1_destructive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick1_d"
+        }
+      },
+      "brick1_vengeful": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick1_v"
+        }
+      },
+      "brick1_steadfast": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick1_s"
+        }
+      },
+	"brick2_raw": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick2"
+        }
+      },
+      "brick2_corrosive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick2_c"
+        }
+      },
+      "brick2_destructive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick2_d"
+        }
+      },
+      "brick2_vengeful": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick2_v"
+        }
+      },
+      "brick2_steadfast": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick2_s"
+        }
+      },
+	"brick3_raw": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick3"
+        }
+      },
+      "brick3_corrosive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick3_c"
+        }
+      },
+      "brick3_destructive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick3_d"
+        }
+      },
+      "brick3_vengeful": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick3_v"
+        }
+      },
+      "brick3_steadfast": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_brick3_s"
+        }
+      }
+    }
+  }
+}
