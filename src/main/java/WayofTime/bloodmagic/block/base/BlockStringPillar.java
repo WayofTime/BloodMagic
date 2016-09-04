@@ -6,11 +6,9 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -29,16 +27,6 @@ public class BlockStringPillar extends BlockString
         this(material, values, "type");
     }
 
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-//        System.out.println(state);
-        return false;
-    }
-
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
@@ -60,8 +48,6 @@ public class BlockStringPillar extends BlockString
             break;
         }
 
-//        System.out.println(iblockstate);
-
         return iblockstate;
     }
 
@@ -70,18 +56,16 @@ public class BlockStringPillar extends BlockString
     public int getMetaFromState(IBlockState state)
     {
         int i = 0;
-        i = i | this.getValues().indexOf(String.valueOf(state.getValue(this.getStringProp())));
+        i = this.getValues().indexOf(String.valueOf(state.getValue(this.getStringProp())));
 
         switch ((EnumFacing.Axis) state.getValue(BlockRotatedPillar.AXIS))
         {
         case X:
-            i |= 4;
+            i = i + 4;
             break;
         case Z:
-            i |= 8;
+            i = i + 8;
             break;
-//        case NONE:
-//            i |= 12;
         }
 
         return i;
@@ -90,8 +74,8 @@ public class BlockStringPillar extends BlockString
     @Override
     public boolean rotateBlock(net.minecraft.world.World world, BlockPos pos, EnumFacing axis)
     {
-        net.minecraft.block.state.IBlockState state = world.getBlockState(pos);
-        for (net.minecraft.block.properties.IProperty<?> prop : state.getProperties().keySet())
+        IBlockState state = world.getBlockState(pos);
+        for (IProperty<?> prop : state.getProperties().keySet())
         {
             if (prop == BlockRotatedPillar.AXIS)
             {
@@ -152,5 +136,11 @@ public class BlockStringPillar extends BlockString
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(BlockRotatedPillar.AXIS, facing.getAxis());
+    }
+
+    @Override
+    public int damageDropped(IBlockState state)
+    {
+        return this.getValues().indexOf(String.valueOf(state.getValue(this.getStringProp())));
     }
 }

@@ -1,0 +1,38 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "raw": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_eye"
+        }
+      },
+      "corrosive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_eye_c"
+        }
+      },
+      "destructive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_eye_d"
+        }
+      },
+      "vengeful": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_eye_v"
+        }
+      },
+      "steadfast": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_eye_s"
+        }
+      }
+    }
+  }
+}
+

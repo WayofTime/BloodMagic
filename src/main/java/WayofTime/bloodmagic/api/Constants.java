@@ -293,7 +293,10 @@ public class Constants
         MIMIC("BlockMimic"),
         ALCHEMY_TABLE("BlockAlchemyTable"),
         DEMON_BRICK_1("BlockDemonBricks1"),
-        DEMON_BRICK_2("BlockDemonBricks2");
+        DEMON_BRICK_2("BlockDemonBricks2"),
+        DEMON_BLOCK_EXTRA("BlockDemonExtra"),
+        DEMON_PILLAR_1("BlockPillar1"),
+        DEMON_LIGHT("BlockDemonLight");
 
         @Getter
         private final String regName;

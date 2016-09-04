@@ -35,21 +35,15 @@ public class BlockDemonPillar extends BlockStringPillar implements IVariantProvi
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-//        for (int i = 0; i < 3; i++)
-//        {
-//            ret.add(new ImmutablePair<Integer, String>(i, "axis=" + EnumFacing.Axis.values()[i]));
-//        }
-//
-//        for (int i = 0; i < names.length; i++)
-//        {
-//            ret.add(new ImmutablePair<Integer, String>(i + 3, "type=" + names[i]));
-//        }
+
+        //This is done to make the ItemBlocks have the proper model
+        EnumFacing.Axis[] axis = new EnumFacing.Axis[] { EnumFacing.Axis.Y, EnumFacing.Axis.X, EnumFacing.Axis.Z };
 
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < names.length; j++)
             {
-                ret.add(new ImmutablePair<Integer, String>(j * 3 + i, "axis=" + EnumFacing.Axis.values()[i] + ",type=" + names[j]));
+                ret.add(new ImmutablePair<Integer, String>(i * 4 + j, "axis=" + axis[i] + ",type=" + names[j]));
             }
         }
 

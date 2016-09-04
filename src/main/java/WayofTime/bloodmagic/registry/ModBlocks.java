@@ -23,6 +23,7 @@ import WayofTime.bloodmagic.block.BlockDemonBase;
 import WayofTime.bloodmagic.block.BlockDemonCrucible;
 import WayofTime.bloodmagic.block.BlockDemonCrystal;
 import WayofTime.bloodmagic.block.BlockDemonCrystallizer;
+import WayofTime.bloodmagic.block.BlockDemonLight;
 import WayofTime.bloodmagic.block.BlockDemonPillar;
 import WayofTime.bloodmagic.block.BlockDemonPylon;
 import WayofTime.bloodmagic.block.BlockDimensionalPortal;
@@ -48,6 +49,7 @@ import WayofTime.bloodmagic.item.block.ItemBlockBloodTank;
 import WayofTime.bloodmagic.item.block.ItemBlockCrystal;
 import WayofTime.bloodmagic.item.block.ItemBlockDemonBase;
 import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
+import WayofTime.bloodmagic.item.block.ItemBlockDemonLight;
 import WayofTime.bloodmagic.item.block.ItemBlockDemonPillarBase;
 import WayofTime.bloodmagic.item.block.ItemBlockMimic;
 import WayofTime.bloodmagic.item.block.ItemBlockPath;
@@ -120,7 +122,10 @@ public class ModBlocks
 
     public static Block demonBrick1;
     public static Block demonBrick2;
+    public static Block demonExtras;
     public static Block demonPillar1;
+
+    public static Block demonLight;
 
     public static void init()
     {
@@ -161,8 +166,12 @@ public class ModBlocks
 
         demonBrick1 = registerBlock(new ItemBlockDemonBase(new BlockDemonBase("bricks1", new String[] { "brick1_raw", "brick1_corrosive", "brick1_destructive", "brick1_vengeful", "brick1_steadfast", "brick2_raw", "brick2_corrosive", "brick2_destructive", "brick2_vengeful", "brick2_steadfast", "brick3_raw", "brick3_corrosive", "brick3_destructive", "brick3_vengeful", "brick3_steadfast" })), Constants.BloodMagicBlock.DEMON_BRICK_1.getRegName());
         demonBrick2 = registerBlock(new ItemBlockDemonBase(new BlockDemonBase("bricks2", new String[] { "smallbrick_raw", "smallbrick_corrosive", "smallbrick_destructive", "smallbrick_vengeful", "smallbrick_steadfast", "tile_raw", "tile_corrosive", "tile_destructive", "tile_vengeful", "tile_steadfast", "tilespecial_raw", "tilespecial_corrosive", "tilespecial_destructive", "tilespecial_vengeful", "tilespecial_steadfast" })), Constants.BloodMagicBlock.DEMON_BRICK_2.getRegName());
+        demonExtras = registerBlock(new ItemBlockDemonBase(new BlockDemonBase("extras", new String[] { "stone_raw", "stone_corrosive", "stone_destructive", "stone_vengeful", "stone_steadfast", "polished_raw", "polished_corrosive", "polished_destructive", "polished_vengeful", "polished_steadfast", "metal_raw", "metal_corrosive", "metal_destructive", "metal_vengeful", "metal_steadfast" })), Constants.BloodMagicBlock.DEMON_BLOCK_EXTRA.getRegName());
+
         demonPillar1 = registerBlock(new ItemBlockDemonPillarBase(new BlockDemonPillar("pillar1", Material.ROCK)), "BlockPillar1");
 //        testSpellBlock = registerBlock(new BlockTestSpellBlock());
+
+        demonLight = registerBlock(new ItemBlockDemonLight(new BlockDemonLight()), Constants.BloodMagicBlock.DEMON_LIGHT.getRegName());
 
         BloodMagicAPI.addToTeleposerBlacklist(inputRoutingNode);
         BloodMagicAPI.addToTranspositionBlacklist(inputRoutingNode);

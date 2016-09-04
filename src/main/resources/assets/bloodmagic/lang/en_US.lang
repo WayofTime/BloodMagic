@@ -256,6 +256,68 @@ tile.BloodMagic.mimic.solidclear.name=Clear Mimic Block
 tile.BloodMagic.mimic.solidlight.name=Lighted Mimic Block
 tile.BloodMagic.mimic.sentient.name=Sentient Mimic Block
 
+tile.BloodMagic.bricks1.brick1_raw.name=Long Raw Stone Bricks
+tile.BloodMagic.bricks1.brick1_corrosive.name=Long Corrosive Stone Bricks
+tile.BloodMagic.bricks1.brick1_destructive.name=Long Destructive Stone Bricks
+tile.BloodMagic.bricks1.brick1_vengeful.name=Long Vengeful Stone Bricks
+tile.BloodMagic.bricks1.brick1_steadfast.name=Long Steadfast Stone Bricks
+tile.BloodMagic.bricks1.brick2_raw.name=Uneven Raw Stone Bricks
+tile.BloodMagic.bricks1.brick2_corrosive.name=Uneven Corrosive Stone Bricks
+tile.BloodMagic.bricks1.brick2_destructive.name=Uneven Destructive Stone Bricks
+tile.BloodMagic.bricks1.brick2_vengeful.name=Uneven Vengeful Stone Bricks
+tile.BloodMagic.bricks1.brick2_steadfast.name=Uneven Steadfast Stone Bricks
+tile.BloodMagic.bricks1.brick3_raw.name=Raw Stone Bricks
+tile.BloodMagic.bricks1.brick3_corrosive.name=Corrosive Stone Bricks
+tile.BloodMagic.bricks1.brick3_destructive.name=Destructive Stone Bricks
+tile.BloodMagic.bricks1.brick3_vengeful.name=Vengeful Stone Bricks
+tile.BloodMagic.bricks1.brick3_steadfast.name=Steadfast Stone Bricks
+
+tile.BloodMagic.bricks2.smallbrick_raw.name=Small Raw Stone Bricks
+tile.BloodMagic.bricks2.smallbrick_corrosive.name=Small Corrosive Stone Bricks
+tile.BloodMagic.bricks2.smallbrick_destructive.name=Small Destructive Stone Bricks
+tile.BloodMagic.bricks2.smallbrick_vengeful.name=Small Vengeful Stone Bricks
+tile.BloodMagic.bricks2.smallbrick_steadfast.name=Small Steadfast Stone Bricks
+tile.BloodMagic.bricks2.tile_raw.name=Small Raw Stone Tiles
+tile.BloodMagic.bricks2.tile_corrosive.name=Corrosive Stone Tiles
+tile.BloodMagic.bricks2.tile_destructive.name=Destructive Stone Tiles
+tile.BloodMagic.bricks2.tile_vengeful.name=Vengeful Stone Tiles
+tile.BloodMagic.bricks2.tile_steadfast.name=Steadfast Stone Tiles
+tile.BloodMagic.bricks2.tilespecial_raw.name=Accented Raw Stone Tiles
+tile.BloodMagic.bricks2.tilespecial_corrosive.name=Accented Corrosive Stone Tiles
+tile.BloodMagic.bricks2.tilespecial_destructive.name=Accented Destructive Stone Tiles
+tile.BloodMagic.bricks2.tilespecial_vengeful.name=Accented Vengeful Stone Tiles
+tile.BloodMagic.bricks2.tilespecial_steadfast.name=Accented Steadfast Stone Tiles
+
+tile.BloodMagic.demonlight.raw.name=Raw Demon Eye
+tile.BloodMagic.demonlight.corrosive.name=Corrosive Demon Eye
+tile.BloodMagic.demonlight.destructive.name=Destructive Demon Eye
+tile.BloodMagic.demonlight.vengeful.name=Vengeful Demon Eye
+tile.BloodMagic.demonlight.steadfast.name=Steadfast Demon Eye
+
+tile.BloodMagic.extras.stone_raw.name=Raw Stone
+tile.BloodMagic.extras.stone_corrosive.name=Corrosive Stone
+tile.BloodMagic.extras.stone_destructive.name=Destructive Stone
+tile.BloodMagic.extras.stone_vengeful.name=Vengeful Stone
+tile.BloodMagic.extras.stone_steadfast.name=Steadfast Stone
+
+tile.BloodMagic.extras.polished_raw.name=Polished Raw Stone
+tile.BloodMagic.extras.polished_corrosive.name=Polished Corrosive Stone
+tile.BloodMagic.extras.polished_destructive.name=Polished Destructive Stone
+tile.BloodMagic.extras.polished_vengeful.name=Polished Vengeful Stone
+tile.BloodMagic.extras.polished_steadfast.name=Polished Steadfast Stone
+
+tile.BloodMagic.extras.metal_raw.name=Raw Demon Alloy
+tile.BloodMagic.extras.metal_corrosive.name=Corrosive Demon Alloy
+tile.BloodMagic.extras.metal_destructive.name=Destructive Demon Alloy
+tile.BloodMagic.extras.metal_vengeful.name=Vengeful Demon Alloy
+tile.BloodMagic.extras.metal_steadfast.name=Steadfast Demon Alloy
+
+tile.BloodMagic.pillar1.raw.name=Raw Stone Pillar
+tile.BloodMagic.pillar1.corrosive.name=Corrosive Stone Pillar
+tile.BloodMagic.pillar1.destructive.name=Destructive Stone Pillar
+tile.BloodMagic.pillar1.vengeful.name=Vengeful Stone Pillar
+tile.BloodMagic.pillar2.steadfast.name=Steadfast Stone Pillar
+
 # Fluids
 fluid.lifeEssence=Life Essence
 

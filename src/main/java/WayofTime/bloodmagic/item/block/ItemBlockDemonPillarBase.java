@@ -25,6 +25,6 @@ public class ItemBlockDemonPillarBase extends ItemBlock
     @Override
     public int getMetadata(int meta)
     {
-        return meta;
+        return meta % BlockDemonPillar.names.length;
     }
 }

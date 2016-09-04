@@ -1,0 +1,88 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "stone_raw": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_stone"
+        }
+      },
+      "stone_corrosive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_stone_c"
+        }
+      },
+      "stone_destructive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_stone_d"
+        }
+      },
+      "stone_vengeful": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_stone_v"
+        }
+      },
+      "stone_steadfast": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_stone_s"
+        }
+      },
+	 "polished_raw": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_polished"
+        }
+      },
+      "polished_corrosive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_polished_c"
+        }
+      },
+      "polished_destructive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_polished_d"
+        }
+      },
+      "polished_vengeful": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_polished_v"
+        }
+      },
+      "polished_steadfast": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_polished_s"
+        }
+      },
+	 "metal_raw": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_metal"
+        }
+      },
+      "metal_corrosive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_metal_c"
+        }
+      },
+      "metal_destructive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_metal_d"
+        }
+      },
+      "metal_vengeful": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_metal_v"
+        }
+      },
+      "metal_steadfast": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_metal_s"
+        }
+      }
+    }
+  }
+}
+
