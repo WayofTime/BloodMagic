@@ -1,0 +1,55 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_bottom_top",
+    "textures": {
+      "bottom": "bloodmagic:blocks/dungeon/dungeon_pillarheart",
+      "top": "bloodmagic:blocks/dungeon/dungeon_pillarheart",
+      "side": "bloodmagic:blocks/dungeon/dungeon_pillar"
+    }
+  },
+  "variants": {
+    "axis": {
+        "x": {
+            "transform": {
+            	"rotation": {"z": -90}
+        	}
+        },
+        "y": {
+
+        },
+        "z": {
+        	"transform": {
+            	"rotation": {"x": 90}
+        	}
+        }
+    },
+    "type": {
+    	"raw": {
+    		
+    	},
+    	"corrosive": {
+    		"textures": {
+			    "bottom": "bloodmagic:blocks/dungeon/dungeon_pillarheart_c",
+			    "top": "bloodmagic:blocks/dungeon/dungeon_pillarheart_c",
+			    "side": "bloodmagic:blocks/dungeon/dungeon_pillar_c"
+		  	}
+    	}
+    },
+    "inventory": [{
+    	"variants": {
+    		"raw": {
+    		
+	    	},
+	    	"corrosive": {
+	    		"textures": {
+				    "bottom": "bloodmagic:blocks/dungeon/dungeon_pillarheart_c",
+				    "top": "bloodmagic:blocks/dungeon/dungeon_pillarheart_c",
+				    "side": "bloodmagic:blocks/dungeon/dungeon_pillar_c"
+			  	}
+	    	}
+    	}
+    }]
+  }
+
+}

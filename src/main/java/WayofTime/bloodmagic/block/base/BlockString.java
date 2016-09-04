@@ -99,7 +99,7 @@ public class BlockString extends Block
             list.add(new ItemStack(this, 1, i));
     }
 
-    private void setupStates()
+    protected void setupStates()
     {
         this.setDefaultState(getExtendedBlockState().withProperty(unlistedStringProp, values.get(0)).withProperty(stringProp, values.get(0)));
     }
@@ -114,7 +114,7 @@ public class BlockString extends Block
         return (IExtendedBlockState) this.getBaseExtendedState().getBaseState();
     }
 
-    private BlockStateContainer createRealBlockState()
+    protected BlockStateContainer createRealBlockState()
     {
         return new ExtendedBlockState(this, new IProperty[] { stringProp }, new IUnlistedProperty[] { unlistedStringProp });
     }
