@@ -1,0 +1,88 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "smallbrick_raw": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_smallbrick"
+        }
+      },
+	 "smallbrick_corrosive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_smallbrick_c"
+        }
+      },
+	 "smallbrick_destructive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_smallbrick_d"
+        }
+      },
+	 "smallbrick_vengeful": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_smallbrick_v"
+        }
+      },
+	 "smallbrick_steadfast": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_smallbrick_s"
+        }
+      },
+	 "tile_raw": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_tile"
+        }
+      },
+	 "tile_corrosive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_tile_c"
+        }
+      },
+	 "tile_destructive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_tile_d"
+        }
+      },
+	 "tile_vengeful": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_tile_v"
+        }
+      },
+	 "tile_steadfast": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_tile_s"
+        }
+      },
+	 "tilespecial_raw": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_tilespecial"
+        }
+      },
+	 "tilespecial_corrosive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_tilespecial_c"
+        }
+      },
+	 "tilespecial_destructive": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_tilespecial_d"
+        }
+      },
+	 "tilespecial_vengeful": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_tilespecial_v"
+        }
+      },
+	 "tilespecial_steadfast": {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/dungeon_tilespecial_s"
+        }
+      }
+    }
+  }
+}
+
