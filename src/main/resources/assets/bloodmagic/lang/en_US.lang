@@ -318,6 +318,18 @@ tile.BloodMagic.pillar1.destructive.name=Destructive Stone Pillar
 tile.BloodMagic.pillar1.vengeful.name=Vengeful Stone Pillar
 tile.BloodMagic.pillar1.steadfast.name=Steadfast Stone Pillar
 
+tile.BloodMagic.pillar2.raw.name=Accented Raw Stone Pillar
+tile.BloodMagic.pillar2.corrosive.name=Accented Corrosive Stone Pillar
+tile.BloodMagic.pillar2.destructive.name=Accented Destructive Stone Pillar
+tile.BloodMagic.pillar2.vengeful.name=Accented Vengeful Stone Pillar
+tile.BloodMagic.pillar2.steadfast.name=Accented Steadfast Stone Pillar
+
+tile.BloodMagic.pillarCap1.raw.name=Raw Stone Pillar Cap
+tile.BloodMagic.pillarCap1.corrosive.name=Corrosive Stone Pillar Cap
+tile.BloodMagic.pillarCap2.destructive.name=Destructive Stone Pillar Cap
+tile.BloodMagic.pillarCap2.vengeful.name=Vengeful Stone Pillar Cap
+tile.BloodMagic.pillarCap3.steadfast.name=Steadfast Stone Pillar Cap
+
 # Fluids
 fluid.lifeEssence=Life Essence
 

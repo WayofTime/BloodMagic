@@ -12,16 +12,17 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.base.BlockStringPillar;
+import WayofTime.bloodmagic.block.base.BlockStringPillarCap;
 import WayofTime.bloodmagic.client.IVariantProvider;
 
-public class BlockDemonPillar extends BlockStringPillar implements IVariantProvider
+public class BlockDemonPillarCapBase extends BlockStringPillarCap implements IVariantProvider
 {
-    public static final String[] names = new String[] { "raw", "corrosive", "destructive", "vengeful", "steadfast" };
+    public final String[] names;
 
-    public BlockDemonPillar(String baseName, Material materialIn)
+    public BlockDemonPillarCapBase(String baseName, Material materialIn, String[] names)
     {
         super(materialIn, names);
+        this.names = names;
 
         setUnlocalizedName(Constants.Mod.MODID + "." + baseName + ".");
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -37,13 +38,12 @@ public class BlockDemonPillar extends BlockStringPillar implements IVariantProvi
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
 
         //This is done to make the ItemBlocks have the proper model
-        EnumFacing.Axis[] axis = new EnumFacing.Axis[] { EnumFacing.Axis.Y, EnumFacing.Axis.X, EnumFacing.Axis.Z };
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < EnumFacing.values().length; i++)
         {
             for (int j = 0; j < names.length; j++)
             {
-                ret.add(new ImmutablePair<Integer, String>(i * 5 + j, "axis=" + axis[i] + ",type=" + names[j]));
+                ret.add(new ImmutablePair<Integer, String>(i * 2 + j, "facing=" + EnumFacing.values()[i] + ",type=" + names[j]));
             }
         }
 

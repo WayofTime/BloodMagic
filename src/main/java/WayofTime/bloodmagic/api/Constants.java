@@ -296,6 +296,10 @@ public class Constants
         DEMON_BRICK_2("BlockDemonBricks2"),
         DEMON_BLOCK_EXTRA("BlockDemonExtra"),
         DEMON_PILLAR_1("BlockPillar1"),
+        DEMON_PILLAR_2("BlockPillar2"),
+        DEMON_PILLAR_CAP_1("BlockPillarCap1"),
+        DEMON_PILLAR_CAP_2("BlockPillarCap2"),
+        DEMON_PILLAR_CAP_3("BlockPillarCap3"),
         DEMON_LIGHT("BlockDemonLight");
 
         @Getter

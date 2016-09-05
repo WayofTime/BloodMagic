@@ -2,13 +2,13 @@ package WayofTime.bloodmagic.item.block;
 
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import WayofTime.bloodmagic.block.BlockDemonPillarBase;
+import WayofTime.bloodmagic.block.BlockDemonPillarCapBase;
 
-public class ItemBlockDemonPillarBase extends ItemBlock
+public class ItemBlockDemonPillarCapBase extends ItemBlock
 {
-    public final BlockDemonPillarBase demonBlock;
+    public final BlockDemonPillarCapBase demonBlock;
 
-    public ItemBlockDemonPillarBase(BlockDemonPillarBase block)
+    public ItemBlockDemonPillarCapBase(BlockDemonPillarCapBase block)
     {
         super(block);
         setHasSubtypes(true);

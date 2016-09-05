@@ -114,12 +114,6 @@ public class BlockStringPillar extends BlockString
         this.setDefaultState(getExtendedBlockState().withProperty(this.getUnlistedStringProp(), this.getValues().get(0)).withProperty(this.getStringProp(), this.getValues().get(0)).withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Y));
     }
 
-//    @Override
-//    protected BlockStateContainer createBlockState()
-//    {
-//        return new BlockStateContainer(this, new IProperty[] { this.getStringProp(), BlockRotatedPillar.AXIS });
-//    }
-
     @Override
     protected BlockStateContainer createRealBlockState()
     {

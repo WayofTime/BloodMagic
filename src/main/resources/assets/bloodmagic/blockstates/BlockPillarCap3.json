@@ -1,0 +1,50 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube",
+    "textures": {
+      "end": "bloodmagic:blocks/dungeon/dungeon_pillarheart_s",
+      "sideBottom": "bloodmagic:blocks/dungeon/dungeon_pillarbottom_s",
+      "sideTop": "bloodmagic:blocks/dungeon/dungeon_pillartop_s",
+      "particle": "#end"
+    }
+  },
+  "variants": {
+  	"facing": {
+        "down": {
+        	"model": "minecraft:cube_bottom_top",
+        	"textures": {
+        		"top": "#end",
+        		"bottom": "#end",
+        		"side": "#sideBottom"
+        	}
+        },
+        "up": {
+        	"model": "minecraft:cube_bottom_top",
+			"textures": {
+				"top": "#end",
+				"bottom": "#end",
+				"side": "#sideTop"
+        	}
+        },
+        "north": {
+        	"model": "bloodmagic:BlockPillarCapNorth"
+        },
+        "south": {
+        	"model": "bloodmagic:BlockPillarCapSouth"
+        },
+        "west": {
+        	"model": "bloodmagic:BlockPillarCapWest"
+        },
+        "east": {
+        	"model": "bloodmagic:BlockPillarCapEast"
+        }
+    },
+    "type": {
+    	"steadfast": {
+    		
+    	}
+    },
+    "inventory": [{ }]
+  }
+}
