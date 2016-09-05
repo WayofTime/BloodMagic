@@ -37,7 +37,22 @@
     		"textures": {
 			    "wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart_c"
 		  	}
-    	}
+    	},
+		"destructive": {
+			"textures": {
+				"wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart_d"
+			}
+		},
+		"vengeful": {
+			"textures": {
+				"wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart_v"
+			}
+		},
+		"steadfast": {
+			"textures": {
+				"wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart_s"
+			}
+		}
     },
     "inventory": [{}]
   }

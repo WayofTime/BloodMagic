@@ -188,7 +188,7 @@ public class ModBlocks
 
         demonLight = registerBlock(new ItemBlockDemonLight(new BlockDemonLight()), Constants.BloodMagicBlock.DEMON_LIGHT.getRegName());
 
-        demonWall1 = registerBlock(new ItemBlockDemonWallBase(new BlockDemonWallBase("wall1", Material.ROCK, new String[] { "raw", "corrosive" })), "BlockWall1");
+        demonWall1 = registerBlock(new ItemBlockDemonWallBase(new BlockDemonWallBase("wall1", Material.ROCK, new String[] { "raw", "corrosive", "destructive", "vengeful", "steadfast" })), "BlockWall1");
 
         BloodMagicAPI.addToTeleposerBlacklist(inputRoutingNode);
         BloodMagicAPI.addToTranspositionBlacklist(inputRoutingNode);
