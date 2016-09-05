@@ -37,18 +37,8 @@ public class BlockDemonWallBase extends BlockStringWall implements IVariantProvi
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
 
-        for (int i = 0; i < 32; i++)
-        {
-            boolean up = (i & 1) == 0;
-            boolean north = (i & 2) == 2;
-            boolean south = (i & 4) == 4;
-            boolean east = (i & 8) == 8;
-            boolean west = (i & 16) == 16;
-            for (int j = 0; j < names.length; j++)
-            {
-                ret.add(new ImmutablePair<Integer, String>(i * names.length + j, "up=" + (up ? "true" : "false") + ",north=" + (north ? "true" : "false") + ",south=" + (south ? "true" : "false") + ",east=" + (east ? "true" : "false") + ",west=" + (west ? "true" : "false") + ",type=" + names[j]));
-            }
-        }
+        for (int i = 0; i < names.length; i++)
+            ret.add(Pair.of(i, "east=false,north=false,south=false,type=" + names[i] + ",up=true,west=false"));
 
         return ret;
     }

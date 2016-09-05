@@ -63,22 +63,22 @@ public class BlockStringWall extends BlockString
     {
         int i = 0;
 
-        if (((Boolean) state.getValue(NORTH)).booleanValue())
+        if (state.getValue(NORTH))
         {
             i |= 1 << EnumFacing.NORTH.getHorizontalIndex();
         }
 
-        if (((Boolean) state.getValue(EAST)).booleanValue())
+        if (state.getValue(EAST))
         {
             i |= 1 << EnumFacing.EAST.getHorizontalIndex();
         }
 
-        if (((Boolean) state.getValue(SOUTH)).booleanValue())
+        if (state.getValue(SOUTH))
         {
             i |= 1 << EnumFacing.SOUTH.getHorizontalIndex();
         }
 
-        if (((Boolean) state.getValue(WEST)).booleanValue())
+        if (state.getValue(WEST))
         {
             i |= 1 << EnumFacing.WEST.getHorizontalIndex();
         }
@@ -104,27 +104,27 @@ public class BlockStringWall extends BlockString
 
     private boolean canConnectTo(IBlockAccess worldIn, BlockPos pos)
     {
-        IBlockState iblockstate = worldIn.getBlockState(pos);
-        Block block = iblockstate.getBlock();
-        return block == Blocks.BARRIER ? false : (block != this && !(block instanceof BlockFenceGate) ? (iblockstate.getMaterial().isOpaque() && iblockstate.isFullCube() ? iblockstate.getMaterial() != Material.GOURD : false) : true);
+        IBlockState worldState = worldIn.getBlockState(pos);
+        Block block = worldState.getBlock();
+        return block != Blocks.BARRIER && (!(block != this && !(block instanceof BlockFenceGate)) || ((worldState.getMaterial().isOpaque() && worldState.isFullCube()) && worldState.getMaterial() != Material.GOURD));
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
     {
-        return side == EnumFacing.DOWN ? super.shouldSideBeRendered(blockState, blockAccess, pos, side) : true;
+        return side != EnumFacing.DOWN || super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
 
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
-        boolean flag = this.canConnectTo(worldIn, pos.north());
-        boolean flag1 = this.canConnectTo(worldIn, pos.east());
-        boolean flag2 = this.canConnectTo(worldIn, pos.south());
-        boolean flag3 = this.canConnectTo(worldIn, pos.west());
-        boolean flag4 = flag && !flag1 && flag2 && !flag3 || !flag && flag1 && !flag2 && flag3;
-        return state.withProperty(UP, Boolean.valueOf(!flag4 || !worldIn.isAirBlock(pos.up()))).withProperty(NORTH, Boolean.valueOf(flag)).withProperty(EAST, Boolean.valueOf(flag1)).withProperty(SOUTH, Boolean.valueOf(flag2)).withProperty(WEST, Boolean.valueOf(flag3));
+        boolean canNorth = this.canConnectTo(worldIn, pos.north());
+        boolean canEast = this.canConnectTo(worldIn, pos.east());
+        boolean canSouth = this.canConnectTo(worldIn, pos.south());
+        boolean canWest = this.canConnectTo(worldIn, pos.west());
+        boolean flag4 = canNorth && !canEast && canSouth && !canWest || !canNorth && canEast && !canSouth && canWest;
+        return state.withProperty(UP, !flag4 || !worldIn.isAirBlock(pos.up())).withProperty(NORTH, canNorth).withProperty(EAST, canEast).withProperty(SOUTH, canSouth).withProperty(WEST, canWest);
     }
 
     @Override
@@ -142,12 +142,12 @@ public class BlockStringWall extends BlockString
     @Override
     protected ItemStack createStackedBlock(IBlockState state)
     {
-        return new ItemStack(Item.getItemFromBlock(this), 1, this.getValues().indexOf(String.valueOf(state.getValue(this.getStringProp()))));
+        return new ItemStack(this, 1, damageDropped(state));
     }
 
     @Override
     public int damageDropped(IBlockState state)
     {
-        return this.getValues().indexOf(String.valueOf(state.getValue(this.getStringProp())));
+        return this.getValues().indexOf(state.getValue(this.getStringProp()));
     }
 }

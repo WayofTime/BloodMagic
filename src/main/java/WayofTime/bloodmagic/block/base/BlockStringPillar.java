@@ -6,11 +6,12 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
@@ -30,35 +31,40 @@ public class BlockStringPillar extends BlockString
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        IBlockState iblockstate = getBlockState().getBaseState().withProperty(this.getStringProp(), this.getValues().get(meta % 5));
+        IBlockState state = getBlockState().getBaseState().withProperty(this.getStringProp(), this.getValues().get(meta % 5));
 
         switch (meta / 5)
         {
         case 0:
-            iblockstate = iblockstate.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Y);
+            state = state.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Y);
             break;
         case 1:
-            iblockstate = iblockstate.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.X);
+            state = state.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.X);
             break;
         case 2:
-            iblockstate = iblockstate.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Z);
+            state = state.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Z);
             break;
         default:
-            iblockstate.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Y);
+            state.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Y);
             break;
         }
 
-        return iblockstate;
+        return state;
+    }
+
+    @Override
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
+    {
+        return new ItemStack(this, 1, damageDropped(state));
     }
 
     @SuppressWarnings("incomplete-switch")
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        int i = 0;
-        i = this.getValues().indexOf(String.valueOf(state.getValue(this.getStringProp())));
+        int i = this.getValues().indexOf(state.getValue(this.getStringProp()));
 
-        switch ((EnumFacing.Axis) state.getValue(BlockRotatedPillar.AXIS))
+        switch (state.getValue(BlockRotatedPillar.AXIS))
         {
         case X:
             i = i + 5;
@@ -72,7 +78,7 @@ public class BlockStringPillar extends BlockString
     }
 
     @Override
-    public boolean rotateBlock(net.minecraft.world.World world, BlockPos pos, EnumFacing axis)
+    public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis)
     {
         IBlockState state = world.getBlockState(pos);
         for (IProperty<?> prop : state.getProperties().keySet())
@@ -123,7 +129,7 @@ public class BlockStringPillar extends BlockString
     @Override
     protected ItemStack createStackedBlock(IBlockState state)
     {
-        return new ItemStack(Item.getItemFromBlock(this), 1, this.getValues().indexOf(String.valueOf(state.getValue(this.getStringProp()))));
+        return new ItemStack(this, 1, damageDropped(state));
     }
 
     @Override
@@ -135,6 +141,6 @@ public class BlockStringPillar extends BlockString
     @Override
     public int damageDropped(IBlockState state)
     {
-        return this.getValues().indexOf(String.valueOf(state.getValue(this.getStringProp())));
+        return this.getValues().indexOf(state.getValue(this.getStringProp()));
     }
 }
