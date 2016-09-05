@@ -17,7 +17,7 @@ import WayofTime.bloodmagic.client.IVariantProvider;
 
 public class BlockDemonPillar extends BlockStringPillar implements IVariantProvider
 {
-    public static final String[] names = new String[] { "raw", "corrosive" };
+    public static final String[] names = new String[] { "raw", "corrosive", "destructive", "vengeful", "steadfast" };
 
     public BlockDemonPillar(String baseName, Material materialIn)
     {
@@ -43,7 +43,7 @@ public class BlockDemonPillar extends BlockStringPillar implements IVariantProvi
         {
             for (int j = 0; j < names.length; j++)
             {
-                ret.add(new ImmutablePair<Integer, String>(i * 4 + j, "axis=" + axis[i] + ",type=" + names[j]));
+                ret.add(new ImmutablePair<Integer, String>(i * 5 + j, "axis=" + axis[i] + ",type=" + names[j]));
             }
         }
 

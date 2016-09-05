@@ -9,6 +9,39 @@
     }
   },
   "variants": {
+    "type": {
+    	"raw": {
+    		
+    	},
+    	"corrosive": {
+    		"textures": {
+			    "bottom": "bloodmagic:blocks/dungeon/dungeon_pillarheart_c",
+			    "top": "bloodmagic:blocks/dungeon/dungeon_pillarheart_c",
+			    "side": "bloodmagic:blocks/dungeon/dungeon_pillar_c"
+		  	}
+    	},
+    	"destructive": {
+    		"textures": {
+			    "bottom": "bloodmagic:blocks/dungeon/dungeon_pillarheart_d",
+			    "top": "bloodmagic:blocks/dungeon/dungeon_pillarheart_d",
+			    "side": "bloodmagic:blocks/dungeon/dungeon_pillar_d"
+		  	}
+    	},
+    	"vengeful": {
+    		"textures": {
+			    "bottom": "bloodmagic:blocks/dungeon/dungeon_pillarheart_v",
+			    "top": "bloodmagic:blocks/dungeon/dungeon_pillarheart_v",
+			    "side": "bloodmagic:blocks/dungeon/dungeon_pillar_v"
+		  	}
+    	},
+    	"steadfast": {
+    		"textures": {
+			    "bottom": "bloodmagic:blocks/dungeon/dungeon_pillarheart_s",
+			    "top": "bloodmagic:blocks/dungeon/dungeon_pillarheart_s",
+			    "side": "bloodmagic:blocks/dungeon/dungeon_pillar_s"
+		  	}
+    	}
+    },
     "axis": {
         "x": {
             "transform": {
@@ -23,18 +56,6 @@
             	"rotation": {"x": 90}
         	}
         }
-    },
-    "type": {
-    	"raw": {
-    		
-    	},
-    	"corrosive": {
-    		"textures": {
-			    "bottom": "bloodmagic:blocks/dungeon/dungeon_pillarheart_c",
-			    "top": "bloodmagic:blocks/dungeon/dungeon_pillarheart_c",
-			    "side": "bloodmagic:blocks/dungeon/dungeon_pillar_c"
-		  	}
-    	}
     },
     "inventory": [{
     	"variants": {

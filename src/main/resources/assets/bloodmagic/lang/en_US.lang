@@ -316,7 +316,7 @@ tile.BloodMagic.pillar1.raw.name=Raw Stone Pillar
 tile.BloodMagic.pillar1.corrosive.name=Corrosive Stone Pillar
 tile.BloodMagic.pillar1.destructive.name=Destructive Stone Pillar
 tile.BloodMagic.pillar1.vengeful.name=Vengeful Stone Pillar
-tile.BloodMagic.pillar2.steadfast.name=Steadfast Stone Pillar
+tile.BloodMagic.pillar1.steadfast.name=Steadfast Stone Pillar
 
 # Fluids
 fluid.lifeEssence=Life Essence

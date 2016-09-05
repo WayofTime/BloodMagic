@@ -30,17 +30,17 @@ public class BlockStringPillar extends BlockString
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        IBlockState iblockstate = this.getDefaultState().withProperty(this.getStringProp(), this.getValues().get((meta & 3) % 4));
+        IBlockState iblockstate = this.getDefaultState().withProperty(this.getStringProp(), this.getValues().get(meta % 5));
 
-        switch (meta & 12)
+        switch (meta / 5)
         {
         case 0:
             iblockstate = iblockstate.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Y);
             break;
-        case 4:
+        case 1:
             iblockstate = iblockstate.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.X);
             break;
-        case 8:
+        case 2:
             iblockstate = iblockstate.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Z);
             break;
         default:
@@ -61,10 +61,10 @@ public class BlockStringPillar extends BlockString
         switch ((EnumFacing.Axis) state.getValue(BlockRotatedPillar.AXIS))
         {
         case X:
-            i = i + 4;
+            i = i + 5;
             break;
         case Z:
-            i = i + 8;
+            i = i + 10;
             break;
         }
 
@@ -123,7 +123,7 @@ public class BlockStringPillar extends BlockString
     @Override
     protected BlockStateContainer createRealBlockState()
     {
-        return new ExtendedBlockState(this, new IProperty[] { BlockRotatedPillar.AXIS, this.getStringProp() }, new IUnlistedProperty[] { this.getUnlistedStringProp() });
+        return new ExtendedBlockState(this, new IProperty[] { this.getStringProp(), BlockRotatedPillar.AXIS }, new IUnlistedProperty[] { this.getUnlistedStringProp() });
     }
 
     @Override
