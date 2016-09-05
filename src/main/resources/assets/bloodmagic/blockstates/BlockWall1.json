@@ -2,8 +2,11 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart"
-    }
+      "wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart",
+      "particle": "#wall"
+    },
+    "model": "bloodmagic:BlockBlank",
+    "transform" : "forge:default-block"
   },
   "variants": {
   	"up": {

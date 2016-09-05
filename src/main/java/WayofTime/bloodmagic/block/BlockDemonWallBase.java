@@ -5,9 +5,7 @@ import java.util.List;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.EnumFacing;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
@@ -38,7 +36,7 @@ public class BlockDemonWallBase extends BlockStringWall implements IVariantProvi
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
 
         for (int i = 0; i < names.length; i++)
-            ret.add(Pair.of(i, "east=false,north=false,south=false,type=" + names[i] + ",up=true,west=false"));
+            ret.add(Pair.of(i, "east=true,north=false,south=false,type=" + names[i] + ",up=true,west=true"));
 
         return ret;
     }
