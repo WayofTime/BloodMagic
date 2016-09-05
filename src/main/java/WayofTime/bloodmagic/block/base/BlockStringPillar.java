@@ -30,7 +30,7 @@ public class BlockStringPillar extends BlockString
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        IBlockState iblockstate = this.getDefaultState().withProperty(this.getStringProp(), this.getValues().get(meta % 5));
+        IBlockState iblockstate = getBlockState().getBaseState().withProperty(this.getStringProp(), this.getValues().get(meta % 5));
 
         switch (meta / 5)
         {
