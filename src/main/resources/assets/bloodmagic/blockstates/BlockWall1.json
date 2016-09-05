@@ -1,0 +1,41 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart"
+    }
+  },
+  "variants": {
+  	"up": {
+  		"true": {"submodel": "minecraft:wall_post"},
+  		"false": {}
+  	},
+  	"north": {
+  		"true": {"submodel": "minecraft:wall_side", "uvlock": true},
+  		"false": {}
+  	},
+  	"south": {
+  		"true": {"submodel": "minecraft:wall_side", "uvlock": true, "y": 180},
+  		"false": {}
+  	},
+  	"east": {
+  		"true": {"submodel": "minecraft:wall_side", "uvlock": true, "y": 90},
+  		"false": {}
+  	},
+  	"west": {
+  		"true": {"submodel": "minecraft:wall_side", "uvlock": true, "y": 270},
+  		"false": {}
+  	},
+    "type": {
+    	"raw": {
+    		
+    	},
+    	"corrosive": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart_c"
+		  	}
+    	}
+    },
+    "inventory": [{}]
+  }
+}

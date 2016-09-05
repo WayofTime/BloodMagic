@@ -27,6 +27,7 @@ import WayofTime.bloodmagic.block.BlockDemonLight;
 import WayofTime.bloodmagic.block.BlockDemonPillarBase;
 import WayofTime.bloodmagic.block.BlockDemonPillarCapBase;
 import WayofTime.bloodmagic.block.BlockDemonPylon;
+import WayofTime.bloodmagic.block.BlockDemonWallBase;
 import WayofTime.bloodmagic.block.BlockDimensionalPortal;
 import WayofTime.bloodmagic.block.BlockIncenseAltar;
 import WayofTime.bloodmagic.block.BlockInputRoutingNode;
@@ -53,6 +54,7 @@ import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
 import WayofTime.bloodmagic.item.block.ItemBlockDemonLight;
 import WayofTime.bloodmagic.item.block.ItemBlockDemonPillarBase;
 import WayofTime.bloodmagic.item.block.ItemBlockDemonPillarCapBase;
+import WayofTime.bloodmagic.item.block.ItemBlockDemonWallBase;
 import WayofTime.bloodmagic.item.block.ItemBlockMimic;
 import WayofTime.bloodmagic.item.block.ItemBlockPath;
 import WayofTime.bloodmagic.item.block.ItemBlockPedestal;
@@ -134,6 +136,8 @@ public class ModBlocks
 
     public static Block demonLight;
 
+    public static Block demonWall1;
+
     public static void init()
     {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
@@ -183,6 +187,8 @@ public class ModBlocks
 //        testSpellBlock = registerBlock(new BlockTestSpellBlock());
 
         demonLight = registerBlock(new ItemBlockDemonLight(new BlockDemonLight()), Constants.BloodMagicBlock.DEMON_LIGHT.getRegName());
+
+        demonWall1 = registerBlock(new ItemBlockDemonWallBase(new BlockDemonWallBase("wall1", Material.ROCK, new String[] { "raw", "corrosive" })), "BlockWall1");
 
         BloodMagicAPI.addToTeleposerBlacklist(inputRoutingNode);
         BloodMagicAPI.addToTranspositionBlacklist(inputRoutingNode);
