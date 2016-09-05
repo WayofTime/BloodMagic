@@ -100,6 +100,10 @@ item.BloodMagic.baseComponent.antiseptic.name=防腐剤
 item.BloodMagic.cuttingFluid.basicCuttingFluid.name=基礎切削液
 item.BloodMagic.cuttingFluid.explosive.name=爆薬
 
+item.BloodMagic.baseComponent.mundaneLength.name=簡素な延長触媒
+item.BloodMagic.baseComponent.mundanePower.name=簡素な強化触媒
+
+
 item.BloodMagic.demonCrystal.crystalDefault.name=デーモンウィル結晶
 item.BloodMagic.demonCrystal.crystalCorrosive.name=腐食性ウィル結晶
 item.BloodMagic.demonCrystal.crystalDestructive.name=破壊性ウィル結晶
@@ -175,6 +179,7 @@ item.BloodMagic.sanguineBook.name=インスペクトリス・スカンダルム
 item.BloodMagic.livingPointUpgrade.draftAngelus.name=アンジェラスの一飲み
 
 item.BloodMagic.willGauge.name=デーモンウィルオーラ計測器
+item.BloodMagic.potionFlask.name=フラスコ入りポーション
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=ライフエッセンス
@@ -245,6 +250,74 @@ tile.BloodMagic.demonCrystalDESTRUCTIVE.name=破壊性ウィル結晶株
 tile.BloodMagic.demonCrystalVENGEFUL.name=報復性ウィル結晶株
 tile.BloodMagic.demonCrystalSTEADFAST.name=不活性ウィル結晶株
 
+tile.BloodMagic.mimic.nohitbox.name=希薄で不透明なミミックブロック
+tile.BloodMagic.mimic.solidopaque.name=不透明なミミックブロック
+tile.BloodMagic.mimic.solidclear.name=透明なミミックブロック
+tile.BloodMagic.mimic.solidlight.name=発光するミミックブロック
+tile.BloodMagic.mimic.sentient.name=理力のミミックブロック
+
+tile.BloodMagic.bricks1.brick1_raw.name=長い原生の石レンガ
+tile.BloodMagic.bricks1.brick1_corrosive.name=長い腐食性の石レンガ
+tile.BloodMagic.bricks1.brick1_destructive.name=長い破壊性の石レンガ
+tile.BloodMagic.bricks1.brick1_vengeful.name=長い報復性の石レンガ
+tile.BloodMagic.bricks1.brick1_steadfast.name=長い不活性の石レンガ
+tile.BloodMagic.bricks1.brick2_raw.name=不均一な原生の石レンガ
+tile.BloodMagic.bricks1.brick2_corrosive.name=不均一な腐食性の石レンガ
+tile.BloodMagic.bricks1.brick2_destructive.name=不均一な破壊性の石レンガ
+tile.BloodMagic.bricks1.brick2_vengeful.name=不均一な報復性の石レンガ
+tile.BloodMagic.bricks1.brick2_steadfast.name=不均一な不活性の石レンガ
+tile.BloodMagic.bricks1.brick3_raw.name=原生の石レンガ
+tile.BloodMagic.bricks1.brick3_corrosive.name=腐食性の石レンガ
+tile.BloodMagic.bricks1.brick3_destructive.name=破壊性の石レンガ
+tile.BloodMagic.bricks1.brick3_vengeful.name=報復性の石レンガ
+tile.BloodMagic.bricks1.brick3_steadfast.name=不活性の石レンガ
+
+tile.BloodMagic.bricks2.smallbrick_raw.name=小さな原生の石レンガ
+tile.BloodMagic.bricks2.smallbrick_corrosive.name=小さな腐食性の石レンガ
+tile.BloodMagic.bricks2.smallbrick_destructive.name=小さな破壊性の石レンガ
+tile.BloodMagic.bricks2.smallbrick_vengeful.name=小さな報復性の石レンガ
+tile.BloodMagic.bricks2.smallbrick_steadfast.name=小さな不活性の石レンガ
+tile.BloodMagic.bricks2.tile_raw.name=原生の石タイル
+tile.BloodMagic.bricks2.tile_corrosive.name=腐食性の石タイル
+tile.BloodMagic.bricks2.tile_destructive.name=破壊性の石タイル
+tile.BloodMagic.bricks2.tile_vengeful.name=報復性の石タイル
+tile.BloodMagic.bricks2.tile_steadfast.name=不活性の石タイル
+tile.BloodMagic.bricks2.tilespecial_raw.name=装飾された原生の石タイル
+tile.BloodMagic.bricks2.tilespecial_corrosive.name=装飾された腐食性の石タイル
+tile.BloodMagic.bricks2.tilespecial_destructive.name=装飾された破壊性の石タイル
+tile.BloodMagic.bricks2.tilespecial_vengeful.name=装飾された報復性の石タイル
+tile.BloodMagic.bricks2.tilespecial_steadfast.name=装飾された不活性の石タイル
+
+tile.BloodMagic.demonlight.raw.name=原生デーモンアイ
+tile.BloodMagic.demonlight.corrosive.name=腐食性デーモンアイ
+tile.BloodMagic.demonlight.destructive.name=破壊性デーモンアイ
+tile.BloodMagic.demonlight.vengeful.name=報復性デーモンアイ
+tile.BloodMagic.demonlight.steadfast.name=不活性デーモンアイ
+
+tile.BloodMagic.extras.stone_raw.name=原生の石
+tile.BloodMagic.extras.stone_corrosive.name=腐食性の石
+tile.BloodMagic.extras.stone_destructive.name=破壊性の石
+tile.BloodMagic.extras.stone_vengeful.name=報復性の石
+tile.BloodMagic.extras.stone_steadfast.name=不活性の石
+
+tile.BloodMagic.extras.polished_raw.name=磨かれた原生の石
+tile.BloodMagic.extras.polished_corrosive.name=磨かれた腐食性の石
+tile.BloodMagic.extras.polished_destructive.name=磨かれた破壊性の石
+tile.BloodMagic.extras.polished_vengeful.name=磨かれた方複製の石
+tile.BloodMagic.extras.polished_steadfast.name=磨かれた不活性の石
+
+tile.BloodMagic.extras.metal_raw.name=原生デーモン合金
+tile.BloodMagic.extras.metal_corrosive.name=報復性デーモン合金
+tile.BloodMagic.extras.metal_destructive.name=破壊性デーモン合金
+tile.BloodMagic.extras.metal_vengeful.name=報復性デーモン合金
+tile.BloodMagic.extras.metal_steadfast.name=不活性デーモン合金
+
+tile.BloodMagic.pillar1.raw.name=原生の柱石
+tile.BloodMagic.pillar1.corrosive.name=腐食性の柱石
+tile.BloodMagic.pillar1.destructive.name=破壊性の柱石
+tile.BloodMagic.pillar1.vengeful.name=報復性の柱石
+tile.BloodMagic.pillar1.steadfast.name=不活性の柱石
+
 # Fluids
 fluid.lifeEssence=ライフエッセンス
 
@@ -294,6 +367,7 @@ tooltip.BloodMagic.sigil.whirlwind.desc=&oスカートは履かないほうが�
 tooltip.BloodMagic.sigil.enderSeverance.desc=&oエンダーマンは悲惨な事になる！
 tooltip.BloodMagic.sigil.teleposition.desc=わずかな距離なら移動できそうだ。
 tooltip.BloodMagic.sigil.transposition.desc=フォースの力を感じるのだ、若き弟子よ。
+tooltip.BloodMagic.sigil.holding.press=&o%s&r&7を押すことで変更
 tooltip.BloodMagic.sigil.holding.desc=多重化印章
 tooltip.BloodMagic.sigil.holding.sigilInSlot=スロット %d： %s
 
@@ -369,12 +443,18 @@ tooltip.BloodMagic.livingArmour.upgrade.graveDigger=グレイヴディガー
 tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=チャージストライク
 tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=トゥルーストライク
 tooltip.BloodMagic.livingArmour.upgrade.elytra=エリトラ
+tooltip.BloodMagic.livingArmour.upgrade.nightSight=夜間技能
+
+
 tooltip.BloodMagic.livingArmour.upgrade.slowness=引きずる足
 tooltip.BloodMagic.livingArmour.upgrade.crippledArm=不自由な腕
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Lv %d)
+tooltip.BloodMagic.livingArmour.upgrade.progress=%s (%d/100)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6強化ポイント： %s / %s
 
-tooltip.BloodMagic.will=ウィルの含有量： %1$,.2f
+tooltip.BloodMagic.livingArmour.extraExtraInfo=&9-Shift + Mで進捗情報-
+
+tooltip.BloodMagic.will=ウィル含有量： %1$,.2f
 tooltip.BloodMagic.sentientSword.desc=デーモンウィルを使用することで潜在能力が開放されます
 tooltip.BloodMagic.sentientAxe.desc=デーモンウィルを使用することで潜在能力が開放されます
 tooltip.BloodMagic.sentientPickaxe.desc=デーモンウィルを使用することで潜在能力が開放されます
@@ -398,13 +478,13 @@ tooltip.BloodMagic.fluid.capacity=最大容量
 tooltip.BloodMagic.ghost.everything=全て
 tooltip.BloodMagic.ghost.amount=幻影アイテムの個数： %d個
 
-tooltip.BloodMagic.currentType.default=内容物： 未精製ウィル
+tooltip.BloodMagic.currentType.default=内容物： 原生ウィル
 tooltip.BloodMagic.currentType.corrosive=内容物： 腐食性ウィル
 tooltip.BloodMagic.currentType.destructive=内容物： 破壊性ウィル
 tooltip.BloodMagic.currentType.vengeful=内容物： 報復性ウィル
 tooltip.BloodMagic.currentType.steadfast=内容物： 不活性ウィル
 
-tooltip.BloodMagic.currentBaseType.default=未精製
+tooltip.BloodMagic.currentBaseType.default=原生
 tooltip.BloodMagic.currentBaseType.corrosive=腐食性
 tooltip.BloodMagic.currentBaseType.destructive=破壊性
 tooltip.BloodMagic.currentBaseType.vengeful=報復性
@@ -419,6 +499,8 @@ tooltip.BloodMagic.decoration.notSafe=危険な装飾
 
 tooltip.BloodMagic.cuttingFluidRatio=%d/%d 回使用可能
 
+tooltip.BloodMagic.potion.uses=%d 回使用可能
+
 tooltip.BloodMagic.book.shifting=紋様が... &oShiftして...
 
 tooltip.BloodMagic.willGauge=大気中のデーモンウィルを測定できる奇妙な装置。
@@ -431,7 +513,7 @@ ritual.BloodMagic.blockRange.noRange=ブロック範囲は適切に設定され�
 ritual.BloodMagic.blockRange.firstBlock=効果範囲の開始ブロックを設定しました。
 ritual.BloodMagic.blockRange.success=正常に新しい効果範囲が設定されました！
 ritual.BloodMagic.willConfig.set=この儀式に以下の種類のデーモンウィルを使用: %s
-ritual.BloodMagic.willConfig.void=儀式はもうデーモンウィルを使用しません
+ritual.BloodMagic.willConfig.void=この儀式はデーモンウィルを使用しません
 
 ritual.BloodMagic.testRitual=試験用儀式
 ritual.BloodMagic.waterRitual=湧水の儀式
@@ -479,6 +561,9 @@ ritual.BloodMagic.crushingRitual.info=指定エリアのブロックを破壊し
 ritual.BloodMagic.crushingRitual.destructive.info=(破壊性) ブロックを強制的に破壊します：破壊した全てのブロックは幸運IIIの効果が適用されています。
 ritual.BloodMagic.crushingRitual.steadfast.info=(不活性) 全てのブロックはシルクタッチによって破壊されます。幸運の効果は無視されます。
 ritual.BloodMagic.crushingRitual.corrosive.info=(腐食性) 全てのブロックは切削液で破壊されます。シルクタッチの効果は無視されます。
+ritual.BloodMagic.greenGroveRitual.corrosive.info=(腐食性) 作物の周囲にいる生物は攻撃を受け、生命力が作物に吸収される。
+ritual.BloodMagic.greenGroveRitual.default.info=(原生) オーラ中のウィル量に応じて全ての儀式の作動速度が向上します。
+ritual.BloodMagic.greenGroveRitual.steadfast.info=(不活性) 種を植え直し、潅水範囲にあるブロックを湿らせる。
 
 ritual.BloodMagic.fullStomachRitual.info=リンクしているチェスト内にある食料を、満腹でないプレイヤーに自動的に供給します。
 ritual.BloodMagic.interdictionRitual.info=マスター儀式石の一定エリア内の生物を排除して侵入できないようにします。
@@ -503,6 +588,8 @@ ritual.BloodMagic.waterRitual.waterRange.info=(水) 設定したエリアに水�
 ritual.BloodMagic.lavaRitual.lavaRange.info=(溶岩) 設定したエリアに溶岩源を生成させます。
 ritual.BloodMagic.lavaRitual.fireFuse.info=(報復性) 範囲内のエンティティは炎によって苦しめられます。
 ritual.BloodMagic.greenGroveRitual.growing.info=(成長) 設定したエリア内の植物の成長を促進させます。
+ritual.BloodMagic.greenGroveRitual.leech.info=(腐食性) 作物の成長のために周辺の生物は生命力を吸収される。
+ritual.BloodMagic.greenGroveRitual.hydrate.info=(不活性) 範囲内の耕したブロックを湿らせ、エリア周辺にある種子を植え付ける。
 ritual.BloodMagic.jumpRitual.jumpRange.info=(跳躍) 設定したエリア内に居る生物を空中に飛び上がらせます。
 ritual.BloodMagic.wellOfSufferingRitual.altar.info=(祭壇) 儀式が血の祭壇を検索するエリアを指定します。変更することにより検索エリアを拡大したり特定の領域に制限したりすることが可能です。
 ritual.BloodMagic.wellOfSufferingRitual.damage.info=(ダメージ) 儀式によって生物が継続ダメージを受けるエリアを設定します。この範囲内に居るすべての生物は徐々にダメージを受け続ける(プレイヤーを除く)。
@@ -564,6 +651,19 @@ chat.BloodMagic.altar.comp.crystal=未実装のアイテム
 chat.BloodMagic.altar.comp.notair=固体ブロック
 
 chat.BloodMagic.altar.nextTier=次のグレードの血の祭壇にするには%sが%sの場所に不足しています。
+
+chat.BloodMagic.mimic.potionSet=ポーションを設置しました。
+chat.BloodMagic.mimic.potionRemove=ポーションを無効化しました。
+chat.BloodMagic.mimic.potionInterval.up=ポーション生成の時間間隔を以下に増加しました: %d tick
+chat.BloodMagic.mimic.potionInterval.down=ポーション生成の時間間隔を以下に減少しました: %d tick
+chat.BloodMagic.mimic.detectRadius.up=プレイヤーの検知範囲を以下に拡大しました: %d ブロック
+chat.BloodMagic.mimic.detectRadius.down=プレイヤーの検知範囲を以下に縮小しました: %d ブロック
+chat.BloodMagic.mimic.potionSpawnRadius.up=ポーション生成の効果範囲を以下に拡大しました: %d ブロック
+chat.BloodMagic.mimic.potionSpawnRadius.down=ポーション生成の効果範囲を以下に減少しました: %d ブロック
+
+# entity
+entity.BloodMagic.SentientSpecter.name=理力の霊魂
+entity.BloodMagic.Mimic.name=ミミック
 
 # sekrit
 
@@ -630,6 +730,8 @@ commands.soulnetwork.create.success=正常に%sのソウルネットワークを
 
 # Keybinds
 BloodMagic.keybind.open_holding=貯蔵の印章を開く
+BloodMagic.keybind.cycle_holding_pos=印章を順に回す (+)
+BloodMagic.keybind.cycle_holding_neg=印章を逆に回す (-)
 
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=血の祭壇
@@ -666,3 +768,6 @@ tc.research_category.BLOODMAGIC=血紅の秘儀
 bloodmagic.research_name.BLOODMAGIC=Blood Magic
 bloodmagic.research_text.BLOODMAGIC=血紅の秘儀
 bloodmagic.research_page.BLOODMAGIC.1=Blood Magic の領域は常に孤独であり、 ”個人の” 技能は世間から疎まれ、時には心を病んでしまうこともあるかも知れない。しかし、自己犠牲とライフエッセンスの力は一般の血の魔術師を超えた領域に到達し、それどころか人知を超えた能力を身につられるだろうことは完全に明白であろう！
+
+# Buttons
+button.bloodmagic.tooltip.fill=ネットワークに充填
