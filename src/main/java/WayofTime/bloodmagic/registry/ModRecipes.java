@@ -163,6 +163,44 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.mimic, 4, 1), "bsb", "srs", "bob", 'b', new ItemStack(ModBlocks.bloodStoneBrick), 'r', new ItemStack(ModBlocks.bloodRune), 's', "stone", 'o', OrbRegistry.getOrbStack(ModItems.orbMagician)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.mimic, 4, 2), "bsb", "srs", "bob", 'b', new ItemStack(ModBlocks.bloodStoneBrick), 'r', new ItemStack(ModBlocks.bloodRune), 's', "blockGlass", 'o', OrbRegistry.getOrbStack(ModItems.orbMagician)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.mimic, 2, 3), "bnb", "trt", "bob", 'b', new ItemStack(ModBlocks.bloodStoneBrick), 'r', new ItemStack(ModBlocks.bloodRune), 'n', Blocks.GLOWSTONE, 't', "torch", 'o', OrbRegistry.getOrbStack(ModItems.orbMagician)));
+
+        for (int i = 0; i < 5; i++)
+        {
+            ItemStack crystalStack = new ItemStack(ModItems.itemDemonCrystal, 1, i);
+            ItemStack baseStoneStack = new ItemStack(ModBlocks.demonExtras, 1, i);
+            ItemStack baseStoneStackCrafted = new ItemStack(ModBlocks.demonExtras, 16, i);
+            ItemStack polishedStoneStack = new ItemStack(ModBlocks.demonExtras, 1, i + 5);
+            ItemStack willBrickStack = new ItemStack(ModBlocks.demonBrick1, 1, i + 10);
+            ItemStack willBrickStackCrafted = new ItemStack(ModBlocks.demonBrick1, 4, i + 10);
+
+            ItemStack willSmallBrickStack = new ItemStack(ModBlocks.demonBrick2, 1, i);
+            ItemStack willSmallBrickStackCrafted = new ItemStack(ModBlocks.demonBrick2, 1, i);
+            ItemStack pillarStack = new ItemStack(ModBlocks.demonPillar1, 1, i);
+            ItemStack pillarStackCrafted = new ItemStack(ModBlocks.demonPillar1, 6, i);
+
+            GameRegistry.addRecipe(new ShapelessOreRecipe(baseStoneStackCrafted, crystalStack, "stone", "stone", "stone", "stone", "stone", "stone", "stone", "stone"));
+            GameRegistry.addRecipe(willBrickStackCrafted, "ss", "ss", 's', baseStoneStack);
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.demonBrick1, 5, i), "ss ", "sss", 's', willBrickStack); //Uneven long bricks
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.demonBrick1, 4, i + 5), "ss ", " ss", 's', willBrickStack); //Uneven bricks
+            GameRegistry.addShapelessRecipe(willBrickStack, new ItemStack(ModBlocks.demonBrick1, 1, i));
+            GameRegistry.addShapelessRecipe(willBrickStack, new ItemStack(ModBlocks.demonBrick1, 1, i + 5));
+            GameRegistry.addRecipe(willSmallBrickStackCrafted, "ss", "ss", 's', willBrickStack);
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.demonBrick2, 9, i + 5), "scs", "ccc", "scs", 's', baseStoneStack, 'c', willBrickStack);
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.demonBrick2, 9, i + 10), "scs", "coc", "scs", 's', baseStoneStack, 'c', willBrickStack, 'o', crystalStack);
+            GameRegistry.addRecipe(pillarStackCrafted, "ss", "ss", "ss", 's', polishedStoneStack);
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.demonPillar2, 8, i), "ppp", "pcp", "ppp", 'p', pillarStack, 'c', crystalStack);
+
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.demonWall1, 6, i), "sss", "sss", 's', willBrickStack);
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.demonWall1, 6, i + 5), "sss", "sss", 's', willSmallBrickStack);
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.demonWall1, 6, i + 10), "sss", "sss", 's', polishedStoneStack);
+
+            GameRegistry.addRecipe(new ItemStack(i < 2 ? ModBlocks.demonStairs1 : (i < 4 ? ModBlocks.demonStairs2 : ModBlocks.demonStairs3), 8, i % 2), "s  ", "ss ", "sss", 's', polishedStoneStack);
+            GameRegistry.addRecipe(new ItemStack(i < 2 ? ModBlocks.demonPillarCap1 : (i < 4 ? ModBlocks.demonPillarCap2 : ModBlocks.demonPillarCap3), 6, i % 2), "sss", "sss", 's', pillarStack);
+
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.demonLight, 5, i), "sgs", "ggg", "sgs", 's', polishedStoneStack, 'g', Blocks.GLOWSTONE);
+
+            GameRegistry.addSmelting(baseStoneStack, polishedStoneStack, 0.15f);
+        }
     }
 
     public static void addAltarRecipes()

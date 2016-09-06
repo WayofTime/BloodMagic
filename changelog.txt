@@ -3,6 +3,7 @@ Version 2.1.0-59
 ------------------------------------------------------
 - Added the Living Armour Upgrade, Nocturnal Prowess, which gives night vision in dark areas and increases damage while the area is dark.
 - Added a LOT of dungeon blocks. I mean a lot.
+- Finished adding the recipes for all of the blocks (except the Demon Alloy)
 
 ------------------------------------------------------
 Version 2.0.4-58
