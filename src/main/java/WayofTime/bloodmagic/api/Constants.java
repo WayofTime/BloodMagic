@@ -300,6 +300,10 @@ public class Constants
         DEMON_PILLAR_CAP_1("BlockPillarCap1"),
         DEMON_PILLAR_CAP_2("BlockPillarCap2"),
         DEMON_PILLAR_CAP_3("BlockPillarCap3"),
+        DEMON_WALL_1("BlockWall1"),
+        DEMON_STAIRS_1("BlockStairs1"),
+        DEMON_STAIRS_2("BlockStairs2"),
+        DEMON_STAIRS_3("BlockStairs3"),
         DEMON_LIGHT("BlockDemonLight");
 
         @Getter

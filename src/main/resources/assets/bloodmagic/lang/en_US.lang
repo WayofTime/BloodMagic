@@ -330,6 +330,28 @@ tile.BloodMagic.pillarCap2.destructive.name=Destructive Stone Pillar Cap
 tile.BloodMagic.pillarCap2.vengeful.name=Vengeful Stone Pillar Cap
 tile.BloodMagic.pillarCap3.steadfast.name=Steadfast Stone Pillar Cap
 
+tile.BloodMagic.wall1.brick_raw.name=Raw Stone Brick Wall
+tile.BloodMagic.wall1.brick_corrosive.name=Corrosive Stone Brick Wall
+tile.BloodMagic.wall1.brick_destructive.name=Destructive Stone Brick Wall
+tile.BloodMagic.wall1.brick_vengeful.name=Vengeful Stone Brick Wall
+tile.BloodMagic.wall1.brick_steadfast.name=Steadfast Stone Brick Wall
+tile.BloodMagic.wall1.smallbrick_raw.name=Raw Small Stone Brick Wall
+tile.BloodMagic.wall1.smallbrick_corrosive.name=Corrosive Small Stone Brick Wall
+tile.BloodMagic.wall1.smallbrick_destructive.name=Destructive Small Stone Brick Wall
+tile.BloodMagic.wall1.smallbrick_vengeful.name=Vengeful Small Stone Brick Wall
+tile.BloodMagic.wall1.smallbrick_steadfast.name=Steadfast Small Stone Brick Wall
+tile.BloodMagic.wall1.large_raw.name=Raw Stone Wall
+tile.BloodMagic.wall1.large_corrosive.name=Corrosive Stone Wall
+tile.BloodMagic.wall1.large_destructive.name=Destructive Stone Wall
+tile.BloodMagic.wall1.large_vengeful.name=Vengeful Stone Wall
+tile.BloodMagic.wall1.large_steadfast.name=Steadfast Stone Wall
+
+tile.BloodMagic.stairs1.raw.name=Raw Stone Stairs
+tile.BloodMagic.stairs1.corrosive.name=Corrosive Stone Stairs
+tile.BloodMagic.stairs2.destructive.name=Destructive Stone Stairs
+tile.BloodMagic.stairs2.vengeful.name=Vengeful Stone Stairs
+tile.BloodMagic.stairs3.steadfast.name=Steadfast Stone Stairs
+
 # Fluids
 fluid.lifeEssence=Life Essence
 

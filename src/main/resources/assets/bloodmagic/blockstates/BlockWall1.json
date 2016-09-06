@@ -30,25 +30,75 @@
   		"false": {}
   	},
     "type": {
-    	"raw": {
+    	"brick_raw": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_brick3"
+		  	}
+    	},
+    	"brick_corrosive": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_brick3_c"
+		  	}
+    	},
+    	"brick_destructive": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_brick3_d"
+		  	}
+    	},
+    	"brick_vengeful": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_brick3_v"
+		  	}
+    	},
+    	"brick_steadfast": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_brick3_s"
+		  	}
+    	},
+    	"smallbrick_raw": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_smallbrick"
+		  	}
+    	},
+    	"smallbrick_corrosive": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_smallbrick_c"
+		  	}
+    	},
+    	"smallbrick_destructive": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_smallbrick_d"
+		  	}
+    	},
+    	"smallbrick_vengeful": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_smallbrick_v"
+		  	}
+    	},
+    	"smallbrick_steadfast": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_smallbrick_s"
+		  	}
+    	},
+    	"large_raw": {
     		
     	},
-    	"corrosive": {
+    	"large_corrosive": {
     		"textures": {
 			    "wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart_c"
 		  	}
     	},
-		"destructive": {
+		"large_destructive": {
 			"textures": {
 				"wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart_d"
 			}
 		},
-		"vengeful": {
+		"large_vengeful": {
 			"textures": {
 				"wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart_v"
 			}
 		},
-		"steadfast": {
+		"large_steadfast": {
 			"textures": {
 				"wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart_s"
 			}
