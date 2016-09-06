@@ -312,11 +312,23 @@ tile.BloodMagic.extras.metal_destructive.name=破壊性デーモン合金
 tile.BloodMagic.extras.metal_vengeful.name=報復性デーモン合金
 tile.BloodMagic.extras.metal_steadfast.name=不活性デーモン合金
 
-tile.BloodMagic.pillar1.raw.name=原生の柱石
-tile.BloodMagic.pillar1.corrosive.name=腐食性の柱石
-tile.BloodMagic.pillar1.destructive.name=破壊性の柱石
-tile.BloodMagic.pillar1.vengeful.name=報復性の柱石
-tile.BloodMagic.pillar1.steadfast.name=不活性の柱石
+tile.BloodMagic.pillar1.raw.name=原生の石柱
+tile.BloodMagic.pillar1.corrosive.name=腐食性の石柱
+tile.BloodMagic.pillar1.destructive.name=破壊性の石柱
+tile.BloodMagic.pillar1.vengeful.name=報復性の石柱
+tile.BloodMagic.pillar1.steadfast.name=不活性の石柱
+
+tile.BloodMagic.pillar2.raw.name=装飾された原生の石柱
+tile.BloodMagic.pillar2.corrosive.name=装飾された腐食性の石柱
+tile.BloodMagic.pillar2.destructive.name=装飾された破壊性の石柱
+tile.BloodMagic.pillar2.vengeful.name=装飾された報復性の石柱
+tile.BloodMagic.pillar2.steadfast.name=装飾された不活性の石柱
+
+tile.BloodMagic.pillarCap1.raw.name=原生の石柱の柱頭
+tile.BloodMagic.pillarCap1.corrosive.name=腐食性の石柱の柱頭
+tile.BloodMagic.pillarCap2.destructive.name=破壊性の石柱の柱頭
+tile.BloodMagic.pillarCap2.vengeful.name=報復性の石柱の柱頭
+tile.BloodMagic.pillarCap3.steadfast.name=不活性の石柱の柱頭
 
 # Fluids
 fluid.lifeEssence=ライフエッセンス
@@ -525,7 +537,7 @@ ritual.BloodMagic.featheredKnifeRitual=フェザーナイフの儀式
 ritual.BloodMagic.regenerationRitual=再生の儀式
 ritual.BloodMagic.harvestRitual=収穫月の儀式
 ritual.BloodMagic.magneticRitual=磁力の儀式
-ritual.BloodMagic.crushingRitual=粉砕の儀式
+ritual.BloodMagic.crushingRitual=粉砕者の儀式
 ritual.BloodMagic.fullStomachRitual=飽食の儀式
 ritual.BloodMagic.interdictionRitual=排除の儀式
 ritual.BloodMagic.containmentRitual=幽閉の儀式
