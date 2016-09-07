@@ -51,7 +51,7 @@ public class DataProviderRitualController implements IWailaDataProvider
                 {
                     TileMasterRitualStone mrs = (TileMasterRitualStone) accessor.getTileEntity();
 
-                    if (mrs.getCurrentRitual() != null)
+                    if (mrs.getCurrentRitual() != null && mrs.isActive())
                     {
                         currenttip.add(TextHelper.localizeEffect(mrs.getCurrentRitual().getUnlocalizedName()));
                         currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromUUID(mrs.getOwner())));
