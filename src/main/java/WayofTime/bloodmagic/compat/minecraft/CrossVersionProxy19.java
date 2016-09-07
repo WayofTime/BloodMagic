@@ -7,7 +7,8 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.lang.reflect.Method;
 
-public class CrossVersionProxy19 implements ICrossVersionProxy {
+public class CrossVersionProxy19 implements ICrossVersionProxy
+{
 
     @Override
     public TileEntity createTileFromData(World world, NBTTagCompound tagCompound)
@@ -20,5 +21,11 @@ public class CrossVersionProxy19 implements ICrossVersionProxy {
         {
             return null;
         }
+    }
+
+    @Override
+    public boolean disableStairSlabCulling()
+    {
+        return false;
     }
 }

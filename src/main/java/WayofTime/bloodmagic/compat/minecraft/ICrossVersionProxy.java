@@ -12,4 +12,6 @@ import net.minecraft.world.World;
 public interface ICrossVersionProxy
 {
     TileEntity createTileFromData(World world, NBTTagCompound tagCompound);
+
+    boolean disableStairSlabCulling();
 }
