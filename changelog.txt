@@ -4,6 +4,9 @@ Version 2.1.0-59
 - Added the Living Armour Upgrade, Nocturnal Prowess, which gives night vision in dark areas and increases damage while the area is dark.
 - Added a LOT of dungeon blocks. I mean a lot.
 - Finished adding the recipes for all of the blocks (except the Demon Alloy)
+- Added a temporary texture (finally) for the Inspectoris Scandalum
+- Fixed Specters spawning with the /give command
+- Fixed the sacrifice range of the altar.
 
 ------------------------------------------------------
 Version 2.0.4-58
