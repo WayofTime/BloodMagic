@@ -134,13 +134,13 @@ public class PlayerSacrificeHelper
     {
         TileEntity tileEntity;
 
-        for (int i = -2; i <= 2; i++)
+        for (int x = -2; x <= 2; x++)
         {
-            for (int j = -2; j <= 2; j++)
+            for (int y = -2; y <= 1; y++)
             {
-                for (int k = -2; k <= 1; k++)
+                for (int z = -2; z <= 2; z++)
                 {
-                    tileEntity = world.getTileEntity(blockPos.add(i, j, k));
+                    tileEntity = world.getTileEntity(blockPos.add(x, y, z));
 
                     if (tileEntity instanceof IBloodAltar)
                     {
