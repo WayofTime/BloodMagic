@@ -99,7 +99,7 @@ public class GenericHandler
         {
             ItemStack stack = itemEntity.getEntityItem();
             Item item = stack.getItem();
-            if (item instanceof ISentientTool)
+            if (stack.hasTagCompound() && item instanceof ISentientTool)
             {
                 if (((ISentientTool) item).spawnSentientEntityOnDrop(stack, event.getPlayer()))
                 {
