@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.ritual;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -53,14 +54,14 @@ public class RitualRegeneration extends Ritual
         AreaDescriptor damageRange = getBlockRange(HEAL_RANGE);
         AxisAlignedBB range = damageRange.getAABB(pos);
 
-        List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, range);
+        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
 
-        for (EntityLivingBase player : entities)
+        for (EntityLivingBase entity : entities)
         {
-            float health = player.getHealth();
-            if (health <= player.getMaxHealth() - 1)
+            float health = entity.getHealth();
+            if (health <= entity.getMaxHealth() - 1)
             {
-                player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 50, 0, false, false));
+                entity.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 50, 0, false, false));
 
                 totalEffects++;
 
