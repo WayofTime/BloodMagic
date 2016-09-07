@@ -330,6 +330,28 @@ tile.BloodMagic.pillarCap2.destructive.name=破壊性の石柱の柱頭
 tile.BloodMagic.pillarCap2.vengeful.name=報復性の石柱の柱頭
 tile.BloodMagic.pillarCap3.steadfast.name=不活性の石柱の柱頭
 
+tile.BloodMagic.wall1.brick_raw.name=原生の石レンガの壁
+tile.BloodMagic.wall1.brick_corrosive.name=腐食性の石レンガの壁
+tile.BloodMagic.wall1.brick_destructive.name=破壊性の石レンガの壁
+tile.BloodMagic.wall1.brick_vengeful.name=報復性の石レンガの壁
+tile.BloodMagic.wall1.brick_steadfast.name=不活性の石レンガの壁
+tile.BloodMagic.wall1.smallbrick_raw.name=原生の石レンガの小さな壁
+tile.BloodMagic.wall1.smallbrick_corrosive.name=腐食性の石レンガの小さな壁
+tile.BloodMagic.wall1.smallbrick_destructive.name=破壊性の石レンガの小さな壁
+tile.BloodMagic.wall1.smallbrick_vengeful.name=報復性の石レンガの小さな壁
+tile.BloodMagic.wall1.smallbrick_steadfast.name=不活性の石レンガの小さな壁
+tile.BloodMagic.wall1.large_raw.name=原生の石壁
+tile.BloodMagic.wall1.large_corrosive.name=腐食性の石壁
+tile.BloodMagic.wall1.large_destructive.name=破壊性の石壁
+tile.BloodMagic.wall1.large_vengeful.name=報復性の石壁
+tile.BloodMagic.wall1.large_steadfast.name=不活性の石壁
+
+tile.BloodMagic.stairs1.raw.name=原生の石の階段
+tile.BloodMagic.stairs1.corrosive.name=腐食性の石の階段
+tile.BloodMagic.stairs2.destructive.name=破壊性の石の階段
+tile.BloodMagic.stairs2.vengeful.name=報復性の石の階段
+tile.BloodMagic.stairs3.steadfast.name=不活性の石の階段
+
 # Fluids
 fluid.lifeEssence=ライフエッセンス
 
@@ -647,7 +669,7 @@ chat.BloodMagic.ritual.notValid=あなたはルーンの配置が正しくない
 
 chat.BloodMagic.livingArmour.upgrade.poisonRemove=あなたは良い効果を感じた！
 chat.BloodMagic.livingArmour.upgrade.fireRemove=&6清涼感があなたを包み込み、炎上が収まった。
-chat.BloodMagic.livingArmour.upgrade.grimReaper=&6闇の力があなたを死のふちに引き込む！
+chat.BloodMagic.livingArmour.upgrade.grimReaper=&6闇の力があなたを死の淵から引き寄せる！
 chat.BloodMagic.livingArmour.newUpgrade=&4強化ポイントを取得しました！
 
 chat.BloodMagic.routing.remove=記録された座標情報を消去しました
@@ -739,6 +761,10 @@ commands.soulnetwork.noCommand=指定されたコマンドはありません
 commands.soulnetwork.notACommand=有効なコマンドではありません
 commands.soulnetwork.fillMax.success=正常に%sのソウルネットワークにオーブの最大値までLPを供給しました！
 commands.soulnetwork.create.success=正常に%sのソウルネットワークを構築しました(オーブのグレード： %d)
+
+# GUI
+tile.BloodMagic.inputNode.name=入力ノード
+tile.BloodMagic.outputNode.name=出力ノード
 
 # Keybinds
 BloodMagic.keybind.open_holding=貯蔵の印章を開く
