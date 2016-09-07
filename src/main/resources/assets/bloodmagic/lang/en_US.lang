@@ -762,6 +762,10 @@ commands.soulnetwork.notACommand=That is not a valid command
 commands.soulnetwork.fillMax.success=Successfully filled %s's Soul Network to their orb max!
 commands.soulnetwork.create.success=Successfully created %s's Soul Network (Orb tier: %d)
 
+# GUI
+tile.BloodMagic.inputNode.name=Input Node
+tile.BloodMagic.outputNode.name=Output Node
+
 # Keybinds
 BloodMagic.keybind.open_holding=Open Sigil of Holding
 BloodMagic.keybind.cycle_holding_pos=Cycle Sigil (+)

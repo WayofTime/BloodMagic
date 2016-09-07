@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.client.gui;
 
 import java.io.IOException;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -153,6 +154,8 @@ public class GuiItemRoutingNode extends GuiContainer
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         super.drawScreen(mouseX, mouseY, partialTicks);
+
+        Minecraft.getMinecraft().fontRendererObj.drawString(inventory.getName(), xSize, ySize / 4, 4210752);
     }
 
     /**
