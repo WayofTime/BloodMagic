@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.Consumer;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -163,15 +162,6 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
             int z = pos.getZ();
 
             return x >= minimumOffset.getX() && x < maximumOffset.getX() && y >= minimumOffset.getY() && y < maximumOffset.getY() && z >= minimumOffset.getZ() && z < maximumOffset.getZ();
-        }
-
-        @Override
-        public void forEachRemaining(Consumer<? super BlockPos> action)
-        {
-            while (hasNext())
-            {
-                action.accept(next());
-            }
         }
 
         @Override
@@ -388,78 +378,62 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         }
 
         @Override
-        public void forEachRemaining(Consumer<? super BlockPos> arg0)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
         public boolean hasNext()
         {
-            // TODO Auto-generated method stub
             return false;
         }
 
         @Override
         public BlockPos next()
         {
-            // TODO Auto-generated method stub
             return null;
         }
 
         @Override
         public void remove()
         {
-            // TODO Auto-generated method stub
 
         }
 
         @Override
         public void resetIterator()
         {
-            // TODO Auto-generated method stub
 
         }
 
         @Override
         public void modifyAreaByBlockPositions(BlockPos pos1, BlockPos pos2)
         {
-            // TODO Auto-generated method stub
+
         }
 
         @Override
         public int getVolumeForOffsets(BlockPos pos1, BlockPos pos2)
         {
-            // TODO Auto-generated method stub
             return 0;
         }
 
         @Override
         public boolean isWithinRange(BlockPos offset1, BlockPos offset2, int verticalLimit, int horizontalLimit)
         {
-            // TODO Auto-generated method stub
             return false;
         }
 
         @Override
         public int getVolume()
         {
-            // TODO Auto-generated method stub
             return 0;
         }
 
         @Override
         public boolean isWithinRange(int verticalLimit, int horizontalLimit)
         {
-            // TODO Auto-generated method stub
             return false;
         }
 
         @Override
         public boolean intersects(AreaDescriptor descriptor)
         {
-            // TODO Auto-generated method stub
             return false;
         }
 
@@ -472,7 +446,6 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         @Override
         public AreaDescriptor rotateDescriptor(PlacementSettings settings)
         {
-            // TODO Auto-generated method stub
             return this;
         }
     }
@@ -542,79 +515,62 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         }
 
         @Override
-        public void forEachRemaining(Consumer<? super BlockPos> arg0)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
         public void remove()
         {
-            // TODO Auto-generated method stub
 
         }
 
         @Override
         public void resetIterator()
         {
-            // TODO Auto-generated method stub
 
         }
 
         @Override
         public void modifyAreaByBlockPositions(BlockPos pos1, BlockPos pos2)
         {
-            // TODO Auto-generated method stub
 
         }
 
         @Override
         public int getVolumeForOffsets(BlockPos pos1, BlockPos pos2)
         {
-            // TODO Auto-generated method stub
             return 0;
         }
 
         @Override
         public boolean isWithinRange(BlockPos offset1, BlockPos offset2, int verticalLimit, int horizontalLimit)
         {
-            // TODO Auto-generated method stub
             return false;
         }
 
         @Override
         public int getVolume()
         {
-            // TODO Auto-generated method stub
             return 0;
         }
 
         @Override
         public boolean isWithinRange(int verticalLimit, int horizontalLimit)
         {
-            // TODO Auto-generated method stub
             return false;
         }
 
         @Override
         public boolean intersects(AreaDescriptor descriptor)
         {
-            // TODO Auto-generated method stub
             return false;
         }
 
         @Override
         public AreaDescriptor offset(BlockPos offset)
         {
-            // TODO Auto-generated method stub
             return new AreaDescriptor.Cross(centerPos.add(offset), size);
         }
 
         @Override
         public AreaDescriptor rotateDescriptor(PlacementSettings settings)
         {
-            // TODO Auto-generated method stub
             return this;
         }
     }

@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.api.livingArmour;
 
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.lang.reflect.Constructor;
@@ -35,7 +36,7 @@ public class LivingArmourHandler
             Constructor<? extends LivingArmourUpgrade> ctor = clazz.getConstructor(int.class);
             if (ctor == null)
             {
-                // TODO: This is bad - add something to the log
+                BloodMagicAPI.getLogger().error("Error adding living armour upgrade {} as it doesn't have a valid constructor.", upgrade.getUniqueIdentifier());
             } else
             {
                 upgradeConstructorMap.put(upgrade.getUniqueIdentifier(), ctor);
