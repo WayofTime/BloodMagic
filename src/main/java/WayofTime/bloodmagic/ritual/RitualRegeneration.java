@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.ritual;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -12,12 +11,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 
 public class RitualRegeneration extends Ritual
@@ -51,6 +50,8 @@ public class RitualRegeneration extends Ritual
         int maxEffects = currentEssence / getRefreshCost();
         int totalEffects = 0;
 
+        int totalCost = 0;
+
         AreaDescriptor damageRange = getBlockRange(HEAL_RANGE);
         AxisAlignedBB range = damageRange.getAABB(pos);
 
@@ -61,18 +62,29 @@ public class RitualRegeneration extends Ritual
             float health = entity.getHealth();
             if (health <= entity.getMaxHealth() - 1)
             {
-                entity.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 50, 0, false, false));
-
-                totalEffects++;
-
-                if (totalEffects >= maxEffects)
+                if (entity.isPotionApplicable(new PotionEffect(MobEffects.REGENERATION)))
                 {
-                    break;
+                    if (entity instanceof EntityPlayer)
+                    {
+                        totalCost += getRefreshCost();
+                    } else
+                    {
+                        totalCost += getRefreshCost() / 10;
+                    }
+
+                    entity.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 50, 0, false, false));
+
+                    totalEffects++;
+
+                    if (totalEffects >= maxEffects)
+                    {
+                        break;
+                    }
                 }
             }
         }
 
-        network.syphon(getRefreshCost() * totalEffects);
+        network.syphon(totalCost);
     }
 
     @Override

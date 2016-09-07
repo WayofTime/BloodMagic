@@ -7,6 +7,7 @@ Version 2.1.0-59
 - Added a temporary texture (finally) for the Inspectoris Scandalum
 - Fixed Specters spawning with the /give command
 - Fixed the sacrifice range of the altar.
+- Fixed the Regeneration ritual so that it works on non-players
 
 ------------------------------------------------------
 Version 2.0.4-58
