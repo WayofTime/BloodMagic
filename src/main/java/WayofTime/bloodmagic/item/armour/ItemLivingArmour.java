@@ -262,7 +262,8 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        stack = NBTHelper.checkNBT(stack);
+        if (!stack.hasTagCompound())
+            return;
 
         if (this == ModItems.livingArmourChest)
         {

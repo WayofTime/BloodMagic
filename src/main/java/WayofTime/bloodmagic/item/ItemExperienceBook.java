@@ -46,10 +46,12 @@ public class ItemExperienceBook extends Item implements IVariantProvider
     {
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.experienceTome"));
 
+        if (!stack.hasTagCompound())
+            return;
+
         double storedExp = getStoredExperience(stack);
 
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.experienceTome.exp", (int) storedExp));
-
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.experienceTome.expLevel", (int) getLevelForExperience(storedExp)));
     }
 

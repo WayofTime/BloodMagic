@@ -56,7 +56,8 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        NBTHelper.checkNBT(stack);
+        if (!stack.hasTagCompound())
+            return;
 
         tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmourPointsUpgrade.desc", 200))));
     }

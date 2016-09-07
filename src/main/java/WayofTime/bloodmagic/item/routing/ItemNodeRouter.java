@@ -41,7 +41,8 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        stack = NBTHelper.checkNBT(stack);
+        if (!stack.hasTagCompound())
+            return;
         NBTTagCompound tag = stack.getTagCompound();
         BlockPos coords = getBlockPos(stack);
 

@@ -77,6 +77,9 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
 
         super.addInformation(stack, player, tooltip, advanced);
 
+        if (!stack.hasTagCompound())
+            return;
+
         stack = NBTHelper.checkNBT(stack);
         NBTTagCompound tag = stack.getTagCompound();
         BlockPos coords = getBlockPos(stack);

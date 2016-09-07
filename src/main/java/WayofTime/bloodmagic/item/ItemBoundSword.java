@@ -97,7 +97,8 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        NBTHelper.checkNBT(stack);
+        if (!stack.hasTagCompound())
+            return;
 
         if (TextHelper.canTranslate("tooltip.BloodMagic.bound.sword.desc"))
             tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.bound.sword.desc"));

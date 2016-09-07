@@ -307,10 +307,10 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        NBTHelper.checkNBT(stack);
+        if (!stack.hasTagCompound())
+            return;
 
         tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.sentientPickaxe.desc"))));
-
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentType." + getCurrentType(stack).getName().toLowerCase()));
     }
 

@@ -33,7 +33,8 @@ public class ItemSigilTeleposition extends ItemSigilBase
     {
         super.addInformation(stack, player, tooltip, advanced);
 
-        stack = NBTHelper.checkNBT(stack);
+        if (!stack.hasTagCompound())
+            return;
         NBTTagCompound tag = stack.getTagCompound();
 
         if (tag != null && stack.getTagCompound().hasKey(Constants.NBT.DIMENSION_ID) && stack.getTagCompound().hasKey(Constants.NBT.X_COORD) && stack.getTagCompound().hasKey(Constants.NBT.Y_COORD) && stack.getTagCompound().hasKey(Constants.NBT.Z_COORD))

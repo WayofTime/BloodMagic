@@ -39,7 +39,8 @@ public class ItemSigilTransposition extends ItemSigilBase
     {
         super.addInformation(stack, player, tooltip, advanced);
 
-        stack = NBTHelper.checkNBT(stack);
+        if (!stack.hasTagCompound())
+            return;
         NBTTagCompound tag = stack.getTagCompound();
 
         if (tag.hasKey(Constants.NBT.CONTAINED_BLOCK_NAME) && tag.hasKey(Constants.NBT.CONTAINED_BLOCK_META))

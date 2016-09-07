@@ -232,6 +232,9 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
+        if (!stack.hasTagCompound())
+            return;
+
         Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(stack));
         if (ritual != null)
         {

@@ -104,6 +104,8 @@ public class ItemUpgradeTome extends Item implements IVariantProvider
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
 //        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmour"))));
+        if (!stack.hasTagCompound())
+            return;
         LivingArmourUpgrade upgrade = LivingUpgrades.getUpgrade(stack);
         if (upgrade != null)
         {

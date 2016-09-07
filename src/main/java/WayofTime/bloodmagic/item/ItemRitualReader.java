@@ -49,7 +49,8 @@ public class ItemRitualReader extends Item implements IVariantProvider
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        NBTHelper.checkNBT(stack);
+        if (!stack.hasTagCompound())
+            return;
 
         EnumRitualReaderState state = this.getState(stack);
         tooltip.add(TextHelper.localizeEffect(tooltipBase + "currentState", TextHelper.localizeEffect(tooltipBase + state.toString().toLowerCase())));

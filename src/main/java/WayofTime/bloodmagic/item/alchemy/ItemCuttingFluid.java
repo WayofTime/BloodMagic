@@ -47,6 +47,8 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
+        if (!stack.hasTagCompound())
+            return;
         int max = getMaxUsesForFluid(stack);
         tooltip.add(TextHelper.localize("tooltip.BloodMagic.cuttingFluidRatio", max - getDamageOfFluid(stack), max));
     }

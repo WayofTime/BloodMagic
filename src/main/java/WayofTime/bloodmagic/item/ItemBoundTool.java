@@ -203,7 +203,8 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
 
         tooltip.add(TextHelper.localize("tooltip.BloodMagic." + (getActivated(stack) ? "activated" : "deactivated")));
 
-        NBTHelper.checkNBT(stack);
+        if (!stack.hasTagCompound())
+            return;
 
         if (!Strings.isNullOrEmpty(getOwnerUUID(stack)))
             tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));

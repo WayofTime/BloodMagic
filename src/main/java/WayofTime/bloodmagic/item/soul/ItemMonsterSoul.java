@@ -51,6 +51,8 @@ public class ItemMonsterSoul extends Item implements IDemonWill, IVariantProvide
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
+        if (!stack.hasTagCompound())
+            return;
         tooltip.add(TextHelper.localize("tooltip.BloodMagic.will", getWill(stack)));
 
         super.addInformation(stack, player, tooltip, advanced);

@@ -51,7 +51,8 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
-        stack = NBTHelper.checkNBT(stack);
+        if (!stack.hasTagCompound())
+            return;
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentTier", stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
     }
 

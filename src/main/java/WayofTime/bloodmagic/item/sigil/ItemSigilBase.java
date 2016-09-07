@@ -51,7 +51,8 @@ public class ItemSigilBase extends ItemSigil implements IVariantProvider
         if (TextHelper.canTranslate(tooltipBase + "desc"))
             tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(tooltipBase + "desc"))));
 
-        NBTHelper.checkNBT(stack);
+        if (!stack.hasTagCompound())
+            return;
 
         if (!Strings.isNullOrEmpty(getOwnerName(stack)))
             tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));

@@ -75,6 +75,9 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.holding.press", KeyBindingBloodMagic.KeyBindings.OPEN_HOLDING.getKey().getDisplayName()));
 
+        if (!stack.hasTagCompound())
+            return;
+
         ItemStack[] inv = getInternalInventory(stack);
 
         if (inv == null)

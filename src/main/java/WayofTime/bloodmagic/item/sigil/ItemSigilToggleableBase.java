@@ -43,8 +43,9 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable implements IMes
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        NBTHelper.checkNBT(stack);
         super.addInformation(stack, player, tooltip, advanced);
+        if (!stack.hasTagCompound())
+            return;
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic." + (getActivated(stack) ? "activated" : "deactivated")));
 
         if (!Strings.isNullOrEmpty(getOwnerName(stack)))
