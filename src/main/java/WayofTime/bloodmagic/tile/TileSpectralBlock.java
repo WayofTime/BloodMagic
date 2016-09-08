@@ -2,22 +2,15 @@ package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.tile.base.TileBase;
 import WayofTime.bloodmagic.tile.base.TileTicking;
 import com.google.common.base.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileSpectralBlock extends TileTicking
 {

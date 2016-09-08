@@ -55,7 +55,6 @@ public class TileBloodTank extends TileBase implements IFluidHandler
     @Override
     public void deserialize(NBTTagCompound tagCompound)
     {
-        super.readFromNBT(tagCompound);
         tank.readFromNBT(tagCompound.getCompoundTag("tank"));
         capacity = tagCompound.getInteger("capacity");
     }

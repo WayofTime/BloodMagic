@@ -20,8 +20,6 @@ public class TileDimensionalPortal extends TileBase
 
     public void deserialize(NBTTagCompound tagCompound)
     {
-        super.readFromNBT(tagCompound);
-
         portalID = tagCompound.getString(RitualPortal.PORTAL_ID_TAG);
 
         masterStoneX = tagCompound.getInteger("masterStoneX");

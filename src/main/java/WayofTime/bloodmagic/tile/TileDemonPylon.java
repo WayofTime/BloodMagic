@@ -49,8 +49,6 @@ public class TileDemonPylon extends TileTicking implements IDemonWillConduit
     @Override
     public void deserialize(NBTTagCompound tag)
     {
-        super.readFromNBT(tag);
-
         holder.readFromNBT(tag, "Will");
     }
 

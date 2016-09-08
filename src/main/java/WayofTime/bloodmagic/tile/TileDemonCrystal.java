@@ -173,8 +173,6 @@ public class TileDemonCrystal extends TileTicking
     @Override
     public void deserialize(NBTTagCompound tag)
     {
-        super.readFromNBT(tag);
-
         holder.readFromNBT(tag, "Will");
         crystalCount = tag.getInteger("crystalCount");
         placement = EnumFacing.getFront(tag.getInteger("placement"));
