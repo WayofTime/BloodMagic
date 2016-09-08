@@ -48,7 +48,7 @@ public class TileInventory extends TileBase implements IInventory
     @Override
     public void deserialize(NBTTagCompound tagCompound)
     {
-        super.readFromNBT(tagCompound);
+        super.deserialize(tagCompound);
         NBTTagList tags = tagCompound.getTagList("Items", 10);
         inventory = new ItemStack[getSizeInventory()];
 
@@ -70,7 +70,7 @@ public class TileInventory extends TileBase implements IInventory
     @Override
     public NBTTagCompound serialize(NBTTagCompound tagCompound)
     {
-        super.writeToNBT(tagCompound);
+        super.serialize(tagCompound);
         NBTTagList tags = new NBTTagList();
 
         for (int i = 0; i < inventory.length; i++)
