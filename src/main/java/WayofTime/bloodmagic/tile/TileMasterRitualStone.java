@@ -35,6 +35,8 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.ChatUtil;
 
 import com.google.common.base.Strings;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Getter
 @NoArgsConstructor
@@ -186,10 +188,12 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                             this.owner = crystalOwner;
                             this.currentRitual = ritual;
 
+                            getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
                             return true;
                         }
                     }
 
+                    getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
                     return true;
                 }
             }
@@ -238,6 +242,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                 this.active = false;
                 this.activeTime = 0;
             }
+            getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
         }
     }
 
@@ -304,6 +309,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet)
     {
         super.onDataPacket(net, packet);
@@ -314,6 +320,12 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     public NBTTagCompound getUpdateTag()
     {
         return writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
+    public void handleUpdateTag(NBTTagCompound tag)
+    {
+        readFromNBT(tag);
     }
 
     @Override

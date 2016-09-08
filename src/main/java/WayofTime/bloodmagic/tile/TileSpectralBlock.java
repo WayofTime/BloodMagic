@@ -14,6 +14,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileSpectralBlock extends TileEntity implements ITickable
 {
@@ -53,6 +55,7 @@ public class TileSpectralBlock extends TileEntity implements ITickable
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
     {
         super.onDataPacket(net, pkt);
@@ -63,6 +66,12 @@ public class TileSpectralBlock extends TileEntity implements ITickable
     public NBTTagCompound getUpdateTag()
     {
         return writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
+    public void handleUpdateTag(NBTTagCompound tag)
+    {
+        readFromNBT(tag);
     }
 
     @Override

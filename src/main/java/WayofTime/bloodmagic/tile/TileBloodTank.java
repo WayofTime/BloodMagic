@@ -6,6 +6,8 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileBloodTank extends TileEntity implements IFluidHandler
 {
@@ -81,6 +83,7 @@ public class TileBloodTank extends TileEntity implements IFluidHandler
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
     {
         super.onDataPacket(net, pkt);
@@ -91,5 +94,11 @@ public class TileBloodTank extends TileEntity implements IFluidHandler
     public NBTTagCompound getUpdateTag()
     {
         return writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
+    public void handleUpdateTag(NBTTagCompound tag)
+    {
+        readFromNBT(tag);
     }
 }

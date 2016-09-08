@@ -19,6 +19,8 @@ import WayofTime.bloodmagic.api.soul.DemonWillHolder;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.block.BlockDemonCrystal;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileDemonCrystal extends TileEntity implements ITickable
 {
@@ -214,6 +216,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
     {
         super.onDataPacket(net, pkt);
@@ -225,5 +228,11 @@ public class TileDemonCrystal extends TileEntity implements ITickable
     public NBTTagCompound getUpdateTag()
     {
         return writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
+    public void handleUpdateTag(NBTTagCompound tag)
+    {
+        readFromNBT(tag);
     }
 }

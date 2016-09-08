@@ -17,6 +17,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -102,6 +104,7 @@ public class TileInventory extends TileEntity implements IInventory
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
     {
         super.onDataPacket(net, pkt);
@@ -112,6 +115,12 @@ public class TileInventory extends TileEntity implements IInventory
     public NBTTagCompound getUpdateTag()
     {
         return writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
+    public void handleUpdateTag(NBTTagCompound tag)
+    {
+        readFromNBT(tag);
     }
 
     @Override
