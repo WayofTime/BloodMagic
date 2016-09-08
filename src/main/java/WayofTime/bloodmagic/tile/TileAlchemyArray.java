@@ -40,9 +40,9 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound)
+    public void deserialize(NBTTagCompound tagCompound)
     {
-        super.readFromNBT(tagCompound);
+        super.deserialize(tagCompound);
         this.isActive = tagCompound.getBoolean("isActive");
         this.activeCounter = tagCompound.getInteger("activeCounter");
         this.key = tagCompound.getString("key");
@@ -57,9 +57,9 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
+    public NBTTagCompound serialize(NBTTagCompound tagCompound)
     {
-        super.writeToNBT(tagCompound);
+        super.serialize(tagCompound);
         tagCompound.setBoolean("isActive", isActive);
         tagCompound.setInteger("activeCounter", activeCounter);
         tagCompound.setString("key", "".equals(key) ? "empty" : key);
@@ -152,20 +152,5 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
         }
 
         return false;
-    }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
-        writeToNBT(nbttagcompound);
-        return new SPacketUpdateTileEntity(pos, this.getBlockMetadata(), nbttagcompound);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet)
-    {
-        super.onDataPacket(net, packet);
-        readFromNBT(packet.getNbtCompound());
     }
 }

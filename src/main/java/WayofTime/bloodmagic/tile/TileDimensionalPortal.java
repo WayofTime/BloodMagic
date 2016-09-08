@@ -1,18 +1,12 @@
 package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.ritual.RitualPortal;
+import WayofTime.bloodmagic.tile.base.TileBase;
 import com.google.common.base.Strings;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileDimensionalPortal extends TileEntity
+public class TileDimensionalPortal extends TileBase
 {
     public String portalID = "";
     public int masterStoneX;
@@ -24,7 +18,7 @@ public class TileDimensionalPortal extends TileEntity
         ;
     }
 
-    public void readFromNBT(NBTTagCompound tagCompound)
+    public void deserialize(NBTTagCompound tagCompound)
     {
         super.readFromNBT(tagCompound);
 
@@ -35,10 +29,8 @@ public class TileDimensionalPortal extends TileEntity
         masterStoneZ = tagCompound.getInteger("masterStoneZ");
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
+    public NBTTagCompound serialize(NBTTagCompound tagCompound)
     {
-        super.writeToNBT(tagCompound);
-
         tagCompound.setString(RitualPortal.PORTAL_ID_TAG, Strings.isNullOrEmpty(portalID) ? "" : portalID);
 
         tagCompound.setInteger("masterStoneX", masterStoneX);
@@ -57,39 +49,5 @@ public class TileDimensionalPortal extends TileEntity
         this.masterStoneX = blockPos.getX();
         this.masterStoneY = blockPos.getY();
         this.masterStoneZ = blockPos.getZ();
-    }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        NBTTagCompound nbt = new NBTTagCompound();
-        writeToNBT(nbt);
-        return new SPacketUpdateTileEntity(getPos(), -999, nbt);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-    {
-        super.onDataPacket(net, pkt);
-        readFromNBT(pkt.getNbtCompound());
-    }
-
-    @Override
-    public NBTTagCompound getUpdateTag()
-    {
-        return writeToNBT(new NBTTagCompound());
-    }
-
-    @Override
-    public void handleUpdateTag(NBTTagCompound tag)
-    {
-        readFromNBT(tag);
-    }
-
-    @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState)
-    {
-        return oldState.getBlock() != newState.getBlock();
     }
 }

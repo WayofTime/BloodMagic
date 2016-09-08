@@ -41,9 +41,9 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     private List<BlockPos> connectionList = new LinkedList<BlockPos>();
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound serialize(NBTTagCompound tag)
     {
-        super.writeToNBT(tag);
+        super.deserialize(tag);
         NBTTagCompound masterTag = new NBTTagCompound();
         masterTag.setInteger(Constants.NBT.X_COORD, masterPos.getX());
         masterTag.setInteger(Constants.NBT.Y_COORD, masterPos.getY());
@@ -64,9 +64,9 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
+    public void deserialize(NBTTagCompound tag)
     {
-        super.readFromNBT(tag);
+        super.deserialize(tag);
         connectionList.clear();
         NBTTagCompound masterTag = tag.getCompoundTag(Constants.NBT.ROUTING_MASTER);
         masterPos = new BlockPos(masterTag.getInteger(Constants.NBT.X_COORD), masterTag.getInteger(Constants.NBT.Y_COORD), masterTag.getInteger(Constants.NBT.Z_COORD));

@@ -33,17 +33,17 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
+    public void deserialize(NBTTagCompound tag)
     {
-        super.readFromNBT(tag);
+        super.deserialize(tag);
 
         burnTime = tag.getInteger(Constants.NBT.SOUL_FORGE_BURN);
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound serialize(NBTTagCompound tag)
     {
-        super.writeToNBT(tag);
+        super.serialize(tag);
 
         tag.setInteger(Constants.NBT.SOUL_FORGE_BURN, burnTime);
         return tag;

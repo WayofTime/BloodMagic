@@ -35,16 +35,16 @@ public class TileTeleposer extends TileInventory implements ITickable
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound)
+    public void deserialize(NBTTagCompound tagCompound)
     {
-        super.readFromNBT(tagCompound);
+        super.deserialize(tagCompound);
         previousInput = tagCompound.getInteger(Constants.NBT.PREVIOUS_INPUT);
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
+    public NBTTagCompound serialize(NBTTagCompound tagCompound)
     {
-        super.writeToNBT(tagCompound);
+        super.serialize(tagCompound);
         tagCompound.setInteger(Constants.NBT.PREVIOUS_INPUT, previousInput);
         return tagCompound;
     }

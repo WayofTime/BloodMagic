@@ -5,19 +5,14 @@ import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWillConduit;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.registry.ModBlocks;
-import net.minecraft.block.state.IBlockState;
+import WayofTime.bloodmagic.tile.base.TileBase;
+import WayofTime.bloodmagic.tile.base.TileTicking;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileDemonCrystallizer extends TileEntity implements ITickable, IDemonWillConduit
+public class TileDemonCrystallizer extends TileTicking implements IDemonWillConduit
 {
     //The whole purpose of this block is to grow a crystal initially. The acceleration and crystal growing is up to the crystal itself afterwards.
     public DemonWillHolder holder = new DemonWillHolder();
@@ -34,7 +29,7 @@ public class TileDemonCrystallizer extends TileEntity implements ITickable, IDem
     }
 
     @Override
-    public void update()
+    public void onUpdate()
     {
         if (worldObj.isRemote)
         {
@@ -93,7 +88,7 @@ public class TileDemonCrystallizer extends TileEntity implements ITickable, IDem
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
+    public void deserialize(NBTTagCompound tag)
     {
         super.readFromNBT(tag);
 
@@ -102,7 +97,7 @@ public class TileDemonCrystallizer extends TileEntity implements ITickable, IDem
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound serialize(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
 
@@ -174,39 +169,5 @@ public class TileDemonCrystallizer extends TileEntity implements ITickable, IDem
     public double getCurrentWill(EnumDemonWillType type)
     {
         return holder.getWill(type);
-    }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        NBTTagCompound nbt = new NBTTagCompound();
-        writeToNBT(nbt);
-        return new SPacketUpdateTileEntity(getPos(), -999, nbt);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-    {
-        super.onDataPacket(net, pkt);
-        readFromNBT(pkt.getNbtCompound());
-    }
-
-    @Override
-    public NBTTagCompound getUpdateTag()
-    {
-        return writeToNBT(new NBTTagCompound());
-    }
-
-    @Override
-    public void handleUpdateTag(NBTTagCompound tag)
-    {
-        readFromNBT(tag);
-    }
-
-    @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState)
-    {
-        return oldState.getBlock() != newState.getBlock();
     }
 }

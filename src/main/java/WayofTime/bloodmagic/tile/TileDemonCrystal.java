@@ -1,28 +1,20 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.tile.base.TileTicking;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.soul.DemonWillHolder;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.block.BlockDemonCrystal;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileDemonCrystal extends TileEntity implements ITickable
+public class TileDemonCrystal extends TileTicking
 {
     public DemonWillHolder holder = new DemonWillHolder();
     public final int maxWill = 100;
@@ -47,7 +39,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable
     }
 
     @Override
-    public void update()
+    public void onUpdate()
     {
         if (worldObj.isRemote)
         {
@@ -179,7 +171,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
+    public void deserialize(NBTTagCompound tag)
     {
         super.readFromNBT(tag);
 
@@ -190,49 +182,12 @@ public class TileDemonCrystal extends TileEntity implements ITickable
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound serialize(NBTTagCompound tag)
     {
-        super.writeToNBT(tag);
-
         holder.writeToNBT(tag, "Will");
         tag.setInteger("crystalCount", crystalCount);
         tag.setInteger("placement", placement.getIndex());
         tag.setDouble("progress", progressToNextCrystal);
         return tag;
-    }
-
-    @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState)
-    {
-        return oldState.getBlock() != newState.getBlock();
-    }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        NBTTagCompound nbt = new NBTTagCompound();
-        writeToNBT(nbt);
-        return new SPacketUpdateTileEntity(getPos(), -999, nbt);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-    {
-        super.onDataPacket(net, pkt);
-        readFromNBT(pkt.getNbtCompound());
-        worldObj.markBlockRangeForRenderUpdate(getPos(), getPos());
-    }
-
-    @Override
-    public NBTTagCompound getUpdateTag()
-    {
-        return writeToNBT(new NBTTagCompound());
-    }
-
-    @Override
-    public void handleUpdateTag(NBTTagCompound tag)
-    {
-        readFromNBT(tag);
     }
 }

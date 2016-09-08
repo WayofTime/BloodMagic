@@ -85,9 +85,9 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
+    public void deserialize(NBTTagCompound tag)
     {
-        super.readFromNBT(tag);
+        super.deserialize(tag);
 
         isSlave = tag.getBoolean("isSlave");
         direction = EnumFacing.getFront(tag.getInteger(Constants.NBT.DIRECTION));
@@ -105,9 +105,9 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound serialize(NBTTagCompound tag)
     {
-        super.writeToNBT(tag);
+        super.serialize(tag);
 
         tag.setBoolean("isSlave", isSlave);
         tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());

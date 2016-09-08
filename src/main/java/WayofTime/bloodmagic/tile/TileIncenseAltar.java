@@ -74,17 +74,17 @@ public class TileIncenseAltar extends TileInventory implements ITickable
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
+    public void deserialize(NBTTagCompound tag)
     {
-        super.readFromNBT(tag);
+        super.deserialize(tag);
         tranquility = tag.getDouble("tranquility");
         incenseAddition = tag.getDouble("incenseAddition");
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound serialize(NBTTagCompound tag)
     {
-        super.writeToNBT(tag);
+        super.serialize(tag);
         tag.setDouble("tranquility", tranquility);
         tag.setDouble("incenseAddition", incenseAddition);
         return tag;

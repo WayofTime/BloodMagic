@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.tile;
 
-import net.minecraft.block.state.IBlockState;
+import WayofTime.bloodmagic.tile.base.TileBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -8,24 +8,17 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class TileInventory extends TileEntity implements IInventory
+public class TileInventory extends TileBase implements IInventory
 {
     protected int[] syncedSlots = new int[0];
     protected ItemStack[] inventory;
@@ -53,7 +46,7 @@ public class TileInventory extends TileEntity implements IInventory
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound)
+    public void deserialize(NBTTagCompound tagCompound)
     {
         super.readFromNBT(tagCompound);
         NBTTagList tags = tagCompound.getTagList("Items", 10);
@@ -75,7 +68,7 @@ public class TileInventory extends TileEntity implements IInventory
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
+    public NBTTagCompound serialize(NBTTagCompound tagCompound)
     {
         super.writeToNBT(tagCompound);
         NBTTagList tags = new NBTTagList();
@@ -93,40 +86,6 @@ public class TileInventory extends TileEntity implements IInventory
 
         tagCompound.setTag("Items", tags);
         return tagCompound;
-    }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        NBTTagCompound nbt = new NBTTagCompound();
-        writeToNBT(nbt);
-        return new SPacketUpdateTileEntity(getPos(), -999, nbt);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-    {
-        super.onDataPacket(net, pkt);
-        readFromNBT(pkt.getNbtCompound());
-    }
-
-    @Override
-    public NBTTagCompound getUpdateTag()
-    {
-        return writeToNBT(new NBTTagCompound());
-    }
-
-    @Override
-    public void handleUpdateTag(NBTTagCompound tag)
-    {
-        readFromNBT(tag);
-    }
-
-    @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState)
-    {
-        return oldState.getBlock() != newState.getBlock();
     }
 
     public void dropItems()

@@ -112,9 +112,9 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
+    public void deserialize(NBTTagCompound tag)
     {
-        super.readFromNBT(tag);
+        super.deserialize(tag);
 
         willMap.clear();
 
@@ -129,9 +129,9 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound serialize(NBTTagCompound tag)
     {
-        super.writeToNBT(tag);
+        super.serialize(tag);
 
         for (Entry<EnumDemonWillType, Double> entry : willMap.entrySet())
         {

@@ -282,9 +282,9 @@ public class TileMimic extends TileInventory implements ITickable
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
+    public void deserialize(NBTTagCompound tag)
     {
-        super.readFromNBT(tag);
+        super.deserialize(tag);
 
         dropItemsOnBreak = tag.getBoolean("dropItemsOnBreak");
         tileTag = tag.getCompoundTag("tileTag");
@@ -296,9 +296,9 @@ public class TileMimic extends TileInventory implements ITickable
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound serialize(NBTTagCompound tag)
     {
-        super.writeToNBT(tag);
+        super.serialize(tag);
 
         tag.setBoolean("dropItemsOnBreak", dropItemsOnBreak);
         tag.setTag("tileTag", tileTag);

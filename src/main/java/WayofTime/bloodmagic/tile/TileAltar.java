@@ -23,9 +23,9 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound)
+    public void deserialize(NBTTagCompound tagCompound)
     {
-        super.readFromNBT(tagCompound);
+        super.deserialize(tagCompound);
 
         NBTTagCompound altarTag = tagCompound.getCompoundTag("bloodAltar");
 
@@ -33,9 +33,9 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
+    public NBTTagCompound serialize(NBTTagCompound tagCompound)
     {
-        super.writeToNBT(tagCompound);
+        super.serialize(tagCompound);
 
         NBTTagCompound altarTag = new NBTTagCompound();
         this.bloodAltar.writeToNBT(altarTag);

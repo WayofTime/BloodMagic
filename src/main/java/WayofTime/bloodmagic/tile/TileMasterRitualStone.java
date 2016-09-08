@@ -3,17 +3,14 @@ package WayofTime.bloodmagic.tile;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.tile.base.TileTicking;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -35,12 +32,10 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.ChatUtil;
 
 import com.google.common.base.Strings;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Getter
 @NoArgsConstructor
-public class TileMasterRitualStone extends TileEntity implements IMasterRitualStone, ITickable
+public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone
 {
     private String owner;
     private boolean active;
@@ -54,7 +49,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     private List<EnumDemonWillType> currentActiveWillConfig = new ArrayList<EnumDemonWillType>();
 
     @Override
-    public void update()
+    public void onUpdate()
     {
         if (worldObj.isRemote)
             return;
@@ -86,9 +81,8 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
+    public void deserialize(NBTTagCompound tag)
     {
-        super.readFromNBT(tag);
         owner = tag.getString(Constants.NBT.OWNER_UUID);
         currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
         if (currentRitual != null)
@@ -114,9 +108,8 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound serialize(NBTTagCompound tag)
     {
-        super.writeToNBT(tag);
         String ritualId = RitualRegistry.getIdForRitual(getCurrentRitual());
         tag.setString(Constants.NBT.OWNER_UUID, Strings.isNullOrEmpty(getOwner()) ? "" : getOwner());
         tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
@@ -188,12 +181,12 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                             this.owner = crystalOwner;
                             this.currentRitual = ritual;
 
-                            getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
+                            notifyUpdate();
                             return true;
                         }
                     }
 
-                    getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
+                    notifyUpdate();
                     return true;
                 }
             }
@@ -242,7 +235,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                 this.active = false;
                 this.activeTime = 0;
             }
-            getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
+            notifyUpdate();
         }
     }
 
@@ -298,34 +291,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     public BlockPos getPos()
     {
         return super.getPos();
-    }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
-        writeToNBT(nbttagcompound);
-        return new SPacketUpdateTileEntity(pos, this.getBlockMetadata(), nbttagcompound);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet)
-    {
-        super.onDataPacket(net, packet);
-        readFromNBT(packet.getNbtCompound());
-    }
-
-    @Override
-    public NBTTagCompound getUpdateTag()
-    {
-        return writeToNBT(new NBTTagCompound());
-    }
-
-    @Override
-    public void handleUpdateTag(NBTTagCompound tag)
-    {
-        readFromNBT(tag);
     }
 
     @Override

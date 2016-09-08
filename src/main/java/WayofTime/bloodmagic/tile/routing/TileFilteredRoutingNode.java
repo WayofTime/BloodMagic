@@ -47,9 +47,9 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
+    public void deserialize(NBTTagCompound tag)
     {
-        super.readFromNBT(tag);
+        super.deserialize(tag);
         currentActiveSlot = tag.getInteger("currentSlot");
         priorities = tag.getIntArray(Constants.NBT.ROUTING_PRIORITY);
         if (priorities.length != 6)
@@ -83,9 +83,9 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound serialize(NBTTagCompound tag)
     {
-        super.writeToNBT(tag);
+        super.serialize(tag);
         tag.setInteger("currentSlot", currentActiveSlot);
         tag.setIntArray(Constants.NBT.ROUTING_PRIORITY, priorities);
         tag.setBoolean("updated", true);

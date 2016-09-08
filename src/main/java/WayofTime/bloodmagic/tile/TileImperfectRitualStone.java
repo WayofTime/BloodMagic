@@ -5,49 +5,16 @@ import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.tile.base.TileBase;
 import lombok.NoArgsConstructor;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 @NoArgsConstructor
-public class TileImperfectRitualStone extends TileEntity implements IImperfectRitualStone
+public class TileImperfectRitualStone extends TileBase implements IImperfectRitualStone
 {
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
-        writeToNBT(nbttagcompound);
-        return new SPacketUpdateTileEntity(pos, this.getBlockMetadata(), nbttagcompound);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet)
-    {
-        super.onDataPacket(net, packet);
-        readFromNBT(packet.getNbtCompound());
-    }
-
-    @Override
-    public NBTTagCompound getUpdateTag()
-    {
-        return writeToNBT(new NBTTagCompound());
-    }
-
-    @Override
-    public void handleUpdateTag(NBTTagCompound tag)
-    {
-        readFromNBT(tag);
-    }
-
     // IImperfectRitualStone
 
     @Override

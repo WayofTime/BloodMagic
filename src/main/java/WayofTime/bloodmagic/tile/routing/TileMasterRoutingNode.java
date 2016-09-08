@@ -155,10 +155,9 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound serialize(NBTTagCompound tag)
     {
-        super.writeToNBT(tag);
-
+        super.serialize(tag);
         NBTTagList tags = new NBTTagList();
         for (BlockPos pos : generalNodeList)
         {
@@ -195,9 +194,9 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
+    public void deserialize(NBTTagCompound tag)
     {
-        super.readFromNBT(tag);
+        super.deserialize(tag);
 
         NBTTagList tags = tag.getTagList(Constants.NBT.ROUTING_MASTER_GENERAL, 10);
         for (int i = 0; i < tags.tagCount(); i++)

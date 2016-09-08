@@ -2,6 +2,8 @@ package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.tile.base.TileBase;
+import WayofTime.bloodmagic.tile.base.TileTicking;
 import com.google.common.base.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -17,7 +19,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileSpectralBlock extends TileEntity implements ITickable
+public class TileSpectralBlock extends TileTicking
 {
     private int ticksRemaining;
     private String containedBlockName;
@@ -28,18 +30,16 @@ public class TileSpectralBlock extends TileEntity implements ITickable
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound)
+    public void deserialize(NBTTagCompound tagCompound)
     {
-        super.readFromNBT(tagCompound);
         ticksRemaining = tagCompound.getInteger(Constants.NBT.TICKS_REMAINING);
         containedBlockName = tagCompound.getString(Constants.NBT.CONTAINED_BLOCK_NAME);
         containedBlockMeta = tagCompound.getInteger(Constants.NBT.CONTAINED_BLOCK_META);
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
+    public NBTTagCompound serialize(NBTTagCompound tagCompound)
     {
-        super.writeToNBT(tagCompound);
         tagCompound.setInteger(Constants.NBT.TICKS_REMAINING, ticksRemaining);
         tagCompound.setString(Constants.NBT.CONTAINED_BLOCK_NAME, Strings.isNullOrEmpty(containedBlockName) ? "" : containedBlockName);
         tagCompound.setInteger(Constants.NBT.CONTAINED_BLOCK_META, containedBlockMeta);
@@ -47,35 +47,7 @@ public class TileSpectralBlock extends TileEntity implements ITickable
     }
 
     @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        NBTTagCompound nbt = new NBTTagCompound();
-        writeToNBT(nbt);
-        return new SPacketUpdateTileEntity(getPos(), -999, nbt);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-    {
-        super.onDataPacket(net, pkt);
-        readFromNBT(pkt.getNbtCompound());
-    }
-
-    @Override
-    public NBTTagCompound getUpdateTag()
-    {
-        return writeToNBT(new NBTTagCompound());
-    }
-
-    @Override
-    public void handleUpdateTag(NBTTagCompound tag)
-    {
-        readFromNBT(tag);
-    }
-
-    @Override
-    public void update()
+    public void onUpdate()
     {
         if (worldObj.isRemote)
         {
