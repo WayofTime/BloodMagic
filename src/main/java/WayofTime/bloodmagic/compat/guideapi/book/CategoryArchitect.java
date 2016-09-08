@@ -26,7 +26,6 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.IPage;
 import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
-import amerifrance.guideapi.page.PageIRecipe;
 import amerifrance.guideapi.page.PageText;
 
 public class CategoryArchitect
@@ -46,7 +45,7 @@ public class CategoryArchitect
         IRecipe altarRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.altar));
         if (altarRecipe != null)
         {
-            altarPages.add(new PageIRecipe(altarRecipe));
+            altarPages.add(BookUtils.getPageForRecipe(altarRecipe));
         }
 
         altarPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodaltar" + ".info.1"), 370));
@@ -54,7 +53,7 @@ public class CategoryArchitect
         IRecipe daggerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModItems.sacrificialDagger));
         if (daggerRecipe != null)
         {
-            altarPages.add(new PageIRecipe(daggerRecipe));
+            altarPages.add(BookUtils.getPageForRecipe(daggerRecipe));
         }
 
         altarPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodaltar" + ".info.2"), 370));
@@ -655,6 +654,17 @@ public class CategoryArchitect
 
         bridgePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bridge" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "bridge"), new EntryText(bridgePages, TextHelper.localize(keyBase + "bridge"), true));
+
+        List<IPage> mimicPages = new ArrayList<IPage>();
+
+        IRecipe mimicRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.mimic, 1, 1));
+        if (mimicRecipe != null)
+        {
+            mimicPages.add(BookUtils.getPageForRecipe(mimicRecipe));
+        }
+
+        mimicPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "mimic" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "mimic"), new EntryText(mimicPages, TextHelper.localize(keyBase + "mimic"), true));
 
         for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
         {

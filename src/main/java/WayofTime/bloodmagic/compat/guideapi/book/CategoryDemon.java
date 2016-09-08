@@ -11,6 +11,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
+import WayofTime.bloodmagic.compat.guideapi.BookUtils;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
 import WayofTime.bloodmagic.compat.guideapi.page.PageTartaricForgeRecipe;
 import WayofTime.bloodmagic.registry.ModBlocks;
@@ -20,7 +21,6 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.IPage;
 import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
-import amerifrance.guideapi.page.PageIRecipe;
 import amerifrance.guideapi.page.PageText;
 
 public class CategoryDemon
@@ -42,7 +42,7 @@ public class CategoryDemon
         IRecipe snareRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModItems.soulSnare));
         if (snareRecipe != null)
         {
-            snarePages.add(new PageIRecipe(snareRecipe));
+            snarePages.add(BookUtils.getPageForRecipe(snareRecipe));
         }
 
         snarePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "snare" + ".info.2"), 370));
@@ -54,7 +54,7 @@ public class CategoryDemon
         IRecipe forgeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.soulForge));
         if (forgeRecipe != null)
         {
-            forgePages.add(new PageIRecipe(forgeRecipe));
+            forgePages.add(BookUtils.getPageForRecipe(forgeRecipe));
         }
 
         forgePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "forge" + ".info.2"), 370));
