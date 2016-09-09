@@ -27,18 +27,18 @@ public class MeteorHolder
 
     public int maxWeight = 1000;
 
-    public ItemStack getKeyStack()
+    public ItemStack getKeyStack(int meta)
     {
         Item item = Utils.getItem(resourceKey);
         if (item != null)
         {
-            return new ItemStack(item);
+            return new ItemStack(item, 1, meta);
         } else
         {
             Block block = Utils.getBlock(resourceKey);
             if (block != null)
             {
-                return new ItemStack(block);
+                return new ItemStack(block, 1, meta);
             }
         }
 

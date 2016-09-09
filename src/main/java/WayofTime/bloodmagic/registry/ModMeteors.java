@@ -54,7 +54,7 @@ public class ModMeteors
             MeteorHolder holder = gson.fromJson(properString, MeteorHolder.class);
             if (holder != null)
             {
-                MeteorRegistry.registerMeteor(holder.getKeyStack(), holder);
+                MeteorRegistry.registerMeteor(holder.getKeyStack(holder.metaKey), holder);
             }
         }
     }
