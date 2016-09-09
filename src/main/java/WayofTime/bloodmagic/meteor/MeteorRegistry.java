@@ -6,9 +6,11 @@ import java.util.Map;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.ItemStackWrapper;
+import WayofTime.bloodmagic.util.Utils;
 
 public class MeteorRegistry
 {
@@ -25,7 +27,9 @@ public class MeteorRegistry
 
     public static void registerMeteor(ItemStack stack, List<MeteorComponent> componentList, float explosionStrength, int radius, int maxWeight)
     {
-        MeteorHolder holder = new MeteorHolder(componentList, explosionStrength, radius, maxWeight);
+        ResourceLocation resource = Utils.getResourceForItem(stack);
+
+        MeteorHolder holder = new MeteorHolder(resource, stack.getItemDamage(), componentList, explosionStrength, radius, maxWeight);
 
         registerMeteor(stack, holder);
     }

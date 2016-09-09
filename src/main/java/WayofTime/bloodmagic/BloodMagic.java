@@ -11,7 +11,12 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.event.FMLModIdMappingEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
@@ -27,6 +32,7 @@ import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModCompatibility;
 import WayofTime.bloodmagic.registry.ModEntities;
 import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.ModMeteors;
 import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.registry.ModRecipes;
 import WayofTime.bloodmagic.registry.ModRituals;
@@ -121,6 +127,7 @@ public class BloodMagic
         ModRecipes.init();
         ModRituals.initRituals();
         ModRituals.initImperfectRituals();
+        ModMeteors.init();
         ModArmourTrackers.init();
         ModCompatibility.loadCompat(ICompatibility.InitializationPhase.INIT);
         NetworkRegistry.INSTANCE.registerGuiHandler(BloodMagic.instance, new GuiHandler());
@@ -138,7 +145,8 @@ public class BloodMagic
     }
 
     @Mod.EventHandler
-    public void modMapping(FMLModIdMappingEvent event) {
+    public void modMapping(FMLModIdMappingEvent event)
+    {
         ModCompatibility.loadCompat(ICompatibility.InitializationPhase.MAPPING);
     }
 

@@ -1,21 +1,27 @@
 package WayofTime.bloodmagic;
 
-import WayofTime.bloodmagic.annot.Handler;
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.util.Utils;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.io.File;
-import java.util.*;
+import WayofTime.bloodmagic.annot.Handler;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.registry.ModMeteors;
+import WayofTime.bloodmagic.util.Utils;
 
 @Handler
 public class ConfigHandler
@@ -159,7 +165,17 @@ public class ConfigHandler
 
     public static void syncConfig()
     {
+        boolean configVersionChanged = false;
+
         String category;
+
+        category = "Version";
+        Property prop = config.get(category, "Config Version", Constants.Mod.VERSION);
+        if (!prop.getString().equals(Constants.Mod.VERSION))
+        {
+            configVersionChanged = true;
+            prop.setValue(Constants.Mod.VERSION);
+        }
 
         category = "Item/Block Blacklisting";
         config.addCustomCategoryComment(category, "Allows disabling of specific Blocks/Items.\nNote that using this may result in crashes. Use is not supported.");
@@ -302,6 +318,22 @@ public class ConfigHandler
         wailaAltarDisplayMode = config.getInt("wailaAltarDisplayMode", category + ".waila", 1, 0, 2, "The mode for the Waila display on Blood Altars.\n0 - Always display information\n1 - Only display when Divination/Seer sigil is in hand.\n2 - Only display when Divination/Seer sigil is in inventory");
         thaumcraftGogglesUpgrade = config.getBoolean("thaumcraftGogglesUpgrade", category + ".thaumcraft", true, "Allows the Living Helmet to be upgraded with Goggles of Revealing in an Anvil.");
         ignoreCompressionSpamAddedByCompression = config.getBoolean("ignoreCompressionSpamAddedByCompression", category + ".compression", true, "Compression decided to add a storage recipe for every item and block in the game. This will make the Sigil of Compression ignore those recipes so your game will actually load in a decent amount of time.");
+
+        category = "Meteors";
+        config.addCustomCategoryComment(category, "Meteor settings");
+
+        String[] defaultMeteors = ModMeteors.getDefaultMeteors();
+        boolean resyncMeteorOnVersionChange = config.getBoolean("resyncOnVersionChange", category, true, "");
+        Property meteorsProp = config.get(category, "MeteorList", defaultMeteors);
+        meteorsProp.setComment("These are meteors. Huzzah!");
+        if (resyncMeteorOnVersionChange && configVersionChanged)
+        {
+            meteorsProp.set(defaultMeteors);
+            ModMeteors.meteors = defaultMeteors;
+        } else
+        {
+            ModMeteors.meteors = meteorsProp.getStringList();
+        }
 
         config.save();
     }

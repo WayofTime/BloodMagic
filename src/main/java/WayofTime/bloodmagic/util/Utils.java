@@ -25,12 +25,14 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -65,6 +67,32 @@ import com.google.common.collect.Iterables;
 
 public class Utils
 {
+    public static Item getItem(ResourceLocation resource)
+    {
+        return Item.REGISTRY.getObject(resource);
+    }
+
+    public static Block getBlock(ResourceLocation resource)
+    {
+        return Block.REGISTRY.getObject(resource);
+    }
+
+    public static ResourceLocation getResourceForItem(ItemStack stack)
+    {
+        if (stack != null)
+        {
+            if (stack.getItem() instanceof ItemBlock)
+            {
+                return Block.REGISTRY.getNameForObject(((ItemBlock) stack.getItem()).getBlock());
+            } else
+            {
+                return Item.REGISTRY.getNameForObject(stack.getItem());
+            }
+        }
+
+        return null;
+    }
+
     public static boolean canPlayerSeeDemonWill(EntityPlayer player)
     {
         ItemStack[] mainInventory = player.inventory.mainInventory;
