@@ -68,7 +68,7 @@ public class BlockRitualStone extends BlockString implements IRitualStone, IVari
     public void setRuneType(World world, BlockPos pos, EnumRuneType runeType)
     {
         int meta = runeType.ordinal();
-        IBlockState newState = ModBlocks.ritualStone.getStateFromMeta(meta);
+        IBlockState newState = ModBlocks.RITUAL_STONE.getStateFromMeta(meta);
         world.setBlockState(pos, newState);
     }
 

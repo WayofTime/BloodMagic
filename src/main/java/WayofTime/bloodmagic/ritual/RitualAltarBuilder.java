@@ -64,9 +64,9 @@ public class RitualAltarBuilder extends Ritual
             altarComponentsIterator = new ArrayList<AltarComponent>(EnumAltarTier.SIX.getAltarComponents()).iterator();
         }
 
-        if (world.getBlockState(altarPos).getBlock().isReplaceable(world, altarPos) && hasItem(tileEntity, Item.getItemFromBlock(ModBlocks.altar), 0, true))
+        if (world.getBlockState(altarPos).getBlock().isReplaceable(world, altarPos) && hasItem(tileEntity, Item.getItemFromBlock(ModBlocks.ALTAR), 0, true))
         {
-            world.setBlockState(altarPos, ModBlocks.altar.getDefaultState());
+            world.setBlockState(altarPos, ModBlocks.ALTAR.getDefaultState());
             lightning(world, altarPos);
             network.syphon(getRefreshCost());
         }
@@ -293,7 +293,7 @@ public class RitualAltarBuilder extends Ritual
                     if (iItemHandler.getStackInSlot(i) != null && iItemHandler.getStackInSlot(i).stackSize > 0 && iItemHandler.getStackInSlot(i).getItem() instanceof ItemBlock && !(Block.getBlockFromItem(iItemHandler.getStackInSlot(i).getItem()) instanceof BlockBloodRune) && iItemHandler.extractItem(i, 1, true) != null)
                     {
                         Block block = Block.getBlockFromItem(iItemHandler.getStackInSlot(i).getItem());
-                        if (block != null && block != Blocks.GLOWSTONE && block != ModBlocks.bloodStoneBrick && block != ModBlocks.crystal)
+                        if (block != null && block != Blocks.GLOWSTONE && block != ModBlocks.BLOOD_STONE && block != ModBlocks.CRYSTAL)
                         {
                             BlockStack blockStack = new BlockStack(block, iItemHandler.getStackInSlot(i).getItemDamage());
                             iItemHandler.extractItem(i, 1, false);
@@ -309,7 +309,7 @@ public class RitualAltarBuilder extends Ritual
                     if (inv.getStackInSlot(i) != null && inv.getStackInSlot(i).stackSize > 0 && inv.getStackInSlot(i).getItem() instanceof ItemBlock && !(Block.getBlockFromItem(inv.getStackInSlot(i).getItem()) instanceof BlockBloodRune))
                     {
                         Block block = Block.getBlockFromItem(inv.getStackInSlot(i).getItem());
-                        if (block != null && block != Blocks.GLOWSTONE && block != ModBlocks.bloodStoneBrick && block != ModBlocks.crystal)
+                        if (block != null && block != Blocks.GLOWSTONE && block != ModBlocks.BLOOD_STONE && block != ModBlocks.CRYSTAL)
                         {
                             BlockStack blockStack = new BlockStack(block, inv.getStackInSlot(i).getItemDamage());
                             inv.decrStackSize(i, 1);

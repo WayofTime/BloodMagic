@@ -110,7 +110,7 @@ public class EntityMimic extends EntityDemonBase
     {
         if (world.isAirBlock(pos))
         {
-            IBlockState mimicState = ModBlocks.mimic.getStateFromMeta(BlockMimic.sentientMimicMeta);
+            IBlockState mimicState = ModBlocks.MIMIC.getStateFromMeta(BlockMimic.sentientMimicMeta);
             world.setBlockState(pos, mimicState, 3);
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileMimic)

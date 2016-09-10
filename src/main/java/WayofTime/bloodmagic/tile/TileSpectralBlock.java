@@ -88,7 +88,7 @@ public class TileSpectralBlock extends TileTicking
         if (world.isAirBlock(blockPos))
             return;
         IBlockState cachedState = world.getBlockState(blockPos);
-        world.setBlockState(blockPos, ModBlocks.spectralBlock.getDefaultState());
+        world.setBlockState(blockPos, ModBlocks.SPECTRAL_BLOCK.getDefaultState());
         TileSpectralBlock tile = (TileSpectralBlock) world.getTileEntity(blockPos);
         tile.setContainedBlockInfo(cachedState);
         tile.setDuration(duration);

@@ -51,7 +51,7 @@ public class CategoryDemon
         List<IPage> forgePages = new ArrayList<IPage>();
         forgePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "forge" + ".info.1"), 370));
 
-        IRecipe forgeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.soulForge));
+        IRecipe forgeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.SOUL_FORGE));
         if (forgeRecipe != null)
         {
             forgePages.add(BookUtils.getPageForRecipe(forgeRecipe));
@@ -100,22 +100,22 @@ public class CategoryDemon
         entries.put(new ResourceLocation(keyBase + "sentientGem"), new EntryText(sentientGemPages, TextHelper.localize(keyBase + "sentientGem"), true));
 
         List<IPage> routingPages = new ArrayList<IPage>();
-        TartaricForgeRecipe nodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.itemRoutingNode));
+        TartaricForgeRecipe nodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.ITEM_ROUTING_NODE));
         if (nodeRecipe != null)
         {
             routingPages.add(new PageTartaricForgeRecipe(nodeRecipe));
         }
-        TartaricForgeRecipe inputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.inputRoutingNode));
+        TartaricForgeRecipe inputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.INPUT_ROUTING_NODE));
         if (inputNodeRecipe != null)
         {
             routingPages.add(new PageTartaricForgeRecipe(inputNodeRecipe));
         }
-        TartaricForgeRecipe outputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.outputRoutingNode));
+        TartaricForgeRecipe outputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.OUTPUT_ROUTING_NODE));
         if (outputNodeRecipe != null)
         {
             routingPages.add(new PageTartaricForgeRecipe(outputNodeRecipe));
         }
-        TartaricForgeRecipe masterNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.masterRoutingNode));
+        TartaricForgeRecipe masterNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.MASTER_ROUTING_NODE));
         if (masterNodeRecipe != null)
         {
             routingPages.add(new PageTartaricForgeRecipe(masterNodeRecipe));
@@ -142,7 +142,7 @@ public class CategoryDemon
 
         List<IPage> cruciblePages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe crucibleRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.demonCrucible));
+        TartaricForgeRecipe crucibleRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.DEMON_CRUCIBLE));
         if (crucibleRecipe != null)
         {
             cruciblePages.add(new PageTartaricForgeRecipe(crucibleRecipe));
@@ -153,7 +153,7 @@ public class CategoryDemon
 
         List<IPage> crystallizerPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe crystallizerRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.demonCrystallizer));
+        TartaricForgeRecipe crystallizerRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.DEMON_CRYSTALLIZER));
         if (crystallizerRecipe != null)
         {
             crystallizerPages.add(new PageTartaricForgeRecipe(crystallizerRecipe));
@@ -164,7 +164,7 @@ public class CategoryDemon
 
         List<IPage> clusterPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe clusterRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.demonCrystal));
+        TartaricForgeRecipe clusterRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.DEMON_CRYSTAL));
         if (clusterRecipe != null)
         {
             clusterPages.add(new PageTartaricForgeRecipe(clusterRecipe));
@@ -175,7 +175,7 @@ public class CategoryDemon
 
         List<IPage> pylonPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe pylonRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.demonPylon));
+        TartaricForgeRecipe pylonRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.DEMON_PYLON));
         if (pylonRecipe != null)
         {
             pylonPages.add(new PageTartaricForgeRecipe(pylonRecipe));

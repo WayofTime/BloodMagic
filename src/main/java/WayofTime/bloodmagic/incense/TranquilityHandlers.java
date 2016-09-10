@@ -122,7 +122,7 @@ public class TranquilityHandlers
                 return new TranquilityStack(EnumTranquilityType.WATER, 1);
             }
 
-            if (block == ModBlocks.lifeEssence)
+            if (block == ModBlocks.LIFE_ESSENCE)
             {
                 return new TranquilityStack(EnumTranquilityType.WATER, 1.5);
             }

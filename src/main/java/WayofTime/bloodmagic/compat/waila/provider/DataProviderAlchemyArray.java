@@ -22,7 +22,7 @@ public class DataProviderAlchemyArray implements IWailaDataProvider
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
-        return new ItemStack(ModItems.arcaneAshes).setStackDisplayName(TextHelper.getFormattedText(ModBlocks.alchemyArray.getLocalizedName()));
+        return new ItemStack(ModItems.arcaneAshes).setStackDisplayName(TextHelper.getFormattedText(ModBlocks.ALCHEMY_ARRAY.getLocalizedName()));
     }
 
     @Override

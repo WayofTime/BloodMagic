@@ -107,7 +107,7 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
 
             if (worldObj.isAirBlock(blockPos))
             {
-                worldObj.setBlockState(blockPos, ModBlocks.bloodLight.getDefaultState());
+                worldObj.setBlockState(blockPos, ModBlocks.BLOOD_LIGHT.getDefaultState());
             }
         }
 

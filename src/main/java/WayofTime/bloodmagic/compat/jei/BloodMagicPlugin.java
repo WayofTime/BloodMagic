@@ -9,7 +9,6 @@ import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
@@ -58,11 +57,11 @@ public class BloodMagicPlugin extends BlankModPlugin
         registry.addDescription(new ItemStack(ModItems.altarMaker), "jei.BloodMagic.desc.altarBuilder");
         registry.addDescription(new ItemStack(ModItems.monsterSoul), "jei.BloodMagic.desc.demonicWill");
 
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.bloodLight));
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.spectralBlock));
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.phantomBlock));
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.alchemyArray));
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.dimensionalPortal, 1, OreDictionary.WILDCARD_VALUE));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.BLOOD_LIGHT));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.SPECTRAL_BLOCK));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.PHANTOM_BLOCK));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.ALCHEMY_ARRAY));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.DIMENSIONAL_PORTAL, 1, OreDictionary.WILDCARD_VALUE));
 
         for (Map.Entry<String, Integer> entry : LivingArmourHandler.upgradeMaxLevelMap.entrySet())
         {
@@ -79,11 +78,11 @@ public class BloodMagicPlugin extends BlankModPlugin
 
         registry.addRecipeClickArea(GuiSoulForge.class, 115, 15, 16, 88, Constants.Compat.JEI_CATEGORY_SOULFORGE);
 
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.altar), Constants.Compat.JEI_CATEGORY_ALTAR);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.soulForge), Constants.Compat.JEI_CATEGORY_SOULFORGE);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ALTAR), Constants.Compat.JEI_CATEGORY_ALTAR);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.SOUL_FORGE), Constants.Compat.JEI_CATEGORY_SOULFORGE);
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.arcaneAshes), Constants.Compat.JEI_CATEGORY_ALCHEMYARRAY);
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.arcaneAshes), Constants.Compat.JEI_CATEGORY_BINDING);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.alchemyTable), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ALCHEMY_TABLE), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
 
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_UUID);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_NAME);

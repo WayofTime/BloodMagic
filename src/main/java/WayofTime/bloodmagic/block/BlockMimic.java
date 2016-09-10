@@ -170,7 +170,7 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
                 {
                     if (block.getRenderType(mimicState) == EnumBlockRenderType.ENTITYBLOCK_ANIMATED)
                     {
-                        return ModBlocks.bloodLight.getDefaultState(); //Small and invisible-ish, basically this is returned in order to not render over the animated block (TESR)
+                        return ModBlocks.BLOOD_LIGHT.getDefaultState(); //Small and invisible-ish, basically this is returned in order to not render over the animated block (TESR)
                     }
 
                     return block.getActualState(mimicState, world, pos);

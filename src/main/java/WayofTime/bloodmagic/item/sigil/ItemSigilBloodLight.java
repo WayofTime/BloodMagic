@@ -42,7 +42,7 @@ public class ItemSigilBloodLight extends ItemSigilBase
 
             if (world.isAirBlock(blockPos))
             {
-                world.setBlockState(blockPos, ModBlocks.bloodLight.getDefaultState());
+                world.setBlockState(blockPos, ModBlocks.BLOOD_LIGHT.getDefaultState());
                 if (!world.isRemote)
                     NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player), player, getLpUsed());
                 resetCooldown(stack);

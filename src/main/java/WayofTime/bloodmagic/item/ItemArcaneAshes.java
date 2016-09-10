@@ -52,7 +52,7 @@ public class ItemArcaneAshes extends Item implements IVariantProvider
             if (!world.isRemote)
             {
                 EnumFacing rotation = EnumFacing.fromAngle(player.getRotationYawHead());
-                world.setBlockState(newPos, ModBlocks.alchemyArray.getDefaultState());
+                world.setBlockState(newPos, ModBlocks.ALCHEMY_ARRAY.getDefaultState());
                 TileEntity tile = world.getTileEntity(newPos);
                 if (tile instanceof TileAlchemyArray)
                 {

@@ -36,7 +36,7 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase
                 BlockPos blockPos = new BlockPos(ix, posY + verticalOffset, iz);
 
                 if (world.isAirBlock(blockPos))
-                    world.setBlockState(blockPos, ModBlocks.phantomBlock.getDefaultState());
+                    world.setBlockState(blockPos, ModBlocks.PHANTOM_BLOCK.getDefaultState());
             }
         }
     }

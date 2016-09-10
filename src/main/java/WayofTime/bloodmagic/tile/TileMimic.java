@@ -142,7 +142,7 @@ public class TileMimic extends TileInventory implements ITickable
         if (player.isSneaking())
             return false;
 
-        if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == new ItemStack(ModBlocks.mimic).getItem())
+        if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == new ItemStack(ModBlocks.MIMIC).getItem())
             return false;
 
         if (getStackInSlot(0) != null && player.getHeldItem(hand) != null)

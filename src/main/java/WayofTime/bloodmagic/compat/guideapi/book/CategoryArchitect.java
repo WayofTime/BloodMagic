@@ -42,7 +42,7 @@ public class CategoryArchitect
 
         List<IPage> altarPages = new ArrayList<IPage>();
 
-        IRecipe altarRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.altar));
+        IRecipe altarRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.ALTAR));
         if (altarRecipe != null)
         {
             altarPages.add(BookUtils.getPageForRecipe(altarRecipe));
@@ -99,7 +99,7 @@ public class CategoryArchitect
 
         List<IPage> incensePages = new ArrayList<IPage>();
 
-        IRecipe incenseRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.incenseAltar));
+        IRecipe incenseRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.INCENSE_ALTAR));
         if (incenseRecipe != null)
         {
             incensePages.add(BookUtils.getPageForRecipe(incenseRecipe));
@@ -107,7 +107,7 @@ public class CategoryArchitect
 
         incensePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "incense" + ".info.1"), 370));
 
-        IRecipe woodPathRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.pathBlock, 1, 0));
+        IRecipe woodPathRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.PATH_BLOCK, 1, 0));
         if (woodPathRecipe != null)
         {
             incensePages.add(BookUtils.getPageForRecipe(woodPathRecipe));
@@ -118,7 +118,7 @@ public class CategoryArchitect
 
         List<IPage> runePages = new ArrayList<IPage>();
 
-        IRecipe runeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.bloodRune, 1, 0));
+        IRecipe runeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 0));
         if (runeRecipe != null)
         {
             runePages.add(BookUtils.getPageForRecipe(runeRecipe));
@@ -140,7 +140,7 @@ public class CategoryArchitect
 
         List<IPage> speedRunePages = new ArrayList<IPage>();
 
-        IRecipe speedRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.bloodRune, 1, 1));
+        IRecipe speedRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 1));
         if (speedRecipe != null)
         {
             speedRunePages.add(BookUtils.getPageForRecipe(speedRecipe));
@@ -218,7 +218,7 @@ public class CategoryArchitect
 
         List<IPage> runeSacrificePages = new ArrayList<IPage>();
 
-        IRecipe runeSacrificeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.bloodRune, 1, 3));
+        IRecipe runeSacrificeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 3));
         if (runeSacrificeRecipe != null)
         {
             runeSacrificePages.add(BookUtils.getPageForRecipe(runeSacrificeRecipe));
@@ -229,7 +229,7 @@ public class CategoryArchitect
 
         List<IPage> runeSelfSacrificePages = new ArrayList<IPage>();
 
-        IRecipe runeSelfSacrificeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.bloodRune, 1, 4));
+        IRecipe runeSelfSacrificeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 4));
         if (runeSelfSacrificeRecipe != null)
         {
             runeSelfSacrificePages.add(BookUtils.getPageForRecipe(runeSelfSacrificeRecipe));
@@ -353,7 +353,7 @@ public class CategoryArchitect
 
         List<IPage> capacityPages = new ArrayList<IPage>();
 
-        IRecipe capacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.bloodRune, 1, 4));
+        IRecipe capacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 4));
         if (capacityRecipe != null)
         {
             capacityPages.add(BookUtils.getPageForRecipe(capacityRecipe));
@@ -364,7 +364,7 @@ public class CategoryArchitect
 
         List<IPage> displacementPages = new ArrayList<IPage>();
 
-        IRecipe displacementRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.bloodRune, 1, 4));
+        IRecipe displacementRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 4));
         if (displacementRecipe != null)
         {
             displacementPages.add(BookUtils.getPageForRecipe(displacementRecipe));
@@ -483,7 +483,7 @@ public class CategoryArchitect
             teleposerPages.add(new PageAltarRecipe(teleposerFocusRecipe));
         }
 
-        IRecipe teleposerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.teleposer));
+        IRecipe teleposerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.TELEPOSER));
         if (teleposerRecipe != null)
         {
             teleposerPages.add(BookUtils.getPageForRecipe(teleposerRecipe));
@@ -544,7 +544,7 @@ public class CategoryArchitect
 
         List<IPage> orbRunePages = new ArrayList<IPage>();
 
-        IRecipe orbRuneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.bloodRune, 1, 8));
+        IRecipe orbRuneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 8));
         if (orbRuneRecipe != null)
         {
             orbRunePages.add(BookUtils.getPageForRecipe(orbRuneRecipe));
@@ -657,7 +657,7 @@ public class CategoryArchitect
 
         List<IPage> mimicPages = new ArrayList<IPage>();
 
-        IRecipe mimicRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.mimic, 1, 1));
+        IRecipe mimicRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.MIMIC, 1, 1));
         if (mimicRecipe != null)
         {
             mimicPages.add(BookUtils.getPageForRecipe(mimicRecipe));

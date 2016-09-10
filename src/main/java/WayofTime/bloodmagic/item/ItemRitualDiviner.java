@@ -153,7 +153,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                             return false;
                         }
                         int meta = component.getRuneType().ordinal();
-                        IBlockState newState = ModBlocks.ritualStone.getStateFromMeta(meta);
+                        IBlockState newState = ModBlocks.RITUAL_STONE.getStateFromMeta(meta);
                         world.setBlockState(newPos, newState);
                         return true;
                     } else
@@ -212,7 +212,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
             if (item instanceof ItemBlock)
             {
                 Block block = ((ItemBlock) item).getBlock();
-                if (block == ModBlocks.ritualStone)
+                if (block == ModBlocks.RITUAL_STONE)
                 {
                     newStack.stackSize--;
                     if (newStack.stackSize <= 0)

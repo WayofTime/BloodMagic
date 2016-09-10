@@ -386,13 +386,13 @@ public class Utils
         case GLOWSTONE:
             return Blocks.GLOWSTONE;
         case BLOODSTONE:
-            return ModBlocks.bloodStoneBrick;
+            return ModBlocks.BLOOD_STONE;
         case BEACON:
             return Blocks.BEACON;
         case BLOODRUNE:
-            return ModBlocks.bloodRune;
+            return ModBlocks.BLOOD_RUNE;
         case CRYSTAL:
-            return ModBlocks.crystal;
+            return ModBlocks.CRYSTAL;
         case NOTAIR:
             return Blocks.STONEBRICK;
         default:

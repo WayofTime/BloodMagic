@@ -148,7 +148,7 @@ public class TileInversionPillar extends TileTicking
         if (!state.getBlock().isAir(state, worldObj, offsetPos))
         {
             //Consume Will and set this block
-            return worldObj.setBlockState(offsetPos, ModBlocks.demonExtras.getStateFromMeta(0));
+            return worldObj.setBlockState(offsetPos, ModBlocks.DEMON_EXTRAS.getStateFromMeta(0));
         }
 
         return false;

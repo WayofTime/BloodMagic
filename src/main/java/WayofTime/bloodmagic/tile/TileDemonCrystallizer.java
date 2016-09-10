@@ -5,7 +5,6 @@ import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWillConduit;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.tile.base.TileBase;
 import WayofTime.bloodmagic.tile.base.TileTicking;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -61,7 +60,7 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
 
     public boolean formCrystal(EnumDemonWillType type, BlockPos position)
     {
-        worldObj.setBlockState(position, ModBlocks.demonCrystal.getStateFromMeta(type.ordinal()));
+        worldObj.setBlockState(position, ModBlocks.DEMON_CRYSTAL.getStateFromMeta(type.ordinal()));
         TileEntity tile = worldObj.getTileEntity(position);
         if (tile instanceof TileDemonCrystal)
         {
