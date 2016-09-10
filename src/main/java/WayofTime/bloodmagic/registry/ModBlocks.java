@@ -39,7 +39,6 @@ import WayofTime.bloodmagic.block.BlockMasterRoutingNode;
 import WayofTime.bloodmagic.block.BlockMimic;
 import WayofTime.bloodmagic.block.BlockOutputRoutingNode;
 import WayofTime.bloodmagic.block.BlockPath;
-import WayofTime.bloodmagic.block.BlockPedestal;
 import WayofTime.bloodmagic.block.BlockPhantom;
 import WayofTime.bloodmagic.block.BlockRitualController;
 import WayofTime.bloodmagic.block.BlockRitualStone;
@@ -59,7 +58,6 @@ import WayofTime.bloodmagic.item.block.ItemBlockDemonPillarCapBase;
 import WayofTime.bloodmagic.item.block.ItemBlockDemonWallBase;
 import WayofTime.bloodmagic.item.block.ItemBlockMimic;
 import WayofTime.bloodmagic.item.block.ItemBlockPath;
-import WayofTime.bloodmagic.item.block.ItemBlockPedestal;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
 import WayofTime.bloodmagic.item.block.ItemDemonStairsBase;
@@ -96,8 +94,6 @@ public class ModBlocks
     public static Block ritualController;
     public static Block ritualStone;
     public static Block bloodLight;
-    //    public static Block testSpellBlock;
-    public static Block pedestal;
     public static Block teleposer;
     public static Block alchemyArray;
     public static Block spectralBlock;
@@ -158,7 +154,6 @@ public class ModBlocks
         ritualController = registerBlock(new ItemBlockRitualController(new BlockRitualController()), Constants.BloodMagicBlock.RITUAL_CONTROLLER.getRegName());
         ritualStone = registerBlock(new ItemBlockRitualStone(new BlockRitualStone()), Constants.BloodMagicBlock.RITUAL_STONE.getRegName());
         bloodLight = registerBlock(new BlockBloodLight(), Constants.BloodMagicBlock.BLOOD_LIGHT.getRegName());
-        pedestal = registerBlock(new ItemBlockPedestal(new BlockPedestal()), Constants.BloodMagicBlock.PEDESTAL.getRegName());
         teleposer = registerBlock(new BlockTeleposer(), Constants.BloodMagicBlock.TELEPOSER.getRegName());
         alchemyArray = registerBlock(new BlockAlchemyArray(), Constants.BloodMagicBlock.ALCHEMY_ARRAY.getRegName());
         spectralBlock = registerBlock(new BlockSpectral(), Constants.BloodMagicBlock.SPECTRAL.getRegName());
@@ -193,7 +188,6 @@ public class ModBlocks
         demonPillarCap1 = registerBlock(new ItemBlockDemonPillarCapBase(new BlockDemonPillarCapBase("pillarCap1", Material.ROCK, new String[] { "raw", "corrosive" })), Constants.BloodMagicBlock.DEMON_PILLAR_CAP_1.getRegName());
         demonPillarCap2 = registerBlock(new ItemBlockDemonPillarCapBase(new BlockDemonPillarCapBase("pillarCap2", Material.ROCK, new String[] { "destructive", "vengeful" })), Constants.BloodMagicBlock.DEMON_PILLAR_CAP_2.getRegName());
         demonPillarCap3 = registerBlock(new ItemBlockDemonPillarCapBase(new BlockDemonPillarCapBase("pillarCap3", Material.ROCK, new String[] { "steadfast" })), Constants.BloodMagicBlock.DEMON_PILLAR_CAP_3.getRegName());
-//        testSpellBlock = registerBlock(new BlockTestSpellBlock());
 
         demonLight = registerBlock(new ItemBlockDemonLight(new BlockDemonLight()), Constants.BloodMagicBlock.DEMON_LIGHT.getRegName());
 
@@ -254,8 +248,6 @@ public class ModBlocks
         renderHelper.fluidRender(lifeEssence);
 
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodLight));
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 0);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(alchemyArray));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(outputRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(inputRoutingNode));

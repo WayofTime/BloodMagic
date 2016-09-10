@@ -275,7 +275,8 @@ public class Constants
         LIFE_ESSENCE("BlockLifeEssence"),
         MASTER_ROUTING_NODE("BlockMasterRoutingNode"),
         OUTPUT_ROUTING_NODE("BlockOutputRoutingNode"),
-        PEDESTAL("BlockPedestal"),
+        @Deprecated
+        PEDESTAL("BlockPedestal"), /** No longer included in the mod. */
         PHANTOM("BlockPhantom"),
         RITUAL_CONTROLLER("BlockRitualController"),
         RITUAL_STONE("BlockRitualStone"),
