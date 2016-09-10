@@ -1,0 +1,19 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "raw": {
+        "textures": {
+          "all": "bloodmagic:blocks/WoodBrickPath"
+        }
+      }
+    }
+  }
+}
+
+

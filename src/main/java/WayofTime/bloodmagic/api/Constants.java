@@ -304,7 +304,8 @@ public class Constants
         DEMON_STAIRS_1("BlockStairs1"),
         DEMON_STAIRS_2("BlockStairs2"),
         DEMON_STAIRS_3("BlockStairs3"),
-        DEMON_LIGHT("BlockDemonLight");
+        DEMON_LIGHT("BlockDemonLight"),
+        INVERSION_PILLAR("BlockInversionPillar");
 
         @Getter
         private final String regName;

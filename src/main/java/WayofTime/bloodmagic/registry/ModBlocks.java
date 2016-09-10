@@ -32,6 +32,7 @@ import WayofTime.bloodmagic.block.BlockDemonWallBase;
 import WayofTime.bloodmagic.block.BlockDimensionalPortal;
 import WayofTime.bloodmagic.block.BlockIncenseAltar;
 import WayofTime.bloodmagic.block.BlockInputRoutingNode;
+import WayofTime.bloodmagic.block.BlockInversionPillar;
 import WayofTime.bloodmagic.block.BlockItemRoutingNode;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.block.BlockMasterRoutingNode;
@@ -73,6 +74,7 @@ import WayofTime.bloodmagic.tile.TileDemonPylon;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileIncenseAltar;
+import WayofTime.bloodmagic.tile.TileInversionPillar;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.tile.TilePhantomBlock;
@@ -143,6 +145,8 @@ public class ModBlocks
     public static Block demonStairs2;
     public static Block demonStairs3;
 
+    public static Block inversionPillar;
+
     public static void init()
     {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
@@ -199,6 +203,8 @@ public class ModBlocks
         demonStairs2 = registerBlock(new ItemDemonStairsBase(new BlockDemonStairsBase("stairs2", Material.ROCK, new String[] { "destructive", "vengeful" })), Constants.BloodMagicBlock.DEMON_STAIRS_2.getRegName());
         demonStairs3 = registerBlock(new ItemDemonStairsBase(new BlockDemonStairsBase("stairs3", Material.ROCK, new String[] { "steadfast" })), Constants.BloodMagicBlock.DEMON_STAIRS_3.getRegName());
 
+        inversionPillar = registerBlock(new ItemBlock(new BlockInversionPillar()), Constants.BloodMagicBlock.INVERSION_PILLAR.getRegName());
+
         BloodMagicAPI.addToTeleposerBlacklist(inputRoutingNode);
         BloodMagicAPI.addToTranspositionBlacklist(inputRoutingNode);
         BloodMagicAPI.addToTeleposerBlacklist(outputRoutingNode);
@@ -236,6 +242,7 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TileDimensionalPortal.class, Constants.Mod.MODID + ":" + TileDimensionalPortal.class.getSimpleName());
         GameRegistry.registerTileEntity(TileBloodTank.class, Constants.Mod.MODID + ":" + TileBloodTank.class.getSimpleName());
         GameRegistry.registerTileEntity(TileMimic.class, Constants.Mod.MODID + ":" + TileMimic.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileInversionPillar.class, Constants.Mod.MODID + ":" + TileInversionPillar.class.getSimpleName());
     }
 
     @SideOnly(Side.CLIENT)
