@@ -92,6 +92,11 @@ public class TileInversionPillar extends TileTicking
         }
     }
 
+    public void removePillarFromMap()
+    {
+
+    }
+
     public List<BlockPos> getNearbyPillarsExcludingThis()
     {
         return InversionPillarHandler.getNearbyPillars(worldObj, type, pos);

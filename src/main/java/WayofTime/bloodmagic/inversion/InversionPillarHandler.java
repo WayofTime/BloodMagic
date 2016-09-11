@@ -13,7 +13,9 @@ import WayofTime.bloodmagic.tile.TileInversionPillar;
 
 public class InversionPillarHandler
 {
+    public static final double farthestDistanceSquared = 16 * 16;
     public static Map<Integer, Map<EnumDemonWillType, List<BlockPos>>> pillarMap = new HashMap<Integer, Map<EnumDemonWillType, List<BlockPos>>>();
+    public static Map<Integer, Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>>> nearPillarMap = new HashMap<Integer, Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>>>();
 
     public static boolean addPillarToMap(World world, EnumDemonWillType type, BlockPos pos)
     {
@@ -49,6 +51,61 @@ public class InversionPillarHandler
         }
     }
 
+    public static boolean removePillarFromMap(World world, EnumDemonWillType type, BlockPos pos)
+    {
+        int dim = world.provider.getDimension();
+        if (pillarMap.containsKey(dim))
+        {
+            Map<EnumDemonWillType, List<BlockPos>> willMap = pillarMap.get(dim);
+            if (willMap.containsKey(type))
+            {
+                if (willMap.get(type).contains(pos))
+                {
+                    return willMap.get(type).remove(pos);
+                } else
+                {
+                    return false;
+                }
+            } else
+            {
+                return false;
+            }
+        } else
+        {
+            return false;
+        }
+    }
+
+    private static void onPillarRemoved(World world, EnumDemonWillType type, BlockPos pos)
+    {
+        int dim = world.provider.getDimension();
+        if (nearPillarMap.containsKey(dim))
+        {
+            Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>> willMap = nearPillarMap.get(dim);
+            if (willMap.containsKey(type))
+            {
+                Map<BlockPos, List<BlockPos>> posMap = willMap.get(type);
+                List<BlockPos> posList = posMap.get(pos);
+                if (posList != null)
+                {
+                    Iterator<BlockPos> itr = posList.iterator();
+                    while (itr.hasNext())
+                    {
+                        BlockPos checkPos = itr.next();
+                        List<BlockPos> checkPosList = posMap.get(checkPos);
+                        if (checkPosList != null)
+                        {
+                            checkPosList.remove(pos);
+                        }
+                    }
+
+                    posMap.remove(pos);
+                }
+            }
+        }
+    }
+
+    //TODO: Change to use the nearPillarMap.
     public static List<BlockPos> getNearbyPillars(World world, EnumDemonWillType type, BlockPos pos)
     {
         int dim = world.provider.getDimension();

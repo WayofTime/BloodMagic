@@ -20,6 +20,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.block.base.BlockStringContainer;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileInversionPillar;
 
 public class BlockInversionPillar extends BlockStringContainer implements IVariantProvider
@@ -36,6 +37,19 @@ public class BlockInversionPillar extends BlockStringContainer implements IVaria
         setResistance(5.0F);
         setSoundType(SoundType.STONE);
         setHarvestLevel("pickaxe", 2);
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
+    {
+        TileEntity tile = world.getTileEntity(blockPos);
+        if (tile instanceof TileInversionPillar)
+        {
+            TileInversionPillar tilePillar = (TileInversionPillar) world.getTileEntity(blockPos);
+            tilePillar.removePillarFromMap();
+        }
+
+        super.breakBlock(world, blockPos, blockState);
     }
 
     @Override
