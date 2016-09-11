@@ -18,7 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -56,9 +55,9 @@ public class CraftingHandler
     {
         if (ConfigHandler.thaumcraftGogglesUpgrade)
         {
-            if (event.getLeft().getItem() == ModItems.livingArmourHelmet && event.getRight().getItem() == Constants.Compat.THAUMCRAFT_GOGGLES && !event.getRight().isItemDamaged())
+            if (event.getLeft().getItem() == ModItems.LIVING_ARMOUR_HELMET && event.getRight().getItem() == Constants.Compat.THAUMCRAFT_GOGGLES && !event.getRight().isItemDamaged())
             {
-                ItemStack output = new ItemStack(ModItems.upgradeTome);
+                ItemStack output = new ItemStack(ModItems.UPGRADE_TOME);
                 output = NBTHelper.checkNBT(output);
                 ItemHelper.LivingUpgrades.setKey(output, Constants.Mod.MODID + ".upgrade.revealing");
                 ItemHelper.LivingUpgrades.setLevel(output, 1);
@@ -70,7 +69,7 @@ public class CraftingHandler
             }
         }
 
-        if (event.getLeft().getItem() == ModItems.sigilHolding)
+        if (event.getLeft().getItem() == ModItems.SIGIL_HOLDING)
         {
             if (event.getRight().getItem() == Items.NAME_TAG)
             {
@@ -102,7 +101,7 @@ public class CraftingHandler
 
         if (event.getLeft().getItem() == Items.BOOK && event.getRight().getItem() == Items.ELYTRA && !event.getRight().isItemDamaged())
         {
-            ItemStack output = new ItemStack(ModItems.upgradeTome);
+            ItemStack output = new ItemStack(ModItems.UPGRADE_TOME);
             output = NBTHelper.checkNBT(output);
             ItemHelper.LivingUpgrades.setKey(output, Constants.Mod.MODID + ".upgrade.elytra");
             ItemHelper.LivingUpgrades.setLevel(output, 1);
@@ -113,7 +112,7 @@ public class CraftingHandler
             return;
         }
 
-        if (event.getLeft().getItem() == ModItems.upgradeTome && event.getRight().getItem() == ModItems.upgradeTome)
+        if (event.getLeft().getItem() == ModItems.UPGRADE_TOME && event.getRight().getItem() == ModItems.UPGRADE_TOME)
         {
             LivingArmourUpgrade leftUpgrade = ItemHelper.LivingUpgrades.getUpgrade(event.getLeft());
             if (leftUpgrade != null && ItemHelper.LivingUpgrades.getKey(event.getLeft()).equals(ItemHelper.LivingUpgrades.getKey(event.getRight())))
@@ -134,7 +133,7 @@ public class CraftingHandler
             }
         }
 
-        if (event.getLeft().getItem() instanceof IUpgradeTrainer && event.getRight().getItem() == ModItems.upgradeTome)
+        if (event.getLeft().getItem() instanceof IUpgradeTrainer && event.getRight().getItem() == ModItems.UPGRADE_TOME)
         {
             LivingArmourUpgrade rightUpgrade = ItemHelper.LivingUpgrades.getUpgrade(event.getRight());
             if (rightUpgrade != null)

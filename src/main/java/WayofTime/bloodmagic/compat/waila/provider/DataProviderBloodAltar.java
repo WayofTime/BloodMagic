@@ -64,8 +64,8 @@ public class DataProviderBloodAltar implements IWailaDataProvider
         }
         case 2:
         {
-            hasSeer = hasStack(new ItemStack(ModItems.sigilSeer), accessor.getPlayer());
-            hasSigil = hasSeer || hasStack(new ItemStack(ModItems.sigilDivination), accessor.getPlayer());
+            hasSeer = hasStack(new ItemStack(ModItems.SIGIL_SEER), accessor.getPlayer());
+            hasSigil = hasSeer || hasStack(new ItemStack(ModItems.SIGIL_DIVINATION), accessor.getPlayer());
             break;
         }
         default:

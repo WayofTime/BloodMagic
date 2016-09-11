@@ -16,7 +16,7 @@ import WayofTime.bloodmagic.registry.ModItems;
 
 public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
 {
-    public static final ItemStack basePotionFlaskStack = new ItemStack(ModItems.potionFlask, 1, OreDictionary.WILDCARD_VALUE);
+    public static final ItemStack basePotionFlaskStack = new ItemStack(ModItems.POTION_FLASK, 1, OreDictionary.WILDCARD_VALUE);
     protected PotionEffect baseEffect;
 
     public static final int temporaryMaximumEffectsOnThePotionFlaskYesThisIsALongFieldItIsJustSoIRemember = 3;
@@ -53,7 +53,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
 
             if (slot != null)
             {
-                boolean match = slot.getItem() == ModItems.potionFlask;
+                boolean match = slot.getItem() == ModItems.POTION_FLASK;
 
                 if (match)
                 {
@@ -105,7 +105,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
 
                     if (match)
                     {
-                        if (next instanceof ItemStack && ((ItemStack) next).getItem() == ModItems.potionFlask)
+                        if (next instanceof ItemStack && ((ItemStack) next).getItem() == ModItems.POTION_FLASK)
                         {
                             if (!isPotionFlaskValidInput(slot))
                             {
@@ -152,7 +152,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
     {
         if (inputStack == null)
         {
-            ItemStack outputStack = new ItemStack(ModItems.potionFlask);
+            ItemStack outputStack = new ItemStack(ModItems.POTION_FLASK);
 
             List<PotionEffect> effectList = new ArrayList<PotionEffect>();
             effectList.add(baseEffect);

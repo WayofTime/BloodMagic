@@ -25,7 +25,6 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -59,7 +58,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
 
     public ItemBoundTool(String name, float damage, Set<Block> effectiveBlocks)
     {
-        super(damage, 1, ModItems.boundToolMaterial, effectiveBlocks);
+        super(damage, 1, ModItems.BOUND_TOOL_MATERIAL, effectiveBlocks);
         setUnlocalizedName(Constants.Mod.MODID + ".bound." + name);
         setCreativeTab(BloodMagic.tabBloodMagic);
 

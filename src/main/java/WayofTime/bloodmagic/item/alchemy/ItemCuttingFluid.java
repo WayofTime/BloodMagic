@@ -75,7 +75,7 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
 
     public static ItemStack getStack(String name)
     {
-        return new ItemStack(ModItems.cuttingFluid, 1, names.indexOf(name));
+        return new ItemStack(ModItems.CUTTING_FLUID, 1, names.indexOf(name));
     }
 
     @Override

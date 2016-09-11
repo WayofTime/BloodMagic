@@ -39,7 +39,7 @@ public class CategoryDemon
         List<IPage> snarePages = new ArrayList<IPage>();
         snarePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "snare" + ".info.1"), 370));
 
-        IRecipe snareRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModItems.soulSnare));
+        IRecipe snareRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModItems.SOUL_SNARE));
         if (snareRecipe != null)
         {
             snarePages.add(BookUtils.getPageForRecipe(snareRecipe));
@@ -62,7 +62,7 @@ public class CategoryDemon
 
         List<IPage> pettyPages = new ArrayList<IPage>();
         pettyPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "petty" + ".info.1"), 370));
-        TartaricForgeRecipe pettyRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.soulGem, 1));
+        TartaricForgeRecipe pettyRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.SOUL_GEM, 1));
         if (pettyRecipe != null)
         {
             pettyPages.add(new PageTartaricForgeRecipe(pettyRecipe));
@@ -72,7 +72,7 @@ public class CategoryDemon
 
         List<IPage> swordPages = new ArrayList<IPage>();
         swordPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "sword" + ".info.1"), 370));
-        TartaricForgeRecipe swordRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.sentientSword));
+        TartaricForgeRecipe swordRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.SENTIENT_SWORD));
         if (swordRecipe != null)
         {
             swordPages.add(new PageTartaricForgeRecipe(swordRecipe));
@@ -82,7 +82,7 @@ public class CategoryDemon
 
         List<IPage> lesserPages = new ArrayList<IPage>();
         lesserPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lesser" + ".info.1"), 370));
-        TartaricForgeRecipe lesserRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.soulGem, 1));
+        TartaricForgeRecipe lesserRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.SOUL_GEM, 1));
         if (lesserRecipe != null)
         {
             lesserPages.add(new PageTartaricForgeRecipe(lesserRecipe));
@@ -121,7 +121,7 @@ public class CategoryDemon
             routingPages.add(new PageTartaricForgeRecipe(masterNodeRecipe));
         }
 
-        TartaricForgeRecipe nodeRouterRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.nodeRouter));
+        TartaricForgeRecipe nodeRouterRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.NODE_ROUTER));
         if (nodeRouterRecipe != null)
         {
             routingPages.add(new PageTartaricForgeRecipe(nodeRouterRecipe));
@@ -186,7 +186,7 @@ public class CategoryDemon
 
         List<IPage> gaugePages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe gaugeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.demonWillGauge));
+        TartaricForgeRecipe gaugeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.DEMON_WILL_GAUGE));
         if (gaugeRecipe != null)
         {
             gaugePages.add(new PageTartaricForgeRecipe(gaugeRecipe));

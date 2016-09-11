@@ -127,7 +127,7 @@ public class ClientProxy extends CommonProxy
                 }
                 return -1;
             }
-        }, ModItems.sigilHolding);
+        }, ModItems.SIGIL_HOLDING);
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor()
         {
             @Override
@@ -138,7 +138,7 @@ public class ClientProxy extends CommonProxy
 
                 return PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(stack));
             }
-        }, ModItems.potionFlask);
+        }, ModItems.POTION_FLASK);
 
         addElytraLayer();
     }

@@ -35,9 +35,9 @@ public class GuideBloodMagic
 
     public static void initCategories()
     {
-        guideBook.addCategory(new CategoryItemStack(CategoryAlchemy.buildCategory(), "guide.BloodMagic.category.alchemy", new ItemStack(ModItems.arcaneAshes)));
-        guideBook.addCategory(new CategoryItemStack(CategoryArchitect.buildCategory(), "guide.BloodMagic.category.architect", new ItemStack(ModItems.sigilDivination)));
-        guideBook.addCategory(new CategoryItemStack(CategoryDemon.buildCategory(), "guide.BloodMagic.category.demon", new ItemStack(ModItems.bloodShard)));
+        guideBook.addCategory(new CategoryItemStack(CategoryAlchemy.buildCategory(), "guide.BloodMagic.category.alchemy", new ItemStack(ModItems.ARCANE_ASHES)));
+        guideBook.addCategory(new CategoryItemStack(CategoryArchitect.buildCategory(), "guide.BloodMagic.category.architect", new ItemStack(ModItems.SIGIL_DIVINATION)));
+        guideBook.addCategory(new CategoryItemStack(CategoryDemon.buildCategory(), "guide.BloodMagic.category.demon", new ItemStack(ModItems.BLOOD_SHARD)));
         guideBook.addCategory(new CategoryItemStack(CategoryRitual.buildCategory(), "guide.BloodMagic.category.ritual", new ItemStack(ModBlocks.RITUAL_CONTROLLER)));
 //        guideBook.addCategory(new CategoryItemStack(CategorySpell.buildCategory(), "guide.BloodMagic.category.spell", new ItemStack(ModItems.ritualDiviner)));
     }

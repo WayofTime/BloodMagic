@@ -68,7 +68,7 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
 
     public static ItemStack getStack(String name)
     {
-        return new ItemStack(ModItems.itemDemonCrystal, 1, names.indexOf(name));
+        return new ItemStack(ModItems.ITEM_DEMON_CRYSTAL, 1, names.indexOf(name));
     }
 
     @Override

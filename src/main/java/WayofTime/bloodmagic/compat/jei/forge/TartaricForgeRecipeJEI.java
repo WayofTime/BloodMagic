@@ -64,12 +64,12 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
 
     public enum DefaultWill
     {
-        SOUL(new ItemStack(ModItems.monsterSoul, 1, 0), 64),
-        PETTY(new ItemStack(ModItems.soulGem, 1, 0), 64),
-        LESSER(new ItemStack(ModItems.soulGem, 1, 1), 256),
-        COMMON(new ItemStack(ModItems.soulGem, 1, 2), 1024),
-        GREATER(new ItemStack(ModItems.soulGem, 1, 3), 4096),
-        GRAND(new ItemStack(ModItems.soulGem, 1, 4), 16384);
+        SOUL(new ItemStack(ModItems.MONSTER_SOUL, 1, 0), 64),
+        PETTY(new ItemStack(ModItems.SOUL_GEM, 1, 0), 64),
+        LESSER(new ItemStack(ModItems.SOUL_GEM, 1, 1), 256),
+        COMMON(new ItemStack(ModItems.SOUL_GEM, 1, 2), 1024),
+        GREATER(new ItemStack(ModItems.SOUL_GEM, 1, 3), 4096),
+        GRAND(new ItemStack(ModItems.SOUL_GEM, 1, 4), 16384);
 
         public final ItemStack willStack;
         public final double minSouls;

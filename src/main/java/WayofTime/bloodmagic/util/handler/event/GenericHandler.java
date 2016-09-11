@@ -341,10 +341,10 @@ public class GenericHandler
             EntityPlayer player = (EntityPlayer) entity;
             ItemStack heldStack = player.getHeldItemMainhand();
 
-            if (heldStack != null && heldStack.getItem() == ModItems.boundSword && !(attackedEntity instanceof EntityAnimal))
+            if (heldStack != null && heldStack.getItem() == ModItems.BOUND_SWORD && !(attackedEntity instanceof EntityAnimal))
                 for (int i = 0; i <= EnchantmentHelper.getLootingModifier(player); i++)
                     if (attackedEntity.getEntityWorld().rand.nextDouble() < 0.2)
-                        event.getDrops().add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(ModItems.bloodShard, 1, 0)));
+                        event.getDrops().add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(ModItems.BLOOD_SHARD, 1, 0)));
         }
     }
 

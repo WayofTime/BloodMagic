@@ -70,7 +70,7 @@ public class RitualUpgradeRemove extends Ritual
                         LivingArmourUpgrade upgrade = entry.getValue();
                         String upgradeKey = entry.getKey();
 
-                        ItemStack upgradeStack = new ItemStack(ModItems.upgradeTome);
+                        ItemStack upgradeStack = new ItemStack(ModItems.UPGRADE_TOME);
                         LivingUpgrades.setKey(upgradeStack, upgradeKey);
                         LivingUpgrades.setLevel(upgradeStack, upgrade.getUpgradeLevel());
 

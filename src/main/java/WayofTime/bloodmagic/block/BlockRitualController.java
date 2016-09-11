@@ -9,7 +9,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -63,7 +62,7 @@ public class BlockRitualController extends BlockStringContainer implements IVari
 
         if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone)
         {
-            if (heldItem != null && heldItem.getItem() == ModItems.activationCrystal)
+            if (heldItem != null && heldItem.getItem() == ModItems.ACTIVATION_CRYSTAL)
             {
                 String key = RitualHelper.getValidRitual(world, pos);
                 EnumFacing direction = RitualHelper.getDirectionOfRitual(world, pos, key);

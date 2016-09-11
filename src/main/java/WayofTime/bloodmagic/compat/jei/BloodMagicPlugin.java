@@ -54,8 +54,8 @@ public class BloodMagicPlugin extends BlankModPlugin
         registry.addRecipes(TartaricForgeRecipeMaker.getRecipes());
         registry.addRecipes(AlchemyTableRecipeMaker.getRecipes());
 
-        registry.addDescription(new ItemStack(ModItems.altarMaker), "jei.BloodMagic.desc.altarBuilder");
-        registry.addDescription(new ItemStack(ModItems.monsterSoul), "jei.BloodMagic.desc.demonicWill");
+        registry.addDescription(new ItemStack(ModItems.ALTAR_MAKER), "jei.BloodMagic.desc.altarBuilder");
+        registry.addDescription(new ItemStack(ModItems.MONSTER_SOUL), "jei.BloodMagic.desc.demonicWill");
 
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.BLOOD_LIGHT));
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.SPECTRAL_BLOCK));
@@ -69,7 +69,7 @@ public class BloodMagicPlugin extends BlankModPlugin
             int maxLevel = entry.getValue();
             for (int i = 0; i < maxLevel - 1; i++)
             {
-                ItemStack stack = new ItemStack(ModItems.upgradeTome);
+                ItemStack stack = new ItemStack(ModItems.UPGRADE_TOME);
                 LivingUpgrades.setKey(stack, key);
                 LivingUpgrades.setLevel(stack, i);
                 jeiHelper.getItemBlacklist().addItemToBlacklist(stack);
@@ -80,8 +80,8 @@ public class BloodMagicPlugin extends BlankModPlugin
 
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ALTAR), Constants.Compat.JEI_CATEGORY_ALTAR);
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.SOUL_FORGE), Constants.Compat.JEI_CATEGORY_SOULFORGE);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.arcaneAshes), Constants.Compat.JEI_CATEGORY_ALCHEMYARRAY);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.arcaneAshes), Constants.Compat.JEI_CATEGORY_BINDING);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.ARCANE_ASHES), Constants.Compat.JEI_CATEGORY_ALCHEMYARRAY);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.ARCANE_ASHES), Constants.Compat.JEI_CATEGORY_BINDING);
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ALCHEMY_TABLE), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
 
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_UUID);

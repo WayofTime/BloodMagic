@@ -43,7 +43,7 @@ public class GuiHolding extends GuiContainer
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-        if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == ModItems.sigilHolding)
+        if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == ModItems.SIGIL_HOLDING)
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.drawTexturedModalRect(4 + x + 36 * ItemSigilHolding.getCurrentItemOrdinal(player.getHeldItemMainhand()), y + 13, 0, 123, 24, 24);

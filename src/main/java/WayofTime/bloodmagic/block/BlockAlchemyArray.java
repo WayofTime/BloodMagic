@@ -130,7 +130,7 @@ public class BlockAlchemyArray extends BlockContainer
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
     {
-        return new ItemStack(ModItems.arcaneAshes);
+        return new ItemStack(ModItems.ARCANE_ASHES);
     }
 
     @Override

@@ -102,7 +102,7 @@ public class BlockBloodLight extends Block
         if (rand.nextInt(3) != 0)
         {
             world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
-            if (playerSP.getActiveItemStack() != null && playerSP.getActiveItemStack().getItem() == ModItems.sigilBloodLight)
+            if (playerSP.getActiveItemStack() != null && playerSP.getActiveItemStack().getItem() == ModItems.SIGIL_BLOOD_LIGHT)
             {
                 world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
                 world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);

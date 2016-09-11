@@ -63,7 +63,7 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe
     {
         if (inputStack == null)
         {
-            ItemStack outputStack = new ItemStack(ModItems.potionFlask);
+            ItemStack outputStack = new ItemStack(ModItems.POTION_FLASK);
 
             List<PotionEffect> effectList = new ArrayList<PotionEffect>();
             int potionLength = wantedPotion.isInstant() ? 1 : BMPotionUtils.getAugmentedLength(baseEffect.getDuration(), lengthAugment, powerAugment - baseEffect.getAmplifier());
@@ -103,7 +103,7 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe
 
     public static ItemStack getAugmentedPotionFlask(PotionEffect baseEffect)
     {
-        ItemStack outputStack = new ItemStack(ModItems.potionFlask);
+        ItemStack outputStack = new ItemStack(ModItems.POTION_FLASK);
 
         List<PotionEffect> effectList = new ArrayList<PotionEffect>();
         effectList.add(baseEffect);

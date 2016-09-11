@@ -90,7 +90,7 @@ public class WillHandler
             int lvl = eff.getAmplifier();
 
             double amountOfSouls = attackedEntity.getEntityWorld().rand.nextDouble() * (lvl + 1) * (lvl + 1) * 5;
-            ItemStack soulStack = ((IDemonWill) ModItems.monsterSoul).createWill(0, amountOfSouls);
+            ItemStack soulStack = ((IDemonWill) ModItems.MONSTER_SOUL).createWill(0, amountOfSouls);
             event.getDrops().add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
         }
 

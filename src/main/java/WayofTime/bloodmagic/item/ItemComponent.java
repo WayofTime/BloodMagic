@@ -115,7 +115,7 @@ public class ItemComponent extends Item implements IVariantProvider
 
     public static ItemStack getStack(String name)
     {
-        return new ItemStack(ModItems.itemComponent, 1, names.indexOf(name));
+        return new ItemStack(ModItems.ITEM_COMPONENT, 1, names.indexOf(name));
     }
 
     @Override

@@ -21,7 +21,7 @@ public class CustomMeshDefinitionWillGem implements ItemMeshDefinition
     @Override
     public ModelResourceLocation getModelLocation(ItemStack stack)
     {
-        if (stack != null && stack.getItem() == ModItems.soulGem)
+        if (stack != null && stack.getItem() == ModItems.SOUL_GEM)
         {
             EnumDemonWillType type = ((ItemSoulGem) stack.getItem()).getCurrentType(stack);
             return new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + name), "type=" + ItemSoulGem.names[stack.getItemDamage()] + "_" + type.getName().toLowerCase());

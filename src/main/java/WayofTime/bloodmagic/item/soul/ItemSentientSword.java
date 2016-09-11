@@ -73,7 +73,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
 
     public ItemSentientSword()
     {
-        super(ModItems.soulToolMaterial);
+        super(ModItems.SOUL_TOOL_MATERIAL);
 
         setUnlocalizedName(Constants.Mod.MODID + ".sentientSword");
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -82,7 +82,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {
-        return ModItems.itemDemonCrystal == repair.getItem() ? true : super.getIsRepairable(toRepair, repair);
+        return ModItems.ITEM_DEMON_CRYSTAL == repair.getItem() ? true : super.getIsRepairable(toRepair, repair);
     }
 
     public void recalculatePowers(ItemStack stack, World world, EntityPlayer player)
@@ -347,7 +347,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
 
         double willModifier = killedEntity instanceof EntitySlime ? 0.67 : 1;
 
-        IDemonWill soul = ((IDemonWill) ModItems.monsterSoul);
+        IDemonWill soul = ((IDemonWill) ModItems.MONSTER_SOUL);
 
         for (int i = 0; i <= looting; i++)
         {

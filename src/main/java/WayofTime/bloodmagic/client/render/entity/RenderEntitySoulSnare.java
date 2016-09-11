@@ -30,7 +30,7 @@ public class RenderEntitySoulSnare extends Render<EntitySoulSnare>
         GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
         this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        this.renderItem.renderItem(new ItemStack(ModItems.soulSnare), ItemCameraTransforms.TransformType.GROUND);
+        this.renderItem.renderItem(new ItemStack(ModItems.SOUL_SNARE), ItemCameraTransforms.TransformType.GROUND);
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

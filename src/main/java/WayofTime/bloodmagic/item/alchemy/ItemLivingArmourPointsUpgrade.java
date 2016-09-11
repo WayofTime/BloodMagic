@@ -25,7 +25,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
@@ -137,7 +136,7 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
 
     public static ItemStack getStack(String name)
     {
-        return new ItemStack(ModItems.itemPointsUpgrade, 1, names.indexOf(name));
+        return new ItemStack(ModItems.ITEM_POINTS_UPGRADE, 1, names.indexOf(name));
     }
 
     @Override

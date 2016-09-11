@@ -66,7 +66,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type)
     {
-        if (this == ModItems.sentientArmourChest || this == ModItems.sentientArmourHelmet || this == ModItems.sentientArmourBoots)
+        if (this == ModItems.SENTIENT_ARMOUR_CHEST || this == ModItems.SENTIENT_ARMOUR_HELMET || this == ModItems.SENTIENT_ARMOUR_BOOTS)
         {
             switch (this.getCurrentType(stack))
             {
@@ -84,7 +84,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             return "bloodmagic:models/armor/sentientArmour_layer_1.png";
         }
 
-        if (this == ModItems.sentientArmourLegs)
+        if (this == ModItems.SENTIENT_ARMOUR_LEGS)
         {
             switch (this.getCurrentType(stack))
             {
@@ -161,13 +161,13 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         double armourReduction = 0.0;
         double damageAmount = 0.25;
 
-        if (this == ModItems.sentientArmourBoots || this == ModItems.sentientArmourHelmet)
+        if (this == ModItems.SENTIENT_ARMOUR_BOOTS || this == ModItems.SENTIENT_ARMOUR_HELMET)
         {
             damageAmount = 3d / 20d * 0.6;
-        } else if (this == ModItems.sentientArmourLegs)
+        } else if (this == ModItems.SENTIENT_ARMOUR_LEGS)
         {
             damageAmount = 6d / 20d * 0.6;
-        } else if (this == ModItems.sentientArmourChest)
+        } else if (this == ModItems.SENTIENT_ARMOUR_CHEST)
         {
             damageAmount = 0.64;
         }
@@ -186,7 +186,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             return new ArmorProperties(-1, 0, 0);
         }
 
-        if (this == ModItems.sentientArmourChest)
+        if (this == ModItems.SENTIENT_ARMOUR_CHEST)
         {
             armourReduction = 0.24 / 0.64; // This values puts it at iron level
 
@@ -232,22 +232,22 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     @Override
     public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot)
     {
-        if (armor.getItem() == ModItems.sentientArmourHelmet)
+        if (armor.getItem() == ModItems.SENTIENT_ARMOUR_HELMET)
         {
             return 3;
         }
 
-        if (armor.getItem() == ModItems.sentientArmourChest)
+        if (armor.getItem() == ModItems.SENTIENT_ARMOUR_CHEST)
         {
             return 8;
         }
 
-        if (armor.getItem() == ModItems.sentientArmourLegs)
+        if (armor.getItem() == ModItems.SENTIENT_ARMOUR_LEGS)
         {
             return 6;
         }
 
-        if (armor.getItem() == ModItems.sentientArmourBoots)
+        if (armor.getItem() == ModItems.SENTIENT_ARMOUR_BOOTS)
         {
             return 3;
         }
@@ -331,13 +331,13 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             public ModelResourceLocation getModelLocation(ItemStack stack)
             {
                 assert getCustomLocation() != null;
-                EnumDemonWillType type = ((ItemSentientArmour) ModItems.sentientArmourHelmet).getCurrentType(stack);
+                EnumDemonWillType type = ((ItemSentientArmour) ModItems.SENTIENT_ARMOUR_HELMET).getCurrentType(stack);
                 String additional = "_" + type.getName().toLowerCase();
-                if (stack.getItem() == ModItems.sentientArmourHelmet)
+                if (stack.getItem() == ModItems.SENTIENT_ARMOUR_HELMET)
                     return new ModelResourceLocation(getCustomLocation(), "armour=head" + additional);
-                else if (stack.getItem() == ModItems.sentientArmourChest)
+                else if (stack.getItem() == ModItems.SENTIENT_ARMOUR_CHEST)
                     return new ModelResourceLocation(getCustomLocation(), "armour=body" + additional);
-                else if (stack.getItem() == ModItems.sentientArmourLegs)
+                else if (stack.getItem() == ModItems.SENTIENT_ARMOUR_LEGS)
                     return new ModelResourceLocation(getCustomLocation(), "armour=leg" + additional);
                 else
                     return new ModelResourceLocation(getCustomLocation(), "armour=feet" + additional);
@@ -444,10 +444,10 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         ItemStack bootsStack = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 
         {
-            ItemStack omegaHelmetStack = ((ItemSentientArmour) ModItems.sentientArmourHelmet).getSubstituteStack(type, will, helmetStack);
-            ItemStack omegaChestStack = ((ItemSentientArmour) ModItems.sentientArmourChest).getSubstituteStack(type, will, chestStack);
-            ItemStack omegaLeggingsStack = ((ItemSentientArmour) ModItems.sentientArmourLegs).getSubstituteStack(type, will, leggingsStack);
-            ItemStack omegaBootsStack = ((ItemSentientArmour) ModItems.sentientArmourBoots).getSubstituteStack(type, will, bootsStack);
+            ItemStack omegaHelmetStack = ((ItemSentientArmour) ModItems.SENTIENT_ARMOUR_HELMET).getSubstituteStack(type, will, helmetStack);
+            ItemStack omegaChestStack = ((ItemSentientArmour) ModItems.SENTIENT_ARMOUR_CHEST).getSubstituteStack(type, will, chestStack);
+            ItemStack omegaLeggingsStack = ((ItemSentientArmour) ModItems.SENTIENT_ARMOUR_LEGS).getSubstituteStack(type, will, leggingsStack);
+            ItemStack omegaBootsStack = ((ItemSentientArmour) ModItems.SENTIENT_ARMOUR_BOOTS).getSubstituteStack(type, will, bootsStack);
 
             player.setItemStackToSlot(EntityEquipmentSlot.HEAD, omegaHelmetStack);
             player.setItemStackToSlot(EntityEquipmentSlot.CHEST, omegaChestStack);

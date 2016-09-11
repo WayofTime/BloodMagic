@@ -35,7 +35,7 @@ public class CategoryAlchemy
 
         List<IPage> ashPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe ashRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.arcaneAshes));
+        TartaricForgeRecipe ashRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.ARCANE_ASHES));
         if (ashRecipe != null)
         {
             ashPages.add(new PageTartaricForgeRecipe(ashRecipe));

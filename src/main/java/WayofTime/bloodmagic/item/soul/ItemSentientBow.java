@@ -58,7 +58,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
                 } else
                 {
                     ItemStack itemstack = entityIn.getActiveItemStack();
-                    return itemstack != null && itemstack.getItem() == ModItems.sentientBow ? (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F : 0.0F;
+                    return itemstack != null && itemstack.getItem() == ModItems.SENTIENT_BOW ? (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F : 0.0F;
                 }
             }
         });
@@ -75,7 +75,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, World world, EntityLivingBase entityIn)
             {
-                return ((ItemSentientBow) ModItems.sentientBow).getCurrentType(stack).ordinal();
+                return ((ItemSentientBow) ModItems.SENTIENT_BOW).getCurrentType(stack).ordinal();
             }
         });
     }
@@ -83,7 +83,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {
-        return ModItems.itemDemonCrystal == repair.getItem() ? true : super.getIsRepairable(toRepair, repair);
+        return ModItems.ITEM_DEMON_CRYSTAL == repair.getItem() ? true : super.getIsRepairable(toRepair, repair);
     }
 
     public void recalculatePowers(ItemStack stack, World world, EntityPlayer player)

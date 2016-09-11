@@ -31,12 +31,12 @@ public class HUDElementHolding extends HUDElement
         // Check mainhand for Sigil of Holding
         if (sigilHolding == null)
             return;
-        if (!(sigilHolding.getItem() == ModItems.sigilHolding))
+        if (!(sigilHolding.getItem() == ModItems.SIGIL_HOLDING))
             sigilHolding = minecraft.thePlayer.getHeldItemOffhand();
         // Check offhand for Sigil of Holding
         if (sigilHolding == null)
             return;
-        if (!(sigilHolding.getItem() == ModItems.sigilHolding))
+        if (!(sigilHolding.getItem() == ModItems.SIGIL_HOLDING))
             return;
 
         Gui ingameGui = minecraft.ingameGUI;

@@ -10,7 +10,7 @@ public class FuelHandler implements IFuelHandler
     @Override
     public int getBurnTime(ItemStack fuel)
     {
-        if (fuel != null && fuel.getItem() == ModItems.itemComponent && fuel.getMetadata() == ItemComponent.getStack(ItemComponent.SAND_COAL).getMetadata())
+        if (fuel != null && fuel.getItem() == ModItems.ITEM_COMPONENT && fuel.getMetadata() == ItemComponent.getStack(ItemComponent.SAND_COAL).getMetadata())
         {
             return 1600;
         }

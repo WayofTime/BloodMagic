@@ -58,7 +58,7 @@ public class BloodMagic
         @Override
         public Item getTabIconItem()
         {
-            return ModItems.bloodOrb;
+            return ModItems.BLOOD_ORB;
         }
     };
 
@@ -67,7 +67,7 @@ public class BloodMagic
         @Override
         public Item getTabIconItem()
         {
-            return ModItems.upgradeTome;
+            return ModItems.UPGRADE_TOME;
         }
     };
 

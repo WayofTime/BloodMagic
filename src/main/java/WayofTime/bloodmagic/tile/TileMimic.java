@@ -78,7 +78,7 @@ public class TileMimic extends TileInventory implements ITickable
                         double posY = this.pos.getY() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
                         double posZ = this.pos.getZ() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
 
-                        ItemStack newStack = new ItemStack(potionStack.getItem() == ModItems.potionFlask ? Items.SPLASH_POTION : potionStack.getItem());
+                        ItemStack newStack = new ItemStack(potionStack.getItem() == ModItems.POTION_FLASK ? Items.SPLASH_POTION : potionStack.getItem());
                         newStack.setTagCompound(potionStack.getTagCompound());
 
                         EntityPotion potionEntity = new EntityPotion(worldObj, posX, posY, posZ, newStack);
@@ -121,7 +121,7 @@ public class TileMimic extends TileInventory implements ITickable
                     ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.potionSet"));
                 }
                 return true;
-            } else if (heldItem.getItem() == ModItems.potionFlask)
+            } else if (heldItem.getItem() == ModItems.POTION_FLASK)
             {
                 //The potion flask is empty, therefore we have to reset the stored potion.
                 if (!world.isRemote)

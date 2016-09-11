@@ -65,7 +65,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         if (!isActive() && !getWorld().isBlockPowered(getPos()) && isRedstoned() && getCurrentRitual() != null)
         {
             active = true;
-            ItemStack crystalStack = NBTHelper.checkNBT(new ItemStack(ModItems.activationCrystal, 1, getCurrentRitual().getCrystalLevel()));
+            ItemStack crystalStack = NBTHelper.checkNBT(new ItemStack(ModItems.ACTIVATION_CRYSTAL, 1, getCurrentRitual().getCrystalLevel()));
             crystalStack.getTagCompound().setString(Constants.NBT.OWNER_UUID, getOwner());
             activateRitual(crystalStack, null, getCurrentRitual());
             redstoned = false;
