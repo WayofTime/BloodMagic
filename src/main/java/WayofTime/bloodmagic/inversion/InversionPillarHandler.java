@@ -61,14 +61,16 @@ public class InversionPillarHandler
 
         if (posList != null)
         {
-            posList.remove(pos);
-
             List<BlockPos> newList = new ArrayList<BlockPos>();
 
             Iterator<BlockPos> itr = posList.iterator();
             while (itr.hasNext())
             {
                 BlockPos newPos = itr.next();
+                if (newPos.equals(pos))
+                {
+                    continue;
+                }
                 if (world.getTileEntity(newPos) instanceof TileInversionPillar) //Make this check... more efficient somehow.
                 {
                     newList.add(newPos);
