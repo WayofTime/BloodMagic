@@ -9,7 +9,6 @@ import java.util.Map;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.tile.TileInversionPillar;
 
 public class InversionPillarHandler
 {
@@ -27,7 +26,9 @@ public class InversionPillarHandler
             {
                 if (!willMap.get(type).contains(pos))
                 {
-                    return willMap.get(type).add(pos);
+                    willMap.get(type).add(pos);
+                    onPillarAdded(world, type, pos);
+                    return true;
                 } else
                 {
                     return false;
@@ -37,6 +38,7 @@ public class InversionPillarHandler
                 List<BlockPos> posList = new ArrayList<BlockPos>();
                 posList.add(pos);
                 willMap.put(type, posList);
+                onPillarAdded(world, type, pos);
                 return true;
             }
         } else
@@ -47,6 +49,7 @@ public class InversionPillarHandler
 
             willMap.put(type, posList);
             pillarMap.put(dim, willMap);
+            onPillarAdded(world, type, pos);
             return true;
         }
     }
@@ -61,6 +64,7 @@ public class InversionPillarHandler
             {
                 if (willMap.get(type).contains(pos))
                 {
+                    onPillarRemoved(world, type, pos);
                     return willMap.get(type).remove(pos);
                 } else
                 {
@@ -76,8 +80,77 @@ public class InversionPillarHandler
         }
     }
 
+    //Assume that it has been added already.
+    private static void onPillarAdded(World world, EnumDemonWillType type, BlockPos pos)
+    {
+        System.out.println("Adding...");
+        List<BlockPos> closePosList = new ArrayList<BlockPos>();
+
+        int dim = world.provider.getDimension();
+        if (pillarMap.containsKey(dim))
+        {
+            Map<EnumDemonWillType, List<BlockPos>> willMap = pillarMap.get(dim);
+            if (willMap.containsKey(type))
+            {
+                List<BlockPos> otherPosList = willMap.get(type);
+
+                Iterator<BlockPos> posIterator = otherPosList.iterator();
+                while (posIterator.hasNext())
+                {
+                    BlockPos closePos = posIterator.next();
+                    if (!closePos.equals(pos) && closePos.distanceSq(pos) <= farthestDistanceSquared)
+                    {
+                        closePosList.add(closePos);
+                    }
+                }
+
+            }
+        }
+        if (nearPillarMap.containsKey(dim))
+        {
+            Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>> willMap = nearPillarMap.get(dim);
+            if (willMap.containsKey(type))
+            {
+                Map<BlockPos, List<BlockPos>> posMap = willMap.get(type);
+
+                Iterator<BlockPos> closePosIterator = closePosList.iterator();
+                while (closePosIterator.hasNext())
+                {
+                    BlockPos closePos = closePosIterator.next();
+                    List<BlockPos> posList = posMap.get(closePos);
+                    if (posList != null && !posList.contains(pos))
+                    {
+                        posList.add(pos);
+                    } else
+                    {
+                        posList = new ArrayList<BlockPos>();
+                        posList.add(pos);
+                        posMap.put(closePos, posList);
+                    }
+                }
+
+                posMap.put(pos, closePosList);
+            } else
+            {
+                Map<BlockPos, List<BlockPos>> posMap = new HashMap<BlockPos, List<BlockPos>>();
+
+                posMap.put(pos, closePosList);
+                willMap.put(type, posMap);
+            }
+        } else
+        {
+            Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>> willMap = new HashMap<EnumDemonWillType, Map<BlockPos, List<BlockPos>>>();
+            Map<BlockPos, List<BlockPos>> posMap = new HashMap<BlockPos, List<BlockPos>>();
+
+            posMap.put(pos, closePosList);
+            willMap.put(type, posMap);
+            nearPillarMap.put(dim, willMap);
+        }
+    }
+
     private static void onPillarRemoved(World world, EnumDemonWillType type, BlockPos pos)
     {
+        System.out.println("Removing...");
         int dim = world.provider.getDimension();
         if (nearPillarMap.containsKey(dim))
         {
@@ -109,35 +182,20 @@ public class InversionPillarHandler
     public static List<BlockPos> getNearbyPillars(World world, EnumDemonWillType type, BlockPos pos)
     {
         int dim = world.provider.getDimension();
-        List<BlockPos> posList = new ArrayList<BlockPos>();
-        if (pillarMap.containsKey(dim))
+        if (nearPillarMap.containsKey(dim))
         {
-            Map<EnumDemonWillType, List<BlockPos>> willMap = pillarMap.get(dim);
-            posList = willMap.get(type);
-        }
-
-        if (posList != null)
-        {
-            List<BlockPos> newList = new ArrayList<BlockPos>();
-
-            Iterator<BlockPos> itr = posList.iterator();
-            while (itr.hasNext())
+            Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>> willMap = nearPillarMap.get(dim);
+            if (willMap.containsKey(type))
             {
-                BlockPos newPos = itr.next();
-                if (newPos.equals(pos))
+                Map<BlockPos, List<BlockPos>> posMap = willMap.get(type);
+                List<BlockPos> posList = posMap.get(pos);
+                if (posList != null)
                 {
-                    continue;
-                }
-                if (world.getTileEntity(newPos) instanceof TileInversionPillar) //Make this check... more efficient somehow.
-                {
-                    newList.add(newPos);
+                    return posList;
                 }
             }
-
-            return newList;
-        } else
-        {
-            return new ArrayList<BlockPos>();
         }
+
+        return new ArrayList<BlockPos>();
     }
 }

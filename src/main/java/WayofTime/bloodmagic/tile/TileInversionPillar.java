@@ -66,6 +66,10 @@ public class TileInversionPillar extends TileTicking
         if (counter % 1 == 0)
         {
             List<BlockPos> pillarList = getNearbyPillarsExcludingThis();
+//            if (type == EnumDemonWillType.VENGEFUL)
+//            {
+//                System.out.println(pillarList.size() + " nearby pillars");
+//            }
             generateWillForNearbyPillars(currentWill, pillarList);
             generateInversionForNearbyPillars(currentWill, pillarList);
             int pollute = polluteNearbyBlocks(currentWill);
@@ -94,7 +98,10 @@ public class TileInversionPillar extends TileTicking
 
     public void removePillarFromMap()
     {
-
+        if (!worldObj.isRemote)
+        {
+            InversionPillarHandler.removePillarFromMap(worldObj, type, pos);
+        }
     }
 
     public List<BlockPos> getNearbyPillarsExcludingThis()
