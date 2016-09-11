@@ -10,6 +10,8 @@ Version 2.1.0-59
 - Fixed the Regeneration ritual so that it works on non-players
 - Added Mimic entry to The Architect.
 - Configurified the Meteor Ritual - Modpacks and users can edit all of the major properties of the meteor ritual, including what items need to be dropped onto the ritual as well as what you get in the ritual, radius, etc. The config will refresh if there is a version change unless you set "resyncOnVersionChange" to false.
+- Merged the three brick variants into one.
+- Added the Inversion Pillar models and caps
 
 ------------------------------------------------------
 Version 2.0.4-58

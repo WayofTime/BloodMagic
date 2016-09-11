@@ -171,7 +171,7 @@ public class ModRecipes
             ItemStack baseStoneStackCrafted = new ItemStack(ModBlocks.DEMON_EXTRAS, 16, i);
             ItemStack polishedStoneStack = new ItemStack(ModBlocks.DEMON_EXTRAS, 1, i + 5);
             ItemStack willBrickStack = new ItemStack(ModBlocks.DEMON_BRICK_1, 1, i + 10);
-            ItemStack willBrickStackCrafted = new ItemStack(ModBlocks.DEMON_BRICK_1, 4, i + 10);
+            ItemStack willBrickStackCrafted = new ItemStack(ModBlocks.DEMON_BRICK_1, 4, i);
 
             ItemStack willSmallBrickStack = new ItemStack(ModBlocks.DEMON_BRICK_2, 1, i);
             ItemStack willSmallBrickStackCrafted = new ItemStack(ModBlocks.DEMON_BRICK_2, 1, i);
@@ -180,10 +180,6 @@ public class ModRecipes
 
             GameRegistry.addRecipe(new ShapelessOreRecipe(baseStoneStackCrafted, crystalStack, "stone", "stone", "stone", "stone", "stone", "stone", "stone", "stone"));
             GameRegistry.addRecipe(willBrickStackCrafted, "ss", "ss", 's', baseStoneStack);
-            GameRegistry.addRecipe(new ItemStack(ModBlocks.DEMON_BRICK_1, 5, i), "ss ", "sss", 's', willBrickStack); //Uneven long bricks
-            GameRegistry.addRecipe(new ItemStack(ModBlocks.DEMON_BRICK_1, 4, i + 5), "ss ", " ss", 's', willBrickStack); //Uneven bricks
-            GameRegistry.addShapelessRecipe(willBrickStack, new ItemStack(ModBlocks.DEMON_BRICK_1, 1, i));
-            GameRegistry.addShapelessRecipe(willBrickStack, new ItemStack(ModBlocks.DEMON_BRICK_1, 1, i + 5));
             GameRegistry.addRecipe(willSmallBrickStackCrafted, "ss", "ss", 's', willBrickStack);
             GameRegistry.addRecipe(new ItemStack(ModBlocks.DEMON_BRICK_2, 9, i + 5), "scs", "ccc", "scs", 's', baseStoneStack, 'c', willBrickStack);
             GameRegistry.addRecipe(new ItemStack(ModBlocks.DEMON_BRICK_2, 9, i + 10), "scs", "coc", "scs", 's', baseStoneStack, 'c', willBrickStack, 'o', crystalStack);
