@@ -170,9 +170,9 @@ item.BloodMagic.itemFilter.modItems.name=Filtre d'Objets par Mod
 item.BloodMagic.itemFilter.oreDict.name=Filtre d'Objets par le Catalogue de Minerai
 
 item.BloodMagic.experienceTome.name=Tôme de Peritia
-item.BloodMagic.sanguineBook.name=Book of Sanguine
+item.BloodMagic.sanguineBook.name=Livre Sanguin
 
-item.BloodMagic.livingPointUpgrade.draftAngelus.name=Draft of Angelus
+item.BloodMagic.livingPointUpgrade.draftAngelus.name=Draft d'Angelus
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Essence de Vie
@@ -269,7 +269,7 @@ tooltip.BloodMagic.sigil.divination.currentAltarCapacity=Capacité Actuelle: %d 
 tooltip.BloodMagic.sigil.divination.currentTranquility=Tranquillité Actuelle: %d
 tooltip.BloodMagic.sigil.divination.currentBonus=Bonus Actuel: +%d%%
 tooltip.BloodMagic.sigil.water.desc=&oUne infinité d'eau, personne?
-tooltip.BloodMagic.sigil.lava.desc=&oCHAUD! NE LE MANGER PAS
+tooltip.BloodMagic.sigil.lava.desc=&oCHAUD! NE LE MANGEZ PAS
 tooltip.BloodMagic.sigil.void.desc=&oMieux que Swiffer®!
 tooltip.BloodMagic.sigil.greenGrove.desc=&oÉcologique
 tooltip.BloodMagic.sigil.magnetism.desc=&oJ'ai une personnalité très attirante
@@ -295,7 +295,7 @@ tooltip.BloodMagic.sigil.transposition.desc=Sens le pouvoir de la force, mon jeu
 tooltip.BloodMagic.sigil.holding.desc=Sigil-ception
 tooltip.BloodMagic.sigil.holding.sigilInSlot=Slot %d: %s
 
-tooltip.BloodMagic.livingArmourPointsUpgrade.desc=Increases the max points of Living Armour to %d.
+tooltip.BloodMagic.livingArmourPointsUpgrade.desc=Augmente le maxium de points de l'Armure Vivante à %d.
 
 tooltip.BloodMagic.bound.sword.desc=&oBattre le faible
 tooltip.BloodMagic.bound.pickaxe.desc=&oDétruir les pierres sans pitié
@@ -345,14 +345,14 @@ tooltip.BloodMagic.telepositionFocus.reinforced=Utilisée pour déplacer les blo
 tooltip.BloodMagic.telepositionFocus.demonic=Utilisée pour déplacer les blocs dans le monde
 
 tooltip.BloodMagic.livingArmour.upgrade.speed=Pieds Rapides
-tooltip.BloodMagic.livingArmour.upgrade.digging=Dwarven Might
-tooltip.BloodMagic.livingArmour.upgrade.poisonResist=Poison Resistance
-tooltip.BloodMagic.livingArmour.upgrade.fireResist=Gift of Ignis
-tooltip.BloodMagic.livingArmour.upgrade.selfSacrifice=Tough Palms
-tooltip.BloodMagic.livingArmour.upgrade.knockback=Body Builder
-tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=Tough Skin
-tooltip.BloodMagic.livingArmour.upgrade.health=Healthy
-tooltip.BloodMagic.livingArmour.upgrade.meleeDamage=Fierce Strike
+tooltip.BloodMagic.livingArmour.upgrade.digging=Puissance de Dwarven
+tooltip.BloodMagic.livingArmour.upgrade.poisonResist=Résistance au Poison
+tooltip.BloodMagic.livingArmour.upgrade.fireResist=Cadeau d'Ignis
+tooltip.BloodMagic.livingArmour.upgrade.selfSacrifice=Paumes Dures
+tooltip.BloodMagic.livingArmour.upgrade.knockback=
+tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=Peau Dure
+tooltip.BloodMagic.livingArmour.upgrade.health=Sain
+tooltip.BloodMagic.livingArmour.upgrade.meleeDamage=Coup Féroce
 tooltip.BloodMagic.livingArmour.upgrade.arrowShot=Trick Shot
 tooltip.BloodMagic.livingArmour.upgrade.stepAssist=Step Assist
 tooltip.BloodMagic.livingArmour.upgrade.grimReaper=Grim Reaper's Sprint
@@ -383,9 +383,9 @@ tooltip.BloodMagic.soulGem.greater=A gem used to contain a greater amount of wil
 tooltip.BloodMagic.soulGem.grand=A gem used to contain a large amount of will
 tooltip.BloodMagic.soulSnare.desc=Throw at a monster and then kill them to obtain their demonic will
 
-tooltip.BloodMagic.itemFilter.exact=Will make sure the items match precisely
-tooltip.BloodMagic.itemFilter.ignoreNBT=Ignores the NBT of the filter
-tooltip.BloodMagic.itemFilter.modItems=Matches all items from the same mod
+tooltip.BloodMagic.itemFilter.exact=Va être sure que les objets se ressemblent exactement
+tooltip.BloodMagic.itemFilter.ignoreNBT=Ignore le NBT du filtre
+tooltip.BloodMagic.itemFilter.modItems=Assortis les objets du même mod
 tooltip.BloodMagic.itemFilter.oreDict=Used to filter through the Ore Dictionary
 
 tooltip.BloodMagic.fluid.type=Fluid Contained
@@ -395,11 +395,11 @@ tooltip.BloodMagic.fluid.capacity=Capacity
 tooltip.BloodMagic.ghost.everything=Everything
 tooltip.BloodMagic.ghost.amount=Ghost item amount: %d
 
-tooltip.BloodMagic.currentType.default=Contains: Raw Will
-tooltip.BloodMagic.currentType.corrosive=Contains: Corrosive Will
-tooltip.BloodMagic.currentType.destructive=Contains: Destructive Will
-tooltip.BloodMagic.currentType.vengeful=Contains: Vengeful Will
-tooltip.BloodMagic.currentType.steadfast=Contains: Steadfast Will
+tooltip.BloodMagic.currentType.default=Contains: Volonté Crue
+tooltip.BloodMagic.currentType.corrosive=Contains: Volonté Corrosive
+tooltip.BloodMagic.currentType.destructive=Contains: Volonté Destructive
+tooltip.BloodMagic.currentType.vengeful=Contains: Volonté Vengeuse
+tooltip.BloodMagic.currentType.steadfast=Contains: Volonté Inébranlable
 
 tooltip.BloodMagic.experienceTome=A book used to store experience
 tooltip.BloodMagic.experienceTome.exp=Exp: %0.3f
