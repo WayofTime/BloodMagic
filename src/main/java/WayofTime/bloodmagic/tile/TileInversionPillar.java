@@ -85,9 +85,9 @@ public class TileInversionPillar extends TileTicking
                 System.out.println("Increasing radius!");
             }
 
-            if (currentInversion >= inversionToAddPillar)
+            if (currentInfectionRadius >= 10 && currentInversion >= inversionToAddPillar)
             {
-
+                //TODO: Spawn pillar
             }
         }
     }
@@ -140,7 +140,7 @@ public class TileInversionPillar extends TileTicking
 
         if (totalGeneratedWill > 0)
         {
-            WorldDemonWillHandler.fillWillToMaximum(worldObj, pos, type, totalGeneratedWill, maxWillForChunk, true);
+            WorldDemonWillHandler.fillWillToMaximum(worldObj, pos, type, totalGeneratedWill, maxWillForChunk, true); //TODO: Find out why this method doesn't work.
         }
     }
 

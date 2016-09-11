@@ -1,16 +1,54 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "textures": { },
-    "model": "cube_all",
-    "uvlock": true
+    "textures": { 
+    	"texture": "bloodmagic:models/pillar_mid",
+    	"particle": "#texture"
+   	},
+    "transform" : "forge:default-block",
+    "model": "bloodmagic:pillar_mid"
   },
   "variants": {
     "type": {
       "raw": {
         "textures": {
-          "all": "bloodmagic:blocks/WoodBrickPath"
-        }
+
+        },
+        "transform": {
+	      	"translation": [ 0, -0.46875, 0 ]
+	    }
+      },
+      "corrosive": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_mid_c"
+        },
+        "transform": {
+	      	"translation": [ 0, -0.46875, 0 ]
+	    }
+      },
+      "vengeful": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_mid_v"
+        },
+        "transform": {
+	      	"translation": [ 0, -0.46875, 0 ]
+	    }
+      },
+      "destructive": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_mid_d"
+        },
+        "transform": {
+	      	"translation": [ 0, -0.46875, 0 ]
+	    }
+      },
+      "steadfast": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_mid_s"
+        },
+        "transform": {
+	      	"translation": [ 0, -0.46875, 0 ]
+	    }
       }
     }
   }

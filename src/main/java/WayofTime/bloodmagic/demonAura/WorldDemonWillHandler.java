@@ -129,9 +129,9 @@ public class WorldDemonWillHandler
 
         DemonWillHolder currentWill = willChunk.getCurrentWill();
         double fill = Math.min(amount, max - currentWill.getWill(type));
-        if (!doFill)
+        if (!doFill || fill <= 0)
         {
-            return fill;
+            return fill > 0 ? fill : 0;
         }
 
         fill = currentWill.addWill(type, amount, max);

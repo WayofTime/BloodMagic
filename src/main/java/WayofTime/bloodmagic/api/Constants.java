@@ -276,7 +276,8 @@ public class Constants
         MASTER_ROUTING_NODE("BlockMasterRoutingNode"),
         OUTPUT_ROUTING_NODE("BlockOutputRoutingNode"),
         @Deprecated
-        PEDESTAL("BlockPedestal"), /** No longer included in the mod. */
+        PEDESTAL("BlockPedestal"),
+        /** No longer included in the mod. */
         PHANTOM("BlockPhantom"),
         RITUAL_CONTROLLER("BlockRitualController"),
         RITUAL_STONE("BlockRitualStone"),
@@ -306,7 +307,8 @@ public class Constants
         DEMON_STAIRS_2("BlockStairs2"),
         DEMON_STAIRS_3("BlockStairs3"),
         DEMON_LIGHT("BlockDemonLight"),
-        INVERSION_PILLAR("BlockInversionPillar");
+        INVERSION_PILLAR("BlockInversionPillar"),
+        INVERSION_PILLAR_END("BlockInversionPillarEnd");
 
         @Getter
         private final String regName;

@@ -6,31 +6,27 @@ import java.util.List;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.block.base.BlockStringContainer;
+import WayofTime.bloodmagic.block.base.BlockString;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.tile.TileInversionPillar;
 
-public class BlockInversionPillar extends BlockStringContainer implements IVariantProvider
+public class BlockInversionPillarEnd extends BlockString implements IVariantProvider
 {
-    public static final String[] names = { "raw", "corrosive", "destructive", "vengeful", "steadfast" };
+    public static final String[] names = { "raw_bottom", "raw_top", "corrosive_bottom", "corrosive_top", "destructive_bottom", "destructive_top", "vengeful_bottom", "vengeful_top", "steadfast_bottom", "steadfast_top" };
 
-    public BlockInversionPillar()
+    public BlockInversionPillarEnd()
     {
         super(Material.ROCK, names);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".inversionpillar.");
+        setUnlocalizedName(Constants.Mod.MODID + ".inversionpillarend.");
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);
@@ -75,11 +71,5 @@ public class BlockInversionPillar extends BlockStringContainer implements IVaria
         for (int i = 0; i < names.length; i++)
             ret.add(new ImmutablePair<Integer, String>(i, "type=" + names[i]));
         return ret;
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
-        return new TileInversionPillar(EnumDemonWillType.values()[meta % 5]);
     }
 }
