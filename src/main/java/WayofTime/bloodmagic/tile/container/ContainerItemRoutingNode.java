@@ -77,7 +77,6 @@ public class ContainerItemRoutingNode extends Container
                 if (slot instanceof SlotGhostItem) //TODO: make the slot clicking work!
                 {
                     lastGhostSlotClicked = slot.getSlotIndex();
-                    System.out.println(lastGhostSlotClicked);
 
                     if ((dragType == 0 || dragType == 1))
                     {

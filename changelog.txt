@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 2.1.0-60
+------------------------------------------------------
+- Fixed routing node serialization.
+- Removed unwanted System.out lines when clicking on the slots in the routing node.
+
+------------------------------------------------------
 Version 2.1.0-59
 ------------------------------------------------------
 - Added the Living Armour Upgrade, Nocturnal Prowess, which gives night vision in dark areas and increases damage while the area is dark.
