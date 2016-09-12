@@ -43,7 +43,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     @Override
     public NBTTagCompound serialize(NBTTagCompound tag)
     {
-        super.deserialize(tag);
+        super.serialize(tag);
         NBTTagCompound masterTag = new NBTTagCompound();
         masterTag.setInteger(Constants.NBT.X_COORD, masterPos.getX());
         masterTag.setInteger(Constants.NBT.Y_COORD, masterPos.getY());
