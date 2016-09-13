@@ -1,61 +1,50 @@
 package WayofTime.bloodmagic.meteor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import lombok.AllArgsConstructor;
-import net.minecraft.block.Block;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.util.Utils;
 
-@AllArgsConstructor
-public class MeteorHolder
+@Getter
+public class Meteor
 {
-    public static Random rand = new Random();
-    public ResourceLocation resourceKey;
-    public int metaKey = 0;
-    public List<MeteorComponent> components = new ArrayList<MeteorComponent>();
+    private static final Random RAND = new Random();
 
-    public float explosionStrength = 1;
-    public int radius = 1;
+    private final ItemStack catalystStack;
+    private final List<MeteorComponent> components;
+    private final float explosionStrength;
+    private final int radius;
+    private final int maxWeight;
 
-    public int maxWeight = 1000;
+    @Setter
+    public int version;
 
-    public ItemStack getKeyStack(int meta)
+    public Meteor(ItemStack catalystStack, List<MeteorComponent> components, float explosionStrength, int radius, int maxWeight)
     {
-        Item item = Utils.getItem(resourceKey);
-        if (item != null)
-        {
-            return new ItemStack(item, 1, meta);
-        } else
-        {
-            Block block = Utils.getBlock(resourceKey);
-            if (block != null)
-            {
-                return new ItemStack(block, 1, meta);
-            }
-        }
-
-        return null;
+        this.catalystStack = catalystStack;
+        this.components = components;
+        this.explosionStrength = explosionStrength;
+        this.radius = radius;
+        this.maxWeight = maxWeight;
     }
 
     public void generateMeteor(World world, BlockPos pos, IBlockState fillerBlock)
     {
         world.newExplosion(null, pos.getX(), pos.getY(), pos.getZ(), explosionStrength, true, true);
 
-        for (int i = -radius; i <= radius; i++)
+        for (int i = -getRadius(); i <= getRadius(); i++)
         {
-            for (int j = -radius; j <= radius; j++)
+            for (int j = -getRadius(); j <= getRadius(); j++)
             {
-                for (int k = -radius; k <= radius; k++)
+                for (int k = -getRadius(); k <= getRadius(); k++)
                 {
-                    if (i * i + j * j + k * k > (radius + 0.5) * (radius + 0.5))
+                    if (i * i + j * j + k * k > (getRadius() + 0.5) * (getRadius() + 0.5))
                     {
                         continue;
                     }
@@ -75,9 +64,9 @@ public class MeteorHolder
 
     public IBlockState getRandomOreFromComponents(IBlockState fillerBlock)
     {
-        int goal = rand.nextInt(maxWeight);
+        int goal = RAND.nextInt(getMaxWeight());
 
-        for (MeteorComponent component : components)
+        for (MeteorComponent component : getComponents())
         {
             goal -= component.getWeight();
             if (goal < 0)

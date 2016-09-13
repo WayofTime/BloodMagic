@@ -18,7 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.commons.io.IOUtils;
 
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.gson.Adapters;
+import WayofTime.bloodmagic.gson.Serializers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -35,8 +35,7 @@ public class DungeonRoomLoader
 
     public static void saveSingleDungeon(DungeonRoom room)
     {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(room);
+        String json = Serializers.GSON.toJson(room);
 
         Writer writer;
         try
@@ -55,17 +54,15 @@ public class DungeonRoomLoader
 
     public static void loadDungeons()
     {
-        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(EnumFacing.class, Adapters.adapter).create();
-
         try
         {
             URL schematicURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(new ResourceLocation("bloodmagic:Schematics")));
-            List<String> schematics = gson.fromJson(Resources.toString(schematicURL, Charsets.UTF_8), new TypeToken<List<String>>(){}.getType());
+            List<String> schematics = Serializers.GSON.fromJson(Resources.toString(schematicURL, Charsets.UTF_8), new TypeToken<List<String>>(){}.getType());
             for (String schematicKey : schematics)
             {
                 ResourceLocation schematic = new ResourceLocation(schematicKey);
                 URL dungeonURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(schematic));
-                DungeonRoom dungeonRoom = gson.fromJson(Resources.toString(dungeonURL, Charsets.UTF_8), DungeonRoom.class);
+                DungeonRoom dungeonRoom = Serializers.GSON.fromJson(Resources.toString(dungeonURL, Charsets.UTF_8), DungeonRoom.class);
                 DungeonRoomRegistry.registerDungeonRoom(dungeonRoom, Math.max(1, dungeonRoom.dungeonWeight));
             }
         } catch (Exception e)

@@ -1,12 +1,13 @@
 package WayofTime.bloodmagic;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import WayofTime.bloodmagic.meteor.MeteorConfigHandler;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
@@ -20,7 +21,6 @@ import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.registry.ModMeteors;
 import WayofTime.bloodmagic.util.Utils;
 
 @Handler
@@ -322,19 +322,6 @@ public class ConfigHandler
         category = "Meteors";
         config.addCustomCategoryComment(category, "Meteor settings");
 
-        String[] defaultMeteors = ModMeteors.getDefaultMeteors();
-        boolean resyncMeteorOnVersionChange = config.getBoolean("resyncOnVersionChange", category, true, "");
-        Property meteorsProp = config.get(category, "MeteorList", defaultMeteors);
-        meteorsProp.setComment("These are meteors. Huzzah!");
-        if (resyncMeteorOnVersionChange && configVersionChanged)
-        {
-            meteorsProp.set(defaultMeteors);
-            ModMeteors.meteors = defaultMeteors;
-        } else
-        {
-            ModMeteors.meteors = meteorsProp.getStringList();
-        }
-
         config.save();
     }
 
@@ -385,7 +372,9 @@ public class ConfigHandler
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent event)
     {
-        if (event.getModID().equals(Constants.Mod.MODID))
-            ConfigHandler.syncConfig();
+        if (event.getModID().equals(Constants.Mod.MODID)) {
+            syncConfig();
+            MeteorConfigHandler.handleMeteors(false);
+        }
     }
 }

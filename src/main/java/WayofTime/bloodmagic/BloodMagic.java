@@ -3,6 +3,7 @@ package WayofTime.bloodmagic;
 import java.io.File;
 import java.util.Map;
 
+import WayofTime.bloodmagic.meteor.MeteorConfigHandler;
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -32,7 +33,6 @@ import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModCompatibility;
 import WayofTime.bloodmagic.registry.ModEntities;
 import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.registry.ModMeteors;
 import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.registry.ModRecipes;
 import WayofTime.bloodmagic.registry.ModRituals;
@@ -127,7 +127,7 @@ public class BloodMagic
         ModRecipes.init();
         ModRituals.initRituals();
         ModRituals.initImperfectRituals();
-        ModMeteors.init();
+        MeteorConfigHandler.init(new File(configDir, "meteors"));
         ModArmourTrackers.init();
         ModCompatibility.loadCompat(ICompatibility.InitializationPhase.INIT);
         NetworkRegistry.INSTANCE.registerGuiHandler(BloodMagic.instance, new GuiHandler());

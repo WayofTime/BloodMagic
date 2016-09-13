@@ -6,17 +6,15 @@ import java.util.Map;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.ItemStackWrapper;
-import WayofTime.bloodmagic.util.Utils;
 
 public class MeteorRegistry
 {
-    public static Map<ItemStackWrapper, MeteorHolder> meteorMap = new HashMap<ItemStackWrapper, MeteorHolder>();
+    public static Map<ItemStackWrapper, Meteor> meteorMap = new HashMap<ItemStackWrapper, Meteor>();
 
-    public static void registerMeteor(ItemStack stack, MeteorHolder holder)
+    public static void registerMeteor(ItemStack stack, Meteor holder)
     {
         ItemStackWrapper wrapper = ItemStackWrapper.getHolder(stack);
         if (wrapper != null)
@@ -27,10 +25,7 @@ public class MeteorRegistry
 
     public static void registerMeteor(ItemStack stack, List<MeteorComponent> componentList, float explosionStrength, int radius, int maxWeight)
     {
-        ResourceLocation resource = Utils.getResourceForItem(stack);
-
-        MeteorHolder holder = new MeteorHolder(resource, stack.getItemDamage(), componentList, explosionStrength, radius, maxWeight);
-
+        Meteor holder = new Meteor(stack, componentList, explosionStrength, radius, maxWeight);
         registerMeteor(stack, holder);
     }
 
@@ -40,7 +35,7 @@ public class MeteorRegistry
         return wrapper != null && meteorMap.containsKey(wrapper);
     }
 
-    public static MeteorHolder getMeteorForItem(ItemStack stack)
+    public static Meteor getMeteorForItem(ItemStack stack)
     {
         ItemStackWrapper wrapper = ItemStackWrapper.getHolder(stack);
         return wrapper != null ? meteorMap.get(wrapper) : null;
@@ -48,7 +43,7 @@ public class MeteorRegistry
 
     public static void generateMeteorForItem(ItemStack stack, World world, BlockPos pos, IBlockState fillerBlock)
     {
-        MeteorHolder holder = getMeteorForItem(stack);
+        Meteor holder = getMeteorForItem(stack);
         if (holder != null)
         {
             holder.generateMeteor(world, pos, fillerBlock);
