@@ -12,13 +12,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.structures.DungeonTester;
 import WayofTime.bloodmagic.tile.TileIncenseAltar;
+import WayofTime.bloodmagic.tile.TileInversionPillar;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
 
@@ -38,6 +37,13 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 ////            BuildTestStructure s = new BuildTestStructure();
 ////            s.placeStructureAtPosition(new Random(), Rotation.CLOCKWISE_180, (WorldServer) world, player.getPosition(), 0);
 //            DungeonTester.testDungeonElementWithOutput((WorldServer) world, player.getPosition());
+//        }
+
+//        if (!world.isRemote)
+//        {
+//            EntityCorruptedZombie fred = new EntityCorruptedZombie(world);
+//            fred.setPosition(player.posX, player.posY, player.posZ);
+//            world.spawnEntityInWorld(fred);
 //        }
 
         if (!world.isRemote)
@@ -74,7 +80,13 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
                         altar.recheckConstruction();
                         double tranquility = altar.tranquility;
                         ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentTranquility", (int) ((100D * (int) (100 * tranquility)) / 100d)), new TextComponentTranslation(tooltipBase + "currentBonus", (int) (100 * altar.incenseAddition)));
+                    } else if (tile != null && tile instanceof TileInversionPillar)
+                    {
+                        TileInversionPillar pillar = (TileInversionPillar) tile;
+                        double inversion = pillar.getCurrentInversion();
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentInversion", ((int) (10 * inversion)) / 10d));
                     } else
+
                     {
                         int currentEssence = NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).getCurrentEssence();
                         ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence));

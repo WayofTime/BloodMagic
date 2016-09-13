@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.registry;
 
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.entity.mob.EntityCorruptedZombie;
 import WayofTime.bloodmagic.entity.mob.EntityMimic;
 import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
@@ -21,5 +22,6 @@ public class ModEntities
         EntityRegistry.registerModEntity(EntityMeteor.class, "Meteor", id++, BloodMagic.instance, 64, 1, true);
         EntityRegistry.registerModEntity(EntitySentientSpecter.class, "SentientSpecter", id++, BloodMagic.instance, 64, 1, true);
         EntityRegistry.registerModEntity(EntityMimic.class, "Mimic", id++, BloodMagic.instance, 64, 1, true);
+        EntityRegistry.registerModEntity(EntityCorruptedZombie.class, "CorruptedZombie", id++, BloodMagic.instance, 64, 1, true);
     }
 }

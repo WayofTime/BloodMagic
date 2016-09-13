@@ -198,4 +198,52 @@ public class InversionPillarHandler
 
         return new ArrayList<BlockPos>();
     }
+
+    public static List<BlockPos> getAllConnectedPillars(World world, EnumDemonWillType type, BlockPos pos)
+    {
+        List<BlockPos> checkedPosList = new ArrayList<BlockPos>();
+        List<BlockPos> uncheckedPosList = new ArrayList<BlockPos>(); //Positions where we did not check their connections.
+
+        uncheckedPosList.add(pos);
+
+        int dim = world.provider.getDimension();
+        if (nearPillarMap.containsKey(dim))
+        {
+            Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>> willMap = nearPillarMap.get(dim);
+            if (willMap.containsKey(type))
+            {
+                Map<BlockPos, List<BlockPos>> posMap = willMap.get(type);
+                // This is where the magic happens. 
+
+                while (!uncheckedPosList.isEmpty())
+                {
+                    //Positions that are new this iteration and need to be dumped into uncheckedPosList next iteration.
+                    List<BlockPos> newPosList = new ArrayList<BlockPos>();
+
+                    Iterator<BlockPos> itr = uncheckedPosList.iterator();
+                    while (itr.hasNext())
+                    {
+                        BlockPos checkPos = itr.next();
+                        List<BlockPos> posList = posMap.get(checkPos);
+                        if (posList != null)
+                        {
+                            for (BlockPos testPos : posList)
+                            {
+                                //Check if the position has already been checked, is scheduled to be checked, or is already found it needs to be checked.
+                                if (!checkedPosList.contains(testPos) && !uncheckedPosList.contains(testPos) && !newPosList.contains(testPos))
+                                {
+                                    newPosList.add(testPos);
+                                }
+                            }
+                        }
+                    }
+
+                    checkedPosList.addAll(uncheckedPosList);
+                    uncheckedPosList = newPosList;
+                }
+            }
+        }
+
+        return checkedPosList;
+    }
 }

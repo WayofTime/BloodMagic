@@ -383,6 +383,7 @@ tooltip.BloodMagic.sigil.divination.currentAltarTier=Current Tier: %d
 tooltip.BloodMagic.sigil.divination.currentEssence=Current Essence: %d LP
 tooltip.BloodMagic.sigil.divination.currentAltarCapacity=Current Capacity: %d LP
 tooltip.BloodMagic.sigil.divination.currentTranquility=Current Tranquility: %d
+tooltip.BloodMagic.sigil.divination.currentInversion=Current Inversion: %d
 tooltip.BloodMagic.sigil.divination.currentBonus=Current Bonus: +%d%%
 tooltip.BloodMagic.sigil.water.desc=&oInfinite water, anyone?
 tooltip.BloodMagic.sigil.lava.desc=&oHOT! DO NOT EAT

@@ -35,11 +35,13 @@ import WayofTime.bloodmagic.client.render.RenderDemonCrucible;
 import WayofTime.bloodmagic.client.render.RenderItemRoutingNode;
 import WayofTime.bloodmagic.client.render.block.RenderMimic;
 import WayofTime.bloodmagic.client.render.entity.BloodLightRenderFactory;
+import WayofTime.bloodmagic.client.render.entity.CorruptedZombieRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.MeteorRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.MimicRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SentientArrowRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SentientSpecterRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SoulSnareRenderFactory;
+import WayofTime.bloodmagic.entity.mob.EntityCorruptedZombie;
 import WayofTime.bloodmagic.entity.mob.EntityMimic;
 import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
@@ -104,6 +106,7 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerEntityRenderingHandler(EntityMeteor.class, new MeteorRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntitySentientSpecter.class, new SentientSpecterRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityMimic.class, new MimicRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(EntityCorruptedZombie.class, new CorruptedZombieRenderFactory());
 
         ShaderHelper.init();
     }
