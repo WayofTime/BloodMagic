@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.item.sigil;
 import java.util.Collections;
 import java.util.List;
 
-import WayofTime.bloodmagic.client.KeyBindingBloodMagic;
+import WayofTime.bloodmagic.client.key.KeyBindings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -27,7 +27,7 @@ import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.Utils;
-import WayofTime.bloodmagic.client.IKeybindable;
+import WayofTime.bloodmagic.client.key.IKeybindable;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.base.Strings;
@@ -42,9 +42,9 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     }
 
     @Override
-    public void onKeyPressed(ItemStack stack, EntityPlayer player, KeyBindingBloodMagic.KeyBindings key, boolean showInChat)
+    public void onKeyPressed(ItemStack stack, EntityPlayer player, KeyBindings key, boolean showInChat)
     {
-        if (stack == player.getHeldItemMainhand() && stack.getItem() instanceof ItemSigilHolding && key.equals(KeyBindingBloodMagic.KeyBindings.OPEN_HOLDING))
+        if (stack == player.getHeldItemMainhand() && stack.getItem() instanceof ItemSigilHolding && key.equals(KeyBindings.OPEN_HOLDING))
         {
             Utils.setUUID(stack);
             player.openGui(BloodMagic.instance, Constants.Gui.SIGIL_HOLDING_GUI, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
@@ -73,7 +73,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.holding.press", KeyBindingBloodMagic.KeyBindings.OPEN_HOLDING.getKey().getDisplayName()));
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.holding.press", KeyBindings.OPEN_HOLDING.getKey().getDisplayName()));
 
         if (!stack.hasTagCompound())
             return;

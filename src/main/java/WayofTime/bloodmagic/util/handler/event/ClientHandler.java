@@ -8,7 +8,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import WayofTime.bloodmagic.client.KeyBindingBloodMagic;
+import WayofTime.bloodmagic.client.key.KeyBindings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
@@ -210,7 +210,7 @@ public class ClientHandler
         if (!minecraft.inGameHasFocus)
             return;
 
-        for (KeyBindingBloodMagic.KeyBindings keyBinding : KeyBindingBloodMagic.KeyBindings.values())
+        for (KeyBindings keyBinding : KeyBindings.values())
             if (keyBinding.getKey().isPressed())
                 keyBinding.handleKeybind();
     }
