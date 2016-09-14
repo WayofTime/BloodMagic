@@ -24,13 +24,14 @@ import WayofTime.bloodmagic.tile.base.TileTicking;
 @Setter
 public class TileInversionPillar extends TileTicking
 {
-    public static double willPerOperation = 2.5;
-    public static double inversionPerOperation = 2;
+    public static double willPerOperation = 0.5;
+    public static double inversionPerOperation = 4;
+    public static double addedInversionPerFailedCheck = 1;
     public static double inversionToIncreaseRadius = 100;
     public static double inversionToAddPillar = 200;
     public static double operationThreshold = 20;
     public static double inversionToSpreadWill = 200;
-    public static double willPushRate = 3;
+    public static double willPushRate = 1;
     public static double inversionCostPerWillSpread = 4;
     public static double minimumWillForChunkWhenSpreading = 100;
 
@@ -40,11 +41,13 @@ public class TileInversionPillar extends TileTicking
     public int consecutiveFailedAirChecks = 0;
     public int currentInfectionRadius = 1;
 
+//    public int dormantCounter = 0; //Time that the pillar will 
+
     public int counter = 0;
 
     public boolean isRegistered = false;
 
-    public static final double maxWillForChunk = 200;
+    public static final double maxWillForChunk = 1000;
 
     public TileInversionPillar()
     {
@@ -84,15 +87,22 @@ public class TileInversionPillar extends TileTicking
             int pollute = polluteNearbyBlocks(currentWill);
             if (pollute == 1)
             {
+                currentInversion += addedInversionPerFailedCheck;
                 consecutiveFailedChecks++;
             } else if (pollute == 3)
             {
+                currentInversion += addedInversionPerFailedCheck;
                 consecutiveFailedAirChecks++;
             } else if (pollute == 0)
             {
                 //We successfully found a block to replace!
                 consecutiveFailedChecks = 0;
                 consecutiveFailedAirChecks = 0;
+            }
+
+            if (consecutiveFailedAirChecks > 100)
+            {
+                createObstructionsInAir();
             }
 
             if (currentInversion >= inversionToSpreadWill)
@@ -106,16 +116,22 @@ public class TileInversionPillar extends TileTicking
                 consecutiveFailedChecks = 0;
                 currentInversion -= inversionToIncreaseRadius;
                 System.out.println("Increasing radius!");
+            } else if (consecutiveFailedAirChecks > 25 * currentInfectionRadius) //Change this to require a number of "creations" with the orbs in the air.
+            {
+                currentInfectionRadius++;
+                consecutiveFailedChecks = 0;
+                currentInversion -= inversionToIncreaseRadius;
+                System.out.println("Increasing radius due to being in the air!");
             }
 
-            if (currentInfectionRadius >= 10 && currentInversion >= inversionToAddPillar)
+            if (currentInfectionRadius >= 8 && currentInversion >= inversionToAddPillar)
             {
                 //TODO: Improve algorithm
                 List<BlockPos> allConnectedPos = InversionPillarHandler.getAllConnectedPillars(worldObj, type, pos);
                 BlockPos candidatePos = findCandidatePositionForPillar(worldObj, type, pos, allConnectedPos, 5, 10);
                 if (!candidatePos.equals(BlockPos.ORIGIN))
                 {
-                    currentInversion -= inversionToAddPillar;
+                    currentInversion = 0;
                     IBlockState pillarState = ModBlocks.INVERSION_PILLAR.getStateFromMeta(type.ordinal());
                     IBlockState bottomState = ModBlocks.INVERSION_PILLAR_END.getStateFromMeta(type.ordinal() * 2);
                     IBlockState topState = ModBlocks.INVERSION_PILLAR_END.getStateFromMeta(type.ordinal() * 2 + 1);
@@ -124,6 +140,24 @@ public class TileInversionPillar extends TileTicking
                     worldObj.setBlockState(candidatePos.up(), topState);
                 }
             }
+        }
+    }
+
+//    public static int getDormantTimeForConnectedPillarsOnSpawn()
+//    {
+//        return 0;
+//    }
+
+    public void createObstructionsInAir()
+    {
+        if (currentInversion > 1000)
+        {
+            Vec3d vec = new Vec3d(worldObj.rand.nextDouble() * 2 - 1, worldObj.rand.nextDouble() * 2 - 1, worldObj.rand.nextDouble() * 2 - 1).normalize().scale(2 * currentInfectionRadius);
+
+            BlockPos centralPos = pos.add(vec.xCoord, vec.yCoord, vec.zCoord);
+
+            worldObj.setBlockState(centralPos, ModBlocks.DEMON_EXTRAS.getStateFromMeta(0));
+            currentInversion -= 1000;
         }
     }
 
@@ -146,7 +180,6 @@ public class TileInversionPillar extends TileTicking
                 for (int sig = -1; sig <= 1; sig += (h > 0 ? 2 : 3))
                 {
                     BlockPos candidatePos = centralPos.add(0, sig * h, 0);
-                    IBlockState candidateState = world.getBlockState(candidatePos);
                     if (world.isAirBlock(candidatePos) && world.isAirBlock(candidatePos.up()) && world.isAirBlock(candidatePos.down()) && !world.isAirBlock(candidatePos.down(2)))
                     {
                         testPos = candidatePos;
@@ -250,7 +283,7 @@ public class TileInversionPillar extends TileTicking
     public void generateWillForNearbyPillars(double currentWillInChunk, List<BlockPos> offsetPositions)
     {
         double totalGeneratedWill = 0;
-        double willFactor = currentWillInChunk / 200;
+        double willFactor = currentWillInChunk / 1000;
 
         for (BlockPos offsetPos : offsetPositions)
         {
@@ -261,7 +294,7 @@ public class TileInversionPillar extends TileTicking
 
         if (totalGeneratedWill > 0)
         {
-            WorldDemonWillHandler.fillWillToMaximum(worldObj, pos, type, totalGeneratedWill, maxWillForChunk, true); //TODO: Find out why this method doesn't work.
+            WorldDemonWillHandler.fillWillToMaximum(worldObj, pos, type, totalGeneratedWill, maxWillForChunk, true);
         }
     }
 
@@ -296,43 +329,45 @@ public class TileInversionPillar extends TileTicking
             return 2; //Not enough Will or Inversion available
         }
 
-        double xOff = worldObj.rand.nextGaussian() * currentInfectionRadius;
-        double yOff = worldObj.rand.nextGaussian() * currentInfectionRadius;
-        double zOff = worldObj.rand.nextGaussian() * currentInfectionRadius;
-        double r2 = xOff * xOff + yOff * yOff + zOff * zOff;
-        int maxInfectionRadius2 = (4 * currentInfectionRadius * currentInfectionRadius);
-        if (r2 > maxInfectionRadius2)
+        for (int i = 0; i < currentInfectionRadius; i++)
         {
-            double factor = Math.sqrt(maxInfectionRadius2 / r2);
-            xOff *= factor;
-            yOff *= factor;
-            zOff *= factor;
-        }
-
-        BlockPos offsetPos = pos.add(xOff + 0.5, yOff + 0.5, zOff + 0.5);
-        if (offsetPos.equals(pos))
-        {
-            return 1; //Invalid block (itself!)
-        }
-
-        IBlockState state = worldObj.getBlockState(offsetPos);
-        if (!state.getBlock().isAir(state, worldObj, offsetPos))
-        {
-            //Consume Will and set this block
-//            System.out.println("I am polluting you at: " + offsetPos);
-            Block block = state.getBlock();
-            if (block == Blocks.DIRT || block == Blocks.STONE || block == Blocks.GRASS)
+            double xOff = (worldObj.rand.nextBoolean() ? 1 : -1) * (worldObj.rand.nextGaussian() + 1) * (currentInfectionRadius);
+            double yOff = (worldObj.rand.nextBoolean() ? 1 : -1) * (worldObj.rand.nextGaussian() + 1) * (currentInfectionRadius);
+            double zOff = (worldObj.rand.nextBoolean() ? 1 : -1) * (worldObj.rand.nextGaussian() + 1) * (currentInfectionRadius);
+            double r2 = xOff * xOff + yOff * yOff + zOff * zOff;
+            int maxInfectionRadius2 = (9 * currentInfectionRadius * currentInfectionRadius);
+            if (r2 > maxInfectionRadius2)
             {
-                if (worldObj.setBlockState(offsetPos, ModBlocks.DEMON_EXTRAS.getStateFromMeta(0)))
-                {
-                    WorldDemonWillHandler.drainWill(worldObj, pos, type, willPerOperation, true);
-                    currentInversion -= inversionPerOperation;
-
-                    return 0; //Successfully placed
-                }
+                double factor = Math.sqrt(maxInfectionRadius2 / r2);
+                xOff *= factor;
+                yOff *= factor;
+                zOff *= factor;
             }
 
-            return 1; //Invalid block
+            BlockPos offsetPos = pos.add(xOff + 0.5, yOff + 0.5, zOff + 0.5);
+            if (offsetPos.equals(pos))
+            {
+                return 1; //Invalid block (itself!)
+            }
+
+            IBlockState state = worldObj.getBlockState(offsetPos);
+            if (!state.getBlock().isAir(state, worldObj, offsetPos))
+            {
+                //Consume Will and set this block
+                Block block = state.getBlock();
+                if (block == Blocks.DIRT || block == Blocks.STONE || block == Blocks.GRASS)
+                {
+                    if (worldObj.setBlockState(offsetPos, ModBlocks.DEMON_EXTRAS.getStateFromMeta(0)))
+                    {
+                        WorldDemonWillHandler.drainWill(worldObj, pos, type, willPerOperation, true);
+                        currentInversion -= inversionPerOperation;
+
+                        return 0; //Successfully placed
+                    }
+                }
+
+                return 1; //Invalid block
+            }
         }
 
         return 3; //The block was air
