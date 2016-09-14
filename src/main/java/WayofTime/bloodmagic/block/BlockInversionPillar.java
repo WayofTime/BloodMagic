@@ -57,6 +57,12 @@ public class BlockInversionPillar extends BlockStringContainer implements IVaria
     }
 
     @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos)
+    {
+        return super.getActualState(state, world, pos).withProperty(Properties.StaticProperty, true);
+    }
+
+    @Override
     public boolean isOpaqueCube(IBlockState state)
     {
         return false;
@@ -91,7 +97,7 @@ public class BlockInversionPillar extends BlockStringContainer implements IVaria
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         for (int i = 0; i < names.length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + names[i]));
+            ret.add(new ImmutablePair<Integer, String>(i, "static=false,type=" + names[i]));
         return ret;
     }
 
@@ -104,6 +110,6 @@ public class BlockInversionPillar extends BlockStringContainer implements IVaria
     @Override
     protected BlockStateContainer createRealBlockState()
     {
-        return new ExtendedBlockState(this, new IProperty[] { stringProp }, new IUnlistedProperty[] { unlistedStringProp, Properties.AnimationProperty });
+        return new ExtendedBlockState(this, new IProperty[] { stringProp, Properties.StaticProperty }, new IUnlistedProperty[] { unlistedStringProp, Properties.AnimationProperty });
     }
 }

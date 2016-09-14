@@ -16,7 +16,7 @@
             "variable": "offset_y",
             "type": "uniform",
             "interpolation": "linear",
-            "samples": [ 0, 0.08, 0.25, 0.42, 0.5, 0.42, 0.25, 0.08 ]
+            "samples": [ -0.0625, -0.0442, 0, 0.0442, 0.0625, 0.0442, 0, -0.0442 ]
           },
           {
             "variable": "axis_y",
@@ -29,16 +29,13 @@
             "type": "uniform",
             "interpolation": "linear",
             "samples": [
-              0, 120, 240,
-              0, 120, 240,
-              0, 120, 240,
               0, 120, 240
             ]
           }
         ]
       },
       "events": {
-        "0.5": "boop"
+
       }
     }
   }

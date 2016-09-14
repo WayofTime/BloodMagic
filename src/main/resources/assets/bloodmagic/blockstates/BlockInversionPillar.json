@@ -36,6 +36,14 @@
         }
       }
     },
+    "static": {
+      "true": {
+        "model": "builtin/generated"
+      },
+      "false": {
+        "model": "bloodmagic:pillar_mid"
+      }
+    },
     "inventory": [{}]
   }
 }

@@ -3,6 +3,7 @@ Version 2.1.0-60
 ------------------------------------------------------
 - Fixed routing node serialization.
 - Removed unwanted System.out lines when clicking on the slots in the routing node.
+- Added fancy rendering for the Inversion Pillars.
 
 ------------------------------------------------------
 Version 2.1.0-59

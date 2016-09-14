@@ -46,9 +46,9 @@ public class TileInversionPillar extends TileTicking
     public static double minimumWillForChunkWhenSpreading = 100;
 
     private final IAnimationStateMachine asm;
-    private final VariableValue offset = new VariableValue(0);
+    private float animationOffsetValue = 0;
+    private final VariableValue animationOffset = new VariableValue(0);
     private final VariableValue cycleLength = new VariableValue(4);
-    private final VariableValue clickTime = new VariableValue(0);
 
     public EnumDemonWillType type;
     public double currentInversion = 0;
@@ -72,12 +72,19 @@ public class TileInversionPillar extends TileTicking
     public TileInversionPillar(EnumDemonWillType type)
     {
         this.type = type;
-        asm = BloodMagic.proxy.load(new ResourceLocation(Constants.Mod.MODID.toLowerCase(), "asms/block/inversion_pillar.json"), ImmutableMap.<String, ITimeValue>of("offset", offset, "cycle_length", cycleLength, "click_time", clickTime));
+        asm = BloodMagic.proxy.load(new ResourceLocation(Constants.Mod.MODID.toLowerCase(), "asms/block/inversion_pillar.json"), ImmutableMap.<String, ITimeValue>of("offset", animationOffset, "cycle_length", cycleLength));
+        animationOffsetValue = -1;
     }
 
     @Override
     public void onUpdate()
     {
+        if (animationOffsetValue < 0)
+        {
+            animationOffsetValue = worldObj.getTotalWorldTime() * worldObj.rand.nextFloat();
+            animationOffset.setValue(animationOffsetValue);
+        }
+
         if (worldObj.isRemote)
         {
             return;
@@ -281,6 +288,9 @@ public class TileInversionPillar extends TileTicking
         currentInversion = tag.getDouble("currentInversion");
         currentInfectionRadius = tag.getInteger("currentInfectionRadius");
         consecutiveFailedChecks = tag.getInteger("consecutiveFailedChecks");
+
+        animationOffsetValue = tag.getFloat("animationOffset");
+        animationOffset.setValue(animationOffsetValue);
     }
 
     @Override
@@ -292,6 +302,7 @@ public class TileInversionPillar extends TileTicking
         tag.setDouble("currentInversion", currentInversion);
         tag.setInteger("currentInfectionRadius", currentInfectionRadius);
         tag.setInteger("consecutiveFailedChecks", consecutiveFailedChecks);
+        tag.setFloat("animationOffset", animationOffsetValue);
 
         return tag;
     }
