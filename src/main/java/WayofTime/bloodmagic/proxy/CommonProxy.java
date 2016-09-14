@@ -2,9 +2,12 @@ package WayofTime.bloodmagic.proxy;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.animation.ITimeValue;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.model.animation.IAnimationStateMachine;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.api.ritual.CapabilityRuneType;
 import WayofTime.bloodmagic.api.ritual.IRitualStone;
@@ -12,6 +15,8 @@ import WayofTime.bloodmagic.api.teleport.TeleportQueue;
 import WayofTime.bloodmagic.fuel.FuelHandler;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
+
+import com.google.common.collect.ImmutableMap;
 
 public class CommonProxy
 {
@@ -62,5 +67,10 @@ public class CommonProxy
     public void tryHandleItemModel(Item item, String name)
     {
         // NO-OP
+    }
+
+    public IAnimationStateMachine load(ResourceLocation location, ImmutableMap<String, ITimeValue> parameters)
+    {
+        return null;
     }
 }

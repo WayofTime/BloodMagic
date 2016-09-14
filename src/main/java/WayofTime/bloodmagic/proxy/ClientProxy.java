@@ -13,7 +13,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.client.model.animation.AnimationTESR;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.common.animation.Event;
+import net.minecraftforge.common.animation.ITimeValue;
+import net.minecraftforge.common.model.animation.IAnimationStateMachine;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -53,10 +58,13 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
+import WayofTime.bloodmagic.tile.TileInversionPillar;
 import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
+
+import com.google.common.collect.ImmutableMap;
 
 public class ClientProxy extends CommonProxy
 {
@@ -89,6 +97,15 @@ public class ClientProxy extends CommonProxy
 
         ModBlocks.initRenders();
         ModItems.initRenders();
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileInversionPillar.class, new AnimationTESR<TileInversionPillar>()
+        {
+            @Override
+            public void handleEvents(TileInversionPillar chest, float time, Iterable<Event> pastEvents)
+            {
+                chest.handleEvents(time, pastEvents);
+            }
+        });
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileAlchemyArray.class, new RenderAlchemyArray());
         ClientRegistry.bindTileEntitySpecialRenderer(TileAltar.class, new RenderAltar());
@@ -197,5 +214,11 @@ public class ClientProxy extends CommonProxy
             BloodMagic.instance.getLogger().error("Failed to set custom Elytra Layer for Elytra Living Armour Upgrade.");
             BloodMagic.instance.getLogger().error(e.getLocalizedMessage());
         }
+    }
+
+    @Override
+    public IAnimationStateMachine load(ResourceLocation location, ImmutableMap<String, ITimeValue> parameters)
+    {
+        return ModelLoaderRegistry.loadASM(location, parameters);
     }
 }

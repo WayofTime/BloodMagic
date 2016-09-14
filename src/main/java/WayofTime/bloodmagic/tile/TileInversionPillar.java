@@ -10,15 +10,25 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.animation.Event;
+import net.minecraftforge.common.animation.ITimeValue;
+import net.minecraftforge.common.animation.TimeValues.VariableValue;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.model.animation.CapabilityAnimation;
+import net.minecraftforge.common.model.animation.IAnimationStateMachine;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.inversion.InversionPillarHandler;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.base.TileTicking;
+
+import com.google.common.collect.ImmutableMap;
 
 @Getter
 @Setter
@@ -34,6 +44,11 @@ public class TileInversionPillar extends TileTicking
     public static double willPushRate = 1;
     public static double inversionCostPerWillSpread = 4;
     public static double minimumWillForChunkWhenSpreading = 100;
+
+    private final IAnimationStateMachine asm;
+    private final VariableValue offset = new VariableValue(0);
+    private final VariableValue cycleLength = new VariableValue(4);
+    private final VariableValue clickTime = new VariableValue(0);
 
     public EnumDemonWillType type;
     public double currentInversion = 0;
@@ -57,6 +72,7 @@ public class TileInversionPillar extends TileTicking
     public TileInversionPillar(EnumDemonWillType type)
     {
         this.type = type;
+        asm = BloodMagic.proxy.load(new ResourceLocation(Constants.Mod.MODID.toLowerCase(), "asms/block/inversion_pillar.json"), ImmutableMap.<String, ITimeValue>of("offset", offset, "cycle_length", cycleLength, "click_time", clickTime));
     }
 
     @Override
@@ -371,5 +387,39 @@ public class TileInversionPillar extends TileTicking
         }
 
         return 3; //The block was air
+    }
+
+    public void handleEvents(float time, Iterable<Event> pastEvents)
+    {
+        for (Event event : pastEvents)
+        {
+            System.out.println("Event: " + event.event() + " " + event.offset() + " " + getPos() + " " + time);
+        }
+    }
+
+    @Override
+    public boolean hasFastRenderer()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing side)
+    {
+        if (capability == CapabilityAnimation.ANIMATION_CAPABILITY)
+        {
+            return true;
+        }
+        return super.hasCapability(capability, side);
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing side)
+    {
+        if (capability == CapabilityAnimation.ANIMATION_CAPABILITY)
+        {
+            return CapabilityAnimation.ANIMATION_CAPABILITY.cast(asm);
+        }
+        return super.getCapability(capability, side);
     }
 }

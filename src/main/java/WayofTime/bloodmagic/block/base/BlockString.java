@@ -39,8 +39,8 @@ public class BlockString extends Block
 {
     private final int maxMeta;
     private final List<String> values;
-    private final PropertyString stringProp;
-    private final IUnlistedProperty unlistedStringProp;
+    protected final PropertyString stringProp;
+    protected final IUnlistedProperty unlistedStringProp;
     private final BlockStateContainer realBlockState;
 
     public BlockString(Material material, String[] values, String propName)

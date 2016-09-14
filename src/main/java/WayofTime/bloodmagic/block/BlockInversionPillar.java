@@ -5,12 +5,17 @@ import java.util.List;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.property.ExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
+import net.minecraftforge.common.property.Properties;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -20,7 +25,6 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.block.base.BlockStringContainer;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileInversionPillar;
 
 public class BlockInversionPillar extends BlockStringContainer implements IVariantProvider
@@ -95,5 +99,11 @@ public class BlockInversionPillar extends BlockStringContainer implements IVaria
     public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new TileInversionPillar(EnumDemonWillType.values()[meta % 5]);
+    }
+
+    @Override
+    protected BlockStateContainer createRealBlockState()
+    {
+        return new ExtendedBlockState(this, new IProperty[] { stringProp }, new IUnlistedProperty[] { unlistedStringProp, Properties.AnimationProperty });
     }
 }
