@@ -16,6 +16,7 @@ import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.entity.mob.EntityCorruptedZombie;
 import WayofTime.bloodmagic.tile.TileIncenseAltar;
 import WayofTime.bloodmagic.tile.TileInversionPillar;
 import WayofTime.bloodmagic.util.ChatUtil;
@@ -39,12 +40,12 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 //            DungeonTester.testDungeonElementWithOutput((WorldServer) world, player.getPosition());
 //        }
 
-//        if (!world.isRemote)
-//        {
-//            EntityCorruptedZombie fred = new EntityCorruptedZombie(world);
-//            fred.setPosition(player.posX, player.posY, player.posZ);
-//            world.spawnEntityInWorld(fred);
-//        }
+        if (!world.isRemote)
+        {
+            EntityCorruptedZombie fred = new EntityCorruptedZombie(world);
+            fred.setPosition(player.posX, player.posY, player.posZ);
+            world.spawnEntityInWorld(fred);
+        }
 
         if (!world.isRemote)
         {
