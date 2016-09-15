@@ -48,6 +48,12 @@ public class ItemBlockMimic extends ItemBlock
             int i = this.getMetadata(stack.getMetadata());
             IBlockState iblockstate1 = this.block.onBlockPlaced(world, pos, facing, hitX, hitY, hitZ, i, player);
 
+            IBlockState blockReplaced = world.getBlockState(pos);
+            if (!canReplaceBlock(world, pos, blockReplaced))
+            {
+                return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
+            }
+
             TileEntity tileReplaced = world.getTileEntity(pos);
             if (!canReplaceTile(i, tileReplaced))
             {
@@ -107,6 +113,10 @@ public class ItemBlockMimic extends ItemBlock
         }
 
         return tile == null;
+    }
+
+    public boolean canReplaceBlock(World world, BlockPos pos, IBlockState state) {
+        return state.getBlockHardness(world, pos) != -1.0F;
     }
 
     public NBTTagCompound getTagFromTileEntity(TileEntity tile)
