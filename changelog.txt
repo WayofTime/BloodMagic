@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.1.0-62
+------------------------------------------------------
+- Fixed the fact rituals were not working (Might have been a compiler error).
+
+------------------------------------------------------
 Version 2.1.0-61
 ------------------------------------------------------
 - Added fancy rendering for the Inversion Pillars.

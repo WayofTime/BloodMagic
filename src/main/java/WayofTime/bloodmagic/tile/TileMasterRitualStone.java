@@ -203,16 +203,12 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     {
         if (!world.isRemote && getCurrentRitual() != null && RitualRegistry.ritualEnabled(getCurrentRitual()))
         {
-            System.out.println("This ritual is enabled and there is a ritual.");
             if (RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), getDirection()))
             {
-                System.out.println("This ritual is valid.");
                 RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
 
                 if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                     return;
-
-                System.out.println("This ritual is going to run!");
 
                 getCurrentRitual().performRitual(this);
             } else
