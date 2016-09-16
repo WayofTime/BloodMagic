@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.1.0-63
+------------------------------------------------------
+- Removed the darn testing code from the Divination Sigil. >.>
+
+------------------------------------------------------
 Version 2.1.0-62
 ------------------------------------------------------
 - Fixed the fact rituals were not working (Might have been a compiler error).
