@@ -310,7 +310,7 @@ public class EntitySentientSpecter extends EntityDemonBase
     {
         super.onDeath(cause);
 
-        if (!worldObj.isRemote)
+        if (!worldObj.isRemote && getHeldItemMainhand() != null)
         {
             this.entityDropItem(getHeldItemMainhand(), 0);
         }
