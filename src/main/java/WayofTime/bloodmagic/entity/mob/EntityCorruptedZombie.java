@@ -1,34 +1,37 @@
 package WayofTime.bloodmagic.entity.mob;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
+import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.entity.monster.EntityIronGolem;
+import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.entity.ai.EntityAIAttackRangedBow;
 
-public class EntityCorruptedZombie extends EntityDemonBase
+public class EntityCorruptedZombie extends EntityAspectedDemonBase
 {
-    @Getter
-    @Setter
-    protected EnumDemonWillType type = EnumDemonWillType.DEFAULT;
-
     private final EntityAIAttackRangedBow aiArrowAttack = new EntityAIAttackRangedBow(this, 1.0D, 20, 15.0F);
     private final EntityAIAttackMelee aiAttackOnCollide = new EntityAIAttackMelee(this, 1.0D, false);
 
@@ -39,6 +42,18 @@ public class EntityCorruptedZombie extends EntityDemonBase
         super(worldIn);
         this.setSize(0.6F, 1.95F);
 //        ((PathNavigateGround) getNavigator()).setCanSwim(false);
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(attackPriority, aiAttackOnCollide);
+        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
+        this.tasks.addTask(7, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(8, new EntityAILookIdle(this));
+
+        this.tasks.addTask(6, new EntityAIMoveThroughVillage(this, 1.0D, false));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, new Class[] { EntityPigZombie.class }));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, false));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityIronGolem.class, true));
 
         this.setCombatTask();
 //        this.targetTasks.addTask(8, new EntityAINearestAttackableTarget<EntityMob>(this, EntityMob.class, 10, true, false, new TargetPredicate(this)));
@@ -48,9 +63,11 @@ public class EntityCorruptedZombie extends EntityDemonBase
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35.0D);
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
         getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.27D);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
     }
 
     @Override
@@ -155,30 +172,6 @@ public class EntityCorruptedZombie extends EntityDemonBase
         super.onUpdate();
     }
 
-    @Override
-    public void writeEntityToNBT(NBTTagCompound tag)
-    {
-        super.writeEntityToNBT(tag);
-
-        tag.setString(Constants.NBT.WILL_TYPE, type.toString());
-    }
-
-    @Override
-    public void readEntityFromNBT(NBTTagCompound tag)
-    {
-        super.readEntityFromNBT(tag);
-
-        if (!tag.hasKey(Constants.NBT.WILL_TYPE))
-        {
-            type = EnumDemonWillType.DEFAULT;
-        } else
-        {
-            type = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
-        }
-
-        this.setCombatTask();
-    }
-
     //TODO: Change to fit the given AI
     @Override
     public boolean shouldAttackEntity(EntityLivingBase attacker, EntityLivingBase owner)
@@ -193,27 +186,33 @@ public class EntityCorruptedZombie extends EntityDemonBase
     }
 
     @Override
+    protected float getSoundPitch()
+    {
+        return super.getSoundPitch() * 0.5f;
+    }
+
+    @Override
     protected SoundEvent getAmbientSound()
     {
-        return SoundEvents.ENTITY_COW_AMBIENT;
+        return SoundEvents.ENTITY_ZOMBIE_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound()
     {
-        return SoundEvents.ENTITY_COW_HURT;
+        return SoundEvents.ENTITY_ZOMBIE_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound()
     {
-        return SoundEvents.ENTITY_COW_DEATH;
+        return SoundEvents.ENTITY_ZOMBIE_DEATH;
     }
 
     @Override
     protected void playStepSound(BlockPos pos, Block block)
     {
-        this.playSound(SoundEvents.ENTITY_COW_STEP, 0.15F, 1.0F);
+        this.playSound(SoundEvents.ENTITY_ZOMBIE_STEP, 0.15F, 1.0F);
     }
 
     /**

@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.client.render.entity;
 
-import net.minecraft.client.model.ModelCreeper;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.model.ModelZombieVillager;
 import net.minecraft.client.renderer.entity.RenderBiped;
@@ -18,7 +17,7 @@ import WayofTime.bloodmagic.entity.mob.EntityCorruptedZombie;
 @SideOnly(Side.CLIENT)
 public class RenderCorruptedZombie extends RenderBiped<EntityCorruptedZombie>
 {
-    private static final ResourceLocation ZOMBIE_TEXTURES = new ResourceLocation("bloodmagic", "textures/entities/zombie_raw.png");
+    private static final ResourceLocation ZOMBIE_TEXTURES = new ResourceLocation("textures/entity/zombie/zombie.png");
     private final ModelZombieVillager zombieVillagerModel;
 
     public RenderCorruptedZombie(RenderManager renderManagerIn)

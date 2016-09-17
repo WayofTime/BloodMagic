@@ -13,7 +13,6 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -40,8 +39,8 @@ import com.google.common.base.Predicate;
 
 public class EntityDemonBase extends EntityCreature implements IEntityOwnable
 {
-    protected static final DataParameter<Byte> TAMED = EntityDataManager.<Byte>createKey(EntityTameable.class, DataSerializers.BYTE);
-    protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityTameable.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+    protected static final DataParameter<Byte> TAMED = EntityDataManager.<Byte>createKey(EntityDemonBase.class, DataSerializers.BYTE);
+    protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityDemonBase.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 
     public EntityDemonBase(World worldIn)
     {
