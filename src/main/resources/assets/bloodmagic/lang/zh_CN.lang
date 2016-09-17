@@ -250,11 +250,97 @@ tile.BloodMagic.demonCrystalDESTRUCTIVE.name=破坏意志晶簇
 tile.BloodMagic.demonCrystalVENGEFUL.name=复仇意志晶簇
 tile.BloodMagic.demonCrystalSTEADFAST.name=坚定意志晶簇
 
-tile.BloodMagic.mimic.nohitbox.name=悬幽不透明的模拟方块
-tile.BloodMagic.mimic.solidopaque.name=不透明的模拟方块
+tile.BloodMagic.mimic.nohitbox.name=悬幽不透明的拟态方块
+tile.BloodMagic.mimic.solidopaque.name=不透明的拟态方块
+tile.BloodMagic.mimic.solidclear.name=清透的拟态方块
+tile.BloodMagic.mimic.solidlight.name=发光的拟态方块
+tile.BloodMagic.mimic.sentient.name=感知拟态方块
 
-tile.BloodMagic.mimic.solidlight.name=发光的悬幽模拟方块
-tile.BloodMagic.mimic.sentient.name=感知模拟方块
+tile.BloodMagic.bricks1.brick1_raw.name=原生石砖
+tile.BloodMagic.bricks1.brick1_corrosive.name=腐蚀性石砖
+tile.BloodMagic.bricks1.brick1_destructive.name=破坏性石砖
+tile.BloodMagic.bricks1.brick1_vengeful.name=复仇性石砖
+tile.BloodMagic.bricks1.brick1_steadfast.name=坚定性石砖
+
+tile.BloodMagic.bricks2.smallbrick_raw.name=小原生石砖
+tile.BloodMagic.bricks2.smallbrick_corrosive.name=小腐蚀性石砖
+tile.BloodMagic.bricks2.smallbrick_destructive.name=小破坏性石砖
+tile.BloodMagic.bricks2.smallbrick_vengeful.name=小复仇性石砖
+tile.BloodMagic.bricks2.smallbrick_steadfast.name=小坚定性石砖
+tile.BloodMagic.bricks2.tile_raw.name=原生石瓦
+tile.BloodMagic.bricks2.tile_corrosive.name=腐蚀性石瓦
+tile.BloodMagic.bricks2.tile_destructive.name=破坏性石瓦
+tile.BloodMagic.bricks2.tile_vengeful.name=复仇性石瓦
+tile.BloodMagic.bricks2.tile_steadfast.name=坚定性石瓦
+tile.BloodMagic.bricks2.tilespecial_raw.name=Accented 原生石瓦
+tile.BloodMagic.bricks2.tilespecial_corrosive.name=Accented 腐蚀性石瓦
+tile.BloodMagic.bricks2.tilespecial_destructive.name=Accented 破坏性石瓦
+tile.BloodMagic.bricks2.tilespecial_vengeful.name=Accented 复仇性石瓦
+tile.BloodMagic.bricks2.tilespecial_steadfast.name=Accented 坚定性石瓦
+
+tile.BloodMagic.demonlight.raw.name=原生恶魔之眼
+tile.BloodMagic.demonlight.corrosive.name=腐蚀性恶魔之眼
+tile.BloodMagic.demonlight.destructive.name=破坏性恶魔之眼
+tile.BloodMagic.demonlight.vengeful.name=复仇性恶魔之眼
+tile.BloodMagic.demonlight.steadfast.name=坚定性恶魔之眼
+
+tile.BloodMagic.extras.stone_raw.name=原生石头
+tile.BloodMagic.extras.stone_corrosive.name=腐蚀性石头
+tile.BloodMagic.extras.stone_destructive.name=破坏性石头
+tile.BloodMagic.extras.stone_vengeful.name=复仇性石头
+tile.BloodMagic.extras.stone_steadfast.name=坚定性石头
+
+tile.BloodMagic.extras.polished_raw.name=磨制原生石头
+tile.BloodMagic.extras.polished_corrosive.name=磨制腐蚀性石头
+tile.BloodMagic.extras.polished_destructive.name=磨制破坏性石头
+tile.BloodMagic.extras.polished_vengeful.name=磨制复仇性石头
+tile.BloodMagic.extras.polished_steadfast.name=磨制坚定性石头
+
+tile.BloodMagic.extras.metal_raw.name=原生恶魔合金
+tile.BloodMagic.extras.metal_corrosive.name=腐蚀性恶魔合金
+tile.BloodMagic.extras.metal_destructive.name=破坏性恶魔合金
+tile.BloodMagic.extras.metal_vengeful.name=复仇性恶魔合金
+tile.BloodMagic.extras.metal_steadfast.name=坚定性恶魔合金
+
+tile.BloodMagic.pillar1.raw.name=原生石柱
+tile.BloodMagic.pillar1.corrosive.name=腐蚀性石柱
+tile.BloodMagic.pillar1.destructive.name=破坏性石柱
+tile.BloodMagic.pillar1.vengeful.name=复仇性石柱
+tile.BloodMagic.pillar1.steadfast.name=坚定性石柱
+
+tile.BloodMagic.pillar2.raw.name=Accented 原生石柱
+tile.BloodMagic.pillar2.corrosive.name=Accented 腐蚀性石柱
+tile.BloodMagic.pillar2.destructive.name=Accented 破坏性石柱
+tile.BloodMagic.pillar2.vengeful.name=Accented 复仇性石柱
+tile.BloodMagic.pillar2.steadfast.name=Accented 坚定性石柱
+
+tile.BloodMagic.pillarCap1.raw.name=原生石柱顶
+tile.BloodMagic.pillarCap1.corrosive.name=腐蚀性石柱顶
+tile.BloodMagic.pillarCap2.destructive.name=破坏性石柱顶
+tile.BloodMagic.pillarCap2.vengeful.name=复仇性石柱顶
+tile.BloodMagic.pillarCap3.steadfast.name=坚定性石柱顶
+
+tile.BloodMagic.wall1.brick_raw.name=原生石砖墙
+tile.BloodMagic.wall1.brick_corrosive.name=腐蚀性石砖墙
+tile.BloodMagic.wall1.brick_destructive.name=破坏性石砖墙
+tile.BloodMagic.wall1.brick_vengeful.name=复仇性石砖墙
+tile.BloodMagic.wall1.brick_steadfast.name=坚定性石砖墙
+tile.BloodMagic.wall1.smallbrick_raw.name=原生小石砖墙
+tile.BloodMagic.wall1.smallbrick_corrosive.name=腐蚀性小石砖墙
+tile.BloodMagic.wall1.smallbrick_destructive.name=破坏性小石砖墙
+tile.BloodMagic.wall1.smallbrick_vengeful.name=复仇性小石砖墙
+tile.BloodMagic.wall1.smallbrick_steadfast.name=坚定性小石砖墙
+tile.BloodMagic.wall1.large_raw.name=原生石墙
+tile.BloodMagic.wall1.large_corrosive.name=腐蚀性石墙
+tile.BloodMagic.wall1.large_destructive.name=破坏性石墙
+tile.BloodMagic.wall1.large_vengeful.name=复仇性石墙
+tile.BloodMagic.wall1.large_steadfast.name=坚定性石墙
+
+tile.BloodMagic.stairs1.raw.name=原生石楼梯
+tile.BloodMagic.stairs1.corrosive.name=腐蚀性石楼梯
+tile.BloodMagic.stairs2.destructive.name=破坏性石楼梯
+tile.BloodMagic.stairs2.vengeful.name=复仇性石楼梯
+tile.BloodMagic.stairs3.steadfast.name=坚定性石楼梯
 
 # Fluids
 fluid.lifeEssence=生命源质
@@ -381,6 +467,9 @@ tooltip.BloodMagic.livingArmour.upgrade.graveDigger=掘墓者
 tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=冲撞击打
 tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=精准击打
 tooltip.BloodMagic.livingArmour.upgrade.elytra=鞘翅
+tooltip.BloodMagic.livingArmour.upgrade.nightSight=夜行猛技
+
+
 tooltip.BloodMagic.livingArmour.upgrade.slowness=疲瘸之腿
 tooltip.BloodMagic.livingArmour.upgrade.crippledArm=残废手臂
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (等级 %d)
@@ -598,7 +687,7 @@ chat.BloodMagic.mimic.potionSpawnRadius.down=药剂生成半径已减少至: % �
 
 # entity
 entity.BloodMagic.SentientSpecter.name=感知之灵
-entity.BloodMagic.Mimic.name=模拟
+entity.BloodMagic.Mimic.name=拟态
 
 # sekrit
 
@@ -663,6 +752,10 @@ commands.soulnetwork.notACommand=这不是有效的命令
 commands.soulnetwork.fillMax.success=成功将 %s 的灵魂网络填满至其宝珠的最大值!
 commands.soulnetwork.create.success=创建 %s 的灵魂网络成功 (宝珠等级: %d)
 
+# GUI
+tile.BloodMagic.inputNode.name=输入节点
+tile.BloodMagic.outputNode.name=输出节点
+
 # Keybinds
 BloodMagic.keybind.open_holding=打开集持印记
 BloodMagic.keybind.cycle_holding_pos=循环选择印记 (+)
@@ -703,3 +796,6 @@ tc.research_category.BLOODMAGIC=血红奥术
 bloodmagic.research_name.BLOODMAGIC=血魔法
 bloodmagic.research_text.BLOODMAGIC=血红奥术
 bloodmagic.research_page.BLOODMAGIC.1=血魔法的领域总是似乎有些孤立且像是"个人"艺术, 同众所周知的喜爱隐居有时还有点疯癫的血魔法师. 然而, 自我牺牲与生命源质的力量甚至拥有超出一般血魔法师所见的用途, 事实上, 这种力量显然终究能应用于神秘学.
+
+# Buttons
+button.bloodmagic.tooltip.fill=填充网络
