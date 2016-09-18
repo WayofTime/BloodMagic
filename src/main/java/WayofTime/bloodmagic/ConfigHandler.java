@@ -196,11 +196,11 @@ public class ConfigHandler
 
         category = "Well of Suffering Blacklist";
         config.addCustomCategoryComment(category, "Entity blacklisting from WoS");
-        wellOfSufferingBlacklist = Arrays.asList(config.getStringList("wellOfSufferingBlacklist", category, new String[] {}, "Use the class name of the Entity to blacklist it from usage.\nIE: EntityWolf, EntityWitch, etc"));
+        wellOfSufferingBlacklist = Arrays.asList(config.getStringList("wellOfSufferingBlacklist", category, new String[] { "EntityArmorStand" }, "Use the class name of the Entity to blacklist it from usage.\nIE: EntityWolf, EntityWitch, etc"));
 
         category = "Blood Altar Sacrificial Values";
         config.addCustomCategoryComment(category, "Entity Sacrificial Value Settings");
-        entitySacrificeValuesList = config.getStringList("entitySacrificeValues", category, new String[] { "EntityVillager;2000", "EntitySlime;150", "EntityEnderman;200", "EntityCow;250", "EntityChicken;250", "EntityHorse;250", "EntitySheep;250", "EntityWolf;250", "EntityOcelot;250", "EntityPig;250", "EntityRabbit;250" }, "Used to edit the amount of LP gained per sacrifice of the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerSacrifice");
+        entitySacrificeValuesList = config.getStringList("entitySacrificeValues", category, new String[] { "EntityVillager;2000", "EntitySlime;150", "EntityEnderman;200", "EntityCow;250", "EntityChicken;250", "EntityHorse;250", "EntitySheep;250", "EntityWolf;250", "EntityOcelot;250", "EntityPig;250", "EntityRabbit;250", "EntityArmorStand;0" }, "Used to edit the amount of LP gained per sacrifice of the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerSacrifice");
         buildEntitySacrificeValues();
 
         category = "Potions";
