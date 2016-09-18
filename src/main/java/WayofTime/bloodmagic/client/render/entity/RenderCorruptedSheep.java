@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.bloodmagic.client.render.entity.layer.LayerAlchemyCircle;
 import WayofTime.bloodmagic.client.render.entity.layer.LayerCorruptedSheepWool;
 import WayofTime.bloodmagic.client.render.entity.layer.LayerWill;
 import WayofTime.bloodmagic.client.render.model.ModelCorruptedSheep;
@@ -22,6 +23,7 @@ public class RenderCorruptedSheep extends RenderLiving<EntityCorruptedSheep>
         this.addLayer(new LayerCorruptedSheepWool(this));
         this.addLayer(new LayerWill<EntityCorruptedSheep>(this, new ModelCorruptedSheep(1.1f)));
         this.addLayer(new LayerWill<EntityCorruptedSheep>(this, new ModelCorruptedSheep2(1.1f)));
+        this.addLayer(new LayerAlchemyCircle<EntityCorruptedSheep>());
     }
 
     @Override

@@ -31,6 +31,7 @@ import WayofTime.bloodmagic.proxy.CommonProxy;
 import WayofTime.bloodmagic.registry.ModArmourTrackers;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModCompatibility;
+import WayofTime.bloodmagic.registry.ModCorruptionBlocks;
 import WayofTime.bloodmagic.registry.ModEntities;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.registry.ModPotions;
@@ -131,6 +132,7 @@ public class BloodMagic
         ModArmourTrackers.init();
         ModCompatibility.loadCompat(ICompatibility.InitializationPhase.INIT);
         NetworkRegistry.INSTANCE.registerGuiHandler(BloodMagic.instance, new GuiHandler());
+        ModCorruptionBlocks.init();
 
         proxy.init();
     }

@@ -6,19 +6,19 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import lombok.Getter;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIEatGrass;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIPanic;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
@@ -27,7 +27,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.EnumHand;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -36,6 +36,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.entity.ai.EntityAIEatAndCorruptBlock;
+import WayofTime.bloodmagic.entity.ai.EntityAIProtectAlly;
 
 import com.google.common.collect.Maps;
 
@@ -49,35 +52,69 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
      * handleHealthUpdate and counts down with each tick.
      */
     private int sheepTimer;
-    private EntityAIEatGrass entityAIEatGrass; //TODO: Change to a new AI
+
+    @Getter
+    private int castTimer = 0;
+    private EntityAIEatAndCorruptBlock entityAIEatGrass;
+    private EntityAIProtectAlly entityAIProtectAlly;
+    private EntityAIAttackMelee aiAttackOnCollide;
+
+    private final int attackPriority = 3;
+
+    public int protectionCooldown = 0;
+    public static int maxProtectionCooldown = 90 * 20; //90 second cooldown
 
     public static float[] getDyeRgb(EnumDyeColor dyeColor)
     {
         return (float[]) DYE_TO_RGB.get(dyeColor);
     }
 
-    public EntityCorruptedSheep(World worldIn)
+    public EntityCorruptedSheep(World world)
     {
-        super(worldIn);
+        this(world, EnumDemonWillType.DEFAULT);
+    }
+
+    public EntityCorruptedSheep(World world, EnumDemonWillType type)
+    {
+        super(world);
         this.setSize(0.9F, 1.3F);
+
+        this.setType(type);
     }
 
     protected void initEntityAI()
     {
-        this.entityAIEatGrass = new EntityAIEatGrass(this);
+        this.entityAIEatGrass = new EntityAIEatAndCorruptBlock(this);
+        this.entityAIProtectAlly = new EntityAIProtectAlly(this);
+
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
-        this.tasks.addTask(3, new EntityAITempt(this, 1.1D, Items.WHEAT, false));
+        this.tasks.addTask(2, entityAIProtectAlly);
         this.tasks.addTask(5, this.entityAIEatGrass);
         this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
+
+        this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityLivingBase>(this, EntityLivingBase.class, 10, true, false, new EntityAspectedDemonBase.TeamAttackPredicate(this)));
+    }
+
+    @Override
+    public void setCombatTask()
+    {
+        if (aiAttackOnCollide != null)
+        {
+            this.tasks.removeTask(aiAttackOnCollide);
+        }
+
+        aiAttackOnCollide = new EntityAIAttackMelee(this, this.getBaseSprintModifier(getType()), false);
+        this.tasks.addTask(attackPriority, aiAttackOnCollide);
     }
 
     @Override
     protected void updateAITasks()
     {
         this.sheepTimer = this.entityAIEatGrass.getEatingGrassTimer();
+        this.castTimer = this.entityAIProtectAlly.getCastTimer();
         super.updateAITasks();
     }
 
@@ -87,18 +124,57 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
         if (this.worldObj.isRemote)
         {
             this.sheepTimer = Math.max(0, this.sheepTimer - 1);
+            this.castTimer = Math.max(0, castTimer - 1);
+            if (this.castTimer == 70)
+            {
+                this.playSound(this.getHurtSound(), this.getSoundVolume() * 2, this.getSoundPitch());
+            }
         }
+
+        this.protectionCooldown = Math.max(0, this.protectionCooldown - 1);
 
         super.onLivingUpdate();
     }
 
-    @Override
-    protected void applyEntityAttributes()
+    public boolean canProtectAlly(EntityLivingBase entity)
     {
-        super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(30);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6);
+        return this.protectionCooldown <= 0 && entity.getHealth() < entity.getMaxHealth() && !entity.isPotionActive(MobEffects.RESISTANCE);
+    }
+
+    public boolean applyProtectionToAlly(EntityLivingBase entity)
+    {
+        if (canProtectAlly(entity))
+        {
+            entity.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 20 * 20, 3));
+            this.protectionCooldown = maxProtectionCooldown;
+        }
+
+        return false;
+    }
+
+    public double getBaseHP(EnumDemonWillType type)
+    {
+        return super.getBaseHP(type) * 0.75;
+    }
+
+    public double getBaseMeleeDamage(EnumDemonWillType type)
+    {
+        return super.getBaseMeleeDamage(type) * 0.75;
+    }
+
+    public double getBaseSpeed(EnumDemonWillType type)
+    {
+        return super.getBaseSpeed(type);
+    }
+
+    public double getBaseSprintModifier(EnumDemonWillType type)
+    {
+        return super.getBaseSprintModifier(type);
+    }
+
+    public double getBaseKnockbackResist(EnumDemonWillType type)
+    {
+        return super.getBaseKnockbackResist(type) + 0.2;
     }
 
     public double getMeleeResist()
@@ -125,6 +201,9 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
         if (id == 10)
         {
             this.sheepTimer = 40;
+        } else if (id == 53)
+        {
+            this.castTimer = 100;
         } else
         {
             super.handleStatusUpdate(id);
@@ -151,19 +230,21 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound compound)
+    public void writeEntityToNBT(NBTTagCompound tag)
     {
-        super.writeEntityToNBT(compound);
-        compound.setBoolean("Sheared", this.getSheared());
-        compound.setByte("Color", (byte) this.getFleeceColor().getMetadata());
+        super.writeEntityToNBT(tag);
+        tag.setBoolean("Sheared", this.getSheared());
+        tag.setByte("Color", (byte) this.getFleeceColor().getMetadata());
+        tag.setInteger("protection", this.protectionCooldown);
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound compound)
+    public void readEntityFromNBT(NBTTagCompound tag)
     {
-        super.readEntityFromNBT(compound);
-        this.setSheared(compound.getBoolean("Sheared"));
-        this.setFleeceColor(EnumDyeColor.byMetadata(compound.getByte("Color")));
+        super.readEntityFromNBT(tag);
+        this.setSheared(tag.getBoolean("Sheared"));
+        this.setFleeceColor(EnumDyeColor.byMetadata(tag.getByte("Color")));
+        this.protectionCooldown = tag.getInteger("protection");
     }
 
     @Override

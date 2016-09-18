@@ -60,8 +60,47 @@ public class CorruptionHandler
         return false;
     }
 
-    public static boolean corruptSurroundingBlocks(World world, EnumDemonWillType type, BlockPos centerPos, int radius)
+    /**
+     * 
+     * @param world
+     * @param type
+     * @param centerPos
+     * @param radius
+     * @param featheringChance
+     *        Chance that the block within the featheringDepth is NOT altered.
+     * @param featheringDepth
+     * @return
+     */
+    public static boolean corruptSurroundingBlocks(World world, EnumDemonWillType type, BlockPos centerPos, int radius, double featheringChance, double featheringDepth)
     {
+        for (int i = -radius; i <= radius; i++)
+        {
+            for (int j = -radius; j <= radius; j++)
+            {
+                for (int k = -radius; k <= radius; k++)
+                {
+                    if (i * i + j * j + k * k > (radius + 0.5) * (radius + 0.5))
+                    {
+                        continue;
+                    }
+
+                    if (featheringChance > 0 && i * i + j * j + k * k > (radius - featheringDepth + 0.5) * (radius - featheringDepth + 0.5) && world.rand.nextDouble() < featheringChance)
+                    {
+                        continue;
+                    }
+
+                    if (world.isAirBlock(centerPos))
+                    {
+                        continue;
+                    }
+
+                    BlockPos offsetPos = centerPos.add(i, j, k);
+                    IBlockState offsetState = world.getBlockState(offsetPos);
+                    Block offsetBlock = offsetState.getBlock();
+                    corruptBlock(world, type, offsetPos, offsetState, offsetBlock);
+                }
+            }
+        }
         return false;
     }
 }
