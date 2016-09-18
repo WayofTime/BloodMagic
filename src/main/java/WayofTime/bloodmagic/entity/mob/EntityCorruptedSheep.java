@@ -96,8 +96,19 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23000000417232513D);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(30);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6);
+    }
+
+    public double getMeleeResist()
+    {
+        return 0.2;
+    }
+
+    public double getProjectileResist()
+    {
+        return 0.6;
     }
 
     @Override
@@ -118,13 +129,6 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
         {
             super.handleStatusUpdate(id);
         }
-    }
-
-    @Override
-    //TODO: Add fun stuff for when interacted with - explode?
-    public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack)
-    {
-        return super.processInteract(player, hand, stack);
     }
 
     @SideOnly(Side.CLIENT)
@@ -178,6 +182,12 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
     protected SoundEvent getDeathSound()
     {
         return SoundEvents.ENTITY_SHEEP_DEATH;
+    }
+
+    @Override
+    protected float getSoundPitch()
+    {
+        return super.getSoundPitch() * 0.5f;
     }
 
     @Override
