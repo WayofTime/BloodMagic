@@ -146,7 +146,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                             RitualHelper.setRuneType(world, newPos, component.getRuneType());
                             return true;
                         }
-                    } else if (block.isAir(state, world, newPos))
+                    } else if (block.isAir(state, world, newPos) || block.isReplaceable(world, pos))
                     {
                         if (!consumeStone(stack, world, player))
                         {
