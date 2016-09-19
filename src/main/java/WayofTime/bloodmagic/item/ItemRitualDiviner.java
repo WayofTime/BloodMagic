@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.common.base.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -63,6 +64,19 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     public String getUnlocalizedName(ItemStack stack)
     {
         return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
+    }
+
+    @Override
+    public String getHighlightTip(ItemStack stack, String displayName)
+    {
+        if (Strings.isNullOrEmpty(getCurrentRitual(stack)))
+            return displayName;
+
+        Ritual ritual = RitualRegistry.getRitualForId(getCurrentRitual(stack));
+        if (ritual == null)
+            return displayName;
+
+        return displayName + ": " + TextHelper.localize(ritual.getUnlocalizedName());
     }
 
     @Override
