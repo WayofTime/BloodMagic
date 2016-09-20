@@ -27,6 +27,11 @@ public class LayerWill<T extends EntityDemonBase> implements LayerRenderer<T>
     {
 //        if (demon.getPowered())
 
+        if (demon.isInvisible())
+        {
+            return; //TODO: Make this also check if the demon wants the Will layer
+        }
+
         boolean flag = demon.isInvisible();
         GlStateManager.depthMask(!flag);
         this.renderer.bindTexture(RAW_TEXTURE);

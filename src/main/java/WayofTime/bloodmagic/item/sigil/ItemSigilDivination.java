@@ -17,6 +17,7 @@ import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.entity.mob.EntityCorruptedChicken;
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
 import WayofTime.bloodmagic.tile.TileIncenseAltar;
 import WayofTime.bloodmagic.tile.TileInversionPillar;
@@ -43,7 +44,7 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 
         if (!world.isRemote)
         {
-            EntityCorruptedSheep fred = new EntityCorruptedSheep(world, EnumDemonWillType.DESTRUCTIVE);
+            EntityCorruptedChicken fred = new EntityCorruptedChicken(world, EnumDemonWillType.DESTRUCTIVE);
             fred.setPosition(player.posX, player.posY, player.posZ);
             world.spawnEntityInWorld(fred);
         }

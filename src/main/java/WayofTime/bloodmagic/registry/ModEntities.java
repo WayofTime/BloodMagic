@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.registry;
 
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.entity.mob.EntityCorruptedChicken;
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedZombie;
 import WayofTime.bloodmagic.entity.mob.EntityMimic;
@@ -25,5 +26,6 @@ public class ModEntities
         EntityRegistry.registerModEntity(EntityMimic.class, "Mimic", id++, BloodMagic.instance, 64, 1, true);
         EntityRegistry.registerModEntity(EntityCorruptedZombie.class, "CorruptedZombie", id++, BloodMagic.instance, 64, 1, true);
         EntityRegistry.registerModEntity(EntityCorruptedSheep.class, "CorruptedSheep", id++, BloodMagic.instance, 64, 1, true);
+        EntityRegistry.registerModEntity(EntityCorruptedChicken.class, "CorruptedChicken", id++, BloodMagic.instance, 64, 1, true);
     }
 }

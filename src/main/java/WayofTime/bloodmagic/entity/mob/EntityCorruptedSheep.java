@@ -152,36 +152,43 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
         return false;
     }
 
+    @Override
     public double getBaseHP(EnumDemonWillType type)
     {
         return super.getBaseHP(type) * 0.75;
     }
 
+    @Override
     public double getBaseMeleeDamage(EnumDemonWillType type)
     {
         return super.getBaseMeleeDamage(type) * 0.75;
     }
 
+    @Override
     public double getBaseSpeed(EnumDemonWillType type)
     {
         return super.getBaseSpeed(type);
     }
 
+    @Override
     public double getBaseSprintModifier(EnumDemonWillType type)
     {
         return super.getBaseSprintModifier(type);
     }
 
+    @Override
     public double getBaseKnockbackResist(EnumDemonWillType type)
     {
         return super.getBaseKnockbackResist(type) + 0.2;
     }
 
+    @Override
     public double getMeleeResist()
     {
         return 0.2;
     }
 
+    @Override
     public double getProjectileResist()
     {
         return 0.6;
@@ -339,7 +346,7 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
 
         if (this.isChild())
         {
-            //TODO: Heal
+            this.heal(3);
         }
     }
 
