@@ -90,9 +90,10 @@ public class EntityAIStealthRetreat extends EntityAIBase
     public void updateTask()
     {
         ticksLeft--;
-        if (ticksLeft <= 0)
+        if (ticksLeft <= 0 || this.entity.getAttackTarget() == null)
         {
             this.entity.attackStateMachine = 0;
+            return;
         }
 
         if (this.entity.getDistanceSqToEntity(this.entity.getAttackTarget()) < 49.0D)

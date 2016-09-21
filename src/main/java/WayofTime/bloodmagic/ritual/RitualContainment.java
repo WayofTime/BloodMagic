@@ -43,9 +43,9 @@ public class RitualContainment extends Ritual
             if (entity instanceof EntityPlayer && (((EntityPlayer) entity).capabilities.isCreativeMode || PlayerHelper.getUUIDFromPlayer((EntityPlayer) entity).toString().equals(masterRitualStone.getOwner())))
                 continue;
 
-            double xDif = entity.posX - masterRitualStone.getBlockPos().getX() + 0.5;
-            double yDif = entity.posY - masterRitualStone.getBlockPos().getY() + 3;
-            double zDif = entity.posZ - masterRitualStone.getBlockPos().getZ() + 0.5;
+            double xDif = entity.posX - (masterRitualStone.getBlockPos().getX() + 0.5);
+            double yDif = entity.posY - (masterRitualStone.getBlockPos().getY() + 2.5);
+            double zDif = entity.posZ - (masterRitualStone.getBlockPos().getZ() + 0.5);
 
             entity.motionX = -0.05 * xDif;
             entity.motionY = -0.05 * yDif;
