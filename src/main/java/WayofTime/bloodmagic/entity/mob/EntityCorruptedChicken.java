@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.entity.mob;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
@@ -27,7 +26,7 @@ import WayofTime.bloodmagic.entity.ai.EntityAIStealthTowardsTarget;
 
 public class EntityCorruptedChicken extends EntityAspectedDemonBase
 {
-    private EntityAIAttackMelee aiAttackOnCollide;
+    private EntityAIAttackStealthMelee aiAttackOnCollide;
     private final int attackPriority = 3;
 
     public float wingRotation;
