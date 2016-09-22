@@ -553,6 +553,39 @@ public class CategoryArchitect
         orbRunePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeOrb" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "runeOrb"), new EntryText(orbRunePages, TextHelper.localize(keyBase + "runeOrb"), true));
 
+        List<IPage> augmentedCapacityPages = new ArrayList<IPage>();
+
+        IRecipe augmentedCapacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 7));
+        if (orbRuneRecipe != null)
+        {
+            augmentedCapacityPages.add(BookUtils.getPageForRecipe(augmentedCapacityRecipe));
+        }
+
+        augmentedCapacityPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "augmentedCapacity" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "augmentedCapacity"), new EntryText(augmentedCapacityPages, TextHelper.localize(keyBase + "augmentedCapacity"), true));
+
+        List<IPage> chargingPages = new ArrayList<IPage>();
+
+        IRecipe chargingRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 10));
+        if (orbRuneRecipe != null)
+        {
+            chargingPages.add(BookUtils.getPageForRecipe(chargingRecipe));
+        }
+
+        chargingPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "charging" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "charging"), new EntryText(chargingPages, TextHelper.localize(keyBase + "charging"), true));
+
+        List<IPage> accelerationPages = new ArrayList<IPage>();
+
+        IRecipe accelerationRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 9));
+        if (orbRuneRecipe != null)
+        {
+            accelerationPages.add(BookUtils.getPageForRecipe(accelerationRecipe));
+        }
+
+        accelerationPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "acceleration" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "acceleration"), new EntryText(accelerationPages, TextHelper.localize(keyBase + "acceleration"), true));
+
         List<IPage> suppressionPages = new ArrayList<IPage>();
 
         TartaricForgeRecipe suppressionRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION));
