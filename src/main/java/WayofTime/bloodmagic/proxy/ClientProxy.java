@@ -42,6 +42,7 @@ import WayofTime.bloodmagic.client.render.block.RenderMimic;
 import WayofTime.bloodmagic.client.render.entity.BloodLightRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.CorruptedChickenRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.CorruptedSheepRenderFactory;
+import WayofTime.bloodmagic.client.render.entity.CorruptedSpiderRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.CorruptedZombieRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.MeteorRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.MimicRenderFactory;
@@ -50,6 +51,7 @@ import WayofTime.bloodmagic.client.render.entity.SentientSpecterRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SoulSnareRenderFactory;
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedChicken;
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
+import WayofTime.bloodmagic.entity.mob.EntityCorruptedSpider;
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedZombie;
 import WayofTime.bloodmagic.entity.mob.EntityMimic;
 import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
@@ -130,6 +132,7 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerEntityRenderingHandler(EntityCorruptedZombie.class, new CorruptedZombieRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityCorruptedSheep.class, new CorruptedSheepRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityCorruptedChicken.class, new CorruptedChickenRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(EntityCorruptedSpider.class, new CorruptedSpiderRenderFactory());
 
         ShaderHelper.init();
     }

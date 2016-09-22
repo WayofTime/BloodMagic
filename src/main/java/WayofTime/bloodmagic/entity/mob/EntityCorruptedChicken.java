@@ -120,7 +120,7 @@ public class EntityCorruptedChicken extends EntityAspectedDemonBase
     @Override
     public double getBaseKnockbackResist(EnumDemonWillType type)
     {
-        return super.getBaseKnockbackResist(type) + 0.2;
+        return super.getBaseKnockbackResist(type);
     }
 
     @Override
@@ -185,6 +185,12 @@ public class EntityCorruptedChicken extends EntityAspectedDemonBase
     protected SoundEvent getDeathSound()
     {
         return SoundEvents.ENTITY_CHICKEN_DEATH;
+    }
+
+    @Override
+    protected float getSoundPitch()
+    {
+        return super.getSoundPitch() * 0.5f;
     }
 
     @Override

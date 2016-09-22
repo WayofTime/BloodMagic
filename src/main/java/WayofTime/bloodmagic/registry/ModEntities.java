@@ -4,6 +4,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedChicken;
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
+import WayofTime.bloodmagic.entity.mob.EntityCorruptedSpider;
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedZombie;
 import WayofTime.bloodmagic.entity.mob.EntityMimic;
 import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
@@ -27,5 +28,6 @@ public class ModEntities
         EntityRegistry.registerModEntity(EntityCorruptedZombie.class, "CorruptedZombie", id++, BloodMagic.instance, 64, 1, true);
         EntityRegistry.registerModEntity(EntityCorruptedSheep.class, "CorruptedSheep", id++, BloodMagic.instance, 64, 1, true);
         EntityRegistry.registerModEntity(EntityCorruptedChicken.class, "CorruptedChicken", id++, BloodMagic.instance, 64, 1, true);
+        EntityRegistry.registerModEntity(EntityCorruptedSpider.class, "CorruptedSpider", id++, BloodMagic.instance, 64, 1, true);
     }
 }

@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.altar;
 
-import java.util.Collections;
 import java.util.List;
 
 import lombok.Getter;
@@ -580,6 +579,7 @@ public class BloodAltar implements IFluidHandler
         } else if (!tier.equals(EnumAltarTier.ONE) && upgrade != null)
         {
             this.isUpgraded = true;
+            this.accelerationUpgrades = upgrade.getAccelerationCount();
             this.consumptionMultiplier = (float) (0.20 * upgrade.getSpeedCount());
             this.efficiencyMultiplier = (float) Math.pow(0.85, upgrade.getEfficiencyCount());
             this.sacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getSacrificeCount());
@@ -587,9 +587,8 @@ public class BloodAltar implements IFluidHandler
             this.capacityMultiplier = (float) ((1 * Math.pow(1.10, upgrade.getBetterCapacityCount()) + 0.20 * upgrade.getCapacityCount()));
             this.dislocationMultiplier = (float) (Math.pow(1.2, upgrade.getDisplacementCount()));
             this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrade.getOrbCapacityCount());
-            this.accelerationUpgrades = upgrade.getAccelerationCount();
             this.chargingFrequency = Math.max(20 - upgrade.getAccelerationCount(), 1);
-            this.chargingRate = 100 * upgrade.getChargingCount();
+            this.chargingRate = (int) (10 * upgrade.getChargingCount() * (1 + consumptionMultiplier / 2));
             this.maxCharge = (int) (FluidContainerRegistry.BUCKET_VOLUME * Math.max(0.5 * capacityMultiplier, 1) * upgrade.getChargingCount());
         }
 
