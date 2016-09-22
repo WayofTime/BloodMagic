@@ -307,6 +307,9 @@ public class ClientHandler
 
         ItemSigilHolding.cycleToNextSigil(stack, mode);
         BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacketProcessor(player.inventory.currentItem, mode));
+        ItemStack newStack = ItemSigilHolding.getItemStackInSlot(stack, ItemSigilHolding.getCurrentItemOrdinal(stack));
+        if (newStack != null)
+            Minecraft.getMinecraft().ingameGUI.setRecordPlaying(newStack.getDisplayName(), false);
     }
 
     private static TextureAtlasSprite forName(TextureMap textureMap, String name, String dir)
