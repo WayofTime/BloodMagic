@@ -490,6 +490,8 @@ tooltip.BloodMagic.livingArmour.upgrade.nightSight=Nocturnal Prowess
 
 tooltip.BloodMagic.livingArmour.upgrade.slowness=Limp Leg
 tooltip.BloodMagic.livingArmour.upgrade.crippledArm=Crippled Arm
+tooltip.BloodMagic.livingArmour.upgrade.slippery=Loose Traction
+tooltip.BloodMagic.livingArmour.upgrade.battleHunger=Battle Hungry
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.upgrade.progress=%s (%d/100)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s

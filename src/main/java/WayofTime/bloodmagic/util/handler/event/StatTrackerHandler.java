@@ -1,15 +1,5 @@
 package WayofTime.bloodmagic.util.handler.event;
 
-import WayofTime.bloodmagic.annot.Handler;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
-import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.livingArmour.tracker.*;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
-import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,6 +16,27 @@ import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import WayofTime.bloodmagic.annot.Handler;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowProtect;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerCriticalStrike;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerDigging;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerExperience;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFallProtect;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGraveDigger;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerHealthboost;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerMeleeDamage;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerNightSight;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPhysicalProtect;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSolarPowered;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSprintAttack;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
+import WayofTime.bloodmagic.util.Utils;
 
 @Handler
 public class StatTrackerHandler

@@ -62,6 +62,7 @@ import WayofTime.bloodmagic.item.ItemExperienceBook;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeBattleHungry;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
@@ -152,6 +153,12 @@ public class GenericHandler
 
                 if (shouldSyphon)
                     ItemHelper.LPContainer.addLPToItem(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST), totalLP, pack.CAPACITY);
+            }
+
+            LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.battleHunger", player.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
+            if (upgrade instanceof LivingArmourUpgradeBattleHungry)
+            {
+                ((LivingArmourUpgradeBattleHungry) upgrade).resetTimer();
             }
         }
     }
