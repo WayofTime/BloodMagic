@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.livingArmour.downgrade;
 
-import net.minecraft.block.BlockIce;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
@@ -13,9 +13,6 @@ public class LivingArmourUpgradeSlippery extends LivingArmourUpgrade
     public static final int[] costs = new int[] { -50 };
     public static final int[] slipperyDuration = new int[] { 30 * 20 };
 
-    public double prevMotionX = 0;
-    public double prevMotionZ = 0;
-
     public LivingArmourUpgradeSlippery(int level)
     {
         super(level);
@@ -24,20 +21,47 @@ public class LivingArmourUpgradeSlippery extends LivingArmourUpgrade
     @Override
     public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
     {
-        double weight = 0.05;
         if (world.isRemote && player.onGround)
         {
-            if (player.moveForward == 0)
+//            if (player.moveForward == 0)
             {
-                player.motionX = (player.motionX - this.prevMotionX) * weight + this.prevMotionX;
-                player.motionZ = (player.motionZ - this.prevMotionZ) * weight + this.prevMotionZ;
 
-                player.velocityChanged = true;
+                float f6 = 0.91F;
+                BlockPos.PooledMutableBlockPos blockpos$pooledmutableblockpos = BlockPos.PooledMutableBlockPos.retain(player.posX, player.getEntityBoundingBox().minY - 1.0D, player.posZ);
+
+                if (player.onGround)
+                {
+                    f6 = world.getBlockState(blockpos$pooledmutableblockpos).getBlock().slipperiness * 0.91F;
+                }
+
+                player.motionX /= (double) (f6 / 0.91);
+                player.motionZ /= (double) (f6 / 0.91);
+
+                float f7 = 0.16277136F / (f6 * f6 * f6);
+                float f8;
+
+                if (player.onGround)
+                {
+                    f8 = player.getAIMoveSpeed() * f7;
+                } else
+                {
+                    f8 = player.jumpMovementFactor;
+                }
+
+                player.moveRelative(-player.moveStrafing, -player.moveForward, f8);
+
+                player.moveRelative(player.moveStrafing, player.moveForward, f8 / 10);
+
+                player.motionX *= 0.90;
+                player.motionY *= 0.90;
             }
         }
+    }
 
-        this.prevMotionX = player.motionX;
-        this.prevMotionZ = player.motionZ;
+    @Override
+    public boolean runOnClient()
+    {
+        return true;
     }
 
     @Override

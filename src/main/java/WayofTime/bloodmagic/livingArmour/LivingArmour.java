@@ -156,7 +156,15 @@ public class LivingArmour implements ILivingArmour
                 continue;
             }
 
-            upgrade.onTick(world, player, this);
+            if (world.isRemote && upgrade.runOnClient())
+            {
+                upgrade.onTick(world, player, this);
+            }
+        }
+
+        if (world.isRemote)
+        {
+            return;
         }
 
         List<String> allowedUpgradesList = new ArrayList<String>();

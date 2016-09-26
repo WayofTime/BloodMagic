@@ -86,4 +86,9 @@ public abstract class LivingArmourUpgrade
     {
         return 0;
     }
+
+    public boolean runOnClient()
+    {
+        return false;
+    }
 }

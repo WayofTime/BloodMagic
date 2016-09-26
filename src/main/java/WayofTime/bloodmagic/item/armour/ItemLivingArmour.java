@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -29,9 +28,13 @@ import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import org.lwjgl.input.Keyboard;
+
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
@@ -47,7 +50,6 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import org.lwjgl.input.Keyboard;
 
 public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshProvider
 {
@@ -361,8 +363,6 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                     }
                 }
             }
-
-            return;
         }
 
         if (this == ModItems.LIVING_ARMOUR_CHEST)
