@@ -17,7 +17,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 public class AltarRecipeJEI extends BlankRecipeWrapper
 {
     @Nonnull
-    private final Object input;
+    private final List<ItemStack> input;
 
     @Nonnull
     private final ItemStack output;
@@ -37,13 +37,13 @@ public class AltarRecipeJEI extends BlankRecipeWrapper
     }
 
     @Override
-    public List getInputs()
+    public List<List<ItemStack>> getInputs()
     {
         return Collections.singletonList(input);
     }
 
     @Override
-    public List getOutputs()
+    public List<ItemStack> getOutputs()
     {
         return Collections.singletonList(output);
     }

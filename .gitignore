@@ -19,6 +19,7 @@ crash-reports/
 /logs/
 /mods/
 /screenshots/
+/classes/
 
 # File Extensions
 *.psd
