@@ -6,6 +6,7 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -23,6 +24,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerJump;
@@ -39,7 +41,7 @@ public class LivingArmourHandler
     @SubscribeEvent
     public void onPlayerClick(PlayerInteractEvent event)
     {
-        if (event.isCancelable() && event.getHand() == EnumHand.OFF_HAND)
+        if (event.isCancelable())
         {
             EntityPlayer player = event.getEntityPlayer();
 
@@ -49,11 +51,25 @@ public class LivingArmourHandler
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)
                 {
-                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.crippledArm", chestStack);
-
-                    if (upgrade instanceof LivingArmourUpgradeCrippledArm)
+                    if (event.getHand() == EnumHand.OFF_HAND)
                     {
-                        event.setCanceled(true);
+                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.crippledArm", chestStack);
+
+                        if (upgrade instanceof LivingArmourUpgradeCrippledArm)
+                        {
+                            event.setCanceled(true);
+                        }
+                    }
+
+                    if (event.getItemStack().getItemUseAction() == EnumAction.DRINK)
+                    {
+                        //TODO: See if the item is a splash potion? Those should be usable.
+                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.quenched", chestStack);
+
+                        if (upgrade instanceof LivingArmourUpgradeQuenched)
+                        {
+                            event.setCanceled(true);
+                        }
                     }
                 }
             }
