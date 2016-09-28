@@ -61,7 +61,7 @@ public class LivingArmourHandler
                         }
                     }
 
-                    if (event.getItemStack().getItemUseAction() == EnumAction.DRINK)
+                    if (event.getItemStack() != null && event.getItemStack().getItemUseAction() == EnumAction.DRINK)
                     {
                         //TODO: See if the item is a splash potion? Those should be usable.
                         LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.quenched", chestStack);

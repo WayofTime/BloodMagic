@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.registry;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeBattleHungry;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeMeleeDecrease;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlippery;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowness;
@@ -93,11 +94,13 @@ public class ModArmourTrackers
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeCriticalStrike(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeElytra(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeFireResist(0));
+        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeNightSight(0));
+
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSlowness(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeCrippledArm(0));
-        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeNightSight(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSlippery(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeBattleHungry(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeQuenched(0));
+        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeMeleeDecrease(0));
     }
 }
