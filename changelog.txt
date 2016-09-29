@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.1.0-65
+------------------------------------------------------
+- Fixed NPE when attacking mobs when you don't have a set of Living Armour. Oops.
+
+------------------------------------------------------
 Version 2.1.0-64
 ------------------------------------------------------
 - Fixed the symmetry issues of the Ritual of Containment

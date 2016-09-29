@@ -155,10 +155,19 @@ public class GenericHandler
                     ItemHelper.LPContainer.addLPToItem(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST), totalLP, pack.CAPACITY);
             }
 
-            LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.battleHunger", player.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
-            if (upgrade instanceof LivingArmourUpgradeBattleHungry)
+            if (LivingArmour.hasFullSet(player))
             {
-                ((LivingArmourUpgradeBattleHungry) upgrade).resetTimer();
+                ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                if (armour != null)
+                {
+
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.battleHunger", chestStack);
+                    if (upgrade instanceof LivingArmourUpgradeBattleHungry)
+                    {
+                        ((LivingArmourUpgradeBattleHungry) upgrade).resetTimer();
+                    }
+                }
             }
         }
     }
