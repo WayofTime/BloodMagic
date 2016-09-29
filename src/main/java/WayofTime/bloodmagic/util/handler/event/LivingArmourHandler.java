@@ -196,9 +196,9 @@ public class LivingArmourHandler
                 }
             }
 
-            if (percentIncrease > 0 && (player.onGround || player.capabilities.isFlying) && player.moveForward > 0F)
+            if (percentIncrease > 0 && (player.onGround || player.capabilities.isFlying) && (Math.abs(player.moveForward) > 0 || Math.abs(player.moveStrafing) > 0))
             {
-                player.moveRelative(0F, 1F, player.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease);
+                player.moveRelative(player.moveStrafing, player.moveForward, player.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease);
             }
         }
     }

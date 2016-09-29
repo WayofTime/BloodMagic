@@ -6,6 +6,7 @@ Version 2.1.0-64
 - Added the Charging rune, which accumulates charge by using the LP from the Blood Altar (1 charge = 1 LP always). If enough charge is stored when crafting, the crafting occurs instantly.
 - Added the entries for the Rune of Augmented Capacity, Charging Rune, and Rune of Acceleration
 - Fixed the Sigil of Translocation so that it does not crash when picking up certain blocks. Also removed the damned lightning.
+- Changed the Quick Feet upgrade and the speed boost sigil so that their speeds are applied when strafing and walking backwards as well.
 
 ------------------------------------------------------
 Version 2.1.0-63

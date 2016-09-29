@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.registry;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeBattleHungry;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeDisoriented;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeMeleeDecrease;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlippery;
@@ -102,5 +103,6 @@ public class ModArmourTrackers
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeBattleHungry(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeQuenched(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeMeleeDecrease(0));
+        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeDisoriented(0));
     }
 }
