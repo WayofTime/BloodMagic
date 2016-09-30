@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.api.livingArmour;
 
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-
-import java.util.List;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
 
 public abstract class StatTracker
 {
@@ -43,9 +43,9 @@ public abstract class StatTracker
 
     /**
      * Used to obtain the progress from the current level to the next level.
-     *
+     * 
      * 0.0 being 0% - 1.0 being 100%.
-     *
+     * 
      * @param livingArmour
      *        The equipped LivingArmour
      * @return the progress from the current level to the next level.
@@ -71,4 +71,6 @@ public abstract class StatTracker
     }
 
     public abstract boolean providesUpgrade(String key);
+
+    public abstract void onArmourUpgradeAdded(LivingArmourUpgrade upgrade);
 }

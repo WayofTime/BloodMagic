@@ -1,19 +1,19 @@
 package WayofTime.bloodmagic.livingArmour.tracker;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeKnockbackResist;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class StatTrackerFood extends StatTracker
 {
@@ -108,5 +108,19 @@ public class StatTrackerFood extends StatTracker
     public boolean providesUpgrade(String key)
     {
         return key.equals(Constants.Mod.MODID + ".upgrade.knockback");
+    }
+
+    @Override
+    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
+    {
+        if (upgrade instanceof LivingArmourUpgradeKnockbackResist)
+        {
+            int level = upgrade.getUpgradeLevel();
+            if (level < foodRequired.length)
+            {
+                foodEaten = Math.max(foodEaten, foodRequired[level]);
+                this.markDirty();
+            }
+        }
     }
 }

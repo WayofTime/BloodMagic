@@ -113,6 +113,11 @@ public class LivingArmour implements ILivingArmour
                     upgradeMap.put(key, upgrade);
                     totalUpgradePoints += upgradePointDifference;
                     notifyPlayerOfUpgrade(user, upgrade);
+                    for (StatTracker tracker : trackerMap.values())
+                    {
+                        tracker.onArmourUpgradeAdded(upgrade);
+                    }
+
                     return true;
                 }
             }
@@ -124,6 +129,11 @@ public class LivingArmour implements ILivingArmour
                 upgradeMap.put(key, upgrade);
                 totalUpgradePoints += upgradePoints;
                 notifyPlayerOfUpgrade(user, upgrade);
+                for (StatTracker tracker : trackerMap.values())
+                {
+                    tracker.onArmourUpgradeAdded(upgrade);
+                }
+
                 return true;
             }
         }

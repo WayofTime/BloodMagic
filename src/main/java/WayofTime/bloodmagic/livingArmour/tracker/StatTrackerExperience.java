@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -13,6 +12,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
+import WayofTime.bloodmagic.util.Utils;
 
 public class StatTrackerExperience extends StatTracker
 {
@@ -106,5 +106,19 @@ public class StatTrackerExperience extends StatTracker
     public boolean providesUpgrade(String key)
     {
         return key.equals(Constants.Mod.MODID + ".upgrade.experienced");
+    }
+
+    @Override
+    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
+    {
+        if (upgrade instanceof LivingArmourUpgradeExperience)
+        {
+            int level = upgrade.getUpgradeLevel();
+            if (level < experienceRequired.length)
+            {
+                totalExperienceGained = Math.max(totalExperienceGained, experienceRequired[level]);
+                this.markDirty();
+            }
+        }
     }
 }

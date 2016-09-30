@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.livingArmour.tracker;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -12,6 +11,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeFireResist;
+import WayofTime.bloodmagic.util.Utils;
 
 public class StatTrackerFireResist extends StatTracker
 {
@@ -88,5 +88,19 @@ public class StatTrackerFireResist extends StatTracker
     public boolean providesUpgrade(String key)
     {
         return key.equals(Constants.Mod.MODID + ".upgrade.fireResist");
+    }
+
+    @Override
+    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
+    {
+        if (upgrade instanceof LivingArmourUpgradeFireResist)
+        {
+            int level = upgrade.getUpgradeLevel();
+            if (level < fireTicksRequired.length)
+            {
+                totalFireTicks = Math.max(totalFireTicks, fireTicksRequired[level]);
+                this.markDirty();
+            }
+        }
     }
 }

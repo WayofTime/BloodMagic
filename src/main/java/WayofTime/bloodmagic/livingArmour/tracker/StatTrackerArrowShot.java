@@ -1,18 +1,18 @@
 package WayofTime.bloodmagic.livingArmour.tracker;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class StatTrackerArrowShot extends StatTracker
 {
@@ -106,5 +106,19 @@ public class StatTrackerArrowShot extends StatTracker
     public boolean providesUpgrade(String key)
     {
         return key.equals(Constants.Mod.MODID + ".upgrade.arrowShot");
+    }
+
+    @Override
+    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
+    {
+        if (upgrade instanceof LivingArmourUpgradeArrowShot)
+        {
+            int level = upgrade.getUpgradeLevel();
+            if (level < shotsRequired.length)
+            {
+                totalShots = Math.max(totalShots, shotsRequired[level]);
+                this.markDirty();
+            }
+        }
     }
 }

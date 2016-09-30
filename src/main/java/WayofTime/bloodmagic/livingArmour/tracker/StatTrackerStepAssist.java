@@ -117,4 +117,14 @@ public class StatTrackerStepAssist extends StatTracker
     {
         return key.equals(Constants.Mod.MODID + ".upgrade.stepAssist");
     }
+
+    @Override
+    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
+    {
+        if (upgrade instanceof LivingArmourUpgradeStepAssist)
+        {
+            totalMovement = Math.max(totalMovement, blocksRequired);
+            this.markDirty();
+        }
+    }
 }

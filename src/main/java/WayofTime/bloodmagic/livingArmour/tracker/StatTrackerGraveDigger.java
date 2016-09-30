@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -13,6 +12,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGraveDigger;
+import WayofTime.bloodmagic.util.Utils;
 
 public class StatTrackerGraveDigger extends StatTracker
 {
@@ -106,5 +106,19 @@ public class StatTrackerGraveDigger extends StatTracker
     public boolean providesUpgrade(String key)
     {
         return key.equals(Constants.Mod.MODID + ".upgrade.graveDigger");
+    }
+
+    @Override
+    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
+    {
+        if (upgrade instanceof LivingArmourUpgradeGraveDigger)
+        {
+            int level = upgrade.getUpgradeLevel();
+            if (level < damageRequired.length)
+            {
+                totalDamageDealt = Math.max(totalDamageDealt, damageRequired[level]);
+                this.markDirty();
+            }
+        }
     }
 }

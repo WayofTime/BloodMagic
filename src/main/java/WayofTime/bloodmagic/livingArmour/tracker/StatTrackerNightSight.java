@@ -130,4 +130,19 @@ public class StatTrackerNightSight extends StatTracker
     {
         return key.equals(Constants.Mod.MODID + ".upgrade.nightSight");
     }
+
+    @Override
+    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
+    {
+        if (upgrade instanceof LivingArmourUpgradeNightSight)
+        {
+            int level = upgrade.getUpgradeLevel();
+            if (level < damageRequired.length)
+            {
+                totalDamageDealt = Math.max(totalDamageDealt, damageRequired[level]);
+                totalNightVision = neededNightVision;
+                this.markDirty();
+            }
+        }
+    }
 }

@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.livingArmour.tracker;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,6 +12,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePoisonResist;
+import WayofTime.bloodmagic.util.Utils;
 
 public class StatTrackerPoison extends StatTracker
 {
@@ -89,5 +89,19 @@ public class StatTrackerPoison extends StatTracker
     public boolean providesUpgrade(String key)
     {
         return key.equals(Constants.Mod.MODID + ".upgrade.poisonResist");
+    }
+
+    @Override
+    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
+    {
+        if (upgrade instanceof LivingArmourUpgradePoisonResist)
+        {
+            int level = upgrade.getUpgradeLevel();
+            if (level < poisonTicksRequired.length)
+            {
+                totalPoisonTicks = Math.max(totalPoisonTicks, poisonTicksRequired[level]);
+                this.markDirty();
+            }
+        }
     }
 }

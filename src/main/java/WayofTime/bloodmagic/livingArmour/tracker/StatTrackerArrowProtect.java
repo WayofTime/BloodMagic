@@ -107,4 +107,18 @@ public class StatTrackerArrowProtect extends StatTracker
     {
         return key.equals(Constants.Mod.MODID + ".upgrade.arrowProtect");
     }
+
+    @Override
+    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
+    {
+        if (upgrade instanceof LivingArmourUpgradeArrowProtect)
+        {
+            int level = upgrade.getUpgradeLevel();
+            if (level < damageRequired.length)
+            {
+                totalDamage = Math.max(totalDamage, damageRequired[level]);
+                this.markDirty();
+            }
+        }
+    }
 }
