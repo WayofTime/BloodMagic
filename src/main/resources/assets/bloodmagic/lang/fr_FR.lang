@@ -17,8 +17,8 @@ item.BloodMagic.lavaCrystal.name=Cristal de Lave
 
 item.BloodMagic.bound.sword.name=Lame Sacrificielle
 item.BloodMagic.bound.pickaxe.name=Pioche Sacrificielle
-item.BloodMagic.bound.axe.name==Hache Sacrificielle
-item.BloodMagic.bound.shovel.name==Pelle Sacrificielle
+item.BloodMagic.bound.axe.name=Hache Sacrificielle
+item.BloodMagic.bound.shovel.name=Pelle Sacrificielle
 
 item.BloodMagic.bucket.lifeEssence.name=Seau de Vie
 
@@ -69,18 +69,18 @@ item.BloodMagic.bloodShard.demon.name=Tesson Sanguin Diabolique
 item.BloodMagic.baseComponent.reagentWater.name=Réactif d'Eau
 item.BloodMagic.baseComponent.reagentLava.name=Réactif de Lave
 item.BloodMagic.baseComponent.reagentAir.name=Réactif d'Air
-item.BloodMagic.baseComponent.reagentFastMiner.name=Réactif de Miner
+item.BloodMagic.baseComponent.reagentFastMiner.name=Réactif Minier
 item.BloodMagic.baseComponent.reagentVoid.name=Réactif du Vide
 item.BloodMagic.baseComponent.reagentGrowth.name=Réactif de Forestation
 item.BloodMagic.baseComponent.reagentAffinity.name=Réactif d'Affinitée Élémentaire
 item.BloodMagic.baseComponent.reagentSight.name=Réactif de Vue
-item.BloodMagic.baseComponent.reagentBinding.name=Réacitf de Sacrifice
-item.BloodMagic.baseComponent.reagentSuppression.name=Réactif de Délétion
+item.BloodMagic.baseComponent.reagentBinding.name=Réactif de Sacrifice
+item.BloodMagic.baseComponent.reagentSuppression.name=Réactif de Suppression
 item.BloodMagic.baseComponent.frameParts.name=Parties des cadres
 item.BloodMagic.baseComponent.reagentBloodLight.name=Réactif de Lampe Sanguine
 item.BloodMagic.baseComponent.reagentMagnetism.name=Réactif de Magnétisme
 item.BloodMagic.baseComponent.reagentHaste.name=Réactif de Célérité
-item.BloodMagic.baseComponent.reagentBridge.name=Réactif du Pont du Phantôme
+item.BloodMagic.baseComponent.reagentBridge.name=Réactif du Pont Fantôme
 item.BloodMagic.baseComponent.reagentCompression.name=Réactif de Compression
 item.BloodMagic.baseComponent.reagentSeverance.name=Réactif de Sévérance
 item.BloodMagic.baseComponent.reagentHolding.name=Réactif de Possession
@@ -94,16 +94,16 @@ item.BloodMagic.baseComponent.coalSand.name=Sable de Charbon
 item.BloodMagic.baseComponent.plantOil.name=Huile de Plante
 item.BloodMagic.baseComponent.sulfur.name=Soufre
 item.BloodMagic.baseComponent.saltpeter.name=Salpêtre
-item.BloodMagic.baseComponent.neurotoxin.name=Neuro Toxine
+item.BloodMagic.baseComponent.neurotoxin.name=Neurotoxine
 item.BloodMagic.baseComponent.antiseptic.name=Antiseptique
 
-item.BloodMagic.cuttingFluid.basicCuttingFluid.name=Coulant Coupant Basic
+item.BloodMagic.cuttingFluid.basicCuttingFluid.name=Fluide Coupant de Base
 item.BloodMagic.cuttingFluid.explosive.name=Poudre Explosive
 
 item.BloodMagic.demonCrystal.crystalDefault.name=Cristal d'une Volonté Diabolique
 item.BloodMagic.demonCrystal.crystalCorrosive.name=Cristal d'une Volonté Corrosive
 item.BloodMagic.demonCrystal.crystalDestructive.name=Cristal d'une Volonté Destructive
-item.BloodMagic.demonCrystal.crystalVengeful.name=Cristal d'une Volonté Vengeuse
+item.BloodMagic.demonCrystal.crystalVengeful.name=Cristal d'une Volonté Vengeresse
 item.BloodMagic.demonCrystal.crystalSteadfast.name=Cristal d'une Volonté Inébranlable
 
 item.BloodMagic.monsterSoul.base.name=Volonté Diabolique
@@ -124,17 +124,17 @@ item.BloodMagic.sigil.fastMiner.name=Emblème du Mineur Rapide
 item.BloodMagic.sigil.seer.name=Emblème du Voyant
 item.BloodMagic.sigil.phantomBridge.name=Emblème du Pont du Fantôme
 item.BloodMagic.sigil.whirlwind.name=Emblème de la Tempête
-item.BloodMagic.sigil.enderSeverance.name=Emblème de l'Ender Sévérance
+item.BloodMagic.sigil.enderSeverance.name=Emblème de Sévérance de l'Ender
 item.BloodMagic.sigil.holding.name=Emblème de Possession
 item.BloodMagic.sigil.holding.display=&r%s: &o&n%s
 item.BloodMagic.sigil.teleposition.name=Emblème de Téléposition
 item.BloodMagic.sigil.transposition.name=Emblème de Transposition
 
-item.BloodMagic.livingArmour.helmet.name=Casque Vivante
+item.BloodMagic.livingArmour.helmet.name=Casque Vivant
 item.BloodMagic.livingArmour.chest.name=Plastron Vivant
 item.BloodMagic.livingArmour.legs.name=Jambières Vivantes
 item.BloodMagic.livingArmour.boots.name=Bottes Vivantes
-item.BloodMagic.sentientArmour.helmet.name=Casque Sentiente
+item.BloodMagic.sentientArmour.helmet.name=Casque Sentient
 item.BloodMagic.sentientArmour.chest.name=Plastron Sentient
 item.BloodMagic.sentientArmour.legs.name=Jambières Sentientes
 item.BloodMagic.sentientArmour.boots.name=Bottes Sentientes
@@ -157,7 +157,7 @@ item.BloodMagic.soulGem.common.name=Gemme Tartrique Commune
 item.BloodMagic.soulGem.greater.name=Gemme Tartrique Complexe
 item.BloodMagic.soulGem.grand.name=Gemme Tartrique Puissante
 item.BloodMagic.soulSnare.base.name=Piège Rudimentaire
-item.BloodMagic.sentientBow.name=Arc Sentiente
+item.BloodMagic.sentientBow.name=Arc Sentient
 item.BloodMagic.sentientArmourGem.name=Gemme d'Armure Sentiente
 item.BloodMagic.sentientAxe.name=Hâche Sentiente
 item.BloodMagic.sentientPickaxe.name=Pioche Sentiente
@@ -190,7 +190,7 @@ tile.BloodMagic.rune.sacrifice.name=Rune de Sacrifice
 tile.BloodMagic.rune.selfsacrifice.name=Rune de l'Autosacrifice
 tile.BloodMagic.rune.displacement.name=Rune de Dislocation
 tile.BloodMagic.rune.capacity.name=Rune de Capacité
-tile.BloodMagic.rune.augcapacity.name=Rune de Capacité Supérieur
+tile.BloodMagic.rune.augcapacity.name=Rune de Capacité Supérieure
 tile.BloodMagic.rune.orb.name=Rune de l'Orbe
 tile.BloodMagic.rune.acceleration.name=Rune d'Accélération
 tile.BloodMagic.rune.charging.name=Rune de Chargement
@@ -207,7 +207,7 @@ tile.BloodMagic.ritualStone.dawn.name=Pierre Rituelle de l'Aube
 tile.BloodMagic.bloodstonebrick.large.name=Brique Large de Roche-Sang
 tile.BloodMagic.bloodstonebrick.brick.name=Brique de Roche-Sang
 tile.BloodMagic.crystal.large.name=Groupe de Cristaux
-tile.BloodMagic.crystal.brick.name=Bloc de Groupe de Cristaux
+tile.BloodMagic.crystal.brick.name=Bloc de Crystal
 tile.BloodMagic.bloodLight.name=Lumière Sanguine
 tile.BloodMagic.spectralBlock.name=Bloc Spectral
 tile.BloodMagic.phantom.name=Bloc Fantôme
@@ -218,12 +218,12 @@ tile.BloodMagic.soulForge.name=Hellfire Forge
 tile.BloodMagic.alchemyTable.name=Table d'Alchimie
 tile.BloodMagic.demonCrucible.name=Creuset Diabolique
 tile.BloodMagic.demonPylon.name=Pylône Diabolique
-tile.BloodMagic.demonCrystallizer.name=Demon Crystallizer
+tile.BloodMagic.demonCrystallizer.name=Crystaliseur Diabolique
 
-tile.BloodMagic.masterRouting.name=Master Routing Node
-tile.BloodMagic.outputRouting.name=Output Routing Node
-tile.BloodMagic.inputRouting.name=Input Routing Node
-tile.BloodMagic.itemRouting.name=Routing Node
+tile.BloodMagic.masterRouting.name=Nœud de Routage Maître
+tile.BloodMagic.outputRouting.name=Nœud de Routage de Sortie
+tile.BloodMagic.inputRouting.name=Nœud de Routage d'Entré
+tile.BloodMagic.itemRouting.name=Nœud de Routage
 
 tile.BloodMagic.path.wood.name=Chemin en Bois
 tile.BloodMagic.path.woodtile.name=Chemin en Bois Carrelé
@@ -240,7 +240,7 @@ tile.BloodMagic.bloodTank.name=Réservoir de Sang
 tile.BloodMagic.demonCrystalDEFAULT.name=Groupe de Cristaux d'une Volonté Diabolique
 tile.BloodMagic.demonCrystalCORROSIVE.name=Groupe de Cristaux d'une Volonté Corrosive
 tile.BloodMagic.demonCrystalDESTRUCTIVE.name=Groupe de Cristaux d'une Volonté Destructive
-tile.BloodMagic.demonCrystalVENGEFUL.name=Groupe de Cristaux d'une Volonté Vengeuse
+tile.BloodMagic.demonCrystalVENGEFUL.name=Groupe de Cristaux d'une Volonté Vengeresse
 tile.BloodMagic.demonCrystalSTEADFAST.name=Groupe de Cristaux d'une Volonté Inébranlable
 
 # Fluids
@@ -302,7 +302,7 @@ tooltip.BloodMagic.bound.pickaxe.desc=&oDétruir les pierres sans pitié
 tooltip.BloodMagic.bound.axe.desc=&oDéforestation diabolique
 tooltip.BloodMagic.bound.shovel.desc=&oEffacer la terre du sol
 
-tooltip.BloodMagic.sacrificialDagger.desc=Juste in pîqure du doigt va suffir...
+tooltip.BloodMagic.sacrificialDagger.desc=Juste une pîqure du doigt va suffir...
 tooltip.BloodMagic.sacrificialDagger.creative=Faites un clic-droit sur un autel en appuyant sur le bouton 'sneak' pour le remplir
 tooltip.BloodMagic.slate.desc=Pierre infusée dans un Autel de Sang
 tooltip.BloodMagic.inscriber.desc=L'écriture est sur le mur...
@@ -333,29 +333,29 @@ tooltip.BloodMagic.ritualReader.information=Information
 tooltip.BloodMagic.ritualReader.set_will_types=Choisir la volonté consommée
 tooltip.BloodMagic.ritualReader.desc.set_area=Clic-droit sur une Pierre Rituelle Maîtresse pour cycler l'endroit de la rituelle que vous vouleiz modifier. Ensuite, cliquez les deux coins du nouveaux endroit que vous vouliez.
 tooltip.BloodMagic.ritualReader.desc.information=Clic-droit sur une Pierre Rituelle Maîtresse pour receuillir des informations basics sur le rituel.
-tooltip.BloodMagic.ritualReader.desc.set_will_types=Donnez les types de volonté diabolique que le ritual va consommer de l'aura par un Clic-Droit sur la PRM avec le même type de crystal dans votre bar chaude.
+tooltip.BloodMagic.ritualReader.desc.set_will_types=Donnez les types de volonté diabolique que le rituel va consommer de l'aura par un Clic-Droit sur la PRM avec le même type de crystal dans votre bar chaude.
 
 tooltip.BloodMagic.arcaneAshes=Cendres sont utilisées pour dessiner un cercle d'alchimie
 
 tooltip.BloodMagic.telepositionFocus.coords=Coodornées courantes: (%d, %d, %d)
 tooltip.BloodMagic.telepositionFocus.dimension=Dimension ID: %d
-tooltip.BloodMagic.telepositionFocus.weak=Utilisée pour déplacer les blocs dans le monde
-tooltip.BloodMagic.telepositionFocus.enhanced=Utilisée pour déplacer les blocs dans le monde
-tooltip.BloodMagic.telepositionFocus.reinforced=Utilisée pour déplacer les blocs dans le monde
-tooltip.BloodMagic.telepositionFocus.demonic=Utilisée pour déplacer les blocs dans le monde
+tooltip.BloodMagic.telepositionFocus.weak=Utilisé pour déplacer les blocs dans le monde
+tooltip.BloodMagic.telepositionFocus.enhanced=Utilisé pour déplacer les blocs dans le monde
+tooltip.BloodMagic.telepositionFocus.reinforced=Utilisé pour déplacer les blocs dans le monde
+tooltip.BloodMagic.telepositionFocus.demonic=Utilisé pour déplacer les blocs dans le monde
 
 tooltip.BloodMagic.livingArmour.upgrade.speed=Pieds Rapides
-tooltip.BloodMagic.livingArmour.upgrade.digging=Puissance de Dwarven
+tooltip.BloodMagic.livingArmour.upgrade.digging=Puissance des Nains
 tooltip.BloodMagic.livingArmour.upgrade.poisonResist=Résistance au Poison
 tooltip.BloodMagic.livingArmour.upgrade.fireResist=Cadeau d'Ignis
 tooltip.BloodMagic.livingArmour.upgrade.selfSacrifice=Paumes Dures
-tooltip.BloodMagic.livingArmour.upgrade.knockback=
+tooltip.BloodMagic.livingArmour.upgrade.knockback=Culturiste
 tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=Peau Dure
 tooltip.BloodMagic.livingArmour.upgrade.health=Sain
 tooltip.BloodMagic.livingArmour.upgrade.meleeDamage=Coup Féroce
-tooltip.BloodMagic.livingArmour.upgrade.arrowShot=Trick Shot
-tooltip.BloodMagic.livingArmour.upgrade.stepAssist=Step Assist
-tooltip.BloodMagic.livingArmour.upgrade.grimReaper=Grim Reaper's Sprint
+tooltip.BloodMagic.livingArmour.upgrade.arrowShot=Tir Acrobatique
+tooltip.BloodMagic.livingArmour.upgrade.stepAssist=Marche Assistée
+tooltip.BloodMagic.livingArmour.upgrade.grimReaper=Sprint de la Faucheuse
 tooltip.BloodMagic.livingArmour.upgrade.solarPowered=Solar Powered
 tooltip.BloodMagic.livingArmour.upgrade.thaumRunicShielding=Runic Shielding
 tooltip.BloodMagic.livingArmour.upgrade.revealing=Revealing
@@ -383,7 +383,7 @@ tooltip.BloodMagic.soulGem.greater=A gem used to contain a greater amount of wil
 tooltip.BloodMagic.soulGem.grand=A gem used to contain a large amount of will
 tooltip.BloodMagic.soulSnare.desc=Throw at a monster and then kill them to obtain their demonic will
 
-tooltip.BloodMagic.itemFilter.exact=Va être sure que les objets se ressemblent exactement
+tooltip.BloodMagic.itemFilter.exact=S'assure que les objets se ressemblent exactement
 tooltip.BloodMagic.itemFilter.ignoreNBT=Ignore le NBT du filtre
 tooltip.BloodMagic.itemFilter.modItems=Assortis les objets du même mod
 tooltip.BloodMagic.itemFilter.oreDict=Used to filter through the Ore Dictionary
@@ -395,11 +395,11 @@ tooltip.BloodMagic.fluid.capacity=Capacity
 tooltip.BloodMagic.ghost.everything=Everything
 tooltip.BloodMagic.ghost.amount=Ghost item amount: %d
 
-tooltip.BloodMagic.currentType.default=Contains: Volonté Crue
-tooltip.BloodMagic.currentType.corrosive=Contains: Volonté Corrosive
-tooltip.BloodMagic.currentType.destructive=Contains: Volonté Destructive
-tooltip.BloodMagic.currentType.vengeful=Contains: Volonté Vengeuse
-tooltip.BloodMagic.currentType.steadfast=Contains: Volonté Inébranlable
+tooltip.BloodMagic.currentType.default=Contient: Volonté Crue
+tooltip.BloodMagic.currentType.corrosive=Contient: Volonté Corrosive
+tooltip.BloodMagic.currentType.destructive=Contient: Volonté Destructive
+tooltip.BloodMagic.currentType.vengeful=Contient: Volonté Vengeresse
+tooltip.BloodMagic.currentType.steadfast=Contient: Volonté Inébranlable
 
 tooltip.BloodMagic.experienceTome=A book used to store experience
 tooltip.BloodMagic.experienceTome.exp=Exp: %0.3f
