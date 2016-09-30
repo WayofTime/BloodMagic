@@ -37,6 +37,9 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
         if (target == null || attacker == null || attacker.worldObj.isRemote || (attacker instanceof EntityPlayer && !(attacker instanceof EntityPlayerMP)))
             return false;
 
+        if (!target.isNonBoss())
+            return false;
+
         if (target.isChild() || target instanceof EntityPlayer)
             return false;
 
