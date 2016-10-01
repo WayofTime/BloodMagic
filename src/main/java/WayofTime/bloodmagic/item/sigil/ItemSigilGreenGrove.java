@@ -24,10 +24,12 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
     @Override
     public boolean onSigilUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (applyBonemeal(stack, world, blockPos))
+        if (applyBonemeal(world, blockPos, player))
         {
-            IBlockState state = world.getBlockState(blockPos);
-            world.playEvent(2001, blockPos, Block.getIdFromBlock(state.getBlock()) + (state.getBlock().getMetaFromState(state) << 12));
+            if (!world.isRemote)
+            {
+                world.playEvent(2005, blockPos, 0);
+            }
             return true;
         }
 
@@ -62,8 +64,8 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
                                 block.updateTick(worldIn, blockPos, worldIn.getBlockState(blockPos), worldIn.rand);
 
                                 IBlockState newState = worldIn.getBlockState(blockPos);
-                                if (!newState.equals(preBlockState))
-                                    worldIn.playEvent(2001, blockPos, Block.getIdFromBlock(newState.getBlock()) + (newState.getBlock().getMetaFromState(newState) << 12));
+                                if (!newState.equals(preBlockState) && !worldIn.isRemote)
+                                    worldIn.playEvent(2005, blockPos, 0);
                             }
                         }
                     }
@@ -72,12 +74,7 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
         }
     }
 
-    private boolean applyBonemeal(ItemStack stack, World worldIn, BlockPos target)
-    {
-        return worldIn instanceof net.minecraft.world.WorldServer && applyBonemeal(stack, worldIn, target, net.minecraftforge.common.util.FakePlayerFactory.getMinecraft((net.minecraft.world.WorldServer) worldIn));
-    }
-
-    private boolean applyBonemeal(ItemStack stack, World worldIn, BlockPos target, EntityPlayer player)
+    private boolean applyBonemeal(World worldIn, BlockPos target, EntityPlayer player)
     {
         IBlockState iblockstate = worldIn.getBlockState(target);
 
