@@ -1,239 +1,250 @@
-#Block Localization
-tile.bloodAltar.name=Autel de Sang
-tile.bloodRune.blank.name=Rune de Sang
-tile.bloodRune.fill.name=Rune de Capacité Augmentée
-tile.bloodRune.empty.name=Rune de Dislocation
-tile.bloodRune.test.name=Rune de l’Orbe
-tile.bloodRune.betterCapacity.name=Rune de la Capacité Supérieure
-tile.bloodRune.acceleration.name=Rune d'Accélération
-tile.speedRune.name=Rune de Vitesse
-tile.efficiencyRune.name=Rune d’Efficacité
-tile.runeOfSacrifice.name=Rune du Sacrifice
-tile.runeOfSelfSacrifice.name=Rune de l’Auto-Sacrifice
-tile.ritualStone.name=Pierre Rituelle
-tile.blockMasterStone.name=Pierre Rituelle Maître
-tile.bloodSocket.name=Poche Remplie
-tile.imperfectRitualStone.name=Pierre Rituelle Imparfaite
-tile.armourForge.name=Forge d’Armure d’Âme
-tile.emptySocket.name=Poche Vide
-tile.bloodStoneBrick.name=Brique de Roche-Sang
-tile.largeBloodStoneBrick.name=Brique Large de Roche-Sang
-tile.blockWritingTable.name=Matériel d’Alchimie
-tile.blockHomHeart.name=Table des Maléfices
-tile.bloodPedestal.name=Piédéstal Arcanique
-tile.bloodPlinth.name=Socle Arcanique
-tile.bloodTeleposer.name=Téléposeur
-tile.blockConduit.name=Conduit des Maléfices
-tile.blockSpellParadigm.projectile.name=Générateur de Particule
-tile.blockSpellParadigm.self.name=Auto-Augmenteur
-tile.blockSpellParadigm.melee.name=Agrégation à la Mêlée
-tile.blockSpellParadigm.tool.name=Forgeron Outilleur
-tile.blockSpellEnhancement.power1.name=Renforcement Instable des Maléfices 
-tile.blockSpellEnhancement.power2.name=Renforcement Standard des Maléfices
-tile.blockSpellEnhancement.power3.name=Renforcement Renforcé des Maléfices 
-tile.blockSpellEnhancement.power4.name=Renforcement Imprégné des Maléfices
-tile.blockSpellEnhancement.power5.name=Renforcement Diabolo des Maléfices
-tile.blockSpellEnhancement.cost1.name=Ristourne Instable des Maléfices
-tile.blockSpellEnhancement.cost2.name=Ristourne Standard des Maléfices
-tile.blockSpellEnhancement.cost3.name=Ristourne Renforcée des Maléfices
-tile.blockSpellEnhancement.cost4.name=Ristourne Imprégnée des Maléfices
-tile.blockSpellEnhancement.cost5.name=Ristourne Démoniaque des Maléfices
-tile.blockSpellEnhancement.potency1.name=Amélioration Instable des Maléfices
-tile.blockSpellEnhancement.potency2.name=Amélioration Standard des Maléfices
-tile.blockSpellEnhancement.potency3.name=Amélioration Renforcée des Maléfices
-tile.blockSpellEnhancement.potency4.name=Amélioration Imprégnée des Maléfices
-tile.blockSpellEnhancement.potency5.name=Amélioration Diabolo des Maléfices
-tile.blockSpellModifier.default.name=Modification Basique des Maléfices
-tile.blockSpellModifier.offensive.name= Modification Offensive des Maléfices
-tile.blockSpellModifier.defensive.name= Modification Défensive des Maléfices
-tile.blockSpellModifier.environmental.name=Modification Environnementale des Maléfices
-tile.blockSpellEffect.fire.name=Creuset des Flammes
-tile.blockSpellEffect.ice.name=Geyser de Glace
-tile.blockSpellEffect.wind.name=Jaillissement des Vents
-tile.blockSpellEffect.earth.name=Assembleur des Terres
-tile.alchemicCalcinator.name=Calcinateur Alchimique
-tile.crystalBelljar.name=Cloche de Cristal
-tile.blockReagentConduit.name=Relais Alchimique
-tile.lifeEssenceFluidBlock.name=Extrait de Vitalité
-tile.crystalBlock.fullCrystal.name=Fragments de Cristaux
-tile.crystalBlock.crystalBrick.name=Briques de Fragments de Cristaux
-tile.demonPortal.name=Portail Diabolo
-
-#Item Localization
-item.weakBloodOrb.name=Orbe Sanguinaire Affaiblie
-item.apprenticeBloodOrb.name=Orbe Sanguinaire de l’Apprenti
-item.magicianBloodOrb.name=Orbe Sanguinaire du Magicien
-item.masterBloodOrb.name=Orbe Sanguinaire du Maître
-item.archmageBloodOrb.name=Orbe Sanguinaire de l'Enchanteur
-item.energyBlast.name=Blaster à Energie
-item.energySword.name=Lame Sacrificielle
-item.lavaCrystal.name=Cristal de Lave
-item.waterSigil.name=Emblème de l’Eau
-item.lavaSigil.name=Emblème de la Lave
-item.voidSigil.name=Emblème du Vide
-item.blankSlate.name=Tablette Vierge
-item.reinforcedSlate.name=Tablette Renforcée
-item.sacrificialDagger.name=Couteau Sacrificiel
-item.daggerOfSacrifice.name=Dague des Sacrifices
-item.airSigil.name=Emblème Stratos
-item.sigilOfTheFastMiner.name=Emblème Spelunk
-item.sigilOfElementalAffinity.name=Emblème d’Affinité Elémentaire
-item.sigilOfHaste.name=Emblème de Célérité
-item.sigilOfHolding.name=Emblème Possessif
-item.divinationSigil.name=Emblème des Pythies
-item.waterScribeTool.name=Craie d’Inscription Elémentaire: Eau
-item.fireScribeTool.name=Craie d’Inscription Elémentaire: Feu
-item.earthScribeTool.name=Craie d’Inscription Elémentaire: Terre
-item.airScribeTool.name=Craie d’Inscription Elémentaire: Air
-item.duskScribeTool.name=Craie d’Inscription Elémentaire: Crépuscule
-item.activationCrystalWeak.name=Cristal d’Activation Affaibli
-item.activationCrystalAwakened.name=Cristal d’Activation Eveillé
-item.activationCrystalCreative.name=Cristal d'Activation Créatif
-item.boundPickaxe.name=Pioche Sacrificielle
-item.boundAxe.name=Hâche Sacrificielle
-item.boundShovel.name=Pelle Sacrificielle
-item.boundHelmet.name=Casque Sacrificiel
-item.boundPlate.name=Plastron Sacrificiel
-item.boundLeggings.name=Jambières Sacrificielles
-item.boundBoots.name=Bottes Sacrificielles
-item.weakBloodShard.name=Eclat Sanguinaire Affaibli
-item.growthSigil.name=Emblème du 
-item.blankSpell.name=Cristal Délié
-item.alchemyFlask.name=Fiole à Potion
-item.standardBindingAgent.name=Agent Sacrificiel Standard
-item.mundanePowerCatalyst.name=Cristal de Puissance Commun
-item.averagePowerCatalyst.name=Cristal de Puissance Moyen
-item.greaterPowerCatalyst.name=Cristal de Puissance Supérieur
-item.mundaneLengtheningCatalyst.name=Catalyseur d'Extension Commun
-item.averageLengtheningCatalyst.name=Catalyseur d’Extension Moyen
-item.greaterLengtheningCatalyst.name=Catalyseur d’Extension Supérieur
-item.incendium.name=Incendium
-item.magicales.name=Magicales
-item.sanctus.name=Sanctus
-item.aether.name=Aether
-item.simpleCatalyst.name=Catalyseur Simple
-item.crepitous.name=Crepitous
-item.crystallos.name=Crystallos
-item.terrae.name=Terrae
-item.aquasalus.name=Aquasalus
-item.tennebrae.name=Tenebrae
-item.demonBloodShard.name=Eclat Sanguinaire Diabolo
-item.sigilOfWind.name=Emblème Mistral
-item.telepositionFocus.name=Focus de Téléposition
-item.enhancedTelepositionFocus.name= Focus de Téléposition Amélioré
-item.reinforcedTelepositionFocus.name=Focus de Téléposition Renforcé 
-item.demonicTelepositionFocus.name= Focus de Téléposition Diabolo
-item.imbuedSlate.name=Tablette Imprégnée
-item.demonicSlate.name=Tablette Diabolo
-item.sigilOfTheBridge.name=Emblème du Pont Fantôme
-item.armourInhibitor.name=Neutralisarmure
-item.cheatyItem.name=Orbe de Test
-item.weakFillingAgent.name=Agent de Remplissage Affaibli
-item.standardFillingAgent.name=Agent de Remplissage Standard
-item.enhancedFillingAgent.name=Agent de Remplissage Amélioré
-item.weakBindingAgent.name=Agent de Sacrifice Affaibli
-item.ritualDiviner.name=Sourcier à Rituel
-item.sigilOfMagnetism.name=Emblème Magnétique
-item.itemDiabloKey.name=Clé Diabolo
-item.energyBazooka.name=Bazooka à Energie
-item.bloodLightSigil.name=Emblème de la Lampe de Sang
-item.itemComplexSpellCrystal.name=Cristal de Maléfice Complexe
-item.itemSigilOfSupression.name=Emblème de Délétion
-item.itemSigilOfEnderSeverance.name=Emblème of Ender Severance
-item.bucketLive.name=Seau d'Extrait Vital
-item.bloodMagicBaseItem.quartzRod.name=Bâton de Quartz
-item.bloodMagicBaseItem.EmptyCore.name=Cœur Creux
-item.bloodMagicBaseItem.MagicalesCable.name=Câble de Magicales
-item.bloodMagicBaseItem.WoodBrace.name=Attelle de Bois
-item.bloodMagicBaseItem.StoneBrace.name=Attelle de Pierre
-item.bloodMagicBaseItem.ProjectileCore.name=Cœur de Projectile
-item.bloodMagicBaseItem.SelfCore.name=Cœur des Egotistes
-item.bloodMagicBaseItem.MeleeCore.name=Cœur de Mêlée
-item.bloodMagicBaseItem.ToolCore.name=Cœur d'Outillage
-item.bloodMagicBaseItem.ParadigmBackPlate.name=Tablette du Paradigme
-item.bloodMagicBaseItem.OutputCable.name=Sortie Maléfique
-item.bloodMagicBaseItem.InputCable.name=Entrée Maléfique
-item.bloodMagicBaseItem.FlameCore.name=Cœur Incandescent
-item.bloodMagicBaseItem.IcyCore.name=Cœur Figé
-item.bloodMagicBaseItem.GustCore.name=Cœur des Bourrasques
-item.bloodMagicBaseItem.EarthenCore.name=Cœur Téllurique
-item.bloodMagicBaseItem.CrackedRunicPlate.name=Tablette Runique Craquelée
-item.bloodMagicBaseItem.RunicPlate.name=Tablette Runique
-item.bloodMagicBaseItem.ScribedRunicPlate.name=Tablette Runique Imprégnée
-item.bloodMagicBaseItem.DefaultCore.name=Cœur Neutre
-item.bloodMagicBaseItem.OffensiveCore.name=Cœur Offensif
-item.bloodMagicBaseItem.DefensiveCore.name=Cœur Défensif
-item.bloodMagicBaseItem.EnvironmentalCore.name=Cœur Environnemental
-item.bloodMagicBaseItem.PowerCore.name=Cœur de Force
-item.bloodMagicBaseItem.CostCore.name=Cœur de Réduction
-item.bloodMagicBaseItem.PotencyCore.name=Cœur de Puissance
-item.bloodMagicBaseItem.ObsidianBrace.name=Attelle d’Obsidienne
-item.bloodMagicBaseItem.EtherealSlate.name=Tablette Ethérale
-item.bloodMagicBaseItem.LifeShard.name=Eclat de Vie
-item.bloodMagicBaseItem.SoulShard.name=Eclat d'Esprit
-item.bloodMagicBaseItem.LifeBrace.name=Attelle de Vie
-item.bloodMagicBaseItem.SoulRunicPlate.name=Plaque Runique Spirituelle
-item.bloodMagicAlchemyItem.Offensa.name=Offensa
-item.bloodMagicAlchemyItem.Praesidium.name=Praesidium
-item.bloodMagicAlchemyItem.OrbisTerrae.name=Orbis Terrae
-item.bloodMagicAlchemyItem.StrengthenedCatalyst.name=Catalyseur Renforcé
-item.bloodMagicAlchemyItem.ConcentratedCatalyst.name=Catalyseur Concentré
-item.bloodMagicAlchemyItem.FracturedBone.name=Os Fracturé
-item.bloodMagicAlchemyItem.Virtus.name=Virtus
-item.bloodMagicAlchemyItem.Reductus.name=Reductus
-item.bloodMagicAlchemyItem.Potentia.name=Potentia
-item.sanguineHelmet.name=Casque Sanglant
-item.itemSeerSigil.name=Emblème de la Vision
-item.itemFluidSigil.name=Emblème Fluide
-item.multiTool.name=Dynamasse
-item.itemCombinationalCatalyst.name=Catalyseur Combinatoire
-item.sanguineRobe.name=Robe Sanglante
-item.sanguinePants.name=Jambières Sanglantes
-item.sanguineBoots.name=Bottes Sanglantes
-item.itemAttunedCrystal.name=Routeur Alchimique
-item.itemTankSegmenter.name=Segment Alchimique
-item.destinationClearer.name=Détergent Alchimique
-item.demonPlacer.name=Cristal Diabolo
-item.creativeDagger.name=Couteau Sacrificiel Créatif
-item.itemBloodPack.name=Pack de la Lettre de Sang
-item.itemHarvestSigil.name=Emblême Déméter
-item.itemCompressionSigil.name=Emblême Compresseur
-item.transcendentBloodOrb.name=Orbe Sanguinaire Transcendante
 #Creative Tab
-itemGroup.tabBloodMagic=Blood Magic
+itemGroup.BloodMagic.creativeTab=Blood Magic
+itemGroup.BloodMagic.creativeTabTome=Blood Magic Tômes d'Améliorations
 
-#Extra Strings
-bm.string.consume=Exaction
-bm.string.drain=Ponction Veineuse
-bm.string.tier=Tiers
-bm.string.crafting.orb.shaped=Fabrication Orbée Formée
-bm.string.crafting.orb.shapeless=Fabrication Orbée Déformée
+#Items
+item.BloodMagic.activationCrystal.weak.name=Cristal d'Activation Affaibli
+item.BloodMagic.activationCrystal.awakened.name=Cristal d'Activation Éveillé
+item.BloodMagic.activationCrystal.creative.name=Cristal d'Activation Créatif
 
-#Entities
-entity.AWWayofTime.EarthElemental.name=Elémentaire terrestre
-entity.AWWayofTime.FireElemental.name=Elémentaire de Feu
-entity.AWWayofTime.HolyElemental.name=Elémentaire Sacré
-entity.AWWayofTime.ShadeElemental.name=Elémentaire Nocturne
-entity.AWWayofTime.WaterElemental.name=Elémentaire d'Eau
-entity.AWWayofTime.AirElemental.name=Elémentaire d'Air
-entity.AWWayofTime.Shade.name=Ombre
-entity.AWWayofTime.BoulderFist.name=Poing de Pierre
-entity.AWWayofTime.IceDemon.name=Diable Glacial
-entity.AWWayofTime.SmallEarthGolem.name=Petit Golem de Terre
-entity.AWWayofTime.WingedFireDemon.name=Démon de Feu Ailé
-entity.AWWayofTime.BileDemon.name=Diabile
-entity.AWWayofTime.LowerGuardian.name=Gardien Inférieur
-entity.AWWayofTime.FallenAngel.name=Ange Déchu
-entity.AWWayofTime.MinorDemonGruntGuardian.name=Gardien Démon
-entity.AWWayofTime.MinorDemonGruntGuardianWind.name=Gardien Démon Aérien
-entity.AWWayofTime.MinorDemonGruntGuardianFire.name=Gardien Démon de Feu
-entity.AWWayofTime.MinorDemonGruntGuardianIce.name=Gardien Démon de Glace
-entity.AWWayofTime.MinorDemonGruntGuardianEarth.name=Gardien Démon de Terre
-entity.AWWayofTime.MinorDemonGruntWind.name=Soldat Démont Aérien
-entity.AWWayofTime.MinorDemonGruntFire.name=Soldat Démon de Feu
-entity.AWWayofTime.MinorDemonGruntIce.name=Soldat Démon de Glace
-entity.AWWayofTime.MinorDemonGruntEarth.name=Soldat Démon de Terre
-entity.AWWayofTime.MinorDemonGrunt.name=Soldat Démon
+item.BloodMagic.sacrificialDagger.normal.name=Dague Sacrificielle
+item.BloodMagic.sacrificialDagger.creative.name=Dague Sacrificielle Créative
+item.BloodMagic.pack.selfSacrifice.name=Sac à dos Sanguin 
+item.BloodMagic.pack.sacrifice.name=Manteau des Bras
+item.BloodMagic.daggerOfSacrifice.name=Dague des Sacrifices
+
+item.BloodMagic.lavaCrystal.name=Cristal de Lave
+
+item.BloodMagic.bound.sword.name=Lame Sacrificielle
+item.BloodMagic.bound.pickaxe.name=Pioche Sacrificielle
+item.BloodMagic.bound.axe.name=Hache Sacrificielle
+item.BloodMagic.bound.shovel.name=Pelle Sacrificielle
+
+item.BloodMagic.bucket.lifeEssence.name=Seau de Vie
+
+item.BloodMagic.scribe.water.name=Craie d’Inscription Elémentaire: Eau
+item.BloodMagic.scribe.fire.name=Craie d’Inscription Elémentaire: Feu
+item.BloodMagic.scribe.earth.name=Craie d’Inscription Elémentaire: Terre
+item.BloodMagic.scribe.air.name=Craie d’Inscription Elémentaire: Air
+item.BloodMagic.scribe.dusk.name=Craie d’Inscription Elémentaire: Crépuscule
+item.BloodMagic.scribe.dawn.name=Craie d’Inscription Elémentaire: Aube
+
+item.BloodMagic.focus.weak.name=Focus de Téléposition
+item.BloodMagic.focus.enhanced.name=Focus de Téléposition Amélioré
+item.BloodMagic.focus.reinforced.name=Focus de Téléposition Renforcé
+item.BloodMagic.focus.demonic.name=Focus de Téléposition Diabolique
+
+item.BloodMagic.slate.blank.name=Tablette Vierge
+item.BloodMagic.slate.reinforced.name=Tablette Renforcée
+item.BloodMagic.slate.imbued.name=Tablette Imprégnée
+item.BloodMagic.slate.demonic.name=Tablette Diabolique
+item.BloodMagic.slate.ethereal.name=Tablette Éthérée
+
+item.BloodMagic.orb.weak.name=Orbe Sanguinaire Affaiblie
+item.BloodMagic.orb.apprentice.name=Orbe Sanguinaire de l’Apprenti
+item.BloodMagic.orb.magician.name=Orbe Sanguinaire du Magicien
+item.BloodMagic.orb.master.name=Orbe Sanguinaire du Maître
+item.BloodMagic.orb.archmage.name=Orbe Sanguinaire de l'Enchanteur
+item.BloodMagic.orb.transcendent.name=Orb Sanguinaire Transcendante
+
+item.BloodMagic.reagent.incendium.name=Incendium
+item.BloodMagic.reagent.magicales.name=Magicales
+item.BloodMagic.reagent.sanctus.name=Sanctus
+item.BloodMagic.reagent.aether.name=Aether
+item.BloodMagic.reagent.crepitous.name=Crepitous
+item.BloodMagic.reagent.crystallos.name=Crystallos
+item.BloodMagic.reagent.terrae.name=Terrae
+item.BloodMagic.reagent.aquasalus.name=Aquasalus
+item.BloodMagic.reagent.tennebrae.name=Tennebrae
+item.BloodMagic.reagent.offensa.name=Offensa
+item.BloodMagic.reagent.praesidium.name=Praesidium
+item.BloodMagic.reagent.orbisterrae.name=Orbis Terrae
+item.BloodMagic.reagent.virtus.name=Virtus
+item.BloodMagic.reagent.reductus.name=Reductus
+item.BloodMagic.reagent.potentia.name=Potentia
+
+item.BloodMagic.bloodShard.weak.name=Tesson Sanguin Faible
+item.BloodMagic.bloodShard.demon.name=Tesson Sanguin Diabolique
+
+item.BloodMagic.baseComponent.reagentWater.name=Réactif d'Eau
+item.BloodMagic.baseComponent.reagentLava.name=Réactif de Lave
+item.BloodMagic.baseComponent.reagentAir.name=Réactif d'Air
+item.BloodMagic.baseComponent.reagentFastMiner.name=Réactif Minier
+item.BloodMagic.baseComponent.reagentVoid.name=Réactif du Vide
+item.BloodMagic.baseComponent.reagentGrowth.name=Réactif de Forestation
+item.BloodMagic.baseComponent.reagentAffinity.name=Réactif d'Affinitée Élémentaire
+item.BloodMagic.baseComponent.reagentSight.name=Réactif de Vue
+item.BloodMagic.baseComponent.reagentBinding.name=Réactif de Sacrifice
+item.BloodMagic.baseComponent.reagentSuppression.name=Réactif de Suppression
+item.BloodMagic.baseComponent.frameParts.name=Parties des cadres
+item.BloodMagic.baseComponent.reagentBloodLight.name=Réactif de Lampe Sanguine
+item.BloodMagic.baseComponent.reagentMagnetism.name=Réactif de Magnétisme
+item.BloodMagic.baseComponent.reagentHaste.name=Réactif de Célérité
+item.BloodMagic.baseComponent.reagentBridge.name=Réactif du Pont Fantôme
+item.BloodMagic.baseComponent.reagentCompression.name=Réactif de Compression
+item.BloodMagic.baseComponent.reagentSeverance.name=Réactif de Sévérance
+item.BloodMagic.baseComponent.reagentHolding.name=Réactif de Possession
+
+item.BloodMagic.baseComponent.reagentTeleposition.name=Réactif de Téléposition
+item.BloodMagic.baseComponent.reagentTransposition.name=Réactif de Transposition
+
+item.BloodMagic.baseComponent.ironSand.name=Sable de Fer
+item.BloodMagic.baseComponent.goldSand.name=Sable d'Or
+item.BloodMagic.baseComponent.coalSand.name=Sable de Charbon
+item.BloodMagic.baseComponent.plantOil.name=Huile de Plante
+item.BloodMagic.baseComponent.sulfur.name=Soufre
+item.BloodMagic.baseComponent.saltpeter.name=Salpêtre
+item.BloodMagic.baseComponent.neurotoxin.name=Neurotoxine
+item.BloodMagic.baseComponent.antiseptic.name=Antiseptique
+
+item.BloodMagic.cuttingFluid.basicCuttingFluid.name=Fluide Coupant de Base
+item.BloodMagic.cuttingFluid.explosive.name=Poudre Explosive
+
+item.BloodMagic.demonCrystal.crystalDefault.name=Cristal d'une Volonté Diabolique
+item.BloodMagic.demonCrystal.crystalCorrosive.name=Cristal d'une Volonté Corrosive
+item.BloodMagic.demonCrystal.crystalDestructive.name=Cristal d'une Volonté Destructive
+item.BloodMagic.demonCrystal.crystalVengeful.name=Cristal d'une Volonté Vengeresse
+item.BloodMagic.demonCrystal.crystalSteadfast.name=Cristal d'une Volonté Inébranlable
+
+item.BloodMagic.monsterSoul.base.name=Volonté Diabolique
+
+item.BloodMagic.sigil.air.name=Emblème d'Air
+item.BloodMagic.sigil.bloodLight.name=Emblème de la Lampe Sanguine
+item.BloodMagic.sigil.compression.name=Emblème de Compression
+item.BloodMagic.sigil.divination.name=Emblème des Pythies
+item.BloodMagic.sigil.water.name=Emblème d'Eau
+item.BloodMagic.sigil.lava.name=Emblème de Lave
+item.BloodMagic.sigil.void.name=Emblème du Vide
+item.BloodMagic.sigil.greenGrove.name=Emblème de la forestation
+item.BloodMagic.sigil.elementalAffinity.name=Emblème de l'Affinité Élémentaire
+item.BloodMagic.sigil.haste.name=Emblème de Célérité
+item.BloodMagic.sigil.suppression.name=Emblème de Délétion
+item.BloodMagic.sigil.magnetism.name=Emblème de Magnétisme
+item.BloodMagic.sigil.fastMiner.name=Emblème du Mineur Rapide
+item.BloodMagic.sigil.seer.name=Emblème du Voyant
+item.BloodMagic.sigil.phantomBridge.name=Emblème du Pont du Fantôme
+item.BloodMagic.sigil.whirlwind.name=Emblème de la Tempête
+item.BloodMagic.sigil.enderSeverance.name=Emblème de Sévérance de l'Ender
+item.BloodMagic.sigil.holding.name=Emblème de Possession
+item.BloodMagic.sigil.holding.display=&r%s: &o&n%s
+item.BloodMagic.sigil.teleposition.name=Emblème de Téléposition
+item.BloodMagic.sigil.transposition.name=Emblème de Transposition
+
+item.BloodMagic.livingArmour.helmet.name=Casque Vivant
+item.BloodMagic.livingArmour.chest.name=Plastron Vivant
+item.BloodMagic.livingArmour.legs.name=Jambières Vivantes
+item.BloodMagic.livingArmour.boots.name=Bottes Vivantes
+item.BloodMagic.sentientArmour.helmet.name=Casque Sentient
+item.BloodMagic.sentientArmour.chest.name=Plastron Sentient
+item.BloodMagic.sentientArmour.legs.name=Jambières Sentientes
+item.BloodMagic.sentientArmour.boots.name=Bottes Sentientes
+
+item.BloodMagic.altarMaker.name=Créateur d'Autels
+
+item.BloodMagic.ritualDivinernormal.name=Devineur de Rituels
+item.BloodMagic.ritualDivinerdusk.name=Devineur de Rituels [Crépuscule]
+item.BloodMagic.ritualDivinerdawn.name=Devineur de Rituels [Aube]
+item.BloodMagic.ritualReader.name=Bricoleur de Rituels
+
+item.BloodMagic.arcaneAshes.name=Cendres Ésotériques
+item.BloodMagic.upgradeTome.name=Tablette d'Amélioration d'Armure Vivante
+item.BloodMagic.upgradeTrainer.name=Bracelet d'Entrainement d'Armure Vivante
+
+item.BloodMagic.sentientSword.name=Épée Sentiente
+item.BloodMagic.soulGem.petty.name=Faible Gemme Tartrique
+item.BloodMagic.soulGem.lesser.name=Simple Gemme Tartrique
+item.BloodMagic.soulGem.common.name=Gemme Tartrique Commune
+item.BloodMagic.soulGem.greater.name=Gemme Tartrique Complexe
+item.BloodMagic.soulGem.grand.name=Gemme Tartrique Puissante
+item.BloodMagic.soulSnare.base.name=Piège Rudimentaire
+item.BloodMagic.sentientBow.name=Arc Sentient
+item.BloodMagic.sentientArmourGem.name=Gemme d'Armure Sentiente
+item.BloodMagic.sentientAxe.name=Hâche Sentiente
+item.BloodMagic.sentientPickaxe.name=Pioche Sentiente
+item.BloodMagic.sentientShovel.name=Pelle Sentiente
+
+item.BloodMagic.nodeRouter.name=Routeur de Jonction
+item.BloodMagic.itemFilter.exact.name=Filtre d'Objets Précis
+item.BloodMagic.itemFilter.ignoreNBT.name=Filtre d'Objets par NBT
+item.BloodMagic.itemFilter.modItems.name=Filtre d'Objets par Mod
+item.BloodMagic.itemFilter.oreDict.name=Filtre d'Objets par le Catalogue de Minerai
+
+item.BloodMagic.experienceTome.name=Tôme de Peritia
+item.BloodMagic.sanguineBook.name=Livre Sanguin
+
+item.BloodMagic.livingPointUpgrade.draftAngelus.name=Draft d'Angelus
+
+# Blocks
+tile.BloodMagic.fluid.lifeEssence.name=Essence de Vie
+
+tile.BloodMagic.stone.ritual.master.name=Pierre Rituelle Maîtresse
+tile.BloodMagic.stone.ritual.imperfect.name=Pierre Rituelle Imparfaite
+
+tile.BloodMagic.altar.name=Autel de Sang
+tile.BloodMagic.alchemyArray.name=&r&fÉtalage d'Alchimie
+
+tile.BloodMagic.rune.blank.name=Rune de Sang
+tile.BloodMagic.rune.speed.name=Rune de Vitesse
+tile.BloodMagic.rune.efficiency.name=Rune d'Efficacité
+tile.BloodMagic.rune.sacrifice.name=Rune de Sacrifice
+tile.BloodMagic.rune.selfsacrifice.name=Rune de l'Autosacrifice
+tile.BloodMagic.rune.displacement.name=Rune de Dislocation
+tile.BloodMagic.rune.capacity.name=Rune de Capacité
+tile.BloodMagic.rune.augcapacity.name=Rune de Capacité Supérieure
+tile.BloodMagic.rune.orb.name=Rune de l'Orbe
+tile.BloodMagic.rune.acceleration.name=Rune d'Accélération
+tile.BloodMagic.rune.charging.name=Rune de Chargement
+
+
+tile.BloodMagic.ritualStone.blank.name=Pierre Rituelle
+tile.BloodMagic.ritualStone.water.name=Pierre Rituelle d'Eau
+tile.BloodMagic.ritualStone.fire.name=Pierre Rituelle du Feu
+tile.BloodMagic.ritualStone.earth.name=Pierre Rituelle de la Terre
+tile.BloodMagic.ritualStone.air.name=Pierre Rituelle de l'Air
+tile.BloodMagic.ritualStone.dusk.name=Pierre Rituelle du Crépuscule
+tile.BloodMagic.ritualStone.dawn.name=Pierre Rituelle de l'Aube
+
+tile.BloodMagic.bloodstonebrick.large.name=Brique Large de Roche-Sang
+tile.BloodMagic.bloodstonebrick.brick.name=Brique de Roche-Sang
+tile.BloodMagic.crystal.large.name=Groupe de Cristaux
+tile.BloodMagic.crystal.brick.name=Bloc de Crystal
+tile.BloodMagic.bloodLight.name=Lumière Sanguine
+tile.BloodMagic.spectralBlock.name=Bloc Spectral
+tile.BloodMagic.phantom.name=Bloc Fantôme
+tile.BloodMagic.incenseAltar.name=Autel Encens
+
+tile.BloodMagic.teleposer.name=Téléposeur
+tile.BloodMagic.soulForge.name=Hellfire Forge
+tile.BloodMagic.alchemyTable.name=Table d'Alchimie
+tile.BloodMagic.demonCrucible.name=Creuset Diabolique
+tile.BloodMagic.demonPylon.name=Pylône Diabolique
+tile.BloodMagic.demonCrystallizer.name=Crystaliseur Diabolique
+
+tile.BloodMagic.masterRouting.name=Nœud de Routage Maître
+tile.BloodMagic.outputRouting.name=Nœud de Routage de Sortie
+tile.BloodMagic.inputRouting.name=Nœud de Routage d'Entré
+tile.BloodMagic.itemRouting.name=Nœud de Routage
+
+tile.BloodMagic.path.wood.name=Chemin en Bois
+tile.BloodMagic.path.woodtile.name=Chemin en Bois Carrelé
+tile.BloodMagic.path.stone.name=Chemin en Pierre
+tile.BloodMagic.path.stonetile.name=Chemin en Pierre Carrelée
+tile.BloodMagic.path.wornstone.name=Chemin en Pierre Usé
+tile.BloodMagic.path.wornstonetile.name=Chemin en Pierre Usé Carrelée
+tile.BloodMagic.path.obsidian.name=Chemin en Obsidienne
+tile.BloodMagic.path.obsidiantile.name=Chemin en Obsidienne Carrelée
+
+tile.BloodMagic.dimensionalPortal.name=Portail Dimensionnel
+tile.BloodMagic.bloodTank.name=Réservoir de Sang
+
+tile.BloodMagic.demonCrystalDEFAULT.name=Groupe de Cristaux d'une Volonté Diabolique
+tile.BloodMagic.demonCrystalCORROSIVE.name=Groupe de Cristaux d'une Volonté Corrosive
+tile.BloodMagic.demonCrystalDESTRUCTIVE.name=Groupe de Cristaux d'une Volonté Destructive
+tile.BloodMagic.demonCrystalVENGEFUL.name=Groupe de Cristaux d'une Volonté Vengeresse
+tile.BloodMagic.demonCrystalSTEADFAST.name=Groupe de Cristaux d'une Volonté Inébranlable
+
+# Fluids
+fluid.lifeEssence=Essence de Vie
 
 #Tooltips
 tooltip.BloodMagic.extraInfo=&9-Tenir shift pour plus d'info-
@@ -258,7 +269,7 @@ tooltip.BloodMagic.sigil.divination.currentAltarCapacity=Capacité Actuelle: %d 
 tooltip.BloodMagic.sigil.divination.currentTranquility=Tranquillité Actuelle: %d
 tooltip.BloodMagic.sigil.divination.currentBonus=Bonus Actuel: +%d%%
 tooltip.BloodMagic.sigil.water.desc=&oUne infinité d'eau, personne?
-tooltip.BloodMagic.sigil.lava.desc=&oCHAUD! NE LE MANGER PAS
+tooltip.BloodMagic.sigil.lava.desc=&oCHAUD! NE LE MANGEZ PAS
 tooltip.BloodMagic.sigil.void.desc=&oMieux que Swiffer®!
 tooltip.BloodMagic.sigil.greenGrove.desc=&oÉcologique
 tooltip.BloodMagic.sigil.magnetism.desc=&oJ'ai une personnalité très attirante
@@ -281,8 +292,358 @@ tooltip.BloodMagic.sigil.whirlwind.desc=&oMieux de ne pas porter une jupe
 tooltip.BloodMagic.sigil.enderSeverance.desc=&oMettre les Endermen dans des situations terribles!
 tooltip.BloodMagic.sigil.teleposition.desc=Je suis très proche d'ètre transporté comme ça.
 tooltip.BloodMagic.sigil.transposition.desc=Sens le pouvoir de la force, mon jeune apprenti.
+tooltip.BloodMagic.sigil.holding.desc=Sigil-ception
+tooltip.BloodMagic.sigil.holding.sigilInSlot=Slot %d: %s
+
+tooltip.BloodMagic.livingArmourPointsUpgrade.desc=Augmente le maxium de points de l'Armure Vivante à %d.
 
 tooltip.BloodMagic.bound.sword.desc=&oBattre le faible
 tooltip.BloodMagic.bound.pickaxe.desc=&oDétruir les pierres sans pitié
 tooltip.BloodMagic.bound.axe.desc=&oDéforestation diabolique
 tooltip.BloodMagic.bound.shovel.desc=&oEffacer la terre du sol
+
+tooltip.BloodMagic.sacrificialDagger.desc=Juste une pîqure du doigt va suffir...
+tooltip.BloodMagic.sacrificialDagger.creative=Faites un clic-droit sur un autel en appuyant sur le bouton 'sneak' pour le remplir
+tooltip.BloodMagic.slate.desc=Pierre infusée dans un Autel de Sang
+tooltip.BloodMagic.inscriber.desc=L'écriture est sur le mur...
+
+tooltip.BloodMagic.pack.selfSacrifice.desc=Ce sac à dos me frictionne vraiment...
+tooltip.BloodMagic.pack.sacrifice.desc=Description
+tooltip.BloodMagic.pack.stored=Stored: %d LP
+
+tooltip.BloodMagic.activationCrystal.weak=Actionne les rituels d'un Bas Niveau
+tooltip.BloodMagic.activationCrystal.awakened=Actionne des rituels plus puissants
+tooltip.BloodMagic.activationCrystal.creative=Creative Seulement - Actionne tout les rituels
+
+tooltip.BloodMagic.diviner.currentRitual=Rituel Courant: 
+tooltip.BloodMagic.diviner.blankRune=Runes Vierge: %d
+tooltip.BloodMagic.diviner.waterRune=Runes d'Eau: %d
+tooltip.BloodMagic.diviner.airRune=Runes d'Air: %d
+tooltip.BloodMagic.diviner.fireRune=Runes de Feu: %d
+tooltip.BloodMagic.diviner.earthRune=Runes de Terre: %d
+tooltip.BloodMagic.diviner.duskRune=Runes de Cépuscule: %d
+tooltip.BloodMagic.diviner.dawnRune=Runes d'Aube: %d
+tooltip.BloodMagic.diviner.totalRune=Runes Totales: %d
+tooltip.BloodMagic.diviner.extraInfo=Appuyer sur shift pour encore plus d'info
+tooltip.BloodMagic.diviner.currentDirection=Directon Courante: %s
+
+tooltip.BloodMagic.ritualReader.currentState=Mode Courant: %s
+tooltip.BloodMagic.ritualReader.set_area=Endroit Déterminé
+tooltip.BloodMagic.ritualReader.information=Information
+tooltip.BloodMagic.ritualReader.set_will_types=Choisir la volonté consommée
+tooltip.BloodMagic.ritualReader.desc.set_area=Clic-droit sur une Pierre Rituelle Maîtresse pour cycler l'endroit de la rituelle que vous vouleiz modifier. Ensuite, cliquez les deux coins du nouveaux endroit que vous vouliez.
+tooltip.BloodMagic.ritualReader.desc.information=Clic-droit sur une Pierre Rituelle Maîtresse pour receuillir des informations basics sur le rituel.
+tooltip.BloodMagic.ritualReader.desc.set_will_types=Donnez les types de volonté diabolique que le rituel va consommer de l'aura par un Clic-Droit sur la PRM avec le même type de crystal dans votre bar chaude.
+
+tooltip.BloodMagic.arcaneAshes=Cendres sont utilisées pour dessiner un cercle d'alchimie
+
+tooltip.BloodMagic.telepositionFocus.coords=Coodornées courantes: (%d, %d, %d)
+tooltip.BloodMagic.telepositionFocus.dimension=Dimension ID: %d
+tooltip.BloodMagic.telepositionFocus.weak=Utilisé pour déplacer les blocs dans le monde
+tooltip.BloodMagic.telepositionFocus.enhanced=Utilisé pour déplacer les blocs dans le monde
+tooltip.BloodMagic.telepositionFocus.reinforced=Utilisé pour déplacer les blocs dans le monde
+tooltip.BloodMagic.telepositionFocus.demonic=Utilisé pour déplacer les blocs dans le monde
+
+tooltip.BloodMagic.livingArmour.upgrade.speed=Pieds Rapides
+tooltip.BloodMagic.livingArmour.upgrade.digging=Puissance des Nains
+tooltip.BloodMagic.livingArmour.upgrade.poisonResist=Résistance au Poison
+tooltip.BloodMagic.livingArmour.upgrade.fireResist=Cadeau d'Ignis
+tooltip.BloodMagic.livingArmour.upgrade.selfSacrifice=Paumes Dures
+tooltip.BloodMagic.livingArmour.upgrade.knockback=Culturiste
+tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=Peau Dure
+tooltip.BloodMagic.livingArmour.upgrade.health=Sain
+tooltip.BloodMagic.livingArmour.upgrade.meleeDamage=Coup Féroce
+tooltip.BloodMagic.livingArmour.upgrade.arrowShot=Tir Acrobatique
+tooltip.BloodMagic.livingArmour.upgrade.stepAssist=Marche Assistée
+tooltip.BloodMagic.livingArmour.upgrade.grimReaper=Sprint de la Faucheuse
+tooltip.BloodMagic.livingArmour.upgrade.solarPowered=Solar Powered
+tooltip.BloodMagic.livingArmour.upgrade.thaumRunicShielding=Runic Shielding
+tooltip.BloodMagic.livingArmour.upgrade.revealing=Revealing
+tooltip.BloodMagic.livingArmour.upgrade.experienced=Experienced
+tooltip.BloodMagic.livingArmour.upgrade.jump=Strong Legs
+tooltip.BloodMagic.livingArmour.upgrade.fallProtect=Soft Fall
+tooltip.BloodMagic.livingArmour.upgrade.graveDigger=Grave Digger
+tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=Charging Strike
+tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=True Strike
+tooltip.BloodMagic.livingArmour.upgrade.elytra=Elytra
+tooltip.BloodMagic.livingArmour.upgrade.slowness=Limp Leg
+tooltip.BloodMagic.livingArmour.upgrade.crippledArm=Crippled Arm
+tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
+tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
+
+tooltip.BloodMagic.will=Will Quality: %1$,.2f
+tooltip.BloodMagic.sentientSword.desc=Uses demon will to unleash its full potential.
+tooltip.BloodMagic.sentientAxe.desc=Uses demon will to unleash its full potential.
+tooltip.BloodMagic.sentientPickaxe.desc=Uses demon will to unleash its full potential.
+tooltip.BloodMagic.sentientShovel.desc=Uses demon will to unleash its full potential.
+tooltip.BloodMagic.soulGem.petty=A gem used to contain a little will
+tooltip.BloodMagic.soulGem.lesser=A gem used to contain some will
+tooltip.BloodMagic.soulGem.common=A gem used to contain more will
+tooltip.BloodMagic.soulGem.greater=A gem used to contain a greater amount of will
+tooltip.BloodMagic.soulGem.grand=A gem used to contain a large amount of will
+tooltip.BloodMagic.soulSnare.desc=Throw at a monster and then kill them to obtain their demonic will
+
+tooltip.BloodMagic.itemFilter.exact=S'assure que les objets se ressemblent exactement
+tooltip.BloodMagic.itemFilter.ignoreNBT=Ignore le NBT du filtre
+tooltip.BloodMagic.itemFilter.modItems=Assortis les objets du même mod
+tooltip.BloodMagic.itemFilter.oreDict=Used to filter through the Ore Dictionary
+
+tooltip.BloodMagic.fluid.type=Fluid Contained
+tooltip.BloodMagic.fluid.amount=Amount
+tooltip.BloodMagic.fluid.capacity=Capacity
+
+tooltip.BloodMagic.ghost.everything=Everything
+tooltip.BloodMagic.ghost.amount=Ghost item amount: %d
+
+tooltip.BloodMagic.currentType.default=Contient: Volonté Crue
+tooltip.BloodMagic.currentType.corrosive=Contient: Volonté Corrosive
+tooltip.BloodMagic.currentType.destructive=Contient: Volonté Destructive
+tooltip.BloodMagic.currentType.vengeful=Contient: Volonté Vengeresse
+tooltip.BloodMagic.currentType.steadfast=Contient: Volonté Inébranlable
+
+tooltip.BloodMagic.experienceTome=A book used to store experience
+tooltip.BloodMagic.experienceTome.exp=Exp: %0.3f
+tooltip.BloodMagic.experienceTome.expLevel=Level: %d
+
+tooltip.BloodMagic.decoration.safe=Safe for decoration
+tooltip.BloodMagic.decoration.notSafe=Dangerous for decoration
+
+tooltip.BloodMagic.cuttingFluidRatio=%d/%d uses remaining
+
+tooltip.BloodMagic.book.shifting=These symbols seem to be... &oshifting...
+
+# Ritual
+ritual.BloodMagic.blockRange.tooBig=The block range given is too big! Needs to be at most %s blocks.
+ritual.BloodMagic.blockRange.tooFar=The block range given is too far! Needs to be within a vertical range of %s blocks and a horizontal range of %s blocks.
+ritual.BloodMagic.blockRange.inactive=The ritual stone is currently inactive, and cannot have its range modified.
+ritual.BloodMagic.blockRange.noRange=The range was not properly chosen.
+ritual.BloodMagic.blockRange.firstBlock=First block for new range stored.
+ritual.BloodMagic.blockRange.success=New range successfully set!
+
+ritual.BloodMagic.testRitual=Test Ritual
+ritual.BloodMagic.waterRitual=Ritual of the Full Spring
+ritual.BloodMagic.lavaRitual=Serenade of the Nether
+ritual.BloodMagic.greenGroveRitual=Ritual of the Green Grove
+ritual.BloodMagic.jumpRitual=Ritual of the High Jump
+ritual.BloodMagic.wellOfSufferingRitual=Well of Suffering
+ritual.BloodMagic.featheredKnifeRitual=Ritual of the Feathered Knife
+ritual.BloodMagic.regenerationRitual=Ritual of Regeneration
+ritual.BloodMagic.harvestRitual=Reap of the Harvest Moon
+ritual.BloodMagic.magneticRitual=Ritual of Magnetism
+ritual.BloodMagic.crushingRitual=Ritual of the Crusher
+ritual.BloodMagic.fullStomachRitual=Ritual of the Satiated Stomach
+ritual.BloodMagic.interdictionRitual=Ritual of Interdiction
+ritual.BloodMagic.containmentRitual=Ritual of Containment
+ritual.BloodMagic.speedRitual=Ritual of Speed
+ritual.BloodMagic.suppressionRitual=Ritual of Suppression
+ritual.BloodMagic.expulsionRitual=Aura of Expulsion
+ritual.BloodMagic.zephyrRitual=Call of the Zephyr
+ritual.BloodMagic.upgradeRemoveRitual=Sound of the Cleansing Soul
+ritual.BloodMagic.armourEvolveRitual=Ritual of Living Evolution
+ritual.BloodMagic.animalGrowthRitual=Ritual of the Shepherd
+ritual.BloodMagic.forsakenSoulRitual=Gathering of the Forsaken Souls
+ritual.BloodMagic.crystalHarvestRitual=Crack of the Fractured Crystal
+
+ritual.BloodMagic.cobblestoneRitual=Le Vulcanos Frigius
+ritual.BloodMagic.placerRitual=Laying of the Filler
+ritual.BloodMagic.fellingRitual=Crash of the Timberman
+ritual.BloodMagic.pumpRitual=Hymn of Siphoning
+ritual.BloodMagic.altarBuilderRitual=The Assembly of the High Altar
+ritual.BloodMagic.portalRitual=The Gate of the Fold
+
+
+ritual.BloodMagic.waterRitual.info=Generates a source of water from the master ritual stone.
+ritual.BloodMagic.lavaRitual.info=Generates a source of lava from the master ritual stone.
+ritual.BloodMagic.greenGroveRitual.info=Grows crops within its area.
+ritual.BloodMagic.jumpRitual.info=Causes entities to leap up into the air.
+ritual.BloodMagic.wellOfSufferingRitual.info=Attacks mobs within its damage zone and puts the LP into a nearby blood altar.
+ritual.BloodMagic.featheredKnifeRitual.info=Drains health from players in its area and puts the LP into a nearby blood altar.
+ritual.BloodMagic.regenerationRitual.info=Casts regeneration on entities within its range if they are missing health.
+ritual.BloodMagic.harvestRitual.info=Harvests plants within its range, dropping the results on the ground.
+ritual.BloodMagic.magneticRitual.info=Pulls up ores from the ground and puts them into its placement range.
+ritual.BloodMagic.crushingRitual.info=Breaks blocks within its crushing range and places the items into the linked chest.
+ritual.BloodMagic.fullStomachRitual.info=Takes food from the linked chest and fills the player's saturation with it.
+ritual.BloodMagic.interdictionRitual.info=Pushes all mobs within its area away from the master ritual stone.
+ritual.BloodMagic.containmentRitual.info=Pulls all mobs within its area towards the master ritual stone.
+ritual.BloodMagic.speedRitual.info=Launches players within its range in the direction of the ritual.
+ritual.BloodMagic.suppressionRitual.info=Suppresses fluids within its range - deactivating the ritual returns the fluids back to the world.
+ritual.BloodMagic.expulsionRitual.info=Expels players from its range that are neither the owner nor have a bound blood orb in the chest on top of the master ritual stone.
+ritual.BloodMagic.zephyrRitual.info=Picks up items within its range and places them into the linked chest.
+ritual.BloodMagic.upgradeRemoveRitual.info=Undocumented.
+ritual.BloodMagic.armourEvolveRitual.info=Undocumented.
+ritual.BloodMagic.animalGrowthRitual.info=Increases the maturity rate of baby animals within its range.
+ritual.BloodMagic.forsakenSoulRitual.info=Damages mobs within its damage range and when the mob dies a demon crystal within its crystal range will be grown.
+ritual.BloodMagic.crystalHarvestRitual.info=Breaks Demon Will crystal clusters within its range, dropping the results on top of the crystals.
+
+ritual.BloodMagic.placerRitual.info=Grabs blocks that are inside of the connected inventory and places them into the world.
+ritual.BloodMagic.fellingRitual.info=A standard tree-cutting machine, this ritual will cut down all trees and leaves within its area and collect the drops.
+ritual.BloodMagic.pumpRitual.info=Looks around the world and grabs fluids from the defined area. Will only remove and put the fluid into the connected tank if the tank has at least a bucket's worth of the same fluid.
+ritual.BloodMagic.altarBuilderRitual.info=Builds an altar out of the components inside of the connected inventory.
+ritual.BloodMagic.portalRitual.info=Creates a portal network based on the activator and the immediately surrounding blocks. Blocks can be changed after activation without changing the network of portals, and portals with the same "key" will link together.
+
+ritual.BloodMagic.waterRitual.waterRange.info=(Water) The area that the ritual will place water source blocks.
+ritual.BloodMagic.lavaRitual.lavaRange.info=(Lava) The area that the ritual will place lava source blocks.
+ritual.BloodMagic.greenGroveRitual.growing.info=(Growth) The area that the ritual will grow plants in.
+ritual.BloodMagic.jumpRitual.jumpRange.info=(Jumping) Entities in this range will be launched in the air.
+ritual.BloodMagic.wellOfSufferingRitual.altar.info=(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region.
+ritual.BloodMagic.wellOfSufferingRitual.damage.info=(Damage) This defines where the ritual will damage a mob. All mobs inside of this range (except for players) will receive damage over time.
+ritual.BloodMagic.featheredKnifeRitual.altar.info=(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region.
+ritual.BloodMagic.featheredKnifeRitual.damage.info=(Damage) This defines where the ritual will damage a player. Players inside of this range will receive damage over time up to the specified limit.
+ritual.BloodMagic.regenerationRitual.heal.info=(Healing) Mobs within this range will receive a regeneration buff.
+ritual.BloodMagic.harvestRitual.harvestRange.info=(Harvesting) Plants within this range will be harvested.
+ritual.BloodMagic.magneticRitual.placementRange.info=(Placement) The range that the ritual will place the grabbed ores into.
+ritual.BloodMagic.crushingRitual.crushingRange.info=(Crushing) The blocks that the ritual will break.
+ritual.BloodMagic.crushingRitual.chest.info=(Chest) The location of the inventory that the ritual will place the broken blocks into.
+ritual.BloodMagic.fullStomachRitual.fillRange.info=(Feeding) The range that the ritual will look at to feed players.
+ritual.BloodMagic.fullStomachRitual.chest.info=(Chest) The location of the inventory that the ritual will grab food from to feed players in range.
+ritual.BloodMagic.interdictionRitual.interdictionRange.info=(Push) The area of the ritual where mobs will be pushed. All mobs are pushed away from the master ritual stone, regardless of where this area is.
+ritual.BloodMagic.containmentRitual.containmentRange.info=(Containment) The area of the ritual where mobs will be pulled. All mobs are pulled towards the master ritual stone, regardless of where this area is.
+ritual.BloodMagic.speedRitual.sanicRange.info=(Speed) All entities within this area are launched in the direction of the arrow formed by the ritual. 
+ritual.BloodMagic.suppressionRitual.suppressionRange.info=(Suppress) All liquids within the range are suppressed.
+ritual.BloodMagic.expulsionRitual.expulsionRange.info=(Expulsion) 
+ritual.BloodMagic.zephyrRitual.zephyrRange.info=(Suction) Items within this range will be sucked into the linked chest.
+ritual.BloodMagic.zephyrRitual.chest.info=(Chest) The location of the inventory that the ritual will place the picked up items into.
+ritual.BloodMagic.animalGrowthRitual.growing.info=(Growth) Animals within this range will grow much faster.
+ritual.BloodMagic.forsakenSoulRitual.crystal.info=(Crystal) Demon Crystals in this range receive an increase in growth speed when a mob is killed by the ritual.
+ritual.BloodMagic.forsakenSoulRitual.damage.info=(Damage) Mobs within this range will be slowly damaged, and when killed will grow the crystals.
+ritual.BloodMagic.crystalHarvestRitual.crystal.info=(Crystal) All Demon Will crystal clusters have a single crystal broken off, spawning the crystal into the world. If there is only one crystal on the cluster, it will not break it.
+
+ritual.BloodMagic.placerRitual.placerRange.info=(Placement) The range that the ritual will place its blocks in. 
+ritual.BloodMagic.placerRitual.chest.info=(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.
+ritual.BloodMagic.fellingRitual.fellingRange.info=(Cutting) The range that the ritual will search out logs and leaves in order to cut down.
+ritual.BloodMagic.fellingRitual.chest.info=(Chest) The location of the inventory that the ritual will place the results into.
+ritual.BloodMagic.pumpRitual.pumpRange.info=(Pump) The region that the ritual will look for fluids to grab from the world.
+
+# Chat
+chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
+chat.BloodMagic.altarMaker.building=Building a Tier %d Altar
+chat.BloodMagic.altarMaker.destroy=Destroyed a Tier %d Altar
+chat.BloodMagic.altarMaker.creativeOnly=This is a creative only item.
+
+chat.BloodMagic.damageSource=%s's soul became too weak
+
+chat.BloodMagic.ritual.weak=You feel a push, but are too weak to perform this ritual.
+chat.BloodMagic.ritual.prevent=The ritual is actively resisting you!
+chat.BloodMagic.ritual.activate=A rush of energy flows through the ritual!
+chat.BloodMagic.ritual.notValid=You feel that these runes are not configured correctly...
+
+chat.BloodMagic.livingArmour.upgrade.poisonRemove=You are starting to feel better already!
+chat.BloodMagic.livingArmour.upgrade.fireRemove=&6A cool feeling envelopes you as the burning subsides.
+chat.BloodMagic.livingArmour.upgrade.grimReaper=&6A shadowy force pulls you from the brink of death!
+chat.BloodMagic.livingArmour.newUpgrade=&4Upgrade acquired!
+
+chat.BloodMagic.routing.remove=Removing contained location
+chat.BloodMagic.routing.set=Setting node location
+chat.BloodMagic.routing.link.master=Linked node to master!
+chat.BloodMagic.routing.link=Linked nodes together
+
+chat.BloodMagic.altar.comp.glowstone=a block of glowstone
+chat.BloodMagic.altar.comp.bloodstone=a large bloodstone brick
+chat.BloodMagic.altar.comp.beacon=a beacon
+chat.BloodMagic.altar.comp.bloodrune=a blood rune
+chat.BloodMagic.altar.comp.crystal=an unimplemented item
+chat.BloodMagic.altar.comp.notair=a solid block
+
+chat.BloodMagic.altar.nextTier=The next tier of blood altar is missing %s at %s.
+
+# sekrit
+
+secret.BloodMagic.bread.bloody=&r&cBloody Bread
+secret.BloodMagic.bread.bloody.desc=Only for &odire &r&7emergencies.
+
+# Commands
+commands.error.arg.invalid=Invalid arguments
+commands.error.arg.missing=Not enough arguments
+commands.error.arg.player.missing=You must specify which player you wish to perform this action on.
+commands.error.404=Command not found!
+commands.error.unknown=Unknown command!
+commands.error.perm=You do not have permission to use this command.
+
+commands.success=Executed successfully
+
+commands.format.help=%s - %s
+commands.format.error=%s - %s
+
+commands.help.usage=/bloodmagic help
+commands.help.help=Displays the help information for the "/bloodmagic" command.
+
+commands.network.usage=/bloodmagic network [syphon|add|get|fill|cap] player [amount]
+commands.network.help=LP network utilities
+commands.network.syphon.help=Removes the given amount of LP from the given player's LP network.
+commands.network.syphon.success=Successfully syphoned %d LP from %s.
+commands.network.add.help=Adds the given amount of LP to the given player's LP network. Follows standard LP gain rules.
+commands.network.add.success=Successfully added %d LP to %s's LP network.
+commands.network.set.help=Sets the given player's LP to the given amount.
+commands.network.set.success=Successfully set %s's LP network to %d LP.
+commands.network.get.help=Returns the amount of LP in the given player's LP network.
+commands.network.fill.help=Fills the given player's LP network to %d.
+commands.network.fill.success=Successfully filled %s's LP network.
+commands.network.cap.help=Fills the given player's LP network to the max that their highest Blood Orb can store.
+commands.network.cap.success=Successfully capped off %s's LP network.
+
+commands.bind.usage=/bloodmagic bind [true|false] [player]
+commands.bind.help=Attempts to (un)bind the currently held item.
+commands.bind.success=Binding successful
+commands.bind.remove.success=Unbinding successful
+
+commands.orb.usage=/bloodmagic orb [set|get] player [tier]
+commands.orb.help=Used to set or get the Player's max Blood Orb tier.
+
+commands.bind.usage=/bind <player>
+commands.bind.success=Item successfully bound!
+commands.bind.failed.noPlayer=There is no player specified
+commands.bind.failed.alreadyBound=Item is already bound; use /unbind to unbind it
+commands.bind.failed.notBindable=Item cannot be bound
+commands.unbind.usage=/unbind
+commands.unbind.success=Item successfully unbound!
+commands.unbind.failed.notBindable=Item cannot be unbound
+commands.soulnetwork.usage=/soulnetwork <player> <add|subtract|fill|empty|get> [amount]
+commands.soulnetwork.add.success=Successfully added %dLP to %s's Soul Network!
+commands.soulnetwork.subtract.success=Successfully subtracted %dLP from %s's Soul Network!
+commands.soulnetwork.fill.success=Successfully filled %s's Soul Network!
+commands.soulnetwork.empty.success=Successfully emptied %s's Soul Network!
+commands.soulnetwork.get.success=There is %dLP in %s's Soul Network!
+commands.soulnetwork.noPlayer=There is no player specified
+commands.soulnetwork.noCommand=There is no command specified
+commands.soulnetwork.notACommand=That is not a valid command
+commands.soulnetwork.fillMax.success=Successfully filled %s's Soul Network to their orb max!
+commands.soulnetwork.create.success=Successfully created %s's Soul Network (Orb tier: %d)
+
+# Keybinds
+BloodMagic.keybind.openSigilHolding=Open Sigil of Holding
+
+# JustEnoughItems
+jei.BloodMagic.recipe.altar=Blood Altar
+jei.BloodMagic.recipe.binding=Alchemy Array (Binding)
+jei.BloodMagic.recipe.alchemyArrayCrafting=Alchemy Array
+jei.BloodMagic.recipe.soulForge=Hellfire Forge
+jei.BloodMagic.recipe.alchemyTable=Alchemy Table
+jei.BloodMagic.recipe.requiredLP=LP: %d
+jei.BloodMagic.recipe.requiredTier=Tier: %d
+jei.BloodMagic.recipe.consumptionRate=Consumption: %d LP/t
+jei.BloodMagic.recipe.drainRate=Drain: %d LP/t
+jei.BloodMagic.recipe.minimumSouls=Minimum: %1$,.2f Will
+jei.BloodMagic.recipe.soulsDrained=Drained: %1$,.2f Will
+jei.BloodMagic.recipe.lpDrained=Drained: %,d LP
+jei.BloodMagic.recipe.ticksRequired=Time: %,d Ticks
+
+jei.BloodMagic.desc.altarBuilder=A creative-only item for use in debugging and testing.\n\nShift + Right click to change the tier to build. Right click an Altar to initiate the build.\n\nBreak an Altar while holding to dismantle it.
+jei.BloodMagic.desc.demonicWill=An imprint of a demonic entity attached to a creature.\n\nCan be obtained by killing a mob with a sentient weapon or by throwing a snare at a mob and killing it while it has white particles.
+
+# WAILA
+waila.BloodMagic.sneak=&oSneak for Information
+waila.BloodMagic.array.reagent=Reagent: %s
+waila.BloodMagic.array.catalyst=Catalyst: %s
+option.BloodMagic.bypassSneak=Bypass Sneak
+option.BloodMagic.bloodAltar=Blood Altar
+option.BloodMagic.ritualController=Ritual Stones
+option.BloodMagic.teleposer=Teleposer
+option.BloodMagic.array=Alchemy Array
+
+# Thaumcraft
+tc.research_category.BLOODMAGIC=Sanguine Arcana
+
+# Thaumcraft Research
+bloodmagic.research_name.BLOODMAGIC=Blood Magic
+bloodmagic.research_text.BLOODMAGIC=Sanguine Arcana
+bloodmagic.research_page.BLOODMAGIC.1=The realm of the Blood Magics has always appeared to be a more solitary and "individual" art with blood mages being notoriously reclusive and a bit insane at times. However, the powers of self-sacrifice and life essence have uses even beyond a normal blood mage's sight, in fact, it is quite apparent that it may have some uses in thaumaturgy after all!
