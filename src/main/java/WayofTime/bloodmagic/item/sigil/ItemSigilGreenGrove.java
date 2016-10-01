@@ -9,6 +9,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 
 public class ItemSigilGreenGrove extends ItemSigilToggleableBase
@@ -78,9 +81,11 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
     {
         IBlockState iblockstate = worldIn.getBlockState(target);
 
-        int hook = net.minecraftforge.event.ForgeEventFactory.onApplyBonemeal(player, worldIn, target, iblockstate, stack);
-        if (hook != 0)
-            return hook > 0;
+        BonemealEvent event = new BonemealEvent(player, worldIn, target, iblockstate);
+        if (MinecraftForge.EVENT_BUS.post(event))
+            return false;
+        else if (event.getResult() == Result.ALLOW)
+            return true;
 
         if (iblockstate.getBlock() instanceof IGrowable)
         {
