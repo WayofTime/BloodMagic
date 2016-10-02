@@ -21,6 +21,8 @@ public class ModPotions
     public static Potion plantLeech;
     public static Potion deafness;
 
+    public static Potion immuneSuppress;
+
     public static void init()
     {
         new PotionEventHandlers();
@@ -47,6 +49,7 @@ public class ModPotions
         constrict = registerPotion("Constriction", new ResourceLocation("constrict"), true, 0x000000, 6, 0);
         plantLeech = registerPotion("Plant Leech", new ResourceLocation("plantLeech"), true, 0x000000, 7, 0);
         deafness = registerPotion("Deaf", new ResourceLocation("deafness"), true, 0x000000, 0, 1);
+        immuneSuppress = registerPotion("(-) Immunity", new ResourceLocation("immuneSuppress"), true, 0x000000, 1, 1);
         // heavyHeart = new PotionBloodMagic("Heavy Heart", new
         // ResourceLocation(resourceLocation +
         // heavyHeart.getName().toLowerCase()), true, 0, 0, 0);

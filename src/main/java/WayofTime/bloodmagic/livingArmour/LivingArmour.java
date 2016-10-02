@@ -20,6 +20,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -108,7 +109,7 @@ public class LivingArmour implements ILivingArmour
             if (nextLevel > currentLevel)
             {
                 int upgradePointDifference = upgrade.getCostOfUpgrade() - upgradeMap.get(key).getCostOfUpgrade();
-                if (upgradePointDifference >= 0 && totalUpgradePoints + upgradePointDifference <= maxUpgradePoints)
+                if (Math.abs(upgradePointDifference) >= 0 && totalUpgradePoints + upgradePointDifference <= maxUpgradePoints)
                 {
                     upgradeMap.put(key, upgrade);
                     totalUpgradePoints += upgradePointDifference;
@@ -190,6 +191,8 @@ public class LivingArmour implements ILivingArmour
             }
         }
 
+        boolean allowOnlyDowngrades = player.isPotionActive(ModPotions.immuneSuppress);
+
         for (Entry<String, StatTracker> entry : trackerMap.entrySet())
         {
             StatTracker tracker = entry.getValue();
@@ -217,6 +220,12 @@ public class LivingArmour implements ILivingArmour
                     tracker.onDeactivatedTick(world, player, this);
                     continue;
                 }
+            }
+
+            if ((allowOnlyDowngrades != tracker.isTrackerDowngrade()))
+            {
+                tracker.onDeactivatedTick(world, player, this);
+                continue;
             }
 
             if (tracker.onTick(world, player, this))
