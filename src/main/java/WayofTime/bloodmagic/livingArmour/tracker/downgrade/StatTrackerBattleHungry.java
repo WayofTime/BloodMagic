@@ -11,15 +11,15 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeMeleeDecrease;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeBattleHungry;
 import WayofTime.bloodmagic.util.Utils;
 
-public class StatTrackerMeleeDecrease extends StatTracker
+public class StatTrackerBattleHungry extends StatTracker
 {
     public double totalDamageDealt = 0;
 
     public static HashMap<LivingArmour, Double> changeMap = new HashMap<LivingArmour, Double>();
-    public static int[] damageRequired = new int[] { 40, 100, 200, 350, 650, 1000, 1500, 2000, 3500, 7500 };
+    public static int[] damageRequired = new int[] { 200, 800, 1300, 2500, 3800, 5000 };
 
     public static void incrementCounter(LivingArmour armour, double damage)
     {
@@ -29,7 +29,7 @@ public class StatTrackerMeleeDecrease extends StatTracker
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.meleeDecrease";
+        return Constants.Mod.MODID + ".tracker.battleHunger";
     }
 
     @Override
@@ -41,13 +41,13 @@ public class StatTrackerMeleeDecrease extends StatTracker
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalDamageDealt = tag.getDouble(Constants.Mod.MODID + ".tracker.meleeDecrease");
+        totalDamageDealt = tag.getDouble(Constants.Mod.MODID + ".tracker.battleHunger");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setDouble(Constants.Mod.MODID + ".tracker.meleeDecrease", totalDamageDealt);
+        tag.setDouble(Constants.Mod.MODID + ".tracker.battleHunger", totalDamageDealt);
     }
 
     @Override
@@ -59,6 +59,7 @@ public class StatTrackerMeleeDecrease extends StatTracker
             if (change > 0)
             {
                 totalDamageDealt += Math.abs(changeMap.get(livingArmour));
+                System.out.println(totalDamageDealt);
                 changeMap.put(livingArmour, 0d);
 
                 this.markDirty();
@@ -84,11 +85,11 @@ public class StatTrackerMeleeDecrease extends StatTracker
     {
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             if (totalDamageDealt >= damageRequired[i])
             {
-                upgradeList.add(new LivingArmourUpgradeMeleeDecrease(i));
+                upgradeList.add(new LivingArmourUpgradeBattleHungry(i));
             }
         }
 
@@ -104,13 +105,13 @@ public class StatTrackerMeleeDecrease extends StatTracker
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.meleeDecrease");
+        return key.equals(Constants.Mod.MODID + ".upgrade.battleHunger");
     }
 
     @Override
     public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
     {
-        if (upgrade instanceof LivingArmourUpgradeMeleeDecrease)
+        if (upgrade instanceof LivingArmourUpgradeBattleHungry)
         {
             int level = upgrade.getUpgradeLevel();
             if (level < damageRequired.length)

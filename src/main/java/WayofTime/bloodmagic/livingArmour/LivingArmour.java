@@ -167,7 +167,7 @@ public class LivingArmour implements ILivingArmour
                 continue;
             }
 
-            if (world.isRemote && upgrade.runOnClient())
+            if ((world.isRemote && upgrade.runOnClient()) || !world.isRemote)
             {
                 upgrade.onTick(world, player, this);
             }

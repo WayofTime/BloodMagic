@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.livingArmour.tracker.downgrade;
+package WayofTime.bloodmagic.livingArmour.tracker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,43 +11,43 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeMeleeDecrease;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeRepairing;
 import WayofTime.bloodmagic.util.Utils;
 
-public class StatTrackerMeleeDecrease extends StatTracker
+public class StatTrackerRepairing extends StatTracker
 {
-    public double totalDamageDealt = 0;
+    public double totalDamage = 0;
 
-    public static HashMap<LivingArmour, Double> changeMap = new HashMap<LivingArmour, Double>();
-    public static int[] damageRequired = new int[] { 40, 100, 200, 350, 650, 1000, 1500, 2000, 3500, 7500 };
+    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
+    public static int[] damageRequired = new int[] { 500 };
 
-    public static void incrementCounter(LivingArmour armour, double damage)
+    public static void incrementCounter(LivingArmour armour, int receivedDamage)
     {
-        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + damage : damage);
+        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + receivedDamage : receivedDamage);
     }
 
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.meleeDecrease";
+        return Constants.Mod.MODID + ".tracker.repair";
     }
 
     @Override
     public void resetTracker()
     {
-        this.totalDamageDealt = 0;
+        this.totalDamage = 0;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalDamageDealt = tag.getDouble(Constants.Mod.MODID + ".tracker.meleeDecrease");
+        totalDamage = tag.getDouble(Constants.Mod.MODID + ".tracker.repair");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setDouble(Constants.Mod.MODID + ".tracker.meleeDecrease", totalDamageDealt);
+        tag.setDouble(Constants.Mod.MODID + ".tracker.repair", totalDamage);
     }
 
     @Override
@@ -58,8 +58,9 @@ public class StatTrackerMeleeDecrease extends StatTracker
             double change = Math.abs(changeMap.get(livingArmour));
             if (change > 0)
             {
-                totalDamageDealt += Math.abs(changeMap.get(livingArmour));
-                changeMap.put(livingArmour, 0d);
+                totalDamage += Math.abs(changeMap.get(livingArmour));
+
+                changeMap.put(livingArmour, 0);
 
                 this.markDirty();
 
@@ -84,11 +85,11 @@ public class StatTrackerMeleeDecrease extends StatTracker
     {
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 1; i++)
         {
-            if (totalDamageDealt >= damageRequired[i])
+            if (totalDamage >= damageRequired[i])
             {
-                upgradeList.add(new LivingArmourUpgradeMeleeDecrease(i));
+                upgradeList.add(new LivingArmourUpgradeRepairing(i));
             }
         }
 
@@ -98,32 +99,26 @@ public class StatTrackerMeleeDecrease extends StatTracker
     @Override
     public double getProgress(LivingArmour livingArmour, int currentLevel)
     {
-        return Utils.calculateStandardProgress(totalDamageDealt, damageRequired, currentLevel);
+        return Utils.calculateStandardProgress(totalDamage, damageRequired, currentLevel);
     }
 
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.meleeDecrease");
+        return key.equals(Constants.Mod.MODID + ".upgrade.repair");
     }
 
     @Override
     public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
     {
-        if (upgrade instanceof LivingArmourUpgradeMeleeDecrease)
+        if (upgrade instanceof LivingArmourUpgradeRepairing)
         {
             int level = upgrade.getUpgradeLevel();
             if (level < damageRequired.length)
             {
-                totalDamageDealt = Math.max(totalDamageDealt, damageRequired[level]);
+                totalDamage = Math.max(totalDamage, damageRequired[level]);
                 this.markDirty();
             }
         }
-    }
-
-    @Override
-    public boolean isTrackerDowngrade()
-    {
-        return true;
     }
 }

@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -28,6 +29,7 @@ import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerJump;
+import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerQuenched;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeJump;
@@ -38,6 +40,34 @@ import WayofTime.bloodmagic.registry.ModPotions;
 @Handler
 public class LivingArmourHandler
 {
+
+    @SubscribeEvent
+    public void onFinishedItem(LivingEntityUseItemEvent.Finish event)
+    {
+        if (event.getEntityLiving() instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+            ItemStack heldStack = event.getItem();
+
+            if (heldStack != null && heldStack.getItemUseAction() == EnumAction.DRINK)
+            {
+                if (player.getItemInUseCount() <= 1)
+                {
+                    if (LivingArmour.hasFullSet(player))
+                    {
+                        ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                        LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                        if (armour != null)
+                        {
+                            //Stat tracker~
+                            StatTrackerQuenched.incrementCounter(armour);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     @SubscribeEvent
     public void onPlayerClick(PlayerInteractEvent event)
     {
@@ -63,6 +93,8 @@ public class LivingArmourHandler
 
                     if (event.getItemStack() != null && event.getItemStack().getItemUseAction() == EnumAction.DRINK)
                     {
+                        ItemStack drinkStack = event.getItemStack();
+
                         //TODO: See if the item is a splash potion? Those should be usable.
                         LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.quenched", chestStack);
 

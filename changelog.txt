@@ -5,6 +5,7 @@ Version 2.1.0-66
 - Added a potion effect called "(-) Immunity", which allows the training of Living Armour Downgrades. This potion is crafted using a Draft of Angelus with a potion flask. Check the uses of the flask!
 - Added some more framework for the Living Armour Downgrades.
 - Modified the Grim Reaper's Sprint so it is better at later levels.
+- Added a Repairing Living Armour Upgrade (trained by damaging the chestplate of the Living Armour while you have a full set on - it repairs all of your armour pieces over time)
 
 ------------------------------------------------------
 Version 2.1.0-65

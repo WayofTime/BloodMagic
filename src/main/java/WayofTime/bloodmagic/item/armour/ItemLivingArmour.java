@@ -41,6 +41,7 @@ import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerRepairing;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeElytra;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.PlayerFallDistancePacketProcessor;
@@ -233,6 +234,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     {
         if (this == ModItems.LIVING_ARMOUR_CHEST)
         {
+            int preDamage = stack.getItemDamage();
             if (source.isUnblockable())
             {
                 return;
@@ -252,6 +254,21 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             }
 
             stack.damageItem(damage, entity);
+
+            int receivedDamage = stack.getItemDamage() - preDamage;
+            if (entity instanceof EntityPlayer)
+            {
+                EntityPlayer player = (EntityPlayer) entity;
+                if (LivingArmour.hasFullSet(player))
+                {
+                    LivingArmour armour = ItemLivingArmour.getLivingArmour(stack);
+                    if (armour != null)
+                    {
+                        StatTrackerRepairing.incrementCounter(armour, receivedDamage);
+                    }
+                }
+            }
+
         } else
         {
             stack.damageItem(damage, entity);

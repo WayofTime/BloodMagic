@@ -24,11 +24,14 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerMovement;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerNightSight;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPoison;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerRepairing;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSolarPowered;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSprintAttack;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerStepAssist;
+import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerBattleHungry;
 import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerMeleeDecrease;
+import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerQuenched;
 import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerSlowness;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeCriticalStrike;
@@ -46,6 +49,7 @@ import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeMeleeDamage;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeNightSight;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePoisonResist;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeRepairing;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSolarPowered;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSpeed;
@@ -76,9 +80,12 @@ public class ModArmourTrackers
         LivingArmourHandler.registerStatTracker(StatTrackerCriticalStrike.class);
         LivingArmourHandler.registerStatTracker(StatTrackerFireResist.class);
         LivingArmourHandler.registerStatTracker(StatTrackerNightSight.class);
+        LivingArmourHandler.registerStatTracker(StatTrackerRepairing.class);
 
         LivingArmourHandler.registerStatTracker(StatTrackerMeleeDecrease.class);
         LivingArmourHandler.registerStatTracker(StatTrackerSlowness.class);
+        LivingArmourHandler.registerStatTracker(StatTrackerBattleHungry.class);
+        LivingArmourHandler.registerStatTracker(StatTrackerQuenched.class);
 
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSpeed(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeDigging(0));
@@ -101,6 +108,7 @@ public class ModArmourTrackers
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeElytra(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeFireResist(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeNightSight(0));
+        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeRepairing(0));
 
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSlowness(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeCrippledArm(0));
