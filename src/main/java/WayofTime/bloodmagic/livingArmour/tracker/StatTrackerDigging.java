@@ -19,7 +19,7 @@ public class StatTrackerDigging extends StatTracker
     public int totalBlocksDug = 0;
 
     public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
-    public static int[] blocksRequired = new int[] { 128, 512, 1024, 2048, 8192, 16000, 32000 };
+    public static int[] blocksRequired = new int[] { 128, 512, 1024, 2048, 8192, 16000, 32000, 50000, 80000, 150000 };
 
     public static void incrementCounter(LivingArmour armour)
     {
@@ -85,7 +85,7 @@ public class StatTrackerDigging extends StatTracker
     {
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
             if (totalBlocksDug >= blocksRequired[i])
             {

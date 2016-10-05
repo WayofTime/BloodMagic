@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.registry;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeBattleHungry;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeDigSlowdown;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeDisoriented;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeMeleeDecrease;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
@@ -30,6 +31,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSolarPowered;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSprintAttack;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerStepAssist;
 import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerBattleHungry;
+import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerDigSlowdown;
 import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerMeleeDecrease;
 import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerQuenched;
 import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerSlowness;
@@ -86,6 +88,7 @@ public class ModArmourTrackers
         LivingArmourHandler.registerStatTracker(StatTrackerSlowness.class);
         LivingArmourHandler.registerStatTracker(StatTrackerBattleHungry.class);
         LivingArmourHandler.registerStatTracker(StatTrackerQuenched.class);
+        LivingArmourHandler.registerStatTracker(StatTrackerDigSlowdown.class);
 
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSpeed(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeDigging(0));
@@ -117,5 +120,6 @@ public class ModArmourTrackers
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeQuenched(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeMeleeDecrease(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeDisoriented(0));
+        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeDigSlowdown(0));
     }
 }

@@ -35,6 +35,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSolarPowered;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSprintAttack;
 import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerBattleHungry;
+import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerDigSlowdown;
 import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerMeleeDecrease;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
@@ -46,7 +47,7 @@ public class StatTrackerHandler
 
     private static float lastPlayerSwingStrength = 0;
 
-    // Tracks: Digging
+    // Tracks: Digging, DigSlowdown
     @SubscribeEvent
     public void blockBreakEvent(BlockEvent.BreakEvent event)
     {
@@ -64,6 +65,11 @@ public class StatTrackerHandler
                     {
                         StatTrackerDigging.incrementCounter(armour);
                         LivingArmourUpgradeDigging.hasDug(armour);
+
+                        if (player.isPotionActive(MobEffects.MINING_FATIGUE))
+                        {
+                            StatTrackerDigSlowdown.incrementCounter(armour);
+                        }
                     }
                 }
             }
