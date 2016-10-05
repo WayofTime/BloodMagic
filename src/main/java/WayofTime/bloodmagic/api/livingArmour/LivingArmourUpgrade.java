@@ -78,6 +78,11 @@ public abstract class LivingArmourUpgrade
         return HashMultimap.create();
     }
 
+    public double getMiningSpeedModifier(EntityPlayer player)
+    {
+        return 1;
+    }
+
     public abstract void writeToNBT(NBTTagCompound tag);
 
     public abstract void readFromNBT(NBTTagCompound tag);

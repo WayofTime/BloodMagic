@@ -15,6 +15,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -40,6 +41,29 @@ import WayofTime.bloodmagic.registry.ModPotions;
 @Handler
 public class LivingArmourHandler
 {
+    @SubscribeEvent
+    public void onMiningSpeedCheck(PlayerEvent.BreakSpeed event)
+    {
+        EntityPlayer player = event.getEntityPlayer();
+        if (LivingArmour.hasFullSet(player))
+        {
+            ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+            LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+            if (armour != null)
+            {
+                double modifier = 1;
+                for (LivingArmourUpgrade upgrade : armour.upgradeMap.values())
+                {
+                    modifier *= upgrade.getMiningSpeedModifier(player);
+                }
+
+                if (modifier != 1)
+                {
+                    event.setNewSpeed((float) (event.getOriginalSpeed() * modifier));
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public void onFinishedItem(LivingEntityUseItemEvent.Finish event)

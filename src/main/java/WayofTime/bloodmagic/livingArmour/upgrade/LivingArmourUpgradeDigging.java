@@ -17,10 +17,10 @@ public class LivingArmourUpgradeDigging extends LivingArmourUpgrade
     public static HashMap<ILivingArmour, Boolean> changeMap = new HashMap<ILivingArmour, Boolean>();
 
     public static final int[] costs = new int[] { 5, 10, 18, 35, 65, 100, 160 };
-    public static final int[] digHasteTime = new int[] { 20, 40, 60, 100, 100, 100 };
-    public static final int[] digHasteLevel = new int[] { 0, 0, 1, 1, 2, 2, 2 };
     public static final int[] digSpeedTime = new int[] { 0, 60, 60, 100, 100, 100, 100 };
     public static final int[] digSpeedLevel = new int[] { 0, 0, 0, 1, 1, 1, 1 };
+
+    public static final double[] digSpeedModifier = new double[] { 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.8, 2, 2.2, 2.5 };
 
     public static void hasDug(LivingArmour armour)
     {
@@ -33,16 +33,21 @@ public class LivingArmourUpgradeDigging extends LivingArmourUpgrade
     }
 
     @Override
+    public double getMiningSpeedModifier(EntityPlayer player)
+    {
+        return digSpeedModifier[this.level];
+    }
+
+    @Override
     public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
     {
         if (changeMap.containsKey(livingArmour) && changeMap.get(livingArmour))
         {
             changeMap.put(livingArmour, false);
 
-            player.addPotionEffect(new PotionEffect(MobEffects.HASTE, digHasteTime[this.level], digHasteLevel[this.level], false, false));
             if (digSpeedTime[this.level] > 0)
             {
-                player.addPotionEffect(new PotionEffect(MobEffects.HASTE, digSpeedTime[this.level], digSpeedLevel[this.level], false, false));
+                player.addPotionEffect(new PotionEffect(MobEffects.SPEED, digSpeedTime[this.level], digSpeedLevel[this.level], false, false));
             }
         }
     }
