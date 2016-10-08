@@ -62,7 +62,7 @@ public class CategoryDemon
 
         List<IPage> pettyPages = new ArrayList<IPage>();
         pettyPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "petty" + ".info.1"), 370));
-        TartaricForgeRecipe pettyRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.SOUL_GEM, 1));
+        TartaricForgeRecipe pettyRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.SOUL_GEM));
         if (pettyRecipe != null)
         {
             pettyPages.add(new PageTartaricForgeRecipe(pettyRecipe));
@@ -82,7 +82,7 @@ public class CategoryDemon
 
         List<IPage> lesserPages = new ArrayList<IPage>();
         lesserPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lesser" + ".info.1"), 370));
-        TartaricForgeRecipe lesserRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.SOUL_GEM, 1));
+        TartaricForgeRecipe lesserRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.SOUL_GEM, 1, 1));
         if (lesserRecipe != null)
         {
             lesserPages.add(new PageTartaricForgeRecipe(lesserRecipe));
