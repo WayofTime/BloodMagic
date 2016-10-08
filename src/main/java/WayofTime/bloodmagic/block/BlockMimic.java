@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.api.altar.IAltarComponent;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -34,7 +37,7 @@ import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileMimic;
 
-public class BlockMimic extends BlockStringContainer implements IVariantProvider
+public class BlockMimic extends BlockStringContainer implements IVariantProvider, IAltarComponent
 {
     public static final int sentientMimicMeta = 4;
     public static final String[] names = { "nohitbox", "solidopaque", "solidclear", "solidlight", "sentient" };
@@ -237,5 +240,31 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
     public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new TileMimic();
+    }
+
+    // IAltarComponent
+
+    @Nullable
+    @Override
+    public EnumAltarComponent getType(World world, IBlockState state, BlockPos pos) {
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileMimic)
+        {
+            TileMimic mimic = (TileMimic) tile;
+            ItemStack stack = mimic.getStackInSlot(0);
+            if (stack != null && stack.getItem() instanceof ItemBlock)
+            {
+                Block block = ((ItemBlock) stack.getItem()).getBlock();
+                if (block instanceof IAltarComponent)
+                {
+                    return ((IAltarComponent) block).getType(world, block.getStateFromMeta(mimic.metaOfReplacedBlock), pos);
+                } else  {
+                    for (EnumAltarComponent altarComponent : EnumAltarComponent.values())
+                    if (block == Utils.getBlockForComponent(altarComponent))
+                        return altarComponent;
+                }
+            }
+        }
+        return null;
     }
 }
