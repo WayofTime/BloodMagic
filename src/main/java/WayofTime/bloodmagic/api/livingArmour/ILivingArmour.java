@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.api.livingArmour;
 
 import com.google.common.collect.Multimap;
+
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,6 +16,8 @@ import net.minecraft.world.World;
 public interface ILivingArmour
 {
     Multimap<String, AttributeModifier> getAttributeModifiers();
+
+    boolean canApplyUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade);
 
     boolean upgradeArmour(EntityPlayer user, LivingArmourUpgrade upgrade);
 

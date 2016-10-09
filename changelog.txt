@@ -8,6 +8,7 @@ Version 2.1.0-66
 - Added a Repairing Living Armour Upgrade (trained by damaging the chestplate of the Living Armour while you have a full set on - it repairs all of your armour pieces over time)
 - Modified the Dwarven Might skill to better change the mining speed when mining.
 - Added a Dig Slowdown armour downgrade called "Weakened Pick", trained by having weakness on while mining.
+- Added the framework for a ritual that grants downgrades (instead of the potion method).
 
 ------------------------------------------------------
 Version 2.1.0-65

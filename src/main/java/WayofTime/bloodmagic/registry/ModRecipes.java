@@ -1,7 +1,10 @@
 package WayofTime.bloodmagic.registry;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -10,12 +13,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectAttractor;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBinding;
@@ -31,6 +39,7 @@ import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.AlchemyTableRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
+import WayofTime.bloodmagic.api.registry.LivingArmourDowngradeRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.api.registry.TartaricForgeRecipeRegistry;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
@@ -47,6 +56,7 @@ import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeStormTrooper;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionRecipe;
@@ -72,6 +82,7 @@ public class ModRecipes
         addAlchemyTableRecipes();
         addOreDoublingAlchemyRecipes();
         addPotionRecipes();
+        addLivingArmourDowngradeRecipes();
     }
 
     public static void initOreDict()
@@ -464,5 +475,33 @@ public class ModRecipes
         powerList.add(inputStack);
         powerList.add(mundanePowerStack);
         AlchemyTableRecipeRegistry.registerRecipe(BMPotionUtils.getPowerAugmentRecipe(lpDrained, 100, tier, powerList, baseEffect, 1));
+    }
+
+    public static void addLivingArmourDowngradeRecipes()
+    {
+        String messageBase = "ritual.BloodMagic.downgradeRitual.dialogue.";
+
+        ItemStack bowStack = new ItemStack(Items.BOW);
+
+        Map<ItemStack, Pair<String, int[]>> dialogueMap = new HashMap<ItemStack, Pair<String, int[]>>();
+        dialogueMap.put(bowStack, Pair.of("bow", new int[] { 1, 200, 400, 600 }));
+
+        for (Entry<ItemStack, Pair<String, int[]>> entry : dialogueMap.entrySet())
+        {
+            ItemStack keyStack = entry.getKey();
+            String str = entry.getValue().getKey();
+            Map<Integer, List<ITextComponent>> textMap = new HashMap<Integer, List<ITextComponent>>();
+            for (int tick : entry.getValue().getValue())
+            {
+                List<ITextComponent> textList = new ArrayList<ITextComponent>();
+                textList.add(new TextComponentTranslation(messageBase + str + "." + tick));
+                textMap.put(tick, textList);
+            }
+
+            LivingArmourDowngradeRecipeRegistry.registerDialog(keyStack, textMap);
+        }
+
+        LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeStormTrooper(0), bowStack, "gemDiamond");
+//        LivingArmourDowngradeRecipeRegistry.registerDialog(bowStack, bowMap);
     }
 }

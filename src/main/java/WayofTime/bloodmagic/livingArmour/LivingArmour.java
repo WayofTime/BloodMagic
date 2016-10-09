@@ -109,7 +109,7 @@ public class LivingArmour implements ILivingArmour
             if (nextLevel > currentLevel)
             {
                 int upgradePointDifference = upgrade.getCostOfUpgrade() - upgradeMap.get(key).getCostOfUpgrade();
-                if (Math.abs(upgradePointDifference) >= 0 && totalUpgradePoints + upgradePointDifference <= maxUpgradePoints)
+                if (totalUpgradePoints + upgradePointDifference <= maxUpgradePoints)
                 {
                     upgradeMap.put(key, upgrade);
                     totalUpgradePoints += upgradePointDifference;
@@ -135,6 +135,36 @@ public class LivingArmour implements ILivingArmour
                     tracker.onArmourUpgradeAdded(upgrade);
                 }
 
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean canApplyUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade)
+    {
+        String key = upgrade.getUniqueIdentifier();
+        if (upgradeMap.containsKey(key))
+        {
+            //Check if this is a higher level than the previous upgrade
+            int nextLevel = upgrade.getUpgradeLevel();
+            int currentLevel = upgradeMap.get(key).getUpgradeLevel();
+
+            if (nextLevel > currentLevel)
+            {
+                int upgradePointDifference = upgrade.getCostOfUpgrade() - upgradeMap.get(key).getCostOfUpgrade();
+                if (totalUpgradePoints + upgradePointDifference <= maxUpgradePoints)
+                {
+                    return true;
+                }
+            }
+        } else
+        {
+            int upgradePoints = upgrade.getCostOfUpgrade();
+            if (totalUpgradePoints + upgradePoints <= maxUpgradePoints)
+            {
                 return true;
             }
         }

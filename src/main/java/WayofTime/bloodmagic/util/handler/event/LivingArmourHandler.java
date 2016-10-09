@@ -1,8 +1,10 @@
 package WayofTime.bloodmagic.util.handler.event;
 
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -11,6 +13,7 @@ import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -27,6 +30,7 @@ import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeStormTrooper;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerJump;
@@ -60,6 +64,44 @@ public class LivingArmourHandler
                 if (modifier != 1)
                 {
                     event.setNewSpeed((float) (event.getOriginalSpeed() * modifier));
+                }
+            }
+        }
+    }
+
+    // Applies: Storm Trooper
+    @SubscribeEvent
+    public void onEntityJoinedWorld(EntityJoinWorldEvent event)
+    {
+        Entity owner = null;
+        if (event.getEntity() instanceof EntityArrow)
+        {
+            owner = ((EntityArrow) event.getEntity()).shootingEntity;
+        } else if (event.getEntity() instanceof EntityThrowable)
+        {
+            owner = ((EntityThrowable) event.getEntity()).getThrower();
+        }
+
+        if (owner instanceof EntityPlayer)
+        {
+            Entity projectile = event.getEntity();
+            EntityPlayer player = (EntityPlayer) owner;
+            if (LivingArmour.hasFullSet(player))
+            {
+                ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                if (armour != null)
+                {
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.stormTrooper", chestStack);
+
+                    if (upgrade instanceof LivingArmourUpgradeStormTrooper)
+                    {
+                        float velocityModifier = (float) (((LivingArmourUpgradeStormTrooper) upgrade).getArrowJiggle(player) * Math.sqrt(projectile.motionX * projectile.motionX + projectile.motionY * projectile.motionY + projectile.motionZ * projectile.motionZ));
+
+                        projectile.motionX += 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
+                        projectile.motionY += 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
+                        projectile.motionZ += 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
+                    }
                 }
             }
         }

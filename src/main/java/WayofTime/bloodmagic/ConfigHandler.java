@@ -79,6 +79,8 @@ public class ConfigHandler
     public static boolean pumpRitual;
     public static boolean altarBuilderRitual;
     public static boolean portalRitual;
+    public static boolean meteorRitual;
+    public static boolean downgradeRitual;
 
     // Imperfect Rituals
     public static boolean imperfectRitualNight;
@@ -293,6 +295,8 @@ public class ConfigHandler
         pumpRitual = config.get(category, "ritualPump", true).getBoolean();
         altarBuilderRitual = config.get(category, "ritualAltarBuilder", true).getBoolean();
         portalRitual = config.get(category, "ritualPortal", true).getBoolean();
+        meteorRitual = config.get(category, "ritualMeteor", true).getBoolean();
+        downgradeRitual = config.get(category, "ritualDowngrade", true).getBoolean();
 
         category = "Rituals.Imperfect";
         imperfectRitualNight = config.get(category, "imperfectRitualNight", true).getBoolean();
@@ -372,7 +376,8 @@ public class ConfigHandler
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent event)
     {
-        if (event.getModID().equals(Constants.Mod.MODID)) {
+        if (event.getModID().equals(Constants.Mod.MODID))
+        {
             syncConfig();
             MeteorConfigHandler.handleMeteors(false);
         }

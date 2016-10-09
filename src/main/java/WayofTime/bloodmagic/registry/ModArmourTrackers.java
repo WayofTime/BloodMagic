@@ -9,6 +9,7 @@ import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeMeleeDecre
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlippery;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowness;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeStormTrooper;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerCriticalStrike;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerDigging;
@@ -121,5 +122,6 @@ public class ModArmourTrackers
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeMeleeDecrease(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeDisoriented(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeDigSlowdown(0));
+        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeStormTrooper(0));
     }
 }

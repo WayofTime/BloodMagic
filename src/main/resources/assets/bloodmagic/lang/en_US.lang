@@ -594,7 +594,7 @@ ritual.BloodMagic.fellingRitual=Crash of the Timberman
 ritual.BloodMagic.pumpRitual=Hymn of Siphoning
 ritual.BloodMagic.altarBuilderRitual=The Assembly of the High Altar
 ritual.BloodMagic.portalRitual=The Gate of the Fold
-
+ritual.BloodMagic.downgradeRitual=Downgrade Ritual
 
 ritual.BloodMagic.waterRitual.info=Generates a source of water from the master ritual stone.
 ritual.BloodMagic.lavaRitual.info=Generates a source of lava from the master ritual stone.
@@ -667,6 +667,11 @@ ritual.BloodMagic.placerRitual.chest.info=(Chest) The location of the inventory 
 ritual.BloodMagic.fellingRitual.fellingRange.info=(Cutting) The range that the ritual will search out logs and leaves in order to cut down.
 ritual.BloodMagic.fellingRitual.chest.info=(Chest) The location of the inventory that the ritual will place the results into.
 ritual.BloodMagic.pumpRitual.pumpRange.info=(Pump) The region that the ritual will look for fluids to grab from the world.
+
+ritual.BloodMagic.downgradeRitual.dialogue.bow.1=So, Mortal, you wish to gain more power...
+ritual.BloodMagic.downgradeRitual.dialogue.bow.200=By kneeling at this altar, you may gain further strength, however you will have to give up something as recompense...
+ritual.BloodMagic.downgradeRitual.dialogue.bow.400=All it takes is a little sacrifice. By forfeighting your aim with a bow, you may attain further heights in other aspects.
+ritual.BloodMagic.downgradeRitual.dialogue.bow.600=What will you choose...
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
