@@ -15,7 +15,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -34,7 +33,6 @@ import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeStormTroop
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerJump;
-import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerQuenched;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeJump;
@@ -101,33 +99,6 @@ public class LivingArmourHandler
                         projectile.motionX += 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
                         projectile.motionY += 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
                         projectile.motionZ += 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
-                    }
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onFinishedItem(LivingEntityUseItemEvent.Finish event)
-    {
-        if (event.getEntityLiving() instanceof EntityPlayer)
-        {
-            EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-            ItemStack heldStack = event.getItem();
-
-            if (heldStack != null && heldStack.getItemUseAction() == EnumAction.DRINK)
-            {
-                if (player.getItemInUseCount() <= 1)
-                {
-                    if (LivingArmour.hasFullSet(player))
-                    {
-                        ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-                        LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-                        if (armour != null)
-                        {
-                            //Stat tracker~
-                            StatTrackerQuenched.incrementCounter(armour);
-                        }
                     }
                 }
             }

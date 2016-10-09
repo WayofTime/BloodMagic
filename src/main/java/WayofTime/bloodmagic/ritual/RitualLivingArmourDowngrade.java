@@ -82,7 +82,11 @@ public class RitualLivingArmourDowngrade extends Ritual
 
                 if (player.isSneaking())
                 {
-                    //TODO: Check if you are kneeling on top of it.
+                    double distance2 = masterPos.offset(EnumFacing.UP).distanceSqToCenter(player.posX, player.posY, player.posZ);
+                    if (distance2 > 1)
+                    {
+                        return;
+                    }
 
                     BlockPos chestPos = masterPos.offset(masterRitualStone.getDirection(), 2).offset(EnumFacing.UP);
                     TileEntity tile = world.getTileEntity(chestPos);
@@ -106,7 +110,6 @@ public class RitualLivingArmourDowngrade extends Ritual
                         LivingArmourDowngradeRecipe recipe = LivingArmourDowngradeRecipeRegistry.getMatchingRecipe(keyStack, recipeList, world, masterPos);
                         if (recipe != null)
                         {
-
                             LivingArmourUpgrade upgrade = recipe.getRecipeOutput();
                             if (LivingArmour.hasFullSet(player))
                             {
@@ -119,14 +122,8 @@ public class RitualLivingArmourDowngrade extends Ritual
                                         if (armour.upgradeArmour(player, upgrade))
                                         {
                                             ItemLivingArmour.setLivingArmour(chestStack, armour);
-                                            for (int i = 0; i < inv.getSlots(); i++)
-                                            {
-                                                ItemStack invStack = inv.getStackInSlot(i);
-                                                if (invStack != null)
-                                                {
-                                                    inv.extractItem(i, invStack.stackSize, false);
-                                                }
-                                            }
+
+                                            recipe.consumeInventory(inv);
 
                                             EntityLightningBolt lightning = new EntityLightningBolt(world, chestPos.getX(), chestPos.getY(), chestPos.getZ(), true);
                                             world.spawnEntityInWorld(lightning);

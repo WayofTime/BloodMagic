@@ -34,9 +34,6 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerNightSight;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSolarPowered;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSprintAttack;
-import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerBattleHungry;
-import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerDigSlowdown;
-import WayofTime.bloodmagic.livingArmour.tracker.downgrade.StatTrackerMeleeDecrease;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
 import WayofTime.bloodmagic.util.Utils;
@@ -65,11 +62,6 @@ public class StatTrackerHandler
                     {
                         StatTrackerDigging.incrementCounter(armour);
                         LivingArmourUpgradeDigging.hasDug(armour);
-
-                        if (player.isPotionActive(MobEffects.MINING_FATIGUE))
-                        {
-                            StatTrackerDigSlowdown.incrementCounter(armour);
-                        }
                     }
                 }
             }
@@ -169,12 +161,6 @@ public class StatTrackerHandler
                     if (!source.isProjectile())
                     {
                         StatTrackerMeleeDamage.incrementCounter(armour, amount);
-
-                        if (player.isPotionActive(MobEffects.WEAKNESS))
-                            StatTrackerMeleeDecrease.incrementCounter(armour, amount);
-
-                        if (player.isPotionActive(MobEffects.HUNGER))
-                            StatTrackerBattleHungry.incrementCounter(armour, amount);
 
                         if (player.worldObj.getLight(player.getPosition()) <= 9)
                             StatTrackerNightSight.incrementCounter(armour, amount);

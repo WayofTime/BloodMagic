@@ -97,4 +97,10 @@ public class LivingArmourUpgradeSlippery extends LivingArmourUpgrade
     {
         return tooltipBase + "slippery";
     }
+
+    @Override
+    public boolean isDowngrade()
+    {
+        return true;
+    }
 }

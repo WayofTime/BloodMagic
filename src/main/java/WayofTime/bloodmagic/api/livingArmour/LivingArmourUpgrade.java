@@ -96,4 +96,9 @@ public abstract class LivingArmourUpgrade
     {
         return false;
     }
+
+    public boolean isDowngrade()
+    {
+        return false;
+    }
 }

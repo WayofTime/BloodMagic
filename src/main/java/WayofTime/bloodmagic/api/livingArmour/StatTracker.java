@@ -73,9 +73,4 @@ public abstract class StatTracker
     public abstract boolean providesUpgrade(String key);
 
     public abstract void onArmourUpgradeAdded(LivingArmourUpgrade upgrade);
-
-    public boolean isTrackerDowngrade()
-    {
-        return false;
-    }
 }

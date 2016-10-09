@@ -73,4 +73,10 @@ public class LivingArmourUpgradeSlowness extends LivingArmourUpgrade
     {
         return tooltipBase + "slowness";
     }
+
+    @Override
+    public boolean isDowngrade()
+    {
+        return true;
+    }
 }

@@ -484,7 +484,7 @@ public class ModRecipes
         ItemStack bowStack = new ItemStack(Items.BOW);
 
         Map<ItemStack, Pair<String, int[]>> dialogueMap = new HashMap<ItemStack, Pair<String, int[]>>();
-        dialogueMap.put(bowStack, Pair.of("bow", new int[] { 1, 200, 400, 600 }));
+        dialogueMap.put(bowStack, Pair.of("bow", new int[] { 1, 100, 300, 500 }));
 
         for (Entry<ItemStack, Pair<String, int[]>> entry : dialogueMap.entrySet())
         {

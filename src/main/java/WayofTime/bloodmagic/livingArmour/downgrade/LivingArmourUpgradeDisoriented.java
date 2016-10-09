@@ -66,4 +66,10 @@ public class LivingArmourUpgradeDisoriented extends LivingArmourUpgrade
     {
         return tooltipBase + "disoriented";
     }
+
+    @Override
+    public boolean isDowngrade()
+    {
+        return true;
+    }
 }

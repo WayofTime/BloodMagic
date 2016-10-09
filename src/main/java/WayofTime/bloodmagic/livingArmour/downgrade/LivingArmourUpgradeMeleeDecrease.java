@@ -3,8 +3,10 @@ package WayofTime.bloodmagic.livingArmour.downgrade;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -73,5 +75,11 @@ public class LivingArmourUpgradeMeleeDecrease extends LivingArmourUpgrade
     public String getUnlocalizedName()
     {
         return tooltipBase + "meleeDecrease";
+    }
+
+    @Override
+    public boolean isDowngrade()
+    {
+        return true;
     }
 }

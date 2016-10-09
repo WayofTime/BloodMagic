@@ -55,4 +55,10 @@ public class LivingArmourUpgradeQuenched extends LivingArmourUpgrade
     {
         return tooltipBase + "quenched";
     }
+
+    @Override
+    public boolean isDowngrade()
+    {
+        return true;
+    }
 }

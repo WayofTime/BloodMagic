@@ -55,4 +55,10 @@ public class LivingArmourUpgradeCrippledArm extends LivingArmourUpgrade
     {
         return tooltipBase + "crippledArm";
     }
+
+    @Override
+    public boolean isDowngrade()
+    {
+        return true;
+    }
 }

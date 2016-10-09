@@ -252,12 +252,6 @@ public class LivingArmour implements ILivingArmour
                 }
             }
 
-            if ((allowOnlyDowngrades != tracker.isTrackerDowngrade()))
-            {
-                tracker.onDeactivatedTick(world, player, this);
-                continue;
-            }
-
             if (tracker.onTick(world, player, this))
             {
                 List<LivingArmourUpgrade> upgradeList = tracker.getUpgrades();

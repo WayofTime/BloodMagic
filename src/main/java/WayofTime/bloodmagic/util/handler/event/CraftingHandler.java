@@ -115,7 +115,7 @@ public class CraftingHandler
         if (event.getLeft().getItem() == ModItems.UPGRADE_TOME && event.getRight().getItem() == ModItems.UPGRADE_TOME)
         {
             LivingArmourUpgrade leftUpgrade = ItemHelper.LivingUpgrades.getUpgrade(event.getLeft());
-            if (leftUpgrade != null && ItemHelper.LivingUpgrades.getKey(event.getLeft()).equals(ItemHelper.LivingUpgrades.getKey(event.getRight())))
+            if (leftUpgrade != null && !leftUpgrade.isDowngrade() && ItemHelper.LivingUpgrades.getKey(event.getLeft()).equals(ItemHelper.LivingUpgrades.getKey(event.getRight())))
             {
                 int leftLevel = ItemHelper.LivingUpgrades.getLevel(event.getLeft());
                 int rightLevel = ItemHelper.LivingUpgrades.getLevel(event.getRight());

@@ -496,6 +496,7 @@ tooltip.BloodMagic.livingArmour.upgrade.battleHunger=Battle Hungry
 tooltip.BloodMagic.livingArmour.upgrade.quenched=Quenched
 tooltip.BloodMagic.livingArmour.upgrade.meleeDecrease=Dulled Blade
 tooltip.BloodMagic.livingArmour.upgrade.digSlowdown=Weakened Pick
+tooltip.BloodMagic.livingArmour.upgrade.stormTrooper=Storm Trooper
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.upgrade.progress=%s (%d/100)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
@@ -668,10 +669,10 @@ ritual.BloodMagic.fellingRitual.fellingRange.info=(Cutting) The range that the r
 ritual.BloodMagic.fellingRitual.chest.info=(Chest) The location of the inventory that the ritual will place the results into.
 ritual.BloodMagic.pumpRitual.pumpRange.info=(Pump) The region that the ritual will look for fluids to grab from the world.
 
-ritual.BloodMagic.downgradeRitual.dialogue.bow.1=So, Mortal, you wish to gain more power...
-ritual.BloodMagic.downgradeRitual.dialogue.bow.200=By kneeling at this altar, you may gain further strength, however you will have to give up something as recompense...
-ritual.BloodMagic.downgradeRitual.dialogue.bow.400=All it takes is a little sacrifice. By forfeighting your aim with a bow, you may attain further heights in other aspects.
-ritual.BloodMagic.downgradeRitual.dialogue.bow.600=What will you choose...
+ritual.BloodMagic.downgradeRitual.dialogue.bow.1=So, mortal, you want to gain more power...?
+ritual.BloodMagic.downgradeRitual.dialogue.bow.100=Of course you must know that everything has a cost... I cannot simply grant you more power without you paying something in return...
+ritual.BloodMagic.downgradeRitual.dialogue.bow.300=If you lay an offering before me, you will forsake your perception, preventing you from using long-ranged projectiles with any form of accuracy. Arrows will no longer be your key to victory.
+ritual.BloodMagic.downgradeRitual.dialogue.bow.500=But in return, I will unlock your armour so that it may grow even further... All you have to do is kneel before this altar with the correct offering...
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d

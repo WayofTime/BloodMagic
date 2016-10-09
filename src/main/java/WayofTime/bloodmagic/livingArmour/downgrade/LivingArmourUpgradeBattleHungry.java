@@ -75,4 +75,10 @@ public class LivingArmourUpgradeBattleHungry extends LivingArmourUpgrade
     {
         return tooltipBase + "battleHunger";
     }
+
+    @Override
+    public boolean isDowngrade()
+    {
+        return true;
+    }
 }

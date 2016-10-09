@@ -75,4 +75,10 @@ public class LivingArmourUpgradeDigSlowdown extends LivingArmourUpgrade
     {
         return tooltipBase + "digSlowdown";
     }
+
+    @Override
+    public boolean isDowngrade()
+    {
+        return true;
+    }
 }

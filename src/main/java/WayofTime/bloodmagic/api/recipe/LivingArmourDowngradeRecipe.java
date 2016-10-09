@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
@@ -131,5 +132,49 @@ public class LivingArmourDowngradeRecipe
     public ArrayList<Object> getInput()
     {
         return this.input;
+    }
+
+    public void consumeInventory(IItemHandler inv)
+    {
+        for (int i = 0; i < inv.getSlots(); i++)
+        {
+            ItemStack stack = inv.getStackInSlot(i);
+            if (stack == null)
+            {
+                continue;
+            }
+
+            if (stack.getItem().hasContainerItem(stack))
+            {
+                inv.extractItem(i, stack.stackSize, false);
+                inv.insertItem(i, stack.getItem().getContainerItem(stack), false);
+            } else
+            {
+                inv.extractItem(i, 1, false);
+            }
+        }
+    }
+
+    protected ItemStack getContainerItem(ItemStack stack)
+    {
+        if (stack == null)
+        {
+            return null;
+        }
+
+        ItemStack copyStack = stack.copy();
+
+        if (copyStack.getItem().hasContainerItem(stack))
+        {
+            return copyStack.getItem().getContainerItem(copyStack);
+        }
+
+        copyStack.stackSize--;
+        if (copyStack.stackSize <= 0)
+        {
+            return null;
+        }
+
+        return copyStack;
     }
 }
