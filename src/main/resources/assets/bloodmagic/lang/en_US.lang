@@ -673,6 +673,15 @@ ritual.BloodMagic.downgradeRitual.dialogue.bow.1=So, mortal, you want to gain mo
 ritual.BloodMagic.downgradeRitual.dialogue.bow.100=Of course you must know that everything has a cost... I cannot simply grant you more power without you paying something in return...
 ritual.BloodMagic.downgradeRitual.dialogue.bow.300=If you lay an offering before me, you will forsake your perception, preventing you from using long-ranged projectiles with any form of accuracy. Arrows will no longer be your key to victory.
 ritual.BloodMagic.downgradeRitual.dialogue.bow.500=But in return, I will unlock your armour so that it may grow even further... All you have to do is kneel before this altar with the correct offering...
+ritual.BloodMagic.downgradeRitual.dialogue.quenched.1=Fufufu... Greetings. I see that you wish to become more powerful.
+ritual.BloodMagic.downgradeRitual.dialogue.quenched.100=You must be fully aware that when one's cup becomes full, it invariably has to empty once more to be filled again.
+ritual.BloodMagic.downgradeRitual.dialogue.quenched.300=As such, I offer you a deal: by forsaking one's ability to drink, I shall grant you a vast increase to your potential. Wether this is a deal you think is worth taking is another matter entirely...
+ritual.BloodMagic.downgradeRitual.dialogue.quenched.500=So kneel, mortal, and drink from this cup that I offer to you, for it may be your last drink.
+ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.1=Hmmm... What is it that you truely desire?
+ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.100=If it is strength beyond mortal men, then I cannot provide that - instead, I can offer you different deal...
+ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.300=I can expand the capabilities of your armour, allowing you to achieve greater heights. However, I will need something from you in return: your strength in physical combat.
+ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.500=By agreeing to this, you will no longer be able to swing a weapon with as much certainty, only able to do a fraction of the damage you could before.
+ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.700=So, the choise is yours: will you kneel at this altar, or will you still take up your sword?
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d

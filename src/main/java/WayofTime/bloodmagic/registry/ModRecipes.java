@@ -56,6 +56,8 @@ import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeMeleeDecrease;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeStormTrooper;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
@@ -482,9 +484,13 @@ public class ModRecipes
         String messageBase = "ritual.BloodMagic.downgradeRitual.dialogue.";
 
         ItemStack bowStack = new ItemStack(Items.BOW);
+        ItemStack bottleStack = new ItemStack(Items.POTIONITEM, 1, 0);
+        ItemStack swordStack = new ItemStack(Items.STONE_SWORD);
 
         Map<ItemStack, Pair<String, int[]>> dialogueMap = new HashMap<ItemStack, Pair<String, int[]>>();
         dialogueMap.put(bowStack, Pair.of("bow", new int[] { 1, 100, 300, 500 }));
+        dialogueMap.put(bottleStack, Pair.of("quenched", new int[] { 1, 100, 300, 500 }));
+        dialogueMap.put(swordStack, Pair.of("dulledBlade", new int[] { 1, 100, 300, 500, 700 }));
 
         for (Entry<ItemStack, Pair<String, int[]>> entry : dialogueMap.entrySet())
         {
@@ -494,14 +500,22 @@ public class ModRecipes
             for (int tick : entry.getValue().getValue())
             {
                 List<ITextComponent> textList = new ArrayList<ITextComponent>();
-                textList.add(new TextComponentTranslation(messageBase + str + "." + tick));
+                textList.add(new TextComponentTranslation("\u00A74%s", new TextComponentTranslation(messageBase + str + "." + tick)));
                 textMap.put(tick, textList);
             }
 
             LivingArmourDowngradeRecipeRegistry.registerDialog(keyStack, textMap);
         }
 
-        LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeStormTrooper(0), bowStack, "gemDiamond");
+        LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeStormTrooper(0), bowStack, Items.ARROW, Items.STRING, "ingotIron", "ingotIron");
+        LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeStormTrooper(1), bowStack, Items.SPECTRAL_ARROW, "ingotGold", "dustRedstone", "dustGlowstone", "gemLapis");
+        LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeStormTrooper(2), bowStack, "gemDiamond", Items.FIRE_CHARGE, Items.BLAZE_ROD, Items.FEATHER);
+        LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeStormTrooper(3), bowStack, Items.PRISMARINE_SHARD, Items.BLAZE_ROD, Items.FEATHER, Items.FEATHER);
+        LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeStormTrooper(4), bowStack, new ItemStack(Items.TIPPED_ARROW, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Items.TIPPED_ARROW, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Items.TIPPED_ARROW, 1, OreDictionary.WILDCARD_VALUE));
 //        LivingArmourDowngradeRecipeRegistry.registerDialog(bowStack, bowMap);
+        LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeQuenched(0), bottleStack, Items.DRAGON_BREATH);
+
+        LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeMeleeDecrease(0), swordStack, Items.IRON_SWORD, Blocks.CACTUS);
+        LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeMeleeDecrease(1), swordStack, Items.IRON_SWORD, "dustRedstone");
     }
 }

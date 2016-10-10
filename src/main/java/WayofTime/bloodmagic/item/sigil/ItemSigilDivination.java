@@ -12,12 +12,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
+import WayofTime.bloodmagic.structures.DungeonTester;
 import WayofTime.bloodmagic.tile.TileIncenseAltar;
 import WayofTime.bloodmagic.tile.TileInversionPillar;
 import WayofTime.bloodmagic.util.ChatUtil;
@@ -33,13 +33,13 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-//        if (world instanceof WorldServer)
-//        {
-//            System.out.println("Testing...");
-////            BuildTestStructure s = new BuildTestStructure();
-////            s.placeStructureAtPosition(new Random(), Rotation.CLOCKWISE_180, (WorldServer) world, player.getPosition(), 0);
-//            DungeonTester.testDungeonElementWithOutput((WorldServer) world, player.getPosition());
-//        }
+        if (world instanceof WorldServer)
+        {
+            System.out.println("Testing...");
+//            BuildTestStructure s = new BuildTestStructure();
+//            s.placeStructureAtPosition(new Random(), Rotation.CLOCKWISE_180, (WorldServer) world, player.getPosition(), 0);
+            DungeonTester.testDungeonElementWithOutput((WorldServer) world, player.getPosition());
+        }
 
 //        if (!world.isRemote)
 //        {
