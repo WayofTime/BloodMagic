@@ -221,8 +221,6 @@ public class LivingArmour implements ILivingArmour
             }
         }
 
-        boolean allowOnlyDowngrades = player.isPotionActive(ModPotions.immuneSuppress);
-
         for (Entry<String, StatTracker> entry : trackerMap.entrySet())
         {
             StatTracker tracker = entry.getValue();

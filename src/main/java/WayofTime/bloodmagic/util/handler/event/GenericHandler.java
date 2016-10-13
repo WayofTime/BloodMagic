@@ -1,6 +1,8 @@
 package WayofTime.bloodmagic.util.handler.event;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -28,6 +30,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -36,6 +39,7 @@ import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
@@ -71,6 +75,7 @@ import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.base.Strings;
@@ -78,6 +83,42 @@ import com.google.common.base.Strings;
 @Handler
 public class GenericHandler
 {
+    public Map<EntityPlayer, Double> bounceMap = new HashMap<EntityPlayer, Double>();
+
+    @SubscribeEvent
+    public void onEntityFall(LivingFallEvent event)
+    {
+        if (event.getEntityLiving() instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+            if (player.isPotionActive(ModPotions.bounce) && !player.isSneaking() && event.getDistance() > 2)
+            {
+                event.setDamageMultiplier(0);
+
+                if (player.worldObj.isRemote)
+                {
+                    player.motionY *= -0.9;
+                    player.isAirBorne = true;
+                    player.onGround = false;
+                    bounceMap.put(player, player.motionY);
+                } else
+                {
+                    player.fallDistance = 0;
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void playerTickPost(TickEvent.PlayerTickEvent event)
+    {
+        if (event.phase == TickEvent.Phase.END && bounceMap.containsKey(event.player))
+        {
+            event.player.motionY = bounceMap.remove(event.player);
+        }
+    }
+
     @SubscribeEvent
     public void onPlayerClick(PlayerInteractEvent event)
     {
@@ -186,6 +227,17 @@ public class GenericHandler
         }
 
         EntityLivingBase entity = event.getEntityLiving();
+
+        if (entity instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) entity;
+            if (player.worldObj.isRemote && player.isSneaking() && player.isPotionActive(ModPotions.cling) && Utils.isPlayerBesideSolidBlockFace(player) && !player.onGround)
+            {
+                player.motionY = 0;
+                player.motionX *= 0.8;
+                player.motionZ *= 0.8;
+            }
+        }
 
         if (entity.isPotionActive(MobEffects.NIGHT_VISION))
         {

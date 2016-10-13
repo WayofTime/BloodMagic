@@ -93,6 +93,29 @@ public class Utils
         return null;
     }
 
+    public static boolean isPlayerBesideSolidBlockFace(EntityPlayer player)
+    {
+        World world = player.worldObj;
+        double minimumDistanceFromAxis = 0.7;
+        BlockPos centralPos = player.getPosition();
+        for (EnumFacing facing : EnumFacing.HORIZONTALS)
+        {
+            BlockPos offsetPos = centralPos.offset(facing);
+            double distance = Math.min(offsetPos.getX() + 0.5 - player.posX, offsetPos.getZ() + 0.5 - player.posZ);
+            if (distance > minimumDistanceFromAxis)
+            {
+                continue;
+            }
+            IBlockState state = world.getBlockState(offsetPos);
+            if (state.isSideSolid(world, offsetPos, facing.getOpposite()))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static boolean canPlayerSeeDemonWill(EntityPlayer player)
     {
         ItemStack[] mainInventory = player.inventory.mainInventory;
