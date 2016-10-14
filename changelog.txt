@@ -9,6 +9,7 @@ Version 2.1.0-66
 - Modified the Dwarven Might skill to better change the mining speed when mining.
 - Added a Dig Slowdown armour downgrade called "Weakened Pick", trained by having weakness on while mining.
 - Added the framework for a ritual that grants downgrades (instead of the potion method).
+- Fixed the recipes for some of the Demon Will blocks
 
 ------------------------------------------------------
 Version 2.1.0-65

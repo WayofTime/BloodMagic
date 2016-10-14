@@ -184,7 +184,7 @@ public class ModRecipes
             ItemStack baseStoneStack = new ItemStack(ModBlocks.DEMON_EXTRAS, 1, i);
             ItemStack baseStoneStackCrafted = new ItemStack(ModBlocks.DEMON_EXTRAS, 16, i);
             ItemStack polishedStoneStack = new ItemStack(ModBlocks.DEMON_EXTRAS, 1, i + 5);
-            ItemStack willBrickStack = new ItemStack(ModBlocks.DEMON_BRICK_1, 1, i + 10);
+            ItemStack willBrickStack = new ItemStack(ModBlocks.DEMON_BRICK_1, 1, i);
             ItemStack willBrickStackCrafted = new ItemStack(ModBlocks.DEMON_BRICK_1, 4, i);
 
             ItemStack willSmallBrickStack = new ItemStack(ModBlocks.DEMON_BRICK_2, 1, i);
@@ -455,8 +455,8 @@ public class ModRecipes
         addPotionRecipe(1000, 1, new ItemStack(Items.GLASS_BOTTLE), new PotionEffect(MobEffects.INVISIBILITY, 2 * 60 * 20));
         addPotionRecipe(1000, 1, new ItemStack(Items.POISONOUS_POTATO), new PotionEffect(MobEffects.SATURATION, 1));
         addPotionRecipe(1000, 1, new ItemStack(ModItems.BLOOD_SHARD, 1, 0), new PotionEffect(MobEffects.HEALTH_BOOST, 2 * 60 * 20));
-        addPotionRecipe(100, 1, new ItemStack(Blocks.SLIME_BLOCK), new PotionEffect(ModPotions.bounce, 2 * 60 * 20));
-        addPotionRecipe(100, 1, new ItemStack(Items.STRING), new PotionEffect(ModPotions.cling, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Blocks.SLIME_BLOCK), new PotionEffect(ModPotions.bounce, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.STRING), new PotionEffect(ModPotions.cling, 2 * 60 * 20));
 
         addPotionRecipe(1000, 1, new ItemStack(Items.BEETROOT), new PotionEffect(ModPotions.deafness, 450));
 
