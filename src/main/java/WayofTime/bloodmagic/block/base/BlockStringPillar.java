@@ -13,8 +13,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.ExtendedBlockState;
-import net.minecraftforge.common.property.IUnlistedProperty;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class BlockStringPillar extends BlockString
 {
@@ -29,9 +28,14 @@ public class BlockStringPillar extends BlockString
     }
 
     @Override
+    protected BlockStateContainer createStateContainer() {
+        return new BlockStateContainer.Builder(this).add(getProperty(), BlockRotatedPillar.AXIS).build();
+    }
+
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        IBlockState state = getBlockState().getBaseState().withProperty(this.getStringProp(), this.getValues().get(meta % 5));
+        IBlockState state = getBlockState().getBaseState().withProperty(this.getProperty(), getTypes()[meta % 5]);
 
         switch (meta / 5)
         {
@@ -62,7 +66,7 @@ public class BlockStringPillar extends BlockString
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        int i = this.getValues().indexOf(state.getValue(this.getStringProp()));
+        int i = ArrayUtils.indexOf(getTypes(), state.getValue(getProperty()));
 
         switch (state.getValue(BlockRotatedPillar.AXIS))
         {
@@ -115,18 +119,6 @@ public class BlockStringPillar extends BlockString
     }
 
     @Override
-    protected void setupStates()
-    {
-        this.setDefaultState(getExtendedBlockState().withProperty(this.getUnlistedStringProp(), this.getValues().get(0)).withProperty(this.getStringProp(), this.getValues().get(0)).withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Y));
-    }
-
-    @Override
-    protected BlockStateContainer createRealBlockState()
-    {
-        return new ExtendedBlockState(this, new IProperty[] { this.getStringProp(), BlockRotatedPillar.AXIS }, new IUnlistedProperty[] { this.getUnlistedStringProp() });
-    }
-
-    @Override
     protected ItemStack createStackedBlock(IBlockState state)
     {
         return new ItemStack(this, 1, damageDropped(state));
@@ -141,6 +133,6 @@ public class BlockStringPillar extends BlockString
     @Override
     public int damageDropped(IBlockState state)
     {
-        return this.getValues().indexOf(state.getValue(this.getStringProp()));
+        return super.getMetaFromState(state);
     }
 }

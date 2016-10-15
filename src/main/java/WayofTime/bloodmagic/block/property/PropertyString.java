@@ -18,10 +18,7 @@ public class PropertyString extends PropertyHelper<String>
     protected PropertyString(String name, String[] values)
     {
         super(name, String.class);
-
-        HashSet<String> hashSet = Sets.newHashSet();
-        hashSet.addAll(Arrays.asList(values));
-        allowedValues = ImmutableSet.copyOf(hashSet);
+        allowedValues = ImmutableSet.copyOf(values);
     }
 
     @SideOnly(Side.CLIENT)

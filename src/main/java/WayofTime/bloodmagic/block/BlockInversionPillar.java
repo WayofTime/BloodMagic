@@ -107,9 +107,7 @@ public class BlockInversionPillar extends BlockStringContainer implements IVaria
         return new TileInversionPillar(EnumDemonWillType.values()[meta % 5]);
     }
 
-    @Override
-    protected BlockStateContainer createRealBlockState()
-    {
-        return new ExtendedBlockState(this, new IProperty[] { stringProp, Properties.StaticProperty }, new IUnlistedProperty[] { unlistedStringProp, Properties.AnimationProperty });
+    protected BlockStateContainer createStateContainer() {
+        return new BlockStateContainer.Builder(this).add(getProperty(), Properties.StaticProperty).add(Properties.AnimationProperty).build();
     }
 }

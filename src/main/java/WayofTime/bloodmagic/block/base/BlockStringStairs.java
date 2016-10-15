@@ -10,7 +10,6 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockStairs.EnumHalf;
 import net.minecraft.block.BlockStairs.EnumShape;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -27,10 +26,9 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.ExtendedBlockState;
-import net.minecraftforge.common.property.IUnlistedProperty;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class BlockStringStairs extends BlockString
 {
@@ -63,6 +61,11 @@ public class BlockStringStairs extends BlockString
     public BlockStringStairs(Material material, String[] values)
     {
         this(material, values, "type");
+    }
+
+    @Override
+    protected BlockStateContainer createStateContainer() {
+        return new BlockStateContainer.Builder(this).add(getProperty(), FACING, BlockStairs.HALF, BlockStairs.SHAPE).build();
     }
 
     @Override
@@ -206,7 +209,7 @@ public class BlockStringStairs extends BlockString
     public IBlockState getStateFromMeta(int meta)
     {
         IBlockState state = getBlockState().getBaseState().withProperty(BlockStairs.HALF, (meta & 8) > 0 ? BlockStairs.EnumHalf.TOP : BlockStairs.EnumHalf.BOTTOM);
-        state = state.withProperty(FACING, EnumFacing.getFront(5 - (meta & 6) / 2)).withProperty(this.getStringProp(), this.getValues().get(meta % 2));
+        state = state.withProperty(FACING, EnumFacing.getFront(5 - (meta & 6) / 2)).withProperty(this.getProperty(), getTypes()[meta % 2]);
         return state;
     }
 
@@ -222,7 +225,7 @@ public class BlockStringStairs extends BlockString
         }
 
         i = i | 5 - state.getValue(FACING).getIndex();
-        return i * 2 + this.getValues().indexOf(state.getValue(this.getStringProp()));
+        return i * 2 + ArrayUtils.indexOf(getTypes(), state.getValue(getProperty()));
     }
 
     @Override
@@ -341,12 +344,6 @@ public class BlockStringStairs extends BlockString
     }
 
     @Override
-    protected BlockStateContainer createRealBlockState()
-    {
-        return new ExtendedBlockState(this, new IProperty[] { BlockStairs.HALF, BlockStairs.SHAPE, FACING, this.getStringProp() }, new IUnlistedProperty[] { this.getUnlistedStringProp() });
-    }
-
-    @Override
     protected ItemStack createStackedBlock(IBlockState state)
     {
         return new ItemStack(this, 1, damageDropped(state));
@@ -355,7 +352,7 @@ public class BlockStringStairs extends BlockString
     @Override
     public int damageDropped(IBlockState state)
     {
-        return this.getValues().indexOf(state.getValue(this.getStringProp()));
+        return super.getMetaFromState(state);
     }
 
     @Override

@@ -1,13 +1,11 @@
 package WayofTime.bloodmagic.block.base;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
@@ -15,8 +13,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.ExtendedBlockState;
-import net.minecraftforge.common.property.IUnlistedProperty;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class BlockStringPillarCap extends BlockString
 {
@@ -33,16 +30,21 @@ public class BlockStringPillarCap extends BlockString
     }
 
     @Override
+    protected BlockStateContainer createStateContainer() {
+        return new BlockStateContainer.Builder(this).add(getProperty(), FACING).build();
+    }
+
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        IBlockState state = getBlockState().getBaseState().withProperty(this.getStringProp(), this.getValues().get(meta % 2));
+        IBlockState state = getBlockState().getBaseState().withProperty(this.getProperty(), getTypes()[meta % 2]);
         return state.withProperty(FACING, EnumFacing.getFront(meta / 2));
     }
 
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        int i = this.getValues().indexOf(state.getValue(this.getStringProp()));
+        int i = ArrayUtils.indexOf(getTypes(), state.getValue(getProperty()));
         return i + 2 * state.getValue(FACING).getIndex();
     }
 
@@ -65,18 +67,6 @@ public class BlockStringPillarCap extends BlockString
     }
 
     @Override
-    protected void setupStates()
-    {
-        this.setDefaultState(getExtendedBlockState().withProperty(this.getUnlistedStringProp(), this.getValues().get(0)).withProperty(this.getStringProp(), this.getValues().get(0)).withProperty(FACING, EnumFacing.UP));
-    }
-
-    @Override
-    protected BlockStateContainer createRealBlockState()
-    {
-        return new ExtendedBlockState(this, new IProperty[] { this.getStringProp(), FACING }, new IUnlistedProperty[] { this.getUnlistedStringProp() });
-    }
-
-    @Override
     protected ItemStack createStackedBlock(IBlockState state)
     {
         return new ItemStack(this, 1, damageDropped(state));
@@ -91,6 +81,6 @@ public class BlockStringPillarCap extends BlockString
     @Override
     public int damageDropped(IBlockState state)
     {
-        return this.getValues().indexOf(state.getValue(this.getStringProp()));
+        return super.getMetaFromState(state);
     }
 }

@@ -43,6 +43,11 @@ public class BlockStringWall extends BlockString
     }
 
     @Override
+    protected BlockStateContainer createStateContainer() {
+        return new BlockStateContainer.Builder(this).add(getProperty(), UP, NORTH, EAST, SOUTH, WEST).build();
+    }
+
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         state = state.getActualState(source, pos);
@@ -125,18 +130,6 @@ public class BlockStringWall extends BlockString
     }
 
     @Override
-    protected void setupStates()
-    {
-        this.setDefaultState(getExtendedBlockState().withProperty(this.getUnlistedStringProp(), this.getValues().get(0)).withProperty(this.getStringProp(), this.getValues().get(0)).withProperty(UP, true).withProperty(NORTH, false).withProperty(SOUTH, false).withProperty(EAST, false).withProperty(WEST, false));
-    }
-
-    @Override
-    protected BlockStateContainer createRealBlockState()
-    {
-        return new ExtendedBlockState(this, new IProperty[] { UP, NORTH, SOUTH, EAST, WEST, this.getStringProp() }, new IUnlistedProperty[] { this.getUnlistedStringProp() });
-    }
-
-    @Override
     protected ItemStack createStackedBlock(IBlockState state)
     {
         return new ItemStack(this, 1, damageDropped(state));
@@ -145,6 +138,6 @@ public class BlockStringWall extends BlockString
     @Override
     public int damageDropped(IBlockState state)
     {
-        return this.getValues().indexOf(state.getValue(this.getStringProp()));
+        return super.getMetaFromState(state);
     }
 }

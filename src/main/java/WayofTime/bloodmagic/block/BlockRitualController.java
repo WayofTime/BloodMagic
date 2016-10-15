@@ -133,14 +133,14 @@ public class BlockRitualController extends BlockStringContainer implements IVari
     public ResourceLocation getLinkedEntry(World world, BlockPos pos, EntityPlayer player, ItemStack stack)
     {
         IBlockState state = world.getBlockState(pos);
-        if (state.getValue(getStringProp()).equals(names[0]))
+        if (state.getValue(getProperty()).equals(names[0]))
         {
             TileMasterRitualStone mrs = (TileMasterRitualStone) world.getTileEntity(pos);
             if (mrs == null || mrs.getCurrentRitual() == null)
                 return null;
             else
                 return new ResourceLocation("bloodmagic", "ritual_" + mrs.getCurrentRitual().getName());
-        } else if (state.getValue(getStringProp()).equals(names[1]))
+        } else if (state.getValue(getProperty()).equals(names[1]))
         {
             ImperfectRitual imperfectRitual = ImperfectRitualRegistry.getRitualForBlock(BlockStack.getStackFromPos(world, pos.up()));
             if (imperfectRitual != null)
