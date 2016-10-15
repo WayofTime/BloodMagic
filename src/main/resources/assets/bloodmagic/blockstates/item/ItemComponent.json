@@ -155,6 +155,21 @@
         "textures": {
           "layer0": "bloodmagic:items/MundanePowerCatalyst"
         }
+      },
+      "reagentclaw": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentClaw"
+        }
+      },
+      "reagentbounce": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentBounce"
+        }
+      },
+      "reagentfrost": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentFrost"
+        }
       }
     }
   }

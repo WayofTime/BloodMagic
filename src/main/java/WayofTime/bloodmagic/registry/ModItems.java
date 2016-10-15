@@ -51,11 +51,14 @@ import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
 import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
 import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
 import WayofTime.bloodmagic.item.sigil.ItemSigilBloodLight;
+import WayofTime.bloodmagic.item.sigil.ItemSigilBounce;
+import WayofTime.bloodmagic.item.sigil.ItemSigilClaw;
 import WayofTime.bloodmagic.item.sigil.ItemSigilCompression;
 import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
 import WayofTime.bloodmagic.item.sigil.ItemSigilElementalAffinity;
 import WayofTime.bloodmagic.item.sigil.ItemSigilEnderSeverance;
 import WayofTime.bloodmagic.item.sigil.ItemSigilFastMiner;
+import WayofTime.bloodmagic.item.sigil.ItemSigilFrost;
 import WayofTime.bloodmagic.item.sigil.ItemSigilGreenGrove;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHaste;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
@@ -125,6 +128,9 @@ public class ModItems
     public static final Item SIGIL_HOLDING;
     public static final Item SIGIL_TELEPOSITION;
     public static final Item SIGIL_TRANSPOSITION;
+    public static final Item SIGIL_CLAW;
+    public static final Item SIGIL_BOUNCE;
+    public static final Item SIGIL_FROST;
     public static final Item ITEM_COMPONENT;
     public static final Item ITEM_DEMON_CRYSTAL;
     public static final Item TELEPOSITION_FOCUS;
@@ -212,6 +218,10 @@ public class ModItems
 
         SIGIL_TELEPOSITION = registerItem(new ItemSigilTeleposition(), Constants.BloodMagicItem.SIGIL_TELEPOSITION.getRegName());
         SIGIL_TRANSPOSITION = registerItem(new ItemSigilTransposition(), Constants.BloodMagicItem.SIGIL_TRANSPOSITION.getRegName());
+
+        SIGIL_CLAW = registerItem(new ItemSigilClaw(), Constants.BloodMagicItem.SIGIL_CLAW.getRegName());
+        SIGIL_BOUNCE = registerItem(new ItemSigilBounce(), Constants.BloodMagicItem.SIGIL_BOUNCE.getRegName());
+        SIGIL_FROST = registerItem(new ItemSigilFrost(), Constants.BloodMagicItem.SIGIL_FROST.getRegName());
 
         ITEM_COMPONENT = registerItem(new ItemComponent(), Constants.BloodMagicItem.COMPONENT.getRegName());
         ITEM_DEMON_CRYSTAL = registerItem(new ItemDemonCrystal(), Constants.BloodMagicItem.DEMON_CRYSTAL.getRegName());

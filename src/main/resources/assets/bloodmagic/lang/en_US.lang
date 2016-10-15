@@ -84,6 +84,9 @@ item.BloodMagic.baseComponent.reagentBridge.name=Phantom Bridge Reagent
 item.BloodMagic.baseComponent.reagentCompression.name=Compression Reagent
 item.BloodMagic.baseComponent.reagentSeverance.name=Severance Reagent
 item.BloodMagic.baseComponent.reagentHolding.name=Holding Reagent
+item.BloodMagic.baseComponent.reagentClaw.name=Claw Reagent
+item.BloodMagic.baseComponent.reagentBounce.name=Elasticity Reagent
+item.BloodMagic.baseComponent.reagentFrost.name=Frost Reagent
 
 item.BloodMagic.baseComponent.reagentTeleposition.name=Teleposition Reagent
 item.BloodMagic.baseComponent.reagentTransposition.name=Transposition Reagent
@@ -133,6 +136,9 @@ item.BloodMagic.sigil.holding.name=Sigil of Holding
 item.BloodMagic.sigil.holding.display=&r%s: &o&n%s
 item.BloodMagic.sigil.teleposition.name=Teleposition Sigil
 item.BloodMagic.sigil.transposition.name=Transposition Sigil
+item.BloodMagic.sigil.claw.name=Sigil of the Claw
+item.BloodMagic.sigil.bounce.name=Sigil of Elasticity
+item.BloodMagic.sigil.frost.name=Sigil of Winter's Breath
 
 item.BloodMagic.livingArmour.helmet.name=Living Helmet
 item.BloodMagic.livingArmour.chest.name=Living Chestplate

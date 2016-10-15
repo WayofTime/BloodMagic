@@ -246,7 +246,10 @@ public class Constants
         SIGIL_HOLDING("ItemSigilHolding"),
         ARMOUR_POINTS_UPGRADE("ItemLivingArmourPointsUpgrade"),
         DEMON_WILL_GAUGE("ItemDemonWillGauge"),
-        POTION_FLASK("ItemPotionFlask"), ;
+        POTION_FLASK("ItemPotionFlask"),
+        SIGIL_CLAW("ItemSigilClaw"),
+        SIGIL_BOUNCE("ItemSigilBounce"),
+        SIGIL_FROST("ItemSigilFrost");
 
         @Getter
         private final String regName;

@@ -288,6 +288,9 @@ public class ModRecipes
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SEVERANCE), new ItemStack(ModItems.SLATE, 1, 3), new ItemStack(ModItems.SIGIL_ENDER_SEVERANCE), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_TELEPOSITION), new ItemStack(ModItems.SLATE, 1, 3), new ItemStack(ModItems.SIGIL_TELEPOSITION), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_TRANSPOSITION), new ItemStack(ModItems.SLATE, 1, 3), new ItemStack(ModItems.SIGIL_TRANSPOSITION), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
+        AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_CLAW), new ItemStack(ModItems.SLATE, 1, 2), new ItemStack(ModItems.SIGIL_CLAW), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
+        AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BOUNCE), new ItemStack(ModItems.SLATE, 1, 1), new ItemStack(ModItems.SIGIL_BOUNCE), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
+        AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_FROST), new ItemStack(ModItems.SLATE, 1, 1), new ItemStack(ModItems.SIGIL_FROST), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
 
         AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new AlchemyArrayEffectAttractor("attractor"), new AttractorAlchemyCircleRenderer());
         AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.FEATHER), new ItemStack(Items.REDSTONE), new AlchemyArrayEffectMovement("movement"), new StaticAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/MovementArray.png")));
@@ -342,6 +345,9 @@ public class ModRecipes
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_COMPRESSION), 2000, 200, "blockIron", "blockGold", Blocks.OBSIDIAN, "cobblestone");
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_TELEPOSITION), 1500, 200, ModBlocks.TELEPOSER, "glowstone", "blockRedstone", "ingotGold");
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_TRANSPOSITION), 1500, 200, ModBlocks.TELEPOSER, "gemDiamond", Items.ENDER_PEARL, Blocks.OBSIDIAN);
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_CLAW), 800, 120, Items.FLINT, Items.FLINT, ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC));
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BOUNCE), 200, 20, Blocks.SLIME_BLOCK, Blocks.SLIME_BLOCK, Items.LEATHER, Items.STRING);
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_FROST), 80, 10, Blocks.ICE, Items.SNOWBALL, Items.SNOWBALL, "dustRedstone");
 
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.SENTIENT_ARMOUR_GEM), 240, 150, Items.DIAMOND_CHESTPLATE, new ItemStack(ModItems.SOUL_GEM, 1, 1), Blocks.IRON_BLOCK, Blocks.OBSIDIAN);
 

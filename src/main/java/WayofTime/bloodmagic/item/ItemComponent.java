@@ -53,6 +53,9 @@ public class ItemComponent extends Item implements IVariantProvider
     public static final String REAGENT_HOLDING = "reagentHolding";
     public static final String CATALYST_LENGTH_1 = "mundaneLength";
     public static final String CATALYST_POWER_1 = "mundanePower";
+    public static final String REAGENT_CLAW = "reagentClaw";
+    public static final String REAGENT_BOUNCE = "reagentBounce";
+    public static final String REAGENT_FROST = "reagentFrost";
 
     public ItemComponent()
     {
@@ -97,6 +100,9 @@ public class ItemComponent extends Item implements IVariantProvider
         names.add(27, REAGENT_HOLDING);
         names.add(28, CATALYST_LENGTH_1);
         names.add(29, CATALYST_POWER_1);
+        names.add(30, REAGENT_CLAW);
+        names.add(31, REAGENT_BOUNCE);
+        names.add(32, REAGENT_FROST);
     }
 
     @Override

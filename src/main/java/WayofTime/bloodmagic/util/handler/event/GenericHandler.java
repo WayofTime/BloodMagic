@@ -98,8 +98,7 @@ public class GenericHandler
                 if (player.worldObj.isRemote)
                 {
                     player.motionY *= -0.9;
-                    player.isAirBorne = true;
-                    player.onGround = false;
+                    player.fallDistance = 0;
                     bounceMap.put(player, player.motionY);
                 } else
                 {
@@ -231,11 +230,17 @@ public class GenericHandler
         if (entity instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) entity;
-            if (player.worldObj.isRemote && player.isSneaking() && player.isPotionActive(ModPotions.cling) && Utils.isPlayerBesideSolidBlockFace(player) && !player.onGround)
+            if (player.isSneaking() && player.isPotionActive(ModPotions.cling) && Utils.isPlayerBesideSolidBlockFace(player) && !player.onGround)
             {
-                player.motionY = 0;
-                player.motionX *= 0.8;
-                player.motionZ *= 0.8;
+                if (player.worldObj.isRemote)
+                {
+                    player.motionY = 0;
+                    player.motionX *= 0.8;
+                    player.motionZ *= 0.8;
+                } else
+                {
+                    player.fallDistance = 0;
+                }
             }
         }
 
