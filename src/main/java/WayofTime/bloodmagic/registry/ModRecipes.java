@@ -27,6 +27,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectAttractor;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBinding;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBounce;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectMovement;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectSkeletonTurret;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectUpdraft;
@@ -43,11 +44,11 @@ import WayofTime.bloodmagic.api.registry.LivingArmourDowngradeRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.api.registry.TartaricForgeRecipeRegistry;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.enums.EnumBloodRune;
 import WayofTime.bloodmagic.client.render.alchemyArray.AttractorAlchemyCircleRenderer;
 import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
 import WayofTime.bloodmagic.client.render.alchemyArray.DualAlchemyCircleRenderer;
+import WayofTime.bloodmagic.client.render.alchemyArray.SingleAlchemyCircleRenderer;
 import WayofTime.bloodmagic.client.render.alchemyArray.StaticAlchemyCircleRenderer;
 import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
 import WayofTime.bloodmagic.compress.BaseCompressionHandler;
@@ -296,6 +297,7 @@ public class ModRecipes
         AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new AlchemyArrayEffectAttractor("attractor"), new AttractorAlchemyCircleRenderer());
         AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.FEATHER), new ItemStack(Items.REDSTONE), new AlchemyArrayEffectMovement("movement"), new StaticAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/MovementArray.png")));
         AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.FEATHER), new ItemStack(Items.GLOWSTONE_DUST), new AlchemyArrayEffectUpdraft("updraft"), new AttractorAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/UpdraftArray.png")));
+        AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.SLIME_BALL), new ItemStack(Items.REDSTONE), new AlchemyArrayEffectBounce("bounce"), new SingleAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BounceArray.png")));
 
         AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.ARROW), new ItemStack(Items.FEATHER), new AlchemyArrayEffectSkeletonTurret("skeletonTurret"), new DualAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SkeletonTurret1.png"), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SkeletonTurret2.png")));
     }

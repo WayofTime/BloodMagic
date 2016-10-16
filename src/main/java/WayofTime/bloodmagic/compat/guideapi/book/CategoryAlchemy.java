@@ -53,6 +53,16 @@ public class CategoryAlchemy
         speedPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "speed" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "speed"), new EntryText(speedPages, TextHelper.localize(keyBase + "speed"), true));
 
+        List<IPage> updraftPages = new ArrayList<IPage>();
+
+        PageAlchemyArray updraftRecipePage = BookUtils.getAlchemyPage("updraft");
+        if (updraftRecipePage != null)
+        {
+            updraftPages.add(updraftRecipePage);
+        }
+        updraftPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "updraft" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "updraft"), new EntryText(updraftPages, TextHelper.localize(keyBase + "updraft"), true));
+
         List<IPage> turretPages = new ArrayList<IPage>();
 
         PageAlchemyArray turretRecipePage = BookUtils.getAlchemyPage("skeletonTurret");
@@ -62,6 +72,16 @@ public class CategoryAlchemy
         }
         turretPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "turret" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "turret"), new EntryText(turretPages, TextHelper.localize(keyBase + "turret"), true));
+
+        List<IPage> bouncePages = new ArrayList<IPage>();
+
+        PageAlchemyArray bounceRecipePage = BookUtils.getAlchemyPage("bounce");
+        if (bounceRecipePage != null)
+        {
+            bouncePages.add(bounceRecipePage);
+        }
+        bouncePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bounce" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "bounce"), new EntryText(bouncePages, TextHelper.localize(keyBase + "bounce"), true));
 
         for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
         {

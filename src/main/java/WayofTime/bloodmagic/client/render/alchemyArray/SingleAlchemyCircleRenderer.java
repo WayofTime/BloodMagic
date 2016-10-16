@@ -11,16 +11,18 @@ import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 
-public class StaticAlchemyCircleRenderer extends AlchemyCircleRenderer
+public class SingleAlchemyCircleRenderer extends AlchemyCircleRenderer
 {
-    public StaticAlchemyCircleRenderer(ResourceLocation location)
+    public float offsetFromFace = -0.9f;
+
+    public SingleAlchemyCircleRenderer()
     {
-        super(location);
+        this(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SkeletonTurret1.png"));
     }
 
-    public StaticAlchemyCircleRenderer()
+    public SingleAlchemyCircleRenderer(ResourceLocation arrayResource)
     {
-        this(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/MovementArray.png"));
+        super(arrayResource);
     }
 
     @Override
@@ -32,18 +34,12 @@ public class StaticAlchemyCircleRenderer extends AlchemyCircleRenderer
     @Override
     public float getRotation(float craftTime)
     {
-        float offset = 50;
+        float offset = 2;
         if (craftTime >= offset)
         {
-            float modifier = (craftTime - offset) * 5f;
+            float modifier = (craftTime - offset) * 2f;
             return modifier * 1f;
         }
-        return 0;
-    }
-
-    @Override
-    public float getSecondaryRotation(float craftTime)
-    {
         return 0;
     }
 
@@ -61,13 +57,11 @@ public class StaticAlchemyCircleRenderer extends AlchemyCircleRenderer
         VertexBuffer wr = tessellator.getBuffer();
 
         GlStateManager.pushMatrix();
-
+        // float rot = (float)(this.worldObj.provider.getWorldTime() % (360 /
+        // this.rotationspeed) * this.rotationspeed) + this.rotationspeed * f;
         float rot = getRotation(craftTime);
 
         float size = 1.0F * getSizeModifier(craftTime);
-
-        // Bind the texture to the circle
-        Minecraft.getMinecraft().renderEngine.bindTexture(arrayResource);
 
         GlStateManager.disableCull();
         GlStateManager.enableBlend();
@@ -111,9 +105,10 @@ public class StaticAlchemyCircleRenderer extends AlchemyCircleRenderer
         GlStateManager.translate(0.5f, 0.5f, getVerticalOffset(craftTime));
         GlStateManager.rotate(rotation.getHorizontalAngle() + 180, 0, 0, 1);
 
+        // Bind the texture to the circle
+        Minecraft.getMinecraft().renderEngine.bindTexture(arrayResource);
         GlStateManager.pushMatrix();
-        GlStateManager.rotate(rot, 0, 1, 0);
-
+        GlStateManager.rotate(rot, 0, 0, 1);
         double var31 = 0.0D;
         double var33 = 1.0D;
         double var35 = 0;

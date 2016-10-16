@@ -2,16 +2,17 @@
 Version 2.1.0-66
 ------------------------------------------------------
 - Made it so that when you acquire a Living Armour Upgrade from a Tome, it raises the corresponding Stat Tracker up to that upgrade level.
-- Added a potion effect called "(-) Immunity", which allows the training of Living Armour Downgrades. This potion is crafted using a Draft of Angelus with a potion flask. Check the uses of the flask!
 - Added some more framework for the Living Armour Downgrades.
 - Modified the Grim Reaper's Sprint so it is better at later levels.
 - Added a Repairing Living Armour Upgrade (trained by damaging the chestplate of the Living Armour while you have a full set on - it repairs all of your armour pieces over time)
 - Modified the Dwarven Might skill to better change the mining speed when mining.
-- Added a Dig Slowdown armour downgrade called "Weakened Pick", trained by having weakness on while mining.
+- Added a Dig Slowdown armour downgrade called "Weakened Pick".
 - Added the framework for a ritual that grants downgrades (instead of the potion method).
 - Fixed the recipes for some of the Demon Will blocks
 - Added the Sigil of Elasticity, the Sigil of the Claw, and the Sigil of Winter's Breath.
 - Changed most of the BlockString blocks to a BlockEnum in order to solve a loading issue with schematics.
+- Added the entries for the Skeleton Turret Array and the Updraft Array
+- Added the Bounce Array
 
 ------------------------------------------------------
 Version 2.1.0-65
