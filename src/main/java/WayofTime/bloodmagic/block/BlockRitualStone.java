@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.block;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -19,17 +18,16 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IRitualStone;
-import WayofTime.bloodmagic.block.base.BlockString;
+import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class BlockRitualStone extends BlockString implements IRitualStone, IVariantProvider
+public class BlockRitualStone extends BlockEnum<EnumRuneType> implements IRitualStone, IVariantProvider
 {
-    public static final String[] names = { "blank", "water", "fire", "earth", "air", "dusk", "dawn" };
-
     public BlockRitualStone()
     {
-        super(Material.IRON, names);
+        super(Material.IRON, EnumRuneType.class);
 
         setUnlocalizedName(Constants.Mod.MODID + ".ritualStone.");
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -61,7 +59,7 @@ public class BlockRitualStone extends BlockString implements IRitualStone, IVari
     @Override
     public boolean isRuneType(World world, BlockPos pos, EnumRuneType runeType)
     {
-        return runeType.toString().equals(names[getMetaFromState(world.getBlockState(pos))]);
+        return runeType == this.getTypes()[getMetaFromState(world.getBlockState(pos))];
     }
 
     @Override
@@ -76,8 +74,8 @@ public class BlockRitualStone extends BlockString implements IRitualStone, IVari
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < names.length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + names[i]));
+        for (int i = 0; i < this.getTypes().length; i++)
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
         return ret;
     }
 }

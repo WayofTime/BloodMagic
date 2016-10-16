@@ -15,16 +15,15 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.base.BlockString;
+import WayofTime.bloodmagic.block.base.BlockEnum;
+import WayofTime.bloodmagic.block.enums.EnumInversionCap;
 import WayofTime.bloodmagic.client.IVariantProvider;
 
-public class BlockInversionPillarEnd extends BlockString implements IVariantProvider
+public class BlockInversionPillarEnd extends BlockEnum<EnumInversionCap> implements IVariantProvider
 {
-    public static final String[] names = { "raw_bottom", "raw_top", "corrosive_bottom", "corrosive_top", "destructive_bottom", "destructive_top", "vengeful_bottom", "vengeful_top", "steadfast_bottom", "steadfast_top" };
-
     public BlockInversionPillarEnd()
     {
-        super(Material.ROCK, names);
+        super(Material.ROCK, EnumInversionCap.class);
 
         setUnlocalizedName(Constants.Mod.MODID + ".inversionpillarend.");
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -68,8 +67,8 @@ public class BlockInversionPillarEnd extends BlockString implements IVariantProv
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < names.length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + names[i]));
+        for (int i = 0; i < this.getTypes().length; i++)
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
         return ret;
     }
 }

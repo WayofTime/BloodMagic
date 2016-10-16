@@ -1,28 +1,28 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.base.BlockString;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockBloodRune extends BlockString implements IVariantProvider
-{
-    public static final String[] names = { "blank", "speed", "efficiency", "sacrifice", "selfsacrifice", "displacement", "capacity", "augcapacity", "orb", "acceleration", "charging" };
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.block.base.BlockEnum;
+import WayofTime.bloodmagic.block.enums.EnumBloodRune;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.util.helper.TextHelper;
+
+public class BlockBloodRune extends BlockEnum<EnumBloodRune> implements IVariantProvider
+{
     public BlockBloodRune()
     {
-        super(Material.ROCK, names);
+        super(Material.ROCK, EnumBloodRune.class);
 
         setUnlocalizedName(Constants.Mod.MODID + ".rune.");
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -48,8 +48,8 @@ public class BlockBloodRune extends BlockString implements IVariantProvider
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < names.length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + names[i]));
+        for (int i = 0; i < this.getTypes().length; i++)
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
         return ret;
     }
 }

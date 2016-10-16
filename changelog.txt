@@ -11,6 +11,7 @@ Version 2.1.0-66
 - Added the framework for a ritual that grants downgrades (instead of the potion method).
 - Fixed the recipes for some of the Demon Will blocks
 - Added the Sigil of Elasticity, the Sigil of the Claw, and the Sigil of Winter's Breath.
+- Changed most of the BlockString blocks to a BlockEnum in order to solve a loading issue with schematics.
 
 ------------------------------------------------------
 Version 2.1.0-65

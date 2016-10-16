@@ -48,38 +48,48 @@ public class BlockString extends Block
     }
 
     @Override
-    protected final BlockStateContainer createBlockState() {
+    protected final BlockStateContainer createBlockState()
+    {
         return new BlockStateContainer.Builder(this).build(); // Blank to avoid crashes
     }
 
     @Override
-    public final BlockStateContainer getBlockState() {
+    public final BlockStateContainer getBlockState()
+    {
         return realStateContainer;
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public IBlockState getStateFromMeta(int meta)
+    {
         return getDefaultState().withProperty(property, types[meta]);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(IBlockState state)
+    {
         return ArrayUtils.indexOf(types, state.getValue(property));
     }
 
     @Override
-    public int damageDropped(IBlockState state) {
+    public int damageDropped(IBlockState state)
+    {
         return getMetaFromState(state);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> subBlocks) {
+    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> subBlocks)
+    {
         for (int i = 0; i < maxMeta; i++)
             subBlocks.add(new ItemStack(item, 1, i));
     }
 
-    protected BlockStateContainer createStateContainer() {
-        return new BlockStateContainer.Builder(this).add(property).build();
+    protected BlockStateContainer createStateContainer()
+    {
+        System.out.println("");
+        BlockStateContainer ctn = new BlockStateContainer.Builder(this).add(property).build();
+        System.out.println("Number of states: " + ctn.getValidStates().size());
+        return ctn;
     }
 }

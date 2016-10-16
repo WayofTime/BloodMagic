@@ -6,23 +6,21 @@ import java.util.List;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IStringSerializable;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.base.BlockStringPillar;
+import WayofTime.bloodmagic.block.base.BlockEnumPillar;
 import WayofTime.bloodmagic.client.IVariantProvider;
 
-public class BlockDemonPillarBase extends BlockStringPillar implements IVariantProvider
+public class BlockDemonPillarBase<E extends Enum<E> & IStringSerializable> extends BlockEnumPillar<E> implements IVariantProvider
 {
-    public final String[] names;
-
-    public BlockDemonPillarBase(String baseName, Material materialIn, String[] names)
+    public BlockDemonPillarBase(String baseName, Material materialIn, Class<E> enumClass)
     {
-        super(materialIn, names);
-        this.names = names;
+        super(materialIn, enumClass);
 
         setUnlocalizedName(Constants.Mod.MODID + "." + baseName + ".");
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -42,9 +40,9 @@ public class BlockDemonPillarBase extends BlockStringPillar implements IVariantP
 
         for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < names.length; j++)
+            for (int j = 0; j < this.getTypes().length; j++)
             {
-                ret.add(new ImmutablePair<Integer, String>(i * 5 + j, "axis=" + axis[i] + ",type=" + names[j]));
+                ret.add(new ImmutablePair<Integer, String>(i * 5 + j, "axis=" + axis[i] + ",type=" + this.getTypes()[j]));
             }
         }
 

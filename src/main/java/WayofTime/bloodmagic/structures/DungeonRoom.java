@@ -67,10 +67,7 @@ public class DungeonRoom
             DungeonStructure structure = new DungeonStructure(location);
             BlockPos offsetPos = Template.transformedBlockPos(settings, entry.getValue());
 
-            if (structure.placeStructureAtPosition(rand, settings, world, pos.add(offsetPos)))
-            {
-                System.out.println(location);
-            }
+            structure.placeStructureAtPosition(rand, settings, world, pos.add(offsetPos));
         }
 
         return true;

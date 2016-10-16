@@ -8,29 +8,32 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+
 import org.apache.commons.lang3.ArrayUtils;
 
-public class BlockStringPillarCap extends BlockString
+public class BlockEnumPillarCap<E extends Enum<E> & IStringSerializable> extends BlockEnum<E>
 {
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
-    public BlockStringPillarCap(Material material, String[] values, String propName)
+    public BlockEnumPillarCap(Material material, Class<E> enumClass, String propName)
     {
-        super(material, values, propName);
+        super(material, enumClass, propName);
     }
 
-    public BlockStringPillarCap(Material material, String[] values)
+    public BlockEnumPillarCap(Material material, Class<E> enumClass)
     {
-        this(material, values, "type");
+        this(material, enumClass, "type");
     }
 
     @Override
-    protected BlockStateContainer createStateContainer() {
+    protected BlockStateContainer createStateContainer()
+    {
         return new BlockStateContainer.Builder(this).add(getProperty(), FACING).build();
     }
 

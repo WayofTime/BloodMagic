@@ -5,9 +5,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.api.altar.IAltarComponent;
-import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -32,19 +29,22 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.base.BlockStringContainer;
+import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.api.altar.IAltarComponent;
+import WayofTime.bloodmagic.block.base.BlockEnumContainer;
+import WayofTime.bloodmagic.block.enums.EnumMimic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileMimic;
+import WayofTime.bloodmagic.util.Utils;
 
-public class BlockMimic extends BlockStringContainer implements IVariantProvider, IAltarComponent
+public class BlockMimic extends BlockEnumContainer<EnumMimic> implements IVariantProvider, IAltarComponent
 {
     public static final int sentientMimicMeta = 4;
-    public static final String[] names = { "nohitbox", "solidopaque", "solidclear", "solidlight", "sentient" };
 
     public BlockMimic()
     {
-        super(Material.ROCK, names);
+        super(Material.ROCK, EnumMimic.class);
 
         setUnlocalizedName(Constants.Mod.MODID + ".mimic.");
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -231,8 +231,8 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < names.length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + names[i]));
+        for (int i = 0; i < this.getTypes().length; i++)
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
         return ret;
     }
 
@@ -246,7 +246,8 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
 
     @Nullable
     @Override
-    public EnumAltarComponent getType(World world, IBlockState state, BlockPos pos) {
+    public EnumAltarComponent getType(World world, IBlockState state, BlockPos pos)
+    {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileMimic)
         {
@@ -258,10 +259,11 @@ public class BlockMimic extends BlockStringContainer implements IVariantProvider
                 if (block instanceof IAltarComponent)
                 {
                     return ((IAltarComponent) block).getType(world, block.getStateFromMeta(mimic.metaOfReplacedBlock), pos);
-                } else  {
+                } else
+                {
                     for (EnumAltarComponent altarComponent : EnumAltarComponent.values())
-                    if (block == Utils.getBlockForComponent(altarComponent))
-                        return altarComponent;
+                        if (block == Utils.getBlockForComponent(altarComponent))
+                            return altarComponent;
                 }
             }
         }

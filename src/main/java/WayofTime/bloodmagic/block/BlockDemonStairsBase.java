@@ -5,23 +5,21 @@ import java.util.List;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.util.IStringSerializable;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.base.BlockStringStairs;
+import WayofTime.bloodmagic.block.base.BlockEnumStairs;
 import WayofTime.bloodmagic.client.IVariantProvider;
 
-public class BlockDemonStairsBase extends BlockStringStairs implements IVariantProvider
+public class BlockDemonStairsBase<E extends Enum<E> & IStringSerializable> extends BlockEnumStairs<E> implements IVariantProvider
 {
-    public final String[] names;
-
-    public BlockDemonStairsBase(String baseName, Material materialIn, String[] names)
+    public BlockDemonStairsBase(String baseName, Material materialIn, Class<E> enumClass)
     {
-        super(materialIn, names);
-        this.names = names;
+        super(materialIn, enumClass);
 
         setUnlocalizedName(Constants.Mod.MODID + "." + baseName + ".");
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -36,9 +34,9 @@ public class BlockDemonStairsBase extends BlockStringStairs implements IVariantP
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
 
-        for (int i = 0; i < names.length; i++)
+        for (int i = 0; i < this.getTypes().length; i++)
         {
-            ret.add(new ImmutablePair<Integer, String>(i, "facing=south,half=bottom,shape=straight,type=" + names[i]));
+            ret.add(new ImmutablePair<Integer, String>(i, "facing=south,half=bottom,shape=straight,type=" + this.getTypes()[i]));
         }
 
         return ret;

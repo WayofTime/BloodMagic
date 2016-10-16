@@ -3,8 +3,8 @@ package WayofTime.bloodmagic.block;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
-import amerifrance.guideapi.api.IGuideLinked;
+import javax.annotation.Nullable;
+
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -28,24 +28,23 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.api.util.helper.RitualHelper;
-import WayofTime.bloodmagic.block.base.BlockStringContainer;
+import WayofTime.bloodmagic.block.base.BlockEnumContainer;
+import WayofTime.bloodmagic.block.enums.EnumRitualController;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.ChatUtil;
-
-import javax.annotation.Nullable;
+import amerifrance.guideapi.api.IGuideLinked;
 
 @Optional.Interface(modid = "guideapi", iface = "amerifrance.guideapi.api.IGuideLinked")
-public class BlockRitualController extends BlockStringContainer implements IVariantProvider, IGuideLinked
+public class BlockRitualController extends BlockEnumContainer<EnumRitualController> implements IVariantProvider, IGuideLinked
 {
-    public static final String[] names = { "master", "imperfect" };
-
     public BlockRitualController()
     {
-        super(Material.ROCK, names);
+        super(Material.ROCK, EnumRitualController.class);
 
         setUnlocalizedName(Constants.Mod.MODID + ".stone.ritual.");
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -121,8 +120,8 @@ public class BlockRitualController extends BlockStringContainer implements IVari
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < names.length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + names[i]));
+        for (int i = 0; i < this.getTypes().length; i++)
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
         return ret;
     }
 
@@ -133,14 +132,14 @@ public class BlockRitualController extends BlockStringContainer implements IVari
     public ResourceLocation getLinkedEntry(World world, BlockPos pos, EntityPlayer player, ItemStack stack)
     {
         IBlockState state = world.getBlockState(pos);
-        if (state.getValue(getProperty()).equals(names[0]))
+        if (state.getValue(getProperty()).equals(EnumRitualController.MASTER))
         {
             TileMasterRitualStone mrs = (TileMasterRitualStone) world.getTileEntity(pos);
             if (mrs == null || mrs.getCurrentRitual() == null)
                 return null;
             else
                 return new ResourceLocation("bloodmagic", "ritual_" + mrs.getCurrentRitual().getName());
-        } else if (state.getValue(getProperty()).equals(names[1]))
+        } else if (state.getValue(getProperty()).equals(EnumRitualController.IMPERFECT))
         {
             ImperfectRitual imperfectRitual = ImperfectRitualRegistry.getRitualForBlock(BlockStack.getStackFromPos(world, pos.up()));
             if (imperfectRitual != null)

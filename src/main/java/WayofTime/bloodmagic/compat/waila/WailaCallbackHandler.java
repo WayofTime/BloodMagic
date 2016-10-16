@@ -7,9 +7,9 @@ import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.block.BlockMimic;
 import WayofTime.bloodmagic.block.BlockRitualController;
 import WayofTime.bloodmagic.block.BlockTeleposer;
-import WayofTime.bloodmagic.block.base.BlockStringPillar;
-import WayofTime.bloodmagic.block.base.BlockStringPillarCap;
-import WayofTime.bloodmagic.block.base.BlockStringStairs;
+import WayofTime.bloodmagic.block.base.BlockEnumPillar;
+import WayofTime.bloodmagic.block.base.BlockEnumPillarCap;
+import WayofTime.bloodmagic.block.base.BlockEnumStairs;
 import WayofTime.bloodmagic.compat.waila.provider.DataProviderAlchemyArray;
 import WayofTime.bloodmagic.compat.waila.provider.DataProviderBloodAltar;
 import WayofTime.bloodmagic.compat.waila.provider.DataProviderMimic;
@@ -27,9 +27,9 @@ public class WailaCallbackHandler
         registrar.registerBodyProvider(new DataProviderAlchemyArray(), BlockAlchemyArray.class);
         registrar.registerStackProvider(new DataProviderAlchemyArray(), BlockAlchemyArray.class);
         registrar.registerStackProvider(new DataProviderMimic(), BlockMimic.class);
-        registrar.registerStackProvider(DataProviderPillar.INSTANCE, BlockStringPillarCap.class);
-        registrar.registerStackProvider(DataProviderPillar.INSTANCE, BlockStringPillar.class);
-        registrar.registerStackProvider(DataProviderPillar.INSTANCE, BlockStringStairs.class);
+        registrar.registerStackProvider(DataProviderPillar.INSTANCE, BlockEnumPillarCap.class);
+        registrar.registerStackProvider(DataProviderPillar.INSTANCE, BlockEnumPillar.class);
+        registrar.registerStackProvider(DataProviderPillar.INSTANCE, BlockEnumStairs.class);
 
         registrar.addConfig(Constants.Mod.MODID, Constants.Compat.WAILA_CONFIG_BYPASS_SNEAK, false);
         registrar.addConfig(Constants.Mod.MODID, Constants.Compat.WAILA_CONFIG_ALTAR, true);

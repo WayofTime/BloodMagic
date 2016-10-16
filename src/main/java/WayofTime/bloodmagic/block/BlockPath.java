@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.block;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -18,16 +17,17 @@ import org.apache.commons.lang3.tuple.Pair;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.incense.IIncensePath;
-import WayofTime.bloodmagic.block.base.BlockString;
+import WayofTime.bloodmagic.block.base.BlockEnum;
+import WayofTime.bloodmagic.block.enums.EnumPath;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class BlockPath extends BlockString implements IIncensePath, IVariantProvider
+public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath, IVariantProvider
 {
-    public static final String[] names = { "wood", "woodtile", "stone", "stonetile", "wornstone", "wornstonetile", "obsidian", "obsidiantile" };
 
     public BlockPath()
     {
-        super(Material.ROCK, names);
+        super(Material.ROCK, EnumPath.class);
 
         setUnlocalizedName(Constants.Mod.MODID + ".path.");
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -78,8 +78,8 @@ public class BlockPath extends BlockString implements IIncensePath, IVariantProv
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < names.length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + names[i]));
+        for (int i = 0; i < this.getTypes().length; i++)
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
         return ret;
     }
 }

@@ -11,6 +11,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.block.BlockAlchemyArray;
 import WayofTime.bloodmagic.block.BlockAlchemyTable;
 import WayofTime.bloodmagic.block.BlockAltar;
@@ -46,24 +47,24 @@ import WayofTime.bloodmagic.block.BlockRitualStone;
 import WayofTime.bloodmagic.block.BlockSoulForge;
 import WayofTime.bloodmagic.block.BlockSpectral;
 import WayofTime.bloodmagic.block.BlockTeleposer;
+import WayofTime.bloodmagic.block.enums.EnumBloodRune;
+import WayofTime.bloodmagic.block.enums.EnumBrickSize;
+import WayofTime.bloodmagic.block.enums.EnumDemonBlock1;
+import WayofTime.bloodmagic.block.enums.EnumDemonBlock2;
+import WayofTime.bloodmagic.block.enums.EnumDemonBlock3;
+import WayofTime.bloodmagic.block.enums.EnumInversionCap;
+import WayofTime.bloodmagic.block.enums.EnumMimic;
+import WayofTime.bloodmagic.block.enums.EnumPath;
+import WayofTime.bloodmagic.block.enums.EnumRitualController;
+import WayofTime.bloodmagic.block.enums.EnumSubWillType;
+import WayofTime.bloodmagic.block.enums.EnumSubWillType1;
+import WayofTime.bloodmagic.block.enums.EnumSubWillType2;
+import WayofTime.bloodmagic.block.enums.EnumSubWillType3;
+import WayofTime.bloodmagic.block.enums.EnumWillWall;
 import WayofTime.bloodmagic.item.block.ItemBlockAlchemyTable;
-import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
-import WayofTime.bloodmagic.item.block.ItemBlockBloodStoneBrick;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodTank;
-import WayofTime.bloodmagic.item.block.ItemBlockCrystal;
-import WayofTime.bloodmagic.item.block.ItemBlockDemonBase;
 import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
-import WayofTime.bloodmagic.item.block.ItemBlockDemonLight;
-import WayofTime.bloodmagic.item.block.ItemBlockDemonPillarBase;
-import WayofTime.bloodmagic.item.block.ItemBlockDemonPillarCapBase;
-import WayofTime.bloodmagic.item.block.ItemBlockDemonWallBase;
-import WayofTime.bloodmagic.item.block.ItemBlockInversionPillar;
-import WayofTime.bloodmagic.item.block.ItemBlockInversionPillarEnd;
-import WayofTime.bloodmagic.item.block.ItemBlockMimic;
-import WayofTime.bloodmagic.item.block.ItemBlockPath;
-import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
-import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
-import WayofTime.bloodmagic.item.block.ItemDemonStairsBase;
+import WayofTime.bloodmagic.item.block.base.ItemBlockEnum;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAlchemyTable;
 import WayofTime.bloodmagic.tile.TileAltar;
@@ -142,23 +143,23 @@ public class ModBlocks
         LIFE_ESSENCE = registerBlock(new BlockLifeEssence(), Constants.BloodMagicBlock.LIFE_ESSENCE.getRegName());
 
         ALTAR = registerBlock(new BlockAltar(), Constants.BloodMagicBlock.ALTAR.getRegName());
-        BLOOD_RUNE = registerBlock(new ItemBlockBloodRune(new BlockBloodRune()), Constants.BloodMagicBlock.BLOOD_RUNE.getRegName());
-        RITUAL_CONTROLLER = registerBlock(new ItemBlockRitualController(new BlockRitualController()), Constants.BloodMagicBlock.RITUAL_CONTROLLER.getRegName());
-        RITUAL_STONE = registerBlock(new ItemBlockRitualStone(new BlockRitualStone()), Constants.BloodMagicBlock.RITUAL_STONE.getRegName());
+        BLOOD_RUNE = registerBlock(new ItemBlockEnum<EnumBloodRune>(new BlockBloodRune()), Constants.BloodMagicBlock.BLOOD_RUNE.getRegName());
+        RITUAL_CONTROLLER = registerBlock(new ItemBlockEnum<EnumRitualController>(new BlockRitualController()), Constants.BloodMagicBlock.RITUAL_CONTROLLER.getRegName());
+        RITUAL_STONE = registerBlock(new ItemBlockEnum<EnumRuneType>(new BlockRitualStone()), Constants.BloodMagicBlock.RITUAL_STONE.getRegName());
         BLOOD_LIGHT = registerBlock(new BlockBloodLight(), Constants.BloodMagicBlock.BLOOD_LIGHT.getRegName());
         TELEPOSER = registerBlock(new BlockTeleposer(), Constants.BloodMagicBlock.TELEPOSER.getRegName());
         ALCHEMY_ARRAY = registerBlock(new BlockAlchemyArray(), Constants.BloodMagicBlock.ALCHEMY_ARRAY.getRegName());
         SPECTRAL_BLOCK = registerBlock(new BlockSpectral(), Constants.BloodMagicBlock.SPECTRAL.getRegName());
         PHANTOM_BLOCK = registerBlock(new BlockPhantom(), Constants.BloodMagicBlock.PHANTOM.getRegName());
         SOUL_FORGE = registerBlock(new BlockSoulForge(), Constants.BloodMagicBlock.SOUL_FORGE.getRegName());
-        CRYSTAL = registerBlock(new ItemBlockCrystal(new BlockCrystal()), Constants.BloodMagicBlock.CRYSTAL.getRegName());
-        BLOOD_STONE = registerBlock(new ItemBlockBloodStoneBrick(new BlockBloodStoneBrick()), Constants.BloodMagicBlock.BLOOD_STONE.getRegName());
+        CRYSTAL = registerBlock(new ItemBlockEnum<EnumBrickSize>(new BlockCrystal()), Constants.BloodMagicBlock.CRYSTAL.getRegName());
+        BLOOD_STONE = registerBlock(new ItemBlockEnum<EnumBrickSize>(new BlockBloodStoneBrick()), Constants.BloodMagicBlock.BLOOD_STONE.getRegName());
         MASTER_ROUTING_NODE = registerBlock(new ItemBlock(new BlockMasterRoutingNode()), Constants.BloodMagicBlock.MASTER_ROUTING_NODE.getRegName());
         INPUT_ROUTING_NODE = registerBlock(new ItemBlock(new BlockInputRoutingNode()), Constants.BloodMagicBlock.INPUT_ROUTING_NODE.getRegName());
         OUTPUT_ROUTING_NODE = registerBlock(new ItemBlock(new BlockOutputRoutingNode()), Constants.BloodMagicBlock.OUTPUT_ROUTING_NODE.getRegName());
         ITEM_ROUTING_NODE = registerBlock(new ItemBlock(new BlockItemRoutingNode()), Constants.BloodMagicBlock.ITEM_ROUTING_NODE.getRegName());
         INCENSE_ALTAR = registerBlock(new BlockIncenseAltar(), Constants.BloodMagicBlock.INCENSE_ALTAR.getRegName());
-        PATH_BLOCK = registerBlock(new ItemBlockPath(new BlockPath()), Constants.BloodMagicBlock.PATH.getRegName());
+        PATH_BLOCK = registerBlock(new ItemBlockEnum<EnumPath>(new BlockPath()), Constants.BloodMagicBlock.PATH.getRegName());
         DEMON_CRUCIBLE = registerBlock(new BlockDemonCrucible(), Constants.BloodMagicBlock.DEMON_CRUCIBLE.getRegName());
         DEMON_PYLON = registerBlock(new BlockDemonPylon(), Constants.BloodMagicBlock.DEMON_PYLON.getRegName());
         DEMON_CRYSTALLIZER = registerBlock(new BlockDemonCrystallizer(), Constants.BloodMagicBlock.DEMON_CRYSTALLIZER.getRegName());
@@ -169,28 +170,28 @@ public class ModBlocks
         DIMENSIONAL_PORTAL = registerBlock(new BlockDimensionalPortal(), Constants.BloodMagicBlock.DIMENSIONAL_PORTAL.getRegName());
         BLOOD_TANK = registerBlock(new ItemBlockBloodTank(new BlockBloodTank()), Constants.BloodMagicBlock.BLOOD_TANK.getRegName());
 
-        MIMIC = registerBlock(new ItemBlockMimic(new BlockMimic()), Constants.BloodMagicBlock.MIMIC.getRegName());
+        MIMIC = registerBlock(new ItemBlockEnum<EnumMimic>(new BlockMimic()), Constants.BloodMagicBlock.MIMIC.getRegName());
 
-        DEMON_BRICK_1 = registerBlock(new ItemBlockDemonBase(new BlockDemonBase("bricks1", new String[] { "brick1_raw", "brick1_corrosive", "brick1_destructive", "brick1_vengeful", "brick1_steadfast" })), Constants.BloodMagicBlock.DEMON_BRICK_1.getRegName());
-        DEMON_BRICK_2 = registerBlock(new ItemBlockDemonBase(new BlockDemonBase("bricks2", new String[] { "smallbrick_raw", "smallbrick_corrosive", "smallbrick_destructive", "smallbrick_vengeful", "smallbrick_steadfast", "tile_raw", "tile_corrosive", "tile_destructive", "tile_vengeful", "tile_steadfast", "tilespecial_raw", "tilespecial_corrosive", "tilespecial_destructive", "tilespecial_vengeful", "tilespecial_steadfast" })), Constants.BloodMagicBlock.DEMON_BRICK_2.getRegName());
-        DEMON_EXTRAS = registerBlock(new ItemBlockDemonBase(new BlockDemonBase("extras", new String[] { "stone_raw", "stone_corrosive", "stone_destructive", "stone_vengeful", "stone_steadfast", "polished_raw", "polished_corrosive", "polished_destructive", "polished_vengeful", "polished_steadfast", "metal_raw", "metal_corrosive", "metal_destructive", "metal_vengeful", "metal_steadfast" })), Constants.BloodMagicBlock.DEMON_BLOCK_EXTRA.getRegName());
+        DEMON_BRICK_1 = registerBlock(new ItemBlockEnum<EnumDemonBlock1>(new BlockDemonBase<EnumDemonBlock1>("bricks1", EnumDemonBlock1.class)), Constants.BloodMagicBlock.DEMON_BRICK_1.getRegName());
+        DEMON_BRICK_2 = registerBlock(new ItemBlockEnum<EnumDemonBlock2>(new BlockDemonBase<EnumDemonBlock2>("bricks2", EnumDemonBlock2.class)), Constants.BloodMagicBlock.DEMON_BRICK_2.getRegName());
+        DEMON_EXTRAS = registerBlock(new ItemBlockEnum<EnumDemonBlock3>(new BlockDemonBase<EnumDemonBlock3>("extras", EnumDemonBlock3.class)), Constants.BloodMagicBlock.DEMON_BLOCK_EXTRA.getRegName());
 
-        DEMON_PILLAR_1 = registerBlock(new ItemBlockDemonPillarBase(new BlockDemonPillarBase("pillar1", Material.ROCK, new String[] { "raw", "corrosive", "destructive", "vengeful", "steadfast" })), Constants.BloodMagicBlock.DEMON_PILLAR_1.getRegName());
-        DEMON_PILLAR_2 = registerBlock(new ItemBlockDemonPillarBase(new BlockDemonPillarBase("pillar2", Material.ROCK, new String[] { "raw", "corrosive", "destructive", "vengeful", "steadfast" })), Constants.BloodMagicBlock.DEMON_PILLAR_2.getRegName());
-        DEMON_PILLAR_CAP_1 = registerBlock(new ItemBlockDemonPillarCapBase(new BlockDemonPillarCapBase("pillarCap1", Material.ROCK, new String[] { "raw", "corrosive" })), Constants.BloodMagicBlock.DEMON_PILLAR_CAP_1.getRegName());
-        DEMON_PILLAR_CAP_2 = registerBlock(new ItemBlockDemonPillarCapBase(new BlockDemonPillarCapBase("pillarCap2", Material.ROCK, new String[] { "destructive", "vengeful" })), Constants.BloodMagicBlock.DEMON_PILLAR_CAP_2.getRegName());
-        DEMON_PILLAR_CAP_3 = registerBlock(new ItemBlockDemonPillarCapBase(new BlockDemonPillarCapBase("pillarCap3", Material.ROCK, new String[] { "steadfast" })), Constants.BloodMagicBlock.DEMON_PILLAR_CAP_3.getRegName());
+        DEMON_PILLAR_1 = registerBlock(new ItemBlockEnum<EnumSubWillType>(new BlockDemonPillarBase<EnumSubWillType>("pillar1", Material.ROCK, EnumSubWillType.class)), Constants.BloodMagicBlock.DEMON_PILLAR_1.getRegName());
+        DEMON_PILLAR_2 = registerBlock(new ItemBlockEnum<EnumSubWillType>(new BlockDemonPillarBase<EnumSubWillType>("pillar2", Material.ROCK, EnumSubWillType.class)), Constants.BloodMagicBlock.DEMON_PILLAR_2.getRegName());
+        DEMON_PILLAR_CAP_1 = registerBlock(new ItemBlockEnum<EnumSubWillType1>(new BlockDemonPillarCapBase<EnumSubWillType1>("pillarCap1", Material.ROCK, EnumSubWillType1.class)), Constants.BloodMagicBlock.DEMON_PILLAR_CAP_1.getRegName());
+        DEMON_PILLAR_CAP_2 = registerBlock(new ItemBlockEnum<EnumSubWillType2>(new BlockDemonPillarCapBase<EnumSubWillType2>("pillarCap2", Material.ROCK, EnumSubWillType2.class)), Constants.BloodMagicBlock.DEMON_PILLAR_CAP_2.getRegName());
+        DEMON_PILLAR_CAP_3 = registerBlock(new ItemBlockEnum<EnumSubWillType3>(new BlockDemonPillarCapBase<EnumSubWillType3>("pillarCap3", Material.ROCK, EnumSubWillType3.class)), Constants.BloodMagicBlock.DEMON_PILLAR_CAP_3.getRegName());
 
-        DEMON_LIGHT = registerBlock(new ItemBlockDemonLight(new BlockDemonLight()), Constants.BloodMagicBlock.DEMON_LIGHT.getRegName());
+        DEMON_LIGHT = registerBlock(new ItemBlockEnum<EnumSubWillType>(new BlockDemonLight()), Constants.BloodMagicBlock.DEMON_LIGHT.getRegName());
 
-        DEMON_WALL_1 = registerBlock(new ItemBlockDemonWallBase(new BlockDemonWallBase("wall1", Material.ROCK, new String[] { "brick_raw", "brick_corrosive", "brick_destructive", "brick_vengeful", "brick_steadfast", "smallbrick_raw", "smallbrick_corrosive", "smallbrick_destructive", "smallbrick_vengeful", "smallbrick_steadfast", "large_raw", "large_corrosive", "large_destructive", "large_vengeful", "large_steadfast" })), Constants.BloodMagicBlock.DEMON_WALL_1.getRegName());
+        DEMON_WALL_1 = registerBlock(new ItemBlockEnum<EnumWillWall>(new BlockDemonWallBase<EnumWillWall>("wall1", Material.ROCK, EnumWillWall.class)), Constants.BloodMagicBlock.DEMON_WALL_1.getRegName());
 
-        DEMON_STAIRS_1 = registerBlock(new ItemDemonStairsBase(new BlockDemonStairsBase("stairs1", Material.ROCK, new String[] { "raw", "corrosive" })), Constants.BloodMagicBlock.DEMON_STAIRS_1.getRegName());
-        DEMON_STAIRS_2 = registerBlock(new ItemDemonStairsBase(new BlockDemonStairsBase("stairs2", Material.ROCK, new String[] { "destructive", "vengeful" })), Constants.BloodMagicBlock.DEMON_STAIRS_2.getRegName());
-        DEMON_STAIRS_3 = registerBlock(new ItemDemonStairsBase(new BlockDemonStairsBase("stairs3", Material.ROCK, new String[] { "steadfast" })), Constants.BloodMagicBlock.DEMON_STAIRS_3.getRegName());
+        DEMON_STAIRS_1 = registerBlock(new ItemBlockEnum<EnumSubWillType1>(new BlockDemonStairsBase<EnumSubWillType1>("stairs1", Material.ROCK, EnumSubWillType1.class)), Constants.BloodMagicBlock.DEMON_STAIRS_1.getRegName());
+        DEMON_STAIRS_2 = registerBlock(new ItemBlockEnum<EnumSubWillType2>(new BlockDemonStairsBase<EnumSubWillType2>("stairs2", Material.ROCK, EnumSubWillType2.class)), Constants.BloodMagicBlock.DEMON_STAIRS_2.getRegName());
+        DEMON_STAIRS_3 = registerBlock(new ItemBlockEnum<EnumSubWillType3>(new BlockDemonStairsBase<EnumSubWillType3>("stairs3", Material.ROCK, EnumSubWillType3.class)), Constants.BloodMagicBlock.DEMON_STAIRS_3.getRegName());
 
-        INVERSION_PILLAR = registerBlock(new ItemBlockInversionPillar(new BlockInversionPillar()), Constants.BloodMagicBlock.INVERSION_PILLAR.getRegName());
-        INVERSION_PILLAR_END = registerBlock(new ItemBlockInversionPillarEnd(new BlockInversionPillarEnd()), Constants.BloodMagicBlock.INVERSION_PILLAR_END.getRegName());
+        INVERSION_PILLAR = registerBlock(new ItemBlockEnum<EnumSubWillType>(new BlockInversionPillar()), Constants.BloodMagicBlock.INVERSION_PILLAR.getRegName());
+        INVERSION_PILLAR_END = registerBlock(new ItemBlockEnum<EnumInversionCap>(new BlockInversionPillarEnd()), Constants.BloodMagicBlock.INVERSION_PILLAR_END.getRegName());
     }
 
     public static void init()

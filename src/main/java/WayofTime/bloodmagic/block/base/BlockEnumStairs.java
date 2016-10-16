@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockStairs.EnumHalf;
@@ -18,6 +17,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -27,10 +27,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.lang3.ArrayUtils;
 
-public class BlockStringStairs extends BlockString
+import WayofTime.bloodmagic.BloodMagic;
+
+import com.google.common.collect.Lists;
+
+public class BlockEnumStairs<E extends Enum<E> & IStringSerializable> extends BlockEnum<E>
 {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
@@ -53,18 +56,19 @@ public class BlockStringStairs extends BlockString
     protected static final AxisAlignedBB AABB_OCT_BOT_SW = new AxisAlignedBB(0.0D, 0.0D, 0.5D, 0.5D, 0.5D, 1.0D);
     protected static final AxisAlignedBB AABB_OCT_BOT_SE = new AxisAlignedBB(0.5D, 0.0D, 0.5D, 1.0D, 0.5D, 1.0D);
 
-    public BlockStringStairs(Material material, String[] values, String propName)
+    public BlockEnumStairs(Material material, Class<E> enumClass, String propName)
     {
-        super(material, values, propName);
+        super(material, enumClass, propName);
     }
 
-    public BlockStringStairs(Material material, String[] values)
+    public BlockEnumStairs(Material material, Class<E> enumClass)
     {
-        this(material, values, "type");
+        this(material, enumClass, "type");
     }
 
     @Override
-    protected BlockStateContainer createStateContainer() {
+    protected BlockStateContainer createStateContainer()
+    {
         return new BlockStateContainer.Builder(this).add(getProperty(), FACING, BlockStairs.HALF, BlockStairs.SHAPE).build();
     }
 
@@ -282,7 +286,7 @@ public class BlockStringStairs extends BlockString
 
     public static boolean isBlockStairs(IBlockState state)
     {
-        return state.getBlock() instanceof BlockStairs || state.getBlock() instanceof BlockStringStairs;
+        return state.getBlock() instanceof BlockStairs || state.getBlock() instanceof BlockEnumStairs;
     }
 
     @Override

@@ -65,7 +65,7 @@ public class ItemInscriptionTool extends ItemBindableBase implements IVariantPro
             stack = NBTHelper.checkNBT(stack);
             int uses = stack.getTagCompound().getInteger(Constants.NBT.USES);
 
-            world.setBlockState(pos, state.withProperty(((BlockRitualStone) state.getBlock()).getProperty(), getType(stack).getName()));
+            world.setBlockState(pos, state.withProperty(((BlockRitualStone) state.getBlock()).getProperty(), getType(stack)));
             if (!player.capabilities.isCreativeMode)
             {
                 stack.getTagCompound().setInteger(Constants.NBT.USES, --uses);

@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -13,8 +12,6 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.ExtendedBlockState;
-import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -23,17 +20,16 @@ import org.apache.commons.lang3.tuple.Pair;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.block.base.BlockStringContainer;
+import WayofTime.bloodmagic.block.base.BlockEnumContainer;
+import WayofTime.bloodmagic.block.enums.EnumSubWillType;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileInversionPillar;
 
-public class BlockInversionPillar extends BlockStringContainer implements IVariantProvider
+public class BlockInversionPillar extends BlockEnumContainer<EnumSubWillType> implements IVariantProvider
 {
-    public static final String[] names = { "raw", "corrosive", "destructive", "vengeful", "steadfast" };
-
     public BlockInversionPillar()
     {
-        super(Material.ROCK, names);
+        super(Material.ROCK, EnumSubWillType.class);
 
         setUnlocalizedName(Constants.Mod.MODID + ".inversionpillar.");
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -96,8 +92,8 @@ public class BlockInversionPillar extends BlockStringContainer implements IVaria
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < names.length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "static=false,type=" + names[i]));
+        for (int i = 0; i < this.getTypes().length; i++)
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
         return ret;
     }
 
@@ -107,7 +103,8 @@ public class BlockInversionPillar extends BlockStringContainer implements IVaria
         return new TileInversionPillar(EnumDemonWillType.values()[meta % 5]);
     }
 
-    protected BlockStateContainer createStateContainer() {
+    protected BlockStateContainer createStateContainer()
+    {
         return new BlockStateContainer.Builder(this).add(getProperty(), Properties.StaticProperty).add(Properties.AnimationProperty).build();
     }
 }

@@ -9,26 +9,29 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+
 import org.apache.commons.lang3.ArrayUtils;
 
-public class BlockStringPillar extends BlockString
+public class BlockEnumPillar<E extends Enum<E> & IStringSerializable> extends BlockEnum<E>
 {
-    public BlockStringPillar(Material material, String[] values, String propName)
+    public BlockEnumPillar(Material material, Class<E> enumClass, String propName)
     {
-        super(material, values, propName);
+        super(material, enumClass, propName);
     }
 
-    public BlockStringPillar(Material material, String[] values)
+    public BlockEnumPillar(Material material, Class<E> enumClass)
     {
-        this(material, values, "type");
+        this(material, enumClass, "type");
     }
 
     @Override
-    protected BlockStateContainer createStateContainer() {
+    protected BlockStateContainer createStateContainer()
+    {
         return new BlockStateContainer.Builder(this).add(getProperty(), BlockRotatedPillar.AXIS).build();
     }
 

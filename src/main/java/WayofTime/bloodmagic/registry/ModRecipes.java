@@ -44,6 +44,7 @@ import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.api.registry.TartaricForgeRecipeRegistry;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.block.BlockBloodRune;
+import WayofTime.bloodmagic.block.enums.EnumBloodRune;
 import WayofTime.bloodmagic.client.render.alchemyArray.AttractorAlchemyCircleRenderer;
 import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
 import WayofTime.bloodmagic.client.render.alchemyArray.DualAlchemyCircleRenderer;
@@ -156,7 +157,7 @@ public class ModRecipes
 
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.ALCHEMY_TABLE), "sss", "wbw", "gog", 's', "stone", 'w', "plankWood", 'b', Items.BLAZE_ROD, 'g', "ingotGold", 'o', OrbRegistry.getOrbStack(ModItems.ORB_WEAK)));
 
-        for (int i = 1; i < BlockBloodRune.names.length; i++)
+        for (int i = 1; i < EnumBloodRune.values().length; i++)
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.BLOOD_RUNE), new ItemStack(ModBlocks.BLOOD_RUNE, 1, i)));
 
         for (int i = 0; i < ItemSoulGem.names.length; i++)

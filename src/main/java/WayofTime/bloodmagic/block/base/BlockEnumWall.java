@@ -3,23 +3,21 @@ package WayofTime.bloodmagic.block.base;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.ExtendedBlockState;
-import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockStringWall extends BlockString
+public class BlockEnumWall<E extends Enum<E> & IStringSerializable> extends BlockEnum<E>
 {
     public static final PropertyBool UP = PropertyBool.create("up");
     public static final PropertyBool NORTH = PropertyBool.create("north");
@@ -32,18 +30,19 @@ public class BlockStringWall extends BlockString
             AABB_BY_INDEX[15].setMaxY(1.5D) };
 
     // Most of this is copied from BlockWall - if there is an issue when porting, look there first.
-    public BlockStringWall(Material material, String[] values, String propName)
+    public BlockEnumWall(Material material, Class<E> enumClass, String propName)
     {
-        super(material, values, propName);
+        super(material, enumClass, propName);
     }
 
-    public BlockStringWall(Material material, String[] values)
+    public BlockEnumWall(Material material, Class<E> enumClass)
     {
-        this(material, values, "type");
+        this(material, enumClass, "type");
     }
 
     @Override
-    protected BlockStateContainer createStateContainer() {
+    protected BlockStateContainer createStateContainer()
+    {
         return new BlockStateContainer.Builder(this).add(getProperty(), UP, NORTH, EAST, SOUTH, WEST).build();
     }
 
