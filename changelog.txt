@@ -13,6 +13,7 @@ Version 2.1.0-66
 - Changed most of the BlockString blocks to a BlockEnum in order to solve a loading issue with schematics.
 - Added the entries for the Skeleton Turret Array and the Updraft Array
 - Added the Bounce Array
+- Modified the Sigil of the Phantom Bridge so it better performs with speed modifications
 
 ------------------------------------------------------
 Version 2.1.0-65
