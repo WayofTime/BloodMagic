@@ -84,6 +84,9 @@ item.BloodMagic.baseComponent.reagentBridge.name=幻影橋の試薬
 item.BloodMagic.baseComponent.reagentCompression.name=圧縮の試薬
 item.BloodMagic.baseComponent.reagentSeverance.name=断絶の試薬
 item.BloodMagic.baseComponent.reagentHolding.name=貯蔵の試薬
+item.BloodMagic.baseComponent.reagentClaw.name=鉤爪の試薬
+item.BloodMagic.baseComponent.reagentBounce.name=弾性の試薬
+item.BloodMagic.baseComponent.reagentFrost.name=寒気の試薬
 
 item.BloodMagic.baseComponent.reagentTeleposition.name=テレポートの試薬
 item.BloodMagic.baseComponent.reagentTransposition.name=転位の試薬
@@ -133,6 +136,9 @@ item.BloodMagic.sigil.holding.name=貯蔵の印章
 item.BloodMagic.sigil.holding.display=&r%s： &o&n%s
 item.BloodMagic.sigil.teleposition.name=テレポートの印章
 item.BloodMagic.sigil.transposition.name=転位の印章
+item.BloodMagic.sigil.claw.name=鉤爪の印章
+item.BloodMagic.sigil.bounce.name=弾性の印章
+item.BloodMagic.sigil.frost.name=冬の息吹の印章
 
 item.BloodMagic.livingArmour.helmet.name=生体のヘルメット
 item.BloodMagic.livingArmour.chest.name=生体のチェストプレート
@@ -261,16 +267,6 @@ tile.BloodMagic.bricks1.brick1_corrosive.name=長い腐食性の石レンガ
 tile.BloodMagic.bricks1.brick1_destructive.name=長い破壊性の石レンガ
 tile.BloodMagic.bricks1.brick1_vengeful.name=長い報復性の石レンガ
 tile.BloodMagic.bricks1.brick1_steadfast.name=長い不活性の石レンガ
-tile.BloodMagic.bricks1.brick2_raw.name=不均一な原生の石レンガ
-tile.BloodMagic.bricks1.brick2_corrosive.name=不均一な腐食性の石レンガ
-tile.BloodMagic.bricks1.brick2_destructive.name=不均一な破壊性の石レンガ
-tile.BloodMagic.bricks1.brick2_vengeful.name=不均一な報復性の石レンガ
-tile.BloodMagic.bricks1.brick2_steadfast.name=不均一な不活性の石レンガ
-tile.BloodMagic.bricks1.brick3_raw.name=原生の石レンガ
-tile.BloodMagic.bricks1.brick3_corrosive.name=腐食性の石レンガ
-tile.BloodMagic.bricks1.brick3_destructive.name=破壊性の石レンガ
-tile.BloodMagic.bricks1.brick3_vengeful.name=報復性の石レンガ
-tile.BloodMagic.bricks1.brick3_steadfast.name=不活性の石レンガ
 
 tile.BloodMagic.bricks2.smallbrick_raw.name=小さな原生の石レンガ
 tile.BloodMagic.bricks2.smallbrick_corrosive.name=小さな腐食性の石レンガ
@@ -288,6 +284,23 @@ tile.BloodMagic.bricks2.tilespecial_destructive.name=装飾された破壊性の
 tile.BloodMagic.bricks2.tilespecial_vengeful.name=装飾された報復性の石タイル
 tile.BloodMagic.bricks2.tilespecial_steadfast.name=装飾された不活性の石タイル
 
+tile.BloodMagic.inversionpillar.raw.name=原生の反転柱
+tile.BloodMagic.inversionpillar.corrosive.name=腐食性の反転柱
+tile.BloodMagic.inversionpillar.destructive.name=破壊性の反転柱
+tile.BloodMagic.inversionpillar.vengeful.name=報復性の反転柱
+tile.BloodMagic.inversionpillar.steadfast.name=不活性の反転柱
+
+tile.BloodMagic.inversionpillarend.raw_bottom.name=原生の反転柱の台座
+tile.BloodMagic.inversionpillarend.corrosive_bottom.name=腐食性の反転柱の台座
+tile.BloodMagic.inversionpillarend.destructive_bottom.name=破壊性の反転柱の台座
+tile.BloodMagic.inversionpillarend.vengeful_bottom.name=報復性の反転柱の台座
+tile.BloodMagic.inversionpillarend.steadfast_bottom.name=不活性の反転柱の台座
+tile.BloodMagic.inversionpillarend.raw_top.name=原生の反転柱の柱頭
+tile.BloodMagic.inversionpillarend.corrosive_top.name=腐食性の反転柱の柱頭
+tile.BloodMagic.inversionpillarend.destructive_top.name=破壊性の反転柱の柱頭
+tile.BloodMagic.inversionpillarend.vengeful_top.name=報復性の反転柱の柱頭
+tile.BloodMagic.inversionpillarend.steadfast_top.name=不活性の反転柱の柱頭
+
 tile.BloodMagic.demonlight.raw.name=原生デーモンアイ
 tile.BloodMagic.demonlight.corrosive.name=腐食性デーモンアイ
 tile.BloodMagic.demonlight.destructive.name=破壊性デーモンアイ
@@ -303,7 +316,7 @@ tile.BloodMagic.extras.stone_steadfast.name=不活性の石
 tile.BloodMagic.extras.polished_raw.name=磨かれた原生の石
 tile.BloodMagic.extras.polished_corrosive.name=磨かれた腐食性の石
 tile.BloodMagic.extras.polished_destructive.name=磨かれた破壊性の石
-tile.BloodMagic.extras.polished_vengeful.name=磨かれた方複製の石
+tile.BloodMagic.extras.polished_vengeful.name=磨かれた報復性の石
 tile.BloodMagic.extras.polished_steadfast.name=磨かれた不活性の石
 
 tile.BloodMagic.extras.metal_raw.name=原生デーモン合金
@@ -340,11 +353,11 @@ tile.BloodMagic.wall1.smallbrick_corrosive.name=腐食性の石レンガの小�
 tile.BloodMagic.wall1.smallbrick_destructive.name=破壊性の石レンガの小さな壁
 tile.BloodMagic.wall1.smallbrick_vengeful.name=報復性の石レンガの小さな壁
 tile.BloodMagic.wall1.smallbrick_steadfast.name=不活性の石レンガの小さな壁
-tile.BloodMagic.wall1.large_raw.name=原生の石壁
-tile.BloodMagic.wall1.large_corrosive.name=腐食性の石壁
-tile.BloodMagic.wall1.large_destructive.name=破壊性の石壁
-tile.BloodMagic.wall1.large_vengeful.name=報復性の石壁
-tile.BloodMagic.wall1.large_steadfast.name=不活性の石壁
+tile.BloodMagic.wall1.large_raw.name=原生の石の壁
+tile.BloodMagic.wall1.large_corrosive.name=腐食性の石の壁
+tile.BloodMagic.wall1.large_destructive.name=破壊性の石の壁
+tile.BloodMagic.wall1.large_vengeful.name=報復性の石の壁
+tile.BloodMagic.wall1.large_steadfast.name=不活性の石の壁
 
 tile.BloodMagic.stairs1.raw.name=原生の石の階段
 tile.BloodMagic.stairs1.corrosive.name=腐食性の石の階段
@@ -376,6 +389,7 @@ tooltip.BloodMagic.sigil.divination.currentAltarTier=祭壇のグレード： %d
 tooltip.BloodMagic.sigil.divination.currentEssence=貯蔵量： %d LP
 tooltip.BloodMagic.sigil.divination.currentAltarCapacity=最大容量： %d LP
 tooltip.BloodMagic.sigil.divination.currentTranquility=現在の鎮静効果： %d
+tooltip.BloodMagic.sigil.divination.currentInversion=現在の反転度： %d
 tooltip.BloodMagic.sigil.divination.currentBonus=結合度： +%d%%
 tooltip.BloodMagic.sigil.water.desc=&o無限の水はいかが？
 tooltip.BloodMagic.sigil.lava.desc=&o高温注意！食べられません
@@ -478,10 +492,17 @@ tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=チャージストライク
 tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=トゥルーストライク
 tooltip.BloodMagic.livingArmour.upgrade.elytra=エリトラ
 tooltip.BloodMagic.livingArmour.upgrade.nightSight=夜間技能
+tooltip.BloodMagic.livingArmour.upgrade.repair=修理
 
 
 tooltip.BloodMagic.livingArmour.upgrade.slowness=引きずる足
 tooltip.BloodMagic.livingArmour.upgrade.crippledArm=不自由な腕
+tooltip.BloodMagic.livingArmour.upgrade.slippery=摩擦力低下
+tooltip.BloodMagic.livingArmour.upgrade.battleHunger=飢餓の戦い
+tooltip.BloodMagic.livingArmour.upgrade.quenched=抑制
+tooltip.BloodMagic.livingArmour.upgrade.meleeDecrease=鈍い刃
+tooltip.BloodMagic.livingArmour.upgrade.digSlowdown=脆くなったツルハシ
+tooltip.BloodMagic.livingArmour.upgrade.stormTrooper=突撃兵
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Lv %d)
 tooltip.BloodMagic.livingArmour.upgrade.progress=%s (%d/100)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6強化ポイント： %s / %s
@@ -580,7 +601,7 @@ ritual.BloodMagic.fellingRitual=木こりの粉砕
 ritual.BloodMagic.pumpRitual=サイフォンの讃歌
 ritual.BloodMagic.altarBuilderRitual=高位祭壇構築儀式
 ritual.BloodMagic.portalRitual=組み込みゲート
-
+ritual.BloodMagic.downgradeRitual=弱化の儀式
 
 ritual.BloodMagic.waterRitual.info=マスター儀式石から水源を生成します。
 ritual.BloodMagic.lavaRitual.info=マスター儀式石から溶岩源を生成します。
@@ -653,6 +674,20 @@ ritual.BloodMagic.placerRitual.chest.info=(チェスト) 儀式がブロック�
 ritual.BloodMagic.fellingRitual.fellingRange.info=(伐採) 儀式が伐採するための原木や葉を探す範囲。
 ritual.BloodMagic.fellingRitual.chest.info=(チェスト) 儀式が蒐集物を格納するインベントリの場所。
 ritual.BloodMagic.pumpRitual.pumpRange.info=(ポンプ) 儀式が採取するための液体を探す範囲。
+
+ritual.BloodMagic.downgradeRitual.dialogue.bow.1=さて人間よ、更なる力が欲しいか...？
+ritual.BloodMagic.downgradeRitual.dialogue.bow.100=もちろん知っているだろうが、何事にも対価が必要である... 何らかの代償を支払うことなく、私はお前に更なる力を与える訳にはいかないのだ...
+ritual.BloodMagic.downgradeRitual.dialogue.bow.300=私の前に供物を差し出すことでお前は感覚を失い、長距離の投擲物を命中させることができなくなるだろう。弓矢が勝利の鍵たり得ることは、もはやないのだ。
+ritual.BloodMagic.downgradeRitual.dialogue.bow.500=だがその見返りとして、私はさらなる成長をもたらすためにお前の鎧を解放しよう... お前がすべき事は供物を捧げ、この祭壇に跪くことだ...
+ritual.BloodMagic.downgradeRitual.dialogue.quenched.1=フフフ... ごきげんよう。 より強力な力を欲しているようだな。
+ritual.BloodMagic.downgradeRitual.dialogue.quenched.100=いっぱいになった杯を再び注ぎ直すには、必ず一度空にする必要がある。これはお前にも十分理解できるだろう。
+ritual.BloodMagic.downgradeRitual.dialogue.quenched.300=次のような取引を持ちかけよう：飲むことにより技能をひとつ失い、私はお前に莫大な潜在能力を与えよう。しかしながら、この取引がお前にとって価値あるものであるかどうかは完全に別の問題だ...
+ritual.BloodMagic.downgradeRitual.dialogue.quenched.500=さあ跪け、人間よ。そして私が授けた杯を飲み干すがいい。おそらくそれはお前にとっての最後の一杯となろう。
+ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.1=ふうむ... お前の本当の望みは何なのだ？
+ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.100=もし死を超越した人間ならば、私はお前と取引をすることはできない─ その代わりに別の取引を提示することはできる...
+ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.300=ただし、私はお前に何かしらの代償を要求しよう：お前の物理的な戦闘能力だ。
+ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.500=これに契約することで、もはやお前は確実に武器を振るえなくなり、以前に振るえていたダメージのほんの僅かしか与えることができなくなる。
+ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.700=さあ、お前の選択次第だ：祭壇に跪くか、己の剣を執り続けるのか？
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=グレードを設定： %d
