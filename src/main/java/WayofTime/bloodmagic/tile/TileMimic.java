@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityPotion;
@@ -347,9 +346,13 @@ public class TileMimic extends TileInventory implements ITickable
         if (stack != null && stack.getItem() instanceof ItemBlock)
         {
             Block block = ((ItemBlock) stack.getItem()).getBlock();
-            if (block instanceof ITileEntityProvider)
+            IBlockState state = block.getStateFromMeta(stack.getItemDamage());
+            if (block.hasTileEntity(state))
             {
-                TileEntity tile = ((ITileEntityProvider) block).createNewTileEntity(world, stack.getItemDamage());
+                TileEntity tile = block.createTileEntity(world, state);
+
+                if (tile == null)
+                    return null;
 
                 if (tag != null)
                 {
