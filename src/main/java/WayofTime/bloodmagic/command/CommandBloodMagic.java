@@ -14,7 +14,7 @@ import java.util.*;
 
 public class CommandBloodMagic extends CommandBase
 {
-
+    // TODO - Move this and sub commands to CommandTreeBase in 1.11. Much cleaner impl
     private final List<String> aliases = new ArrayList<String>();
     private final Map<String, ISubCommand> subCommands = new HashMap<String, ISubCommand>();
 
