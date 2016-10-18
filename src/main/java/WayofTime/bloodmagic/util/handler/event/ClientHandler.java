@@ -46,13 +46,11 @@ import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.client.hud.HUDElement;
 import WayofTime.bloodmagic.client.render.RenderFakeBlocks;
 import WayofTime.bloodmagic.item.ItemRitualDiviner;
-import WayofTime.bloodmagic.item.ItemRitualReader;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.SigilHoldingPacketProcessor;
@@ -177,9 +175,6 @@ public class ClientHandler
 
         if (tileEntity instanceof TileMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner)
             renderRitualStones(player, event.getPartialTicks());
-
-        if (tileEntity instanceof TileMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualReader)
-            renderRitualInformation(player, event.getPartialTicks());
     }
 
     @SubscribeEvent
@@ -315,25 +310,6 @@ public class ClientHandler
     private static TextureAtlasSprite forName(TextureMap textureMap, String name, String dir)
     {
         return textureMap.registerSprite(new ResourceLocation(Constants.Mod.DOMAIN + dir + "/" + name));
-    }
-
-    private void renderRitualInformation(EntityPlayerSP player, float partialTicks)
-    {
-        World world = player.worldObj;
-        TileMasterRitualStone mrs = (TileMasterRitualStone) world.getTileEntity(minecraft.objectMouseOver.getBlockPos());
-        Ritual ritual = mrs.getCurrentRitual();
-
-        if (ritual != null)
-        {
-            List<String> ranges = ritual.getListOfRanges();
-            for (String range : ranges)
-            {
-                AreaDescriptor areaDescriptor = ritual.getBlockRange(range);
-
-                for (BlockPos pos : areaDescriptor.getContainedPositions(minecraft.objectMouseOver.getBlockPos()))
-                    RenderFakeBlocks.drawFakeBlock(ritualStoneBlank, pos.getX(), pos.getY(), pos.getZ(), world);
-            }
-        }
     }
 
     private void renderRitualStones(EntityPlayerSP player, float partialTicks)
