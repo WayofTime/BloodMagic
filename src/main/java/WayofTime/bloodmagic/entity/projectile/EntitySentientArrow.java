@@ -13,6 +13,8 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 
+import java.util.Locale;
+
 public class EntitySentientArrow extends EntityTippedArrow
 {
     public double reimbursedAmountOnHit = 0;
@@ -63,7 +65,7 @@ public class EntitySentientArrow extends EntityTippedArrow
         super.readEntityFromNBT(tag);
 
         reimbursedAmountOnHit = tag.getDouble("reimbursement");
-        type = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
+        type = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
     }
 
     @Override

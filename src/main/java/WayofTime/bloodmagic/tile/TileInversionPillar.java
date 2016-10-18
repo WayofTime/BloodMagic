@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.tile;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -284,7 +285,7 @@ public class TileInversionPillar extends TileTicking
             type = EnumDemonWillType.DEFAULT;
         }
 
-        type = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
+        type = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
         currentInversion = tag.getDouble("currentInversion");
         currentInfectionRadius = tag.getInteger("currentInfectionRadius");
         consecutiveFailedChecks = tag.getInteger("consecutiveFailedChecks");

@@ -33,6 +33,8 @@ import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.registry.ModItems;
 
+import java.util.Locale;
+
 public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentientTool//, IMeshProvider
 {
     public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000 };
@@ -141,7 +143,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
             return EnumDemonWillType.DEFAULT;
         }
 
-        return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
+        return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
     }
 
     public double getDamageModifier(EnumDemonWillType type, int willBracket)

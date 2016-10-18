@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.entity.mob;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nullable;
 
@@ -457,7 +458,7 @@ public class EntitySentientSpecter extends EntityDemonBase
             type = EnumDemonWillType.DEFAULT;
         } else
         {
-            type = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
+            type = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
         }
 
         wasGivenSentientArmour = tag.getBoolean("sentientArmour");

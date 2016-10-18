@@ -2,10 +2,8 @@ package WayofTime.bloodmagic.api.soul;
 
 import java.util.Locale;
 
-import lombok.Getter;
 import net.minecraft.util.IStringSerializable;
 
-@Getter
 public enum EnumDemonWillType implements IStringSerializable
 {
     DEFAULT("default"),

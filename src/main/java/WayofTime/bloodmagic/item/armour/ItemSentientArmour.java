@@ -1,9 +1,6 @@
 package WayofTime.bloodmagic.item.armour;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -480,7 +477,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             return EnumDemonWillType.DEFAULT;
         }
 
-        return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
+        return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
     }
 
     public void setCurrentType(EnumDemonWillType type, ItemStack stack)

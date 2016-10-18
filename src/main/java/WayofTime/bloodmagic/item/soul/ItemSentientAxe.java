@@ -1,9 +1,6 @@
 package WayofTime.bloodmagic.item.soul;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import javax.annotation.Nullable;
 
@@ -263,7 +260,7 @@ public class ItemSentientAxe extends ItemAxe implements IDemonWillWeapon, IMeshP
             return EnumDemonWillType.DEFAULT;
         }
 
-        return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
+        return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
     }
 
     public void setCurrentType(ItemStack stack, EnumDemonWillType type)

@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item.soul;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nullable;
 
@@ -255,7 +256,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
             return EnumDemonWillType.DEFAULT;
         }
 
-        return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
+        return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
     }
 
     public void setCurrentType(EnumDemonWillType type, ItemStack soulGemStack)

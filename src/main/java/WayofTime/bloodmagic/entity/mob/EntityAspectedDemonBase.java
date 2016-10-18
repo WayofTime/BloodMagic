@@ -14,6 +14,8 @@ import WayofTime.bloodmagic.gson.Serializers;
 
 import com.google.common.base.Predicate;
 
+import java.util.Locale;
+
 public abstract class EntityAspectedDemonBase extends EntityDemonBase
 {
     protected static final DataParameter<EnumDemonWillType> TYPE = EntityDataManager.<EnumDemonWillType>createKey(EntityAspectedDemonBase.class, Serializers.WILL_TYPE_SERIALIZER);
@@ -223,7 +225,7 @@ public abstract class EntityAspectedDemonBase extends EntityDemonBase
             setType(EnumDemonWillType.DEFAULT);
         } else
         {
-            setType(EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE)));
+            setType(EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH)));
         }
     }
 
