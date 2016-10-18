@@ -93,7 +93,7 @@ public class BlockInversionPillar extends BlockEnumContainer<EnumSubWillType> im
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         for (int i = 0; i < this.getTypes().length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
+            ret.add(new ImmutablePair<Integer, String>(i, "static=false,type=" + this.getTypes()[i]));
         return ret;
     }
 
