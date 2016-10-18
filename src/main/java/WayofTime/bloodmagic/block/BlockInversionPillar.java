@@ -98,9 +98,13 @@ public class BlockInversionPillar extends BlockEnumContainer<EnumSubWillType> im
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
-        return new TileInversionPillar(EnumDemonWillType.values()[meta % 5]);
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileInversionPillar(state.getValue(getProperty()).getType());
     }
 
     protected BlockStateContainer createStateContainer()

@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.block.enums;
 
 import java.util.Locale;
 
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumSubWillType implements IStringSerializable
@@ -22,5 +23,9 @@ public enum EnumSubWillType implements IStringSerializable
     public String getName()
     {
         return this.toString();
+    }
+
+    public EnumDemonWillType getType() {
+        return EnumDemonWillType.valueOf(name());
     }
 }

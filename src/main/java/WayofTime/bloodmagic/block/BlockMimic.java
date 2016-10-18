@@ -237,8 +237,12 @@ public class BlockMimic extends BlockEnumContainer<EnumMimic> implements IVarian
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileMimic();
     }
 

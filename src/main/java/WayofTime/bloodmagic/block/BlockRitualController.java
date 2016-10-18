@@ -109,9 +109,13 @@ public class BlockRitualController extends BlockEnumContainer<EnumRitualControll
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta)
-    {
-        return meta == 0 ? (new TileMasterRitualStone()) : (new TileImperfectRitualStone());
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return state.getValue(getProperty()) == EnumRitualController.MASTER ? new TileMasterRitualStone() : new TileImperfectRitualStone();
     }
 
     // IVariantProvider
