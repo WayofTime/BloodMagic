@@ -2,12 +2,14 @@ package WayofTime.bloodmagic.proxy;
 
 import java.awt.Color;
 
+import WayofTime.bloodmagic.client.key.KeyBindings;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
@@ -118,6 +120,10 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileRoutingNode.class, new RenderItemRoutingNode());
         ClientRegistry.bindTileEntitySpecialRenderer(TileDemonCrucible.class, new RenderDemonCrucible());
         ClientRegistry.bindTileEntitySpecialRenderer(TileMimic.class, new RenderMimic());
+
+        // Initialize key-binds during startup so they load correctly
+        for (KeyBindings key : KeyBindings.values())
+            key.getKey();
     }
 
     @Override
