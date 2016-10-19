@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
-import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileMimic;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -21,7 +20,7 @@ public class DataProviderMimic implements IWailaDataProvider
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
         TileMimic mimic = (TileMimic) accessor.getTileEntity();
-        return mimic != null && mimic.getStackInSlot(0) != null ? mimic.getStackInSlot(0) : new ItemStack(ModBlocks.MIMIC, 1, mimic.getBlockMetadata());
+        return mimic != null && mimic.getStackInSlot(0) != null ? mimic.getStackInSlot(0) : accessor.getStack();
     }
 
     @Override
