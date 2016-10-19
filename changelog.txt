@@ -14,6 +14,15 @@ Version 2.1.0-66
 - Added the entries for the Skeleton Turret Array and the Updraft Array
 - Added the Bounce Array
 - Modified the Sigil of the Phantom Bridge so it better performs with speed modifications
+- Added the ability to use Mimic Blocks containing a valid Altar Component to work with the altar (#945)
+  - Note: If using a Blood Rune, you do not get the ability of said rune. It just counts as a valid block.
+- Fixed `/bloodmagic network get NAME` using the wrong localization (#955)
+- Fixed Mimic Blocks causing an NPE with some Tile Entities (#951)
+- Fixed a massive FPS drop when looking at a Master Ritual Stone while holding a Ritual Tinkerer (#950)
+- Fixed an occasional crash when looking at a Mimic block with WAILA installed (#949)
+- Fixed the displayed Lesser Tartaric Gem recipe in the Guide (#947)
+- Fixed Dagger of Sacrifice one-shotting bosses. It now just doesn't work (#932)
+- Fixed controls re-binding after each startup (#922)
 
 ------------------------------------------------------
 Version 2.1.0-65
