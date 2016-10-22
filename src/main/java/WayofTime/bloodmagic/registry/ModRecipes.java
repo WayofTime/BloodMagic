@@ -29,11 +29,13 @@ import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectAttractor;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBinding;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBounce;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectMovement;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectSigil;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectSkeletonTurret;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectUpdraft;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.compress.CompressionRegistry;
+import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.recipe.AlchemyTableCustomRecipe;
 import WayofTime.bloodmagic.api.recipe.ShapedBloodOrbRecipe;
 import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
@@ -300,6 +302,9 @@ public class ModRecipes
         AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.SLIME_BALL), new ItemStack(Items.REDSTONE), new AlchemyArrayEffectBounce("bounce"), new SingleAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BounceArray.png")));
 
         AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.ARROW), new ItemStack(Items.FEATHER), new AlchemyArrayEffectSkeletonTurret("skeletonTurret"), new DualAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SkeletonTurret1.png"), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SkeletonTurret2.png")));
+
+        AlchemyArrayRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_FASTMINER), new ItemStack(Items.IRON_PICKAXE), new AlchemyArrayEffectSigil("fastMiner", (ISigil) ModItems.SIGIL_FAST_MINER), new SingleAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/FastMinerSigil.png")));
+
     }
 
     public static void addCompressionHandlers()

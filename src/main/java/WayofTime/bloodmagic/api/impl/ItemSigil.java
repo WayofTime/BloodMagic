@@ -5,6 +5,8 @@ import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import lombok.Getter;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 /**
  * Base class for all (static) sigils.
@@ -34,5 +36,17 @@ public class ItemSigil extends ItemBindable implements ISigil
 
         stack.getTagCompound().setBoolean(Constants.NBT.UNUSABLE, unusable);
         return stack;
+    }
+
+    @Override
+    public boolean performArrayEffect(World world, BlockPos pos)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean hasArrayEffect()
+    {
+        return false;
     }
 }

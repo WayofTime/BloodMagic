@@ -23,6 +23,7 @@ Version 2.1.0-66
 - Fixed the displayed Lesser Tartaric Gem recipe in the Guide (#947)
 - Fixed Dagger of Sacrifice one-shotting bosses. It now just doesn't work (#932)
 - Fixed controls re-binding after each startup (#922)
+- Added an alchemy array, the Array of the Fast Miner
 
 ------------------------------------------------------
 Version 2.1.0-65
