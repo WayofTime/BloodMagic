@@ -159,9 +159,13 @@ public class AltarRecipeRegistry
             if (tierCheck.ordinal() < minTier.ordinal())
                 return false;
 
-            for (ItemStackWrapper stack : input)
+            for (ItemStackWrapper stack : input) {
                 if (comparedStack.isItemEqual(stack.toStack()))
                     return true;
+
+                if (comparedStack.getItem() == stack.item && stack.meta == OreDictionary.WILDCARD_VALUE)
+                    return true;
+            }
 
             return false;
         }
