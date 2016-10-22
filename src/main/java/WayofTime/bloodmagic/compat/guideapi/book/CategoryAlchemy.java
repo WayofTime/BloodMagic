@@ -83,6 +83,21 @@ public class CategoryAlchemy
         bouncePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bounce" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "bounce"), new EntryText(bouncePages, TextHelper.localize(keyBase + "bounce"), true));
 
+        List<IPage> buffPages = new ArrayList<IPage>();
+
+        buffPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "buff" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "buff"), new EntryText(buffPages, TextHelper.localize(keyBase + "buff"), true));
+
+        List<IPage> fastMinerPages = new ArrayList<IPage>();
+
+        PageAlchemyArray fastMinerRecipePage = BookUtils.getAlchemyPage("fastMiner");
+        if (fastMinerRecipePage != null)
+        {
+            fastMinerPages.add(fastMinerRecipePage);
+        }
+        fastMinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "fastMiner" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "fastMiner"), new EntryText(fastMinerPages, TextHelper.localize(keyBase + "fastMiner"), true));
+
         for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
         {
             for (IPage page : entry.getValue().pageList)
