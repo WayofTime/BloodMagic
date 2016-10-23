@@ -26,6 +26,7 @@ import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.saving.SoulNetwork;
+import WayofTime.bloodmagic.api.soul.DemonWillHolder;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
@@ -80,6 +81,7 @@ public class RitualGreenGrove extends Ritual
 
         List<EnumDemonWillType> willConfig = masterRitualStone.getActiveWillConfig();
 
+        DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, pos);
         double corrosiveWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.CORROSIVE, willConfig);
         double rawWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.DEFAULT, willConfig);
         double steadfastWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.STEADFAST, willConfig);
@@ -95,6 +97,12 @@ public class RitualGreenGrove extends Ritual
         double vengefulDrain = 0;
 
         AreaDescriptor growingRange = getBlockRange(GROW_RANGE);
+
+        int maxGrowthVolume = getMaxVolumeForRange(GROW_RANGE, willConfig, holder);
+        if (!growingRange.isWithinRange(getMaxVerticalRadiusForRange(GROW_RANGE, willConfig, holder), getMaxHorizontalRadiusForRange(GROW_RANGE, willConfig, holder)) || (maxGrowthVolume != 0 && growingRange.getVolume() > maxGrowthVolume))
+        {
+            return;
+        }
 
         for (BlockPos newPos : growingRange.getContainedPositions(pos))
         {
@@ -233,7 +241,7 @@ public class RitualGreenGrove extends Ritual
     {
         if (will > 0)
         {
-            return 0.5;
+            return 0.3 + will / 200;
         }
 
         return defaultGrowthChance;
@@ -256,6 +264,51 @@ public class RitualGreenGrove extends Ritual
     }
 
     @Override
+    public int getMaxVolumeForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder)
+    {
+        if (GROW_RANGE.equals(range) && activeTypes.contains(EnumDemonWillType.DESTRUCTIVE))
+        {
+            double destructiveWill = holder.getWill(EnumDemonWillType.DESTRUCTIVE);
+            if (destructiveWill > 0)
+            {
+                return 81 + (int) Math.pow(destructiveWill / 4, 1.5);
+            }
+        }
+
+        return volumeRangeMap.get(range);
+    }
+
+    @Override
+    public int getMaxVerticalRadiusForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder)
+    {
+        if (GROW_RANGE.equals(range) && activeTypes.contains(EnumDemonWillType.DESTRUCTIVE))
+        {
+            double destructiveWill = holder.getWill(EnumDemonWillType.DESTRUCTIVE);
+            if (destructiveWill > 0)
+            {
+                return (int) (4 + destructiveWill / 10d);
+            }
+        }
+
+        return verticalRangeMap.get(range);
+    }
+
+    @Override
+    public int getMaxHorizontalRadiusForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder)
+    {
+        if (GROW_RANGE.equals(range) && activeTypes.contains(EnumDemonWillType.DESTRUCTIVE))
+        {
+            double destructiveWill = holder.getWill(EnumDemonWillType.DESTRUCTIVE);
+            if (destructiveWill > 0)
+            {
+                return (int) (4 + destructiveWill / 10d);
+            }
+        }
+
+        return horizontalRangeMap.get(range);
+    }
+
+    @Override
     public int getRefreshCost()
     {
         return 20; //TODO: Need to find a way to balance this
@@ -275,7 +328,7 @@ public class RitualGreenGrove extends Ritual
     @Override
     public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player)
     {
-        return new ITextComponent[] { new TextComponentTranslation(this.getUnlocalizedName() + ".info"), new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info") };
+        return new ITextComponent[] { new TextComponentTranslation(this.getUnlocalizedName() + ".info"), new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".destructive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".vengeful.info") };
     }
 
     @Override

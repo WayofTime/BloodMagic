@@ -618,7 +618,9 @@ ritual.BloodMagic.crushingRitual.steadfast.info=(Steadfast) Causes all blocks th
 ritual.BloodMagic.crushingRitual.corrosive.info=(Corrosive) All blocks are broken to be processed with a form of cutting fluid. Overrides Silk Touch where applicable.
 ritual.BloodMagic.greenGroveRitual.corrosive.info=(Corrosive) Entities within range are attacked by nearby plants, leeching away their life.
 ritual.BloodMagic.greenGroveRitual.default.info=(Raw) Increases the speed of all of the ritual operations depending on the total Will in the Aura.
+ritual.BloodMagic.greenGroveRitual.vengeful.info=(Vengeful) Increases the rate that a growth tick is successful.
 ritual.BloodMagic.greenGroveRitual.steadfast.info=(Steadfast) Seeds are replanted and blocks are hydrated within the Hydration range.
+ritual.BloodMagic.greenGroveRitual.destructive.info=(Destructive) Growing range is increased based on total Will.
 
 ritual.BloodMagic.fullStomachRitual.info=Takes food from the linked chest and fills the player's saturation with it.
 ritual.BloodMagic.interdictionRitual.info=Pushes all mobs within its area away from the master ritual stone.

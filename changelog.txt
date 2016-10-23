@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.1.0-67
+------------------------------------------------------
+- Added the Destructive Will effect to the Ritual of the Green Grove. This ritual now is done~
+
+------------------------------------------------------
 Version 2.1.0-66
 ------------------------------------------------------
 - Made it so that when you acquire a Living Armour Upgrade from a Tome, it raises the corresponding Stat Tracker up to that upgrade level.

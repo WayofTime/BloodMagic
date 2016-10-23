@@ -25,7 +25,6 @@ import WayofTime.bloodmagic.ritual.RitualHarvest;
 import WayofTime.bloodmagic.ritual.RitualInterdiction;
 import WayofTime.bloodmagic.ritual.RitualJumping;
 import WayofTime.bloodmagic.ritual.RitualLava;
-import WayofTime.bloodmagic.ritual.RitualLivingArmourDowngrade;
 import WayofTime.bloodmagic.ritual.RitualMagnetic;
 import WayofTime.bloodmagic.ritual.RitualMeteor;
 import WayofTime.bloodmagic.ritual.RitualPlacer;
