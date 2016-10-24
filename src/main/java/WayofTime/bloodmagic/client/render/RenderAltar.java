@@ -26,8 +26,8 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
 {
     public static Minecraft mc = Minecraft.getMinecraft();
     public static ResourceLocation resource = new ResourceLocation("bloodmagic", "textures/blocks/lifeEssenceStill.png");
-    public static float minHeight = 0.6497f;
-    public static float maxHeight = 0.79f;
+    public static float minHeight = 0.499f;
+    public static float maxHeight = 0.745f;
 
     @Override
     public void renderTileEntityAt(TileAltar tileAltar, double x, double y, double z, float partialTicks, int destroyStage)
