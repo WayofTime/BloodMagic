@@ -30,7 +30,7 @@ public class RitualFeatheredKnife extends Ritual
         addBlockRange(DAMAGE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-15, -20, -15), 31, 41, 31));
 
         setMaximumVolumeAndDistanceOfRange(ALTAR_RANGE, 0, 10, 15);
-        setMaximumVolumeAndDistanceOfRange(DAMAGE_RANGE, 0, 15, 15);
+        setMaximumVolumeAndDistanceOfRange(DAMAGE_RANGE, 0, 25, 15);
     }
 
     @Override
