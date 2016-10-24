@@ -1,18 +1,20 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.altar.BloodAltar;
-import WayofTime.bloodmagic.api.altar.EnumAltarTier;
-import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import javax.annotation.Nonnull;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import WayofTime.bloodmagic.altar.BloodAltar;
+import WayofTime.bloodmagic.api.altar.EnumAltarTier;
+import WayofTime.bloodmagic.api.altar.IBloodAltar;
 
-public class TileAltar extends TileInventory implements IBloodAltar, ITickable, IFluidHandler
+import com.sun.istack.internal.Nullable;
+
+public class TileAltar extends TileInventory implements IBloodAltar, ITickable
 {
     private BloodAltar bloodAltar;
 
@@ -60,43 +62,6 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
     public boolean isItemValidForSlot(int slot, ItemStack itemstack)
     {
         return slot == 0;
-    }
-
-    /* IFluidHandler */
-    @Override
-    public int fill(EnumFacing from, FluidStack resource, boolean doFill)
-    {
-        return bloodAltar.fill(from, resource, doFill);
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
-    {
-        return bloodAltar.drain(from, resource, doDrain);
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
-    {
-        return bloodAltar.drain(from, maxDrain, doDrain);
-    }
-
-    @Override
-    public boolean canFill(EnumFacing from, Fluid fluid)
-    {
-        return bloodAltar.canFill(from, fluid);
-    }
-
-    @Override
-    public boolean canDrain(EnumFacing from, Fluid fluid)
-    {
-        return bloodAltar.canDrain(from, fluid);
-    }
-
-    @Override
-    public FluidTankInfo[] getTankInfo(EnumFacing from)
-    {
-        return bloodAltar.getTankInfo(from);
     }
 
     @Override
@@ -233,5 +198,28 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
     public boolean setCurrentTierDisplayed(EnumAltarTier altarTier)
     {
         return bloodAltar.setCurrentTierDisplayed(altarTier);
+    }
+
+    @Override
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)
+    {
+        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+        {
+            return true;
+        }
+
+        return super.hasCapability(capability, facing);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing)
+    {
+        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+        {
+            return (T) bloodAltar;
+        }
+
+        return super.getCapability(capability, facing);
     }
 }

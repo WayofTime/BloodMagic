@@ -62,6 +62,7 @@ public class RitualLava extends Ritual
         World world = masterRitualStone.getWorldObj();
         SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
         int currentEssence = network.getCurrentEssence();
+        int lpDrain = 0;
 
         if (currentEssence < getRefreshCost())
         {
@@ -70,10 +71,11 @@ public class RitualLava extends Ritual
         }
 
         BlockPos pos = masterRitualStone.getBlockPos();
-        int maxEffects = currentEssence / getRefreshCost();
-        int totalEffects = 0;
-
         List<EnumDemonWillType> willConfig = masterRitualStone.getActiveWillConfig();
+
+        double rawWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.DEFAULT, willConfig);
+        double rawDrained = 0;
+
         DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, pos);
         AreaDescriptor lavaRange = getBlockRange(LAVA_RANGE);
 
@@ -88,13 +90,20 @@ public class RitualLava extends Ritual
             IBlockState state = world.getBlockState(newPos);
             if (world.isAirBlock(newPos) || Utils.isFlowingLiquid(world, newPos, state))
             {
+                int lpCost = getLPCostForRawWill(rawWill);
+                if (currentEssence < lpCost)
+                {
+                    break;
+                }
                 world.setBlockState(newPos, Blocks.FLOWING_LAVA.getDefaultState());
-                totalEffects++;
-            }
-
-            if (totalEffects >= maxEffects)
-            {
-                break;
+                currentEssence -= lpCost;
+                lpDrain += lpCost;
+                if (rawWill > 0)
+                {
+                    double drain = getWillCostForRawWill(rawWill);
+                    rawWill -= drain;
+                    rawDrained += drain;
+                }
             }
         }
 
@@ -201,7 +210,12 @@ public class RitualLava extends Ritual
             }
         }
 
-        network.syphon(getRefreshCost() * totalEffects);
+        if (rawDrained > 0)
+        {
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrained, true);
+        }
+
+        network.syphon(lpDrain);
     }
 
     @Override
@@ -291,5 +305,15 @@ public class RitualLava extends Ritual
     public float getCorrosiveDamageForWill(double corrosiveWill)
     {
         return (float) (1 + corrosiveWill * 0.05);
+    }
+
+    public int getLPCostForRawWill(double raw)
+    {
+        return Math.max((int) (500 - raw), 0);
+    }
+
+    public double getWillCostForRawWill(double raw)
+    {
+        return Math.min(1, raw / 500);
     }
 }

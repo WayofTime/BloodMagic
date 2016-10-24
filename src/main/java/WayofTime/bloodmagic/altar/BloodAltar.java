@@ -12,11 +12,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -788,7 +789,7 @@ public class BloodAltar implements IFluidHandler
     }
 
     @Override
-    public int fill(EnumFacing from, FluidStack resource, boolean doFill)
+    public int fill(FluidStack resource, boolean doFill)
     {
         if (resource == null || resource.getFluid() != BlockLifeEssence.getLifeEssence())
         {
@@ -836,17 +837,17 @@ public class BloodAltar implements IFluidHandler
     }
 
     @Override
-    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
+    public FluidStack drain(FluidStack resource, boolean doDrain)
     {
         if (resource == null || !resource.isFluidEqual(fluidOutput))
         {
             return null;
         }
-        return drain(from, resource.amount, doDrain);
+        return drain(resource.amount, doDrain);
     }
 
     @Override
-    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
+    public FluidStack drain(int maxDrain, boolean doDrain)
     {
         if (fluidOutput == null)
         {
@@ -868,20 +869,8 @@ public class BloodAltar implements IFluidHandler
     }
 
     @Override
-    public boolean canFill(EnumFacing from, Fluid fluid)
+    public IFluidTankProperties[] getTankProperties()
     {
-        return fluid == BlockLifeEssence.getLifeEssence();
-    }
-
-    @Override
-    public boolean canDrain(EnumFacing from, Fluid fluid)
-    {
-        return fluid == BlockLifeEssence.getLifeEssence();
-    }
-
-    @Override
-    public FluidTankInfo[] getTankInfo(EnumFacing from)
-    {
-        return new FluidTankInfo[] { new FluidTankInfo(fluid, capacity) };
+        return new IFluidTankProperties[] { new FluidTankPropertiesWrapper(new FluidTank(fluid, capacity)) };
     }
 }
