@@ -605,6 +605,12 @@ ritual.BloodMagic.downgradeRitual=Downgrade Ritual
 
 ritual.BloodMagic.waterRitual.info=Generates a source of water from the master ritual stone.
 ritual.BloodMagic.lavaRitual.info=Generates a source of lava from the master ritual stone.
+ritual.BloodMagic.lavaRitual.default.info=(Raw) Decreases the LP cost of placing lava and allows lava to be placed insided of a linked container.
+ritual.BloodMagic.lavaRitual.corrosive.info=(Corrosive) Entities within range that are immune to fire are damaged severely.
+ritual.BloodMagic.lavaRitual.destructive.info=(Destructive) Lava placement range is increased based on total Will.
+ritual.BloodMagic.lavaRitual.vengeful.info=(Vengeful) Entities within range have Fire Fuse applied to them.
+ritual.BloodMagic.lavaRitual.steadfast.info=(Steadfast) Players within a designated range have Fire Resistance applied to them.
+
 ritual.BloodMagic.greenGroveRitual.info=Grows crops within its area.
 ritual.BloodMagic.jumpRitual.info=Causes entities to leap up into the air.
 ritual.BloodMagic.wellOfSufferingRitual.info=Attacks mobs within its damage zone and puts the LP into a nearby blood altar.
@@ -644,6 +650,8 @@ ritual.BloodMagic.meteorRitual.info=Consumes an item inside of its item range to
 ritual.BloodMagic.waterRitual.waterRange.info=(Water) The area that the ritual will place water source blocks.
 ritual.BloodMagic.lavaRitual.lavaRange.info=(Lava) The area that the ritual will place lava source blocks.
 ritual.BloodMagic.lavaRitual.fireFuse.info=(Vengeful) Entities in this range are afflicted by Fire Fuse.
+ritual.BloodMagic.lavaRitual.fireResist.info=(Steadfast) Players in this range have Fire Resist applied.
+ritual.BloodMagic.lavaRitual.fireDamage.info=(Corrosive) Entities within this range that are immune to fire damage are hurt proportional to the Will.
 ritual.BloodMagic.greenGroveRitual.growing.info=(Growth) The area that the ritual will grow plants in.
 ritual.BloodMagic.greenGroveRitual.leech.info=(Corrosive) Entities in this area have their life drained to grow nearby crops.
 ritual.BloodMagic.greenGroveRitual.hydrate.info=(Steadfast) Blocks within this range are rehydrated into farmland, and seeds within the area are planted nearby.

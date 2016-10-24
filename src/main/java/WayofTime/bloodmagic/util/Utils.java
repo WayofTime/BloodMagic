@@ -93,6 +93,11 @@ public class Utils
         return null;
     }
 
+    public static boolean isImmuneToFireDamage(EntityLivingBase entity)
+    {
+        return entity.isImmuneToFire() || entity.isPotionActive(MobEffects.FIRE_RESISTANCE);
+    }
+
     public static boolean isPlayerBesideSolidBlockFace(EntityPlayer player)
     {
         World world = player.worldObj;

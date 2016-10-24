@@ -7,10 +7,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
@@ -29,20 +33,32 @@ public class RitualLava extends Ritual
 {
     public static final String LAVA_RANGE = "lavaRange";
     public static final String FIRE_FUSE_RANGE = "fireFuse";
+    public static final String FIRE_RESIST_RANGE = "fireResist";
+    public static final String FIRE_DAMAGE_RANGE = "fireDamage";
     public static final double vengefulWillDrain = 1;
+    public static final double steadfastWillDrain = 0.5;
+    public static final double corrosiveWillDrain = 0.2;
+
+    public int timer = 0;
+    public static final int corrosiveRefreshTime = 20;
 
     public RitualLava()
     {
         super("ritualLava", 0, 10000, "ritual." + Constants.Mod.MODID + ".lavaRitual");
         addBlockRange(LAVA_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
         addBlockRange(FIRE_FUSE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, -2, -2), 5));
+        addBlockRange(FIRE_RESIST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 1));
+        addBlockRange(FIRE_DAMAGE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 1));
         setMaximumVolumeAndDistanceOfRange(LAVA_RANGE, 9, 3, 3);
         setMaximumVolumeAndDistanceOfRange(FIRE_FUSE_RANGE, 0, 10, 10);
+        setMaximumVolumeAndDistanceOfRange(FIRE_RESIST_RANGE, 0, 10, 10);
+        setMaximumVolumeAndDistanceOfRange(FIRE_DAMAGE_RANGE, 0, 10, 10);
     }
 
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
+        timer++;
         World world = masterRitualStone.getWorldObj();
         SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
         int currentEssence = network.getCurrentEssence();
@@ -82,9 +98,10 @@ public class RitualLava extends Ritual
             }
         }
 
-        network.syphon(getRefreshCost() * totalEffects);
-
         double vengefulWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.VENGEFUL, willConfig);
+        double steadfastWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.STEADFAST, willConfig);
+        double corrosiveWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.CORROSIVE, willConfig);
+
         if (vengefulWill >= vengefulWillDrain)
         {
             double vengefulDrained = 0;
@@ -102,7 +119,7 @@ public class RitualLava extends Ritual
 
                 if (entity instanceof EntityPlayer)
                 {
-//                    continue;
+                    continue;
                 }
 
                 if (!entity.isPotionActive(ModPotions.fireFuse))
@@ -119,6 +136,72 @@ public class RitualLava extends Ritual
                 WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrained, true);
             }
         }
+
+        if (steadfastWill >= steadfastWillDrain)
+        {
+            double steadfastDrained = 0;
+            AreaDescriptor resistRange = getBlockRange(FIRE_RESIST_RANGE);
+
+            int duration = getFireResistForWill(steadfastWill);
+
+            AxisAlignedBB resistArea = resistRange.getAABB(pos);
+            List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, resistArea);
+
+            for (EntityPlayer entity : entities)
+            {
+                if (steadfastWill < steadfastWillDrain)
+                {
+                    break;
+                }
+                if (!entity.isPotionActive(MobEffects.FIRE_RESISTANCE) || (entity.getActivePotionEffect(MobEffects.FIRE_RESISTANCE).getDuration() < 2))
+                {
+                    entity.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 100, 0));
+
+                    steadfastDrained += steadfastWillDrain;
+                    steadfastWill -= steadfastWillDrain;
+                }
+            }
+
+            if (steadfastDrained > 0)
+            {
+                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastDrained, true);
+            }
+        }
+
+        if (timer % corrosiveRefreshTime == 0 && corrosiveWill >= corrosiveWillDrain)
+        {
+            double corrosiveDrained = 0;
+            AreaDescriptor resistRange = getBlockRange(FIRE_DAMAGE_RANGE);
+
+            float damage = getCorrosiveDamageForWill(corrosiveWill);
+
+            AxisAlignedBB damageArea = resistRange.getAABB(pos);
+            List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, damageArea);
+
+            for (EntityLivingBase entity : entities)
+            {
+                if (corrosiveWill < corrosiveWillDrain)
+                {
+                    break;
+                }
+
+                if (!entity.isDead && entity.hurtTime <= 0 && Utils.isImmuneToFireDamage(entity))
+                {
+                    if (entity.attackEntityFrom(BloodMagicAPI.getDamageSource(), damage))
+                    {
+                        corrosiveDrained += corrosiveWillDrain;
+                        corrosiveWill -= corrosiveWillDrain;
+                    }
+                }
+            }
+
+            if (corrosiveDrained > 0)
+            {
+                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrained, true);
+            }
+        }
+
+        network.syphon(getRefreshCost() * totalEffects);
     }
 
     @Override
@@ -131,6 +214,12 @@ public class RitualLava extends Ritual
     public int getRefreshCost()
     {
         return 500;
+    }
+
+    @Override
+    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player)
+    {
+        return new ITextComponent[] { new TextComponentTranslation(this.getUnlocalizedName() + ".info"), new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".destructive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".vengeful.info") };
     }
 
     @Override
@@ -192,5 +281,15 @@ public class RitualLava extends Ritual
         }
 
         return horizontalRangeMap.get(range);
+    }
+
+    public int getFireResistForWill(double steadfastWill)
+    {
+        return (int) (200 + steadfastWill * 3);
+    }
+
+    public float getCorrosiveDamageForWill(double corrosiveWill)
+    {
+        return (float) (1 + corrosiveWill * 0.05);
     }
 }
