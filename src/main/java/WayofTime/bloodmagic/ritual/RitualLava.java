@@ -9,11 +9,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
@@ -35,6 +40,8 @@ public class RitualLava extends Ritual
     public static final String FIRE_FUSE_RANGE = "fireFuse";
     public static final String FIRE_RESIST_RANGE = "fireResist";
     public static final String FIRE_DAMAGE_RANGE = "fireDamage";
+    public static final String LAVA_TANK_RANGE = "lavaTank";
+
     public static final double vengefulWillDrain = 1;
     public static final double steadfastWillDrain = 0.5;
     public static final double corrosiveWillDrain = 0.2;
@@ -49,10 +56,13 @@ public class RitualLava extends Ritual
         addBlockRange(FIRE_FUSE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, -2, -2), 5));
         addBlockRange(FIRE_RESIST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 1));
         addBlockRange(FIRE_DAMAGE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 1));
+        addBlockRange(LAVA_TANK_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
+
         setMaximumVolumeAndDistanceOfRange(LAVA_RANGE, 9, 3, 3);
         setMaximumVolumeAndDistanceOfRange(FIRE_FUSE_RANGE, 0, 10, 10);
         setMaximumVolumeAndDistanceOfRange(FIRE_RESIST_RANGE, 0, 10, 10);
         setMaximumVolumeAndDistanceOfRange(FIRE_DAMAGE_RANGE, 0, 10, 10);
+        setMaximumVolumeAndDistanceOfRange(LAVA_TANK_RANGE, 1, 10, 10);
     }
 
     @Override
@@ -103,6 +113,34 @@ public class RitualLava extends Ritual
                     double drain = getWillCostForRawWill(rawWill);
                     rawWill -= drain;
                     rawDrained += drain;
+                }
+            }
+        }
+
+        if (rawWill > 0)
+        {
+            AreaDescriptor chestRange = getBlockRange(LAVA_TANK_RANGE);
+            TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
+            double drain = getWillCostForRawWill(rawWill);
+            int lpCost = getLPCostForRawWill(rawWill);
+
+            if (rawWill >= drain && currentEssence >= lpCost)
+            {
+                if (tile != null)
+                {
+                    if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null))
+                    {
+                        IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+                        double filled = handler.fill(new FluidStack(FluidRegistry.LAVA, 1000), true);
+
+                        double ratio = filled / 1000;
+
+                        rawWill -= drain * ratio;
+                        rawDrained += drain * ratio;
+
+                        currentEssence -= Math.ceil(lpCost * ratio);
+                        lpDrain += Math.ceil(lpCost * ratio);
+                    }
                 }
             }
         }

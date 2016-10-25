@@ -2,7 +2,7 @@
 Version 2.1.0-67
 ------------------------------------------------------
 - Added the Destructive Will effect to the Ritual of the Green Grove. This ritual now is done~
-- Added more augmentations for the Lava Ritual.
+- Finished the Augments for the Serenade of the Nether.
 - Implemented a new model for the Blood Altar to be more in-line with the rest of the mod (Thanks, wiiv!)
 - Made the Blood Altar respect the new capability system for fluid management.
 
