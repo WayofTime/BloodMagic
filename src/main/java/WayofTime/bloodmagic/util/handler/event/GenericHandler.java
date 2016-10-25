@@ -83,7 +83,8 @@ import com.google.common.base.Strings;
 @Handler
 public class GenericHandler
 {
-    public Map<EntityPlayer, Double> bounceMap = new HashMap<EntityPlayer, Double>();
+    public static Map<EntityPlayer, Double> bounceMap = new HashMap<EntityPlayer, Double>();
+    public static Map<EntityPlayer, Integer> filledHandMap = new HashMap<EntityPlayer, Integer>();
 
     @SubscribeEvent
     public void onEntityFall(LivingFallEvent event)
@@ -115,6 +116,21 @@ public class GenericHandler
         if (event.phase == TickEvent.Phase.END && bounceMap.containsKey(event.player))
         {
             event.player.motionY = bounceMap.remove(event.player);
+        }
+
+        if (event.phase == TickEvent.Phase.END)
+        {
+            if (filledHandMap.containsKey(event.player))
+            {
+                int value = filledHandMap.get(event.player) - 1;
+                if (value <= 0)
+                {
+                    filledHandMap.remove(event.player);
+                } else
+                {
+                    filledHandMap.put(event.player, value);
+                }
+            }
         }
     }
 
