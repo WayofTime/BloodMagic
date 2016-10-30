@@ -1,25 +1,50 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.tile.TileAltar;
-import net.minecraft.entity.EntityLivingBase;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
+import WayofTime.bloodmagic.registry.ModPotions;
 
 public class RitualFeatheredKnife extends Ritual
 {
     public static final String ALTAR_RANGE = "altar";
     public static final String DAMAGE_RANGE = "damage";
+
+    public static double rawWillDrain = 0.05;
+    public static double destructiveWillDrain = 0.05;
+    public static double corrosiveWillThreshold = 10;
+    public static double steadfastWillThreshold = 10;
+    public static double vengefulWillThreshold = 10;
+
+    public int refreshTime = 20;
+    public static int defaultRefreshTime = 20;
 
     public BlockPos altarOffsetPos = new BlockPos(0, 0, 0); //TODO: Save!
 
@@ -48,6 +73,18 @@ public class RitualFeatheredKnife extends Ritual
 
         BlockPos pos = masterRitualStone.getBlockPos();
 
+        List<EnumDemonWillType> willConfig = masterRitualStone.getActiveWillConfig();
+
+        double corrosiveWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.CORROSIVE, willConfig);
+        double destructiveWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.DESTRUCTIVE, willConfig);
+        double rawWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.DEFAULT, willConfig);
+        double steadfastWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.STEADFAST, willConfig);
+        double vengefulWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.VENGEFUL, willConfig);
+
+        refreshTime = getRefreshTimeForRawWill(rawWill);
+
+        boolean consumeRawWill = rawWill >= rawWillDrain && refreshTime != defaultRefreshTime;
+
         int maxEffects = currentEssence / getRefreshCost();
         int totalEffects = 0;
 
@@ -57,12 +94,12 @@ public class RitualFeatheredKnife extends Ritual
 
         AreaDescriptor altarRange = getBlockRange(ALTAR_RANGE);
 
-        if (!altarRange.isWithinArea(altarOffsetPos) || !(tile instanceof TileAltar))
+        if (!altarRange.isWithinArea(altarOffsetPos) || !(tile instanceof IBloodAltar))
         {
             for (BlockPos newPos : altarRange.getContainedPositions(pos))
             {
                 TileEntity nextTile = world.getTileEntity(newPos);
-                if (nextTile instanceof TileAltar)
+                if (nextTile instanceof IBloodAltar)
                 {
                     tile = nextTile;
                     altarOffsetPos = newPos.subtract(pos);
@@ -73,23 +110,74 @@ public class RitualFeatheredKnife extends Ritual
             }
         }
 
-        if (tile instanceof TileAltar)
+        boolean useIncense = corrosiveWill >= corrosiveWillThreshold;
+
+        if (tile instanceof IBloodAltar)
         {
-            TileAltar tileAltar = (TileAltar) tile;
+            IBloodAltar tileAltar = (IBloodAltar) tile;
 
             AreaDescriptor damageRange = getBlockRange(DAMAGE_RANGE);
             AxisAlignedBB range = damageRange.getAABB(pos);
 
+            double destructiveDrain = 0;
+
             List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, range);
 
-            for (EntityLivingBase player : entities)
+            for (EntityPlayer player : entities)
             {
-                float health = player.getHealth();
-                if (health > 6)
-                {
-                    player.setHealth(health - 1);
+                float healthThreshold = steadfastWill >= steadfastWillThreshold ? 0.7f : 0.3f;
 
-                    tileAltar.sacrificialDaggerCall(ConfigHandler.sacrificialDaggerConversion, false);
+                if (vengefulWill >= vengefulWillThreshold && !player.getUniqueID().toString().equals(masterRitualStone.getOwner()))
+                {
+                    healthThreshold = 0.1f;
+                }
+
+                float health = player.getHealth();
+                float maxHealth = player.getMaxHealth();
+
+                float sacrificedHealth = 1;
+                double lpModifier = 1;
+
+                if ((health / player.getMaxHealth() > healthThreshold) && ((useIncense && !player.isPotionActive(ModPotions.soulFray)) || !useIncense))
+                {
+                    if (useIncense)
+                    {
+                        double incenseAmount = PlayerSacrificeHelper.getPlayerIncense(player);
+
+                        sacrificedHealth = health - maxHealth * healthThreshold;
+                        lpModifier *= PlayerSacrificeHelper.getModifier(incenseAmount);
+
+                        PlayerSacrificeHelper.setPlayerIncense(player, 0);
+                        player.addPotionEffect(new PotionEffect(ModPotions.soulFray, PlayerSacrificeHelper.soulFrayDuration));
+                    }
+
+                    if (destructiveWill >= destructiveWillDrain * sacrificedHealth)
+                    {
+                        lpModifier *= getLPModifierForWill(destructiveWill);
+                        destructiveWill -= destructiveWillDrain * sacrificedHealth;
+                        destructiveDrain += destructiveWillDrain * sacrificedHealth;
+                    }
+
+                    if (LivingArmour.hasFullSet(player))
+                    {
+                        ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                        LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                        if (armour != null)
+                        {
+                            LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.selfSacrifice", chestStack);
+
+                            if (upgrade instanceof LivingArmourUpgradeSelfSacrifice)
+                            {
+                                double modifier = ((LivingArmourUpgradeSelfSacrifice) upgrade).getSacrificeModifier();
+
+                                lpModifier *= (1 + modifier);
+                            }
+                        }
+                    }
+
+                    player.setHealth(health - sacrificedHealth);
+
+                    tileAltar.sacrificialDaggerCall((int) (ConfigHandler.sacrificialDaggerConversion * lpModifier * sacrificedHealth), false);
 
                     totalEffects++;
 
@@ -97,17 +185,27 @@ public class RitualFeatheredKnife extends Ritual
                     {
                         break;
                     }
+
                 }
+            }
+
+            if (destructiveDrain > 0)
+            {
+                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, destructiveDrain, true);
             }
         }
 
         network.syphon(getRefreshCost() * totalEffects);
+        if (totalEffects > 0 && consumeRawWill)
+        {
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawWillDrain, true);
+        }
     }
 
     @Override
     public int getRefreshTime()
     {
-        return 20;
+        return refreshTime;
     }
 
     @Override
@@ -136,5 +234,26 @@ public class RitualFeatheredKnife extends Ritual
     public Ritual getNewCopy()
     {
         return new RitualFeatheredKnife();
+    }
+
+    @Override
+    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player)
+    {
+        return new ITextComponent[] { new TextComponentTranslation(this.getUnlocalizedName() + ".info"), new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".destructive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".vengeful.info") };
+    }
+
+    public double getLPModifierForWill(double destructiveWill)
+    {
+        return 1 + destructiveWill * 0.2 / 100;
+    }
+
+    public int getRefreshTimeForRawWill(double rawWill)
+    {
+        if (rawWill >= rawWillDrain)
+        {
+            return 10;
+        }
+
+        return defaultRefreshTime;
     }
 }

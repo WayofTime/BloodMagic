@@ -627,6 +627,11 @@ ritual.BloodMagic.greenGroveRitual.default.info=(Raw) Increases the speed of all
 ritual.BloodMagic.greenGroveRitual.vengeful.info=(Vengeful) Increases the rate that a growth tick is successful.
 ritual.BloodMagic.greenGroveRitual.steadfast.info=(Steadfast) Seeds are replanted and blocks are hydrated within the Hydration range.
 ritual.BloodMagic.greenGroveRitual.destructive.info=(Destructive) Growing range is increased based on total Will.
+ritual.BloodMagic.featheredKnifeRitual.default.info=(Raw) Increases the speed of the ritual based on the total Will in the Aura.
+ritual.BloodMagic.featheredKnifeRitual.destructive.info=(Destructive) Increases the yield of the ritual based on total Will.
+ritual.BloodMagic.featheredKnifeRitual.vengeful.info=(Vengeful) Sets the minimum health for sacrificing to 10%%. Overridden by Steadfast for the Owner if active.
+ritual.BloodMagic.featheredKnifeRitual.corrosive.info=(Corrosive) Uses the player's Incense to increase the yield.
+ritual.BloodMagic.featheredKnifeRitual.steadfast.info=(Steadfast) Sets the minimum health for sacrificing from 30%% to 70%%.
 
 ritual.BloodMagic.fullStomachRitual.info=Takes food from the linked chest and fills the player's saturation with it.
 ritual.BloodMagic.interdictionRitual.info=Pushes all mobs within its area away from the master ritual stone.
@@ -698,7 +703,7 @@ ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.1=Hmmm... What is it that
 ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.100=If it is strength beyond mortal men, then I cannot provide that - instead, I can offer you different deal...
 ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.300=I can expand the capabilities of your armour, allowing you to achieve greater heights. However, I will need something from you in return: your strength in physical combat.
 ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.500=By agreeing to this, you will no longer be able to swing a weapon with as much certainty, only able to do a fraction of the damage you could before.
-ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.700=So, the choise is yours: will you kneel at this altar, or will you still take up your sword?
+ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.700=So, the choice is yours: will you kneel at this altar, or will you still take up your sword?
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
