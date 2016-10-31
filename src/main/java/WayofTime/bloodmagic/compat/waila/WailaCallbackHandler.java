@@ -22,6 +22,7 @@ public class WailaCallbackHandler
     public static void callbackRegister(IWailaRegistrar registrar)
     {
         registrar.registerBodyProvider(new DataProviderBloodAltar(), BlockAltar.class);
+        registrar.registerNBTProvider(new DataProviderBloodAltar(), BlockAltar.class);
         registrar.registerBodyProvider(new DataProviderTeleposer(), BlockTeleposer.class);
         registrar.registerBodyProvider(new DataProviderRitualController(), BlockRitualController.class);
         registrar.registerBodyProvider(new DataProviderAlchemyArray(), BlockAlchemyArray.class);
