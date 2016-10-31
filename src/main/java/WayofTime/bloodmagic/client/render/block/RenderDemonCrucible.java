@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.client.render;
+package WayofTime.bloodmagic.client.render.block;
 
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
 import net.minecraft.client.Minecraft;

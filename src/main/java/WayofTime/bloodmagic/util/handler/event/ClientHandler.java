@@ -49,7 +49,7 @@ import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.client.hud.HUDElement;
-import WayofTime.bloodmagic.client.render.RenderFakeBlocks;
+import WayofTime.bloodmagic.client.render.block.RenderFakeBlocks;
 import WayofTime.bloodmagic.item.ItemRitualDiviner;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
@@ -369,7 +369,7 @@ public class ClientHandler
                     break;
                 }
 
-                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);
+                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
             }
         }
 
@@ -433,7 +433,7 @@ public class ClientHandler
                     break;
                 }
 
-                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);
+                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
             }
         }
 

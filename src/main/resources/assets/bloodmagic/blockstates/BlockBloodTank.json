@@ -1,0 +1,92 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "tier": {
+	  "0": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "1": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "2": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "3": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "4": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "5": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "6": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "7": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "8": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "9": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "10": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "11": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "12": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "13": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "14": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  },
+	  "15": {
+		"textures": {
+	      "all": "bloodmagic:blocks/BloodTank"
+	    }
+	  }
+	}
+  }
+}

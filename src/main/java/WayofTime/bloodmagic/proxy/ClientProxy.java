@@ -3,13 +3,14 @@ package WayofTime.bloodmagic.proxy;
 import java.awt.Color;
 
 import WayofTime.bloodmagic.client.key.KeyBindings;
+import WayofTime.bloodmagic.client.render.block.*;
+import WayofTime.bloodmagic.tile.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
@@ -36,11 +37,6 @@ import WayofTime.bloodmagic.client.helper.ShaderHelper;
 import WayofTime.bloodmagic.client.hud.HUDElementDemonWillAura;
 import WayofTime.bloodmagic.client.hud.HUDElementHolding;
 import WayofTime.bloodmagic.client.render.LayerBloodElytra;
-import WayofTime.bloodmagic.client.render.RenderAlchemyArray;
-import WayofTime.bloodmagic.client.render.RenderAltar;
-import WayofTime.bloodmagic.client.render.RenderDemonCrucible;
-import WayofTime.bloodmagic.client.render.RenderItemRoutingNode;
-import WayofTime.bloodmagic.client.render.block.RenderMimic;
 import WayofTime.bloodmagic.client.render.entity.BloodLightRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.CorruptedChickenRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.CorruptedSheepRenderFactory;
@@ -63,11 +59,6 @@ import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.tile.TileAlchemyArray;
-import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.tile.TileDemonCrucible;
-import WayofTime.bloodmagic.tile.TileInversionPillar;
-import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
@@ -120,6 +111,7 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileRoutingNode.class, new RenderItemRoutingNode());
         ClientRegistry.bindTileEntitySpecialRenderer(TileDemonCrucible.class, new RenderDemonCrucible());
         ClientRegistry.bindTileEntitySpecialRenderer(TileMimic.class, new RenderMimic());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileBloodTank.class, new RenderBloodTank());
 
         // Initialize key-binds during startup so they load correctly
         for (KeyBindings key : KeyBindings.values())

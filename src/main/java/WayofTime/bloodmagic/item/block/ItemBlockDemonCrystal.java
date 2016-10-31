@@ -12,6 +12,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Locale;
+
 public class ItemBlockDemonCrystal extends ItemBlock
 {
     public ItemBlockDemonCrystal(Block block)
@@ -23,7 +25,7 @@ public class ItemBlockDemonCrystal extends ItemBlock
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return super.getUnlocalizedName(stack) + EnumDemonWillType.values()[stack.getItemDamage()];
+        return super.getUnlocalizedName(stack) + EnumDemonWillType.values()[stack.getItemDamage()].toString().toLowerCase(Locale.ENGLISH);
     }
 
     @Override

@@ -250,11 +250,11 @@ tile.BloodMagic.path.obsidiantile.name=Tiled Obsidian Path
 tile.BloodMagic.dimensionalPortal.name=Dimensional Portal
 tile.BloodMagic.bloodTank.name=Blood Tank
 
-tile.BloodMagic.demonCrystalDEFAULT.name=Demon Will Crystal Cluster
-tile.BloodMagic.demonCrystalCORROSIVE.name=Corrosive Will Crystal Cluster
-tile.BloodMagic.demonCrystalDESTRUCTIVE.name=Destructive Will Crystal Cluster
-tile.BloodMagic.demonCrystalVENGEFUL.name=Vengeful Will Crystal Cluster
-tile.BloodMagic.demonCrystalSTEADFAST.name=Steadfast Will Crystal Cluster
+tile.BloodMagic.demonCrystal.default.name=Demon Will Crystal Cluster
+tile.BloodMagic.demonCrystal.corrosive.name=Corrosive Will Crystal Cluster
+tile.BloodMagic.demonCrystal.destructive.name=Destructive Will Crystal Cluster
+tile.BloodMagic.demonCrystal.vengeful.name=Vengeful Will Crystal Cluster
+tile.BloodMagic.demonCrystal.steadfast.name=Steadfast Will Crystal Cluster
 
 tile.BloodMagic.mimic.nohitbox.name=Ethereal Opaque Mimic Block
 tile.BloodMagic.mimic.solidopaque.name=Opaque Mimic Block
@@ -376,6 +376,7 @@ tooltip.BloodMagic.orb.owner=Added by: %s
 tooltip.BloodMagic.currentOwner=Current owner: %s
 tooltip.BloodMagic.currentTier=Current tier: %d
 tooltip.BloodMagic.config.disabled=Currently disabled in the Config
+tooltip.BloodMagic.tier=Tier %d
 
 tooltip.BloodMagic.activated=Activated
 tooltip.BloodMagic.deactivated=Deactivated

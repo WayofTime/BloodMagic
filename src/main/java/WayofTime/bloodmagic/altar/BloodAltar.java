@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
@@ -53,7 +53,7 @@ public class BloodAltar implements IFluidHandler
     protected FluidStack fluidInput = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);
     private EnumAltarTier altarTier = EnumAltarTier.ONE;
     private AltarUpgrade upgrade;
-    private int capacity = FluidContainerRegistry.BUCKET_VOLUME * 10;
+    private int capacity = Fluid.BUCKET_VOLUME * 10;
     private FluidStack fluid = new FluidStack(BloodMagicAPI.getLifeEssence(), 0);
     private int liquidRequired; // mB
     private boolean canBeFilled;
@@ -69,7 +69,7 @@ public class BloodAltar implements IFluidHandler
     private int accelerationUpgrades;
     private boolean isUpgraded;
     private boolean isResultBlock;
-    private int bufferCapacity = FluidContainerRegistry.BUCKET_VOLUME;
+    private int bufferCapacity = Fluid.BUCKET_VOLUME;
     private int progress;
     private int lockdownDuration;
     private int demonBloodDuration;
@@ -352,13 +352,15 @@ public class BloodAltar implements IFluidHandler
         if (!isActive)
             progress = 0;
 
-        if (tileAltar.getStackInSlot(0) != null)
+        ItemStack input = tileAltar.getStackInSlot(0);
+
+        if (input != null)
         {
             // Do recipes
-            AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(tileAltar.getStackInSlot(0));
+            AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(input);
             if (recipe != null)
             {
-                if (recipe.doesRequiredItemMatch(tileAltar.getStackInSlot(0), altarTier))
+                if (recipe.doesRequiredItemMatch(input, altarTier))
                 {
                     this.isActive = true;
                     this.recipe = recipe;
@@ -395,7 +397,7 @@ public class BloodAltar implements IFluidHandler
             {
                 BlockPos newPos = pos.offset(facing);
                 IBlockState block = world.getBlockState(newPos);
-                block.getBlock().neighborChanged(block, world, newPos, block.getBlock());
+                block.getBlock().onNeighborChange(world, pos, newPos);
             }
         }
         if (internalCounter % (Math.max(20 - this.accelerationUpgrades, 1)) == 0)
@@ -438,7 +440,9 @@ public class BloodAltar implements IFluidHandler
             return;
         }
 
-        if (tileAltar.getStackInSlot(0) == null)
+        ItemStack input = tileAltar.getStackInSlot(0);
+
+        if (input == null)
             return;
 
         World world = tileAltar.getWorld();
@@ -450,7 +454,7 @@ public class BloodAltar implements IFluidHandler
         if (!canBeFilled)
         {
             boolean hasOperated = false;
-            int stackSize = tileAltar.getStackInSlot(0).stackSize;
+            int stackSize = input.stackSize;
 
             if (totalCharge > 0)
             {
@@ -517,7 +521,7 @@ public class BloodAltar implements IFluidHandler
         {
             ItemStack returnedItem = tileAltar.getStackInSlot(0);
 
-            if (!(returnedItem.getItem() instanceof IBloodOrb))
+            if (returnedItem == null || !(returnedItem.getItem() instanceof IBloodOrb))
                 return;
 
             IBloodOrb item = (IBloodOrb) (returnedItem.getItem());
@@ -590,11 +594,11 @@ public class BloodAltar implements IFluidHandler
             this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrade.getOrbCapacityCount());
             this.chargingFrequency = Math.max(20 - upgrade.getAccelerationCount(), 1);
             this.chargingRate = (int) (10 * upgrade.getChargingCount() * (1 + consumptionMultiplier / 2));
-            this.maxCharge = (int) (FluidContainerRegistry.BUCKET_VOLUME * Math.max(0.5 * capacityMultiplier, 1) * upgrade.getChargingCount());
+            this.maxCharge = (int) (Fluid.BUCKET_VOLUME * Math.max(0.5 * capacityMultiplier, 1) * upgrade.getChargingCount());
         }
 
-        this.capacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 10 * capacityMultiplier);
-        this.bufferCapacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 1 * capacityMultiplier);
+        this.capacity = (int) (Fluid.BUCKET_VOLUME * 10 * capacityMultiplier);
+        this.bufferCapacity = (int) (Fluid.BUCKET_VOLUME * 1 * capacityMultiplier);
 
         if (this.fluid.amount > this.capacity)
             this.fluid.amount = this.capacity;

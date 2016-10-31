@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.client.render;
+package WayofTime.bloodmagic.client.render.block;
 
 import WayofTime.bloodmagic.api.altar.AltarComponent;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
@@ -38,7 +38,8 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
-        this.renderFluid(getWorld(), level);
+        if (level > 0)
+            this.renderFluid(getWorld(), level);
         this.renderItem(tileAltar.getWorld(), inputStack, partialTicks);
         GlStateManager.popMatrix();
 
@@ -173,7 +174,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
                     break;
                 }
 
-                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);
+                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
             }
         }
 

@@ -88,7 +88,12 @@ public class DataProviderBloodAltar implements IWailaDataProvider
 
                 if (hasSeer)
                 {
-                    currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.seer.currentAltarProgress.percent", ((int) ((double) altar.getProgress() / (double) altar.getLiquidRequired() * 100)) + "%"));
+                    int progress = accessor.getNBTData().getCompoundTag("bloodAltar").getInteger(Constants.NBT.ALTAR_PROGRESS);
+                    int liquidRequired = accessor.getNBTData().getCompoundTag("bloodAltar").getInteger(Constants.NBT.ALTAR_LIQUID_REQ);
+                    int craftAmount = 1;
+                    if (accessor.getNBTData().getTagList("Items", 10).get(0).getId() == 10)
+                        craftAmount = ((NBTTagCompound)accessor.getNBTData().getTagList("Items", 10).get(0)).getByte("Count");
+                    currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.seer.currentAltarProgress.percent", (int) (((double) progress / (double) liquidRequired * 100) / craftAmount) + "%"));
                 }
             }
         } else
@@ -108,7 +113,9 @@ public class DataProviderBloodAltar implements IWailaDataProvider
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos)
     {
-        return null;
+        if (te != null)
+            te.writeToNBT(tag);
+        return tag;
     }
 
     public static boolean hasStack(ItemStack stack, EntityPlayer player)
