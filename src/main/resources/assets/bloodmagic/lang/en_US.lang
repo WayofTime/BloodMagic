@@ -114,6 +114,10 @@ item.BloodMagic.demonCrystal.crystalVengeful.name=Vengeful Will Crystal
 item.BloodMagic.demonCrystal.crystalSteadfast.name=Steadfast Will Crystal
 
 item.BloodMagic.monsterSoul.base.name=Demonic Will
+item.BloodMagic.monsterSoul.corrosive.name=Corrosive Demonic Will
+item.BloodMagic.monsterSoul.destructive.name=Destructive Demonic Will
+item.BloodMagic.monsterSoul.vengeful.name=Vengeful Demonic Will
+item.BloodMagic.monsterSoul.steadfast.name=Steadfast Demonic Will
 
 item.BloodMagic.sigil.air.name=Air Sigil
 item.BloodMagic.sigil.bloodLight.name=Sigil of the Blood Lamp
