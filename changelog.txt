@@ -6,6 +6,7 @@ Version 2.1.0-67
 - Implemented a new model for the Blood Altar to be more in-line with the rest of the mod (Thanks, wiiv!)
 - Made the Blood Altar respect the new capability system for fluid management.
 - Finished the Augments for the Ritual of the Feathered Knife.
+- Finished the Augments for the Ritual of the Crusher.
 - Changed the Ritual of the Feathered Knife so it respects the Tough Palms Living Armour Upgrade.
 - Fixed the Ritual of the Feathered Knife so that its health threshold is percent-based.
 - Made the aspected Sentient Tools drop their corresponding Will type on killing enemies.
