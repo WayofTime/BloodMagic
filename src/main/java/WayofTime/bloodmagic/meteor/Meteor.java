@@ -34,17 +34,19 @@ public class Meteor
         this.maxWeight = maxWeight;
     }
 
-    public void generateMeteor(World world, BlockPos pos, IBlockState fillerBlock)
+    public void generateMeteor(World world, BlockPos pos, IBlockState fillerBlock, double radiusModifier, double explosionModifier, double fillerChance)
     {
-        world.newExplosion(null, pos.getX(), pos.getY(), pos.getZ(), explosionStrength, true, true);
+        world.newExplosion(null, pos.getX(), pos.getY(), pos.getZ(), (float) (explosionStrength * explosionModifier), true, true);
+        int radius = (int) Math.ceil(getRadius() * radiusModifier);
+        double floatingRadius = getRadius() * radiusModifier;
 
-        for (int i = -getRadius(); i <= getRadius(); i++)
+        for (int i = -radius; i <= radius; i++)
         {
-            for (int j = -getRadius(); j <= getRadius(); j++)
+            for (int j = -radius; j <= radius; j++)
             {
-                for (int k = -getRadius(); k <= getRadius(); k++)
+                for (int k = -radius; k <= radius; k++)
                 {
-                    if (i * i + j * j + k * k > (getRadius() + 0.5) * (getRadius() + 0.5))
+                    if (i * i + j * j + k * k > (floatingRadius + 0.5) * (floatingRadius + 0.5))
                     {
                         continue;
                     }
@@ -54,15 +56,19 @@ public class Meteor
 
                     if (world.isAirBlock(newPos) || Utils.isBlockLiquid(state))
                     {
-                        IBlockState placedState = getRandomOreFromComponents(fillerBlock);
-                        world.setBlockState(newPos, placedState);
+                        IBlockState placedState = getRandomOreFromComponents(fillerBlock, fillerChance);
+                        if (placedState != null)
+                        {
+                            world.setBlockState(newPos, placedState);
+                        }
                     }
                 }
             }
         }
     }
 
-    public IBlockState getRandomOreFromComponents(IBlockState fillerBlock)
+    //fillerChance is the chance that the filler block will NOT be placed
+    public IBlockState getRandomOreFromComponents(IBlockState fillerBlock, double fillerChance)
     {
         int goal = RAND.nextInt(getMaxWeight());
 
@@ -77,11 +83,11 @@ public class Meteor
                     return state;
                 } else
                 {
-                    return fillerBlock;
+                    return RAND.nextDouble() > fillerChance ? fillerBlock : null;
                 }
             }
         }
 
-        return fillerBlock;
+        return RAND.nextDouble() > fillerChance ? fillerBlock : null;
     }
 }

@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -17,8 +19,9 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
+import WayofTime.bloodmagic.api.util.helper.PurificationHelper;
+import WayofTime.bloodmagic.client.IVariantProvider;
 
 public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
 {
@@ -47,16 +50,22 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
             return false;
 
         String entityName = target.getClass().getSimpleName();
-        int lifeEssence = 500;
+        int lifeEssenceRatio = 25;
 
         if (ConfigHandler.entitySacrificeValues.containsKey(entityName))
-            lifeEssence = ConfigHandler.entitySacrificeValues.get(entityName);
+            lifeEssenceRatio = ConfigHandler.entitySacrificeValues.get(entityName);
 
         if (BloodMagicAPI.getEntitySacrificeValues().containsKey(entityName))
-            lifeEssence = BloodMagicAPI.getEntitySacrificeValues().get(entityName);
+            lifeEssenceRatio = BloodMagicAPI.getEntitySacrificeValues().get(entityName);
 
-        if (lifeEssence <= 0)
+        if (lifeEssenceRatio <= 0)
             return false;
+
+        int lifeEssence = (int) (lifeEssenceRatio * target.getHealth());
+        if (target instanceof EntityAnimal)
+        {
+            lifeEssence = (int) (lifeEssence * (1 + PurificationHelper.getCurrentPurity((EntityAnimal) target)));
+        }
 
         if (PlayerSacrificeHelper.findAndFillAltar(attacker.worldObj, target, lifeEssence, true))
         {

@@ -20,6 +20,10 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
     protected int ticksInAir = 0;
     protected int maxTicksInAir = 600;
 
+    protected double radiusModifier = 1;
+    protected double explosionModifier = 1;
+    protected double fillerChance = 0;
+
     @Setter
     public ItemStack meteorStack;
 
@@ -28,7 +32,7 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
         super(world);
     }
 
-    public EntityMeteor(World world, double x, double y, double z, double velX, double velY, double velZ)
+    public EntityMeteor(World world, double x, double y, double z, double velX, double velY, double velZ, double radiusModifier, double explosionModifier, double fillerChance)
     {
         super(world);
         this.setSize(1F, 1F);
@@ -36,6 +40,9 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
         motionX = velX;
         motionY = velY;
         motionZ = velZ;
+        this.radiusModifier = radiusModifier;
+        this.explosionModifier = explosionModifier;
+        this.fillerChance = fillerChance;
     }
 
     @Override
@@ -88,7 +95,7 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
 
     public void generateMeteor(BlockPos pos)
     {
-        MeteorRegistry.generateMeteorForItem(meteorStack, worldObj, pos, Blocks.STONE.getDefaultState());
+        MeteorRegistry.generateMeteorForItem(meteorStack, worldObj, pos, Blocks.STONE.getDefaultState(), radiusModifier, explosionModifier, fillerChance);
     }
 
     public DamageSource getDamageSource()
@@ -102,7 +109,9 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
         super.writeEntityToNBT(nbt);
         nbt.setInteger(Constants.NBT.PROJECTILE_TICKS_IN_AIR, ticksInAir);
         nbt.setInteger(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR, maxTicksInAir);
-
+        nbt.setDouble("radiusModifier", radiusModifier);
+        nbt.setDouble("explosionModifier", explosionModifier);
+        nbt.setDouble("fillerChance", fillerChance);
         if (meteorStack != null)
         {
             meteorStack.writeToNBT(nbt);
@@ -115,6 +124,9 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
         super.readEntityFromNBT(nbt);
         ticksInAir = nbt.getInteger(Constants.NBT.PROJECTILE_TICKS_IN_AIR);
         maxTicksInAir = nbt.getInteger(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR);
+        radiusModifier = nbt.getDouble("radiusModifier");
+        explosionModifier = nbt.getDouble("explosionModifier");
+        fillerChance = nbt.getDouble("fillerChance");
         meteorStack = ItemStack.loadItemStackFromNBT(nbt);
     }
 

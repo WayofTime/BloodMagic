@@ -10,6 +10,9 @@ Version 2.1.0-67
 - Changed the Ritual of the Feathered Knife so it respects the Tough Palms Living Armour Upgrade.
 - Fixed the Ritual of the Feathered Knife so that its health threshold is percent-based.
 - Made the aspected Sentient Tools drop their corresponding Will type on killing enemies.
+- Made it so peaceful animals provide more LP by default (to encourage creating your own farm).
+- Increased the effectiveness of animals for the Gathering of the Forsaken Souls ritual by a factor of 4.
+- Added the framework for the Purification Altar.
 
 ------------------------------------------------------
 Version 2.1.0-66
