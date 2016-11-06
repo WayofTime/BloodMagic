@@ -128,7 +128,7 @@ public class MeteorConfigHandler
         diamondMeteorList.add(new MeteorComponent(250, "oreDiamond"));
         diamondMeteorList.add(new MeteorComponent(180, "oreEmerald"));
         diamondMeteorList.add(new MeteorComponent(50, "oreRedstone"));
-        diamondMeteorList.add(new MeteorComponent(400, "oreCoal"));
+        diamondMeteorList.add(new MeteorComponent(400, "minecraft:diamond_block"));
 
         Meteor diamondMeteor = new Meteor(new ItemStack(Blocks.DIAMOND_BLOCK), diamondMeteorList, 10, 3, 1000);
         goldMeteor.setVersion(3);
