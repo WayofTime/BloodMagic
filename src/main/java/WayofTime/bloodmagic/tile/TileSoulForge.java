@@ -79,7 +79,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
             return;
         }
 
-        double soulsInGem = getWill();
+        double soulsInGem = getWill(EnumDemonWillType.DEFAULT);
 
         List<ItemStack> inputList = new ArrayList<ItemStack>();
 
@@ -107,7 +107,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
                         {
                             if (!worldObj.isRemote && soulsInGem >= recipe.getMinimumSouls())
                             {
-                                consumeSouls(requiredSouls);
+                                consumeSouls(EnumDemonWillType.DEFAULT, requiredSouls);
                             }
                         }
 
@@ -189,39 +189,39 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
         return false;
     }
 
-    public double getWill()
+    public double getWill(EnumDemonWillType type)
     {
         ItemStack soulStack = getStackInSlot(soulSlot);
 
         if (soulStack != null)
         {
-            if (soulStack.getItem() instanceof IDemonWill)
+            if (soulStack.getItem() instanceof IDemonWill && ((IDemonWill) soulStack.getItem()).getType(soulStack) == type)
             {
                 IDemonWill soul = (IDemonWill) soulStack.getItem();
-                return soul.getWill(soulStack);
+                return soul.getWill(type, soulStack);
             }
 
             if (soulStack.getItem() instanceof IDemonWillGem)
             {
                 IDemonWillGem soul = (IDemonWillGem) soulStack.getItem();
-                return soul.getWill(EnumDemonWillType.DEFAULT, soulStack);
+                return soul.getWill(type, soulStack);
             }
         }
 
         return 0;
     }
 
-    public double consumeSouls(double requested)
+    public double consumeSouls(EnumDemonWillType type, double requested)
     {
         ItemStack soulStack = getStackInSlot(soulSlot);
 
         if (soulStack != null)
         {
-            if (soulStack.getItem() instanceof IDemonWill)
+            if (soulStack.getItem() instanceof IDemonWill && ((IDemonWill) soulStack.getItem()).getType(soulStack) == type)
             {
                 IDemonWill soul = (IDemonWill) soulStack.getItem();
-                double souls = soul.drainWill(soulStack, requested);
-                if (soul.getWill(soulStack) <= 0)
+                double souls = soul.drainWill(type, soulStack, requested);
+                if (soul.getWill(type, soulStack) <= 0)
                 {
                     setInventorySlotContents(soulSlot, null);
                 }
@@ -231,7 +231,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
             if (soulStack.getItem() instanceof IDemonWillGem)
             {
                 IDemonWillGem soul = (IDemonWillGem) soulStack.getItem();
-                return soul.drainWill(EnumDemonWillType.DEFAULT, soulStack, requested, true);
+                return soul.drainWill(type, soulStack, requested, true);
             }
         }
 

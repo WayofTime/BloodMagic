@@ -228,7 +228,7 @@ public class RitualGreenGrove extends Ritual
                 corrosiveDrain += corrosiveWillDrain;
             }
 
-            if (corrosiveWillDrain > 0)
+            if (corrosiveDrain > 0)
             {
                 WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrain, true);
             }

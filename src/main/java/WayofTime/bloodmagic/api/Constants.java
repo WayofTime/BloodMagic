@@ -33,6 +33,7 @@ public class Constants
         public static final String DIRECTION = "direction";
         public static final String REAGENT_TANKS = "reagentTanks";
         public static final String CURRENT_INCENSE = "BM:CurrentIncense";
+        public static final String CURRENT_PURITY = "BM:CurrentPurity";
         public static final String EMPTY = "Empty";
         public static final String OUTPUT_AMOUNT = "outputAmount";
         public static final String INPUT_AMOUNT = "inputAmount";

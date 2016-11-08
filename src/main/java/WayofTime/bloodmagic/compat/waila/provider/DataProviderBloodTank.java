@@ -46,7 +46,7 @@ public class DataProviderBloodTank implements IWailaDataProvider
                 currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.tier", bloodTank.getBlockMetadata() + 1));
                 currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.capacity") + ": " + bloodTank.getCapacity() + "mB");
 
-                NBTTagCompound tag = bloodTank.getUpdateTag().getCompoundTag(Constants.NBT.TANK);
+                NBTTagCompound tag = accessor.getNBTData().getCompoundTag(Constants.NBT.TANK);
                 if (!Strings.isNullOrEmpty(tag.getString("FluidName")) && FluidStack.loadFluidStackFromNBT(tag) != null)
                 {
                     currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.type") + ": " + FluidStack.loadFluidStackFromNBT(tag).getLocalizedName());

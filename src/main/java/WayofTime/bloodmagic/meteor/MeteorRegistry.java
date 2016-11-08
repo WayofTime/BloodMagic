@@ -41,12 +41,12 @@ public class MeteorRegistry
         return wrapper != null ? meteorMap.get(wrapper) : null;
     }
 
-    public static void generateMeteorForItem(ItemStack stack, World world, BlockPos pos, IBlockState fillerBlock)
+    public static void generateMeteorForItem(ItemStack stack, World world, BlockPos pos, IBlockState fillerBlock, double radiusModifier, double explosionModifier, double fillerChance)
     {
         Meteor holder = getMeteorForItem(stack);
         if (holder != null)
         {
-            holder.generateMeteor(world, pos, fillerBlock);
+            holder.generateMeteor(world, pos, fillerBlock, radiusModifier, explosionModifier, fillerChance);
         }
     }
 }

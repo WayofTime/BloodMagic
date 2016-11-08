@@ -25,9 +25,6 @@ public class ItemBlockBloodTank extends ItemBlock implements IFluidContainerItem
     public ItemBlockBloodTank(Block block)
     {
         super(block);
-
-        setHasSubtypes(true);
-        setMaxDamage(0);
     }
 
     @Override

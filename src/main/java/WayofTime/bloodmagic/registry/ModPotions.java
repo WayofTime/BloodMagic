@@ -23,6 +23,7 @@ public class ModPotions
 
     public static Potion bounce;
     public static Potion cling;
+    public static Potion sacrificialLamb;
 
     public static void init()
     {
@@ -52,6 +53,7 @@ public class ModPotions
         deafness = registerPotion("Deaf", new ResourceLocation("deafness"), true, 0x000000, 0, 1);
         bounce = registerPotion("Bounce", new ResourceLocation("bounce"), false, 0x000000, 1, 1);
         cling = registerPotion("Cling", new ResourceLocation("cling"), false, 0x000000, 2, 1);
+        sacrificialLamb = registerPotion("S. Lamb", new ResourceLocation("lamb"), false, 0x000000, 3, 1);
         // heavyHeart = new PotionBloodMagic("Heavy Heart", new
         // ResourceLocation(resourceLocation +
         // heavyHeart.getName().toLowerCase()), true, 0, 0, 0);

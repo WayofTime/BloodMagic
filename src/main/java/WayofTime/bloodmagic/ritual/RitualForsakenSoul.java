@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -13,12 +14,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
 
@@ -127,8 +128,14 @@ public class RitualForsakenSoul extends Ritual
                         if (!entity.isEntityAlive())
                         {
                             int uniqueness = calculateUniqueness(entity);
-                            willBuffer += getWillForUniqueness(uniqueness) / HEALTH_THRESHOLD * entity.getMaxHealth();
-                            crystalBuffer += entity.getMaxHealth() / HEALTH_THRESHOLD;
+                            double modifier = 1;
+                            if (entity instanceof EntityAnimal && !entity.isCollided)
+                            {
+                                modifier = 4;
+                            }
+
+                            willBuffer += modifier * getWillForUniqueness(uniqueness) / HEALTH_THRESHOLD * entity.getMaxHealth();
+                            crystalBuffer += modifier * entity.getMaxHealth() / HEALTH_THRESHOLD;
 
                             totalEffects++;
                             if (totalEffects >= maxEffects)

@@ -16,7 +16,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.compress.CompressionRegistry;
 import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
 import WayofTime.bloodmagic.api.registry.AlchemyTableRecipeRegistry;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
@@ -36,12 +40,16 @@ public class RitualCrushing extends Ritual
     public static final String CRUSHING_RANGE = "crushingRange";
     public static final String CHEST_RANGE = "chest";
 
-    public static double rawWillDrain = 0.5;
+    public static double rawWillDrain = 0.05;
     public static double steadfastWillDrain = 0.2;
     public static double destructiveWillDrain = 0.2;
+    public static double vengefulWillDrain = 0.2;
 
     public static Map<ItemStack, Integer> cuttingFluidLPMap = new HashMap<ItemStack, Integer>();
     public static Map<ItemStack, Double> cuttingFluidWillMap = new HashMap<ItemStack, Double>();
+
+    public int refreshTime = 40;
+    public static int defaultRefreshTime = 40;
 
     public RitualCrushing()
     {
@@ -83,9 +91,15 @@ public class RitualCrushing extends Ritual
 
         List<EnumDemonWillType> willConfig = masterRitualStone.getActiveWillConfig();
 
+        double rawWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.DEFAULT, willConfig);
         double steadfastWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.STEADFAST, willConfig);
         double corrosiveWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.CORROSIVE, willConfig);
         double destructiveWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.DESTRUCTIVE, willConfig);
+        double vengefulWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.VENGEFUL, willConfig);
+
+        refreshTime = getRefreshTimeForRawWill(rawWill);
+
+        boolean consumeRawWill = rawWill >= rawWillDrain && refreshTime != defaultRefreshTime;
 
         boolean isSilkTouch = steadfastWill >= steadfastWillDrain;
         boolean useCuttingFluid = corrosiveWill > 0;
@@ -93,6 +107,9 @@ public class RitualCrushing extends Ritual
         int fortune = destructiveWill > 0 ? 3 : 0;
 
         AreaDescriptor crushingRange = getBlockRange(CRUSHING_RANGE);
+        boolean hasOperated = false;
+
+        double rawDrain = 0;
 
         for (BlockPos newPos : crushingRange.getContainedPositions(pos))
         {
@@ -236,15 +253,52 @@ public class RitualCrushing extends Ritual
 
             world.destroyBlock(newPos, false);
             network.syphon(getRefreshCost());
+            hasOperated = true;
+
+            if (consumeRawWill)
+            {
+                rawDrain += rawWillDrain;
+                rawWill -= rawWillDrain;
+            }
 
             break;
         }
+
+        if (hasOperated && tile != null && vengefulWill >= vengefulWillDrain)
+        {
+            Pair<ItemStack, Boolean> pair = CompressionRegistry.compressInventory(tile, world);
+            if (pair.getRight())
+            {
+                ItemStack returned = pair.getLeft();
+                if (returned != null)
+                {
+                    Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, returned);
+                }
+
+                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulWillDrain, true);
+            }
+        }
+
+        if (rawDrain > 0)
+        {
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrain, true);
+        }
+    }
+
+    public int getRefreshTimeForRawWill(double rawWill)
+    {
+        if (rawWill >= rawWillDrain)
+        {
+            return Math.max(1, (int) (40 - rawWill / 5));
+        }
+
+        return defaultRefreshTime;
     }
 
     @Override
     public int getRefreshTime()
     {
-        return 40;
+        return refreshTime;
     }
 
     @Override
@@ -269,7 +323,7 @@ public class RitualCrushing extends Ritual
     @Override
     public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player)
     {
-        return new ITextComponent[] { new TextComponentTranslation(this.getUnlocalizedName() + ".info"), new TextComponentTranslation(this.getUnlocalizedName() + ".destructive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info") };
+        return new ITextComponent[] { new TextComponentTranslation(this.getUnlocalizedName() + ".info"), new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".destructive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".vengeful.info") };
     }
 
     @Override

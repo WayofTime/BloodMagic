@@ -237,11 +237,11 @@ tile.BloodMagic.path.obsidiantile.name=Chemin en Obsidienne Carrelée
 tile.BloodMagic.dimensionalPortal.name=Portail Dimensionnel
 tile.BloodMagic.bloodTank.name=Réservoir de Sang
 
-tile.BloodMagic.demonCrystalDEFAULT.name=Groupe de Cristaux d'une Volonté Diabolique
-tile.BloodMagic.demonCrystalCORROSIVE.name=Groupe de Cristaux d'une Volonté Corrosive
-tile.BloodMagic.demonCrystalDESTRUCTIVE.name=Groupe de Cristaux d'une Volonté Destructive
-tile.BloodMagic.demonCrystalVENGEFUL.name=Groupe de Cristaux d'une Volonté Vengeresse
-tile.BloodMagic.demonCrystalSTEADFAST.name=Groupe de Cristaux d'une Volonté Inébranlable
+tile.BloodMagic.demonCrystal.default.name=Groupe de Cristaux d'une Volonté Diabolique
+tile.BloodMagic.demonCrystal.corrosive.name=Groupe de Cristaux d'une Volonté Corrosive
+tile.BloodMagic.demonCrystal.destructive.name=Groupe de Cristaux d'une Volonté Destructive
+tile.BloodMagic.demonCrystal.vengeful.name=Groupe de Cristaux d'une Volonté Vengeresse
+tile.BloodMagic.demonCrystal.steadfast.name=Groupe de Cristaux d'une Volonté Inébranlable
 
 # Fluids
 fluid.lifeEssence=Essence de Vie

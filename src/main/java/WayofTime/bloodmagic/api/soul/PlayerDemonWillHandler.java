@@ -30,9 +30,9 @@ public class PlayerDemonWillHandler
         {
             if (stack != null)
             {
-                if (stack.getItem() instanceof IDemonWill)
+                if (stack.getItem() instanceof IDemonWill && ((IDemonWill) stack.getItem()).getType(stack) == type)
                 {
-                    souls += ((IDemonWill) stack.getItem()).getWill(stack);
+                    souls += ((IDemonWill) stack.getItem()).getWill(type, stack);
                 } else if (stack.getItem() instanceof IDemonWillGem)
                 {
                     souls += ((IDemonWillGem) stack.getItem()).getWill(type, stack);
@@ -112,10 +112,10 @@ public class PlayerDemonWillHandler
             ItemStack stack = inventory[i];
             if (stack != null)
             {
-                if (stack.getItem() instanceof IDemonWill)
+                if (stack.getItem() instanceof IDemonWill && ((IDemonWill) stack.getItem()).getType(stack) == type)
                 {
-                    consumed += ((IDemonWill) stack.getItem()).drainWill(stack, amount - consumed);
-                    if (((IDemonWill) stack.getItem()).getWill(stack) <= 0)
+                    consumed += ((IDemonWill) stack.getItem()).drainWill(type, stack, amount - consumed);
+                    if (((IDemonWill) stack.getItem()).getWill(type, stack) <= 0)
                         inventory[i] = null;
                 } else if (stack.getItem() instanceof IDemonWillGem)
                 {

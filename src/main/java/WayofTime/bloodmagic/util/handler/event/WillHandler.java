@@ -51,10 +51,10 @@ public class WillHandler
         if (stack != null && stack.getItem() instanceof IDemonWill)
         {
             EntityPlayer player = event.getEntityPlayer();
-
+            EnumDemonWillType pickupType = ((IDemonWill) stack.getItem()).getType(stack);
             ItemStack remainder = PlayerDemonWillHandler.addDemonWill(player, stack);
 
-            if (remainder == null || ((IDemonWill) stack.getItem()).getWill(stack) < 0.0001 || PlayerDemonWillHandler.isDemonWillFull(EnumDemonWillType.DEFAULT, player))
+            if (remainder == null || ((IDemonWill) stack.getItem()).getWill(pickupType, stack) < 0.0001 || PlayerDemonWillHandler.isDemonWillFull(pickupType, player))
             {
                 stack.stackSize = 0;
                 event.setResult(Event.Result.ALLOW);
@@ -108,8 +108,15 @@ public class WillHandler
                     for (ItemStack willStack : droppedSouls)
                     {
                         remainder = PlayerDemonWillHandler.addDemonWill(player, willStack);
-                        if (remainder != null && ((IDemonWill) remainder.getItem()).getWill(remainder) >= 0.0001)
-                            event.getDrops().add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, remainder));
+
+                        if (remainder != null)
+                        {
+                            EnumDemonWillType pickupType = ((IDemonWill) remainder.getItem()).getType(remainder);
+                            if (((IDemonWill) remainder.getItem()).getWill(pickupType, remainder) >= 0.0001)
+                            {
+                                event.getDrops().add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, remainder));
+                            }
+                        }
                     }
                     player.inventoryContainer.detectAndSendChanges();
                 }
