@@ -12,7 +12,7 @@ public interface IDemonWill
      * 
      * @return - The amount of Will an ItemStack contains
      */
-    double getWill(ItemStack willStack);
+    double getWill(EnumDemonWillType type, ItemStack willStack);
 
     /**
      * Sets the amount of Will in a given ItemStack.
@@ -22,7 +22,7 @@ public interface IDemonWill
      * @param will
      *        - The amount of will to set the stack to
      */
-    void setWill(ItemStack willStack, double will);
+    void setWill(EnumDemonWillType type, ItemStack willStack, double will);
 
     /**
      * Drains the demonic will from the willStack. If all of the will is
@@ -35,7 +35,7 @@ public interface IDemonWill
      * 
      * @return The amount of will drained.
      */
-    double drainWill(ItemStack willStack, double drainAmount);
+    double drainWill(EnumDemonWillType type, ItemStack willStack, double drainAmount);
 
     /**
      * Creates a new ItemStack with the specified number of will. Implementation
@@ -49,4 +49,6 @@ public interface IDemonWill
      * @return - An ItemStack with the set amount of Will
      */
     ItemStack createWill(int meta, double number);
+
+    EnumDemonWillType getType(ItemStack stack);
 }

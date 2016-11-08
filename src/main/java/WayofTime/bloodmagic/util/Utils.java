@@ -29,6 +29,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
@@ -67,6 +68,27 @@ import com.google.common.collect.Iterables;
 
 public class Utils
 {
+    public static float addAbsorptionToMaximum(EntityLivingBase entity, float added, int maximum, int duration)
+    {
+        float currentAmount = entity.getAbsorptionAmount();
+        added = Math.min(maximum - currentAmount, added);
+
+        if (added <= 0)
+        {
+            return 0;
+        }
+
+        if (duration > 0)
+        {
+            int potionLevel = (int) ((currentAmount + added) / 4);
+            entity.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, duration, potionLevel, true, false));
+        }
+
+        entity.setAbsorptionAmount(currentAmount + added);
+
+        return added;
+    }
+
     public static Item getItem(ResourceLocation resource)
     {
         return Item.REGISTRY.getObject(resource);

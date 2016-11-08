@@ -6,7 +6,27 @@
   },
   "variants": {
     "type": {
-      "monstersoul": {
+      "base": {
+        "textures": {
+          "layer0": "bloodmagic:items/BaseMonsterSoul"
+        }
+      },
+	"corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/BaseMonsterSoul"
+        }
+      },
+	"destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/BaseMonsterSoul"
+        }
+      },
+	"vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/BaseMonsterSoul"
+        }
+      },
+	"steadfast": {
         "textures": {
           "layer0": "bloodmagic:items/BaseMonsterSoul"
         }

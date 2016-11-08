@@ -374,11 +374,13 @@ public class ItemSentientAxe extends ItemAxe implements IDemonWillWeapon, IMeshP
 
         IDemonWill soul = ((IDemonWill) ModItems.MONSTER_SOUL);
 
+        EnumDemonWillType type = this.getCurrentType(stack);
+
         for (int i = 0; i <= looting; i++)
         {
             if (i == 0 || attackingEntity.worldObj.rand.nextDouble() < 0.4)
             {
-                ItemStack soulStack = soul.createWill(0, willModifier * (this.getDropOfActivatedSword(stack) * attackingEntity.worldObj.rand.nextDouble() + this.getStaticDropOfActivatedSword(stack)) * killedEntity.getMaxHealth() / 20d);
+                ItemStack soulStack = soul.createWill(type.ordinal(), willModifier * (this.getDropOfActivatedSword(stack) * attackingEntity.worldObj.rand.nextDouble() + this.getStaticDropOfActivatedSword(stack)) * killedEntity.getMaxHealth() / 20d);
                 soulList.add(soulStack);
             }
         }

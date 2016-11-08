@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item.soul;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
@@ -13,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -21,7 +23,7 @@ import java.util.List;
 
 public class ItemMonsterSoul extends Item implements IDemonWill, IVariantProvider
 {
-    public static String[] names = { "base" };
+    public static String[] names = { "base", "corrosive", "destructive", "vengeful", "steadfast" };
 
     public ItemMonsterSoul()
     {
@@ -53,14 +55,25 @@ public class ItemMonsterSoul extends Item implements IDemonWill, IVariantProvide
     {
         if (!stack.hasTagCompound())
             return;
-        tooltip.add(TextHelper.localize("tooltip.BloodMagic.will", getWill(stack)));
+        tooltip.add(TextHelper.localize("tooltip.BloodMagic.will", getWill(getType(stack), stack)));
 
         super.addInformation(stack, player, tooltip, advanced);
     }
 
     @Override
-    public double getWill(ItemStack soulStack)
+    public EnumDemonWillType getType(ItemStack stack)
     {
+        return EnumDemonWillType.values()[stack.getItemDamage() % 5];
+    }
+
+    @Override
+    public double getWill(EnumDemonWillType type, ItemStack soulStack)
+    {
+        if (type != this.getType(soulStack))
+        {
+            return 0;
+        }
+
         NBTHelper.checkNBT(soulStack);
 
         NBTTagCompound tag = soulStack.getTagCompound();
@@ -69,22 +82,24 @@ public class ItemMonsterSoul extends Item implements IDemonWill, IVariantProvide
     }
 
     @Override
-    public void setWill(ItemStack soulStack, double souls)
+    public void setWill(EnumDemonWillType type, ItemStack soulStack, double souls)
     {
         NBTHelper.checkNBT(soulStack);
 
         NBTTagCompound tag = soulStack.getTagCompound();
 
+        soulStack.setItemDamage(type.ordinal());
+
         tag.setDouble(Constants.NBT.SOULS, souls);
     }
 
     @Override
-    public double drainWill(ItemStack soulStack, double drainAmount)
+    public double drainWill(EnumDemonWillType type, ItemStack soulStack, double drainAmount)
     {
-        double souls = getWill(soulStack);
+        double souls = getWill(type, soulStack);
 
         double soulsDrained = Math.min(drainAmount, souls);
-        setWill(soulStack, souls - soulsDrained);
+        setWill(type, soulStack, souls - soulsDrained);
 
         return soulsDrained;
     }
@@ -92,8 +107,8 @@ public class ItemMonsterSoul extends Item implements IDemonWill, IVariantProvide
     @Override
     public ItemStack createWill(int meta, double number)
     {
-        ItemStack soulStack = new ItemStack(this, 1, meta);
-        setWill(soulStack, number);
+        ItemStack soulStack = new ItemStack(this, 1, meta % 5);
+        setWill(getType(soulStack), soulStack, number);
         return soulStack;
     }
 
@@ -101,7 +116,11 @@ public class ItemMonsterSoul extends Item implements IDemonWill, IVariantProvide
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=monstersoul"));
+        for (int i = 0; i < names.length; i++)
+        {
+            String name = names[i];
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + name));
+        }
         return ret;
     }
 }

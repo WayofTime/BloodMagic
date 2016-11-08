@@ -23,7 +23,7 @@ public class RitualWellOfSuffering extends Ritual
     public static final String ALTAR_RANGE = "altar";
     public static final String DAMAGE_RANGE = "damage";
 
-    public static final int SACRIFICE_AMOUNT = 20;
+    public static final int SACRIFICE_AMOUNT = 25;
 
     public BlockPos altarOffsetPos = new BlockPos(0, 0, 0); //TODO: Save!
 
@@ -99,7 +99,17 @@ public class RitualWellOfSuffering extends Ritual
                 {
                     if (entity.attackEntityFrom(DamageSource.outOfWorld, 1))
                     {
-                        tileAltar.sacrificialDaggerCall(SACRIFICE_AMOUNT, true);
+                        String entityName = entity.getClass().getSimpleName();
+
+                        int lifeEssenceRatio = SACRIFICE_AMOUNT;
+
+                        if (ConfigHandler.entitySacrificeValues.containsKey(entityName))
+                            lifeEssenceRatio = ConfigHandler.entitySacrificeValues.get(entityName);
+
+                        if (BloodMagicAPI.getEntitySacrificeValues().containsKey(entityName))
+                            lifeEssenceRatio = BloodMagicAPI.getEntitySacrificeValues().get(entityName);
+
+                        tileAltar.sacrificialDaggerCall(lifeEssenceRatio, true);
 
                         totalEffects++;
 

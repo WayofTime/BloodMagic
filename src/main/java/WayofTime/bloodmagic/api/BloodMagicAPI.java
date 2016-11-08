@@ -221,7 +221,8 @@ public class BloodMagicAPI
      * @param entityClass
      *        - The class of the entity to blacklist.
      * @param sacrificeValue
-     *        - The Amount of LP to provide per each entity sacrificed.
+     *        - The Amount of LP to provide per each HP of the entity
+     *        sacrificed.
      */
     public static void setEntitySacrificeValue(Class<? extends EntityLivingBase> entityClass, int sacrificeValue)
     {
@@ -235,7 +236,8 @@ public class BloodMagicAPI
      * @param entityClassName
      *        - The name of the class of the entity to blacklist.
      * @param sacrificeValue
-     *        - The Amount of LP to provide per each entity sacrificed.
+     *        - The Amount of LP to provide per each HP of the entity
+     *        sacrificed.
      */
     public static void setEntitySacrificeValue(String entityClassName, int sacrificeValue)
     {

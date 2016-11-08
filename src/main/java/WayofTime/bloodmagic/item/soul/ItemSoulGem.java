@@ -153,7 +153,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
         if (soulStack != null && soulStack.getItem() instanceof IDemonWill)
         {
             EnumDemonWillType thisType = this.getCurrentType(soulGemStack);
-            if (thisType != EnumDemonWillType.DEFAULT)
+            if (thisType != ((IDemonWill) soulStack.getItem()).getType(soulStack))
             {
                 return soulStack;
             }
@@ -162,11 +162,11 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
 
             if (soulsLeft < getMaxWill(thisType, soulGemStack))
             {
-                double newSoulsLeft = Math.min(soulsLeft + soul.getWill(soulStack), getMaxWill(thisType, soulGemStack));
-                soul.drainWill(soulStack, newSoulsLeft - soulsLeft);
+                double newSoulsLeft = Math.min(soulsLeft + soul.getWill(thisType, soulStack), getMaxWill(thisType, soulGemStack));
+                soul.drainWill(thisType, soulStack, newSoulsLeft - soulsLeft);
 
                 setWill(thisType, soulGemStack, newSoulsLeft);
-                if (soul.getWill(soulStack) <= 0)
+                if (soul.getWill(thisType, soulStack) <= 0)
                 {
                     return null;
                 }

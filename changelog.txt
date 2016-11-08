@@ -6,8 +6,15 @@ Version 2.1.0-67
 - Implemented a new model for the Blood Altar to be more in-line with the rest of the mod (Thanks, wiiv!)
 - Made the Blood Altar respect the new capability system for fluid management.
 - Finished the Augments for the Ritual of the Feathered Knife.
+- Finished the Augments for the Ritual of the Crusher.
+- Finished most of the Augments for the Ritual of the Shepherd.
 - Changed the Ritual of the Feathered Knife so it respects the Tough Palms Living Armour Upgrade.
 - Fixed the Ritual of the Feathered Knife so that its health threshold is percent-based.
+- Made the aspected Sentient Tools drop their corresponding Will type on killing enemies.
+- Made it so peaceful animals provide more LP by default (to encourage creating your own farm).
+- Increased the effectiveness of animals for the Gathering of the Forsaken Souls ritual by a factor of 4.
+- Added the framework for the Purification Altar.
+- Fixed a crash with the Ritual Diviner when attempting to replace certain blocks.
 
 ------------------------------------------------------
 Version 2.1.0-66

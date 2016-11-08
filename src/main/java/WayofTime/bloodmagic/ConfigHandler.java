@@ -202,7 +202,7 @@ public class ConfigHandler
 
         category = "Blood Altar Sacrificial Values";
         config.addCustomCategoryComment(category, "Entity Sacrificial Value Settings");
-        entitySacrificeValuesList = config.getStringList("entitySacrificeValues", category, new String[] { "EntityVillager;2000", "EntitySlime;150", "EntityEnderman;200", "EntityCow;250", "EntityChicken;250", "EntityHorse;250", "EntitySheep;250", "EntityWolf;250", "EntityOcelot;250", "EntityPig;250", "EntityRabbit;250", "EntityArmorStand;0" }, "Used to edit the amount of LP gained per sacrifice of the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerSacrifice");
+        entitySacrificeValuesList = config.getStringList("entitySacrificeLP:HPValues", category, new String[] { "EntityVillager;100", "EntitySlime;15", "EntityEnderman;10", "EntityCow;100", "EntityChicken;100", "EntityHorse;250", "EntitySheep;100", "EntityWolf;100", "EntityOcelot;100", "EntityPig;100", "EntityRabbit;100", "EntityArmorStand;0" }, "Used to edit the amount of LP gained per HP sacrificed for the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerHP");
         buildEntitySacrificeValues();
 
         category = "Potions";

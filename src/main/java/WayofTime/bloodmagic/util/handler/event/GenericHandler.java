@@ -9,7 +9,12 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -228,6 +233,9 @@ public class GenericHandler
         }
     }
 
+    private static Map<EntityAnimal, EntityAITarget> targetTaskMap = new HashMap<EntityAnimal, EntityAITarget>();
+    private static Map<EntityAnimal, EntityAIBase> attackTaskMap = new HashMap<EntityAnimal, EntityAIBase>();
+
     // Handles sending the client the Demon Will Aura updates
     @SubscribeEvent
     public void onLivingUpdate(LivingUpdateEvent event)
@@ -238,6 +246,34 @@ public class GenericHandler
             if (entity instanceof EntityPlayer && entity.ticksExisted % 50 == 0) //TODO: Change to an incremental counter
             {
                 sendPlayerDemonWillAura((EntityPlayer) entity);
+            }
+
+            if (event.getEntityLiving() instanceof EntityAnimal)
+            {
+                EntityAnimal animal = (EntityAnimal) event.getEntityLiving();
+                if (animal.isPotionActive(ModPotions.sacrificialLamb))
+                {
+                    if (!targetTaskMap.containsKey(animal))
+                    {
+                        EntityAITarget task = new EntityAINearestAttackableTarget<EntityMob>(animal, EntityMob.class, false);
+                        EntityAIBase attackTask = new EntityAIAttackMelee(animal, 1.0D, false);
+                        animal.targetTasks.addTask(1, task);
+                        animal.tasks.addTask(1, attackTask);
+                        targetTaskMap.put(animal, task);
+                        attackTaskMap.put(animal, attackTask);
+                    }
+
+                    if (animal.getAttackTarget() != null && animal.getDistanceSqToEntity(animal.getAttackTarget()) < 4)
+                    {
+                        animal.worldObj.createExplosion(null, animal.posX, animal.posY + (double) (animal.height / 16.0F), animal.posZ, 2 + animal.getActivePotionEffect(ModPotions.sacrificialLamb).getAmplifier() * 1.5f, false);
+                        targetTaskMap.remove(animal);
+                        attackTaskMap.remove(animal);
+                    }
+                } else if (targetTaskMap.containsKey(animal))
+                {
+                    targetTaskMap.remove(animal);
+                    attackTaskMap.remove(animal);
+                }
             }
         }
 
