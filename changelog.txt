@@ -14,6 +14,7 @@ Version 2.1.0-67
 - Made it so peaceful animals provide more LP by default (to encourage creating your own farm).
 - Increased the effectiveness of animals for the Gathering of the Forsaken Souls ritual by a factor of 4.
 - Added the framework for the Purification Altar.
+- Fixed a crash with the Ritual Diviner when attempting to replace certain blocks.
 
 ------------------------------------------------------
 Version 2.1.0-66
