@@ -3,13 +3,13 @@ package WayofTime.bloodmagic.client.render.block;
 import WayofTime.bloodmagic.tile.TileBloodTank;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -25,10 +25,9 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
     {
         Tessellator tessellator = Tessellator.getInstance();
 
-        net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
+        RenderHelper.disableStandardItemLighting();
 
         GlStateManager.disableRescaleNormal();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.disableBlend();
 
         GlStateManager.pushMatrix();
@@ -40,7 +39,7 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
         if (renderFluid != null)
             renderFluid(bloodTank, tessellator, renderFluid);
 
-        net.minecraft.client.renderer.RenderHelper.enableStandardItemLighting();
+        RenderHelper.enableStandardItemLighting();
 
         GlStateManager.popMatrix();
     }
@@ -54,13 +53,14 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
 
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
 
-//        GlStateManager.enableBlend();
-//        GlStateManager.disableLighting();
-//        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-//        GlStateManager.color(1F, 1F, 1F, 1F);
-
-//        tessellator.setColorRGBA(255, 255, 255, 128);
-//        tessellator.setBrightness(240);
+        final int rgbaColor = renderFluid.getColor();
+        final int rColor = rgbaColor >> 16 & 0xFF;
+        final int gColor = rgbaColor >> 8 & 0xFF;
+        final int bColor = rgbaColor & 0xFF;
+        final int aColor = rgbaColor >> 24 & 0xFF;
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.color(rColor, gColor, bColor, aColor);
 
         float scale = bloodTank.getRenderHeight();
         float u1 = fluid.getMinU();
@@ -76,16 +76,16 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
             float offset = 0.002F;
 
             // Top
-            buffer.pos(0, scale - offset, 0).tex(u1, v1).color(255, 255, 255, 128).endVertex();
-            buffer.pos(0, scale - offset, 1).tex(u1, v2).color(255, 255, 255, 128).endVertex();
-            buffer.pos(1, scale - offset, 1).tex(u2, v2).color(255, 255, 255, 128).endVertex();
-            buffer.pos(1, scale - offset, 0).tex(u2, v1).color(255, 255, 255, 128).endVertex();
+            buffer.pos(0, scale - offset, 0).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0, scale - offset, 1).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(1, scale - offset, 1).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(1, scale - offset, 0).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
 
             // Bottom
-            buffer.pos(1, offset, 0).tex(u1, v1).color(255, 255, 255, 128).endVertex();
-            buffer.pos(1, offset, 1).tex(u1, v2).color(255, 255, 255, 128).endVertex();
-            buffer.pos(0, offset, 1).tex(u2, v2).color(255, 255, 255, 128).endVertex();
-            buffer.pos(0, offset, 0).tex(u2, v1).color(255, 255, 255, 128).endVertex();
+            buffer.pos(1, offset, 0).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(1, offset, 1).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0, offset, 1).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0, offset, 0).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
 
             if (scale > otherEdge)
             {
@@ -95,28 +95,28 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
                 v2 -= (fluid.getMaxV() - fluid.getMinV()) * (1 - scale);
 
                 //NORTH
-                buffer.pos(edge, scale + offset, 0).tex(u1, v1).color(255, 255, 255, 128).endVertex();
-                buffer.pos(edge, otherEdge, 0).tex(u1, v2).color(255, 255, 255, 128).endVertex();
-                buffer.pos(otherEdge, otherEdge, 0).tex(u2, v2).color(255, 255, 255, 128).endVertex();
-                buffer.pos(otherEdge, scale + offset, 0).tex(u2, v1).color(255, 255, 255, 128).endVertex();
+                buffer.pos(edge, scale + offset, 0).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(edge, otherEdge, 0).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(otherEdge, otherEdge, 0).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(otherEdge, scale + offset, 0).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
 
                 //EAST
-                buffer.pos(0, otherEdge - offset, edge + offset).tex(u1, v2).color(255, 255, 255, 128).endVertex();
-                buffer.pos(0, scale + offset, edge + offset).tex(u1, v1).color(255, 255, 255, 128).endVertex();
-                buffer.pos(0, scale + offset, otherEdge - offset).tex(u2, v1).color(255, 255, 255, 128).endVertex();
-                buffer.pos(0, otherEdge - offset, otherEdge - offset).tex(u2, v2).color(255, 255, 255, 128).endVertex();
+                buffer.pos(0, otherEdge - offset, edge + offset).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(0, scale + offset, edge + offset).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(0, scale + offset, otherEdge - offset).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(0, otherEdge - offset, otherEdge - offset).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
 
                 //SOUTH
-                buffer.pos(1, offset, 1 - offset).tex(u1, v2).color(255, 255, 255, 128).endVertex();
-                buffer.pos(1, scale, 1 - offset).tex(u1, v1).color(255, 255, 255, 128).endVertex();
-                buffer.pos(0, scale, 1 - offset).tex(u2, v1).color(255, 255, 255, 128).endVertex();
-                buffer.pos(0, offset, 1 - offset).tex(u2, v2).color(255, 255, 255, 128).endVertex();
+                buffer.pos(1, offset, 1 - offset).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(1, scale, 1 - offset).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(0, scale, 1 - offset).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(0, offset, 1 - offset).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
 
                 //WEST
-                buffer.pos(1 - offset, scale, 1).tex(u1, v1).color(255, 255, 255, 128).endVertex();
-                buffer.pos(1 - offset, offset, 1).tex(u1, v2).color(255, 255, 255, 128).endVertex();
-                buffer.pos(1 - offset, offset, 0).tex(u2, v2).color(255, 255, 255, 128).endVertex();
-                buffer.pos(1 - offset, scale, 0).tex(u2, v1).color(255, 255, 255, 128).endVertex();
+                buffer.pos(1 - offset, scale, 1).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(1 - offset, offset, 1).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(1 - offset, offset, 0).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(1 - offset, scale, 0).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
             }
         }
         tessellator.draw();
