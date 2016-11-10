@@ -101,6 +101,15 @@ public class ItemHelper
             return null;
         }
 
+        public static void setUpgrade(ItemStack stack, LivingArmourUpgrade upgrade)
+        {
+            if (stack.getItem() instanceof ItemUpgradeTome || stack.getItem() instanceof IUpgradeTrainer)
+            {
+                setKey(stack, upgrade.getUniqueIdentifier());
+                setLevel(stack, upgrade.getUpgradeLevel());
+            }
+        }
+
         public static void setKey(ItemStack stack, String key)
         {
             if (stack.getItem() instanceof ItemUpgradeTome || stack.getItem() instanceof IUpgradeTrainer)

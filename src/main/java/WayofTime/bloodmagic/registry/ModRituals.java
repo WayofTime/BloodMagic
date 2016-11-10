@@ -25,6 +25,7 @@ import WayofTime.bloodmagic.ritual.RitualHarvest;
 import WayofTime.bloodmagic.ritual.RitualInterdiction;
 import WayofTime.bloodmagic.ritual.RitualJumping;
 import WayofTime.bloodmagic.ritual.RitualLava;
+import WayofTime.bloodmagic.ritual.RitualLivingArmourDowngrade;
 import WayofTime.bloodmagic.ritual.RitualMagnetic;
 import WayofTime.bloodmagic.ritual.RitualMeteor;
 import WayofTime.bloodmagic.ritual.RitualPlacer;
@@ -149,8 +150,8 @@ public class ModRituals
         meteorRitual = new RitualMeteor();
         RitualRegistry.registerRitual(meteorRitual, ConfigHandler.meteorRitual);
 
-//        downgradeRitual = new RitualLivingArmourDowngrade();
-//        RitualRegistry.registerRitual(downgradeRitual, ConfigHandler.downgradeRitual);
+        downgradeRitual = new RitualLivingArmourDowngrade();
+        RitualRegistry.registerRitual(downgradeRitual, ConfigHandler.downgradeRitual);
 
         RitualCrushing.registerCuttingFluid(ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC), 250, 0.5);
         RitualCrushing.registerCuttingFluid(ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE), 25, 0.05);
