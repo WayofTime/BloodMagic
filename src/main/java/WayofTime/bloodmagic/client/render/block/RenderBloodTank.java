@@ -49,7 +49,7 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
         VertexBuffer buffer = tessellator.getBuffer();
 
         TextureAtlasSprite fluid = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(renderFluid.getStill().toString());
-        fluid = checkIcon(fluid);
+        fluid = fluid == null ? mc.getTextureMapBlocks().getMissingSprite() : fluid;
 
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
 
@@ -120,12 +120,5 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
             }
         }
         tessellator.draw();
-    }
-
-    public static TextureAtlasSprite checkIcon(TextureAtlasSprite icon)
-    {
-        if (icon == null)
-            return mc.getTextureMapBlocks().getMissingSprite();
-        return icon;
     }
 }

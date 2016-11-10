@@ -43,14 +43,17 @@ public class DataProviderBloodTank implements IWailaDataProvider
             if (accessor.getBlock() instanceof BlockBloodTank && accessor.getTileEntity() instanceof TileBloodTank)
             {
                 TileBloodTank bloodTank = (TileBloodTank) accessor.getTileEntity();
+                NBTTagCompound tag = accessor.getNBTData();
+                int capacity = tag.getInteger(Constants.NBT.ALTAR_CAPACITY);
                 currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.tier", bloodTank.getBlockMetadata() + 1));
-                currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.capacity") + ": " + bloodTank.getCapacity() + "mB");
+                currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.capacity") + ": " + capacity + "mB");
 
-                NBTTagCompound tag = accessor.getNBTData().getCompoundTag(Constants.NBT.TANK);
-                if (!Strings.isNullOrEmpty(tag.getString("FluidName")) && FluidStack.loadFluidStackFromNBT(tag) != null)
+                tag = tag.getCompoundTag(Constants.NBT.TANK);
+                FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag);
+                if (!Strings.isNullOrEmpty(tag.getString("FluidName")) && fluidStack != null)
                 {
-                    currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.type") + ": " + FluidStack.loadFluidStackFromNBT(tag).getLocalizedName());
-                    currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.amount") + ": " + tag.getInteger("Amount") + "/" + bloodTank.getCapacity() + "mB");
+                    currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.type") + ": " + fluidStack.getLocalizedName());
+                    currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.amount") + ": " + tag.getInteger("Amount") + "/" + capacity + "mB");
                 }
             }
         }
