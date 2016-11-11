@@ -9,9 +9,12 @@ import java.util.Map.Entry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionType;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -503,11 +506,13 @@ public class ModRecipes
         ItemStack bowStack = new ItemStack(Items.BOW);
         ItemStack bottleStack = new ItemStack(Items.POTIONITEM, 1, 0);
         ItemStack swordStack = new ItemStack(Items.STONE_SWORD);
+        ItemStack healingPotionStack = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM, 1, 0), PotionTypes.HEALING);
 
         Map<ItemStack, Pair<String, int[]>> dialogueMap = new HashMap<ItemStack, Pair<String, int[]>>();
         dialogueMap.put(bowStack, Pair.of("bow", new int[] { 1, 100, 300, 500 }));
         dialogueMap.put(bottleStack, Pair.of("quenched", new int[] { 1, 100, 300, 500 }));
         dialogueMap.put(swordStack, Pair.of("dulledBlade", new int[] { 1, 100, 300, 500, 700 }));
+        dialogueMap.put(healingPotionStack, Pair.of("slowHeal", new int[] { 1, 100, 300, 500, 700 }));
 
         for (Entry<ItemStack, Pair<String, int[]>> entry : dialogueMap.entrySet())
         {

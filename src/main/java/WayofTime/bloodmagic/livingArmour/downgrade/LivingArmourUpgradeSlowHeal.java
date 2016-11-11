@@ -1,32 +1,26 @@
 package WayofTime.bloodmagic.livingArmour.downgrade;
 
-import java.util.HashMap;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
 
-public class LivingArmourUpgradeDigSlowdown extends LivingArmourUpgrade
+public class LivingArmourUpgradeSlowHeal extends LivingArmourUpgrade
 {
-    public static HashMap<ILivingArmour, Boolean> changeMap = new HashMap<ILivingArmour, Boolean>();
-
     public static final int[] costs = new int[] { -10, -17, -28, -42, -60, -80, -100, -125, -160, -200 };
 
-    public static final double[] digSpeedModifier = new double[] { 0.9, 0.8, 0.7, 0.6, 0.55, 0.5, 0.4, 0.35, 0.3, 0.2 };
+    public static final double[] healModifier = new double[] { 0.9, 0.8, 0.7, 0.6, 0.55, 0.5, 0.4, 0.35, 0.3, 0.2 };
 
-    public LivingArmourUpgradeDigSlowdown(int level)
+    public LivingArmourUpgradeSlowHeal(int level)
     {
         super(level);
     }
 
-    @Override
-    public double getMiningSpeedModifier(EntityPlayer player)
+    public double getHealingModifier()
     {
-        return digSpeedModifier[this.level];
+        return healModifier[this.level];
     }
 
     @Override
@@ -38,7 +32,7 @@ public class LivingArmourUpgradeDigSlowdown extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.digSlowdown";
+        return Constants.Mod.MODID + ".upgrade.slowHeal";
     }
 
     @Override
@@ -68,7 +62,7 @@ public class LivingArmourUpgradeDigSlowdown extends LivingArmourUpgrade
     @Override
     public String getUnlocalizedName()
     {
-        return tooltipBase + "digSlowdown";
+        return tooltipBase + "slowHeal";
     }
 
     @Override

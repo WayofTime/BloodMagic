@@ -15,6 +15,7 @@ Version 2.1.0-67
 - Increased the effectiveness of animals for the Gathering of the Forsaken Souls ritual by a factor of 4.
 - Added the framework for the Purification Altar.
 - Fixed a crash with the Ritual Diviner when attempting to replace certain blocks.
+- Snares can no longer hit the thrower of the snare within 20 ticks of throwing it.
 
 ------------------------------------------------------
 Version 2.1.0-66
