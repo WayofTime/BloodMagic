@@ -28,6 +28,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -123,23 +124,13 @@ public class BlockBloodTank extends BlockContainer implements IVariantProvider
     public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         TileBloodTank fluidHandler = (TileBloodTank) world.getTileEntity(blockPos);
-        boolean flag = false;
-        if (Utils.fillHandlerWithContainer(world, fluidHandler.getTank(), player))
+        if (FluidUtil.interactWithFluidHandler(heldItem, fluidHandler.getTank(), player))
+        {
             world.notifyBlockUpdate(blockPos, state, state, 3);
-        if (Utils.fillContainerFromHandler(fluidHandler.getTank(), player, fluidHandler.getTank().getFluid()))
-            world.notifyBlockUpdate(blockPos, state, state, 3);
-        if (FluidContainerRegistry.isContainer(heldItem))
-            world.notifyBlockUpdate(blockPos, state, state, 3);
-        else
-            flag = true;
+            return true;
+        }
 
-        if (!world.isRemote)
-            ((WorldServer) world).getPlayerChunkMap().markBlockForUpdate(blockPos);
-        else
-            world.markBlockRangeForRenderUpdate(blockPos, blockPos);
-        world.notifyNeighborsOfStateChange(blockPos, this);
-        world.markBlockRangeForRenderUpdate(blockPos, blockPos);
-        return !flag;
+        return false;
     }
 
     @Override

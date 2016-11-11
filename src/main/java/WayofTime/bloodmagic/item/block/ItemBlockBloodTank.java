@@ -25,6 +25,8 @@ public class ItemBlockBloodTank extends ItemBlock implements IFluidContainerItem
     public ItemBlockBloodTank(Block block)
     {
         super(block);
+
+        setHasSubtypes(true);
     }
 
     @Override
@@ -43,7 +45,7 @@ public class ItemBlockBloodTank extends ItemBlock implements IFluidContainerItem
         }
         else
         {
-            return super.getItemStackDisplayName(stack);
+            return super.getItemStackDisplayName(stack) + " " + TextHelper.localizeEffect("tooltip.BloodMagic.tier", stack.getItemDamage() + 1);
         }
     }
 

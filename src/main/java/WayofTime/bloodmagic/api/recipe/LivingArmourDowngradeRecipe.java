@@ -134,6 +134,11 @@ public class LivingArmourDowngradeRecipe
         return this.input;
     }
 
+    public ItemStack getKey()
+    {
+        return this.keyStack;
+    }
+
     public void consumeInventory(IItemHandler inv)
     {
         for (int i = 0; i < inv.getSlots(); i++)
