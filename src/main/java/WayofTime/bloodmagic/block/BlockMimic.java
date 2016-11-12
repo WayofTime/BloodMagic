@@ -168,7 +168,7 @@ public class BlockMimic extends BlockEnumContainer<EnumMimic> implements IVarian
             if (stack != null && stack.getItem() instanceof ItemBlock)
             {
                 Block block = ((ItemBlock) stack.getItem()).getBlock();
-                IBlockState mimicState = block.getStateFromMeta(mimic.metaOfReplacedBlock);
+                IBlockState mimicState = block.getStateFromMeta(stack.getItemDamage());
                 if (block != this)
                 {
                     if (block.getRenderType(mimicState) == EnumBlockRenderType.ENTITYBLOCK_ANIMATED)
