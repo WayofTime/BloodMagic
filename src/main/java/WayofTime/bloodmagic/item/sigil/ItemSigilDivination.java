@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -45,6 +46,9 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 //            fred.setPosition(player.posX, player.posY, player.posZ);
 //            world.spawnEntityInWorld(fred);
 //        }
+
+        if (PlayerHelper.isFakePlayer(player))
+            return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
         if (!world.isRemote)
         {

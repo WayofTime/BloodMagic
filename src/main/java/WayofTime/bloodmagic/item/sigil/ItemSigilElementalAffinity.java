@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,9 @@ public class ItemSigilElementalAffinity extends ItemSigilToggleableBase
     @Override
     public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return;
+
         player.fallDistance = 0;
         player.extinguish();
         player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 2, 1, true, false));

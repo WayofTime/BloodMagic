@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.registry.ModPotions;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -17,6 +18,9 @@ public class ItemSigilHaste extends ItemSigilToggleableBase
     @Override
     public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return;
+
         player.addPotionEffect(new PotionEffect(ModPotions.boost, 2, 0, true, false));
     }
 }

@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item.sigil;
 import java.util.Collections;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.key.KeyBindings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -99,6 +100,9 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
+        if (PlayerHelper.isFakePlayer(playerIn))
+            return EnumActionResult.FAIL;
+
         int currentSlot = getCurrentItemOrdinal(stack);
         ItemStack[] inv = getInternalInventory(stack);
 
@@ -119,6 +123,9 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+
         int currentSlot = getCurrentItemOrdinal(stack);
         ItemStack[] inv = getInternalInventory(stack);
 

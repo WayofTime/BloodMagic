@@ -2,16 +2,14 @@ package WayofTime.bloodmagic.item.sigil;
 
 import java.util.List;
 
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -70,6 +68,9 @@ public class ItemSigilTransposition extends ItemSigilBase
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return EnumActionResult.FAIL;
+
         stack = NBTHelper.checkNBT(stack);
 
         IBlockState state = world.getBlockState(blockPos);

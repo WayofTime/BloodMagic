@@ -1,10 +1,13 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -24,6 +27,9 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
     @Override
     public boolean onSigilUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return false;
+
         if (applyBonemeal(world, blockPos, player))
         {
             if (!world.isRemote)
@@ -39,6 +45,9 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
     @Override
     public void onSigilUpdate(ItemStack stack, World worldIn, EntityPlayer player, int itemSlot, boolean isSelected)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return;
+
         int range = 3;
         int verticalRange = 2;
         int posX = (int) Math.round(player.posX - 0.5f);

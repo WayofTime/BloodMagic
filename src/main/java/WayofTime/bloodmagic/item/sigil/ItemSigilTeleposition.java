@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item.sigil;
 
 import java.util.List;
 
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -48,6 +49,9 @@ public class ItemSigilTeleposition extends ItemSigilBase
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+
         if (!world.isRemote && NBTHelper.checkNBT(stack) != null && stack.getTagCompound().hasKey(Constants.NBT.DIMENSION_ID) && stack.getTagCompound().hasKey(Constants.NBT.X_COORD) && stack.getTagCompound().hasKey(Constants.NBT.Y_COORD) && stack.getTagCompound().hasKey(Constants.NBT.Z_COORD))
         {
             BlockPos blockPos = new BlockPos(getValue(stack.getTagCompound(), Constants.NBT.X_COORD), getValue(stack.getTagCompound(), Constants.NBT.Y_COORD), getValue(stack.getTagCompound(), Constants.NBT.Z_COORD)).up();
@@ -65,6 +69,9 @@ public class ItemSigilTeleposition extends ItemSigilBase
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return EnumActionResult.FAIL;
+
         if (!world.isRemote && player.isSneaking() && NBTHelper.checkNBT(stack) != null)
         {
             if (world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileTeleposer)

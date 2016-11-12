@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item.sigil;
 import java.util.List;
 
 import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
@@ -21,6 +22,8 @@ public class ItemSigilFastMiner extends ItemSigilToggleableBase
     @Override
     public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return;
         player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 2, 0, true, false));
     }
 
