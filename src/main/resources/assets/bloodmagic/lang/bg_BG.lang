@@ -1,6 +1,6 @@
 #Creative Tab
 itemGroup.BloodMagic.creativeTab=Магията на Кръвта
-itemGroup.BloodMagic.creativeTabTome=BМагията на Кръвта Ъпгрейд Томове
+itemGroup.BloodMagic.creativeTabTome=Магията на Кръвта Ъпгрейд Томове
 
 #Items
 item.BloodMagic.activationCrystal.weak.name=Слаб Кристален Активатор
@@ -22,46 +22,12 @@ item.BloodMagic.bound.shovel.name=Обвързана Лопата
 
 item.BloodMagic.bucket.lifeEssence.name=Кофата на Живота
 
-item.BloodMagic.scribe.water.name=Elemental Inscription Tool: Water
-item.BloodMagic.scribe.fire.name=Elemental Inscription Tool: Fire
-item.BloodMagic.scribe.earth.name=Elemental Inscription Tool: Earth
-item.BloodMagic.scribe.air.name=Elemental Inscription Tool: Air
-item.BloodMagic.scribe.dusk.name=Elemental Inscription Tool: Dusk
-item.BloodMagic.scribe.dawn.name=Elemental Inscription Tool: Dawn
-
-item.BloodMagic.focus.weak.name=Teleposition Focus
-item.BloodMagic.focus.enhanced.name=Enhanced Teleposition Focus
-item.BloodMagic.focus.reinforced.name=Reinforced Teleposition Focus
-item.BloodMagic.focus.demonic.name=Demonic Teleposition Focus
-
-item.BloodMagic.slate.blank.name=Blank Slate
-item.BloodMagic.slate.reinforced.name=Reinforced Slate
-item.BloodMagic.slate.imbued.name=Imbued Slate
-item.BloodMagic.slate.demonic.name=Demonic Slate
-item.BloodMagic.slate.ethereal.name=Ethereal Slate
-
 item.BloodMagic.orb.weak.name=Слаб Кръвен Орб
 item.BloodMagic.orb.apprentice.name=Apprentice Кръвен Орб
 item.BloodMagic.orb.magician.name=Магичен Кръвен Орб
 item.BloodMagic.orb.master.name=Мастер Кръвен Орб
 item.BloodMagic.orb.archmage.name=Превъзходен Кръвен Орб
 item.BloodMagic.orb.transcendent.name=Съвършен Кръвен Орб
-
-item.BloodMagic.reagent.incendium.name=Incendium
-item.BloodMagic.reagent.magicales.name=Magicales
-item.BloodMagic.reagent.sanctus.name=Sanctus
-item.BloodMagic.reagent.aether.name=Aether
-item.BloodMagic.reagent.crepitous.name=Crepitous
-item.BloodMagic.reagent.crystallos.name=Crystallos
-item.BloodMagic.reagent.terrae.name=Terrae
-item.BloodMagic.reagent.aquasalus.name=Aquasalus
-item.BloodMagic.reagent.tennebrae.name=Tennebrae
-item.BloodMagic.reagent.offensa.name=Offensa
-item.BloodMagic.reagent.praesidium.name=Praesidium
-item.BloodMagic.reagent.orbisterrae.name=Orbis Terrae
-item.BloodMagic.reagent.virtus.name=Virtus
-item.BloodMagic.reagent.reductus.name=Reductus
-item.BloodMagic.reagent.potentia.name=Potentia
 
 item.BloodMagic.bloodShard.weak.name=Слабо Кръвно Парче
 item.BloodMagic.bloodShard.demon.name=Демонично Кръвно Парче
@@ -97,64 +63,28 @@ item.BloodMagic.baseComponent.saltpeter.name=Saltpeter
 item.BloodMagic.cuttingFluid.basicCuttingFluid.name=Basic Cutting Fluid
 item.BloodMagic.cuttingFluid.explosive.name=Explosive Powder
 
-item.BloodMagic.demonCrystal.crystalDefault.name=Demon Will Crystal
-item.BloodMagic.demonCrystal.crystalCorrosive.name=Corrosive Will Crystal
-item.BloodMagic.demonCrystal.crystalDestructive.name=Destructive Will Crystal
-item.BloodMagic.demonCrystal.crystalVengeful.name=Vengeful Will Crystal
-item.BloodMagic.demonCrystal.crystalSteadfast.name=Steadfast Will Crystal
+item.BloodMagic.demonCrystal.crystalDefault.name=Кристал на Демонична Воля
+item.BloodMagic.demonCrystal.crystalCorrosive.name=Кристал на Корозивна Воля
+item.BloodMagic.demonCrystal.crystalDestructive.name=Кристал на Разрушителна Воля
+item.BloodMagic.demonCrystal.crystalVengeful.name=Кристал на Отмъстителна Воля
+item.BloodMagic.demonCrystal.crystalSteadfast.name=Кристал на Твърда Воля
 
-item.BloodMagic.monsterSoul.base.name=Demonic Will
+item.BloodMagic.monsterSoul.base.name=Дяволска Воля
 
-item.BloodMagic.sigil.air.name=Air Sigil
-item.BloodMagic.sigil.bloodLight.name=Sigil of the Blood Lamp
-item.BloodMagic.sigil.compression.name=Sigil of Compression
-item.BloodMagic.sigil.divination.name=Divination Sigil
-item.BloodMagic.sigil.water.name=Water Sigil
-item.BloodMagic.sigil.lava.name=Lava Sigil
-item.BloodMagic.sigil.void.name=Void Sigil
-item.BloodMagic.sigil.greenGrove.name=Sigil of the Green Grove
-item.BloodMagic.sigil.elementalAffinity.name=Sigil of Elemental Affinity
-item.BloodMagic.sigil.haste.name=Sigil of Haste
-item.BloodMagic.sigil.suppression.name=Sigil of Suppression
-item.BloodMagic.sigil.magnetism.name=Sigil of Magnetism
-item.BloodMagic.sigil.fastMiner.name=Sigil of the Fast Miner
-item.BloodMagic.sigil.seer.name=Seer's Sigil
-item.BloodMagic.sigil.phantomBridge.name=Sigil of the Phantom Bridge
-item.BloodMagic.sigil.whirlwind.name=Sigil of the Whirlwind
-item.BloodMagic.sigil.enderSeverance.name=Sigil of Ender Severance
+item.BloodMagic.livingArmour.helmet.name=Живата Каска
+item.BloodMagic.livingArmour.chest.name=Живящия Нагръдник
+item.BloodMagic.livingArmour.legs.name=Живите Гамаши
+item.BloodMagic.livingArmour.boots.name=Живите Ботуши
+item.BloodMagic.sentientArmour.helmet.name=Чувствителна Каска
+item.BloodMagic.sentientArmour.chest.name=Чувствителен Нагръдник
+item.BloodMagic.sentientArmour.legs.name=Чувствителни Гамаши
+item.BloodMagic.sentientArmour.boots.name=Чувствителни Ботуши
 
-item.BloodMagic.sigil.teleposition.name=Teleposition Sigil
-item.BloodMagic.sigil.transposition.name=Transposition Sigil
+item.BloodMagic.altarMaker.name=Създател на алтари
 
-item.BloodMagic.livingArmour.helmet.name=Living Helmet
-item.BloodMagic.livingArmour.chest.name=Living Chestplate
-item.BloodMagic.livingArmour.legs.name=Living Leggings
-item.BloodMagic.livingArmour.boots.name=Living Boots
-item.BloodMagic.sentientArmour.helmet.name=Sentient Helmet
-item.BloodMagic.sentientArmour.chest.name=Sentient Chestplate
-item.BloodMagic.sentientArmour.legs.name=Sentient Leggings
-item.BloodMagic.sentientArmour.boots.name=Sentient Boots
-
-item.BloodMagic.altarMaker.name=Altar Maker
-
-item.BloodMagic.ritualDivinernormal.name=Ritual Diviner
-item.BloodMagic.ritualDivinerdusk.name=Ritual Diviner [Dusk]
-item.BloodMagic.ritualDivinerdawn.name=Ritual Diviner [Dawn]
-item.BloodMagic.ritualReader.name=Ritual Tinkerer
-
-item.BloodMagic.arcaneAshes.name=Arcane Ashes
-item.BloodMagic.upgradeTome.name=Living Armour Upgrade Tome
-item.BloodMagic.upgradeTrainer.name=Living Armour Training Bracelet
-
-item.BloodMagic.sentientSword.name=Sentient Sword
-item.BloodMagic.soulGem.petty.name=Petty Tartaric Gem
-item.BloodMagic.soulGem.lesser.name=Lesser Tartaric Gem
-item.BloodMagic.soulGem.common.name=Common Tartaric Gem
-item.BloodMagic.soulGem.greater.name=Greater Tartaric Gem
-item.BloodMagic.soulGem.grand.name=Grand Tartaric Gem
-item.BloodMagic.soulSnare.base.name=Rudimentary Snare
-item.BloodMagic.sentientBow.name=Sentient Bow
-item.BloodMagic.sentientArmourGem.name=Sentient Armour Gem
+item.BloodMagic.sentientSword.name=Чувствителен Меч
+item.BloodMagic.sentientBow.name=Чувствителен Лък
+item.BloodMagic.sentientArmourGem.name=скъпоценен камък на Чувствителната Броня
 
 item.BloodMagic.nodeRouter.name=Node Router
 item.BloodMagic.itemFilter.exact.name=Precise Item Filter
