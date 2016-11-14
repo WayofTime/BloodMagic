@@ -19,8 +19,10 @@ public class DataProviderMimic implements IWailaDataProvider
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
-        TileMimic mimic = (TileMimic) accessor.getTileEntity();
-        return mimic != null && mimic.getStackInSlot(0) != null ? mimic.getStackInSlot(0) : accessor.getStack();
+        if (accessor.getNBTData().getBoolean("hasItem"))
+            return ItemStack.loadItemStackFromNBT(accessor.getNBTData());
+
+        return new ItemStack(accessor.getBlock(), 1, accessor.getMetadata());
     }
 
     @Override
@@ -44,6 +46,11 @@ public class DataProviderMimic implements IWailaDataProvider
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos)
     {
-        return null;
+        if (te instanceof TileMimic && ((TileMimic) te).getStackInSlot(0) != null)
+        {
+            tag.setBoolean("hasItem", true);
+            ((TileMimic) te).getStackInSlot(0).writeToNBT(tag);
+        }
+        return tag;
     }
 }

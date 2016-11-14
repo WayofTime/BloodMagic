@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,6 +33,9 @@ public class ItemSigilWater extends ItemSigilBase
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+
         if (!world.isRemote && !isUnusable(stack))
         {
             RayTraceResult rayTrace = this.rayTrace(world, player, false);

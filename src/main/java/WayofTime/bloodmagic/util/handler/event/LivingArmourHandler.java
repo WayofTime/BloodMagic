@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -29,6 +30,7 @@ import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowHeal;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeStormTrooper;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
@@ -43,6 +45,35 @@ import WayofTime.bloodmagic.registry.ModPotions;
 @Handler
 public class LivingArmourHandler
 {
+    @SubscribeEvent
+    public void onEntityHealed(LivingHealEvent event)
+    {
+        if (event.getEntityLiving() instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) event.getEntity();
+            if (LivingArmour.hasFullSet(player))
+            {
+                ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                if (armour != null)
+                {
+                    double modifier = 1;
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.slowHeal", chestStack);
+
+                    if (upgrade instanceof LivingArmourUpgradeSlowHeal)
+                    {
+                        modifier *= ((LivingArmourUpgradeSlowHeal) upgrade).getHealingModifier();
+                    }
+
+                    if (modifier != 1)
+                    {
+                        event.setAmount((float) (event.getAmount() * modifier));
+                    }
+                }
+            }
+        }
+    }
+
     @SubscribeEvent
     public void onMiningSpeedCheck(PlayerEvent.BreakSpeed event)
     {

@@ -9,6 +9,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -32,6 +33,9 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+
         if (!world.isRemote)
         {
             super.onItemRightClick(stack, world, player, hand);

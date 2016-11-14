@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.compress.CompressionRegistry;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,6 +21,9 @@ public class ItemSigilCompression extends ItemSigilToggleableBase
     @Override
     public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return;
+
         ItemStack compressedStack = CompressionRegistry.compressInventory(player.inventory.mainInventory, world);
 
         if (compressedStack != null)

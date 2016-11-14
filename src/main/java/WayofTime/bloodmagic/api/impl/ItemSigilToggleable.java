@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IActivatable;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -46,6 +47,9 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+
         if (!world.isRemote && !isUnusable(stack))
         {
             if (player.isSneaking())

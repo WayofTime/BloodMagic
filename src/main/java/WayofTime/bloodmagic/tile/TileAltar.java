@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,8 +12,6 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
-
-import com.sun.istack.internal.Nullable;
 
 public class TileAltar extends TileInventory implements IBloodAltar, ITickable
 {

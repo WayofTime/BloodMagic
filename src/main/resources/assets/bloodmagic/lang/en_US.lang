@@ -508,6 +508,7 @@ tooltip.BloodMagic.livingArmour.upgrade.quenched=Quenched
 tooltip.BloodMagic.livingArmour.upgrade.meleeDecrease=Dulled Blade
 tooltip.BloodMagic.livingArmour.upgrade.digSlowdown=Weakened Pick
 tooltip.BloodMagic.livingArmour.upgrade.stormTrooper=Storm Trooper
+tooltip.BloodMagic.livingArmour.upgrade.slowHeal=Diseased
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.upgrade.progress=%s (%d/100)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
@@ -722,10 +723,14 @@ ritual.BloodMagic.downgradeRitual.dialogue.quenched.100=You must be fully aware 
 ritual.BloodMagic.downgradeRitual.dialogue.quenched.300=As such, I offer you a deal: by forsaking one's ability to drink, I shall grant you a vast increase to your potential. Wether this is a deal you think is worth taking is another matter entirely...
 ritual.BloodMagic.downgradeRitual.dialogue.quenched.500=So kneel, mortal, and drink from this cup that I offer to you, for it may be your last drink.
 ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.1=Hmmm... What is it that you truely desire?
-ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.100=If it is strength beyond mortal men, then I cannot provide that - instead, I can offer you different deal...
+ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.100=If it is strength beyond mortal men, then I cannot provide that - instead, I can offer you a different deal...
 ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.300=I can expand the capabilities of your armour, allowing you to achieve greater heights. However, I will need something from you in return: your strength in physical combat.
 ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.500=By agreeing to this, you will no longer be able to swing a weapon with as much certainty, only able to do a fraction of the damage you could before.
 ritual.BloodMagic.downgradeRitual.dialogue.dulledBlade.700=So, the choice is yours: will you kneel at this altar, or will you still take up your sword?
+ritual.BloodMagic.downgradeRitual.dialogue.slowHeal.1=Beware, mortal, for you are on shaky ground.
+ritual.BloodMagic.downgradeRitual.dialogue.slowHeal.100=Unlike my comrades, I offer one of the most grim deals that you could possibly hope for as a magician that deals in your own health.
+ritual.BloodMagic.downgradeRitual.dialogue.slowHeal.300=Although your wounds may heal, they will do so slowly if you accept my "offering," and the stings of battle will plague you even more.
+ritual.BloodMagic.downgradeRitual.dialogue.slowHeal.500=So think carefully before you rush into something that you may regret, since even though your cup may be empty it will be almost impossible to fill once more...
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d

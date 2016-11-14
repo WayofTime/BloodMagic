@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -7,6 +8,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
@@ -26,6 +28,9 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+
         boolean unusable = isUnusable(stack);
         if (world.isRemote && !unusable)
         {

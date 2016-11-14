@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item.sigil;
 
 import java.util.List;
 
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +20,9 @@ public class ItemSigilMagnetism extends ItemSigilToggleableBase
     @Override
     public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return;
+
         int range = 5;
         int verticalRange = 5;
         float posX = Math.round(player.posX);

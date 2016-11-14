@@ -57,9 +57,10 @@ public class ItemBlockBloodTank extends ItemBlock implements IFluidContainerItem
         if (stack.hasTagCompound())
         {
             NBTTagCompound tag = stack.getTagCompound().getCompoundTag(Constants.NBT.TANK);
-            if (!Strings.isNullOrEmpty(tag.getString("FluidName")) && FluidStack.loadFluidStackFromNBT(tag) != null)
+            FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag);
+            if (!Strings.isNullOrEmpty(tag.getString("FluidName")) && fluidStack != null)
             {
-                tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.type") + ": " + FluidStack.loadFluidStackFromNBT(tag).getLocalizedName());
+                tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.type") + ": " + fluidStack.getLocalizedName());
                 tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.amount") + ": " + tag.getInteger("Amount") + "/" + getCapacity(stack) + "mB");
             }
         }

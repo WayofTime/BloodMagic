@@ -32,7 +32,12 @@ public class EntitySoulSnare extends EntityThrowable
     @Override
     protected void onImpact(RayTraceResult result)
     {
-        if (result.entityHit != null)
+        if (result.entityHit == this.getThrower() && this.ticksExisted < 20)
+        {
+            return;
+        }
+
+        if (result.entityHit != null && result.entityHit != this.getThrower())
         {
             if (result.entityHit instanceof EntityLivingBase && result.entityHit.worldObj.rand.nextDouble() < 0.25)
             {

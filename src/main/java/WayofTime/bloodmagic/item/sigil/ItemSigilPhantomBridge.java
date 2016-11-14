@@ -3,8 +3,11 @@ package WayofTime.bloodmagic.item.sigil;
 import java.util.HashMap;
 import java.util.Map;
 
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -26,6 +29,9 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase
     @Override
     public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
     {
+        if (PlayerHelper.isFakePlayer(player))
+            return;
+
         if (!prevPositionMap.containsKey(player))
         {
             prevPositionMap.put(player, Pair.of(player.posX, player.posZ));

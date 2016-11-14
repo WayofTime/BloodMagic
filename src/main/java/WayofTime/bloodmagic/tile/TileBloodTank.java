@@ -70,6 +70,11 @@ public class TileBloodTank extends TileBase
         return 0F;
     }
 
+    public int getComparatorOutput()
+    {
+        return tank.getFluidAmount() > 0 ? (int) (1 + ((double) tank.getFluidAmount() / (double) tank.getCapacity()) * 14) : 0;
+    }
+
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)
     {

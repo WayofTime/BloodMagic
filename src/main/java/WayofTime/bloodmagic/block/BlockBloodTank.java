@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileBloodTank;
-import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -25,8 +24,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
@@ -126,7 +123,9 @@ public class BlockBloodTank extends BlockContainer implements IVariantProvider
         TileBloodTank fluidHandler = (TileBloodTank) world.getTileEntity(blockPos);
         if (FluidUtil.interactWithFluidHandler(heldItem, fluidHandler.getTank(), player))
         {
-            world.notifyBlockUpdate(blockPos, state, state, 3);
+            world.checkLight(blockPos);
+            world.updateComparatorOutputLevel(blockPos, this);
+            world.markAndNotifyBlock(blockPos, world.getChunkFromBlockCoords(blockPos), state, state, 3);
             return true;
         }
 
@@ -172,6 +171,10 @@ public class BlockBloodTank extends BlockContainer implements IVariantProvider
                 blockState.withProperty(TIER, stack.getMetadata());
             }
         }
+
+        world.checkLight(blockPos);
+        world.updateComparatorOutputLevel(blockPos, this);
+        world.markAndNotifyBlock(blockPos, world.getChunkFromBlockCoords(blockPos), blockState, blockState, 3);
     }
 
     @Override
@@ -191,6 +194,21 @@ public class BlockBloodTank extends BlockContainer implements IVariantProvider
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
     {
         return getDrops(world, pos, world.getBlockState(pos), 0).get(0);
+    }
+
+    @Override
+    public boolean hasComparatorInputOverride(IBlockState state)
+    {
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(IBlockState state, World w, BlockPos pos)
+    {
+        TileEntity tile = w.getTileEntity(pos);
+        if (tile instanceof TileBloodTank)
+            return ((TileBloodTank) tile).getComparatorOutput();
+        return 0;
     }
 
     @Override

@@ -23,8 +23,6 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
     @Override
     public void renderTileEntityAt(TileBloodTank bloodTank, double x, double y, double z, float partialTicks, int destroyStage)
     {
-        Tessellator tessellator = Tessellator.getInstance();
-
         RenderHelper.disableStandardItemLighting();
 
         GlStateManager.disableRescaleNormal();
@@ -37,15 +35,16 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
 
         Fluid renderFluid = bloodTank.getClientRenderFluid();
         if (renderFluid != null)
-            renderFluid(bloodTank, tessellator, renderFluid);
+            renderFluid(bloodTank.getRenderHeight(), renderFluid);
 
         RenderHelper.enableStandardItemLighting();
 
         GlStateManager.popMatrix();
     }
 
-    private void renderFluid(TileBloodTank bloodTank, Tessellator tessellator, Fluid renderFluid)
+    public static void renderFluid(float scale, Fluid renderFluid)
     {
+        Tessellator tessellator = Tessellator.getInstance();
         VertexBuffer buffer = tessellator.getBuffer();
 
         TextureAtlasSprite fluid = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(renderFluid.getStill().toString());
@@ -62,7 +61,6 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GlStateManager.color(rColor, gColor, bColor, aColor);
 
-        float scale = bloodTank.getRenderHeight();
         float u1 = fluid.getMinU();
         float v1 = fluid.getMinV();
         float u2 = fluid.getMaxU();

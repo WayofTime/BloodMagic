@@ -21,6 +21,7 @@ public class WailaCallbackHandler
         registrar.registerNBTProvider(new DataProviderBloodTank(), BlockBloodTank.class);
         registrar.registerStackProvider(new DataProviderAlchemyArray(), BlockAlchemyArray.class);
         registrar.registerStackProvider(new DataProviderMimic(), BlockMimic.class);
+        registrar.registerNBTProvider(new DataProviderMimic(), BlockMimic.class);
         registrar.registerStackProvider(DataProviderPillar.INSTANCE, BlockEnumPillarCap.class);
         registrar.registerStackProvider(DataProviderPillar.INSTANCE, BlockEnumPillar.class);
         registrar.registerStackProvider(DataProviderPillar.INSTANCE, BlockEnumStairs.class);
