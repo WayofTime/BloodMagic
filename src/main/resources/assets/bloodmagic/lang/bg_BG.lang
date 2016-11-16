@@ -1,0 +1,85 @@
+#Creative Tab
+itemGroup.BloodMagic.creativeTab=Магията на Кръвта
+itemGroup.BloodMagic.creativeTabTome=Магията на Кръвта Ъпгрейд Томове
+
+#Items
+item.BloodMagic.activationCrystal.weak.name=Слаб Кристален Активатор
+item.BloodMagic.activationCrystal.awakened.name=Буднат Кристален Активатор
+item.BloodMagic.activationCrystal.creative.name=Креативен Кристален Активатор
+
+item.BloodMagic.sacrificialDagger.normal.name=Жертвоприношителен Нож
+item.BloodMagic.sacrificialDagger.creative.name=Креативен Жертвоприношителен Нож
+item.BloodMagic.pack.selfSacrifice.name=Кървав Пакет
+item.BloodMagic.pack.sacrifice.name=ГЕРБ
+item.BloodMagic.daggerOfSacrifice.name=Нож на Жертвоприношението
+
+item.BloodMagic.lavaCrystal.name=Лава Кристал
+
+item.BloodMagic.bound.sword.name=Обвързано Острие
+item.BloodMagic.bound.pickaxe.name=Обвързана Кирка
+item.BloodMagic.bound.axe.name=Обвързана Брадва
+item.BloodMagic.bound.shovel.name=Обвързана Лопата
+
+item.BloodMagic.bucket.lifeEssence.name=Кофата на Живота
+
+item.BloodMagic.orb.weak.name=Слаб Кръвен Орб
+item.BloodMagic.orb.apprentice.name=Apprentice Кръвен Орб
+item.BloodMagic.orb.magician.name=Магичен Кръвен Орб
+item.BloodMagic.orb.master.name=Мастер Кръвен Орб
+item.BloodMagic.orb.archmage.name=Превъзходен Кръвен Орб
+item.BloodMagic.orb.transcendent.name=Съвършен Кръвен Орб
+
+item.BloodMagic.bloodShard.weak.name=Слабо Кръвно Парче
+item.BloodMagic.bloodShard.demon.name=Демонично Кръвно Парче
+
+item.BloodMagic.baseComponent.reagentWater.name=Ваден Реагент
+item.BloodMagic.baseComponent.reagentLava.name=Лава Реагент
+item.BloodMagic.baseComponent.reagentAir.name=Въздушен Реагент
+item.BloodMagic.baseComponent.reagentFastMiner.name=Минен Реагент
+item.BloodMagic.baseComponent.reagentVoid.name=Void Реагент
+item.BloodMagic.baseComponent.reagentGrowth.name=Растежен Реагент
+item.BloodMagic.baseComponent.reagentAffinity.name=Елеменарно Афинитен Реагент
+item.BloodMagic.baseComponent.reagentSight.name=Зрителен Реагент
+item.BloodMagic.baseComponent.reagentBinding.name=Обвързващ Реагент
+item.BloodMagic.baseComponent.reagentSuppression.name=Потискащ Реагент
+item.BloodMagic.baseComponent.frameParts.name=Части на Рамка
+item.BloodMagic.baseComponent.reagentBloodLight.name=Светлинно Кръвен Реагент
+item.BloodMagic.baseComponent.reagentMagnetism.name=Магнетичен Реагент
+item.BloodMagic.baseComponent.reagentHaste.name=Бързинен Реагент
+item.BloodMagic.baseComponent.reagentBridge.name=Фантомен Мост Реагент
+item.BloodMagic.baseComponent.reagentCompression.name=Компресиращ Реагент
+item.BloodMagic.baseComponent.reagentSeverance.name=Скъсяващ Реагент
+
+item.BloodMagic.baseComponent.reagentTeleposition.name=Позицияпроменящ Реагент
+item.BloodMagic.baseComponent.reagentTransposition.name=ТранспонираЩ Реагент
+
+item.BloodMagic.baseComponent.ironSand.name=Железен Пясък
+item.BloodMagic.baseComponent.goldSand.name=Златен Пясък
+item.BloodMagic.baseComponent.coalSand.name=Въглищен Пясък
+
+item.BloodMagic.demonCrystal.crystalDefault.name=Кристал на Демонична Воля
+item.BloodMagic.demonCrystal.crystalCorrosive.name=Кристал на Корозивна Воля
+item.BloodMagic.demonCrystal.crystalDestructive.name=Кристал на Разрушителна Воля
+item.BloodMagic.demonCrystal.crystalVengeful.name=Кристал на Отмъстителна Воля
+item.BloodMagic.demonCrystal.crystalSteadfast.name=Кристал на Твърда Воля
+
+item.BloodMagic.monsterSoul.base.name=Дяволска Воля
+
+item.BloodMagic.livingArmour.helmet.name=Живата Каска
+item.BloodMagic.livingArmour.chest.name=Живящия Нагръдник
+item.BloodMagic.livingArmour.legs.name=Живите Гамаши
+item.BloodMagic.livingArmour.boots.name=Живите Ботуши
+item.BloodMagic.sentientArmour.helmet.name=Чувствителна Каска
+item.BloodMagic.sentientArmour.chest.name=Чувствителен Нагръдник
+item.BloodMagic.sentientArmour.legs.name=Чувствителни Гамаши
+item.BloodMagic.sentientArmour.boots.name=Чувствителни Ботуши
+
+item.BloodMagic.altarMaker.name=Създател на алтари
+
+item.BloodMagic.sentientSword.name=Чувствителен Меч
+item.BloodMagic.sentientBow.name=Чувствителен Лък
+item.BloodMagic.sentientArmourGem.name=скъпоценен камък на Чувствителната Броня
+
+# JustEnoughItems
+jei.BloodMagic.recipe.altar=Алтар на Кръвта
+jei.BloodMagic.recipe.ticksRequired=Време: %,d Ticks
