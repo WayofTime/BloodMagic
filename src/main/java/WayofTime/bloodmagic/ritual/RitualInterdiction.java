@@ -20,7 +20,7 @@ public class RitualInterdiction extends Ritual
     {
         super("ritualInterdiction", 0, 1000, "ritual." + Constants.Mod.MODID + ".interdictionRitual");
         addBlockRange(INTERDICTION_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 0, -2), 5));
-        setMaximumVolumeAndDistanceOfRange(INTERDICTION_RANGE, 0, 5, 5);
+        setMaximumVolumeAndDistanceOfRange(INTERDICTION_RANGE, 0, 10, 10);
     }
 
     @Override
@@ -43,14 +43,19 @@ public class RitualInterdiction extends Ritual
             if (entity instanceof EntityPlayer && (((EntityPlayer) entity).capabilities.isCreativeMode || PlayerHelper.getUUIDFromPlayer((EntityPlayer) entity).toString().equals(masterRitualStone.getOwner())))
                 continue;
 
-            double xDif = entity.posX - masterRitualStone.getBlockPos().getX();
+            double xDif = entity.posX - (masterRitualStone.getBlockPos().getX() + 0.5);
             double yDif = entity.posY - masterRitualStone.getBlockPos().getY() + 1;
-            double zDif = entity.posZ - masterRitualStone.getBlockPos().getZ();
+            double zDif = entity.posZ - (masterRitualStone.getBlockPos().getZ() + 0.5);
 
             entity.motionX = 0.1 * xDif;
             entity.motionY = 0.1 * yDif;
             entity.motionZ = 0.1 * zDif;
             entity.fallDistance = 0;
+
+            if (entity instanceof EntityPlayer)
+            {
+                entity.velocityChanged = true;
+            }
         }
     }
 

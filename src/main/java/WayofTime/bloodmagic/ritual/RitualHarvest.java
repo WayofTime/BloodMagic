@@ -31,7 +31,7 @@ public class RitualHarvest extends Ritual
     {
         super("ritualHarvest", 0, 20000, "ritual." + Constants.Mod.MODID + ".harvestRitual");
         addBlockRange(HARVEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-4, 1, -4), 9, 5, 9));
-        setMaximumVolumeAndDistanceOfRange(HARVEST_RANGE, 81, 15, 15);
+        setMaximumVolumeAndDistanceOfRange(HARVEST_RANGE, 0, 15, 15);
     }
 
     @Override
