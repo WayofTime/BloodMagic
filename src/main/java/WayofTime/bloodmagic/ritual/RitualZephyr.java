@@ -1,20 +1,23 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.util.Utils;
 
 public class RitualZephyr extends Ritual
 {
@@ -41,7 +44,7 @@ public class RitualZephyr extends Ritual
         AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
         TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
 
-        if (!masterRitualStone.getWorldObj().isRemote && tileInventory != null && tileInventory instanceof IInventory)
+        if (!masterRitualStone.getWorldObj().isRemote && tileInventory != null)
         {
             if (currentEssence < getRefreshCost())
             {
@@ -65,7 +68,7 @@ public class RitualZephyr extends Ritual
 
                     ItemStack copyStack = entityItem.getEntityItem().copy();
                     int originalAmount = copyStack.stackSize;
-                    ItemStack newStack = Utils.insertStackIntoInventory(copyStack, (IInventory) tileInventory, EnumFacing.DOWN);
+                    ItemStack newStack = Utils.insertStackIntoTile(copyStack, tileInventory, EnumFacing.DOWN);
 
                     if (newStack != null && newStack.stackSize < originalAmount)
                     {
