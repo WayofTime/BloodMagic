@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry.AltarRecipe;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.compat.guideapi.BookUtils;
@@ -115,6 +114,7 @@ public class CategoryRitual
         addRitualPagesToEntries("laying", entries);
         addRitualPagesToEntries("timberman", entries);
         addRitualPagesToEntries("meteor", entries);
+        addRitualPagesToEntries("downgrade", entries);
 
         for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
         {
