@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.1.0-68
+------------------------------------------------------
+- Fixed Ritual of Regeneration's text
+
+------------------------------------------------------
 Version 2.1.0-67
 ------------------------------------------------------
 - Added the Destructive Will effect to the Ritual of the Green Grove. This ritual now is done~
