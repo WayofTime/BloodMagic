@@ -23,27 +23,30 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
     @Override
     public void renderTileEntityAt(TileBloodTank bloodTank, double x, double y, double z, float partialTicks, int destroyStage)
     {
+        if (bloodTank == null)
+            return;
+
+        Fluid renderFluid = bloodTank.getClientRenderFluid();
+        if (bloodTank.getRenderHeight() == 0 || renderFluid == null)
+            return;
+
+        GlStateManager.pushMatrix();
+
+        bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+
+        renderFluid(bloodTank.getRenderHeight(), renderFluid, x, y, z);
+
+        GlStateManager.popMatrix();
+    }
+
+    public void renderFluid(float scale, Fluid renderFluid, double x, double y, double z)
+    {
+        GlStateManager.translate(x, y, z);
         RenderHelper.disableStandardItemLighting();
 
         GlStateManager.disableRescaleNormal();
         GlStateManager.disableBlend();
 
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(x, y, z);
-
-        bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-
-        Fluid renderFluid = bloodTank.getClientRenderFluid();
-        if (renderFluid != null)
-            renderFluid(bloodTank.getRenderHeight(), renderFluid);
-
-        RenderHelper.enableStandardItemLighting();
-
-        GlStateManager.popMatrix();
-    }
-
-    public static void renderFluid(float scale, Fluid renderFluid)
-    {
         Tessellator tessellator = Tessellator.getInstance();
         VertexBuffer buffer = tessellator.getBuffer();
 
@@ -66,11 +69,10 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
         float u2 = fluid.getMaxU();
         float v2 = fluid.getMaxV();
 
-        float edge = 0.9375F;
-        float otherEdge = 0.0625F;
-
         if (scale > 0)
         {
+            float edge = 0.9375F;
+            float otherEdge = 0.0625F;
             float offset = 0.002F;
 
             // Top
@@ -93,30 +95,32 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
                 v2 -= (fluid.getMaxV() - fluid.getMinV()) * (1 - scale);
 
                 //NORTH
-                buffer.pos(edge, scale + offset, 0).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(edge, otherEdge, 0).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(otherEdge, otherEdge, 0).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(otherEdge, scale + offset, 0).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(1, scale, offset).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(1, 0, offset).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(0, 0, offset).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(0, scale, offset).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
 
                 //EAST
-                buffer.pos(0, otherEdge - offset, edge + offset).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(0, scale + offset, edge + offset).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(0, scale + offset, otherEdge - offset).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(0, otherEdge - offset, otherEdge - offset).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(offset, 0, 1).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(offset, scale, 1).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(offset, scale, 0).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(offset, 0, 0).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
 
                 //SOUTH
-                buffer.pos(1, offset, 1 - offset).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(1, 0, 1 - offset).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
                 buffer.pos(1, scale, 1 - offset).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
                 buffer.pos(0, scale, 1 - offset).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(0, offset, 1 - offset).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(0, 0, 1 - offset).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
 
                 //WEST
                 buffer.pos(1 - offset, scale, 1).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(1 - offset, offset, 1).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(1 - offset, offset, 0).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(1 - offset, 0, 1).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
+                buffer.pos(1 - offset, 0, 0).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
                 buffer.pos(1 - offset, scale, 0).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
             }
         }
         tessellator.draw();
+
+        RenderHelper.enableStandardItemLighting();
     }
 }

@@ -8,24 +8,26 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
+import net.minecraftforge.items.IItemHandler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.util.Utils;
 
 import com.google.common.base.Strings;
 
@@ -59,18 +61,23 @@ public class RitualExpulsion extends Ritual
         AreaDescriptor expulsionRange = getBlockRange(EXPULSION_RANGE);
 
         List<String> allowedNames = new ArrayList<String>();
+        BlockPos masterPos = masterRitualStone.getBlockPos();
+        TileEntity tile = world.getTileEntity(masterPos.up());
 
-        if (world.getTileEntity(masterRitualStone.getBlockPos().up()) != null && world.getTileEntity(masterRitualStone.getBlockPos().up()) instanceof IInventory)
+        if (tile != null)
         {
-            IInventory inventory = (IInventory) world.getTileEntity(masterRitualStone.getBlockPos().up());
-            for (int i = 0; i < inventory.getSizeInventory(); i++)
+            IItemHandler handler = Utils.getInventory(tile, null);
+            if (handler != null)
             {
-                ItemStack itemStack = inventory.getStackInSlot(i);
-                if (itemStack != null && itemStack.getItem() instanceof IBindable)
+                for (int i = 0; i < handler.getSlots(); i++)
                 {
-                    IBindable bindable = (IBindable) itemStack.getItem();
-                    if (!Strings.isNullOrEmpty(bindable.getOwnerName(itemStack)) && !allowedNames.contains(bindable.getOwnerName(itemStack)))
-                        allowedNames.add(bindable.getOwnerName(itemStack));
+                    ItemStack itemStack = handler.getStackInSlot(i);
+                    if (itemStack != null && itemStack.getItem() instanceof IBindable)
+                    {
+                        IBindable bindable = (IBindable) itemStack.getItem();
+                        if (!Strings.isNullOrEmpty(bindable.getOwnerName(itemStack)) && !allowedNames.contains(bindable.getOwnerName(itemStack)))
+                            allowedNames.add(bindable.getOwnerName(itemStack));
+                    }
                 }
             }
         }

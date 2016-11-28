@@ -9,12 +9,9 @@ import java.util.Map.Entry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
-import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.potion.PotionType;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -39,6 +36,8 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.compress.CompressionRegistry;
 import WayofTime.bloodmagic.api.iface.ISigil;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.recipe.AlchemyTableCustomRecipe;
 import WayofTime.bloodmagic.api.recipe.ShapedBloodOrbRecipe;
 import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
@@ -63,8 +62,14 @@ import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeBattleHungry;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeDigSlowdown;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeDisoriented;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeMeleeDecrease;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowHeal;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowness;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeStormTrooper;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
@@ -506,13 +511,18 @@ public class ModRecipes
         ItemStack bowStack = new ItemStack(Items.BOW);
         ItemStack bottleStack = new ItemStack(Items.POTIONITEM, 1, 0);
         ItemStack swordStack = new ItemStack(Items.STONE_SWORD);
-        ItemStack healingPotionStack = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM, 1, 0), PotionTypes.HEALING);
+        ItemStack goldenAppleStack = new ItemStack(Items.GOLDEN_APPLE);
+        ItemStack fleshStack = new ItemStack(Items.ROTTEN_FLESH);
+        ItemStack shieldStack = new ItemStack(Items.SHIELD);
+        ItemStack pickStack = new ItemStack(Items.STONE_PICKAXE);
+        ItemStack minecartStack = new ItemStack(Items.MINECART);
+        ItemStack stringStack = new ItemStack(Items.STRING);
 
         Map<ItemStack, Pair<String, int[]>> dialogueMap = new HashMap<ItemStack, Pair<String, int[]>>();
         dialogueMap.put(bowStack, Pair.of("bow", new int[] { 1, 100, 300, 500 }));
         dialogueMap.put(bottleStack, Pair.of("quenched", new int[] { 1, 100, 300, 500 }));
         dialogueMap.put(swordStack, Pair.of("dulledBlade", new int[] { 1, 100, 300, 500, 700 }));
-        dialogueMap.put(healingPotionStack, Pair.of("slowHeal", new int[] { 1, 100, 300, 500, 700 }));
+        dialogueMap.put(goldenAppleStack, Pair.of("slowHeal", new int[] { 1, 100, 300, 500, 700 }));
 
         for (Entry<ItemStack, Pair<String, int[]>> entry : dialogueMap.entrySet())
         {
@@ -536,8 +546,52 @@ public class ModRecipes
         LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeStormTrooper(4), bowStack, new ItemStack(Items.TIPPED_ARROW, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Items.TIPPED_ARROW, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Items.TIPPED_ARROW, 1, OreDictionary.WILDCARD_VALUE));
 //        LivingArmourDowngradeRecipeRegistry.registerDialog(bowStack, bowMap);
         LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeQuenched(0), bottleStack, Items.DRAGON_BREATH);
+        LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeCrippledArm(0), shieldStack, "gemDiamond");
 
-        LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeMeleeDecrease(0), swordStack, Items.IRON_SWORD, Blocks.CACTUS);
-        LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeMeleeDecrease(1), swordStack, Items.IRON_SWORD, "dustRedstone");
+        for (int i = 0; i < 10; i++)
+        {
+            addRecipeForTieredDowngrade(new LivingArmourUpgradeMeleeDecrease(i), swordStack, i);
+            addRecipeForTieredDowngrade(new LivingArmourUpgradeSlowHeal(i), goldenAppleStack, i);
+            addRecipeForTieredDowngrade(new LivingArmourUpgradeBattleHungry(i), fleshStack, i);
+            addRecipeForTieredDowngrade(new LivingArmourUpgradeDigSlowdown(i), pickStack, i);
+            addRecipeForTieredDowngrade(new LivingArmourUpgradeDisoriented(i), minecartStack, i);
+            addRecipeForTieredDowngrade(new LivingArmourUpgradeSlowness(i), stringStack, i);
+        }
+    }
+
+    public static void addRecipeForTieredDowngrade(LivingArmourUpgrade upgrade, ItemStack stack, int tier)
+    {
+        switch (tier)
+        {
+        case 0:
+            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "ingotIron", new ItemStack(ModItems.SLATE, 1, 0));
+            break;
+        case 1:
+            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "dustRedstone", "dustRedstone", "ingotIron", new ItemStack(ModItems.SLATE, 1, 0));
+            break;
+        case 2:
+            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "ingotGold", "gemLapis", "gemLapis", new ItemStack(ModItems.SLATE, 1, 1));
+            break;
+        case 3:
+            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.VINE, "dyeRed", Items.GOLDEN_CARROT, new ItemStack(ModItems.SLATE, 1, 1));
+            break;
+        case 4:
+            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.GOLDEN_APPLE, "treeSapling", "treeSapling", new ItemStack(ModItems.SLATE, 1, 2));
+            break;
+        case 5:
+            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.IRON_BLOCK, Blocks.REDSTONE_BLOCK, new ItemStack(ModItems.SLATE, 1, 2));
+            break;
+        case 6:
+            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.IRON_BLOCK, Blocks.GLOWSTONE, "ingotGold", "ingotGold", new ItemStack(ModItems.SLATE, 1, 3));
+            break;
+        case 7:
+            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.GOLD_BLOCK, Blocks.LAPIS_BLOCK, "gemDiamond", new ItemStack(ModItems.SLATE, 1, 3));
+            break;
+        case 8:
+            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.DRAGON_BREATH, "gemDiamond", new ItemStack(ModItems.SLATE, 1, 4));
+            break;
+        case 9:
+            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.NETHER_STAR, "gemDiamond", "gemDiamond", new ItemStack(ModItems.SLATE, 1, 4));
+        }
     }
 }

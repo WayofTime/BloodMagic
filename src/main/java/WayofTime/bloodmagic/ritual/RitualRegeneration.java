@@ -77,7 +77,7 @@ public class RitualRegeneration extends Ritual
         double corrosiveDrain = 0;
 
         boolean syphonHealth = corrosiveWill >= corrosiveWillDrain;
-        boolean applyAbsorption = true;
+        boolean applyAbsorption = false;
         float absorptionRate = 1;
         int maxAbsorption = 20;
 
@@ -177,7 +177,7 @@ public class RitualRegeneration extends Ritual
     @Override
     public int getRefreshCost()
     {
-        return 200;
+        return SACRIFICE_AMOUNT;
     }
 
     @Override

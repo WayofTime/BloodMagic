@@ -20,7 +20,7 @@ public class RitualContainment extends Ritual
     {
         super("ritualContainment", 0, 2000, "ritual." + Constants.Mod.MODID + ".containmentRitual");
         addBlockRange(CONTAINMENT_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-3, 0, -3), 7));
-        setMaximumVolumeAndDistanceOfRange(CONTAINMENT_RANGE, 0, 5, 10);
+        setMaximumVolumeAndDistanceOfRange(CONTAINMENT_RANGE, 0, 10, 10);
     }
 
     @Override

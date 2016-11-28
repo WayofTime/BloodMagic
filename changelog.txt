@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.1.0-68
+------------------------------------------------------
+- Fixed Ritual of Regeneration's text
+
+------------------------------------------------------
 Version 2.1.0-67
 ------------------------------------------------------
 - Added the Destructive Will effect to the Ritual of the Green Grove. This ritual now is done~
@@ -16,6 +21,8 @@ Version 2.1.0-67
 - Added the framework for the Purification Altar.
 - Fixed a crash with the Ritual Diviner when attempting to replace certain blocks.
 - Snares can no longer hit the thrower of the snare within 20 ticks of throwing it.
+- Updated the book so it contains most of the rituals.
+- Added some placeholder recipes for the Living Armour Downgrades - they will eventually change.
 
 ------------------------------------------------------
 Version 2.1.0-66

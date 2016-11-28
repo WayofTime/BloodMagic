@@ -12,7 +12,7 @@ import WayofTime.bloodmagic.client.key.KeyBindings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
@@ -222,6 +222,12 @@ public class ClientHandler
     @SubscribeEvent
     public void onModelBake(ModelBakeEvent event)
     {
+        ModelResourceLocation location = new ModelResourceLocation("bloodmagic:BlockBloodTank", "inventory");
+        IBakedModel model = event.getModelRegistry().getObject(location);
+
+        if (model instanceof IBakedModel)
+            event.getModelRegistry().putObject(location, new CustomModelFactory(model));
+
         if (BloodMagic.isDev() && SUPPRESS_ASSET_ERRORS)
             return;
 

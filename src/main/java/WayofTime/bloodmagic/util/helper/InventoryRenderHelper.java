@@ -174,7 +174,7 @@ public class InventoryRenderHelper
      * 
      * @return The class name of the given Item
      */
-    private static String getClassName(Item item)
+    public static String getClassName(Item item)
     {
         return item instanceof ItemBlock ? Block.getBlockFromItem(item).getClass().getSimpleName() : item.getClass().getSimpleName();
     }
