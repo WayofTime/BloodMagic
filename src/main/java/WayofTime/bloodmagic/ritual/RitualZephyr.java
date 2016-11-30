@@ -78,6 +78,11 @@ public class RitualZephyr extends Ritual
 
                         entityItem.getEntityItem().stackSize = newStack.stackSize;
                     }
+
+                    if (newStack == null)
+                    {
+                        entityItem.setDead();
+                    }
                 }
             }
 
