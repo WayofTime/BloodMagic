@@ -216,7 +216,11 @@ public class BlockBloodTank extends BlockContainer implements IVariantProvider
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         for (int i = 0; i < TileBloodTank.capacities.length; i++)
+        {
             ret.add(new ImmutablePair<Integer, String>(i, "tier=" + i));
+            ret.add(new ImmutablePair<Integer, String>(i, "inventory"));
+        }
+
         return ret;
     }
 }

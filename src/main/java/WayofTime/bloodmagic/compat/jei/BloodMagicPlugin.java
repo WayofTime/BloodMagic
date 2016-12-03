@@ -99,9 +99,4 @@ public class BloodMagicPlugin extends BlankModPlugin
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.DIMENSION_ID);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.ITEM_INVENTORY);
     }
-
-    @Override
-    public void onRuntimeAvailable(IJeiRuntime runtime)
-    {
-    }
 }

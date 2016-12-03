@@ -2,6 +2,7 @@
 Version 2.1.0-68
 ------------------------------------------------------
 - Fixed Ritual of Regeneration's text
+- Fixed silly dupe bug with the Zephyr ritual. 
 
 ------------------------------------------------------
 Version 2.1.0-67

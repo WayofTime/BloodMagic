@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Shamelessly taken off of the Mekanism repository written by aidancbrady
+ * Shamelessly taken off of the Mekanism repository written by {@author aidancbrady}
  * https://github.com/aidancbrady/Mekanism
  */
 public class BakedCustomItemModel implements IPerspectiveAwareModel

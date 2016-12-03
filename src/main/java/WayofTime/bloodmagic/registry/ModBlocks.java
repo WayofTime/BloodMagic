@@ -251,8 +251,6 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(MASTER_ROUTING_NODE));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ITEM_ROUTING_NODE));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ALCHEMY_TABLE));
-        for (int i = 0; i < 16; i++)
-            renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(BLOOD_TANK), i, InventoryRenderHelper.getClassName(InventoryRenderHelper.getItemFromBlock(BLOOD_TANK)));
         renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(DEMON_CRYSTAL), 0, "ItemBlockDemonCrystal", "default");
         renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(DEMON_CRYSTAL), 1, "ItemBlockDemonCrystal", "corrosive");
         renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(DEMON_CRYSTAL), 2, "ItemBlockDemonCrystal", "destructive");
