@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.util.handler.event;
+package WayofTime.bloodmagic.client.render.model;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.*;

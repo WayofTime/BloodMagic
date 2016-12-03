@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.util.handler.event;
+package WayofTime.bloodmagic.client.render.model;
 
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.BlockBloodTank;

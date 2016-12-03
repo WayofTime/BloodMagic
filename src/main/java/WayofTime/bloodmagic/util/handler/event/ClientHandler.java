@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import WayofTime.bloodmagic.client.key.KeyBindings;
+import WayofTime.bloodmagic.client.render.model.CustomModelFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
