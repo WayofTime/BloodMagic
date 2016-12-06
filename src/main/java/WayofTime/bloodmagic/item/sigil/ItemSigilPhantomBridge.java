@@ -59,6 +59,7 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase
             //I am SURE you are teleporting!
             playerVelX = 0;
             playerVelZ = 0;
+            totalVel = 0;
         }
 
         BlockPos playerPos = player.getPosition();

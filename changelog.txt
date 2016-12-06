@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.1.0-69
+------------------------------------------------------
+- Fixed Phantom Bridge sigil glitch when travelling between dimensions and teleporting large distances.
+
+------------------------------------------------------
 Version 2.1.0-68
 ------------------------------------------------------
 - Fixed Ritual of Regeneration's text
