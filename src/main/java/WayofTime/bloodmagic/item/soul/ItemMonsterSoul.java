@@ -123,4 +123,22 @@ public class ItemMonsterSoul extends Item implements IDemonWill, IVariantProvide
         }
         return ret;
     }
+
+    @Override
+    public double getWill(ItemStack willStack)
+    {
+        return this.getWill(EnumDemonWillType.DEFAULT, willStack);
+    }
+
+    @Override
+    public void setWill(ItemStack willStack, double will)
+    {
+        this.setWill(EnumDemonWillType.DEFAULT, willStack, will);
+    }
+
+    @Override
+    public double drainWill(ItemStack willStack, double drainAmount)
+    {
+        return this.drainWill(EnumDemonWillType.DEFAULT, willStack, drainAmount);
+    }
 }

@@ -2,6 +2,7 @@
 Version 2.1.0-69
 ------------------------------------------------------
 - Fixed Phantom Bridge sigil glitch when travelling between dimensions and teleporting large distances.
+- Added deprecated methods for easier updating - Oops!
 
 ------------------------------------------------------
 Version 2.1.0-68
