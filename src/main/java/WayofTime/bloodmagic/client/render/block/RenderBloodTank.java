@@ -39,8 +39,10 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
         GlStateManager.popMatrix();
     }
 
-    public void renderFluid(float scale, Fluid renderFluid, double x, double y, double z)
+    public void renderFluid(float maxHeight, Fluid renderFluid, double x, double y, double z)
     {
+        maxHeight = maxHeight * 0.575F;
+
         GlStateManager.translate(x, y, z);
         RenderHelper.disableStandardItemLighting();
 
@@ -69,56 +71,40 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
         float u2 = fluid.getMaxU();
         float v2 = fluid.getMaxV();
 
-        if (scale > 0)
-        {
-            float edge = 0.9375F;
-            float otherEdge = 0.0625F;
-            float offset = 0.002F;
+        if (maxHeight > 0) {
+            float texWidth = u2 - u1;
 
-            // Top
-            buffer.pos(0, scale - offset, 0).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
-            buffer.pos(0, scale - offset, 1).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
-            buffer.pos(1, scale - offset, 1).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
-            buffer.pos(1, scale - offset, 0).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            // TOP
+            buffer.pos(0.25, maxHeight + 0.05, 0.25).tex(u1 + 0.75 * texWidth, v1 + (maxHeight + 0.05) * texWidth).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.25, maxHeight + 0.05, 0.75).tex(u1 + 0.75 * texWidth, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.75, maxHeight + 0.05, 0.75).tex(u1 + 0.25 * texWidth, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.75, maxHeight + 0.05, 0.25).tex(u1 + 0.25 * texWidth, v1 + (maxHeight + 0.05) * texWidth).color(rColor, gColor, bColor, aColor).endVertex();
 
-            // Bottom
-            buffer.pos(1, offset, 0).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
-            buffer.pos(1, offset, 1).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
-            buffer.pos(0, offset, 1).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
-            buffer.pos(0, offset, 0).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            // NORTH
+            buffer.pos(0.75, maxHeight + 0.05, 0.25).tex(u1 + 0.75 * texWidth, v1 + (maxHeight + 0.05) * texWidth).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.75, 0, 0.25).tex(u1 + 0.75 * texWidth, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.25, 0, 0.25).tex(u1 + 0.25 * texWidth, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.25, maxHeight + 0.05, 0.25).tex(u1 + 0.25 * texWidth, v1 + (maxHeight + 0.05) * texWidth).color(rColor, gColor, bColor, aColor).endVertex();
 
-            if (scale > otherEdge)
-            {
-                if (scale > edge)
-                    scale = edge;
+            // EAST
+            buffer.pos(0.25, 0, 0.75).tex(u1 + 0.75 * texWidth, v1 + (maxHeight + 0.05) * texWidth).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.25, maxHeight + 0.05, 0.75).tex(u1 + 0.75 * texWidth, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.25, maxHeight + 0.05, 0.25).tex(u1 + 0.25 * texWidth, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.25, 0, 0.25).tex(u1 + 0.25 * texWidth, v1 + (maxHeight + 0.05) * texWidth).color(rColor, gColor, bColor, aColor).endVertex();
 
-                v2 -= (fluid.getMaxV() - fluid.getMinV()) * (1 - scale);
+            // SOUTH
+            buffer.pos(0.75, 0, 0.75).tex(u1 + 0.75 * texWidth, v1 + (maxHeight + 0.05) * texWidth).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.75, maxHeight + 0.05, 0.75).tex(u1 + 0.75 * texWidth, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.25, maxHeight + 0.05, 0.75).tex(u1 + 0.25 * texWidth, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.25, 0, 0.75).tex(u1 + 0.25 * texWidth, v1 + (maxHeight + 0.05) * texWidth).color(rColor, gColor, bColor, aColor).endVertex();
 
-                //NORTH
-                buffer.pos(1, scale, offset).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(1, 0, offset).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(0, 0, offset).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(0, scale, offset).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
-
-                //EAST
-                buffer.pos(offset, 0, 1).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(offset, scale, 1).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(offset, scale, 0).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(offset, 0, 0).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
-
-                //SOUTH
-                buffer.pos(1, 0, 1 - offset).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(1, scale, 1 - offset).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(0, scale, 1 - offset).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(0, 0, 1 - offset).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
-
-                //WEST
-                buffer.pos(1 - offset, scale, 1).tex(u1, v1).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(1 - offset, 0, 1).tex(u1, v2).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(1 - offset, 0, 0).tex(u2, v2).color(rColor, gColor, bColor, aColor).endVertex();
-                buffer.pos(1 - offset, scale, 0).tex(u2, v1).color(rColor, gColor, bColor, aColor).endVertex();
-            }
+            // WEST
+            buffer.pos(0.75, maxHeight + 0.05, 0.75).tex(u1 + 0.75 * texWidth, v1 + (maxHeight + 0.05) * texWidth).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.75, 0, 0.75).tex(u1 + 0.75 * texWidth, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.75, 0, 0.25).tex(u1 + 0.25 * texWidth, v1).color(rColor, gColor, bColor, aColor).endVertex();
+            buffer.pos(0.75, maxHeight + 0.05, 0.25).tex(u1 + 0.25 * texWidth, v1 + (maxHeight + 0.05) * texWidth).color(rColor, gColor, bColor, aColor).endVertex();
         }
+
         tessellator.draw();
 
         RenderHelper.enableStandardItemLighting();

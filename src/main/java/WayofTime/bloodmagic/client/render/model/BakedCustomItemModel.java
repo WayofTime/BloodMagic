@@ -71,7 +71,7 @@ public class BakedCustomItemModel implements IPerspectiveAwareModel
             GlStateManager.pushMatrix();
 
             FluidStack fluid = null;
-            float capacity = TileBloodTank.capacities[stack.getItemDamage()] * Fluid.BUCKET_VOLUME;
+            float capacity = TileBloodTank.CAPACITIES[stack.getItemDamage()] * Fluid.BUCKET_VOLUME;
             int amount = 0;
             if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.TANK))
             {

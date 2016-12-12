@@ -14,17 +14,17 @@ public class TileBloodTank extends TileBase
     public int capacity;
     protected FluidTank tank;
 
-    public static int[] capacities = { 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65336, 131072, 262144, 524288 };
+    public static final int[] CAPACITIES = { 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65336, 131072, 262144, 524288 };
 
     public TileBloodTank(int meta)
     {
-        capacity = capacities[meta] * Fluid.BUCKET_VOLUME;
+        capacity = CAPACITIES[meta] * Fluid.BUCKET_VOLUME;
         tank = new FluidTank(capacity);
     }
 
     public TileBloodTank()
     {
-        capacity = capacities[0] * Fluid.BUCKET_VOLUME;
+        capacity = CAPACITIES[0] * Fluid.BUCKET_VOLUME;
         tank = new FluidTank(capacity);
     }
 

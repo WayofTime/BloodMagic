@@ -2,7 +2,7 @@
   "forge_marker": 1,
   "defaults": {
     "textures": { "all": "bloodmagic:blocks/BloodTank" },
-    "model": "cube_all",
+    "model": "bloodmagic:BlockBloodTank",
     "uvlock": true
   },
   "variants": {

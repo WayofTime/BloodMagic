@@ -2,14 +2,11 @@ package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.block.base.BlockInteger;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileBloodTank;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,6 +17,7 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
@@ -31,16 +29,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockBloodTank extends BlockContainer implements IVariantProvider
+public class BlockBloodTank extends BlockInteger implements IVariantProvider
 {
-    public static final PropertyInteger TIER = PropertyInteger.create("tier", 0, TileBloodTank.capacities.length - 1);
+    public static final AxisAlignedBB BOX = new AxisAlignedBB(0.25, 0, 0.25, 0.75, 0.8, 0.75);
 
     public BlockBloodTank()
     {
-        super(Material.IRON);
+        super(Material.IRON, TileBloodTank.CAPACITIES.length - 1, "tier");
 
         setUnlocalizedName(Constants.Mod.MODID + ".bloodTank");
         setHardness(2.0F);
@@ -49,21 +48,19 @@ public class BlockBloodTank extends BlockContainer implements IVariantProvider
         setHarvestLevel("pickaxe", 1);
         setCreativeTab(BloodMagic.tabBloodMagic);
         setLightOpacity(0);
-
-        setDefaultState(blockState.getBaseState().withProperty(TIER, 0));
     }
 
-    // This is important!!! - DON'T DELETE - idk why
+    @Nullable
     @Override
-    public TileEntity createTileEntity(World worldIn, IBlockState blockState)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
     {
-        return new TileBloodTank(getMetaFromState(blockState));
+        return BOX;
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
+    public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos)
     {
-        return new TileBloodTank(meta);
+        return BOX;
     }
 
     @Override
@@ -76,7 +73,7 @@ public class BlockBloodTank extends BlockContainer implements IVariantProvider
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {
-        return BlockRenderLayer.TRANSLUCENT;
+        return BlockRenderLayer.CUTOUT_MIPPED;
     }
 
     @Override
@@ -92,32 +89,6 @@ public class BlockBloodTank extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
-        return this.getDefaultState().withProperty(TIER, meta);
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state)
-    {
-        return state.getValue(TIER);
-    }
-
-    @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos)
-    {
-        if (world.getTileEntity(pos) == null)
-            return state;
-        return state.withProperty(TIER, world.getTileEntity(pos).getBlockMetadata());
-    }
-
-    @Override
-    protected BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer(this, new IProperty[] { TIER });
-    }
-
-    @Override
     public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         TileBloodTank fluidHandler = (TileBloodTank) world.getTileEntity(blockPos);
@@ -129,7 +100,7 @@ public class BlockBloodTank extends BlockContainer implements IVariantProvider
             return true;
         }
 
-        return false;
+        return true;
     }
 
     @Override
@@ -141,13 +112,14 @@ public class BlockBloodTank extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos blockPos, IBlockState blockState, int fortune)
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState blockState, int fortune)
     {
         ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 
-        if (world.getTileEntity(blockPos) instanceof TileBloodTank)
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileBloodTank)
         {
-            TileBloodTank bloodTank = (TileBloodTank) world.getTileEntity(blockPos);
+            TileBloodTank bloodTank = (TileBloodTank) tile;
             ItemStack drop = new ItemStack(this);
             NBTTagCompound tag = new NBTTagCompound();
             bloodTank.serialize(tag);
@@ -160,21 +132,22 @@ public class BlockBloodTank extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos blockPos, IBlockState blockState, EntityLivingBase placer, ItemStack stack)
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState blockState, EntityLivingBase placer, ItemStack stack)
     {
-        if (world.getTileEntity(blockPos) != null && world.getTileEntity(blockPos) instanceof TileBloodTank)
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileBloodTank)
         {
             NBTTagCompound tag = stack.getTagCompound();
             if (tag != null)
             {
-                ((TileBloodTank) world.getTileEntity(blockPos)).deserialize(tag);
-                blockState.withProperty(TIER, stack.getMetadata());
+                ((TileBloodTank) tile).deserialize(tag);
+                blockState.withProperty(getProperty(), stack.getMetadata());
             }
         }
 
-        world.checkLight(blockPos);
-        world.updateComparatorOutputLevel(blockPos, this);
-        world.markAndNotifyBlock(blockPos, world.getChunkFromBlockCoords(blockPos), blockState, blockState, 3);
+        world.checkLight(pos);
+        world.updateComparatorOutputLevel(pos, this);
+        world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), blockState, blockState, 3);
     }
 
     @Override
@@ -193,7 +166,7 @@ public class BlockBloodTank extends BlockContainer implements IVariantProvider
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
     {
-        return getDrops(world, pos, world.getBlockState(pos), 0).get(0);
+        return new ItemStack(this, 1, getMetaFromState(state));
     }
 
     @Override
@@ -203,19 +176,33 @@ public class BlockBloodTank extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public int getComparatorInputOverride(IBlockState state, World w, BlockPos pos)
+    public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos)
     {
-        TileEntity tile = w.getTileEntity(pos);
+        TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileBloodTank)
             return ((TileBloodTank) tile).getComparatorOutput();
         return 0;
     }
 
     @Override
+    public TileEntity createTileEntity(World worldIn, IBlockState blockState)
+    {
+        return new TileBloodTank(getMetaFromState(blockState));
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state)
+    {
+        return true;
+    }
+
+    // IVariantProvider
+
+    @Override
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < TileBloodTank.capacities.length; i++)
+        for (int i = 0; i < TileBloodTank.CAPACITIES.length; i++)
             ret.add(new ImmutablePair<Integer, String>(i, "inventory"));
 
         return ret;

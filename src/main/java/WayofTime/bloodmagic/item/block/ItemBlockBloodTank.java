@@ -70,7 +70,7 @@ public class ItemBlockBloodTank extends ItemBlock implements IFluidContainerItem
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
     {
-        for (int i = 0; i < TileBloodTank.capacities.length; i++)
+        for (int i = 0; i < TileBloodTank.CAPACITIES.length; i++)
             list.add(new ItemStack(id, 1, i));
     }
 
@@ -89,7 +89,7 @@ public class ItemBlockBloodTank extends ItemBlock implements IFluidContainerItem
     @Override
     public int getCapacity(ItemStack container)
     {
-        return container != null && Block.getBlockFromItem(container.getItem()) instanceof BlockBloodTank ? TileBloodTank.capacities[container.getMetadata()] * Fluid.BUCKET_VOLUME : 0;
+        return container != null && Block.getBlockFromItem(container.getItem()) instanceof BlockBloodTank ? TileBloodTank.CAPACITIES[container.getMetadata()] * Fluid.BUCKET_VOLUME : 0;
     }
 
     @Override
