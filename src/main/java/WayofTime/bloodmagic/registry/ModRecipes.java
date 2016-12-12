@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import WayofTime.bloodmagic.tile.TileBloodTank;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -125,6 +126,10 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.BLOOD_STONE, 16), "stone", new ItemStack(ModItems.BLOOD_SHARD)));
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ACTIVATION_CRYSTAL, 1, 1), new ItemStack(Items.NETHER_STAR), OrbRegistry.getOrbStack(ModItems.ORB_ARCHMAGE));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.SOUL_SNARE, 4, 0), "sis", "iri", "sis", 's', new ItemStack(Items.STRING), 'i', "ingotIron", 'r', "dustRedstone"));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.BLOOD_TANK), "RBR", "G G", "RRR", 'R', new ItemStack(ModBlocks.BLOOD_RUNE), 'B', ModBlocks.BLOOD_STONE, 'G', "blockGlass"));
+        for (int i = 1; i < TileBloodTank.CAPACITIES.length; i++)
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.BLOOD_TANK, 1, i), "RBR", "T T", "RRR", 'R', new ItemStack(ModBlocks.BLOOD_RUNE), 'B', ModBlocks.BLOOD_STONE, 'T', new ItemStack(ModBlocks.BLOOD_TANK, 1, i - 1)));
 
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.TELEPOSITION_FOCUS, 1, 2), new ItemStack(ModItems.TELEPOSITION_FOCUS, 1, 1), new ItemStack(ModItems.BLOOD_SHARD));
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.TELEPOSITION_FOCUS, 1, 3), new ItemStack(ModItems.TELEPOSITION_FOCUS, 1, 2), new ItemStack(ModItems.BLOOD_SHARD, 1, 1));
