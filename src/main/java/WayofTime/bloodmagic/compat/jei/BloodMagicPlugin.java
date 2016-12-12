@@ -4,10 +4,8 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import mezz.jei.api.BlankModPlugin;
-import mezz.jei.api.IJeiHelpers;
-import mezz.jei.api.IModRegistry;
-import mezz.jei.api.JEIPlugin;
+import mezz.jei.api.*;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.bloodmagic.api.Constants;
@@ -79,6 +77,8 @@ public class BloodMagicPlugin extends BlankModPlugin
                 jeiHelper.getItemBlacklist().addItemToBlacklist(stack);
             }
         }
+
+        jeiHelper.getSubtypeRegistry().useNbtForSubtypes(Item.getItemFromBlock(ModBlocks.BLOOD_TANK));
 
         registry.addRecipeClickArea(GuiSoulForge.class, 115, 15, 16, 88, Constants.Compat.JEI_CATEGORY_SOULFORGE);
 

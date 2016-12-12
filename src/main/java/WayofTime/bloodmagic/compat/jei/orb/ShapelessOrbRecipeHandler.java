@@ -17,9 +17,16 @@ public class ShapelessOrbRecipeHandler implements IRecipeHandler<ShapelessBloodO
         return ShapelessBloodOrbRecipe.class;
     }
 
+    @Deprecated
     @Nonnull
     @Override
     public String getRecipeCategoryUid()
+    {
+        return VanillaRecipeCategoryUid.CRAFTING;
+    }
+
+    @Override
+    public String getRecipeCategoryUid(@Nonnull ShapelessBloodOrbRecipe recipe)
     {
         return VanillaRecipeCategoryUid.CRAFTING;
     }

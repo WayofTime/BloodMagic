@@ -15,9 +15,16 @@ public class AltarRecipeHandler implements IRecipeHandler<AltarRecipeJEI>
         return AltarRecipeJEI.class;
     }
 
+    @Deprecated
     @Nonnull
     @Override
     public String getRecipeCategoryUid()
+    {
+        return Constants.Compat.JEI_CATEGORY_ALTAR;
+    }
+
+    @Override
+    public String getRecipeCategoryUid(@Nonnull AltarRecipeJEI recipe)
     {
         return Constants.Compat.JEI_CATEGORY_ALTAR;
     }

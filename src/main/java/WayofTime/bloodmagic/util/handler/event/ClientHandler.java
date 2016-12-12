@@ -9,10 +9,11 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import WayofTime.bloodmagic.client.key.KeyBindings;
+import WayofTime.bloodmagic.client.render.model.CustomModelFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,7 +50,7 @@ import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.client.hud.HUDElement;
-import WayofTime.bloodmagic.client.render.RenderFakeBlocks;
+import WayofTime.bloodmagic.client.render.block.RenderFakeBlocks;
 import WayofTime.bloodmagic.item.ItemRitualDiviner;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
@@ -222,6 +223,12 @@ public class ClientHandler
     @SubscribeEvent
     public void onModelBake(ModelBakeEvent event)
     {
+        ModelResourceLocation location = new ModelResourceLocation("bloodmagic:BlockBloodTank", "inventory");
+        IBakedModel model = event.getModelRegistry().getObject(location);
+
+        if (model instanceof IBakedModel)
+            event.getModelRegistry().putObject(location, new CustomModelFactory(model));
+
         if (BloodMagic.isDev() && SUPPRESS_ASSET_ERRORS)
             return;
 
@@ -369,7 +376,7 @@ public class ClientHandler
                     break;
                 }
 
-                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);
+                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
             }
         }
 
@@ -433,7 +440,7 @@ public class ClientHandler
                     break;
                 }
 
-                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);
+                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
             }
         }
 

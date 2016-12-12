@@ -244,11 +244,11 @@ tile.BloodMagic.path.obsidiantile.name=黑曜石瓦路面
 tile.BloodMagic.dimensionalPortal.name=空间传送门
 tile.BloodMagic.bloodTank.name=血液槽
 
-tile.BloodMagic.demonCrystalDEFAULT.name=恶魔意志晶簇
-tile.BloodMagic.demonCrystalCORROSIVE.name=腐蚀意志晶簇
-tile.BloodMagic.demonCrystalDESTRUCTIVE.name=破坏意志晶簇
-tile.BloodMagic.demonCrystalVENGEFUL.name=复仇意志晶簇
-tile.BloodMagic.demonCrystalSTEADFAST.name=坚定意志晶簇
+tile.BloodMagic.demonCrystal.default.name=恶魔意志晶簇
+tile.BloodMagic.demonCrystal.corrosive.name=腐蚀意志晶簇
+tile.BloodMagic.demonCrystal.destructive.name=破坏意志晶簇
+tile.BloodMagic.demonCrystal.vengeful.name=复仇意志晶簇
+tile.BloodMagic.demonCrystal.steadfast.name=坚定意志晶簇
 
 tile.BloodMagic.mimic.nohitbox.name=悬幽不透明的拟态方块
 tile.BloodMagic.mimic.solidopaque.name=不透明的拟态方块

@@ -15,9 +15,17 @@ public class ArmourDowngradeRecipeHandler implements IRecipeHandler<ArmourDowngr
         return ArmourDowngradeRecipeJEI.class;
     }
 
+    @Deprecated
     @Nonnull
     @Override
     public String getRecipeCategoryUid()
+    {
+        return Constants.Compat.JEI_CATEGORY_ARMOURDOWNGRADE;
+    }
+
+    @Nonnull
+    @Override
+    public String getRecipeCategoryUid(ArmourDowngradeRecipeJEI recipe)
     {
         return Constants.Compat.JEI_CATEGORY_ARMOURDOWNGRADE;
     }

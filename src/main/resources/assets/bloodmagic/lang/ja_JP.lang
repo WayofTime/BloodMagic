@@ -250,11 +250,11 @@ tile.BloodMagic.path.obsidiantile.name=タイル状の黒曜石の経路
 tile.BloodMagic.dimensionalPortal.name=ワープポータル
 tile.BloodMagic.bloodTank.name=血液タンク
 
-tile.BloodMagic.demonCrystalDEFAULT.name=デーモンウィル結晶株
-tile.BloodMagic.demonCrystalCORROSIVE.name=腐食性ウィル結晶株
-tile.BloodMagic.demonCrystalDESTRUCTIVE.name=破壊性ウィル結晶株
-tile.BloodMagic.demonCrystalVENGEFUL.name=報復性ウィル結晶株
-tile.BloodMagic.demonCrystalSTEADFAST.name=不活性ウィル結晶株
+tile.BloodMagic.demonCrystal.default.name=デーモンウィル結晶株
+tile.BloodMagic.demonCrystal.corrosive.name=腐食性ウィル結晶株
+tile.BloodMagic.demonCrystal.destructive.name=破壊性ウィル結晶株
+tile.BloodMagic.demonCrystal.vengeful.name=報復性ウィル結晶株
+tile.BloodMagic.demonCrystal.steadfast.name=不活性ウィル結晶株
 
 tile.BloodMagic.mimic.nohitbox.name=希薄で不透明なミミックブロック
 tile.BloodMagic.mimic.solidopaque.name=不透明なミミックブロック

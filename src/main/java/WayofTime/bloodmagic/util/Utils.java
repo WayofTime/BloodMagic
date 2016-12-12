@@ -44,10 +44,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -570,7 +567,7 @@ public class Utils
      */
     public static boolean canCombine(ItemStack stack1, ItemStack stack2)
     {
-        if (stack1 == null)
+        if (stack1 == null || stack1.isItemStackDamageable() ^ stack2.isItemStackDamageable())
         {
             return false;
         }
@@ -578,11 +575,6 @@ public class Utils
         if (stack2 == null)
         {
             return true;
-        }
-
-        if (stack1.isItemStackDamageable() ^ stack2.isItemStackDamageable())
-        {
-            return false;
         }
 
         return stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2.getItemDamage() && ItemStack.areItemStackTagsEqual(stack1, stack2);
@@ -1124,67 +1116,6 @@ public class Utils
         finalWorld.notifyNeighborsOfStateChange(finalPos, initialStack.getBlock());
 
         return true;
-    }
-
-    //Shamelessly ripped off of CoFH Lib
-    public static boolean fillContainerFromHandler(World world, IFluidHandler handler, EntityPlayer player, FluidStack tankFluid)
-    {
-        ItemStack container = player.getHeldItemMainhand();
-        if (FluidContainerRegistry.isEmptyContainer(container))
-        {
-            ItemStack returnStack = FluidContainerRegistry.fillFluidContainer(tankFluid, container);
-            FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(returnStack);
-            if (fluid == null || returnStack == null)
-            {
-                return false;
-            }
-            if (!player.capabilities.isCreativeMode)
-            {
-                if (container.stackSize == 1)
-                {
-                    container = container.copy();
-                    player.inventory.setInventorySlotContents(player.inventory.currentItem, returnStack);
-                } else if (!player.inventory.addItemStackToInventory(returnStack))
-                {
-                    return false;
-                }
-                handler.drain(EnumFacing.UP, fluid.amount, true);
-                container.stackSize--;
-                if (container.stackSize <= 0)
-                {
-                    container = null;
-                }
-            } else
-            {
-                handler.drain(EnumFacing.UP, fluid.amount, true);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    //Shamelessly ripped off of CoFH Lib
-    public static boolean fillHandlerWithContainer(World world, IFluidHandler handler, EntityPlayer player)
-    {
-        ItemStack container = player.getHeldItemMainhand();
-        FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(container);
-        if (fluid != null)
-        {
-            if (handler.fill(EnumFacing.UP, fluid, false) == fluid.amount || player.capabilities.isCreativeMode)
-            {
-                if (world.isRemote)
-                {
-                    return true;
-                }
-                handler.fill(EnumFacing.UP, fluid, true);
-                if (!player.capabilities.isCreativeMode)
-                {
-                    player.inventory.setInventorySlotContents(player.inventory.currentItem, consumeItem(container));
-                }
-                return true;
-            }
-        }
-        return false;
     }
 
     //Shamelessly ripped off of CoFH Lib

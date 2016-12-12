@@ -70,6 +70,12 @@ public class BloodMagic
         {
             return ModItems.UPGRADE_TOME;
         }
+
+        @Override
+        public boolean hasSearchBar()
+        {
+            return true;
+        }
     };
 
     @Getter
@@ -90,10 +96,13 @@ public class BloodMagic
 
             Class proxyClass = Class.forName(PROXY_MAP.get(mcVersion));
             crossVersionProxy = (ICrossVersionProxy) proxyClass.newInstance();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             throw new IllegalArgumentException("Blood Magic could not find a cross version proxy!", e);
         }
+
+        tabUpgradeTome.setNoTitle().setBackgroundImageName("upgrade_tomes.png");
 
         FluidRegistry.enableUniversalBucket();
     }

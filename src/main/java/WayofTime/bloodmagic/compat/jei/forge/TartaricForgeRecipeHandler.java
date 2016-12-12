@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.compat.jei.forge;
 
-import javax.annotation.Nonnull;
-
+import WayofTime.bloodmagic.api.Constants;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import WayofTime.bloodmagic.api.Constants;
+
+import javax.annotation.Nonnull;
 
 public class TartaricForgeRecipeHandler implements IRecipeHandler<TartaricForgeRecipeJEI>
 {
@@ -15,9 +15,16 @@ public class TartaricForgeRecipeHandler implements IRecipeHandler<TartaricForgeR
         return TartaricForgeRecipeJEI.class;
     }
 
+    @Deprecated
     @Nonnull
     @Override
     public String getRecipeCategoryUid()
+    {
+        return Constants.Compat.JEI_CATEGORY_SOULFORGE;
+    }
+
+    @Override
+    public String getRecipeCategoryUid(@Nonnull TartaricForgeRecipeJEI recipe)
     {
         return Constants.Compat.JEI_CATEGORY_SOULFORGE;
     }

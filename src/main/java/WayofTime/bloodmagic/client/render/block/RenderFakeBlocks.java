@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.client.render;
+package WayofTime.bloodmagic.client.render.block;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 public class RenderFakeBlocks
 {
-    public static void drawFakeBlock(TextureAtlasSprite texture, double minX, double minY, double minZ, World world)
+    public static void drawFakeBlock(TextureAtlasSprite texture, double minX, double minY, double minZ)
     {
         if (texture == null)
             return;

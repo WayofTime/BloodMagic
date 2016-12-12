@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.client.render;
+package WayofTime.bloodmagic.client.render.block;
 
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;

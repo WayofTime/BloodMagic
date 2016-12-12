@@ -15,9 +15,16 @@ public class BindingRecipeHandler implements IRecipeHandler<BindingRecipeJEI>
         return BindingRecipeJEI.class;
     }
 
+    @Deprecated
     @Nonnull
     @Override
     public String getRecipeCategoryUid()
+    {
+        return Constants.Compat.JEI_CATEGORY_BINDING;
+    }
+
+    @Override
+    public String getRecipeCategoryUid(@Nonnull BindingRecipeJEI recipe)
     {
         return Constants.Compat.JEI_CATEGORY_BINDING;
     }

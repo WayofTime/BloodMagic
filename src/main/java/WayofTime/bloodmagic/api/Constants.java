@@ -126,6 +126,8 @@ public class Constants
         public static final String POTION_AUGMENT_LENGHT = "length:";
         public static final String POTION_AUGMENT_STRENGTH = "strength:";
         public static final String POTION_IMPURITY = "impurity";
+
+        public static final String TANK = "tank";
     }
 
     public static class Mod
@@ -161,6 +163,7 @@ public class Constants
         public static final String WAILA_CONFIG_TELEPOSER = Mod.MODID + ".teleposer";
         public static final String WAILA_CONFIG_RITUAL = Mod.MODID + ".ritualController";
         public static final String WAILA_CONFIG_ARRAY = Mod.MODID + ".array";
+        public static final String WAILA_CONFIG_BLOOD_TANK = Mod.MODID + ".bloodTank";
 
         public static final Item THAUMCRAFT_GOGGLES = ForgeRegistries.ITEMS.getValue(new ResourceLocation("Thaumcraft", "goggles"));
     }

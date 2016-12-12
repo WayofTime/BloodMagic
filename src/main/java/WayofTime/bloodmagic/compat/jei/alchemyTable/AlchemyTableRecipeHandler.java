@@ -15,9 +15,16 @@ public class AlchemyTableRecipeHandler implements IRecipeHandler<AlchemyTableRec
         return AlchemyTableRecipeJEI.class;
     }
 
+    @Deprecated
     @Nonnull
     @Override
     public String getRecipeCategoryUid()
+    {
+        return Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE;
+    }
+
+    @Override
+    public String getRecipeCategoryUid(@Nonnull AlchemyTableRecipeJEI recipe)
     {
         return Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE;
     }
