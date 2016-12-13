@@ -53,7 +53,7 @@ public class PageAltarRecipe extends Page
             guiBase.renderToolTip(input.get(0), mouseX, mouseY);
         }
 
-        if (output == null)
+        if (output.isEmpty())
         {
             output = new ItemStack(Blocks.BARRIER);
         }

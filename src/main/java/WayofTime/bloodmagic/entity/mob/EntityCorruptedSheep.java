@@ -121,7 +121,7 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
     @Override
     public void onLivingUpdate()
     {
-        if (this.worldObj.isRemote)
+        if (this.getEntityWorld().isRemote)
         {
             this.sheepTimer = Math.max(0, this.sheepTimer - 1);
             this.castTimer = Math.max(0, castTimer - 1);
@@ -359,7 +359,7 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata)
     {
         livingdata = super.onInitialSpawn(difficulty, livingdata);
-        this.setFleeceColor(getRandomSheepColor(this.worldObj.rand));
+        this.setFleeceColor(getRandomSheepColor(this.getEntityWorld().rand));
         return livingdata;
     }
 

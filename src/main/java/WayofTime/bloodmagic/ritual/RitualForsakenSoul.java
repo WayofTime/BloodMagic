@@ -123,7 +123,7 @@ public class RitualForsakenSoul extends Ritual
             {
                 if (entity.isEntityAlive() && !(entity instanceof EntityPlayer))
                 {
-                    if (entity.attackEntityFrom(DamageSource.outOfWorld, 1))
+                    if (entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, 1))
                     {
                         if (!entity.isEntityAlive())
                         {

@@ -129,10 +129,10 @@ public class DataProviderBloodAltar implements IWailaDataProvider
 
     private static boolean holdingSeerSigil(EntityPlayer player)
     {
-        if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemSigilSeer)
+        if (player.getHeldItemMainhand().getItem() instanceof ItemSigilSeer)
             return true;
 
-        if (player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof ItemSigilSeer)
+        if (player.getHeldItemOffhand().getItem() instanceof ItemSigilSeer)
             return true;
 
         return false;
@@ -140,10 +140,10 @@ public class DataProviderBloodAltar implements IWailaDataProvider
 
     private static boolean holdingDivinationSigil(EntityPlayer player)
     {
-        if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemSigilDivination)
+        if (player.getHeldItemMainhand().getItem() instanceof ItemSigilDivination)
             return true;
 
-        if (player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof ItemSigilDivination)
+        if (player.getHeldItemOffhand().getItem() instanceof ItemSigilDivination)
             return true;
 
         return false;

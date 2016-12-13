@@ -29,13 +29,7 @@ public class WillChunk
         this.currentWill = currentWill;
     }
 
-    public boolean isModified()
-    {
-        if ((this.chunkRef != null) && (this.chunkRef.get() != null))
-        {
-            return ((Chunk) this.chunkRef.get()).needsSaving(false);
-        }
-
-        return false;
+    public boolean isModified() {
+        return (this.chunkRef != null) && (this.chunkRef.get() != null) && this.chunkRef.get().needsSaving(false);
     }
 }

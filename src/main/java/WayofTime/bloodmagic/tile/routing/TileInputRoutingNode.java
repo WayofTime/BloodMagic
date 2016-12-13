@@ -26,7 +26,7 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
     @Override
     public IItemFilter getInputFilterForSide(EnumFacing side)
     {
-        TileEntity tile = worldObj.getTileEntity(pos.offset(side));
+        TileEntity tile = getWorld().getTileEntity(pos.offset(side));
         if (tile != null)
         {
             IItemHandler handler = Utils.getInventory(tile, side.getOpposite());
@@ -34,7 +34,7 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
             {
                 ItemStack filterStack = this.getFilterStack(side);
 
-                if (filterStack == null || !(filterStack.getItem() instanceof IItemFilterProvider))
+                if (filterStack.isEmpty() || !(filterStack.getItem() instanceof IItemFilterProvider))
                 {
                     IItemFilter filter = new DefaultItemFilter();
                     filter.initializeFilter(null, tile, handler, false);

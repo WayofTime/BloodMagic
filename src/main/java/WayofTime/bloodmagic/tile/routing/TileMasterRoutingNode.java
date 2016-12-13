@@ -45,15 +45,15 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     @Override
     public void update()
     {
-        if (!worldObj.isRemote)
+        if (!getWorld().isRemote)
         {
-//            currentInput = worldObj.isBlockIndirectlyGettingPowered(pos);
-            currentInput = worldObj.getStrongPower(pos);
+//            currentInput = getWorld().isBlockIndirectlyGettingPowered(pos);
+            currentInput = getWorld().getStrongPower(pos);
 
 //            System.out.println(currentInput);
         }
 
-        if (worldObj.isRemote || worldObj.getTotalWorldTime() % tickRate != 0) //Temporary tick rate solver
+        if (getWorld().isRemote || getWorld().getTotalWorldTime() % tickRate != 0) //Temporary tick rate solver
         {
             return;
         }
@@ -62,7 +62,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
         for (BlockPos outputPos : outputNodeList)
         {
-            TileEntity outputTile = worldObj.getTileEntity(outputPos);
+            TileEntity outputTile = getWorld().getTileEntity(outputPos);
             if (outputTile instanceof IOutputItemRoutingNode && this.isConnected(new LinkedList<BlockPos>(), outputPos))
             {
                 IOutputItemRoutingNode outputNode = (IOutputItemRoutingNode) outputTile;
@@ -96,7 +96,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
         for (BlockPos inputPos : inputNodeList)
         {
-            TileEntity inputTile = worldObj.getTileEntity(inputPos);
+            TileEntity inputTile = getWorld().getTileEntity(inputPos);
             if (inputTile instanceof IInputItemRoutingNode && this.isConnected(new LinkedList<BlockPos>(), inputPos))
             {
                 IInputItemRoutingNode inputNode = (IInputItemRoutingNode) inputTile;
@@ -126,7 +126,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
             }
         }
 
-        int maxTransfer = this.getMaxTransferForDemonWill(WorldDemonWillHandler.getCurrentWill(worldObj, pos, EnumDemonWillType.DEFAULT));
+        int maxTransfer = this.getMaxTransferForDemonWill(WorldDemonWillHandler.getCurrentWill(getWorld(), pos, EnumDemonWillType.DEFAULT));
 
         for (Entry<Integer, List<IItemFilter>> outputEntry : outputMap.entrySet())
         {
@@ -231,7 +231,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 //        {
 //            return false;
 //        }
-        TileEntity tile = worldObj.getTileEntity(nodePos);
+        TileEntity tile = getWorld().getTileEntity(nodePos);
         if (!(tile instanceof IRoutingNode))
         {
 //            connectionMap.remove(nodePos);
@@ -254,7 +254,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 //                path.clear();
 //                path.addAll(testPath);
                 return true;
-            } else if (NodeHelper.isNodeConnectionEnabled(worldObj, node, testPos))
+            } else if (NodeHelper.isNodeConnectionEnabled(getWorld(), node, testPos))
             {
                 if (isConnected(path, testPos))
                 {
@@ -401,7 +401,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
         while (itr.hasNext())
         {
             BlockPos testPos = itr.next();
-            TileEntity tile = worldObj.getTileEntity(testPos);
+            TileEntity tile = getWorld().getTileEntity(testPos);
             if (tile instanceof IRoutingNode)
             {
                 ((IRoutingNode) tile).removeConnection(pos);

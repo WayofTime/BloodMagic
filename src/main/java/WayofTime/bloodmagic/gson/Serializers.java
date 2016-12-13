@@ -34,7 +34,7 @@ public class Serializers
         @Override
         public EnumDemonWillType read(PacketBuffer buf)
         {
-            return (EnumDemonWillType) buf.readEnumValue(EnumDemonWillType.class);
+            return buf.readEnumValue(EnumDemonWillType.class);
         }
 
         @Override

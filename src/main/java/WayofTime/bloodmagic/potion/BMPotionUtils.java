@@ -30,7 +30,7 @@ public class BMPotionUtils
 
     public static double damageMobAndGrowSurroundingPlants(EntityLivingBase entity, int horizontalRadius, int verticalRadius, double damageRatio, int maxPlantsGrown)
     {
-        World world = entity.worldObj;
+        World world = entity.getEntityWorld();
         if (world.isRemote)
         {
             return 0;

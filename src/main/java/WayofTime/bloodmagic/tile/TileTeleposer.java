@@ -52,9 +52,9 @@ public class TileTeleposer extends TileInventory implements ITickable
     @Override
     public void update()
     {
-        if (!worldObj.isRemote)
+        if (!getWorld().isRemote)
         {
-            int currentInput = worldObj.getStrongPower(pos);
+            int currentInput = getWorld().getStrongPower(pos);
 
             if (previousInput == 0 && currentInput != 0)
             {
@@ -67,17 +67,16 @@ public class TileTeleposer extends TileInventory implements ITickable
 
     public void initiateTeleport()
     {
-        if (!worldObj.isRemote && worldObj.getTileEntity(pos) != null && worldObj.getTileEntity(pos) instanceof TileTeleposer && canInitiateTeleport((TileTeleposer) worldObj.getTileEntity(pos)) && worldObj.getBlockState(pos).getBlock() instanceof BlockTeleposer)
+        if (!getWorld().isRemote && canInitiateTeleport(this) && getBlockType() instanceof BlockTeleposer)
         {
-            TileTeleposer teleposer = (TileTeleposer) worldObj.getTileEntity(pos);
-            ItemStack focusStack = NBTHelper.checkNBT(teleposer.getStackInSlot(0));
+            ItemStack focusStack = NBTHelper.checkNBT(getStackInSlot(0));
             ItemTelepositionFocus focus = (ItemTelepositionFocus) focusStack.getItem();
-            BlockPos focusPos = focus.getBlockPos(teleposer.getStackInSlot(0));
-            World focusWorld = focus.getWorld(teleposer.getStackInSlot(0));
+            BlockPos focusPos = focus.getBlockPos(getStackInSlot(0));
+            World focusWorld = focus.getWorld(getStackInSlot(0));
 
             if (focusWorld != null && focusWorld.getTileEntity(focusPos) instanceof TileTeleposer && !focusWorld.getTileEntity(focusPos).equals(this))
             {
-                final int focusLevel = (teleposer.getStackInSlot(0).getItemDamage() + 1);
+                final int focusLevel = (getStackInSlot(0).getItemDamage() + 1);
                 final int lpToBeDrained = (int) (0.5F * Math.sqrt((pos.getX() - focusPos.getX()) * (pos.getX() - focusPos.getX()) + (pos.getY() - focusPos.getY() + 1) * (pos.getY() - focusPos.getY() + 1) + (pos.getZ() - focusPos.getZ()) * (pos.getZ() - focusPos.getZ())));
 
                 if (NetworkHelper.getSoulNetwork(focus.getOwnerUUID(focusStack)).syphonAndDamage(PlayerHelper.getPlayerFromUUID(focus.getOwnerUUID(focusStack)), lpToBeDrained * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1)))
@@ -90,7 +89,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                         {
                             for (int k = -(focusLevel - 1); k <= (focusLevel - 1); k++)
                             {
-                                TeleposeEvent event = new TeleposeEvent(worldObj, pos.add(i, 1 + j, k), focusWorld, focusPos.add(i, 1 + j, k));
+                                TeleposeEvent event = new TeleposeEvent(getWorld(), pos.add(i, 1 + j, k), focusWorld, focusPos.add(i, 1 + j, k));
                                 if (Utils.swapLocations(event.initalWorld, event.initialBlockPos, event.finalWorld, event.finalBlockPos) && !MinecraftForge.EVENT_BUS.post(event))
                                 {
                                     blocksTransported++;
@@ -104,11 +103,11 @@ public class TileTeleposer extends TileInventory implements ITickable
                     List<Entity> originalWorldEntities;
                     List<Entity> focusWorldEntities;
                     AxisAlignedBB originalArea = new AxisAlignedBB(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, Math.min(focusWorld.getHeight(), pos.getY() + 2 * focusLevel), pos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
-                    originalWorldEntities = worldObj.getEntitiesWithinAABB(Entity.class, originalArea);
+                    originalWorldEntities = getWorld().getEntitiesWithinAABB(Entity.class, originalArea);
                     AxisAlignedBB focusArea = new AxisAlignedBB(focusPos.getX(), focusPos.getY() + 1, focusPos.getZ(), focusPos.getX() + 1, Math.min(focusWorld.getHeight(), focusPos.getY() + 2 * focusLevel), focusPos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
                     focusWorldEntities = focusWorld.getEntitiesWithinAABB(Entity.class, focusArea);
 
-                    if (focusWorld.equals(worldObj))
+                    if (focusWorld.equals(getWorld()))
                     {
                         if (!originalWorldEntities.isEmpty())
                         {
@@ -131,7 +130,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                         {
                             for (Entity entity : originalWorldEntities)
                             {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), worldObj, focusWorld.provider.getDimension(), true));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), getWorld(), focusWorld.provider.getDimension(), true));
                             }
                         }
 
@@ -139,7 +138,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                         {
                             for (Entity entity : focusWorldEntities)
                             {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), focusWorld, worldObj.provider.getDimension(), true));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), focusWorld, getWorld().provider.getDimension(), true));
                             }
                         }
                     }
@@ -150,6 +149,6 @@ public class TileTeleposer extends TileInventory implements ITickable
 
     private boolean canInitiateTeleport(TileTeleposer teleposer)
     {
-        return teleposer.getStackInSlot(0) != null && teleposer.getStackInSlot(0).getItem() instanceof ItemTelepositionFocus && !Strings.isNullOrEmpty(((ItemTelepositionFocus) teleposer.getStackInSlot(0).getItem()).getOwnerName(teleposer.getStackInSlot(0)));
+        return !teleposer.getStackInSlot(0).isEmpty() && teleposer.getStackInSlot(0).getItem() instanceof ItemTelepositionFocus && !Strings.isNullOrEmpty(((ItemTelepositionFocus) teleposer.getStackInSlot(0).getItem()).getOwnerName(teleposer.getStackInSlot(0)));
     }
 }

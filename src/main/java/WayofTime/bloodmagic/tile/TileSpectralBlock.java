@@ -42,7 +42,7 @@ public class TileSpectralBlock extends TileTicking
     @Override
     public void onUpdate()
     {
-        if (worldObj.isRemote)
+        if (getWorld().isRemote)
         {
             return;
         }
@@ -79,7 +79,7 @@ public class TileSpectralBlock extends TileTicking
         if (!Strings.isNullOrEmpty(containedBlockName))
             block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(containedBlockName));
 
-        if (block != null && worldObj.setBlockState(pos, block.getStateFromMeta(containedBlockMeta)))
+        if (block != null && getWorld().setBlockState(pos, block.getStateFromMeta(containedBlockMeta)))
             getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
     }
 

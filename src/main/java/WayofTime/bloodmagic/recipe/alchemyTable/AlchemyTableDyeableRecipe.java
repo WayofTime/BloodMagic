@@ -51,13 +51,11 @@ public class AlchemyTableDyeableRecipe extends AlchemyTableRecipe
                 if (match)
                 {
                     inputItemLocation = x;
-                    continue;
                 } else
                 {
                     if (slot.getItem() == Items.NAME_TAG || slot.getItem() == Items.DYE)
                     {
                         nameTagOrDyeLocation = x;
-                        continue;
                     }
                 }
             }
@@ -108,30 +106,19 @@ public class AlchemyTableDyeableRecipe extends AlchemyTableRecipe
         boolean hasNameTagOrDye = false;
         boolean hasInputItem = false;
 
-        for (int x = 0; x < checkedList.size(); x++)
-        {
-            ItemStack slot = checkedList.get(x);
-
-            if (slot != null)
-            {
+        for (ItemStack slot : checkedList) {
+            if (slot != null) {
                 boolean match = OreDictionary.itemMatches(inputItem, slot, false);
 
-                if (match && hasInputItem)
-                {
+                if (match && hasInputItem) {
                     return false;
-                } else if (match)
-                {
+                } else if (match) {
                     hasInputItem = true;
-                    continue;
-                } else
-                {
-                    if (slot.getItem() == Items.NAME_TAG || slot.getItem() == Items.DYE)
-                    {
-                        if (hasNameTagOrDye)
-                        {
+                } else {
+                    if (slot.getItem() == Items.NAME_TAG || slot.getItem() == Items.DYE) {
+                        if (hasNameTagOrDye) {
                             return false;
-                        } else
-                        {
+                        } else {
                             hasNameTagOrDye = true;
                         }
                     }

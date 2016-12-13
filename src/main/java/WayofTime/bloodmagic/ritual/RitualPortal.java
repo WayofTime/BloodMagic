@@ -109,13 +109,10 @@ public class RitualPortal extends Ritual
                 }
             }
 
-            if (LocationsHandler.getLocationsHandler() != null)
+            if (LocationsHandler.getLocationsHandler().addLocation(name, new PortalLocation(x, y + 1, z, world.provider.getDimension())))
             {
-                if (LocationsHandler.getLocationsHandler().addLocation(name, new PortalLocation(x, y + 1, z, world.provider.getDimension())))
-                {
-                    portalRitualTag.setString(PORTAL_ID_TAG, name);
-                    return true;
-                }
+                portalRitualTag.setString(PORTAL_ID_TAG, name);
+                return true;
             }
         }
         return false;
@@ -191,10 +188,7 @@ public class RitualPortal extends Ritual
         int z = masterRitualStone.getBlockPos().getZ();
         EnumFacing direction = masterRitualStone.getDirection();
 
-        if (LocationsHandler.getLocationsHandler() != null)
-        {
-            LocationsHandler.getLocationsHandler().removeLocation(portalRitualTag.getString(PORTAL_ID_TAG), new PortalLocation(x, y + 1, z, world.provider.getDimension()));
-        }
+        LocationsHandler.getLocationsHandler().removeLocation(portalRitualTag.getString(PORTAL_ID_TAG), new PortalLocation(x, y + 1, z, world.provider.getDimension()));
 
         if (direction == EnumFacing.NORTH || direction == EnumFacing.SOUTH)
         {

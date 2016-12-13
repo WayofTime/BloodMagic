@@ -45,8 +45,8 @@ public class BuildTestStructure
 
         settings.setRotation(rot);
         settings.setIgnoreEntities(true);
-        settings.setChunk((ChunkPos) null);
-        settings.setReplacedBlock((Block) null);
+        settings.setChunk(null);
+        settings.setReplacedBlock(null);
         settings.setIgnoreStructureBlock(false);
 
 //        settings.func_189946_a(MathHelper.clamp_float(schema.integrity, 0.0F, 1.0F));

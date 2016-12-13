@@ -136,20 +136,20 @@ public class RitualExpulsion extends Ritual
 
         moveEntityViaTeleport(entityLiving, event.getTargetX(), event.getTargetY(), event.getTargetZ());
         boolean flag = false;
-        int i = MathHelper.floor_double(entityLiving.posX);
-        int j = MathHelper.floor_double(entityLiving.posY);
-        int k = MathHelper.floor_double(entityLiving.posZ);
+        int i = MathHelper.floor(entityLiving.posX);
+        int j = MathHelper.floor(entityLiving.posY);
+        int k = MathHelper.floor(entityLiving.posZ);
         int l;
 
-        if (!entityLiving.worldObj.isAirBlock(new BlockPos(i, j, k)))
+        if (!entityLiving.getEntityWorld().isAirBlock(new BlockPos(i, j, k)))
         {
             boolean flag1 = false;
 
             while (!flag1 && j > 0)
             {
-                IBlockState state = entityLiving.worldObj.getBlockState(new BlockPos(i, j - 1, k));
+                IBlockState state = entityLiving.getEntityWorld().getBlockState(new BlockPos(i, j - 1, k));
 
-                if (state != null && state.getMaterial().blocksMovement())
+                if (state.getMaterial().blocksMovement())
                 {
                     flag1 = true;
                 } else
@@ -163,7 +163,7 @@ public class RitualExpulsion extends Ritual
             {
                 moveEntityViaTeleport(entityLiving, entityLiving.posX, entityLiving.posY, entityLiving.posZ);
 
-                if (!entityLiving.isCollided && !entityLiving.worldObj.containsAnyLiquid(entityLiving.getEntityBoundingBox()))
+                if (!entityLiving.isCollided && !entityLiving.getEntityWorld().containsAnyLiquid(entityLiving.getEntityBoundingBox()))
                 {
                     flag = true;
                 }
@@ -179,13 +179,13 @@ public class RitualExpulsion extends Ritual
             for (l = 0; l < 128; ++l)
             {
                 double lengthVal = (double) l / ((double) 128 - 1.0D);
-                float randF1 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                float randF2 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                float randF3 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                double lengthValX = lastX + (entityLiving.posX - lastX) * lengthVal + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
-                double lengthValY = lastY + (entityLiving.posY - lastY) * lengthVal + entityLiving.worldObj.rand.nextDouble() * (double) entityLiving.height;
-                double lengthValZ = lastZ + (entityLiving.posZ - lastZ) * lengthVal + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
-                entityLiving.worldObj.spawnParticle(EnumParticleTypes.PORTAL, lengthValX, lengthValY, lengthValZ, (double) randF1, (double) randF2, (double) randF3);
+                float randF1 = (entityLiving.getEntityWorld().rand.nextFloat() - 0.5F) * 0.2F;
+                float randF2 = (entityLiving.getEntityWorld().rand.nextFloat() - 0.5F) * 0.2F;
+                float randF3 = (entityLiving.getEntityWorld().rand.nextFloat() - 0.5F) * 0.2F;
+                double lengthValX = lastX + (entityLiving.posX - lastX) * lengthVal + (entityLiving.getEntityWorld().rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
+                double lengthValY = lastY + (entityLiving.posY - lastY) * lengthVal + entityLiving.getEntityWorld().rand.nextDouble() * (double) entityLiving.height;
+                double lengthValZ = lastZ + (entityLiving.posZ - lastZ) * lengthVal + (entityLiving.getEntityWorld().rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
+                entityLiving.getEntityWorld().spawnParticle(EnumParticleTypes.PORTAL, lengthValX, lengthValY, lengthValZ, (double) randF1, (double) randF2, (double) randF3);
             }
 
             return true;
@@ -200,7 +200,7 @@ public class RitualExpulsion extends Ritual
             {
                 EntityPlayerMP entityplayermp = (EntityPlayerMP) entityLiving;
 
-                if (entityplayermp.worldObj == entityLiving.worldObj)
+                if (entityplayermp.getEntityWorld() == entityLiving.getEntityWorld())
                 {
                     EnderTeleportEvent event = new EnderTeleportEvent(entityplayermp, x, y, z, 5.0F);
 

@@ -33,7 +33,7 @@ public class TilePurificationAltar extends TileInventory implements ITickable
         if (totalPurity <= 0)
         {
             ItemStack stack = this.getStackInSlot(0);
-            if (stack != null && stack.getItem() instanceof IPurificationAsh)
+            if (!stack.isEmpty() && stack.getItem() instanceof IPurificationAsh)
             {
                 totalPurity = ((IPurificationAsh) stack.getItem()).getTotalPurity(stack);
                 maxPurity = ((IPurificationAsh) stack.getItem()).getMaxPurity(stack);
@@ -45,7 +45,7 @@ public class TilePurificationAltar extends TileInventory implements ITickable
         }
 
         AxisAlignedBB aabb = purityArea.getAABB(getPos());
-        List<EntityAnimal> animalList = worldObj.getEntitiesWithinAABB(EntityAnimal.class, aabb);
+        List<EntityAnimal> animalList = getWorld().getEntitiesWithinAABB(EntityAnimal.class, aabb);
         if (animalList.isEmpty())
         {
             return;
@@ -65,9 +65,9 @@ public class TilePurificationAltar extends TileInventory implements ITickable
 
         if (hasPerformed)
         {
-            if (worldObj.rand.nextInt(4) == 0 && worldObj instanceof WorldServer)
+            if (getWorld().rand.nextInt(4) == 0 && getWorld() instanceof WorldServer)
             {
-                WorldServer server = (WorldServer) worldObj;
+                WorldServer server = (WorldServer) getWorld();
                 server.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 1, 0.02, 0.03, 0.02, 0, new int[0]);
             }
         }

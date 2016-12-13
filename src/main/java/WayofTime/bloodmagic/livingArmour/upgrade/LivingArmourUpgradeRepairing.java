@@ -32,7 +32,7 @@ public class LivingArmourUpgradeRepairing extends LivingArmourUpgrade
 
             EntityEquipmentSlot randomSlot = EntityEquipmentSlot.values()[2 + world.rand.nextInt(4)];
             ItemStack repairStack = player.getItemStackFromSlot(randomSlot);
-            if (repairStack != null)
+            if (!repairStack.isEmpty())
             {
                 if (repairStack.isItemStackDamageable() && repairStack.isItemDamaged())
                 {

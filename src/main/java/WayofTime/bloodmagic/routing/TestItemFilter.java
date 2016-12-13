@@ -40,9 +40,6 @@ public class TestItemFilter implements IItemFilter
      *        being pulled from or pushed to.
      * @param itemHandler
      *        - The item handler
-     * @param side
-     *        - The side that the inventory is being accessed from. Used for
-     *        pulling/pushing from/to the inventory.
      * @param isFilterOutput
      *        - Tells the filter what actions to expect. If true, it should be
      *        initialized as an output filter. If false, it should be
@@ -60,23 +57,23 @@ public class TestItemFilter implements IItemFilter
             for (int slot = 0; slot < itemHandler.getSlots(); slot++)
             {
                 ItemStack checkedStack = itemHandler.getStackInSlot(slot);
-                if (checkedStack == null)
+                if (checkedStack.isEmpty())
                 {
                     continue;
                 }
 
-                int stackSize = checkedStack.stackSize;
+                int stackSize = checkedStack.getCount();
 
                 for (ItemStack filterStack : requestList)
                 {
-                    if (filterStack.stackSize == 0)
+                    if (filterStack.getCount() == 0)
                     {
                         continue;
                     }
 
                     if (doStacksMatch(filterStack, checkedStack))
                     {
-                        filterStack.stackSize = Math.max(filterStack.stackSize - stackSize, 0);
+                        filterStack.setCount(Math.max(filterStack.getCount() - stackSize, 0));
                     }
                 }
             }
@@ -85,24 +82,24 @@ public class TestItemFilter implements IItemFilter
             requestList = filteredList;
             for (ItemStack filterStack : requestList)
             {
-                filterStack.stackSize *= -1; //Invert the stack size so that 
+                filterStack.setCount(filterStack.getCount() * -1); //Invert the stack size so that
             }
 
             for (int slot = 0; slot < itemHandler.getSlots(); slot++)
             {
                 ItemStack checkedStack = itemHandler.getStackInSlot(slot);
-                if (checkedStack == null)
+                if (checkedStack.isEmpty())
                 {
                     continue;
                 }
 
-                int stackSize = checkedStack.stackSize;
+                int stackSize = checkedStack.getCount();
 
                 for (ItemStack filterStack : filteredList)
                 {
                     if (doStacksMatch(filterStack, checkedStack))
                     {
-                        filterStack.stackSize += stackSize;
+                        filterStack.grow(stackSize);
                     }
                 }
             }
@@ -112,7 +109,7 @@ public class TestItemFilter implements IItemFilter
         while (iterator.hasNext())
         {
             ItemStack filterStack = iterator.next();
-            if (filterStack.stackSize <= 0)
+            if (filterStack.isEmpty())
             {
                 iterator.remove();
             }
@@ -137,7 +134,7 @@ public class TestItemFilter implements IItemFilter
         {
             if (doStacksMatch(filterStack, inputStack))
             {
-                allowedAmount = Math.min(filterStack.stackSize, inputStack.stackSize);
+                allowedAmount = Math.min(filterStack.getCount(), inputStack.getCount());
                 break;
             }
         }
@@ -148,12 +145,12 @@ public class TestItemFilter implements IItemFilter
         }
 
         ItemStack testStack = inputStack.copy();
-        testStack.stackSize = allowedAmount;
+        testStack.setCount(allowedAmount);
         ItemStack remainderStack = Utils.insertStackIntoTile(testStack, itemHandler);
 
-        int changeAmount = allowedAmount - (remainderStack == null ? 0 : remainderStack.stackSize);
+        int changeAmount = allowedAmount - (remainderStack.isEmpty() ? 0 : remainderStack.getCount());
         testStack = inputStack.copy();
-        testStack.stackSize -= changeAmount;
+        testStack.shrink(changeAmount);
 
         Iterator<ItemStack> itr = requestList.iterator();
         while (itr.hasNext())
@@ -161,8 +158,8 @@ public class TestItemFilter implements IItemFilter
             ItemStack filterStack = itr.next();
             if (doStacksMatch(filterStack, inputStack))
             {
-                filterStack.stackSize -= changeAmount;
-                if (filterStack.stackSize <= 0)
+                filterStack.shrink(changeAmount);
+                if (filterStack.isEmpty())
                 {
                     itr.remove();
                 }
@@ -186,7 +183,7 @@ public class TestItemFilter implements IItemFilter
         for (int slot = 0; slot < itemHandler.getSlots(); slot++)
         {
             ItemStack inputStack = itemHandler.getStackInSlot(slot);
-            if (inputStack == null || itemHandler.extractItem(slot, inputStack.stackSize, true) == null)//(accessedInventory instanceof ISidedInventory && !((ISidedInventory) accessedInventory).canExtractItem(slot, inputStack, accessedSide)))
+            if (inputStack.isEmpty() || itemHandler.extractItem(slot, inputStack.getCount(), true).isEmpty())//(accessedInventory instanceof ISidedInventory && !((ISidedInventory) accessedInventory).canExtractItem(slot, inputStack, accessedSide)))
             {
                 continue;
             }
@@ -196,7 +193,7 @@ public class TestItemFilter implements IItemFilter
             {
                 if (doStacksMatch(filterStack, inputStack))
                 {
-                    allowedAmount = Math.min(maxTransfer, Math.min(filterStack.stackSize, itemHandler.extractItem(slot, inputStack.stackSize, true).stackSize));
+                    allowedAmount = Math.min(maxTransfer, Math.min(filterStack.getCount(), itemHandler.extractItem(slot, inputStack.getCount(), true).getCount()));
                     break;
                 }
             }
@@ -207,17 +204,15 @@ public class TestItemFilter implements IItemFilter
             }
 
             ItemStack testStack = inputStack.copy();
-            testStack.stackSize = allowedAmount;
+            testStack.setCount(allowedAmount);
             ItemStack remainderStack = outputFilter.transferStackThroughOutputFilter(testStack);
-            int changeAmount = allowedAmount - (remainderStack == null ? 0 : remainderStack.stackSize);
+            int changeAmount = allowedAmount - (remainderStack.isEmpty() ? 0 : remainderStack.getCount());
 
-            if (remainderStack != null && remainderStack.stackSize == allowedAmount)
+            if (!remainderStack.isEmpty() && remainderStack.getCount() == allowedAmount)
             {
                 //Nothing has changed. Moving on!
                 continue;
             }
-
-            maxTransfer -= changeAmount;
 
             itemHandler.extractItem(slot, changeAmount, false);
 
@@ -227,8 +222,8 @@ public class TestItemFilter implements IItemFilter
                 ItemStack filterStack = itr.next();
                 if (doStacksMatch(filterStack, inputStack))
                 {
-                    filterStack.stackSize -= changeAmount;
-                    if (filterStack.stackSize <= 0)
+                    filterStack.shrink(changeAmount);
+                    if (filterStack.isEmpty())
                     {
                         itr.remove();
                     }

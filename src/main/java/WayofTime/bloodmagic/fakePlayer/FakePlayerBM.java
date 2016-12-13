@@ -16,8 +16,6 @@ import com.mojang.authlib.GameProfile;
  */
 public class FakePlayerBM extends FakePlayer
 {
-    ItemStack prevWeapon;
-
     public FakePlayerBM(World world, BlockPos pos, GameProfile profile)
     {
         super(FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(world.provider.getDimension()), profile);

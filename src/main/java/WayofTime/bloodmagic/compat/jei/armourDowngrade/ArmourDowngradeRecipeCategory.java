@@ -1,14 +1,13 @@
 package WayofTime.bloodmagic.compat.jei.armourDowngrade;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
@@ -63,15 +62,15 @@ public class ArmourDowngradeRecipeCategory implements IRecipeCategory
 
     }
 
+    @Nullable
     @Override
-    public void drawAnimations(Minecraft minecraft)
-    {
-
+    public IDrawable getIcon() {
+        return null;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper, IIngredients ingredients)
     {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
@@ -89,10 +88,9 @@ public class ArmourDowngradeRecipeCategory implements IRecipeCategory
 
         if (recipeWrapper instanceof ArmourDowngradeRecipeJEI)
         {
-            ArmourDowngradeRecipeJEI recipe = (ArmourDowngradeRecipeJEI) recipeWrapper;
-            guiItemStacks.set(KEY_SLOT, (ArrayList<ItemStack>) recipe.getInputs().get(1));
-            craftingGridHelper.setOutput(guiItemStacks, recipe.getOutputs());
-            craftingGridHelper.setInput(guiItemStacks, (List) recipe.getInputs().get(0), 3, 2);
+            guiItemStacks.set(KEY_SLOT, ingredients.getInputs(ItemStack.class).get(1));
+            craftingGridHelper.setOutput(guiItemStacks, ingredients.getOutputs(ItemStack.class).get(0));
+            craftingGridHelper.setInputs(guiItemStacks, ingredients.getInputs(ItemStack.class), 3, 2);
         }
     }
 }

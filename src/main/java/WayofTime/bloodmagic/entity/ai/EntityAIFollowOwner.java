@@ -29,7 +29,7 @@ public class EntityAIFollowOwner extends EntityAIBase
     public EntityAIFollowOwner(EntityDemonBase thePetIn, double followSpeedIn, float minDistIn, float maxDistIn)
     {
         this.thePet = thePetIn;
-        this.theWorld = thePetIn.worldObj;
+        this.theWorld = thePetIn.getEntityWorld();
         this.followSpeed = followSpeedIn;
         this.petPathfinder = thePetIn.getNavigator();
         this.minDist = minDistIn;
@@ -100,7 +100,7 @@ public class EntityAIFollowOwner extends EntityAIBase
     {
         IBlockState iblockstate = this.theWorld.getBlockState(pos);
         Block block = iblockstate.getBlock();
-        return block == Blocks.AIR ? true : !iblockstate.isFullCube();
+        return block == Blocks.AIR || !iblockstate.isFullCube();
     }
 
     /**
@@ -122,9 +122,9 @@ public class EntityAIFollowOwner extends EntityAIBase
                     {
                         if (this.thePet.getDistanceSqToEntity(this.theOwner) >= 144.0D)
                         {
-                            int i = MathHelper.floor_double(this.theOwner.posX) - 2;
-                            int j = MathHelper.floor_double(this.theOwner.posZ) - 2;
-                            int k = MathHelper.floor_double(this.theOwner.getEntityBoundingBox().minY);
+                            int i = MathHelper.floor(this.theOwner.posX) - 2;
+                            int j = MathHelper.floor(this.theOwner.posZ) - 2;
+                            int k = MathHelper.floor(this.theOwner.getEntityBoundingBox().minY);
 
                             for (int l = 0; l <= 4; ++l)
                             {

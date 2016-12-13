@@ -52,7 +52,7 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase
         this.tasks.addTask(5, new EntityAIWander(this, 0.8D));
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(6, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
 
         this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityLivingBase>(this, EntityLivingBase.class, 10, true, false, new EntityAspectedDemonBase.TeamAttackPredicate(this)));
@@ -95,7 +95,7 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase
     }
 
     @Override
-    protected PathNavigate getNewNavigator(World worldIn)
+    protected PathNavigate createNavigator(World worldIn)
     {
         return new PathNavigateClimber(this, worldIn);
     }
@@ -104,7 +104,7 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase
     protected void entityInit()
     {
         super.entityInit();
-        this.dataManager.register(CLIMBING, Byte.valueOf((byte) 0));
+        this.dataManager.register(CLIMBING, (byte) 0);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase
     {
         super.onUpdate();
 
-        if (!this.worldObj.isRemote)
+        if (!this.getEntityWorld().isRemote)
         {
             this.setBesideClimbableBlock(this.isCollidedHorizontally);
         }
@@ -168,17 +168,17 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase
     @Override
     public boolean isPotionApplicable(PotionEffect potioneffectIn)
     {
-        return potioneffectIn.getPotion() == MobEffects.POISON ? false : super.isPotionApplicable(potioneffectIn);
+        return potioneffectIn.getPotion() != MobEffects.POISON && super.isPotionApplicable(potioneffectIn);
     }
 
     public boolean isBesideClimbableBlock()
     {
-        return (((Byte) this.dataManager.get(CLIMBING)).byteValue() & 1) != 0;
+        return (this.dataManager.get(CLIMBING) & 1) != 0;
     }
 
     public void setBesideClimbableBlock(boolean climbing)
     {
-        byte b0 = ((Byte) this.dataManager.get(CLIMBING)).byteValue();
+        byte b0 = this.dataManager.get(CLIMBING);
 
         if (climbing)
         {
@@ -188,7 +188,7 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase
             b0 = (byte) (b0 & -2);
         }
 
-        this.dataManager.set(CLIMBING, Byte.valueOf(b0));
+        this.dataManager.set(CLIMBING, b0);
     }
 
     @Override
@@ -213,7 +213,7 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase
 
             if (f >= 0.5F && this.attacker.getRNG().nextInt(100) == 0)
             {
-                this.attacker.setAttackTarget((EntityLivingBase) null);
+                this.attacker.setAttackTarget(null);
                 return false;
             } else
             {
@@ -240,7 +240,7 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase
         public boolean shouldExecute()
         {
             float f = this.taskOwner.getBrightness(1.0F);
-            return f >= 0.5F ? false : super.shouldExecute();
+            return !(f >= 0.5F) && super.shouldExecute();
         }
     }
 }

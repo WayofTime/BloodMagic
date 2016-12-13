@@ -1,9 +1,6 @@
 package WayofTime.bloodmagic.recipe.alchemyTable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -38,7 +35,7 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe
 
     public AlchemyTablePotionAugmentRecipe(int lpDrained, int ticksRequired, int tierRequired, ItemStack inputItem, PotionEffect baseEffect, double lengthAugment, int powerAugment)
     {
-        this(lpDrained, ticksRequired, tierRequired, Arrays.asList(inputItem), baseEffect, lengthAugment, powerAugment);
+        this(lpDrained, ticksRequired, tierRequired, Collections.singletonList(inputItem), baseEffect, lengthAugment, powerAugment);
     }
 
     @Override
@@ -79,19 +76,14 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe
         List<PotionEffect> effectList = PotionUtils.getEffectsFromStack(outputStack);
         List<PotionEffect> newEffectList = new ArrayList<PotionEffect>();
 
-        Iterator<PotionEffect> effectIterator = effectList.iterator();
-        while (effectIterator.hasNext())
-        {
-            PotionEffect effect = effectIterator.next();
-            if (effect.getPotion() == wantedPotion)
-            {
+        for (PotionEffect effect : effectList) {
+            if (effect.getPotion() == wantedPotion) {
                 double currentLengthAugment = Math.max(lengthAugment, BMPotionUtils.getLengthAugment(outputStack, wantedPotion));
                 int currentPowerAugment = Math.max(powerAugment, effect.getAmplifier());
                 int potionLength = wantedPotion.isInstant() ? 1 : BMPotionUtils.getAugmentedLength(baseEffect.getDuration(), currentLengthAugment, currentPowerAugment);
                 newEffectList.add(new PotionEffect(wantedPotion, potionLength, currentPowerAugment));
                 BMPotionUtils.setLengthAugment(outputStack, wantedPotion, currentLengthAugment);
-            } else
-            {
+            } else {
                 newEffectList.add(effect);
             }
         }

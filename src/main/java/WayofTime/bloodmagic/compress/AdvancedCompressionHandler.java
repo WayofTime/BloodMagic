@@ -20,15 +20,15 @@ public class AdvancedCompressionHandler extends CompressionHandler
     {
         for (ItemStack invStack : inv)
         {
-            if (invStack == null)
+            if (invStack.isEmpty())
             {
                 continue;
             }
 
             for (int i = 2; i <= 3; i++)
             {
-                ItemStack stacky = getRecipe(invStack, world, i);
-                if (stacky != null)
+                ItemStack stack = getRecipe(invStack, world, i);
+                if (!stack.isEmpty())
                 {
                     int threshold = CompressionRegistry.getItemThreshold(invStack);
 
@@ -37,13 +37,13 @@ public class AdvancedCompressionHandler extends CompressionHandler
                     if (neededLeft <= 0)
                     {
                         iterateThroughInventory(invStack, 0, inv, needed, true);
-                        return stacky;
+                        return stack;
                     }
                 }
             }
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
     public int iterateThroughInventory(ItemStack required, int kept, ItemStack[] inv, int needed, boolean doDrain)
@@ -54,14 +54,14 @@ public class AdvancedCompressionHandler extends CompressionHandler
         {
             i++;
 
-            if (invStack == null)
+            if (invStack.isEmpty())
             {
                 continue;
             }
 
             if (invStack.isItemEqual(required) && (invStack.getTagCompound() == null ? required.getTagCompound() == null : invStack.getTagCompound().equals(required.getTagCompound())))
             {
-                int stackSize = invStack.stackSize;
+                int stackSize = invStack.getCount();
                 int used = 0;
                 if (kept > 0)
                 {
@@ -76,10 +76,10 @@ public class AdvancedCompressionHandler extends CompressionHandler
                     int remainingFromStack = Math.max(stackSize - used - needed, 0);
                     if (doDrain)
                     {
-                        invStack.stackSize = remainingFromStack + used;
-                        if (invStack.stackSize <= 0)
+                        invStack.setCount(remainingFromStack + used);
+                        if (invStack.isEmpty())
                         {
-                            inv[i] = null;
+                            inv[i] = ItemStack.EMPTY;
                         }
                     }
 
@@ -98,7 +98,7 @@ public class AdvancedCompressionHandler extends CompressionHandler
 
     public static boolean isResultStackReversible(ItemStack stack, int gridSize, World world)
     {
-        if (stack == null)
+        if (stack.isEmpty())
         {
             return false;
         }
@@ -113,12 +113,12 @@ public class AdvancedCompressionHandler extends CompressionHandler
         inventory.setInventorySlotContents(0, stack);
 
         ItemStack returnStack = StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world);
-        if (returnStack == null)
+        if (returnStack.isEmpty())
         {
             return false;
         }
 
-        ItemStack compressedStack = null;
+        ItemStack compressedStack = ItemStack.EMPTY;
         switch (gridSize)
         {
         case 2:
@@ -129,7 +129,7 @@ public class AdvancedCompressionHandler extends CompressionHandler
             break;
         }
 
-        return compressedStack != null && CompressionRegistry.areItemStacksEqual(stack, compressedStack);
+        return !compressedStack.isEmpty() && CompressionRegistry.areItemStacksEqual(stack, compressedStack);
     }
 
     public static ItemStack getRecipe(ItemStack stack, World world, int gridSize)
@@ -151,7 +151,7 @@ public class AdvancedCompressionHandler extends CompressionHandler
 
     public static boolean has22Recipe(ItemStack stack, World world)
     {
-        return get22Recipe(stack, world) != null;
+        return !get22Recipe(stack, world).isEmpty();
     }
 
     public static ItemStack get22Recipe(ItemStack stack, World world)
@@ -161,7 +161,7 @@ public class AdvancedCompressionHandler extends CompressionHandler
 
     public static boolean has33Recipe(ItemStack stack, World world)
     {
-        return get33Recipe(stack, world) != null;
+        return !get33Recipe(stack, world).isEmpty();
     }
 
     public static ItemStack get33Recipe(ItemStack stack, World world)

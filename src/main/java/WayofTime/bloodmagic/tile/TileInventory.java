@@ -61,7 +61,7 @@ public class TileInventory extends TileBase implements IInventory
 
                 if (j >= 0 && j < inventory.length)
                 {
-                    inventory[j] = ItemStack.loadItemStackFromNBT(data);
+                    inventory[j] = new ItemStack(data);
                 }
             }
         }
@@ -75,7 +75,7 @@ public class TileInventory extends TileBase implements IInventory
 
         for (int i = 0; i < inventory.length; i++)
         {
-            if ((inventory[i] != null) && !isSyncedSlot(i))
+            if ((!inventory[i].isEmpty()) && !isSyncedSlot(i))
             {
                 NBTTagCompound data = new NBTTagCompound();
                 data.setByte("Slot", (byte) i);
@@ -115,7 +115,7 @@ public class TileInventory extends TileBase implements IInventory
             if (!getWorld().isRemote)
                 getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
 
-            if (inventory[index].stackSize <= count)
+            if (inventory[index].getCount() <= count)
             {
                 ItemStack itemStack = inventory[index];
                 inventory[index] = null;
@@ -124,7 +124,7 @@ public class TileInventory extends TileBase implements IInventory
             }
 
             ItemStack itemStack = inventory[index].splitStack(count);
-            if (inventory[index].stackSize == 0)
+            if (inventory[index].getCount() == 0)
                 inventory[index] = null;
 
             markDirty();
@@ -150,8 +150,8 @@ public class TileInventory extends TileBase implements IInventory
     public void setInventorySlotContents(int slot, ItemStack stack)
     {
         inventory[slot] = stack;
-        if (stack != null && stack.stackSize > getInventoryStackLimit())
-            stack.stackSize = getInventoryStackLimit();
+        if (!stack.isEmpty() && stack.getCount() > getInventoryStackLimit())
+            stack.setCount(getInventoryStackLimit());
         markDirty();
         if (!getWorld().isRemote)
             getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
@@ -161,12 +161,6 @@ public class TileInventory extends TileBase implements IInventory
     public int getInventoryStackLimit()
     {
         return 64;
-    }
-
-    @Override
-    public boolean isUseableByPlayer(EntityPlayer player)
-    {
-        return true;
     }
 
     @Override
@@ -209,6 +203,20 @@ public class TileInventory extends TileBase implements IInventory
     public void clear()
     {
         this.inventory = new ItemStack[size];
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack stack : inventory)
+            if (!stack.isEmpty())
+                return false;
+
+        return true;
+    }
+
+    @Override
+    public boolean isUsableByPlayer(EntityPlayer player) {
+        return true;
     }
 
     // IWorldNameable

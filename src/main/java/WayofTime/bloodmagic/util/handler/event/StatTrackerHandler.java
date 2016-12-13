@@ -87,7 +87,7 @@ public class StatTrackerHandler
             if (armour != null)
             {
                 StatTrackerHealthboost.incrementCounter(armour, event.getAmount());
-                if (player.worldObj.canSeeSky(player.getPosition()) && player.worldObj.provider.isDaytime())
+                if (player.getEntityWorld().canSeeSky(player.getPosition()) && player.getEntityWorld().provider.isDaytime())
                 {
                     StatTrackerSolarPowered.incrementCounter(armour, event.getAmount());
                 }
@@ -124,7 +124,7 @@ public class StatTrackerHandler
                     if (sourceEntity != null && !source.isMagicDamage() && !source.isProjectile())
                         StatTrackerPhysicalProtect.incrementCounter(armour, amount);
 
-                    if (source.equals(DamageSource.fall))
+                    if (source.equals(DamageSource.FALL))
                         StatTrackerFallProtect.incrementCounter(armour, amount);
 
                     if (source.isProjectile())
@@ -162,7 +162,7 @@ public class StatTrackerHandler
                     {
                         StatTrackerMeleeDamage.incrementCounter(armour, amount);
 
-                        if (player.worldObj.getLight(player.getPosition()) <= 9)
+                        if (player.getEntityWorld().getLight(player.getPosition()) <= 9)
                             StatTrackerNightSight.incrementCounter(armour, amount);
 
                         if (mainWeapon != null && mainWeapon.getItem() instanceof ItemSpade)

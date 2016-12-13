@@ -138,7 +138,7 @@ public class RitualFeatheredKnife extends Ritual
                 float sacrificedHealth = 1;
                 double lpModifier = 1;
 
-                if ((health / player.getMaxHealth() > healthThreshold) && ((useIncense && !player.isPotionActive(ModPotions.soulFray)) || !useIncense))
+                if ((health / player.getMaxHealth() > healthThreshold) && (!useIncense || !player.isPotionActive(ModPotions.soulFray)))
                 {
                     if (useIncense)
                     {

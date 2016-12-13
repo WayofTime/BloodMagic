@@ -34,7 +34,7 @@ public class LivingArmourUpgradeMeleeDamage extends LivingArmourUpgrade
     {
         Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
 
-        modifierMap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(9423688, 1), "damage modifier" + 1, meleeDamage[this.level], 0));
+        modifierMap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(new UUID(9423688, 1), "damage modifier" + 1, meleeDamage[this.level], 0));
 
         return modifierMap;
     }

@@ -4,9 +4,6 @@ import WayofTime.bloodmagic.block.*;
 import WayofTime.bloodmagic.compat.waila.provider.*;
 import mcp.mobius.waila.api.IWailaRegistrar;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.base.BlockEnumPillar;
-import WayofTime.bloodmagic.block.base.BlockEnumPillarCap;
-import WayofTime.bloodmagic.block.base.BlockEnumStairs;
 
 public class WailaCallbackHandler
 {
@@ -22,9 +19,6 @@ public class WailaCallbackHandler
         registrar.registerStackProvider(new DataProviderAlchemyArray(), BlockAlchemyArray.class);
         registrar.registerStackProvider(new DataProviderMimic(), BlockMimic.class);
         registrar.registerNBTProvider(new DataProviderMimic(), BlockMimic.class);
-        registrar.registerStackProvider(DataProviderPillar.INSTANCE, BlockEnumPillarCap.class);
-        registrar.registerStackProvider(DataProviderPillar.INSTANCE, BlockEnumPillar.class);
-        registrar.registerStackProvider(DataProviderPillar.INSTANCE, BlockEnumStairs.class);
 
         registrar.addConfig(Constants.Mod.MODID, Constants.Compat.WAILA_CONFIG_BYPASS_SNEAK, false);
         registrar.addConfig(Constants.Mod.MODID, Constants.Compat.WAILA_CONFIG_ALTAR, true);

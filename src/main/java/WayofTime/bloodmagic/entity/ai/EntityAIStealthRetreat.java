@@ -82,7 +82,7 @@ public class EntityAIStealthRetreat extends EntityAIBase
     @Override
     public void startExecuting()
     {
-        ticksLeft = this.entity.worldObj.rand.nextInt(100) + 100;
+        ticksLeft = this.entity.getEntityWorld().rand.nextInt(100) + 100;
         this.entityPathNavigate.setPath(this.entityPathEntity, this.farSpeed);
     }
 

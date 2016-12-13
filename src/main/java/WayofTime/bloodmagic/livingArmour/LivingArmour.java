@@ -197,7 +197,7 @@ public class LivingArmour implements ILivingArmour
                 continue;
             }
 
-            if ((world.isRemote && upgrade.runOnClient()) || !world.isRemote)
+            if (!world.isRemote || upgrade.runOnClient())
             {
                 upgrade.onTick(world, player, this);
             }
@@ -385,7 +385,7 @@ public class LivingArmour implements ILivingArmour
                 continue;
             }
             ItemStack slotStack = player.getItemStackFromSlot(slot);
-            if (slotStack == null || !(slotStack.getItem() instanceof ItemLivingArmour))
+            if (slotStack.isEmpty() || !(slotStack.getItem() instanceof ItemLivingArmour))
                 return false;
         }
 

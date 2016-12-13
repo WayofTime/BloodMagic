@@ -32,7 +32,7 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     public void setGhostItemAmount(int ghostItemSlot, int amount)
     {
         ItemStack stack = itemInventory.getStackInSlot(ghostItemSlot);
-        if (stack != null)
+        if (!stack.isEmpty())
         {
             GhostItemHelper.setItemGhostAmount(stack, amount);
         }
@@ -70,10 +70,10 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
 
                     if (j == 0)
                     {
-                        inventory[currentActiveSlot] = ItemStack.loadItemStackFromNBT(data);
+                        inventory[currentActiveSlot] = new ItemStack(data);
                     } else if (j >= 1 && j < inventory.length + 1)
                     {
-                        inventory[j - 1] = ItemStack.loadItemStackFromNBT(data);
+                        inventory[j - 1] = new ItemStack(data);
                     }
                 }
             }
@@ -126,14 +126,14 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     public void incrementCurrentPriotiryToMaximum(int max)
     {
         priorities[currentActiveSlot] = Math.min(priorities[currentActiveSlot] + 1, max);
-        IBlockState state = worldObj.getBlockState(pos);
-        worldObj.notifyBlockUpdate(pos, state, state, 3);
+        IBlockState state = getWorld().getBlockState(pos);
+        getWorld().notifyBlockUpdate(pos, state, state, 3);
     }
 
     public void decrementCurrentPriority()
     {
         priorities[currentActiveSlot] = Math.max(priorities[currentActiveSlot] - 1, 0);
-        IBlockState state = worldObj.getBlockState(pos);
-        worldObj.notifyBlockUpdate(pos, state, state, 3);
+        IBlockState state = getWorld().getBlockState(pos);
+        getWorld().notifyBlockUpdate(pos, state, state, 3);
     }
 }

@@ -22,8 +22,8 @@ public class LivingArmourUpgradeDisoriented extends LivingArmourUpgrade
     {
         if (world.isRemote && player.ticksExisted % 20 == 0 && world.rand.nextDouble() <= chance[this.level])
         {
-            player.rotationYaw = (float) (world.rand.nextFloat() * 360);
-            player.rotationPitch = (float) (world.rand.nextFloat() * 180 - 90);
+            player.rotationYaw = world.rand.nextFloat() * 360;
+            player.rotationPitch = world.rand.nextFloat() * 180 - 90;
         }
     }
 

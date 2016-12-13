@@ -147,8 +147,6 @@ public class CraftingHandler
                     event.setCost(1);
 
                     event.setOutput(outputStack);
-
-                    return;
                 }
             }
         }

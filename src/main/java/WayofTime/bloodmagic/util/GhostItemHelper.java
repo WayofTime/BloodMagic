@@ -59,7 +59,7 @@ public class GhostItemHelper
         {
             newStack.setTagCompound(null);
         }
-        newStack.stackSize = amount;
+        newStack.setCount(amount);
 
         return newStack;
     }

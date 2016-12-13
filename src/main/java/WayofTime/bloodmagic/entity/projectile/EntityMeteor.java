@@ -95,12 +95,12 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
 
     public void generateMeteor(BlockPos pos)
     {
-        MeteorRegistry.generateMeteorForItem(meteorStack, worldObj, pos, Blocks.STONE.getDefaultState(), radiusModifier, explosionModifier, fillerChance);
+        MeteorRegistry.generateMeteorForItem(meteorStack, getEntityWorld(), pos, Blocks.STONE.getDefaultState(), radiusModifier, explosionModifier, fillerChance);
     }
 
     public DamageSource getDamageSource()
     {
-        return DamageSource.anvil;
+        return DamageSource.ANVIL;
     }
 
     @Override
@@ -127,7 +127,7 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
         radiusModifier = nbt.getDouble("radiusModifier");
         explosionModifier = nbt.getDouble("explosionModifier");
         fillerChance = nbt.getDouble("fillerChance");
-        meteorStack = ItemStack.loadItemStackFromNBT(nbt);
+        meteorStack = new ItemStack(nbt);
     }
 
     @Override

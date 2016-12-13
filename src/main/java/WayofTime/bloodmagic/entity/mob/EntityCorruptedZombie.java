@@ -73,17 +73,17 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase
     @Override
     public void setCombatTask()
     {
-        if (this.worldObj != null && !this.worldObj.isRemote)
+        if (!this.getEntityWorld().isRemote)
         {
             this.tasks.removeTask(this.aiAttackOnCollide);
             this.tasks.removeTask(this.aiArrowAttack);
             ItemStack itemstack = this.getHeldItemMainhand();
 
-            if (itemstack != null && itemstack.getItem() instanceof ItemBow)
+            if (!itemstack.isEmpty() && itemstack.getItem() instanceof ItemBow)
             {
                 int i = 20;
 
-                if (this.worldObj.getDifficulty() != EnumDifficulty.HARD)
+                if (this.getEntityWorld().getDifficulty() != EnumDifficulty.HARD)
                 {
                     i = 40;
                 }
@@ -100,7 +100,7 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
-        return this.isEntityInvulnerable(source) ? false : super.attackEntityFrom(source, amount);
+        return !this.isEntityInvulnerable(source) && super.attackEntityFrom(source, amount);
     }
 
     /**
@@ -128,7 +128,7 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase
      */
     public double absorbWillFromAuraToHeal(double toHeal)
     {
-        if (worldObj.isRemote)
+        if (getEntityWorld().isRemote)
         {
             return 0;
         }
@@ -139,13 +139,13 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase
             return 0;
         }
 
-        double will = WorldDemonWillHandler.getCurrentWill(worldObj, getPosition(), getType());
+        double will = WorldDemonWillHandler.getCurrentWill(getEntityWorld(), getPosition(), getType());
 
         toHeal = Math.min(healthMissing, Math.min(toHeal, will / getWillToHealth()));
         if (toHeal > 0)
         {
             this.heal((float) toHeal);
-            return WorldDemonWillHandler.drainWill(worldObj, getPosition(), getType(), toHeal * getWillToHealth(), true);
+            return WorldDemonWillHandler.drainWill(getEntityWorld(), getPosition(), getType(), toHeal * getWillToHealth(), true);
         }
 
         return 0;
@@ -164,7 +164,7 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase
 
     public void onUpdate()
     {
-        if (!this.worldObj.isRemote && this.ticksExisted % 20 == 0)
+        if (!this.getEntityWorld().isRemote && this.ticksExisted % 20 == 0)
         {
             absorbWillFromAuraToHeal(2);
         }
@@ -174,15 +174,8 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase
 
     //TODO: Change to fit the given AI
     @Override
-    public boolean shouldAttackEntity(EntityLivingBase attacker, EntityLivingBase owner)
-    {
-        if (!(attacker instanceof EntityCreeper) && !(attacker instanceof EntityGhast))
-        {
-            return super.shouldAttackEntity(attacker, owner);
-        } else
-        {
-            return false;
-        }
+    public boolean shouldAttackEntity(EntityLivingBase attacker, EntityLivingBase owner) {
+        return !(attacker instanceof EntityCreeper) && !(attacker instanceof EntityGhast) && super.shouldAttackEntity(attacker, owner);
     }
 
     @Override

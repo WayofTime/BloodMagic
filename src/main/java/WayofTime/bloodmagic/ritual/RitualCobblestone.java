@@ -48,7 +48,7 @@ public class RitualCobblestone extends Ritual
         if (tileEntity != null && tileEntity instanceof TileAlchemyArray)
         {
             TileAlchemyArray alchemyArray = (TileAlchemyArray) tileEntity;
-            if (alchemyArray.getStackInSlot(0) != null && alchemyArray.getStackInSlot(0).getItem() instanceof ItemComponent)
+            if (!alchemyArray.getStackInSlot(0).isEmpty() && alchemyArray.getStackInSlot(0).getItem() instanceof ItemComponent)
             {
                 switch (alchemyArray.getStackInSlot(0).getItemDamage())
                 {

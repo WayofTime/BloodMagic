@@ -43,7 +43,6 @@ public class RitualZephyr extends Ritual
         BlockPos masterPos = masterRitualStone.getBlockPos();
         AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
         TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
-
         if (!masterRitualStone.getWorldObj().isRemote && tileInventory != null)
         {
             if (currentEssence < getRefreshCost())
@@ -57,32 +56,29 @@ public class RitualZephyr extends Ritual
             List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, zephyrRange.getAABB(masterRitualStone.getBlockPos()));
             int count = 0;
 
-            if (itemList != null)
+            for (EntityItem entityItem : itemList)
             {
-                for (EntityItem entityItem : itemList)
+                if (entityItem.isDead)
                 {
-                    if (entityItem.isDead)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    ItemStack copyStack = entityItem.getEntityItem().copy();
-                    int originalAmount = copyStack.stackSize;
-                    ItemStack newStack = Utils.insertStackIntoTile(copyStack, tileInventory, EnumFacing.DOWN);
+                ItemStack copyStack = entityItem.getEntityItem().copy();
+                int originalAmount = copyStack.getCount();
+                ItemStack newStack = Utils.insertStackIntoTile(copyStack, tileInventory, EnumFacing.DOWN);
 
-                    if (newStack != null && newStack.stackSize < originalAmount)
-                    {
-                        count++;
-                        if (newStack.stackSize <= 0)
-                            entityItem.setDead();
-
-                        entityItem.getEntityItem().stackSize = newStack.stackSize;
-                    }
-
-                    if (newStack == null)
-                    {
+                if (!newStack.isEmpty() && newStack.getCount() < originalAmount)
+                {
+                    count++;
+                    if (newStack.isEmpty())
                         entityItem.setDead();
-                    }
+
+                    entityItem.getEntityItem().setCount(newStack.getCount());
+                }
+
+                if (newStack.isEmpty())
+                {
+                    entityItem.setDead();
                 }
             }
 

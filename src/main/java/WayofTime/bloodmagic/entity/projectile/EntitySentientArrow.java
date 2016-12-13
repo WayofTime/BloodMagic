@@ -41,7 +41,7 @@ public class EntitySentientArrow extends EntityTippedArrow
     {
         if (this.shootingEntity instanceof EntityPlayer)
         {
-            if (hitEntity.worldObj.getDifficulty() != EnumDifficulty.PEACEFUL && !(hitEntity instanceof IMob))
+            if (hitEntity.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && !(hitEntity instanceof IMob))
             {
                 return;
             }

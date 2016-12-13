@@ -51,8 +51,8 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 
             if (stack.getItem() instanceof IPlantable)
             {
-                if (stack.stackSize > 1)
-                    stack.stackSize--;
+                if (stack.getCount() > 1)
+                    stack.shrink(1);
                 else
                     drops.remove(stack);
 
@@ -70,7 +70,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
                 if (!world.isRemote)
                 {
                     EntityItem toDrop = new EntityItem(world, pos.getX(), pos.getY() + 0.5, pos.getZ(), stack);
-                    world.spawnEntityInWorld(toDrop);
+                    world.spawnEntity(toDrop);
                 }
             }
 

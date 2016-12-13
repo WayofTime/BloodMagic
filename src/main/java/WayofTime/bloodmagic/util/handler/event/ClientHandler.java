@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nullable;
-
 import WayofTime.bloodmagic.client.key.KeyBindings;
 import WayofTime.bloodmagic.client.render.model.CustomModelFactory;
 import net.minecraft.client.Minecraft;
@@ -93,14 +91,11 @@ public class ClientHandler
     private static EnumFacing mrsHoloDirection;
     private static boolean mrsHoloDisplay;
 
-    boolean doCrystalRenderTest = true;
-    public static ResourceLocation crystalResource = new ResourceLocation(Constants.Mod.DOMAIN + "textures/entities/defaultCrystalLayer.png");
-
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event)
     {
         ItemStack stack = event.getItemStack();
-        if (stack == null)
+        if (stack.isEmpty())
         {
             return;
         }
@@ -121,7 +116,7 @@ public class ClientHandler
     @SubscribeEvent
     public void onSoundEvent(PlaySoundEvent event)
     {
-        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayer player = Minecraft.getMinecraft().player;
         if (player != null && player.isPotionActive(ModPotions.deafness))
         {
             event.setResultSound(null);
@@ -152,8 +147,8 @@ public class ClientHandler
     @SubscribeEvent
     public void render(RenderWorldLastEvent event)
     {
-        EntityPlayerSP player = minecraft.thePlayer;
-        World world = player.worldObj;
+        EntityPlayerSP player = minecraft.player;
+        World world = player.getEntityWorld();
 
         if (mrsHoloTile != null)
         {
@@ -174,20 +169,20 @@ public class ClientHandler
 
         TileEntity tileEntity = world.getTileEntity(minecraft.objectMouseOver.getBlockPos());
 
-        if (tileEntity instanceof TileMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner)
+        if (tileEntity instanceof TileMasterRitualStone && !player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner)
             renderRitualStones(player, event.getPartialTicks());
     }
 
     @SubscribeEvent
     public void onMouseEvent(MouseEvent event)
     {
-        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         if (event.getDwheel() != 0 && player != null && player.isSneaking())
         {
             ItemStack stack = player.getHeldItemMainhand();
 
-            if (stack != null)
+            if (!stack.isEmpty())
             {
                 Item item = stack.getItem();
 
@@ -226,7 +221,7 @@ public class ClientHandler
         ModelResourceLocation location = new ModelResourceLocation("bloodmagic:BlockBloodTank", "inventory");
         IBakedModel model = event.getModelRegistry().getObject(location);
 
-        if (model instanceof IBakedModel)
+        if (model != null)
             event.getModelRegistry().putObject(location, new CustomModelFactory(model));
 
         if (BloodMagic.isDev() && SUPPRESS_ASSET_ERRORS)
@@ -310,8 +305,8 @@ public class ClientHandler
         ItemSigilHolding.cycleToNextSigil(stack, mode);
         BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacketProcessor(player.inventory.currentItem, mode));
         ItemStack newStack = ItemSigilHolding.getItemStackInSlot(stack, ItemSigilHolding.getCurrentItemOrdinal(stack));
-        if (newStack != null)
-            Minecraft.getMinecraft().ingameGUI.setRecordPlaying(newStack.getDisplayName(), false);
+        if (!newStack.isEmpty())
+            player.sendStatusMessage(newStack.getTextComponent(), true);
     }
 
     private static TextureAtlasSprite forName(TextureMap textureMap, String name, String dir)
@@ -321,7 +316,7 @@ public class ClientHandler
 
     private void renderRitualStones(EntityPlayerSP player, float partialTicks)
     {
-        World world = player.worldObj;
+        World world = player.getEntityWorld();
         ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getCurrentItem().getItem();
         EnumFacing direction = ritualDiviner.getDirection(player.inventory.getCurrentItem());
         Ritual ritual = RitualRegistry.getRitualForId(ritualDiviner.getCurrentRitual(player.inventory.getCurrentItem()));
@@ -385,8 +380,8 @@ public class ClientHandler
 
     public static void renderRitualStones(TileMasterRitualStone masterRitualStone, float partialTicks)
     {
-        EntityPlayerSP player = minecraft.thePlayer;
-        World world = player.worldObj;
+        EntityPlayerSP player = minecraft.player;
+        World world = player.world;
         EnumFacing direction = mrsHoloDirection;
         Ritual ritual = mrsHoloRitual;
 
@@ -461,29 +456,5 @@ public class ClientHandler
         mrsHoloTile = null;
         mrsHoloRitual = null;
         mrsHoloDirection = EnumFacing.NORTH;
-    }
-
-    protected void renderHotbarItem(int x, int y, float partialTicks, EntityPlayer player, @Nullable ItemStack stack)
-    {
-        if (stack != null)
-        {
-            float animation = (float) stack.animationsToGo - partialTicks;
-
-            if (animation > 0.0F)
-            {
-                GlStateManager.pushMatrix();
-                float f1 = 1.0F + animation / 5.0F;
-                GlStateManager.translate((float) (x + 8), (float) (y + 12), 0.0F);
-                GlStateManager.scale(1.0F / f1, (f1 + 1.0F) / 2.0F, 1.0F);
-                GlStateManager.translate((float) (-(x + 8)), (float) (-(y + 12)), 0.0F);
-            }
-
-            minecraft.getRenderItem().renderItemAndEffectIntoGUI(player, stack, x, y);
-
-            if (animation > 0.0F)
-                GlStateManager.popMatrix();
-
-            minecraft.getRenderItem().renderItemOverlays(minecraft.fontRendererObj, stack, x, y);
-        }
     }
 }

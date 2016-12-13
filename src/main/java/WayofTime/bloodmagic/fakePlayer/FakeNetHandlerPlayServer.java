@@ -5,30 +5,12 @@ import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.CPacketAnimation;
-import net.minecraft.network.play.client.CPacketChatMessage;
-import net.minecraft.network.play.client.CPacketClickWindow;
-import net.minecraft.network.play.client.CPacketClientSettings;
-import net.minecraft.network.play.client.CPacketClientStatus;
-import net.minecraft.network.play.client.CPacketCloseWindow;
-import net.minecraft.network.play.client.CPacketConfirmTransaction;
-import net.minecraft.network.play.client.CPacketCreativeInventoryAction;
-import net.minecraft.network.play.client.CPacketEnchantItem;
-import net.minecraft.network.play.client.CPacketEntityAction;
-import net.minecraft.network.play.client.CPacketHeldItemChange;
-import net.minecraft.network.play.client.CPacketInput;
-import net.minecraft.network.play.client.CPacketKeepAlive;
-import net.minecraft.network.play.client.CPacketPlayer;
-import net.minecraft.network.play.client.CPacketPlayerAbilities;
-import net.minecraft.network.play.client.CPacketPlayerDigging;
-import net.minecraft.network.play.client.CPacketPlayerTryUseItem;
-import net.minecraft.network.play.client.CPacketResourcePackStatus;
-import net.minecraft.network.play.client.CPacketSpectate;
-import net.minecraft.network.play.client.CPacketTabComplete;
-import net.minecraft.network.play.client.CPacketUpdateSign;
-import net.minecraft.network.play.client.CPacketUseEntity;
+import net.minecraft.network.play.client.*;
+import net.minecraft.network.play.server.SPacketPlayerPosLook;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+
+import java.util.Set;
 
 /**
  * All credits for this go to CrazyPants, from EIO
@@ -47,7 +29,47 @@ public class FakeNetHandlerPlayServer extends NetHandlerPlayServer
     }
 
     @Override
-    public void kickPlayerFromServer(String p_147360_1_)
+    public void update()
+    {
+    }
+
+    @Override
+    public void disconnect(String reason)
+    {
+    }
+
+    @Override
+    public void processVehicleMove(CPacketVehicleMove packetIn)
+    {
+    }
+
+    @Override
+    public void processConfirmTeleport(CPacketConfirmTeleport packetIn)
+    {
+    }
+
+    @Override
+    public void setPlayerLocation(double x, double y, double z, float yaw, float pitch, Set<SPacketPlayerPosLook.EnumFlags> relativeSet)
+    {
+    }
+
+    @Override
+    public void processTryUseItemOnBlock(CPacketPlayerTryUseItemOnBlock packetIn)
+    {
+    }
+
+    @Override
+    public void processTryUseItem(CPacketPlayerTryUseItem packetIn)
+    {
+    }
+
+    @Override
+    public void processSteerBoat(CPacketSteerBoat packetIn)
+    {
+    }
+
+    @Override
+    public void processCustomPayload(CPacketCustomPayload packetIn)
     {
     }
 
@@ -68,11 +90,6 @@ public class FakeNetHandlerPlayServer extends NetHandlerPlayServer
 
     @Override
     public void processPlayerDigging(CPacketPlayerDigging p_147345_1_)
-    {
-    }
-
-    @Override
-    public void processPlayerBlockPlacement(CPacketPlayerTryUseItem packetIn)
     {
     }
 

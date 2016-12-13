@@ -47,7 +47,7 @@ public class EntityAIStealthTowardsTarget extends EntityAIBase
             return false;
         } else
         {
-            ticksLeft = this.entity.worldObj.rand.nextInt(200) + 100;
+            ticksLeft = this.entity.getEntityWorld().rand.nextInt(200) + 100;
             this.xPosition = vec3d.xCoord;
             this.yPosition = vec3d.yCoord;
             this.zPosition = vec3d.zCoord;
@@ -75,7 +75,7 @@ public class EntityAIStealthTowardsTarget extends EntityAIBase
         if (this.entity.getNavigator().noPath())
         {
             EntityLivingBase target = this.entity.getAttackTarget();
-            Vec3d vec3d = null;
+            Vec3d vec3d;
             if (target instanceof EntityCreature)
             {
                 vec3d = RandomPositionGenerator.findRandomTarget((EntityCreature) target, 10, 7);

@@ -61,7 +61,7 @@ public class HarvestHandlerStem implements IHarvestHandler
             for (ItemStack drop : drops)
             {
                 EntityItem item = new EntityItem(world, cropPos.getX(), cropPos.getY() + 0.5, cropPos.getZ(), drop);
-                world.spawnEntityInWorld(item);
+                world.spawnEntity(item);
             }
         }
 

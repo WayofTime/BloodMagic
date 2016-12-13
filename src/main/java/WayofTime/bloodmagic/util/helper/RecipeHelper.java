@@ -16,7 +16,7 @@ public class RecipeHelper
             if (recipe != null)
             {
                 ItemStack resultStack = recipe.getRecipeOutput();
-                if (resultStack != null && resultStack.getItem() != null)
+                if (!resultStack.isEmpty())
                 {
                     if (resultStack.getItem() == stack.getItem() && resultStack.getItemDamage() == stack.getItemDamage())
                     {
@@ -36,7 +36,7 @@ public class RecipeHelper
             if (recipe != null)
             {
                 ItemStack resultStack = recipe.getOutput();
-                if (resultStack != null && resultStack.getItem() != null)
+                if (!resultStack.isEmpty())
                 {
                     if (resultStack.getItem() == stack.getItem() && resultStack.getItemDamage() == stack.getItemDamage())
                     {
@@ -56,7 +56,7 @@ public class RecipeHelper
             if (recipe != null)
             {
                 ItemStack resultStack = recipe.getRecipeOutput();
-                if (resultStack != null && resultStack.getItem() != null)
+                if (!resultStack.isEmpty())
                 {
                     if (resultStack.getItem() == stack.getItem() && resultStack.getItemDamage() == stack.getItemDamage())
                     {

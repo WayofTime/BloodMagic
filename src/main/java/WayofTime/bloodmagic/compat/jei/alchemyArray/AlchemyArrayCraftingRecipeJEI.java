@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
@@ -27,22 +28,14 @@ public class AlchemyArrayCraftingRecipeJEI extends BlankRecipeWrapper
         this.output = output;
     }
 
-    @Override
-    @Nonnull
-    public List<ItemStack> getInputs()
-    {
-        return inputs;
-    }
-
     public ItemStack getCatalyst()
     {
         return catalyst;
     }
 
     @Override
-    @Nonnull
-    public List<ItemStack> getOutputs()
-    {
-        return Collections.singletonList(output);
+    public void getIngredients(IIngredients ingredients) {
+        ingredients.setOutputs(ItemStack.class, Collections.singletonList(output));
+        ingredients.setInputs(ItemStack.class, inputs);
     }
 }

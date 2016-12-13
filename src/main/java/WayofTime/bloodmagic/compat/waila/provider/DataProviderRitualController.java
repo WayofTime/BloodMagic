@@ -65,7 +65,7 @@ public class DataProviderRitualController implements IWailaDataProvider
 
                 if (accessor.getBlock().getMetaFromState(accessor.getBlockState()) == 1 && accessor.getTileEntity() instanceof TileImperfectRitualStone)
                 {
-                    if (accessor.getWorld().getBlockState(accessor.getPosition().up()).getBlock() != null)
+                    if (accessor.getWorld().isAirBlock(accessor.getPosition().up()))
                     {
                         Block up = accessor.getWorld().getBlockState(accessor.getPosition().up()).getBlock();
                         int meta = up.getMetaFromState(accessor.getWorld().getBlockState(accessor.getPosition().up()));

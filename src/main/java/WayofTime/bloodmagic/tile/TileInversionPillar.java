@@ -82,23 +82,23 @@ public class TileInversionPillar extends TileTicking
     {
         if (animationOffsetValue < 0)
         {
-            animationOffsetValue = worldObj.getTotalWorldTime() * worldObj.rand.nextFloat();
+            animationOffsetValue = getWorld().getTotalWorldTime() * getWorld().rand.nextFloat();
             animationOffset.setValue(animationOffsetValue);
         }
 
-        if (worldObj.isRemote)
+        if (getWorld().isRemote)
         {
             return;
         }
 
         if (!isRegistered)
         {
-            isRegistered = InversionPillarHandler.addPillarToMap(worldObj, getType(), getPos());
+            isRegistered = InversionPillarHandler.addPillarToMap(getWorld(), getType(), getPos());
         }
 
         counter++;
 
-        double currentWill = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
+        double currentWill = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
         if (counter % 1 == 0)
         {
             List<BlockPos> pillarList = getNearbyPillarsExcludingThis();
@@ -151,17 +151,17 @@ public class TileInversionPillar extends TileTicking
             if (currentInfectionRadius >= 8 && currentInversion >= inversionToAddPillar)
             {
                 //TODO: Improve algorithm
-                List<BlockPos> allConnectedPos = InversionPillarHandler.getAllConnectedPillars(worldObj, type, pos);
-                BlockPos candidatePos = findCandidatePositionForPillar(worldObj, type, pos, allConnectedPos, 5, 10);
+                List<BlockPos> allConnectedPos = InversionPillarHandler.getAllConnectedPillars(getWorld(), type, pos);
+                BlockPos candidatePos = findCandidatePositionForPillar(getWorld(), type, pos, allConnectedPos, 5, 10);
                 if (!candidatePos.equals(BlockPos.ORIGIN))
                 {
                     currentInversion = 0;
                     IBlockState pillarState = ModBlocks.INVERSION_PILLAR.getStateFromMeta(type.ordinal());
                     IBlockState bottomState = ModBlocks.INVERSION_PILLAR_END.getStateFromMeta(type.ordinal() * 2);
                     IBlockState topState = ModBlocks.INVERSION_PILLAR_END.getStateFromMeta(type.ordinal() * 2 + 1);
-                    worldObj.setBlockState(candidatePos, pillarState);
-                    worldObj.setBlockState(candidatePos.down(), bottomState);
-                    worldObj.setBlockState(candidatePos.up(), topState);
+                    getWorld().setBlockState(candidatePos, pillarState);
+                    getWorld().setBlockState(candidatePos.down(), bottomState);
+                    getWorld().setBlockState(candidatePos.up(), topState);
                 }
             }
         }
@@ -176,11 +176,11 @@ public class TileInversionPillar extends TileTicking
     {
         if (currentInversion > 1000)
         {
-            Vec3d vec = new Vec3d(worldObj.rand.nextDouble() * 2 - 1, worldObj.rand.nextDouble() * 2 - 1, worldObj.rand.nextDouble() * 2 - 1).normalize().scale(2 * currentInfectionRadius);
+            Vec3d vec = new Vec3d(getWorld().rand.nextDouble() * 2 - 1, getWorld().rand.nextDouble() * 2 - 1, getWorld().rand.nextDouble() * 2 - 1).normalize().scale(2 * currentInfectionRadius);
 
             BlockPos centralPos = pos.add(vec.xCoord, vec.yCoord, vec.zCoord);
 
-            worldObj.setBlockState(centralPos, ModBlocks.DEMON_EXTRAS.getStateFromMeta(0));
+            getWorld().setBlockState(centralPos, ModBlocks.DEMON_EXTRAS.getStateFromMeta(0));
             currentInversion -= 1000;
         }
     }
@@ -236,7 +236,7 @@ public class TileInversionPillar extends TileTicking
 
     public void spreadWillToSurroundingChunks()
     {
-        double currentAmount = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
+        double currentAmount = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
         if (currentAmount <= minimumWillForChunkWhenSpreading)
         {
             return;
@@ -245,7 +245,7 @@ public class TileInversionPillar extends TileTicking
         for (EnumFacing side : EnumFacing.HORIZONTALS)
         {
             BlockPos offsetPos = pos.offset(side, 16);
-            double sideAmount = WorldDemonWillHandler.getCurrentWill(worldObj, offsetPos, type);
+            double sideAmount = WorldDemonWillHandler.getCurrentWill(getWorld(), offsetPos, type);
             if (currentAmount > sideAmount)
             {
                 double drainAmount = Math.min((currentAmount - sideAmount) / 2, willPushRate);
@@ -254,8 +254,8 @@ public class TileInversionPillar extends TileTicking
                     continue;
                 }
 
-                double drain = WorldDemonWillHandler.drainWill(worldObj, pos, type, drainAmount, true);
-                drain = WorldDemonWillHandler.fillWillToMaximum(worldObj, offsetPos, type, drain, maxWillForChunk, true);
+                double drain = WorldDemonWillHandler.drainWill(getWorld(), pos, type, drainAmount, true);
+                drain = WorldDemonWillHandler.fillWillToMaximum(getWorld(), offsetPos, type, drain, maxWillForChunk, true);
 
                 currentInversion -= drain * inversionCostPerWillSpread;
             }
@@ -264,15 +264,15 @@ public class TileInversionPillar extends TileTicking
 
     public void removePillarFromMap()
     {
-        if (!worldObj.isRemote)
+        if (!getWorld().isRemote)
         {
-            InversionPillarHandler.removePillarFromMap(worldObj, type, pos);
+            InversionPillarHandler.removePillarFromMap(getWorld(), type, pos);
         }
     }
 
     public List<BlockPos> getNearbyPillarsExcludingThis()
     {
-        return InversionPillarHandler.getNearbyPillars(worldObj, type, pos);
+        return InversionPillarHandler.getNearbyPillars(getWorld(), type, pos);
     }
 
     @Override
@@ -322,7 +322,7 @@ public class TileInversionPillar extends TileTicking
 
         if (totalGeneratedWill > 0)
         {
-            WorldDemonWillHandler.fillWillToMaximum(worldObj, pos, type, totalGeneratedWill, maxWillForChunk, true);
+            WorldDemonWillHandler.fillWillToMaximum(getWorld(), pos, type, totalGeneratedWill, maxWillForChunk, true);
         }
     }
 
@@ -359,9 +359,9 @@ public class TileInversionPillar extends TileTicking
 
         for (int i = 0; i < currentInfectionRadius; i++)
         {
-            double xOff = (worldObj.rand.nextBoolean() ? 1 : -1) * (worldObj.rand.nextGaussian() + 1) * (currentInfectionRadius);
-            double yOff = (worldObj.rand.nextBoolean() ? 1 : -1) * (worldObj.rand.nextGaussian() + 1) * (currentInfectionRadius);
-            double zOff = (worldObj.rand.nextBoolean() ? 1 : -1) * (worldObj.rand.nextGaussian() + 1) * (currentInfectionRadius);
+            double xOff = (getWorld().rand.nextBoolean() ? 1 : -1) * (getWorld().rand.nextGaussian() + 1) * (currentInfectionRadius);
+            double yOff = (getWorld().rand.nextBoolean() ? 1 : -1) * (getWorld().rand.nextGaussian() + 1) * (currentInfectionRadius);
+            double zOff = (getWorld().rand.nextBoolean() ? 1 : -1) * (getWorld().rand.nextGaussian() + 1) * (currentInfectionRadius);
             double r2 = xOff * xOff + yOff * yOff + zOff * zOff;
             int maxInfectionRadius2 = (9 * currentInfectionRadius * currentInfectionRadius);
             if (r2 > maxInfectionRadius2)
@@ -378,16 +378,16 @@ public class TileInversionPillar extends TileTicking
                 return 1; //Invalid block (itself!)
             }
 
-            IBlockState state = worldObj.getBlockState(offsetPos);
-            if (!state.getBlock().isAir(state, worldObj, offsetPos))
+            IBlockState state = getWorld().getBlockState(offsetPos);
+            if (!state.getBlock().isAir(state, getWorld(), offsetPos))
             {
                 //Consume Will and set this block
                 Block block = state.getBlock();
                 if (block == Blocks.DIRT || block == Blocks.STONE || block == Blocks.GRASS)
                 {
-                    if (worldObj.setBlockState(offsetPos, ModBlocks.DEMON_EXTRAS.getStateFromMeta(0)))
+                    if (getWorld().setBlockState(offsetPos, ModBlocks.DEMON_EXTRAS.getStateFromMeta(0)))
                     {
-                        WorldDemonWillHandler.drainWill(worldObj, pos, type, willPerOperation, true);
+                        WorldDemonWillHandler.drainWill(getWorld(), pos, type, willPerOperation, true);
                         currentInversion -= inversionPerOperation;
 
                         return 0; //Successfully placed

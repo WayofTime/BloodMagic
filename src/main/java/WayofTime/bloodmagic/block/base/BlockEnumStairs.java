@@ -27,6 +27,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import net.minecraftforge.common.ForgeModContainer;
 import org.apache.commons.lang3.ArrayUtils;
 
 import WayofTime.bloodmagic.BloodMagic;
@@ -368,7 +369,7 @@ public class BlockEnumStairs<E extends Enum<E> & IStringSerializable> extends Bl
     @Override
     public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face)
     {
-        if (BloodMagic.getCrossVersionProxy().disableStairSlabCulling())
+        if (ForgeModContainer.disableStairSlabCulling)
             return super.doesSideBlockRendering(state, world, pos, face);
 
         if (state.isOpaqueCube())

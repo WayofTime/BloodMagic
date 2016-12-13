@@ -7,6 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
+import javax.annotation.Nullable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -15,6 +16,7 @@ public class WorldDemonWillHandler
     static ConcurrentHashMap<Integer, WillWorld> containedWills = new ConcurrentHashMap<Integer, WillWorld>();
     public static ConcurrentHashMap<Integer, CopyOnWriteArrayList<PosXY>> dirtyChunks = new ConcurrentHashMap<Integer, CopyOnWriteArrayList<PosXY>>();
 
+    @Nullable
     public static DemonWillHolder getWillHolder(int dim, int x, int y)
     {
         WillChunk chunk = getWillChunk(dim, x, y);
@@ -36,6 +38,7 @@ public class WorldDemonWillHandler
         return containedWills.get(dim);
     }
 
+    @Nullable
     public static WillChunk getWillChunk(int dim, int x, int y)
     {
         if (!containedWills.containsKey(dim))

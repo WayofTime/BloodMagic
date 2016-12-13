@@ -46,9 +46,13 @@ import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.items.wrapper.PlayerInvWrapper;
+import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BlockStack;
@@ -86,32 +90,6 @@ public class Utils
         return added;
     }
 
-    public static Item getItem(ResourceLocation resource)
-    {
-        return Item.REGISTRY.getObject(resource);
-    }
-
-    public static Block getBlock(ResourceLocation resource)
-    {
-        return Block.REGISTRY.getObject(resource);
-    }
-
-    public static ResourceLocation getResourceForItem(ItemStack stack)
-    {
-        if (stack != null)
-        {
-            if (stack.getItem() instanceof ItemBlock)
-            {
-                return Block.REGISTRY.getNameForObject(((ItemBlock) stack.getItem()).getBlock());
-            } else
-            {
-                return Item.REGISTRY.getNameForObject(stack.getItem());
-            }
-        }
-
-        return null;
-    }
-
     public static boolean isImmuneToFireDamage(EntityLivingBase entity)
     {
         return entity.isImmuneToFire() || entity.isPotionActive(MobEffects.FIRE_RESISTANCE);
@@ -119,7 +97,7 @@ public class Utils
 
     public static boolean isPlayerBesideSolidBlockFace(EntityPlayer player)
     {
-        World world = player.worldObj;
+        World world = player.getEntityWorld();
         double minimumDistanceFromAxis = 0.7;
         BlockPos centralPos = player.getPosition();
         for (EnumFacing facing : EnumFacing.HORIZONTALS)
@@ -142,16 +120,17 @@ public class Utils
 
     public static boolean canPlayerSeeDemonWill(EntityPlayer player)
     {
-        ItemStack[] mainInventory = player.inventory.mainInventory;
+        IItemHandler inventory = new PlayerMainInvWrapper(player.inventory);
 
-        for (ItemStack stack : mainInventory)
+        for (int i = 0; i < inventory.getSlots(); i++)
         {
-            if (stack == null)
+            ItemStack stack = inventory.getStackInSlot(i);
+            if (stack.isEmpty())
             {
                 continue;
             }
 
-            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.worldObj, stack, player))
+            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), stack, player))
             {
                 return true;
             }
@@ -165,12 +144,7 @@ public class Utils
         Vec3d relativePosition = new Vec3d(entity.posX - pos.getX() - 0.5, entity.posY + (double) entity.getEyeHeight() - pos.getY() - 0.5, entity.posZ - pos.getZ() - 0.5);
         EnumFacing dir = EnumFacing.getFacingFromVector((float) relativePosition.xCoord, (float) relativePosition.yCoord, (float) relativePosition.zCoord);
         RayTraceResult result = world.rayTraceBlocks(new Vec3d(entity.posX, entity.posY + (double) entity.getEyeHeight(), entity.posZ), new Vec3d(pos.getX() + 0.5 + dir.getFrontOffsetX() * 0.4, pos.getY() + 0.5 + dir.getFrontOffsetY() * 0.4, pos.getZ() + 0.5 + dir.getFrontOffsetZ() * 0.4), false, true, true);
-        if (result != null)
-        {
-            return pos.equals(result.getBlockPos());
-        }
-
-        return result != null;
+        return result == null || pos.equals(result.getBlockPos());
     }
 
     public static int plantSeedsInArea(World world, AxisAlignedBB aabb, int horizontalRadius, int verticalRadius)
@@ -188,7 +162,7 @@ public class Utils
 
     public static int plantItemStack(World world, BlockPos centralPos, ItemStack stack, int horizontalRadius, int verticalRadius)
     {
-        if (stack == null || stack.stackSize <= 0)
+        if (stack.isEmpty())
         {
             return 0;
         }
@@ -226,9 +200,9 @@ public class Utils
                                     IBlockState plantState = ((IPlantable) item).getPlant(world, newPos);
                                     world.setBlockState(newPos, plantState, 3);
                                     world.playEvent(2001, newPos, Block.getIdFromBlock(plantState.getBlock()) + (plantState.getBlock().getMetaFromState(plantState) << 12));
-                                    stack.stackSize--;
+                                    stack.shrink(1);
                                     planted++;
-                                    if (stack.stackSize <= 0)
+                                    if (stack.isEmpty() || stack.getCount() <= 0)
                                     {
                                         return planted;
                                     }
@@ -250,13 +224,13 @@ public class Utils
             return 0;
         }
 
-        World world = itemEntity.worldObj;
+        World world = itemEntity.getEntityWorld();
         BlockPos pos = itemEntity.getPosition();
         ItemStack stack = itemEntity.getEntityItem();
 
         int planted = plantItemStack(world, pos, stack, horizontalRadius, verticalRadius);
 
-        if (stack.stackSize <= 0)
+        if (stack.isEmpty())
         {
             itemEntity.setDead();
         }
@@ -266,18 +240,19 @@ public class Utils
 
     public static int getDemonWillResolution(EntityPlayer player)
     {
-        ItemStack[] mainInventory = player.inventory.mainInventory;
+        IItemHandler inventory = new PlayerMainInvWrapper(player.inventory);
 
-        for (ItemStack stack : mainInventory)
+        for (int i = 0; i < inventory.getSlots(); i++)
         {
-            if (stack == null)
+            ItemStack stack = inventory.getStackInSlot(i);
+            if (stack.isEmpty())
             {
                 continue;
             }
 
-            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.worldObj, stack, player))
+            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), stack, player))
             {
-                return ((IDemonWillViewer) stack.getItem()).getDemonWillAuraResolution(player.worldObj, stack, player);
+                return ((IDemonWillViewer) stack.getItem()).getDemonWillAuraResolution(player.getEntityWorld(), stack, player);
             }
         }
 
@@ -300,7 +275,7 @@ public class Utils
 
     public static void setPlayerSpeedFromServer(EntityPlayer player, double motionX, double motionY, double motionZ)
     {
-        if (!player.worldObj.isRemote && player instanceof EntityPlayerMP)
+        if (!player.getEntityWorld().isRemote && player instanceof EntityPlayerMP)
         {
             BloodMagicPacketHandler.sendTo(new PlayerVelocityPacketProcessor(motionX, motionY, motionZ), (EntityPlayerMP) player);
         }
@@ -363,19 +338,19 @@ public class Utils
      */
     public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot)
     {
-        if (tile.getStackInSlot(slot) == null && player.getHeldItemMainhand() != null)
+        if (tile.getStackInSlot(slot).isEmpty() && !player.getHeldItemMainhand().isEmpty())
         {
             ItemStack input = player.getHeldItemMainhand().copy();
-            input.stackSize = 1;
-            player.getHeldItemMainhand().stackSize--;
+            input.setCount(1);
+            player.getHeldItemMainhand().shrink(1);
             tile.setInventorySlotContents(slot, input);
             return true;
-        } else if (tile.getStackInSlot(slot) != null && player.getHeldItemMainhand() == null)
+        } else if (!tile.getStackInSlot(slot).isEmpty() && player.getHeldItemMainhand().isEmpty())
         {
             if (!tile.getWorld().isRemote)
             {
                 EntityItem invItem = new EntityItem(tile.getWorld(), player.posX, player.posY + 0.25, player.posZ, tile.getStackInSlot(slot));
-                tile.getWorld().spawnEntityInWorld(invItem);
+                tile.getWorld().spawnEntity(invItem);
             }
             tile.clear();
             return false;
@@ -523,7 +498,7 @@ public class Utils
             return damage;
         } else
         {
-            if (attackedEntity.isPotionActive(resistance) && source != DamageSource.outOfWorld)
+            if (attackedEntity.isPotionActive(resistance) && source != DamageSource.OUT_OF_WORLD)
             {
                 int i = (attackedEntity.getActivePotionEffect(resistance).getAmplifier() + 1) * 5;
                 int j = 25 - i;
@@ -564,20 +539,23 @@ public class Utils
      * @param stack2
      *        Slot content that stack1 is placed into
      * @return True if they can be combined
+     * @deprecated use {@link ItemHandlerHelper#canItemStacksStack(ItemStack, ItemStack)}
      */
+    @Deprecated
     public static boolean canCombine(ItemStack stack1, ItemStack stack2)
     {
-        if (stack1 == null || stack1.isItemStackDamageable() ^ stack2.isItemStackDamageable())
-        {
-            return false;
-        }
-
-        if (stack2 == null)
-        {
-            return true;
-        }
-
-        return stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2.getItemDamage() && ItemStack.areItemStackTagsEqual(stack1, stack2);
+        return ItemHandlerHelper.canItemStacksStack(stack1, stack2);
+//        if (stack1.isEmpty() || stack1.isItemStackDamageable() ^ stack2.isItemStackDamageable())
+//        {
+//            return false;
+//        }
+//
+//        if (stack2.isEmpty())
+//        {
+//            return true;
+//        }
+//
+//        return stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2.getItemDamage() && ItemStack.areItemStackTagsEqual(stack1, stack2);
     }
 
     /**
@@ -591,18 +569,18 @@ public class Utils
     {
         ItemStack[] returned = new ItemStack[2];
 
-        if (canCombine(stack1, stack2))
+        if (ItemHandlerHelper.canItemStacksStack(stack1, stack2))
         {
-            int transferedAmount = Math.min(transferMax, stack2 == null ? stack1.stackSize : Math.min(stack2.getMaxStackSize() - stack2.stackSize, stack1.stackSize));
+            int transferedAmount = Math.min(transferMax, stack2.isEmpty() ? stack1.getCount() : Math.min(stack2.getMaxStackSize() - stack2.getCount(), stack1.getCount()));
             if (transferedAmount > 0)
             {
                 ItemStack copyStack = stack1.splitStack(transferedAmount);
-                if (stack2 == null)
+                if (stack2.isEmpty())
                 {
                     stack2 = copyStack;
                 } else
                 {
-                    stack2.stackSize += transferedAmount;
+                    stack2.grow(transferedAmount);
                 }
             }
         }
@@ -624,18 +602,18 @@ public class Utils
     {
         ItemStack[] returned = new ItemStack[2];
 
-        if (canCombine(stack1, stack2))
+        if (ItemHandlerHelper.canItemStacksStack(stack1, stack2))
         {
-            int transferedAmount = stack2 == null ? stack1.stackSize : Math.min(stack2.getMaxStackSize() - stack2.stackSize, stack1.stackSize);
+            int transferedAmount = stack2.isEmpty() ? stack1.getCount() : Math.min(stack2.getMaxStackSize() - stack2.getCount(), stack1.getCount());
             if (transferedAmount > 0)
             {
                 ItemStack copyStack = stack1.splitStack(transferedAmount);
-                if (stack2 == null)
+                if (stack2.isEmpty())
                 {
                     stack2 = copyStack;
                 } else
                 {
-                    stack2.stackSize += transferedAmount;
+                    stack2.grow(transferedAmount);
                 }
             }
         }
@@ -733,9 +711,9 @@ public class Utils
             {
                 ItemStack invStack = handler.getStackInSlot(slot);
 
-                if (invStack != null && canCombine(stack, invStack))
+                if (!invStack.isEmpty() && ItemHandlerHelper.canItemStacksStack(stack, invStack))
                 {
-                    numberMatching += invStack.stackSize;
+                    numberMatching += invStack.getCount();
                 }
             }
 
@@ -749,23 +727,23 @@ public class Utils
             for (int slot = 0; slot < numberOfSlots; slot++)
             {
                 ItemStack newCopyStack = copyStack.copy();
-                newCopyStack.stackSize = Math.min(copyStack.stackSize, newLimit);
+                newCopyStack.setCount(Math.min(copyStack.getCount(), newLimit));
 
                 newCopyStack = handler.insertItem(slot, newCopyStack, false);
 
-                if (newCopyStack == null)
+                if (newCopyStack.isEmpty())
                 {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
 
-                newLimit -= (copyStack.stackSize - newCopyStack.stackSize);
+                newLimit -= (copyStack.getCount() - newCopyStack.getCount());
 
                 if (newLimit <= 0)
                 {
-                    return null; //TODO
+                    return ItemStack.EMPTY; //TODO
                 }
 
-                copyStack.stackSize -= (copyStack.stackSize - newCopyStack.stackSize);
+                copyStack.shrink(copyStack.getCount() - newCopyStack.getCount());
             }
 
             return copyStack;
@@ -779,9 +757,9 @@ public class Utils
 
     public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir)
     {
-        if (stack == null)
+        if (stack.isEmpty())
         {
-            return null;
+            return ItemStack.EMPTY;
         }
 
         boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
@@ -812,9 +790,9 @@ public class Utils
             stack = combinedStacks[0];
             inventory.setInventorySlotContents(i, combinedStacks[1]);
 
-            if (stack.stackSize <= 0)
+            if (stack.isEmpty())
             {
-                return stack;
+                return ItemStack.EMPTY;
             }
         }
 
@@ -828,12 +806,12 @@ public class Utils
 
     public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir, boolean fillToLimit, int limit)
     {
-        if (stack == null)
+        if (stack.isEmpty())
         {
             return true;
         }
 
-        int itemsLeft = stack.stackSize;
+        int itemsLeft = stack.getCount();
 
         boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
 
@@ -865,14 +843,14 @@ public class Utils
 
                 ItemStack invStack = inventory.getStackInSlot(i);
 
-                if (invStack != null && canCombine(stack, invStack))
+                if (!invStack.isEmpty() && ItemHandlerHelper.canItemStacksStack(stack, invStack))
                 {
-                    numberMatching += invStack.stackSize;
+                    numberMatching += invStack.getCount();
                 }
             }
         }
 
-        if (fillToLimit && limit < stack.stackSize + numberMatching)
+        if (fillToLimit && limit < stack.getCount() + numberMatching)
         {
             return false;
         }
@@ -888,12 +866,12 @@ public class Utils
             boolean canCombine = canCombine(stack, invStack);
             if (canCombine)
             {
-                if (invStack == null)
+                if (invStack.isEmpty())
                 {
                     itemsLeft = 0;
                 } else
                 {
-                    itemsLeft -= (invStack.getMaxStackSize() - invStack.stackSize);
+                    itemsLeft -= (invStack.getMaxStackSize() - invStack.getCount());
                 }
             }
 
@@ -918,9 +896,9 @@ public class Utils
      */
     public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir, int limit)
     {
-        if (stack == null)
+        if (stack.isEmpty())
         {
-            return null;
+            return ItemStack.EMPTY;
         }
 
         boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
@@ -953,7 +931,7 @@ public class Utils
 
             if (invStack != null && canCombine(stack, invStack))
             {
-                numberMatching += invStack.stackSize;
+                numberMatching += invStack.getCount();
             }
         }
 
@@ -971,15 +949,15 @@ public class Utils
                 continue;
             }
 
-            int prevStackSize = stack.stackSize;
+            int prevStackSize = stack.getCount();
 
             ItemStack[] combinedStacks = combineStacks(stack, inventory.getStackInSlot(i), newLimit);
             stack = combinedStacks[0];
             inventory.setInventorySlotContents(i, combinedStacks[1]); //TODO
 
-            newLimit -= (prevStackSize - stack.stackSize);
+            newLimit -= (prevStackSize - stack.getCount());
 
-            if (newLimit <= 0 || stack.stackSize <= 0)
+            if (newLimit <= 0 || stack.isEmpty())
             {
                 return stack;
             }
@@ -1050,7 +1028,7 @@ public class Utils
         }
 
         entityItem.setEntityItemStack(stack);
-        return world.spawnEntityInWorld(entityItem);
+        return world.spawnEntity(entityItem);
     }
 
     public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos)
@@ -1094,26 +1072,27 @@ public class Utils
 
         if (initialTile != null)
         {
-            TileEntity newTileInitial = BloodMagic.getCrossVersionProxy().createTileFromData(finalWorld, initialTag);
+            TileEntity newTileInitial = TileEntity.create(finalWorld, initialTag);
+
 
             finalWorld.setTileEntity(finalPos, newTileInitial);
             newTileInitial.setPos(finalPos);
-            newTileInitial.setWorldObj(finalWorld);
+            newTileInitial.setWorld(finalWorld);
         }
 
         initialWorld.setBlockState(initialPos, finalBlockState, 3);
 
         if (finalTile != null)
         {
-            TileEntity newTileFinal = BloodMagic.getCrossVersionProxy().createTileFromData(initialWorld, finalTag);
+            TileEntity newTileFinal = TileEntity.create(initialWorld, finalTag);
 
             initialWorld.setTileEntity(initialPos, newTileFinal);
             newTileFinal.setPos(initialPos);
-            newTileFinal.setWorldObj(initialWorld);
+            newTileFinal.setWorld(initialWorld);
         }
 
-        initialWorld.notifyNeighborsOfStateChange(initialPos, finalStack.getBlock());
-        finalWorld.notifyNeighborsOfStateChange(finalPos, initialStack.getBlock());
+        initialWorld.notifyNeighborsOfStateChange(initialPos, finalStack.getBlock(), true);
+        finalWorld.notifyNeighborsOfStateChange(finalPos, initialStack.getBlock(), true);
 
         return true;
     }
@@ -1122,25 +1101,25 @@ public class Utils
     public static ItemStack consumeItem(ItemStack stack)
     {
         Item item = stack.getItem();
-        boolean largerStack = stack.stackSize > 1;
+        boolean largerStack = stack.getCount() > 1;
         if (largerStack)
         {
-            stack.stackSize -= 1;
+            stack.shrink(1);
         }
         if (item.hasContainerItem(stack))
         {
             ItemStack ret = item.getContainerItem(stack);
-            if (ret == null)
+            if (ret.isEmpty())
             {
-                return null;
+                return ItemStack.EMPTY;
             }
             if (ret.isItemStackDamageable() && ret.getItemDamage() > ret.getMaxDamage())
             {
-                ret = null;
+                ret = ItemStack.EMPTY;
             }
             return ret;
         }
-        return largerStack ? stack : null;
+        return largerStack ? stack : ItemStack.EMPTY;
     }
 
     public static void registerHandlers(Set<ASMDataTable.ASMData> eventHandlers)

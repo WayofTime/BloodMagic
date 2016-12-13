@@ -32,6 +32,8 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
 
+import javax.annotation.Nullable;
+
 public class TileMimic extends TileInventory implements ITickable
 {
     private static Field _blockMetadata = ReflectionHelper.findField(TileEntity.class, "blockMetadata", "field_145847_g");
@@ -55,7 +57,7 @@ public class TileMimic extends TileInventory implements ITickable
     @Override
     public void update()
     {
-        if (worldObj.isRemote)
+        if (getWorld().isRemote)
         {
             return;
         }
@@ -67,36 +69,36 @@ public class TileMimic extends TileInventory implements ITickable
             if (potionStack != null)
             {
                 AxisAlignedBB bb = new AxisAlignedBB(this.getPos()).expand(playerCheckRadius, playerCheckRadius, playerCheckRadius);
-                List<EntityPlayer> playerList = worldObj.getEntitiesWithinAABB(EntityPlayer.class, bb);
+                List<EntityPlayer> playerList = getWorld().getEntitiesWithinAABB(EntityPlayer.class, bb);
 
                 for (EntityPlayer player : playerList)
                 {
                     if (!player.capabilities.isCreativeMode)
                     {
-                        double posX = this.pos.getX() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
-                        double posY = this.pos.getY() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
-                        double posZ = this.pos.getZ() + 0.5 + (2 * worldObj.rand.nextDouble() - 1) * potionSpawnRadius;
+                        double posX = this.pos.getX() + 0.5 + (2 * getWorld().rand.nextDouble() - 1) * potionSpawnRadius;
+                        double posY = this.pos.getY() + 0.5 + (2 * getWorld().rand.nextDouble() - 1) * potionSpawnRadius;
+                        double posZ = this.pos.getZ() + 0.5 + (2 * getWorld().rand.nextDouble() - 1) * potionSpawnRadius;
 
                         ItemStack newStack = new ItemStack(potionStack.getItem() == ModItems.POTION_FLASK ? Items.SPLASH_POTION : potionStack.getItem());
                         newStack.setTagCompound(potionStack.getTagCompound());
 
-                        EntityPotion potionEntity = new EntityPotion(worldObj, posX, posY, posZ, newStack);
+                        EntityPotion potionEntity = new EntityPotion(getWorld(), posX, posY, posZ, newStack);
 
-                        worldObj.spawnEntityInWorld(potionEntity);
+                        getWorld().spawnEntity(potionEntity);
                         break;
                     }
                 }
             }
         }
 
-        if (this.getBlockMetadata() == BlockMimic.sentientMimicMeta && worldObj.getDifficulty() != EnumDifficulty.PEACEFUL && !(mimicedTile instanceof IInventory))
+        if (this.getBlockMetadata() == BlockMimic.sentientMimicMeta && getWorld().getDifficulty() != EnumDifficulty.PEACEFUL && !(mimicedTile instanceof IInventory))
         {
             AxisAlignedBB bb = new AxisAlignedBB(this.getPos()).expand(playerCheckRadius, playerCheckRadius, playerCheckRadius);
-            List<EntityPlayer> playerList = worldObj.getEntitiesWithinAABB(EntityPlayer.class, bb);
+            List<EntityPlayer> playerList = getWorld().getEntitiesWithinAABB(EntityPlayer.class, bb);
 
             for (EntityPlayer player : playerList)
             {
-                if (!player.capabilities.isCreativeMode && Utils.canEntitySeeBlock(worldObj, player, getPos()))
+                if (!player.capabilities.isCreativeMode && Utils.canEntitySeeBlock(getWorld(), player, getPos()))
                 {
                     spawnMimicEntity(player);
                     break;
@@ -108,10 +110,10 @@ public class TileMimic extends TileInventory implements ITickable
 
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side)
     {
-        if (heldItem != null && player.capabilities.isCreativeMode)
+        if (!heldItem.isEmpty() && player.capabilities.isCreativeMode)
         {
             List<PotionEffect> list = PotionUtils.getEffectsFromStack(heldItem);
-            if (list != null && !list.isEmpty())
+            if (!list.isEmpty())
             {
                 if (!world.isRemote)
                 {
@@ -141,10 +143,10 @@ public class TileMimic extends TileInventory implements ITickable
         if (player.isSneaking())
             return false;
 
-        if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == new ItemStack(ModBlocks.MIMIC).getItem())
+        if (!player.getHeldItem(hand).isEmpty() && player.getHeldItem(hand).getItem() == new ItemStack(ModBlocks.MIMIC).getItem())
             return false;
 
-        if (getStackInSlot(0) != null && player.getHeldItem(hand) != null)
+        if (!getStackInSlot(0).isEmpty() && !player.getHeldItem(hand).isEmpty())
             return false;
 
         if (!dropItemsOnBreak && !player.capabilities.isCreativeMode)
@@ -155,7 +157,7 @@ public class TileMimic extends TileInventory implements ITickable
 
         if (player.capabilities.isCreativeMode)
         {
-            dropItemsOnBreak = getStackInSlot(0) == null;
+            dropItemsOnBreak = getStackInSlot(0).isEmpty();
         }
 
         world.notifyBlockUpdate(pos, state, state, 3);
@@ -189,7 +191,7 @@ public class TileMimic extends TileInventory implements ITickable
                 return false;
             }
 
-            if (player.getActiveItemStack() == null && getStackInSlot(1) != null)
+            if (player.getActiveItemStack().isEmpty() && !getStackInSlot(1).isEmpty())
             {
                 switch (sideHit)
                 {
@@ -242,31 +244,31 @@ public class TileMimic extends TileInventory implements ITickable
 
     public boolean spawnMimicEntity(EntityPlayer target)
     {
-        if (this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL)
+        if (this.getWorld().getDifficulty() == EnumDifficulty.PEACEFUL)
         {
             return false;
         }
 
-        if (this.getStackInSlot(0) == null || worldObj.isRemote)
+        if (this.getStackInSlot(0).isEmpty() || getWorld().isRemote)
         {
             return false;
         }
 
-        EntityMimic mimicEntity = new EntityMimic(worldObj);
+        EntityMimic mimicEntity = new EntityMimic(getWorld());
         mimicEntity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 
         mimicEntity.initializeMimic(getStackInSlot(0), tileTag, dropItemsOnBreak, metaOfReplacedBlock, playerCheckRadius, pos);
         tileTag = null;
         mimicedTile = null;
-        this.setInventorySlotContents(0, null);
+        this.setInventorySlotContents(0, ItemStack.EMPTY);
 
-        worldObj.spawnEntityInWorld(mimicEntity);
+        getWorld().spawnEntity(mimicEntity);
         if (target != null)
         {
             mimicEntity.setAttackTarget(target);
         }
 
-        worldObj.setBlockToAir(pos);
+        getWorld().setBlockToAir(pos);
 
         return true;
     }
@@ -277,7 +279,7 @@ public class TileMimic extends TileInventory implements ITickable
         {
             dropMimicedTileInventory();
         }
-        mimicedTile = getTileFromStackWithTag(worldObj, pos, getStackInSlot(0), tileTag, metaOfReplacedBlock);
+        mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, metaOfReplacedBlock);
     }
 
     @Override
@@ -288,7 +290,7 @@ public class TileMimic extends TileInventory implements ITickable
         dropItemsOnBreak = tag.getBoolean("dropItemsOnBreak");
         tileTag = tag.getCompoundTag("tileTag");
         metaOfReplacedBlock = tag.getInteger("metaOfReplacedBlock");
-        mimicedTile = getTileFromStackWithTag(worldObj, pos, getStackInSlot(0), tileTag, metaOfReplacedBlock);
+        mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, metaOfReplacedBlock);
         playerCheckRadius = tag.getInteger("playerCheckRadius");
         potionSpawnRadius = tag.getInteger("potionSpawnRadius");
         potionSpawnInterval = Math.max(1, tag.getInteger("potionSpawnInterval"));
@@ -319,7 +321,7 @@ public class TileMimic extends TileInventory implements ITickable
 
     public static boolean replaceMimicWithBlockActual(World world, BlockPos pos, ItemStack stack, NBTTagCompound tileTag, int replacedMeta)
     {
-        if (stack != null && stack.getItem() instanceof ItemBlock)
+        if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock)
         {
             Block block = ((ItemBlock) stack.getItem()).getBlock();
             IBlockState state = block.getStateFromMeta(replacedMeta);
@@ -341,9 +343,10 @@ public class TileMimic extends TileInventory implements ITickable
         return false;
     }
 
-    public static TileEntity getTileFromStackWithTag(World world, BlockPos pos, ItemStack stack, NBTTagCompound tag, int replacementMeta)
+    @Nullable
+    public static TileEntity getTileFromStackWithTag(World world, BlockPos pos, ItemStack stack, @Nullable NBTTagCompound tag, int replacementMeta)
     {
-        if (stack != null && stack.getItem() instanceof ItemBlock)
+        if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock)
         {
             Block block = ((ItemBlock) stack.getItem()).getBlock();
             IBlockState state = block.getStateFromMeta(stack.getItemDamage());
@@ -356,14 +359,14 @@ public class TileMimic extends TileInventory implements ITickable
 
                 if (tag != null)
                 {
-                    NBTTagCompound copyTag = (NBTTagCompound) (tag.copy());
+                    NBTTagCompound copyTag = tag.copy();
                     copyTag.setInteger("x", pos.getX());
                     copyTag.setInteger("y", pos.getY());
                     copyTag.setInteger("z", pos.getZ());
                     tile.readFromNBT(copyTag);
                 }
 
-                tile.setWorldObj(world);
+                tile.setWorld(world);
 
                 try
                 {
@@ -396,7 +399,7 @@ public class TileMimic extends TileInventory implements ITickable
 
     public void dropMimicedTileInventory()
     {
-        if (!worldObj.isRemote && mimicedTile instanceof IInventory)
+        if (!getWorld().isRemote && mimicedTile instanceof IInventory)
         {
             InventoryHelper.dropInventoryItems(getWorld(), getPos(), (IInventory) mimicedTile);
         }

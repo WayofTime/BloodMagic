@@ -20,7 +20,7 @@ public class DataProviderMimic implements IWailaDataProvider
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
         if (accessor.getNBTData().getBoolean("hasItem"))
-            return ItemStack.loadItemStackFromNBT(accessor.getNBTData());
+            return new ItemStack(accessor.getNBTData());
 
         return new ItemStack(accessor.getBlock(), 1, accessor.getMetadata());
     }

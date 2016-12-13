@@ -52,6 +52,8 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
+import javax.annotation.Nullable;
+
 public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshProvider
 {
     private static Field _FLAGS = ReflectionHelper.findField(Entity.class, "FLAGS", "field_184240_ax");
@@ -138,12 +140,12 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 
         int maxAbsorption = 100000;
 
-        if (source.equals(DamageSource.drown))
+        if (source.equals(DamageSource.DROWN))
         {
             return new ArmorProperties(-1, 0, 0);
         }
 
-        if (source.equals(DamageSource.outOfWorld))
+        if (source.equals(DamageSource.OUT_OF_WORLD))
         {
             return new ArmorProperties(-1, 0, 0);
         }
@@ -243,7 +245,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             if (damage > this.getMaxDamage(stack) - this.getDamage(stack))
             {
                 //TODO: Syphon a load of LP.
-                if (entity.worldObj.isRemote && entity instanceof EntityPlayer)
+                if (entity.getEntityWorld().isRemote && entity instanceof EntityPlayer)
                 {
                     EntityPlayer player = (EntityPlayer) entity;
                     SoulNetwork network = NetworkHelper.getSoulNetwork(player);
@@ -307,7 +309,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                         if (tracker != null)
                         {
                             double progress = tracker.getProgress(armour, upgrade.getUpgradeLevel());
-                            tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.progress", TextHelper.localize(upgrade.getUnlocalizedName()), MathHelper.clamp_int((int) (progress * 100D), 0, 100)));
+                            tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.progress", TextHelper.localize(upgrade.getUnlocalizedName()), MathHelper.clamp((int) (progress * 100D), 0, 100)));
                         }
                     } else
                     {
@@ -458,6 +460,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         return ret;
     }
 
+    @Nullable
     public static LivingArmour getLivingArmourFromStack(ItemStack stack)
     {
         NBTTagCompound livingTag = getArmourTag(stack);
@@ -549,6 +552,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         return uuid != null && armourMap.containsKey(uuid);
     }
 
+    @Nullable
     public static LivingArmour getLivingArmour(ItemStack stack)
     {
         UUID uuid = Utils.getUUID(stack);

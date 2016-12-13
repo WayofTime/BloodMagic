@@ -19,7 +19,7 @@ public class LivingArmourUpgradeFallProtect extends LivingArmourUpgrade
     @Override
     public double getArmourProtection(EntityLivingBase wearer, DamageSource source)
     {
-        if (source.equals(DamageSource.fall))
+        if (source.equals(DamageSource.FALL))
         {
             return protectionLevel[this.level];
         }

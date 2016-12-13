@@ -21,6 +21,6 @@ public class IgnoreNBTItemFilter extends TestItemFilter
     @Override
     public boolean doStacksMatch(ItemStack filterStack, ItemStack testStack)
     {
-        return filterStack != null && testStack != null && filterStack.getItem() == testStack.getItem() && filterStack.getMetadata() == testStack.getMetadata();
+        return ItemStack.areItemsEqual(filterStack, testStack);
     }
 }

@@ -27,12 +27,9 @@ public class DefaultItemFilter implements IItemFilter
      * 
      * @param filteredList
      *        - The list of ItemStacks that the filter is set to.
-     * @param inventory
+     * @param itemHandler
      *        - The inventory that is being accessed. This inventory is either
      *        being pulled from or pushed to.
-     * @param side
-     *        - The side that the inventory is being accessed from. Used for
-     *        pulling/pushing from/to the inventory.
      * @param isFilterOutput
      *        - Tells the filter what actions to expect. If true, it should be
      *        initialized as an output filter. If false, it should be
@@ -59,7 +56,7 @@ public class DefaultItemFilter implements IItemFilter
     @Override
     public ItemStack transferStackThroughOutputFilter(ItemStack inputStack)
     {
-        int allowedAmount = inputStack.stackSize; //This is done to make the migration to a maximum amount transfered a lot easier
+        int allowedAmount = inputStack.getCount(); //This is done to make the migration to a maximum amount transfered a lot easier
 
         if (allowedAmount <= 0)
         {
@@ -67,12 +64,12 @@ public class DefaultItemFilter implements IItemFilter
         }
 
         ItemStack testStack = inputStack.copy();
-        testStack.stackSize = allowedAmount;
+        testStack.setCount(allowedAmount);
         ItemStack remainderStack = Utils.insertStackIntoTile(testStack, itemHandler);
 
-        int changeAmount = allowedAmount - (remainderStack == null ? 0 : remainderStack.stackSize);
+        int changeAmount = allowedAmount - (remainderStack.isEmpty() ? 0 : remainderStack.getCount());
         testStack = inputStack.copy();
-        testStack.stackSize -= changeAmount;
+        testStack.shrink(changeAmount);
 
         World world = accessedTile.getWorld();
         BlockPos pos = accessedTile.getPos();
@@ -91,25 +88,23 @@ public class DefaultItemFilter implements IItemFilter
         for (int slot = 0; slot < itemHandler.getSlots(); slot++)
         {
             ItemStack inputStack = itemHandler.getStackInSlot(slot);
-            if (inputStack == null || itemHandler.extractItem(slot, inputStack.stackSize, true) == null)//(accessedInventory instanceof ISidedInventory && !((ISidedInventory) accessedInventory).canExtractItem(slot, inputStack, accessedSide)))
+            if (inputStack.isEmpty() || itemHandler.extractItem(slot, inputStack.getCount(), true).isEmpty())//(accessedInventory instanceof ISidedInventory && !((ISidedInventory) accessedInventory).canExtractItem(slot, inputStack, accessedSide)))
             {
                 continue;
             }
 
-            int allowedAmount = Math.min(itemHandler.extractItem(slot, inputStack.stackSize, true).stackSize, maxTransfer);
+            int allowedAmount = Math.min(itemHandler.extractItem(slot, inputStack.getCount(), true).getCount(), maxTransfer);
 
             ItemStack testStack = inputStack.copy();
-            testStack.stackSize = allowedAmount;
+            testStack.setCount(allowedAmount);
             ItemStack remainderStack = outputFilter.transferStackThroughOutputFilter(testStack);
-            int changeAmount = allowedAmount - (remainderStack == null ? 0 : remainderStack.stackSize);
+            int changeAmount = allowedAmount - (remainderStack.isEmpty() ? 0 : remainderStack.getCount());
 
-            if (remainderStack != null && remainderStack.stackSize == allowedAmount)
+            if (!remainderStack.isEmpty() && remainderStack.getCount() == allowedAmount)
             {
                 //Nothing has changed. Moving on!
                 continue;
             }
-
-            maxTransfer -= changeAmount;
 
             itemHandler.extractItem(slot, changeAmount, false);
 

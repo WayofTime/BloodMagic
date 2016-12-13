@@ -30,26 +30,26 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
     @Override
     public void onUpdate()
     {
-        if (worldObj.isRemote)
+        if (getWorld().isRemote)
         {
             return;
         }
 
         BlockPos offsetPos = pos.offset(EnumFacing.UP);
-        if (worldObj.isAirBlock(offsetPos)) //Room for a crystal to grow
+        if (getWorld().isAirBlock(offsetPos)) //Room for a crystal to grow
         {
-            EnumDemonWillType highestType = WorldDemonWillHandler.getHighestDemonWillType(worldObj, pos);
-            double amount = WorldDemonWillHandler.getCurrentWill(worldObj, pos, highestType);
+            EnumDemonWillType highestType = WorldDemonWillHandler.getHighestDemonWillType(getWorld(), pos);
+            double amount = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, highestType);
             if (amount >= willToFormCrystal)
             {
                 internalCounter += getCrystalFormationRate(amount);
                 if (internalCounter >= totalFormationTime)
                 {
-                    if (WorldDemonWillHandler.drainWill(worldObj, getPos(), highestType, willToFormCrystal, false) >= willToFormCrystal)
+                    if (WorldDemonWillHandler.drainWill(getWorld(), getPos(), highestType, willToFormCrystal, false) >= willToFormCrystal)
                     {
                         if (highestType == EnumDemonWillType.DEFAULT && formRandomSpecialCrystal(offsetPos) || formCrystal(highestType, offsetPos))
                         {
-                            WorldDemonWillHandler.drainWill(worldObj, getPos(), highestType, willToFormCrystal, true);
+                            WorldDemonWillHandler.drainWill(getWorld(), getPos(), highestType, willToFormCrystal, true);
                             internalCounter = 0;
                         }
                     }
@@ -60,8 +60,8 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
 
     public boolean formCrystal(EnumDemonWillType type, BlockPos position)
     {
-        worldObj.setBlockState(position, ModBlocks.DEMON_CRYSTAL.getStateFromMeta(type.ordinal()));
-        TileEntity tile = worldObj.getTileEntity(position);
+        getWorld().setBlockState(position, ModBlocks.DEMON_CRYSTAL.getStateFromMeta(type.ordinal()));
+        TileEntity tile = getWorld().getTileEntity(position);
         if (tile instanceof TileDemonCrystal)
         {
             ((TileDemonCrystal) tile).setPlacement(EnumFacing.UP);
@@ -73,11 +73,11 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
 
     public boolean formRandomSpecialCrystal(BlockPos position)
     {
-        if (worldObj.rand.nextDouble() > 0.1)
+        if (getWorld().rand.nextDouble() > 0.1)
         {
             return formCrystal(EnumDemonWillType.DEFAULT, position);
         }
-        EnumDemonWillType crystalType = EnumDemonWillType.values()[worldObj.rand.nextInt(EnumDemonWillType.values().length - 1) + 1];
+        EnumDemonWillType crystalType = EnumDemonWillType.values()[getWorld().rand.nextInt(EnumDemonWillType.values().length - 1) + 1];
         return formCrystal(crystalType, position);
     }
 

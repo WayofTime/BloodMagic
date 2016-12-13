@@ -42,7 +42,7 @@ public class DataProviderTeleposer implements IWailaDataProvider
             if (accessor.getBlock() instanceof BlockTeleposer && accessor.getTileEntity() instanceof TileTeleposer)
             {
                 TileTeleposer teleposer = (TileTeleposer) accessor.getTileEntity();
-                if (teleposer.getStackInSlot(0) != null)
+                if (!teleposer.getStackInSlot(0).isEmpty())
                 {
                     ItemStack contained = teleposer.getStackInSlot(0);
                     BlockPos toPos = ((ItemTelepositionFocus) contained.getItem()).getBlockPos(contained);

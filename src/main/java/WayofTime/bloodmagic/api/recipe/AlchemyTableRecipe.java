@@ -15,7 +15,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class AlchemyTableRecipe
 {
     protected ItemStack output = null;
-    protected ArrayList<Object> input = new ArrayList<Object>();
+    protected ArrayList<ItemStack> input = new ArrayList<ItemStack>();
     @Getter
     protected int lpDrained;
     @Getter
@@ -148,7 +148,7 @@ public class AlchemyTableRecipe
      * 
      * @return The recipes input vales.
      */
-    public ArrayList<Object> getInput()
+    public ArrayList<ItemStack> getInput()
     {
         return this.input;
     }

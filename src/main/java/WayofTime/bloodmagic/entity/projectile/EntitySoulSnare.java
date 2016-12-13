@@ -39,7 +39,7 @@ public class EntitySoulSnare extends EntityThrowable
 
         if (result.entityHit != null && result.entityHit != this.getThrower())
         {
-            if (result.entityHit instanceof EntityLivingBase && result.entityHit.worldObj.rand.nextDouble() < 0.25)
+            if (result.entityHit instanceof EntityLivingBase && result.entityHit.getEntityWorld().rand.nextDouble() < 0.25)
             {
                 ((EntityLivingBase) result.entityHit).addPotionEffect(new PotionEffect(ModPotions.soulSnare, 300, 0));
             }
@@ -49,10 +49,10 @@ public class EntitySoulSnare extends EntityThrowable
 
         for (int j = 0; j < 8; ++j)
         {
-            this.worldObj.spawnParticle(EnumParticleTypes.SNOWBALL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
+            this.getEntityWorld().spawnParticle(EnumParticleTypes.SNOWBALL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
         }
 
-        if (!this.worldObj.isRemote)
+        if (!this.getEntityWorld().isRemote)
         {
             this.setDead();
         }

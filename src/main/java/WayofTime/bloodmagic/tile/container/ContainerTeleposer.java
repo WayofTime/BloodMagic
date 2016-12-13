@@ -34,7 +34,7 @@ public class ContainerTeleposer extends Container
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot)
     {
-        ItemStack stack = null;
+        ItemStack stack = ItemStack.EMPTY;
         Slot slotObject = inventorySlots.get(slot);
         int slots = inventorySlots.size();
 
@@ -49,28 +49,28 @@ public class ContainerTeleposer extends Container
                 {
                     if (!this.mergeItemStack(stackInSlot, 0, slots, false))
                     {
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                 } else if (!this.mergeItemStack(stackInSlot, slots, 36 + slots, false))
                 {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             }
 
-            if (stackInSlot.stackSize == 0)
+            if (stackInSlot.getCount() == 0)
             {
-                slotObject.putStack(null);
+                slotObject.putStack(ItemStack.EMPTY);
             } else
             {
                 slotObject.onSlotChanged();
             }
 
-            if (stackInSlot.stackSize == stack.stackSize)
+            if (stackInSlot.getCount() == stack.getCount())
             {
-                return null;
+                return ItemStack.EMPTY;
             }
 
-            slotObject.onPickupFromSlot(player, stackInSlot);
+            slotObject.onTake(player, stackInSlot);
         }
 
         return stack;
@@ -79,7 +79,7 @@ public class ContainerTeleposer extends Container
     @Override
     public boolean canInteractWith(EntityPlayer playerIn)
     {
-        return this.tileTeleposer.isUseableByPlayer(playerIn);
+        return this.tileTeleposer.isUsableByPlayer(playerIn);
     }
 
     private class SlotTeleposer extends Slot

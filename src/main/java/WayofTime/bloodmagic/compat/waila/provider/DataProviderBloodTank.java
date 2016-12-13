@@ -35,7 +35,7 @@ public class DataProviderBloodTank implements IWailaDataProvider
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
-        if (!config.getConfig(Constants.Compat.WAILA_CONFIG_BLOOD_TANK))
+        if (!config.getConfig(Constants.Compat.WAILA_CONFIG_BLOOD_TANK) && !config.getConfig("capability.tankinfo"))
             return currenttip;
 
         if (accessor.getPlayer().isSneaking() || config.getConfig(Constants.Compat.WAILA_CONFIG_BYPASS_SNEAK))

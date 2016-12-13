@@ -1,11 +1,13 @@
 package WayofTime.bloodmagic.compat.jei.altar;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
@@ -52,14 +54,14 @@ public class AltarRecipeCategory implements IRecipeCategory
 
     }
 
+    @Nullable
     @Override
-    public void drawAnimations(Minecraft minecraft)
-    {
-
+    public IDrawable getIcon() {
+        return null;
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
+    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients)
     {
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 31, 0);
         recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 125, 30);
@@ -67,9 +69,9 @@ public class AltarRecipeCategory implements IRecipeCategory
         if (recipeWrapper instanceof AltarRecipeJEI)
         {
             AltarRecipeJEI altarRecipeWrapper = (AltarRecipeJEI) recipeWrapper;
-            List<List<ItemStack>> inputs = altarRecipeWrapper.getInputs();
+            List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
             recipeLayout.getItemStacks().set(INPUT_SLOT, inputs.get(0));
-            recipeLayout.getItemStacks().set(OUTPUT_SLOT, altarRecipeWrapper.getOutputs());
+            recipeLayout.getItemStacks().set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
         }
     }
 }

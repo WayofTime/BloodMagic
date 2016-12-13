@@ -61,7 +61,7 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
     @Override
     public void setThrowableHeading(double var1, double var3, double var5, float var7, float var8)
     {
-        float var9 = MathHelper.sqrt_double(var1 * var1 + var3 * var3 + var5 * var5);
+        float var9 = MathHelper.sqrt(var1 * var1 + var3 * var3 + var5 * var5);
         var1 /= var9;
         var3 /= var9;
         var5 /= var9;
@@ -74,7 +74,7 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
         motionX = var1;
         motionY = var3;
         motionZ = var5;
-        float var10 = MathHelper.sqrt_double(var1 * var1 + var5 * var5);
+        float var10 = MathHelper.sqrt(var1 * var1 + var5 * var5);
         prevRotationYaw = rotationYaw = (float) (Math.atan2(var1, var5) * 180.0D / Math.PI);
         prevRotationPitch = rotationPitch = (float) (Math.atan2(var3, var10) * 180.0D / Math.PI);
     }
@@ -105,9 +105,9 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
             EnumFacing sideHit = mop.sideHit;
             BlockPos blockPos = mop.getBlockPos().offset(sideHit);
 
-            if (worldObj.isAirBlock(blockPos))
+            if (getEntityWorld().isAirBlock(blockPos))
             {
-                worldObj.setBlockState(blockPos, ModBlocks.BLOOD_LIGHT.getDefaultState());
+                getEntityWorld().setBlockState(blockPos, ModBlocks.BLOOD_LIGHT.getDefaultState());
             }
         }
 
@@ -129,9 +129,9 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
             }
         }
 
-        if (worldObj.isAirBlock(new BlockPos((int) this.posX, (int) this.posY, (int) this.posZ)))
+        if (getEntityWorld().isAirBlock(new BlockPos((int) this.posX, (int) this.posY, (int) this.posZ)))
         {
-            worldObj.setBlockState(new BlockPos((int) this.posX, (int) this.posY, (int) this.posZ), Blocks.FIRE.getDefaultState());
+            getEntityWorld().setBlockState(new BlockPos((int) this.posX, (int) this.posY, (int) this.posZ), Blocks.FIRE.getDefaultState());
         }
 
         // spawnHitParticles("magicCrit", 8);

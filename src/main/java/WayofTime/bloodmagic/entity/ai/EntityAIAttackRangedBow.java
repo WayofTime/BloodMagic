@@ -37,12 +37,12 @@ public class EntityAIAttackRangedBow extends EntityAIBase
      */
     public boolean shouldExecute()
     {
-        return this.entity.getAttackTarget() == null ? false : this.isBowInMainhand();
+        return this.entity.getAttackTarget() != null && this.isBowInMainhand();
     }
 
     protected boolean isBowInMainhand()
     {
-        return this.entity.getHeldItemMainhand() != null && this.entity.getHeldItemMainhand().getItem() instanceof ItemBow;
+        return this.entity.getHeldItemMainhand().getItem() instanceof ItemBow;
     }
 
     /**

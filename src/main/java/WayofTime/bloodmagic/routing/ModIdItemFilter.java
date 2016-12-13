@@ -11,7 +11,7 @@ public class ModIdItemFilter extends TestItemFilter
     @Override
     public boolean doStacksMatch(ItemStack filterStack, ItemStack testStack)
     {
-        if (filterStack != null && testStack != null && filterStack.getItem() != null && testStack.getItem() != null)
+        if (ItemStack.areItemsEqualIgnoreDurability(filterStack, testStack))
         {
             String keyId = getModID(filterStack.getItem());
             String checkedId = getModID(testStack.getItem());

@@ -129,7 +129,7 @@ public class RitualCrushing extends Ritual
             if (useCuttingFluid)
             {
                 ItemStack checkStack = block.getItem(world, newPos, state);
-                if (checkStack == null)
+                if (checkStack.isEmpty())
                 {
                     continue;
                 }
@@ -159,7 +159,7 @@ public class RitualCrushing extends Ritual
                     }
 
                     ItemStack result = recipe.getRecipeOutput(input);
-                    if (result == null)
+                    if (result.isEmpty())
                     {
                         continue;
                     }
@@ -167,7 +167,7 @@ public class RitualCrushing extends Ritual
                     if (tile != null)
                     {
                         result = Utils.insertStackIntoTile(result, tile, EnumFacing.DOWN);
-                        if (result != null && result.stackSize > 0)
+                        if (!result.isEmpty())
                         {
                             Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, result);
                         }
@@ -189,7 +189,7 @@ public class RitualCrushing extends Ritual
             if (!isBlockClaimed && isSilkTouch && block.canSilkHarvest(world, newPos, state, null))
             {
                 ItemStack checkStack = block.getItem(world, newPos, state);
-                if (checkStack == null)
+                if (checkStack.isEmpty())
                 {
                     continue;
                 }
@@ -210,7 +210,7 @@ public class RitualCrushing extends Ritual
                 else
                     Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
 
-                if (copyStack != null && copyStack.stackSize > 0)
+                if (!copyStack.isEmpty())
                 {
                     Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
                 }
@@ -223,31 +223,28 @@ public class RitualCrushing extends Ritual
 
                 List<ItemStack> stackList = block.getDrops(world, newPos, state, fortune);
 
-                if (stackList != null && !stackList.isEmpty())
+                for (ItemStack item : stackList)
                 {
-                    for (ItemStack item : stackList)
-                    {
-                        ItemStack copyStack = ItemStack.copyItemStack(item);
+                    ItemStack copyStack = item.copy();
 
-                        if (tile != null)
-                        {
-                            copyStack = Utils.insertStackIntoTile(copyStack, tile, EnumFacing.DOWN);
-                        } else
-                        {
-                            Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
-                            continue;
-                        }
-                        if (copyStack != null && copyStack.stackSize > 0)
-                        {
-                            Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
-                        }
-                    }
-
-                    if (fortune > 0)
+                    if (tile != null)
                     {
-                        WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveWillDrain, true);
-                        destructiveWill -= destructiveWillDrain;
+                        copyStack = Utils.insertStackIntoTile(copyStack, tile, EnumFacing.DOWN);
+                    } else
+                    {
+                        Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
+                        continue;
                     }
+                    if (!copyStack.isEmpty())
+                    {
+                        Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
+                    }
+                }
+
+                if (fortune > 0)
+                {
+                    WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveWillDrain, true);
+                    destructiveWill -= destructiveWillDrain;
                 }
             }
 
@@ -323,7 +320,14 @@ public class RitualCrushing extends Ritual
     @Override
     public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player)
     {
-        return new ITextComponent[] { new TextComponentTranslation(this.getUnlocalizedName() + ".info"), new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".destructive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".vengeful.info") };
+        return new ITextComponent[] {
+                new TextComponentTranslation(this.getUnlocalizedName() + ".info"),
+                new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"),
+                new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"),
+                new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info"),
+                new TextComponentTranslation(this.getUnlocalizedName() + ".destructive.info"),
+                new TextComponentTranslation(this.getUnlocalizedName() + ".vengeful.info")
+        };
     }
 
     @Override

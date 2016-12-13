@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.api.ritual.Ritual;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,6 +58,7 @@ public class RitualRegistry
         registerRitual(ritual, ritual.getName());
     }
 
+    @Nullable
     public static Ritual getRitualForId(String id)
     {
         Ritual ritual = registry.get(id);

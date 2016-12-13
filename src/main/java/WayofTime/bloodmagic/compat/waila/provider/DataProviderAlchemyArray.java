@@ -43,10 +43,10 @@ public class DataProviderAlchemyArray implements IWailaDataProvider
             if (tile instanceof TileAlchemyArray)
             {
                 TileAlchemyArray tileArray = (TileAlchemyArray) tile;
-                if (tileArray.getStackInSlot(0) != null)
+                if (!tileArray.getStackInSlot(0).isEmpty())
                     currenttip.add(TextHelper.localize("waila.BloodMagic.array.reagent", tileArray.getStackInSlot(0).getDisplayName()));
 
-                if (tileArray.getStackInSlot(1) != null)
+                if (!tileArray.getStackInSlot(1).isEmpty())
                     currenttip.add(TextHelper.localize("waila.BloodMagic.array.catalyst", tileArray.getStackInSlot(1).getDisplayName()));
             }
         } else

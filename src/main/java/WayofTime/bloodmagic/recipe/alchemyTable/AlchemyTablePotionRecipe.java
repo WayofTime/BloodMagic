@@ -1,9 +1,6 @@
 package WayofTime.bloodmagic.recipe.alchemyTable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -40,7 +37,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
 
     public AlchemyTablePotionRecipe(int lpDrained, int ticksRequired, int tierRequired, ItemStack inputItem, PotionEffect baseEffect)
     {
-        this(lpDrained, ticksRequired, tierRequired, Arrays.asList(inputItem), baseEffect);
+        this(lpDrained, ticksRequired, tierRequired, Collections.singletonList(inputItem), baseEffect);
     }
 
     @Override
@@ -58,7 +55,6 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
                 if (match)
                 {
                     flaskLocation = x;
-                    continue;
                 }
             }
         }
@@ -68,7 +64,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
             return getModifiedFlaskForInput(inputList.get(flaskLocation));
         }
 
-        return getModifiedFlaskForInput(null);
+        return getModifiedFlaskForInput(ItemStack.EMPTY);
     }
 
     @Override
@@ -76,39 +72,27 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
     {
         ArrayList<Object> required = new ArrayList<Object>(input);
 
-        for (int x = 0; x < checkedList.size(); x++)
-        {
-            ItemStack slot = checkedList.get(x);
-
-            if (slot != null)
-            {
+        for (ItemStack slot : checkedList) {
+            if (slot != null) {
                 boolean inRecipe = false;
-                Iterator<Object> req = required.iterator();
 
-                while (req.hasNext())
-                {
+                for (Object aRequired : required) {
                     boolean match = false;
 
-                    Object next = req.next();
+                    Object next = aRequired;
 
-                    if (next instanceof ItemStack)
-                    {
+                    if (next instanceof ItemStack) {
                         match = OreDictionary.itemMatches((ItemStack) next, slot, false);
-                    } else if (next instanceof List)
-                    {
+                    } else if (next instanceof List) {
                         Iterator<ItemStack> itr = ((List<ItemStack>) next).iterator();
-                        while (itr.hasNext() && !match)
-                        {
+                        while (itr.hasNext() && !match) {
                             match = OreDictionary.itemMatches(itr.next(), slot, false);
                         }
                     }
 
-                    if (match)
-                    {
-                        if (next instanceof ItemStack && ((ItemStack) next).getItem() == ModItems.POTION_FLASK)
-                        {
-                            if (!isPotionFlaskValidInput(slot))
-                            {
+                    if (match) {
+                        if (next instanceof ItemStack && ((ItemStack) next).getItem() == ModItems.POTION_FLASK) {
+                            if (!isPotionFlaskValidInput(slot)) {
                                 break;
                             }
                         }
@@ -119,8 +103,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
                     }
                 }
 
-                if (!inRecipe)
-                {
+                if (!inRecipe) {
                     return false;
                 }
             }
@@ -150,7 +133,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
 
     public ItemStack getModifiedFlaskForInput(ItemStack inputStack)
     {
-        if (inputStack == null)
+        if (inputStack.isEmpty())
         {
             ItemStack outputStack = new ItemStack(ModItems.POTION_FLASK);
 

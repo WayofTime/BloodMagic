@@ -232,7 +232,14 @@ public class RitualAnimalGrowth extends Ritual
     @Override
     public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player)
     {
-        return new ITextComponent[] { new TextComponentTranslation(this.getUnlocalizedName() + ".info"), new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".destructive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".vengeful.info") };
+        return new ITextComponent[] {
+                new TextComponentTranslation(this.getUnlocalizedName() + ".info"),
+                new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"),
+                new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"),
+                new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info"),
+                new TextComponentTranslation(this.getUnlocalizedName() + ".destructive.info"),
+                new TextComponentTranslation(this.getUnlocalizedName() + ".vengeful.info")
+        };
     }
 
     public int getBreedingDecreaseForWill(double vengefulWill)

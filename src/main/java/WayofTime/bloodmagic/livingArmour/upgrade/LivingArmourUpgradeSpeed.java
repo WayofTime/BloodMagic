@@ -61,7 +61,7 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
 
         if (healthModifier[this.level] > 0)
         {
-            modifierMap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(952142, 1), "Health modifier" + 1, healthModifier[this.level], 0));
+            modifierMap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(new UUID(952142, 1), "Health modifier" + 1, healthModifier[this.level], 0));
         }
 
         return modifierMap;

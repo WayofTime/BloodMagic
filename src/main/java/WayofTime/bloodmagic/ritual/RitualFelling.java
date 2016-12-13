@@ -114,17 +114,17 @@ public class RitualFelling extends Ritual
     private void placeInInventory(IBlockState blockState, World world, BlockPos blockPos, BlockPos tileEntityPos)
     {
         TileEntity tile = world.getTileEntity(tileEntityPos);
-        if (tile != null && blockState.getBlock().getDrops(world, blockPos, world.getBlockState(blockPos), 0) != null)
+        if (tile != null)
         {
             if (tile instanceof IInventory)
             {
                 for (ItemStack stack : blockState.getBlock().getDrops(world, blockPos, world.getBlockState(blockPos), 0))
                 {
                     ItemStack copyStack = stack.copy();
-                    Utils.insertStackIntoInventory(copyStack, (IInventory) tile, EnumFacing.DOWN);
-                    if (copyStack.stackSize > 0)
+                    Utils.insertStackIntoTile(copyStack, tile, EnumFacing.DOWN);
+                    if (!copyStack.isEmpty())
                     {
-                        world.spawnEntityInWorld(new EntityItem(world, blockPos.getX() + 0.4, blockPos.getY() + 2, blockPos.getZ() + 0.4, copyStack));
+                        world.spawnEntity(new EntityItem(world, blockPos.getX() + 0.4, blockPos.getY() + 2, blockPos.getZ() + 0.4, copyStack));
                     }
                 }
             }

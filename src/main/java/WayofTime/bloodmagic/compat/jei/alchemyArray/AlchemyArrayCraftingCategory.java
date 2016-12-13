@@ -1,12 +1,15 @@
 package WayofTime.bloodmagic.compat.jei.alchemyArray;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
@@ -50,14 +53,15 @@ public class AlchemyArrayCraftingCategory implements IRecipeCategory
 
     }
 
+    @Nullable
     @Override
-    public void drawAnimations(Minecraft minecraft)
+    public IDrawable getIcon()
     {
-
+        return null;
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
+    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients)
     {
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 0, 5);
         recipeLayout.getItemStacks().init(CATALYST_SLOT, true, 29, 3);
@@ -66,9 +70,9 @@ public class AlchemyArrayCraftingCategory implements IRecipeCategory
         if (recipeWrapper instanceof AlchemyArrayCraftingRecipeJEI)
         {
             AlchemyArrayCraftingRecipeJEI alchemyArrayWrapper = (AlchemyArrayCraftingRecipeJEI) recipeWrapper;
-            recipeLayout.getItemStacks().set(INPUT_SLOT, alchemyArrayWrapper.getInputs());
+            recipeLayout.getItemStacks().set(INPUT_SLOT, ingredients.getInputs(ItemStack.class).get(0));
             recipeLayout.getItemStacks().set(CATALYST_SLOT, alchemyArrayWrapper.getCatalyst());
-            recipeLayout.getItemStacks().set(OUTPUT_SLOT, alchemyArrayWrapper.getOutputs());
+            recipeLayout.getItemStacks().set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0).get(0));
         }
     }
 }

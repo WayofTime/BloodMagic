@@ -51,7 +51,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     @Override
     public void onUpdate()
     {
-        if (worldObj.isRemote)
+        if (getWorld().isRemote)
             return;
 
         if (getWorld().isBlockPowered(getPos()) && isActive())

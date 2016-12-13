@@ -38,7 +38,7 @@ public class BaseCompressionHandler extends CompressionHandler
             return this.getResultStack();
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
     public int getRemainingNeeded(ItemStack[] inv)
@@ -53,7 +53,7 @@ public class BaseCompressionHandler extends CompressionHandler
 
     public int iterateThroughInventory(ItemStack[] inv, boolean doDrain)
     {
-        int needed = this.required.stackSize;
+        int needed = this.required.getCount();
         int kept = this.getLeftover();
         int i = -1;
 
@@ -68,7 +68,7 @@ public class BaseCompressionHandler extends CompressionHandler
 
             if (invStack.isItemEqual(this.required) && (invStack.getTagCompound() == null ? this.required.getTagCompound() == null : invStack.getTagCompound().equals(this.required.getTagCompound())))
             {
-                int stackSize = invStack.stackSize;
+                int stackSize = invStack.getCount();
                 int used = 0;
                 if (kept > 0)
                 {
@@ -83,10 +83,10 @@ public class BaseCompressionHandler extends CompressionHandler
                     int remainingFromStack = Math.max(stackSize - used - needed, 0);
                     if (doDrain)
                     {
-                        invStack.stackSize = remainingFromStack + used;
-                        if (invStack.stackSize <= 0)
+                        invStack.setCount(remainingFromStack + used);
+                        if (invStack.isEmpty())
                         {
-                            inv[i] = null;
+                            inv[i] = ItemStack.EMPTY;
                         }
                     }
 

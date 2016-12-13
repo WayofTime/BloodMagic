@@ -7,9 +7,11 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.bloodmagic.util.Utils;
 
@@ -34,8 +36,8 @@ public class MeteorComponent
                 meta = Integer.parseInt(stringList[2]);
             }
 
-            Block ore = Block.REGISTRY.getObject(new ResourceLocation(domain, block));
-            if (ore != null)
+            Block ore = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(domain, block));
+            if (ore != Blocks.AIR)
             {
                 return ore.getStateFromMeta(meta);
             }

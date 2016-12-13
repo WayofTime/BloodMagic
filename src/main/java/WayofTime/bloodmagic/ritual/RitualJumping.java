@@ -42,30 +42,27 @@ public class RitualJumping extends Ritual
 
         AreaDescriptor jumpRange = getBlockRange(JUMP_RANGE);
         List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, jumpRange.getAABB(masterRitualStone.getBlockPos()));
-        if (entities != null)
+        for (EntityLivingBase entity : entities)
         {
-            for (EntityLivingBase entity : entities)
+            if (totalEffects >= maxEffects)
             {
-                if (totalEffects >= maxEffects)
-                {
-                    break;
-                }
+                break;
+            }
 
-                double motionY = 1.5;
+            double motionY = 1.5;
 
-                entity.fallDistance = 0;
-                if (entity.isSneaking())
-                {
-                    continue;
-                }
+            entity.fallDistance = 0;
+            if (entity.isSneaking())
+            {
+                continue;
+            }
 
-                entity.motionY = motionY;
-                totalEffects++;
+            entity.motionY = motionY;
+            totalEffects++;
 
-                if (entity instanceof EntityPlayer)
-                {
-                    Utils.setPlayerSpeedFromServer((EntityPlayer) entity, entity.motionX, entity.motionY, entity.motionZ);
-                }
+            if (entity instanceof EntityPlayer)
+            {
+                Utils.setPlayerSpeedFromServer((EntityPlayer) entity, entity.motionX, entity.motionY, entity.motionZ);
             }
         }
 

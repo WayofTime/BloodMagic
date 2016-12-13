@@ -43,7 +43,7 @@ public class EntityMimic extends EntityDemonBase
     /**
      * Copy of EntitySpider's AI (should be pretty evident...)
      */
-    private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(EntityMimic.class, DataSerializers.BYTE);
+    private static final DataParameter<Byte> CLIMBING = EntityDataManager.createKey(EntityMimic.class, DataSerializers.BYTE);
 
     public boolean dropItemsOnBreak = true;
     public NBTTagCompound tileTag = new NBTTagCompound();
@@ -64,7 +64,7 @@ public class EntityMimic extends EntityDemonBase
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.tasks.addTask(7, new EntityAIMimicReform(this));
 
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
         this.targetTasks.addTask(2, new EntityMimic.AISpiderTarget(this, EntityPlayer.class));
         this.targetTasks.addTask(3, new EntityMimic.AISpiderTarget(this, EntityIronGolem.class));
     }
@@ -160,7 +160,7 @@ public class EntityMimic extends EntityDemonBase
                             }
 
                             BlockPos newPos = centerPos.add(i, j, k);
-                            if (spawnMimicBlockAtPosition(worldObj, newPos))
+                            if (spawnMimicBlockAtPosition(getEntityWorld(), newPos))
                             {
                                 return true;
                             }
@@ -178,7 +178,7 @@ public class EntityMimic extends EntityDemonBase
     {
         super.onDeath(cause);
 
-        if (!worldObj.isRemote)
+        if (!getEntityWorld().isRemote)
         {
             BlockPos centerPos = this.getPosition();
 
@@ -201,7 +201,7 @@ public class EntityMimic extends EntityDemonBase
                                 }
 
                                 BlockPos newPos = centerPos.add(i, j, k);
-                                if (spawnHeldBlockOnDeath(worldObj, newPos))
+                                if (spawnHeldBlockOnDeath(getEntityWorld(), newPos))
                                 {
                                     return;
                                 }
@@ -227,7 +227,7 @@ public class EntityMimic extends EntityDemonBase
      * Returns new PathNavigateGround instance
      */
     @Override
-    protected PathNavigate getNewNavigator(World worldIn)
+    protected PathNavigate createNavigator(World worldIn)
     {
         return new PathNavigateClimber(this, worldIn);
     }
@@ -236,7 +236,7 @@ public class EntityMimic extends EntityDemonBase
     protected void entityInit()
     {
         super.entityInit();
-        this.dataManager.register(CLIMBING, Byte.valueOf((byte) 0));
+        this.dataManager.register(CLIMBING, (byte) 0);
 //        this.dataManager.register(ITEMSTACK, null);
     }
 
@@ -246,7 +246,7 @@ public class EntityMimic extends EntityDemonBase
     @Override
     public void onUpdate()
     {
-        if (!this.worldObj.isRemote && this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL)
+        if (!this.getEntityWorld().isRemote && this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL)
         {
             if (reformIntoMimicBlock(this.getPosition()))
             {
@@ -256,7 +256,7 @@ public class EntityMimic extends EntityDemonBase
 
         super.onUpdate();
 
-        if (!this.worldObj.isRemote)
+        if (!this.getEntityWorld().isRemote)
         {
             this.setBesideClimbableBlock(this.isCollidedHorizontally);
         }
@@ -324,7 +324,7 @@ public class EntityMimic extends EntityDemonBase
     @Override
     public boolean isPotionApplicable(PotionEffect potioneffectIn)
     {
-        return potioneffectIn.getPotion() == MobEffects.POISON ? false : super.isPotionApplicable(potioneffectIn);
+        return potioneffectIn.getPotion() != MobEffects.POISON && super.isPotionApplicable(potioneffectIn);
     }
 
     /**
@@ -333,7 +333,7 @@ public class EntityMimic extends EntityDemonBase
      */
     public boolean isBesideClimbableBlock()
     {
-        return (((Byte) this.dataManager.get(CLIMBING)).byteValue() & 1) != 0;
+        return (this.dataManager.get(CLIMBING) & 1) != 0;
     }
 
     /**
@@ -342,7 +342,7 @@ public class EntityMimic extends EntityDemonBase
      */
     public void setBesideClimbableBlock(boolean climbing)
     {
-        byte b0 = ((Byte) this.dataManager.get(CLIMBING)).byteValue();
+        byte b0 = this.dataManager.get(CLIMBING);
 
         if (climbing)
         {
@@ -352,7 +352,7 @@ public class EntityMimic extends EntityDemonBase
             b0 = (byte) (b0 & -2);
         }
 
-        this.dataManager.set(CLIMBING, Byte.valueOf(b0));
+        this.dataManager.set(CLIMBING, b0);
     }
 
     public float getEyeHeight()

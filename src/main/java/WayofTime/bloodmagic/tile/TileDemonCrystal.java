@@ -41,7 +41,7 @@ public class TileDemonCrystal extends TileTicking
     @Override
     public void onUpdate()
     {
-        if (worldObj.isRemote)
+        if (getWorld().isRemote)
         {
             return;
         }
@@ -52,20 +52,20 @@ public class TileDemonCrystal extends TileTicking
         {
             EnumDemonWillType type = EnumDemonWillType.values()[this.getBlockMetadata()];
 
-            double value = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
+            double value = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
             if (type != EnumDemonWillType.DEFAULT)
             {
                 if (value >= 100)
                 {
                     double nextProgress = getCrystalGrowthPerSecond(value);
-                    progressToNextCrystal += WorldDemonWillHandler.drainWill(worldObj, getPos(), type, nextProgress * sameWillConversionRate, true) / sameWillConversionRate;
+                    progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), type, nextProgress * sameWillConversionRate, true) / sameWillConversionRate;
                 } else
                 {
-                    value = WorldDemonWillHandler.getCurrentWill(worldObj, pos, EnumDemonWillType.DEFAULT);
+                    value = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, EnumDemonWillType.DEFAULT);
                     if (value > 0.5)
                     {
                         double nextProgress = getCrystalGrowthPerSecond(value) * timeDelayForWrongWill;
-                        progressToNextCrystal += WorldDemonWillHandler.drainWill(worldObj, getPos(), EnumDemonWillType.DEFAULT, nextProgress * defaultWillConversionRate, true) / defaultWillConversionRate;
+                        progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), EnumDemonWillType.DEFAULT, nextProgress * defaultWillConversionRate, true) / defaultWillConversionRate;
                     }
                 }
             } else
@@ -73,17 +73,17 @@ public class TileDemonCrystal extends TileTicking
                 if (value > 0.5)
                 {
                     double nextProgress = getCrystalGrowthPerSecond(value);
-                    progressToNextCrystal += WorldDemonWillHandler.drainWill(worldObj, getPos(), type, nextProgress * sameWillConversionRate, true) / sameWillConversionRate;
+                    progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), type, nextProgress * sameWillConversionRate, true) / sameWillConversionRate;
                 }
             }
 
             checkAndGrowCrystal();
         }
 
-//        if (worldObj.getWorldTime() % 200 == 0)
+//        if (getWorld().getWorldTime() % 200 == 0)
 //        {
 //            crystalCount = Math.min(crystalCount + 1, 7);
-//            worldObj.markBlockForUpdate(pos);
+//            getWorld().markBlockForUpdate(pos);
 //        }
     }
 
@@ -105,11 +105,11 @@ public class TileDemonCrystal extends TileTicking
             return 0;
         }
 
-        IBlockState state = worldObj.getBlockState(pos);
+        IBlockState state = getWorld().getBlockState(pos);
         int meta = this.getBlockType().getMetaFromState(state);
         EnumDemonWillType type = EnumDemonWillType.values()[meta];
 
-        double value = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
+        double value = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
         double percentDrain = willDrain <= 0 ? 1 : Math.min(1, value / willDrain);
         if (percentDrain <= 0)
         {
@@ -117,7 +117,7 @@ public class TileDemonCrystal extends TileTicking
         }
 
         // Verification that you can actually drain the will from this chunk, for future proofing.
-        WorldDemonWillHandler.drainWill(worldObj, pos, type, percentDrain * willDrain, true);
+        WorldDemonWillHandler.drainWill(getWorld(), pos, type, percentDrain * willDrain, true);
         progressToNextCrystal += percentDrain * progressPercentage;
 
         checkAndGrowCrystal();
@@ -131,8 +131,8 @@ public class TileDemonCrystal extends TileTicking
         {
             progressToNextCrystal--;
             crystalCount++;
-            IBlockState thisState = worldObj.getBlockState(pos);
-            worldObj.notifyBlockUpdate(pos, thisState, thisState, 3);
+            IBlockState thisState = getWorld().getBlockState(pos);
+            getWorld().notifyBlockUpdate(pos, thisState, thisState, 3);
             markDirty();
         }
     }
@@ -144,15 +144,15 @@ public class TileDemonCrystal extends TileTicking
 
     public boolean dropSingleCrystal()
     {
-        if (!worldObj.isRemote && crystalCount > 1)
+        if (!getWorld().isRemote && crystalCount > 1)
         {
-            IBlockState state = worldObj.getBlockState(pos);
+            IBlockState state = getWorld().getBlockState(pos);
             EnumDemonWillType type = state.getValue(BlockDemonCrystal.TYPE);
             ItemStack stack = BlockDemonCrystal.getItemStackDropped(type, 1);
             if (stack != null)
             {
                 crystalCount--;
-                worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack));
+                getWorld().spawnEntity(new EntityItem(getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack));
                 return true;
             }
         }
@@ -167,7 +167,7 @@ public class TileDemonCrystal extends TileTicking
 
     public int getCrystalCountForRender()
     {
-        return MathHelper.clamp_int(crystalCount - 1, 0, 6);
+        return MathHelper.clamp(crystalCount - 1, 0, 6);
     }
 
     @Override

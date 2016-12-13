@@ -76,8 +76,9 @@ public class ItemPotionFlask extends Item implements IVariantProvider
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         int remainingUses = stack.getMaxDamage() - stack.getItemDamage();
         if (remainingUses <= 0)
         {

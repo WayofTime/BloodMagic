@@ -180,15 +180,15 @@ public abstract class EntityAspectedDemonBase extends EntityDemonBase
             float newAmount = amount;
             if (source.isProjectile())
             {
-                newAmount *= MathHelper.clamp_double(1 - getProjectileResist(), 0, 1);
+                newAmount *= MathHelper.clamp(1 - getProjectileResist(), 0, 1);
             } else
             {
-                newAmount *= MathHelper.clamp_double(1 - getMeleeResist(), 0, 1);
+                newAmount *= MathHelper.clamp(1 - getMeleeResist(), 0, 1);
             }
 
             if (source.isMagicDamage())
             {
-                newAmount *= MathHelper.clamp_double(1 - getMagicResist(), 0, 1);
+                newAmount *= MathHelper.clamp(1 - getMagicResist(), 0, 1);
             }
 
             return super.attackEntityFrom(source, newAmount);

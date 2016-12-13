@@ -67,7 +67,7 @@ public class RitualFullStomach extends Ritual
             for (int i = lastSlot; i < inventory.getSizeInventory(); i++)
             {
                 ItemStack stack = inventory.getStackInSlot(i);
-                if (stack != null && stack.getItem() instanceof ItemFood)
+                if (!stack.isEmpty() && stack.getItem() instanceof ItemFood)
                 {
                     ItemFood foodItem = (ItemFood) stack.getItem();
 

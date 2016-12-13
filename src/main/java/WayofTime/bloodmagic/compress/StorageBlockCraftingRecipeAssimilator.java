@@ -33,10 +33,10 @@ public class StorageBlockCraftingRecipeAssimilator
                 continue;
 
             ItemStack output = recipe.getRecipeOutput();
-            if (output == null || output.getItem() == null)
+            if (output.isEmpty())
                 continue;
 
-            if (output.stackSize == 1)
+            if (output.getCount() == 1)
             {
                 PackingRecipe packingRecipe = getPackingRecipe(recipe);
 
@@ -44,7 +44,7 @@ public class StorageBlockCraftingRecipeAssimilator
                 {
                     packingRecipes.add(packingRecipe);
                 }
-            } else if ((output.stackSize == 4 || output.stackSize == 9) && recipe.getRecipeSize() == 1)
+            } else if ((output.getCount() == 4 || output.getCount() == 9) && recipe.getRecipeSize() == 1)
             {
                 unpackingRecipes.add(recipe);
             }
@@ -81,7 +81,7 @@ public class StorageBlockCraftingRecipeAssimilator
                 {
                     // the recipe could be parsed, use its inputs directly since that's faster verify recipe size
 
-                    if (recipePack.inputCount != unpacked.stackSize)
+                    if (recipePack.inputCount != unpacked.getCount())
                         continue;
 
                     // check if any of the input options matches the unpacked
@@ -99,14 +99,14 @@ public class StorageBlockCraftingRecipeAssimilator
                 {
                     // unknown IRecipe, check through the recipe conventionally verify recipe size for 3x3 to skip anything smaller quickly
 
-                    if (unpacked.stackSize == 9 && recipePack.recipe.getRecipeSize() < 9)
+                    if (unpacked.getCount() == 9 && recipePack.recipe.getRecipeSize() < 9)
                         continue;
 
                     // initialize inventory late, but only once per unpack recipe
 
                     if (inventory == null)
                     {
-                        if (unpacked.stackSize == 4)
+                        if (unpacked.getCount() == 4)
                         {
                             inventory = inventory2x2;
                         } else
@@ -114,7 +114,7 @@ public class StorageBlockCraftingRecipeAssimilator
                             inventory = inventory3x3;
                         }
 
-                        for (int i = 0; i < unpacked.stackSize; i++)
+                        for (int i = 0; i < unpacked.getCount(); i++)
                         {
                             inventory.setInventorySlotContents(i, unpacked.copy());
                         }

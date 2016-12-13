@@ -94,12 +94,8 @@ public class InversionPillarHandler
             {
                 List<BlockPos> otherPosList = willMap.get(type);
 
-                Iterator<BlockPos> posIterator = otherPosList.iterator();
-                while (posIterator.hasNext())
-                {
-                    BlockPos closePos = posIterator.next();
-                    if (!closePos.equals(pos) && closePos.distanceSq(pos) <= farthestDistanceSquared)
-                    {
+                for (BlockPos closePos : otherPosList) {
+                    if (!closePos.equals(pos) && closePos.distanceSq(pos) <= farthestDistanceSquared) {
                         closePosList.add(closePos);
                     }
                 }
@@ -113,16 +109,11 @@ public class InversionPillarHandler
             {
                 Map<BlockPos, List<BlockPos>> posMap = willMap.get(type);
 
-                Iterator<BlockPos> closePosIterator = closePosList.iterator();
-                while (closePosIterator.hasNext())
-                {
-                    BlockPos closePos = closePosIterator.next();
+                for (BlockPos closePos : closePosList) {
                     List<BlockPos> posList = posMap.get(closePos);
-                    if (posList != null && !posList.contains(pos))
-                    {
+                    if (posList != null && !posList.contains(pos)) {
                         posList.add(pos);
-                    } else
-                    {
+                    } else {
                         posList = new ArrayList<BlockPos>();
                         posList.add(pos);
                         posMap.put(closePos, posList);
@@ -220,18 +211,12 @@ public class InversionPillarHandler
                     //Positions that are new this iteration and need to be dumped into uncheckedPosList next iteration.
                     List<BlockPos> newPosList = new ArrayList<BlockPos>();
 
-                    Iterator<BlockPos> itr = uncheckedPosList.iterator();
-                    while (itr.hasNext())
-                    {
-                        BlockPos checkPos = itr.next();
+                    for (BlockPos checkPos : uncheckedPosList) {
                         List<BlockPos> posList = posMap.get(checkPos);
-                        if (posList != null)
-                        {
-                            for (BlockPos testPos : posList)
-                            {
+                        if (posList != null) {
+                            for (BlockPos testPos : posList) {
                                 //Check if the position has already been checked, is scheduled to be checked, or is already found it needs to be checked.
-                                if (!checkedPosList.contains(testPos) && !uncheckedPosList.contains(testPos) && !newPosList.contains(testPos))
-                                {
+                                if (!checkedPosList.contains(testPos) && !uncheckedPosList.contains(testPos) && !newPosList.contains(testPos)) {
                                     newPosList.add(testPos);
                                 }
                             }

@@ -49,32 +49,32 @@ public class RitualPlacer extends Ritual
         }
 
         AreaDescriptor areaDescriptor = getBlockRange(PLACER_RANGE);
-        IInventory iInventory;
+        IInventory inventory;
 
         if (tileEntity != null)
         {
             // Using the new Forge inventory system
             if (tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN))
             {
-                IItemHandler iItemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+                IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
 
-                if (iItemHandler.getSlots() <= 0)
+                if (itemHandler.getSlots() <= 0)
                 {
                     return;
                 }
 
                 for (BlockPos blockPos : areaDescriptor.getContainedPositions(masterRitualStone.getBlockPos()))
                 {
-                    for (int inv = 0; inv < iItemHandler.getSlots(); inv++)
+                    for (int inv = 0; inv < itemHandler.getSlots(); inv++)
                     {
-                        if (world.getBlockState(blockPos).getBlock().isReplaceable(world, blockPos) && iItemHandler.getStackInSlot(inv) != null && iItemHandler.getStackInSlot(inv).stackSize != 0)
+                        if (world.getBlockState(blockPos).getBlock().isReplaceable(world, blockPos) && !itemHandler.getStackInSlot(inv).isEmpty())
                         {
-                            if (iItemHandler.getStackInSlot(inv).getItem() instanceof ItemBlock && world.getBlockState(blockPos.down()) != null)
+                            if (itemHandler.getStackInSlot(inv).getItem() instanceof ItemBlock && world.isAirBlock(blockPos.down()))
                             {
-                                if (iItemHandler.extractItem(inv, 1, true) != null)
+                                if (!itemHandler.extractItem(inv, 1, true).isEmpty())
                                 {
-                                    world.setBlockState(blockPos, Block.getBlockFromItem(iItemHandler.getStackInSlot(inv).getItem()).getStateFromMeta(iItemHandler.getStackInSlot(inv).getItemDamage()));
-                                    iItemHandler.extractItem(inv, 1, false);
+                                    world.setBlockState(blockPos, Block.getBlockFromItem(itemHandler.getStackInSlot(inv).getItem()).getStateFromMeta(itemHandler.getStackInSlot(inv).getItemDamage()));
+                                    itemHandler.extractItem(inv, 1, false);
                                     tileEntity.markDirty();
                                     network.syphon(getRefreshCost());
                                 }
@@ -85,24 +85,24 @@ public class RitualPlacer extends Ritual
                 //Compatibility with the old system, as it still exists
             } else if (tileEntity instanceof IInventory)
             {
-                iInventory = (IInventory) tileEntity;
+                inventory = (IInventory) tileEntity;
 
-                if (iInventory.getSizeInventory() <= 0)
+                if (inventory.getSizeInventory() <= 0)
                 {
                     return;
                 }
 
                 for (BlockPos blockPos : areaDescriptor.getContainedPositions(masterRitualStone.getBlockPos()))
                 {
-                    for (int inv = 0; inv < iInventory.getSizeInventory(); inv++)
+                    for (int inv = 0; inv < inventory.getSizeInventory(); inv++)
                     {
-                        if (world.getBlockState(blockPos).getBlock().isReplaceable(world, blockPos) && iInventory.getStackInSlot(inv) != null && iInventory.getStackInSlot(inv).stackSize != 0)
+                        if (world.getBlockState(blockPos).getBlock().isReplaceable(world, blockPos) && !inventory.getStackInSlot(inv).isEmpty())
                         {
-                            if (iInventory.getStackInSlot(inv).getItem() instanceof ItemBlock && world.getBlockState(blockPos.down()) != null)
+                            if (inventory.getStackInSlot(inv).getItem() instanceof ItemBlock && world.isAirBlock(blockPos.down()))
                             {
-                                world.setBlockState(blockPos, Block.getBlockFromItem(iInventory.getStackInSlot(inv).getItem()).getStateFromMeta(iInventory.getStackInSlot(inv).getItemDamage()));
-                                iInventory.decrStackSize(inv, 1);
-                                iInventory.markDirty();
+                                world.setBlockState(blockPos, Block.getBlockFromItem(inventory.getStackInSlot(inv).getItem()).getStateFromMeta(inventory.getStackInSlot(inv).getItemDamage()));
+                                inventory.decrStackSize(inv, 1);
+                                inventory.markDirty();
                                 network.syphon(getRefreshCost());
                                 break;
                             }

@@ -41,7 +41,7 @@ public class ContainerSoulForge extends Container
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
-        ItemStack itemstack = null;
+        ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack())
@@ -53,7 +53,7 @@ public class ContainerSoulForge extends Container
             {
                 if (!this.mergeItemStack(itemstack1, 6, 6 + 36, true))
                 {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
 
                 slot.onSlotChange(itemstack1, itemstack);
@@ -63,31 +63,31 @@ public class ContainerSoulForge extends Container
                 {
                     if (!this.mergeItemStack(itemstack1, 4, 5, false))
                     {
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                 } else if (!this.mergeItemStack(itemstack1, 0, 4, false))
                 {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             } else if (!this.mergeItemStack(itemstack1, 6, 42, false))
             {
-                return null;
+                return ItemStack.EMPTY;
             }
 
-            if (itemstack1.stackSize == 0)
+            if (itemstack1.getCount() == 0)
             {
-                slot.putStack(null);
+                slot.putStack(ItemStack.EMPTY);
             } else
             {
                 slot.onSlotChanged();
             }
 
-            if (itemstack1.stackSize == itemstack.stackSize)
+            if (itemstack1.getCount() == itemstack.getCount())
             {
-                return null;
+                return ItemStack.EMPTY;
             }
 
-            slot.onPickupFromSlot(playerIn, itemstack1);
+            slot.onTake(playerIn, itemstack1);
         }
 
         return itemstack;
@@ -96,7 +96,7 @@ public class ContainerSoulForge extends Container
     @Override
     public boolean canInteractWith(EntityPlayer playerIn)
     {
-        return this.tileForge.isUseableByPlayer(playerIn);
+        return this.tileForge.isUsableByPlayer(playerIn);
     }
 
     private class SlotSoul extends Slot

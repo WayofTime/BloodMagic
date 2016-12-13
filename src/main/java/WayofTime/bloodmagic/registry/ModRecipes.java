@@ -456,7 +456,7 @@ public class ModRecipes
                 if (dustList != null && dustList.size() > 0)
                 {
                     ItemStack dustStack = dustList.get(0).copy();
-                    dustStack.stackSize = 2;
+                    dustStack.setCount(2);
                     AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(dustStack, 400, 200, 1, ore, ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC)));
                     addedOreRecipeList.add(ore);
                 }

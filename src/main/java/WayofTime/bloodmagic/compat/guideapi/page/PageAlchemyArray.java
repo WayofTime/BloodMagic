@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.compat.guideapi.page;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -32,17 +33,17 @@ public class PageAlchemyArray extends Page
 
     public PageAlchemyArray(List<ResourceLocation> resources, ItemStack inputStack, ItemStack catalystStack)
     {
-        this(resources, inputStack, catalystStack, null);
+        this(resources, inputStack, catalystStack, ItemStack.EMPTY);
     }
 
     public PageAlchemyArray(ResourceLocation resource, ItemStack inputStack, ItemStack catalystStack, ItemStack outputStack)
     {
-        this(Arrays.asList(resource), inputStack, catalystStack, outputStack);
+        this(Collections.singletonList(resource), inputStack, catalystStack, outputStack);
     }
 
     public PageAlchemyArray(ResourceLocation resource, ItemStack inputStack, ItemStack catalystStack)
     {
-        this(Arrays.asList(resource), inputStack, catalystStack);
+        this(Collections.singletonList(resource), inputStack, catalystStack);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class PageAlchemyArray extends Page
         int y = guiTop + 30;
 
         Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("bloodmagicguide" + ":textures/gui/alchemyArrayCrafting.png"));
-        guiBase.drawTexturedModalRect(x, y, 0, 0, 62, 88 + (outputStack == null ? 0 : 26));
+        guiBase.drawTexturedModalRect(x, y, 0, 0, 62, 88 + (outputStack.isEmpty() ? 0 : 26));
 
         guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.BloodMagic.page.alchemyArray"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
 
@@ -85,7 +86,7 @@ public class PageAlchemyArray extends Page
             guiBase.renderToolTip(catalystStack, mouseX, mouseY);
         }
 
-        if (outputStack != null)
+        if (!outputStack.isEmpty())
         {
             int outputX = x + 43;
             int outputY = y + 95;

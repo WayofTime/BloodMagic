@@ -55,7 +55,7 @@ public class RitualArmourEvolve extends Ritual
 
                         masterRitualStone.setActive(false);
 
-                        world.spawnEntityInWorld(new EntityLightningBolt(world, pos.getX(), pos.getY() - 1, pos.getZ(), true));
+                        world.spawnEntity(new EntityLightningBolt(world, pos.getX(), pos.getY() - 1, pos.getZ(), true));
                     }
                 }
             }

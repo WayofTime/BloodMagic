@@ -9,6 +9,7 @@ import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockRedstoneOre;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -50,7 +51,7 @@ public class RitualMagnetic extends Ritual
         if (block instanceof BlockOre || block instanceof BlockRedstoneOre)
             return true;
 
-        if (Item.getItemFromBlock(block) == null)
+        if (Item.getItemFromBlock(block) == Items.AIR)
             return false;
 
         BlockStack type = new BlockStack(block, meta);
@@ -71,7 +72,7 @@ public class RitualMagnetic extends Ritual
 
     public static boolean isBlockOre(ItemStack stack)
     {
-        if (stack == null)
+        if (stack.isEmpty())
         {
             return false;
         }

@@ -32,7 +32,7 @@ public class StorageBlockCraftingManager
 
     private static boolean isResultStackReversible(ItemStack stack, int gridSize, World world, List list)
     {
-        if (stack == null)
+        if (stack.isEmpty())
         {
             return false;
         }
@@ -47,12 +47,12 @@ public class StorageBlockCraftingManager
         inventory.setInventorySlotContents(0, stack);
 
         ItemStack returnStack = StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world, list);
-        if (returnStack == null || returnStack.getItem() == null)
+        if (returnStack.isEmpty())
         {
             return false;
         }
 
-        ItemStack compressedStack = null;
+        ItemStack compressedStack = ItemStack.EMPTY;
         switch (gridSize)
         {
         case 2:
@@ -63,7 +63,7 @@ public class StorageBlockCraftingManager
             break;
         }
 
-        return compressedStack != null && CompressionRegistry.areItemStacksEqual(stack, compressedStack);
+        return !compressedStack.isEmpty() && CompressionRegistry.areItemStacksEqual(stack, compressedStack);
     }
 
     private static ItemStack getRecipe(ItemStack stack, World world, int gridSize, List list)
@@ -85,7 +85,7 @@ public class StorageBlockCraftingManager
 
     private static boolean has22Recipe(ItemStack stack, World world, List list)
     {
-        return get22Recipe(stack, world, list) != null;
+        return !get22Recipe(stack, world, list).isEmpty();
     }
 
     private static ItemStack get22Recipe(ItemStack stack, World world, List list)
@@ -95,7 +95,7 @@ public class StorageBlockCraftingManager
 
     private static boolean has33Recipe(ItemStack stack, World world, List list)
     {
-        return get33Recipe(stack, world, list) != null;
+        return !get33Recipe(stack, world, list).isEmpty();
     }
 
     private static ItemStack get33Recipe(ItemStack stack, World world, List list)
@@ -111,15 +111,15 @@ public class StorageBlockCraftingManager
     private ItemStack findMatchingRecipe(InventoryCrafting craftingInventory, World world, List list)
     {
         int i = 0;
-        ItemStack itemstack = null;
-        ItemStack itemstack1 = null;
+        ItemStack itemstack = ItemStack.EMPTY;
+        ItemStack itemstack1 = ItemStack.EMPTY;
         int j;
 
         for (j = 0; j < craftingInventory.getSizeInventory(); ++j)
         {
             ItemStack itemstack2 = craftingInventory.getStackInSlot(j);
 
-            if (itemstack2 != null)
+            if (!itemstack2.isEmpty())
             {
                 if (i == 0)
                 {
@@ -135,13 +135,13 @@ public class StorageBlockCraftingManager
             }
         }
 
-        if (i == 2 && itemstack.getItem() == itemstack1.getItem() && itemstack.stackSize == 1 && itemstack1.stackSize == 1 && itemstack.getItem().isRepairable())
+        if (i == 2 && itemstack.getItem() == itemstack1.getItem() && itemstack.getCount() == 1 && itemstack1.getCount() == 1 && itemstack.getItem().isRepairable())
         {
             Item item = itemstack.getItem();
-            int j1 = item.getMaxDamage() - itemstack.getItemDamage();
-            int k = item.getMaxDamage() - itemstack1.getItemDamage();
-            int l = j1 + k + item.getMaxDamage() * 5 / 100;
-            int i1 = item.getMaxDamage() - l;
+            int j1 = item.getMaxDamage(itemstack) - itemstack.getItemDamage();
+            int k = item.getMaxDamage(itemstack) - itemstack1.getItemDamage();
+            int l = j1 + k + item.getMaxDamage(itemstack) * 5 / 100;
+            int i1 = item.getMaxDamage(itemstack) - l;
 
             if (i1 < 0)
             {
@@ -161,7 +161,7 @@ public class StorageBlockCraftingManager
                 }
             }
 
-            return null;
+            return ItemStack.EMPTY;
         }
     }
 }

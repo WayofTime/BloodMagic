@@ -40,8 +40,8 @@ public class Dungeon
 
         settings.setRotation(rot);
         settings.setIgnoreEntities(true);
-        settings.setChunk((ChunkPos) null);
-        settings.setReplacedBlock((Block) null);
+        settings.setChunk(null);
+        settings.setReplacedBlock(null);
         settings.setIgnoreStructureBlock(false);
 
         DungeonRoom room = getRandomRoom(rand);
@@ -142,10 +142,8 @@ public class Dungeon
                 EnumFacing face = removedDoor1.getKey();
                 if (availableDoorMap.containsKey(face))
                 {
-                    availableDoorMap.get(face).remove(removedDoor1);
+                    availableDoorMap.get(face).remove(removedDoor1.getRight());
                 }
-
-                removedDoor1 = null;
             }
 
             if (removedDoor2 != null)
@@ -153,10 +151,8 @@ public class Dungeon
                 EnumFacing face = removedDoor2.getKey();
                 if (availableDoorMap.containsKey(face))
                 {
-                    availableDoorMap.get(face).remove(removedDoor2);
+                    availableDoorMap.get(face).remove(removedDoor2.getRight());
                 }
-
-                removedDoor2 = null;
             }
         }
 

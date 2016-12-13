@@ -203,16 +203,16 @@ public class RitualAltarBuilder extends Ritual
         {
             if (tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN))
             {
-                IItemHandler iItemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+                IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
 
-                if (iItemHandler.getSlots() <= 0)
+                if (itemHandler.getSlots() <= 0)
                 {
                     return false;
                 }
 
-                for (int i = 0; i < iItemHandler.getSlots(); i++)
+                for (int i = 0; i < itemHandler.getSlots(); i++)
                 {
-                    if (iItemHandler.getStackInSlot(i) != null && iItemHandler.getStackInSlot(i).stackSize > 0 && iItemHandler.getStackInSlot(i).getItem() == item && iItemHandler.getStackInSlot(i).getItemDamage() == damage && iItemHandler.extractItem(i, 1, !consumeItem) != null)
+                    if (!itemHandler.getStackInSlot(i).isEmpty() && itemHandler.getStackInSlot(i).getItem() == item && itemHandler.getStackInSlot(i).getItemDamage() == damage && !itemHandler.extractItem(i, 1, !consumeItem).isEmpty())
                     {
                         return true;
                     }
@@ -222,7 +222,7 @@ public class RitualAltarBuilder extends Ritual
                 IInventory inv = (IInventory) tileEntity;
                 for (int i = 0; i < inv.getSizeInventory(); i++)
                 {
-                    if (inv.getStackInSlot(i) != null && inv.getStackInSlot(i).stackSize > 0 && inv.getStackInSlot(i).getItem() == item && inv.getStackInSlot(i).getItemDamage() == damage)
+                    if (!inv.getStackInSlot(0).isEmpty() && inv.getStackInSlot(i).getItem() == item && inv.getStackInSlot(i).getItemDamage() == damage)
                     {
                         if (consumeItem)
                         {
@@ -242,19 +242,19 @@ public class RitualAltarBuilder extends Ritual
         {
             if (tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN))
             {
-                IItemHandler iItemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+                IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
 
-                if (iItemHandler.getSlots() <= 0)
+                if (itemHandler.getSlots() <= 0)
                 {
                     return null;
                 }
 
-                for (int i = 0; i < iItemHandler.getSlots(); i++)
+                for (int i = 0; i < itemHandler.getSlots(); i++)
                 {
-                    if (iItemHandler.getStackInSlot(i) != null && iItemHandler.getStackInSlot(i).stackSize > 0 && iItemHandler.getStackInSlot(i).getItem() instanceof ItemBlock && Block.getBlockFromItem(iItemHandler.getStackInSlot(i).getItem()) instanceof BlockBloodRune && iItemHandler.extractItem(i, 1, true) != null)
+                    if (!itemHandler.getStackInSlot(i).isEmpty() && itemHandler.getStackInSlot(i).getItem() instanceof ItemBlock && Block.getBlockFromItem(itemHandler.getStackInSlot(i).getItem()) instanceof BlockBloodRune && itemHandler.extractItem(i, 1, true) != null)
                     {
-                        BlockStack blockStack = new BlockStack(Utils.getBlockForComponent(EnumAltarComponent.BLOODRUNE), iItemHandler.getStackInSlot(i).getItemDamage());
-                        iItemHandler.extractItem(i, 1, false);
+                        BlockStack blockStack = new BlockStack(Utils.getBlockForComponent(EnumAltarComponent.BLOODRUNE), itemHandler.getStackInSlot(i).getItemDamage());
+                        itemHandler.extractItem(i, 1, false);
                         return blockStack;
                     }
                 }
@@ -263,7 +263,7 @@ public class RitualAltarBuilder extends Ritual
                 IInventory inv = (IInventory) tileEntity;
                 for (int i = 0; i < inv.getSizeInventory(); i++)
                 {
-                    if (inv.getStackInSlot(i) != null && inv.getStackInSlot(i).stackSize > 0 && inv.getStackInSlot(i).getItem() instanceof ItemBlock && Block.getBlockFromItem(inv.getStackInSlot(i).getItem()) instanceof BlockBloodRune)
+                    if (!inv.getStackInSlot(i).isEmpty() && inv.getStackInSlot(i).getItem() instanceof ItemBlock && Block.getBlockFromItem(inv.getStackInSlot(i).getItem()) instanceof BlockBloodRune)
                     {
                         BlockStack blockStack = new BlockStack(Utils.getBlockForComponent(EnumAltarComponent.BLOODRUNE), inv.getStackInSlot(i).getItemDamage());
                         inv.decrStackSize(i, 1);
@@ -281,22 +281,22 @@ public class RitualAltarBuilder extends Ritual
         {
             if (tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN))
             {
-                IItemHandler iItemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+                IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
 
-                if (iItemHandler.getSlots() <= 0)
+                if (itemHandler.getSlots() <= 0)
                 {
                     return null;
                 }
 
-                for (int i = 0; i < iItemHandler.getSlots(); i++)
+                for (int i = 0; i < itemHandler.getSlots(); i++)
                 {
-                    if (iItemHandler.getStackInSlot(i) != null && iItemHandler.getStackInSlot(i).stackSize > 0 && iItemHandler.getStackInSlot(i).getItem() instanceof ItemBlock && !(Block.getBlockFromItem(iItemHandler.getStackInSlot(i).getItem()) instanceof BlockBloodRune) && iItemHandler.extractItem(i, 1, true) != null)
+                    if (!itemHandler.getStackInSlot(i).isEmpty() && itemHandler.getStackInSlot(i).getItem() instanceof ItemBlock && !(Block.getBlockFromItem(itemHandler.getStackInSlot(i).getItem()) instanceof BlockBloodRune) && itemHandler.extractItem(i, 1, true) != null)
                     {
-                        Block block = Block.getBlockFromItem(iItemHandler.getStackInSlot(i).getItem());
+                        Block block = Block.getBlockFromItem(itemHandler.getStackInSlot(i).getItem());
                         if (block != null && block != Blocks.GLOWSTONE && block != ModBlocks.BLOOD_STONE && block != ModBlocks.CRYSTAL)
                         {
-                            BlockStack blockStack = new BlockStack(block, iItemHandler.getStackInSlot(i).getItemDamage());
-                            iItemHandler.extractItem(i, 1, false);
+                            BlockStack blockStack = new BlockStack(block, itemHandler.getStackInSlot(i).getItemDamage());
+                            itemHandler.extractItem(i, 1, false);
                             return blockStack;
                         }
                     }
@@ -306,10 +306,10 @@ public class RitualAltarBuilder extends Ritual
                 IInventory inv = (IInventory) tileEntity;
                 for (int i = 0; i < inv.getSizeInventory(); i++)
                 {
-                    if (inv.getStackInSlot(i) != null && inv.getStackInSlot(i).stackSize > 0 && inv.getStackInSlot(i).getItem() instanceof ItemBlock && !(Block.getBlockFromItem(inv.getStackInSlot(i).getItem()) instanceof BlockBloodRune))
+                    if (!inv.getStackInSlot(i).isEmpty() && inv.getStackInSlot(i).getItem() instanceof ItemBlock && !(Block.getBlockFromItem(inv.getStackInSlot(i).getItem()) instanceof BlockBloodRune))
                     {
                         Block block = Block.getBlockFromItem(inv.getStackInSlot(i).getItem());
-                        if (block != null && block != Blocks.GLOWSTONE && block != ModBlocks.BLOOD_STONE && block != ModBlocks.CRYSTAL)
+                        if (block != Blocks.GLOWSTONE && block != ModBlocks.BLOOD_STONE && block != ModBlocks.CRYSTAL)
                         {
                             BlockStack blockStack = new BlockStack(block, inv.getStackInSlot(i).getItemDamage());
                             inv.decrStackSize(i, 1);

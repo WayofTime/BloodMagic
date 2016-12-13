@@ -11,7 +11,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -49,14 +50,17 @@ public class RitualPump extends Ritual
             return;
         }
 
-        if (tileEntity != null && tileEntity instanceof IFluidHandler)
+        if (tileEntity != null && tileEntity.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN))
         {
-            IFluidHandler fluidHandler = (IFluidHandler) tileEntity;
+            IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
             if (!cached || liquidsCache.isEmpty())
             {
-                if (fluidHandler.drain(EnumFacing.DOWN, 1000, false) != null)
+                if (fluidHandler.drain(1000, false) != null)
                 {
-                    FluidStack fluidStack = fluidHandler.drain(EnumFacing.DOWN, 1000, false);
+                    FluidStack fluidStack = fluidHandler.drain(1000, false);
+                    if (fluidStack == null)
+                        return;
+
                     for (BlockPos blockPos : getBlockRange(PUMP_RANGE).getContainedPositions(masterRitualStone.getBlockPos()))
                     {
                         if (!liquidsCache.contains(blockPos))
@@ -77,7 +81,7 @@ public class RitualPump extends Ritual
             {
                 network.syphon(getRefreshCost());
                 currentPos = blockPosIterator.next();
-                fluidHandler.fill(EnumFacing.DOWN, fluidHandler.drain(EnumFacing.DOWN, 1000, false), true);
+                fluidHandler.fill(fluidHandler.drain(1000, false), true);
                 world.setBlockState(currentPos, Blocks.STONE.getDefaultState());
                 blockPosIterator.remove();
             }

@@ -15,14 +15,6 @@ public class ArmourDowngradeRecipeHandler implements IRecipeHandler<ArmourDowngr
         return ArmourDowngradeRecipeJEI.class;
     }
 
-    @Deprecated
-    @Nonnull
-    @Override
-    public String getRecipeCategoryUid()
-    {
-        return Constants.Compat.JEI_CATEGORY_ARMOURDOWNGRADE;
-    }
-
     @Nonnull
     @Override
     public String getRecipeCategoryUid(ArmourDowngradeRecipeJEI recipe)
@@ -40,6 +32,6 @@ public class ArmourDowngradeRecipeHandler implements IRecipeHandler<ArmourDowngr
     @Override
     public boolean isRecipeValid(@Nonnull ArmourDowngradeRecipeJEI recipe)
     {
-        return recipe.getInputs().get(0).size() > 0 && recipe.getOutputs().size() > 0;
+        return true;
     }
 }

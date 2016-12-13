@@ -59,7 +59,7 @@ public class PlayerVelocityPacketProcessor implements IMessage, IMessageHandler<
     @SideOnly(Side.CLIENT)
     public void onMessageFromServer()
     {
-        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayer player = Minecraft.getMinecraft().player;
         player.motionX = motionX;
         player.motionY = motionY;
         player.motionZ = motionZ;
