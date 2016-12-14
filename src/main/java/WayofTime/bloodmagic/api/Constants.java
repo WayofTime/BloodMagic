@@ -207,6 +207,7 @@ public class Constants
         NODE_ROUTER("ItemNodeRouter"),
         RITUAL_DIVINER("ItemRitualDiviner"),
         ROUTER_FILTER("ItemRouterFilter"),
+        FLUID_ROUTER_FILTER("ItemFluidRouterFilter"),
         SACRIFICIAL_DAGGER("ItemSacrificialDagger"),
         SACRIFICE_PACK("ItemPackSacrifice"),
         SELF_SACRIFICE_PACK("ItemPackSelfSacrifice"),

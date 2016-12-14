@@ -47,6 +47,7 @@ import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
+import WayofTime.bloodmagic.item.routing.ItemFluidRouterFilter;
 import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
 import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
 import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
@@ -159,6 +160,7 @@ public class ModItems
     public static final Item SENTIENT_SHOVEL;
     public static final Item NODE_ROUTER;
     public static final Item BASE_ITEM_FILTER;
+    public static final Item BASE_FLUID_FILTER;
     public static final Item CUTTING_FLUID;
     public static final Item SANGUINE_BOOK;
     public static final Item ITEM_POINTS_UPGRADE;
@@ -258,6 +260,7 @@ public class ModItems
 
         NODE_ROUTER = registerItem(new ItemNodeRouter(), Constants.BloodMagicItem.NODE_ROUTER.getRegName());
         BASE_ITEM_FILTER = registerItem(new ItemRouterFilter(), Constants.BloodMagicItem.ROUTER_FILTER.getRegName());
+        BASE_FLUID_FILTER = registerItem(new ItemFluidRouterFilter(), Constants.BloodMagicItem.FLUID_ROUTER_FILTER.getRegName());
 
         CUTTING_FLUID = registerItem(new ItemCuttingFluid(), Constants.BloodMagicItem.CUTTING_FLUID.getRegName());
 

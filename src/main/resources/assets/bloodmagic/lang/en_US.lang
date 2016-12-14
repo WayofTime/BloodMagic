@@ -182,6 +182,7 @@ item.BloodMagic.itemFilter.exact.name=Precise Item Filter
 item.BloodMagic.itemFilter.ignoreNBT.name=NBT Item Filter
 item.BloodMagic.itemFilter.modItems.name=Mod Item Filter
 item.BloodMagic.itemFilter.oreDict.name=Ore Dictionary Item Filter
+item.BloodMagic.fluidFilter.exact.name=Fluid Filter
 
 item.BloodMagic.experienceTome.name=Tome of Peritia
 item.BloodMagic.sanguineBook.name=Inspectoris Scandalum
@@ -531,6 +532,8 @@ tooltip.BloodMagic.itemFilter.exact=Will make sure the items match precisely
 tooltip.BloodMagic.itemFilter.ignoreNBT=Ignores the NBT of the filter
 tooltip.BloodMagic.itemFilter.modItems=Matches all items from the same mod
 tooltip.BloodMagic.itemFilter.oreDict=Used to filter through the Ore Dictionary
+
+tooltip.BloodMagic.itemFilter.exact=Filters the fluid input/output
 
 tooltip.BloodMagic.fluid.type=Fluid Contained
 tooltip.BloodMagic.fluid.amount=Amount

@@ -8,9 +8,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.IItemHandler;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -19,24 +19,20 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.inventory.ItemInventory;
-import WayofTime.bloodmagic.routing.DefaultItemFilter;
-import WayofTime.bloodmagic.routing.IItemFilter;
-import WayofTime.bloodmagic.routing.IgnoreNBTItemFilter;
-import WayofTime.bloodmagic.routing.ModIdItemFilter;
-import WayofTime.bloodmagic.routing.OreDictItemFilter;
-import WayofTime.bloodmagic.routing.TestItemFilter;
+import WayofTime.bloodmagic.routing.IFluidFilter;
+import WayofTime.bloodmagic.routing.RoutingFluidFilter;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class ItemRouterFilter extends Item implements IItemFilterProvider, IVariantProvider
+public class ItemFluidRouterFilter extends Item implements IFluidFilterProvider, IVariantProvider
 {
-    public static String[] names = { "exact", "ignoreNBT", "modItems", "oreDict" };
+    public static String[] names = { "exact" };
 
-    public ItemRouterFilter()
+    public ItemFluidRouterFilter()
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".itemFilter.");
+        setUnlocalizedName(Constants.Mod.MODID + ".fluidFilter.");
         setHasSubtypes(true);
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
@@ -59,33 +55,24 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        tooltip.add(TextHelper.localize("tooltip.BloodMagic.itemFilter." + names[stack.getItemDamage()]));
+        tooltip.add(TextHelper.localize("tooltip.BloodMagic.fluidFilter." + names[stack.getItemDamage()]));
 
         super.addInformation(stack, player, tooltip, advanced);
     }
 
     @Override
-    public IItemFilter getInputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
+    public IFluidFilter getInputFluidFilter(ItemStack filterStack, TileEntity tile, IFluidHandler handler)
     {
-        IItemFilter testFilter = new TestItemFilter();
+        IFluidFilter testFilter = new RoutingFluidFilter();
 
         switch (filterStack.getMetadata())
         {
         case 0:
-            testFilter = new TestItemFilter();
-            break;
-        case 1:
-            testFilter = new IgnoreNBTItemFilter();
-            break;
-        case 2:
-            testFilter = new ModIdItemFilter();
-            break;
-        case 3:
-            testFilter = new OreDictItemFilter();
+            testFilter = new RoutingFluidFilter();
             break;
 
         default:
-            testFilter = new DefaultItemFilter();
+            testFilter = new RoutingFluidFilter();
         }
 
         List<ItemStack> filteredList = new ArrayList<ItemStack>();
@@ -108,27 +95,18 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     }
 
     @Override
-    public IItemFilter getOutputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
+    public IFluidFilter getOutputFluidFilter(ItemStack filterStack, TileEntity tile, IFluidHandler handler)
     {
-        IItemFilter testFilter = new TestItemFilter();
+        IFluidFilter testFilter = new RoutingFluidFilter();
 
         switch (filterStack.getMetadata())
         {
         case 0:
-            testFilter = new TestItemFilter();
-            break;
-        case 1:
-            testFilter = new IgnoreNBTItemFilter();
-            break;
-        case 2:
-            testFilter = new ModIdItemFilter();
-            break;
-        case 3:
-            testFilter = new OreDictItemFilter();
+            testFilter = new RoutingFluidFilter();
             break;
 
         default:
-            testFilter = new DefaultItemFilter();
+            testFilter = new RoutingFluidFilter();
         }
 
         List<ItemStack> filteredList = new ArrayList<ItemStack>();
@@ -159,9 +137,6 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "type=exact"));
-        ret.add(new ImmutablePair<Integer, String>(1, "type=ignorenbt"));
-        ret.add(new ImmutablePair<Integer, String>(2, "type=moditems"));
-        ret.add(new ImmutablePair<Integer, String>(3, "type=oredict"));
         return ret;
     }
 

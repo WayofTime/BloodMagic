@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.1.1-70
+------------------------------------------------------
+- Added Fluid routing to the routing nodes - this is done by using the Fluid Filter and placing a fluid container as the filter.
+
+------------------------------------------------------
 Version 2.1.0-69
 ------------------------------------------------------
 - Fixed Phantom Bridge sigil glitch when travelling between dimensions and teleporting large distances.
