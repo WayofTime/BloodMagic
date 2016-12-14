@@ -10,9 +10,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import WayofTime.bloodmagic.item.inventory.ItemInventory;
-import WayofTime.bloodmagic.item.routing.IItemFilterProvider;
+import WayofTime.bloodmagic.item.routing.IRoutingFilterProvider;
 import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
-import WayofTime.bloodmagic.util.GhostItemHelper;
 
 public class ContainerItemRoutingNode extends Container
 {
@@ -100,6 +99,13 @@ public class ContainerItemRoutingNode extends Container
                                     GhostItemHelper.setItemGhostAmount(copyStack, 0);
                                     copyStack.setCount(1);
                                     slot.putStack(copyStack);
+
+                                    ItemStack filterStack = this.inventorySlots.get(0).getStack();
+                                    if (filterStack.getItem() instanceof IRoutingFilterProvider)
+                                    {
+                                        ItemStack copyStack = ((IRoutingFilterProvider) filterStack.getItem()).getContainedStackForItem(filterStack, heldStack);
+                                        slot.putStack(copyStack);
+                                    }
                                 }
                             }
                         } else
@@ -136,14 +142,14 @@ public class ContainerItemRoutingNode extends Container
             {
                 if (!this.mergeItemStack(itemstack1, slotsOccupied, slotsOccupied + 36, true))
                 {
-                    return ItemStack.EMPTY;
+                    return null;
                 }
 
                 slot.onSlotChange(itemstack1, itemstack);
             } else if (index > 0)
             {
 //                return null;
-                if (itemstack1.getItem() instanceof IItemFilterProvider) // Change to check item is a filter
+                if (itemstack1.getItem() instanceof IRoutingFilterProvider) // Change to check item is a filter
                 {
                     if (!this.mergeItemStack(itemstack1, 0, 1, false))
                     {
@@ -155,7 +161,7 @@ public class ContainerItemRoutingNode extends Container
                 return ItemStack.EMPTY;
             }
 
-            if (itemstack1.getCount() == 0)
+            if (itemstack1.isEmpty())
             {
                 slot.putStack(ItemStack.EMPTY);
             } else
@@ -195,7 +201,7 @@ public class ContainerItemRoutingNode extends Container
         @Override
         public boolean isItemValid(ItemStack itemStack)
         {
-            return itemStack.getItem() instanceof IItemFilterProvider; //TODO: Create a new Item that holds the filter.
+            return itemStack.getItem() instanceof IRoutingFilterProvider; //TODO: Create a new Item that holds the filter.
         }
 
         @Override

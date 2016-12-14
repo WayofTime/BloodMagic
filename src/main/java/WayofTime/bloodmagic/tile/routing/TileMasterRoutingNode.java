@@ -17,9 +17,12 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.routing.IFluidFilter;
+import WayofTime.bloodmagic.routing.IInputFluidRoutingNode;
 import WayofTime.bloodmagic.routing.IInputItemRoutingNode;
 import WayofTime.bloodmagic.routing.IItemFilter;
 import WayofTime.bloodmagic.routing.IMasterRoutingNode;
+import WayofTime.bloodmagic.routing.IOutputFluidRoutingNode;
 import WayofTime.bloodmagic.routing.IOutputItemRoutingNode;
 import WayofTime.bloodmagic.routing.IRoutingNode;
 import WayofTime.bloodmagic.routing.NodeHelper;
@@ -59,33 +62,65 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
         }
 
         Map<Integer, List<IItemFilter>> outputMap = new TreeMap<Integer, List<IItemFilter>>();
+        Map<Integer, List<IFluidFilter>> outputFluidMap = new TreeMap<Integer, List<IFluidFilter>>();
 
         for (BlockPos outputPos : outputNodeList)
         {
             TileEntity outputTile = getWorld().getTileEntity(outputPos);
-            if (outputTile instanceof IOutputItemRoutingNode && this.isConnected(new LinkedList<BlockPos>(), outputPos))
+            if (this.isConnected(new LinkedList<BlockPos>(), outputPos))
             {
-                IOutputItemRoutingNode outputNode = (IOutputItemRoutingNode) outputTile;
-
-                for (EnumFacing facing : EnumFacing.VALUES)
+                if (outputTile instanceof IOutputItemRoutingNode)
                 {
-                    if (!outputNode.isInventoryConnectedToSide(facing) || !outputNode.isOutput(facing))
-                    {
-                        continue;
-                    }
+                    IOutputItemRoutingNode outputNode = (IOutputItemRoutingNode) outputTile;
 
-                    IItemFilter filter = outputNode.getOutputFilterForSide(facing);
-                    if (filter != null)
+                    for (EnumFacing facing : EnumFacing.VALUES)
                     {
-                        int priority = outputNode.getPriority(facing);
-                        if (outputMap.containsKey(priority))
+                        if (!outputNode.isInventoryConnectedToSide(facing) || !outputNode.isOutput(facing))
                         {
-                            outputMap.get(priority).add(filter);
-                        } else
+                            continue;
+                        }
+
+                        IItemFilter filter = outputNode.getOutputFilterForSide(facing);
+                        if (filter != null)
                         {
-                            List<IItemFilter> filterList = new LinkedList<IItemFilter>();
-                            filterList.add(filter);
-                            outputMap.put(priority, filterList);
+                            int priority = outputNode.getPriority(facing);
+                            if (outputMap.containsKey(priority))
+                            {
+                                outputMap.get(priority).add(filter);
+                            } else
+                            {
+                                List<IItemFilter> filterList = new LinkedList<IItemFilter>();
+                                filterList.add(filter);
+                                outputMap.put(priority, filterList);
+                            }
+                        }
+                    }
+                }
+
+                if (outputTile instanceof IOutputFluidRoutingNode)
+                {
+                    IOutputFluidRoutingNode outputNode = (IOutputFluidRoutingNode) outputTile;
+
+                    for (EnumFacing facing : EnumFacing.VALUES)
+                    {
+                        if (!outputNode.isTankConnectedToSide(facing) || !outputNode.isFluidOutput(facing))
+                        {
+                            continue;
+                        }
+
+                        IFluidFilter filter = outputNode.getOutputFluidFilterForSide(facing);
+                        if (filter != null)
+                        {
+                            int priority = outputNode.getPriority(facing);
+                            if (outputMap.containsKey(priority))
+                            {
+                                outputFluidMap.get(priority).add(filter);
+                            } else
+                            {
+                                List<IFluidFilter> filterList = new LinkedList<IFluidFilter>();
+                                filterList.add(filter);
+                                outputFluidMap.put(priority, filterList);
+                            }
                         }
                     }
                 }
@@ -93,33 +128,65 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
         }
 
         Map<Integer, List<IItemFilter>> inputMap = new TreeMap<Integer, List<IItemFilter>>();
+        Map<Integer, List<IFluidFilter>> inputFluidMap = new TreeMap<Integer, List<IFluidFilter>>();
 
         for (BlockPos inputPos : inputNodeList)
         {
             TileEntity inputTile = getWorld().getTileEntity(inputPos);
-            if (inputTile instanceof IInputItemRoutingNode && this.isConnected(new LinkedList<BlockPos>(), inputPos))
+            if (this.isConnected(new LinkedList<BlockPos>(), inputPos))
             {
-                IInputItemRoutingNode inputNode = (IInputItemRoutingNode) inputTile;
-
-                for (EnumFacing facing : EnumFacing.VALUES)
+                if (inputTile instanceof IInputItemRoutingNode)
                 {
-                    if (!inputNode.isInventoryConnectedToSide(facing) || !inputNode.isInput(facing))
-                    {
-                        continue;
-                    }
+                    IInputItemRoutingNode inputNode = (IInputItemRoutingNode) inputTile;
 
-                    IItemFilter filter = inputNode.getInputFilterForSide(facing);
-                    if (filter != null)
+                    for (EnumFacing facing : EnumFacing.VALUES)
                     {
-                        int priority = inputNode.getPriority(facing);
-                        if (inputMap.containsKey(priority))
+                        if (!inputNode.isInventoryConnectedToSide(facing) || !inputNode.isInput(facing))
                         {
-                            inputMap.get(priority).add(filter);
-                        } else
+                            continue;
+                        }
+
+                        IItemFilter filter = inputNode.getInputFilterForSide(facing);
+                        if (filter != null)
                         {
-                            List<IItemFilter> filterList = new LinkedList<IItemFilter>();
-                            filterList.add(filter);
-                            inputMap.put(priority, filterList);
+                            int priority = inputNode.getPriority(facing);
+                            if (inputMap.containsKey(priority))
+                            {
+                                inputMap.get(priority).add(filter);
+                            } else
+                            {
+                                List<IItemFilter> filterList = new LinkedList<IItemFilter>();
+                                filterList.add(filter);
+                                inputMap.put(priority, filterList);
+                            }
+                        }
+                    }
+                }
+
+                if (inputTile instanceof IInputFluidRoutingNode)
+                {
+                    IInputFluidRoutingNode inputNode = (IInputFluidRoutingNode) inputTile;
+
+                    for (EnumFacing facing : EnumFacing.VALUES)
+                    {
+                        if (!inputNode.isTankConnectedToSide(facing) || !inputNode.isFluidInput(facing))
+                        {
+                            continue;
+                        }
+
+                        IFluidFilter filter = inputNode.getInputFluidFilterForSide(facing);
+                        if (filter != null)
+                        {
+                            int priority = inputNode.getPriority(facing);
+                            if (inputMap.containsKey(priority))
+                            {
+                                inputFluidMap.get(priority).add(filter);
+                            } else
+                            {
+                                List<IFluidFilter> filterList = new LinkedList<IFluidFilter>();
+                                filterList.add(filter);
+                                inputFluidMap.put(priority, filterList);
+                            }
                         }
                     }
                 }
@@ -127,6 +194,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
         }
 
         int maxTransfer = this.getMaxTransferForDemonWill(WorldDemonWillHandler.getCurrentWill(getWorld(), pos, EnumDemonWillType.DEFAULT));
+        int maxFluidTransfer = 1000;
 
         for (Entry<Integer, List<IItemFilter>> outputEntry : outputMap.entrySet())
         {
@@ -140,6 +208,26 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                     {
                         maxTransfer -= inputFilter.transferThroughInputFilter(outputFilter, maxTransfer);
                         if (maxTransfer <= 0)
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (Entry<Integer, List<IFluidFilter>> outputEntry : outputFluidMap.entrySet())
+        {
+            List<IFluidFilter> outputList = outputEntry.getValue();
+            for (IFluidFilter outputFilter : outputList)
+            {
+                for (Entry<Integer, List<IFluidFilter>> inputEntry : inputFluidMap.entrySet())
+                {
+                    List<IFluidFilter> inputList = inputEntry.getValue();
+                    for (IFluidFilter inputFilter : inputList)
+                    {
+                        maxFluidTransfer -= inputFilter.transferThroughInputFilter(outputFilter, maxFluidTransfer);
+                        if (maxFluidTransfer <= 0)
                         {
                             return;
                         }

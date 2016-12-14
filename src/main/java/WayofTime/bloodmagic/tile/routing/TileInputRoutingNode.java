@@ -3,14 +3,19 @@ package WayofTime.bloodmagic.tile.routing;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
+import WayofTime.bloodmagic.item.routing.IFluidFilterProvider;
 import WayofTime.bloodmagic.item.routing.IItemFilterProvider;
 import WayofTime.bloodmagic.routing.DefaultItemFilter;
+import WayofTime.bloodmagic.routing.IFluidFilter;
+import WayofTime.bloodmagic.routing.IInputFluidRoutingNode;
 import WayofTime.bloodmagic.routing.IInputItemRoutingNode;
 import WayofTime.bloodmagic.routing.IItemFilter;
 import WayofTime.bloodmagic.util.Utils;
 
-public class TileInputRoutingNode extends TileFilteredRoutingNode implements IInputItemRoutingNode
+public class TileInputRoutingNode extends TileFilteredRoutingNode implements IInputItemRoutingNode, IInputFluidRoutingNode
 {
     public TileInputRoutingNode()
     {
@@ -34,11 +39,14 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
             {
                 ItemStack filterStack = this.getFilterStack(side);
 
-                if (filterStack.isEmpty() || !(filterStack.getItem() instanceof IItemFilterProvider))
+                if (filterStack.isEmpty())
                 {
                     IItemFilter filter = new DefaultItemFilter();
                     filter.initializeFilter(null, tile, handler, false);
                     return filter;
+                } else if (!(filterStack.getItem() instanceof IItemFilterProvider))
+                {
+                    return null;
                 }
 
                 IItemFilterProvider filter = (IItemFilterProvider) filterStack.getItem();
@@ -47,5 +55,36 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
         }
 
         return null;
+    }
+
+    @Override
+    public boolean isFluidInput(EnumFacing side)
+    {
+        return true;
+    }
+
+    @Override
+    public IFluidFilter getInputFluidFilterForSide(EnumFacing side)
+    {
+        TileEntity tile = worldObj.getTileEntity(pos.offset(side));
+        if (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
+        {
+            IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
+            ItemStack filterStack = this.getFilterStack(side);
+            if (filterStack == null || !(filterStack.getItem() instanceof IFluidFilterProvider))
+            {
+                return null;
+            }
+
+            return ((IFluidFilterProvider) filterStack.getItem()).getInputFluidFilter(filterStack, tile, handler);
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean isTankConnectedToSide(EnumFacing side)
+    {
+        return true;
     }
 }

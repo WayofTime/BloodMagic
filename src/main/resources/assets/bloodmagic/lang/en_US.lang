@@ -182,6 +182,7 @@ item.bloodmagic.itemFilter.exact.name=Precise Item Filter
 item.bloodmagic.itemFilter.ignoreNBT.name=NBT Item Filter
 item.bloodmagic.itemFilter.modItems.name=Mod Item Filter
 item.bloodmagic.itemFilter.oreDict.name=Ore Dictionary Item Filter
+item.bloodmagic.fluidFilter.exact.name=Fluid Filter
 
 item.bloodmagic.experienceTome.name=Tome of Peritia
 item.bloodmagic.sanguineBook.name=Inspectoris Scandalum
@@ -444,7 +445,7 @@ tooltip.bloodmagic.activationCrystal.weak=Activates low-level rituals
 tooltip.bloodmagic.activationCrystal.awakened=Activates more powerful rituals
 tooltip.bloodmagic.activationCrystal.creative=Creative Only - Activates any ritual
 
-tooltip.bloodmagic.diviner.currentRitual=Current Ritual: 
+tooltip.bloodmagic.diviner.currentRitual=Current Ritual:
 tooltip.bloodmagic.diviner.blankRune=Blank Runes: %d
 tooltip.bloodmagic.diviner.waterRune=Water Runes: %d
 tooltip.bloodmagic.diviner.airRune=Air Runes: %d
@@ -535,6 +536,7 @@ tooltip.bloodmagic.itemFilter.oreDict=Used to filter through the Ore Dictionary
 tooltip.bloodmagic.fluid.type=Fluid Contained
 tooltip.bloodmagic.fluid.amount=Amount
 tooltip.bloodmagic.fluid.capacity=Capacity
+tooltip.bloodmagic.itemFilter.exact=Filters the fluid input/output
 
 tooltip.bloodmagic.ghost.everything=Everything
 tooltip.bloodmagic.ghost.amount=Ghost item amount: %d
@@ -697,9 +699,9 @@ ritual.bloodmagic.fullStomachRitual.fillRange.info=(Feeding) The range that the 
 ritual.bloodmagic.fullStomachRitual.chest.info=(Chest) The location of the inventory that the ritual will grab food from to feed players in range.
 ritual.bloodmagic.interdictionRitual.interdictionRange.info=(Push) The area of the ritual where mobs will be pushed. All mobs are pushed away from the master ritual stone, regardless of where this area is.
 ritual.bloodmagic.containmentRitual.containmentRange.info=(Containment) The area of the ritual where mobs will be pulled. All mobs are pulled towards the master ritual stone, regardless of where this area is.
-ritual.bloodmagic.speedRitual.sanicRange.info=(Speed) All entities within this area are launched in the direction of the arrow formed by the ritual. 
+ritual.bloodmagic.speedRitual.sanicRange.info=(Speed) All entities within this area are launched in the direction of the arrow formed by the ritual.
 ritual.bloodmagic.suppressionRitual.suppressionRange.info=(Suppress) All liquids within the range are suppressed.
-ritual.bloodmagic.expulsionRitual.expulsionRange.info=(Expulsion) 
+ritual.bloodmagic.expulsionRitual.expulsionRange.info=(Expulsion)
 ritual.bloodmagic.zephyrRitual.zephyrRange.info=(Suction) Items within this range will be sucked into the linked chest.
 ritual.bloodmagic.zephyrRitual.chest.info=(Chest) The location of the inventory that the ritual will place the picked up items into.
 ritual.bloodmagic.animalGrowthRitual.growing.info=(Growth) Animals within this range will grow much faster.
@@ -708,7 +710,7 @@ ritual.bloodmagic.forsakenSoulRitual.crystal.info=(Crystal) Demon Crystals in th
 ritual.bloodmagic.forsakenSoulRitual.damage.info=(Damage) Mobs within this range will be slowly damaged, and when killed will grow the crystals.
 ritual.bloodmagic.crystalHarvestRitual.crystal.info=(Crystal) All Demon Will crystal clusters have a single crystal broken off, spawning the crystal into the world. If there is only one crystal on the cluster, it will not break it.
 
-ritual.bloodmagic.placerRitual.placerRange.info=(Placement) The range that the ritual will place its blocks in. 
+ritual.bloodmagic.placerRitual.placerRange.info=(Placement) The range that the ritual will place its blocks in.
 ritual.bloodmagic.placerRitual.chest.info=(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.
 ritual.bloodmagic.fellingRitual.fellingRange.info=(Cutting) The range that the ritual will search out logs and leaves in order to cut down.
 ritual.bloodmagic.fellingRitual.chest.info=(Chest) The location of the inventory that the ritual will place the results into.

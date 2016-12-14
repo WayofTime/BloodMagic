@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
+import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.Utils;
 
 /**
