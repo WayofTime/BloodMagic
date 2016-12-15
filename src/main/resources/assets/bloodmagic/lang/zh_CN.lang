@@ -379,7 +379,7 @@ tooltip.BloodMagic.orb.owner=来源: %s
 tooltip.BloodMagic.currentOwner=当前所有者: %s
 tooltip.BloodMagic.currentTier=当前层级: %d
 tooltip.BloodMagic.config.disabled=于配置信息中禁用
-tooltip.BloodMagic.tier=Tier %d
+tooltip.BloodMagic.tier=层级 %d
 
 tooltip.BloodMagic.activated=激活
 tooltip.BloodMagic.deactivated=停用
@@ -509,7 +509,6 @@ tooltip.BloodMagic.livingArmour.upgrade.digSlowdown=弱化挖掘
 tooltip.BloodMagic.livingArmour.upgrade.stormTrooper=风暴骑兵
 tooltip.BloodMagic.livingArmour.upgrade.slowHeal=愈合延缓
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (等级 %d)
-tooltip.BloodMagic.livingArmour.upgrade.progress=%s (%d/100)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6强化点数: %s / %s
 
 tooltip.BloodMagic.livingArmour.extraExtraInfo=&9-按住 shift + M 查看进展信息-
