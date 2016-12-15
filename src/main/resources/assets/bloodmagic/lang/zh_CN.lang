@@ -606,7 +606,7 @@ ritual.BloodMagic.fellingRitual=伐林仪式
 ritual.BloodMagic.pumpRitual=虹吸圣曲
 ritual.BloodMagic.altarBuilderRitual=祭坛集结号
 ritual.BloodMagic.portalRitual=折域之门
-ritual.BloodMagic.downgradeRitual=恶魔的慈悲
+ritual.BloodMagic.downgradeRitual=沉重灵魂的忏悔
 
 ritual.BloodMagic.waterRitual.info=通过主仪式石生成一个水源方块
 ritual.BloodMagic.lavaRitual.info=通过主仪式石生成一个岩浆源方块
@@ -851,7 +851,7 @@ jei.BloodMagic.recipe.binding=炼金矩阵 (绑定)
 jei.BloodMagic.recipe.alchemyArrayCrafting=炼金矩阵
 jei.BloodMagic.recipe.soulForge=狱火熔炉
 jei.BloodMagic.recipe.alchemyTable=炼金术桌
-jei.BloodMagic.recipe.armourDowngrade=祭品 (仪式：恶魔的慈悲)
+jei.BloodMagic.recipe.armourDowngrade=祭品 (仪式：沉重灵魂的忏悔)
 jei.BloodMagic.recipe.requiredLP=LP: %d
 jei.BloodMagic.recipe.requiredTier=层级: %d
 jei.BloodMagic.recipe.consumptionRate=消耗率: %d LP/t
