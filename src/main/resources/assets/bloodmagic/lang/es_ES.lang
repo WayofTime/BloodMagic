@@ -1,0 +1,165 @@
+#Creative Tab
+itemGroup.BloodMagic.creativeTab=Magia Sanguinea
+itemGroup.BloodMagic.creativeTabTome=Tomos de Mejora de Magia Sanguinea
+
+#Items
+item.BloodMagic.activationCrystal.weak.name=Cristal de Activación Débil
+item.BloodMagic.activationCrystal.awakened.name=Cristal de Activación Despertado
+item.BloodMagic.activationCrystal.creative.name=Cristal de Activación Creativo
+
+item.BloodMagic.sacrificialDagger.normal.name=Daga Sacrifical
+item.BloodMagic.sacrificialDagger.creative.name=Daga Sacrifical Creativa
+item.BloodMagic.pack.selfSacrifice.name=Blood Letter's Pack
+item.BloodMagic.pack.sacrifice.name=Escudo de Armas
+item.BloodMagic.daggerOfSacrifice.name=Daga de Sacrificio
+
+item.BloodMagic.lavaCrystal.name=Cristal de Lava
+
+item.BloodMagic.bound.sword.name=Espada Confinada
+item.BloodMagic.bound.pickaxe.name=Pico Confinado
+item.BloodMagic.bound.axe.name=Hacha Confinado
+item.BloodMagic.bound.shovel.name=Pala Confinada
+
+item.BloodMagic.bucket.lifeEssence.name=Cubo de Vida
+
+item.BloodMagic.scribe.water.name=Herramienta de Inscripción Elemental: Agua
+item.BloodMagic.scribe.fire.name=Herramienta de Inscripción Elemental: Fuego
+item.BloodMagic.scribe.earth.name=Herramienta de Inscripción Elemental: Tierra
+item.BloodMagic.scribe.air.name=Herramienta de Inscripción Elemental: Aire
+item.BloodMagic.scribe.dusk.name=Herramienta de Inscripción Elemental: Crepúsculo
+item.BloodMagic.scribe.dawn.name=Herramienta de Inscripción Elemental: Alba
+
+item.BloodMagic.focus.weak.name=Foco de Teleposición
+item.BloodMagic.focus.enhanced.name=Foco de Teleposición Mejorado
+item.BloodMagic.focus.reinforced.name=Foco de Teleposición Reforzado
+item.BloodMagic.focus.demonic.name=Foco de Teleposición Demoníaco
+
+item.BloodMagic.slate.blank.name=Loja en Blanco
+item.BloodMagic.slate.reinforced.name=Loja Reforzada
+item.BloodMagic.slate.imbued.name=Loja Imbuída
+item.BloodMagic.slate.demonic.name=Loja Demoníaca
+item.BloodMagic.slate.ethereal.name=Loja Etérea
+
+item.BloodMagic.orb.weak.name=Orbe de Sangre Débil
+item.BloodMagic.orb.apprentice.name=Orbe de Sangre de Aprendiz
+item.BloodMagic.orb.magician.name=Orbe de Sangre de Mago
+item.BloodMagic.orb.master.name=Orbe de Sangre de Maestro
+item.BloodMagic.orb.archmage.name=Orbe de Sangre de Archimago
+item.BloodMagic.orb.transcendent.name=Orbe de Sangre Transcendente
+
+item.BloodMagic.reagent.incendium.name=Incendium
+item.BloodMagic.reagent.magicales.name=Magicales
+item.BloodMagic.reagent.sanctus.name=Sanctus
+item.BloodMagic.reagent.aether.name=Éter
+item.BloodMagic.reagent.crepitous.name=Crepitous
+item.BloodMagic.reagent.crystallos.name=Crystallos
+item.BloodMagic.reagent.terrae.name=Terrae
+item.BloodMagic.reagent.aquasalus.name=Aquasalus
+item.BloodMagic.reagent.tennebrae.name=Tennebrae
+item.BloodMagic.reagent.offensa.name=Offensa
+item.BloodMagic.reagent.praesidium.name=Praesidium
+item.BloodMagic.reagent.orbisterrae.name=Orbis Terrae
+item.BloodMagic.reagent.virtus.name=Virtus
+item.BloodMagic.reagent.reductus.name=Reductus
+item.BloodMagic.reagent.potentia.name=Potentia
+
+item.BloodMagic.bloodShard.weak.name=Fragmento de Sangre Débil
+item.BloodMagic.bloodShard.demon.name=Fragmento de Sangre de Demonio
+
+item.BloodMagic.baseComponent.reagentWater.name=Catalizador de Agua
+item.BloodMagic.baseComponent.reagentLava.name=Catalizador de Lava
+item.BloodMagic.baseComponent.reagentAir.name=Catalizador de Aire
+item.BloodMagic.baseComponent.reagentFastMiner.name=Catalizador de Minería
+item.BloodMagic.baseComponent.reagentVoid.name=Catalizador de Vacío
+item.BloodMagic.baseComponent.reagentGrowth.name=Catalizador de Crecimiento
+item.BloodMagic.baseComponent.reagentAffinity.name=Catalizador de Afinidad Elemental
+item.BloodMagic.baseComponent.reagentSight.name=Catalizador de Vista
+item.BloodMagic.baseComponent.reagentBinding.name=Catalizador de Unión
+item.BloodMagic.baseComponent.reagentSuppression.name=Catalizador de Supresión
+item.BloodMagic.baseComponent.frameParts.name=Partes de Marco
+item.BloodMagic.baseComponent.reagentBloodLight.name=Catalizador de Lámpara de Sangre
+item.BloodMagic.baseComponent.reagentMagnetism.name=Catalizador de Magnetismo
+item.BloodMagic.baseComponent.reagentHaste.name=Catalizador de Velocidad
+item.BloodMagic.baseComponent.reagentBridge.name=Catalizador de Puente Fantasmal
+item.BloodMagic.baseComponent.reagentCompression.name=Catalizador de Compresión
+item.BloodMagic.baseComponent.reagentSeverance.name=Catalizador de División
+item.BloodMagic.baseComponent.reagentHolding.name=Catalizador de Almacenamiento
+item.BloodMagic.baseComponent.reagentClaw.name=Catalizador de Garra
+item.BloodMagic.baseComponent.reagentBounce.name=Catalizador de Elasticidad
+item.BloodMagic.baseComponent.reagentFrost.name=Catalizador de Escarcha
+
+item.BloodMagic.baseComponent.reagentTeleposition.name=Catalizador de Teleposición
+item.BloodMagic.baseComponent.reagentTransposition.name=Catalizador de Transposición
+
+item.BloodMagic.baseComponent.ironSand.name=Arena de Hierro
+item.BloodMagic.baseComponent.goldSand.name=Arena de Oro
+item.BloodMagic.baseComponent.coalSand.name=Arena de Carbón
+item.BloodMagic.baseComponent.plantOil.name=Aceite Vegetal
+item.BloodMagic.baseComponent.sulfur.name=Sulfuro
+item.BloodMagic.baseComponent.saltpeter.name=Salitre
+item.BloodMagic.baseComponent.neurotoxin.name=Neuro Toxina
+item.BloodMagic.baseComponent.antiseptic.name=Antiseptico
+
+item.BloodMagic.cuttingFluid.basicCuttingFluid.name=Fluído de Corte Básico
+item.BloodMagic.cuttingFluid.explosive.name=Polvo Explosivo
+
+item.BloodMagic.baseComponent.mundaneLength.name=Catalizador de Duracíon Simple
+item.BloodMagic.baseComponent.mundanePower.name=Catalizador de Potencia Simple
+
+
+item.BloodMagic.demonCrystal.crystalDefault.name=Cristal de Voluntad Demonáaca
+item.BloodMagic.demonCrystal.crystalCorrosive.name=Cristal de Voluntad Corrosiva
+item.BloodMagic.demonCrystal.crystalDestructive.name=Cristal de Voluntad Destructiva
+item.BloodMagic.demonCrystal.crystalVengeful.name=Cristal de Voluntad Vengativa
+item.BloodMagic.demonCrystal.crystalSteadfast.name=Cristal de Voluntad Tenaz
+
+item.BloodMagic.monsterSoul.base.name=Voluntad Demoníaca
+item.BloodMagic.monsterSoul.corrosive.name=Voluntad Demoníaca Corrosiva
+item.BloodMagic.monsterSoul.destructive.name=Voluntad Demoníaca Destructiva
+item.BloodMagic.monsterSoul.vengeful.name=Voluntad Demoníaca Vengativa
+item.BloodMagic.monsterSoul.steadfast.name=Voluntad Demoníaca Tenaz
+
+item.BloodMagic.sigil.air.name=Signo de Aire
+item.BloodMagic.sigil.bloodLight.name=Signo de la Lámpara de Sangre
+item.BloodMagic.sigil.compression.name=Signo de Compresión
+item.BloodMagic.sigil.divination.name=Signo de Divinación
+item.BloodMagic.sigil.water.name=Signo de Agua
+item.BloodMagic.sigil.lava.name=Signo de Lava
+item.BloodMagic.sigil.void.name=Signo de Vacío
+item.BloodMagic.sigil.greenGrove.name=Signo de la Verde Arboleda
+item.BloodMagic.sigil.elementalAffinity.name=Signo de Afinidad Elemental
+item.BloodMagic.sigil.haste.name=Signo de Velocidad
+item.BloodMagic.sigil.suppression.name=Signo de Supresión
+item.BloodMagic.sigil.magnetism.name=Signo de Magnetismo
+item.BloodMagic.sigil.fastMiner.name=Signo del Minero Veloz
+item.BloodMagic.sigil.seer.name=Signo del Vidente
+item.BloodMagic.sigil.phantomBridge.name=Signo del Puente Fantasmal
+item.BloodMagic.sigil.whirlwind.name=Signo del Remolino
+item.BloodMagic.sigil.enderSeverance.name=Signo de División Ender
+item.BloodMagic.sigil.holding.name=Signo de Almacenamiento
+item.BloodMagic.sigil.holding.display=&r%s: &o&n%s
+item.BloodMagic.sigil.teleposition.name=Signo de Teleposición
+item.BloodMagic.sigil.transposition.name=Signo de Transposición
+item.BloodMagic.sigil.claw.name=Signo de la Garra
+item.BloodMagic.sigil.bounce.name=Signo de Elasticidad
+item.BloodMagic.sigil.frost.name=Signo de Aliento de Invierno
+
+item.BloodMagic.livingArmour.helmet.name=Casco Vivo
+item.BloodMagic.livingArmour.chest.name=Peto Vivo
+item.BloodMagic.livingArmour.legs.name=Grebas Vivas
+item.BloodMagic.livingArmour.boots.name=Botas Vivas
+item.BloodMagic.sentientArmour.helmet.name=Casco Consciente
+item.BloodMagic.sentientArmour.chest.name=Peto Consciente
+item.BloodMagic.sentientArmour.legs.name=Grebas Conscientes
+item.BloodMagic.sentientArmour.boots.name=Botas Conscientes
+
+item.BloodMagic.altarMaker.name=Constructor de Altares
+
+item.BloodMagic.ritualDivinernormal.name=Zahorí Ritualístico
+item.BloodMagic.ritualDivinerdusk.name=Zahorí Ritualístico [Crepúsculo]
+item.BloodMagic.ritualDivinerdawn.name=Zahorí Ritualístico [Alba]
+item.BloodMagic.ritualReader.name=Controlador de Ritual
+
+item.BloodMagic.arcaneAshes.name=Cenizas Arcanas
+item.BloodMagic.upgradeTome.name=Tomo de Mejora para Armadura Viva
+item.BloodMagic.upgradeTrainer.name=Pulsera de Entrenamiento para Armadura Viva
