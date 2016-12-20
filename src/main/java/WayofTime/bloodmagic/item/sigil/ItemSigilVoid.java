@@ -16,7 +16,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
-import WayofTime.bloodmagic.api.Constants;
 
 public class ItemSigilVoid extends ItemSigilBase
 {
@@ -99,7 +98,7 @@ public class ItemSigilVoid extends ItemSigilBase
         {
             FluidStack amount = ((IFluidHandler) tile).drain(side, 1000, false);
 
-            if (amount != null && amount.amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
+            if (amount != null && amount.amount > 0 && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()))
             {
                 ((IFluidHandler) tile).drain(side, 1000, true);
                 return EnumActionResult.SUCCESS;
@@ -115,7 +114,7 @@ public class ItemSigilVoid extends ItemSigilBase
             return EnumActionResult.FAIL;
         }
 
-        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
+        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()))
         {
             world.setBlockToAir(newPos);
             return EnumActionResult.SUCCESS;

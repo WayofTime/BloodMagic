@@ -86,7 +86,7 @@ public class SubCommandNetwork extends SubCommandBase
                     if (Utils.isInteger(args[2]))
                     {
                         int amount = Integer.parseInt(args[2]);
-                        NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player), player, amount);
+                        NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, amount);
                         displaySuccessString(sender, "commands.network.syphon.success", amount, player.getDisplayName().getFormattedText());
                     } else
                     {

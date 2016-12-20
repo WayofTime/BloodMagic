@@ -49,7 +49,7 @@ public class ItemSigilBloodLight extends ItemSigilBase
             {
                 world.setBlockState(blockPos, ModBlocks.BLOOD_LIGHT.getDefaultState());
                 if (!world.isRemote)
-                    NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player), player, getLpUsed());
+                    NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed());
                 resetCooldown(stack);
                 player.swingArm(hand);
                 return super.onItemRightClick(stack, world, player, hand);
@@ -59,7 +59,7 @@ public class ItemSigilBloodLight extends ItemSigilBase
             if (!world.isRemote)
             {
                 world.spawnEntityInWorld(new EntityBloodLight(world, player));
-                NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player), player, getLpUsed());
+                NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed());
             }
             resetCooldown(stack);
         }

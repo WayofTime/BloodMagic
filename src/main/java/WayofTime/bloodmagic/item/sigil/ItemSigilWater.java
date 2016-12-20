@@ -61,7 +61,7 @@ public class ItemSigilWater extends ItemSigilBase
                     if (!player.canPlayerEdit(blockpos1, rayTrace.sideHit, stack))
                         return super.onItemRightClick(stack, world, player, hand);
 
-                    if (this.canPlaceWater(world, blockpos1) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()) && this.tryPlaceWater(world, blockpos1))
+                    if (this.canPlaceWater(world, blockpos1) && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()) && this.tryPlaceWater(world, blockpos1))
                         return super.onItemRightClick(stack, world, player, hand);
                 }
             }

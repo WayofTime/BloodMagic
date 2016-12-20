@@ -18,7 +18,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
-import WayofTime.bloodmagic.api.Constants;
 
 public class ItemSigilLava extends ItemSigilBase
 {
@@ -64,7 +63,7 @@ public class ItemSigilLava extends ItemSigilBase
                         return super.onItemRightClick(stack, world, player, hand);
                     }
 
-                    if (this.canPlaceLava(world, blockpos1) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()) && this.tryPlaceLava(world, blockpos1))
+                    if (this.canPlaceLava(world, blockpos1) && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()) && this.tryPlaceLava(world, blockpos1))
                     {
                         return super.onItemRightClick(stack, world, player, hand);
                     }
@@ -93,7 +92,7 @@ public class ItemSigilLava extends ItemSigilBase
             FluidStack fluid = new FluidStack(FluidRegistry.LAVA, 1000);
             int amount = ((IFluidHandler) tile).fill(side, fluid, false);
 
-            if (amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
+            if (amount > 0 && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()))
             {
                 ((IFluidHandler) tile).fill(side, fluid, true);
                 return EnumActionResult.SUCCESS;
