@@ -110,7 +110,9 @@ public class NetworkHelper
      *        - Amount of LP to syphon
      * 
      * @return - Whether the action should be performed.
+     * @deprecated Use {@link #getSoulNetwork(EntityPlayer)} and {@link SoulNetwork#syphonAndDamage(EntityPlayer, int)}
      */
+    @Deprecated
     public static boolean syphonAndDamage(SoulNetwork soulNetwork, EntityPlayer user, int toSyphon)
     {
 

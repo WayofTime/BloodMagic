@@ -6,7 +6,6 @@ import java.util.List;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.impl.ItemSigil;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import com.google.common.base.Strings;
 import lombok.Getter;

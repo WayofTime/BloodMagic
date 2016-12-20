@@ -65,7 +65,7 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        return (NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()) && onSigilUse(player.getHeldItem(hand), player, world, pos, side, hitX, hitY, hitZ)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+        return (NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()) && onSigilUse(player.getHeldItem(hand), player, world, pos, side, hitX, hitY, hitZ)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
     }
 
     public boolean onSigilUse(ItemStack itemStack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
@@ -80,7 +80,7 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
         {
             if (entityIn.ticksExisted % 100 == 0)
             {
-                if (!NetworkHelper.getSoulNetwork((EntityPlayerMP) entityIn).syphonAndDamage((EntityPlayer) entityIn, getLpUsed()))
+                if (!NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage((EntityPlayer) entityIn, getLpUsed()))
                 {
                     setActivatedState(stack, false);
                 }

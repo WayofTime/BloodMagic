@@ -102,7 +102,7 @@ public class ItemSigilVoid extends ItemSigilBase
             IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
             FluidStack amount = handler.drain(1000, false);
 
-            if (amount != null && amount.amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
+            if (amount != null && amount.amount > 0 && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()))
             {
                 handler.drain(1000, true);
                 return EnumActionResult.SUCCESS;
@@ -118,7 +118,7 @@ public class ItemSigilVoid extends ItemSigilBase
             return EnumActionResult.FAIL;
         }
 
-        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
+        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()))
         {
             world.setBlockToAir(newPos);
             return EnumActionResult.SUCCESS;

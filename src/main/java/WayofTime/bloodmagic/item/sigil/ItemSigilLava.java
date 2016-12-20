@@ -65,7 +65,7 @@ public class ItemSigilLava extends ItemSigilBase
                         return super.onItemRightClick(world, player, hand);
                     }
 
-                    if (this.canPlaceLava(world, blockpos1) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()) && this.tryPlaceLava(world, blockpos1))
+                    if (this.canPlaceLava(world, blockpos1) && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()) && this.tryPlaceLava(world, blockpos1))
                     {
                         return super.onItemRightClick(world, player, hand);
                     }
@@ -96,7 +96,7 @@ public class ItemSigilLava extends ItemSigilBase
             FluidStack fluid = new FluidStack(FluidRegistry.LAVA, 1000);
             int amount = handler.fill(fluid, false);
 
-            if (amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
+            if (amount > 0 && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()))
             {
                 handler.fill(fluid, true);
                 return EnumActionResult.SUCCESS;
