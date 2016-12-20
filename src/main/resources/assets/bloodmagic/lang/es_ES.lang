@@ -46,22 +46,6 @@ item.BloodMagic.orb.master.name=Orbe de Sangre de Maestro
 item.BloodMagic.orb.archmage.name=Orbe de Sangre de Archimago
 item.BloodMagic.orb.transcendent.name=Orbe de Sangre Transcendente
 
-item.BloodMagic.reagent.incendium.name=Incendium
-item.BloodMagic.reagent.magicales.name=Magicales
-item.BloodMagic.reagent.sanctus.name=Sanctus
-item.BloodMagic.reagent.aether.name=Éter
-item.BloodMagic.reagent.crepitous.name=Crepitous
-item.BloodMagic.reagent.crystallos.name=Crystallos
-item.BloodMagic.reagent.terrae.name=Terrae
-item.BloodMagic.reagent.aquasalus.name=Aquasalus
-item.BloodMagic.reagent.tennebrae.name=Tennebrae
-item.BloodMagic.reagent.offensa.name=Offensa
-item.BloodMagic.reagent.praesidium.name=Praesidium
-item.BloodMagic.reagent.orbisterrae.name=Orbis Terrae
-item.BloodMagic.reagent.virtus.name=Virtus
-item.BloodMagic.reagent.reductus.name=Reductus
-item.BloodMagic.reagent.potentia.name=Potentia
-
 item.BloodMagic.bloodShard.weak.name=Fragmento de Sangre Débil
 item.BloodMagic.bloodShard.demon.name=Fragmento de Sangre de Demonio
 
@@ -106,7 +90,7 @@ item.BloodMagic.baseComponent.mundaneLength.name=Catalizador de Duracíon Simple
 item.BloodMagic.baseComponent.mundanePower.name=Catalizador de Potencia Simple
 
 
-item.BloodMagic.demonCrystal.crystalDefault.name=Cristal de Voluntad Demonáaca
+item.BloodMagic.demonCrystal.crystalDefault.name=Cristal de Voluntad Demoníaca
 item.BloodMagic.demonCrystal.crystalCorrosive.name=Cristal de Voluntad Corrosiva
 item.BloodMagic.demonCrystal.crystalDestructive.name=Cristal de Voluntad Destructiva
 item.BloodMagic.demonCrystal.crystalVengeful.name=Cristal de Voluntad Vengativa
@@ -136,7 +120,6 @@ item.BloodMagic.sigil.phantomBridge.name=Signo del Puente Fantasmal
 item.BloodMagic.sigil.whirlwind.name=Signo del Remolino
 item.BloodMagic.sigil.enderSeverance.name=Signo de División Ender
 item.BloodMagic.sigil.holding.name=Signo de Almacenamiento
-item.BloodMagic.sigil.holding.display=&r%s: &o&n%s
 item.BloodMagic.sigil.teleposition.name=Signo de Teleposición
 item.BloodMagic.sigil.transposition.name=Signo de Transposición
 item.BloodMagic.sigil.claw.name=Signo de la Garra
@@ -162,3 +145,136 @@ item.BloodMagic.ritualReader.name=Controlador de Ritual
 item.BloodMagic.arcaneAshes.name=Cenizas Arcanas
 item.BloodMagic.upgradeTome.name=Tomo de Mejora para Armadura Viva
 item.BloodMagic.upgradeTrainer.name=Pulsera de Entrenamiento para Armadura Viva
+
+
+item.BloodMagic.sentientSword.name=Espada Consciente
+item.BloodMagic.soulGem.petty.name=Gema Tartárica Mezquina
+item.BloodMagic.soulGem.lesser.name=Gema Tartàrica Inferior
+item.BloodMagic.soulGem.common.name=Gema Tartàrica Común
+item.BloodMagic.soulGem.greater.name=Gema Tartàrica Superior
+item.BloodMagic.soulGem.grand.name=Gema Tartàrica Grandiosa
+item.BloodMagic.sentientBow.name=Arco Consciente
+item.BloodMagic.sentientArmourGem.name=Gema de Armadura Consciente
+item.BloodMagic.sentientAxe.name=Hacha Consciente
+item.BloodMagic.sentientPickaxe.name=Pico Consciente
+item.BloodMagic.sentientShovel.name=Pala Consciente
+
+item.BloodMagic.nodeRouter.name=Router de Nodo
+item.BloodMagic.itemFilter.exact.name=Filtro Preciso de Objeto
+item.BloodMagic.itemFilter.ignoreNBT.name=Filtro NBT de Objeto
+item.BloodMagic.itemFilter.modItems.name=Filtro de Mod de Objeto
+item.BloodMagic.itemFilter.oreDict.name=Filtro de OreDictionary de Objeto
+item.BloodMagic.fluidFilter.exact.name=Filtro de Fluído
+
+item.BloodMagic.experienceTome.name=Tomo de Peritia
+
+item.BloodMagic.willGauge.name=Válvula de Aura de Voluntad Demoniaca
+item.BloodMagic.potionFlask.name=Frasco de Poción
+
+# Blocks
+tile.BloodMagic.fluid.lifeEssence.name=Esencia de Vida
+
+tile.BloodMagic.stone.ritual.master.name=Piedra de Ritual Maestra
+tile.BloodMagic.stone.ritual.imperfect.name=Piedra de Ritual Imperfecta
+
+tile.BloodMagic.altar.name=Altar de Sangre
+tile.BloodMagic.alchemyArray.name=&r&fAlchemy Array
+
+tile.BloodMagic.rune.blank.name=Runa en Blanco
+tile.BloodMagic.rune.speed.name=Runa de Velocidad
+tile.BloodMagic.rune.efficiency.name=Runa de Eficiencia
+tile.BloodMagic.rune.sacrifice.name=Runa de Sacrificio
+tile.BloodMagic.rune.selfsacrifice.name=Runa de Auto-sacrificio
+tile.BloodMagic.rune.displacement.name=Runa de Desplazamiento
+tile.BloodMagic.rune.capacity.name=Runa de Capacidad
+tile.BloodMagic.rune.augcapacity.name=Rune de Capacidad Aumentada
+tile.BloodMagic.rune.orb.name=Runa del Orbe
+tile.BloodMagic.rune.acceleration.name=Runa de Aceleración
+tile.BloodMagic.rune.charging.name=Runa de Carga
+
+
+tile.BloodMagic.ritualStone.blank.name=Piedra de Ritual
+tile.BloodMagic.ritualStone.water.name=Piedra de Ritual de Agua
+tile.BloodMagic.ritualStone.fire.name=Piedra de Ritual de Fuego
+tile.BloodMagic.ritualStone.earth.name=Piedra de Ritual de Tierra
+tile.BloodMagic.ritualStone.air.name=Piedra de Ritual de Aire
+tile.BloodMagic.ritualStone.dusk.name=Piedra de Ritual de Crepúsculo
+tile.BloodMagic.ritualStone.dawn.name=Piedra de Ritual de Alba
+
+tile.BloodMagic.bloodstonebrick.large.name=Ladrillo de Piedra Sanguinea Grande
+tile.BloodMagic.bloodstonebrick.brick.name=Ladrillo de Piedra Sanguinea
+tile.BloodMagic.crystal.large.name=Racimo de Cristal
+tile.BloodMagic.crystal.brick.name=Ladrillo de Racimo de Cristal
+tile.BloodMagic.bloodLight.name=Luz Sanguinea
+tile.BloodMagic.spectralBlock.name=Libro Espectral
+tile.BloodMagic.phantom.name=Libro Fantasmal
+tile.BloodMagic.incenseAltar.name=Altar de Incienso
+
+tile.BloodMagic.teleposer.name=Teleposicionador
+tile.BloodMagic.soulForge.name=Forja de Infierno
+tile.BloodMagic.alchemyTable.name=Mesa de Alquimia
+tile.BloodMagic.demonCrucible.name=Crisol Demoníaco
+tile.BloodMagic.demonPylon.name=Pilón Demoníaco
+tile.BloodMagic.demonCrystallizer.name=Cristalizador Demoníaco
+
+tile.BloodMagic.masterRouting.name=Nodo Enrutador Maestro
+tile.BloodMagic.outputRouting.name=Nodo Enrutador de Salida
+tile.BloodMagic.inputRouting.name=Nodo Enrutador de Entrada
+tile.BloodMagic.itemRouting.name=Nodo Enrutador
+
+tile.BloodMagic.path.wood.name=Camino de Madera
+tile.BloodMagic.path.stone.name=Camino de Ladrillo de Piedra
+tile.BloodMagic.path.wornstone.name=Camino de Ladrillo de Piedra Desgastada
+tile.BloodMagic.path.obsidian.name=Camino de Ladrillo de Obsidiana
+
+tile.BloodMagic.dimensionalPortal.name=Portal Dimensional
+tile.BloodMagic.bloodTank.name=Tanque de Sangre
+
+tile.BloodMagic.demonCrystal.default.name=Racimo de Cristal de Voluntad Demoníaca
+tile.BloodMagic.demonCrystal.corrosive.name=Racimo de Cristal de Voluntad Corrosiva
+tile.BloodMagic.demonCrystal.destructive.name=Racimo de Cristal de Voluntad Destructiva
+tile.BloodMagic.demonCrystal.vengeful.name=Racimo de Cristal de Voluntad Vengativa
+tile.BloodMagic.demonCrystal.steadfast.name=Racimo de Cristal de Voluntad Tenaz
+
+tile.BloodMagic.mimic.nohitbox.name=Bloque Imitador Opaco Etéreo
+tile.BloodMagic.mimic.solidopaque.name=Bloque Imitador Opaco
+tile.BloodMagic.mimic.solidclear.name=Bloque Imitador Transparente
+tile.BloodMagic.mimic.solidlight.name=Bloque Imitador Encendido
+tile.BloodMagic.mimic.sentient.name=Bloque Imitador Consciente
+
+tile.BloodMagic.bricks1.brick1_corrosive.name=Ladrillo de Piedra Corrosivo
+tile.BloodMagic.bricks1.brick1_destructive.name=Ladrillo de Piedra Destructivo
+tile.BloodMagic.bricks1.brick1_vengeful.name=Ladrillo de Piedra Vengativo
+tile.BloodMagic.bricks1.brick1_steadfast.name=Ladrillo de Piedra Tenaz
+
+tile.BloodMagic.bricks2.smallbrick_corrosive.name=Pequeño Ladrillo de Piedra Corrosivo
+tile.BloodMagic.bricks2.smallbrick_destructive.name=Pequeño Ladrillo de Piedra Destructivo
+tile.BloodMagic.bricks2.smallbrick_vengeful.name=Pequeño Ladrillo de Piedra Vengativo
+tile.BloodMagic.bricks2.smallbrick_steadfast.name=Pequeño Ladrillo de Piedra Tenaz
+tile.BloodMagic.bricks2.tile_corrosive.name=Azulejos de Piedra Corrosivos
+tile.BloodMagic.bricks2.tile_destructive.name=Azulejos de Piedra Destructivos
+tile.BloodMagic.bricks2.tile_vengeful.name=Azulejos de Piedra Vengativos
+tile.BloodMagic.bricks2.tile_steadfast.name=Azulejos de Piedra Tenaces
+tile.BloodMagic.bricks2.tilespecial_corrosive.name=Azulejos de Piedra Corrosivos Acentuados
+tile.BloodMagic.bricks2.tilespecial_destructive.name=Azulejos de Piedra Destructivos Acentuados
+tile.BloodMagic.bricks2.tilespecial_vengeful.name=Azulejos de Piedra Vengativos Acentuados
+tile.BloodMagic.bricks2.tilespecial_steadfast.name=Azulejos de Piedra Tenaces Acentuados
+
+tile.BloodMagic.inversionpillar.corrosive.name=Pilar de Inversión Corrosivo
+tile.BloodMagic.inversionpillar.destructive.name=Pilar de Inversión Destructivo
+tile.BloodMagic.inversionpillar.vengeful.name=Pilar de Inversión Vengativo
+tile.BloodMagic.inversionpillar.steadfast.name=Pilar de Inversión Tenaz
+
+tile.BloodMagic.inversionpillarend.corrosive_bottom.name=Base de Pilar de Inversión Corrosivo
+tile.BloodMagic.inversionpillarend.destructive_bottom.name=Base de Pilar de Inversión Destructivo
+tile.BloodMagic.inversionpillarend.vengeful_bottom.name=Base de Pilar de Inversión Vengativo
+tile.BloodMagic.inversionpillarend.steadfast_bottom.name=Base de Pilar de Inversión Tenaz
+tile.BloodMagic.inversionpillarend.corrosive_top.name=Tapa de Pilar de Inversión Corrosivo 
+tile.BloodMagic.inversionpillarend.destructive_top.name=Tapa de Pilar de Inversión Destructivo
+tile.BloodMagic.inversionpillarend.vengeful_top.name=Tapa de Pilar de Inversión Vengativa
+tile.BloodMagic.inversionpillarend.steadfast_top.name=Tapa de Pilar de Inversión Tenaz
+
+tile.BloodMagic.demonlight.corrosive.name=Ojo de Demonio Corrosivo
+tile.BloodMagic.demonlight.destructive.name=Ojo de Demonio Destructivo
+tile.BloodMagic.demonlight.vengeful.name=Ojo de Demonio Vengativo
+tile.BloodMagic.demonlight.steadfast.name=Ojo de Demonio Tenaz
