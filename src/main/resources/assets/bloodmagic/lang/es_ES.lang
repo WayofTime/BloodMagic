@@ -278,3 +278,102 @@ tile.BloodMagic.demonlight.corrosive.name=Ojo de Demonio Corrosivo
 tile.BloodMagic.demonlight.destructive.name=Ojo de Demonio Destructivo
 tile.BloodMagic.demonlight.vengeful.name=Ojo de Demonio Vengativo
 tile.BloodMagic.demonlight.steadfast.name=Ojo de Demonio Tenaz
+
+
+tile.BloodMagic.extras.stone_corrosive.name=Piedra Corrosiva
+tile.BloodMagic.extras.stone_destructive.name=Piedra Destructiva
+tile.BloodMagic.extras.stone_vengeful.name=Piedra Vengativa
+tile.BloodMagic.extras.stone_steadfast.name=Piedra Tenaz
+
+tile.BloodMagic.extras.polished_corrosive.name=Piedra Corrosiva Pulida
+tile.BloodMagic.extras.polished_destructive.name=Piedra Destructiva Pulida
+tile.BloodMagic.extras.polished_vengeful.name=Piedra Vengativa Pulida
+tile.BloodMagic.extras.polished_steadfast.name=Piedra Tenaz Pulida
+
+tile.BloodMagic.extras.metal_corrosive.name=Aleación Demoníaca Corrosiva
+tile.BloodMagic.extras.metal_destructive.name=Aleación Demoníaca Destructiva
+tile.BloodMagic.extras.metal_vengeful.name=Aleación Demoníaca Vengativa
+tile.BloodMagic.extras.metal_steadfast.name=Aleación Demoníaca Tenaz
+
+tile.BloodMagic.pillar1.corrosive.name=Pilar de Piedra Corrosiva
+tile.BloodMagic.pillar1.destructive.name=Pilar de Piedra Destructiva
+tile.BloodMagic.pillar1.vengeful.name=Pilar de Piedra Vengativa
+tile.BloodMagic.pillar1.steadfast.name=Pilar de Piedra Tenaz
+
+tile.BloodMagic.pillar2.corrosive.name=Pilar de Piedra Corrosiva Acentuado
+tile.BloodMagic.pillar2.destructive.name=Pilar de Piedra Destructiva Acentuado
+tile.BloodMagic.pillar2.vengeful.name=Pilar de Piedra Vengativa Acentuado
+tile.BloodMagic.pillar2.steadfast.name=Pilar de Piedra Vengativa Acentuado
+
+tile.BloodMagic.pillarCap1.corrosive.name=Tapa de Pilar de Piedra Corrosiva
+tile.BloodMagic.pillarCap2.destructive.name=Tapa de Pilar de Piedra Destructiva
+tile.BloodMagic.pillarCap2.vengeful.name=Tapa de Pilar de Piedra Vengativa
+tile.BloodMagic.pillarCap3.steadfast.name=Tapa de Pilar de Piedra Tenaz
+
+tile.BloodMagic.wall1.brick_corrosive.name=Pared de Ladrillo de Piedra Corrosiva
+tile.BloodMagic.wall1.brick_destructive.name=Pared de Ladrillo de Piedra Destructiva
+tile.BloodMagic.wall1.brick_vengeful.name=Pared de Ladrillo de Piedra Vengativa
+tile.BloodMagic.wall1.brick_steadfast.name=Pared de Ladrillo de Piedra Tenaz
+tile.BloodMagic.wall1.large_corrosive.name=Pared de Piedra Corrosiva
+tile.BloodMagic.wall1.large_destructive.name=Pared de Piedra Destructiva
+tile.BloodMagic.wall1.large_vengeful.name=Pared de Piedra Vengativa
+tile.BloodMagic.wall1.large_steadfast.name=Pared de Piedra Tenaz
+
+tile.BloodMagic.stairs1.corrosive.name=Escaleras de Piedra Corrosivas
+tile.BloodMagic.stairs2.destructive.name=Escaleras de Piedra Destructivas
+tile.BloodMagic.stairs2.vengeful.name=Escaleras de Piedra Vengativas
+tile.BloodMagic.stairs3.steadfast.name=Escaleras de Piedra Tenaces
+
+# Fluids
+fluid.lifeEssence=Esencia de Vida
+
+# Tooltips
+tooltip.BloodMagic.extraInfo=&9-Apreta shift para más información-
+
+tooltip.BloodMagic.orb.owner=Añadido por: %s
+tooltip.BloodMagic.currentOwner=Propietario Actual: %s
+tooltip.BloodMagic.currentTier=Nivel Actual: %d
+tooltip.BloodMagic.config.disabled=Incapacitado Actualmente por la Configuración
+tooltip.BloodMagic.tier=Nivel %d
+
+tooltip.BloodMagic.activated=Activado
+tooltip.BloodMagic.deactivated=Desactivado
+
+tooltip.BloodMagic.sigil.air.desc=&oYa me siento más ligero...
+tooltip.BloodMagic.sigil.bloodLight.desc=&oVeo una luz!
+tooltip.BloodMagic.sigil.compression.desc=&oManos de Diamantes
+tooltip.BloodMagic.sigil.divination.desc=&oObserva el Alma
+tooltip.BloodMagic.sigil.divination.otherNetwork=Observando el Alma de %s
+tooltip.BloodMagic.sigil.divination.currentAltarTier=Nivel Actual: %d
+tooltip.BloodMagic.sigil.divination.currentEssence=Esencia Actual: %d PV
+tooltip.BloodMagic.sigil.divination.currentAltarCapacity=Capacidad Actual: %d PV
+tooltip.BloodMagic.sigil.divination.currentTranquility=Tranquilidad Actual: %d
+tooltip.BloodMagic.sigil.divination.currentInversion=Inversión Actual: %d
+tooltip.BloodMagic.sigil.divination.currentBonus=Bonus Actual: +%d%%
+tooltip.BloodMagic.sigil.water.desc=&oAlguien, agua infinita?
+tooltip.BloodMagic.sigil.lava.desc=&oCALIENTE! NO COMER
+tooltip.BloodMagic.sigil.greenGrove.desc=&oMediomambiental
+tooltip.BloodMagic.sigil.magnetism.desc=&oTengo una personalidad magnética
+tooltip.BloodMagic.sigil.suppression.desc=&oMejor que telekinésis...
+tooltip.BloodMagic.sigil.haste.desc=&oDespués de 42 dosis de cafeína...
+tooltip.BloodMagic.sigil.fastMiner.desc=&oSigue minando, y minando...
+tooltip.BloodMagic.sigil.elementalAffinity.desc=&oCaen peces de fuego!
+tooltip.BloodMagic.sigil.seer.desc=&oCuando ver todo no es suficente
+tooltip.BloodMagic.sigil.seer.currentAltarProgress=Progreso Actual: %d PV/ %s PV
+tooltip.BloodMagic.sigil.seer.currentAltarProgress.percent=Progreso Actual: %s
+tooltip.BloodMagic.sigil.seer.currentAltarConsumptionRate=:Velocidad de Consumo: %d PV
+tooltip.BloodMagic.sigil.seer.currentAltarTier=Nivel Actual: %d
+tooltip.BloodMagic.sigil.seer.currentEssence=Esencia Actual: %d PV
+tooltip.BloodMagic.sigil.seer.currentAltarCapacity=Capacidad Actual: %d PV
+tooltip.BloodMagic.sigil.seer.currentCharge=Carga Actual: %d
+tooltip.BloodMagic.sigil.seer.currentTranquility=Tranquilidad Actual: %d
+tooltip.BloodMagic.sigil.seer.currentBonus=Bonus Actual: +%d%%
+tooltip.BloodMagic.sigil.phantomBridge.desc=&oCaminando en el aire...
+tooltip.BloodMagic.sigil.whirlwind.desc=&oMejor no llevar falda
+tooltip.BloodMagic.sigil.enderSeverance.desc=&oPoniendo Endermans en situaciones terribles!
+tooltip.BloodMagic.sigil.transposition.desc=Siente el poder de la Fuerza, mi joven aprendiz.
+tooltip.BloodMagic.sigil.holding.press=Apreta &o%s&r&7 para modificar
+tooltip.BloodMagic.sigil.holding.desc=Signo-incepcción
+tooltip.BloodMagic.sigil.holding.sigilInSlot=Espacio %d: %s
+
+tooltip.BloodMagic.livingArmourPointsUpgrade.desc=Aumenta el máximo de puntos de la Armadura Viva a %d.
