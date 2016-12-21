@@ -3,6 +3,7 @@ Version 2.1.1-70
 ------------------------------------------------------
 - Added Fluid routing to the routing nodes - this is done by using the Fluid Filter and placing a fluid container as the filter.
 - Made it so the book does not give the filling recipe when the Blood Orb recipe is queried. 
+- Added a null check for the Will getter for the Aura incase the WillChunk somehow does not generate. 
 
 ------------------------------------------------------
 Version 2.1.0-69

@@ -174,6 +174,11 @@ public class WorldDemonWillHandler
     {
         WillChunk willChunk = getWillChunk(world, pos);
 
+        if (willChunk == null)
+        {
+            return 0;
+        }
+
         DemonWillHolder currentWill = willChunk.getCurrentWill();
         return currentWill.getWill(type);
     }
