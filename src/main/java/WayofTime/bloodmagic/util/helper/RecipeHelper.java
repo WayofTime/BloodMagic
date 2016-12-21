@@ -33,7 +33,7 @@ public class RecipeHelper
     {
         for (AltarRecipeRegistry.AltarRecipe recipe : AltarRecipeRegistry.getRecipes().values())
         {
-            if (recipe != null)
+            if (recipe != null && !recipe.isFillable())
             {
                 ItemStack resultStack = recipe.getOutput();
                 if (!resultStack.isEmpty())
