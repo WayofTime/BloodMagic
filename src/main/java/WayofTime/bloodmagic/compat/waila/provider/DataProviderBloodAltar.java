@@ -88,12 +88,14 @@ public class DataProviderBloodAltar implements IWailaDataProvider
 
                 if (hasSeer)
                 {
+                    int charge = accessor.getNBTData().getCompoundTag("bloodAltar").getInteger(Constants.NBT.ALTAR_TOTAL_CHARGE);
                     int progress = accessor.getNBTData().getCompoundTag("bloodAltar").getInteger(Constants.NBT.ALTAR_PROGRESS);
                     int liquidRequired = accessor.getNBTData().getCompoundTag("bloodAltar").getInteger(Constants.NBT.ALTAR_LIQUID_REQ);
                     int craftAmount = 1;
                     if (accessor.getNBTData().getTagList("Items", 10).get(0).getId() == 10)
                         craftAmount = ((NBTTagCompound)accessor.getNBTData().getTagList("Items", 10).get(0)).getByte("Count");
                     currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarProgress.percent", (int) (((double) progress / (double) liquidRequired * 100) / craftAmount) + "%"));
+                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentCharge", charge));
                 }
             }
         } else
@@ -143,7 +145,7 @@ public class DataProviderBloodAltar implements IWailaDataProvider
         if (player.getHeldItemMainhand().getItem() instanceof ItemSigilDivination)
             return true;
 
-        if (player.getHeldItemOffhand().getItem() instanceof ItemSigilDivination)
+        if (player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof ItemSigilDivination)
             return true;
 
         return false;
