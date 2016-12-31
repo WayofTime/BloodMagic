@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.meteor;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.gson.Serializers;
 import com.google.common.collect.Lists;
@@ -30,6 +31,11 @@ public class MeteorConfigHandler
 
     public static void handleMeteors(boolean checkNewVersion)
     {
+        if (meteorDir == null) {
+            BloodMagic.instance.getLogger().error("Attempted to handle meteor config but the folder has not been initialized. Was this run too early?");
+            return;
+        }
+
         // Clear the meteors so that reloading in-game can be done
         MeteorRegistry.meteorMap.clear();
         List<Pair<String, Meteor>> defaultMeteors = getDefaultMeteors();
