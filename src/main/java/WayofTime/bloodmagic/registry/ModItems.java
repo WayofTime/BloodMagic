@@ -82,7 +82,7 @@ import WayofTime.bloodmagic.item.soul.ItemSentientShovel;
 import WayofTime.bloodmagic.item.soul.ItemSentientSword;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.item.soul.ItemSoulSnare;
-import WayofTime.bloodmagic.potion.item.ItemPotionFlask;
+import WayofTime.bloodmagic.item.ItemPotionFlask;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
 public class ModItems
