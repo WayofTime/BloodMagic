@@ -163,6 +163,9 @@ public class ClientProxy extends CommonProxy
                 if (tintIndex != 0 && tintIndex != 2)
                     return -1;
 
+                if (stack.hasTagCompound() && stack.getTagCompound().hasKey("empty"))
+                    return -1;
+
                 return PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(stack));
             }
         }, ModItems.POTION_FLASK);

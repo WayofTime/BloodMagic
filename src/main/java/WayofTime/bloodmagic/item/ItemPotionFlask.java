@@ -1,31 +1,36 @@
-package WayofTime.bloodmagic.potion.item;
+package WayofTime.bloodmagic.item;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import com.google.common.collect.Lists;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.client.IVariantProvider;
 
-public class ItemPotionFlask extends Item implements IVariantProvider
+import javax.annotation.Nullable;
+
+public class ItemPotionFlask extends Item implements IMeshProvider
 {
     public ItemPotionFlask()
     {
@@ -44,6 +49,8 @@ public class ItemPotionFlask extends Item implements IVariantProvider
         int remainingUses = stack.getMaxDamage() - stack.getItemDamage();
         if (remainingUses <= 0)
         {
+            NBTHelper.checkNBT(stack);
+            stack.getTagCompound().setBoolean("empty", true);
             return stack;
         }
 
@@ -76,12 +83,34 @@ public class ItemPotionFlask extends Item implements IVariantProvider
     }
 
     @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        ItemStack stack = player.getHeldItem(hand);
+        int remainingUses = stack.getMaxDamage() - stack.getItemDamage();
+        if (remainingUses > 0 || !stack.hasTagCompound() || !stack.getTagCompound().hasKey("empty"))
+            return EnumActionResult.PASS;
+
+        RayTraceResult trace = rayTrace(world, player, true);
+
+        if (trace.typeOfHit == RayTraceResult.Type.BLOCK && world.getBlockState(trace.getBlockPos()).getMaterial() == Material.WATER)
+        {
+            world.playSound(player, player.posX, player.posY, player.posZ, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            player.setHeldItem(hand, new ItemStack(this));
+            return EnumActionResult.SUCCESS;
+        }
+
+        return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
+    }
+
+    @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
         ItemStack stack = player.getHeldItem(hand);
         int remainingUses = stack.getMaxDamage() - stack.getItemDamage();
         if (remainingUses <= 0)
         {
+            NBTHelper.checkNBT(stack);
+            stack.getTagCompound().setBoolean("empty", true);
             return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
         }
         player.setActiveHand(hand);
@@ -107,11 +136,34 @@ public class ItemPotionFlask extends Item implements IVariantProvider
 //        }
 //    }
 
+
+    @SideOnly(Side.CLIENT)
     @Override
-    public List<Pair<Integer, String>> getVariants()
+    public ItemMeshDefinition getMeshDefinition()
     {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
-        return ret;
+        return new ItemMeshDefinition()
+        {
+            @Override
+            public ModelResourceLocation getModelLocation(ItemStack stack)
+            {
+                boolean full = true;
+                if (stack.hasTagCompound() && stack.getTagCompound().hasKey("empty"))
+                    full = false;
+                return new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + getRegistryName().getResourcePath()), "full=" + (full ? "true" : "false"));
+            }
+        };
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getCustomLocation()
+    {
+        return null;
+    }
+
+    @Override
+    public List<String> getVariants()
+    {
+        return Lists.newArrayList("full=true", "full=false");
     }
 }
