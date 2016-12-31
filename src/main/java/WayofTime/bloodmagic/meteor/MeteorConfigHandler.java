@@ -140,7 +140,7 @@ public class MeteorConfigHandler
         diamondMeteorList.add(new MeteorComponent(400, "minecraft:diamond_block"));
 
         Meteor diamondMeteor = new Meteor(new ItemStack(Blocks.DIAMOND_BLOCK), diamondMeteorList, 10, 3, 1000);
-        goldMeteor.setVersion(3);
+        diamondMeteor.setVersion(3);
 
         holders.add(Pair.of("IronMeteor", ironMeteor));
         DEFAULT_METEORS.put("IronMeteor", ironMeteor);
