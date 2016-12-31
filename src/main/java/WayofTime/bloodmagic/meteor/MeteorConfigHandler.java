@@ -2,6 +2,9 @@ package WayofTime.bloodmagic.meteor;
 
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.gson.Serializers;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import org.apache.commons.io.FilenameUtils;
@@ -9,14 +12,13 @@ import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MeteorConfigHandler
 {
-    private static final Map<String, Meteor> DEFAULT_METEORS = new HashMap<String, Meteor>();
+    private static final Map<String, Meteor> DEFAULT_METEORS = Maps.newHashMap();
 
     private static File meteorDir;
 
@@ -51,7 +53,7 @@ public class MeteorConfigHandler
             if (meteorFiles == null)
                 return;
 
-            List<Pair<String, Meteor>> meteors = new ArrayList<Pair<String, Meteor>>();
+            List<Pair<String, Meteor>> meteors = Lists.newArrayList();
 
             // Filter names so we can compare to defaults
             for (File meteorFile : meteorFiles)
@@ -62,21 +64,28 @@ public class MeteorConfigHandler
 
             if (checkNewVersion && ConfigHandler.getConfig().getBoolean("resyncOnVersionChange", "Meteors", true, "Should the default meteors be regenerated if the mod has updated them"))
             {
-                // Check defaults for new version
+                Set<String> discoveredDefaults = Sets.newHashSet();
+
+                // Check existing defaults for new version
                 for (Pair<String, Meteor> meteor : meteors)
                 {
                     Meteor defaultMeteor = DEFAULT_METEORS.get(meteor.getLeft());
-                    if (defaultMeteor != null && defaultMeteor.version > meteor.getRight().version)
+                    if (defaultMeteor != null)
                     {
-                        String json = Serializers.GSON.toJson(defaultMeteor);
-                        File meteorFile = new File(meteorDir, meteor.getLeft() + ".json");
-                        new PrintWriter(meteorFile).close(); // Clear the file
-                        FileWriter fileWriter = new FileWriter(meteorFile);
-                        fileWriter.write(json); // Write the new contents
-                        fileWriter.close();
-
-                        meteors.set(meteors.indexOf(meteor), Pair.of(meteor.getLeft(), defaultMeteor));
+                        discoveredDefaults.add(meteor.getLeft());
+                        if (defaultMeteor.version > meteor.getRight().version) {
+                            writeMeteor(meteor.getLeft(), defaultMeteor);
+                            meteors.set(meteors.indexOf(meteor), Pair.of(meteor.getLeft(), defaultMeteor));
+                        }
                     }
+                }
+
+                // Generate new defaults
+                for (Map.Entry<String, Meteor> entry : DEFAULT_METEORS.entrySet()) {
+                    if (discoveredDefaults.contains(entry.getKey()))
+                        continue;
+
+                    writeMeteor(entry.getKey(), entry.getValue());
                 }
             }
 
@@ -93,10 +102,10 @@ public class MeteorConfigHandler
 
     private static List<Pair<String, Meteor>> getDefaultMeteors()
     {
-        List<Pair<String, Meteor>> holders = new ArrayList<Pair<String, Meteor>>();
+        List<Pair<String, Meteor>> holders = Lists.newArrayList();
 
         // Iron
-        List<MeteorComponent> ironMeteorList = new ArrayList<MeteorComponent>();
+        List<MeteorComponent> ironMeteorList = Lists.newArrayList();
         ironMeteorList.add(new MeteorComponent(400, "oreIron"));
         ironMeteorList.add(new MeteorComponent(200, "oreCopper"));
         ironMeteorList.add(new MeteorComponent(140, "oreTin"));
@@ -108,7 +117,7 @@ public class MeteorConfigHandler
         Meteor ironMeteor = new Meteor(new ItemStack(Blocks.IRON_BLOCK), ironMeteorList, 15, 5, 1000);
         ironMeteor.setVersion(2);
         // Gold
-        List<MeteorComponent> goldMeteorList = new ArrayList<MeteorComponent>();
+        List<MeteorComponent> goldMeteorList = Lists.newArrayList();
         goldMeteorList.add(new MeteorComponent(200, "oreIron"));
         goldMeteorList.add(new MeteorComponent(100, "oreCopper"));
         goldMeteorList.add(new MeteorComponent(60, "oreTin"));
@@ -121,7 +130,7 @@ public class MeteorConfigHandler
         Meteor goldMeteor = new Meteor(new ItemStack(Blocks.GOLD_BLOCK), goldMeteorList, 18, 6, 1000);
         goldMeteor.setVersion(3);
 
-        List<MeteorComponent> diamondMeteorList = new ArrayList<MeteorComponent>();
+        List<MeteorComponent> diamondMeteorList = Lists.newArrayList();
         diamondMeteorList.add(new MeteorComponent(50, "oreIron"));
         diamondMeteorList.add(new MeteorComponent(100, "oreGold"));
         diamondMeteorList.add(new MeteorComponent(10, "oreLapis"));
@@ -142,5 +151,18 @@ public class MeteorConfigHandler
         holders.add(Pair.of("DiamondMeteor", diamondMeteor));
         DEFAULT_METEORS.put("DiamondMeteor", diamondMeteor);
         return holders;
+    }
+
+    private static void writeMeteor(String name, Meteor meteor) {
+        try {
+            String json = Serializers.GSON.toJson(meteor);
+            File meteorFile = new File(meteorDir, name + ".json");
+            new PrintWriter(meteorFile).close(); // Clear the file
+            FileWriter fileWriter = new FileWriter(meteorFile);
+            fileWriter.write(json); // Write the new contents
+            fileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
