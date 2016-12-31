@@ -198,11 +198,11 @@ public class ConfigHandler
 
         category = "Well of Suffering Blacklist";
         config.addCustomCategoryComment(category, "Entity blacklisting from WoS");
-        wellOfSufferingBlacklist = Arrays.asList(config.getStringList("wellOfSufferingBlacklist", category, new String[] { "EntityArmorStand" }, "Use the class name of the Entity to blacklist it from usage.\nIE: EntityWolf, EntityWitch, etc"));
+        wellOfSufferingBlacklist = Arrays.asList(config.getStringList("wellOfSufferingBlacklist", category, new String[] { "EntityArmorStand", "EntitySentientSpecter" }, "Use the class name of the Entity to blacklist it from usage.\nIE: EntityWolf, EntityWitch, etc"));
 
         category = "Blood Altar Sacrificial Values";
         config.addCustomCategoryComment(category, "Entity Sacrificial Value Settings");
-        entitySacrificeValuesList = config.getStringList("entitySacrificeLP:HPValues", category, new String[] { "EntityVillager;100", "EntitySlime;15", "EntityEnderman;10", "EntityCow;100", "EntityChicken;100", "EntityHorse;100", "EntitySheep;100", "EntityWolf;100", "EntityOcelot;100", "EntityPig;100", "EntityRabbit;100", "EntityArmorStand;0" }, "Used to edit the amount of LP gained per HP sacrificed for the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerHP");
+        entitySacrificeValuesList = config.getStringList("entitySacrificeLP:HPValues", category, new String[] { "EntityVillager;100", "EntitySlime;15", "EntityEnderman;10", "EntityCow;100", "EntityChicken;100", "EntityHorse;100", "EntitySheep;100", "EntityWolf;100", "EntityOcelot;100", "EntityPig;100", "EntityRabbit;100", "EntityArmorStand;0", "EntitySentientSpecter;0" }, "Used to edit the amount of LP gained per HP sacrificed for the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerHP");
         buildEntitySacrificeValues();
 
         category = "Potions";
