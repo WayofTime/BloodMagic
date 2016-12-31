@@ -76,7 +76,7 @@ public class RitualExpulsion extends Ritual
                     {
                         IBindable bindable = (IBindable) itemStack.getItem();
                         if (!Strings.isNullOrEmpty(bindable.getOwnerName(itemStack)) && !allowedNames.contains(bindable.getOwnerName(itemStack)))
-                            allowedNames.add(bindable.getOwnerName(itemStack));
+                            allowedNames.add(bindable.getOwnerUUID(itemStack));
                     }
                 }
             }
