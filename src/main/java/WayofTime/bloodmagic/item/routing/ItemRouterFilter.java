@@ -171,7 +171,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     {
         ItemStack copyStack = keyStack.copy();
         GhostItemHelper.setItemGhostAmount(copyStack, 0);
-        copyStack.stackSize = 1;
+        copyStack.setCount(1);
         return copyStack;
     }
 }

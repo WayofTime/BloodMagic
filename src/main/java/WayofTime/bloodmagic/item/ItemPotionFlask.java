@@ -99,7 +99,7 @@ public class ItemPotionFlask extends Item implements IMeshProvider
             return EnumActionResult.SUCCESS;
         }
 
-        return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
+        return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override

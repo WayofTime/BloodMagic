@@ -5,12 +5,17 @@
     "transform": "forge:default-item"
   },
   "variants": {
-    "type": {
-      "normal": {
+    "full": {
+      "true": {
         "textures": {
           "layer0": "bloodmagic:items/PotionFlask_underlay",
           "layer1": "bloodmagic:items/PotionFlask_outline",
           "layer2": "bloodmagic:items/PotionFlask_overlay"
+        }
+      },
+      "false": {
+        "textures": {
+          "layer0": "bloodmagic:items/PotionFlask_outline"
         }
       }
     }

@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.tile.container;
 
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.util.GhostItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
@@ -85,10 +86,10 @@ public class ContainerItemRoutingNode extends Container
                         if (dragType == 0) //Left mouse click-eth
                         {
                             {
-                                if (heldStack == null && slotStack != null)
+                                if (heldStack.isEmpty() && !slotStack.isEmpty())
                                 {
                                     //I clicked on the slot with an empty hand. Selecting!
-                                } else if (heldStack != null && slotStack == null)
+                                } else if (!heldStack.isEmpty() && slotStack.isEmpty())
                                 {
                                     if (!((SlotGhostItem) slot).canBeAccessed())
                                     {
@@ -103,15 +104,15 @@ public class ContainerItemRoutingNode extends Container
                                     ItemStack filterStack = this.inventorySlots.get(0).getStack();
                                     if (filterStack.getItem() instanceof IRoutingFilterProvider)
                                     {
-                                        ItemStack copyStack = ((IRoutingFilterProvider) filterStack.getItem()).getContainedStackForItem(filterStack, heldStack);
-                                        slot.putStack(copyStack);
+                                        ItemStack filterCopy = ((IRoutingFilterProvider) filterStack.getItem()).getContainedStackForItem(filterStack, heldStack);
+                                        slot.putStack(filterCopy);
                                     }
                                 }
                             }
                         } else
                         //Right mouse click-eth away
                         {
-                            slot.putStack(null);
+                            slot.putStack(ItemStack.EMPTY);
                         }
                     }
                 }

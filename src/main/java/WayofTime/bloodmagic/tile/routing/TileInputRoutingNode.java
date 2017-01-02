@@ -66,7 +66,7 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
     @Override
     public IFluidFilter getInputFluidFilterForSide(EnumFacing side)
     {
-        TileEntity tile = worldObj.getTileEntity(pos.offset(side));
+        TileEntity tile = getWorld().getTileEntity(pos.offset(side));
         if (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
         {
             IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);

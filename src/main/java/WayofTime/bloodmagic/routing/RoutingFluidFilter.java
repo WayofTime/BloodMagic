@@ -88,7 +88,7 @@ public class RoutingFluidFilter implements IFluidFilter
     public static FluidStack getFluidStackFromItemStack(ItemStack inputStack)
     {
         FluidStack fluidStack = FluidUtil.getFluidContained(inputStack);
-        fluidStack.amount = inputStack.stackSize;
+        fluidStack.amount = inputStack.getCount();
         return fluidStack;
     }
 

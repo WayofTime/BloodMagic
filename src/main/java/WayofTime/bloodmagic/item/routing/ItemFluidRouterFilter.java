@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -45,7 +46,7 @@ public class ItemFluidRouterFilter extends Item implements IFluidFilterProvider,
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
         for (int i = 0; i < names.length; i++)
             list.add(new ItemStack(id, 1, i));
@@ -63,7 +64,7 @@ public class ItemFluidRouterFilter extends Item implements IFluidFilterProvider,
     @Override
     public IFluidFilter getInputFluidFilter(ItemStack filterStack, TileEntity tile, IFluidHandler handler)
     {
-        IFluidFilter testFilter = new RoutingFluidFilter();
+        IFluidFilter testFilter;
 
         switch (filterStack.getMetadata())
         {
@@ -120,9 +121,9 @@ public class ItemFluidRouterFilter extends Item implements IFluidFilterProvider,
             }
 
             ItemStack ghostStack = GhostItemHelper.getStackFromGhost(stack);
-            if (ghostStack.stackSize == 0)
+            if (ghostStack.isEmpty())
             {
-                ghostStack.stackSize = Integer.MAX_VALUE;
+                ghostStack.setCount(Integer.MAX_VALUE);
             }
 
             filteredList.add(ghostStack);
@@ -145,7 +146,7 @@ public class ItemFluidRouterFilter extends Item implements IFluidFilterProvider,
     {
         ItemStack copyStack = keyStack.copy();
         GhostItemHelper.setItemGhostAmount(copyStack, 0);
-        copyStack.stackSize = 1;
+        copyStack.setCount(1);
         return copyStack;
     }
 }
