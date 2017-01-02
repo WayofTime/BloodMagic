@@ -66,8 +66,9 @@ public class ItemSigilTransposition extends ItemSigilBase
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return EnumActionResult.FAIL;
 
@@ -123,7 +124,7 @@ public class ItemSigilTransposition extends ItemSigilBase
                     blockPos = blockPos.offset(side);
                 }
 
-                if (stack.stackSize != 0 && player.canPlayerEdit(blockPos, side, stack) && world.canBlockBePlaced(blockToPlace.getBlock(), blockPos, false, side, player, stack))
+                if (!stack.isEmpty() && player.canPlayerEdit(blockPos, side, stack) && world.mayPlace(blockToPlace.getBlock(), blockPos, false, side, player))
                 {
                     if (world.setBlockState(blockPos, blockToPlace.getState(), 3))
                     {

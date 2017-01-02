@@ -26,7 +26,7 @@ public class PlayerHelper
 
     public static String getUsernameFromPlayer(EntityPlayer player)
     {
-        return player.worldObj.isRemote ? "" : UsernameCache.getLastKnownUsername(getUUIDFromPlayer(player));
+        return player.getEntityWorld().isRemote ? "" : UsernameCache.getLastKnownUsername(getUUIDFromPlayer(player));
     }
 
     public static EntityPlayer getPlayerFromUsername(String username)

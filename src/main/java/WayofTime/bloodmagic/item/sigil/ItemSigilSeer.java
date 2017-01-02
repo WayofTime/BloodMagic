@@ -31,14 +31,15 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
         if (!world.isRemote)
         {
-            super.onItemRightClick(stack, world, player, hand);
+            super.onItemRightClick(world, player, hand);
             RayTraceResult rayTrace = rayTrace(world, player, false);
 
             if (rayTrace == null)
@@ -67,10 +68,10 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
                         altar.checkTier();
                         if (tile instanceof IInventory)
                         {
-                            if (((IInventory) tile).getStackInSlot(0) != null)
+                            if (!((IInventory) tile).getStackInSlot(0).isEmpty())
                             {
                                 int progress = altar.getProgress();
-                                int totalLiquidRequired = altar.getLiquidRequired() * ((IInventory) tile).getStackInSlot(0).stackSize;
+                                int totalLiquidRequired = altar.getLiquidRequired() * ((IInventory) tile).getStackInSlot(0).getCount();
                                 int consumptionRate = (int) (altar.getConsumptionRate() * (altar.getConsumptionMultiplier() + 1));
                                 ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentAltarProgress", progress, totalLiquidRequired), new TextComponentTranslation(tooltipBase + "currentAltarConsumptionRate", consumptionRate), new TextComponentTranslation(tooltipBase + "currentAltarTier", tier), new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence), new TextComponentTranslation(tooltipBase + "currentAltarCapacity", capacity), new TextComponentTranslation(tooltipBase + "currentCharge", charge));
                             } else
@@ -93,6 +94,6 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
             }
         }
 
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 }

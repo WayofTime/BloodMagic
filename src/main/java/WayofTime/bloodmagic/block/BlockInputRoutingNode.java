@@ -12,6 +12,8 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.routing.TileInputRoutingNode;
 
+import javax.annotation.Nullable;
+
 public class BlockInputRoutingNode extends BlockRoutingNode
 {
     public BlockInputRoutingNode()
@@ -19,12 +21,6 @@ public class BlockInputRoutingNode extends BlockRoutingNode
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".inputRouting");
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
-        return new TileInputRoutingNode();
     }
 
     @Override
@@ -49,5 +45,16 @@ public class BlockInputRoutingNode extends BlockRoutingNode
         }
 
         return true;
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileInputRoutingNode();
     }
 }

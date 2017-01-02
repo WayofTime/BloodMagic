@@ -26,16 +26,11 @@ public class HUDElementHolding extends HUDElement
     @Override
     public void render(Minecraft minecraft, ScaledResolution resolution, float partialTicks)
     {
-        ItemStack sigilHolding = minecraft.thePlayer.getHeldItemMainhand();
-        // TODO - Clean this mess
+        ItemStack sigilHolding = minecraft.player.getHeldItemMainhand();
         // Check mainhand for Sigil of Holding
-        if (sigilHolding == null)
-            return;
         if (!(sigilHolding.getItem() == ModItems.SIGIL_HOLDING))
-            sigilHolding = minecraft.thePlayer.getHeldItemOffhand();
+            sigilHolding = minecraft.player.getHeldItemOffhand();
         // Check offhand for Sigil of Holding
-        if (sigilHolding == null)
-            return;
         if (!(sigilHolding.getItem() == ModItems.SIGIL_HOLDING))
             return;
 
@@ -54,7 +49,7 @@ public class HUDElementHolding extends HUDElement
         {
             for (ItemStack sigil : holdingInv)
             {
-                renderHotbarItem(resolution.getScaledWidth() / 2 + 103 + xOffset + getXOffset(), resolution.getScaledHeight() - 18 + getYOffset(), partialTicks, minecraft.thePlayer, sigil);
+                renderHotbarItem(resolution.getScaledWidth() / 2 + 103 + xOffset + getXOffset(), resolution.getScaledHeight() - 18 + getYOffset(), partialTicks, minecraft.player, sigil);
                 xOffset += 20;
             }
         }
@@ -72,7 +67,7 @@ public class HUDElementHolding extends HUDElement
     {
         if (stack != null)
         {
-            float animation = (float) stack.animationsToGo - partialTicks;
+            float animation = (float) stack.getAnimationsToGo() - partialTicks;
 
             if (animation > 0.0F)
             {

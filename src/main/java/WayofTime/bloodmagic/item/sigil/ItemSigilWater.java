@@ -20,8 +20,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidHandler;
-import WayofTime.bloodmagic.api.Constants;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class ItemSigilWater extends ItemSigilBase
 {
@@ -31,8 +31,9 @@ public class ItemSigilWater extends ItemSigilBase
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
@@ -51,28 +52,29 @@ public class ItemSigilWater extends ItemSigilBase
                     BlockPos blockpos = rayTrace.getBlockPos();
 
                     if (!world.isBlockModifiable(player, blockpos))
-                        return super.onItemRightClick(stack, world, player, hand);
+                        return super.onItemRightClick(world, player, hand);
 
                     if (!player.canPlayerEdit(blockpos.offset(rayTrace.sideHit), rayTrace.sideHit, stack))
-                        return super.onItemRightClick(stack, world, player, hand);
+                        return super.onItemRightClick(world, player, hand);
 
                     BlockPos blockpos1 = blockpos.offset(rayTrace.sideHit);
 
                     if (!player.canPlayerEdit(blockpos1, rayTrace.sideHit, stack))
-                        return super.onItemRightClick(stack, world, player, hand);
+                        return super.onItemRightClick(world, player, hand);
 
                     if (this.canPlaceWater(world, blockpos1) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()) && this.tryPlaceWater(world, blockpos1))
-                        return super.onItemRightClick(stack, world, player, hand);
+                        return super.onItemRightClick(world, player, hand);
                 }
             }
         }
 
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote || player.isSneaking() || isUnusable(stack))
             return EnumActionResult.FAIL;
 
@@ -80,14 +82,15 @@ public class ItemSigilWater extends ItemSigilBase
             return EnumActionResult.FAIL;
 
         TileEntity tile = world.getTileEntity(blockPos);
-        if (tile instanceof IFluidHandler)
+        if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
         {
+            IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
             FluidStack fluid = new FluidStack(FluidRegistry.WATER, 1000);
-            int amount = ((IFluidHandler) tile).fill(side, fluid, false);
+            int amount = handler.fill(fluid, false);
 
             if (amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
             {
-                ((IFluidHandler) tile).fill(side, fluid, true);
+                handler.fill(fluid, true);
                 return EnumActionResult.SUCCESS;
             }
 

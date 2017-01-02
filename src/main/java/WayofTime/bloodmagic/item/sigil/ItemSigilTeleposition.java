@@ -47,8 +47,9 @@ public class ItemSigilTeleposition extends ItemSigilBase
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
@@ -63,12 +64,13 @@ public class ItemSigilTeleposition extends ItemSigilBase
                 TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(blockPos, player, getOwnerUUID(stack), world, getValue(stack.getTagCompound(), Constants.NBT.DIMENSION_ID), true));
             }
         }
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return EnumActionResult.FAIL;
 

@@ -22,8 +22,8 @@ public class RenderCorruptedZombie extends RenderBiped<EntityCorruptedZombie>
 
     public RenderCorruptedZombie(RenderManager renderManagerIn)
     {
-        super(renderManagerIn, new ModelZombie(), 0.5F, 1.0F);
-        LayerRenderer<?> layerrenderer = (LayerRenderer) this.layerRenderers.get(0);
+        super(renderManagerIn, new ModelZombie(), 0.5F);
+        LayerRenderer<?> layerrenderer = this.layerRenderers.get(0);
         this.zombieVillagerModel = new ModelZombieVillager();
         this.addLayer(new LayerHeldItem(this));
         LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this)
@@ -38,11 +38,11 @@ public class RenderCorruptedZombie extends RenderBiped<EntityCorruptedZombie>
 
         if (layerrenderer instanceof LayerCustomHead)
         {
-            this.removeLayer(layerrenderer);
+            layerRenderers.remove(layerrenderer);
             this.addLayer(new LayerCustomHead(this.zombieVillagerModel.bipedHead));
         }
 
-        this.removeLayer(layerbipedarmor);
+        this.layerRenderers.remove(layerbipedarmor);
         this.addLayer(new LayerWill<EntityCorruptedZombie>(this, new ModelZombie(1.2f, false)));
     }
 
@@ -70,10 +70,5 @@ public class RenderCorruptedZombie extends RenderBiped<EntityCorruptedZombie>
     protected ResourceLocation getEntityTexture(EntityCorruptedZombie entity)
     {
         return ZOMBIE_TEXTURES;
-    }
-
-    protected void rotateCorpse(EntityCorruptedZombie entityLiving, float p_77043_2_, float p_77043_3_, float partialTicks)
-    {
-        super.rotateCorpse(entityLiving, p_77043_2_, p_77043_3_, partialTicks);
     }
 }

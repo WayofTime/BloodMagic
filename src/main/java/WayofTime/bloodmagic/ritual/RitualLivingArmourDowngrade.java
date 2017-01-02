@@ -126,7 +126,7 @@ public class RitualLivingArmourDowngrade extends Ritual
                                             recipe.consumeInventory(inv);
 
                                             EntityLightningBolt lightning = new EntityLightningBolt(world, chestPos.getX(), chestPos.getY(), chestPos.getZ(), true);
-                                            world.spawnEntityInWorld(lightning);
+                                            world.spawnEntity(lightning);
 
                                             masterRitualStone.setActive(false);
                                         }

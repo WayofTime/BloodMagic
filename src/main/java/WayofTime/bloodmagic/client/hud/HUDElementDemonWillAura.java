@@ -34,7 +34,7 @@ public class HUDElementDemonWillAura extends HUDElement
     @Override
     public void render(Minecraft minecraft, ScaledResolution resolution, float partialTicks)
     {
-        EntityPlayer player = minecraft.thePlayer;
+        EntityPlayer player = minecraft.player;
 
         if (!Utils.canPlayerSeeDemonWill(player))
         {

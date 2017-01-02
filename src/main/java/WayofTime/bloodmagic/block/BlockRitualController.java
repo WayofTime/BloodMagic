@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.block.base.BlockEnum;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -39,7 +40,7 @@ import WayofTime.bloodmagic.util.ChatUtil;
 import amerifrance.guideapi.api.IGuideLinked;
 
 @Optional.Interface(modid = "guideapi", iface = "amerifrance.guideapi.api.IGuideLinked")
-public class BlockRitualController extends BlockEnumContainer<EnumRitualController> implements IVariantProvider, IGuideLinked
+public class BlockRitualController extends BlockEnum<EnumRitualController> implements IVariantProvider, IGuideLinked
 {
     public BlockRitualController()
     {
@@ -54,13 +55,14 @@ public class BlockRitualController extends BlockEnumContainer<EnumRitualControll
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        ItemStack heldItem = player.getHeldItem(hand);
         TileEntity tile = world.getTileEntity(pos);
 
         if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone)
         {
-            if (heldItem != null && heldItem.getItem() == ModItems.ACTIVATION_CRYSTAL)
+            if (heldItem.getItem() == ModItems.ACTIVATION_CRYSTAL)
             {
                 String key = RitualHelper.getValidRitual(world, pos);
                 EnumFacing direction = RitualHelper.getDirectionOfRitual(world, pos, key);

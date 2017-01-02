@@ -48,10 +48,7 @@ public class ItemSigilSuppression extends ItemSigilToggleableBase
                     BlockPos blockPos = new BlockPos(x + i, y + j, z + k);
                     IBlockState state = world.getBlockState(blockPos);
 
-                    // TODO - Change back when BlockFluidBase overrides getStateFromMeta()
-                    // Temporary fix to avoid liquid duplication
-                    if (state.getBlock() instanceof BlockFluidBase) {/*No-op*/}
-                    else if (Utils.isBlockLiquid(state) && world.getTileEntity(blockPos) == null)
+                    if (Utils.isBlockLiquid(state) && world.getTileEntity(blockPos) == null)
                           TileSpectralBlock.createSpectralBlock(world, blockPos, refresh);
                     else
                     {

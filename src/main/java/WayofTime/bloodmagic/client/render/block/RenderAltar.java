@@ -102,7 +102,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
         {
             GlStateManager.translate(0.5, 1, 0.5);
             EntityItem entityitem = new EntityItem(world, 0.0D, 0.0D, 0.0D, stack);
-            entityitem.getEntityItem().stackSize = 1;
+            entityitem.getEntityItem().setCount(1);
             entityitem.hoverStart = 0.0F;
             GlStateManager.pushMatrix();
             GlStateManager.disableLighting();
@@ -124,8 +124,8 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
 
     private void renderHologram(TileAltar altar, EnumAltarTier tier, float partialTicks)
     {
-        EntityPlayerSP player = mc.thePlayer;
-        World world = player.worldObj;
+        EntityPlayerSP player = mc.player;
+        World world = player.world;
 
         if (tier == EnumAltarTier.ONE)
             return;

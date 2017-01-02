@@ -184,7 +184,7 @@ item.itemTankSegmenter.name=Alchemic Segmenter
 item.destinationClearer.name=Alchemic Cleanser
 
 #Creative Tab
-itemGroup.tabBloodMagic=선혈의마술[Blood Magic]
+itemGroup.tabbloodmagic=선혈의마술[Blood Magic]
 
 #Extra Strings
 bm.string.consume=사용량

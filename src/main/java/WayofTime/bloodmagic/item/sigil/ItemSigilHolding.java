@@ -48,7 +48,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         if (stack == player.getHeldItemMainhand() && stack.getItem() instanceof ItemSigilHolding && key.equals(KeyBindings.OPEN_HOLDING))
         {
             Utils.setUUID(stack);
-            player.openGui(BloodMagic.instance, Constants.Gui.SIGIL_HOLDING_GUI, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
+            player.openGui(BloodMagic.instance, Constants.Gui.SIGIL_HOLDING_GUI, player.getEntityWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
         }
     }
 
@@ -98,9 +98,10 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        if (PlayerHelper.isFakePlayer(playerIn))
+        ItemStack stack = player.getHeldItem(hand);
+        if (PlayerHelper.isFakePlayer(player))
             return EnumActionResult.FAIL;
 
         int currentSlot = getCurrentItemOrdinal(stack);
@@ -114,15 +115,16 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         if (itemUsing == null || Strings.isNullOrEmpty(((IBindable) itemUsing.getItem()).getOwnerUUID(itemUsing)))
             return EnumActionResult.PASS;
 
-        EnumActionResult result = itemUsing.getItem().onItemUse(itemUsing, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+        EnumActionResult result = itemUsing.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
         saveInventory(stack, inv);
 
         return result;
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
@@ -137,7 +139,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         if (itemUsing == null || Strings.isNullOrEmpty(((IBindable) itemUsing.getItem()).getOwnerUUID(itemUsing)))
             return ActionResult.newResult(EnumActionResult.PASS, stack);
 
-        itemUsing.getItem().onItemRightClick(itemUsing, world, player, hand);
+        itemUsing.getItem().onItemRightClick(world, player, hand);
 
         saveInventory(stack, inv);
 
@@ -251,7 +253,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         {
             initModeTag(itemStack);
             int currentSigil = itemStack.getTagCompound().getInteger(Constants.NBT.CURRENT_SIGIL);
-            currentSigil = MathHelper.clamp_int(currentSigil, 0, inventorySize - 1);
+            currentSigil = MathHelper.clamp(currentSigil, 0, inventorySize - 1);
             return currentSigil;
         }
 
@@ -284,7 +286,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 
             if (j >= 0 && j < inv.length)
             {
-                inv[j] = ItemStack.loadItemStackFromNBT(data);
+                inv[j] = new ItemStack(data);
             }
         }
 

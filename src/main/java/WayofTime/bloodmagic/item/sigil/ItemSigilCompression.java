@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.compress.CompressionRegistry;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.item.EntityItem;
@@ -24,12 +23,12 @@ public class ItemSigilCompression extends ItemSigilToggleableBase
         if (PlayerHelper.isFakePlayer(player))
             return;
 
-        ItemStack compressedStack = CompressionRegistry.compressInventory(player.inventory.mainInventory, world);
+        ItemStack compressedStack = CompressionRegistry.compressInventory(player.inventory.mainInventory.toArray(new ItemStack[player.inventory.mainInventory.size()]), world);
 
         if (compressedStack != null)
         {
             EntityItem entityItem = new EntityItem(world, player.posX, player.posY, player.posZ, compressedStack);
-            world.spawnEntityInWorld(entityItem);
+            world.spawnEntity(entityItem);
         }
     }
 }

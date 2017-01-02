@@ -2,6 +2,7 @@ package WayofTime.bloodmagic;
 
 import java.io.File;
 
+import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.meteor.MeteorConfigHandler;
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
@@ -103,6 +104,8 @@ public class BloodMagic
         Utils.registerHandlers(event.getAsmData().getAll(Handler.class.getCanonicalName()));
         proxy.preInit();
     }
+
+
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)

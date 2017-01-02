@@ -30,7 +30,7 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
 //        if (world instanceof WorldServer)
 //        {
@@ -46,13 +46,14 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 //            fred.setPosition(player.posX, player.posY, player.posZ);
 //            world.spawnEntityInWorld(fred);
 //        }
+        ItemStack stack = player.getHeldItem(hand);
 
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
         if (!world.isRemote)
         {
-            super.onItemRightClick(stack, world, player, hand);
+            super.onItemRightClick(world, player, hand);
 
             RayTraceResult position = rayTrace(world, player, false);
 
@@ -99,6 +100,6 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
             }
         }
 
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 }

@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.api.soul;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 /**
  * This class provides several helper methods in order to handle soul
@@ -23,7 +24,7 @@ public class PlayerDemonWillHandler
      */
     public static double getTotalDemonWill(EnumDemonWillType type, EntityPlayer player)
     {
-        ItemStack[] inventory = player.inventory.mainInventory;
+        NonNullList<ItemStack> inventory = player.inventory.mainInventory;
         double souls = 0;
 
         for (ItemStack stack : inventory)
@@ -72,7 +73,7 @@ public class PlayerDemonWillHandler
      */
     public static boolean isDemonWillFull(EnumDemonWillType type, EntityPlayer player)
     {
-        ItemStack[] inventory = player.inventory.mainInventory;
+        NonNullList<ItemStack> inventory = player.inventory.mainInventory;
 
         boolean hasGem = false;
         for (ItemStack stack : inventory)
@@ -102,25 +103,22 @@ public class PlayerDemonWillHandler
     {
         double consumed = 0;
 
-        ItemStack[] inventory = player.inventory.mainInventory;
+        NonNullList<ItemStack> inventory = player.inventory.mainInventory;
 
-        for (int i = 0; i < inventory.length; i++)
+        for (int i = 0; i < inventory.size(); i++)
         {
             if (consumed >= amount)
                 return consumed;
 
-            ItemStack stack = inventory[i];
-            if (stack != null)
+            ItemStack stack = inventory.get(i);
+            if (stack.getItem() instanceof IDemonWill && ((IDemonWill) stack.getItem()).getType(stack) == type)
             {
-                if (stack.getItem() instanceof IDemonWill && ((IDemonWill) stack.getItem()).getType(stack) == type)
-                {
-                    consumed += ((IDemonWill) stack.getItem()).drainWill(type, stack, amount - consumed);
-                    if (((IDemonWill) stack.getItem()).getWill(type, stack) <= 0)
-                        inventory[i] = null;
-                } else if (stack.getItem() instanceof IDemonWillGem)
-                {
-                    consumed += ((IDemonWillGem) stack.getItem()).drainWill(type, stack, amount - consumed, true);
-                }
+                consumed += ((IDemonWill) stack.getItem()).drainWill(type, stack, amount - consumed);
+                if (((IDemonWill) stack.getItem()).getWill(type, stack) <= 0)
+                    inventory.set(i, ItemStack.EMPTY);
+            } else if (stack.getItem() instanceof IDemonWillGem)
+            {
+                consumed += ((IDemonWillGem) stack.getItem()).drainWill(type, stack, amount - consumed, true);
             }
         }
 
@@ -143,7 +141,7 @@ public class PlayerDemonWillHandler
         if (willStack == null)
             return null;
 
-        ItemStack[] inventory = player.inventory.mainInventory;
+        NonNullList<ItemStack> inventory = player.inventory.mainInventory;
 
         for (ItemStack stack : inventory)
         {
@@ -173,7 +171,7 @@ public class PlayerDemonWillHandler
      */
     public static double addDemonWill(EnumDemonWillType type, EntityPlayer player, double amount)
     {
-        ItemStack[] inventory = player.inventory.mainInventory;
+        NonNullList<ItemStack> inventory = player.inventory.mainInventory;
         double remaining = amount;
 
         for (ItemStack stack : inventory)
@@ -206,7 +204,7 @@ public class PlayerDemonWillHandler
      */
     public static double addDemonWill(EnumDemonWillType type, EntityPlayer player, double amount, ItemStack ignored)
     {
-        ItemStack[] inventory = player.inventory.mainInventory;
+        NonNullList<ItemStack> inventory = player.inventory.mainInventory;
         double remaining = amount;
 
         for (ItemStack stack : inventory)

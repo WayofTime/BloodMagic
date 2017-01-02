@@ -26,8 +26,9 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
@@ -59,7 +60,7 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
                 player.fallDistance = 0;
         }
 
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     @Override

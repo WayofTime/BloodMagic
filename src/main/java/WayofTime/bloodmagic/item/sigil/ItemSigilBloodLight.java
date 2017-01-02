@@ -31,15 +31,16 @@ public class ItemSigilBloodLight extends ItemSigilBase
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
         RayTraceResult mop = this.rayTrace(world, player, false);
 
         if (getCooldownRemainder(stack) > 0)
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
 
         if (mop != null && mop.typeOfHit == RayTraceResult.Type.BLOCK)
         {
@@ -52,19 +53,19 @@ public class ItemSigilBloodLight extends ItemSigilBase
                     NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player), player, getLpUsed());
                 resetCooldown(stack);
                 player.swingArm(hand);
-                return super.onItemRightClick(stack, world, player, hand);
+                return super.onItemRightClick(world, player, hand);
             }
         } else
         {
             if (!world.isRemote)
             {
-                world.spawnEntityInWorld(new EntityBloodLight(world, player));
+                world.spawnEntity(new EntityBloodLight(world, player));
                 NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player), player, getLpUsed());
             }
             resetCooldown(stack);
         }
 
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     @Override

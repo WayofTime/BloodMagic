@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.block;
 import java.util.ArrayList;
 import java.util.Random;
 
+import WayofTime.bloodmagic.block.base.BlockInteger;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -23,7 +24,9 @@ import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
 import WayofTime.bloodmagic.ritual.portal.Teleports;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;
 
-public class BlockDimensionalPortal extends BlockIntegerContainer
+import javax.annotation.Nullable;
+
+public class BlockDimensionalPortal extends BlockInteger
 {
     protected static final AxisAlignedBB AABB_0 = new AxisAlignedBB(0.0D, 0.0D, 0.375D, 1.0D, 1.0D, 0.625D);
     protected static final AxisAlignedBB AABB_1 = new AxisAlignedBB(0.375D, 0.0D, 0.0D, 0.625D, 1.0D, 1.0D);
@@ -39,12 +42,6 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
-        return new TileDimensionalPortal();
-    }
-
-    @Override
     public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return false;
@@ -57,13 +54,13 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return null;
     }
@@ -168,6 +165,17 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
     {
         this.spawnParticles(world, pos.getX(), pos.getY(), pos.getZ());
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileDimensionalPortal();
     }
 
     private void spawnParticles(World world, int x, int y, int z)

@@ -52,7 +52,7 @@ public class GuiAlchemyTable extends GuiContainer
             {
                 Slot slot = this.inventorySlots.getSlot(slotId);
 
-                this.drawTexturedModalRect(i + slot.xDisplayPosition, j + slot.yDisplayPosition, 195, 1, 16, 16);
+                this.drawTexturedModalRect(i + slot.xPos, j + slot.yPos, 195, 1, 16, 16);
             }
         }
     }

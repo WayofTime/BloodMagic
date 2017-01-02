@@ -15,8 +15,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.fluids.IFluidHandler;
-import WayofTime.bloodmagic.api.Constants;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class ItemSigilVoid extends ItemSigilBase
 {
@@ -26,8 +26,9 @@ public class ItemSigilVoid extends ItemSigilBase
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
@@ -47,40 +48,41 @@ public class ItemSigilVoid extends ItemSigilBase
 
                     if (!world.isBlockModifiable(player, blockpos))
                     {
-                        return super.onItemRightClick(stack, world, player, hand);
+                        return super.onItemRightClick(world, player, hand);
                     }
 
                     if (!player.canPlayerEdit(blockpos.offset(rayTrace.sideHit), rayTrace.sideHit, stack))
                     {
-                        return super.onItemRightClick(stack, world, player, hand);
+                        return super.onItemRightClick(world, player, hand);
                     }
 
                     if (!player.canPlayerEdit(blockpos, rayTrace.sideHit, stack))
                     {
-                        return super.onItemRightClick(stack, world, player, hand);
+                        return super.onItemRightClick(world, player, hand);
                     }
 
                     if (world.getBlockState(blockpos).getBlock().getMaterial(world.getBlockState(blockpos)).isLiquid() && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
                     {
                         world.setBlockToAir(blockpos);
-                        return super.onItemRightClick(stack, world, player, hand);
+                        return super.onItemRightClick(world, player, hand);
                     }
                 }
             } else
             {
-                return super.onItemRightClick(stack, world, player, hand);
+                return super.onItemRightClick(world, player, hand);
             }
 
             if (!player.capabilities.isCreativeMode)
                 this.setUnusable(stack, !NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()));
         }
 
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return EnumActionResult.FAIL;
 
@@ -95,13 +97,14 @@ public class ItemSigilVoid extends ItemSigilBase
         }
 
         TileEntity tile = world.getTileEntity(blockPos);
-        if (tile instanceof IFluidHandler)
+        if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
         {
-            FluidStack amount = ((IFluidHandler) tile).drain(side, 1000, false);
+            IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
+            FluidStack amount = handler.drain(1000, false);
 
             if (amount != null && amount.amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
             {
-                ((IFluidHandler) tile).drain(side, 1000, true);
+                handler.drain(1000, true);
                 return EnumActionResult.SUCCESS;
             }
 
