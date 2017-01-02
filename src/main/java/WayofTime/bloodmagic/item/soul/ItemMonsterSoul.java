@@ -56,7 +56,7 @@ public class ItemMonsterSoul extends Item implements IDemonWill, IVariantProvide
     {
         if (!stack.hasTagCompound())
             return;
-        tooltip.add(TextHelper.localize("tooltip.BloodMagic.will", getWill(getType(stack), stack)));
+        tooltip.add(TextHelper.localize("tooltip.bloodmagic.will", getWill(getType(stack), stack)));
 
         super.addInformation(stack, player, tooltip, advanced);
     }

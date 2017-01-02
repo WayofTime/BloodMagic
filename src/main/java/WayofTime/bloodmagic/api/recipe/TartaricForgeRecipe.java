@@ -15,7 +15,7 @@ import java.util.List;
 public class TartaricForgeRecipe
 {
     protected ItemStack output = null;
-    protected ArrayList<Object> input = new ArrayList<Object>();
+    protected List<Object> input = new ArrayList<Object>();
     @Getter
     protected double minimumSouls;
     @Getter
@@ -137,7 +137,7 @@ public class TartaricForgeRecipe
      * 
      * @return The recipes input vales.
      */
-    public ArrayList<Object> getInput()
+    public List<Object> getInput()
     {
         return this.input;
     }

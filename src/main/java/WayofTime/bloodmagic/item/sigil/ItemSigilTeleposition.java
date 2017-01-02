@@ -41,8 +41,8 @@ public class ItemSigilTeleposition extends ItemSigilBase
         if (tag != null && stack.getTagCompound().hasKey(Constants.NBT.DIMENSION_ID) && stack.getTagCompound().hasKey(Constants.NBT.X_COORD) && stack.getTagCompound().hasKey(Constants.NBT.Y_COORD) && stack.getTagCompound().hasKey(Constants.NBT.Z_COORD))
         {
             tooltip.add(" ");
-            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.telepositionFocus.coords", getValue(tag, Constants.NBT.X_COORD), getValue(tag, Constants.NBT.Y_COORD), getValue(tag, Constants.NBT.Z_COORD)));
-            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.telepositionFocus.dimension", getValue(tag, Constants.NBT.DIMENSION_ID)));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.coords", getValue(tag, Constants.NBT.X_COORD), getValue(tag, Constants.NBT.Y_COORD), getValue(tag, Constants.NBT.Z_COORD)));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.dimension", getValue(tag, Constants.NBT.DIMENSION_ID)));
         }
     }
 

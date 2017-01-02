@@ -119,7 +119,7 @@ public class TileMimic extends TileInventory implements ITickable
                 {
                     setInventorySlotContents(1, heldItem.copy());
                     world.notifyBlockUpdate(pos, state, state, 3);
-                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.potionSet"));
+                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionSet"));
                 }
                 return true;
             } else if (heldItem.getItem() == ModItems.POTION_FLASK)
@@ -129,7 +129,7 @@ public class TileMimic extends TileInventory implements ITickable
                 {
                     setInventorySlotContents(1, null);
                     world.notifyBlockUpdate(pos, state, state, 3);
-                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.potionRemove"));
+                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionRemove"));
                 }
                 return true;
             }
@@ -174,11 +174,11 @@ public class TileMimic extends TileInventory implements ITickable
                 if (player.isSneaking())
                 {
                     playerCheckRadius = Math.max(playerCheckRadius - 1, 0);
-                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.detectRadius.down", playerCheckRadius));
+                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.detectRadius.down", playerCheckRadius));
                 } else
                 {
                     playerCheckRadius++;
-                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.detectRadius.up", playerCheckRadius));
+                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.detectRadius.up", playerCheckRadius));
                 }
 
                 return false;
@@ -200,11 +200,11 @@ public class TileMimic extends TileInventory implements ITickable
                     if (player.isSneaking())
                     {
                         potionSpawnRadius = Math.max(potionSpawnRadius - 1, 0);
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.potionSpawnRadius.down", potionSpawnRadius));
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionSpawnRadius.down", potionSpawnRadius));
                     } else
                     {
                         potionSpawnRadius++;
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.potionSpawnRadius.up", potionSpawnRadius));
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionSpawnRadius.up", potionSpawnRadius));
                     }
                     break;
                 case NORTH: //When the block is clicked on the NORTH or SOUTH side, detectRadius is edited.
@@ -212,11 +212,11 @@ public class TileMimic extends TileInventory implements ITickable
                     if (player.isSneaking())
                     {
                         playerCheckRadius = Math.max(playerCheckRadius - 1, 0);
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.detectRadius.down", playerCheckRadius));
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.detectRadius.down", playerCheckRadius));
                     } else
                     {
                         playerCheckRadius++;
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.detectRadius.up", playerCheckRadius));
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.detectRadius.up", playerCheckRadius));
                     }
                     break;
                 case UP: //When the block is clicked on the UP or DOWN side, potionSpawnInterval is edited.
@@ -224,11 +224,11 @@ public class TileMimic extends TileInventory implements ITickable
                     if (player.isSneaking())
                     {
                         potionSpawnInterval = Math.max(potionSpawnInterval - 1, 1);
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.potionInterval.down", potionSpawnInterval));
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionInterval.down", potionSpawnInterval));
                     } else
                     {
                         potionSpawnInterval++;
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.BloodMagic.mimic.potionInterval.up", potionSpawnInterval));
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionInterval.up", potionSpawnInterval));
                     }
                     break;
                 default:

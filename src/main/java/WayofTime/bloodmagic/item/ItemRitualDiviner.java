@@ -46,7 +46,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 {
     public static String[] names = { "normal", "dusk", "dawn" };
 
-    public static final String tooltipBase = "tooltip.BloodMagic.diviner.";
+    public static final String tooltipBase = "tooltip.bloodmagic.diviner.";
 
     public ItemRitualDiviner()
     {
@@ -243,7 +243,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(stack));
         if (ritual != null)
         {
-            tooltip.add(TextHelper.localize("tooltip.BloodMagic.diviner.currentRitual") + TextHelper.localize(ritual.getUnlocalizedName()));
+            tooltip.add(TextHelper.localize("tooltip.bloodmagic.diviner.currentRitual") + TextHelper.localize(ritual.getUnlocalizedName()));
 
             boolean sneaking = Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
             boolean extraInfo = sneaking && Keyboard.isKeyDown(Keyboard.KEY_M);

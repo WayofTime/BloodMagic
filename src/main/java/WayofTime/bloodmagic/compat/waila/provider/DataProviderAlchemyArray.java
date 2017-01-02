@@ -44,14 +44,14 @@ public class DataProviderAlchemyArray implements IWailaDataProvider
             {
                 TileAlchemyArray tileArray = (TileAlchemyArray) tile;
                 if (!tileArray.getStackInSlot(0).isEmpty())
-                    currenttip.add(TextHelper.localize("waila.BloodMagic.array.reagent", tileArray.getStackInSlot(0).getDisplayName()));
+                    currenttip.add(TextHelper.localize("waila.bloodmagic.array.reagent", tileArray.getStackInSlot(0).getDisplayName()));
 
                 if (!tileArray.getStackInSlot(1).isEmpty())
-                    currenttip.add(TextHelper.localize("waila.BloodMagic.array.catalyst", tileArray.getStackInSlot(1).getDisplayName()));
+                    currenttip.add(TextHelper.localize("waila.bloodmagic.array.catalyst", tileArray.getStackInSlot(1).getDisplayName()));
             }
         } else
         {
-            currenttip.add(TextHelper.localizeEffect("waila.BloodMagic.sneak"));
+            currenttip.add(TextHelper.localizeEffect("waila.bloodmagic.sneak"));
         }
 
         return currenttip;

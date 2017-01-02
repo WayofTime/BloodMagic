@@ -28,10 +28,10 @@ public class GuideBloodMagic implements IGuideBook
     @Override
     public Book buildBook() {
         guideBook = new Book();
-        guideBook.setTitle("guide.BloodMagic.title");
-        guideBook.setDisplayName("guide.BloodMagic.display");
-        guideBook.setWelcomeMessage("guide.BloodMagic.welcome");
-        guideBook.setAuthor("guide.BloodMagic.author");
+        guideBook.setTitle("guide.bloodmagic.title");
+        guideBook.setDisplayName("guide.bloodmagic.display");
+        guideBook.setWelcomeMessage("guide.bloodmagic.welcome");
+        guideBook.setAuthor("guide.bloodmagic.author");
         guideBook.setRegistryName(new ResourceLocation(Constants.Mod.MODID, "guide"));
         guideBook.setColor(Color.RED);
 
@@ -45,11 +45,11 @@ public class GuideBloodMagic implements IGuideBook
 
     @Override
     public void handlePost(ItemStack bookStack) {
-        guideBook.addCategory(new CategoryItemStack(CategoryAlchemy.buildCategory(), "guide.BloodMagic.category.alchemy", new ItemStack(ModItems.ARCANE_ASHES)));
-        guideBook.addCategory(new CategoryItemStack(CategoryArchitect.buildCategory(), "guide.BloodMagic.category.architect", new ItemStack(ModItems.SIGIL_DIVINATION)));
-        guideBook.addCategory(new CategoryItemStack(CategoryDemon.buildCategory(), "guide.BloodMagic.category.demon", new ItemStack(ModItems.BLOOD_SHARD)));
-        guideBook.addCategory(new CategoryItemStack(CategoryRitual.buildCategory(), "guide.BloodMagic.category.ritual", new ItemStack(ModBlocks.RITUAL_CONTROLLER)));
-//        guideBook.addCategory(new CategoryItemStack(CategorySpell.buildCategory(), "guide.BloodMagic.category.spell", new ItemStack(ModItems.ritualDiviner)));
+        guideBook.addCategory(new CategoryItemStack(CategoryAlchemy.buildCategory(), "guide.bloodmagic.category.alchemy", new ItemStack(ModItems.ARCANE_ASHES)));
+        guideBook.addCategory(new CategoryItemStack(CategoryArchitect.buildCategory(), "guide.bloodmagic.category.architect", new ItemStack(ModItems.SIGIL_DIVINATION)));
+        guideBook.addCategory(new CategoryItemStack(CategoryDemon.buildCategory(), "guide.bloodmagic.category.demon", new ItemStack(ModItems.BLOOD_SHARD)));
+        guideBook.addCategory(new CategoryItemStack(CategoryRitual.buildCategory(), "guide.bloodmagic.category.ritual", new ItemStack(ModBlocks.RITUAL_CONTROLLER)));
+//        guideBook.addCategory(new CategoryItemStack(CategorySpell.buildCategory(), "guide.bloodmagic.category.spell", new ItemStack(ModItems.ritualDiviner)));
 
         GameRegistry.addRecipe(new ShapelessOreRecipe(GuideAPI.getStackFromBook(GuideBloodMagic.guideBook), new ItemStack(Items.BOOK), Blocks.GLASS, Items.FEATHER));
     }

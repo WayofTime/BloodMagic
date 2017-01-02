@@ -43,7 +43,7 @@ public class PageAltarRecipe extends Page
         Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("bloodmagicguide" + ":textures/gui/altar.png"));
         guiBase.drawTexturedModalRect(guiLeft + 42, guiTop + 53, 0, 0, 146, 104);
 
-        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.BloodMagic.page.bloodAltar"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
+        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.bloodmagic.page.bloodAltar"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
 
         int inputX = (1 + 1) * 20 + (guiLeft + guiBase.xSize / 7) + 1;
         int inputY = (20) + (guiTop + guiBase.ySize / 5) - 1; //1 * 20
@@ -71,7 +71,7 @@ public class PageAltarRecipe extends Page
             guiBase.drawCenteredString(fontRenderer, TextHelper.localize("bm.string.tier") + ": " + String.valueOf(tier), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6 + 15, 0);
             guiBase.drawCenteredString(fontRenderer, "LP: " + String.valueOf(bloodRequired), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6 + 30, 0);
         }
-        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.BloodMagic.page.tier", String.valueOf(tier)), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6, 0);
-        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.BloodMagic.page.lp", String.valueOf(bloodRequired)), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6 + 15, 0);
+        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.bloodmagic.page.tier", String.valueOf(tier)), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6, 0);
+        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.bloodmagic.page.lp", String.valueOf(bloodRequired)), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6 + 15, 0);
     }
 }

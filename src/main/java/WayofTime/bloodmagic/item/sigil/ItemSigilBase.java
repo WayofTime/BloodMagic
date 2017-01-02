@@ -36,7 +36,7 @@ public class ItemSigilBase extends ItemSigil implements IVariantProvider
         setCreativeTab(BloodMagic.tabBloodMagic);
 
         this.name = name;
-        this.tooltipBase = "tooltip.BloodMagic.sigil." + name + ".";
+        this.tooltipBase = "tooltip.bloodmagic.sigil." + name + ".";
     }
 
     public ItemSigilBase(String name)
@@ -55,7 +55,7 @@ public class ItemSigilBase extends ItemSigil implements IVariantProvider
             return;
 
         if (!Strings.isNullOrEmpty(getOwnerName(stack)))
-            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
 
         super.addInformation(stack, player, tooltip, advanced);
     }

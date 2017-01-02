@@ -42,27 +42,27 @@ public class ItemBlockBloodTank extends ItemBlock
         if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.TANK) && !stack.getTagCompound().getCompoundTag(Constants.NBT.TANK).getString("FluidName").equals(""))
         {
             NBTTagCompound tag = stack.getTagCompound().getCompoundTag(Constants.NBT.TANK);
-            return super.getItemStackDisplayName(stack) + " " + TextHelper.localizeEffect("tooltip.BloodMagic.tier", stack.getItemDamage() + 1) + " (" + FluidStack.loadFluidStackFromNBT(tag).getLocalizedName() + ")";
+            return super.getItemStackDisplayName(stack) + " " + TextHelper.localizeEffect("tooltip.bloodmagic.tier", stack.getItemDamage() + 1) + " (" + FluidStack.loadFluidStackFromNBT(tag).getLocalizedName() + ")";
         }
         else
         {
-            return super.getItemStackDisplayName(stack) + " " + TextHelper.localizeEffect("tooltip.BloodMagic.tier", stack.getItemDamage() + 1);
+            return super.getItemStackDisplayName(stack) + " " + TextHelper.localizeEffect("tooltip.bloodmagic.tier", stack.getItemDamage() + 1);
         }
     }
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer entityPlayer, List<String> tooltip, boolean advanced)
     {
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.tier", stack.getItemDamage() + 1));
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.capacity") + ": " + getCapacity(stack) + "mB");
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.tier", stack.getItemDamage() + 1));
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.capacity") + ": " + getCapacity(stack) + "mB");
         if (stack.hasTagCompound())
         {
             NBTTagCompound tag = stack.getTagCompound().getCompoundTag(Constants.NBT.TANK);
             FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag);
             if (!Strings.isNullOrEmpty(tag.getString("FluidName")) && fluidStack != null)
             {
-                tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.type") + ": " + fluidStack.getLocalizedName());
-                tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.amount") + ": " + tag.getInteger("Amount") + "/" + getCapacity(stack) + "mB");
+                tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.type") + ": " + fluidStack.getLocalizedName());
+                tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.amount") + ": " + tag.getInteger("Amount") + "/" + getCapacity(stack) + "mB");
             }
         }
     }

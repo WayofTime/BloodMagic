@@ -86,7 +86,7 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
                 stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1);
 
             currentDisplayedTier = EnumAltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)];
-            ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)));
+            ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.bloodmagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)));
 
             return super.onItemRightClick(world, player, hand);
         }
@@ -111,9 +111,9 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
     {
         if (!stack.hasTagCompound())
             return;
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.book.shifting"));
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.book.shifting"));
         tooltip.add(TextFormatting.OBFUSCATED + "~ILikeTehNutsAndICannotLie");
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentTier", stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentTier", stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
     }
 
     // IVariantProvider

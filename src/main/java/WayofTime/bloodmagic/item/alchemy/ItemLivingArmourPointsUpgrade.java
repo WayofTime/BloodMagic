@@ -59,7 +59,7 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
         if (!stack.hasTagCompound())
             return;
 
-        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmourPointsUpgrade.desc", 200))));
+        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.livingArmourPointsUpgrade.desc", 200))));
     }
 
     @Override

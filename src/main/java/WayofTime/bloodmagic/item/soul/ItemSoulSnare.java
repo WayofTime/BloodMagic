@@ -75,7 +75,7 @@ public class ItemSoulSnare extends Item implements IVariantProvider
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.soulSnare.desc"))));
+        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.soulSnare.desc"))));
 
         super.addInformation(stack, player, tooltip, advanced);
     }

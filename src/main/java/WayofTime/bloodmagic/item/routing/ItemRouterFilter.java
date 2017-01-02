@@ -60,7 +60,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        tooltip.add(TextHelper.localize("tooltip.BloodMagic.itemFilter." + names[stack.getItemDamage()]));
+        tooltip.add(TextHelper.localize("tooltip.bloodmagic.itemFilter." + names[stack.getItemDamage()]));
 
         super.addInformation(stack, player, tooltip, advanced);
     }

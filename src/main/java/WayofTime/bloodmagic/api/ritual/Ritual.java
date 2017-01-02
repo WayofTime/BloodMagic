@@ -276,7 +276,7 @@ public abstract class Ritual
         AreaDescriptor descriptor = this.getBlockRange(range);
         if (descriptor == null)
         {
-            return new TextComponentTranslation("ritual.BloodMagic.blockRange.tooBig", "?");
+            return new TextComponentTranslation("ritual.bloodmagic.blockRange.tooBig", "?");
         }
 
         List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
@@ -288,10 +288,10 @@ public abstract class Ritual
 
         if (maxVolume > 0 && descriptor.getVolumeForOffsets(offset1, offset2) > maxVolume)
         {
-            return new TextComponentTranslation("ritual.BloodMagic.blockRange.tooBig", maxVolume);
+            return new TextComponentTranslation("ritual.bloodmagic.blockRange.tooBig", maxVolume);
         } else
         {
-            return new TextComponentTranslation("ritual.BloodMagic.blockRange.tooFar", maxVertical, maxHorizontal);
+            return new TextComponentTranslation("ritual.bloodmagic.blockRange.tooFar", maxVertical, maxHorizontal);
         }
     }
 
@@ -307,7 +307,7 @@ public abstract class Ritual
             return new TextComponentTranslation(this.getUnlocalizedName() + "." + range + ".info");
         } else
         {
-            return new TextComponentTranslation("ritual.BloodMagic.blockRange.noRange");
+            return new TextComponentTranslation("ritual.bloodmagic.blockRange.noRange");
         }
     }
 

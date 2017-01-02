@@ -76,7 +76,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
                     }
                 } else
                 {
-                    ChatUtil.sendNoSpamUnloc(player, "chat.BloodMagic.ritual.notValid");
+                    ChatUtil.sendNoSpamUnloc(player, "chat.bloodmagic.ritual.notValid");
                 }
             }
         } else if (getMetaFromState(state) == 1 && tile instanceof TileImperfectRitualStone)

@@ -65,9 +65,8 @@ public class RitualLivingArmourDowngrade extends Ritual
         {
             if (player.getUniqueID().toString().equals(masterRitualStone.getOwner()))
             {
-                isActivatorPresent = true;
                 ItemStack keyStack = getStackFromItemFrame(world, masterPos, masterRitualStone.getDirection());
-                if (keyStack == null)
+                if (keyStack.isEmpty())
                 {
                     return;
                 }
@@ -101,7 +100,7 @@ public class RitualLivingArmourDowngrade extends Ritual
                         for (int i = 0; i < inv.getSlots(); i++)
                         {
                             ItemStack invStack = inv.getStackInSlot(i);
-                            if (invStack != null)
+                            if (!invStack.isEmpty())
                             {
                                 recipeList.add(invStack);
                             }
@@ -176,13 +175,13 @@ public class RitualLivingArmourDowngrade extends Ritual
         List<EntityItemFrame> frames = world.getEntitiesWithinAABB(EntityItemFrame.class, bb);
         for (EntityItemFrame frame : frames)
         {
-            if (frame.getDisplayedItem() != null)
+            if (!frame.getDisplayedItem().isEmpty())
             {
                 return frame.getDisplayedItem();
             }
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override

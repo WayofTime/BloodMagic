@@ -159,7 +159,7 @@ public class SubCommandNetwork extends CommandBase
                 SoulNetwork network = NetworkHelper.getSoulNetwork(player);
 
                 if (args.length > 1)
-                    sender.sendMessage(new TextComponentString(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.divination.currentEssence", network.getCurrentEssence())));
+                    sender.sendMessage(new TextComponentString(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence())));
 
             }
         },

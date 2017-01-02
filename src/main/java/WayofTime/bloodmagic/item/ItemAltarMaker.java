@@ -53,7 +53,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
     {
         if (!stack.hasTagCompound())
             return;
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentTier", stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentTier", stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
 
         if (!player.capabilities.isCreativeMode)
         {
-            ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.creativeOnly"));
+            ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.bloodmagic.altarMaker.creativeOnly"));
             return super.onItemRightClick(world, player, hand);
         }
 
@@ -79,7 +79,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
                 stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1);
 
             setTierToBuild(EnumAltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)]);
-            ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)));
+            ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.bloodmagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)));
             return super.onItemRightClick(world, player, hand);
         }
 
@@ -89,7 +89,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
 
         if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK && world.getBlockState(rayTrace.getBlockPos()).getBlock() instanceof BlockAltar)
         {
-            ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.building", NumeralHelper.toRoman(tierToBuild.toInt())));
+            ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.bloodmagic.altarMaker.building", NumeralHelper.toRoman(tierToBuild.toInt())));
             buildAltar(world, rayTrace.getBlockPos());
             IBlockState state = world.getBlockState(rayTrace.getBlockPos());
 

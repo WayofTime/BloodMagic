@@ -33,7 +33,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemRitualReader extends Item implements IVariantProvider
 {
-    public static final String tooltipBase = "tooltip.BloodMagic.ritualReader.";
+    public static final String tooltipBase = "tooltip.bloodmagic.ritualReader.";
 
     public ItemRitualReader()
     {
@@ -61,7 +61,7 @@ public class ItemRitualReader extends Item implements IVariantProvider
             tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(tooltipBase + "desc." + state.toString().toLowerCase()))));
         } else
         {
-            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.extraInfo"));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.extraInfo"));
         }
 
         super.addInformation(stack, player, tooltip, advanced);
@@ -158,7 +158,7 @@ public class ItemRitualReader extends Item implements IVariantProvider
                         if (containedPos.equals(BlockPos.ORIGIN))
                         {
                             this.setBlockPos(stack, pos.subtract(masterPos));
-                            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.BloodMagic.blockRange.firstBlock"));
+                            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.blockRange.firstBlock"));
                             //TODO: Notify player.
                         } else
                         {

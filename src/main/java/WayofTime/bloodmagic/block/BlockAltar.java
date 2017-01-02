@@ -200,7 +200,7 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
         IBloodAltar altar = ((IBloodAltar) world.getTileEntity(pos));
         Pair<BlockPos, EnumAltarComponent> missingBlock = BloodAltar.getAltarMissingBlock(world, pos, altar.getTier().toInt());
         if (missingBlock != null)
-            docs.add(new TextComponentTranslation("chat.BloodMagic.altar.nextTier", new TextComponentTranslation(missingBlock.getRight().getKey()), Utils.prettifyBlockPosString(missingBlock.getLeft())));
+            docs.add(new TextComponentTranslation("chat.bloodmagic.altar.nextTier", new TextComponentTranslation(missingBlock.getRight().getKey()), Utils.prettifyBlockPosString(missingBlock.getLeft())));
 
         return docs;
     }

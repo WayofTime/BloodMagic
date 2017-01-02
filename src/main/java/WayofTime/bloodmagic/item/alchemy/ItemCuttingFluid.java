@@ -51,7 +51,7 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
         if (!stack.hasTagCompound())
             return;
         int max = getMaxUsesForFluid(stack);
-        tooltip.add(TextHelper.localize("tooltip.BloodMagic.cuttingFluidRatio", max - getDamageOfFluid(stack), max));
+        tooltip.add(TextHelper.localize("tooltip.bloodmagic.cuttingFluidRatio", max - getDamageOfFluid(stack), max));
     }
 
     private void buildItemList()

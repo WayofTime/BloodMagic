@@ -33,7 +33,7 @@ public class ItemDemonWillGauge extends Item implements IVariantProvider, IDemon
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.willGauge"))));
+        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.willGauge"))));
     }
 
     @Override

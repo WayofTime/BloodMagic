@@ -41,27 +41,24 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
         {
             //TODO: Fill the contained gem if it is there.
             ItemStack stack = this.getStackInSlot(0);
-            if (stack != null)
+            if (stack.getItem() instanceof IDemonWillGem)
             {
-                if (stack.getItem() instanceof IDemonWillGem)
+                IDemonWillGem gemItem = (IDemonWillGem) stack.getItem();
+                for (EnumDemonWillType type : EnumDemonWillType.values())
                 {
-                    IDemonWillGem gemItem = (IDemonWillGem) stack.getItem();
-                    for (EnumDemonWillType type : EnumDemonWillType.values())
+                    if (willMap.containsKey(type))
                     {
-                        if (willMap.containsKey(type))
+                        double current = willMap.get(type);
+                        double fillAmount = Math.min(gemDrainRate, current);
+                        if (fillAmount > 0)
                         {
-                            double current = willMap.get(type);
-                            double fillAmount = Math.min(gemDrainRate, current);
-                            if (fillAmount > 0)
+                            fillAmount = gemItem.fillWill(type, stack, fillAmount, true);
+                            if (willMap.get(type) - fillAmount <= 0)
                             {
-                                fillAmount = gemItem.fillWill(type, stack, fillAmount, true);
-                                if (willMap.get(type) - fillAmount <= 0)
-                                {
-                                    willMap.remove(type);
-                                } else
-                                {
-                                    willMap.put(type, willMap.get(type) - fillAmount);
-                                }
+                                willMap.remove(type);
+                            } else
+                            {
+                                willMap.put(type, willMap.get(type) - fillAmount);
                             }
                         }
                     }

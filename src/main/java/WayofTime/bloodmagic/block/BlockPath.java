@@ -48,7 +48,7 @@ public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath, IVar
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.decoration.safe"));
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.decoration.safe"));
         super.addInformation(stack, player, tooltip, advanced);
     }
 

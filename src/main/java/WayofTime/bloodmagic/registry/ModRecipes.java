@@ -511,7 +511,7 @@ public class ModRecipes
 
     public static void addLivingArmourDowngradeRecipes()
     {
-        String messageBase = "ritual.BloodMagic.downgradeRitual.dialogue.";
+        String messageBase = "ritual.bloodmagic.downgradeRitual.dialogue.";
 
         ItemStack bowStack = new ItemStack(Items.BOW);
         ItemStack bottleStack = new ItemStack(Items.POTIONITEM, 1, 0);

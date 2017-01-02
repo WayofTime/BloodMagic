@@ -54,12 +54,12 @@ public class DataProviderRitualController implements IWailaDataProvider
                     if (mrs.getCurrentRitual() != null && mrs.isActive())
                     {
                         currenttip.add(TextHelper.localizeEffect(mrs.getCurrentRitual().getUnlocalizedName()));
-                        currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromUUID(mrs.getOwner())));
+                        currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", PlayerHelper.getUsernameFromUUID(mrs.getOwner())));
                         if (!RitualRegistry.ritualEnabled(mrs.getCurrentRitual()))
-                            currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.config.disabled"));
+                            currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.config.disabled"));
                     } else
                     {
-                        currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.deactivated"));
+                        currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.deactivated"));
                     }
                 }
 
@@ -76,14 +76,14 @@ public class DataProviderRitualController implements IWailaDataProvider
                         {
                             currenttip.add(TextHelper.localizeEffect(ritual.getUnlocalizedName()));
                             if (!ImperfectRitualRegistry.ritualEnabled(ritual))
-                                currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.config.disabled"));
+                                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.config.disabled"));
                         }
                     }
                 }
             }
         } else
         {
-            currenttip.add(TextHelper.localizeEffect("waila.BloodMagic.sneak"));
+            currenttip.add(TextHelper.localizeEffect("waila.bloodmagic.sneak"));
         }
 
         return currenttip;

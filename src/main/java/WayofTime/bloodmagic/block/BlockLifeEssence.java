@@ -69,7 +69,7 @@ public class BlockLifeEssence extends BlockFluidClassic
         @Override
         public String getLocalizedName(FluidStack fluidStack)
         {
-            return TextHelper.localize("tile.BloodMagic.fluid.lifeEssence.name");
+            return TextHelper.localize("tile.bloodmagic.fluid.lifeEssence.name");
         }
     }
 }

@@ -72,10 +72,10 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced)
     {
-        list.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.sacrificialDagger.desc"))));
+        list.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sacrificialDagger.desc"))));
 
         if (stack.getItemDamage() == 1)
-            list.add(TextHelper.localizeEffect("tooltip.BloodMagic.sacrificialDagger.creative"));
+            list.add(TextHelper.localizeEffect("tooltip.bloodmagic.sacrificialDagger.creative"));
     }
 
     @Override

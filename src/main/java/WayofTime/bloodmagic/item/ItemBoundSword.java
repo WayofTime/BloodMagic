@@ -102,13 +102,13 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
         if (!stack.hasTagCompound())
             return;
 
-        if (TextHelper.canTranslate("tooltip.BloodMagic.bound.sword.desc"))
-            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.bound.sword.desc"));
+        if (TextHelper.canTranslate("tooltip.bloodmagic.bound.sword.desc"))
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.bound.sword.desc"));
 
-        tooltip.add(TextHelper.localize("tooltip.BloodMagic." + (getActivated(stack) ? "activated" : "deactivated")));
+        tooltip.add(TextHelper.localize("tooltip.bloodmagic." + (getActivated(stack) ? "activated" : "deactivated")));
 
         if (!Strings.isNullOrEmpty(getOwnerUUID(stack)))
-            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
     }
 
     @Override

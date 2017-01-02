@@ -9,6 +9,7 @@ import net.minecraft.util.EnumFacing;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.item.inventory.ItemInventory;
 import WayofTime.bloodmagic.util.GhostItemHelper;
+import net.minecraft.util.NonNullList;
 
 public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedInventory
 {
@@ -60,7 +61,7 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
         if (!tag.getBoolean("updated"))
         {
             NBTTagList tags = tag.getTagList("Items", 10);
-            inventory = new ItemStack[getSizeInventory()];
+            inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
             for (int i = 0; i < tags.tagCount(); i++)
             {
                 if (!isSyncedSlot(i))
@@ -70,10 +71,10 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
 
                     if (j == 0)
                     {
-                        inventory[currentActiveSlot] = new ItemStack(data);
-                    } else if (j >= 1 && j < inventory.length + 1)
+                        inventory.set(i, new ItemStack(data));
+                    } else if (j >= 1 && j < inventory.size() + 1)
                     {
-                        inventory[j - 1] = new ItemStack(data);
+                        inventory.set(j - 1, new ItemStack(data));
                     }
                 }
             }

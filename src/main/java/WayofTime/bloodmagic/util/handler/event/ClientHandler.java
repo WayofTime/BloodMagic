@@ -105,10 +105,10 @@ public class ClientHandler
             int amount = GhostItemHelper.getItemGhostAmount(stack);
             if (amount == 0)
             {
-                event.getToolTip().add(TextHelper.localize("tooltip.BloodMagic.ghost.everything"));
+                event.getToolTip().add(TextHelper.localize("tooltip.bloodmagic.ghost.everything"));
             } else
             {
-                event.getToolTip().add(TextHelper.localize("tooltip.BloodMagic.ghost.amount", amount));
+                event.getToolTip().add(TextHelper.localize("tooltip.bloodmagic.ghost.amount", amount));
             }
         }
     }

@@ -120,9 +120,9 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
             return;
 
         EnumDemonWillType type = this.getCurrentType(stack);
-        tooltip.add(TextHelper.localize("tooltip.BloodMagic.soulGem." + names[stack.getItemDamage()]));
-        tooltip.add(TextHelper.localize("tooltip.BloodMagic.will", getWill(type, stack)));
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentType." + getCurrentType(stack).getName().toLowerCase()));
+        tooltip.add(TextHelper.localize("tooltip.bloodmagic.soulGem." + names[stack.getItemDamage()]));
+        tooltip.add(TextHelper.localize("tooltip.bloodmagic.will", getWill(type, stack)));
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentType." + getCurrentType(stack).getName().toLowerCase()));
 
         super.addInformation(stack, player, tooltip, advanced);
     }

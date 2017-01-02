@@ -74,7 +74,7 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localize("tooltip.BloodMagic.telepositionFocus." + names[stack.getItemDamage()]))));
+        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localize("tooltip.bloodmagic.telepositionFocus." + names[stack.getItemDamage()]))));
 
         super.addInformation(stack, player, tooltip, advanced);
 
@@ -87,8 +87,8 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
 
         if (coords != null && tag != null)
         {
-            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.telepositionFocus.coords", coords.getX(), coords.getY(), coords.getZ()));
-            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.telepositionFocus.dimension", tag.getInteger(Constants.NBT.DIMENSION_ID)));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.coords", coords.getX(), coords.getY(), coords.getZ()));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.dimension", tag.getInteger(Constants.NBT.DIMENSION_ID)));
         }
     }
 

@@ -56,7 +56,7 @@ public class DungeonRoomLoader
     {
         try
         {
-            URL schematicURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(new ResourceLocation("bloodmagic:Schematics")));
+            URL schematicURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(new ResourceLocation("bloodmagic:schematics")));
             List<String> schematics = Serializers.GSON.fromJson(Resources.toString(schematicURL, Charsets.UTF_8), new TypeToken<List<String>>(){}.getType());
             for (String schematicKey : schematics)
             {

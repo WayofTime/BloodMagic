@@ -85,10 +85,10 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.orb.desc"));
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.orb.desc"));
 
         if (advanced)
-            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.orb.owner", getOrb(stack.getItemDamage()).getOwner()));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.orb.owner", getOrb(stack.getItemDamage()).getOwner()));
 
         super.addInformation(stack, player, tooltip, advanced);
     }

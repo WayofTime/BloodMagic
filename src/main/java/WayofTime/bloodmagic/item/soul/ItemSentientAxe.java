@@ -307,8 +307,8 @@ public class ItemSentientAxe extends ItemAxe implements IDemonWillWeapon, IMeshP
         if (!stack.hasTagCompound())
             return;
 
-        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.sentientAxe.desc"))));
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentType." + getCurrentType(stack).getName().toLowerCase()));
+        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sentientAxe.desc"))));
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentType." + getCurrentType(stack).getName().toLowerCase()));
     }
 
     @Override

@@ -29,7 +29,7 @@ import com.google.common.collect.Multimap;
 
 public class LivingArmour implements ILivingArmour
 {
-    public static String chatBase = "chat.BloodMagic.livingArmour.";
+    public static String chatBase = "chat.bloodmagic.livingArmour.";
     public HashMap<String, StatTracker> trackerMap = new HashMap<String, StatTracker>();
     public HashMap<String, LivingArmourUpgrade> upgradeMap = new HashMap<String, LivingArmourUpgrade>();
 

@@ -56,7 +56,7 @@ public class PageAlchemyArray extends Page
         Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("bloodmagicguide" + ":textures/gui/alchemyArrayCrafting.png"));
         guiBase.drawTexturedModalRect(x, y, 0, 0, 62, 88 + (outputStack.isEmpty() ? 0 : 26));
 
-        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.BloodMagic.page.alchemyArray"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
+        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.bloodmagic.page.alchemyArray"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
 
         for (ResourceLocation arrayResource : arrayResources)
         {

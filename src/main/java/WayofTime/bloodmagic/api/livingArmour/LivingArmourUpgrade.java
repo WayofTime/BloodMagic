@@ -13,8 +13,8 @@ import net.minecraft.world.World;
 
 public abstract class LivingArmourUpgrade
 {
-    public static String chatBase = "chat.BloodMagic.livingArmour.upgrade.";
-    public static String tooltipBase = "tooltip.BloodMagic.livingArmour.upgrade.";
+    public static String chatBase = "chat.bloodmagic.livingArmour.upgrade.";
+    public static String tooltipBase = "tooltip.bloodmagic.livingArmour.upgrade.";
 
     /**
      * Upgrade level 0 is the first upgrade. Upgrade goes from 0 to getMaxTier()

@@ -40,7 +40,7 @@ public class BlockBloodRune extends BlockEnum<EnumBloodRune> implements IVariant
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.decoration.safe"));
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.decoration.safe"));
         super.addInformation(stack, player, tooltip, advanced);
     }
 

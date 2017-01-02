@@ -94,7 +94,7 @@ public class ItemPotionFlask extends Item implements IVariantProvider
     {
         PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
         tooltip.add("");
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.potion.uses", stack.getMaxDamage() - stack.getItemDamage()));
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.potion.uses", stack.getMaxDamage() - stack.getItemDamage()));
     }
 
 //    @Override

@@ -66,7 +66,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         if (item == null)
             return displayName;
         else
-            return TextHelper.localizeEffect("item.BloodMagic.sigil.holding.display", displayName, item.getDisplayName());
+            return TextHelper.localizeEffect("item.bloodmagic.sigil.holding.display", displayName, item.getDisplayName());
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.holding.press", KeyBindings.OPEN_HOLDING.getKey().getDisplayName()));
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.holding.press", KeyBindings.OPEN_HOLDING.getKey().getDisplayName()));
 
         if (!stack.hasTagCompound())
             return;
@@ -91,9 +91,9 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         {
             if (inv[i] != null)
                 if (item != null && inv[i] == item)
-                    tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.holding.sigilInSlot", i + 1, "&o&n" + inv[i].getDisplayName()));
+                    tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, "&o&n" + inv[i].getDisplayName()));
                 else
-                    tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.holding.sigilInSlot", i + 1, inv[i].getDisplayName()));
+                    tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, inv[i].getDisplayName()));
         }
     }
 

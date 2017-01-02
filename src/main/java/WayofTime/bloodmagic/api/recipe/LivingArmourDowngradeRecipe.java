@@ -17,7 +17,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 public class LivingArmourDowngradeRecipe
 {
     protected LivingArmourUpgrade upgrade = null;
-    protected ItemStack keyStack = null;
+    protected ItemStack keyStack = ItemStack.EMPTY;
     protected List<Object> input = new ArrayList<Object>();
 
     public LivingArmourDowngradeRecipe(LivingArmourUpgrade upgrade, ItemStack keyStack, Object... recipe)

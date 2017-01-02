@@ -50,7 +50,7 @@ public class PageTartaricForgeRecipe extends Page
         Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("bloodmagicguide" + ":textures/gui/soulForge.png"));
         guiBase.drawTexturedModalRect(guiLeft + 42, guiTop + 53, 0, 0, 146, 104);
 
-        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.BloodMagic.page.soulForge"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
+        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.bloodmagic.page.soulForge"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
 
 //        int inputX = (1 + 1) * 20 + (guiLeft + guiBase.xSize / 7) + 1;
 //        int inputY = (20) + (guiTop + guiBase.ySize / 5) - 1; //1 * 20
@@ -131,8 +131,8 @@ public class PageTartaricForgeRecipe extends Page
             guiBase.drawCenteredString(fontRenderer, TextHelper.localize("bm.string.tier") + ": " + String.valueOf(tier), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6 + 15, 0);
 //            guiBase.drawCenteredString(fontRenderer, "LP: " + String.valueOf(bloodRequired), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6 + 30, 0);
         }
-        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.BloodMagic.page.minimumWill", String.valueOf(minimumWill)), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6 - 15, 0);
-        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.BloodMagic.page.drainedWill", String.valueOf(drainedWill)), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6, 0);
+        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.bloodmagic.page.minimumWill", String.valueOf(minimumWill)), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6 - 15, 0);
+        guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.bloodmagic.page.drainedWill", String.valueOf(drainedWill)), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6, 0);
     }
 
     protected int getRandomizedCycle(int index, int max)

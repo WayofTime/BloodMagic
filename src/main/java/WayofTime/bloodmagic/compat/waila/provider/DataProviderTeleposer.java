@@ -48,13 +48,13 @@ public class DataProviderTeleposer implements IWailaDataProvider
                     BlockPos toPos = ((ItemTelepositionFocus) contained.getItem()).getBlockPos(contained);
                     int dimensionID = contained.getTagCompound().getInteger(Constants.NBT.DIMENSION_ID);
 
-                    currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.telepositionFocus.coords", toPos.getX(), toPos.getY(), toPos.getZ()));
-                    currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.telepositionFocus.dimension", dimensionID));
+                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.coords", toPos.getX(), toPos.getY(), toPos.getZ()));
+                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.dimension", dimensionID));
                 }
             }
         } else
         {
-            currenttip.add(TextHelper.localizeEffect("waila.BloodMagic.sneak"));
+            currenttip.add(TextHelper.localizeEffect("waila.bloodmagic.sneak"));
         }
 
         return currenttip;

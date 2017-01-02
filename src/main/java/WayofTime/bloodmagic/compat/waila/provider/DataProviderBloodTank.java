@@ -45,21 +45,21 @@ public class DataProviderBloodTank implements IWailaDataProvider
                 TileBloodTank bloodTank = (TileBloodTank) accessor.getTileEntity();
                 NBTTagCompound tag = accessor.getNBTData();
                 int capacity = tag.getInteger(Constants.NBT.ALTAR_CAPACITY);
-                currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.tier", bloodTank.getBlockMetadata() + 1));
-                currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.capacity") + ": " + capacity + "mB");
+                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.tier", bloodTank.getBlockMetadata() + 1));
+                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.capacity") + ": " + capacity + "mB");
 
                 tag = tag.getCompoundTag(Constants.NBT.TANK);
                 FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag);
                 if (!Strings.isNullOrEmpty(tag.getString("FluidName")) && fluidStack != null)
                 {
-                    currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.type") + ": " + fluidStack.getLocalizedName());
-                    currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.amount") + ": " + tag.getInteger("Amount") + "/" + capacity + "mB");
+                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.type") + ": " + fluidStack.getLocalizedName());
+                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.amount") + ": " + tag.getInteger("Amount") + "/" + capacity + "mB");
                 }
             }
         }
         else
         {
-            currenttip.add(TextHelper.localizeEffect("waila.BloodMagic.sneak"));
+            currenttip.add(TextHelper.localizeEffect("waila.bloodmagic.sneak"));
         }
 
         return currenttip;

@@ -307,8 +307,8 @@ public class ItemSentientShovel extends ItemSpade implements IDemonWillWeapon, I
         if (!stack.hasTagCompound())
             return;
 
-        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.sentientShovel.desc"))));
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentType." + getCurrentType(stack).getName().toLowerCase()));
+        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sentientShovel.desc"))));
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentType." + getCurrentType(stack).getName().toLowerCase()));
     }
 
     @Override

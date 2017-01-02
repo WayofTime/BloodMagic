@@ -36,7 +36,7 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable implements IMes
         setCreativeTab(BloodMagic.tabBloodMagic);
 
         this.name = name;
-        this.tooltipBase = "tooltip.BloodMagic.sigil." + name + ".";
+        this.tooltipBase = "tooltip.bloodmagic.sigil." + name + ".";
     }
 
     @Override
@@ -46,10 +46,10 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable implements IMes
         super.addInformation(stack, player, tooltip, advanced);
         if (!stack.hasTagCompound())
             return;
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic." + (getActivated(stack) ? "activated" : "deactivated")));
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic." + (getActivated(stack) ? "activated" : "deactivated")));
 
         if (!Strings.isNullOrEmpty(getOwnerName(stack)))
-            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
     }
 
     @Override

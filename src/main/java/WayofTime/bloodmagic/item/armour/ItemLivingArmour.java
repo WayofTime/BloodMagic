@@ -309,19 +309,19 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                         if (tracker != null)
                         {
                             double progress = tracker.getProgress(armour, upgrade.getUpgradeLevel());
-                            tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.progress", TextHelper.localize(upgrade.getUnlocalizedName()), MathHelper.clamp((int) (progress * 100D), 0, 100)));
+                            tooltip.add(TextHelper.localize("tooltip.bloodmagic.livingArmour.upgrade.progress", TextHelper.localize(upgrade.getUnlocalizedName()), MathHelper.clamp((int) (progress * 100D), 0, 100)));
                         }
                     } else
                     {
-                        tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getUnlocalizedName()), upgrade.getUpgradeLevel() + 1));
+                        tooltip.add(TextHelper.localize("tooltip.bloodmagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getUnlocalizedName()), upgrade.getUpgradeLevel() + 1));
                     }
                 }
             }
 
-            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmour.upgrade.points", armour.totalUpgradePoints, armour.maxUpgradePoints));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.livingArmour.upgrade.points", armour.totalUpgradePoints, armour.maxUpgradePoints));
             if (!(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && Keyboard.isKeyDown(Keyboard.KEY_M)))
             {
-                tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmour.extraExtraInfo"));
+                tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.livingArmour.extraExtraInfo"));
             }
         }
 

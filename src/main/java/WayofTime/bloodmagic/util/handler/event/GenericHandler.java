@@ -357,7 +357,7 @@ public class GenericHandler
         if (block instanceof BlockAltar && event.getEntityPlayer() != null && event.getEntityPlayer() instanceof EntityPlayerMP && !event.getEntityPlayer().getHeldItemMainhand().isEmpty() && event.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemAltarMaker)
         {
             ItemAltarMaker altarMaker = (ItemAltarMaker) event.getEntityPlayer().getHeldItemMainhand().getItem();
-            ChatUtil.sendNoSpam(event.getEntityPlayer(), TextHelper.localizeEffect("chat.BloodMagic.altarMaker.destroy", altarMaker.destroyAltar(event.getEntityPlayer())));
+            ChatUtil.sendNoSpam(event.getEntityPlayer(), TextHelper.localizeEffect("chat.bloodmagic.altarMaker.destroy", altarMaker.destroyAltar(event.getEntityPlayer())));
         }
     }
 

@@ -155,7 +155,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
                         if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost() && !activator.capabilities.isCreativeMode)
                         {
-                            ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.weak");
+                            ChatUtil.sendNoSpamUnloc(activator, "chat.bloodmagic.ritual.weak");
                             return false;
                         }
 
@@ -166,7 +166,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
                         if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         {
-                            ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.prevent");
+                            ChatUtil.sendNoSpamUnloc(activator, "chat.bloodmagic.ritual.prevent");
                             return false;
                         }
 
@@ -175,7 +175,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
                             if (!isRedstoned() && !activator.capabilities.isCreativeMode)
                                 network.syphon(ritual.getActivationCost());
 
-                            ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.activate");
+                            ChatUtil.sendNoSpamUnloc(activator, "chat.bloodmagic.ritual.activate");
 
                             this.active = true;
                             this.owner = crystalOwner;
@@ -192,7 +192,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
             }
         } else
         {
-            ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.notValid");
+            ChatUtil.sendNoSpamUnloc(activator, "chat.bloodmagic.ritual.notValid");
         }
 
         return false;
@@ -351,7 +351,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
                 ChatUtil.sendNoSpam(player, this.currentRitual.getErrorForBlockRangeOnFail(player, range, this, offset1, offset2));
             } else
             {
-                ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.BloodMagic.blockRange.success"));
+                ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.blockRange.success"));
             }
 
             return allowed;
@@ -359,7 +359,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
         if (player != null)
         {
-            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.BloodMagic.blockRange.inactive"));
+            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.blockRange.inactive"));
         }
 
         return false;
@@ -387,13 +387,13 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
             for (int i = 0; i < typeList.size(); i++)
             {
-                translations[i] = new TextComponentTranslation("tooltip.BloodMagic.currentBaseType." + typeList.get(i).name.toLowerCase());
+                translations[i] = new TextComponentTranslation("tooltip.bloodmagic.currentBaseType." + typeList.get(i).name.toLowerCase());
             }
 
-            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.BloodMagic.willConfig.set", new TextComponentTranslation(constructedString, translations)));
+            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.willConfig.set", new TextComponentTranslation(constructedString, translations)));
         } else
         {
-            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.BloodMagic.willConfig.void"));
+            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.willConfig.void"));
         }
     }
 }

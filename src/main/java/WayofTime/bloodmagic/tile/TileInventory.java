@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.capabilities.Capability;
@@ -21,13 +22,13 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 public class TileInventory extends TileBase implements IInventory
 {
     protected int[] syncedSlots = new int[0];
-    protected ItemStack[] inventory;
+    protected NonNullList<ItemStack> inventory;
     private int size;
     private String name;
 
     public TileInventory(int size, String name)
     {
-        this.inventory = new ItemStack[size];
+        this.inventory = NonNullList.withSize(size, ItemStack.EMPTY);
         this.size = size;
         this.name = name;
         initializeItemHandlers();
@@ -50,7 +51,7 @@ public class TileInventory extends TileBase implements IInventory
     {
         super.deserialize(tagCompound);
         NBTTagList tags = tagCompound.getTagList("Items", 10);
-        inventory = new ItemStack[getSizeInventory()];
+        inventory = NonNullList.withSize(size, ItemStack.EMPTY);
 
         for (int i = 0; i < tags.tagCount(); i++)
         {
@@ -59,9 +60,9 @@ public class TileInventory extends TileBase implements IInventory
                 NBTTagCompound data = tags.getCompoundTagAt(i);
                 byte j = data.getByte("Slot");
 
-                if (j >= 0 && j < inventory.length)
+                if (j >= 0 && j < inventory.size())
                 {
-                    inventory[j] = new ItemStack(data);
+                    inventory.set(i, new ItemStack(data));
                 }
             }
         }
@@ -73,13 +74,13 @@ public class TileInventory extends TileBase implements IInventory
         super.serialize(tagCompound);
         NBTTagList tags = new NBTTagList();
 
-        for (int i = 0; i < inventory.length; i++)
+        for (int i = 0; i < inventory.size(); i++)
         {
-            if ((!inventory[i].isEmpty()) && !isSyncedSlot(i))
+            if ((!inventory.get(i).isEmpty()) && !isSyncedSlot(i))
             {
                 NBTTagCompound data = new NBTTagCompound();
                 data.setByte("Slot", (byte) i);
-                inventory[i].writeToNBT(data);
+                inventory.get(i).writeToNBT(data);
                 tags.appendTag(data);
             }
         }
@@ -104,52 +105,49 @@ public class TileInventory extends TileBase implements IInventory
     @Override
     public ItemStack getStackInSlot(int index)
     {
-        return inventory[index];
+        return inventory.get(index);
     }
 
     @Override
     public ItemStack decrStackSize(int index, int count)
     {
-        if (inventory[index] != null)
+        if (!getStackInSlot(index).isEmpty())
         {
             if (!getWorld().isRemote)
                 getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
 
-            if (inventory[index].getCount() <= count)
+            if (getStackInSlot(index).getCount() <= count)
             {
-                ItemStack itemStack = inventory[index];
-                inventory[index] = null;
+                ItemStack itemStack = inventory.get(index);
+                inventory.set(index, ItemStack.EMPTY);
                 markDirty();
                 return itemStack;
             }
 
-            ItemStack itemStack = inventory[index].splitStack(count);
-            if (inventory[index].getCount() == 0)
-                inventory[index] = null;
-
+            ItemStack itemStack = inventory.get(index).splitStack(count);
             markDirty();
             return itemStack;
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
     public ItemStack removeStackFromSlot(int slot)
     {
-        if (inventory[slot] != null)
+        if (!inventory.get(slot).isEmpty())
         {
-            ItemStack itemStack = inventory[slot];
-            setInventorySlotContents(slot, null);
+            ItemStack itemStack = inventory.get(slot);
+            setInventorySlotContents(slot, ItemStack.EMPTY);
             return itemStack;
         }
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
     public void setInventorySlotContents(int slot, ItemStack stack)
     {
-        inventory[slot] = stack;
+        inventory.set(slot, stack);
         if (!stack.isEmpty() && stack.getCount() > getInventoryStackLimit())
             stack.setCount(getInventoryStackLimit());
         markDirty();
@@ -202,7 +200,7 @@ public class TileInventory extends TileBase implements IInventory
     @Override
     public void clear()
     {
-        this.inventory = new ItemStack[size];
+        this.inventory = NonNullList.withSize(size, ItemStack.EMPTY);
     }
 
     @Override
@@ -224,7 +222,7 @@ public class TileInventory extends TileBase implements IInventory
     @Override
     public String getName()
     {
-        return TextHelper.localize("tile.BloodMagic." + name + ".name");
+        return TextHelper.localize("tile.bloodmagic." + name + ".name");
     }
 
     @Override

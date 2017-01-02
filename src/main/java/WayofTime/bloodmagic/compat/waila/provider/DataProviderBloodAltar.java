@@ -82,9 +82,9 @@ public class DataProviderBloodAltar implements IWailaDataProvider
             if (accessor.getBlock() instanceof BlockAltar && accessor.getTileEntity() instanceof TileAltar)
             {
                 TileAltar altar = (TileAltar) accessor.getTileEntity();
-                currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.seer.currentAltarTier", altar.getTier().toInt()));
-                currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.seer.currentAltarCapacity", altar.getCapacity()));
-                currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.seer.currentEssence", altar.getCurrentBlood()));
+                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarTier", altar.getTier().toInt()));
+                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarCapacity", altar.getCapacity()));
+                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentEssence", altar.getCurrentBlood()));
 
                 if (hasSeer)
                 {
@@ -93,12 +93,12 @@ public class DataProviderBloodAltar implements IWailaDataProvider
                     int craftAmount = 1;
                     if (accessor.getNBTData().getTagList("Items", 10).get(0).getId() == 10)
                         craftAmount = ((NBTTagCompound)accessor.getNBTData().getTagList("Items", 10).get(0)).getByte("Count");
-                    currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.seer.currentAltarProgress.percent", (int) (((double) progress / (double) liquidRequired * 100) / craftAmount) + "%"));
+                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarProgress.percent", (int) (((double) progress / (double) liquidRequired * 100) / craftAmount) + "%"));
                 }
             }
         } else
         {
-            currenttip.add(TextHelper.localizeEffect("waila.BloodMagic.sneak"));
+            currenttip.add(TextHelper.localizeEffect("waila.bloodmagic.sneak"));
         }
 
         return currenttip;
