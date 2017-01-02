@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -67,7 +68,7 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
         for (int i = 0; i < names.size(); i++)
             list.add(new ItemStack(id, 1, i));

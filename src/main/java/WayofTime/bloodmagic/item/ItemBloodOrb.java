@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,42 +42,43 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
         for (int i = 0; i < OrbRegistry.getSize(); i++)
             list.add(new ItemStack(id, 1, i));
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (world == null)
-            return super.onItemRightClick(stack, null, player, hand);
+            return super.onItemRightClick(world, player, hand);
 
         world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
         // SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ,
         // 20, world.provider.getDimensionId(), 4, posX, posY, posZ);
 
         if (PlayerHelper.isFakePlayer(player))
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
 
         if (!stack.hasTagCompound())
         {
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
         }
 
         if (Strings.isNullOrEmpty(getOwnerUUID(stack)))
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
 
         if (world.isRemote)
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
 
         if (getOwnerUUID(stack).equals(PlayerHelper.getUsernameFromPlayer(player)))
             NetworkHelper.setMaxOrb(NetworkHelper.getSoulNetwork(getOwnerUUID(stack)), getOrbLevel(stack.getItemDamage()));
 
         NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).add(200, getMaxEssence(stack.getItemDamage()));
         NetworkHelper.getSoulNetwork(player).hurtPlayer(player, 200);
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     @Override

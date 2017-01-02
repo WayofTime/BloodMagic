@@ -54,8 +54,9 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote)
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
@@ -63,7 +64,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
 
         if (position == null)
         {
-            return super.onItemRightClick(stack, world, player, EnumHand.MAIN_HAND);
+            return super.onItemRightClick(world, player, EnumHand.MAIN_HAND);
         } else
         {
             if (position.typeOfHit == RayTraceResult.Type.BLOCK)
@@ -71,7 +72,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
                 TileEntity tile = world.getTileEntity(position.getBlockPos());
 
                 if (!(tile instanceof IBloodAltar))
-                    return super.onItemRightClick(stack, world, player, EnumHand.MAIN_HAND);
+                    return super.onItemRightClick(world, player, EnumHand.MAIN_HAND);
 
                 LPContainer.tryAndFillAltar((IBloodAltar) tile, stack, world, position.getBlockPos());
             }

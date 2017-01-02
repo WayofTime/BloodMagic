@@ -59,7 +59,7 @@ public class ContainerHolding extends Container
     {
         super.onContainerClosed(entityPlayer);
 
-        if (!entityPlayer.worldObj.isRemote)
+        if (!entityPlayer.getEntityWorld().isRemote)
         {
             saveInventory(entityPlayer);
         }
@@ -70,7 +70,7 @@ public class ContainerHolding extends Container
     {
         super.detectAndSendChanges();
 
-        if (!player.worldObj.isRemote)
+        if (!player.getEntityWorld().isRemote)
         {
             saveInventory(player);
         }
@@ -79,8 +79,8 @@ public class ContainerHolding extends Container
     @Override
     public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int slotIndex)
     {
-        ItemStack stack = null;
-        Slot slotObject = (Slot) inventorySlots.get(slotIndex);
+        ItemStack stack = ItemStack.EMPTY;
+        Slot slotObject = inventorySlots.get(slotIndex);
         int slots = inventorySlots.size();
 
         if (slotObject != null && slotObject.getHasStack())
@@ -94,11 +94,11 @@ public class ContainerHolding extends Container
                 {
                     if (!this.mergeItemStack(stackInSlot, ItemSigilHolding.inventorySize, slots, false))
                     {
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                 } else if (!this.mergeItemStack(stackInSlot, 0, ItemSigilHolding.inventorySize, false))
                 {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             } else if (stack.getItem() instanceof ItemSigilHolding)
             {
@@ -106,28 +106,28 @@ public class ContainerHolding extends Container
                 {
                     if (!this.mergeItemStack(stackInSlot, ItemSigilHolding.inventorySize + (PLAYER_INVENTORY_ROWS * PLAYER_INVENTORY_COLUMNS), inventorySlots.size(), false))
                     {
-                        return null;
+                        return ItemStack.EMPTY;
                     }
                 } else if (!this.mergeItemStack(stackInSlot, ItemSigilHolding.inventorySize, ItemSigilHolding.inventorySize + (PLAYER_INVENTORY_ROWS * PLAYER_INVENTORY_COLUMNS), false))
                 {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             }
 
-            if (stackInSlot.stackSize == 0)
+            if (stackInSlot.isEmpty())
             {
-                slotObject.putStack(null);
+                slotObject.putStack(ItemStack.EMPTY);
             } else
             {
                 slotObject.onSlotChanged();
             }
 
-            if (stackInSlot.stackSize == stack.stackSize)
+            if (stackInSlot.getCount() == stack.getCount())
             {
-                return null;
+                return ItemStack.EMPTY;
             }
 
-            slotObject.onPickupFromSlot(player, stackInSlot);
+            slotObject.onTake(player, stackInSlot);
         }
 
         return stack;

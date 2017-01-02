@@ -119,10 +119,8 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider
                             else
                             {
                                 List<ItemStack> itemDrops = blockStack.getBlock().getDrops(world, blockPos, world.getBlockState(blockPos), fortuneLvl);
-
-                                if (itemDrops != null)
-                                    for (ItemStack stacks : itemDrops)
-                                        drops.add(ItemStackWrapper.getHolder(stacks));
+                                for (ItemStack stacks : itemDrops)
+                                    drops.add(ItemStackWrapper.getHolder(stacks));
                             }
 
                             world.setBlockToAir(blockPos);
@@ -143,8 +141,8 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider
         Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
         if (equipmentSlot == EntityEquipmentSlot.MAINHAND)
         {
-            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getActivated(stack) ? 5 : 2, 0));
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", -2.5, 0));
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getActivated(stack) ? 5 : 2, 0));
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", -2.5, 0));
         }
         return multimap;
     }

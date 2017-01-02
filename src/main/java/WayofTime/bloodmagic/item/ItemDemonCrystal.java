@@ -7,6 +7,7 @@ import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -60,7 +61,7 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
         for (int i = 0; i < names.size(); i++)
             list.add(new ItemStack(id, 1, i));
@@ -74,18 +75,18 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
     @Override
     public double getWill(ItemStack willStack)
     {
-        return getDiscretization(willStack) * willStack.stackSize;
+        return getDiscretization(willStack) * willStack.getCount();
     }
 
     @Override
     public double drainWill(ItemStack willStack, double drainAmount)
     {
         double discretization = getDiscretization(willStack);
-        int drainedNumber = (int) Math.floor(Math.min(willStack.stackSize * discretization, drainAmount) / discretization);
+        int drainedNumber = (int) Math.floor(Math.min(willStack.getCount() * discretization, drainAmount) / discretization);
 
         if (drainedNumber > 0)
         {
-            willStack.stackSize -= drainedNumber;
+            willStack.shrink(drainedNumber);
             return drainedNumber * discretization;
         }
 
@@ -101,7 +102,7 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
     @Override
     public EnumDemonWillType getType(ItemStack willStack)
     {
-        return EnumDemonWillType.values()[MathHelper.clamp_int(willStack.getMetadata(), 0, EnumDemonWillType.values().length - 1)];
+        return EnumDemonWillType.values()[MathHelper.clamp(willStack.getMetadata(), 0, EnumDemonWillType.values().length - 1)];
     }
 
     @Override

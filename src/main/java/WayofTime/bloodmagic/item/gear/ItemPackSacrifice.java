@@ -38,8 +38,9 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote)
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
@@ -47,7 +48,7 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
 
         if (rayTrace == null)
         {
-            return super.onItemRightClick(stack, world, player, EnumHand.MAIN_HAND);
+            return super.onItemRightClick(world, player, EnumHand.MAIN_HAND);
         } else
         {
             if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
@@ -55,7 +56,7 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
                 TileEntity tile = world.getTileEntity(rayTrace.getBlockPos());
 
                 if (!(tile instanceof IBloodAltar))
-                    return super.onItemRightClick(stack, world, player, EnumHand.MAIN_HAND);
+                    return super.onItemRightClick(world, player, EnumHand.MAIN_HAND);
 
                 LPContainer.tryAndFillAltar((IBloodAltar) tile, stack, world, rayTrace.getBlockPos());
             }

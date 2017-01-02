@@ -62,7 +62,7 @@ public class ItemInventory implements IInventory
 
                 if (j >= 0 && j < inventory.length)
                 {
-                    inventory[j] = ItemStack.loadItemStackFromNBT(data);
+                    inventory[j] = new ItemStack(data);
                 }
             }
         }
@@ -123,22 +123,22 @@ public class ItemInventory implements IInventory
     @Override
     public ItemStack decrStackSize(int index, int count)
     {
-        if (inventory[index] != null)
+        if (!inventory[index].isEmpty())
         {
 //            if (!worldObj.isRemote)
 //                worldObj.markBlockForUpdate(this.pos);
 
-            if (inventory[index].stackSize <= count)
+            if (inventory[index].getCount() <= count)
             {
                 ItemStack itemStack = inventory[index];
-                inventory[index] = null;
+                inventory[index] = ItemStack.EMPTY;
                 markDirty();
                 return itemStack;
             }
 
             ItemStack itemStack = inventory[index].splitStack(count);
-            if (inventory[index].stackSize == 0)
-                inventory[index] = null;
+            if (inventory[index].isEmpty())
+                inventory[index] = ItemStack.EMPTY;
 
             markDirty();
             return itemStack;
@@ -153,7 +153,7 @@ public class ItemInventory implements IInventory
         if (inventory[slot] != null)
         {
             ItemStack itemStack = inventory[slot];
-            setInventorySlotContents(slot, null);
+            setInventorySlotContents(slot, ItemStack.EMPTY);
             return itemStack;
         }
         return null;
@@ -163,8 +163,8 @@ public class ItemInventory implements IInventory
     public void setInventorySlotContents(int slot, ItemStack stack)
     {
         inventory[slot] = stack;
-        if (stack != null && stack.stackSize > getInventoryStackLimit())
-            stack.stackSize = getInventoryStackLimit();
+        if (stack.getCount() > getInventoryStackLimit())
+            stack.setCount(getInventoryStackLimit());
         markDirty();
 //        if (!worldObj.isRemote)
 //            worldObj.markBlockForUpdate(this.pos);
@@ -177,7 +177,7 @@ public class ItemInventory implements IInventory
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player)
+    public boolean isUsableByPlayer(EntityPlayer player)
     {
         return true;
     }
@@ -249,6 +249,11 @@ public class ItemInventory implements IInventory
         {
             this.writeToStack(masterStack);
         }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
     }
 
     public boolean canInventoryBeManipulated()

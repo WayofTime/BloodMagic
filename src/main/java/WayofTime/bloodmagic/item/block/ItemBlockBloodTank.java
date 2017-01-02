@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
@@ -20,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemBlockBloodTank extends ItemBlock implements IFluidContainerItem
+public class ItemBlockBloodTank extends ItemBlock
 {
     public ItemBlockBloodTank(Block block)
     {
@@ -68,96 +69,15 @@ public class ItemBlockBloodTank extends ItemBlock implements IFluidContainerItem
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
         for (int i = 0; i < TileBloodTank.CAPACITIES.length; i++)
             list.add(new ItemStack(id, 1, i));
     }
 
-    @Override
-    public FluidStack getFluid(ItemStack stack)
-    {
-        if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.TANK) && !stack.getTagCompound().getCompoundTag(Constants.NBT.TANK).getString("FluidName").equals(""))
-        {
-            NBTTagCompound tag = stack.getTagCompound().getCompoundTag(Constants.NBT.TANK);
-            return FluidStack.loadFluidStackFromNBT(tag);
-        }
-
-        return null;
-    }
-
-    @Override
     public int getCapacity(ItemStack container)
     {
         return container != null && Block.getBlockFromItem(container.getItem()) instanceof BlockBloodTank ? TileBloodTank.CAPACITIES[container.getMetadata()] * Fluid.BUCKET_VOLUME : 0;
-    }
-
-    @Override
-    public int fill(ItemStack stack, FluidStack resource, boolean doFill)
-    {
-        if (resource == null || stack.stackSize != 1)
-            return 0;
-
-        int fillAmount = 0, capacity = getCapacity(stack);
-        NBTTagCompound tag = stack.getTagCompound(), fluidTag = null;
-        FluidStack fluid = null;
-
-        if (tag == null || !tag.hasKey(Constants.NBT.TANK) || (fluidTag = tag.getCompoundTag(Constants.NBT.TANK)) == null || (fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null)
-            fillAmount = Math.min(capacity, resource.amount);
-
-        if (fluid == null)
-        {
-            if (doFill)
-            {
-                fluid = resource.copy();
-                fluid.amount = 0;
-            }
-        }
-        else if (!fluid.isFluidEqual(resource))
-            return 0;
-        else
-            fillAmount = Math.min(capacity - fluid.amount, resource.amount);
-
-        fillAmount = Math.max(fillAmount, 0);
-
-        if (doFill)
-        {
-            if (tag == null)
-                stack.setTagCompound(new NBTTagCompound());
-
-            tag = stack.getTagCompound();
-            fluid.amount += fillAmount;
-            tag.setTag(Constants.NBT.TANK, fluid.writeToNBT(fluidTag == null ? new NBTTagCompound() : fluidTag));
-        }
-
-        return fillAmount;
-    }
-
-    @Override
-    public FluidStack drain(ItemStack stack, int maxDrain, boolean doDrain)
-    {
-        NBTTagCompound tag = stack.getTagCompound(), fluidTag = null;
-        FluidStack fluid;
-
-        if (tag == null || !tag.hasKey(Constants.NBT.TANK) || (fluidTag = tag.getCompoundTag(Constants.NBT.TANK)) == null || (fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null)
-        {
-            if (fluidTag != null)
-                tag.removeTag(Constants.NBT.TANK);
-            return null;
-        }
-
-        int drainAmount = Math.min(maxDrain, fluid.amount);
-
-        if (doDrain)
-        {
-            tag.removeTag(Constants.NBT.TANK);
-            fluid.amount -= drainAmount;
-            if (fluid.amount > 0)
-                fill(stack, fluid, true);
-        }
-
-        fluid.amount = drainAmount;
-        return fluid;
     }
 
     @Override

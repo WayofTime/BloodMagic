@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -41,41 +42,42 @@ public class ItemUpgradeTome extends Item implements IVariantProvider
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote)
         {
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
         }
 
         LivingArmourUpgrade upgrade = LivingUpgrades.getUpgrade(stack);
         if (upgrade == null)
         {
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
         }
 
         ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-        if (chestStack != null && chestStack.getItem() instanceof ItemLivingArmour)
+        if (chestStack.getItem() instanceof ItemLivingArmour)
         {
             LivingArmour armour = ItemLivingArmour.getLivingArmourFromStack(chestStack);
             if (armour == null)
             {
-                return super.onItemRightClick(stack, world, player, hand);
+                return super.onItemRightClick(world, player, hand);
             }
 
             if (armour.upgradeArmour(player, upgrade))
             {
                 ItemLivingArmour.setLivingArmour(chestStack, armour);
 //                ((ItemLivingArmour) chestStack.getItem()).setLivingArmour(stack, armour, false);
-                stack.stackSize--;
+                stack.shrink(1);
             }
         }
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
         for (Entry<String, Integer> entry : LivingArmourHandler.upgradeMaxLevelMap.entrySet())
         {

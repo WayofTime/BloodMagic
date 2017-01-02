@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,10 +34,10 @@ public class ItemSentientArmourGem extends Item
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
         boolean hasSentientArmour = false;
-        ItemStack[] armourInventory = player.inventory.armorInventory;
+        NonNullList<ItemStack> armourInventory = player.inventory.armorInventory;
         for (ItemStack armourStack : armourInventory)
         {
             if (armourStack != null && armourStack.getItem() instanceof ItemSentientArmour)
@@ -57,14 +58,14 @@ public class ItemSentientArmourGem extends Item
             ItemSentientArmour.convertPlayerArmour(type, will, player);
         }
 
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+        return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
     }
 
     @SideOnly(Side.CLIENT)
     public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining)
     {
         boolean hasSentientArmour = false;
-        ItemStack[] armourInventory = player.inventory.armorInventory;
+        NonNullList<ItemStack> armourInventory = player.inventory.armorInventory;
         for (ItemStack armourStack : armourInventory)
         {
             if (armourStack != null && armourStack.getItem() instanceof ItemSentientArmour)

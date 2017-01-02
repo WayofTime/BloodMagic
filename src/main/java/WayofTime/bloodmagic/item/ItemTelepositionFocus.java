@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -47,14 +48,14 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
         for (int i = 0; i < names.length; i++)
             list.add(new ItemStack(id, 1, i));
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
         if (player.isSneaking())
         {
@@ -62,11 +63,11 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
 
             if (mop != null && mop.typeOfHit == RayTraceResult.Type.BLOCK)
             {
-                setBlockPos(stack, world, mop.getBlockPos());
+                setBlockPos(player.getHeldItem(hand), world, mop.getBlockPos());
             }
         }
 
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     @Override

@@ -56,8 +56,9 @@ public class ItemExperienceBook extends Item implements IVariantProvider
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote)
         {
             if (player.isSneaking())
@@ -95,7 +96,7 @@ public class ItemExperienceBook extends Item implements IVariantProvider
             if (player.experienceLevel % 5 == 0)
             {
                 float f = player.experienceLevel > 30 ? 1.0F : (float) player.experienceLevel / 30.0F;
-                player.worldObj.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_LEVELUP, player.getSoundCategory(), f * 0.75F, 1.0F);
+                player.getEntityWorld().playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_LEVELUP, player.getSoundCategory(), f * 0.75F, 1.0F);
             }
         } else
         {

@@ -40,7 +40,7 @@ public class InventoryHolding extends ItemInventory
             {
                 ItemStack itemStack = entityPlayer.inventory.getStackInSlot(i);
 
-                if (itemStack != null && Utils.hasUUID(itemStack))
+                if (!itemStack.isEmpty() && Utils.hasUUID(itemStack))
                 {
                     if (itemStack.getTagCompound().getLong(Constants.NBT.MOST_SIG) == parentStackUUID.getMostSignificantBits() && itemStack.getTagCompound().getLong(Constants.NBT.LEAST_SIG) == parentStackUUID.getLeastSignificantBits())
                     {

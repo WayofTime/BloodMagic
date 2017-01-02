@@ -22,7 +22,7 @@ public class ItemBlockString extends ItemBlock {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return getBlock().getUnlocalizedName() + "." + getBlock().getTypes()[MathHelper.clamp_int(stack.getItemDamage(), 0, 15)];
+        return getBlock().getUnlocalizedName() + "." + getBlock().getTypes()[MathHelper.clamp(stack.getItemDamage(), 0, 15)];
     }
 
     @Override

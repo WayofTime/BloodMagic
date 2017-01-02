@@ -28,6 +28,7 @@ import net.minecraft.item.ItemTool;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -80,7 +81,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
         subItems.add(Utils.setUnbreakable(new ItemStack(itemIn)));
     }
@@ -125,8 +126,9 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (player.isSneaking())
             setActivatedState(stack, !getActivated(stack));
 
@@ -140,7 +142,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
 
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     @Override
@@ -244,12 +246,12 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
 
             while (count >= maxStackSize)
             {
-                world.spawnEntityInWorld(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(maxStackSize)));
+                world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(maxStackSize)));
                 count -= maxStackSize;
             }
 
             if (count > 0)
-                world.spawnEntityInWorld(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(count)));
+                world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(count)));
         }
     }
 

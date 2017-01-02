@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
@@ -49,7 +50,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
         for (int i = 0; i < names.length; i++)
             list.add(new ItemStack(id, 1, i));
@@ -110,7 +111,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     @Override
     public IItemFilter getOutputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
     {
-        IItemFilter testFilter = new TestItemFilter();
+        IItemFilter testFilter;
 
         switch (filterStack.getMetadata())
         {
@@ -142,9 +143,9 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
             }
 
             ItemStack ghostStack = GhostItemHelper.getStackFromGhost(stack);
-            if (ghostStack.stackSize == 0)
+            if (ghostStack.isEmpty())
             {
-                ghostStack.stackSize = Integer.MAX_VALUE;
+                ghostStack.setCount(Integer.MAX_VALUE);
             }
 
             filteredList.add(ghostStack);

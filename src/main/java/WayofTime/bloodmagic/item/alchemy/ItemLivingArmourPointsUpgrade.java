@@ -16,6 +16,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -68,7 +69,7 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
 
         if (player == null || !player.capabilities.isCreativeMode)
         {
-            --stack.stackSize;
+            stack.shrink(1);
         }
 
         if (!worldIn.isRemote)
@@ -109,10 +110,10 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand)
     {
         playerIn.setActiveHand(hand);
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(hand));
     }
 
     private void buildItemList()
@@ -128,7 +129,7 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
         for (int i = 0; i < names.size(); i++)
             list.add(new ItemStack(id, 1, i));
@@ -151,7 +152,7 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
     public static ItemStack getStack(String key, int stackSize)
     {
         ItemStack stack = getStack(key);
-        stack.stackSize = stackSize;
+        stack.setCount(stackSize);
 
         return stack;
     }

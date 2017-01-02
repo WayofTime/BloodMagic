@@ -34,7 +34,7 @@ public class ItemLavaCrystal extends ItemBindableBase implements IFuelHandler, I
         NetworkHelper.getSoulNetwork(this.getOwnerUUID(itemStack)).syphon(25);
         ItemStack copiedStack = itemStack.copy();
         copiedStack.setItemDamage(copiedStack.getItemDamage());
-        copiedStack.stackSize = 1;
+        copiedStack.setCount(1);
         return copiedStack;
     }
 

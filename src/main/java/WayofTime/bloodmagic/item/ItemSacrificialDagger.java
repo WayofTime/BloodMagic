@@ -63,7 +63,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
         for (int i = 0; i < names.length; i++)
             list.add(new ItemStack(id, 1, i));
@@ -81,7 +81,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
     {
-        if (entityLiving instanceof EntityPlayer && !entityLiving.worldObj.isRemote)
+        if (entityLiving instanceof EntityPlayer && !entityLiving.getEntityWorld().isRemote)
             PlayerSacrificeHelper.sacrificePlayerHealth((EntityPlayer) entityLiving);
     }
 
@@ -98,10 +98,11 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
 
         if (this.canUseForSacrifice(stack))
         {
@@ -124,7 +125,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
         {
             SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, ConfigHandler.sacrificialDaggerDamage, lpAdded);
             if (MinecraftForge.EVENT_BUS.post(evt))
-                return super.onItemRightClick(stack, world, player, hand);
+                return super.onItemRightClick(world, player, hand);
 
             if (evt.shouldDrainHealth)
             {
@@ -140,7 +141,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
             }
 
             if (!evt.shouldFillAltar)
-                return super.onItemRightClick(stack, world, player, hand);
+                return super.onItemRightClick(world, player, hand);
 
             lpAdded = evt.lpAdded;
         }
@@ -154,12 +155,12 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
             world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);
 
         if (!world.isRemote && PlayerHelper.isFakePlayer(player))
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
 
         // TODO - Check if SoulFray is active
         PlayerSacrificeHelper.findAndFillAltar(world, player, lpAdded, false);
 
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     @Override

@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
@@ -173,12 +174,12 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
 
         int maxAbsorption = 100000;
 
-        if (source.equals(DamageSource.drown))
+        if (source.equals(DamageSource.DROWN))
         {
             return new ArmorProperties(-1, 0, 0);
         }
 
-        if (source.equals(DamageSource.outOfWorld))
+        if (source.equals(DamageSource.OUT_OF_WORLD))
         {
             return new ArmorProperties(-1, 0, 0);
         }
@@ -191,7 +192,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             ItemStack leggings = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
             ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 
-            if (helmet == null || leggings == null || boots == null)
+            if (helmet.isEmpty() || leggings.isEmpty() || boots.isEmpty())
             {
                 damageAmount *= (armourReduction);
 
@@ -371,18 +372,18 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
         if (slot == EntityEquipmentSlot.CHEST)
         {
-            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 318145), "Armor modifier", this.getHealthBonus(stack), 0));
-            multimap.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 8145), "Armor modifier", this.getKnockbackResistance(stack), 0));
-            multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 94021), "Armor modifier", this.getSpeedBoost(stack), 2));
-            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 96721), "Armor modifier", this.getDamageBoost(stack), 2));
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 73245), "Armor modifier", this.getAttackSpeedBoost(stack), 2));
+            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(new UUID(0, 318145), "Armor modifier", this.getHealthBonus(stack), 0));
+            multimap.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.getName(), new AttributeModifier(new UUID(0, 8145), "Armor modifier", this.getKnockbackResistance(stack), 0));
+            multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(new UUID(0, 94021), "Armor modifier", this.getSpeedBoost(stack), 2));
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(new UUID(0, 96721), "Armor modifier", this.getDamageBoost(stack), 2));
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(new UUID(0, 73245), "Armor modifier", this.getAttackSpeedBoost(stack), 2));
         }
         return multimap;
     }
 
     public static void revertAllArmour(EntityPlayer player)
     {
-        ItemStack[] armourInventory = player.inventory.armorInventory;
+        NonNullList<ItemStack> armourInventory = player.inventory.armorInventory;
         for (ItemStack stack : armourInventory)
         {
             if (stack != null && stack.getItem() instanceof ItemSentientArmour)
@@ -423,9 +424,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         }
 
         NBTTagCompound tag = omegaTag.getCompoundTag("armour");
-        ItemStack armourStack = ItemStack.loadItemStackFromNBT(tag);
-
-        return armourStack;
+        return new ItemStack(tag);
     }
 
     public static boolean convertPlayerArmour(EnumDemonWillType type, double will, EntityPlayer player)

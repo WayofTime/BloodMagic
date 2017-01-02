@@ -43,8 +43,9 @@ public class ItemArcaneAshes extends Item implements IVariantProvider
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        ItemStack stack = player.getHeldItem(hand);
         BlockPos newPos = blockPos.offset(side);
 
         if (world.isAirBlock(newPos))

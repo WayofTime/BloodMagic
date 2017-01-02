@@ -7,6 +7,7 @@ import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -113,7 +114,7 @@ public class ItemComponent extends Item implements IVariantProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
         for (int i = 0; i < names.size(); i++)
             list.add(new ItemStack(id, 1, i));
@@ -136,7 +137,7 @@ public class ItemComponent extends Item implements IVariantProvider
     public static ItemStack getStack(String key, int stackSize)
     {
         ItemStack stack = getStack(key);
-        stack.stackSize = stackSize;
+        stack.setCount(stackSize);
 
         return stack;
     }

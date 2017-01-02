@@ -57,15 +57,16 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote)
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
 
         if (!player.capabilities.isCreativeMode)
         {
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.creativeOnly"));
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
         }
 
         stack = NBTHelper.checkNBT(stack);
@@ -79,12 +80,12 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
 
             setTierToBuild(EnumAltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)]);
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)));
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
         }
 
         RayTraceResult rayTrace = rayTrace(world, player, false);
         if (rayTrace == null || rayTrace.typeOfHit == RayTraceResult.Type.MISS || rayTrace.typeOfHit == RayTraceResult.Type.ENTITY)
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
 
         if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK && world.getBlockState(rayTrace.getBlockPos()).getBlock() instanceof BlockAltar)
         {
@@ -95,7 +96,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
             world.notifyBlockUpdate(rayTrace.getBlockPos(), state, state, 3);
         }
 
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     @Override
@@ -132,7 +133,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
 
     public String destroyAltar(EntityPlayer player)
     {
-        World world = player.worldObj;
+        World world = player.getEntityWorld();
         if (world.isRemote)
             return "";
 

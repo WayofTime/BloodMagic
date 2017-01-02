@@ -9,10 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -71,8 +68,9 @@ public class ItemRitualReader extends Item implements IVariantProvider
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         RayTraceResult ray = this.rayTrace(world, player, false);
         if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
         {
@@ -93,8 +91,9 @@ public class ItemRitualReader extends Item implements IVariantProvider
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote)
         {
             EnumRitualReaderState state = this.getState(stack);
@@ -123,11 +122,11 @@ public class ItemRitualReader extends Item implements IVariantProvider
                     break;
                 case SET_WILL_TYPES:
                     List<EnumDemonWillType> typeList = new ArrayList<EnumDemonWillType>();
-                    ItemStack[] inv = player.inventory.mainInventory;
+                    NonNullList<ItemStack> inv = player.inventory.mainInventory;
                     for (int i = 0; i < 9; i++)
                     {
-                        ItemStack testStack = inv[i];
-                        if (testStack == null)
+                        ItemStack testStack = inv.get(i);
+                        if (testStack.isEmpty())
                         {
                             continue;
                         }
@@ -177,7 +176,7 @@ public class ItemRitualReader extends Item implements IVariantProvider
             }
         }
 
-        return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
+        return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
     public BlockPos getBlockPos(ItemStack stack)

@@ -44,10 +44,10 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
         if (world.isRemote)
-            return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
+            return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
 
         IBlockState hitState = world.getBlockState(pos);
         if (player.isSneaking())
@@ -60,19 +60,20 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
                 if (!docs.isEmpty())
                 {
                     ChatUtil.sendNoSpam(player, docs.toArray(new ITextComponent[docs.size()]));
-                    return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
+                    return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
                 }
             }
         }
 
-        return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
+        return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote)
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
 
         stack = NBTHelper.checkNBT(stack);
 
@@ -87,10 +88,10 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
             currentDisplayedTier = EnumAltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)];
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)));
 
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(world, player, hand);
         }
 
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     public boolean trySetDisplayedTier(World world, BlockPos pos)

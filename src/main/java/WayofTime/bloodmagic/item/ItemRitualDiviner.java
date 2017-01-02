@@ -15,11 +15,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -81,15 +77,16 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
         for (int i = 0; i < names.length; i++)
             list.add(new ItemStack(id, 1, i));
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (player.isSneaking())
         {
             if (world.isRemote)
@@ -214,12 +211,11 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
             return true;
         }
 
-        ItemStack[] inventory = player.inventory.mainInventory;
-        for (int i = 0; i < inventory.length; i++)
+        NonNullList<ItemStack> inventory = player.inventory.mainInventory;
+        for (ItemStack newStack : inventory)
         {
-            ItemStack newStack = inventory[i];
-            if (newStack == null)
-            {
+            if (newStack.isEmpty()) {
+
                 continue;
             }
             Item item = newStack.getItem();
@@ -228,12 +224,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                 Block block = ((ItemBlock) item).getBlock();
                 if (block == ModBlocks.RITUAL_STONE)
                 {
-                    newStack.stackSize--;
-                    if (newStack.stackSize <= 0)
-                    {
-                        inventory[i] = null;
-                    }
-
+                    newStack.shrink(1);
                     return true;
                 }
             }
@@ -344,8 +335,9 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         RayTraceResult ray = this.rayTrace(world, player, false);
         if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
         {
@@ -372,7 +364,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         {
             EntityPlayer player = (EntityPlayer) entityLiving;
 
-            RayTraceResult ray = this.rayTrace(player.worldObj, player, false);
+            RayTraceResult ray = this.rayTrace(player.getEntityWorld(), player, false);
             if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
             {
                 return false;
