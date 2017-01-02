@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -143,6 +144,19 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
             return 1;
         }
         return 1.0 - (getWill(type, stack) / maxWill);
+    }
+
+    @Override
+    public int getRGBDurabilityForDisplay(ItemStack stack)
+    {
+        EnumDemonWillType type = this.getCurrentType(stack);
+        double maxWill = getMaxWill(type, stack);
+        if (maxWill <= 0)
+        {
+            return 1;
+        }
+
+        return MathHelper.hsvToRGB(Math.max(0.0F, (float)(getWill(type, stack)) / (float) maxWill) / 3.0F, 1.0F, 1.0F);
     }
 
     @Override

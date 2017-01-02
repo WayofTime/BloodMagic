@@ -14,6 +14,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -72,7 +73,7 @@ public class ItemInscriptionTool extends ItemBindableBase implements IVariantPro
             {
                 stack.getTagCompound().setInteger(Constants.NBT.USES, --uses);
                 if (uses <= 0)
-                    player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+                    player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
             }
             return EnumActionResult.SUCCESS;
         }
@@ -83,16 +84,23 @@ public class ItemInscriptionTool extends ItemBindableBase implements IVariantPro
     @Override
     public boolean showDurabilityBar(ItemStack stack)
     {
-        return true;
+        return stack.hasTagCompound();
     }
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack)
     {
-        stack = NBTHelper.checkNBT(stack);
         int uses = stack.getTagCompound().getInteger(Constants.NBT.USES);
 
         return 1.0 - ((double) uses / (double) 10);
+    }
+
+    @Override
+    public int getRGBDurabilityForDisplay(ItemStack stack)
+    {
+        int uses = stack.getTagCompound().getInteger(Constants.NBT.USES);
+
+        return MathHelper.hsvToRGB(Math.max(0.0F, (float)(uses) / 10) / 3.0F, 1.0F, 1.0F);
     }
 
     @Override
