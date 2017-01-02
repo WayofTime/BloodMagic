@@ -1,0 +1,47 @@
+{
+  "dungeonWeight": 4,
+  "structureMap": {
+    "bloodmagic:Building1": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  "doorMap": {
+    "south": [
+      {
+        "x": 7,
+        "y": 0,
+        "z": 14
+      },
+      {
+        "x": 4,
+        "y": 8,
+        "z": 14
+      }
+    ],
+    "north": [
+      {
+        "x": 4,
+        "y": 8,
+        "z": 0
+      }
+    ]
+  },
+  "descriptorList": [
+    {
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "maximumOffset": {
+        "x": 15,
+        "y": 13,
+        "z": 15
+      },
+      "blockPosCache": [],
+      "cache": true
+    }
+  ]
+}

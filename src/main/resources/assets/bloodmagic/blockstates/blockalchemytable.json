@@ -1,0 +1,50 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": { },
+        "model": "bloodmagic:ModelAlchemyTable.obj",
+        "custom": { "flip-v": true },
+        "transform" : "forge:default-block",
+        "uvlock": true
+    },
+    "variants": {
+        "direction": {
+    		"down": {
+    		},
+    		"up": {
+    		},
+    		"north": {
+    			"transform": {
+            		"rotation": {"y": -90}
+        		}
+    		},
+    		"south": {
+    			"transform": {
+            		"rotation": {"y": 90}
+        		}
+    		},
+    		"east": {
+    			"transform": {
+            		"rotation": {"y": 180}
+        		}
+    		},
+    		"west": {
+
+    		}
+    	},
+    	"invisible": {
+    		"true": {
+    			"model": "cube_all",
+    			"textures": {
+		          	"all": "bloodmagic:blocks/empty"
+		        }
+    		},
+    		"false": {
+    			
+    		}
+    	},
+		"inventory": [{
+
+        }]
+    }
+}

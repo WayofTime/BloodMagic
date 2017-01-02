@@ -1,0 +1,41 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "water": {
+        "textures": {
+          "layer0": "bloodmagic:items/WaterScribeTool"
+        }
+      },
+      "fire": {
+        "textures": {
+          "layer0": "bloodmagic:items/FireScribeTool"
+        }
+      },
+      "earth": {
+        "textures": {
+          "layer0": "bloodmagic:items/EarthScribeTool"
+        }
+      },
+      "air": {
+        "textures": {
+          "layer0": "bloodmagic:items/AirScribeTool"
+        }
+      },
+      "dusk": {
+        "textures": {
+          "layer0": "bloodmagic:items/DuskScribeTool"
+        }
+      },
+      "dawn": {
+        "textures": {
+          "layer0": "bloodmagic:items/DawnScribeTool"
+        }
+      }
+    }
+  }
+}

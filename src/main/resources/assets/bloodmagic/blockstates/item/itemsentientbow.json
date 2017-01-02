@@ -1,0 +1,34 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-tool"
+  },
+  "variants": {
+    "type": {
+      "default": {
+        "model": "bloodmagic:item/ItemSentientBow"
+      },
+      "corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBow_corrosive"
+        }
+      },
+      "destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBow_destructive"
+        }
+      },
+      "vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBow_vengeful"
+        }
+      },
+      "steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBow_steadfast"
+        }
+      }
+    }
+  }
+}

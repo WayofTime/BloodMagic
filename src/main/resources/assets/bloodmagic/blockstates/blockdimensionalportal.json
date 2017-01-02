@@ -1,0 +1,13 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {},
+    "uvlock": true
+  },
+  "variants": {
+    "meta": {
+      "0": {"model": "bloodmagic:BlockDimensionalPortalNS"},
+      "1": {"model": "bloodmagic:BlockDimensionalPortalEW"}
+    }
+  }
+}

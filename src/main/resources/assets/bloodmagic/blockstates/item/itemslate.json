@@ -1,0 +1,36 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "blank": {
+        "textures": {
+          "layer0": "bloodmagic:items/BlankSlate"
+        }
+      },
+      "reinforced": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReinforcedSlate"
+        }
+      },
+      "imbued": {
+        "textures": {
+          "layer0": "bloodmagic:items/InfusedSlate"
+        }
+      },
+      "demonic": {
+        "textures": {
+          "layer0": "bloodmagic:items/DemonSlate"
+        }
+      },
+      "ethereal": {
+        "textures": {
+          "layer0": "bloodmagic:items/EtherealSlate"
+        }
+      }
+    }
+  }
+}

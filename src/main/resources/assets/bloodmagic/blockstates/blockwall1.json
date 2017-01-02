@@ -1,0 +1,109 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart",
+      "particle": "#wall"
+    },
+    "model": "bloodmagic:BlockBlank",
+    "transform" : "forge:default-block"
+  },
+  "variants": {
+  	"up": {
+  		"true": {"submodel": "minecraft:wall_post"},
+  		"false": {}
+  	},
+  	"north": {
+  		"true": {"submodel": "minecraft:wall_side", "uvlock": true},
+  		"false": {}
+  	},
+  	"south": {
+  		"true": {"submodel": "minecraft:wall_side", "uvlock": true, "y": 180},
+  		"false": {}
+  	},
+  	"east": {
+  		"true": {"submodel": "minecraft:wall_side", "uvlock": true, "y": 90},
+  		"false": {}
+  	},
+  	"west": {
+  		"true": {"submodel": "minecraft:wall_side", "uvlock": true, "y": 270},
+  		"false": {}
+  	},
+    "type": {
+    	"brick_raw": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_brick3"
+		  	}
+    	},
+    	"brick_corrosive": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_brick3_c"
+		  	}
+    	},
+    	"brick_destructive": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_brick3_d"
+		  	}
+    	},
+    	"brick_vengeful": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_brick3_v"
+		  	}
+    	},
+    	"brick_steadfast": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_brick3_s"
+		  	}
+    	},
+    	"smallbrick_raw": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_smallbrick"
+		  	}
+    	},
+    	"smallbrick_corrosive": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_smallbrick_c"
+		  	}
+    	},
+    	"smallbrick_destructive": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_smallbrick_d"
+		  	}
+    	},
+    	"smallbrick_vengeful": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_smallbrick_v"
+		  	}
+    	},
+    	"smallbrick_steadfast": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_smallbrick_s"
+		  	}
+    	},
+    	"large_raw": {
+    		
+    	},
+    	"large_corrosive": {
+    		"textures": {
+			    "wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart_c"
+		  	}
+    	},
+		"large_destructive": {
+			"textures": {
+				"wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart_d"
+			}
+		},
+		"large_vengeful": {
+			"textures": {
+				"wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart_v"
+			}
+		},
+		"large_steadfast": {
+			"textures": {
+				"wall": "bloodmagic:blocks/dungeon/dungeon_pillarheart_s"
+			}
+		}
+    },
+    "inventory": [{}]
+  }
+}

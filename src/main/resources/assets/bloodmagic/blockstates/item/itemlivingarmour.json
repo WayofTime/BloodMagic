@@ -1,0 +1,31 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "armour": {
+      "head": {
+        "textures": {
+          "layer0": "bloodmagic:items/LivingHelmet"
+        }
+      },
+      "body": {
+        "textures": {
+          "layer0": "bloodmagic:items/LivingPlate"
+        }
+      },
+      "leg": {
+        "textures": {
+          "layer0": "bloodmagic:items/LivingLeggings"
+        }
+      },
+      "feet": {
+        "textures": {
+          "layer0": "bloodmagic:items/LivingBoots"
+        }
+      }
+    }
+  }
+}

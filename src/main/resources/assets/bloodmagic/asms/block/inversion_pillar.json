@@ -1,0 +1,13 @@
+{
+  "parameters": {
+    "clip_time": [ "-/", "#offset", "#cycle_length" ]
+  },
+  "clips": {
+    "moving": [ "apply", "bloodmagic:block/pillar_mid@moving", "#clip_time" ]
+  },
+  "states": [
+    "moving"
+  ],
+  "transitions": {},
+  "start_state": "moving"
+}

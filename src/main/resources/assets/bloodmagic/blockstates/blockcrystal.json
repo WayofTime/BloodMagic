@@ -1,0 +1,22 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "large": {
+        "textures": {
+          "all": "bloodmagic:blocks/ShardCluster"
+        }
+      },
+      "brick": {
+        "textures": {
+          "all": "bloodmagic:blocks/ShardClusterBrick"
+        }
+      }
+    }
+  }
+}

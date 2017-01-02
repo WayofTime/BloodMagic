@@ -1,0 +1,17 @@
+{
+  "elements": [
+    {   
+	"from": [ 0, 0, 0 ],
+      "to": [ 16, 16, 16 ],
+      "faces": {
+        "up": { "uv": [ 0, 0, 16, 16 ], "texture": "#sideTop" },
+        "down": { "uv": [ 0, 0, 16, 16 ], "texture": "#sideBottom" },
+        "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#end" },
+        "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#end" },
+        "west": { "uv": [ 16, 0, 0, 16 ], "texture": "#sideTop", "rotation": 270 },
+        "east": { "uv": [ 16, 0, 0, 16 ], "texture": "#sideBottom", "rotation": 270 }
+      }
+    }
+  ]
+}
+

@@ -1,0 +1,35 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+	"type=brick1_raw": [
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick1"}},
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick2"}},
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick3"}}
+	],
+	"type=brick1_corrosive": [
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick1_c"}},
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick2_c"}},
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick3_c"}}
+	],
+	"type=brick1_destructive": [
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick1_d"}},
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick2_d"}},
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick3_d"}}
+	],
+	"type=brick1_vengeful": [
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick1_v"}},
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick2_v"}},
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick3_v"}}
+	],
+	"type=brick1_steadfast": [
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick1_s"}},
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick2_s"}},
+	  {"textures": {"all": "bloodmagic:blocks/dungeon/dungeon_brick3_s"}}
+	]
+  }
+}

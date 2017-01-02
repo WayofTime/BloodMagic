@@ -1,0 +1,21 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "weak": {
+        "textures": {
+          "layer0": "bloodmagic:items/WeakBloodShard"
+        }
+      },
+      "demonic": {
+        "textures": {
+          "layer0": "bloodmagic:items/DemonBloodShard"
+        }
+      }
+    }
+  }
+}

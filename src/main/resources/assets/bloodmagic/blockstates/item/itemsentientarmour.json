@@ -1,0 +1,111 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "armour": {
+      "head_default": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientHelmet"
+        }
+      },
+      "body_default": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientPlate"
+        }
+      },
+      "leg_default": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientLeggings"
+        }
+      },
+      "feet_default": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBoots"
+        }
+      },
+      "head_corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientHelmet_corrosive"
+        }
+      },
+      "body_corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientPlate_corrosive"
+        }
+      },
+      "leg_corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientLeggings_corrosive"
+        }
+      },
+      "feet_corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBoots_corrosive"
+        }
+      },
+      "head_vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientHelmet_vengeful"
+        }
+      },
+      "body_vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientPlate_vengeful"
+        }
+      },
+      "leg_vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientLeggings_vengeful"
+        }
+      },
+      "feet_vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBoots_vengeful"
+        }
+      },
+      "head_destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientHelmet_destructive"
+        }
+      },
+      "body_destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientPlate_destructive"
+        }
+      },
+      "leg_destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientLeggings_destructive"
+        }
+      },
+      "feet_destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBoots_destructive"
+        }
+      },
+      "head_steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientHelmet_steadfast"
+        }
+      },
+      "body_steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientPlate_steadfast"
+        }
+      },
+      "leg_steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientLeggings_steadfast"
+        }
+      },
+      "feet_steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBoots_steadfast"
+        }
+      }
+    }
+  }
+}

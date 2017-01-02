@@ -1,0 +1,65 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "bloodmagic:routing/ModelMasterRoutingNodeCore.obj",
+		"transform" : "forge:default-block",
+		"custom": { "flip-v": true },
+		"uvlock": true
+	},
+	"variants": {
+		"north": {
+			"true": {
+				"submodel": "bloodmagic:routing/ModelMasterRoutingNodeBase.obj", 
+				"transform": {
+            		"rotation": {"x": 90}
+        		}
+        	},
+			"false": {}
+		},
+		"south": {
+			"true": {
+				"submodel": "bloodmagic:routing/ModelMasterRoutingNodeBase.obj", 
+				"transform": {
+            		"rotation": {"x": -90}
+        		}
+        	},
+			"false": {}
+		},
+		"east": {
+			"true": {
+				"submodel": "bloodmagic:routing/ModelMasterRoutingNodeBase.obj", 
+				"transform": {
+            		"rotation": {"z": 90}
+        		}
+        	},
+			"false": {}
+		},
+		"west": {
+			"true": {
+				"submodel": "bloodmagic:routing/ModelMasterRoutingNodeBase.obj", 
+				"transform": {
+            		"rotation": {"z": -90}
+        		}
+        	},
+			"false": {}
+		},
+		"down": {
+			"true": {
+				"submodel": "bloodmagic:routing/ModelMasterRoutingNodeBase.obj"
+        	}, 
+			"false": {}
+		},
+		"up": {
+			"true": {
+				"submodel": "bloodmagic:routing/ModelMasterRoutingNodeBase.obj", 
+				"transform": {
+            		"rotation": {"z": -180}
+        		}
+			}, 
+			"false": {}
+		},
+		"inventory": [{
+			"submodel": "bloodmagic:routing/ModelMasterRoutingNodeBase.obj"
+        }]
+	}
+}

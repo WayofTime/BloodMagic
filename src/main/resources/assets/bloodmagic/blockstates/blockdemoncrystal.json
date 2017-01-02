@@ -1,0 +1,146 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": { "#crystal" : "bloodmagic:models/DefaultCrystal" },
+        "model": "bloodmagic:crystal/Crystal1.obj",
+        "custom": { "flip-v": true },
+        "transform" : "forge:default-block"
+    },
+    "variants": {
+    	"attached": {
+    		"down": {
+    			"transform": {
+            		"rotation": {"x": 180}
+        		}
+    		},
+    		"up": {
+    		},
+    		"north": {
+    			"transform": {
+            		"rotation": {"x": -90}
+        		}
+    		},
+    		"south": {
+    			"transform": {
+            		"rotation": {"x": 90}
+        		}
+    		},
+    		"east": {
+    			"transform": {
+            		"rotation": {"z": -90}
+        		}
+    		},
+    		"west": {
+    			"transform": {
+            		"rotation": {"z": 90}
+        		}
+    		}
+    	},
+    	"type": {
+    		"default": {
+	    		"textures": {
+	    			"#crystal" : "bloodmagic:models/DefaultCrystal"
+	    		}
+    		},
+    		"corrosive": {
+	    		"textures": {
+	    			"#crystal" : "bloodmagic:models/CorrosiveCrystal"
+	    		}
+    		},
+    		"destructive": {
+	    		"textures": {
+	    			"#crystal" : "bloodmagic:models/DestructiveCrystal"
+    			}
+    		},
+    		"vengeful": {
+    			"textures": {
+    				"#crystal" : "bloodmagic:models/VengefulCrystal"
+    			}
+    		},
+    		"steadfast": {
+    			"textures": {
+    				"#crystal" : "bloodmagic:models/SteadfastCrystal"
+    			}
+    		}
+    	},
+        "age": {
+        	"0": {
+
+      		},
+      		"1": {
+				"submodel": "bloodmagic:crystal/Crystal2.obj"
+      		},
+      		"2": {
+				"submodel": {
+					"crystal2": {"model": "bloodmagic:crystal/Crystal2.obj"},
+					"crystal3": {"model": "bloodmagic:crystal/Crystal3.obj"}
+				}
+      		},
+      		"3": {
+				"submodel": {
+					"crystal2": {"model": "bloodmagic:crystal/Crystal2.obj"},
+					"crystal3": {"model": "bloodmagic:crystal/Crystal3.obj"},
+					"crystal4": {"model": "bloodmagic:crystal/Crystal4.obj"}
+				}
+      		},
+      		"4": {
+				"submodel": {
+					"crystal2": {"model": "bloodmagic:crystal/Crystal2.obj"},
+					"crystal3": {"model": "bloodmagic:crystal/Crystal3.obj"},
+					"crystal4": {"model": "bloodmagic:crystal/Crystal4.obj"},
+					"crystal5": {"model": "bloodmagic:crystal/Crystal5.obj"}
+				}
+      		},
+      		"5": {
+				"submodel": {
+					"crystal2": {"model": "bloodmagic:crystal/Crystal2.obj"},
+					"crystal3": {"model": "bloodmagic:crystal/Crystal3.obj"},
+					"crystal4": {"model": "bloodmagic:crystal/Crystal4.obj"},
+					"crystal5": {"model": "bloodmagic:crystal/Crystal5.obj"},
+					"crystal6": {"model": "bloodmagic:crystal/Crystal6.obj"}
+				}
+      		},
+      		"6": {
+				"submodel": {
+					"crystal2": {"model": "bloodmagic:crystal/Crystal2.obj"},
+					"crystal3": {"model": "bloodmagic:crystal/Crystal3.obj"},
+					"crystal4": {"model": "bloodmagic:crystal/Crystal4.obj"},
+					"crystal5": {"model": "bloodmagic:crystal/Crystal5.obj"},
+					"crystal6": {"model": "bloodmagic:crystal/Crystal6.obj"},
+					"crystal7": {"model": "bloodmagic:crystal/Crystal7.obj"}
+				}
+      		}
+        },
+        "inventory": [{
+            "variants": {
+	            "type": {
+		    		"default": {
+			    		"textures": {
+			    			"#crystal" : "bloodmagic:models/DefaultCrystal"
+			    		}
+		    		},
+		    		"corrosive": {
+			    		"textures": {
+			    			"#crystal" : "bloodmagic:models/CorrosiveCrystal"
+			    		}
+		    		},
+		    		"destructive": {
+			    		"textures": {
+			    			"#crystal" : "bloodmagic:models/DestructiveCrystal"
+		    			}
+		    		},
+		    		"vengeful": {
+		    			"textures": {
+		    				"#crystal" : "bloodmagic:models/VengefulCrystal"
+		    			}
+		    		},
+		    		"steadfast": {
+		    			"textures": {
+		    				"#crystal" : "bloodmagic:models/SteadfastCrystal"
+	    				}
+	    			}
+				}	
+            }
+        }]
+    }
+}

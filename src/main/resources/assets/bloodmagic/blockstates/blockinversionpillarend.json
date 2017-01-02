@@ -1,0 +1,72 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { 
+    	"texture": "bloodmagic:models/pillar_base",
+    	"particle": "#texture"
+   	},
+    "transform" : "forge:default-block",
+    "model": "bloodmagic:pillar_bottom"
+  },
+  "variants": {
+    "type": {
+      "raw_bottom": {
+        "textures": {
+
+        }
+      },
+      "raw_top": {
+        "textures": {
+
+        },
+        "model": "bloodmagic:pillar_top"
+      },
+      "corrosive_bottom": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_base_c"
+        }
+      },
+      "corrosive_top": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_base_c"
+        },
+        "model": "bloodmagic:pillar_top"
+      },
+      "destructive_bottom": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_base_d"
+        }
+      },
+      "destructive_top": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_base_d"
+        },
+        "model": "bloodmagic:pillar_top"
+      },
+      "vengeful_bottom": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_base_v"
+        }
+      },
+      "vengeful_top": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_base_v"
+        },
+        "model": "bloodmagic:pillar_top"
+      },
+      "steadfast_bottom": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_base_s"
+        }
+      },
+      "steadfast_top": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_base_s"
+        },
+        "model": "bloodmagic:pillar_top"
+      }
+    }
+  }
+}
+
+

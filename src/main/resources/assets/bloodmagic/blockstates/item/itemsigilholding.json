@@ -1,0 +1,22 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "normal": {
+        "textures": {
+          "layer0": "bloodmagic:items/SigilOfHolding"
+        }
+      },
+      "color": {
+        "textures": {
+          "layer0": "bloodmagic:items/SigilOfHolding",
+          "layer1": "bloodmagic:items/SigilOverlay"
+        }
+      }
+    }
+  }
+}

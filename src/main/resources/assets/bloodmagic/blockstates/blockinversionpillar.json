@@ -1,0 +1,51 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { 
+    	"texture": "bloodmagic:models/pillar_mid",
+    	"particle": "#texture"
+   	},
+    "transform" : "forge:default-block",
+    "model": "bloodmagic:pillar_mid"
+  },
+  "variants": {
+    "type": {
+      "raw": {
+        "textures": {
+
+        }
+      },
+      "corrosive": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_mid_c"
+        }
+      },
+      "vengeful": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_mid_v"
+        }
+      },
+      "destructive": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_mid_d"
+        }
+      },
+      "steadfast": {
+        "textures": {
+			"texture": "bloodmagic:models/pillar_mid_s"
+        }
+      }
+    },
+    "static": {
+      "true": {
+        "model": "builtin/generated"
+      },
+      "false": {
+        "model": "bloodmagic:pillar_mid"
+      }
+    },
+    "inventory": [{}]
+  }
+}
+
+

@@ -1,0 +1,22 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "master": {
+        "textures": {
+          "all": "bloodmagic:blocks/MasterRitualStone"
+        }
+      },
+      "imperfect": {
+        "textures": {
+          "all": "bloodmagic:blocks/ImperfectRitualStone"
+        }
+      }
+    }
+  }
+}

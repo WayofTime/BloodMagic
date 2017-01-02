@@ -1,0 +1,176 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "reagentwater": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentWater"
+        }
+      },
+      "reagentlava": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentLava"
+        }
+      },
+      "reagentair": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentAir"
+        }
+      },
+      "reagentfastminer": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentFastMiner"
+        }
+      },
+      "reagentvoid": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentVoid"
+        }
+      },
+      "reagentgrowth": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentGrowth"
+        }
+      },
+      "reagentaffinity": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentAffinity"
+        }
+      },
+      "reagentsight": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentSight"
+        }
+      },
+      "reagentbinding": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentBinding"
+        }
+      },
+      "reagentsuppression": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentSuppression"
+        }
+      },
+      "frameparts": {
+        "textures": {
+          "layer0": "bloodmagic:items/ComponentFrameParts"
+        }
+      },
+      "reagentbloodlight": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentBloodLight"
+        }
+      },
+      "reagentmagnetism": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentMagnetism"
+        }
+      },
+      "reagenthaste": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentHaste"
+        }
+      },
+      "reagentcompression": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentCompression"
+        }
+      },
+      "reagentbridge": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentBridge"
+        }
+      },
+      "reagentseverance": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentSeverance"
+        }
+      },
+      "reagentteleposition": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentTeleposition"
+        }
+      },
+      "reagenttransposition": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentTransposition"
+        }
+      },
+      "ironsand": {
+        "textures": {
+          "layer0": "bloodmagic:items/IronSand"
+        }
+      },
+      "goldsand": {
+        "textures": {
+          "layer0": "bloodmagic:items/GoldSand"
+        }
+      },
+      "coalsand": {
+        "textures": {
+          "layer0": "bloodmagic:items/CoalSand"
+        }
+      },
+      "plantoil": {
+        "textures": {
+          "layer0": "bloodmagic:items/PlantOil"
+        }
+      },
+      "sulfur": {
+        "textures": {
+          "layer0": "bloodmagic:items/Sulfur"
+        }
+      },
+      "saltpeter": {
+        "textures": {
+          "layer0": "bloodmagic:items/Saltpeter"
+        }
+      },
+      "neurotoxin": {
+        "textures": {
+          "layer0": "bloodmagic:items/NeuroToxin"
+        }
+      },
+      "antiseptic": {
+        "textures": {
+          "layer0": "bloodmagic:items/Antiseptic"
+        }
+      },
+      "reagentholding": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentHolding"
+        }
+      },
+      "mundanelength": {
+        "textures": {
+          "layer0": "bloodmagic:items/MundaneLengtheningCatalyst"
+        }
+      },
+      "mundanepower": {
+        "textures": {
+          "layer0": "bloodmagic:items/MundanePowerCatalyst"
+        }
+      },
+      "reagentclaw": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentClaw"
+        }
+      },
+      "reagentbounce": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentBounce"
+        }
+      },
+      "reagentfrost": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentFrost"
+        }
+      }
+    }
+  }
+}

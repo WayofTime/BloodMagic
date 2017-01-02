@@ -1,0 +1,176 @@
+{
+    "textures": {
+        "particle": "#model"
+    },
+    "elements": [
+        {   
+        	"from": [ 6, 13, 6 ],
+            "to": [ 10, 14, 10 ],
+            "faces": {
+                "down":  { "uv": [ 5.75, 9, 6.75, 8 ], "texture": "#model" },
+                "up":    { "uv": [ 4.75, 8, 5.75, 9 ], "texture": "#model" },
+                "north": { "uv": [ 6.75, 9, 7.75, 9.25 ], "texture": "#model" },
+                "south": { "uv": [ 4.75, 9, 5.75, 9.25 ], "texture": "#model" },
+                "west":  { "uv": [ 3.75, 9, 4.75, 9.25 ], "texture": "#model" },
+                "east":  { "uv": [ 5.75, 9, 6.75, 9.25 ], "texture": "#model" }
+            },
+            "__comment": "Top symbol"
+        },
+        {   
+        	"from": [ 6, 2, 6 ],
+            "to": [ 10, 3, 10 ],
+            "faces": {
+                "down":  { "uv": [ 5.75, 10.75, 6.75, 9.75 ], "texture": "#model" },
+                "up":    { "uv": [ 4.75, 9.75, 5.75, 10.75 ], "texture": "#model" },
+                "north": { "uv": [ 6.75, 10.75, 7.75, 11 ], "texture": "#model" },
+                "south": { "uv": [ 4.75, 10.75, 5.75, 11 ], "texture": "#model" },
+                "west":  { "uv": [ 3.75, 10.75, 4.75, 11 ], "texture": "#model" },
+                "east":  { "uv": [ 5.75, 10.75, 6.75, 11 ], "texture": "#model" }
+            },
+            "__comment": "Bottom symbol"
+        },
+        {   
+        	"from": [ 2, 6, 6 ],
+            "to": [ 3, 10, 10 ],
+            "faces": {
+                "down":  { "uv": [ 4.5, 12.5, 4.75, 11.5 ], "texture": "#model" },
+                "up":    { "uv": [ 4.25, 11.5, 4.5, 12.5 ], "texture": "#model" },
+                "north": { "uv": [ 5.5, 12.5, 5.75, 13.5 ], "texture": "#model" },
+                "south": { "uv": [ 4.25, 12.5, 4.5, 13.5 ], "texture": "#model" },
+                "west":  { "uv": [ 3.25, 12.5, 4.25, 13.5 ], "texture": "#model" },
+                "east":  { "uv": [ 4.5, 12.5, 5.5, 13.5 ], "texture": "#model" }
+            },
+            "__comment": "Left symbol"
+        },
+        {   
+        	"from": [ 13, 6, 6 ],
+            "to": [ 14, 10, 10 ],
+            "faces": {
+                "down":  { "uv": [ 4.5, 15, 4.75, 14 ], "texture": "#model" },
+                "up":    { "uv": [ 4.25, 14, 4.5, 15 ], "texture": "#model" },
+                "north": { "uv": [ 5.5, 15, 5.75, 16 ], "texture": "#model" },
+                "south": { "uv": [ 4.25, 15, 4.5, 16 ], "texture": "#model" },
+                "west":  { "uv": [ 3.25, 15, 4.25, 16 ], "texture": "#model" },
+                "east":  { "uv": [ 4.5, 15, 5.5, 16 ], "texture": "#model" }
+            },
+            "__comment": "Right symbol"
+        },
+        {   
+        	"from": [ 7, 13, 10 ],
+            "to": [ 9, 14, 15 ],
+            "faces": {
+                "down":  { "uv": [ 1.75, 9.25, 2.25, 8 ], "texture": "#model" },
+                "up":    { "uv": [ 1.25, 8, 1.75, 9.25 ], "texture": "#model" },
+                "north": { "uv": [ 3, 9.25, 3.5, 9.5 ], "texture": "#model" },
+                "south": { "uv": [ 1.25, 9.25, 1.75, 9.5 ], "texture": "#model" },
+                "west":  { "uv": [ 0, 9.25, 1.25, 9.5 ], "texture": "#model" },
+                "east":  { "uv": [ 1.75, 9.25, 3, 9.5 ], "texture": "#model" }
+            },
+            "__comment": "Top holding bar"
+        },
+        {   
+        	"from": [ 7, 2, 10 ],
+            "to": [ 9, 3, 15 ],
+            "faces": {
+                "down":  { "uv": [ 1.75, 11, 2.25, 9.75 ], "texture": "#model" },
+                "up":    { "uv": [ 1.25, 9.75, 1.75, 11 ], "texture": "#model" },
+                "north": { "uv": [ 3, 11, 3.5, 11.25 ], "texture": "#model" },
+                "south": { "uv": [ 1.25, 11, 1.75, 11.25 ], "texture": "#model" },
+                "west":  { "uv": [ 0, 11, 1.25, 11.25 ], "texture": "#model" },
+                "east":  { "uv": [ 1.75, 11, 3, 11.25 ], "texture": "#model" }
+            },
+            "__comment": "Bottom holding bar"
+        },
+        {   
+        	"from": [ 2, 7, 10 ],
+            "to": [ 3, 9, 15 ],
+            "faces": {
+                "down":  { "uv": [ 1.5, 15.25, 1.75, 14 ], "texture": "#model" },
+                "up":    { "uv": [ 1.25, 14, 1.5, 15.25 ], "texture": "#model" },
+                "north": { "uv": [ 2.75, 15.25, 3, 15.75 ], "texture": "#model" },
+                "south": { "uv": [ 1.25, 15.25, 1.5, 15.75 ], "texture": "#model" },
+                "west":  { "uv": [ 0, 15.25, 1.25, 15.75 ], "texture": "#model" },
+                "east":  { "uv": [ 1.5, 15.25, 2.75, 15.75 ], "texture": "#model" }
+            },
+            "__comment": "Left holding bar"
+        },
+        {   
+        	"from": [ 13, 7, 10 ],
+            "to": [ 14, 9, 15 ],
+            "faces": {
+            	"down":  { "uv": [ 1.5, 12.75, 1.75, 11.5 ], "texture": "#model" },
+                "up":    { "uv": [ 1.25, 11.5, 1.5, 12.75 ], "texture": "#model" },
+                "north": { "uv": [ 2.75, 12.75, 3, 13.25 ], "texture": "#model" },
+                "south": { "uv": [ 1.25, 12.75, 1.5, 13.25 ], "texture": "#model" },
+                "west":  { "uv": [ 0, 12.75, 1.25, 13.25 ], "texture": "#model" },
+                "east":  { "uv": [ 1.5, 12.75, 2.75, 13.25 ], "texture": "#model" }
+            },
+            "__comment": "Right holding bar"
+        },
+        {   
+        	"from": [ 6, 6, 15 ],
+            "to": [ 10, 10, 16 ],
+            "faces": {
+            	"down":  { "uv": [ 7.5, 4.75, 8.5, 4.5 ], "texture": "#model" },
+                "up":    { "uv": [ 6.5, 4.5, 7.5, 4.75 ], "texture": "#model" },
+                "north": { "uv": [ 7.75, 4.75, 8.75, 5.75 ], "texture": "#model" },
+                "south": { "uv": [ 6.5, 4.75, 7.5, 5.75 ], "texture": "#model" },
+                "west":  { "uv": [ 6.25, 4.75, 6.5, 5.75 ], "texture": "#model" },
+                "east":  { "uv": [ 7.5, 4.75, 7.75, 5.75 ], "texture": "#model" }
+            },
+            "__comment": "Central point"
+        },
+        {   
+        	"from": [ 3, 11, 14 ],
+            "to": [ 13, 13, 16 ],
+            "faces": {
+            	"down":  { "uv": [ 3, 3.75, 5.5, 3.25 ], "texture": "#model" },
+                "up":    { "uv": [ 0.5, 3.25, 3, 3.75 ], "texture": "#model" },
+                "north": { "uv": [ 3.5, 3.75, 6, 4.25 ], "texture": "#model" },
+                "south": { "uv": [ 0.5, 3.75, 3, 4.25 ], "texture": "#model" },
+                "west":  { "uv": [ 0, 3.75, 0.5, 4.25 ], "texture": "#model" },
+                "east":  { "uv": [ 3, 3.75, 3.5, 4.25 ], "texture": "#model" }
+            },
+            "__comment": "Top main brace"
+        },
+        {   
+        	"from": [ 3, 3, 14 ],
+            "to": [ 13, 5, 16 ],
+            "faces": {
+            	"down":  { "uv": [ 3, 7.25, 5.5, 6.75 ], "texture": "#model" },
+                "up":    { "uv": [ 0.5, 6.75, 3, 7.25 ], "texture": "#model" },
+                "north": { "uv": [ 3.5, 7.25, 6, 7.75 ], "texture": "#model" },
+                "south": { "uv": [ 0.5, 7.25, 3, 7.75 ], "texture": "#model" },
+                "west":  { "uv": [ 0, 7.25, 0.5, 7.75 ], "texture": "#model" },
+                "east":  { "uv": [ 3, 7.25, 3.5, 7.75 ], "texture": "#model" }
+            },
+            "__comment": "Bottom main brace"
+        },
+        {   
+        	"from": [ 3, 5, 14 ],
+            "to": [ 5, 11, 16 ],
+            "faces": {
+            	"down":  { "uv": [ 1, 5, 1.5, 4.5 ], "texture": "#model" },
+                "up":    { "uv": [ 0.5, 4.5, 1, 5 ], "texture": "#model" },
+                "north": { "uv": [ 1.5, 5, 2, 6.5 ], "texture": "#model" },
+                "south": { "uv": [ 0.5, 5, 1, 6.5 ], "texture": "#model" },
+                "west":  { "uv": [ 0, 5, 0.5, 6.5 ], "texture": "#model" },
+                "east":  { "uv": [ 1, 5, 1.5, 6.5 ], "texture": "#model" }
+            },
+            "__comment": "Left main brace"
+        },
+        {   
+        	"from": [ 11, 5, 14 ],
+            "to": [ 13, 11, 16 ],
+            "faces": {
+            	"down":  { "uv": [ 5, 5, 5.5, 4.5 ], "texture": "#model" },
+                "up":    { "uv": [ 4.5, 4.5, 5, 5 ], "texture": "#model" },
+                "north": { "uv": [ 5.5, 5, 6, 6.5 ], "texture": "#model" },
+                "south": { "uv": [ 4.5, 5, 5, 6.5 ], "texture": "#model" },
+                "west":  { "uv": [ 4, 5, 4.5, 6.5 ], "texture": "#model" },
+                "east":  { "uv": [ 5, 5, 5.5, 6.5 ], "texture": "#model" }
+            },
+            "__comment": "Right main brace"
+        }
+    ]
+}

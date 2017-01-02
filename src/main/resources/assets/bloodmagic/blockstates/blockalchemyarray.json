@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "normal": {
+      "model": "bloodmagic:BlockAlchemyArray",
+      "textures": {
+        "all": "bloodmagic:models/AlchemyArrays/StupidArray"
+      }
+    }
+  }
+}

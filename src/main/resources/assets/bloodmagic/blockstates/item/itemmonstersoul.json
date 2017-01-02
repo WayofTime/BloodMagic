@@ -1,0 +1,36 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "base": {
+        "textures": {
+          "layer0": "bloodmagic:items/BaseMonsterSoul"
+        }
+      },
+	"corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/BaseMonsterSoul_corrosive"
+        }
+      },
+	"destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/BaseMonsterSoul_destructive"
+        }
+      },
+	"vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/BaseMonsterSoul_vengeful"
+        }
+      },
+	"steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/BaseMonsterSoul_steadfast"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "blank": {
+        "textures": {
+          "all": "bloodmagic:blocks/BlankRune"
+        }
+      },
+      "speed": {
+        "textures": {
+          "all": "bloodmagic:blocks/SpeedRune"
+        }
+      },
+      "efficiency": {
+        "textures": {
+          "all": "bloodmagic:blocks/EfficiencyRune"
+        }
+      },
+      "sacrifice": {
+        "textures": {
+          "all": "bloodmagic:blocks/RuneOfSacrifice"
+        }
+      },
+      "selfsacrifice": {
+        "textures": {
+          "all": "bloodmagic:blocks/RuneOfSelfSacrifice"
+        }
+      },
+      "displacement": {
+        "textures": {
+          "all": "bloodmagic:blocks/DislocationRune"
+        }
+      },
+      "capacity": {
+        "textures": {
+          "all": "bloodmagic:blocks/AltarCapacityRune"
+        }
+      },
+      "augcapacity": {
+        "textures": {
+          "all": "bloodmagic:blocks/BetterCapacityRune"
+        }
+      },
+      "orb": {
+        "textures": {
+          "all": "bloodmagic:blocks/OrbCapacityRune"
+        }
+      },
+      "acceleration": {
+        "textures": {
+          "all": "bloodmagic:blocks/AccelerationRune"
+        }
+      },
+      "charging": {
+        "textures": {
+          "all": "bloodmagic:blocks/ChargingRune"
+        }
+      }
+    }
+  }
+}

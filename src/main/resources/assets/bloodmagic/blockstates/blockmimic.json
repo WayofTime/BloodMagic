@@ -1,0 +1,38 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "nohitbox": {
+        "textures": {
+          "all": "bloodmagic:blocks/EtherealOpaqueMimic"
+        }
+      },
+      "solidopaque": {
+        "textures": {
+          "all": "bloodmagic:blocks/SolidOpaqueMimic"
+        }
+      },
+      "solidclear": {
+        "textures": {
+          "all": "bloodmagic:blocks/SolidClearMimic"
+        }
+      },
+      "solidlight": {
+        "textures": {
+          "all": "bloodmagic:blocks/SolidLightMimic"
+        }
+      },
+      "sentient": {
+        "textures": {
+          "all": "bloodmagic:blocks/SentientMimic"
+        }
+      }      
+    }
+  }
+}
+

@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "orientable"
+  },
+  "variants": {
+    "normal": [{
+      "textures": {
+        "top": "bloodmagic:blocks/Teleposer_Top",
+        "side": "bloodmagic:blocks/Teleposer_Side",
+        "front": "bloodmagic:blocks/Teleposer_Side",
+        "bottom": "bloodmagic:blocks/Teleposer_Side"
+      }
+    }]
+  }
+}

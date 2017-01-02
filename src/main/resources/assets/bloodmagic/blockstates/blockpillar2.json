@@ -1,0 +1,58 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube",
+    "textures": {
+      "end": "bloodmagic:blocks/dungeon/dungeon_pillarheart",
+      "side": "bloodmagic:blocks/dungeon/dungeon_pillarspecial",
+      "particle": "#end"
+    }
+  },
+  "variants": {
+  	"axis": {
+        "x": {
+        	"model": "bloodmagic:BlockPillarX"
+        },
+        "y": {
+        	"model": "minecraft:cube_bottom_top",
+			"textures": {
+				"top": "#end",
+				"bottom": "#end"
+        	}
+        },
+        "z": {
+        	"model": "bloodmagic:BlockPillarZ"
+        }
+    },
+    "type": {
+    	"raw": {
+    		
+    	},
+    	"corrosive": {
+    		"textures": {
+			    "end": "bloodmagic:blocks/dungeon/dungeon_pillarheart_c",
+			    "side": "bloodmagic:blocks/dungeon/dungeon_pillarspecial_c"
+		  	}
+    	},
+    	"destructive": {
+    		"textures": {
+			    "end": "bloodmagic:blocks/dungeon/dungeon_pillarheart_d",
+			    "side": "bloodmagic:blocks/dungeon/dungeon_pillarspecial_d"
+		  	}
+    	},
+    	"vengeful": {
+    		"textures": {
+			    "end": "bloodmagic:blocks/dungeon/dungeon_pillarheart_v",
+			    "side": "bloodmagic:blocks/dungeon/dungeon_pillarspecial_v"
+		  	}
+    	},
+    	"steadfast": {
+    		"textures": {
+			    "end": "bloodmagic:blocks/dungeon/dungeon_pillarheart_s",
+			    "side": "bloodmagic:blocks/dungeon/dungeon_pillarspecial_s"
+		  	}
+    	}
+    },
+    "inventory": [{ }]
+  }
+}

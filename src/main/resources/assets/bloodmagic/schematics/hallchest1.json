@@ -1,0 +1,41 @@
+{
+  "structureMap": {
+    "bloodmagic:HallChest1": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  "doorMap": {
+    "west": [
+      {
+        "x": 0,
+        "y": 0,
+        "z": 4
+      }
+    ],
+    "east": [
+      {
+        "x": 11,
+        "y": 0,
+        "z": 4
+      }
+    ]
+  },
+  "descriptorList": [
+    {
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "maximumOffset": {
+        "x": 12,
+        "y": 5,
+        "z": 9
+      },
+      "blockPosCache": [],
+      "cache": true
+    }
+  ]
+}

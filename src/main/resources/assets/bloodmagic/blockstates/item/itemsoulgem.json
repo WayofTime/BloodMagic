@@ -1,0 +1,136 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "petty_default": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemPetty"
+        }
+      },
+      "lesser_default": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemLesser"
+        }
+      },
+      "common_default": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemCommon"
+        }
+      },
+      "greater_default": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGreater"
+        }
+      },
+      "grand_default": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGrand"
+        }
+      },
+      "petty_corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemPetty_corrosive"
+        }
+      },
+      "lesser_corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemLesser_corrosive"
+        }
+      },
+      "common_corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemCommon_corrosive"
+        }
+      },
+      "greater_corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGreater_corrosive"
+        }
+      },
+      "grand_corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGrand_corrosive"
+        }
+      },
+      "petty_vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemPetty_vengeful"
+        }
+      },
+      "lesser_vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemLesser_vengeful"
+        }
+      },
+      "common_vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemCommon_vengeful"
+        }
+      },
+      "greater_vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGreater_vengeful"
+        }
+      },
+      "grand_vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGrand_vengeful"
+        }
+      },
+      "petty_destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemPetty_destructive"
+        }
+      },
+      "lesser_destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemLesser_destructive"
+        }
+      },
+      "common_destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemCommon_destructive"
+        }
+      },
+      "greater_destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGreater_destructive"
+        }
+      },
+      "grand_destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGrand_destructive"
+        }
+      },
+      "petty_steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemPetty_steadfast"
+        }
+      },
+      "lesser_steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemLesser_steadfast"
+        }
+      },
+      "common_steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemCommon_steadfast"
+        }
+      },
+      "greater_steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGreater_steadfast"
+        }
+      },
+      "grand_steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGrand_steadfast"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "wood": {
+        "textures": {
+          "all": "bloodmagic:blocks/WoodBrickPath"
+        }
+      },
+      "woodtile": {
+        "textures": {
+          "all": "bloodmagic:blocks/WoodTilePath"
+        }
+      },
+      "stone": {
+        "textures": {
+          "all": "bloodmagic:blocks/StoneBrickPath"
+        }
+      },
+      "stonetile": {
+        "textures": {
+          "all": "bloodmagic:blocks/StoneTilePath"
+        }
+      },
+      "wornstone": {
+        "textures": {
+          "all": "bloodmagic:blocks/WornStoneBrickPath"
+        }
+      },
+      "wornstonetile": {
+        "textures": {
+          "all": "bloodmagic:blocks/WornStoneTilePath"
+        }
+      },
+      "obsidian": {
+        "textures": {
+          "all": "bloodmagic:blocks/ObsidianBrickPath"
+        }
+      },
+      "obsidiantile": {
+        "textures": {
+          "all": "bloodmagic:blocks/ObsidianTilePath"
+        }
+      }
+    }
+  }
+}
+
