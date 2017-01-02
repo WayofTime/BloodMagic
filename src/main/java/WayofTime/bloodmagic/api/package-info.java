@@ -1,10 +1,4 @@
-@API(owner = "BloodMagic", provides = "BloodMagic|API", apiVersion = "@VERSION@")
-@MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+@API(owner = Constants.Mod.MODID, provides = Constants.Mod.MODID + "|API", apiVersion = Constants.Mod.VERSION)
 package WayofTime.bloodmagic.api;
 
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraftforge.fml.common.API;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
