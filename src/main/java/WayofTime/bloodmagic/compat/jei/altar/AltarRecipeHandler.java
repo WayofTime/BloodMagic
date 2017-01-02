@@ -31,6 +31,6 @@ public class AltarRecipeHandler implements IRecipeHandler<AltarRecipeJEI>
     @Override
     public boolean isRecipeValid(@Nonnull AltarRecipeJEI recipe)
     {
-        return recipe.getInputs().size() > 0 && recipe.getOutputs().size() > 0;
+        return true;
     }
 }

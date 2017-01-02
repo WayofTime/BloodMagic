@@ -25,7 +25,7 @@ public class AltarRecipeCategory implements IRecipeCategory
     @Nonnull
     private final IDrawable background = BloodMagicPlugin.jeiHelper.getGuiHelper().createDrawable(new ResourceLocation(Constants.Mod.DOMAIN + "gui/jei/altar.png"), 3, 4, 155, 65);
     @Nonnull
-    private final String localizedName = TextHelper.localize("jei.BloodMagic.recipe.altar");
+    private final String localizedName = TextHelper.localize("jei.bloodmagic.recipe.altar");
 
     @Nonnull
     @Override
@@ -68,9 +68,7 @@ public class AltarRecipeCategory implements IRecipeCategory
 
         if (recipeWrapper instanceof AltarRecipeJEI)
         {
-            AltarRecipeJEI altarRecipeWrapper = (AltarRecipeJEI) recipeWrapper;
-            List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
-            recipeLayout.getItemStacks().set(INPUT_SLOT, inputs.get(0));
+            recipeLayout.getItemStacks().set(INPUT_SLOT, ingredients.getInputs(ItemStack.class).get(0));
             recipeLayout.getItemStacks().set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
         }
     }

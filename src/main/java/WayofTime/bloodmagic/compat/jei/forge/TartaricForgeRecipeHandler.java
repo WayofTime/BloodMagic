@@ -15,14 +15,6 @@ public class TartaricForgeRecipeHandler implements IRecipeHandler<TartaricForgeR
         return TartaricForgeRecipeJEI.class;
     }
 
-    @Deprecated
-    @Nonnull
-    @Override
-    public String getRecipeCategoryUid()
-    {
-        return Constants.Compat.JEI_CATEGORY_SOULFORGE;
-    }
-
     @Override
     public String getRecipeCategoryUid(@Nonnull TartaricForgeRecipeJEI recipe)
     {
@@ -39,6 +31,6 @@ public class TartaricForgeRecipeHandler implements IRecipeHandler<TartaricForgeR
     @Override
     public boolean isRecipeValid(@Nonnull TartaricForgeRecipeJEI recipe)
     {
-        return recipe.getInputs().get(0).size() > 0 && recipe.getOutputs().size() > 0;
+        return true;
     }
 }

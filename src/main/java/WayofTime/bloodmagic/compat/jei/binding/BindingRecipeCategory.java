@@ -1,9 +1,11 @@
 package WayofTime.bloodmagic.compat.jei.binding;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
@@ -22,7 +24,7 @@ public class BindingRecipeCategory implements IRecipeCategory
     @Nonnull
     private final IDrawable background = BloodMagicPlugin.jeiHelper.getGuiHelper().createDrawable(new ResourceLocation(Constants.Mod.DOMAIN + "gui/jei/binding.png"), 0, 0, 100, 30);
     @Nonnull
-    private final String localizedName = TextHelper.localize("jei.BloodMagic.recipe.binding");
+    private final String localizedName = TextHelper.localize("jei.bloodmagic.recipe.binding");
 
     @Nonnull
     @Override
@@ -51,26 +53,23 @@ public class BindingRecipeCategory implements IRecipeCategory
 
     }
 
+    @Nullable
     @Override
-    public void drawAnimations(Minecraft minecraft)
-    {
-
+    public IDrawable getIcon() {
+        return null;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
-    {
+    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 0, 5);
         recipeLayout.getItemStacks().init(CATALYST_SLOT, true, 29, 3);
         recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 73, 5);
 
         if (recipeWrapper instanceof BindingRecipeJEI)
         {
-            BindingRecipeJEI bindingRecipe = (BindingRecipeJEI) recipeWrapper;
-            recipeLayout.getItemStacks().set(INPUT_SLOT, bindingRecipe.getInputs());
-            recipeLayout.getItemStacks().set(CATALYST_SLOT, bindingRecipe.getCatalyst());
-            recipeLayout.getItemStacks().set(OUTPUT_SLOT, bindingRecipe.getOutputs());
+            recipeLayout.getItemStacks().set(INPUT_SLOT, ingredients.getInputs(ItemStack.class).get(0));
+            recipeLayout.getItemStacks().set(CATALYST_SLOT, ingredients.getInputs(ItemStack.class).get(1));
+            recipeLayout.getItemStacks().set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
         }
     }
 }

@@ -26,7 +26,7 @@ public class ArmourDowngradeRecipeCategory implements IRecipeCategory
     @Nonnull
     private final IDrawable background = BloodMagicPlugin.jeiHelper.getGuiHelper().createDrawable(new ResourceLocation(Constants.Mod.DOMAIN + "gui/jei/alchemyTable.png"), 0, 0, 118, 40);
     @Nonnull
-    private final String localizedName = TextHelper.localize("jei.BloodMagic.recipe.armourDowngrade");
+    private final String localizedName = TextHelper.localize("jei.bloodmagic.recipe.armourDowngrade");
     @Nonnull
     private final ICraftingGridHelper craftingGridHelper;
 
@@ -88,8 +88,9 @@ public class ArmourDowngradeRecipeCategory implements IRecipeCategory
 
         if (recipeWrapper instanceof ArmourDowngradeRecipeJEI)
         {
-            guiItemStacks.set(KEY_SLOT, ingredients.getInputs(ItemStack.class).get(1));
-            craftingGridHelper.setOutput(guiItemStacks, ingredients.getOutputs(ItemStack.class).get(0));
+            guiItemStacks.set(KEY_SLOT, ingredients.getInputs(ItemStack.class).get(ingredients.getInputs(ItemStack.class).size() - 1));
+            ingredients.getInputs(ItemStack.class).remove(ingredients.getInputs(ItemStack.class).size() - 1);
+            guiItemStacks.set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
             craftingGridHelper.setInputs(guiItemStacks, ingredients.getInputs(ItemStack.class), 3, 2);
         }
     }

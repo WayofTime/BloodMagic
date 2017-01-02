@@ -56,8 +56,8 @@ public class BloodMagicPlugin extends BlankModPlugin
         registry.addRecipes(AlchemyTableRecipeMaker.getRecipes());
         registry.addRecipes(ArmourDowngradeRecipeMaker.getRecipes());
 
-        registry.addDescription(new ItemStack(ModItems.ALTAR_MAKER), "jei.BloodMagic.desc.altarBuilder");
-        registry.addDescription(new ItemStack(ModItems.MONSTER_SOUL), "jei.BloodMagic.desc.demonicWill");
+        registry.addDescription(new ItemStack(ModItems.ALTAR_MAKER), "jei.bloodmagic.desc.altarBuilder");
+        registry.addDescription(new ItemStack(ModItems.MONSTER_SOUL), "jei.bloodmagic.desc.demonicWill");
 
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.BLOOD_LIGHT));
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.SPECTRAL_BLOCK));
@@ -78,8 +78,6 @@ public class BloodMagicPlugin extends BlankModPlugin
             }
         }
 
-        jeiHelper.getSubtypeRegistry().useNbtForSubtypes(Item.getItemFromBlock(ModBlocks.BLOOD_TANK));
-
         registry.addRecipeClickArea(GuiSoulForge.class, 115, 15, 16, 88, Constants.Compat.JEI_CATEGORY_SOULFORGE);
 
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ALTAR), Constants.Compat.JEI_CATEGORY_ALTAR);
@@ -88,15 +86,10 @@ public class BloodMagicPlugin extends BlankModPlugin
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.ARCANE_ASHES), Constants.Compat.JEI_CATEGORY_BINDING);
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ALCHEMY_TABLE), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.RITUAL_CONTROLLER), Constants.Compat.JEI_CATEGORY_ARMOURDOWNGRADE);
+    }
 
-        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_UUID);
-        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_NAME);
-        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.USES);
-        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.SOULS);
-        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.X_COORD);
-        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.Y_COORD);
-        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.Z_COORD);
-        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.DIMENSION_ID);
-        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.ITEM_INVENTORY);
+    @Override
+    public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
+        subtypeRegistry.useNbtForSubtypes(Item.getItemFromBlock(ModBlocks.BLOOD_TANK));
     }
 }

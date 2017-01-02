@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.compat.jei.alchemyTable;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
 import lombok.Getter;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
@@ -22,7 +23,8 @@ public class AlchemyTableRecipeJEI extends BlankRecipeWrapper
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-//        ingredients.setInputLists(ItemStack.class, Lists.<ItemStack>newArrayList(recipe.getInput(), OrbRegistry.getOrbsDownToTier(recipe.getTierRequired())));
+        List<List<ItemStack>> expanded = BloodMagicPlugin.jeiHelper.getStackHelper().expandRecipeItemStackInputs(recipe.getInput());
+        ingredients.setInputLists(ItemStack.class, expanded);
         ingredients.setOutput(ItemStack.class, recipe.getRecipeOutput(new ArrayList<ItemStack>()));
     }
 
@@ -32,8 +34,8 @@ public class AlchemyTableRecipeJEI extends BlankRecipeWrapper
         ArrayList<String> ret = new ArrayList<String>();
         if (mouseX >= 58 && mouseX <= 78 && mouseY >= 21 && mouseY <= 34)
         {
-            ret.add(TextHelper.localize("jei.BloodMagic.recipe.lpDrained", recipe.getLpDrained()));
-            ret.add(TextHelper.localize("jei.BloodMagic.recipe.ticksRequired", recipe.getTicksRequired()));
+            ret.add(TextHelper.localize("jei.bloodmagic.recipe.lpDrained", recipe.getLpDrained()));
+            ret.add(TextHelper.localize("jei.bloodmagic.recipe.ticksRequired", recipe.getTicksRequired()));
         }
         return ret;
     }

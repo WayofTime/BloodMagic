@@ -31,6 +31,6 @@ public class AlchemyArrayCraftingRecipeHandler implements IRecipeHandler<Alchemy
     @Override
     public boolean isRecipeValid(@Nonnull AlchemyArrayCraftingRecipeJEI recipe)
     {
-        return recipe.getInputs().size() > 0 && recipe.getOutputs().size() > 0;
+        return true;
     }
 }
