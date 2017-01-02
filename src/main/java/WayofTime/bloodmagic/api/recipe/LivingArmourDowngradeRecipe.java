@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,7 +18,7 @@ public class LivingArmourDowngradeRecipe
 {
     protected LivingArmourUpgrade upgrade = null;
     protected ItemStack keyStack = null;
-    protected ArrayList<Object> input = new ArrayList<Object>();
+    protected List<Object> input = new ArrayList<Object>();
 
     public LivingArmourDowngradeRecipe(LivingArmourUpgrade upgrade, ItemStack keyStack, Object... recipe)
     {
@@ -77,20 +78,17 @@ public class LivingArmourDowngradeRecipe
 
         ArrayList<Object> required = new ArrayList<Object>(input);
 
-        for (int x = 0; x < checkedList.size(); x++)
+        for (ItemStack slot : checkedList)
         {
-            ItemStack slot = checkedList.get(x);
-
             if (slot != null)
             {
                 boolean inRecipe = false;
-                Iterator<Object> req = required.iterator();
 
-                while (req.hasNext())
+                for (Object aRequired : required)
                 {
                     boolean match = false;
 
-                    Object next = req.next();
+                    Object next = aRequired;
 
                     if (next instanceof ItemStack)
                     {
@@ -129,9 +127,9 @@ public class LivingArmourDowngradeRecipe
      * 
      * @return The recipes input vales.
      */
-    public ArrayList<Object> getInput()
+    public List<Object> getInput()
     {
-        return this.input;
+        return ImmutableList.copyOf(input);
     }
 
     public ItemStack getKey()
@@ -144,14 +142,14 @@ public class LivingArmourDowngradeRecipe
         for (int i = 0; i < inv.getSlots(); i++)
         {
             ItemStack stack = inv.getStackInSlot(i);
-            if (stack == null)
+            if (stack.isEmpty())
             {
                 continue;
             }
 
             if (stack.getItem().hasContainerItem(stack))
             {
-                inv.extractItem(i, stack.stackSize, false);
+                inv.extractItem(i, stack.getCount(), false);
                 inv.insertItem(i, stack.getItem().getContainerItem(stack), false);
             } else
             {
@@ -162,9 +160,9 @@ public class LivingArmourDowngradeRecipe
 
     protected ItemStack getContainerItem(ItemStack stack)
     {
-        if (stack == null)
+        if (stack.isEmpty())
         {
-            return null;
+            return ItemStack.EMPTY;
         }
 
         ItemStack copyStack = stack.copy();
@@ -174,10 +172,10 @@ public class LivingArmourDowngradeRecipe
             return copyStack.getItem().getContainerItem(copyStack);
         }
 
-        copyStack.stackSize--;
-        if (copyStack.stackSize <= 0)
+        copyStack.shrink(1);
+        if (copyStack.isEmpty())
         {
-            return null;
+            return ItemStack.EMPTY;
         }
 
         return copyStack;

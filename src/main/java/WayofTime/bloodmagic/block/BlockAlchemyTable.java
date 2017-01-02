@@ -22,7 +22,9 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.TileAlchemyTable;
 
-public class BlockAlchemyTable extends BlockContainer
+import javax.annotation.Nullable;
+
+public class BlockAlchemyTable extends Block
 {
     public static final PropertyBool INVISIBLE = PropertyBool.create("invisible");
     public static final PropertyEnum<EnumFacing> DIRECTION = PropertyEnum.<EnumFacing>create("direction", EnumFacing.class);
@@ -60,7 +62,7 @@ public class BlockAlchemyTable extends BlockContainer
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }
@@ -107,17 +109,11 @@ public class BlockAlchemyTable extends BlockContainer
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] { DIRECTION, INVISIBLE });
+        return new BlockStateContainer(this, DIRECTION, INVISIBLE);
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta)
-    {
-        return new TileAlchemyTable();
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         BlockPos position = pos;
         TileEntity tile = world.getTileEntity(pos);
@@ -152,7 +148,18 @@ public class BlockAlchemyTable extends BlockContainer
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block neighborBlock)
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileAlchemyTable();
+    }
+
+    @Override
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos)
     {
         TileAlchemyTable tile = (TileAlchemyTable) world.getTileEntity(pos);
         if (tile != null)

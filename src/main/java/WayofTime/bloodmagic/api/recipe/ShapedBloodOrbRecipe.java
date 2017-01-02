@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
@@ -242,7 +243,7 @@ public class ShapedBloodOrbRecipe implements IRecipe
                 // value of the item instead
                 if (target instanceof Integer)
                 {
-                    if (slot != null && slot.getItem() instanceof IBloodOrb)
+                    if (!slot.isEmpty() && slot.getItem() instanceof IBloodOrb)
                     {
                         IBloodOrb orb = (IBloodOrb) slot.getItem();
                         if (orb.getOrbLevel(slot.getItemDamage()) < (Integer) target)
@@ -271,7 +272,7 @@ public class ShapedBloodOrbRecipe implements IRecipe
                     {
                         return false;
                     }
-                } else if (target == null && slot != null)
+                } else if (target == null && !slot.isEmpty())
                 {
                     return false;
                 }
@@ -292,7 +293,7 @@ public class ShapedBloodOrbRecipe implements IRecipe
         return this.input;
     }
 
-    public ItemStack[] getRemainingItems(InventoryCrafting inv)
+    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
     {
         return ForgeHooks.defaultRecipeGetRemainingItems(inv);
     }

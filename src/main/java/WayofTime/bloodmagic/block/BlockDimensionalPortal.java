@@ -19,7 +19,6 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.teleport.PortalLocation;
 import WayofTime.bloodmagic.api.teleport.TeleportQueue;
-import WayofTime.bloodmagic.block.base.BlockIntegerContainer;
 import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
 import WayofTime.bloodmagic.ritual.portal.Teleports;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;

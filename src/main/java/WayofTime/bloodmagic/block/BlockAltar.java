@@ -7,8 +7,7 @@ import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.iface.IDocumentedBlock;
-import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +39,9 @@ import WayofTime.bloodmagic.util.Utils;
 
 import com.google.common.base.Strings;
 
-public class BlockAltar extends BlockContainer implements IVariantProvider, IDocumentedBlock
+import javax.annotation.Nullable;
+
+public class BlockAltar extends Block implements IVariantProvider, IDocumentedBlock
 {
     public BlockAltar()
     {
@@ -74,7 +75,7 @@ public class BlockAltar extends BlockContainer implements IVariantProvider, IDoc
 
             if (world.getBlockState(pos.down()).getBlock() instanceof BlockBloodStoneBrick)
             {
-                if (orbStack != null && orbStack.getItem() instanceof IBloodOrb && orbStack.getItem() instanceof IBindable)
+                if (orbStack.getItem() instanceof IBloodOrb && orbStack.getItem() instanceof IBindable)
                 {
                     IBloodOrb bloodOrb = (IBloodOrb) orbStack.getItem();
                     IBindable bindable = (IBindable) orbStack.getItem();
@@ -119,9 +120,9 @@ public class BlockAltar extends BlockContainer implements IVariantProvider, IDoc
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
-        return false;
+        return true;
     }
 
     @Override
@@ -131,13 +132,7 @@ public class BlockAltar extends BlockContainer implements IVariantProvider, IDoc
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta)
-    {
-        return new TileAltar();
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         TileAltar altar = (TileAltar) world.getTileEntity(pos);
 
@@ -146,13 +141,10 @@ public class BlockAltar extends BlockContainer implements IVariantProvider, IDoc
 
         ItemStack playerItem = player.inventory.getCurrentItem();
 
-        if (playerItem != null)
+        if (playerItem.getItem() instanceof IAltarReader || playerItem.getItem() instanceof IAltarManipulator)
         {
-            if (playerItem.getItem() instanceof IAltarReader || playerItem.getItem() instanceof IAltarManipulator)
-            {
-                playerItem.getItem().onItemRightClick(playerItem, world, player, hand);
-                return true;
-            }
+            playerItem.getItem().onItemRightClick(world, player, hand);
+            return true;
         }
 
         if (Utils.insertItemToTile(altar, player))
@@ -176,6 +168,17 @@ public class BlockAltar extends BlockContainer implements IVariantProvider, IDoc
         }
 
         super.breakBlock(world, blockPos, blockState);
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileAltar();
     }
 
     // IVariantProvider

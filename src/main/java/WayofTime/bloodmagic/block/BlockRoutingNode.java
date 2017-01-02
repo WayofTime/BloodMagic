@@ -18,7 +18,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 
-public abstract class BlockRoutingNode extends BlockContainer
+public class BlockRoutingNode extends Block
 {
     protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.378F, 0.378F, 0.378F, 0.625F, 0.625F, 0.625F);
 
@@ -72,7 +72,7 @@ public abstract class BlockRoutingNode extends BlockContainer
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }

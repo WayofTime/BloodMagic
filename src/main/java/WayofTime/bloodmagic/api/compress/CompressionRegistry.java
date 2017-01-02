@@ -67,19 +67,19 @@ public class CompressionRegistry
             for (int slot = 0; slot < itemHandler.getSlots(); slot++)
             {
                 inventory[slot] = itemHandler.extractItem(slot, 64, true);
-                copyInventory[slot] = ItemStack.copyItemStack(inventory[slot]);
+                copyInventory[slot] = inventory[slot].copy();
             }
 
             for (CompressionHandler handler : compressionRegistry)
             {
                 ItemStack stack = handler.compressInventory(copyInventory, world);
-                if (stack != null)
+                if (!stack.isEmpty())
                 {
                     for (int slot = 0; slot < itemHandler.getSlots(); slot++)
                     {
                         if (inventory[slot] != null && !ItemStack.areItemStacksEqual(inventory[slot], copyInventory[slot]))
                         {
-                            itemHandler.extractItem(slot, inventory[slot].stackSize, false);
+                            itemHandler.extractItem(slot, inventory[slot].getCount(), false);
                             if (copyInventory[slot] != null)
                             {
                                 itemHandler.insertItem(slot, copyInventory[slot], false);
@@ -92,7 +92,7 @@ public class CompressionRegistry
             }
         }
 
-        return Pair.of(null, false);
+        return Pair.of(ItemStack.EMPTY, false);
     }
 
     public static int getItemThreshold(ItemStack stack)
@@ -110,6 +110,6 @@ public class CompressionRegistry
 
     public static boolean areItemStacksEqual(ItemStack stack, ItemStack compressedStack)
     {
-        return stack.isItemEqual(compressedStack) && (stack.getTagCompound() == null ? compressedStack.getTagCompound() == null : stack.getTagCompound().equals(compressedStack.getTagCompound()));
+        return stack.isItemEqual(compressedStack) && (stack.getTagCompound() == null ? !compressedStack.hasTagCompound() : stack.getTagCompound().equals(compressedStack.getTagCompound()));
     }
 }

@@ -13,7 +13,6 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -54,7 +53,7 @@ public class BlockEnumWall<E extends Enum<E> & IStringSerializable> extends Bloc
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
     {
         blockState = blockState.getActualState(worldIn, pos);
         return CLIP_AABB_BY_INDEX[getAABBIndex(blockState)];
@@ -129,7 +128,7 @@ public class BlockEnumWall<E extends Enum<E> & IStringSerializable> extends Bloc
     }
 
     @Override
-    protected ItemStack createStackedBlock(IBlockState state)
+    protected ItemStack getSilkTouchDrop(IBlockState state)
     {
         return new ItemStack(this, 1, damageDropped(state));
     }

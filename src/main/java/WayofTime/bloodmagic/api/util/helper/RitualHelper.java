@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.api.ritual.IRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -149,17 +150,17 @@ public class RitualHelper
     {
         if (world == null)
             return;
-        Block block = world.getBlockState(pos).getBlock();
+        IBlockState state = world.getBlockState(pos);
         TileEntity tile = world.getTileEntity(pos);
 
-        if (block instanceof IRitualStone)
-            ((IRitualStone) block).setRuneType(world, pos, type);
+        if (state.getBlock() instanceof IRitualStone)
+            ((IRitualStone) state.getBlock()).setRuneType(world, pos, type);
         else if (tile instanceof IRitualStone.Tile)
             ((IRitualStone.Tile) tile).setRuneType(type);
         else if (tile != null && tile.hasCapability(RUNE_CAPABILITY, null))
         {
             tile.getCapability(RUNE_CAPABILITY, null).setRuneType(type);
-            world.notifyBlockOfStateChange(pos, block);
+            world.notifyBlockUpdate(pos, state, state, 3);
         }
     }
 }

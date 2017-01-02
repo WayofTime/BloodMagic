@@ -19,6 +19,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -31,7 +32,9 @@ import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
 
-public class BlockDemonCrystal extends BlockContainer
+import javax.annotation.Nullable;
+
+public class BlockDemonCrystal extends Block
 {
     public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 6);
     public static final PropertyEnum<EnumDemonWillType> TYPE = PropertyEnum.<EnumDemonWillType>create("type", EnumDemonWillType.class);
@@ -60,7 +63,7 @@ public class BlockDemonCrystal extends BlockContainer
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block neighborBlock)
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos)
     {
         TileDemonCrystal tile = (TileDemonCrystal) world.getTileEntity(pos);
         EnumFacing placement = tile.getPlacement();
@@ -87,7 +90,7 @@ public class BlockDemonCrystal extends BlockContainer
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs creativeTabs, List<ItemStack> list)
+    public void getSubBlocks(Item item, CreativeTabs creativeTabs, NonNullList<ItemStack> list)
     {
         for (int i = 0; i < EnumDemonWillType.values().length; i++)
             list.add(new ItemStack(this, 1, i));
@@ -112,7 +115,7 @@ public class BlockDemonCrystal extends BlockContainer
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }
@@ -143,19 +146,13 @@ public class BlockDemonCrystal extends BlockContainer
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumDemonWillType) state.getValue(TYPE)).ordinal();
+        return state.getValue(TYPE).ordinal();
     }
 
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] { TYPE, AGE, ATTACHED });
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World world, int meta)
-    {
-        return new TileDemonCrystal();
+        return new BlockStateContainer(this, TYPE, AGE, ATTACHED);
     }
 
     @Override
@@ -191,7 +188,7 @@ public class BlockDemonCrystal extends BlockContainer
             break;
         }
 
-        stack.stackSize = crystalNumber;
+        stack.setCount(crystalNumber);
         return stack;
     }
 
@@ -202,7 +199,7 @@ public class BlockDemonCrystal extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (world.isRemote)
         {
@@ -221,7 +218,18 @@ public class BlockDemonCrystal extends BlockContainer
         return true;
     }
 
-//    @Override
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileDemonCrystal();
+    }
+
+    //    @Override
 //    public java.util.List<ItemStack> getDrops(net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
 //    {
 //        java.util.List<ItemStack> ret = super.getDrops(world, pos, state, fortune);

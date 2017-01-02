@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +26,9 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TilePhantomBlock;
 
-public class BlockPhantom extends BlockContainer implements IVariantProvider
+import javax.annotation.Nullable;
+
+public class BlockPhantom extends Block implements IVariantProvider
 {
     public BlockPhantom()
     {
@@ -54,7 +57,7 @@ public class BlockPhantom extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }
@@ -86,8 +89,13 @@ public class BlockPhantom extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta)
-    {
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
         return new TilePhantomBlock(100);
     }
 

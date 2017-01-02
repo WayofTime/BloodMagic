@@ -5,11 +5,13 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.block.base.BlockEnum;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -31,14 +33,13 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.altar.IAltarComponent;
-import WayofTime.bloodmagic.block.base.BlockEnumContainer;
 import WayofTime.bloodmagic.block.enums.EnumMimic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.util.Utils;
 
-public class BlockMimic extends BlockEnumContainer<EnumMimic> implements IVariantProvider, IAltarComponent
+public class BlockMimic extends BlockEnum<EnumMimic> implements IVariantProvider, IAltarComponent
 {
     public static final int sentientMimicMeta = 4;
 
@@ -56,7 +57,8 @@ public class BlockMimic extends BlockEnumContainer<EnumMimic> implements IVarian
     }
 
     @Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos)
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         switch (this.getMetaFromState(state))
         {
@@ -65,10 +67,10 @@ public class BlockMimic extends BlockEnumContainer<EnumMimic> implements IVarian
         case 3:
         case 4:
             TileMimic tileMimic = (TileMimic) world.getTileEntity(pos);
-            if (tileMimic != null && tileMimic.getStackInSlot(0) != null)
+            if (tileMimic != null && !tileMimic.getStackInSlot(0).isEmpty())
             {
                 Block mimicBlock = Block.getBlockFromItem(tileMimic.getStackInSlot(0).getItem());
-                if (mimicBlock == null)
+                if (mimicBlock == Blocks.AIR)
                 {
                     return FULL_BLOCK_AABB;
                 }
@@ -93,10 +95,10 @@ public class BlockMimic extends BlockEnumContainer<EnumMimic> implements IVarian
     public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos)
     {
         TileMimic tileMimic = (TileMimic) world.getTileEntity(pos);
-        if (tileMimic != null && tileMimic.getStackInSlot(0) != null)
+        if (tileMimic != null && !tileMimic.getStackInSlot(0).isEmpty())
         {
             Block mimicBlock = Block.getBlockFromItem(tileMimic.getStackInSlot(0).getItem());
-            if (mimicBlock == null)
+            if (mimicBlock == Blocks.AIR)
             {
                 return FULL_BLOCK_AABB;
             }
@@ -147,14 +149,10 @@ public class BlockMimic extends BlockEnumContainer<EnumMimic> implements IVarian
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileMimic mimic = (TileMimic) world.getTileEntity(pos);
 
-        if (mimic == null)
-            return false;
-
-        return mimic.onBlockActivated(world, pos, state, player, hand, heldItem, side);
+        return mimic != null && mimic.onBlockActivated(world, pos, state, player, hand, player.getHeldItem(hand), side);
     }
 
     @Override
@@ -165,7 +163,7 @@ public class BlockMimic extends BlockEnumContainer<EnumMimic> implements IVarian
         {
             TileMimic mimic = (TileMimic) tile;
             ItemStack stack = mimic.getStackInSlot(0);
-            if (stack != null && stack.getItem() instanceof ItemBlock)
+            if (stack.getItem() instanceof ItemBlock)
             {
                 Block block = ((ItemBlock) stack.getItem()).getBlock();
                 IBlockState mimicState = block.getStateFromMeta(stack.getItemDamage());
@@ -196,7 +194,7 @@ public class BlockMimic extends BlockEnumContainer<EnumMimic> implements IVarian
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }
@@ -257,7 +255,7 @@ public class BlockMimic extends BlockEnumContainer<EnumMimic> implements IVarian
         {
             TileMimic mimic = (TileMimic) tile;
             ItemStack stack = mimic.getStackInSlot(0);
-            if (stack != null && stack.getItem() instanceof ItemBlock)
+            if (stack.getItem() instanceof ItemBlock)
             {
                 Block block = ((ItemBlock) stack.getItem()).getBlock();
                 if (block instanceof IAltarComponent)

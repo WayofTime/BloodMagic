@@ -170,7 +170,7 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect
         {
             boolean res = false;
             //TODO:
-            TileEntity te = mob.worldObj.getTileEntity(coord);
+            TileEntity te = mob.getEntityWorld().getTileEntity(coord);
             if (te instanceof TileAlchemyArray)
             {
                 res = true;

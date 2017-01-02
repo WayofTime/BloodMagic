@@ -54,7 +54,7 @@ public class BlockDemonPylon extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }

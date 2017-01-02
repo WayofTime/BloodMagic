@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.block.base.BlockEnum;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
@@ -19,13 +20,11 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.block.base.BlockEnumContainer;
 import WayofTime.bloodmagic.block.enums.EnumSubWillType;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileInversionPillar;
 
-public class BlockInversionPillar extends BlockEnumContainer<EnumSubWillType> implements IVariantProvider
+public class BlockInversionPillar extends BlockEnum<EnumSubWillType> implements IVariantProvider
 {
     public BlockInversionPillar()
     {
@@ -77,7 +76,7 @@ public class BlockInversionPillar extends BlockEnumContainer<EnumSubWillType> im
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }

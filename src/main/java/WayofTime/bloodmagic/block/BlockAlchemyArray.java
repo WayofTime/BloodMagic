@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.block;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -27,7 +28,9 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.util.Utils;
 
-public class BlockAlchemyArray extends BlockContainer
+import javax.annotation.Nullable;
+
+public class BlockAlchemyArray extends Block
 {
     protected static final AxisAlignedBB ARRAY_AABB = new AxisAlignedBB(0, 0, 0, 1, 0.1, 1);
 
@@ -81,7 +84,7 @@ public class BlockAlchemyArray extends BlockContainer
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }
@@ -99,7 +102,7 @@ public class BlockAlchemyArray extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         //TODO: Right click should rotate it
         TileAlchemyArray array = (TileAlchemyArray) world.getTileEntity(pos);
@@ -109,12 +112,12 @@ public class BlockAlchemyArray extends BlockContainer
 
         ItemStack playerItem = player.getHeldItem(hand);
 
-        if (playerItem != null)
+        if (!playerItem.isEmpty())
         {
-            if (array.getStackInSlot(0) == null)
+            if (array.getStackInSlot(0).isEmpty())
             {
                 Utils.insertItemToTile(array, player, 0);
-            } else if (array.getStackInSlot(0) != null)
+            } else if (!array.getStackInSlot(0).isEmpty())
             {
                 Utils.insertItemToTile(array, player, 1);
                 array.attemptCraft();
@@ -141,12 +144,6 @@ public class BlockAlchemyArray extends BlockContainer
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
-        return new TileAlchemyArray();
-    }
-
-    @Override
     public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
     {
         TileAlchemyArray alchemyArray = (TileAlchemyArray) world.getTileEntity(blockPos);
@@ -154,5 +151,16 @@ public class BlockAlchemyArray extends BlockContainer
             alchemyArray.dropItems();
 
         super.breakBlock(world, blockPos, blockState);
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileAlchemyArray();
     }
 }

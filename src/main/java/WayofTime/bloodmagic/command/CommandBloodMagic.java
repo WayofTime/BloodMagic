@@ -1,77 +1,46 @@
 package WayofTime.bloodmagic.command;
 
 import WayofTime.bloodmagic.command.sub.SubCommandBind;
-import WayofTime.bloodmagic.command.sub.SubCommandHelp;
 import WayofTime.bloodmagic.command.sub.SubCommandNetwork;
 import WayofTime.bloodmagic.command.sub.SubCommandOrb;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.server.command.CommandTreeBase;
 
-import java.util.*;
-
-public class CommandBloodMagic extends CommandBase
+public class CommandBloodMagic extends CommandTreeBase
 {
-    // TODO - Move this and sub commands to CommandTreeBase in 1.11. Much cleaner impl
-    private final List<String> aliases = new ArrayList<String>();
-    private final Map<String, ISubCommand> subCommands = new HashMap<String, ISubCommand>();
-
     public CommandBloodMagic()
     {
-        aliases.add("BloodMagic");
-        aliases.add("bloodmagic");
-        aliases.add("bloodMagic");
-        aliases.add("bm");
-
-        subCommands.put("help", new SubCommandHelp(this));
-        subCommands.put("network", new SubCommandNetwork(this));
-        subCommands.put("bind", new SubCommandBind(this));
-        subCommands.put("orb", new SubCommandOrb(this));
+        addSubcommand(new SubCommandBind());
+        addSubcommand(new SubCommandNetwork());
+        addSubcommand(new SubCommandOrb());
     }
 
     @Override
-    public String getCommandName()
+    public String getName()
     {
-        return "/bloodmagic";
+        return "bloodmagic";
     }
 
     @Override
-    public int getRequiredPermissionLevel()
+    public String getUsage(ICommandSender sender)
     {
-        return 2;
+        return "/bloodmagic help";
     }
 
-    @Override
-    public String getCommandUsage(ICommandSender commandSender)
+    public static void displayHelpString(ICommandSender commandSender, String display, Object... info)
     {
-        return getCommandName() + " help";
+        commandSender.sendMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
     }
 
-    @Override
-    public List<String> getCommandAliases()
+    public static void displayErrorString(ICommandSender commandSender, String display, Object... info)
     {
-        return aliases;
+        commandSender.sendMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
     }
 
-    @Override
-    public void execute(MinecraftServer server, ICommandSender commandSender, String[] args)
+    public static void displaySuccessString(ICommandSender commandSender, String display, Object... info)
     {
-        if (args.length > 0 && subCommands.containsKey(args[0]))
-        {
-
-            ISubCommand subCommand = subCommands.get(args[0]);
-            String[] subArgs = Arrays.copyOfRange(args, 1, args.length);
-            subCommand.processSubCommand(server, commandSender, subArgs);
-        } else
-        {
-            commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect("commands.error.unknown")));
-        }
-    }
-
-    public Map<String, ISubCommand> getSubCommands()
-    {
-        return subCommands;
+        commandSender.sendMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
     }
 }

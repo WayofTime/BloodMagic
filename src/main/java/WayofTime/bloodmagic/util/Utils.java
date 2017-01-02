@@ -649,7 +649,7 @@ public class Utils
 
             for (int i = 0; i < handler.getSlots(); i++)
             {
-                if (handler.getStackInSlot(i) == null)
+                if (handler.getStackInSlot(i).isEmpty())
                 {
                     slots++;
                 }
@@ -658,7 +658,7 @@ public class Utils
         {
             for (int i = 0; i < ((IInventory) tile).getSizeInventory(); i++)
             {
-                if (((IInventory) tile).getStackInSlot(i) == null)
+                if (((IInventory) tile).getStackInSlot(i).isEmpty())
                 {
                     slots++;
                 }
@@ -677,9 +677,9 @@ public class Utils
         for (int slot = 0; slot < numberOfSlots; slot++)
         {
             copyStack = handler.insertItem(slot, copyStack, false);
-            if (copyStack == null)
+            if (copyStack.isEmpty())
             {
-                return null;
+                return ItemStack.EMPTY;
             }
         }
 

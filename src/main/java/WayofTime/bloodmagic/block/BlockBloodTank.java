@@ -52,7 +52,7 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider
 
     @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
     {
         return BOX;
     }
@@ -89,10 +89,11 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        ItemStack held = player.getHeldItem(hand);
         TileBloodTank fluidHandler = (TileBloodTank) world.getTileEntity(blockPos);
-        if (FluidUtil.interactWithFluidHandler(heldItem, fluidHandler.getTank(), player))
+        if (FluidUtil.interactWithFluidHandler(held, fluidHandler.getTank(), player).isSuccess())
         {
             world.checkLight(blockPos);
             world.updateComparatorOutputLevel(blockPos, this);

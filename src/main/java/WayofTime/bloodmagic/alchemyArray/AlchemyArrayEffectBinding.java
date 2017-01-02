@@ -40,7 +40,7 @@ public class AlchemyArrayEffectBinding extends AlchemyArrayEffectCrafting
             ItemStack output = outputStack.copy();
             EntityItem outputEntity = new EntityItem(tile.getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
 
-            tile.getWorld().spawnEntityInWorld(outputEntity);
+            tile.getWorld().spawnEntity(outputEntity);
 
             return true;
         }
@@ -60,7 +60,7 @@ public class AlchemyArrayEffectBinding extends AlchemyArrayEffectCrafting
             double dispZ = -distance * Math.cos(angle);
 
             EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ, true);
-            world.spawnEntityInWorld(lightning);
+            world.spawnEntity(lightning);
         }
     }
 

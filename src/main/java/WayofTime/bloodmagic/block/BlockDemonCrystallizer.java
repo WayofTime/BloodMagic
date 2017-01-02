@@ -61,7 +61,7 @@ public class BlockDemonCrystallizer extends BlockContainer implements IVariantPr
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }

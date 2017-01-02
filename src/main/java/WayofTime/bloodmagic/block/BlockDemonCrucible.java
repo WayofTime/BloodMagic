@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -27,7 +28,9 @@ import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
 import WayofTime.bloodmagic.util.Utils;
 
-public class BlockDemonCrucible extends BlockContainer implements IVariantProvider
+import javax.annotation.Nullable;
+
+public class BlockDemonCrucible extends Block implements IVariantProvider
 {
     public BlockDemonCrucible()
     {
@@ -55,7 +58,7 @@ public class BlockDemonCrucible extends BlockContainer implements IVariantProvid
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }
@@ -67,25 +70,17 @@ public class BlockDemonCrucible extends BlockContainer implements IVariantProvid
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        return new TileDemonCrucible();
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+        ItemStack heldItem = player.getHeldItem(hand);
         TileDemonCrucible crucible = (TileDemonCrucible) world.getTileEntity(pos);
 
         if (crucible == null || player.isSneaking())
             return false;
 
-        if (heldItem != null)
+        if (!(heldItem.getItem() instanceof IDiscreteDemonWill) && !(heldItem.getItem() instanceof IDemonWillGem))
         {
-            if (!(heldItem.getItem() instanceof IDiscreteDemonWill) && !(heldItem.getItem() instanceof IDemonWillGem))
-            {
-                return true;
-            }
+            return true;
         }
 
         Utils.insertItemToTile(crucible, player);
@@ -102,6 +97,17 @@ public class BlockDemonCrucible extends BlockContainer implements IVariantProvid
             tile.dropItems();
 
         super.breakBlock(world, blockPos, blockState);
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileDemonCrucible();
     }
 
     @Override

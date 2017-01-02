@@ -25,9 +25,9 @@ public class AlchemyTableCustomRecipe extends AlchemyTableRecipe
     @Override
     protected ItemStack getContainerItem(ItemStack stack)
     {
-        if (stack == null)
+        if (stack.isEmpty())
         {
-            return null;
+            return ItemStack.EMPTY;
         }
 
         ItemStack copyStack = stack.copy();
@@ -42,10 +42,10 @@ public class AlchemyTableCustomRecipe extends AlchemyTableRecipe
             return copyStack.getItem().getContainerItem(copyStack);
         }
 
-        copyStack.stackSize--;
-        if (copyStack.stackSize <= 0)
+        copyStack.shrink(1);
+        if (copyStack.isEmpty())
         {
-            return null;
+            return ItemStack.EMPTY;
         }
 
         return copyStack;

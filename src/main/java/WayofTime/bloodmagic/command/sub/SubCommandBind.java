@@ -4,43 +4,31 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.command.SubCommandBase;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.PlayerNotFoundException;
+import net.minecraft.command.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 
-public class SubCommandBind extends SubCommandBase
+public class SubCommandBind extends CommandBase
 {
-
-    public SubCommandBind(ICommand parent)
+    @Override
+    public String getName()
     {
-        super(parent, "bind");
+        return "bind";
     }
 
     @Override
-    public String getArgUsage(ICommandSender commandSender)
+    public String getUsage(ICommandSender commandSender)
     {
         return TextHelper.localizeEffect("commands.bind.usage");
     }
 
     @Override
-    public String getHelpText()
+    public void execute(MinecraftServer server, ICommandSender commandSender, String[] args) throws CommandException
     {
-        return TextHelper.localizeEffect("commands.bind.help");
-    }
-
-    @Override
-    public void processSubCommand(MinecraftServer server, ICommandSender commandSender, String[] args)
-    {
-        super.processSubCommand(server, commandSender, args);
-
         if (commandSender.getEntityWorld().isRemote)
             return;
 
@@ -52,7 +40,7 @@ public class SubCommandBind extends SubCommandBase
             ItemStack held = player.getHeldItemMainhand();
             boolean bind = true;
 
-            if (held != null && held.getItem() instanceof IBindable)
+            if (held.getItem() instanceof IBindable)
             {
                 if (args.length > 0)
                 {
@@ -77,20 +65,20 @@ public class SubCommandBind extends SubCommandBase
                 {
                     BindableHelper.setItemOwnerName(held, playerName);
                     BindableHelper.setItemOwnerUUID(held, uuid);
-                    commandSender.addChatMessage(new TextComponentTranslation("commands.bind.success"));
+                    commandSender.sendMessage(new TextComponentTranslation("commands.bind.success"));
                 } else
                 {
                     if (!Strings.isNullOrEmpty(((IBindable) held.getItem()).getOwnerUUID(held)))
                     {
                         held.getTagCompound().removeTag(Constants.NBT.OWNER_UUID);
                         held.getTagCompound().removeTag(Constants.NBT.OWNER_NAME);
-                        commandSender.addChatMessage(new TextComponentTranslation("commands.bind.remove.success"));
+                        commandSender.sendMessage(new TextComponentTranslation("commands.bind.remove.success"));
                     }
                 }
             }
         } catch (PlayerNotFoundException e)
         {
-            commandSender.addChatMessage(new TextComponentTranslation(TextHelper.localizeEffect("commands.error.404")));
+            commandSender.sendMessage(new TextComponentTranslation(TextHelper.localizeEffect("commands.error.404")));
         }
     }
 

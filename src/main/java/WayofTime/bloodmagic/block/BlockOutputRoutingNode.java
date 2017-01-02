@@ -12,6 +12,8 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
 
+import javax.annotation.Nullable;
+
 public class BlockOutputRoutingNode extends BlockRoutingNode
 {
     public BlockOutputRoutingNode()
@@ -19,12 +21,6 @@ public class BlockOutputRoutingNode extends BlockRoutingNode
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".outputRouting");
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
-        return new TileOutputRoutingNode();
     }
 
     @Override
@@ -41,7 +37,7 @@ public class BlockOutputRoutingNode extends BlockRoutingNode
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (world.getTileEntity(pos) instanceof TileOutputRoutingNode)
         {
@@ -49,5 +45,16 @@ public class BlockOutputRoutingNode extends BlockRoutingNode
         }
 
         return true;
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileOutputRoutingNode();
     }
 }

@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.block.base;
 
-import java.util.List;
-
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -11,6 +9,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import WayofTime.bloodmagic.block.property.PropertyString;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
@@ -79,7 +78,7 @@ public class BlockString extends Block
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> subBlocks)
+    public void getSubBlocks(Item item, CreativeTabs tab, NonNullList<ItemStack> subBlocks)
     {
         for (int i = 0; i < maxMeta; i++)
             subBlocks.add(new ItemStack(item, 1, i));

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -15,7 +16,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class AlchemyTableRecipe
 {
     protected ItemStack output = null;
-    protected ArrayList<ItemStack> input = new ArrayList<ItemStack>();
+    protected ArrayList<Object> input = new ArrayList<Object>();
     @Getter
     protected int lpDrained;
     @Getter
@@ -103,13 +104,12 @@ public class AlchemyTableRecipe
             if (slot != null)
             {
                 boolean inRecipe = false;
-                Iterator<Object> req = required.iterator();
 
-                while (req.hasNext())
+                for (Object aRequired : required)
                 {
                     boolean match = false;
 
-                    Object next = req.next();
+                    Object next = aRequired;
 
                     if (next instanceof ItemStack)
                     {
@@ -148,9 +148,9 @@ public class AlchemyTableRecipe
      * 
      * @return The recipes input vales.
      */
-    public ArrayList<ItemStack> getInput()
+    public List<Object> getInput()
     {
-        return this.input;
+        return ImmutableList.copyOf(input);
     }
 
     public ItemStack[] getRemainingItems(ItemStack[] inventory)
@@ -166,9 +166,9 @@ public class AlchemyTableRecipe
 
     protected ItemStack getContainerItem(ItemStack stack)
     {
-        if (stack == null)
+        if (stack.isEmpty())
         {
-            return null;
+            return ItemStack.EMPTY;
         }
 
         ItemStack copyStack = stack.copy();
@@ -178,10 +178,10 @@ public class AlchemyTableRecipe
             return copyStack.getItem().getContainerItem(copyStack);
         }
 
-        copyStack.stackSize--;
-        if (copyStack.stackSize <= 0)
+        copyStack.shrink(1);
+        if (copyStack.isEmpty())
         {
-            return null;
+            return ItemStack.EMPTY;
         }
 
         return copyStack;

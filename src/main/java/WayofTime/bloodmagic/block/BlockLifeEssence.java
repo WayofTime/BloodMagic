@@ -31,14 +31,6 @@ public class BlockLifeEssence extends BlockFluidClassic
         BloodMagicAPI.setLifeEssence(getLifeEssence());
     }
 
-    // TODO - Remove after Forge fixes
-    // Fix for BlockFluidBase not overriding this
-    @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
-        return getBlockState().getBaseState().withProperty(LEVEL, meta);
-    }
-
     @Override
     public boolean canDisplace(IBlockAccess world, BlockPos blockPos)
     {

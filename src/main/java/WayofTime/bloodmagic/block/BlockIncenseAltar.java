@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -21,7 +22,9 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileIncenseAltar;
 
-public class BlockIncenseAltar extends BlockContainer implements IVariantProvider
+import javax.annotation.Nullable;
+
+public class BlockIncenseAltar extends Block implements IVariantProvider
 {
     protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.3F, 0F, 0.3F, 0.72F, 1F, 0.72F);
 
@@ -61,7 +64,7 @@ public class BlockIncenseAltar extends BlockContainer implements IVariantProvide
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }
@@ -73,12 +76,6 @@ public class BlockIncenseAltar extends BlockContainer implements IVariantProvide
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta)
-    {
-        return new TileIncenseAltar();
-    }
-
-    @Override
     public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
     {
         TileIncenseAltar TileIncenseAltar = (TileIncenseAltar) world.getTileEntity(blockPos);
@@ -86,6 +83,17 @@ public class BlockIncenseAltar extends BlockContainer implements IVariantProvide
             TileIncenseAltar.dropItems();
 
         super.breakBlock(world, blockPos, blockState);
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileIncenseAltar();
     }
 
     @Override

@@ -3,44 +3,32 @@ package WayofTime.bloodmagic.command.sub;
 import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.command.SubCommandBase;
+import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.PlayerNotFoundException;
+import net.minecraft.command.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 
 import java.util.Locale;
 
-public class SubCommandOrb extends SubCommandBase
+public class SubCommandOrb extends CommandBase
 {
-
-    public SubCommandOrb(ICommand parent)
-    {
-        super(parent, "orb");
+    @Override
+    public String getName() {
+        return "orb";
     }
 
     @Override
-    public String getArgUsage(ICommandSender commandSender)
+    public String getUsage(ICommandSender commandSender)
     {
         return TextHelper.localizeEffect("commands.orb.usage");
     }
 
     @Override
-    public String getHelpText()
+    public void execute(MinecraftServer server, ICommandSender commandSender, String[] args) throws CommandException
     {
-        return TextHelper.localizeEffect("commands.orb.help");
-    }
-
-    @Override
-    public void processSubCommand(MinecraftServer server, ICommandSender commandSender, String[] args)
-    {
-        super.processSubCommand(server, commandSender, args);
-
         if (args.length > 0)
         {
 
@@ -58,7 +46,7 @@ public class SubCommandOrb extends SubCommandBase
                 String uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
                 SoulNetwork network = NetworkHelper.getSoulNetwork(uuid);
 
-                boolean displayHelp = isBounded(0, 2, args.length);
+                boolean displayHelp = args.length > 0 && args.length < 2;
 
                 try
                 {
@@ -68,7 +56,7 @@ public class SubCommandOrb extends SubCommandBase
                     {
                         if (displayHelp)
                         {
-                            displayHelpString(commandSender, ValidCommands.SET.help);
+                            CommandBloodMagic.displayHelpString(commandSender, ValidCommands.SET.help);
                             break;
                         }
 
@@ -78,14 +66,14 @@ public class SubCommandOrb extends SubCommandBase
                             {
                                 int amount = Integer.parseInt(args[2]);
                                 network.setOrbTier(amount);
-                                displaySuccessString(commandSender, "commands.success");
+                                CommandBloodMagic.displaySuccessString(commandSender, "commands.success");
                             } else
                             {
-                                displayErrorString(commandSender, "commands.error.arg.invalid");
+                                CommandBloodMagic.displayErrorString(commandSender, "commands.error.arg.invalid");
                             }
                         } else
                         {
-                            displayErrorString(commandSender, "commands.error.arg.missing");
+                            CommandBloodMagic.displayErrorString(commandSender, "commands.error.arg.missing");
                         }
 
                         break;
@@ -94,23 +82,23 @@ public class SubCommandOrb extends SubCommandBase
                     {
                         if (displayHelp)
                         {
-                            displayHelpString(commandSender, ValidCommands.GET.help);
+                            CommandBloodMagic.displayHelpString(commandSender, ValidCommands.GET.help);
                             break;
                         }
 
                         if (args.length > 1)
-                            commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect("message.orb.currenttier", network.getOrbTier())));
+                            commandSender.sendMessage(new TextComponentString(TextHelper.localizeEffect("message.orb.currenttier", network.getOrbTier())));
 
                         break;
                     }
                     }
                 } catch (IllegalArgumentException e)
                 {
-                    displayErrorString(commandSender, "commands.error.404");
+                    CommandBloodMagic.displayErrorString(commandSender, "commands.error.404");
                 }
             } catch (PlayerNotFoundException e)
             {
-                displayErrorString(commandSender, "commands.error.404");
+                CommandBloodMagic.displayErrorString(commandSender, "commands.error.404");
             }
         }
     }

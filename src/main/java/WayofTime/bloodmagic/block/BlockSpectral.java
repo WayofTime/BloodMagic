@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import WayofTime.bloodmagic.ConfigHandler;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -27,7 +28,9 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileSpectralBlock;
 
-public class BlockSpectral extends BlockContainer implements IVariantProvider
+import javax.annotation.Nullable;
+
+public class BlockSpectral extends Block implements IVariantProvider
 {
     protected static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
 
@@ -63,7 +66,7 @@ public class BlockSpectral extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }
@@ -112,8 +115,13 @@ public class BlockSpectral extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta)
-    {
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileSpectralBlock();
     }
 

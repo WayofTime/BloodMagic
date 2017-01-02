@@ -43,11 +43,11 @@ public class BlockTeleposer extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        ItemStack playerItem = heldItem;
+        ItemStack playerItem = player.getHeldItem(hand);
 
-        if (playerItem != null && playerItem.getItem() instanceof ItemTelepositionFocus)
+        if (playerItem.getItem() instanceof ItemTelepositionFocus)
             ((ItemTelepositionFocus) playerItem.getItem()).setBlockPos(playerItem, world, pos);
         else if (world.getTileEntity(pos) instanceof TileTeleposer)
             player.openGui(BloodMagic.instance, Constants.Gui.TELEPOSER_GUI, world, pos.getX(), pos.getY(), pos.getZ());

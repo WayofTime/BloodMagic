@@ -7,7 +7,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -83,7 +85,7 @@ public class ShapelessBloodOrbRecipe implements IRecipe
     {
         output = recipe.getRecipeOutput();
 
-        for (ItemStack ingred : ((List<ItemStack>) recipe.recipeItems))
+        for (ItemStack ingred : recipe.recipeItems)
         {
             Object finalObj = ingred;
             for (Entry<ItemStack, String> replace : replacements.entrySet())
@@ -126,7 +128,7 @@ public class ShapelessBloodOrbRecipe implements IRecipe
         {
             ItemStack slot = var1.getStackInSlot(x);
 
-            if (slot != null)
+            if (!slot.isEmpty())
             {
                 boolean inRecipe = false;
                 Iterator<Object> req = required.iterator();
@@ -187,17 +189,9 @@ public class ShapelessBloodOrbRecipe implements IRecipe
     }
 
     @Override
-    public ItemStack[] getRemainingItems(InventoryCrafting inv)
+    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
     {
-        ItemStack[] aitemstack = new ItemStack[inv.getSizeInventory()];
-
-        for (int i = 0; i < aitemstack.length; ++i)
-        {
-            ItemStack itemstack = inv.getStackInSlot(i);
-            aitemstack[i] = net.minecraftforge.common.ForgeHooks.getContainerItem(itemstack);
-        }
-
-        return aitemstack;
+        return ForgeHooks.defaultRecipeGetRemainingItems(inv);
     }
 
     public int getTier()

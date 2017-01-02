@@ -21,7 +21,6 @@ import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.LogHelper;
 import WayofTime.bloodmagic.client.gui.GuiHandler;
-import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.compat.ICompatibility;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.proxy.CommonProxy;

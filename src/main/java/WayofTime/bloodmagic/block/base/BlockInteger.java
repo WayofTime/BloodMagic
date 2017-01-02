@@ -9,10 +9,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
 
 /**
  * Creates a block that has multiple meta-based states.
@@ -68,7 +67,7 @@ public class BlockInteger extends Block
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> subBlocks) {
+    public void getSubBlocks(Item item, CreativeTabs tab, NonNullList<ItemStack> subBlocks) {
         for (int i = 0; i < maxMeta; i++)
             subBlocks.add(new ItemStack(item, 1, i));
     }

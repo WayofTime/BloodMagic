@@ -29,24 +29,25 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
     @Override
     public boolean getActivated(ItemStack stack)
     {
-        return stack != null && NBTHelper.checkNBT(stack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
+        return !stack.isEmpty() && NBTHelper.checkNBT(stack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
     }
 
     @Override
     public ItemStack setActivatedState(ItemStack stack, boolean activated)
     {
-        if (stack != null)
+        if (!stack.isEmpty())
         {
             NBTHelper.checkNBT(stack).getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
             return stack;
         }
 
-        return null;
+        return stack;
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
@@ -55,16 +56,16 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
             if (player.isSneaking())
                 setActivatedState(stack, !getActivated(stack));
             if (getActivated(stack) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
-                return super.onItemRightClick(stack, world, player, hand);
+                return super.onItemRightClick(world, player, hand);
         }
 
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        return (NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()) && onSigilUse(stack, player, world, pos, side, hitX, hitY, hitZ)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+        return (NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()) && onSigilUse(player.getHeldItem(hand), player, world, pos, side, hitX, hitY, hitZ)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
     }
 
     public boolean onSigilUse(ItemStack itemStack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)

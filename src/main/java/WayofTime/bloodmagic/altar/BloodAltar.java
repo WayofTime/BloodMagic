@@ -354,7 +354,7 @@ public class BloodAltar implements IFluidHandler
 
         ItemStack input = tileAltar.getStackInSlot(0);
 
-        if (input != null)
+        if (!input.isEmpty())
         {
             // Do recipes
             AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(input);
@@ -364,7 +364,7 @@ public class BloodAltar implements IFluidHandler
                 {
                     this.isActive = true;
                     this.recipe = recipe;
-                    this.result = recipe.getOutput() == null ? null : new ItemStack(recipe.getOutput().getItem(), 1, recipe.getOutput().getMetadata());
+                    this.result = recipe.getOutput().isEmpty() ? ItemStack.EMPTY : new ItemStack(recipe.getOutput().getItem(), 1, recipe.getOutput().getMetadata());
                     this.liquidRequired = recipe.getSyphon();
                     this.canBeFilled = recipe.isFillable();
                     this.consumptionRate = recipe.getConsumeRate();
@@ -442,7 +442,7 @@ public class BloodAltar implements IFluidHandler
 
         ItemStack input = tileAltar.getStackInSlot(0);
 
-        if (input == null)
+        if (input.isEmpty())
             return;
 
         World world = tileAltar.getWorld();
@@ -454,7 +454,7 @@ public class BloodAltar implements IFluidHandler
         if (!canBeFilled)
         {
             boolean hasOperated = false;
-            int stackSize = input.stackSize;
+            int stackSize = input.getCount();
 
             if (totalCharge > 0)
             {
@@ -480,7 +480,7 @@ public class BloodAltar implements IFluidHandler
                 if (internalCounter % 4 == 0 && world instanceof WorldServer)
                 {
                     WorldServer server = (WorldServer) world;
-                    server.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.2, 0, 0.2, 0, new int[0]);
+                    server.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.2, 0, 0.2, 0);
                 }
 
             } else if (!hasOperated && progress > 0)
@@ -490,7 +490,7 @@ public class BloodAltar implements IFluidHandler
                 if (internalCounter % 2 == 0 && world instanceof WorldServer)
                 {
                     WorldServer server = (WorldServer) world;
-                    server.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.1, 0, 0.1, 0, new int[0]);
+                    server.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.1, 0, 0.1, 0);
                 }
             }
 
@@ -500,8 +500,8 @@ public class BloodAltar implements IFluidHandler
                 {
                     ItemStack result = this.result;
 
-                    if (result != null)
-                        result.stackSize *= stackSize;
+                    if (!result.isEmpty())
+                        result.setCount(result.getCount() * stackSize);
 
                     MinecraftForge.EVENT_BUS.post(new AltarCraftedEvent(recipe, result));
                     tileAltar.setInventorySlotContents(0, result);
@@ -510,7 +510,7 @@ public class BloodAltar implements IFluidHandler
                     if (world instanceof WorldServer)
                     {
                         WorldServer server = (WorldServer) world;
-                        server.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.3, 0, 0.3, 0, new int[0]);
+                        server.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.3, 0, 0.3, 0);
                     }
 
                     this.cooldownAfterCrafting = 30;
@@ -521,7 +521,7 @@ public class BloodAltar implements IFluidHandler
         {
             ItemStack returnedItem = tileAltar.getStackInSlot(0);
 
-            if (returnedItem == null || !(returnedItem.getItem() instanceof IBloodOrb))
+            if (returnedItem.isEmpty() || !(returnedItem.getItem() instanceof IBloodOrb))
                 return;
 
             IBloodOrb item = (IBloodOrb) (returnedItem.getItem());
@@ -546,7 +546,7 @@ public class BloodAltar implements IFluidHandler
                 if (drain > 0 && internalCounter % 4 == 0 && world instanceof WorldServer)
                 {
                     WorldServer server = (WorldServer) world;
-                    server.spawnParticle(EnumParticleTypes.SPELL_WITCH, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0, 0, 0, 0.001, new int[] {});
+                    server.spawnParticle(EnumParticleTypes.SPELL_WITCH, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0, 0, 0, 0.001);
                 }
             }
         }
@@ -758,7 +758,7 @@ public class BloodAltar implements IFluidHandler
 
     public void setActive()
     {
-        if (tileAltar.getStackInSlot(0) == null)
+        if (tileAltar.getStackInSlot(0).isEmpty())
         {
             isActive = false;
         }

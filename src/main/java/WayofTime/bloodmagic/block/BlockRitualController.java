@@ -30,7 +30,6 @@ import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.api.util.helper.RitualHelper;
-import WayofTime.bloodmagic.block.base.BlockEnumContainer;
 import WayofTime.bloodmagic.block.enums.EnumRitualController;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.registry.ModItems;
