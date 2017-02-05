@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 import WayofTime.bloodmagic.client.key.KeyBindings;
-import WayofTime.bloodmagic.client.render.model.CustomModelFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
@@ -218,12 +217,6 @@ public class ClientHandler
     @SubscribeEvent
     public void onModelBake(ModelBakeEvent event)
     {
-        ModelResourceLocation location = new ModelResourceLocation("bloodmagic:BlockBloodTank", "inventory");
-        IBakedModel model = event.getModelRegistry().getObject(location);
-
-        if (model != null)
-            event.getModelRegistry().putObject(location, new CustomModelFactory(model));
-
         if (BloodMagic.isDev() && SUPPRESS_ASSET_ERRORS)
             return;
 
@@ -381,7 +374,7 @@ public class ClientHandler
     public static void renderRitualStones(TileMasterRitualStone masterRitualStone, float partialTicks)
     {
         EntityPlayerSP player = minecraft.player;
-        World world = player.world;
+        World world = player.getEntityWorld();
         EnumFacing direction = mrsHoloDirection;
         Ritual ritual = mrsHoloRitual;
 
