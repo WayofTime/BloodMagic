@@ -260,9 +260,14 @@ public class ChatUtil
         public static class Handler implements IMessageHandler<PacketNoSpamChat, IMessage>
         {
             @Override
-            public IMessage onMessage(PacketNoSpamChat message, MessageContext ctx)
+            public IMessage onMessage(final PacketNoSpamChat message, MessageContext ctx)
             {
-                sendNoSpamMessages(message.chatLines);
+                Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+                    @Override
+                    public void run() {
+                        sendNoSpamMessages(message.chatLines);
+                    }
+                });
                 return null;
             }
         }
