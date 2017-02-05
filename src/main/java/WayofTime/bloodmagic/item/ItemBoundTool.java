@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.Utils;
 import com.google.common.base.Strings;
@@ -86,16 +87,19 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
+    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected)
     {
-        if (entityIn instanceof EntityPlayer && getActivated(stack) && isSelected && getBeingHeldDown(stack) && stack == ((EntityPlayer) entityIn).getActiveItemStack())
+        if (entity instanceof EntityPlayer && getActivated(stack) && isSelected && getBeingHeldDown(stack) && stack == ((EntityPlayer) entity).getActiveItemStack())
         {
-            EntityPlayer player = (EntityPlayer) entityIn;
+            EntityPlayer player = (EntityPlayer) entity;
             setHeldDownCount(stack, Math.min(player.getItemInUseCount(), chargeTime));
         } else if (!isSelected)
         {
             setBeingHeldDown(stack, false);
         }
+
+        if (entity instanceof EntityPlayer && getActivated(stack) && world.getTotalWorldTime() % 80 == 0)
+            NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage((EntityPlayer) entity, 20);
     }
 
     protected int getHeldDownCount(ItemStack stack)
