@@ -2,45 +2,32 @@ package WayofTime.bloodmagic.command.sub;
 
 import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.command.SubCommandBase;
+import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.PlayerNotFoundException;
+import net.minecraft.command.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 
 import java.util.Locale;
 
-public class SubCommandNetwork extends SubCommandBase
+public class SubCommandNetwork extends CommandBase
 {
-
-    public SubCommandNetwork(ICommand parent)
-    {
-        super(parent, "network");
+    @Override
+    public String getName() {
+        return "network";
     }
 
     @Override
-    public String getArgUsage(ICommandSender commandSender)
+    public String getUsage(ICommandSender commandSender)
     {
         return TextHelper.localizeEffect("commands.network.usage");
     }
 
     @Override
-    public String getHelpText()
+    public void execute(MinecraftServer server, ICommandSender commandSender, String[] args) throws CommandException
     {
-        return TextHelper.localizeEffect("commands.network.help");
-    }
-
-    @Override
-    public void processSubCommand(MinecraftServer server, ICommandSender commandSender, String[] args)
-    {
-        super.processSubCommand(server, commandSender, args);
-
         if (args.length > 1)
         {
             if (args[0].equalsIgnoreCase("help"))
@@ -53,18 +40,18 @@ public class SubCommandNetwork extends SubCommandBase
                 try
                 {
                     ValidCommands command = ValidCommands.valueOf(args[0].toUpperCase(Locale.ENGLISH));
-                    command.run(player, commandSender, isBounded(0, 2, args.length), args);
+                    command.run(player, commandSender, args.length > 0 && args.length < 2, args);
                 } catch (IllegalArgumentException e)
                 {
 
                 }
             } catch (PlayerNotFoundException e)
             {
-                displayErrorString(commandSender, e.getLocalizedMessage());
+                CommandBloodMagic.displayErrorString(commandSender, e.getLocalizedMessage());
             }
         } else
         {
-            displayErrorString(commandSender, "commands.error.arg.missing");
+            CommandBloodMagic.displayErrorString(commandSender, "commands.error.arg.missing");
         }
     }
 
@@ -77,7 +64,7 @@ public class SubCommandNetwork extends SubCommandBase
             {
                 if (displayHelp)
                 {
-                    displayHelpString(sender, this.help);
+                    CommandBloodMagic.displayHelpString(sender, this.help);
                     return;
                 }
 
@@ -87,14 +74,14 @@ public class SubCommandNetwork extends SubCommandBase
                     {
                         int amount = Integer.parseInt(args[2]);
                         NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, amount);
-                        displaySuccessString(sender, "commands.network.syphon.success", amount, player.getDisplayName().getFormattedText());
+                        CommandBloodMagic.displaySuccessString(sender, "commands.network.syphon.success", amount, player.getDisplayName().getFormattedText());
                     } else
                     {
-                        displayErrorString(sender, "commands.error.arg.invalid");
+                        CommandBloodMagic.displayErrorString(sender, "commands.error.arg.invalid");
                     }
                 } else
                 {
-                    displayErrorString(sender, "commands.error.arg.missing");
+                    CommandBloodMagic.displayErrorString(sender, "commands.error.arg.missing");
                 }
             }
         },
@@ -105,7 +92,7 @@ public class SubCommandNetwork extends SubCommandBase
             {
                 if (displayHelp)
                 {
-                    displayHelpString(sender, this.help);
+                    CommandBloodMagic.displayHelpString(sender, this.help);
                     return;
                 }
 
@@ -117,14 +104,14 @@ public class SubCommandNetwork extends SubCommandBase
                     {
                         int amount = Integer.parseInt(args[2]);
                         int maxOrb = NetworkHelper.getMaximumForTier(network.getOrbTier());
-                        displaySuccessString(sender, "commands.network.add.success", network.add(amount, maxOrb), player.getDisplayName().getFormattedText());
+                        CommandBloodMagic.displaySuccessString(sender, "commands.network.add.success", network.add(amount, maxOrb), player.getDisplayName().getFormattedText());
                     } else
                     {
-                        displayErrorString(sender, "commands.error.arg.invalid");
+                        CommandBloodMagic.displayErrorString(sender, "commands.error.arg.invalid");
                     }
                 } else
                 {
-                    displayErrorString(sender, "commands.error.arg.missing");
+                    CommandBloodMagic.displayErrorString(sender, "commands.error.arg.missing");
                 }
             }
         },
@@ -135,7 +122,7 @@ public class SubCommandNetwork extends SubCommandBase
             {
                 if (displayHelp)
                 {
-                    displayHelpString(sender, this.help);
+                    CommandBloodMagic.displayHelpString(sender, this.help);
                     return;
                 }
 
@@ -147,14 +134,14 @@ public class SubCommandNetwork extends SubCommandBase
                     {
                         int amount = Integer.parseInt(args[2]);
                         network.setCurrentEssence(amount);
-                        displaySuccessString(sender, "commands.network.set.success", player.getDisplayName().getFormattedText(), amount);
+                        CommandBloodMagic.displaySuccessString(sender, "commands.network.set.success", player.getDisplayName().getFormattedText(), amount);
                     } else
                     {
-                        displayErrorString(sender, "commands.error.arg.invalid");
+                        CommandBloodMagic.displayErrorString(sender, "commands.error.arg.invalid");
                     }
                 } else
                 {
-                    displayErrorString(sender, "commands.error.arg.missing");
+                    CommandBloodMagic.displayErrorString(sender, "commands.error.arg.missing");
                 }
             }
         },
@@ -165,14 +152,14 @@ public class SubCommandNetwork extends SubCommandBase
             {
                 if (displayHelp)
                 {
-                    displayHelpString(sender, this.help);
+                    CommandBloodMagic.displayHelpString(sender, this.help);
                     return;
                 }
 
                 SoulNetwork network = NetworkHelper.getSoulNetwork(player);
 
                 if (args.length > 1)
-                    sender.addChatMessage(new TextComponentString(TextHelper.localizeEffect("tooltip.BloodMagic.sigil.divination.currentEssence", network.getCurrentEssence())));
+                    sender.sendMessage(new TextComponentString(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence())));
 
             }
         },
@@ -183,7 +170,7 @@ public class SubCommandNetwork extends SubCommandBase
             {
                 if (displayHelp)
                 {
-                    displayHelpString(sender, this.help, Integer.MAX_VALUE);
+                    CommandBloodMagic.displayHelpString(sender, this.help, Integer.MAX_VALUE);
                     return;
                 }
 
@@ -192,7 +179,7 @@ public class SubCommandNetwork extends SubCommandBase
                 if (args.length > 1)
                 {
                     network.setCurrentEssence(Integer.MAX_VALUE);
-                    displaySuccessString(sender, "commands.network.fill.success", player.getDisplayName().getFormattedText());
+                    CommandBloodMagic.displaySuccessString(sender, "commands.network.fill.success", player.getDisplayName().getFormattedText());
                 }
             }
         },
@@ -203,7 +190,7 @@ public class SubCommandNetwork extends SubCommandBase
             {
                 if (displayHelp)
                 {
-                    displayHelpString(sender, this.help);
+                    CommandBloodMagic.displayHelpString(sender, this.help);
                     return;
                 }
 
@@ -213,7 +200,7 @@ public class SubCommandNetwork extends SubCommandBase
                 {
                     int maxOrb = NetworkHelper.getMaximumForTier(network.getOrbTier());
                     network.setCurrentEssence(maxOrb);
-                    displaySuccessString(sender, "commands.network.cap.success", player.getDisplayName().getFormattedText());
+                    CommandBloodMagic.displaySuccessString(sender, "commands.network.cap.success", player.getDisplayName().getFormattedText());
                 }
             }
         },

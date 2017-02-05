@@ -59,7 +59,7 @@ public class ContainerHolding extends Container
     {
         super.onContainerClosed(entityPlayer);
 
-        if (!entityPlayer.worldObj.isRemote)
+        if (!entityPlayer.getEntityWorld().isRemote)
         {
             saveInventory(entityPlayer);
         }
@@ -70,7 +70,7 @@ public class ContainerHolding extends Container
     {
         super.detectAndSendChanges();
 
-        if (!player.worldObj.isRemote)
+        if (!player.getEntityWorld().isRemote)
         {
             saveInventory(player);
         }

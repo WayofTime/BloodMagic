@@ -129,7 +129,7 @@ public class BlockEnumWall<E extends Enum<E> & IStringSerializable> extends Bloc
     }
 
     @Override
-    protected ItemStack createStackedBlock(IBlockState state)
+    protected ItemStack getSilkTouchDrop(IBlockState state)
     {
         return new ItemStack(this, 1, damageDropped(state));
     }

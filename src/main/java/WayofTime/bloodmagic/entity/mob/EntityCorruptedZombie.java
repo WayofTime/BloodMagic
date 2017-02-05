@@ -73,7 +73,7 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase
     @Override
     public void setCombatTask()
     {
-        if (this.worldObj != null && !this.worldObj.isRemote)
+        if (this.getEntityWorld() != null && !this.getEntityWorld().isRemote)
         {
             this.tasks.removeTask(this.aiAttackOnCollide);
             this.tasks.removeTask(this.aiArrowAttack);
@@ -83,7 +83,7 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase
             {
                 int i = 20;
 
-                if (this.worldObj.getDifficulty() != EnumDifficulty.HARD)
+                if (this.getEntityWorld().getDifficulty() != EnumDifficulty.HARD)
                 {
                     i = 40;
                 }
@@ -128,7 +128,7 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase
      */
     public double absorbWillFromAuraToHeal(double toHeal)
     {
-        if (worldObj.isRemote)
+        if (getEntityWorld().isRemote)
         {
             return 0;
         }
@@ -139,13 +139,13 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase
             return 0;
         }
 
-        double will = WorldDemonWillHandler.getCurrentWill(worldObj, getPosition(), getType());
+        double will = WorldDemonWillHandler.getCurrentWill(getEntityWorld(), getPosition(), getType());
 
         toHeal = Math.min(healthMissing, Math.min(toHeal, will / getWillToHealth()));
         if (toHeal > 0)
         {
             this.heal((float) toHeal);
-            return WorldDemonWillHandler.drainWill(worldObj, getPosition(), getType(), toHeal * getWillToHealth(), true);
+            return WorldDemonWillHandler.drainWill(getEntityWorld(), getPosition(), getType(), toHeal * getWillToHealth(), true);
         }
 
         return 0;
@@ -164,7 +164,7 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase
 
     public void onUpdate()
     {
-        if (!this.worldObj.isRemote && this.ticksExisted % 20 == 0)
+        if (!this.getEntityWorld().isRemote && this.ticksExisted % 20 == 0)
         {
             absorbWillFromAuraToHeal(2);
         }

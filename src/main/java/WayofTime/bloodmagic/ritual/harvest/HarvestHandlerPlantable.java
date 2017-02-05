@@ -70,7 +70,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
                 if (!world.isRemote)
                 {
                     EntityItem toDrop = new EntityItem(world, pos.getX(), pos.getY() + 0.5, pos.getZ(), stack);
-                    world.spawnEntityInWorld(toDrop);
+                    world.spawnEntity(toDrop);
                 }
             }
 

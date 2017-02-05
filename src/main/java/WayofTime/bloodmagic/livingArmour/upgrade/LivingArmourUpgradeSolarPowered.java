@@ -29,7 +29,7 @@ public class LivingArmourUpgradeSolarPowered extends LivingArmourUpgrade
     @Override
     public double getArmourProtection(EntityLivingBase wearer, DamageSource source)
     {
-        if (wearer.worldObj.canSeeSky(wearer.getPosition()) || wearer.worldObj.provider.isDaytime())
+        if (wearer.getEntityWorld().canSeeSky(wearer.getPosition()) || wearer.getEntityWorld().provider.isDaytime())
         {
             return protectionLevel[this.level];
         }

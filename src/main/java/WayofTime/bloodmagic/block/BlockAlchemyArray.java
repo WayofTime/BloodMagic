@@ -81,7 +81,7 @@ public class BlockAlchemyArray extends BlockContainer
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation()
     {
         return false;
     }

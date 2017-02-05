@@ -189,7 +189,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
     {
         if (ent instanceof EntitySlime)
         {
-            ent.faceEntity(getTarget(ent.worldObj, pos), 10.0F, 20.0F);
+            ent.faceEntity(getTarget(ent.getEntityWorld(), pos), 10.0F, 20.0F);
         } else if (ent instanceof EntitySilverfish)
         {
             if (counter < 10)
@@ -197,7 +197,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
                 return;
             }
             EntitySilverfish sf = (EntitySilverfish) ent;
-            Path pathentity = getPathEntityToEntity(ent, getTarget(ent.worldObj, pos), getRange());
+            Path pathentity = getPathEntityToEntity(ent, getTarget(ent.getEntityWorld(), pos), getRange());
             sf.getNavigator().setPath(pathentity, sf.getAIMoveSpeed());
         } else if (ent instanceof EntityBlaze)
         {
@@ -221,7 +221,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
 //            ent.setAttackTarget(target);
         } else if (ent instanceof EntityEnderman)
         {
-            ((EntityEnderman) ent).setAttackTarget(getTarget(ent.worldObj, pos));
+            ((EntityEnderman) ent).setAttackTarget(getTarget(ent.getEntityWorld(), pos));
         }
     }
 
@@ -234,7 +234,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
         if (distance > 2)
         {
             EntityMob mod = (EntityMob) ent;
-            mod.faceEntity(getTarget(ent.worldObj, pos), 180, 0);
+            mod.faceEntity(getTarget(ent.getEntityWorld(), pos), 180, 0);
             mod.moveEntityWithHeading(0, 0.3f);
             if (mod.posY < pos.getY())
             {
@@ -248,12 +248,12 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
 
     public Path getPathEntityToEntity(Entity entity, Entity targetEntity, float range)
     {
-        int targX = MathHelper.floor_double(targetEntity.posX);
-        int targY = MathHelper.floor_double(targetEntity.posY + 1.0D);
-        int targZ = MathHelper.floor_double(targetEntity.posZ);
+        int targX = MathHelper.floor(targetEntity.posX);
+        int targY = MathHelper.floor(targetEntity.posY + 1.0D);
+        int targZ = MathHelper.floor(targetEntity.posZ);
 
         PathFinder pf = new PathFinder(new WalkNodeProcessor());
-        return pf.findPath(targetEntity.worldObj, (EntityLiving) entity, new BlockPos(targX, targY, targZ), range);
+        return pf.findPath(targetEntity.getEntityWorld(), (EntityLiving) entity, new BlockPos(targX, targY, targZ), range);
     }
 
     private boolean trackMob(BlockPos pos, EntityLiving ent)
@@ -261,7 +261,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
         //TODO: Figure out if this crud is needed
         if (useSetTarget(ent))
         {
-            ((EntityMob) ent).setAttackTarget(getTarget(ent.worldObj, pos));
+            ((EntityMob) ent).setAttackTarget(getTarget(ent.getEntityWorld(), pos));
             return true;
         } else if (useSpecialCase(ent))
         {
@@ -328,7 +328,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
         }
 
         cancelCurrentTasks(ent);
-        ent.tasks.addTask(0, new AttractTask(ent, getTarget(ent.worldObj, pos), pos));
+        ent.tasks.addTask(0, new AttractTask(ent, getTarget(ent.getEntityWorld(), pos), pos));
 
         return true;
     }
@@ -364,13 +364,13 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
     {
         if (ent instanceof EntitySlime)
         {
-            ent.faceEntity(getTarget(ent.worldObj, pos), 10.0F, 20.0F);
-//            ent.setAttackTarget(getTarget(ent.worldObj, pos));
+            ent.faceEntity(getTarget(ent.getEntityWorld(), pos), 10.0F, 20.0F);
+//            ent.setAttackTarget(getTarget(ent.getEntityWorld(), pos));
             return true;
         } else if (ent instanceof EntitySilverfish)
         {
             EntitySilverfish es = (EntitySilverfish) ent;
-            Path pathentity = getPathEntityToEntity(ent, getTarget(ent.worldObj, pos), getRange());
+            Path pathentity = getPathEntityToEntity(ent, getTarget(ent.getEntityWorld(), pos), getRange());
             es.getNavigator().setPath(pathentity, es.getAIMoveSpeed());
             return true;
         } else if (ent instanceof EntityBlaze)
@@ -439,7 +439,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
         {
             boolean res = false;
             //TODO:
-            TileEntity te = mob.worldObj.getTileEntity(coord);
+            TileEntity te = mob.getEntityWorld().getTileEntity(coord);
             if (te instanceof TileAlchemyArray)
             {
                 res = true;

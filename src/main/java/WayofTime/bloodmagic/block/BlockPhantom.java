@@ -54,7 +54,7 @@ public class BlockPhantom extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation()
     {
         return false;
     }

@@ -14,7 +14,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class CompatibilityGuideAPI implements ICompatibility
 {
-    private static IRecipe guideRecipe = null;
+    static IRecipe guideRecipe = null;
     private static boolean worldFlag;
 
     @Override
@@ -46,9 +46,11 @@ public class CompatibilityGuideAPI implements ICompatibility
         {
             if (!worldFlag) {
                 GameRegistry.addRecipe(guideRecipe);
+                GuideBloodMagic.handleBookRecipe(true);
                 worldFlag = true;
             } else {
                 CraftingManager.getInstance().getRecipeList().remove(guideRecipe);
+                GuideBloodMagic.handleBookRecipe(false);
                 worldFlag = false;
             }
             break;

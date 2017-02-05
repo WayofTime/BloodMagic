@@ -70,7 +70,7 @@ public class BlockBloodLight extends Block
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation()
     {
         return false;
     }
@@ -97,7 +97,7 @@ public class BlockBloodLight extends Block
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
     {
-        EntityPlayerSP playerSP = Minecraft.getMinecraft().thePlayer;
+        EntityPlayerSP playerSP = Minecraft.getMinecraft().player;
 
         if (rand.nextInt(3) != 0)
         {

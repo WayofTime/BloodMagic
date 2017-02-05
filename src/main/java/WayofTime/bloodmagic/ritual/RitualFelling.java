@@ -124,7 +124,7 @@ public class RitualFelling extends Ritual
                     Utils.insertStackIntoInventory(copyStack, (IInventory) tile, EnumFacing.DOWN);
                     if (copyStack.stackSize > 0)
                     {
-                        world.spawnEntityInWorld(new EntityItem(world, blockPos.getX() + 0.4, blockPos.getY() + 2, blockPos.getZ() + 0.4, copyStack));
+                        world.spawnEntity(new EntityItem(world, blockPos.getX() + 0.4, blockPos.getY() + 2, blockPos.getZ() + 0.4, copyStack));
                     }
                 }
             }

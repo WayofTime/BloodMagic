@@ -224,7 +224,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
             if (attacker instanceof EntityPlayer)
             {
                 EntityPlayer attackerPlayer = (EntityPlayer) attacker;
-                this.recalculatePowers(stack, attackerPlayer.worldObj, attackerPlayer);
+                this.recalculatePowers(stack, attackerPlayer.getEntityWorld(), attackerPlayer);
                 EnumDemonWillType type = this.getCurrentType(stack);
                 double will = PlayerDemonWillHandler.getTotalDemonWill(type, attackerPlayer);
                 int willBracket = this.getLevel(stack, will);
@@ -314,7 +314,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     @Override
     public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
     {
-        recalculatePowers(stack, player.worldObj, player);
+        recalculatePowers(stack, player.getEntityWorld(), player);
 
         double drain = this.getDrainOfActivatedSword(stack);
         if (drain > 0)
@@ -365,7 +365,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     {
         List<ItemStack> soulList = new ArrayList<ItemStack>();
 
-        if (killedEntity.worldObj.getDifficulty() != EnumDifficulty.PEACEFUL && !(killedEntity instanceof IMob))
+        if (killedEntity.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && !(killedEntity instanceof IMob))
         {
             return soulList;
         }
@@ -378,9 +378,9 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
 
         for (int i = 0; i <= looting; i++)
         {
-            if (i == 0 || attackingEntity.worldObj.rand.nextDouble() < 0.4)
+            if (i == 0 || attackingEntity.getEntityWorld().rand.nextDouble() < 0.4)
             {
-                ItemStack soulStack = soul.createWill(type.ordinal(), willModifier * (this.getDropOfActivatedSword(stack) * attackingEntity.worldObj.rand.nextDouble() + this.getStaticDropOfActivatedSword(stack)) * killedEntity.getMaxHealth() / 20d);
+                ItemStack soulStack = soul.createWill(type.ordinal(), willModifier * (this.getDropOfActivatedSword(stack) * attackingEntity.getEntityWorld().rand.nextDouble() + this.getStaticDropOfActivatedSword(stack)) * killedEntity.getMaxHealth() / 20d);
                 soulList.add(soulStack);
             }
         }
@@ -395,10 +395,10 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
         Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
         if (slot == EntityEquipmentSlot.MAINHAND)
         {
-            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getDamageOfActivatedSword(stack), 0));
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", this.getAttackSpeedOfSword(stack), 0));
-            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 31818145), "Weapon modifier", this.getHealthBonusOfSword(stack), 0));
-            multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 4218052), "Weapon modifier", this.getSpeedOfSword(stack), 2));
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getDamageOfActivatedSword(stack), 0));
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED. getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", this.getAttackSpeedOfSword(stack), 0));
+            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(new UUID(0, 31818145), "Weapon modifier", this.getHealthBonusOfSword(stack), 0));
+            multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(new UUID(0, 4218052), "Weapon modifier", this.getSpeedOfSword(stack), 2));
         }
 
         return multimap;
@@ -543,7 +543,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     @Override
     public boolean spawnSentientEntityOnDrop(ItemStack droppedStack, EntityPlayer player)
     {
-        World world = player.worldObj;
+        World world = player.getEntityWorld();
         if (!world.isRemote)
         {
             this.recalculatePowers(droppedStack, world, player);
@@ -559,7 +559,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
 
             EntitySentientSpecter specterEntity = new EntitySentientSpecter(world);
             specterEntity.setPosition(player.posX, player.posY, player.posZ);
-            world.spawnEntityInWorld(specterEntity);
+            world.spawnEntity(specterEntity);
 
             specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, droppedStack.copy());
 

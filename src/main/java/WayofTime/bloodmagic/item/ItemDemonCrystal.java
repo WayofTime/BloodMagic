@@ -101,7 +101,7 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
     @Override
     public EnumDemonWillType getType(ItemStack willStack)
     {
-        return EnumDemonWillType.values()[MathHelper.clamp_int(willStack.getMetadata(), 0, EnumDemonWillType.values().length - 1)];
+        return EnumDemonWillType.values()[MathHelper.clamp(willStack.getMetadata(), 0, EnumDemonWillType.values().length - 1)];
     }
 
     @Override

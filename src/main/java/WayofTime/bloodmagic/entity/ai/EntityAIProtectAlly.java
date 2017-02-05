@@ -21,7 +21,7 @@ public class EntityAIProtectAlly extends EntityAIBase
     public EntityAIProtectAlly(EntityCorruptedSheep entity)
     {
         this.entity = entity;
-        this.world = entity.worldObj;
+        this.world = entity.getEntityWorld();
         this.setMutexBits(7);
     }
 

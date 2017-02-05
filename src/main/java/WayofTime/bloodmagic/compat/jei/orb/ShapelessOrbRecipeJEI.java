@@ -8,7 +8,10 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.ICraftingRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -16,14 +19,12 @@ import net.minecraftforge.fluids.FluidStack;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class ShapelessOrbRecipeJEI implements ICraftingRecipeWrapper
+public class ShapelessOrbRecipeJEI extends BlankRecipeWrapper implements ICraftingRecipeWrapper
 {
 
     @Nonnull
     private final List inputs;
-
     private final int tier;
-
     @Nonnull
     private final ItemStack output;
 
@@ -42,52 +43,16 @@ public class ShapelessOrbRecipeJEI implements ICraftingRecipeWrapper
     }
 
     @Override
-    public List getInputs()
-    {
-        return inputs;
-    }
-
-    @Override
-    public List<ItemStack> getOutputs()
-    {
-        return Collections.singletonList(output);
+    public void getIngredients(IIngredients ingredients) {
+        List<List<ItemStack>> expanded = BloodMagicPlugin.jeiHelper.getStackHelper().expandRecipeItemStackInputs(inputs);
+        ingredients.setInputLists(ItemStack.class, expanded);
+        ingredients.setOutput(ItemStack.class, output);
     }
 
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
-        String draw = TextHelper.localize("jei.BloodMagic.recipe.requiredTier", NumeralHelper.toRoman(tier));
+        String draw = TextHelper.localize("jei.bloodmagic.recipe.requiredTier", NumeralHelper.toRoman(tier));
         minecraft.fontRendererObj.drawString(draw, 72 - minecraft.fontRendererObj.getStringWidth(draw) / 2, 10, Color.gray.getRGB());
-    }
-
-    @Override
-    public List<FluidStack> getFluidInputs()
-    {
-        return null;
-    }
-
-    @Override
-    public List<FluidStack> getFluidOutputs()
-    {
-        return null;
-    }
-
-    @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight)
-    {
-
-    }
-
-    @Nullable
-    @Override
-    public List<String> getTooltipStrings(int mouseX, int mouseY)
-    {
-        return null;
-    }
-
-    @Override
-    public boolean handleClick(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int mouseButton)
-    {
-        return false;
     }
 }

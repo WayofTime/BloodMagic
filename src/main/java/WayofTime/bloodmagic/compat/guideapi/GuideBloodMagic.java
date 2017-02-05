@@ -6,7 +6,6 @@ import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import amerifrance.guideapi.api.GuideAPI;
 import amerifrance.guideapi.api.impl.Book;
-import amerifrance.guideapi.api.util.NBTBookTags;
 import amerifrance.guideapi.category.CategoryItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -42,9 +41,13 @@ public class GuideBloodMagic
 //        guideBook.addCategory(new CategoryItemStack(CategorySpell.buildCategory(), "guide.BloodMagic.category.spell", new ItemStack(ModItems.ritualDiviner)));
     }
 
-    public static void initJEIBlacklist()
+    public static void handleBookRecipe(boolean add)
     {
-        if (Loader.isModLoaded("JEI"))
-            BloodMagicPlugin.jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(GuideAPI.guideBook, NBTBookTags.BOOK_TAG, NBTBookTags.CATEGORY_PAGE_TAG, NBTBookTags.CATEGORY_TAG, NBTBookTags.ENTRY_PAGE_TAG, NBTBookTags.ENTRY_TAG, NBTBookTags.KEY_TAG, NBTBookTags.PAGE_TAG);
+        if (Loader.isModLoaded("JEI")) {
+            if (add)
+                BloodMagicPlugin.jeiRuntime.getRecipeRegistry().addRecipe(CompatibilityGuideAPI.guideRecipe);
+            else
+                BloodMagicPlugin.jeiRuntime.getRecipeRegistry().removeRecipe(CompatibilityGuideAPI.guideRecipe);
+        }
     }
 }

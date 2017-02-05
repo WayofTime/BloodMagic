@@ -136,7 +136,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         {
             if (this.isSlave())
             {
-                TileEntity tile = worldObj.getTileEntity(connectedPos);
+                TileEntity tile = getWorld().getTileEntity(connectedPos);
                 if (tile instanceof TileAlchemyTable)
                 {
                     return (T) new SidedInvWrapper((TileAlchemyTable) tile, facing);
@@ -246,12 +246,12 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         int tier = getTierOfOrb();
 
         AlchemyTableRecipe recipe = AlchemyTableRecipeRegistry.getMatchingRecipe(inputList, getWorld(), getPos());
-        if (recipe != null && (burnTime > 0 || (!worldObj.isRemote && tier >= recipe.getTierRequired() && this.getContainedLp() >= recipe.getLpDrained())))
+        if (recipe != null && (burnTime > 0 || (!getWorld().isRemote && tier >= recipe.getTierRequired() && this.getContainedLp() >= recipe.getLpDrained())))
         {
             if (burnTime == 1)
             {
-                IBlockState state = worldObj.getBlockState(pos);
-                worldObj.notifyBlockUpdate(getPos(), state, state, 3);
+                IBlockState state = getWorld().getBlockState(pos);
+                getWorld().notifyBlockUpdate(getPos(), state, state, 3);
             }
 
             if (canCraft(inputList, recipe))
@@ -261,18 +261,18 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
                 if (burnTime == ticksRequired)
                 {
-                    if (!worldObj.isRemote)
+                    if (!getWorld().isRemote)
                     {
                         int requiredLp = recipe.getLpDrained();
                         if (requiredLp > 0)
                         {
-                            if (!worldObj.isRemote)
+                            if (!getWorld().isRemote)
                             {
                                 consumeLp(requiredLp);
                             }
                         }
 
-                        if (!worldObj.isRemote)
+                        if (!getWorld().isRemote)
                         {
                             craftItem(inputList, recipe);
                         }
@@ -280,8 +280,8 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
                     burnTime = 0;
 
-                    IBlockState state = worldObj.getBlockState(pos);
-                    worldObj.notifyBlockUpdate(getPos(), state, state, 3);
+                    IBlockState state = getWorld().getBlockState(pos);
+                    getWorld().notifyBlockUpdate(getPos(), state, state, 3);
                 } else if (burnTime > ticksRequired + 10)
                 {
                     burnTime = 0;

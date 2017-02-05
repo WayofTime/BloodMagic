@@ -47,7 +47,7 @@ public class HarvestHandlerTall implements IHarvestHandler
             for (ItemStack drop : drops)
             {
                 EntityItem item = new EntityItem(world, pos.getX(), pos.getY() + 0.5, pos.getZ(), drop);
-                world.spawnEntityInWorld(item);
+                world.spawnEntity(item);
             }
         }
 

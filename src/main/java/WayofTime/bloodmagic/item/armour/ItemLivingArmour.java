@@ -243,7 +243,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             if (damage > this.getMaxDamage(stack) - this.getDamage(stack))
             {
                 //TODO: Syphon a load of LP.
-                if (entity.worldObj.isRemote && entity instanceof EntityPlayer)
+                if (entity.getEntityWorld().isRemote && entity instanceof EntityPlayer)
                 {
                     EntityPlayer player = (EntityPlayer) entity;
                     SoulNetwork network = NetworkHelper.getSoulNetwork(player);
@@ -307,7 +307,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                         if (tracker != null)
                         {
                             double progress = tracker.getProgress(armour, upgrade.getUpgradeLevel());
-                            tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.progress", TextHelper.localize(upgrade.getUnlocalizedName()), MathHelper.clamp_int((int) (progress * 100D), 0, 100)));
+                            tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.progress", TextHelper.localize(upgrade.getUnlocalizedName()), MathHelper.clamp((int) (progress * 100D), 0, 100)));
                         }
                     } else
                     {

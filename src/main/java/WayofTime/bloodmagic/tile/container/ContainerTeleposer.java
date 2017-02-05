@@ -79,7 +79,7 @@ public class ContainerTeleposer extends Container
     @Override
     public boolean canInteractWith(EntityPlayer playerIn)
     {
-        return this.tileTeleposer.isUseableByPlayer(playerIn);
+        return this.tileTeleposer.isUsableByPlayer(playerIn);
     }
 
     private class SlotTeleposer extends Slot

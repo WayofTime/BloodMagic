@@ -55,7 +55,7 @@ public class BlockDemonCrucible extends BlockContainer implements IVariantProvid
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation()
     {
         return false;
     }

@@ -58,7 +58,7 @@ public class ItemSigilBloodLight extends ItemSigilBase
         {
             if (!world.isRemote)
             {
-                world.spawnEntityInWorld(new EntityBloodLight(world, player));
+                world.spawnEntity(new EntityBloodLight(world, player));
                 NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed());
             }
             resetCooldown(stack);

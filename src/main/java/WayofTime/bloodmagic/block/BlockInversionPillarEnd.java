@@ -52,7 +52,7 @@ public class BlockInversionPillarEnd extends BlockEnum<EnumInversionCap> impleme
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation()
     {
         return false;
     }

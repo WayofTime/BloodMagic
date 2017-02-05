@@ -35,7 +35,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     {
         if (arrayEffect != null)
         {
-            arrayEffect.onEntityCollidedWithBlock(this, worldObj, pos, state, entity);
+            arrayEffect.onEntityCollidedWithBlock(this, getWorld(), pos, state, entity);
         }
     }
 
@@ -145,7 +145,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
             {
                 this.decrStackSize(0, 1);
                 this.decrStackSize(1, 1);
-                this.worldObj.setBlockToAir(getPos());
+                this.getWorld().setBlockToAir(getPos());
             }
 
             return true;

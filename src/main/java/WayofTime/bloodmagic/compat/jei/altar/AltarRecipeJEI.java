@@ -2,13 +2,12 @@ package WayofTime.bloodmagic.compat.jei.altar;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -18,7 +17,6 @@ public class AltarRecipeJEI extends BlankRecipeWrapper
 {
     @Nonnull
     private final List<ItemStack> input;
-
     @Nonnull
     private final ItemStack output;
 
@@ -31,35 +29,27 @@ public class AltarRecipeJEI extends BlankRecipeWrapper
         this.input = input;
         this.output = output;
 
-        this.infoString = new String[] { TextHelper.localize("jei.BloodMagic.recipe.requiredTier", NumeralHelper.toRoman(tier)), TextHelper.localize("jei.BloodMagic.recipe.requiredLP", requiredLP) };
+        this.infoString = new String[] { TextHelper.localize("jei.bloodmagic.recipe.requiredTier", NumeralHelper.toRoman(tier)), TextHelper.localize("jei.bloodmagic.recipe.requiredLP", requiredLP) };
         this.consumptionRate = consumptionRate;
         this.drainRate = drainRate;
     }
 
     @Override
-    public List<List<ItemStack>> getInputs()
-    {
-        return Collections.singletonList(input);
+    public void getIngredients(IIngredients ingredients) {
+        ingredients.setInputs(ItemStack.class, input);
+        ingredients.setOutput(ItemStack.class, output);
     }
 
-    @Override
-    public List<ItemStack> getOutputs()
-    {
-        return Collections.singletonList(output);
-    }
-
-    @Nullable
     @Override
     public List<String> getTooltipStrings(int mouseX, int mouseY)
     {
         ArrayList<String> ret = new ArrayList<String>();
         if (mouseX >= 13 && mouseX <= 64 && mouseY >= 27 && mouseY <= 58)
         {
-            ret.add(TextHelper.localize("jei.BloodMagic.recipe.consumptionRate", consumptionRate));
-            ret.add(TextHelper.localize("jei.BloodMagic.recipe.drainRate", drainRate));
-            return ret;
+            ret.add(TextHelper.localize("jei.bloodmagic.recipe.consumptionRate", consumptionRate));
+            ret.add(TextHelper.localize("jei.bloodmagic.recipe.drainRate", drainRate));
         }
-        return null;
+        return ret;
     }
 
     @Override

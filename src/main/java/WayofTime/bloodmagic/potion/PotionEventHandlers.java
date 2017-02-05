@@ -59,7 +59,7 @@ public class PotionEventHandlers
         {
             int d0 = 3;
             AxisAlignedBB axisAlignedBB = new AxisAlignedBB(event.getEntityLiving().posX - 0.5, event.getEntityLiving().posY - 0.5, event.getEntityLiving().posZ - 0.5, event.getEntityLiving().posX + 0.5, event.getEntityLiving().posY + 0.5, event.getEntityLiving().posZ + 0.5).expand(d0, d0, d0);
-            List entityList = event.getEntityLiving().worldObj.getEntitiesWithinAABB(Entity.class, axisAlignedBB);
+            List entityList = event.getEntityLiving().getEntityWorld().getEntitiesWithinAABB(Entity.class, axisAlignedBB);
 
             for (Object thing : entityList)
             {

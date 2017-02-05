@@ -124,8 +124,8 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
 
     private void renderHologram(TileAltar altar, EnumAltarTier tier, float partialTicks)
     {
-        EntityPlayerSP player = mc.thePlayer;
-        World world = player.worldObj;
+        EntityPlayerSP player = mc.player;
+        World world = player.world;
 
         if (tier == EnumAltarTier.ONE)
             return;

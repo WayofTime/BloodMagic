@@ -8,7 +8,10 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
+import com.google.common.collect.Lists;
 import lombok.Getter;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
@@ -20,7 +23,7 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
     @Getter
     private TartaricForgeRecipe recipe;
     @Getter
-    private ArrayList<ItemStack> validGems = new ArrayList<ItemStack>();
+    private List<ItemStack> validGems = new ArrayList<ItemStack>();
 
     public TartaricForgeRecipeJEI(TartaricForgeRecipe recipe)
     {
@@ -32,20 +35,11 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
     }
 
     @Override
-    @Nonnull
-    public List<Collection> getInputs()
-    {
-        ArrayList<Collection> ret = new ArrayList<Collection>();
-        ret.add(recipe.getInput());
-        ret.add(validGems);
-        return ret;
-    }
-
-    @Override
-    @Nonnull
-    public List<ItemStack> getOutputs()
-    {
-        return Collections.singletonList(recipe.getRecipeOutput());
+    public void getIngredients(IIngredients ingredients) {
+        List<List<ItemStack>> expandedInputs = BloodMagicPlugin.jeiHelper.getStackHelper().expandRecipeItemStackInputs(recipe.getInput());
+        expandedInputs.add(validGems);
+        ingredients.setInputLists(ItemStack.class, expandedInputs);
+        ingredients.setOutput(ItemStack.class, recipe.getRecipeOutput());
     }
 
     @Nullable
@@ -55,8 +49,8 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
         ArrayList<String> ret = new ArrayList<String>();
         if (mouseX >= 40 && mouseX <= 60 && mouseY >= 21 && mouseY <= 34)
         {
-            ret.add(TextHelper.localize("jei.BloodMagic.recipe.minimumSouls", recipe.getMinimumSouls()));
-            ret.add(TextHelper.localize("jei.BloodMagic.recipe.soulsDrained", recipe.getSoulsDrained()));
+            ret.add(TextHelper.localize("jei.bloodmagic.recipe.minimumSouls", recipe.getMinimumSouls()));
+            ret.add(TextHelper.localize("jei.bloodmagic.recipe.soulsDrained", recipe.getSoulsDrained()));
             return ret;
         }
         return null;

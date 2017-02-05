@@ -61,7 +61,7 @@ public class BlockIncenseAltar extends BlockContainer implements IVariantProvide
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation()
     {
         return false;
     }

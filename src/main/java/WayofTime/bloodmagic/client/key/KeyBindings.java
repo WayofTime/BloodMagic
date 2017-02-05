@@ -27,7 +27,7 @@ public enum KeyBindings
         @Override
         public void handleKeybind()
         {
-            ItemStack itemStack = ClientHandler.minecraft.thePlayer.getHeldItemMainhand();
+            ItemStack itemStack = ClientHandler.minecraft.player.getHeldItemMainhand();
             if (itemStack != null && itemStack.getItem() instanceof IKeybindable)
                 BloodMagicPacketHandler.INSTANCE.sendToServer(new KeyProcessor(this, false));
         }
@@ -38,7 +38,7 @@ public enum KeyBindings
         @Override
         public void handleKeybind()
         {
-            EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
             if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
                 ClientHandler.cycleSigil(player.getHeldItemMainhand(), player, -1);
         }
@@ -49,7 +49,7 @@ public enum KeyBindings
         @Override
         public void handleKeybind()
         {
-            EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
             if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
                 ClientHandler.cycleSigil(player.getHeldItemMainhand(), player, 1);
         }

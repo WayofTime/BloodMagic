@@ -121,7 +121,7 @@ public class ClientHandler
     @SubscribeEvent
     public void onSoundEvent(PlaySoundEvent event)
     {
-        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayer player = Minecraft.getMinecraft().player;
         if (player != null && player.isPotionActive(ModPotions.deafness))
         {
             event.setResultSound(null);
@@ -152,8 +152,8 @@ public class ClientHandler
     @SubscribeEvent
     public void render(RenderWorldLastEvent event)
     {
-        EntityPlayerSP player = minecraft.thePlayer;
-        World world = player.worldObj;
+        EntityPlayerSP player = minecraft.player;
+        World world = player.getEntityWorld();
 
         if (mrsHoloTile != null)
         {
@@ -181,7 +181,7 @@ public class ClientHandler
     @SubscribeEvent
     public void onMouseEvent(MouseEvent event)
     {
-        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         if (event.getDwheel() != 0 && player != null && player.isSneaking())
         {
@@ -311,7 +311,7 @@ public class ClientHandler
         BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacketProcessor(player.inventory.currentItem, mode));
         ItemStack newStack = ItemSigilHolding.getItemStackInSlot(stack, ItemSigilHolding.getCurrentItemOrdinal(stack));
         if (newStack != null)
-            Minecraft.getMinecraft().ingameGUI.setRecordPlaying(newStack.getDisplayName(), false);
+            Minecraft.getMinecraft().ingameGUI.setOverlayMessage(newStack.getDisplayName(), false);
     }
 
     private static TextureAtlasSprite forName(TextureMap textureMap, String name, String dir)
@@ -321,7 +321,7 @@ public class ClientHandler
 
     private void renderRitualStones(EntityPlayerSP player, float partialTicks)
     {
-        World world = player.worldObj;
+        World world = player.getEntityWorld();
         ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getCurrentItem().getItem();
         EnumFacing direction = ritualDiviner.getDirection(player.inventory.getCurrentItem());
         Ritual ritual = RitualRegistry.getRitualForId(ritualDiviner.getCurrentRitual(player.inventory.getCurrentItem()));
@@ -385,8 +385,8 @@ public class ClientHandler
 
     public static void renderRitualStones(TileMasterRitualStone masterRitualStone, float partialTicks)
     {
-        EntityPlayerSP player = minecraft.thePlayer;
-        World world = player.worldObj;
+        EntityPlayerSP player = minecraft.player;
+        World world = player.getEntityWorld();
         EnumFacing direction = mrsHoloDirection;
         Ritual ritual = mrsHoloRitual;
 

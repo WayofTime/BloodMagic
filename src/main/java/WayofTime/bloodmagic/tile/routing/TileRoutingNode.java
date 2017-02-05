@@ -30,10 +30,10 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     @Override
     public void update()
     {
-        if (!worldObj.isRemote)
+        if (!getWorld().isRemote)
         {
-            currentInput = worldObj.isBlockIndirectlyGettingPowered(pos);
-//            currentInput = worldObj.getStrongPower(pos);
+            currentInput = getWorld().isBlockIndirectlyGettingPowered(pos);
+//            currentInput = getWorld().getStrongPower(pos);
         }
     }
 
@@ -83,14 +83,14 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     @Override
     public void removeAllConnections()
     {
-        TileEntity testTile = worldObj.getTileEntity(getMasterPos());
+        TileEntity testTile = getWorld().getTileEntity(getMasterPos());
         if (testTile instanceof IMasterRoutingNode)
         {
             ((IMasterRoutingNode) testTile).removeConnection(pos); // Remove this node from the master
         }
         for (BlockPos testPos : connectionList)
         {
-            TileEntity tile = worldObj.getTileEntity(testPos);
+            TileEntity tile = getWorld().getTileEntity(testPos);
             if (tile instanceof IRoutingNode)
             {
                 ((IRoutingNode) tile).removeConnection(pos);

@@ -52,22 +52,22 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
     @Override
     public void update()
     {
-        if (!worldObj.isRemote)
+        if (!getWorld().isRemote)
         {
             for (EnumDemonWillType type : EnumDemonWillType.values())
             {
-                double willInWorld = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
+                double willInWorld = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
                 double filled = Math.min(willInWorld, worldWillTransferRate);
 
                 if (filled > 0)
                 {
                     filled = this.fillDemonWill(type, filled, false);
-                    filled = WorldDemonWillHandler.drainWill(worldObj, pos, type, filled, false);
+                    filled = WorldDemonWillHandler.drainWill(getWorld(), pos, type, filled, false);
 
                     if (filled > 0)
                     {
                         this.fillDemonWill(type, filled, true);
-                        WorldDemonWillHandler.drainWill(worldObj, pos, type, filled, true);
+                        WorldDemonWillHandler.drainWill(getWorld(), pos, type, filled, true);
                     }
                 }
             }
@@ -100,18 +100,18 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
 
                 if (burnTime == ticksRequired)
                 {
-                    if (!worldObj.isRemote)
+                    if (!getWorld().isRemote)
                     {
                         double requiredSouls = recipe.getSoulsDrained();
                         if (requiredSouls > 0)
                         {
-                            if (!worldObj.isRemote && soulsInGem >= recipe.getMinimumSouls())
+                            if (!getWorld().isRemote && soulsInGem >= recipe.getMinimumSouls())
                             {
                                 consumeSouls(EnumDemonWillType.DEFAULT, requiredSouls);
                             }
                         }
 
-                        if (!worldObj.isRemote && soulsInGem >= recipe.getMinimumSouls())
+                        if (!getWorld().isRemote && soulsInGem >= recipe.getMinimumSouls())
                             craftItem(recipe);
                     }
 

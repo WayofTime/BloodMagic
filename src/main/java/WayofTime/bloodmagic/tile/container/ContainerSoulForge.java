@@ -96,7 +96,7 @@ public class ContainerSoulForge extends Container
     @Override
     public boolean canInteractWith(EntityPlayer playerIn)
     {
-        return this.tileForge.isUseableByPlayer(playerIn);
+        return this.tileForge.isUsableByPlayer(playerIn);
     }
 
     private class SlotSoul extends Slot

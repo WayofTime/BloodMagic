@@ -28,7 +28,7 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
     @Override
     public void renderTileEntityAt(TileRoutingNode tileNode, double x, double y, double z, float partialTicks, int destroyStage)
     {
-        if ((mc.thePlayer.getHeldItemMainhand() != null && mc.thePlayer.getHeldItemMainhand().getItem() instanceof INodeRenderer) || ConfigHandler.alwaysRenderRoutingLines)
+        if ((mc.player.getHeldItemMainhand() != null && mc.player.getHeldItemMainhand().getItem() instanceof INodeRenderer) || ConfigHandler.alwaysRenderRoutingLines)
         {
             List<BlockPos> connectionList = tileNode.getConnected();
             for (BlockPos wantedPos : connectionList)
@@ -41,7 +41,7 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
                 int yd = offsetPos.getY();
                 int zd = offsetPos.getZ();
                 double distance = Math.sqrt(xd * xd + yd * yd + zd * zd);
-                double subLength = MathHelper.sqrt_double(xd * xd + zd * zd);
+                double subLength = MathHelper.sqrt(xd * xd + zd * zd);
                 float rotYaw = -((float) (Math.atan2(zd, xd) * 180.0D / Math.PI));
                 float rotPitch = ((float) (Math.atan2(yd, subLength) * 180.0D / Math.PI));
 
@@ -55,7 +55,7 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
                 GlStateManager.disableLighting();
                 GlStateManager.disableCull();
                 float f2 = 0;
-                float f3 = -f2 * 0.2F - (float) MathHelper.floor_float(-f2 * 0.1F);
+                float f3 = -f2 * 0.2F - (float) MathHelper.floor(-f2 * 0.1F);
                 GlStateManager.enableBlend();
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 

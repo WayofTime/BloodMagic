@@ -72,7 +72,7 @@ public abstract class BlockRoutingNode extends BlockContainer
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation()
     {
         return false;
     }

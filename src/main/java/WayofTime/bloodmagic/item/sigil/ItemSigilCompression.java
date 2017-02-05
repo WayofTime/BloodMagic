@@ -28,7 +28,7 @@ public class ItemSigilCompression extends ItemSigilToggleableBase
         if (compressedStack != null)
         {
             EntityItem entityItem = new EntityItem(world, player.posX, player.posY, player.posZ, compressedStack);
-            world.spawnEntityInWorld(entityItem);
+            world.spawnEntity(entityItem);
         }
     }
 }

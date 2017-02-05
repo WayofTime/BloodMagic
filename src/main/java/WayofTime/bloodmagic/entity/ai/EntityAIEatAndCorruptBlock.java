@@ -20,7 +20,7 @@ public class EntityAIEatAndCorruptBlock extends EntityAIBase
     public EntityAIEatAndCorruptBlock(EntityAspectedDemonBase entity)
     {
         this.grassEaterEntity = entity;
-        this.world = entity.worldObj;
+        this.world = entity.getEntityWorld();
         this.setMutexBits(7);
     }
 

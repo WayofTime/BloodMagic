@@ -17,14 +17,6 @@ public class ShapelessOrbRecipeHandler implements IRecipeHandler<ShapelessBloodO
         return ShapelessBloodOrbRecipe.class;
     }
 
-    @Deprecated
-    @Nonnull
-    @Override
-    public String getRecipeCategoryUid()
-    {
-        return VanillaRecipeCategoryUid.CRAFTING;
-    }
-
     @Override
     public String getRecipeCategoryUid(@Nonnull ShapelessBloodOrbRecipe recipe)
     {
@@ -42,5 +34,10 @@ public class ShapelessOrbRecipeHandler implements IRecipeHandler<ShapelessBloodO
     public boolean isRecipeValid(@Nonnull ShapelessBloodOrbRecipe recipe)
     {
         return recipe.getInput().size() > 0;
+    }
+
+    @Override
+    public String getRecipeCategoryUid() {
+        return null;
     }
 }

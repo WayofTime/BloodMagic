@@ -78,7 +78,7 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound>
     {
         if (user != null)
         {
-            if (user.worldObj.isRemote)
+            if (user.getEntityWorld().isRemote)
                 return false;
 
             if (!Strings.isNullOrEmpty(playerId.toString()))

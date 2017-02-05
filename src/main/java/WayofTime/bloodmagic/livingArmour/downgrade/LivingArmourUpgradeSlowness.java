@@ -29,7 +29,7 @@ public class LivingArmourUpgradeSlowness extends LivingArmourUpgrade
     {
         Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
 
-        modifierMap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(85472, 8502), "speed modifier" + 2, speedModifier[this.level], 1));
+        modifierMap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(new UUID(85472, 8502), "speed modifier" + 2, speedModifier[this.level], 1));
 
         return modifierMap;
     }

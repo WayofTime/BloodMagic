@@ -77,7 +77,7 @@ public class BlockInversionPillar extends BlockEnumContainer<EnumSubWillType> im
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation()
     {
         return false;
     }

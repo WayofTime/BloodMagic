@@ -126,14 +126,14 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     public void incrementCurrentPriotiryToMaximum(int max)
     {
         priorities[currentActiveSlot] = Math.min(priorities[currentActiveSlot] + 1, max);
-        IBlockState state = worldObj.getBlockState(pos);
-        worldObj.notifyBlockUpdate(pos, state, state, 3);
+        IBlockState state = getWorld().getBlockState(pos);
+        getWorld().notifyBlockUpdate(pos, state, state, 3);
     }
 
     public void decrementCurrentPriority()
     {
         priorities[currentActiveSlot] = Math.max(priorities[currentActiveSlot] - 1, 0);
-        IBlockState state = worldObj.getBlockState(pos);
-        worldObj.notifyBlockUpdate(pos, state, state, 3);
+        IBlockState state = getWorld().getBlockState(pos);
+        getWorld().notifyBlockUpdate(pos, state, state, 3);
     }
 }

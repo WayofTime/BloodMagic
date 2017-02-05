@@ -30,14 +30,14 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
     @Override
     public void update()
     {
-        if (worldObj.isRemote)
+        if (getWorld().isRemote)
         {
             return;
         }
 
         internalCounter++;
 
-        if (worldObj.isBlockPowered(getPos()))
+        if (getWorld().isBlockPowered(getPos()))
         {
             //TODO: Fill the contained gem if it is there.
             ItemStack stack = this.getStackInSlot(0);
@@ -77,21 +77,21 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
                     IDemonWillGem gemItem = (IDemonWillGem) stack.getItem();
                     for (EnumDemonWillType type : EnumDemonWillType.values())
                     {
-                        double currentAmount = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
+                        double currentAmount = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
                         double drainAmount = Math.min(maxWill - currentAmount, gemDrainRate);
-                        double filled = WorldDemonWillHandler.fillWillToMaximum(worldObj, pos, type, drainAmount, maxWill, false);
+                        double filled = WorldDemonWillHandler.fillWillToMaximum(getWorld(), pos, type, drainAmount, maxWill, false);
                         filled = gemItem.drainWill(type, stack, filled, false);
                         if (filled > 0)
                         {
                             filled = gemItem.drainWill(type, stack, filled, true);
-                            WorldDemonWillHandler.fillWillToMaximum(worldObj, pos, type, filled, maxWill, true);
+                            WorldDemonWillHandler.fillWillToMaximum(getWorld(), pos, type, filled, maxWill, true);
                         }
                     }
                 } else if (stack.getItem() instanceof IDiscreteDemonWill) //TODO: Limit the speed of this process
                 {
                     IDiscreteDemonWill willItem = (IDiscreteDemonWill) stack.getItem();
                     EnumDemonWillType type = willItem.getType(stack);
-                    double currentAmount = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
+                    double currentAmount = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
                     double needed = maxWill - currentAmount;
                     double discreteAmount = willItem.getDiscretization(stack);
                     if (needed >= discreteAmount)
@@ -99,7 +99,7 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
                         double filled = willItem.drainWill(stack, discreteAmount);
                         if (filled > 0)
                         {
-                            WorldDemonWillHandler.fillWillToMaximum(worldObj, pos, type, filled, maxWill, true);
+                            WorldDemonWillHandler.fillWillToMaximum(getWorld(), pos, type, filled, maxWill, true);
                             if (stack.stackSize <= 0)
                             {
                                 this.setInventorySlotContents(0, null);

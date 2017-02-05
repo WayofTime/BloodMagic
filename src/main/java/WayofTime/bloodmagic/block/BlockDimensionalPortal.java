@@ -58,7 +58,7 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation()
     {
         return false;
     }

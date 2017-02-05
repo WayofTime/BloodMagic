@@ -107,7 +107,7 @@ public class EntitySentientSpecter extends EntityDemonBase
     @Override
     public void setCombatTask()
     {
-        if (this.worldObj != null && !this.worldObj.isRemote)
+        if (this.getEntityWorld() != null && !this.getEntityWorld().isRemote)
         {
             this.tasks.removeTask(this.aiAttackOnCollide);
             this.tasks.removeTask(this.aiArrowAttack);
@@ -117,7 +117,7 @@ public class EntitySentientSpecter extends EntityDemonBase
             {
                 int i = 20;
 
-                if (this.worldObj.getDifficulty() != EnumDifficulty.HARD)
+                if (this.getEntityWorld().getDifficulty() != EnumDifficulty.HARD)
                 {
                     i = 40;
                 }
@@ -311,7 +311,7 @@ public class EntitySentientSpecter extends EntityDemonBase
     {
         super.onDeath(cause);
 
-        if (!worldObj.isRemote && getHeldItemMainhand() != null)
+        if (!getEntityWorld().isRemote && getHeldItemMainhand() != null)
         {
             this.entityDropItem(getHeldItemMainhand(), 0);
         }
@@ -345,7 +345,7 @@ public class EntitySentientSpecter extends EntityDemonBase
         {
             if (stack == null && player.isSneaking()) //Should return to the entity
             {
-                if (!worldObj.isRemote)
+                if (!getEntityWorld().isRemote)
                 {
                     if (getHeldItemMainhand() != null)
                     {
@@ -380,9 +380,9 @@ public class EntitySentientSpecter extends EntityDemonBase
     {
         this.heal((float) toHeal);
 
-        if (worldObj instanceof WorldServer)
+        if (getEntityWorld() instanceof WorldServer)
         {
-            WorldServer server = (WorldServer) worldObj;
+            WorldServer server = (WorldServer) getEntityWorld();
             server.spawnParticle(EnumParticleTypes.HEART, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, 7, 0.2, 0.2, 0.2, 0, new int[0]);
         }
     }
@@ -394,7 +394,7 @@ public class EntitySentientSpecter extends EntityDemonBase
      */
     public double absorbWillFromAuraToHeal(double toHeal)
     {
-        if (worldObj.isRemote)
+        if (getEntityWorld().isRemote)
         {
             return 0;
         }
@@ -405,13 +405,13 @@ public class EntitySentientSpecter extends EntityDemonBase
             return 0;
         }
 
-        double will = WorldDemonWillHandler.getCurrentWill(worldObj, getPosition(), getType());
+        double will = WorldDemonWillHandler.getCurrentWill(getEntityWorld(), getPosition(), getType());
 
         toHeal = Math.min(healthMissing, Math.min(toHeal, will / getWillToHealth()));
         if (toHeal > 0)
         {
             this.heal((float) toHeal);
-            return WorldDemonWillHandler.drainWill(worldObj, getPosition(), getType(), toHeal * getWillToHealth(), true);
+            return WorldDemonWillHandler.drainWill(getEntityWorld(), getPosition(), getType(), toHeal * getWillToHealth(), true);
         }
 
         return 0;
@@ -430,7 +430,7 @@ public class EntitySentientSpecter extends EntityDemonBase
 
     public void onUpdate()
     {
-        if (!this.worldObj.isRemote && this.ticksExisted % 20 == 0)
+        if (!this.getEntityWorld().isRemote && this.ticksExisted % 20 == 0)
         {
             absorbWillFromAuraToHeal(2);
         }
@@ -485,7 +485,7 @@ public class EntitySentientSpecter extends EntityDemonBase
         ItemStack heldStack = this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
         if (heldStack != null && heldStack.getItem() == ModItems.SENTIENT_BOW)
         {
-            EntityTippedArrow arrowEntity = ((ItemSentientBow) heldStack.getItem()).getArrowEntity(worldObj, heldStack, target, this, velocity);
+            EntityTippedArrow arrowEntity = ((ItemSentientBow) heldStack.getItem()).getArrowEntity(getEntityWorld(), heldStack, target, this, velocity);
             if (arrowEntity != null)
             {
                 List<PotionEffect> effects = getPotionEffectsForArrowRemovingDuration(0.2f);
@@ -495,19 +495,19 @@ public class EntitySentientSpecter extends EntityDemonBase
                 }
 
                 this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-                this.worldObj.spawnEntityInWorld(arrowEntity);
+                this.getEntityWorld().spawnEntity(arrowEntity);
             }
         } else
         {
-            EntityTippedArrow entitytippedarrow = new EntityTippedArrow(this.worldObj, this); //TODO: Change to an arrow created by the Sentient Bow
+            EntityTippedArrow entitytippedarrow = new EntityTippedArrow(this.getEntityWorld(), this); //TODO: Change to an arrow created by the Sentient Bow
             double d0 = target.posX - this.posX;
             double d1 = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - entitytippedarrow.posY;
             double d2 = target.posZ - this.posZ;
-            double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+            double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
             entitytippedarrow.setThrowableHeading(d0, d1 + d3 * 0.2, d2, 1.6F, 0); //TODO: Yes, it is an accurate arrow. Don't be hatin'
             int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this);
             int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this);
-            entitytippedarrow.setDamage((double) (velocity * 2.0F) + this.rand.nextGaussian() * 0.25D + (double) ((float) this.worldObj.getDifficulty().getDifficultyId() * 0.11F));
+            entitytippedarrow.setDamage((double) (velocity * 2.0F) + this.rand.nextGaussian() * 0.25D + (double) ((float) this.getEntityWorld().getDifficulty().getDifficultyId() * 0.11F));
 
             if (i > 0)
             {
@@ -533,7 +533,7 @@ public class EntitySentientSpecter extends EntityDemonBase
             }
 
             this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-            this.worldObj.spawnEntityInWorld(entitytippedarrow);
+            this.getEntityWorld().spawnEntity(entitytippedarrow);
         }
     }
 

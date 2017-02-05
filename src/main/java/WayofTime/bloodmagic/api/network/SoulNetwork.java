@@ -70,13 +70,13 @@ public class SoulNetwork extends WorldSavedData
         if (FMLCommonHandler.instance().getMinecraftServerInstance() == null)
             return 0;
 
-        World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServers[0];
-        SoulNetwork data = (SoulNetwork) world.loadItemData(SoulNetwork.class, event.ownerNetwork);
+        World world = FMLCommonHandler.instance().getMinecraftServerInstance().worlds[0];
+        SoulNetwork data = (SoulNetwork) world.loadData(SoulNetwork.class, event.ownerNetwork);
 
         if (data == null)
         {
             data = new SoulNetwork(event.ownerNetwork);
-            world.setItemData(event.ownerNetwork, data);
+            world.setData(event.ownerNetwork, data);
         }
 
         int currEss = data.getCurrentEssence();
@@ -129,7 +129,7 @@ public class SoulNetwork extends WorldSavedData
     {
         if (user != null)
         {
-            if (user.worldObj.isRemote)
+            if (user.getEntityWorld().isRemote)
                 return false;
 
             if (!Strings.isNullOrEmpty(mapName))

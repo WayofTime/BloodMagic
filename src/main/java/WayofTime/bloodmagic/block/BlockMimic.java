@@ -196,7 +196,7 @@ public class BlockMimic extends BlockEnumContainer<EnumMimic> implements IVarian
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation()
     {
         return false;
     }

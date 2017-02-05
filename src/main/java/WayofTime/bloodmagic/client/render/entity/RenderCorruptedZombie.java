@@ -72,8 +72,8 @@ public class RenderCorruptedZombie extends RenderBiped<EntityCorruptedZombie>
         return ZOMBIE_TEXTURES;
     }
 
-    protected void rotateCorpse(EntityCorruptedZombie entityLiving, float p_77043_2_, float p_77043_3_, float partialTicks)
+    protected void applyRotations(EntityCorruptedZombie entityLiving, float p_77043_2_, float p_77043_3_, float partialTicks)
     {
-        super.rotateCorpse(entityLiving, p_77043_2_, p_77043_3_, partialTicks);
+        super.applyRotations(entityLiving, p_77043_2_, p_77043_3_, partialTicks);
     }
 }

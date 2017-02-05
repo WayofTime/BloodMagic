@@ -18,6 +18,6 @@ public class ContainerMasterRoutingNode extends Container
     @Override
     public boolean canInteractWith(EntityPlayer playerIn)
     {
-        return this.tileMasterRoutingNode.isUseableByPlayer(playerIn);
+        return this.tileMasterRoutingNode.isUsableByPlayer(playerIn);
     }
 }

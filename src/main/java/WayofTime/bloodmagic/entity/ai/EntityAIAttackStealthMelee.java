@@ -37,7 +37,7 @@ public class EntityAIAttackStealthMelee extends EntityAIBase
     public EntityAIAttackStealthMelee(EntityCorruptedChicken creature, double speedIn, boolean useLongMemory)
     {
         this.chicken = creature;
-        this.worldObj = creature.worldObj;
+        this.worldObj = creature.getEntityWorld();
         this.speedTowardsTarget = speedIn;
         this.longMemory = useLongMemory;
         this.setMutexBits(3);

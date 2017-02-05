@@ -372,7 +372,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         {
             EntityPlayer player = (EntityPlayer) entityLiving;
 
-            RayTraceResult ray = this.rayTrace(player.worldObj, player, false);
+            RayTraceResult ray = this.rayTrace(player.getEntityWorld(), player, false);
             if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
             {
                 return false;

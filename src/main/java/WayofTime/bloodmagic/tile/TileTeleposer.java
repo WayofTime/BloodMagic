@@ -52,9 +52,9 @@ public class TileTeleposer extends TileInventory implements ITickable
     @Override
     public void update()
     {
-        if (!worldObj.isRemote)
+        if (!getWorld().isRemote)
         {
-            int currentInput = worldObj.getStrongPower(pos);
+            int currentInput = getWorld().getStrongPower(pos);
 
             if (previousInput == 0 && currentInput != 0)
             {
@@ -67,9 +67,9 @@ public class TileTeleposer extends TileInventory implements ITickable
 
     public void initiateTeleport()
     {
-        if (!worldObj.isRemote && worldObj.getTileEntity(pos) != null && worldObj.getTileEntity(pos) instanceof TileTeleposer && canInitiateTeleport((TileTeleposer) worldObj.getTileEntity(pos)) && worldObj.getBlockState(pos).getBlock() instanceof BlockTeleposer)
+        if (!getWorld().isRemote && getWorld().getTileEntity(pos) != null && getWorld().getTileEntity(pos) instanceof TileTeleposer && canInitiateTeleport((TileTeleposer) getWorld().getTileEntity(pos)) && getWorld().getBlockState(pos).getBlock() instanceof BlockTeleposer)
         {
-            TileTeleposer teleposer = (TileTeleposer) worldObj.getTileEntity(pos);
+            TileTeleposer teleposer = (TileTeleposer) getWorld().getTileEntity(pos);
             ItemStack focusStack = NBTHelper.checkNBT(teleposer.getStackInSlot(0));
             ItemTelepositionFocus focus = (ItemTelepositionFocus) focusStack.getItem();
             BlockPos focusPos = focus.getBlockPos(teleposer.getStackInSlot(0));
@@ -90,7 +90,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                         {
                             for (int k = -(focusLevel - 1); k <= (focusLevel - 1); k++)
                             {
-                                TeleposeEvent event = new TeleposeEvent(worldObj, pos.add(i, 1 + j, k), focusWorld, focusPos.add(i, 1 + j, k));
+                                TeleposeEvent event = new TeleposeEvent(getWorld(), pos.add(i, 1 + j, k), focusWorld, focusPos.add(i, 1 + j, k));
                                 if (Utils.swapLocations(event.initalWorld, event.initialBlockPos, event.finalWorld, event.finalBlockPos) && !MinecraftForge.EVENT_BUS.post(event))
                                 {
                                     blocksTransported++;
@@ -104,11 +104,11 @@ public class TileTeleposer extends TileInventory implements ITickable
                     List<Entity> originalWorldEntities;
                     List<Entity> focusWorldEntities;
                     AxisAlignedBB originalArea = new AxisAlignedBB(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, Math.min(focusWorld.getHeight(), pos.getY() + 2 * focusLevel), pos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
-                    originalWorldEntities = worldObj.getEntitiesWithinAABB(Entity.class, originalArea);
+                    originalWorldEntities = getWorld().getEntitiesWithinAABB(Entity.class, originalArea);
                     AxisAlignedBB focusArea = new AxisAlignedBB(focusPos.getX(), focusPos.getY() + 1, focusPos.getZ(), focusPos.getX() + 1, Math.min(focusWorld.getHeight(), focusPos.getY() + 2 * focusLevel), focusPos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
                     focusWorldEntities = focusWorld.getEntitiesWithinAABB(Entity.class, focusArea);
 
-                    if (focusWorld.equals(worldObj))
+                    if (focusWorld.equals(getWorld()))
                     {
                         if (!originalWorldEntities.isEmpty())
                         {
@@ -131,7 +131,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                         {
                             for (Entity entity : originalWorldEntities)
                             {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), worldObj, focusWorld.provider.getDimension(), true));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), getWorld(), focusWorld.provider.getDimension(), true));
                             }
                         }
 
@@ -139,7 +139,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                         {
                             for (Entity entity : focusWorldEntities)
                             {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), focusWorld, worldObj.provider.getDimension(), true));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), focusWorld, getWorld().provider.getDimension(), true));
                             }
                         }
                     }

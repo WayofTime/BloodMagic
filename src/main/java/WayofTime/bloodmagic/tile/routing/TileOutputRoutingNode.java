@@ -31,7 +31,7 @@ public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IO
     @Override
     public IItemFilter getOutputFilterForSide(EnumFacing side)
     {
-        TileEntity tile = worldObj.getTileEntity(pos.offset(side));
+        TileEntity tile = getWorld().getTileEntity(pos.offset(side));
         if (tile != null)
         {
             IItemHandler handler = Utils.getInventory(tile, side.getOpposite());
@@ -66,7 +66,7 @@ public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IO
     @Override
     public IFluidFilter getOutputFluidFilterForSide(EnumFacing side)
     {
-        TileEntity tile = worldObj.getTileEntity(pos.offset(side));
+        TileEntity tile = getWorld().getTileEntity(pos.offset(side));
         if (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
         {
             IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);

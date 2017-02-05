@@ -60,7 +60,7 @@ public class BlockAlchemyTable extends BlockContainer
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation()
     {
         return false;
     }
@@ -107,7 +107,7 @@ public class BlockAlchemyTable extends BlockContainer
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] { DIRECTION, INVISIBLE });
+        return new BlockStateContainer(this, DIRECTION, INVISIBLE);
     }
 
     @Override

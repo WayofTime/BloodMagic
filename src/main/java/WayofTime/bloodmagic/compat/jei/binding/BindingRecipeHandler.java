@@ -15,14 +15,6 @@ public class BindingRecipeHandler implements IRecipeHandler<BindingRecipeJEI>
         return BindingRecipeJEI.class;
     }
 
-    @Deprecated
-    @Nonnull
-    @Override
-    public String getRecipeCategoryUid()
-    {
-        return Constants.Compat.JEI_CATEGORY_BINDING;
-    }
-
     @Override
     public String getRecipeCategoryUid(@Nonnull BindingRecipeJEI recipe)
     {
@@ -39,6 +31,11 @@ public class BindingRecipeHandler implements IRecipeHandler<BindingRecipeJEI>
     @Override
     public boolean isRecipeValid(@Nonnull BindingRecipeJEI recipe)
     {
-        return recipe.getInputs().size() > 0 && recipe.getOutputs().size() > 0;
+        return true;
+    }
+
+    @Override
+    public String getRecipeCategoryUid() {
+        return null;
     }
 }

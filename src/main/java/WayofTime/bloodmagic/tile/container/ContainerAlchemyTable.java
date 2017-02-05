@@ -116,7 +116,7 @@ public class ContainerAlchemyTable extends Container
     @Override
     public boolean canInteractWith(EntityPlayer playerIn)
     {
-        return this.tileTable.isUseableByPlayer(playerIn);
+        return this.tileTable.isUsableByPlayer(playerIn);
     }
 
     private class SlotOrb extends Slot

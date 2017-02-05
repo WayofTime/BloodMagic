@@ -1,14 +1,15 @@
 package WayofTime.bloodmagic.compat.jei.forge;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
@@ -27,7 +28,7 @@ public class TartaricForgeRecipeCategory implements IRecipeCategory
     @Nonnull
     private final IDrawable background = BloodMagicPlugin.jeiHelper.getGuiHelper().createDrawable(new ResourceLocation(Constants.Mod.DOMAIN + "gui/jei/soulForge.png"), 0, 0, 100, 40);
     @Nonnull
-    private final String localizedName = TextHelper.localize("jei.BloodMagic.recipe.soulForge");
+    private final String localizedName = TextHelper.localize("jei.bloodmagic.recipe.soulForge");
     @Nonnull
     private final ICraftingGridHelper craftingGridHelper;
 
@@ -63,15 +64,15 @@ public class TartaricForgeRecipeCategory implements IRecipeCategory
 
     }
 
+    @Nullable
     @Override
-    public void drawAnimations(Minecraft minecraft)
+    public IDrawable getIcon()
     {
-
+        return null;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
+    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients)
     {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
@@ -87,12 +88,25 @@ public class TartaricForgeRecipeCategory implements IRecipeCategory
             }
         }
 
+        List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
+
         if (recipeWrapper instanceof TartaricForgeRecipeJEI)
         {
-            TartaricForgeRecipeJEI recipe = (TartaricForgeRecipeJEI) recipeWrapper;
-            guiItemStacks.set(GEM_SLOT, (ArrayList<ItemStack>) recipe.getInputs().get(1));
-            craftingGridHelper.setOutput(guiItemStacks, recipe.getOutputs());
-            craftingGridHelper.setInput(guiItemStacks, (List) recipe.getInputs().get(0), 2, 3);
+            guiItemStacks.set(GEM_SLOT, ingredients.getInputs(ItemStack.class).get(ingredients.getInputs(ItemStack.class).size() - 1));
+            inputs.remove(ingredients.getInputs(ItemStack.class).size() - 1);
+            guiItemStacks.set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
+            guiItemStacks.set(INPUT_SLOT, ingredients.getInputs(ItemStack.class).get(0));
+            craftingGridHelper.setInputStacks(guiItemStacks, inputs);
         }
+    }
+
+    @Override
+    public void drawAnimations(Minecraft minecraft) {
+
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper) {
+
     }
 }

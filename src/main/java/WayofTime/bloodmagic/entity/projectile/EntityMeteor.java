@@ -95,7 +95,7 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
 
     public void generateMeteor(BlockPos pos)
     {
-        MeteorRegistry.generateMeteorForItem(meteorStack, worldObj, pos, Blocks.STONE.getDefaultState(), radiusModifier, explosionModifier, fillerChance);
+        MeteorRegistry.generateMeteorForItem(meteorStack, getEntityWorld(), pos, Blocks.STONE.getDefaultState(), radiusModifier, explosionModifier, fillerChance);
     }
 
     public DamageSource getDamageSource()

@@ -54,7 +54,7 @@ public class Teleports
                             return;
 
                         if (teleposer)
-                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z))))
+                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), new BlockPos(x, y, z))))
                                 return;
 
                         network.syphon(getTeleportCost());
@@ -62,13 +62,13 @@ public class Teleports
                         EntityPlayerMP player = (EntityPlayerMP) entity;
 
                         player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
-                        player.worldObj.updateEntityWithOptionalForce(player, false);
+                        player.getEntityWorld().updateEntityWithOptionalForce(player, false);
                         player.connection.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
                         player.timeUntilPortal = 150;
 
-                        player.worldObj.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+                        player.getEntityWorld().playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                         if (teleposer)
-                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z)));
+                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), new BlockPos(x, y, z)));
                     } else
                     {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
@@ -76,20 +76,20 @@ public class Teleports
                             return;
 
                         if (teleposer)
-                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z))))
+                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), new BlockPos(x, y, z))))
                                 return;
 
                         network.syphon(getTeleportCost() / 10);
 
-                        WorldServer world = (WorldServer) entity.worldObj;
+                        WorldServer world = (WorldServer) entity.getEntityWorld();
 
                         entity.setPosition(x + 0.5, y + 0.5, z + 0.5);
                         entity.timeUntilPortal = 150;
                         world.resetUpdateEntityTick();
 
-                        entity.worldObj.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+                        entity.getEntityWorld().playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                         if (teleposer)
-                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), entity.worldObj, new BlockPos(x, y, z)));
+                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), new BlockPos(x, y, z)));
                     }
                 }
             }
@@ -137,14 +137,14 @@ public class Teleports
                     {
                         EntityPlayerMP player = (EntityPlayerMP) entity;
 
-                        if (!player.worldObj.isRemote)
+                        if (!player.getEntityWorld().isRemote)
                         {
                             SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
                             if (network.getCurrentEssence() < getTeleportCost())
                                 return;
 
                             if (teleposer)
-                                if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z))))
+                                if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, new BlockPos(x, y, z))))
                                     return;
 
                             network.syphon(getTeleportCost());
@@ -152,20 +152,20 @@ public class Teleports
                             player.changeDimension(newWorldID); //TODO: UNTESTED
 //                            server.getConfigurationManager().transferPlayerToDimension(player, newWorldID, new TeleporterBloodMagic(newWorldServer));
                             player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
-                            player.worldObj.updateEntityWithOptionalForce(player, false);
+                            player.getEntityWorld().updateEntityWithOptionalForce(player, false);
                             player.connection.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
                             if (teleposer)
-                                MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
+                                MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
                         }
 
-                    } else if (!entity.worldObj.isRemote)
+                    } else if (!entity.getEntityWorld().isRemote)
                     {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
                         if (network.getCurrentEssence() < (getTeleportCost() / 10))
                             return;
 
                         if (teleposer)
-                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z))))
+                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, new BlockPos(x, y, z))))
                                 return;
 
                         network.syphon(getTeleportCost() / 10);
@@ -181,7 +181,7 @@ public class Teleports
                         {
                             teleportedEntity.setLocationAndAngles(x + 0.5, y + 0.5, z + 0.5, entity.rotationYaw, entity.rotationPitch);
                             teleportedEntity.forceSpawn = true;
-                            newWorldServer.spawnEntityInWorld(teleportedEntity);
+                            newWorldServer.spawnEntity(teleportedEntity);
                             teleportedEntity.setWorld(newWorldServer);
                             teleportedEntity.timeUntilPortal = teleportedEntity instanceof EntityPlayer ? 150 : 20;
                         }
@@ -189,7 +189,7 @@ public class Teleports
                         oldWorldServer.resetUpdateEntityTick();
                         newWorldServer.resetUpdateEntityTick();
                         if (teleposer)
-                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.worldObj, entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
+                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
                     }
                     entity.timeUntilPortal = entity instanceof EntityLiving ? 150 : 20;
                     newWorldServer.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);

@@ -371,11 +371,11 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
         if (slot == EntityEquipmentSlot.CHEST)
         {
-            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 318145), "Armor modifier", this.getHealthBonus(stack), 0));
-            multimap.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 8145), "Armor modifier", this.getKnockbackResistance(stack), 0));
-            multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 94021), "Armor modifier", this.getSpeedBoost(stack), 2));
-            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 96721), "Armor modifier", this.getDamageBoost(stack), 2));
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 73245), "Armor modifier", this.getAttackSpeedBoost(stack), 2));
+            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(new UUID(0, 318145), "Armor modifier", this.getHealthBonus(stack), 0));
+            multimap.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.getName(), new AttributeModifier(new UUID(0, 8145), "Armor modifier", this.getKnockbackResistance(stack), 0));
+            multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(new UUID(0, 94021), "Armor modifier", this.getSpeedBoost(stack), 2));
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(new UUID(0, 96721), "Armor modifier", this.getDamageBoost(stack), 2));
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(new UUID(0, 73245), "Armor modifier", this.getAttackSpeedBoost(stack), 2));
         }
         return multimap;
     }

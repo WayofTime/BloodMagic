@@ -51,7 +51,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable
     protected void entityInit()
     {
         super.entityInit();
-        this.dataManager.register(TAMED, Byte.valueOf((byte) 0));
+        this.dataManager.register(TAMED, (byte) 0);
         this.dataManager.register(OWNER_UNIQUE_ID, Optional.<UUID>absent());
     }
 
@@ -84,7 +84,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
-        return this.isEntityInvulnerable(source) ? false : super.attackEntityFrom(source, amount);
+        return !this.isEntityInvulnerable(source) && super.attackEntityFrom(source, amount);
     }
 
     /**
@@ -133,7 +133,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable
                     if (this.rand.nextFloat() < f1)
                     {
                         entityplayer.getCooldownTracker().setCooldown(Items.SHIELD, 100);
-                        this.worldObj.setEntityState(entityplayer, (byte) 30);
+                        this.getEntityWorld().setEntityState(entityplayer, (byte) 30);
                     }
                 }
             }
@@ -149,7 +149,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable
     {
         super.setItemStackToSlot(slotIn, stack);
 
-        if (!this.worldObj.isRemote && slotIn == EntityEquipmentSlot.MAINHAND)
+        if (!this.getEntityWorld().isRemote && slotIn == EntityEquipmentSlot.MAINHAND)
         {
             this.setCombatTask();
         }
@@ -169,9 +169,9 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable
     {
         this.heal((float) toHeal);
 
-        if (worldObj instanceof WorldServer)
+        if (getEntityWorld() instanceof WorldServer)
         {
-            WorldServer server = (WorldServer) worldObj;
+            WorldServer server = (WorldServer) getEntityWorld();
             server.spawnParticle(EnumParticleTypes.HEART, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, 7, 0.2, 0.2, 0.2, 0, new int[0]);
         }
     }
@@ -248,7 +248,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable
                 }
             }
 
-            return attacker instanceof EntityPlayer && owner instanceof EntityPlayer && !((EntityPlayer) owner).canAttackPlayer((EntityPlayer) attacker) ? false : !(attacker instanceof EntityHorse) || !((EntityHorse) attacker).isTame();
+            return !(attacker instanceof EntityPlayer && owner instanceof EntityPlayer && !((EntityPlayer) owner).canAttackPlayer((EntityPlayer) attacker)) && (!(attacker instanceof EntityHorse) || !((EntityHorse) attacker).isTame());
         } else
         {
             return false;
@@ -262,19 +262,19 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable
 
     public boolean isTamed()
     {
-        return (((Byte) this.dataManager.get(TAMED)).byteValue() & 4) != 0;
+        return (this.dataManager.get(TAMED) & 4) != 0;
     }
 
     public void setTamed(boolean tamed)
     {
-        byte b0 = ((Byte) this.dataManager.get(TAMED)).byteValue();
+        byte b0 = this.dataManager.get(TAMED);
 
         if (tamed)
         {
-            this.dataManager.set(TAMED, Byte.valueOf((byte) (b0 | 4)));
+            this.dataManager.set(TAMED, (byte) (b0 | 4));
         } else
         {
-            this.dataManager.set(TAMED, Byte.valueOf((byte) (b0 & -5)));
+            this.dataManager.set(TAMED, (byte) (b0 & -5));
         }
 
 //        this.setupTamedAI();
@@ -316,7 +316,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable
     @Override
     public UUID getOwnerId()
     {
-        return (UUID) (this.dataManager.get(OWNER_UNIQUE_ID)).orNull();
+        return this.dataManager.get(OWNER_UNIQUE_ID).orNull();
     }
 
     public void setOwnerId(UUID uuid)
@@ -330,7 +330,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable
         try
         {
             UUID uuid = this.getOwnerId();
-            return uuid == null ? null : this.worldObj.getPlayerEntityByUUID(uuid);
+            return uuid == null ? null : this.getEntityWorld().getPlayerEntityByUUID(uuid);
         } catch (IllegalArgumentException var2)
         {
             return null;

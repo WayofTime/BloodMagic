@@ -79,7 +79,7 @@ public class RitualUpgradeRemove extends Ritual
                         if (successful)
                         {
                             removedUpgrade = true;
-                            world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, upgradeStack));
+                            world.spawnEntity(new EntityItem(world, player.posX, player.posY, player.posZ, upgradeStack));
                             for (Entry<String, StatTracker> trackerEntry : armour.trackerMap.entrySet())
                             {
                                 StatTracker tracker = trackerEntry.getValue();
@@ -102,7 +102,7 @@ public class RitualUpgradeRemove extends Ritual
 
                         masterRitualStone.setActive(false);
 
-                        world.spawnEntityInWorld(new EntityLightningBolt(world, pos.getX(), pos.getY() - 1, pos.getZ(), true));
+                        world.spawnEntity(new EntityLightningBolt(world, pos.getX(), pos.getY() - 1, pos.getZ(), true));
                     }
 
                 }

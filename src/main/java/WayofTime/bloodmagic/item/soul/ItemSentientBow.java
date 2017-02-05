@@ -85,7 +85,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {
-        return ModItems.ITEM_DEMON_CRYSTAL == repair.getItem() ? true : super.getIsRepairable(toRepair, repair);
+        return ModItems.ITEM_DEMON_CRYSTAL == repair.getItem() || super.getIsRepairable(toRepair, repair);
     }
 
     public void recalculatePowers(ItemStack stack, World world, EntityPlayer player)
@@ -294,7 +294,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
         double d0 = target.posX - user.posX;
         double d1 = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - entityArrow.posY;
         double d2 = target.posZ - user.posZ;
-        double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+        double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
         entityArrow.setThrowableHeading(d0, d1 + d3 * 0.05, d2, newArrowVelocity, 0);
 
         if (newArrowVelocity == 0)
@@ -405,7 +405,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
                             entityArrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
                         }
 
-                        world.spawnEntityInWorld(entityArrow);
+                        world.spawnEntity(entityArrow);
                     }
 
                     world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + arrowVelocity * 0.5F);
@@ -453,7 +453,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
     @Override
     public boolean spawnSentientEntityOnDrop(ItemStack droppedStack, EntityPlayer player)
     {
-        World world = player.worldObj;
+        World world = player.getEntityWorld();
         if (!world.isRemote)
         {
             this.recalculatePowers(droppedStack, world, player);
@@ -469,7 +469,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
 
             EntitySentientSpecter specterEntity = new EntitySentientSpecter(world);
             specterEntity.setPosition(player.posX, player.posY, player.posZ);
-            world.spawnEntityInWorld(specterEntity);
+            world.spawnEntity(specterEntity);
 
             specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, droppedStack.copy());
 

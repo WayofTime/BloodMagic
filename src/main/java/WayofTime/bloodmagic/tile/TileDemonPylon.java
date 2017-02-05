@@ -23,24 +23,24 @@ public class TileDemonPylon extends TileTicking implements IDemonWillConduit
     @Override
     public void onUpdate()
     {
-        if (worldObj.isRemote)
+        if (getWorld().isRemote)
         {
             return;
         }
 
         for (EnumDemonWillType type : EnumDemonWillType.values())
         {
-            double currentAmount = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
+            double currentAmount = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
 
             for (EnumFacing side : EnumFacing.HORIZONTALS)
             {
                 BlockPos offsetPos = pos.offset(side, 16);
-                double sideAmount = WorldDemonWillHandler.getCurrentWill(worldObj, offsetPos, type);
+                double sideAmount = WorldDemonWillHandler.getCurrentWill(getWorld(), offsetPos, type);
                 if (sideAmount > currentAmount)
                 {
                     double drainAmount = Math.min((sideAmount - currentAmount) / 2, drainRate);
-                    double drain = WorldDemonWillHandler.drainWill(worldObj, offsetPos, type, drainAmount, true);
-                    WorldDemonWillHandler.fillWill(worldObj, pos, type, drain, true);
+                    double drain = WorldDemonWillHandler.drainWill(getWorld(), offsetPos, type, drainAmount, true);
+                    WorldDemonWillHandler.fillWill(getWorld(), pos, type, drain, true);
                 }
             }
         }

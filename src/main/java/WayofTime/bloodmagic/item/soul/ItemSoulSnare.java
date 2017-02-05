@@ -53,7 +53,7 @@ public class ItemSoulSnare extends Item implements IVariantProvider
         {
             EntitySoulSnare snare = new EntitySoulSnare(worldIn, playerIn);
             snare.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
-            worldIn.spawnEntityInWorld(snare);
+            worldIn.spawnEntity(snare);
         }
 
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);

@@ -28,7 +28,7 @@ public class ImperfectRitualZombie extends ImperfectRitual
         zombie.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 20000, 3));
 
         if (!imperfectRitualStone.getRitualWorld().isRemote)
-            imperfectRitualStone.getRitualWorld().spawnEntityInWorld(zombie);
+            imperfectRitualStone.getRitualWorld().spawnEntity(zombie);
 
         return true;
     }

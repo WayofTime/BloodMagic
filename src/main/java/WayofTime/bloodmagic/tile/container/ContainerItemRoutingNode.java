@@ -178,7 +178,7 @@ public class ContainerItemRoutingNode extends Container
     @Override
     public boolean canInteractWith(EntityPlayer playerIn)
     {
-        return this.tileItemRoutingNode.isUseableByPlayer(playerIn);
+        return this.tileItemRoutingNode.isUsableByPlayer(playerIn);
     }
 
     private class SlotItemFilter extends Slot

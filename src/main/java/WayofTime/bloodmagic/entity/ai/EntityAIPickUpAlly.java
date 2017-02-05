@@ -40,7 +40,7 @@ public class EntityAIPickUpAlly extends EntityAIBase
     public EntityAIPickUpAlly(EntityAspectedDemonBase creature, double speedIn, boolean useLongMemory)
     {
         this.entity = creature;
-        this.worldObj = creature.worldObj;
+        this.worldObj = creature.getEntityWorld();
         this.speedTowardsTarget = speedIn;
         this.longMemory = useLongMemory;
         this.setMutexBits(3);
@@ -57,7 +57,7 @@ public class EntityAIPickUpAlly extends EntityAIBase
         }
 
         AxisAlignedBB bb = new AxisAlignedBB(entity.posX - 0.5, entity.posY - 0.5, entity.posZ - 0.5, entity.posX + 0.5, entity.posY + 0.5, entity.posZ + 0.5).expandXyz(5);
-        List<EntityLivingBase> list = this.entity.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, bb, new EntityAspectedDemonBase.WillTypePredicate(entity.getType()));
+        List<EntityLivingBase> list = this.entity.getEntityWorld().getEntitiesWithinAABB(EntityLivingBase.class, bb, new EntityAspectedDemonBase.WillTypePredicate(entity.getType()));
         for (EntityLivingBase testEntity : list)
         {
             if (testEntity != this.entity)

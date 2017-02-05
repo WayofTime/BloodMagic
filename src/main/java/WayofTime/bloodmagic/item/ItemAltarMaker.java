@@ -132,7 +132,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
 
     public String destroyAltar(EntityPlayer player)
     {
-        World world = player.worldObj;
+        World world = player.getEntityWorld();
         if (world.isRemote)
             return "";
 

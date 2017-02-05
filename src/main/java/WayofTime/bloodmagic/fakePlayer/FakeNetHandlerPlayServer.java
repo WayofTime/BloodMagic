@@ -47,7 +47,7 @@ public class FakeNetHandlerPlayServer extends NetHandlerPlayServer
     }
 
     @Override
-    public void kickPlayerFromServer(String p_147360_1_)
+    public void disconnect(String reason)
     {
     }
 
@@ -72,7 +72,7 @@ public class FakeNetHandlerPlayServer extends NetHandlerPlayServer
     }
 
     @Override
-    public void processPlayerBlockPlacement(CPacketPlayerTryUseItem packetIn)
+    public void processTryUseItem(CPacketPlayerTryUseItem packetIn)
     {
     }
 

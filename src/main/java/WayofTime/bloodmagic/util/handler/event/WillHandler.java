@@ -84,21 +84,21 @@ public class WillHandler
         DamageSource source = event.getSource();
         Entity entity = source.getEntity();
 
-        if (attackedEntity.isPotionActive(ModPotions.soulSnare) && (attackedEntity instanceof EntityMob || attackedEntity.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL))
+        if (attackedEntity.isPotionActive(ModPotions.soulSnare) && (attackedEntity instanceof EntityMob || attackedEntity.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL))
         {
             PotionEffect eff = attackedEntity.getActivePotionEffect(ModPotions.soulSnare);
             int lvl = eff.getAmplifier();
 
             double amountOfSouls = attackedEntity.getEntityWorld().rand.nextDouble() * (lvl + 1) * (lvl + 1) * 5;
             ItemStack soulStack = ((IDemonWill) ModItems.MONSTER_SOUL).createWill(0, amountOfSouls);
-            event.getDrops().add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
+            event.getDrops().add(new EntityItem(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
         }
 
         if (entity != null && entity instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) entity;
             ItemStack heldStack = player.getHeldItemMainhand();
-            if (heldStack != null && heldStack.getItem() instanceof IDemonWillWeapon && !player.worldObj.isRemote)
+            if (heldStack != null && heldStack.getItem() instanceof IDemonWillWeapon && !player.getEntityWorld().isRemote)
             {
                 IDemonWillWeapon demonWillWeapon = (IDemonWillWeapon) heldStack.getItem();
                 List<ItemStack> droppedSouls = demonWillWeapon.getRandomDemonWillDrop(attackedEntity, player, heldStack, event.getLootingLevel());
@@ -114,7 +114,7 @@ public class WillHandler
                             EnumDemonWillType pickupType = ((IDemonWill) remainder.getItem()).getType(remainder);
                             if (((IDemonWill) remainder.getItem()).getWill(pickupType, remainder) >= 0.0001)
                             {
-                                event.getDrops().add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, remainder));
+                                event.getDrops().add(new EntityItem(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, remainder));
                             }
                         }
                     }

@@ -48,7 +48,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         if (stack == player.getHeldItemMainhand() && stack.getItem() instanceof ItemSigilHolding && key.equals(KeyBindings.OPEN_HOLDING))
         {
             Utils.setUUID(stack);
-            player.openGui(BloodMagic.instance, Constants.Gui.SIGIL_HOLDING_GUI, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
+            player.openGui(BloodMagic.instance, Constants.Gui.SIGIL_HOLDING_GUI, player.getEntityWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
         }
     }
 
@@ -251,7 +251,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         {
             initModeTag(itemStack);
             int currentSigil = itemStack.getTagCompound().getInteger(Constants.NBT.CURRENT_SIGIL);
-            currentSigil = MathHelper.clamp_int(currentSigil, 0, inventorySize - 1);
+            currentSigil = MathHelper.clamp(currentSigil, 0, inventorySize - 1);
             return currentSigil;
         }
 

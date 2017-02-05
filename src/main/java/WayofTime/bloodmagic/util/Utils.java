@@ -25,7 +25,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -33,7 +32,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -86,32 +84,6 @@ public class Utils
         return added;
     }
 
-    public static Item getItem(ResourceLocation resource)
-    {
-        return Item.REGISTRY.getObject(resource);
-    }
-
-    public static Block getBlock(ResourceLocation resource)
-    {
-        return Block.REGISTRY.getObject(resource);
-    }
-
-    public static ResourceLocation getResourceForItem(ItemStack stack)
-    {
-        if (stack != null)
-        {
-            if (stack.getItem() instanceof ItemBlock)
-            {
-                return Block.REGISTRY.getNameForObject(((ItemBlock) stack.getItem()).getBlock());
-            } else
-            {
-                return Item.REGISTRY.getNameForObject(stack.getItem());
-            }
-        }
-
-        return null;
-    }
-
     public static boolean isImmuneToFireDamage(EntityLivingBase entity)
     {
         return entity.isImmuneToFire() || entity.isPotionActive(MobEffects.FIRE_RESISTANCE);
@@ -119,7 +91,7 @@ public class Utils
 
     public static boolean isPlayerBesideSolidBlockFace(EntityPlayer player)
     {
-        World world = player.worldObj;
+        World world = player.getEntityWorld();
         double minimumDistanceFromAxis = 0.7;
         BlockPos centralPos = player.getPosition();
         for (EnumFacing facing : EnumFacing.HORIZONTALS)
@@ -151,7 +123,7 @@ public class Utils
                 continue;
             }
 
-            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.worldObj, stack, player))
+            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), stack, player))
             {
                 return true;
             }
@@ -250,7 +222,7 @@ public class Utils
             return 0;
         }
 
-        World world = itemEntity.worldObj;
+        World world = itemEntity.getEntityWorld();
         BlockPos pos = itemEntity.getPosition();
         ItemStack stack = itemEntity.getEntityItem();
 
@@ -275,9 +247,9 @@ public class Utils
                 continue;
             }
 
-            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.worldObj, stack, player))
+            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), stack, player))
             {
-                return ((IDemonWillViewer) stack.getItem()).getDemonWillAuraResolution(player.worldObj, stack, player);
+                return ((IDemonWillViewer) stack.getItem()).getDemonWillAuraResolution(player.getEntityWorld(), stack, player);
             }
         }
 
@@ -300,7 +272,7 @@ public class Utils
 
     public static void setPlayerSpeedFromServer(EntityPlayer player, double motionX, double motionY, double motionZ)
     {
-        if (!player.worldObj.isRemote && player instanceof EntityPlayerMP)
+        if (!player.getEntityWorld().isRemote && player instanceof EntityPlayerMP)
         {
             BloodMagicPacketHandler.sendTo(new PlayerVelocityPacketProcessor(motionX, motionY, motionZ), (EntityPlayerMP) player);
         }
@@ -375,7 +347,7 @@ public class Utils
             if (!tile.getWorld().isRemote)
             {
                 EntityItem invItem = new EntityItem(tile.getWorld(), player.posX, player.posY + 0.25, player.posZ, tile.getStackInSlot(slot));
-                tile.getWorld().spawnEntityInWorld(invItem);
+                tile.getWorld().spawnEntity(invItem);
             }
             tile.clear();
             return false;
@@ -1050,7 +1022,7 @@ public class Utils
         }
 
         entityItem.setEntityItemStack(stack);
-        return world.spawnEntityInWorld(entityItem);
+        return world.spawnEntity(entityItem);
     }
 
     public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos)
@@ -1098,7 +1070,7 @@ public class Utils
 
             finalWorld.setTileEntity(finalPos, newTileInitial);
             newTileInitial.setPos(finalPos);
-            newTileInitial.setWorldObj(finalWorld);
+            newTileInitial.setWorld(finalWorld);
         }
 
         initialWorld.setBlockState(initialPos, finalBlockState, 3);
@@ -1109,7 +1081,7 @@ public class Utils
 
             initialWorld.setTileEntity(initialPos, newTileFinal);
             newTileFinal.setPos(initialPos);
-            newTileFinal.setWorldObj(initialWorld);
+            newTileFinal.setWorld(initialWorld);
         }
 
         initialWorld.notifyNeighborsOfStateChange(initialPos, finalStack.getBlock());

@@ -35,8 +35,8 @@ public class TilePhantomBlock extends TileTicking
 
         if (ticksRemaining <= 0)
         {
-            worldObj.setBlockToAir(getPos());
-            worldObj.removeTileEntity(getPos());
+            getWorld().setBlockToAir(getPos());
+            getWorld().removeTileEntity(getPos());
         }
     }
 }

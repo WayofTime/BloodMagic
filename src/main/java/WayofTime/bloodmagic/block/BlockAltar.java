@@ -119,7 +119,7 @@ public class BlockAltar extends BlockContainer implements IVariantProvider, IDoc
     }
 
     @Override
-    public boolean isVisuallyOpaque()
+    public boolean causesSuffocation()
     {
         return false;
     }

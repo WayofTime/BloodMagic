@@ -19,14 +19,6 @@ public class ShapedOrbRecipeHandler implements IRecipeHandler<ShapedBloodOrbReci
         return ShapedBloodOrbRecipe.class;
     }
 
-    @Deprecated
-    @Nonnull
-    @Override
-    public String getRecipeCategoryUid()
-    {
-        return VanillaRecipeCategoryUid.CRAFTING;
-    }
-
     @Nonnull
     public String getRecipeCategoryUid(@Nonnull ShapedBloodOrbRecipe recipe)
     {
@@ -44,5 +36,10 @@ public class ShapedOrbRecipeHandler implements IRecipeHandler<ShapedBloodOrbReci
     public boolean isRecipeValid(@Nonnull ShapedBloodOrbRecipe recipe)
     {
         return recipe.getInput().length > 0;
+    }
+
+    @Override
+    public String getRecipeCategoryUid() {
+        return null;
     }
 }

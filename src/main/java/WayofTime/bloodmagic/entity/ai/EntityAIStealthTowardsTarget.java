@@ -47,7 +47,7 @@ public class EntityAIStealthTowardsTarget extends EntityAIBase
             return false;
         } else
         {
-            ticksLeft = this.entity.worldObj.rand.nextInt(200) + 100;
+            ticksLeft = this.entity.getEntityWorld().rand.nextInt(200) + 100;
             this.xPosition = vec3d.xCoord;
             this.yPosition = vec3d.yCoord;
             this.zPosition = vec3d.zCoord;

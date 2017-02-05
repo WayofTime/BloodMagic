@@ -15,14 +15,6 @@ public class AlchemyTableRecipeHandler implements IRecipeHandler<AlchemyTableRec
         return AlchemyTableRecipeJEI.class;
     }
 
-    @Deprecated
-    @Nonnull
-    @Override
-    public String getRecipeCategoryUid()
-    {
-        return Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE;
-    }
-
     @Override
     public String getRecipeCategoryUid(@Nonnull AlchemyTableRecipeJEI recipe)
     {
@@ -39,6 +31,11 @@ public class AlchemyTableRecipeHandler implements IRecipeHandler<AlchemyTableRec
     @Override
     public boolean isRecipeValid(@Nonnull AlchemyTableRecipeJEI recipe)
     {
-        return recipe.getInputs().get(0).size() > 0 && recipe.getOutputs().size() > 0;
+        return true;
+    }
+
+    @Override
+    public String getRecipeCategoryUid() {
+        return null;
     }
 }

@@ -65,7 +65,7 @@ public class RitualMeteor extends Ritual
             {
                 EntityMeteor meteor = new EntityMeteor(world, pos.getX(), 260, pos.getZ(), 0, -0.1, 0, radiusModifier, explosionModifier, fillerChance);
                 meteor.setMeteorStack(stack.copy());
-                world.spawnEntityInWorld(meteor);
+                world.spawnEntity(meteor);
 
                 entityItem.setDead();
 

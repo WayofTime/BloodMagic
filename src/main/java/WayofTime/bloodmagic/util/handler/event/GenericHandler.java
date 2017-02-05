@@ -101,7 +101,7 @@ public class GenericHandler
             {
                 event.setDamageMultiplier(0);
 
-                if (player.worldObj.isRemote)
+                if (player.getEntityWorld().isRemote)
                 {
                     player.motionY *= -0.9;
                     player.fallDistance = 0;
@@ -197,7 +197,7 @@ public class GenericHandler
     @SubscribeEvent
     public void onEntityHurt(LivingHurtEvent event)
     {
-        if (event.getEntity().worldObj.isRemote)
+        if (event.getEntity().getEntityWorld().isRemote)
             return;
 
         if (event.getSource().getEntity() instanceof EntityPlayer && !PlayerHelper.isFakePlayer((EntityPlayer) event.getSource().getEntity()))
@@ -240,7 +240,7 @@ public class GenericHandler
     @SubscribeEvent
     public void onLivingUpdate(LivingUpdateEvent event)
     {
-        if (!event.getEntityLiving().worldObj.isRemote)
+        if (!event.getEntityLiving().getEntityWorld().isRemote)
         {
             EntityLivingBase entity = event.getEntityLiving();
             if (entity instanceof EntityPlayer && entity.ticksExisted % 50 == 0) //TODO: Change to an incremental counter
@@ -265,7 +265,7 @@ public class GenericHandler
 
                     if (animal.getAttackTarget() != null && animal.getDistanceSqToEntity(animal.getAttackTarget()) < 4)
                     {
-                        animal.worldObj.createExplosion(null, animal.posX, animal.posY + (double) (animal.height / 16.0F), animal.posZ, 2 + animal.getActivePotionEffect(ModPotions.sacrificialLamb).getAmplifier() * 1.5f, false);
+                        animal.getEntityWorld().createExplosion(null, animal.posX, animal.posY + (double) (animal.height / 16.0F), animal.posZ, 2 + animal.getActivePotionEffect(ModPotions.sacrificialLamb).getAmplifier() * 1.5f, false);
                         targetTaskMap.remove(animal);
                         attackTaskMap.remove(animal);
                     }
@@ -284,7 +284,7 @@ public class GenericHandler
             EntityPlayer player = (EntityPlayer) entity;
             if (player.isSneaking() && player.isPotionActive(ModPotions.cling) && Utils.isPlayerBesideSolidBlockFace(player) && !player.onGround)
             {
-                if (player.worldObj.isRemote)
+                if (player.getEntityWorld().isRemote)
                 {
                     player.motionY = 0;
                     player.motionX *= 0.8;
@@ -307,14 +307,14 @@ public class GenericHandler
 
         if (entity.isPotionActive(ModPotions.fireFuse))
         {
-            entity.worldObj.spawnParticle(EnumParticleTypes.FLAME, entity.posX + entity.worldObj.rand.nextDouble() * 0.3, entity.posY + entity.worldObj.rand.nextDouble() * 0.3, entity.posZ + entity.worldObj.rand.nextDouble() * 0.3, 0, 0.06d, 0);
+            entity.getEntityWorld().spawnParticle(EnumParticleTypes.FLAME, entity.posX + entity.getEntityWorld().rand.nextDouble() * 0.3, entity.posY + entity.getEntityWorld().rand.nextDouble() * 0.3, entity.posZ + entity.getEntityWorld().rand.nextDouble() * 0.3, 0, 0.06d, 0);
 
             int r = entity.getActivePotionEffect(ModPotions.fireFuse).getAmplifier();
             int radius = 1 * r + 1;
 
             if (entity.getActivePotionEffect(ModPotions.fireFuse).getDuration() <= 3)
             {
-                entity.worldObj.createExplosion(null, entity.posX, entity.posY, entity.posZ, radius, false);
+                entity.getEntityWorld().createExplosion(null, entity.posX, entity.posY, entity.posZ, radius, false);
             }
         }
 
@@ -335,7 +335,7 @@ public class GenericHandler
         if (player instanceof EntityPlayerMP)
         {
             BlockPos pos = player.getPosition();
-            DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(player.worldObj.provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);
+            DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(player.getEntityWorld().provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);
             if (holder != null)
             {
                 BloodMagicPacketHandler.sendTo(new DemonAuraPacketProcessor(holder), (EntityPlayerMP) player);
@@ -469,7 +469,7 @@ public class GenericHandler
             if (heldStack != null && heldStack.getItem() == ModItems.BOUND_SWORD && !(attackedEntity instanceof EntityAnimal))
                 for (int i = 0; i <= EnchantmentHelper.getLootingModifier(player); i++)
                     if (attackedEntity.getEntityWorld().rand.nextDouble() < 0.2)
-                        event.getDrops().add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(ModItems.BLOOD_SHARD, 1, 0)));
+                        event.getDrops().add(new EntityItem(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(ModItems.BLOOD_SHARD, 1, 0)));
         }
     }
 
@@ -487,7 +487,7 @@ public class GenericHandler
             itemstack.setItemDamage(itemstack.getItemDamage() - i);
         }
 
-        if (!player.worldObj.isRemote)
+        if (!player.getEntityWorld().isRemote)
         {
             for (ItemStack stack : player.inventory.mainInventory)
             {

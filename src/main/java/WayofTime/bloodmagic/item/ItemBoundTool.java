@@ -244,12 +244,12 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
 
             while (count >= maxStackSize)
             {
-                world.spawnEntityInWorld(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(maxStackSize)));
+                world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(maxStackSize)));
                 count -= maxStackSize;
             }
 
             if (count > 0)
-                world.spawnEntityInWorld(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(count)));
+                world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(count)));
         }
     }
 

@@ -308,7 +308,7 @@ public class LivingArmourHandler
     @SubscribeEvent
     public void onArrowFire(ArrowLooseEvent event)
     {
-        World world = event.getEntityPlayer().worldObj;
+        World world = event.getEntityPlayer().getEntityWorld();
         ItemStack stack = event.getBow();
         EntityPlayer player = event.getEntityPlayer();
 
@@ -368,7 +368,7 @@ public class LivingArmourHandler
 
                         entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
 
-                        world.spawnEntityInWorld(entityarrow);
+                        world.spawnEntity(entityarrow);
                     }
                 }
             }
