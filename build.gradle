@@ -45,27 +45,14 @@ if (new File(projectDir, '.git').exists())
 
 repositories {
     maven { url "http://dvs1.progwml6.com/files/maven" }
-    maven {	url "http://mobiusstrip.eu/maven" }
     maven {	url "http://tehnut.info/maven" }
-	
-    ivy {
-        name "Thaumcraft"
-        artifactPattern "https://dl.dropboxusercontent.com/u/47135879/[module]-[revision]-deobf.[ext]"
-    }
-    ivy {
-        name "Baubles"
-        artifactPattern "https://dl.dropboxusercontent.com/u/47135879/[module]-1.8.9-[revision]-deobf.[ext]"
-    }
 }
 
 dependencies {
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
-    deobfCompile "mcp.mobius.waila:Waila:${waila_version}_${mc_version}:dev"
+    deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}_${mc_version}"
     deobfCompile "info.amerifrance.guideapi:Guide-API:${mc_version}-${guideapi_version}"
     deobfCompile "info.tehnut.buttons:Buttons:${buttons_version}:api"
-
-//    compile name: "Thaumcraft", version: "${mc_version}-${thaumcraft_version}", ext: "jar"
-//    compile name: 'Baubles', version: "${baubles_version}", ext: 'jar'
 }
 
 minecraft {
@@ -205,6 +192,8 @@ String getChangelogText() {
 def curseRelations = {
     optionalLibrary 'just-enough-items-jei'
     optionalLibrary 'waila'
+    optionalLibrary 'hwyla'
+    optionalLibrary 'buttonz'
     requiredLibrary 'guide-api'
 }
 
@@ -218,8 +207,6 @@ curseforge {
         releaseType = 'beta'
 
         relations curseRelations
-        addGameVersion '1.10'
-        addGameVersion '1.10.2'
 
         addArtifact javadocJar
         addArtifact sourceJar

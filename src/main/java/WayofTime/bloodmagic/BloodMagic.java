@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic;
 
 import java.io.File;
-import java.util.Map;
 
 import WayofTime.bloodmagic.meteor.MeteorConfigHandler;
 import lombok.Getter;
@@ -9,7 +8,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -25,7 +23,6 @@ import WayofTime.bloodmagic.api.util.helper.LogHelper;
 import WayofTime.bloodmagic.client.gui.GuiHandler;
 import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.compat.ICompatibility;
-import WayofTime.bloodmagic.compat.minecraft.ICrossVersionProxy;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.proxy.CommonProxy;
 import WayofTime.bloodmagic.registry.ModArmourTrackers;
@@ -41,8 +38,6 @@ import WayofTime.bloodmagic.registry.ModTranquilityHandlers;
 import WayofTime.bloodmagic.structures.ModDungeons;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.handler.IMCHandler;
-
-import com.google.common.collect.ImmutableMap;
 
 @Mod(modid = Constants.Mod.MODID, name = Constants.Mod.NAME, version = Constants.Mod.VERSION, dependencies = Constants.Mod.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.config.ConfigGuiFactory")
 @Getter
@@ -76,34 +71,13 @@ public class BloodMagic
         {
             return true;
         }
-    };
+    }.setNoTitle().setBackgroundImageName("upgrade_tomes.png");
 
     @Getter
     private static boolean isDev = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
-    @Getter
-    private static ICrossVersionProxy crossVersionProxy;
-    private static final Map<String, String> PROXY_MAP = ImmutableMap.of("1.9.4", "WayofTime.bloodmagic.compat.minecraft.CrossVersionProxy19", "1.10", "WayofTime.bloodmagic.compat.minecraft.CrossVersionProxy110", "1.10.2", "WayofTime.bloodmagic.compat.minecraft.CrossVersionProxy110");
-
     static
     {
-        try
-        {
-            String mcVersion = (String) Loader.class.getDeclaredField("MC_VERSION").get(null);
-
-            if (!PROXY_MAP.containsKey(mcVersion))
-                throw new IllegalStateException("Blood Magic couldn't find a cross version proxy!");
-
-            Class proxyClass = Class.forName(PROXY_MAP.get(mcVersion));
-            crossVersionProxy = (ICrossVersionProxy) proxyClass.newInstance();
-        }
-        catch (Exception e)
-        {
-            throw new IllegalArgumentException("Blood Magic could not find a cross version proxy!", e);
-        }
-
-        tabUpgradeTome.setNoTitle().setBackgroundImageName("upgrade_tomes.png");
-
         FluidRegistry.enableUniversalBucket();
     }
 
