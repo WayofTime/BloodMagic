@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.api.util.helper;
 
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.registry.ModPotions;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,6 +11,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 public class PlayerSacrificeHelper
 {
@@ -70,8 +72,13 @@ public class PlayerSacrificeHelper
             if (health > maxHealth / 10.0)
             {
                 float sacrificedHealth = health - maxHealth / 10.0f;
+                int lpAdded = (int) (sacrificedHealth * ConfigHandler.sacrificialDaggerConversion * getModifier(amount));
 
-                if (findAndFillAltar(player.getEntityWorld(), player, (int) (sacrificedHealth * ConfigHandler.sacrificialDaggerConversion * getModifier(amount)), false))
+                SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, (int) sacrificedHealth, lpAdded);
+                if (MinecraftForge.EVENT_BUS.post(evt))
+                    return false;
+
+                if (findAndFillAltar(player.getEntityWorld(), player, evt.lpAdded, false))
                 {
                     player.setHealth(maxHealth / 10.0f);
                     setPlayerIncense(player, 0);
