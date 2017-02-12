@@ -37,7 +37,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     public int ticksRequired = 1;
 
     public BlockPos connectedPos = BlockPos.ORIGIN;
-    public List<Integer> blockedSlots = new ArrayList<Integer>();
+    public boolean[] blockedSlots = new boolean[] { false, false, false, false, false, false };
 
     public TileAlchemyTable()
     {
@@ -60,28 +60,14 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         return isSlave();
     }
 
-    public boolean isInputSlotAccessible(int slot)
-    {
-        if (slot < 6 && slot >= 0)
-        {
-            return !blockedSlots.contains(slot);
-        }
-
-        return true;
+    public boolean isInputSlotAccessible(int slot) {
+        return !(slot < 6 && slot >= 0) || !blockedSlots[slot];
     }
 
     public void toggleInputSlotAccessible(int slot)
     {
         if (slot < 6 && slot >= 0)
-        {
-            if (blockedSlots.contains(slot))
-            {
-                blockedSlots.remove((Object) slot);
-            } else
-            {
-                blockedSlots.add(slot);
-            }
-        }
+            blockedSlots[slot] = !blockedSlots[slot];
     }
 
     @Override
@@ -96,12 +82,9 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         burnTime = tag.getInteger("burnTime");
         ticksRequired = tag.getInteger("ticksRequired");
 
-        blockedSlots.clear();
-        int[] blockedSlotArray = tag.getIntArray("blockedSlots");
-        for (int blocked : blockedSlotArray)
-        {
-            blockedSlots.add(blocked);
-        }
+        byte[] array = tag.getByteArray("blockedSlots");
+        for (int i = 0; i < array.length; i++)
+            blockedSlots[i] = array[i] != 0;
     }
 
     @Override
@@ -118,13 +101,11 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         tag.setInteger("burnTime", burnTime);
         tag.setInteger("ticksRequired", ticksRequired);
 
-        int[] blockedSlotArray = new int[blockedSlots.size()];
-        for (int i = 0; i < blockedSlots.size(); i++)
-        {
-            blockedSlotArray[i] = blockedSlots.get(i);
-        }
+        byte[] blockedSlotArray = new byte[blockedSlots.length];
+        for (int i = 0; i < blockedSlots.length; i++)
+            blockedSlotArray[i] = (byte) (blockedSlots[i] ? 1 : 0);
 
-        tag.setIntArray("blockedSlots", blockedSlotArray);
+        tag.setByteArray("blockedSlots", blockedSlotArray);
         return tag;
     }
 
