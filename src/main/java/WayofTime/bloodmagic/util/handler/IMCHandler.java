@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.util.handler;
 
 import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -52,6 +53,17 @@ public class IMCHandler
                     Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(splitInfo[0], splitInfo[1]));
                     if (block != null)
                         BloodMagicAPI.blacklistFromGreenGrove(block);
+                }
+            }
+
+            if (message.key.equals("altarComponent") && message.isStringMessage())
+            {
+                String[] splitInfo = message.getStringValue().split(":");
+                if (splitInfo.length == 4)
+                {
+                    Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(splitInfo[0], splitInfo[1]));
+                    if (block != null)
+                        BloodMagicAPI.addAltarComponent(block.getStateFromMeta(Integer.parseInt(splitInfo[2])), EnumAltarComponent.valueOf(splitInfo[3]));
                 }
             }
         }

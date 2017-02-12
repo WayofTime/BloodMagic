@@ -1,9 +1,11 @@
 package WayofTime.bloodmagic.api;
 
+import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.util.helper.LogHelper;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,6 +42,8 @@ public class BloodMagicAPI
     private static final Map<String, Integer> entitySacrificeValues = new HashMap<String, Integer>();
     @Getter
     private static final ArrayList<Block> greenGroveBlacklist = new ArrayList<Block>();
+    @Getter
+    private static final Map<IBlockState, EnumAltarComponent> altarComponents = new HashMap<IBlockState, EnumAltarComponent>();
 
     @Getter
     @Setter
@@ -260,5 +264,25 @@ public class BloodMagicAPI
     {
         if (!greenGroveBlacklist.contains(block))
             greenGroveBlacklist.add(block);
+    }
+
+    /**
+     * Marks an IBlockState as a specific {@link EnumAltarComponent} without needing to implement
+     * {@link WayofTime.bloodmagic.api.altar.IAltarComponent} on the block.
+     *
+     * IMC:
+     * {@code FMLInterModComs.sendMessage("BloodMagic", "altarComponent", "domain:name:meta:component")}
+     * Example:
+     * {@code FMLInterModComs.sendMessage("BloodMagic", "altarComponent", "minecraft:glowstone:0:GLOWSTONE")}
+     *
+     * @param state
+     *        - The IBlockState for this component
+     * @param altarComponent
+     *        - The EnumAltarComponent for this state
+     */
+    public static void addAltarComponent(IBlockState state, EnumAltarComponent altarComponent)
+    {
+        if (!altarComponents.containsKey(state))
+            altarComponents.put(state, altarComponent);
     }
 }
