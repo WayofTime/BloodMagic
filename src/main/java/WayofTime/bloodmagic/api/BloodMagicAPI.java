@@ -30,6 +30,7 @@ import java.util.Map;
  * <li>{@link #addToTeleposerBlacklist(BlockStack)}</li>
  * <li>{@link #blacklistFromGreenGrove(Block)}</li>
  * <li>{@link #setEntitySacrificeValue(Class, int)}</li>
+ * <li>{@link #addAltarComponent(IBlockState, EnumAltarComponent)}</li>
  * </ul>
  */
 public class BloodMagicAPI
@@ -130,9 +131,9 @@ public class BloodMagicAPI
      * be changed via Configuration files.
      * 
      * IMC:
-     * {@code FMLInterModComs.sendMessage("BloodMagic", "teleposerBlacklist", ItemStack)}
+     * {@code FMLInterModComs.sendMessage("bloodmagic", "teleposerBlacklist", ItemStack)}
      * Example:
-     * {@code FMLInterModComs.sendMessage("BloodMagic", "teleposerBlacklist", new ItemStack(Blocks.bedrock))}
+     * {@code FMLInterModComs.sendMessage("bloodmagic", "teleposerBlacklist", new ItemStack(Blocks.bedrock))}
      * 
      * @param blockStack
      *        - The BlockStack to blacklist.
@@ -172,9 +173,9 @@ public class BloodMagicAPI
      * cannot be changed via Configuration files.
      * 
      * IMC:
-     * {@code FMLInterModComs.sendMessage("BloodMagic", "transpositionBlacklist", ItemStack)}
+     * {@code FMLInterModComs.sendMessage("bloodmagic", "transpositionBlacklist", ItemStack)}
      * Example:
-     * {@code FMLInterModComs.sendMessage("BloodMagic", "transpositionBlacklist", new ItemStack(Blocks.bedrock))}
+     * {@code FMLInterModComs.sendMessage("bloodmagic", "transpositionBlacklist", new ItemStack(Blocks.bedrock))}
      * 
      * @param blockStack
      *        - The BlockStack to blacklist.
@@ -218,9 +219,9 @@ public class BloodMagicAPI
      * The default value for any unset Entity is 500 LP per sacrifice.
      * 
      * IMC:
-     * {@code FMLInterModComs.sendMessage("BloodMagic", "sacrificeValue", "ClassName;Value")}
+     * {@code FMLInterModComs.sendMessage("bloodmagic", "sacrificeValue", "ClassName;Value")}
      * Example:
-     * {@code FMLInterModComs.sendMessage("BloodMagic", "sacrificeValue", "EntityVillager;2000")}
+     * {@code FMLInterModComs.sendMessage("bloodmagic", "sacrificeValue", "EntityVillager;2000")}
      * 
      * @param entityClass
      *        - The class of the entity to blacklist.
@@ -253,9 +254,9 @@ public class BloodMagicAPI
      * Blacklists a block from the Green Grove Ritual and Sigil.
      * 
      * IMC:
-     * {@code FMLInterModComs.sendMessage("BloodMagic", "greenGroveBlacklist", "domain:name")}
+     * {@code FMLInterModComs.sendMessage("bloodmagic", "greenGroveBlacklist", "domain:name")}
      * Example:
-     * {@code FMLInterModComs.sendMessage("BloodMagic", "greenGroveBlacklist", "minecraft:wheat")}
+     * {@code FMLInterModComs.sendMessage("bloodmagic", "greenGroveBlacklist", "minecraft:wheat")}
      * 
      * @param block
      *        - Block to blacklist
@@ -271,9 +272,9 @@ public class BloodMagicAPI
      * {@link WayofTime.bloodmagic.api.altar.IAltarComponent} on the block.
      *
      * IMC:
-     * {@code FMLInterModComs.sendMessage("BloodMagic", "altarComponent", "domain:name:meta:component")}
+     * {@code FMLInterModComs.sendMessage("bloodmagic", "altarComponent", "domain:name:meta:component")}
      * Example:
-     * {@code FMLInterModComs.sendMessage("BloodMagic", "altarComponent", "minecraft:glowstone:0:GLOWSTONE")}
+     * {@code FMLInterModComs.sendMessage("bloodmagic", "altarComponent", "minecraft:glowstone:0:GLOWSTONE")}
      *
      * @param state
      *        - The IBlockState for this component
