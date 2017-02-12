@@ -1,9 +1,22 @@
 ------------------------------------------------------
 Version 2.1.1-70
 ------------------------------------------------------
+- Fixed the Living Armour Sacrificial Upgrade
+- Fixed Bound Tools not draining LP
+- Implemented the Blood Tank
+  - Current recipes are temporary™
+- Empty flasks can now be refilled to create a new flask
+- Fixed Aura of Expulsion whitelist
+- Added the Altar's Charge value to the Waila Tooltip when holding a Seer's Sigil
+- Fixed meteor config error caused by EnderCore reloading configs early into startup
+- Fixed meteor config not generating new entries
+- Blacklisted Sentient Spectres from the Well of Suffering
+- Fixed Sigils drawing from the user instead of the bound network
 - Added Fluid routing to the routing nodes - this is done by using the Fluid Filter and placing a fluid container as the filter.
 - Made it so the book does not give the filling recipe when the Blood Orb recipe is queried. 
 - Added a null check for the Will getter for the Aura incase the WillChunk somehow does not generate. 
+- [API] Added a new IMC API for modders to register their blocks as an altar component.
+  - Example: Chisel Glowstone can now be used for the Tier 3 caps (once Chisel implements it)
 
 ------------------------------------------------------
 Version 2.1.0-69
