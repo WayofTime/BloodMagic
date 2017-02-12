@@ -76,7 +76,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         {
             if (blockedSlots.contains(slot))
             {
-                blockedSlots.remove(slot);
+                blockedSlots.remove((Object) slot);
             } else
             {
                 blockedSlots.add(slot);
