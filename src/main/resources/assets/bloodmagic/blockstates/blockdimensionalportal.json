@@ -7,7 +7,8 @@
   "variants": {
     "meta": {
       "0": {"model": "bloodmagic:BlockDimensionalPortalNS"},
-      "1": {"model": "bloodmagic:BlockDimensionalPortalEW"}
+      "1": {"model": "bloodmagic:BlockDimensionalPortalEW"},
+      "2": {}
     }
   }
 }
