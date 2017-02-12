@@ -129,9 +129,12 @@ public class BloodAltar implements IFluidHandler
                     EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(world, worldBlock.getState(), componentPos);
                     if (component == null || component != altarComponent.getComponent())
                         return false;
-                } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent()))
+                } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent())) // Special case Vanilla
                 {
                     return false;
+                } else if (BloodMagicAPI.getAltarComponents().get(worldBlock.getState()) != null) // Mod compat
+                {
+                    return BloodMagicAPI.getAltarComponents().get(worldBlock.getState()) == altarComponent.getComponent();
                 }
             } else
             {
