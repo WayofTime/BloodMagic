@@ -780,11 +780,6 @@ chat.BloodMagic.mimic.potionSpawnRadius.down=Potion spawning radius has been dec
 entity.BloodMagic.SentientSpecter.name=Sentient Specter
 entity.BloodMagic.Mimic.name=Mimic
 
-# sekrit
-
-secret.BloodMagic.bread.bloody=&r&cBloody Bread
-secret.BloodMagic.bread.bloody.desc=Only for &odire &r&7emergencies.
-
 # Commands
 commands.error.arg.invalid=Invalid arguments
 commands.error.arg.missing=Not enough arguments

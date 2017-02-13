@@ -49,8 +49,8 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
         ArrayList<String> ret = new ArrayList<String>();
         if (mouseX >= 40 && mouseX <= 60 && mouseY >= 21 && mouseY <= 34)
         {
-            ret.add(TextHelper.localize("jei.bloodmagic.recipe.minimumSouls", recipe.getMinimumSouls()));
-            ret.add(TextHelper.localize("jei.bloodmagic.recipe.soulsDrained", recipe.getSoulsDrained()));
+            ret.add(TextHelper.localize("jei.BloodMagic.recipe.minimumSouls", recipe.getMinimumSouls()));
+            ret.add(TextHelper.localize("jei.BloodMagic.recipe.soulsDrained", recipe.getSoulsDrained()));
             return ret;
         }
         return null;

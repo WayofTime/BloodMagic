@@ -57,8 +57,8 @@ public class BloodMagicPlugin extends BlankModPlugin
         registry.addRecipes(AlchemyTableRecipeMaker.getRecipes());
         registry.addRecipes(ArmourDowngradeRecipeMaker.getRecipes());
 
-        registry.addDescription(new ItemStack(ModItems.ALTAR_MAKER), "jei.bloodmagic.desc.altarBuilder");
-        registry.addDescription(new ItemStack(ModItems.MONSTER_SOUL), "jei.bloodmagic.desc.demonicWill");
+        registry.addDescription(new ItemStack(ModItems.ALTAR_MAKER), "jei.BloodMagic.desc.altarBuilder");
+        registry.addDescription(new ItemStack(ModItems.MONSTER_SOUL), "jei.BloodMagic.desc.demonicWill");
 
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.BLOOD_LIGHT));
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.SPECTRAL_BLOCK));
