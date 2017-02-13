@@ -22,9 +22,7 @@ import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
@@ -62,12 +60,11 @@ public class RitualFeatheredKnife extends Ritual
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
         World world = masterRitualStone.getWorldObj();
-        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
-        int currentEssence = network.getCurrentEssence();
+        int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
         if (currentEssence < getRefreshCost())
         {
-            network.causeNausea();
+            masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
 
@@ -195,7 +192,7 @@ public class RitualFeatheredKnife extends Ritual
             }
         }
 
-        network.syphon(getRefreshCost() * totalEffects);
+        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * totalEffects);
         if (totalEffects > 0 && consumeRawWill)
         {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawWillDrain, true);

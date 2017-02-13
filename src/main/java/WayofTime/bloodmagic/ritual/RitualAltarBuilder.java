@@ -5,12 +5,10 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.AltarComponent;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.util.Utils;
@@ -47,15 +45,14 @@ public class RitualAltarBuilder extends Ritual
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
         World world = masterRitualStone.getWorldObj();
-        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
         TileEntity tileEntity = world.getTileEntity(masterRitualStone.getBlockPos().up());
         BlockPos altarPos = masterRitualStone.getBlockPos().up(2);
 
-        int currentEssence = network.getCurrentEssence();
+        int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
         if (currentEssence < getRefreshCost())
         {
-            network.causeNausea();
+            masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
 
@@ -68,7 +65,7 @@ public class RitualAltarBuilder extends Ritual
         {
             world.setBlockState(altarPos, ModBlocks.ALTAR.getDefaultState());
             lightning(world, altarPos);
-            network.syphon(getRefreshCost());
+            masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
         }
 
         if (altarComponentsIterator.hasNext())
@@ -87,7 +84,7 @@ public class RitualAltarBuilder extends Ritual
                     {
                         world.setBlockState(currentPos, blockStack.getState(), 3);
                         lightning(world, currentPos);
-                        network.syphon(getRefreshCost());
+                        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
                     }
                     break;
                 }
@@ -98,7 +95,7 @@ public class RitualAltarBuilder extends Ritual
                     {
                         world.setBlockState(currentPos, blockStack.getState(), 3);
                         lightning(world, currentPos);
-                        network.syphon(getRefreshCost());
+                        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
                     }
                     break;
                 }
@@ -109,7 +106,7 @@ public class RitualAltarBuilder extends Ritual
                     {
                         world.setBlockState(currentPos, blockStack.getState(), 3);
                         lightning(world, currentPos);
-                        network.syphon(getRefreshCost());
+                        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
                     }
                     break;
                 }

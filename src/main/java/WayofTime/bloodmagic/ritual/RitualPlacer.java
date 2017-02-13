@@ -1,9 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemBlock;
@@ -35,16 +33,15 @@ public class RitualPlacer extends Ritual
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
         World world = masterRitualStone.getWorldObj();
-        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
         BlockPos masterPos = masterRitualStone.getBlockPos();
         AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
         TileEntity tileEntity = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
 
-        int currentEssence = network.getCurrentEssence();
+        int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
         if (currentEssence < getRefreshCost())
         {
-            network.causeNausea();
+            masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
 
@@ -76,7 +73,7 @@ public class RitualPlacer extends Ritual
                                     world.setBlockState(blockPos, Block.getBlockFromItem(iItemHandler.getStackInSlot(inv).getItem()).getStateFromMeta(iItemHandler.getStackInSlot(inv).getItemDamage()));
                                     iItemHandler.extractItem(inv, 1, false);
                                     tileEntity.markDirty();
-                                    network.syphon(getRefreshCost());
+                                    masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
                                 }
                             }
                         }
@@ -103,7 +100,7 @@ public class RitualPlacer extends Ritual
                                 world.setBlockState(blockPos, Block.getBlockFromItem(iInventory.getStackInSlot(inv).getItem()).getStateFromMeta(iInventory.getStackInSlot(inv).getItemDamage()));
                                 iInventory.decrStackSize(inv, 1);
                                 iInventory.markDirty();
-                                network.syphon(getRefreshCost());
+                                masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
                                 break;
                             }
                         }

@@ -1,9 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import net.minecraft.block.Block;
@@ -29,14 +27,13 @@ public class RitualCobblestone extends Ritual
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
         World world = masterRitualStone.getWorldObj();
-        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
-        int currentEssence = network.getCurrentEssence();
+        int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
         TileEntity tileEntity = world.getTileEntity(masterRitualStone.getBlockPos().up());
         Block block = Blocks.COBBLESTONE;
 
         if (currentEssence < getRefreshCost())
         {
-            network.causeNausea();
+            masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
 
@@ -87,7 +84,7 @@ public class RitualCobblestone extends Ritual
             }
         }
 
-        network.syphon(getRefreshCost() * totalEffects);
+        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * totalEffects);
     }
 
     @Override

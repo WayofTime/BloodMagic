@@ -28,9 +28,7 @@ import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.util.Utils;
@@ -71,12 +69,11 @@ public class RitualCrushing extends Ritual
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
         World world = masterRitualStone.getWorldObj();
-        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
-        int currentEssence = network.getCurrentEssence();
+        int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
         if (currentEssence < getRefreshCost())
         {
-            network.causeNausea();
+            masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
 
@@ -179,7 +176,7 @@ public class RitualCrushing extends Ritual
                     WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, willDrain, true);
                     corrosiveWill -= willDrain;
 
-                    network.syphon(lpDrain);
+                    masterRitualStone.getOwnerNetwork().syphon(lpDrain);
                     currentEssence -= lpDrain;
 
                     isBlockClaimed = true;
@@ -252,7 +249,7 @@ public class RitualCrushing extends Ritual
             }
 
             world.destroyBlock(newPos, false);
-            network.syphon(getRefreshCost());
+            masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
             hasOperated = true;
 
             if (consumeRawWill)

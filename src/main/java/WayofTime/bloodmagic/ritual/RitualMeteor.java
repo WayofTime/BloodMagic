@@ -13,9 +13,7 @@ import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 import WayofTime.bloodmagic.meteor.MeteorRegistry;
@@ -36,8 +34,7 @@ public class RitualMeteor extends Ritual
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
         World world = masterRitualStone.getWorldObj();
-        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
-        int currentEssence = network.getCurrentEssence();
+        int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
         BlockPos pos = masterRitualStone.getBlockPos();
 
@@ -71,7 +68,7 @@ public class RitualMeteor extends Ritual
 
                 if (destructiveWill >= destructiveWillDrain && currentEssence >= 1000000000)
                 {
-                    network.syphon(1000000);
+                    masterRitualStone.getOwnerNetwork().syphon(1000000);
                 } else
                 {
                     masterRitualStone.setActive(false);

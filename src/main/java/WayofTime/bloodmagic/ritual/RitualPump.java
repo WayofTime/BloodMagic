@@ -1,9 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -39,13 +37,12 @@ public class RitualPump extends Ritual
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
         World world = masterRitualStone.getWorldObj();
-        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
-        int currentEssence = network.getCurrentEssence();
+        int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
         TileEntity tileEntity = world.getTileEntity(masterRitualStone.getBlockPos().up());
 
         if (currentEssence < getRefreshCost())
         {
-            network.causeNausea();
+            masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
 
@@ -75,7 +72,7 @@ public class RitualPump extends Ritual
 
             if (blockPosIterator.hasNext())
             {
-                network.syphon(getRefreshCost());
+                masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
                 currentPos = blockPosIterator.next();
                 fluidHandler.fill(EnumFacing.DOWN, fluidHandler.drain(EnumFacing.DOWN, 1000, false), true);
                 world.setBlockState(currentPos, Blocks.STONE.getDefaultState());

@@ -38,6 +38,7 @@ import com.google.common.base.Strings;
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone
 {
     private String owner;
+    private SoulNetwork cachedNetwork;
     private boolean active;
     private boolean redstoned;
     private int activeTime;
@@ -84,6 +85,8 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     public void deserialize(NBTTagCompound tag)
     {
         owner = tag.getString(Constants.NBT.OWNER_UUID);
+        if (!Strings.isNullOrEmpty(owner))
+            cachedNetwork = NetworkHelper.getSoulNetwork(owner);
         currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
         if (currentRitual != null)
         {
@@ -140,7 +143,6 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
         activationCrystal = NBTHelper.checkNBT(activationCrystal);
         String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_UUID);
-//        crystalOwner = PlayerHelper.getUUIDFromPlayer(activator).toString(); //Temporary patch job
 
         if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null)
         {
@@ -179,6 +181,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
                             this.active = true;
                             this.owner = crystalOwner;
+                            this.cachedNetwork = network;
                             this.currentRitual = ritual;
 
                             notifyUpdate();
@@ -279,6 +282,12 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     public String getOwner()
     {
         return owner;
+    }
+
+    @Override
+    public SoulNetwork getOwnerNetwork()
+    {
+        return cachedNetwork;
     }
 
     @Override
