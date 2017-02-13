@@ -114,6 +114,10 @@ item.bloodmagic.demonCrystal.crystalVengeful.name=報復性ウィル結晶
 item.bloodmagic.demonCrystal.crystalSteadfast.name=不活性ウィル結晶
 
 item.bloodmagic.monsterSoul.base.name=デーモニックウィル
+item.bloodmagic.monsterSoul.corrosive.name=腐食性デーモニックウィル
+item.bloodmagic.monsterSoul.destructive.name=破壊性デーモニックウィル
+item.bloodmagic.monsterSoul.vengeful.name=報復性デーモニックウィル
+item.bloodmagic.monsterSoul.steadfast.name=不活性デーモニックウィル
 
 item.bloodmagic.sigil.air.name=風の印章
 item.bloodmagic.sigil.bloodLight.name=血のランプの印章
@@ -178,6 +182,7 @@ item.bloodmagic.itemFilter.exact.name=精密アイテムフィルタ
 item.bloodmagic.itemFilter.ignoreNBT.name=NBTタグフィルタ
 item.bloodmagic.itemFilter.modItems.name=MODアイテムフィルタ
 item.bloodmagic.itemFilter.oreDict.name=鉱石辞書フィルタ
+item.bloodmagic.fluidFilter.exact.name=液体フィルタ
 
 item.bloodmagic.experienceTome.name=ペリティアの書
 item.bloodmagic.sanguineBook.name=インスペクトリス・スカンダルム
@@ -376,6 +381,7 @@ tooltip.bloodmagic.orb.owner=以下による追加要素： %s
 tooltip.bloodmagic.currentOwner=現在の所有者： %s
 tooltip.bloodmagic.currentTier=祭壇のグレード： %d
 tooltip.bloodmagic.config.disabled=現在configにより無効化されています
+tooltip.bloodmagic.tier=ｸﾞﾚｰﾄﾞ %d
 
 tooltip.bloodmagic.activated=アクティブ
 tooltip.bloodmagic.deactivated=非アクティブ
@@ -393,7 +399,7 @@ tooltip.bloodmagic.sigil.divination.currentInversion=現在の反転度： %d
 tooltip.bloodmagic.sigil.divination.currentBonus=結合度： +%d%%
 tooltip.bloodmagic.sigil.water.desc=&o無限の水はいかが？
 tooltip.bloodmagic.sigil.lava.desc=&o高温注意！食べられません
-tooltip.bloodmagic.sigil.void.desc=&oクイックルワイパー(R)より良い！
+tooltip.bloodmagic.sigil.void.desc=&oクイックルワイパー(R)より素晴らしい！
 tooltip.bloodmagic.sigil.greenGrove.desc=&o環境にやさしい
 tooltip.bloodmagic.sigil.magnetism.desc=&o私は引き付ける性格です
 tooltip.bloodmagic.sigil.suppression.desc=&o素晴らしい念動力だ...
@@ -492,7 +498,7 @@ tooltip.bloodmagic.livingArmour.upgrade.sprintAttack=チャージストライク
 tooltip.bloodmagic.livingArmour.upgrade.criticalStrike=トゥルーストライク
 tooltip.bloodmagic.livingArmour.upgrade.elytra=エリトラ
 tooltip.bloodmagic.livingArmour.upgrade.nightSight=夜間技能
-tooltip.bloodmagic.livingArmour.upgrade.repair=修理
+tooltip.bloodmagic.livingArmour.upgrade.repair=補修
 
 
 tooltip.bloodmagic.livingArmour.upgrade.slowness=引きずる足
@@ -501,8 +507,9 @@ tooltip.bloodmagic.livingArmour.upgrade.slippery=摩擦力低下
 tooltip.bloodmagic.livingArmour.upgrade.battleHunger=飢餓の戦い
 tooltip.bloodmagic.livingArmour.upgrade.quenched=抑制
 tooltip.bloodmagic.livingArmour.upgrade.meleeDecrease=鈍い刃
-tooltip.bloodmagic.livingArmour.upgrade.digSlowdown=脆くなったツルハシ
+tooltip.bloodmagic.livingArmour.upgrade.digSlowdown=朽ちたツルハシ
 tooltip.bloodmagic.livingArmour.upgrade.stormTrooper=突撃兵
+tooltip.bloodmagic.livingArmour.upgrade.slowHeal=病気
 tooltip.bloodmagic.livingArmour.upgrade.level=%s (Lv %d)
 tooltip.bloodmagic.livingArmour.upgrade.progress=%s (%d/100)
 tooltip.bloodmagic.livingArmour.upgrade.points=&6強化ポイント： %s / %s
@@ -529,6 +536,7 @@ tooltip.bloodmagic.itemFilter.oreDict=鉱石辞書を用いてフィルタしま
 tooltip.bloodmagic.fluid.type=液体を格納する
 tooltip.bloodmagic.fluid.amount=量
 tooltip.bloodmagic.fluid.capacity=最大容量
+tooltip.bloodmagic.itemFilter.exact=液体フィルタ 入力/出力
 
 tooltip.bloodmagic.ghost.everything=全て
 tooltip.bloodmagic.ghost.amount=幻影アイテムの個数： %d個
@@ -545,7 +553,7 @@ tooltip.bloodmagic.currentBaseType.destructive=破壊性
 tooltip.bloodmagic.currentBaseType.vengeful=報復性
 tooltip.bloodmagic.currentBaseType.steadfast=不活性
 
-tooltip.bloodmagic.experienceTome=経験値を貯蔵するのに用いる本
+tooltip.bloodmagic.experienceTome=経験値を貯蔵するために用いる本
 tooltip.bloodmagic.experienceTome.exp=Exp: %0.3f
 tooltip.bloodmagic.experienceTome.expLevel=レベル： %d
 
@@ -558,7 +566,7 @@ tooltip.bloodmagic.potion.uses=%d 回使用可能
 
 tooltip.bloodmagic.book.shifting=紋様が... &oShiftして...
 
-tooltip.bloodmagic.willGauge=大気中のデーモンウィルを測定できる奇妙な装置。
+tooltip.bloodmagic.willGauge=大気中のデーモンウィルを測定するための奇妙な装置。
 
 # Ritual
 ritual.bloodmagic.blockRange.tooBig=指定されたブロック範囲が広すぎます！最大%sブロックの範囲内である必要があります。
@@ -601,24 +609,52 @@ ritual.bloodmagic.fellingRitual=木こりの粉砕
 ritual.bloodmagic.pumpRitual=サイフォンの讃歌
 ritual.bloodmagic.altarBuilderRitual=高位祭壇構築儀式
 ritual.bloodmagic.portalRitual=組み込みゲート
-ritual.bloodmagic.downgradeRitual=弱化の儀式
+ritual.bloodmagic.downgradeRitual=重き魂の懺悔
 
 ritual.bloodmagic.waterRitual.info=マスター儀式石から水源を生成します。
 ritual.bloodmagic.lavaRitual.info=マスター儀式石から溶岩源を生成します。
-ritual.bloodmagic.greenGroveRitual.info=エリア内の作物を育成させます。
+ritual.bloodmagic.lavaRitual.default.info=(原生) 溶岩の生成LPコストを下げ、リンクさせた容器に溶岩を注ぎ込みます。
+ritual.bloodmagic.lavaRitual.corrosive.info=(腐食性) 範囲内にいる生物のうち、火炎耐性を持つものに深刻なダメージを与えます。
+ritual.bloodmagic.lavaRitual.destructive.info=(破壊性) 総ウィル量に応じて溶岩の設置範囲が拡大します。
+ritual.bloodmagic.lavaRitual.vengeful.info=(報復性) 範囲内の生物に対して火炎への抵抗を付与します。
+ritual.bloodmagic.lavaRitual.steadfast.info=(不活性) 指定した範囲内にいるプレイヤーに対して火炎耐性を付与します。
+
+ritual.bloodmagic.greenGroveRitual.info=エリア内の作物を成長させます。
 ritual.bloodmagic.jumpRitual.info=空中にはね飛ぶ効果を付与します。
 ritual.bloodmagic.wellOfSufferingRitual.info=生物にダメージを与えるエリアを生成し、付近の血の祭壇にLPを供給します。
 ritual.bloodmagic.featheredKnifeRitual.info=プレイヤーにダメージを与えるエリアを生成し、付近後の祭壇にLPを供給します。
 ritual.bloodmagic.regenerationRitual.info=エリア内にHPが減少している生物がいた場合、再生能力を付与します。
+ritual.bloodmagic.regenerationRitual.default.info=(原生)
+ritual.bloodmagic.regenerationRitual.corrosive.info=(腐食性) 範囲内にいるプレイヤー以外の生物から生命力を奪い、プレイヤーを治癒します。
+ritual.bloodmagic.regenerationRitual.destructive.info=(破壊性)
+ritual.bloodmagic.regenerationRitual.vengeful.info=(報復性)
+ritual.bloodmagic.regenerationRitual.steadfast.info=(不活性)
 ritual.bloodmagic.harvestRitual.info=エリア内の作物を刈り取り、種などの収穫物があった場合は植え直します。
 ritual.bloodmagic.magneticRitual.info=地中から鉱石を掘り起こし、指定エリアに並べます。
 ritual.bloodmagic.crushingRitual.info=指定エリアのブロックを破壊し、収集物をリンクしているチェストに格納します。
 ritual.bloodmagic.crushingRitual.destructive.info=(破壊性) ブロックを強制的に破壊します：破壊した全てのブロックは幸運IIIの効果が適用されています。
 ritual.bloodmagic.crushingRitual.steadfast.info=(不活性) 全てのブロックはシルクタッチによって破壊されます。幸運の効果は無視されます。
 ritual.bloodmagic.crushingRitual.corrosive.info=(腐食性) 全てのブロックは切削液で破壊されます。シルクタッチの効果は無視されます。
+ritual.bloodmagic.crushingRitual.vengeful.info=(報復性) 可能であればインベントリの圧縮を試みます。1回の動作で一度の圧縮しか行われません。
+ritual.bloodmagic.crushingRitual.default.info=(原生) 総ウィル量に応じて、儀式の速度が向上します。
 ritual.bloodmagic.greenGroveRitual.corrosive.info=(腐食性) 作物の周囲にいる生物は攻撃を受け、生命力が作物に吸収される。
 ritual.bloodmagic.greenGroveRitual.default.info=(原生) オーラ中のウィル量に応じて全ての儀式の作動速度が向上します。
+ritual.bloodmagic.greenGroveRitual.vengeful.info=(報復性) Tick当たりの成長の成功率が増加します。
 ritual.bloodmagic.greenGroveRitual.steadfast.info=(不活性) 種を植え直し、潅水範囲にあるブロックを湿らせる。
+ritual.bloodmagic.greenGroveRitual.destructive.info=(破壊性) 総ウィル量に応じて、成長させる範囲が拡大します。
+ritual.bloodmagic.featheredKnifeRitual.default.info=(原生) オーラ中の総ウィル量に応じて、儀式の速度が向上します。
+ritual.bloodmagic.featheredKnifeRitual.destructive.info=(破壊性) オーラ中の総ウィル量に応じて、儀式による収集量を増やします。
+ritual.bloodmagic.featheredKnifeRitual.vengeful.info=(報復性) 犠牲にするHPの最低値を10%%までにします。所有者が不活性が有効にしていると上書きされます。
+ritual.bloodmagic.featheredKnifeRitual.corrosive.info=(腐食性) お香による効果増大を有効にします。
+ritual.bloodmagic.featheredKnifeRitual.steadfast.info=(不活性) 犠牲にするHPの最低値を30%%から70%%にします。
+ritual.bloodmagic.speedRitual.default.info=(原生) オーラ中の総ウィル量に応じて、射出速度が上昇します。
+ritual.bloodmagic.speedRitual.vengeful.info=(報復性) 大人の生物やプレイヤーを移動させます。破壊性も利用していた場合はプレイヤーを移動させます。
+ritual.bloodmagic.speedRitual.destructive.info=(破壊性) 子供の生物やプレイヤーを移動させます。報復性も利用していた場合はプレイヤーを移動させます。
+ritual.bloodmagic.animalGrowthRitual.vengeful.info=(報復性) 大人が再び繁殖するまでの時間を短縮すます。
+ritual.bloodmagic.animalGrowthRitual.steadfast.info=(不活性) 関連付けられたチェスト内のアイテムを用いて、エリア内の大人を自動的に繁殖させます。
+ritual.bloodmagic.animalGrowthRitual.default.info=(原生) オーラ中の総ウィル量に応じて、儀式の速度が向上します。
+ritual.bloodmagic.animalGrowthRitual.destructive.info=(破壊性) 長い間繁殖を行っていない大人は、MOBに向かっていき爆発する。
+ritual.bloodmagic.animalGrowthRitual.corrosive.info=(腐食性) Unimplemented.
 
 ritual.bloodmagic.fullStomachRitual.info=リンクしているチェスト内にある食料を、満腹でないプレイヤーに自動的に供給します。
 ritual.bloodmagic.interdictionRitual.info=マスター儀式石の一定エリア内の生物を排除して侵入できないようにします。
@@ -641,7 +677,10 @@ ritual.bloodmagic.meteorRitual.info=範囲内のアイテムを消費し、空�
 
 ritual.bloodmagic.waterRitual.waterRange.info=(水) 設定したエリアに水源を生成させます。
 ritual.bloodmagic.lavaRitual.lavaRange.info=(溶岩) 設定したエリアに溶岩源を生成させます。
+ritual.bloodmagic.lavaRitual.lavaTank.info=(原生) 儀式によって生成した溶岩を入れるタンク。
 ritual.bloodmagic.lavaRitual.fireFuse.info=(報復性) 範囲内のエンティティは炎によって苦しめられます。
+ritual.bloodmagic.lavaRitual.fireResist.info=(不活性) 範囲内のプレイヤーは火炎耐性の効果を与えます。
+ritual.bloodmagic.lavaRitual.fireDamage.info=(腐食性) 範囲内にいる火炎耐性を持つ生物はウィル量に比例したダメージを受けます。
 ritual.bloodmagic.greenGroveRitual.growing.info=(成長) 設定したエリア内の植物の成長を促進させます。
 ritual.bloodmagic.greenGroveRitual.leech.info=(腐食性) 作物の成長のために周辺の生物は生命力を吸収される。
 ritual.bloodmagic.greenGroveRitual.hydrate.info=(不活性) 範囲内の耕したブロックを湿らせ、エリア周辺にある種子を植え付ける。
@@ -651,6 +690,7 @@ ritual.bloodmagic.wellOfSufferingRitual.damage.info=(ダメージ) 儀式によ�
 ritual.bloodmagic.featheredKnifeRitual.altar.info=(祭壇）儀式が血の祭壇を検索するエリアを指定します。変更することにより検索エリアを拡大したり特定の領域に制限したりすることが可能です。
 ritual.bloodmagic.featheredKnifeRitual.damage.info=(ダメージ) 儀式によってプレイヤーが継続ダメージを受けるエリアを設定します。この範囲内に居るプレイヤーは死ぬ一歩手前まで徐々にダメージを受け続ける。
 ritual.bloodmagic.regenerationRitual.heal.info=(回復) 範囲内に居る生物は再生能力の効果を与えます。
+ritual.bloodmagic.regenerationRitual.vampire.info=(吸血主義) 範囲内にいる生物はプレイヤーの回復のために生命力が削られていきます。
 ritual.bloodmagic.harvestRitual.harvestRange.info=(収穫) 範囲内の植物を収穫します。
 ritual.bloodmagic.magneticRitual.placementRange.info=(配置) 儀式はこのエリアに手に入れた鉱石を配置します。
 ritual.bloodmagic.crushingRitual.crushingRange.info=(粉砕) 儀式はこのエリア内のブロックを破壊して入手します。
@@ -665,6 +705,7 @@ ritual.bloodmagic.expulsionRitual.expulsionRange.info=(追放)
 ritual.bloodmagic.zephyrRitual.zephyrRange.info=(吸引) 設定範囲内のアイテムが収集され、リンクされているチェストに収納されます。
 ritual.bloodmagic.zephyrRitual.chest.info=(チェスト) 儀式が収集したアイテムを収納するためのチェストの場所。
 ritual.bloodmagic.animalGrowthRitual.growing.info=(成長) 範囲内の動物がとても早く成長します。
+ritual.bloodmagic.animalGrowthRitual.chest.info=(チェスト) 繁殖させるための適切な餌を入れたチェストの場所。
 ritual.bloodmagic.forsakenSoulRitual.crystal.info=(結晶) 儀式によって生物が死亡した際に、この範囲内のデーモンウィル結晶の成長が促進します。
 ritual.bloodmagic.forsakenSoulRitual.damage.info=(ダメージ) この範囲内の生物は徐々にダメージを受け、死亡した際のウィルがクリスタルの成長に利用されます。
 ritual.bloodmagic.crystalHarvestRitual.crystal.info=(結晶) 析出した全てのデーモンウィル結晶株を破壊して単結晶の結晶にします。結晶株が1つだけになった場合は破壊しない。
@@ -688,6 +729,10 @@ ritual.bloodmagic.downgradeRitual.dialogue.dulledBlade.100=もし死を超越し
 ritual.bloodmagic.downgradeRitual.dialogue.dulledBlade.300=ただし、私はお前に何かしらの代償を要求しよう：お前の物理的な戦闘能力だ。
 ritual.bloodmagic.downgradeRitual.dialogue.dulledBlade.500=これに契約することで、もはやお前は確実に武器を振るえなくなり、以前に振るえていたダメージのほんの僅かしか与えることができなくなる。
 ritual.bloodmagic.downgradeRitual.dialogue.dulledBlade.700=さあ、お前の選択次第だ：祭壇に跪くか、己の剣を執り続けるのか？
+ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.1=用心したまえ、人間よ。お前の地盤は崩れ行くことになるだろう。
+ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.100=私は我が同輩たちとは異なる。お前の生命を扱う魔術師として、お前の望みを叶えるための恐ろしい契約を提供しよう。
+ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.300=お前の怪我はいずれ癒えることだろう。しかし私の”加護”を受けし者はそれが酷くゆったりとしたものになる。戦場で傷を負えばお前をさらに悩ませることだろう。
+ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.500=挑む前によくよく考えたまえ。ひとたび空にしてしまった杯を、再び満たすことは不可能なのだから...
 
 # Chat
 chat.bloodmagic.altarMaker.setTier=グレードを設定： %d
@@ -812,6 +857,7 @@ jei.bloodmagic.recipe.binding=錬金術魔法陣(結合)
 jei.bloodmagic.recipe.alchemyArrayCrafting=錬金術魔法陣
 jei.bloodmagic.recipe.soulForge=業火のかまど
 jei.bloodmagic.recipe.alchemyTable=錬金術テーブル
+jei.bloodmagic.recipe.armourDowngrade=懺悔 (儀式)
 jei.bloodmagic.recipe.requiredLP=LP： %d
 jei.bloodmagic.recipe.requiredTier=ｸﾞﾚｰﾄﾞ: %d
 jei.bloodmagic.recipe.consumptionRate=消費率： %d LP/t
