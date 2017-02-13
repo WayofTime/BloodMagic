@@ -44,6 +44,9 @@ public class GuideBloodMagic
     public static void handleBookRecipe(boolean add)
     {
         if (Loader.isModLoaded("JEI")) {
+            if (BloodMagicPlugin.jeiRuntime == null)
+                return;
+
             if (add)
                 BloodMagicPlugin.jeiRuntime.getRecipeRegistry().addRecipe(CompatibilityGuideAPI.guideRecipe);
             else
