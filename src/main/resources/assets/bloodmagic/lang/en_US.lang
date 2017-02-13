@@ -1,6 +1,6 @@
 #Creative Tab
 itemGroup.BloodMagic.creativeTab=Blood Magic
-itemGroup.BloodMagic.creativeTabTome=Blood Magic Upgrade Tomes
+itemGroup.BloodMagic.creativeTabTome=Blood Magic | Tomes
 
 #Items
 item.BloodMagic.activationCrystal.weak.name=Weak Activation Crystal
@@ -162,6 +162,7 @@ item.BloodMagic.ritualReader.name=Ritual Tinkerer
 
 item.BloodMagic.arcaneAshes.name=Arcane Ashes
 item.BloodMagic.upgradeTome.name=Living Armour Upgrade Tome
+item.BloodMagic.downgradeTome.name=Living Armour Downgrade Tome
 item.BloodMagic.upgradeTrainer.name=Living Armour Training Bracelet
 
 item.BloodMagic.sentientSword.name=Sentient Sword
@@ -510,6 +511,8 @@ tooltip.BloodMagic.livingArmour.upgrade.meleeDecrease=Dulled Blade
 tooltip.BloodMagic.livingArmour.upgrade.digSlowdown=Weakened Pick
 tooltip.BloodMagic.livingArmour.upgrade.stormTrooper=Storm Trooper
 tooltip.BloodMagic.livingArmour.upgrade.slowHeal=Diseased
+tooltip.BloodMagic.livingArmour.upgrade.disoriented=Disoriented
+
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.upgrade.progress=%s (%d/100)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
