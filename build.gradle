@@ -216,8 +216,7 @@ curseforge {
         releaseType = 'beta'
 
         relations curseRelations
-        addGameVersion '1.10'
-        addGameVersion '1.10.2'
+        addGameVersion '1.11.2'
 
         addArtifact javadocJar
         addArtifact sourceJar
