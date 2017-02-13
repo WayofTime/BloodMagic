@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.api.ritual;
 
 import java.util.List;
 
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -17,6 +18,8 @@ import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 public interface IMasterRitualStone
 {
     String getOwner();
+
+    SoulNetwork getOwnerNetwork();
 
     boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator, Ritual ritual);
 

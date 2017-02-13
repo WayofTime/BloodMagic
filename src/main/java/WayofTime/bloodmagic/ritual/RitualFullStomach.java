@@ -1,9 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemFood;
@@ -36,8 +34,7 @@ public class RitualFullStomach extends Ritual
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
         World world = masterRitualStone.getWorldObj();
-        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
-        int currentEssence = network.getCurrentEssence();
+        int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
         BlockPos pos = masterRitualStone.getBlockPos();
 
@@ -91,13 +88,12 @@ public class RitualFullStomach extends Ritual
 
             if (totalEffects >= maxEffects)
             {
-                network.causeNausea();
-
+                masterRitualStone.getOwnerNetwork().causeNausea();
                 break;
             }
         }
 
-        network.syphon(getRefreshCost() * totalEffects);
+        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * totalEffects);
     }
 
     @Override

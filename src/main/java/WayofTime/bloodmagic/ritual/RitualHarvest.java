@@ -3,10 +3,8 @@ package WayofTime.bloodmagic.ritual;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IHarvestHandler;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
 import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -37,13 +35,12 @@ public class RitualHarvest extends Ritual
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
-        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
         World world = masterRitualStone.getWorldObj();
         BlockPos pos = masterRitualStone.getBlockPos();
 
-        if (network.getCurrentEssence() < getRefreshCost())
+        if (masterRitualStone.getOwnerNetwork().getCurrentEssence() < getRefreshCost())
         {
-            network.causeNausea();
+            masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
 
@@ -61,7 +58,7 @@ public class RitualHarvest extends Ritual
             }
         }
 
-        network.syphon(getRefreshCost() * harvested);
+        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * harvested);
     }
 
     @Override

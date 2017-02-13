@@ -15,8 +15,6 @@ import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.Utils;
 
 public class RitualZephyr extends Ritual
@@ -38,8 +36,7 @@ public class RitualZephyr extends Ritual
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
         World world = masterRitualStone.getWorldObj();
-        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
-        int currentEssence = network.getCurrentEssence();
+        int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
         BlockPos masterPos = masterRitualStone.getBlockPos();
         AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
         TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
@@ -47,7 +44,7 @@ public class RitualZephyr extends Ritual
         {
             if (currentEssence < getRefreshCost())
             {
-                network.causeNausea();
+                masterRitualStone.getOwnerNetwork().causeNausea();
                 return;
             }
 
@@ -82,7 +79,7 @@ public class RitualZephyr extends Ritual
                 }
             }
 
-            network.syphon(this.getRefreshCost() * Math.min(count, 100));
+            masterRitualStone.getOwnerNetwork().syphon(this.getRefreshCost() * Math.min(count, 100));
         }
     }
 

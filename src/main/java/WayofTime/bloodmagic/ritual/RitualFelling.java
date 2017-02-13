@@ -1,9 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -44,8 +42,7 @@ public class RitualFelling extends Ritual
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
         World world = masterRitualStone.getWorldObj();
-        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
-        int currentEssence = network.getCurrentEssence();
+        int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
         BlockPos masterPos = masterRitualStone.getBlockPos();
         AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
@@ -53,7 +50,7 @@ public class RitualFelling extends Ritual
 
         if (currentEssence < getRefreshCost())
         {
-            network.causeNausea();
+            masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
 
@@ -74,7 +71,7 @@ public class RitualFelling extends Ritual
 
         if (blockPosIterator.hasNext() && tileInventory != null && tileInventory instanceof IInventory)
         {
-            network.syphon(getRefreshCost());
+            masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
             currentPos = blockPosIterator.next();
             placeInInventory(world.getBlockState(currentPos), world, currentPos, chestRange.getContainedPositions(masterPos).get(0));
             world.setBlockToAir(currentPos);
