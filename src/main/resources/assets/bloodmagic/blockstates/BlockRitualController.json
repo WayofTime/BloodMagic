@@ -16,6 +16,11 @@
         "textures": {
           "all": "bloodmagic:blocks/ImperfectRitualStone"
         }
+      },
+      "inverted": {
+        "textures": {
+          "all": "bloodmagic:blocks/MasterRitualStone_Inverted"
+        }
       }
     }
   }

@@ -198,6 +198,7 @@ tile.BloodMagic.fluid.lifeEssence.name=Life Essence
 
 tile.BloodMagic.stone.ritual.master.name=Master Ritual Stone
 tile.BloodMagic.stone.ritual.imperfect.name=Imperfect Ritual Stone
+tile.BloodMagic.stone.ritual.inverted.name=Inverted Master Ritual Stone
 
 tile.BloodMagic.altar.name=Blood Altar
 tile.BloodMagic.alchemyArray.name=&r&fAlchemy Array
