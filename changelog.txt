@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Version 2.1.3
+------------------------------------------------------
+- Added a new Master Ritual Stone that inverts it's redstone activity
+- Fixed Living Armor attributes overriding eachother instead of adding up
+- Fixed Ore doubling sometimes adding invalid recipes
+- Downgrade tomes are now called Downgrade Tomes
+- Added some caching to rituals to (hopefully) increase performance with less world data query-ing
+
+------------------------------------------------------
 Version 2.1.2
 ------------------------------------------------------
 - Fixed server crash when creating the guide entries
