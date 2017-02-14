@@ -7,7 +7,9 @@ import net.minecraft.util.IStringSerializable;
 public enum EnumRitualController implements IStringSerializable
 {
     MASTER,
-    IMPERFECT;
+    IMPERFECT,
+    INVERTED,
+    ;
 
     @Override
     public String toString()

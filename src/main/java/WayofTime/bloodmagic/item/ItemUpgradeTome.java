@@ -74,6 +74,18 @@ public class ItemUpgradeTome extends Item implements IVariantProvider
     }
 
     @Override
+    public String getUnlocalizedName(ItemStack stack) {
+        if (!stack.hasTagCompound())
+            return super.getUnlocalizedName(stack);
+
+        LivingArmourUpgrade upgrade = LivingUpgrades.getUpgrade(stack);
+        if (upgrade != null && upgrade.isDowngrade())
+            return "item." + Constants.Mod.MODID + ".downgradeTome";
+
+        return super.getUnlocalizedName(stack);
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
     {

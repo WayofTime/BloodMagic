@@ -52,7 +52,7 @@ public class ShapelessOrbRecipeJEI extends BlankRecipeWrapper implements ICrafti
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
-        String draw = TextHelper.localize("jei.bloodmagic.recipe.requiredTier", NumeralHelper.toRoman(tier));
+        String draw = TextHelper.localize("jei.BloodMagic.recipe.requiredTier", NumeralHelper.toRoman(tier));
         minecraft.fontRendererObj.drawString(draw, 72 - minecraft.fontRendererObj.getStringWidth(draw) / 2, 10, Color.gray.getRGB());
     }
 }

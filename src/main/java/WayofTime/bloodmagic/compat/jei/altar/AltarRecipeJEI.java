@@ -29,7 +29,7 @@ public class AltarRecipeJEI extends BlankRecipeWrapper
         this.input = input;
         this.output = output;
 
-        this.infoString = new String[] { TextHelper.localize("jei.bloodmagic.recipe.requiredTier", NumeralHelper.toRoman(tier)), TextHelper.localize("jei.bloodmagic.recipe.requiredLP", requiredLP) };
+        this.infoString = new String[] { TextHelper.localize("jei.BloodMagic.recipe.requiredTier", NumeralHelper.toRoman(tier)), TextHelper.localize("jei.BloodMagic.recipe.requiredLP", requiredLP) };
         this.consumptionRate = consumptionRate;
         this.drainRate = drainRate;
     }
@@ -46,8 +46,8 @@ public class AltarRecipeJEI extends BlankRecipeWrapper
         ArrayList<String> ret = new ArrayList<String>();
         if (mouseX >= 13 && mouseX <= 64 && mouseY >= 27 && mouseY <= 58)
         {
-            ret.add(TextHelper.localize("jei.bloodmagic.recipe.consumptionRate", consumptionRate));
-            ret.add(TextHelper.localize("jei.bloodmagic.recipe.drainRate", drainRate));
+            ret.add(TextHelper.localize("jei.BloodMagic.recipe.consumptionRate", consumptionRate));
+            ret.add(TextHelper.localize("jei.BloodMagic.recipe.drainRate", drainRate));
         }
         return ret;
     }

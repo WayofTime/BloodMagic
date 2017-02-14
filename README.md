@@ -20,10 +20,7 @@ Blood Magic is an arcane art that is practiced by mages who attempt to gather a 
 ##Development Setup
 
 1. Fork this project to your own Github repository and clone it to your desktop.
-2. Navigate to the directory you cloned to. Open a command window there and run `gradlew setupDevWorkspace` then (if you use Eclipse) `gradlew eclipse` or (if you use IDEA) `gradlew idea`. 
-3. This process will setup [Forge](http://www.minecraftforge.net/forum/), your workspace, and link [MineTweaker](http://minetweaker3.powerofbytes.com/) as a dependency.
-4. Open the project in your IDE of choice.
-5. Set `../src/api/java` as a source directory.
+2. Navigate to the directory you cloned to. Follow the [Forge Documentation](http://mcforge.readthedocs.io/en/latest/gettingstarted/#from-zero-to-modding) (start at step 4) to setup your workspace. If you use IDEA, follow [this set](http://mcforge.readthedocs.io/en/latest/gettingstarted/#terminal-free-intellij-idea-configuration) of steps.
 
 ####IntelliJ IDEA extra steps
 

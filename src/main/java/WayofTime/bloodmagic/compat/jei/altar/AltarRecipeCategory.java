@@ -25,7 +25,7 @@ public class AltarRecipeCategory implements IRecipeCategory
     @Nonnull
     private final IDrawable background = BloodMagicPlugin.jeiHelper.getGuiHelper().createDrawable(new ResourceLocation(Constants.Mod.DOMAIN + "gui/jei/altar.png"), 3, 4, 155, 65);
     @Nonnull
-    private final String localizedName = TextHelper.localize("jei.bloodmagic.recipe.altar");
+    private final String localizedName = TextHelper.localize("jei.BloodMagic.recipe.altar");
 
     @Nonnull
     @Override

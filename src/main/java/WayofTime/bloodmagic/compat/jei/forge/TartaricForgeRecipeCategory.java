@@ -28,7 +28,7 @@ public class TartaricForgeRecipeCategory implements IRecipeCategory
     @Nonnull
     private final IDrawable background = BloodMagicPlugin.jeiHelper.getGuiHelper().createDrawable(new ResourceLocation(Constants.Mod.DOMAIN + "gui/jei/soulForge.png"), 0, 0, 100, 40);
     @Nonnull
-    private final String localizedName = TextHelper.localize("jei.bloodmagic.recipe.soulForge");
+    private final String localizedName = TextHelper.localize("jei.BloodMagic.recipe.soulForge");
     @Nonnull
     private final ICraftingGridHelper craftingGridHelper;
 

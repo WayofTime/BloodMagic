@@ -26,7 +26,7 @@ public class ArmourDowngradeRecipeCategory implements IRecipeCategory
     @Nonnull
     private final IDrawable background = BloodMagicPlugin.jeiHelper.getGuiHelper().createDrawable(new ResourceLocation(Constants.Mod.DOMAIN + "gui/jei/alchemyTable.png"), 0, 0, 118, 40);
     @Nonnull
-    private final String localizedName = TextHelper.localize("jei.bloodmagic.recipe.armourDowngrade");
+    private final String localizedName = TextHelper.localize("jei.BloodMagic.recipe.armourDowngrade");
     @Nonnull
     private final ICraftingGridHelper craftingGridHelper;
 
