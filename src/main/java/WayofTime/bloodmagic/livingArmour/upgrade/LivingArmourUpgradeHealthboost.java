@@ -10,6 +10,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import org.apache.commons.codec.binary.StringUtils;
 
 import java.util.UUID;
 
@@ -34,7 +35,8 @@ public class LivingArmourUpgradeHealthboost extends LivingArmourUpgrade
     {
         Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
 
-        modifierMap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(new UUID(9423688, 1), "Health modifier" + 1, healthModifier[this.level], 0));
+        String name = getUniqueIdentifier() + "-HealthModifier1";
+        modifierMap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(UUID.nameUUIDFromBytes(StringUtils.getBytesUtf8(name)), "HealthModifier1", healthModifier[this.level], 0));
 
         return modifierMap;
     }
