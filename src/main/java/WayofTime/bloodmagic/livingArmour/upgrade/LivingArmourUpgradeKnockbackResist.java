@@ -7,6 +7,7 @@ import com.google.common.collect.Multimap;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.nbt.NBTTagCompound;
+import org.apache.commons.codec.binary.StringUtils;
 
 import java.util.UUID;
 
@@ -26,11 +27,13 @@ public class LivingArmourUpgradeKnockbackResist extends LivingArmourUpgrade
     {
         Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
 
-        modifierMap.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.getName(), new AttributeModifier(new UUID(895132, 1), "Knockback modifier" + 1, kbModifier[this.level], 0));
+        String name = getUniqueIdentifier() + "-KnockbackModifier1";
+        modifierMap.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.getName(), new AttributeModifier(UUID.nameUUIDFromBytes(StringUtils.getBytesUtf8(name)), "KnockbackModifier1", kbModifier[this.level], 0));
 
         if (healthModifier[this.level] > 0)
         {
-            modifierMap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(new UUID(952142, 1), "Health modifier" + 1, healthModifier[this.level], 0));
+            name = getUniqueIdentifier() + "-HealthModifier1";
+            modifierMap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(UUID.nameUUIDFromBytes(StringUtils.getBytesUtf8(name)), "HealthModifier1", healthModifier[this.level], 0));
         }
 
         return modifierMap;

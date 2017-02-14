@@ -81,7 +81,6 @@ public class LivingArmour implements ILivingArmour
     {
         HashMultimap<String, AttributeModifier> modifierMap = HashMultimap.create();
 
-        int count = 0;
         for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())
         {
             LivingArmourUpgrade upgrade = entry.getValue();
@@ -90,33 +89,10 @@ public class LivingArmour implements ILivingArmour
                 continue;
             }
 
-            Multimap<String, AttributeModifier> upgradeModifiers = upgrade.getAttributeModifiers();
-            for (String key : upgradeModifiers.keySet())
-            {
-                if (modifierMap.containsKey(key))
-                {
-                    Collection<AttributeModifier> renamed = renameModifiers(upgradeModifiers.get(key), count);
-                    modifierMap.get(key).addAll(renamed);
-                    count += renamed.size();
-                } else
-                    modifierMap.putAll(upgradeModifiers);
-            }
+            modifierMap.putAll(upgrade.getAttributeModifiers());
         }
 
         return modifierMap;
-    }
-
-    private static Set<AttributeModifier> renameModifiers(Collection<AttributeModifier> modifiers, int count)
-    {
-        Set<AttributeModifier> newModifiers = new HashSet<AttributeModifier>();
-        for (AttributeModifier modifier : modifiers)
-        {
-            String newName = modifier.getName().substring(0, modifier.getName().length() - 1) + count;
-            newModifiers.add(new AttributeModifier(UUID.nameUUIDFromBytes(new byte[] {(byte)count}), newName, modifier.getAmount(), modifier.getOperation()));
-            count++;
-        }
-
-        return newModifiers;
     }
 
     @Override
