@@ -454,8 +454,9 @@ public class ModRecipes
             {
                 String dustName = ore.replaceFirst("ore", "dust");
 
+                List<ItemStack> discoveredOres = OreDictionary.getOres(ore);
                 List<ItemStack> dustList = OreDictionary.getOres(dustName);
-                if (dustList != null && dustList.size() > 0)
+                if (dustList != null && !dustList.isEmpty() && discoveredOres != null && !discoveredOres.isEmpty())
                 {
                     ItemStack dustStack = dustList.get(0).copy();
                     dustStack.stackSize = 2;
