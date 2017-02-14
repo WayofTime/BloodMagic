@@ -1,9 +1,7 @@
 package WayofTime.bloodmagic.livingArmour;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -81,8 +79,9 @@ public class LivingArmour implements ILivingArmour
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers()
     {
-        HashMultimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
+        HashMultimap<String, AttributeModifier> modifierMap = HashMultimap.create();
 
+        int count = 0;
         for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())
         {
             LivingArmourUpgrade upgrade = entry.getValue();
@@ -90,10 +89,34 @@ public class LivingArmour implements ILivingArmour
             {
                 continue;
             }
-            modifierMap.putAll(upgrade.getAttributeModifiers());
+
+            Multimap<String, AttributeModifier> upgradeModifiers = upgrade.getAttributeModifiers();
+            for (String key : upgradeModifiers.keySet())
+            {
+                if (modifierMap.containsKey(key))
+                {
+                    Collection<AttributeModifier> renamed = renameModifiers(upgradeModifiers.get(key), count);
+                    modifierMap.get(key).addAll(renamed);
+                    count += renamed.size();
+                } else
+                    modifierMap.putAll(upgradeModifiers);
+            }
         }
 
         return modifierMap;
+    }
+
+    private static Set<AttributeModifier> renameModifiers(Collection<AttributeModifier> modifiers, int count)
+    {
+        Set<AttributeModifier> newModifiers = new HashSet<AttributeModifier>();
+        for (AttributeModifier modifier : modifiers)
+        {
+            String newName = modifier.getName().substring(0, modifier.getName().length() - 1) + count;
+            newModifiers.add(new AttributeModifier(UUID.nameUUIDFromBytes(new byte[] {(byte)count}), newName, modifier.getAmount(), modifier.getOperation()));
+            count++;
+        }
+
+        return newModifiers;
     }
 
     @Override
