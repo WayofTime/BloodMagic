@@ -13,6 +13,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import org.apache.commons.codec.binary.StringUtils;
 
 public class LivingArmourUpgradeSlowness extends LivingArmourUpgrade
 {
@@ -29,7 +30,8 @@ public class LivingArmourUpgradeSlowness extends LivingArmourUpgrade
     {
         Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
 
-        modifierMap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(new UUID(85472, 8502), "speed modifier" + 2, speedModifier[this.level], 1));
+        String name = getUniqueIdentifier() + "-SpeedModifier1";
+        modifierMap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(UUID.nameUUIDFromBytes(StringUtils.getBytesUtf8(name)), "SpeedModifier1", speedModifier[this.level], 1));
 
         return modifierMap;
     }
