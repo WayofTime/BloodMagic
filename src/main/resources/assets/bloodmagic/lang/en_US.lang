@@ -198,6 +198,7 @@ tile.bloodmagic.fluid.lifeEssence.name=Life Essence
 
 tile.bloodmagic.stone.ritual.master.name=Master Ritual Stone
 tile.bloodmagic.stone.ritual.imperfect.name=Imperfect Ritual Stone
+tile.bloodmagic.stone.ritual.inverted.name=Inverted Master Ritual Stone
 
 tile.bloodmagic.altar.name=Blood Altar
 tile.bloodmagic.alchemyArray.name=&r&fAlchemy Array
@@ -511,6 +512,8 @@ tooltip.bloodmagic.livingArmour.upgrade.meleeDecrease=Dulled Blade
 tooltip.bloodmagic.livingArmour.upgrade.digSlowdown=Weakened Pick
 tooltip.bloodmagic.livingArmour.upgrade.stormTrooper=Storm Trooper
 tooltip.bloodmagic.livingArmour.upgrade.slowHeal=Diseased
+tooltip.bloodmagic.livingArmour.upgrade.disoriented=Disoriented
+
 tooltip.bloodmagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.bloodmagic.livingArmour.upgrade.progress=%s (%d/100)
 tooltip.bloodmagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s

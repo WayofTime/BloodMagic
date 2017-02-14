@@ -60,7 +60,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
         ItemStack heldItem = player.getHeldItem(hand);
         TileEntity tile = world.getTileEntity(pos);
 
-        if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone)
+        if (state.getValue(getProperty()) != EnumRitualController.IMPERFECT && tile instanceof TileMasterRitualStone)
         {
             if (heldItem.getItem() == ModItems.ACTIVATION_CRYSTAL)
             {
@@ -73,13 +73,15 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
                     if (((TileMasterRitualStone) tile).activateRitual(heldItem, player, RitualRegistry.getRitualForId(key)))
                     {
                         ((TileMasterRitualStone) tile).setDirection(direction);
+                        if (state.getValue(getProperty()) == EnumRitualController.INVERTED)
+                            ((TileMasterRitualStone) tile).setInverted(true);
                     }
                 } else
                 {
                     ChatUtil.sendNoSpamUnloc(player, "chat.bloodmagic.ritual.notValid");
                 }
             }
-        } else if (getMetaFromState(state) == 1 && tile instanceof TileImperfectRitualStone)
+        } else if (state.getValue(getProperty()) == EnumRitualController.IMPERFECT && tile instanceof TileImperfectRitualStone)
         {
 
             IBlockState determinerState = world.getBlockState(pos.up());
@@ -110,13 +112,15 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(IBlockState state)
+    {
         return true;
     }
 
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
-        return state.getValue(getProperty()) == EnumRitualController.MASTER ? new TileMasterRitualStone() : new TileImperfectRitualStone();
+    public TileEntity createTileEntity(World world, IBlockState state)
+    {
+        return state.getValue(getProperty()) != EnumRitualController.IMPERFECT ? new TileMasterRitualStone() : new TileImperfectRitualStone();
     }
 
     // IVariantProvider

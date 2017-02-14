@@ -46,6 +46,8 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     private Ritual currentRitual;
     @Setter
     private EnumFacing direction = EnumFacing.NORTH;
+    @Setter
+    private boolean inverted;
 
     private List<EnumDemonWillType> currentActiveWillConfig = new ArrayList<EnumDemonWillType>();
 
@@ -55,7 +57,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         if (getWorld().isRemote)
             return;
 
-        if (getWorld().isBlockPowered(getPos()) && isActive())
+        if (isPowered() && isActive())
         {
             active = false;
             redstoned = true;
@@ -63,7 +65,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
             return;
         }
 
-        if (!isActive() && !getWorld().isBlockPowered(getPos()) && isRedstoned() && getCurrentRitual() != null)
+        if (!isActive() && !isPowered() && isRedstoned() && getCurrentRitual() != null)
         {
             active = true;
             ItemStack crystalStack = NBTHelper.checkNBT(new ItemStack(ModItems.ACTIVATION_CRYSTAL, 1, getCurrentRitual().getCrystalLevel()));
@@ -404,5 +406,13 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         {
             ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.willConfig.void"));
         }
+    }
+
+    public boolean isPowered()
+    {
+        if (inverted)
+            return !getWorld().isBlockPowered(getPos());
+
+        return getWorld().isBlockPowered(getPos());
     }
 }

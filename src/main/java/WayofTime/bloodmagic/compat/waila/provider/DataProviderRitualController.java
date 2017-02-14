@@ -47,7 +47,9 @@ public class DataProviderRitualController implements IWailaDataProvider
         {
             if (accessor.getBlock() instanceof BlockRitualController)
             {
-                if (accessor.getBlock().getMetaFromState(accessor.getBlockState()) == 0 && accessor.getTileEntity() instanceof TileMasterRitualStone)
+                int controllerMeta = accessor.getBlock().getMetaFromState(accessor.getBlockState());
+
+                if ((controllerMeta == 0 || controllerMeta == 2) && accessor.getTileEntity() instanceof TileMasterRitualStone)
                 {
                     TileMasterRitualStone mrs = (TileMasterRitualStone) accessor.getTileEntity();
 
@@ -63,7 +65,7 @@ public class DataProviderRitualController implements IWailaDataProvider
                     }
                 }
 
-                if (accessor.getBlock().getMetaFromState(accessor.getBlockState()) == 1 && accessor.getTileEntity() instanceof TileImperfectRitualStone)
+                if (controllerMeta == 1 && accessor.getTileEntity() instanceof TileImperfectRitualStone)
                 {
                     if (accessor.getWorld().isAirBlock(accessor.getPosition().up()))
                     {

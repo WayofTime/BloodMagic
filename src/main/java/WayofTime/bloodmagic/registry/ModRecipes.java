@@ -150,6 +150,8 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.RITUAL_STONE, 4), "aba", "bcb", "aba", 'a', Blocks.OBSIDIAN, 'b', new ItemStack(ModItems.SLATE, 1, 1), 'c', OrbRegistry.getOrbStack(ModItems.ORB_APPRENTICE)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.RITUAL_CONTROLLER), "aba", "bcb", "aba", 'a', Blocks.OBSIDIAN, 'b', ModBlocks.RITUAL_STONE, 'c', OrbRegistry.getOrbStack(ModItems.ORB_MAGICIAN)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.RITUAL_CONTROLLER, 1, 1), "aba", "bcb", "aba", 'a', Blocks.OBSIDIAN, 'b', "stone", 'c', OrbRegistry.getOrbStack(ModItems.ORB_WEAK)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.RITUAL_CONTROLLER, 1, 2), new ItemStack(ModBlocks.RITUAL_CONTROLLER), new ItemStack(Blocks.REDSTONE_TORCH), new ItemStack(ModItems.SLATE)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.RITUAL_CONTROLLER), new ItemStack(ModBlocks.RITUAL_CONTROLLER, 1, 2)));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.BASE_ITEM_FILTER, 1, 0), "sgs", "gfg", "sgs", 'f', ItemComponent.getStack(ItemComponent.COMPONENT_FRAME_PART), 'g', "blockGlass", 's', "stickWood"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.BASE_ITEM_FILTER, 1, 1), "sgs", "gfg", "sgs", 'f', ItemComponent.getStack(ItemComponent.COMPONENT_FRAME_PART), 'g', "dyeYellow", 's', "stickWood"));
