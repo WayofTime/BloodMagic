@@ -1,6 +1,6 @@
 #Creative Tab
 itemGroup.BloodMagic.creativeTab=血魔法
-itemGroup.BloodMagic.creativeTabTome=血魔法|手册
+itemGroup.BloodMagic.creativeTabTome=血魔法|强化手册
 
 #Items
 item.BloodMagic.activationCrystal.weak.name=[虚弱]激活水晶
@@ -111,13 +111,13 @@ item.BloodMagic.demonCrystal.crystalDefault.name=恶魔意志晶体
 item.BloodMagic.demonCrystal.crystalCorrosive.name=腐蚀意志晶体
 item.BloodMagic.demonCrystal.crystalDestructive.name=破坏意志晶体
 item.BloodMagic.demonCrystal.crystalVengeful.name=复仇意志晶体
-item.BloodMagic.demonCrystal.crystalSteadfast.name=坚定意志晶体
+item.BloodMagic.demonCrystal.crystalSteadfast.name=坚毅意志晶体
 
 item.BloodMagic.monsterSoul.base.name=[原生]恶魔意志
 item.BloodMagic.monsterSoul.corrosive.name=[腐蚀]恶魔意志
 item.BloodMagic.monsterSoul.destructive.name=[破坏]恶魔意志
 item.BloodMagic.monsterSoul.vengeful.name=[复仇]恶魔意志
-item.BloodMagic.monsterSoul.steadfast.name=[坚定]恶魔意志
+item.BloodMagic.monsterSoul.steadfast.name=[坚毅]恶魔意志
 
 item.BloodMagic.sigil.air.name=风之印记
 item.BloodMagic.sigil.bloodLight.name=血光印记
@@ -255,13 +255,13 @@ tile.BloodMagic.path.obsidian.name=黑曜石砖路面
 tile.BloodMagic.path.obsidiantile.name=黑曜石瓦路面
 
 tile.BloodMagic.dimensionalPortal.name=空间传送门
-tile.BloodMagic.bloodTank.name=血液槽
+tile.BloodMagic.bloodTank.name=血法师的储罐
 
 tile.BloodMagic.demonCrystal.default.name=[原生]意志晶簇
 tile.BloodMagic.demonCrystal.corrosive.name=[腐蚀]意志晶簇
 tile.BloodMagic.demonCrystal.destructive.name=[破坏]意志晶簇
 tile.BloodMagic.demonCrystal.vengeful.name=[复仇]意志晶簇
-tile.BloodMagic.demonCrystal.steadfast.name=[坚定]意志晶簇
+tile.BloodMagic.demonCrystal.steadfast.name=[坚毅]意志晶簇
 
 tile.BloodMagic.mimic.nohitbox.name=[悬幽]拟态方块
 tile.BloodMagic.mimic.solidopaque.name=拟态方块
@@ -273,104 +273,104 @@ tile.BloodMagic.bricks1.brick1_raw.name=原生石砖
 tile.BloodMagic.bricks1.brick1_corrosive.name=腐蚀石砖
 tile.BloodMagic.bricks1.brick1_destructive.name=破坏石砖
 tile.BloodMagic.bricks1.brick1_vengeful.name=复仇石砖
-tile.BloodMagic.bricks1.brick1_steadfast.name=坚定石砖
+tile.BloodMagic.bricks1.brick1_steadfast.name=坚毅石砖
 
 tile.BloodMagic.bricks2.smallbrick_raw.name=小原生石砖
 tile.BloodMagic.bricks2.smallbrick_corrosive.name=小腐蚀石砖
 tile.BloodMagic.bricks2.smallbrick_destructive.name=小破坏石砖
 tile.BloodMagic.bricks2.smallbrick_vengeful.name=小复仇石砖
-tile.BloodMagic.bricks2.smallbrick_steadfast.name=小坚定石砖
+tile.BloodMagic.bricks2.smallbrick_steadfast.name=小坚毅石砖
 tile.BloodMagic.bricks2.tile_raw.name=原生石瓦
 tile.BloodMagic.bricks2.tile_corrosive.name=腐蚀石瓦
 tile.BloodMagic.bricks2.tile_destructive.name=破坏石瓦
 tile.BloodMagic.bricks2.tile_vengeful.name=复仇石瓦
-tile.BloodMagic.bricks2.tile_steadfast.name=坚定石瓦
+tile.BloodMagic.bricks2.tile_steadfast.name=坚毅石瓦
 tile.BloodMagic.bricks2.tilespecial_raw.name=二重原生石瓦
 tile.BloodMagic.bricks2.tilespecial_corrosive.name=二重腐蚀石瓦
 tile.BloodMagic.bricks2.tilespecial_destructive.name=二重破坏石瓦
 tile.BloodMagic.bricks2.tilespecial_vengeful.name=二重复仇石瓦
-tile.BloodMagic.bricks2.tilespecial_steadfast.name=二重坚定石瓦
+tile.BloodMagic.bricks2.tilespecial_steadfast.name=二重坚毅石瓦
 
 tile.BloodMagic.inversionpillar.raw.name=[原生]反转柱
 tile.BloodMagic.inversionpillar.corrosive.name=[腐蚀]反转柱
 tile.BloodMagic.inversionpillar.destructive.name=[破坏]反转柱
 tile.BloodMagic.inversionpillar.vengeful.name=[复仇]反转柱
-tile.BloodMagic.inversionpillar.steadfast.name=[坚定]反转柱
+tile.BloodMagic.inversionpillar.steadfast.name=[坚毅]反转柱
 
 tile.BloodMagic.inversionpillarend.raw_bottom.name=[原生]反转柱基
 tile.BloodMagic.inversionpillarend.corrosive_bottom.name=[腐蚀]反转柱基
 tile.BloodMagic.inversionpillarend.destructive_bottom.name=[破坏]反转柱基
 tile.BloodMagic.inversionpillarend.vengeful_bottom.name=[复仇]反转柱基
-tile.BloodMagic.inversionpillarend.steadfast_bottom.name=[坚定]反转柱基
+tile.BloodMagic.inversionpillarend.steadfast_bottom.name=[坚毅]反转柱基
 tile.BloodMagic.inversionpillarend.raw_top.name=[原生]反转柱顶盖
 tile.BloodMagic.inversionpillarend.corrosive_top.name=[腐蚀]反转柱顶盖
 tile.BloodMagic.inversionpillarend.destructive_top.name=[破坏]反转柱顶盖
 tile.BloodMagic.inversionpillarend.vengeful_top.name=[复仇]反转柱顶盖
-tile.BloodMagic.inversionpillarend.steadfast_top.name=[坚定]反转柱顶盖
+tile.BloodMagic.inversionpillarend.steadfast_top.name=[坚毅]反转柱顶盖
 
 tile.BloodMagic.demonlight.raw.name=[原生]意志之瞳
 tile.BloodMagic.demonlight.corrosive.name=[腐蚀]意志之瞳
 tile.BloodMagic.demonlight.destructive.name=[破坏]意志之瞳
 tile.BloodMagic.demonlight.vengeful.name=[复仇]意志之瞳
-tile.BloodMagic.demonlight.steadfast.name=[坚定]意志之瞳
+tile.BloodMagic.demonlight.steadfast.name=[坚毅]意志之瞳
 
 tile.BloodMagic.extras.stone_raw.name=原生石头
 tile.BloodMagic.extras.stone_corrosive.name=腐蚀石头
 tile.BloodMagic.extras.stone_destructive.name=破坏石头
 tile.BloodMagic.extras.stone_vengeful.name=复仇石头
-tile.BloodMagic.extras.stone_steadfast.name=坚定石头
+tile.BloodMagic.extras.stone_steadfast.name=坚毅石头
 
 tile.BloodMagic.extras.polished_raw.name=磨制原生石
 tile.BloodMagic.extras.polished_corrosive.name=磨制腐蚀石
 tile.BloodMagic.extras.polished_destructive.name=磨制破坏石
 tile.BloodMagic.extras.polished_vengeful.name=磨制复仇石
-tile.BloodMagic.extras.polished_steadfast.name=磨制坚定石
+tile.BloodMagic.extras.polished_steadfast.name=磨制坚毅石
 
 tile.BloodMagic.extras.metal_raw.name=原生意志合金
 tile.BloodMagic.extras.metal_corrosive.name=腐蚀意志合金
 tile.BloodMagic.extras.metal_destructive.name=破坏意志合金
 tile.BloodMagic.extras.metal_vengeful.name=复仇意志合金
-tile.BloodMagic.extras.metal_steadfast.name=坚定意志合金
+tile.BloodMagic.extras.metal_steadfast.name=坚毅意志合金
 
 tile.BloodMagic.pillar1.raw.name=原生石柱
 tile.BloodMagic.pillar1.corrosive.name=腐蚀石柱
 tile.BloodMagic.pillar1.destructive.name=破坏石柱
 tile.BloodMagic.pillar1.vengeful.name=复仇石柱
-tile.BloodMagic.pillar1.steadfast.name=坚定石柱
+tile.BloodMagic.pillar1.steadfast.name=坚毅石柱
 
 tile.BloodMagic.pillar2.raw.name=二重原生石柱
 tile.BloodMagic.pillar2.corrosive.name=二重腐蚀石柱
 tile.BloodMagic.pillar2.destructive.name=二重破坏石柱
 tile.BloodMagic.pillar2.vengeful.name=二重复仇石柱
-tile.BloodMagic.pillar2.steadfast.name=二重坚定石柱
+tile.BloodMagic.pillar2.steadfast.name=二重坚毅石柱
 
 tile.BloodMagic.pillarCap1.raw.name=原生顶柱
 tile.BloodMagic.pillarCap1.corrosive.name=腐蚀顶柱
 tile.BloodMagic.pillarCap2.destructive.name=破坏顶柱
 tile.BloodMagic.pillarCap2.vengeful.name=复仇顶柱
-tile.BloodMagic.pillarCap3.steadfast.name=坚定顶柱
+tile.BloodMagic.pillarCap3.steadfast.name=坚毅顶柱
 
 tile.BloodMagic.wall1.brick_raw.name=原生石砖墙
 tile.BloodMagic.wall1.brick_corrosive.name=腐蚀石砖墙
 tile.BloodMagic.wall1.brick_destructive.name=破坏石砖墙
 tile.BloodMagic.wall1.brick_vengeful.name=复仇石砖墙
-tile.BloodMagic.wall1.brick_steadfast.name=坚定石砖墙
+tile.BloodMagic.wall1.brick_steadfast.name=坚毅石砖墙
 tile.BloodMagic.wall1.smallbrick_raw.name=小原生石砖墙
 tile.BloodMagic.wall1.smallbrick_corrosive.name=小腐蚀石砖墙
 tile.BloodMagic.wall1.smallbrick_destructive.name=小破坏石砖墙
 tile.BloodMagic.wall1.smallbrick_vengeful.name=小复仇石砖墙
-tile.BloodMagic.wall1.smallbrick_steadfast.name=小坚定石砖墙
+tile.BloodMagic.wall1.smallbrick_steadfast.name=小坚毅石砖墙
 tile.BloodMagic.wall1.large_raw.name=原生石墙
 tile.BloodMagic.wall1.large_corrosive.name=腐蚀石墙
 tile.BloodMagic.wall1.large_destructive.name=破坏石墙
 tile.BloodMagic.wall1.large_vengeful.name=复仇石墙
-tile.BloodMagic.wall1.large_steadfast.name=坚定石墙
+tile.BloodMagic.wall1.large_steadfast.name=坚毅石墙
 
 tile.BloodMagic.stairs1.raw.name=原生石楼梯
 tile.BloodMagic.stairs1.corrosive.name=腐蚀石楼梯
 tile.BloodMagic.stairs2.destructive.name=破坏石楼梯
 tile.BloodMagic.stairs2.vengeful.name=复仇石楼梯
-tile.BloodMagic.stairs3.steadfast.name=坚定石楼梯
+tile.BloodMagic.stairs3.steadfast.name=坚毅石楼梯
 
 # Fluids
 fluid.lifeEssence=生命源质
@@ -550,13 +550,13 @@ tooltip.BloodMagic.currentType.default=蕴含：原生意志
 tooltip.BloodMagic.currentType.corrosive=蕴含：腐蚀意志
 tooltip.BloodMagic.currentType.destructive=蕴含：破坏意志
 tooltip.BloodMagic.currentType.vengeful=蕴含：复仇意志
-tooltip.BloodMagic.currentType.steadfast=蕴含：坚定意志
+tooltip.BloodMagic.currentType.steadfast=蕴含：坚毅意志
 
 tooltip.BloodMagic.currentBaseType.default=原生
 tooltip.BloodMagic.currentBaseType.corrosive=腐蚀
 tooltip.BloodMagic.currentBaseType.destructive=破坏
 tooltip.BloodMagic.currentBaseType.vengeful=复仇
-tooltip.BloodMagic.currentBaseType.steadfast=坚定
+tooltip.BloodMagic.currentBaseType.steadfast=坚毅
 
 tooltip.BloodMagic.experienceTome=用于储存经验的书
 tooltip.BloodMagic.experienceTome.exp=经验值：%0.3f
@@ -622,7 +622,7 @@ ritual.BloodMagic.lavaRitual.default.info=[原生]降低生成岩浆的LP消耗�
 ritual.BloodMagic.lavaRitual.corrosive.info=[腐蚀]范围内免疫火焰伤害的实体将受到伤害
 ritual.BloodMagic.lavaRitual.destructive.info=[破坏]岩浆的放置范围根据意志的总量增加
 ritual.BloodMagic.lavaRitual.vengeful.info=[复仇]给予范围内实体缓燃引线效果（上天）
-ritual.BloodMagic.lavaRitual.steadfast.info=[坚定]给予范围内的玩家防火效果
+ritual.BloodMagic.lavaRitual.steadfast.info=[坚毅]给予范围内的玩家防火效果
 
 ritual.BloodMagic.greenGroveRitual.info=在其范围内种植农作物
 ritual.BloodMagic.jumpRitual.info=使实体跃向高空
@@ -633,30 +633,30 @@ ritual.BloodMagic.regenerationRitual.default.info=[原生]
 ritual.BloodMagic.regenerationRitual.corrosive.info=[腐蚀]从非玩家的实体身上汲取鲜血以治疗玩家
 ritual.BloodMagic.regenerationRitual.destructive.info=[破坏]
 ritual.BloodMagic.regenerationRitual.vengeful.info=[复仇]
-ritual.BloodMagic.regenerationRitual.steadfast.info=[坚定]
+ritual.BloodMagic.regenerationRitual.steadfast.info=[坚毅]
 ritual.BloodMagic.harvestRitual.info=收割其范围内的植物，产物掉落于地上
 ritual.BloodMagic.magneticRitual.info=将地底的矿石传送至其放置区域
 ritual.BloodMagic.crushingRitual.info=破坏其挖掘范围内的方块，并将掉落物放置于所连接的箱子
 ritual.BloodMagic.crushingRitual.destructive.info=[破坏]强力的破坏方块：所有方块破坏受 时运III 影响
-ritual.BloodMagic.crushingRitual.steadfast.info=[坚定]以 精准采集 获取被破坏方块。适用情况下覆盖时运
+ritual.BloodMagic.crushingRitual.steadfast.info=[坚毅]以 精准采集 获取被破坏方块。适用情况下覆盖时运
 ritual.BloodMagic.crushingRitual.corrosive.info=[腐蚀]所有被破坏方块将以基础切削油的形式处理。适用情况下覆盖精准采集
 ritual.BloodMagic.crushingRitual.vengeful.info=[复仇]压缩库存内的物品（如将煤炭压缩成煤炭块），目前每次操作仅执行一次压缩
 ritual.BloodMagic.crushingRitual.default.info=[原生]根据意志总量增加仪式的运行速度
 ritual.BloodMagic.greenGroveRitual.corrosive.info=[腐蚀]范围内的实体将被附近的植物攻击, 蚕食掉他们的生命
 ritual.BloodMagic.greenGroveRitual.default.info=[原生]根据灵域内意志的总量加快所有的仪式运作速度
 ritual.BloodMagic.greenGroveRitual.vengeful.info=[复仇]增加生长刻成功的速率
-ritual.BloodMagic.greenGroveRitual.steadfast.info=[坚定]在水合范围内, 种子会被再次种植且方块会被润湿
+ritual.BloodMagic.greenGroveRitual.steadfast.info=[坚毅]在水合范围内, 种子会被再次种植且方块会被润湿
 ritual.BloodMagic.greenGroveRitual.destructive.info=[破坏] 促进作物生长的范围根据意志的总量增加
 ritual.BloodMagic.featheredKnifeRitual.default.info=[原生] 根据灵域内意志的总量增加仪式的运行速度
 ritual.BloodMagic.featheredKnifeRitual.destructive.info=[破坏] 根据意志总量增加仪式的产出的LP
-ritual.BloodMagic.featheredKnifeRitual.vengeful.info=[复仇] 将牺牲的最小生命值设为10%%.覆盖[坚定]的效果
+ritual.BloodMagic.featheredKnifeRitual.vengeful.info=[复仇] 将牺牲的最小生命值设为10%%.覆盖[坚毅]的效果
 ritual.BloodMagic.featheredKnifeRitual.corrosive.info=[腐蚀] 使用玩家的“熏香”来提高收益
-ritual.BloodMagic.featheredKnifeRitual.steadfast.info=[坚定]  将牺牲的最小生命值设为30%%到70%%
+ritual.BloodMagic.featheredKnifeRitual.steadfast.info=[坚毅]  将牺牲的最小生命值设为30%%到70%%
 ritual.BloodMagic.speedRitual.default.info=[原生] 根据意志总量增加仪式产生的移动速度
 ritual.BloodMagic.speedRitual.vengeful.info=[复仇] 防止玩家与成年动物被运输，如果与[破坏]配合，则运输玩家
 ritual.BloodMagic.speedRitual.destructive.info=[破坏] 防止玩家与幼年动物被运输，如果与[复仇]配合，则运输玩家
 ritual.BloodMagic.animalGrowthRitual.vengeful.info=[复仇] 减少成年动物繁殖的间隔时间
-ritual.BloodMagic.animalGrowthRitual.steadfast.info=[坚定] 使用箱子内的物品饲养区域内的动物
+ritual.BloodMagic.animalGrowthRitual.steadfast.info=[坚毅] 使用箱子内的物品饲养区域内的动物
 ritual.BloodMagic.animalGrowthRitual.default.info=[原生] 根据灵域内意志的总量增加仪式的运行速度
 ritual.BloodMagic.animalGrowthRitual.destructive.info=[破坏]让最近没有繁殖后代的成年动物冲向怪物自爆
 ritual.BloodMagic.animalGrowthRitual.corrosive.info=[腐蚀] 暂无特殊效果
@@ -684,11 +684,11 @@ ritual.BloodMagic.waterRitual.waterRange.info=(水源) 仪式放置水源方块�
 ritual.BloodMagic.lavaRitual.lavaRange.info=(岩浆) 仪式放置岩浆方块的区域。
 ritual.BloodMagic.lavaRitual.lavaTank.info=[原生] 仪式将岩浆导入其中的储罐
 ritual.BloodMagic.lavaRitual.fireFuse.info=[复仇] 在这个区域内的实体将遭受缓燃引线效果
-ritual.BloodMagic.lavaRitual.fireResist.info=[坚定] 玩家在此区域内可获得防火buff
+ritual.BloodMagic.lavaRitual.fireResist.info=[坚毅] 玩家在此区域内可获得防火buff
 ritual.BloodMagic.lavaRitual.fireDamage.info=[腐蚀] 该区域内免疫火焰伤害的实体将受到伤害，伤害量与意志的量相关
 ritual.BloodMagic.greenGroveRitual.growing.info=(生长) 仪式加快植物生长的区域。
 ritual.BloodMagic.greenGroveRitual.leech.info=[腐蚀] 区域内实体的生命将流失于滋养附近的农作物。
-ritual.BloodMagic.greenGroveRitual.hydrate.info=[坚定] 区域内的方块将被润湿为耕地，且区域内的种子将被就近种植。
+ritual.BloodMagic.greenGroveRitual.hydrate.info=[坚毅] 区域内的方块将被润湿为耕地，且区域内的种子将被就近种植。
 ritual.BloodMagic.jumpRitual.jumpRange.info=(跳跃) 在这个区域内的实体将跃向高空。
 ritual.BloodMagic.wellOfSufferingRitual.altar.info=(祭坛) 规定仪式检测血之祭坛的区域。该项修改为添加或撤销一个坐标。
 ritual.BloodMagic.wellOfSufferingRitual.damage.info=(伤害) 规定仪式伤害生物的区域。该区域内所有生物(除了玩家)将持续受到伤害。
