@@ -539,9 +539,9 @@ tooltip.BloodMagic.itemFilter.oreDict=Used to filter through the Ore Dictionary
 
 tooltip.BloodMagic.itemFilter.exact=Filters the fluid input/output
 
-tooltip.BloodMagic.fluid.type=Fluid Contained
-tooltip.BloodMagic.fluid.amount=Amount
-tooltip.BloodMagic.fluid.capacity=Capacity
+tooltip.BloodMagic.fluid.type=Fluid Contained: %s
+tooltip.BloodMagic.fluid.amount=Amount: %d / %d mB
+tooltip.BloodMagic.fluid.capacity=Capacity: %d mB
 
 tooltip.BloodMagic.ghost.everything=Everything
 tooltip.BloodMagic.ghost.amount=Ghost item amount: %d
