@@ -531,8 +531,8 @@ public class Utils
     }
 
     /**
-     * Used to determine if stack1 can be placed into stack2. If stack2 is null
-     * and stack1 isn't null, returns true. Ignores stack size
+     * Used to determine if stack1 can be placed into stack2. If stack2 is is empty
+     * and stack1 isn't empty, returns true. Ignores stack size
      * 
      * @param stack1
      *        Stack that is placed into a slot
@@ -544,18 +544,7 @@ public class Utils
     @Deprecated
     public static boolean canCombine(ItemStack stack1, ItemStack stack2)
     {
-        return ItemHandlerHelper.canItemStacksStack(stack1, stack2);
-//        if (stack1.isEmpty() || stack1.isItemStackDamageable() ^ stack2.isItemStackDamageable())
-//        {
-//            return false;
-//        }
-//
-//        if (stack2.isEmpty())
-//        {
-//            return true;
-//        }
-//
-//        return stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2.getItemDamage() && ItemStack.areItemStackTagsEqual(stack1, stack2);
+        return stack1.isEmpty() && !stack2.isEmpty() || ItemHandlerHelper.canItemStacksStack(stack1, stack2);
     }
 
     /**
