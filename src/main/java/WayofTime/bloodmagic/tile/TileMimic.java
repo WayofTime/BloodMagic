@@ -127,7 +127,7 @@ public class TileMimic extends TileInventory implements ITickable
                 //The potion flask is empty, therefore we have to reset the stored potion.
                 if (!world.isRemote)
                 {
-                    setInventorySlotContents(1, null);
+                    setInventorySlotContents(1, ItemStack.EMPTY);
                     world.notifyBlockUpdate(pos, state, state, 3);
                     ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionRemove"));
                 }

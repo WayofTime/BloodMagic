@@ -66,7 +66,7 @@ public class AlchemyTableDyeableRecipe extends AlchemyTableRecipe
             ItemStack tagOrDyeStack = inputList.get(nameTagOrDyeLocation);
             ItemStack inputStack = inputList.get(inputItemLocation);
 
-            if (inputStack == null || tagOrDyeStack == null)
+            if (inputStack.isEmpty() || tagOrDyeStack.isEmpty())
             {
                 return output.copy();
             }
@@ -106,19 +106,27 @@ public class AlchemyTableDyeableRecipe extends AlchemyTableRecipe
         boolean hasNameTagOrDye = false;
         boolean hasInputItem = false;
 
-        for (ItemStack slot : checkedList) {
-            if (slot != null) {
+        for (ItemStack slot : checkedList)
+        {
+            if (!slot.isEmpty())
+            {
                 boolean match = OreDictionary.itemMatches(inputItem, slot, false);
 
-                if (match && hasInputItem) {
+                if (match && hasInputItem)
+                {
                     return false;
-                } else if (match) {
+                } else if (match)
+                {
                     hasInputItem = true;
-                } else {
-                    if (slot.getItem() == Items.NAME_TAG || slot.getItem() == Items.DYE) {
-                        if (hasNameTagOrDye) {
+                } else
+                {
+                    if (slot.getItem() == Items.NAME_TAG || slot.getItem() == Items.DYE)
+                    {
+                        if (hasNameTagOrDye)
+                        {
                             return false;
-                        } else {
+                        } else
+                        {
                             hasNameTagOrDye = true;
                         }
                     }

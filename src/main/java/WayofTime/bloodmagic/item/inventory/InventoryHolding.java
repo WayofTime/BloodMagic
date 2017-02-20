@@ -17,15 +17,13 @@ public class InventoryHolding extends ItemInventory
     public InventoryHolding(ItemStack itemStack)
     {
         super(itemStack, ItemSigilHolding.inventorySize, "SigilOfHolding");
-
-//        readFromNBT(itemStack.getTagCompound());
     }
 
     public void onGuiSaved(EntityPlayer entityPlayer)
     {
         masterStack = findParentStack(entityPlayer);
 
-        if (masterStack != null)
+        if (!masterStack.isEmpty())
         {
             save();
         }
@@ -50,7 +48,7 @@ public class InventoryHolding extends ItemInventory
             }
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
     public void save()

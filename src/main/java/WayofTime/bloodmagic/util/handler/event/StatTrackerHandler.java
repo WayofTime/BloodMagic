@@ -54,7 +54,7 @@ public class StatTrackerHandler
             if (LivingArmour.hasFullSet(player))
             {
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-                if (chestStack != null && chestStack.getItem() instanceof ItemLivingArmour)
+                if (chestStack.getItem() instanceof ItemLivingArmour)
                 {
                     LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
 
@@ -133,7 +133,7 @@ public class StatTrackerHandler
             } else
             {
                 ItemStack chestStack = attackedPlayer.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-                if (chestStack != null && chestStack.getItem() instanceof ItemSentientArmour)
+                if (chestStack.getItem() instanceof ItemSentientArmour)
                 {
                     ItemSentientArmour armour = (ItemSentientArmour) chestStack.getItem();
                     armour.onPlayerAttacked(chestStack, source, attackedPlayer);
@@ -165,7 +165,7 @@ public class StatTrackerHandler
                         if (player.getEntityWorld().getLight(player.getPosition()) <= 9)
                             StatTrackerNightSight.incrementCounter(armour, amount);
 
-                        if (mainWeapon != null && mainWeapon.getItem() instanceof ItemSpade)
+                        if (mainWeapon.getItem() instanceof ItemSpade)
                             StatTrackerGraveDigger.incrementCounter(armour, amount);
 
                         if (player.isSprinting())

@@ -48,7 +48,7 @@ public class WillHandler
     public void onItemPickup(EntityItemPickupEvent event)
     {
         ItemStack stack = event.getItem().getEntityItem();
-        if (stack != null && stack.getItem() instanceof IDemonWill)
+        if (stack.getItem() instanceof IDemonWill)
         {
             EntityPlayer player = event.getEntityPlayer();
             EnumDemonWillType pickupType = ((IDemonWill) stack.getItem()).getType(stack);
@@ -98,7 +98,7 @@ public class WillHandler
         {
             EntityPlayer player = (EntityPlayer) entity;
             ItemStack heldStack = player.getHeldItemMainhand();
-            if (heldStack != null && heldStack.getItem() instanceof IDemonWillWeapon && !player.getEntityWorld().isRemote)
+            if (heldStack.getItem() instanceof IDemonWillWeapon && !player.getEntityWorld().isRemote)
             {
                 IDemonWillWeapon demonWillWeapon = (IDemonWillWeapon) heldStack.getItem();
                 List<ItemStack> droppedSouls = demonWillWeapon.getRandomDemonWillDrop(attackedEntity, player, heldStack, event.getLootingLevel());

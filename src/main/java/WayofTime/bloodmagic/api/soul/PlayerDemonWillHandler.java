@@ -29,15 +29,12 @@ public class PlayerDemonWillHandler
 
         for (ItemStack stack : inventory)
         {
-            if (stack != null)
+            if (stack.getItem() instanceof IDemonWill && ((IDemonWill) stack.getItem()).getType(stack) == type)
             {
-                if (stack.getItem() instanceof IDemonWill && ((IDemonWill) stack.getItem()).getType(stack) == type)
-                {
-                    souls += ((IDemonWill) stack.getItem()).getWill(type, stack);
-                } else if (stack.getItem() instanceof IDemonWillGem)
-                {
-                    souls += ((IDemonWillGem) stack.getItem()).getWill(type, stack);
-                }
+                souls += ((IDemonWill) stack.getItem()).getWill(type, stack);
+            } else if (stack.getItem() instanceof IDemonWillGem)
+            {
+                souls += ((IDemonWillGem) stack.getItem()).getWill(type, stack);
             }
         }
 
@@ -78,7 +75,7 @@ public class PlayerDemonWillHandler
         boolean hasGem = false;
         for (ItemStack stack : inventory)
         {
-            if (stack != null && stack.getItem() instanceof IDemonWillGem)
+            if (stack.getItem() instanceof IDemonWillGem)
             {
                 hasGem = true;
                 if (((IDemonWillGem) stack.getItem()).getWill(type, stack) < ((IDemonWillGem) stack.getItem()).getMaxWill(type, stack))
@@ -145,11 +142,11 @@ public class PlayerDemonWillHandler
 
         for (ItemStack stack : inventory)
         {
-            if (stack != null && stack.getItem() instanceof IDemonWillGem)
+            if (stack.getItem() instanceof IDemonWillGem)
             {
                 ItemStack newStack = ((IDemonWillGem) stack.getItem()).fillDemonWillGem(stack, willStack);
-                if (newStack == null)
-                    return null;
+                if (newStack.isEmpty())
+                    return ItemStack.EMPTY;
             }
         }
 
@@ -176,7 +173,7 @@ public class PlayerDemonWillHandler
 
         for (ItemStack stack : inventory)
         {
-            if (stack != null && stack.getItem() instanceof IDemonWillGem)
+            if (stack.getItem() instanceof IDemonWillGem)
             {
                 remaining -= ((IDemonWillGem) stack.getItem()).fillWill(type, stack, remaining, true);
                 if (remaining <= 0)
@@ -209,7 +206,7 @@ public class PlayerDemonWillHandler
 
         for (ItemStack stack : inventory)
         {
-            if (stack != null && !stack.equals(ignored) && stack.getItem() instanceof IDemonWillGem)
+            if (!stack.equals(ignored) && stack.getItem() instanceof IDemonWillGem)
             {
                 remaining -= ((IDemonWillGem) stack.getItem()).fillWill(type, stack, remaining, true);
 

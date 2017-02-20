@@ -493,7 +493,7 @@ public class GenericHandler
         {
             for (ItemStack stack : player.inventory.mainInventory)
             {
-                if (stack != null && stack.getItem() instanceof ItemExperienceBook)
+                if (stack.getItem() instanceof ItemExperienceBook)
                 {
                     ItemExperienceBook.addExperience(stack, event.getOrb().xpValue);
                     event.getOrb().xpValue = 0;

@@ -25,7 +25,7 @@ public class ItemInventory implements IInventory
         this.name = name;
         this.masterStack = masterStack;
 
-        if (masterStack != null)
+        if (!masterStack.isEmpty())
             this.readFromStack(masterStack);
     }
 
@@ -150,13 +150,13 @@ public class ItemInventory implements IInventory
     @Override
     public ItemStack removeStackFromSlot(int slot)
     {
-        if (inventory[slot] != null)
+        if (!inventory[slot].isEmpty())
         {
             ItemStack itemStack = inventory[slot];
             setInventorySlotContents(slot, ItemStack.EMPTY);
             return itemStack;
         }
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override

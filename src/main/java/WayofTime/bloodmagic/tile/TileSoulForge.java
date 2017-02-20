@@ -223,7 +223,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
                 double souls = soul.drainWill(type, soulStack, requested);
                 if (soul.getWill(type, soulStack) <= 0)
                 {
-                    setInventorySlotContents(soulSlot, null);
+                    setInventorySlotContents(soulSlot, ItemStack.EMPTY);
                 }
                 return souls;
             }
