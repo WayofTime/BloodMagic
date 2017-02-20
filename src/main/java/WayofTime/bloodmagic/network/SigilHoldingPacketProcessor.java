@@ -39,14 +39,14 @@ public class SigilHoldingPacketProcessor implements IMessage, IMessageHandler<Si
     @Override
     public IMessage onMessage(SigilHoldingPacketProcessor message, MessageContext ctx)
     {
-        ItemStack itemStack = null;
+        ItemStack itemStack = ItemStack.EMPTY;
 
         if (message.slot > -1 && message.slot < 9)
         {
             itemStack = ctx.getServerHandler().playerEntity.inventory.getStackInSlot(message.slot);
         }
 
-        if (itemStack != null)
+        if (!itemStack.isEmpty())
         {
             ItemSigilHolding.cycleToNextSigil(itemStack, message.mode);
         }

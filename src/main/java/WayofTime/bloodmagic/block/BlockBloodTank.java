@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.base.BlockInteger;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileBloodTank;
+import com.google.common.collect.Lists;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -29,6 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +91,17 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider
     }
 
     @Override
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity tile, ItemStack stack) {
+        super.harvestBlock(world, player, pos, state, tile, stack);
+        world.setBlockToAir(pos);
+    }
+
+    @Override
+    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+        return willHarvest || super.removedByPlayer(state, world, pos, player, willHarvest);
+    }
+
+    @Override
     public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         ItemStack held = player.getHeldItem(hand);
@@ -115,17 +128,19 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState blockState, int fortune)
     {
-        ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+        List<ItemStack> list = Lists.newArrayList();
 
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileBloodTank)
         {
             TileBloodTank bloodTank = (TileBloodTank) tile;
-            ItemStack drop = new ItemStack(this);
+            ItemStack drop = new ItemStack(this, 1, bloodTank.getBlockMetadata());
             NBTTagCompound tag = new NBTTagCompound();
-            bloodTank.serialize(tag);
+
+            if (bloodTank.getTank().getFluid() != null)
+                bloodTank.getTank().getFluid().writeToNBT(tag);
+
             drop.setTagCompound(tag);
-            drop.setItemDamage(getMetaFromState(blockState));
             list.add(drop);
         }
 
@@ -138,11 +153,12 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileBloodTank)
         {
+            TileBloodTank bloodTank = (TileBloodTank) tile;
             NBTTagCompound tag = stack.getTagCompound();
             if (tag != null)
             {
-                ((TileBloodTank) tile).deserialize(tag);
-                blockState.withProperty(getProperty(), stack.getMetadata());
+                FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag);
+                bloodTank.getTank().setFluid(fluidStack);
             }
         }
 

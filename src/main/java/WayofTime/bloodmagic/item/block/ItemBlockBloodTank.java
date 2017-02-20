@@ -1,10 +1,8 @@
 package WayofTime.bloodmagic.item.block;
 
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.BlockBloodTank;
 import WayofTime.bloodmagic.tile.TileBloodTank;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.base.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +11,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
@@ -39,10 +38,10 @@ public class ItemBlockBloodTank extends ItemBlock
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.TANK) && !stack.getTagCompound().getCompoundTag(Constants.NBT.TANK).getString("FluidName").equals(""))
+        FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(stack.getTagCompound());
+        if (fluidStack != null)
         {
-            NBTTagCompound tag = stack.getTagCompound().getCompoundTag(Constants.NBT.TANK);
-            return super.getItemStackDisplayName(stack) + " " + TextHelper.localizeEffect("tooltip.bloodmagic.tier", stack.getItemDamage() + 1) + " (" + FluidStack.loadFluidStackFromNBT(tag).getLocalizedName() + ")";
+            return super.getItemStackDisplayName(stack) + " " + TextHelper.localizeEffect("tooltip.bloodmagic.tier", stack.getItemDamage() + 1) + " (" + fluidStack.getLocalizedName() + ")";
         }
         else
         {
@@ -54,15 +53,15 @@ public class ItemBlockBloodTank extends ItemBlock
     public void addInformation(ItemStack stack, EntityPlayer entityPlayer, List<String> tooltip, boolean advanced)
     {
         tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.tier", stack.getItemDamage() + 1));
-        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.capacity") + ": " + getCapacity(stack) + "mB");
+        tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.capacity", getCapacity(stack)));
         if (stack.hasTagCompound())
         {
-            NBTTagCompound tag = stack.getTagCompound().getCompoundTag(Constants.NBT.TANK);
+            NBTTagCompound tag = stack.getTagCompound();
             FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag);
-            if (!Strings.isNullOrEmpty(tag.getString("FluidName")) && fluidStack != null)
+            if (fluidStack != null)
             {
-                tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.type") + ": " + fluidStack.getLocalizedName());
-                tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.amount") + ": " + tag.getInteger("Amount") + "/" + getCapacity(stack) + "mB");
+                tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.type", fluidStack.getLocalizedName()));
+                tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.amount", fluidStack.amount, getCapacity(stack)));
             }
         }
     }
@@ -77,7 +76,8 @@ public class ItemBlockBloodTank extends ItemBlock
 
     public int getCapacity(ItemStack container)
     {
-        return container != null && Block.getBlockFromItem(container.getItem()) instanceof BlockBloodTank ? TileBloodTank.CAPACITIES[container.getMetadata()] * Fluid.BUCKET_VOLUME : 0;
+        int meta = MathHelper.clamp(container.getItemDamage(), 0, TileBloodTank.CAPACITIES.length);
+        return !container.isEmpty() && Block.getBlockFromItem(container.getItem()) instanceof BlockBloodTank ? TileBloodTank.CAPACITIES[meta] * Fluid.BUCKET_VOLUME : 0;
     }
 
     @Override
