@@ -16,7 +16,7 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     public int currentActiveSlot = 0;
     public int[] priorities = new int[6];
 
-    public ItemInventory itemInventory = new ItemInventory(null, 9, "");
+    public ItemInventory itemInventory = new ItemInventory(ItemStack.EMPTY, 9, "");
 
     public TileFilteredRoutingNode(int size, String name)
     {

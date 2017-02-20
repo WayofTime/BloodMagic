@@ -7,20 +7,21 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
 public class ItemInventory implements IInventory
 {
     protected int[] syncedSlots = new int[0];
-    private ItemStack[] inventory;
+    private NonNullList<ItemStack> inventory;
     private int size;
     private String name;
     protected ItemStack masterStack;
 
     public ItemInventory(ItemStack masterStack, int size, String name)
     {
-        this.inventory = new ItemStack[size];
+        this.inventory = NonNullList.withSize(size, ItemStack.EMPTY);
         this.size = size;
         this.name = name;
         this.masterStack = masterStack;
@@ -51,7 +52,7 @@ public class ItemInventory implements IInventory
     public void readFromNBT(NBTTagCompound tagCompound)
     {
         NBTTagList tags = tagCompound.getTagList(Constants.NBT.ITEMS, 10);
-        inventory = new ItemStack[getSizeInventory()];
+        inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
 
         for (int i = 0; i < tags.tagCount(); i++)
         {
@@ -60,9 +61,9 @@ public class ItemInventory implements IInventory
                 NBTTagCompound data = tags.getCompoundTagAt(i);
                 byte j = data.getByte(Constants.NBT.SLOT);
 
-                if (j >= 0 && j < inventory.length)
+                if (j >= 0 && j < inventory.size())
                 {
-                    inventory[j] = new ItemStack(data);
+                    inventory.set(i, new ItemStack(data));
                 }
             }
         }
@@ -72,13 +73,13 @@ public class ItemInventory implements IInventory
     {
         NBTTagList tags = new NBTTagList();
 
-        for (int i = 0; i < inventory.length; i++)
+        for (int i = 0; i < inventory.size(); i++)
         {
-            if ((inventory[i] != null) && !isSyncedSlot(i))
+            if ((!inventory.get(i).isEmpty()) && !isSyncedSlot(i))
             {
                 NBTTagCompound data = new NBTTagCompound();
                 data.setByte(Constants.NBT.SLOT, (byte) i);
-                inventory[i].writeToNBT(data);
+                inventory.get(i).writeToNBT(data);
                 tags.appendTag(data);
             }
         }
@@ -117,28 +118,28 @@ public class ItemInventory implements IInventory
     @Override
     public ItemStack getStackInSlot(int index)
     {
-        return inventory[index];
+        return inventory.get(index);
     }
 
     @Override
     public ItemStack decrStackSize(int index, int count)
     {
-        if (!inventory[index].isEmpty())
+        if (!inventory.get(index).isEmpty())
         {
 //            if (!worldObj.isRemote)
 //                worldObj.markBlockForUpdate(this.pos);
 
-            if (inventory[index].getCount() <= count)
+            if (inventory.get(index).getCount() <= count)
             {
-                ItemStack itemStack = inventory[index];
-                inventory[index] = ItemStack.EMPTY;
+                ItemStack itemStack = inventory.get(index);
+                inventory.set(index, ItemStack.EMPTY);
                 markDirty();
                 return itemStack;
             }
 
-            ItemStack itemStack = inventory[index].splitStack(count);
-            if (inventory[index].isEmpty())
-                inventory[index] = ItemStack.EMPTY;
+            ItemStack itemStack = inventory.get(index).splitStack(count);
+            if (inventory.get(index).isEmpty())
+                inventory.set(index, ItemStack.EMPTY);
 
             markDirty();
             return itemStack;
@@ -150,9 +151,9 @@ public class ItemInventory implements IInventory
     @Override
     public ItemStack removeStackFromSlot(int slot)
     {
-        if (!inventory[slot].isEmpty())
+        if (!inventory.get(slot).isEmpty())
         {
-            ItemStack itemStack = inventory[slot];
+            ItemStack itemStack = inventory.get(slot);
             setInventorySlotContents(slot, ItemStack.EMPTY);
             return itemStack;
         }
@@ -162,7 +163,7 @@ public class ItemInventory implements IInventory
     @Override
     public void setInventorySlotContents(int slot, ItemStack stack)
     {
-        inventory[slot] = stack;
+        inventory.set(slot, stack);
         if (stack.getCount() > getInventoryStackLimit())
             stack.setCount(getInventoryStackLimit());
         markDirty();
@@ -221,7 +222,7 @@ public class ItemInventory implements IInventory
     @Override
     public void clear()
     {
-        this.inventory = new ItemStack[size];
+        this.inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
     }
 
     @Override
