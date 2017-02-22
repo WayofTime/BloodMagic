@@ -400,7 +400,7 @@ public class BloodAltar implements IFluidHandler
             {
                 BlockPos newPos = pos.offset(facing);
                 IBlockState block = world.getBlockState(newPos);
-                block.getBlock().onNeighborChange(world, pos, newPos);
+                block.getBlock().onNeighborChange(world, newPos, pos);
             }
         }
         if (internalCounter % (Math.max(20 - this.accelerationUpgrades, 1)) == 0)
