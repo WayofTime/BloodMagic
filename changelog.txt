@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Version 2.1.4
+------------------------------------------------------
+- Fixed a crash when checking if two items could be combined
+- Fixed a crash when attempting to open the Sigil of Holding GUI
+- Fixed a crash when somebody made an "invalid" stack of the Blood Tank
+- Fixed a crash/hilarity where a Blood Altar would update itself as a Comparator
+  - Thanks to Arcaratus for causing this. I haven't laughed that hard in a while.
+
+------------------------------------------------------
 Version 2.1.3
 ------------------------------------------------------
 - Added a new Master Ritual Stone that inverts it's redstone activity

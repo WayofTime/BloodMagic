@@ -159,7 +159,7 @@ public class LivingArmourHandler
                         }
                     }
 
-                    if (event.getItemStack() != null && event.getItemStack().getItemUseAction() == EnumAction.DRINK)
+                    if (event.getItemStack().getItemUseAction() == EnumAction.DRINK)
                     {
                         ItemStack drinkStack = event.getItemStack();
 
