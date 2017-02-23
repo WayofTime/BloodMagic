@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.api.iface.IActivatable;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import com.google.common.base.Strings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -65,6 +66,10 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        ItemStack stack = player.getHeldItem(hand);
+        if (Strings.isNullOrEmpty(getOwnerUUID(stack)) || player.isSneaking()) // Make sure Sigils are bound before handling. Also ignores while toggling state
+            return EnumActionResult.PASS;
+
         return (NetworkHelper.getSoulNetwork(getOwnerUUID(player.getHeldItem(hand))).syphonAndDamage(player, getLpUsed()) && onSigilUse(player.getHeldItem(hand), player, world, pos, side, hitX, hitY, hitZ)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
     }
 
