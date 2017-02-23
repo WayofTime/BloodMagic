@@ -26,6 +26,11 @@ public enum EnumSubWillType implements IStringSerializable
     }
 
     public EnumDemonWillType getType() {
-        return EnumDemonWillType.valueOf(name());
+        String name = name();
+
+        if (this == RAW)
+            name = EnumDemonWillType.DEFAULT.name();
+
+        return EnumDemonWillType.valueOf(name);
     }
 }
