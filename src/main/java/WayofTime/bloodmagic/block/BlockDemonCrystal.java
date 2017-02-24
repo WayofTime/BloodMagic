@@ -143,13 +143,13 @@ public class BlockDemonCrystal extends BlockContainer
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumDemonWillType) state.getValue(TYPE)).ordinal();
+        return state.getValue(TYPE).ordinal();
     }
 
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] { TYPE, AGE, ATTACHED });
+        return new BlockStateContainer(this, TYPE, AGE, ATTACHED);
     }
 
     @Override
@@ -161,12 +161,16 @@ public class BlockDemonCrystal extends BlockContainer
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
-        TileDemonCrystal tile = (TileDemonCrystal) world.getTileEntity(pos);
-        EnumDemonWillType type = state.getValue(TYPE);
-        int number = tile.getCrystalCount();
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileDemonCrystal) {
+            EnumDemonWillType type = state.getValue(TYPE);
+            int number = ((TileDemonCrystal) tile).getCrystalCount();
 
-        spawnAsEntity(world, pos, getItemStackDropped(type, number));
-        world.removeTileEntity(pos);
+            spawnAsEntity(world, pos, getItemStackDropped(type, number));
+            world.removeTileEntity(pos);
+        }
+
+        super.breakBlock(world, pos, state);
     }
 
     public static ItemStack getItemStackDropped(EnumDemonWillType type, int crystalNumber)
