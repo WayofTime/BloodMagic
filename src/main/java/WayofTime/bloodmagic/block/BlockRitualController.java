@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.api.iface.IBindable;
+import com.google.common.base.Strings;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -63,10 +65,13 @@ public class BlockRitualController extends BlockEnumContainer<EnumRitualControll
         {
             if (heldItem != null && heldItem.getItem() == ModItems.ACTIVATION_CRYSTAL)
             {
+                IBindable bindable = (IBindable) heldItem.getItem();
+                if (Strings.isNullOrEmpty(bindable.getOwnerName(heldItem)))
+                    return false;
+
                 String key = RitualHelper.getValidRitual(world, pos);
                 EnumFacing direction = RitualHelper.getDirectionOfRitual(world, pos, key);
-                // TODO: Give a message stating that this ritual is not a valid
-                // ritual.
+                // TODO: Give a message stating that this ritual is not a valid ritual.
                 if (!key.isEmpty() && direction != null && RitualHelper.checkValidRitual(world, pos, key, direction))
                 {
                     if (((TileMasterRitualStone) tile).activateRitual(heldItem, player, RitualRegistry.getRitualForId(key)))
