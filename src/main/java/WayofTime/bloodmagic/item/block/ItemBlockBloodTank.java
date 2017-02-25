@@ -76,7 +76,7 @@ public class ItemBlockBloodTank extends ItemBlock
 
     public int getCapacity(ItemStack container)
     {
-        int meta = MathHelper.clamp(container.getItemDamage(), 0, TileBloodTank.CAPACITIES.length);
+        int meta = MathHelper.clamp(container.getItemDamage(), 0, TileBloodTank.CAPACITIES.length - 1);
         return !container.isEmpty() && Block.getBlockFromItem(container.getItem()) instanceof BlockBloodTank ? TileBloodTank.CAPACITIES[meta] * Fluid.BUCKET_VOLUME : 0;
     }
 
