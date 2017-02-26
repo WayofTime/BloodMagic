@@ -1,4 +1,12 @@
 ------------------------------------------------------
+Version 2.1.5
+------------------------------------------------------
+- Fixed JEI compat for Alchemy Table recipes
+- Fixed (yet another) crash when creating an "invalid" stack of the Blood Tank
+- Fixed Demon Will Crystal and Teleposer crashy interaction
+- Fixed crash when working with toggleable sigils
+
+------------------------------------------------------
 Version 2.1.4
 ------------------------------------------------------
 - Fixed a crash when checking if two items could be combined
