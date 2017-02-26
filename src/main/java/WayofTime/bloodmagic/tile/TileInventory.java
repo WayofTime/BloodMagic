@@ -62,7 +62,7 @@ public class TileInventory extends TileBase implements IInventory
 
                 if (j >= 0 && j < inventory.size())
                 {
-                    inventory.set(i, new ItemStack(data));
+                    inventory.set(j, new ItemStack(data)); // No matter how much an i looks like a j, it is not one. They are drastically different characters and cause drastically different things to happen. Apparently I didn't know this at one point. - TehNut
                 }
             }
         }
