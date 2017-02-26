@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -47,7 +48,10 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
         if (!target.isNonBoss())
             return false;
 
-        if (target.isChild() || target instanceof EntityPlayer)
+        if (target instanceof EntityPlayer)
+            return false;
+
+        if (target.isChild() && !(target instanceof IMob))
             return false;
 
         if (target.isDead || target.getHealth() < 0.5F)
@@ -69,6 +73,11 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
         if (target instanceof EntityAnimal)
         {
             lifeEssence = (int) (lifeEssence * (1 + PurificationHelper.getCurrentPurity((EntityAnimal) target)));
+        }
+
+        if (target.isChild())
+        {
+            lifeEssence *= 0.5F;
         }
 
         if (PlayerSacrificeHelper.findAndFillAltar(attacker.getEntityWorld(), target, lifeEssence, true))
