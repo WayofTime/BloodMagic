@@ -106,6 +106,9 @@ public class RitualWellOfSuffering extends Ritual
                         if (BloodMagicAPI.getEntitySacrificeValues().containsKey(entityName))
                             lifeEssenceRatio = BloodMagicAPI.getEntitySacrificeValues().get(entityName);
 
+                        if (entity.isChild())
+                            lifeEssenceRatio *= 0.5F;
+
                         tileAltar.sacrificialDaggerCall(lifeEssenceRatio, true);
 
                         totalEffects++;
