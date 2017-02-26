@@ -2,28 +2,32 @@ package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.*;
+import com.google.common.collect.Lists;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.wrappers.BlockLiquidWrapper;
+import net.minecraftforge.fluids.capability.wrappers.FluidBlockWrapper;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class RitualPump extends Ritual
 {
     public static final String PUMP_RANGE = "pumpRange";
 
-    private ArrayList<BlockPos> liquidsCache;
-    private Iterator<BlockPos> blockPosIterator;
-
-    private boolean cached = false;
-    private BlockPos currentPos;
+    private List<Pair<BlockPos, FluidStack>> liquidsCache;
+    private Iterator<Pair<BlockPos, FluidStack>> blockPosIterator;
 
     public RitualPump()
     {
@@ -31,7 +35,7 @@ public class RitualPump extends Ritual
         addBlockRange(PUMP_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-16, -16, -16), new BlockPos(17, 17, 17)));
 
         setMaximumVolumeAndDistanceOfRange(PUMP_RANGE, 0, 16, 16);
-        liquidsCache = new ArrayList<BlockPos>();
+        liquidsCache = Lists.newArrayList();
     }
 
     @Override
@@ -47,39 +51,39 @@ public class RitualPump extends Ritual
             return;
         }
 
-        if (tileEntity != null && tileEntity.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN))
-        {
+        if (tileEntity != null && tileEntity.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
             IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
-            if (!cached || liquidsCache.isEmpty())
-            {
-                if (fluidHandler.drain(1000, false) != null)
-                {
-                    FluidStack fluidStack = fluidHandler.drain(1000, false);
-                    if (fluidStack == null)
-                        return;
+            IBlockState tankState = world.getBlockState(masterRitualStone.getBlockPos().up());
+            int maxDrain = fluidHandler.getTankProperties()[0].getCapacity();
 
-                    for (BlockPos blockPos : getBlockRange(PUMP_RANGE).getContainedPositions(masterRitualStone.getBlockPos()))
-                    {
-                        if (!liquidsCache.contains(blockPos))
-                        {
-                            if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock() == fluidStack.getFluid().getBlock() && world.getBlockState(blockPos).getValue(BlockLiquid.LEVEL) == 0)
-                            {
-                                liquidsCache.add(blockPos);
-                            }
-                        }
+            if (fluidHandler.getTankProperties()[0].getContents() != null && fluidHandler.getTankProperties()[0].getContents().amount >= maxDrain)
+                return;
+
+            for (BlockPos pos : getBlockRange(PUMP_RANGE).getContainedPositions(masterRitualStone.getBlockPos())) {
+                IBlockState state = world.getBlockState(pos);
+                IFluidHandler blockHandler = null;
+                if (state.getBlock() instanceof BlockLiquid)
+                    blockHandler = new BlockLiquidWrapper((BlockLiquid) state.getBlock(), world, pos);
+                else if (state.getBlock() instanceof IFluidHandler)
+                    blockHandler = new FluidBlockWrapper((IFluidBlock) state.getBlock(), world, pos);
+
+                if (blockHandler != null) {
+                    FluidStack blockDrain = blockHandler.drain(maxDrain, false);
+                    if (blockDrain != null && fluidHandler.fill(blockDrain, false) == blockDrain.amount) {
+                        Pair<BlockPos, FluidStack> posInfo = Pair.of(pos, blockHandler.drain(maxDrain, false));
+                        if (!liquidsCache.contains(posInfo))
+                            liquidsCache.add(posInfo);
                     }
                 }
-
-                cached = true;
-                blockPosIterator = liquidsCache.iterator();
             }
 
-            if (blockPosIterator.hasNext())
-            {
+            blockPosIterator = liquidsCache.iterator();
+            if (blockPosIterator.hasNext()) {
+                Pair<BlockPos, FluidStack> posInfo = blockPosIterator.next();
                 masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
-                currentPos = blockPosIterator.next();
-                fluidHandler.fill(fluidHandler.drain(1000, false), true);
-                world.setBlockState(currentPos, Blocks.STONE.getDefaultState());
+                fluidHandler.fill(posInfo.getRight(), true);
+                world.setBlockState(posInfo.getLeft(), Blocks.STONE.getDefaultState());
+                world.notifyBlockUpdate(posInfo.getLeft(), tankState, tankState, 3);
                 blockPosIterator.remove();
             }
         }
