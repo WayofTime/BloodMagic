@@ -1,23 +1,21 @@
 package WayofTime.bloodmagic.compat.jei.alchemyTable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.IRecipeCategory;
-import mezz.jei.api.recipe.IRecipeWrapper;
-import net.minecraft.client.Minecraft;
+import mezz.jei.api.recipe.BlankRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class AlchemyTableRecipeCategory implements IRecipeCategory
+public class AlchemyTableRecipeCategory extends BlankRecipeCategory<AlchemyTableRecipeJEI>
 {
     private static final int OUTPUT_SLOT = 0;
     private static final int ORB_SLOT = 1;
@@ -57,21 +55,7 @@ public class AlchemyTableRecipeCategory implements IRecipeCategory
     }
 
     @Override
-    public void drawExtras(Minecraft minecraft)
-    {
-
-    }
-
-    @Nullable
-    @Override
-    public IDrawable getIcon()
-    {
-        return null;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients)
+    public void setRecipe(IRecipeLayout recipeLayout, AlchemyTableRecipeJEI recipeWrapper, IIngredients ingredients)
     {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
@@ -87,12 +71,8 @@ public class AlchemyTableRecipeCategory implements IRecipeCategory
             }
         }
 
-        if (recipeWrapper instanceof AlchemyTableRecipeJEI)
-        {
-            AlchemyTableRecipeJEI recipe = (AlchemyTableRecipeJEI) recipeWrapper;
-            guiItemStacks.set(ORB_SLOT, ingredients.getInputs(ItemStack.class).get(1));
-            craftingGridHelper.setOutput(guiItemStacks, ingredients.getOutputs(ItemStack.class).get(0));
-            craftingGridHelper.setInputs(guiItemStacks, ingredients.getInputs(ItemStack.class), 3, 2);
-        }
+        guiItemStacks.set(ORB_SLOT, OrbRegistry.getOrbsDownToTier(recipeWrapper.getRecipe().getTierRequired()));
+        guiItemStacks.set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
+        craftingGridHelper.setInputs(guiItemStacks, ingredients.getInputs(ItemStack.class), 3, 2);
     }
 }
