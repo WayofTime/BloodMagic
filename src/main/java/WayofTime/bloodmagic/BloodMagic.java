@@ -3,6 +3,7 @@ package WayofTime.bloodmagic;
 import java.io.File;
 
 import WayofTime.bloodmagic.command.CommandBloodMagic;
+import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.meteor.MeteorConfigHandler;
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
@@ -11,12 +12,7 @@ import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
-import net.minecraftforge.fml.common.event.FMLModIdMappingEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
@@ -105,8 +101,6 @@ public class BloodMagic
         proxy.preInit();
     }
 
-
-
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
@@ -131,6 +125,11 @@ public class BloodMagic
         ModCompatibility.loadCompat(ICompatibility.InitializationPhase.POST_INIT);
 
         proxy.postInit();
+    }
+
+    @Mod.EventHandler
+    public void loadComplete(FMLLoadCompleteEvent event) {
+        RitualRegistry.orderLookupList();
     }
 
     @Mod.EventHandler
