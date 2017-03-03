@@ -1,6 +1,6 @@
 #Creative Tab
 itemGroup.bloodmagic.creativeTab=Blood Magic
-itemGroup.bloodmagic.creativeTabTome=Blood Magic 強化の書
+itemGroup.bloodmagic.creativeTabTome=Blood Magic ¦ 書物
 
 #Items
 item.bloodmagic.activationCrystal.weak.name=弱い起動クリスタル
@@ -162,6 +162,7 @@ item.bloodmagic.ritualReader.name=儀式の調整器
 
 item.bloodmagic.arcaneAshes.name=秘儀の灰
 item.bloodmagic.upgradeTome.name=生体アーマー強化の書
+item.bloodmagic.downgradeTome.name=生体アーマー弱化の書
 item.bloodmagic.upgradeTrainer.name=生体アーマー養成ブレスレット
 
 item.bloodmagic.sentientSword.name=理力の剣
@@ -197,6 +198,7 @@ tile.bloodmagic.fluid.lifeEssence.name=ライフエッセンス
 
 tile.bloodmagic.stone.ritual.master.name=マスター儀式石
 tile.bloodmagic.stone.ritual.imperfect.name=簡易儀式石
+tile.bloodmagic.stone.ritual.inverted.name=反転マスター儀式石
 
 tile.bloodmagic.altar.name=血の祭壇
 tile.bloodmagic.alchemyArray.name=&r&f錬金術魔法陣
@@ -261,11 +263,11 @@ tile.bloodmagic.demonCrystal.destructive.name=破壊性ウィル結晶株
 tile.bloodmagic.demonCrystal.vengeful.name=報復性ウィル結晶株
 tile.bloodmagic.demonCrystal.steadfast.name=不活性ウィル結晶株
 
-tile.bloodmagic.mimic.nohitbox.name=希薄で不透明なミミックブロック
-tile.bloodmagic.mimic.solidopaque.name=不透明なミミックブロック
-tile.bloodmagic.mimic.solidclear.name=透明なミミックブロック
-tile.bloodmagic.mimic.solidlight.name=発光するミミックブロック
-tile.bloodmagic.mimic.sentient.name=理力のミミックブロック
+tile.bloodmagic.mimic.nohitbox.name=希薄で不透過な偽装ブロック
+tile.bloodmagic.mimic.solidopaque.name=不透過な偽装ブロック
+tile.bloodmagic.mimic.solidclear.name=透過な偽装ブロック
+tile.bloodmagic.mimic.solidlight.name=発光する偽装ブロック
+tile.bloodmagic.mimic.sentient.name=理力の偽装ブロック
 
 tile.bloodmagic.bricks1.brick1_raw.name=長い原生の石レンガ
 tile.bloodmagic.bricks1.brick1_corrosive.name=長い腐食性の石レンガ
@@ -381,7 +383,7 @@ tooltip.bloodmagic.orb.owner=以下による追加要素： %s
 tooltip.bloodmagic.currentOwner=現在の所有者： %s
 tooltip.bloodmagic.currentTier=祭壇のグレード： %d
 tooltip.bloodmagic.config.disabled=現在configにより無効化されています
-tooltip.bloodmagic.tier=ｸﾞﾚｰﾄﾞ %d
+tooltip.bloodmagic.tier=グレード%d
 
 tooltip.bloodmagic.activated=アクティブ
 tooltip.bloodmagic.deactivated=非アクティブ
@@ -509,7 +511,9 @@ tooltip.bloodmagic.livingArmour.upgrade.quenched=抑制
 tooltip.bloodmagic.livingArmour.upgrade.meleeDecrease=鈍い刃
 tooltip.bloodmagic.livingArmour.upgrade.digSlowdown=朽ちたツルハシ
 tooltip.bloodmagic.livingArmour.upgrade.stormTrooper=突撃兵
-tooltip.bloodmagic.livingArmour.upgrade.slowHeal=病気
+tooltip.bloodmagic.livingArmour.upgrade.slowHeal=病弱
+tooltip.bloodmagic.livingArmour.upgrade.disoriented=方向感覚障害
+
 tooltip.bloodmagic.livingArmour.upgrade.level=%s (Lv %d)
 tooltip.bloodmagic.livingArmour.upgrade.progress=%s (%d/100)
 tooltip.bloodmagic.livingArmour.upgrade.points=&6強化ポイント： %s / %s
@@ -533,10 +537,11 @@ tooltip.bloodmagic.itemFilter.ignoreNBT=NBTタグでフィルタします
 tooltip.bloodmagic.itemFilter.modItems=特定MODのアイテムをフィルタします
 tooltip.bloodmagic.itemFilter.oreDict=鉱石辞書を用いてフィルタします
 
-tooltip.bloodmagic.fluid.type=液体を格納する
-tooltip.bloodmagic.fluid.amount=量
-tooltip.bloodmagic.fluid.capacity=最大容量
-tooltip.bloodmagic.itemFilter.exact=液体フィルタ 入力/出力
+tooltip.bloodmagic.itemFilter.exact=液体の入出力をフィルタします
+
+tooltip.bloodmagic.fluid.type=液体内容物： %s
+tooltip.bloodmagic.fluid.amount=内容量： %d / %d mB
+tooltip.bloodmagic.fluid.capacity=最大容量： %d mB
 
 tooltip.bloodmagic.ghost.everything=全て
 tooltip.bloodmagic.ghost.amount=幻影アイテムの個数： %d個
@@ -778,11 +783,6 @@ chat.bloodmagic.mimic.potionSpawnRadius.down=ポーション生成の効果範�
 # entity
 entity.bloodmagic.SentientSpecter.name=理力の霊魂
 entity.bloodmagic.Mimic.name=ミミック
-
-# sekrit
-
-secret.bloodmagic.bread.bloody=&r&c血のパン
-secret.bloodmagic.bread.bloody.desc=&o切迫した&r&7緊急時専用
 
 # Commands
 commands.error.arg.invalid=無効な引数です
