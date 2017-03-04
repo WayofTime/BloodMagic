@@ -180,7 +180,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
                 setWill(thisType, soulGemStack, newSoulsLeft);
                 if (soul.getWill(thisType, soulStack) <= 0)
                 {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             }
         }
