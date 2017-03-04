@@ -90,7 +90,7 @@ public class BloodMagicPlugin extends BlankModPlugin
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
-
+        subtypeRegistry.useNbtForSubtypes(ModItems.UPGRADE_TOME);
     }
 
     @Override
