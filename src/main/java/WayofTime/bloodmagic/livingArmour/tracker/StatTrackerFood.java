@@ -19,7 +19,7 @@ public class StatTrackerFood extends StatTracker
 {
     public static Map<EntityPlayer, Integer> lastFoodEatenMap = new HashMap<EntityPlayer, Integer>();
 
-    public static int[] foodRequired = new int[] { 100, 200, 300, 5000, 1000 };
+    public static int[] foodRequired = new int[] { 100, 200, 300, 500, 1000 };
 
     public int foodEaten = 0;
 
