@@ -135,7 +135,7 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
         applyDamageToFluid(stack);
         if (getDamageOfFluid(stack) >= getMaxUsesForFluid(stack))
         {
-            return null;
+            return ItemStack.EMPTY;
         }
 
         return stack;
