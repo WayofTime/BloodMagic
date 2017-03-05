@@ -21,6 +21,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.MouseEvent;
@@ -298,8 +299,7 @@ public class ClientHandler
         ItemSigilHolding.cycleToNextSigil(stack, mode);
         BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacketProcessor(player.inventory.currentItem, mode));
         ItemStack newStack = ItemSigilHolding.getItemStackInSlot(stack, ItemSigilHolding.getCurrentItemOrdinal(stack));
-        if (!newStack.isEmpty())
-            player.sendStatusMessage(newStack.getTextComponent(), true);
+        player.sendStatusMessage(newStack.isEmpty() ? new TextComponentString("") : newStack.getTextComponent(), true);
     }
 
     private static TextureAtlasSprite forName(TextureMap textureMap, String name, String dir)

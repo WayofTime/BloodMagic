@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
-import javax.annotation.Nullable;
+import java.util.List;
 
 public class HUDElementHolding extends HUDElement
 {
@@ -43,15 +43,12 @@ public class HUDElementHolding extends HUDElement
         ingameGui.drawTexturedModalRect(resolution.getScaledWidth() / 2 + 99 + (currentSlot * 20) + getXOffset(), resolution.getScaledHeight() - 23 + getYOffset(), 0, 22, 24, 24);
 
         RenderHelper.enableGUIStandardItemLighting();
-        ItemStack[] holdingInv = ItemSigilHolding.getInternalInventory(sigilHolding);
+        List<ItemStack> holdingInv = ItemSigilHolding.getInternalInventory(sigilHolding);
         int xOffset = 0;
-        if (holdingInv != null)
+        for (ItemStack sigil : holdingInv)
         {
-            for (ItemStack sigil : holdingInv)
-            {
-                renderHotbarItem(resolution.getScaledWidth() / 2 + 103 + xOffset + getXOffset(), resolution.getScaledHeight() - 18 + getYOffset(), partialTicks, minecraft.player, sigil);
-                xOffset += 20;
-            }
+            renderHotbarItem(resolution.getScaledWidth() / 2 + 103 + xOffset + getXOffset(), resolution.getScaledHeight() - 18 + getYOffset(), partialTicks, minecraft.player, sigil);
+            xOffset += 20;
         }
 
         RenderHelper.disableStandardItemLighting();
@@ -63,9 +60,9 @@ public class HUDElementHolding extends HUDElement
         return true;
     }
 
-    protected void renderHotbarItem(int x, int y, float partialTicks, EntityPlayer player, @Nullable ItemStack stack)
+    protected void renderHotbarItem(int x, int y, float partialTicks, EntityPlayer player, ItemStack stack)
     {
-        if (stack != null)
+        if (!stack.isEmpty())
         {
             float animation = (float) stack.getAnimationsToGo() - partialTicks;
 

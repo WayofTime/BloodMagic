@@ -10,10 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -55,15 +52,11 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     @Override
     public String getHighlightTip(ItemStack stack, String displayName)
     {
-        ItemStack[] inv = getInternalInventory(stack);
-
-        if (inv == null)
-            return displayName;
-
+        List<ItemStack> inv = getInternalInventory(stack);
         int currentSlot = getCurrentItemOrdinal(stack);
-        ItemStack item = inv[currentSlot];
+        ItemStack item = inv.get(currentSlot);
 
-        if (item == null)
+        if (item.isEmpty())
             return displayName;
         else
             return TextHelper.localizeEffect("item.bloodmagic.sigil.holding.display", displayName, item.getDisplayName());
@@ -79,21 +72,18 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         if (!stack.hasTagCompound())
             return;
 
-        ItemStack[] inv = getInternalInventory(stack);
-
-        if (inv == null)
-            return;
-
+        List<ItemStack> inv = getInternalInventory(stack);
         int currentSlot = getCurrentItemOrdinal(stack);
-        ItemStack item = inv[currentSlot];
+        ItemStack item = inv.get(currentSlot);
 
         for (int i = 0; i < inventorySize; i++)
         {
-            if (inv[i] != null)
-                if (item != null && inv[i] == item)
-                    tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, "&o&n" + inv[i].getDisplayName()));
+            ItemStack invStack = inv.get(i);
+            if (!invStack.isEmpty())
+                if (!item.isEmpty() && invStack == item)
+                    tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, "&o&n" + invStack.getDisplayName()));
                 else
-                    tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, inv[i].getDisplayName()));
+                    tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, invStack.getDisplayName()));
         }
     }
 
@@ -105,14 +95,10 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
             return EnumActionResult.FAIL;
 
         int currentSlot = getCurrentItemOrdinal(stack);
-        ItemStack[] inv = getInternalInventory(stack);
+        List<ItemStack> inv = getInternalInventory(stack);
+        ItemStack itemUsing = inv.get(currentSlot);
 
-        if (inv == null)
-            return EnumActionResult.PASS;
-
-        ItemStack itemUsing = inv[currentSlot];
-
-        if (itemUsing == null || Strings.isNullOrEmpty(((IBindable) itemUsing.getItem()).getOwnerUUID(itemUsing)))
+        if (itemUsing.isEmpty() || Strings.isNullOrEmpty(((IBindable) itemUsing.getItem()).getOwnerUUID(itemUsing)))
             return EnumActionResult.PASS;
 
         EnumActionResult result = itemUsing.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
@@ -129,14 +115,10 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
         int currentSlot = getCurrentItemOrdinal(stack);
-        ItemStack[] inv = getInternalInventory(stack);
+        List<ItemStack> inv = getInternalInventory(stack);
+        ItemStack itemUsing = inv.get(currentSlot);
 
-        if (inv == null)
-            return ActionResult.newResult(EnumActionResult.PASS, stack);
-
-        ItemStack itemUsing = inv[currentSlot];
-
-        if (itemUsing == null || Strings.isNullOrEmpty(((IBindable) itemUsing.getItem()).getOwnerUUID(itemUsing)))
+        if (itemUsing.isEmpty() || Strings.isNullOrEmpty(((IBindable) itemUsing.getItem()).getOwnerUUID(itemUsing)))
             return ActionResult.newResult(EnumActionResult.PASS, stack);
 
         itemUsing.getItem().onItemRightClick(world, player, hand);
@@ -146,7 +128,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         return ActionResult.newResult(EnumActionResult.PASS, stack);
     }
 
-    public void saveInventory(ItemStack itemStack, ItemStack[] inventory)
+    public void saveInventory(ItemStack itemStack, List<ItemStack> inventory)
     {
         NBTTagCompound itemTag = itemStack.getTagCompound();
 
@@ -159,11 +141,11 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 
         for (int i = 0; i < inventorySize; i++)
         {
-            if (inventory[i] != null)
+            if (!inventory.get(i).isEmpty())
             {
                 NBTTagCompound tag = new NBTTagCompound();
                 tag.setByte(Constants.NBT.SLOT, (byte) i);
-                inventory[i].writeToNBT(tag);
+                inventory.get(i).writeToNBT(tag);
                 itemList.appendTag(tag);
             }
         }
@@ -182,21 +164,17 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 
     public void tickInternalInventory(ItemStack itemStack, World world, Entity entity, int itemSlot, boolean isSelected)
     {
-        ItemStack[] inv = getInternalInventory(itemStack);
-
-        if (inv == null)
-        {
-            return;
-        }
+        List<ItemStack> inv = getInternalInventory(itemStack);
 
         for (int i = 0; i < inventorySize; i++)
         {
-            if (inv[i] == null)
+            ItemStack stack = inv.get(i);
+            if (stack.isEmpty())
             {
                 continue;
             }
 
-            inv[i].getItem().onUpdate(inv[i], world, entity, itemSlot, isSelected);
+            stack.getItem().onUpdate(stack, world, entity, itemSlot, isSelected);
         }
     }
 
@@ -224,12 +202,12 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         return index;
     }
 
-    private static void initModeTag(ItemStack itemStack)
+    private static void initModeTag(ItemStack stack)
     {
-        if (itemStack.getTagCompound() == null)
+        if (!stack.hasTagCompound())
         {
-            itemStack = NBTHelper.checkNBT(itemStack);
-            itemStack.getTagCompound().setInteger(Constants.NBT.CURRENT_SIGIL, inventorySize);
+            stack = NBTHelper.checkNBT(stack);
+            stack.getTagCompound().setInteger(Constants.NBT.CURRENT_SIGIL, inventorySize);
         }
     }
 
@@ -237,22 +215,22 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     {
         if (itemStack.getItem() instanceof ItemSigilHolding)
         {
-            ItemStack[] itemStacks = getInternalInventory(itemStack);
-            if (itemStacks != null)
-                return itemStacks[slot == 5 ? 4 : slot];
+            List<ItemStack> inv = getInternalInventory(itemStack);
+            if (inv != null)
+                return inv.get(slot == 5 ? 4 : slot);
             else
-                return null;
+                return ItemStack.EMPTY;
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
-    public static int getCurrentItemOrdinal(ItemStack itemStack)
+    public static int getCurrentItemOrdinal(ItemStack stack)
     {
-        if (itemStack.getItem() instanceof ItemSigilHolding)
+        if (stack.getItem() instanceof ItemSigilHolding)
         {
-            initModeTag(itemStack);
-            int currentSigil = itemStack.getTagCompound().getInteger(Constants.NBT.CURRENT_SIGIL);
+            initModeTag(stack);
+            int currentSigil = stack.getTagCompound().getInteger(Constants.NBT.CURRENT_SIGIL);
             currentSigil = MathHelper.clamp(currentSigil, 0, inventorySize - 1);
             return currentSigil;
         }
@@ -260,33 +238,33 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         return 0;
     }
 
-    public static ItemStack[] getInternalInventory(ItemStack itemStack)
+    public static List<ItemStack> getInternalInventory(ItemStack stack)
     {
-        initModeTag(itemStack);
-        NBTTagCompound tagCompound = itemStack.getTagCompound();
+        initModeTag(stack);
+        NBTTagCompound tagCompound = stack.getTagCompound();
 
         if (tagCompound == null)
         {
-            return null;
+            return NonNullList.withSize(inventorySize, ItemStack.EMPTY);
         }
 
         NBTTagList tagList = tagCompound.getTagList(Constants.NBT.ITEMS, 10);
 
-        if (tagList == null)
+        if (tagList.hasNoTags())
         {
-            return null;
+            return NonNullList.withSize(inventorySize, ItemStack.EMPTY);
         }
 
-        ItemStack[] inv = new ItemStack[inventorySize];
+        List<ItemStack> inv = NonNullList.withSize(inventorySize, ItemStack.EMPTY);
 
         for (int i = 0; i < tagList.tagCount(); i++)
         {
             NBTTagCompound data = tagList.getCompoundTagAt(i);
             byte j = data.getByte(Constants.NBT.SLOT);
 
-            if (j >= 0 && j < inv.length)
+            if (j >= 0 && j < inv.size())
             {
-                inv[j] = new ItemStack(data);
+                inv.set(j, new ItemStack(data));
             }
         }
 
@@ -304,14 +282,14 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
             {
                 int currentIndex = getCurrentItemOrdinal(itemStack);
                 ItemStack currentItemStack = getItemStackInSlot(itemStack, currentIndex);
-                if (currentItemStack == null)
+                if (currentItemStack.isEmpty())
                     return;
                 if (mode < 0)
                 {
                     index = next(currentIndex);
                     currentItemStack = getItemStackInSlot(itemStack, index);
 
-                    while (currentItemStack == null)
+                    while (currentItemStack.isEmpty())
                     {
                         index = next(index);
                         currentItemStack = getItemStackInSlot(itemStack, index);
@@ -321,7 +299,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
                     index = prev(currentIndex);
                     currentItemStack = getItemStackInSlot(itemStack, index);
 
-                    while (currentItemStack == null)
+                    while (currentItemStack.isEmpty())
                     {
                         index = prev(index);
                         currentItemStack = getItemStackInSlot(itemStack, index);
