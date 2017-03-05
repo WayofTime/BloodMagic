@@ -78,9 +78,12 @@ public class BlockDemonCrucible extends Block implements IVariantProvider
         if (crucible == null || player.isSneaking())
             return false;
 
-        if (!(heldItem.getItem() instanceof IDiscreteDemonWill) && !(heldItem.getItem() instanceof IDemonWillGem))
+        if (!heldItem.isEmpty())
         {
-            return true;
+            if (!(heldItem.getItem() instanceof IDiscreteDemonWill) && !(heldItem.getItem() instanceof IDemonWillGem))
+            {
+                return true;
+            }
         }
 
         Utils.insertItemToTile(crucible, player);
