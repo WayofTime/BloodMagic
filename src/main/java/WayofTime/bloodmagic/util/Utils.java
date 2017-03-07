@@ -447,7 +447,7 @@ public class Utils
         for (int x = 0; x < inventory.length; x++)
         {
             ItemStack stack = inventory[x];
-            if (stack == null)
+            if (stack.isEmpty())
             {
                 continue;
             }
@@ -918,7 +918,7 @@ public class Utils
 
             ItemStack invStack = inventory.getStackInSlot(i);
 
-            if (invStack != null && canCombine(stack, invStack))
+            if (!invStack.isEmpty() && canCombine(stack, invStack))
             {
                 numberMatching += invStack.getCount();
             }
