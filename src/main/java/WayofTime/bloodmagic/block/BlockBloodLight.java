@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.block;
 
-import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -9,7 +8,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -20,6 +18,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.registry.ModItems;
+
+import javax.annotation.Nullable;
 
 public class BlockBloodLight extends Block
 {
@@ -32,10 +32,17 @@ public class BlockBloodLight extends Block
         setUnlocalizedName(Constants.Mod.MODID + ".bloodLight");
     }
 
+    @Nullable
     @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
     {
+        return null;
+    }
 
+    @Override
+    public boolean isCollidable()
+    {
+        return false;
     }
 
     @Override
