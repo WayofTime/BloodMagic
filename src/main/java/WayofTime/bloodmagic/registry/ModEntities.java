@@ -20,15 +20,15 @@ public class ModEntities
     public static void init()
     {
         int entities = 0;
-        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID+":BloodLight"),EntityBloodLight.class, "BloodLight",++entities, BloodMagic.instance,16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID+":SoulSnare"),EntitySoulSnare.class, "SoulSnare",++entities, BloodMagic.instance,16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID+":SoulArrow"),EntitySentientArrow.class, "SoulArrow",++entities, BloodMagic.instance,16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID+":Meteor"),EntityMeteor.class, "Meteor",++entities, BloodMagic.instance,16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID+":SentientSpecter"),EntitySentientSpecter.class, "SentientSpecter",++entities, BloodMagic.instance,16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID+":Mimic"),EntityMimic.class, "Mimic",++entities, BloodMagic.instance,16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID+":CorruptedZombie"),EntityCorruptedZombie.class, "CorruptedZombie",++entities, BloodMagic.instance,16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID+":CorruptedSheep"),EntityCorruptedSheep.class, "CorruptedSheep",++entities, BloodMagic.instance,16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID+":CorruptedChicken"),EntityCorruptedChicken.class, "CorruptedChicken",++entities, BloodMagic.instance,16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID+":CorruptedSpider"),EntityCorruptedSpider.class, "CorruptedSpider",++entities, BloodMagic.instance,16*4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID, "BloodLight"), EntityBloodLight.class, "BloodLight", ++entities, BloodMagic.instance, 16*4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID, "SoulSnare"), EntitySoulSnare.class, "SoulSnare", ++entities, BloodMagic.instance, 16*4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID, "SoulArrow"), EntitySentientArrow.class, "SoulArrow", ++entities, BloodMagic.instance, 16*4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID, "Meteor"), EntityMeteor.class, "Meteor", ++entities, BloodMagic.instance, 16*4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID, "SentientSpecter"), EntitySentientSpecter.class, "SentientSpecter", ++entities, BloodMagic.instance, 16*4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID, "Mimic"), EntityMimic.class, "Mimic", ++entities, BloodMagic.instance, 16*4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID, "CorruptedZombie"), EntityCorruptedZombie.class, "CorruptedZombie", ++entities, BloodMagic.instance, 16*4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID, "CorruptedSheep"), EntityCorruptedSheep.class, "CorruptedSheep", ++entities, BloodMagic.instance, 16*4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID, "CorruptedChicken"), EntityCorruptedChicken.class, "CorruptedChicken", ++entities, BloodMagic.instance, 16*4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Constants.Mod.MODID, "CorruptedSpider"), EntityCorruptedSpider.class, "CorruptedSpider", ++entities, BloodMagic.instance, 16*4, 3, true);
     }
 }
