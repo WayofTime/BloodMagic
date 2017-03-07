@@ -82,7 +82,7 @@ public class BloodAltar implements IFluidHandler
     private int cooldownAfterCrafting = 60;
 
     private AltarRecipe recipe;
-    private ItemStack result;
+    private ItemStack result = ItemStack.EMPTY;
 
     @Getter
     private EnumAltarTier currentTierDisplayed = EnumAltarTier.ONE;
