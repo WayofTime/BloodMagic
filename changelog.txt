@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Version 2.1.6
+------------------------------------------------------
+- Fixed JEI not displaying Armor Tomes
+- Fixed Body Builder level 4 being 5x more expensive than level 5
+    - https://github.com/WayofTime/BloodMagic/pull/1080
+- Updated Japanese localization
+    - https://github.com/WayofTime/BloodMagic/pull/1076
+
+------------------------------------------------------
 Version 2.1.5
 ------------------------------------------------------
 - Fixed JEI compat for Alchemy Table recipes
