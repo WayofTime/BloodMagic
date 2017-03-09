@@ -18,6 +18,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
@@ -83,7 +84,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
                     }
                 } else
                 {
-                    ChatUtil.sendNoSpamUnloc(player, "chat.bloodmagic.ritual.notValid");
+                    player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.notValid"), true);
                 }
             }
         } else if (state.getValue(getProperty()) == EnumRitualController.IMPERFECT && tile instanceof TileImperfectRitualStone)

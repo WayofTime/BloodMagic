@@ -18,6 +18,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -586,7 +588,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         Ritual ritual = RitualRegistry.getRitualForId(key);
         if (ritual != null)
         {
-            ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentRitual") + TextHelper.localize(ritual.getUnlocalizedName()));
+            player.sendStatusMessage(new TextComponentTranslation(ritual.getUnlocalizedName()), true);
         }
     }
 

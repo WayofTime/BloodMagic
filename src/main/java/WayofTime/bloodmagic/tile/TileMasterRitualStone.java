@@ -93,7 +93,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         if (currentRitual != null)
         {
             NBTTagCompound ritualTag = tag.getCompoundTag(Constants.NBT.CURRENT_RITUAL_TAG);
-            if (ritualTag != null)
+            if (!ritualTag.hasNoTags())
             {
                 currentRitual.readFromNBT(ritualTag);
             }
@@ -159,7 +159,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
                         if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost() && !activator.capabilities.isCreativeMode)
                         {
-                            ChatUtil.sendNoSpamUnloc(activator, "chat.bloodmagic.ritual.weak");
+                            activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.weak"), true);
                             return false;
                         }
 
@@ -170,7 +170,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
                         if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         {
-                            ChatUtil.sendNoSpamUnloc(activator, "chat.bloodmagic.ritual.prevent");
+                            activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.prevent"), true);
                             return false;
                         }
 
@@ -179,7 +179,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
                             if (!isRedstoned() && !activator.capabilities.isCreativeMode)
                                 network.syphon(ritual.getActivationCost());
 
-                            ChatUtil.sendNoSpamUnloc(activator, "chat.bloodmagic.ritual.activate");
+                            activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.activate"), true);
 
                             this.active = true;
                             this.owner = crystalOwner;
@@ -197,7 +197,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
             }
         } else
         {
-            ChatUtil.sendNoSpamUnloc(activator, "chat.bloodmagic.ritual.notValid");
+            activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.notValid"), true);
         }
 
         return false;
