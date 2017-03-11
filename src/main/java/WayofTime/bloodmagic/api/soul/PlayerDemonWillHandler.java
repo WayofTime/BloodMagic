@@ -135,8 +135,8 @@ public class PlayerDemonWillHandler
      */
     public static ItemStack addDemonWill(EntityPlayer player, ItemStack willStack)
     {
-        if (willStack == null)
-            return null;
+        if (willStack.isEmpty())
+            return ItemStack.EMPTY;
 
         NonNullList<ItemStack> inventory = player.inventory.mainInventory;
 

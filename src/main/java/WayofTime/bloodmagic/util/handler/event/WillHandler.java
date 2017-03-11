@@ -109,7 +109,7 @@ public class WillHandler
                     {
                         remainder = PlayerDemonWillHandler.addDemonWill(player, willStack);
 
-                        if (remainder != null)
+                        if (!remainder.isEmpty())
                         {
                             EnumDemonWillType pickupType = ((IDemonWill) remainder.getItem()).getType(remainder);
                             if (((IDemonWill) remainder.getItem()).getWill(pickupType, remainder) >= 0.0001)
