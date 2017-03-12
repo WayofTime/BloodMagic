@@ -25,7 +25,7 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
     protected double fillerChance = 0;
 
     @Setter
-    public ItemStack meteorStack;
+    public ItemStack meteorStack = ItemStack.EMPTY;
 
     public EntityMeteor(World world)
     {
@@ -112,10 +112,10 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
         nbt.setDouble("radiusModifier", radiusModifier);
         nbt.setDouble("explosionModifier", explosionModifier);
         nbt.setDouble("fillerChance", fillerChance);
-        if (meteorStack != null)
-        {
+        if (!meteorStack.isEmpty())
             meteorStack.writeToNBT(nbt);
-        }
+        else
+            nbt.setBoolean("noItem", true);
     }
 
     @Override
@@ -127,7 +127,10 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
         radiusModifier = nbt.getDouble("radiusModifier");
         explosionModifier = nbt.getDouble("explosionModifier");
         fillerChance = nbt.getDouble("fillerChance");
-        meteorStack = new ItemStack(nbt);
+        if (!nbt.hasKey("noItem"))
+            meteorStack = new ItemStack(nbt);
+        else
+            meteorStack = ItemStack.EMPTY;
     }
 
     @Override
