@@ -11,7 +11,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -69,11 +72,12 @@ public class RitualFelling extends Ritual
             blockPosIterator = treePartsCache.iterator();
         }
 
-        if (blockPosIterator.hasNext() && tileInventory != null && tileInventory instanceof IInventory)
+        if (blockPosIterator.hasNext() && tileInventory != null)
         {
             masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
             currentPos = blockPosIterator.next();
-            placeInInventory(world.getBlockState(currentPos), world, currentPos, chestRange.getContainedPositions(masterPos).get(0));
+            IItemHandler inventory = Utils.getInventory(tileInventory, EnumFacing.DOWN);
+            placeInInventory(world.getBlockState(currentPos), world, currentPos, inventory);
             world.setBlockToAir(currentPos);
             blockPosIterator.remove();
         }
@@ -108,23 +112,16 @@ public class RitualFelling extends Ritual
         return new RitualFelling();
     }
 
-    private void placeInInventory(IBlockState blockState, World world, BlockPos blockPos, BlockPos tileEntityPos)
+    private void placeInInventory(IBlockState choppedState, World world, BlockPos choppedPos, @Nullable IItemHandler inventory)
     {
-        TileEntity tile = world.getTileEntity(tileEntityPos);
-        if (tile != null)
+        if (inventory == null)
+            return;
+
+        for (ItemStack stack : choppedState.getBlock().getDrops(world, choppedPos, world.getBlockState(choppedPos), 0))
         {
-            if (tile instanceof IInventory)
-            {
-                for (ItemStack stack : blockState.getBlock().getDrops(world, blockPos, world.getBlockState(blockPos), 0))
-                {
-                    ItemStack copyStack = stack.copy();
-                    Utils.insertStackIntoTile(copyStack, tile, EnumFacing.DOWN);
-                    if (!copyStack.isEmpty())
-                    {
-                        world.spawnEntity(new EntityItem(world, blockPos.getX() + 0.4, blockPos.getY() + 2, blockPos.getZ() + 0.4, copyStack));
-                    }
-                }
-            }
+            ItemStack remainder = ItemHandlerHelper.insertItem(inventory, stack, false);
+            if (!remainder.isEmpty())
+                world.spawnEntity(new EntityItem(world, choppedPos.getX() + 0.4, choppedPos.getY() + 2, choppedPos.getZ() + 0.4, remainder));
         }
     }
 }
