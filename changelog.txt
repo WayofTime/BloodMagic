@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Version 2.1.7
+------------------------------------------------------
+
+- Fixed the Seer's Sigil not using Roman Numerals to display the altar tier
+    - https://github.com/WayofTime/BloodMagic/pull/1094
+
+------------------------------------------------------
 Version 2.1.6
 ------------------------------------------------------
 - Fixed JEI not displaying Armor Tomes
