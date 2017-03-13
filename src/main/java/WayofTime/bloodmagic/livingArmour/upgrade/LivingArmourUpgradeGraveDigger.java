@@ -21,7 +21,7 @@ public class LivingArmourUpgradeGraveDigger extends LivingArmourUpgrade
     @Override
     public double getAdditionalDamageOnHit(double damage, EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon)
     {
-        if (weapon != null && weapon.getItem() instanceof ItemSpade)
+        if (!weapon.isEmpty() && weapon.getItem() instanceof ItemSpade)
         {
             return getDamageModifier();
         }
