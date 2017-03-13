@@ -1,4 +1,20 @@
 ------------------------------------------------------
+Version 2.1.7
+------------------------------------------------------
+
+- Fixed Grave Digger not applying damage bonus
+    - https://github.com/WayofTime/BloodMagic/issues/1098
+- Fixed crash when attempting to handle the dropping of Demonic Will
+    - https://github.com/WayofTime/BloodMagic/issues/1091
+- Fixed Crash of the Timberman dupe
+    - This also adds support for IItemHandler based inventories
+    - https://github.com/WayofTime/BloodMagic/issues/1090
+- Fixed a crash when a Meteor struck the ground
+    - https://github.com/WayofTime/BloodMagic/issues/1088
+- Fixed the Seer's Sigil not using Roman Numerals to display the altar tier
+    - https://github.com/WayofTime/BloodMagic/pull/1094
+
+------------------------------------------------------
 Version 2.1.6
 ------------------------------------------------------
 - Fixed invisible Sentient Specters destroying everything and everybody around their owners
