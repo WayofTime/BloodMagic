@@ -3,8 +3,9 @@ package WayofTime.bloodmagic.ritual;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.*;
 import net.minecraft.block.Block;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -46,64 +47,36 @@ public class RitualPlacer extends Ritual
         }
 
         AreaDescriptor areaDescriptor = getBlockRange(PLACER_RANGE);
-        IInventory iInventory;
 
         if (tileEntity != null)
         {
-            // Using the new Forge inventory system
             if (tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN))
             {
-                IItemHandler iItemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+                IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
 
-                if (iItemHandler.getSlots() <= 0)
+                if (itemHandler.getSlots() <= 0)
                 {
                     return;
                 }
 
+                posLoop:
                 for (BlockPos blockPos : areaDescriptor.getContainedPositions(masterRitualStone.getBlockPos()))
                 {
-                    for (int inv = 0; inv < iItemHandler.getSlots(); inv++)
-                    {
-                        if (world.getBlockState(blockPos).getBlock().isReplaceable(world, blockPos) && iItemHandler.getStackInSlot(inv) != null && iItemHandler.getStackInSlot(inv).stackSize != 0)
-                        {
-                            if (iItemHandler.getStackInSlot(inv).getItem() instanceof ItemBlock && world.getBlockState(blockPos.down()) != null)
-                            {
-                                if (iItemHandler.extractItem(inv, 1, true) != null)
-                                {
-                                    world.setBlockState(blockPos, Block.getBlockFromItem(iItemHandler.getStackInSlot(inv).getItem()).getStateFromMeta(iItemHandler.getStackInSlot(inv).getItemDamage()));
-                                    iItemHandler.extractItem(inv, 1, false);
-                                    tileEntity.markDirty();
-                                    masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
-                                }
-                            }
-                        }
-                    }
-                }
-                //Compatibility with the old system, as it still exists
-            } else if (tileEntity instanceof IInventory)
-            {
-                iInventory = (IInventory) tileEntity;
+                    if (!world.getBlockState(blockPos).getBlock().isReplaceable(world, blockPos))
+                        continue;
 
-                if (iInventory.getSizeInventory() <= 0)
-                {
-                    return;
-                }
-
-                for (BlockPos blockPos : areaDescriptor.getContainedPositions(masterRitualStone.getBlockPos()))
-                {
-                    for (int inv = 0; inv < iInventory.getSizeInventory(); inv++)
+                    for (int invSlot = 0; invSlot < itemHandler.getSlots(); invSlot++)
                     {
-                        if (world.getBlockState(blockPos).getBlock().isReplaceable(world, blockPos) && iInventory.getStackInSlot(inv) != null && iInventory.getStackInSlot(inv).stackSize != 0)
-                        {
-                            if (iInventory.getStackInSlot(inv).getItem() instanceof ItemBlock && world.getBlockState(blockPos.down()) != null)
-                            {
-                                world.setBlockState(blockPos, Block.getBlockFromItem(iInventory.getStackInSlot(inv).getItem()).getStateFromMeta(iInventory.getStackInSlot(inv).getItemDamage()));
-                                iInventory.decrStackSize(inv, 1);
-                                iInventory.markDirty();
-                                masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
-                                break;
-                            }
-                        }
+                        ItemStack stack = itemHandler.extractItem(invSlot, 1, true);
+                        if (stack == null || !(stack.getItem() instanceof ItemBlock))
+                            continue;
+
+                        IBlockState placeState = Block.getBlockFromItem(itemHandler.getStackInSlot(invSlot).getItem()).getStateFromMeta(itemHandler.getStackInSlot(invSlot).getItemDamage());
+                        world.setBlockState(blockPos, placeState);
+                        itemHandler.extractItem(invSlot, 1, false);
+                        tileEntity.markDirty();
+                        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
+                        break posLoop; // Break instead of return in case we add things later
                     }
                 }
             }
