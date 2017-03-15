@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item.sigil;
 
 import java.util.List;
 
+import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -50,6 +51,8 @@ public class ItemSigilTeleposition extends ItemSigilBase
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
         ItemStack stack = player.getHeldItem(hand);
+        if (stack.getItem() instanceof ISigil.Holding)
+            stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
@@ -71,6 +74,8 @@ public class ItemSigilTeleposition extends ItemSigilBase
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         ItemStack stack = player.getHeldItem(hand);
+        if (stack.getItem() instanceof ISigil.Holding)
+            stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (PlayerHelper.isFakePlayer(player))
             return EnumActionResult.FAIL;
 

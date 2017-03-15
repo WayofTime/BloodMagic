@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item.sigil;
 import java.util.Collections;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.key.KeyBindings;
 import net.minecraft.entity.Entity;
@@ -30,7 +31,9 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.base.Strings;
 
-public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAltarReader
+import javax.annotation.Nonnull;
+
+public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAltarReader, ISigil.Holding
 {
     public static final int inventorySize = 5;
 
@@ -126,6 +129,13 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         saveInventory(stack, inv);
 
         return ActionResult.newResult(EnumActionResult.PASS, stack);
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack getHeldItem(ItemStack holdingStack, EntityPlayer player)
+    {
+        return getInternalInventory(holdingStack).get(getCurrentItemOrdinal(holdingStack));
     }
 
     public void saveInventory(ItemStack itemStack, List<ItemStack> inventory)

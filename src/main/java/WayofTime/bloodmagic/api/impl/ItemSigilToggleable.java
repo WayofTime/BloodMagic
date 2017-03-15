@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.api.impl;
 
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IActivatable;
+import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
@@ -49,6 +50,8 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
         ItemStack stack = player.getHeldItem(hand);
+        if (stack.getItem() instanceof ISigil.Holding)
+            stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
@@ -67,6 +70,8 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         ItemStack stack = player.getHeldItem(hand);
+        if (stack.getItem() instanceof ISigil.Holding)
+            stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (Strings.isNullOrEmpty(getOwnerUUID(stack)) || player.isSneaking()) // Make sure Sigils are bound before handling. Also ignores while toggling state
             return EnumActionResult.PASS;
 

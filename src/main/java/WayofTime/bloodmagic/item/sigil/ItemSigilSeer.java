@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item.sigil;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -33,6 +34,8 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
         ItemStack stack = player.getHeldItem(hand);
+        if (stack.getItem() instanceof ISigil.Holding)
+            stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 

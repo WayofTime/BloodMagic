@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item.sigil;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.iface.ISigil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -47,6 +48,8 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 //            world.spawnEntityInWorld(fred);
 //        }
         ItemStack stack = player.getHeldItem(hand);
+        if (stack.getItem() instanceof ISigil.Holding)
+            stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
 
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
