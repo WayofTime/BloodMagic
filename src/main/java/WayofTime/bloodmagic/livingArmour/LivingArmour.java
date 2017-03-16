@@ -1,9 +1,7 @@
 package WayofTime.bloodmagic.livingArmour;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -81,7 +79,7 @@ public class LivingArmour implements ILivingArmour
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers()
     {
-        HashMultimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
+        HashMultimap<String, AttributeModifier> modifierMap = HashMultimap.create();
 
         for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())
         {
@@ -90,6 +88,7 @@ public class LivingArmour implements ILivingArmour
             {
                 continue;
             }
+
             modifierMap.putAll(upgrade.getAttributeModifiers());
         }
 

@@ -12,6 +12,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import org.apache.commons.codec.binary.StringUtils;
 
 import java.util.UUID;
 
@@ -36,7 +37,8 @@ public class LivingArmourUpgradeMeleeDecrease extends LivingArmourUpgrade
     {
         Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
 
-        modifierMap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(new UUID(0271023, 5321), "damage modifier" + 2, meleeDamage[this.level], 1));
+        String name = getUniqueIdentifier() + "-DamageModifier1";
+        modifierMap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(UUID.nameUUIDFromBytes(StringUtils.getBytesUtf8(name)), "DamageModifier1", meleeDamage[this.level], 1));
 
         return modifierMap;
     }

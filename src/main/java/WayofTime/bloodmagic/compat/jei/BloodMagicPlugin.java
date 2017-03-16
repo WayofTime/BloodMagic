@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import mezz.jei.api.*;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.bloodmagic.api.Constants;
@@ -91,7 +90,7 @@ public class BloodMagicPlugin extends BlankModPlugin
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
-        subtypeRegistry.useNbtForSubtypes(Item.getItemFromBlock(ModBlocks.BLOOD_TANK));
+        subtypeRegistry.useNbtForSubtypes(ModItems.UPGRADE_TOME);
     }
 
     @Override

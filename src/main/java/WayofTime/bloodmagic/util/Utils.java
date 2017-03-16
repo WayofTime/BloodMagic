@@ -46,6 +46,7 @@ import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import WayofTime.bloodmagic.BloodMagic;
@@ -537,19 +538,8 @@ public class Utils
      *        Slot content that stack1 is placed into
      * @return True if they can be combined
      */
-    public static boolean canCombine(ItemStack stack1, ItemStack stack2)
-    {
-        if (stack1 == null || stack1.isItemStackDamageable() ^ stack2.isItemStackDamageable())
-        {
-            return false;
-        }
-
-        if (stack2 == null)
-        {
-            return true;
-        }
-
-        return stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2.getItemDamage() && ItemStack.areItemStackTagsEqual(stack1, stack2);
+    public static boolean canCombine(ItemStack stack1, ItemStack stack2) {
+        return stack1 != null && stack2 == null || ItemHandlerHelper.canItemStacksStack(stack1, stack2);
     }
 
     /**

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -12,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 
+import net.minecraftforge.common.util.FakePlayer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -37,13 +39,19 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
     @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
     {
+        if (attacker instanceof FakePlayer)
+            return false;
+
         if (target == null || attacker == null || attacker.getEntityWorld().isRemote || (attacker instanceof EntityPlayer && !(attacker instanceof EntityPlayerMP)))
             return false;
 
         if (!target.isNonBoss())
             return false;
 
-        if (target.isChild() || target instanceof EntityPlayer)
+        if (target instanceof EntityPlayer)
+            return false;
+
+        if (target.isChild() && !(target instanceof IMob))
             return false;
 
         if (target.isDead || target.getHealth() < 0.5F)
@@ -65,6 +73,11 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
         if (target instanceof EntityAnimal)
         {
             lifeEssence = (int) (lifeEssence * (1 + PurificationHelper.getCurrentPurity((EntityAnimal) target)));
+        }
+
+        if (target.isChild())
+        {
+            lifeEssence *= 0.5F;
         }
 
         if (PlayerSacrificeHelper.findAndFillAltar(attacker.getEntityWorld(), target, lifeEssence, true))

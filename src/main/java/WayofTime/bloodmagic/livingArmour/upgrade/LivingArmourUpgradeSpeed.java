@@ -15,6 +15,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import org.apache.commons.codec.binary.StringUtils;
 
 public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
 {
@@ -61,7 +62,8 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
 
         if (healthModifier[this.level] > 0)
         {
-            modifierMap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(new UUID(952142, 1), "Health modifier" + 1, healthModifier[this.level], 0));
+            String name = getUniqueIdentifier() + "-HealthModifier1";
+            modifierMap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(UUID.nameUUIDFromBytes(StringUtils.getBytesUtf8(name)), "HealthModifier1", healthModifier[this.level], 0));
         }
 
         return modifierMap;
