@@ -1,6 +1,6 @@
 #Creative Tab
 itemGroup.BloodMagic.creativeTab=血魔法
-itemGroup.BloodMagic.creativeTabTome=血魔法|强化手册
+itemGroup.BloodMagic.creativeTabTome=血魔法|手册
 
 #Items
 item.BloodMagic.activationCrystal.weak.name=[虚弱]激活水晶
@@ -512,7 +512,7 @@ tooltip.BloodMagic.livingArmour.upgrade.meleeDecrease=钝拙之刃
 tooltip.BloodMagic.livingArmour.upgrade.digSlowdown=弱化挖掘
 tooltip.BloodMagic.livingArmour.upgrade.stormTrooper=风暴骑兵
 tooltip.BloodMagic.livingArmour.upgrade.slowHeal=愈合延缓
-tooltip.BloodMagic.livingArmour.upgrade.disoriented=暂无特性
+tooltip.BloodMagic.livingArmour.upgrade.disoriented=平衡失调
 
 tooltip.BloodMagic.livingArmour.upgrade.level=%s（等级 %d）
 tooltip.BloodMagic.livingArmour.upgrade.progress=%s（%d/100）
@@ -539,9 +539,9 @@ tooltip.BloodMagic.itemFilter.oreDict=按矿物辞典筛选
 
 tooltip.BloodMagic.itemFilter.exact=精确匹配液体
 
-tooltip.BloodMagic.fluid.type=所含液体
-tooltip.BloodMagic.fluid.amount=数量
-tooltip.BloodMagic.fluid.capacity=容量
+tooltip.BloodMagic.fluid.type=所含液体：%s
+tooltip.BloodMagic.fluid.amount=数量：%d / %d mB
+tooltip.BloodMagic.fluid.capacity=容量：%d mB
 
 tooltip.BloodMagic.ghost.everything=任何物品
 tooltip.BloodMagic.ghost.amount=幽灵物品数量：%d
