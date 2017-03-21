@@ -23,6 +23,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
@@ -106,8 +107,10 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider
     {
         ItemStack held = player.getHeldItem(hand);
         TileBloodTank fluidHandler = (TileBloodTank) world.getTileEntity(blockPos);
-        if (FluidUtil.interactWithFluidHandler(held, fluidHandler.getTank(), player).isSuccess())
+        FluidActionResult result = FluidUtil.interactWithFluidHandler(held, fluidHandler.getTank(), player);
+        if (result.isSuccess())
         {
+            player.setHeldItem(hand, result.getResult());
             world.checkLight(blockPos);
             world.updateComparatorOutputLevel(blockPos, this);
             world.markAndNotifyBlock(blockPos, world.getChunkFromBlockCoords(blockPos), state, state, 3);
