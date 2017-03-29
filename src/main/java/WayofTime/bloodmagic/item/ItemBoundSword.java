@@ -73,6 +73,11 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected)
     {
+        if (Strings.isNullOrEmpty(getOwnerUUID(stack))) {
+            setActivatedState(stack, false);
+            return;
+        }
+
         if (entity instanceof EntityPlayer && getActivated(stack) && world.getTotalWorldTime() % 80 == 0)
             NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage((EntityPlayer) entity, 20);
     }
