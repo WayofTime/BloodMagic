@@ -1,4 +1,16 @@
 ------------------------------------------------------
+Version 2.1.8
+------------------------------------------------------
+
+- Fixed crash when activing Bound Tools
+    - https://github.com/WayofTime/BloodMagic/issues/1114
+- Updated the Chinese localization
+    - https://github.com/WayofTime/BloodMagic/pull/1052
+- Placer Ritual is now much more performant
+- Many recipes have been moved over to support the Ore Dictionary
+    - https://github.com/WayofTime/BloodMagic/issues/1101
+
+------------------------------------------------------
 Version 2.1.7
 ------------------------------------------------------
 
