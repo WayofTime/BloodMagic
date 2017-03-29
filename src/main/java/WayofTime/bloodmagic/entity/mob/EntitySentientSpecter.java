@@ -479,7 +479,7 @@ public class EntitySentientSpecter extends EntityDemonBase
     public void attackEntityWithRangedAttack(EntityLivingBase target, float velocity)
     {
         ItemStack heldStack = this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-        if (heldStack != null && heldStack.getItem() == ModItems.SENTIENT_BOW)
+        if (!heldStack.isEmpty() && heldStack.getItem() == ModItems.SENTIENT_BOW)
         {
             EntityTippedArrow arrowEntity = ((ItemSentientBow) heldStack.getItem()).getArrowEntity(getEntityWorld(), heldStack, target, this, velocity);
             if (arrowEntity != null)
