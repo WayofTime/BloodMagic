@@ -46,7 +46,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 
         for (ItemStack stack : drops)
         {
-            if (stack == null)
+            if (stack.isEmpty())
                 continue;
 
             if (stack.getItem() instanceof IPlantable)
