@@ -90,6 +90,11 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected)
     {
+        if (Strings.isNullOrEmpty(getOwnerUUID(stack))) {
+            setActivatedState(stack, false);
+            return;
+        }
+
         if (entity instanceof EntityPlayer && getActivated(stack) && isSelected && getBeingHeldDown(stack) && stack == ((EntityPlayer) entity).getActiveItemStack())
         {
             EntityPlayer player = (EntityPlayer) entity;
