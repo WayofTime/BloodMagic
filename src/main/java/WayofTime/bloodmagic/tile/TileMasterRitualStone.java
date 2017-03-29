@@ -33,6 +33,8 @@ import WayofTime.bloodmagic.util.ChatUtil;
 
 import com.google.common.base.Strings;
 
+import javax.annotation.Nullable;
+
 @Getter
 @NoArgsConstructor
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone
@@ -138,7 +140,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator, Ritual ritual)
+    public boolean activateRitual(ItemStack activationCrystal, @Nullable EntityPlayer activator, Ritual ritual)
     {
         if (PlayerHelper.isFakePlayer(activator))
             return false;
@@ -157,7 +159,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
                     {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(crystalOwner);
 
-                        if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost() && !activator.capabilities.isCreativeMode)
+                        if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost() && (activator != null && !activator.capabilities.isCreativeMode))
                         {
                             activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.weak"), true);
                             return false;
@@ -176,10 +178,11 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
                         if (ritual.activateRitual(this, activator, crystalOwner))
                         {
-                            if (!isRedstoned() && !activator.capabilities.isCreativeMode)
+                            if (!isRedstoned() && (activator != null && !activator.capabilities.isCreativeMode))
                                 network.syphon(ritual.getActivationCost());
 
-                            activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.activate"), true);
+                            if (activator != null)
+                                activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.activate"), true);
 
                             this.active = true;
                             this.owner = crystalOwner;
@@ -197,7 +200,8 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
             }
         } else
         {
-            activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.notValid"), true);
+            if (activator != null)
+                activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.notValid"), true);
         }
 
         return false;

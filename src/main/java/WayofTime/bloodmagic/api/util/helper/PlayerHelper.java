@@ -79,7 +79,7 @@ public class PlayerHelper
      */
     public static boolean isFakePlayer(EntityPlayer player)
     {
-        return player != null && (player instanceof FakePlayer || knownFakePlayers.contains(player.getClass().getCanonicalName()));
+        return player instanceof FakePlayer || (player != null && knownFakePlayers.contains(player.getClass().getCanonicalName()));
     }
 
     public static void causeNauseaToPlayer(ItemStack stack)
