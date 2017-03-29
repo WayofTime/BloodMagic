@@ -1,4 +1,23 @@
 ------------------------------------------------------
+Version 2.1.8
+------------------------------------------------------
+
+- Fixed more null stack issues
+    - Will it ever end?
+- Fixed a crash when activating a ritual via Redstone
+- Fixed a fluid handling issue with Blood Tanks
+    - https://github.com/WayofTime/BloodMagic/issues/1108
+- Fixed issue where Sigils inside a Sigil of Holding were using the wrong item
+    - https://github.com/WayofTime/BloodMagic/issues/1102
+- Fixed crash when activing Bound Tools
+    - https://github.com/WayofTime/BloodMagic/issues/1114
+- Updated the Chinese localization
+    - https://github.com/WayofTime/BloodMagic/pull/1052
+- Placer Ritual is now much more performant
+- Many recipes have been moved over to support the Ore Dictionary
+    - https://github.com/WayofTime/BloodMagic/issues/1101
+
+------------------------------------------------------
 Version 2.1.7
 ------------------------------------------------------
 
