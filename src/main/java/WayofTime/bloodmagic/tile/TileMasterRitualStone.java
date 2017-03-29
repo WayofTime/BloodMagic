@@ -172,7 +172,8 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
                         if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         {
-                            activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.prevent"), true);
+                            if (activator != null)
+                                activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.prevent"), true);
                             return false;
                         }
 
