@@ -747,9 +747,9 @@ chat.BloodMagic.altarMaker.creativeOnly=該物品僅限創造模式。
 
 chat.BloodMagic.damageSource=%s 的靈魂開始變得虛弱
 
-chat.BloodMagic.ritual.weak=你感到有股拉力, 但沒有足夠的力量來完成這個儀式.
-chat.BloodMagic.ritual.prevent=儀式在積極的抵抗你!
-chat.BloodMagic.ritual.activate=一股能量流經這個儀式!
+chat.BloodMagic.ritual.weak=你感到有股力量，但不足以完成這個儀式。
+chat.BloodMagic.ritual.prevent=儀式在積極的抵抗你！
+chat.BloodMagic.ritual.activate=一股能量流經這個儀式！
 chat.BloodMagic.ritual.notValid=這些儀式石似乎有些擺放不得當...
 
 chat.BloodMagic.livingArmour.upgrade.poisonRemove=你感到已經好多了！
@@ -771,8 +771,8 @@ chat.BloodMagic.altar.comp.notair=一個實心方塊
 
 chat.BloodMagic.altar.nextTier=下一層級的血之祭壇缺失%s，對應坐標為 %s 。
 
-chat.BloodMagic.mimic.potionSet=藥劑陷阱已設置.
-chat.BloodMagic.mimic.potionRemove=藥劑陷阱已移除.
+chat.BloodMagic.mimic.potionSet=藥劑陷阱已設置。
+chat.BloodMagic.mimic.potionRemove=藥劑陷阱已移除。
 chat.BloodMagic.mimic.potionInterval.up=藥劑時間間隔已增加至：%d 刻。
 chat.BloodMagic.mimic.potionInterval.down=藥劑時間間隔已減少至：%d 刻。
 chat.BloodMagic.mimic.detectRadius.up=玩家檢測半徑已增加至：%d 格方塊。
@@ -820,8 +820,7 @@ commands.bind.success=物品成功綁定！
 commands.bind.remove.success=解除綁定成功
 
 commands.orb.usage=/bloodmagic orb [設置(set)|查看(get)] <玩家> [等級]
-commands.orb.help=用於設置或查看玩家的最高血寶珠等級.
-
+commands.orb.help=用於設置或查看玩家的最高血寶珠等級。
 commands.bind.usage=/bind <玩家>
 commands.bind.success=物品成功綁定！
 commands.bind.failed.noPlayer=沒有指定玩家
@@ -867,8 +866,8 @@ jei.BloodMagic.recipe.soulsDrained=消耗：%1$,.2f Will
 jei.BloodMagic.recipe.lpDrained=消耗：%d LP
 jei.BloodMagic.recipe.ticksRequired=時間：%d 刻
 
-jei.BloodMagic.desc.altarBuilder=該物品僅限創造模式，用於調試測試.\n\nShift + 右鍵 改變層級。右鍵祭壇開始搭建。\n\n手持破壞祭壇時將全部移除。
-jei.BloodMagic.desc.demonicWill=附身於生物的惡魔意志之體現.\n\n可以通過用感知武器殺死生物掉落，或是對著生物拋擲原始投網。當它出現白色顆粒時殺了它。
+jei.BloodMagic.desc.altarBuilder=該物品僅限創造模式，用於調整測試。\n\nShift+右鍵 以改變層級。右鍵祭壇開始搭建。\n\n手持破壞祭壇時將全部移除。
+jei.BloodMagic.desc.demonicWill=附身於生物的惡魔意志之體現。\n\n可以通過用感知武器殺死生物掉落，或是對著生物拋擲原始投網。當它出現白色顆粒時殺了它。
 
 # WAILA
 waila.BloodMagic.sneak=&o潛行查看信息
@@ -887,7 +886,7 @@ tc.research_category.BLOODMAGIC=血儀術
 # Thaumcraft Research
 bloodmagic.research_name.BLOODMAGIC=血魔法
 bloodmagic.research_text.BLOODMAGIC=血儀術
-bloodmagic.research_page.BLOODMAGIC.1=血魔法的領域一直令人感到孤僻， 而血術師的"獨門"祕法更是出名的悖離人群，常使人感到瘋狂。 然而自我犧牲與生命精華的力量甚至能擁有平凡血術師所難以估計的強大力量， 顯然秘術使可以把它作為某些用途！
+bloodmagic.research_page.BLOODMAGIC.1=血魔法的領域一直令人感到孤僻，而血術師的"獨門"祕法更是出名的悖離人群，常使人感到瘋狂。 然而自我犧牲與生命精華的力量甚至能擁有平凡血術師所難以估計的強大力量，顯然秘術使可以把它作為某些用途！
 
 # Buttons
 button.bloodmagic.tooltip.fill=填充網絡
