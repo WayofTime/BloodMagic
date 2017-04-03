@@ -14,6 +14,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.saving.SoulNetwork;
@@ -295,11 +296,10 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
             return false;
         if (currentOutputStack.isEmpty())
             return true;
-        if (!currentOutputStack.isItemEqual(outputStack))
+        if (!ItemHandlerHelper.canItemStacksStack(outputStack, currentOutputStack))
             return false;
         int result = currentOutputStack.getCount() + outputStack.getCount();
         return result <= getInventoryStackLimit() && result <= currentOutputStack.getMaxStackSize();
-
     }
 
     public int getTierOfOrb()
@@ -356,9 +356,9 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
             if (currentOutputStack.isEmpty())
             {
                 setInventorySlotContents(outputSlot, outputStack);
-            } else if (currentOutputStack.getItem() == currentOutputStack.getItem())
+            } else if (ItemHandlerHelper.canItemStacksStack(outputStack, currentOutputStack))
             {
-                currentOutputStack.setCount(outputStack.getCount());
+                currentOutputStack.grow(outputStack.getCount());
             }
 
             consumeInventory(recipe);
