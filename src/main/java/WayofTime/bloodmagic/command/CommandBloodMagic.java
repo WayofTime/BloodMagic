@@ -29,6 +29,12 @@ public class CommandBloodMagic extends CommandTreeBase
         return "/bloodmagic help";
     }
 
+    @Override
+    public int getRequiredPermissionLevel()
+    {
+        return 2;
+    }
+
     public static void displayHelpString(ICommandSender commandSender, String display, Object... info)
     {
         commandSender.sendMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
