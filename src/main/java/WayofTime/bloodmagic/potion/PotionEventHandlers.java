@@ -1,15 +1,18 @@
 package WayofTime.bloodmagic.potion;
 
+import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.registry.ModPotions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -107,6 +110,20 @@ public class PotionEventHandlers
                 projectile.motionZ = newVel * delZ;
             }
         }
+    }
+
+    @SubscribeEvent
+    public void onPlayerRespawn(PlayerEvent.Clone event)
+    {
+        if (event.isWasDeath())
+            event.getEntityPlayer().addPotionEffect(new PotionEffect(ModPotions.soulFray, 400));
+    }
+
+    @SubscribeEvent
+    public void onSacrificeKnifeUsed(SacrificeKnifeUsedEvent event)
+    {
+        if (event.player.isPotionActive(ModPotions.soulFray))
+            event.lpAdded = (int) (event.lpAdded * 0.1D);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
