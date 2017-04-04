@@ -1,4 +1,18 @@
 ------------------------------------------------------
+Version 2.1.9
+------------------------------------------------------
+
+- Fixed Alchemy Table overwriting output each time it crafted something
+    - https://github.com/WayofTime/BloodMagic/issues/1119
+- Blood Magic commands (/bloodmagic) can now be used in Command Blocks
+    - https://github.com/WayofTime/BloodMagic/issues/1117
+- Re-implemented the Soul Fray debuff on death
+    - No more exploiting sacrifice by killing yourself over and over (again)
+    - https://github.com/WayofTime/BloodMagic/issues/1118
+- Updated Traditional Chinese localization
+    - https://github.com/WayofTime/BloodMagic/pull/1116
+
+------------------------------------------------------
 Version 2.1.8
 ------------------------------------------------------
 
