@@ -67,6 +67,9 @@ public class ItemRouterAmountPacketProcessor implements IMessage, IMessageHandle
         World world = DimensionManager.getWorld(dimension);
         if (world != null)
         {
+            if (!world.isBlockLoaded(pos))
+                return;
+
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileFilteredRoutingNode)
             {
