@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Version 2.1.10
+------------------------------------------------------
+
+- Fixed malicious clients being able to load arbitrary chunks on the server
+- Fixed Bound tools not setting their tool class and harvest level
+
+------------------------------------------------------
 Version 2.1.9
 ------------------------------------------------------
 
