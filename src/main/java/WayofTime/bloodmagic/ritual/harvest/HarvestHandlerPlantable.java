@@ -7,9 +7,12 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.List;
 
@@ -28,6 +31,13 @@ public class HarvestHandlerPlantable implements IHarvestHandler
         HarvestRegistry.registerStandardCrop(Blocks.POTATOES, 7);
         HarvestRegistry.registerStandardCrop(Blocks.BEETROOTS, 3);
         HarvestRegistry.registerStandardCrop(Blocks.NETHER_WART, 3);
+
+        addThirdPartyCrop("actuallyadditions", "blockFlax", 7);
+        addThirdPartyCrop("actuallyadditions", "blockCanola", 7);
+        addThirdPartyCrop("actuallyadditions", "blockRice", 7);
+
+        addThirdPartyCrop("extrautils2", "redorchid", 6);
+        addThirdPartyCrop("extrautils2", "enderlily", 7);
     }
 
     @Override
@@ -51,11 +61,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 
             if (stack.getItem() instanceof IPlantable)
             {
-                if (stack.stackSize > 1)
-                    stack.stackSize--;
-                else
-                    drops.remove(stack);
-
+                stack.stackSize--;
                 foundSeed = true;
                 break;
             }
@@ -67,6 +73,9 @@ public class HarvestHandlerPlantable implements IHarvestHandler
             world.playEvent(2001, pos, Block.getStateId(blockStack.getState()));
             for (ItemStack stack : drops)
             {
+                if (stack == null || stack.stackSize <= 0)
+                    continue;
+
                 if (!world.isRemote)
                 {
                     EntityItem toDrop = new EntityItem(world, pos.getX(), pos.getY() + 0.5, pos.getZ(), stack);
@@ -78,5 +87,15 @@ public class HarvestHandlerPlantable implements IHarvestHandler
         }
 
         return false;
+    }
+
+    private static void addThirdPartyCrop(String modid, String regName, int matureMeta)
+    {
+        if (!Loader.isModLoaded(modid))
+            return;
+
+        Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(modid, regName));
+        if (block != null && block != Blocks.AIR)
+            HarvestRegistry.registerStandardCrop(block, matureMeta);
     }
 }
