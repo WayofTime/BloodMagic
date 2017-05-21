@@ -120,8 +120,9 @@ public class MeteorConfigHandler
         ironMeteorList.add(new MeteorComponent(30, "oreGold"));
         ironMeteorList.add(new MeteorComponent(60, "oreLapis"));
         ironMeteorList.add(new MeteorComponent(100, "oreRedstone"));
-        Meteor ironMeteor = new Meteor(new ItemStack(Blocks.IRON_BLOCK), ironMeteorList, 15, 5, 1000);
+        Meteor ironMeteor = new Meteor(new ItemStack(Blocks.IRON_BLOCK), ironMeteorList, 15, 5);
         ironMeteor.setVersion(2);
+
         // Gold
         List<MeteorComponent> goldMeteorList = Lists.newArrayList();
         goldMeteorList.add(new MeteorComponent(200, "oreIron"));
@@ -132,10 +133,10 @@ public class MeteorConfigHandler
         goldMeteorList.add(new MeteorComponent(30, "oreDiamond"));
         goldMeteorList.add(new MeteorComponent(20, "oreEmerald"));
         goldMeteorList.add(new MeteorComponent(20, "oreCoal"));
-
-        Meteor goldMeteor = new Meteor(new ItemStack(Blocks.GOLD_BLOCK), goldMeteorList, 18, 6, 1000);
+        Meteor goldMeteor = new Meteor(new ItemStack(Blocks.GOLD_BLOCK), goldMeteorList, 18, 6);
         goldMeteor.setVersion(3);
 
+        // Diamond
         List<MeteorComponent> diamondMeteorList = Lists.newArrayList();
         diamondMeteorList.add(new MeteorComponent(50, "oreIron"));
         diamondMeteorList.add(new MeteorComponent(100, "oreGold"));
@@ -143,9 +144,8 @@ public class MeteorConfigHandler
         diamondMeteorList.add(new MeteorComponent(250, "oreDiamond"));
         diamondMeteorList.add(new MeteorComponent(180, "oreEmerald"));
         diamondMeteorList.add(new MeteorComponent(50, "oreRedstone"));
-        diamondMeteorList.add(new MeteorComponent(400, "minecraft:diamond_block"));
-
-        Meteor diamondMeteor = new Meteor(new ItemStack(Blocks.DIAMOND_BLOCK), diamondMeteorList, 10, 3, 1000);
+        diamondMeteorList.add(new MeteorComponent(400, "oreDiamond"));
+        Meteor diamondMeteor = new Meteor(new ItemStack(Blocks.DIAMOND_BLOCK), diamondMeteorList, 10, 3);
         diamondMeteor.setVersion(3);
 
         holders.add(Pair.of("IronMeteor", ironMeteor));
