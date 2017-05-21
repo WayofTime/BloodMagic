@@ -122,7 +122,7 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.PACK_SACRIFICE), "aba", "cdc", "aea", 'a', "blockGlass", 'b', Items.BUCKET, 'c', "ingotIron", 'd', Items.LEATHER_CHESTPLATE, 'e', ModItems.SLATE));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.RITUAL_DIVINER), "dfd", "ase", "dwd", 'f', EnumRuneType.FIRE.getScribeStack(), 'a', EnumRuneType.AIR.getScribeStack(), 'w', EnumRuneType.WATER.getScribeStack(), 'e', EnumRuneType.EARTH.getScribeStack(), 'd', "gemDiamond", 's', "stickWood"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.RITUAL_DIVINER, 1, 1), " S ", "tdt", " S ", 'S', new ItemStack(ModItems.SLATE, 1, 3), 't', EnumRuneType.DUSK.getScribeStack(), 'd', new ItemStack(ModItems.RITUAL_DIVINER)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.BLOOD_STONE, 1, 1), "aa", "aa", 'a', new ItemStack(ModBlocks.BLOOD_STONE)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.BLOOD_STONE, 4, 1), "aa", "aa", 'a', new ItemStack(ModBlocks.BLOOD_STONE)));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.BLOOD_STONE, 16), "stone", new ItemStack(ModItems.BLOOD_SHARD)));
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ACTIVATION_CRYSTAL, 1, 1), new ItemStack(Items.NETHER_STAR), OrbRegistry.getOrbStack(ModItems.ORB_ARCHMAGE));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.SOUL_SNARE, 4, 0), "sis", "iri", "sis", 's', "string", 'i', "ingotIron", 'r', "dustRedstone"));
