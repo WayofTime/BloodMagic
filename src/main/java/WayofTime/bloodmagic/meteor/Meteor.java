@@ -25,13 +25,17 @@ public class Meteor
     @Setter
     public int version;
 
-    public Meteor(ItemStack catalystStack, List<MeteorComponent> components, float explosionStrength, int radius, int maxWeight)
+    public Meteor(ItemStack catalystStack, List<MeteorComponent> components, float explosionStrength, int radius)
     {
         this.catalystStack = catalystStack;
         this.components = components;
         this.explosionStrength = explosionStrength;
         this.radius = radius;
-        this.maxWeight = maxWeight;
+
+        int weight = 0;
+        for (MeteorComponent component : components)
+            weight += component.getWeight();
+        this.maxWeight = weight;
     }
 
     public void generateMeteor(World world, BlockPos pos, IBlockState fillerBlock, double radiusModifier, double explosionModifier, double fillerChance)

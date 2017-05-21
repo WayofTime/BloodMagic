@@ -23,9 +23,9 @@ public class MeteorRegistry
         }
     }
 
-    public static void registerMeteor(ItemStack stack, List<MeteorComponent> componentList, float explosionStrength, int radius, int maxWeight)
+    public static void registerMeteor(ItemStack stack, List<MeteorComponent> componentList, float explosionStrength, int radius)
     {
-        Meteor holder = new Meteor(stack, componentList, explosionStrength, radius, maxWeight);
+        Meteor holder = new Meteor(stack, componentList, explosionStrength, radius);
         registerMeteor(stack, holder);
     }
 
