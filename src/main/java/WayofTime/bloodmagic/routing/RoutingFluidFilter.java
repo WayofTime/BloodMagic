@@ -13,6 +13,8 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
+import javax.annotation.Nullable;
+
 public class RoutingFluidFilter implements IFluidFilter
 {
     protected List<FluidStack> requestList;
@@ -85,9 +87,13 @@ public class RoutingFluidFilter implements IFluidFilter
         }
     }
 
+    @Nullable
     public static FluidStack getFluidStackFromItemStack(ItemStack inputStack)
     {
         FluidStack fluidStack = FluidUtil.getFluidContained(inputStack);
+        if (fluidStack == null)
+            return null;
+
         fluidStack.amount = inputStack.stackSize;
         return fluidStack;
     }
