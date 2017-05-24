@@ -34,6 +34,7 @@ public class TileBloodTank extends TileBase
         super.deserialize(tagCompound);
         tank.readFromNBT(tagCompound.getCompoundTag(Constants.NBT.TANK));
         capacity = tagCompound.getInteger(Constants.NBT.ALTAR_CAPACITY);
+        tank.setCapacity(capacity);
     }
 
     @Override
