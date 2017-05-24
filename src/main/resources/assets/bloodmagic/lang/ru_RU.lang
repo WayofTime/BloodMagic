@@ -1,4 +1,4 @@
-﻿﻿#Creative Tab
+﻿#Creative Tab
 itemGroup.bloodmagic.creativeTab=Blood Magic
 itemGroup.bloodmagic.creativeTabTome=Blood Magic Upgrade Tomes
 
@@ -221,10 +221,10 @@ tooltip.bloodmagic.sigil.compression.desc=&oКучи алмазов
 tooltip.bloodmagic.sigil.divination.desc=&oВзгляд в душу
 tooltip.bloodmagic.sigil.divination.otherNetwork=Заглянем в душу %s
 tooltip.bloodmagic.sigil.divination.currentAltarTier=Уровень: %d
-tooltip.bloodmagic.sigil.divination.currentEssence=Эссенции: %,d LP
-tooltip.bloodmagic.sigil.divination.currentAltarCapacity=Ёмкость: %,d LP
-tooltip.bloodmagic.sigil.divination.currentTranquility=Спокойствие: %,d
-tooltip.bloodmagic.sigil.divination.currentBonus=Бонус: +%,d%%
+tooltip.bloodmagic.sigil.divination.currentEssence=Эссенции: %d LP
+tooltip.bloodmagic.sigil.divination.currentAltarCapacity=Ёмкость: %d LP
+tooltip.bloodmagic.sigil.divination.currentTranquility=Спокойствие: %d
+tooltip.bloodmagic.sigil.divination.currentBonus=Бонус: +%d%%
 tooltip.bloodmagic.sigil.water.desc=&oНужна вода?
 tooltip.bloodmagic.sigil.lava.desc=&oГОРЯЧЕЕ! НЕ ЕСТЬ!
 tooltip.bloodmagic.sigil.void.desc=&oЛучше чем Swiffer!
@@ -235,15 +235,15 @@ tooltip.bloodmagic.sigil.haste.desc=&oПосле 42 чашек кофе...
 tooltip.bloodmagic.sigil.fastMiner.desc=&oВсе глубже и глубже...
 tooltip.bloodmagic.sigil.elementalAffinity.desc=&oПадающая огненная рыба!
 tooltip.bloodmagic.sigil.seer.desc=&oКогда просто видеть недостаточно
-tooltip.bloodmagic.sigil.seer.currentAltarProgress=Прогресс: %,d LP/ %s LP
+tooltip.bloodmagic.sigil.seer.currentAltarProgress=Прогресс: %d LP/ %s LP
 tooltip.bloodmagic.sigil.seer.currentAltarProgress.percent=Прогресс: %s
-tooltip.bloodmagic.sigil.seer.currentAltarConsumptionRate=Расход: %,d LP
+tooltip.bloodmagic.sigil.seer.currentAltarConsumptionRate=Расход: %d LP
 tooltip.bloodmagic.sigil.seer.currentAltarTier=Уровень: %d
-tooltip.bloodmagic.sigil.seer.currentEssence=Эссенции: %,d LP
-tooltip.bloodmagic.sigil.seer.currentAltarCapacity=Ёмкость: %,d LP
-tooltip.bloodmagic.sigil.seer.currentCharge=Заряд: %,d
-tooltip.bloodmagic.sigil.seer.currentTranquility=Спокойствие: %,d
-tooltip.bloodmagic.sigil.seer.currentBonus=Бонус: +%,d%%
+tooltip.bloodmagic.sigil.seer.currentEssence=Эссенции: %d LP
+tooltip.bloodmagic.sigil.seer.currentAltarCapacity=Ёмкость: %d LP
+tooltip.bloodmagic.sigil.seer.currentCharge=Заряд: %d
+tooltip.bloodmagic.sigil.seer.currentTranquility=Спокойствие: %d
+tooltip.bloodmagic.sigil.seer.currentBonus=Бонус: +%d%%
 tooltip.bloodmagic.sigil.phantomBridge.desc=&oПрогулки в воздухе...
 tooltip.bloodmagic.sigil.whirlwind.desc=&oЛучше не одевать юбку
 tooltip.bloodmagic.sigil.enderSeverance.desc=&oНеприятности для странников Края!
@@ -262,7 +262,7 @@ tooltip.bloodmagic.inscriber.desc=Надписи на стене...
 
 tooltip.bloodmagic.pack.selfSacrifice.desc=This pack really chafes...
 tooltip.bloodmagic.pack.sacrifice.desc=Description
-tooltip.bloodmagic.pack.stored=Накоплено: %,d LP
+tooltip.bloodmagic.pack.stored=Накоплено: %d LP
 
 tooltip.bloodmagic.activationCrystal.weak=Активирует простые ритуалы
 tooltip.bloodmagic.activationCrystal.awakened=Активирует сложные ритуалы
@@ -282,7 +282,7 @@ tooltip.bloodmagic.diviner.currentDirection=Направление: %s
 
 tooltip.bloodmagic.arcaneAshes=Пепел для начертания алхимических знаков
 
-tooltip.bloodmagic.telepositionFocus.coords=Координаты: (%,d, %,d, %,d)
+tooltip.bloodmagic.telepositionFocus.coords=Координаты: (%d, %d, %d)
 tooltip.bloodmagic.telepositionFocus.dimension=ID Измерения: %d
 tooltip.bloodmagic.telepositionFocus.weak=Может перемещать блоки
 tooltip.bloodmagic.telepositionFocus.enhanced=Может перемещать блоки
@@ -320,9 +320,9 @@ tooltip.bloodmagic.itemFilter.ignoreNBT=Позволяет игнорирова�
 tooltip.bloodmagic.itemFilter.modItems=Позволяет отобрать предметы из одного мода
 tooltip.bloodmagic.itemFilter.oreDict=Фильтр использующий Ore Dictionary
 
-tooltip.bloodmagic.fluid.type=Содержит
-tooltip.bloodmagic.fluid.amount=Кол-во
-tooltip.bloodmagic.fluid.capacity=Ёмкость
+tooltip.bloodmagic.fluid.type=Жидкость: %s
+tooltip.bloodmagic.fluid.amount=Кол-во: %d / %d мВ
+tooltip.bloodmagic.fluid.capacity=Ёмкость: %d мВ
 
 # Ritual
 ritual.bloodmagic.testRitual=Тестовый ритуал
@@ -375,10 +375,10 @@ jei.bloodmagic.recipe.altar=Кровавый алтарь
 jei.bloodmagic.recipe.binding=Алхимическая матрица (Связывание)
 jei.bloodmagic.recipe.alchemyArrayCrafting=Алхимическая матрица
 jei.bloodmagic.recipe.soulForge=Адская кузница
-jei.bloodmagic.recipe.requiredLP=LP: %,d
+jei.bloodmagic.recipe.requiredLP=LP: %d
 jei.bloodmagic.recipe.requiredTier=Уровень: %d
-jei.bloodmagic.recipe.consumptionRate=Расход: %,d LP/t
-jei.bloodmagic.recipe.drainRate=Потери: %,d LP/t
+jei.bloodmagic.recipe.consumptionRate=Расход: %d LP/t
+jei.bloodmagic.recipe.drainRate=Потери: %d LP/t
 jei.bloodmagic.recipe.minimumSouls=Минимум: %1$,.2f энергии
 jei.bloodmagic.recipe.soulsDrained=Затраты: %1$,.2f энергии
 
