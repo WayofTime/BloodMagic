@@ -13,6 +13,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.iface.IUpgradeTrainer;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
@@ -175,7 +176,7 @@ public class LivingArmour implements ILivingArmour
     @Override
     public void notifyPlayerOfUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade)
     {
-        ChatUtil.sendChat(user, TextHelper.localizeEffect(chatBase + "newUpgrade"));
+        user.sendStatusMessage(new TextComponentString(TextHelper.localizeEffect(chatBase + "newUpgrade")), true);
     }
 
     /**

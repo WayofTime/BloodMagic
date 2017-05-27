@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
@@ -33,7 +34,7 @@ public class LivingArmourUpgradeFireResist extends LivingArmourUpgrade
             player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, fireResistDuration[this.level]));
             fireCooldown = fireCooldownTime[this.level];
 
-            ChatUtil.sendNoSpam(player, TextHelper.localizeEffect(chatBase + "fireRemove"));
+            player.sendStatusMessage(new TextComponentString(TextHelper.localizeEffect(chatBase + "fireRemove")), true);
 
         } else if (fireCooldown > 0)
         {

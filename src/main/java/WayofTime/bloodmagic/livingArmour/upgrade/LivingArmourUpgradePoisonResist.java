@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
@@ -35,7 +36,7 @@ public class LivingArmourUpgradePoisonResist extends LivingArmourUpgrade
                 player.removePotionEffect(MobEffects.POISON);
                 poisonCooldown = poisonCooldownTime[this.level];
 
-                ChatUtil.sendNoSpam(player, TextHelper.localize(chatBase + "poisonRemove"));
+                player.sendStatusMessage(new TextComponentString(TextHelper.localize(chatBase + "poisonRemove")), true);
             }
         } else if (poisonCooldown > 0)
         {

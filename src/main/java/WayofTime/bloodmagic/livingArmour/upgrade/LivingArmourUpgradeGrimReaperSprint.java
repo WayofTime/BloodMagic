@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
@@ -90,7 +91,7 @@ public class LivingArmourUpgradeGrimReaperSprint extends LivingArmourUpgrade
         }
 
         deathTimer = rebirthDelay[this.level];
-        ChatUtil.sendNoSpam(player, TextHelper.localizeEffect(chatBase + "grimReaper"));
+        player.sendStatusMessage(new TextComponentString(TextHelper.localizeEffect(chatBase + "grimReaper")), true);
     }
 
     public boolean canSavePlayer(EntityPlayer player)

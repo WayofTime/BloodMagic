@@ -158,7 +158,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             ItemStack leggings = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
             ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 
-            if (helmet == null || leggings == null || boots == null)
+            if (helmet.isEmpty() || leggings.isEmpty() || boots.isEmpty())
             {
                 damageAmount *= (armourReduction);
 
