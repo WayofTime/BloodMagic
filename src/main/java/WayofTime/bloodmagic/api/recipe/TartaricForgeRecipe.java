@@ -1,6 +1,8 @@
 package WayofTime.bloodmagic.api.recipe;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@EqualsAndHashCode
+@ToString
 public class TartaricForgeRecipe
 {
     protected ItemStack output = null;
