@@ -22,6 +22,11 @@ public class TartaricForgeRecipeRegistry
         registerRecipe(new TartaricForgeRecipe(outputStack, minimulSouls, drain, objects));
     }
 
+    public static void removeRecipe(TartaricForgeRecipe recipe)
+    {
+        recipeList.remove(recipe);
+    }
+
     public static TartaricForgeRecipe getMatchingRecipe(List<ItemStack> itemList, World world, BlockPos pos)
     {
         for (TartaricForgeRecipe recipe : recipeList)

@@ -22,6 +22,11 @@ public class AlchemyTableRecipeRegistry
         registerRecipe(new AlchemyTableRecipe(outputStack, lpDrained, ticksRequired, tierRequired, objects));
     }
 
+    public static void removeRecipe(AlchemyTableRecipe recipe)
+    {
+        recipeList.remove(recipe);
+    }
+
     public static AlchemyTableRecipe getMatchingRecipe(List<ItemStack> itemList, World world, BlockPos pos)
     {
         for (AlchemyTableRecipe recipe : recipeList)

@@ -42,6 +42,11 @@ public class AltarRecipeRegistry
         registerRecipe(new AltarRecipe(orbStack, orbStack, tier, maxForOrb, consumeRate, drainRate, true));
     }
 
+    public static void removeRecipe(AltarRecipe altarRecipe)
+    {
+        recipes.remove(altarRecipe.getInput());
+    }
+
     /**
      * Gets the recipe that the provided input is registered to.
      * 

@@ -74,13 +74,7 @@ public class AlchemyArrayRecipeRegistry
             }
         }
 
-        if (circleRenderer == null)
-        {
-            recipes.put(input, new AlchemyArrayRecipe(input, catalystStack, arrayEffect, defaultRenderer));
-        } else
-        {
-            recipes.put(input, new AlchemyArrayRecipe(input, catalystStack, arrayEffect, circleRenderer));
-        }
+        recipes.put(input, new AlchemyArrayRecipe(input, catalystStack, arrayEffect, circleRenderer == null ? defaultRenderer : circleRenderer));
     }
 
     public static AlchemyArrayEffect getAlchemyArrayEffect(String key)
@@ -116,7 +110,7 @@ public class AlchemyArrayRecipeRegistry
     }
 
     /**
-     * @param Output
+     * @param stack
      *        of the recipe
      * @return an array of two ItemStacks - first index is the input stack,
      *         second is the catalyst stack. Returns {null, null} if no recipe
