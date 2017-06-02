@@ -63,10 +63,10 @@ public class TileMimic extends TileInventory implements ITickable
         }
 
         internalCounter++;
-        if (internalCounter % potionSpawnInterval == 0 && this.getBlockMetadata() != BlockMimic.sentientMimicMeta)
+        if (internalCounter % potionSpawnInterval == 0 && this.getBlockMetadata() == BlockMimic.sentientMimicMeta)
         {
             ItemStack potionStack = this.getStackInSlot(1);
-            if (potionStack != null)
+            if (!potionStack.isEmpty())
             {
                 AxisAlignedBB bb = new AxisAlignedBB(this.getPos()).expand(playerCheckRadius, playerCheckRadius, playerCheckRadius);
                 List<EntityPlayer> playerList = getWorld().getEntitiesWithinAABB(EntityPlayer.class, bb);
