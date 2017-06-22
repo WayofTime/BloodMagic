@@ -39,7 +39,7 @@ public class HarvestHandlerStem implements IHarvestHandler
         BlockPos cropPos = pos;
         if (HarvestRegistry.getStemCrops().containsKey(blockStack))
         {
-            EnumFacing cropDir = blockStack.getState().getValue(BlockStem.FACING);
+            EnumFacing cropDir = blockStack.getBlock().getActualState(blockStack.getState(), world, pos).getValue(BlockStem.FACING);
 
             if (cropDir != EnumFacing.UP)
             {
