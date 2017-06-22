@@ -56,11 +56,11 @@ public class ItemStackWrapper
     public static ItemStackWrapper getHolder(ItemStack stack)
     {
         if (stack.isEmpty())
-        {
             return null;
-        }
 
-        return new ItemStackWrapper(stack.getItem(), stack.getCount(), stack.getItemDamage());
+        ItemStackWrapper wrapper = new ItemStackWrapper(stack.getItem(), stack.getCount(), stack.getItemDamage());
+        wrapper.setNbtTag(stack.getTagCompound());
+        return wrapper;
     }
 
     public ItemStack toStack()
