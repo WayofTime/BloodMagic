@@ -1,9 +1,15 @@
 package WayofTime.bloodmagic.ritual.harvest;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
+
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.iface.IHarvestHandler;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -13,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.util.List;
 
@@ -38,6 +45,15 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 
         addThirdPartyCrop("extrautils2", "redorchid", 6);
         addThirdPartyCrop("extrautils2", "enderlily", 7);
+
+        addThirdPartyCrop("roots", "moonglow", 7);
+        addThirdPartyCrop("roots", "terra_moss", 7);
+        addThirdPartyCrop("roots", "pereskia", 7);
+        addThirdPartyCrop("roots", "wildroot", 7);
+        addThirdPartyCrop("roots", "aubergine", 7);
+        addThirdPartyCrop("roots", "spirit_herb", 7);
+
+        addPamCrops();
     }
 
     @Override
@@ -97,5 +113,38 @@ public class HarvestHandlerPlantable implements IHarvestHandler
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(modid, regName));
         if (block != null && block != Blocks.AIR)
             HarvestRegistry.registerStandardCrop(block, matureMeta);
+    }
+
+    private static void addPamCrops()
+    {
+        if (!Loader.isModLoaded("harvestcraft"))
+            return;
+
+        try {
+            ClassLoader loader = HarvestHandlerPlantable.class.getClassLoader();
+            String className = "com.pam.harvestcraft.blocks.CropRegistry";
+            Class<?> registry = ReflectionHelper.getClass(loader, className);
+            Field names = ReflectionHelper.findField(registry, "cropNames");
+            Method getCrop = registry.getMethod("getCrop", String.class);
+            for (String name : (String[])names.get(null)) {
+                BlockCrops crop = (BlockCrops) getCrop.invoke(null, name);
+                HarvestRegistry.registerStandardCrop(crop, crop.getMaxAge());
+            }
+        } catch (NoSuchMethodException e) {
+            BloodMagic.instance.getLogger().error("HarvestCraft integration cancelled; unable to find crop name mapper");
+            return;
+        } catch (IllegalAccessException e) {
+            BloodMagic.instance.getLogger().error("HarvestCraft integration cancelled; crop name lookup broke");
+            return;
+        } catch (InvocationTargetException e) {
+            BloodMagic.instance.getLogger().error("HarvestCraft integration cancelled; crop name lookup broke");
+            return;
+        } catch (ReflectionHelper.UnableToFindClassException e) {
+            BloodMagic.instance.getLogger().error("HarvestCraft integration cancelled; unable to find crop registry");
+            return;
+        } catch (ReflectionHelper.UnableToFindFieldException e) {
+            BloodMagic.instance.getLogger().error("HarvestCraft integration cancelled; unable to find crop names in registry");
+            return;
+        }
     }
 }
