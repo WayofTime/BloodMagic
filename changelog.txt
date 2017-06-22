@@ -1,4 +1,25 @@
 ------------------------------------------------------
+Version 2.1.11
+------------------------------------------------------
+
+- Added support for some modded crops (Untested. Theoretically they work)
+    - Harvestcraft
+    - Actually Additions
+    - Extra Utilities
+- Fixed permission level for sub-commands
+- Large Bloodstone Bricks should receive 4 from a craft
+- Fixed Diamond Meteor giving blocks of diamond
+- Dynamically calculate Meteor Weight
+- Fixed NPE in fluid filter
+- Fixed Blood Tank capacity being reset when the chunk reloaded
+- Updated russian translation
+- Fixed Rune Type capability not registering on physical client
+- Updated Sigil of Holding texture so set color is more visible
+- Fixed blocks destroyed by bound tools not storing any NBT data
+- Fixed Harvest ritual not working on Melons and Pumpkins
+- [API] Methods for removing recipes
+
+------------------------------------------------------
 Version 2.1.10
 ------------------------------------------------------
 
