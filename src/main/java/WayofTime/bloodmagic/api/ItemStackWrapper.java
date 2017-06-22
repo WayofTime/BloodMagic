@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,14 +52,15 @@ public class ItemStackWrapper
         this(blockStack.getBlock(), 1, blockStack.getMeta());
     }
 
+    @Nullable
     public static ItemStackWrapper getHolder(ItemStack stack)
     {
         if (stack == null)
-        {
             return null;
-        }
 
-        return new ItemStackWrapper(stack.getItem(), stack.stackSize, stack.getItemDamage());
+        ItemStackWrapper wrapper = new ItemStackWrapper(stack.getItem(), stack.stackSize, stack.getItemDamage());
+        wrapper.setNbtTag(stack.getTagCompound());
+        return wrapper;
     }
 
     public ItemStack toStack()
