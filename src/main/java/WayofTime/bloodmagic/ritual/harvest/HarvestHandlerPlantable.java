@@ -45,6 +45,13 @@ public class HarvestHandlerPlantable implements IHarvestHandler
         addThirdPartyCrop("extrautils2", "redorchid", 6);
         addThirdPartyCrop("extrautils2", "enderlily", 7);
 
+        addThirdPartyCrop("roots", "moonglow", 7);
+        addThirdPartyCrop("roots", "terra_moss", 7);
+        addThirdPartyCrop("roots", "pereskia", 7);
+        addThirdPartyCrop("roots", "wildroot", 7);
+        addThirdPartyCrop("roots", "aubergine", 7);
+        addThirdPartyCrop("roots", "spirit_herb", 7);
+
         addPamCrops();
     }
 
