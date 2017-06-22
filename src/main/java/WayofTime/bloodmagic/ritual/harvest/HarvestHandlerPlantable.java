@@ -1,5 +1,9 @@
 package WayofTime.bloodmagic.ritual.harvest;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
+
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.iface.IHarvestHandler;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
@@ -12,7 +16,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.util.List;
 
@@ -38,6 +44,8 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 
         addThirdPartyCrop("extrautils2", "redorchid", 6);
         addThirdPartyCrop("extrautils2", "enderlily", 7);
+
+        addPamCrops();
     }
 
     @Override
@@ -97,5 +105,38 @@ public class HarvestHandlerPlantable implements IHarvestHandler
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(modid, regName));
         if (block != null && block != Blocks.AIR)
             HarvestRegistry.registerStandardCrop(block, matureMeta);
+    }
+
+    private static void addPamCrops()
+    {
+        if (!Loader.isModLoaded("harvestcraft"))
+            return;
+
+        try {
+            ClassLoader loader = HarvestHandlerPlantable.class.getClassLoader();
+            String className = "com.pam.harvestcraft.blocks.CropRegistry";
+            Class<?> registry = ReflectionHelper.getClass(loader, className);
+            Field names = ReflectionHelper.findField(registry, "cropNames");
+            Method getCrop = registry.getMethod("getCrop", String.class);
+            for (String name : (String[])names.get(null)) {
+                Block crop = (Block) getCrop.invoke(null, name);
+                HarvestRegistry.registerStandardCrop(crop, 3);
+            }
+        } catch (NoSuchMethodException e) {
+            FMLLog.warning("HarvestCraft integration cancelled; unable to find crop name mapper");
+            return;
+        } catch (IllegalAccessException e) {
+            FMLLog.warning("HarvestCraft integration cancelled; crop name lookup broke");
+            return;
+        } catch (InvocationTargetException e) {
+            FMLLog.warning("HarvestCraft integration cancelled; crop name lookup broke");
+            return;
+        } catch (ReflectionHelper.UnableToFindClassException e) {
+            FMLLog.warning("HarvestCraft integration cancelled; unable to find crop registry");
+            return;
+        } catch (ReflectionHelper.UnableToFindFieldException e) {
+            FMLLog.warning("HarvestCraft integration cancelled; unable to find crop names in registry");
+            return;
+        }
     }
 }
