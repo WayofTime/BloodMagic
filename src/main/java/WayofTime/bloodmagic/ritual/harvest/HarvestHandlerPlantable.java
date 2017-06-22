@@ -9,6 +9,7 @@ import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.iface.IHarvestHandler;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -126,8 +127,8 @@ public class HarvestHandlerPlantable implements IHarvestHandler
             Field names = ReflectionHelper.findField(registry, "cropNames");
             Method getCrop = registry.getMethod("getCrop", String.class);
             for (String name : (String[])names.get(null)) {
-                Block crop = (Block) getCrop.invoke(null, name);
-                HarvestRegistry.registerStandardCrop(crop, 3);
+                BlockCrops crop = (BlockCrops) getCrop.invoke(null, name);
+                HarvestRegistry.registerStandardCrop(crop, crop.getMaxAge());
             }
         } catch (NoSuchMethodException e) {
             BloodMagic.instance.getLogger().error("HarvestCraft integration cancelled; unable to find crop name mapper");
