@@ -410,7 +410,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             return armour.getAttributeModifiers();
         }
 
-        return HashMultimap.<String, AttributeModifier>create();
+        return super.getAttributeModifiers(slot, stack);
     }
 
     @Override
