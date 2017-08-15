@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,7 +16,7 @@ public class RitualContainment extends Ritual
 
     public RitualContainment()
     {
-        super("ritualContainment", 0, 2000, "ritual." + Constants.Mod.MODID + ".containmentRitual");
+        super("ritualContainment", 0, 2000, "ritual." + BloodMagic.MODID + ".containmentRitual");
         addBlockRange(CONTAINMENT_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-3, 0, -3), 7));
         setMaximumVolumeAndDistanceOfRange(CONTAINMENT_RANGE, 0, 10, 10);
     }

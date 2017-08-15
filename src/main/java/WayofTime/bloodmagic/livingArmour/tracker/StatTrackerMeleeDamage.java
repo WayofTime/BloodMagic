@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
@@ -29,7 +29,7 @@ public class StatTrackerMeleeDamage extends StatTracker
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.meleeDamage";
+        return BloodMagic.MODID + ".tracker.meleeDamage";
     }
 
     @Override
@@ -41,13 +41,13 @@ public class StatTrackerMeleeDamage extends StatTracker
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalDamageDealt = tag.getDouble(Constants.Mod.MODID + ".tracker.meleeDamage");
+        totalDamageDealt = tag.getDouble(BloodMagic.MODID + ".tracker.meleeDamage");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setDouble(Constants.Mod.MODID + ".tracker.meleeDamage", totalDamageDealt);
+        tag.setDouble(BloodMagic.MODID + ".tracker.meleeDamage", totalDamageDealt);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class StatTrackerMeleeDamage extends StatTracker
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.meleeDamage");
+        return key.equals(BloodMagic.MODID + ".upgrade.meleeDamage");
     }
 
     @Override

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.client.gui;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.tile.container.ContainerTeleposer;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -30,7 +30,7 @@ public class GuiTeleposer extends GuiContainer
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        ResourceLocation teleposerGuiTextures = new ResourceLocation(Constants.Mod.MODID + ":textures/gui/teleposer.png");
+        ResourceLocation teleposerGuiTextures = new ResourceLocation(BloodMagic.MODID + ":textures/gui/teleposer.png");
         this.mc.getTextureManager().bindTexture(teleposerGuiTextures);
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;

@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -25,7 +24,6 @@ import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 
 import com.google.common.base.Strings;
 
-@Getter
 public class TileAlchemyTable extends TileInventory implements ISidedInventory, ITickable
 {
     public static final int orbSlot = 6;
@@ -397,5 +395,41 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         {
             setInventorySlotContents(i, result[i]);
         }
+    }
+
+    public static int getOrbSlot() {
+        return orbSlot;
+    }
+
+    public static int getToolSlot() {
+        return toolSlot;
+    }
+
+    public static int getOutputSlot() {
+        return outputSlot;
+    }
+
+    public EnumFacing getDirection() {
+        return direction;
+    }
+
+    public boolean isSlave() {
+        return isSlave;
+    }
+
+    public int getBurnTime() {
+        return burnTime;
+    }
+
+    public int getTicksRequired() {
+        return ticksRequired;
+    }
+
+    public BlockPos getConnectedPos() {
+        return connectedPos;
+    }
+
+    public boolean[] getBlockedSlots() {
+        return blockedSlots;
     }
 }

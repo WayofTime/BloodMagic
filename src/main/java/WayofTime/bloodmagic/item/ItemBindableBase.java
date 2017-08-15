@@ -2,7 +2,6 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.impl.ItemBindable;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
@@ -19,7 +18,7 @@ public class ItemBindableBase extends ItemBindable
     {
         super();
 
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.ritual.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -22,7 +22,7 @@ public class RitualFullStomach extends Ritual
 
     public RitualFullStomach()
     {
-        super("ritualFullStomach", 0, 100000, "ritual." + Constants.Mod.MODID + ".fullStomachRitual");
+        super("ritualFullStomach", 0, 100000, "ritual." + BloodMagic.MODID + ".fullStomachRitual");
         addBlockRange(FILL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-25, -25, -25), 51));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
 

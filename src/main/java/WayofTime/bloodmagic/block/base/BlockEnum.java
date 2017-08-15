@@ -1,23 +1,24 @@
 package WayofTime.bloodmagic.block.base;
 
-import lombok.Getter;
+import WayofTime.bloodmagic.block.IBMBlock;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.item.block.base.ItemBlockEnum;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
-@Getter
-public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block
+public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block implements IBMBlock, IVariantProvider
 {
     private final E[] types;
     private final PropertyEnum<E> property;
@@ -68,16 +69,44 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block
         return getMetaFromState(state);
     }
 
-    @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item item, CreativeTabs tab, NonNullList<ItemStack> subBlocks)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> subBlocks)
     {
         for (E type : types)
-            subBlocks.add(new ItemStack(item, 1, type.ordinal()));
+            subBlocks.add(new ItemStack(this, 1, type.ordinal()));
     }
 
     protected BlockStateContainer createStateContainer()
     {
         return new BlockStateContainer.Builder(this).add(property).build();
+    }
+
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlockEnum<>(this);
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> variants = Lists.newArrayList();
+        if (getItem() == null)
+            return variants;
+
+        for (int i = 0; i < types.length; i++)
+            variants.add(Pair.of(i, getProperty().getName() + "=" + types[i].name()));
+
+        return variants;
+    }
+
+    public E[] getTypes() {
+        return types;
+    }
+
+    public PropertyEnum<E> getProperty() {
+        return property;
+    }
+
+    public BlockStateContainer getRealStateContainer() {
+        return realStateContainer;
     }
 }

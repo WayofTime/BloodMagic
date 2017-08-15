@@ -6,14 +6,12 @@ import java.util.Map;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 
 public class ItemSigilPhantomBridge extends ItemSigilToggleableBase
 {
@@ -88,7 +86,7 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase
                 BlockPos blockPos = new BlockPos(ix + posX, posY + verticalOffset, iz + posZ);
 
                 if (world.isAirBlock(blockPos))
-                    world.setBlockState(blockPos, ModBlocks.PHANTOM_BLOCK.getDefaultState());
+                    world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
             }
         }
 

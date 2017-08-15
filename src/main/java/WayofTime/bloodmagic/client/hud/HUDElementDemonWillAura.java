@@ -3,15 +3,14 @@ package WayofTime.bloodmagic.client.hud;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.proxy.ClientProxy;
 import WayofTime.bloodmagic.util.Utils;
@@ -41,7 +40,7 @@ public class HUDElementDemonWillAura extends HUDElement
             return;
         }
 
-        minecraft.getTextureManager().bindTexture(new ResourceLocation(Constants.Mod.MODID, "textures/hud/bars.png"));
+        minecraft.getTextureManager().bindTexture(new ResourceLocation(BloodMagic.MODID, "textures/hud/bars.png"));
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         this.drawTexturedModalRect(getXOffset(), getYOffset(), 0, 105 * 2, 80, 46);
 
@@ -52,7 +51,7 @@ public class HUDElementDemonWillAura extends HUDElement
         {
             i++;
             GlStateManager.color(1.0F, 1.0F, 1.0F);
-            minecraft.getTextureManager().bindTexture(new ResourceLocation(Constants.Mod.MODID, "textures/hud/bars.png"));
+            minecraft.getTextureManager().bindTexture(new ResourceLocation(BloodMagic.MODID, "textures/hud/bars.png"));
             int textureXOffset = (i > 3) ? (i - 3) : (3 - i);
             int maxBarSize = 30 - 2 * textureXOffset;
 

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.ritual.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -22,7 +22,7 @@ public class RitualPlacer extends Ritual
 
     public RitualPlacer()
     {
-        super("ritualPlacer", 0, 5000, "ritual." + Constants.Mod.MODID + ".placerRitual");
+        super("ritualPlacer", 0, 5000, "ritual." + BloodMagic.MODID + ".placerRitual");
         addBlockRange(PLACER_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 0, -2), 5, 1, 5));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
 

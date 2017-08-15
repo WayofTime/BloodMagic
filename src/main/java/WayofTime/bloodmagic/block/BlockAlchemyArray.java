@@ -3,12 +3,11 @@ package WayofTime.bloodmagic.block;
 import java.util.List;
 import java.util.Random;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -23,8 +22,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.util.Utils;
 
@@ -38,13 +36,12 @@ public class BlockAlchemyArray extends Block
     {
         super(Material.CLOTH);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".alchemyArray");
+        setUnlocalizedName(BloodMagic.MODID + ".alchemyArray");
         setHardness(0.1f);
     }
 
     @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity)
-    {
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
         // No-op
     }
 
@@ -134,7 +131,7 @@ public class BlockAlchemyArray extends Block
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
     {
-        return new ItemStack(ModItems.ARCANE_ASHES);
+        return new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES);
     }
 
     @Override

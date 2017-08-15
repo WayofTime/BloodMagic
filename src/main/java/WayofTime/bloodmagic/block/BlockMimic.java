@@ -1,8 +1,5 @@
 package WayofTime.bloodmagic.block;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nullable;
 
 import WayofTime.bloodmagic.block.base.BlockEnum;
@@ -26,20 +23,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.altar.IAltarComponent;
 import WayofTime.bloodmagic.block.enums.EnumMimic;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.util.Utils;
 
-public class BlockMimic extends BlockEnum<EnumMimic> implements IVariantProvider, IAltarComponent
+public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent
 {
     public static final int sentientMimicMeta = 4;
 
@@ -47,8 +39,8 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IVariantProvider
     {
         super(Material.ROCK, EnumMimic.class);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".mimic.");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".mimic.");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);
         setSoundType(SoundType.STONE);
@@ -171,7 +163,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IVariantProvider
                 {
                     if (block.getRenderType(mimicState) == EnumBlockRenderType.ENTITYBLOCK_ANIMATED)
                     {
-                        return ModBlocks.BLOOD_LIGHT.getDefaultState(); //Small and invisible-ish, basically this is returned in order to not render over the animated block (TESR)
+                        return RegistrarBloodMagicBlocks.BLOOD_LIGHT.getDefaultState(); //Small and invisible-ish, basically this is returned in order to not render over the animated block (TESR)
                     }
 
                     return block.getActualState(mimicState, world, pos);
@@ -223,15 +215,6 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IVariantProvider
         }
 
         super.breakBlock(world, blockPos, blockState);
-    }
-
-    @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < this.getTypes().length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
-        return ret;
     }
 
     @Override

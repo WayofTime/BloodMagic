@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -18,7 +17,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileIncenseAltar;
 
@@ -32,8 +30,8 @@ public class BlockIncenseAltar extends Block implements IVariantProvider
     {
         super(Material.ROCK);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".incenseAltar");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".incenseAltar");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 0);

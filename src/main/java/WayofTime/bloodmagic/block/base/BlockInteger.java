@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.block.base;
 
-import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -18,7 +17,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * 
  * These states will be numbered 0 through {@code maxMeta}.
  */
-@Getter
 public class BlockInteger extends Block
 {
     private final int maxMeta;
@@ -65,11 +63,10 @@ public class BlockInteger extends Block
         return getMetaFromState(state);
     }
 
-    @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item item, CreativeTabs tab, NonNullList<ItemStack> subBlocks) {
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> subBlocks) {
         for (int i = 0; i < maxMeta; i++)
-            subBlocks.add(new ItemStack(item, 1, i));
+            subBlocks.add(new ItemStack(this, 1, i));
     }
 
     protected BlockStateContainer createStateContainer() {

@@ -61,7 +61,7 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
                     BlockPos blockPos = new BlockPos(ix, iy, iz);
                     Block block = worldIn.getBlockState(blockPos).getBlock();
 
-                    if (!BloodMagicAPI.getGreenGroveBlacklist().contains(block))
+                    if (!BloodMagicAPI.greenGroveBlacklist.contains(block))
                     {
                         if (block instanceof IPlantable || block instanceof IGrowable)
                         {

@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IHarvestHandler;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
 import WayofTime.bloodmagic.api.ritual.*;
@@ -27,7 +27,7 @@ public class RitualHarvest extends Ritual
 
     public RitualHarvest()
     {
-        super("ritualHarvest", 0, 20000, "ritual." + Constants.Mod.MODID + ".harvestRitual");
+        super("ritualHarvest", 0, 20000, "ritual." + BloodMagic.MODID + ".harvestRitual");
         addBlockRange(HARVEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-4, 1, -4), 9, 5, 9));
         setMaximumVolumeAndDistanceOfRange(HARVEST_RANGE, 0, 15, 15);
     }

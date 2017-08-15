@@ -45,7 +45,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerRepairing;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeElytra;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.PlayerFallDistancePacketProcessor;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -69,16 +69,16 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     public ItemLivingArmour(EntityEquipmentSlot armorType)
     {
         super(ItemArmor.ArmorMaterial.IRON, 0, armorType);
-        setUnlocalizedName(Constants.Mod.MODID + ".livingArmour.");
+        setUnlocalizedName(BloodMagic.MODID + ".livingArmour.");
 //        setMaxDamage(250);
         setMaxDamage((int) (getMaxDamage() * 1.5));
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override
     public void onCreated(ItemStack stack, World world, EntityPlayer player)
     {
-        if (stack != null && !world.isRemote && stack.getItem() == ModItems.LIVING_ARMOUR_CHEST)
+        if (stack != null && !world.isRemote && stack.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST)
         {
             Utils.setUUID(stack);
         }
@@ -87,12 +87,12 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type)
     {
-        if (this == ModItems.LIVING_ARMOUR_CHEST || this == ModItems.LIVING_ARMOUR_HELMET || this == ModItems.LIVING_ARMOUR_BOOTS)
+        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST || this == RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET || this == RegistrarBloodMagicItems.LIVING_ARMOUR_BOOTS)
         {
             return "bloodmagic:models/armor/livingArmour_layer_1.png";
         }
 
-        if (this == ModItems.LIVING_ARMOUR_LEGS)
+        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_LEGS)
         {
             return "bloodmagic:models/armor/livingArmour_layer_2.png";
         } else
@@ -125,13 +125,13 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         double armourReduction = 0.0;
         double damageAmount = 0.25;
 
-        if (this == ModItems.LIVING_ARMOUR_BOOTS || this == ModItems.LIVING_ARMOUR_HELMET)
+        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_BOOTS || this == RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET)
         {
             damageAmount = 3d / 20d * 0.6;
-        } else if (this == ModItems.LIVING_ARMOUR_LEGS)
+        } else if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_LEGS)
         {
             damageAmount = 6d / 20d * 0.6;
-        } else if (this == ModItems.LIVING_ARMOUR_CHEST)
+        } else if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST)
         {
             damageAmount = 0.64;
         }
@@ -150,7 +150,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             return new ArmorProperties(-1, 0, 0);
         }
 
-        if (this == ModItems.LIVING_ARMOUR_CHEST)
+        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST)
         {
             armourReduction = 0.24 / 0.64; // This values puts it at iron level
 
@@ -208,22 +208,22 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     @Override
     public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot)
     {
-        if (armor.getItem() == ModItems.LIVING_ARMOUR_HELMET)
+        if (armor.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET)
         {
             return 3;
         }
 
-        if (armor.getItem() == ModItems.LIVING_ARMOUR_CHEST)
+        if (armor.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST)
         {
             return 8;
         }
 
-        if (armor.getItem() == ModItems.LIVING_ARMOUR_LEGS)
+        if (armor.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_LEGS)
         {
             return 6;
         }
 
-        if (armor.getItem() == ModItems.LIVING_ARMOUR_BOOTS)
+        if (armor.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_BOOTS)
         {
             return 3;
         }
@@ -234,7 +234,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     @Override
     public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot)
     {
-        if (this == ModItems.LIVING_ARMOUR_CHEST)
+        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST)
         {
             int preDamage = stack.getItemDamage();
             if (source.isUnblockable())
@@ -286,7 +286,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         if (!stack.hasTagCompound())
             return;
 
-        if (this == ModItems.LIVING_ARMOUR_CHEST)
+        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST)
         {
             LivingArmour armour = getLivingArmourFromStack(stack);
             for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
@@ -333,7 +333,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     {
         super.onArmorTick(world, player, stack);
 
-        if (world.isRemote && this == ModItems.LIVING_ARMOUR_CHEST)
+        if (world.isRemote && this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST)
         {
             if (player instanceof EntityPlayerSP) //Sanity check
             {
@@ -358,7 +358,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                     if (LivingArmour.hasFullSet(player))
                     {
                         ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(Constants.Mod.MODID + ".upgrade.elytra", chestStack);
+                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(BloodMagic.MODID + ".upgrade.elytra", chestStack);
                         if (upgrade instanceof LivingArmourUpgradeElytra)
                         {
                             if (spPlayer.movementInput.jump && !spPlayer.onGround && spPlayer.motionY < 0.0D && !spPlayer.capabilities.isFlying)
@@ -384,7 +384,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             }
         }
 
-        if (this == ModItems.LIVING_ARMOUR_CHEST)
+        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST)
         {
             if (!hasLivingArmour(stack))
             {
@@ -405,7 +405,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
     {
-        if (this == ModItems.LIVING_ARMOUR_CHEST && isEnabled(stack) && slot == EntityEquipmentSlot.CHEST)
+        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST && isEnabled(stack) && slot == EntityEquipmentSlot.CHEST)
         {
             LivingArmour armour = ItemLivingArmour.getLivingArmourFromStack(stack);
 
@@ -431,11 +431,11 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             public ModelResourceLocation getModelLocation(ItemStack stack)
             {
                 assert getCustomLocation() != null;
-                if (stack.getItem() == ModItems.LIVING_ARMOUR_HELMET)
+                if (stack.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET)
                     return new ModelResourceLocation(getCustomLocation(), "armour=head");
-                else if (stack.getItem() == ModItems.LIVING_ARMOUR_CHEST)
+                else if (stack.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST)
                     return new ModelResourceLocation(getCustomLocation(), "armour=body");
-                else if (stack.getItem() == ModItems.LIVING_ARMOUR_LEGS)
+                else if (stack.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_LEGS)
                     return new ModelResourceLocation(getCustomLocation(), "armour=leg");
                 else
                     return new ModelResourceLocation(getCustomLocation(), "armour=feet");
@@ -446,7 +446,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     @Override
     public ResourceLocation getCustomLocation()
     {
-        return new ResourceLocation(Constants.Mod.MODID, "item/ItemLivingArmour");
+        return new ResourceLocation(BloodMagic.MODID, "item/ItemLivingArmour");
     }
 
     @Override

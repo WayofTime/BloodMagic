@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
@@ -26,7 +25,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 
 import javax.annotation.Nullable;
 
@@ -34,8 +32,8 @@ public class ItemPotionFlask extends Item implements IMeshProvider
 {
     public ItemPotionFlask()
     {
-        setUnlocalizedName(Constants.Mod.MODID + ".potionFlask");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".potionFlask");
+        setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
         setMaxDamage(8);
         setNoRepair();
@@ -149,7 +147,7 @@ public class ItemPotionFlask extends Item implements IMeshProvider
                 boolean full = true;
                 if (stack.hasTagCompound() && stack.getTagCompound().hasKey("empty"))
                     full = false;
-                return new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + getRegistryName().getResourcePath()), "full=" + (full ? "true" : "false"));
+                return new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/" + getRegistryName().getResourcePath()), "full=" + (full ? "true" : "false"));
             }
         };
     }

@@ -3,10 +3,10 @@ package WayofTime.bloodmagic.livingArmour.tracker;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
@@ -22,7 +22,7 @@ public class StatTrackerFireResist extends StatTracker
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.fire";
+        return BloodMagic.MODID + ".tracker.fire";
     }
 
     @Override
@@ -34,13 +34,13 @@ public class StatTrackerFireResist extends StatTracker
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalFireTicks = tag.getInteger(Constants.Mod.MODID + ".tracker.fire");
+        totalFireTicks = tag.getInteger(BloodMagic.MODID + ".tracker.fire");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setInteger(Constants.Mod.MODID + ".tracker.fire", totalFireTicks);
+        tag.setInteger(BloodMagic.MODID + ".tracker.fire", totalFireTicks);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class StatTrackerFireResist extends StatTracker
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.fireResist");
+        return key.equals(BloodMagic.MODID + ".upgrade.fireResist");
     }
 
     @Override

@@ -2,19 +2,18 @@ package WayofTime.bloodmagic.item;
 
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagic;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
@@ -25,11 +24,13 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.base.Strings;
 
+import javax.annotation.Nullable;
+
 public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindable
 {
     public ItemBloodOrb()
     {
-        setUnlocalizedName(Constants.Mod.MODID + ".orb.");
+        setUnlocalizedName(BloodMagic.MODID + ".orb");
         this.setMaxDamage(0);
         setHasSubtypes(true);
     }
@@ -37,27 +38,41 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return super.getUnlocalizedName(stack) + OrbRegistry.getOrb(stack.getItemDamage()).getName();
+        BloodOrb orb = getOrb(stack);
+        if (orb == null)
+            return super.getUnlocalizedName(stack);
+
+        return super.getUnlocalizedName(stack) + "." + orb.getName();
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
-        for (int i = 0; i < OrbRegistry.getSize(); i++)
-            list.add(new ItemStack(id, 1, i));
+        if (!isInCreativeTab(creativeTab))
+            return;
+
+        for (BloodOrb orb : RegistrarBloodMagic.BLOOD_ORBS) {
+            ItemStack orbStack = new ItemStack(this);
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setString("orb", orb.getRegistryName().toString());
+            orbStack.setTagCompound(tag);
+            list.add(orbStack);
+        }
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
         ItemStack stack = player.getHeldItem(hand);
+        BloodOrb orb = getOrb(stack);
+
+        if (orb == null)
+            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+
         if (world == null)
             return super.onItemRightClick(world, player, hand);
 
         world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-        // SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ,
-        // 20, world.provider.getDimensionId(), 4, posX, posY, posZ);
 
         if (PlayerHelper.isFakePlayer(player))
             return super.onItemRightClick(world, player, hand);
@@ -74,9 +89,9 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
             return super.onItemRightClick(world, player, hand);
 
         if (getOwnerUUID(stack).equals(PlayerHelper.getUsernameFromPlayer(player)))
-            NetworkHelper.setMaxOrb(NetworkHelper.getSoulNetwork(getOwnerUUID(stack)), getOrbLevel(stack.getItemDamage()));
+            NetworkHelper.setMaxOrb(NetworkHelper.getSoulNetwork(getOwnerUUID(stack)), orb.getTier());
 
-        NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).add(200, getMaxEssence(stack.getItemDamage()));
+        NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).add(200, orb.getCapacity());
         NetworkHelper.getSoulNetwork(player).hurtPlayer(player, 200);
         return super.onItemRightClick(world, player, hand);
     }
@@ -87,8 +102,9 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
     {
         tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.orb.desc"));
 
-        if (advanced)
-            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.orb.owner", getOrb(stack.getItemDamage()).getOwner()));
+        BloodOrb orb = getOrb(stack);
+        if (advanced && orb != null)
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.orb.owner", orb.getRegistryName()));
 
         super.addInformation(stack, player, tooltip, advanced);
     }
@@ -115,21 +131,13 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
 
     // IBloodOrb
 
+    @Nullable
     @Override
-    public BloodOrb getOrb(int meta)
-    {
-        return OrbRegistry.getOrb(meta);
-    }
+    public BloodOrb getOrb(ItemStack stack) {
+        if (!stack.hasTagCompound())
+            return null;
 
-    @Override
-    public int getMaxEssence(int meta)
-    {
-        return OrbRegistry.getOrb(meta).getCapacity();
-    }
-
-    @Override
-    public int getOrbLevel(int meta)
-    {
-        return OrbRegistry.getOrb(meta).getTier();
+        ResourceLocation id = new ResourceLocation(stack.getTagCompound().getString("orb"));
+        return RegistrarBloodMagic.BLOOD_ORBS.getValue(id);
     }
 }

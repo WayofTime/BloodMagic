@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.client.render.entity;
 
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
@@ -30,7 +30,7 @@ public class RenderEntitySoulSnare extends Render<EntitySoulSnare>
         GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
         this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        this.renderItem.renderItem(new ItemStack(ModItems.SOUL_SNARE), ItemCameraTransforms.TransformType.GROUND);
+        this.renderItem.renderItem(new ItemStack(RegistrarBloodMagicItems.SOUL_SNARE), ItemCameraTransforms.TransformType.GROUND);
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

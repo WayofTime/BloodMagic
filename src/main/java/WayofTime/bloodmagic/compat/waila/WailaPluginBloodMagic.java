@@ -1,14 +1,17 @@
 package WayofTime.bloodmagic.compat.waila;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.block.*;
 import WayofTime.bloodmagic.compat.waila.provider.*;
+import mcp.mobius.waila.api.IWailaPlugin;
 import mcp.mobius.waila.api.IWailaRegistrar;
 import WayofTime.bloodmagic.api.Constants;
+import mcp.mobius.waila.api.WailaPlugin;
 
-public class WailaCallbackHandler
-{
-    public static void callbackRegister(IWailaRegistrar registrar)
-    {
+@WailaPlugin
+public class WailaPluginBloodMagic implements IWailaPlugin {
+    @Override
+    public void register(IWailaRegistrar registrar) {
         registrar.registerBodyProvider(new DataProviderBloodAltar(), BlockAltar.class);
         registrar.registerNBTProvider(new DataProviderBloodAltar(), BlockAltar.class);
         registrar.registerBodyProvider(new DataProviderTeleposer(), BlockTeleposer.class);
@@ -20,11 +23,11 @@ public class WailaCallbackHandler
         registrar.registerStackProvider(new DataProviderMimic(), BlockMimic.class);
         registrar.registerNBTProvider(new DataProviderMimic(), BlockMimic.class);
 
-        registrar.addConfig(Constants.Mod.MODID, Constants.Compat.WAILA_CONFIG_BYPASS_SNEAK, false);
-        registrar.addConfig(Constants.Mod.MODID, Constants.Compat.WAILA_CONFIG_ALTAR, true);
-        registrar.addConfig(Constants.Mod.MODID, Constants.Compat.WAILA_CONFIG_TELEPOSER, true);
-        registrar.addConfig(Constants.Mod.MODID, Constants.Compat.WAILA_CONFIG_RITUAL, true);
-        registrar.addConfig(Constants.Mod.MODID, Constants.Compat.WAILA_CONFIG_ARRAY, true);
-        registrar.addConfig(Constants.Mod.MODID, Constants.Compat.WAILA_CONFIG_BLOOD_TANK, true);
+        registrar.addConfig(BloodMagic.MODID, Constants.Compat.WAILA_CONFIG_BYPASS_SNEAK, false);
+        registrar.addConfig(BloodMagic.MODID, Constants.Compat.WAILA_CONFIG_ALTAR, true);
+        registrar.addConfig(BloodMagic.MODID, Constants.Compat.WAILA_CONFIG_TELEPOSER, true);
+        registrar.addConfig(BloodMagic.MODID, Constants.Compat.WAILA_CONFIG_RITUAL, true);
+        registrar.addConfig(BloodMagic.MODID, Constants.Compat.WAILA_CONFIG_ARRAY, true);
+        registrar.addConfig(BloodMagic.MODID, Constants.Compat.WAILA_CONFIG_BLOOD_TANK, true);
     }
 }

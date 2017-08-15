@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import javax.annotation.Nullable;
-
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -54,16 +50,11 @@ import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtByTarget;
 import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtTarget;
 import WayofTime.bloodmagic.entity.ai.EntityAIRetreatToHeal;
 import WayofTime.bloodmagic.item.soul.ItemSentientBow;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 
 public class EntitySentientSpecter extends EntityDemonBase
 {
-    @Getter
-    @Setter
     protected EnumDemonWillType type = EnumDemonWillType.DESTRUCTIVE;
-
-    @Getter
-    @Setter
     protected boolean wasGivenSentientArmour = false;
 
     private final EntityAIAttackRangedBow aiArrowAttack = new EntityAIAttackRangedBow(this, 1.0D, 20, 15.0F);
@@ -355,7 +346,7 @@ public class EntitySentientSpecter extends EntityDemonBase
 
                     if (wasGivenSentientArmour)
                     {
-                        this.entityDropItem(new ItemStack(ModItems.SENTIENT_ARMOUR_GEM), 0);
+                        this.entityDropItem(new ItemStack(RegistrarBloodMagicItems.SENTIENT_ARMOUR_GEM), 0);
                     }
 
                     this.setDead();
@@ -479,7 +470,7 @@ public class EntitySentientSpecter extends EntityDemonBase
     public void attackEntityWithRangedAttack(EntityLivingBase target, float velocity)
     {
         ItemStack heldStack = this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-        if (!heldStack.isEmpty() && heldStack.getItem() == ModItems.SENTIENT_BOW)
+        if (!heldStack.isEmpty() && heldStack.getItem() == RegistrarBloodMagicItems.SENTIENT_BOW)
         {
             EntityTippedArrow arrowEntity = ((ItemSentientBow) heldStack.getItem()).getArrowEntity(getEntityWorld(), heldStack, target, this, velocity);
             if (arrowEntity != null)
@@ -564,5 +555,21 @@ public class EntitySentientSpecter extends EntityDemonBase
     protected float getSoundVolume()
     {
         return 0.4F;
+    }
+
+    public EnumDemonWillType getType() {
+        return type;
+    }
+
+    public void setType(EnumDemonWillType type) {
+        this.type = type;
+    }
+
+    public boolean isWasGivenSentientArmour() {
+        return wasGivenSentientArmour;
+    }
+
+    public void setWasGivenSentientArmour(boolean wasGivenSentientArmour) {
+        this.wasGivenSentientArmour = wasGivenSentientArmour;
     }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.IGrowable;
@@ -19,7 +20,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -51,7 +51,7 @@ public class RitualGreenGrove extends Ritual
 
     public RitualGreenGrove()
     {
-        super("ritualGreenGrove", 0, 5000, "ritual." + Constants.Mod.MODID + ".greenGroveRitual");
+        super("ritualGreenGrove", 0, 5000, "ritual." + BloodMagic.MODID + ".greenGroveRitual");
         addBlockRange(GROW_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 2, -1), 3, 1, 3));
         addBlockRange(LEECH_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 1));
         addBlockRange(HYDRATE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 1));
@@ -106,7 +106,7 @@ public class RitualGreenGrove extends Ritual
             IBlockState state = world.getBlockState(newPos);
             Block block = state.getBlock();
 
-            if (!BloodMagicAPI.getGreenGroveBlacklist().contains(block))
+            if (!BloodMagicAPI.greenGroveBlacklist.contains(block))
             {
                 if (block instanceof IPlantable || block instanceof IGrowable)
                 {

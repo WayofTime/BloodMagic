@@ -31,8 +31,8 @@ import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeMaker;
 import WayofTime.bloodmagic.compat.jei.orb.ShapedOrbRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.orb.ShapelessOrbRecipeHandler;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 
 @JEIPlugin
 public class BloodMagicPlugin extends BlankModPlugin
@@ -55,14 +55,14 @@ public class BloodMagicPlugin extends BlankModPlugin
         registry.addRecipes(AlchemyTableRecipeMaker.getRecipes());
         registry.addRecipes(ArmourDowngradeRecipeMaker.getRecipes());
 
-        registry.addDescription(new ItemStack(ModItems.ALTAR_MAKER), "jei.bloodmagic.desc.altarBuilder");
-        registry.addDescription(new ItemStack(ModItems.MONSTER_SOUL), "jei.bloodmagic.desc.demonicWill");
+        registry.addDescription(new ItemStack(RegistrarBloodMagicItems.ALTAR_MAKER), "jei.bloodmagic.desc.altarBuilder");
+        registry.addDescription(new ItemStack(RegistrarBloodMagicItems.MONSTER_SOUL), "jei.bloodmagic.desc.demonicWill");
 
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.BLOOD_LIGHT));
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.SPECTRAL_BLOCK));
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.PHANTOM_BLOCK));
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.ALCHEMY_ARRAY));
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.DIMENSIONAL_PORTAL, 1, OreDictionary.WILDCARD_VALUE));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_LIGHT));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(RegistrarBloodMagicBlocks.SPECTRAL));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(RegistrarBloodMagicBlocks.PHANTOM));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(RegistrarBloodMagicBlocks.ALCHEMY_ARRAY));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(RegistrarBloodMagicBlocks.DIMENSIONAL_PORTAL, 1, OreDictionary.WILDCARD_VALUE));
 
         for (Map.Entry<String, Integer> entry : LivingArmourHandler.upgradeMaxLevelMap.entrySet())
         {
@@ -70,7 +70,7 @@ public class BloodMagicPlugin extends BlankModPlugin
             int maxLevel = entry.getValue();
             for (int i = 0; i < maxLevel - 1; i++)
             {
-                ItemStack stack = new ItemStack(ModItems.UPGRADE_TOME);
+                ItemStack stack = new ItemStack(RegistrarBloodMagicItems.UPGRADE_TOME);
                 LivingUpgrades.setKey(stack, key);
                 LivingUpgrades.setLevel(stack, i);
                 jeiHelper.getItemBlacklist().addItemToBlacklist(stack);
@@ -79,16 +79,16 @@ public class BloodMagicPlugin extends BlankModPlugin
 
         registry.addRecipeClickArea(GuiSoulForge.class, 115, 15, 16, 88, Constants.Compat.JEI_CATEGORY_SOULFORGE);
 
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ALTAR), Constants.Compat.JEI_CATEGORY_ALTAR);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.SOUL_FORGE), Constants.Compat.JEI_CATEGORY_SOULFORGE);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.ARCANE_ASHES), Constants.Compat.JEI_CATEGORY_ALCHEMYARRAY);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.ARCANE_ASHES), Constants.Compat.JEI_CATEGORY_BINDING);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ALCHEMY_TABLE), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.RITUAL_CONTROLLER), Constants.Compat.JEI_CATEGORY_ARMOURDOWNGRADE);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(RegistrarBloodMagicBlocks.ALTAR), Constants.Compat.JEI_CATEGORY_ALTAR);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(RegistrarBloodMagicBlocks.SOUL_FORGE), Constants.Compat.JEI_CATEGORY_SOULFORGE);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES), Constants.Compat.JEI_CATEGORY_ALCHEMYARRAY);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES), Constants.Compat.JEI_CATEGORY_BINDING);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(RegistrarBloodMagicBlocks.ALCHEMY_TABLE), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER), Constants.Compat.JEI_CATEGORY_ARMOURDOWNGRADE);
     }
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
-        subtypeRegistry.useNbtForSubtypes(ModItems.UPGRADE_TOME);
+        subtypeRegistry.useNbtForSubtypes(RegistrarBloodMagicItems.UPGRADE_TOME);
     }
 }

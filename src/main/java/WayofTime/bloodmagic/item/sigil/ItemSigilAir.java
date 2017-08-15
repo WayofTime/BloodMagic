@@ -48,9 +48,9 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
                 wantedVelocity += (1 + amplifier) * (0.35);
             }
 
-            player.motionX = vec.xCoord * wantedVelocity;
-            player.motionY = vec.yCoord * wantedVelocity;
-            player.motionZ = vec.zCoord * wantedVelocity;
+            player.motionX = vec.x * wantedVelocity;
+            player.motionY = vec.y * wantedVelocity;
+            player.motionZ = vec.z * wantedVelocity;
             world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
         }
 

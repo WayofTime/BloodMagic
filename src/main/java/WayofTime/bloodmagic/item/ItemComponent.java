@@ -15,9 +15,8 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 
 public class ItemComponent extends Item implements IVariantProvider
 {
@@ -62,9 +61,9 @@ public class ItemComponent extends Item implements IVariantProvider
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".baseComponent.");
+        setUnlocalizedName(BloodMagic.MODID + ".baseComponent.");
         setHasSubtypes(true);
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.TAB_BM);
 
         buildItemList();
     }
@@ -122,7 +121,7 @@ public class ItemComponent extends Item implements IVariantProvider
 
     public static ItemStack getStack(String name)
     {
-        return new ItemStack(ModItems.ITEM_COMPONENT, 1, names.indexOf(name));
+        return new ItemStack(RegistrarBloodMagicItems.ITEM_COMPONENT, 1, names.indexOf(name));
     }
 
     @Override

@@ -1,12 +1,5 @@
 package WayofTime.bloodmagic.api.altar;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class AltarUpgrade
 {
     private int speedCount;
@@ -19,6 +12,22 @@ public class AltarUpgrade
     private int betterCapacityCount;
     private int accelerationCount;
     private int chargingCount;
+
+    public AltarUpgrade(int speedCount, int efficiencyCount, int sacrificeCount, int selfSacrificeCount, int displacementCount, int capacityCount, int orbCapacityCount, int betterCapacityCount, int accelerationCount, int chargingCount) {
+        this.speedCount = speedCount;
+        this.efficiencyCount = efficiencyCount;
+        this.sacrificeCount = sacrificeCount;
+        this.selfSacrificeCount = selfSacrificeCount;
+        this.displacementCount = displacementCount;
+        this.capacityCount = capacityCount;
+        this.orbCapacityCount = orbCapacityCount;
+        this.betterCapacityCount = betterCapacityCount;
+        this.accelerationCount = accelerationCount;
+        this.chargingCount = chargingCount;
+    }
+
+    public AltarUpgrade() {
+    }
 
     // Adders
 
@@ -80,5 +89,45 @@ public class AltarUpgrade
     {
         chargingCount++;
         return this;
+    }
+
+    public int getSpeedCount() {
+        return speedCount;
+    }
+
+    public int getEfficiencyCount() {
+        return efficiencyCount;
+    }
+
+    public int getSacrificeCount() {
+        return sacrificeCount;
+    }
+
+    public int getSelfSacrificeCount() {
+        return selfSacrificeCount;
+    }
+
+    public int getDisplacementCount() {
+        return displacementCount;
+    }
+
+    public int getCapacityCount() {
+        return capacityCount;
+    }
+
+    public int getOrbCapacityCount() {
+        return orbCapacityCount;
+    }
+
+    public int getBetterCapacityCount() {
+        return betterCapacityCount;
+    }
+
+    public int getAccelerationCount() {
+        return accelerationCount;
+    }
+
+    public int getChargingCount() {
+        return chargingCount;
     }
 }

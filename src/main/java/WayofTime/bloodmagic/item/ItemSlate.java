@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.creativetab.CreativeTabs;
@@ -26,8 +25,8 @@ public class ItemSlate extends Item implements IVariantProvider
     {
         super();
 
-        setCreativeTab(BloodMagic.tabBloodMagic);
-        setUnlocalizedName(Constants.Mod.MODID + ".slate.");
+        setCreativeTab(BloodMagic.TAB_BM);
+        setUnlocalizedName(BloodMagic.MODID + ".slate.");
         setHasSubtypes(true);
     }
 

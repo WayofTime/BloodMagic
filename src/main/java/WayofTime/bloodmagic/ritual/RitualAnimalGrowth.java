@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.ritual;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,7 +15,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -40,7 +40,7 @@ public class RitualAnimalGrowth extends Ritual
 
     public RitualAnimalGrowth()
     {
-        super("ritualAnimalGrowth", 0, 10000, "ritual." + Constants.Mod.MODID + ".animalGrowthRitual");
+        super("ritualAnimalGrowth", 0, 10000, "ritual." + BloodMagic.MODID + ".animalGrowthRitual");
         addBlockRange(GROWTH_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 1, -2), 5, 2, 5));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
 

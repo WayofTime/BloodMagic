@@ -1,15 +1,14 @@
 package WayofTime.bloodmagic.block;
 
+import WayofTime.bloodmagic.item.block.ItemBlockAlchemyTable;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -24,7 +23,7 @@ import WayofTime.bloodmagic.tile.TileAlchemyTable;
 
 import javax.annotation.Nullable;
 
-public class BlockAlchemyTable extends Block
+public class BlockAlchemyTable extends Block implements IBMBlock
 {
     public static final PropertyBool INVISIBLE = PropertyBool.create("invisible");
     public static final PropertyEnum<EnumFacing> DIRECTION = PropertyEnum.<EnumFacing>create("direction", EnumFacing.class);
@@ -34,8 +33,8 @@ public class BlockAlchemyTable extends Block
         super(Material.ROCK);
 //        this.setDefaultState(this.blockState.getBaseState().withProperty(DIRECTION, EnumFacing.DOWN).withProperty(INVISIBLE, false));
 
-        setUnlocalizedName(Constants.Mod.MODID + ".alchemyTable");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".alchemyTable");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 0);
@@ -172,5 +171,10 @@ public class BlockAlchemyTable extends Block
                 world.setBlockToAir(pos);
             }
         }
+    }
+
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlockAlchemyTable(this);
     }
 }

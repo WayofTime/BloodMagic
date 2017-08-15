@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.api.event;
 
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
-import lombok.Getter;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
@@ -10,7 +9,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  * 
  * It is not cancelable, however you can modify the output stack.
  */
-@Getter
 public class AltarCraftedEvent extends Event
 {
 
@@ -27,5 +25,13 @@ public class AltarCraftedEvent extends Event
     {
         this.altarRecipe = altarRecipe;
         this.output = output;
+    }
+
+    public AltarRecipeRegistry.AltarRecipe getAltarRecipe() {
+        return altarRecipe;
+    }
+
+    public ItemStack getOutput() {
+        return output;
     }
 }

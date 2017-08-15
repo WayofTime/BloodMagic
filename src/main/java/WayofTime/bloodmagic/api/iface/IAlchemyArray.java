@@ -4,5 +4,5 @@ import net.minecraft.util.EnumFacing;
 
 public interface IAlchemyArray
 {
-    public abstract EnumFacing getRotation();
+    EnumFacing getRotation();
 }

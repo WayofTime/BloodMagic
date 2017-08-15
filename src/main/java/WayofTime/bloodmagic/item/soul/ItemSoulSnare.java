@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.item.soul;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -30,8 +29,8 @@ public class ItemSoulSnare extends Item implements IVariantProvider
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".soulSnare.");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".soulSnare.");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHasSubtypes(true);
         setMaxStackSize(16);
     }

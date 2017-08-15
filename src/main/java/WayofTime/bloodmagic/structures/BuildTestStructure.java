@@ -2,14 +2,12 @@ package WayofTime.bloodmagic.structures;
 
 import java.util.Random;
 
-import WayofTime.bloodmagic.api.Constants;
-import net.minecraft.block.Block;
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
@@ -25,7 +23,7 @@ public class BuildTestStructure
         MinecraftServer minecraftserver = world.getMinecraftServer();
         TemplateManager templatemanager = world.getStructureTemplateManager();
 
-        ResourceLocation resource = new ResourceLocation(Constants.Mod.MODID, "Corridor1");
+        ResourceLocation resource = new ResourceLocation(BloodMagic.MODID, "Corridor1");
         Template template = templatemanager.getTemplate(minecraftserver, resource);
 
         if (template == null)

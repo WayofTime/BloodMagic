@@ -5,11 +5,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.item.crafting.*;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -44,7 +42,7 @@ public class StorageBlockCraftingRecipeAssimilator
                 {
                     packingRecipes.add(packingRecipe);
                 }
-            } else if ((output.getCount() == 4 || output.getCount() == 9) && recipe.getRecipeSize() == 1)
+            } else if ((output.getCount() == 4 || output.getCount() == 9) && recipe.canFit(1, 1))
             {
                 unpackingRecipes.add(recipe);
             }
@@ -99,7 +97,7 @@ public class StorageBlockCraftingRecipeAssimilator
                 {
                     // unknown IRecipe, check through the recipe conventionally verify recipe size for 3x3 to skip anything smaller quickly
 
-                    if (unpacked.getCount() == 9 && recipePack.recipe.getRecipeSize() < 9)
+                    if (unpacked.getCount() == 9 && recipePack.recipe.getIngredients().size() < 9)
                         continue;
 
                     // initialize inventory late, but only once per unpack recipe
@@ -149,7 +147,7 @@ public class StorageBlockCraftingRecipeAssimilator
     @SuppressWarnings("unchecked")
     private List<IRecipe> getCraftingRecipes()
     {
-        return CraftingManager.getInstance().getRecipeList();
+        return ForgeRegistries.RECIPES.getValues();
     }
 
     private Container makeDummyContainer()
@@ -166,27 +164,10 @@ public class StorageBlockCraftingRecipeAssimilator
 
     private PackingRecipe getPackingRecipe(IRecipe recipe)
     {
-        if (recipe.getRecipeSize() < 4)
+        if (recipe.getIngredients().size() < 4)
             return null;
 
-        List<?> inputs;
-
-        if (recipe instanceof ShapedRecipes)
-        {
-            inputs = Arrays.asList(((ShapedRecipes) recipe).recipeItems);
-        } else if (recipe instanceof ShapelessRecipes)
-        {
-            inputs = ((ShapelessRecipes) recipe).recipeItems;
-        } else if (recipe instanceof ShapedOreRecipe)
-        {
-            inputs = Arrays.asList(((ShapedOreRecipe) recipe).getInput());
-        } else if (recipe instanceof ShapelessOreRecipe)
-        {
-            inputs = ((ShapelessOreRecipe) recipe).getInput();
-        } else
-        {
-            return new PackingRecipe(recipe, null, -1);
-        }
+        List<Ingredient> inputs = recipe.getIngredients();
 
         // check if the recipe inputs are size 4 or 9
 
@@ -203,7 +184,7 @@ public class StorageBlockCraftingRecipeAssimilator
 
         // grab identical inputs
 
-        List<ItemStack> identicalInputs = getIdenticalInputs(inputs);
+        List<Ingredient> identicalInputs = getIdenticalInputs(inputs);
         if (identicalInputs == null)
             return null;
 
@@ -219,18 +200,18 @@ public class StorageBlockCraftingRecipeAssimilator
      * @return List List of all options.
      */
     @SuppressWarnings("unchecked")
-    private List<ItemStack> getIdenticalInputs(List<?> inputs)
+    private List<Ingredient> getIdenticalInputs(List<Ingredient> inputs)
     {
-        List<ItemStack> options = null;
+        List<Ingredient> options = null;
 
-        for (Object input : inputs)
+        for (Ingredient input : inputs)
         {
             if (input == null)
                 continue;
 
             List<ItemStack> offers;
 
-            if (input instanceof ItemStack)
+            if (input. instanceof ItemStack)
             {
                 offers = Collections.singletonList((ItemStack) input);
             } else if (input instanceof List)

@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.util.handler.event;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBanner;
@@ -21,7 +22,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.util.helper.ItemHelper;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.item.ItemInscriptionTool;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 
 @Handler
 public class CraftingHandler
@@ -55,11 +56,11 @@ public class CraftingHandler
     {
         if (ConfigHandler.thaumcraftGogglesUpgrade)
         {
-            if (event.getLeft().getItem() == ModItems.LIVING_ARMOUR_HELMET && event.getRight().getItem() == Constants.Compat.THAUMCRAFT_GOGGLES && !event.getRight().isItemDamaged())
+            if (event.getLeft().getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET && event.getRight().getItem() == Constants.Compat.THAUMCRAFT_GOGGLES && !event.getRight().isItemDamaged())
             {
-                ItemStack output = new ItemStack(ModItems.UPGRADE_TOME);
+                ItemStack output = new ItemStack(RegistrarBloodMagicItems.UPGRADE_TOME);
                 output = NBTHelper.checkNBT(output);
-                ItemHelper.LivingUpgrades.setKey(output, Constants.Mod.MODID + ".upgrade.revealing");
+                ItemHelper.LivingUpgrades.setKey(output, BloodMagic.MODID + ".upgrade.revealing");
                 ItemHelper.LivingUpgrades.setLevel(output, 1);
                 event.setCost(1);
 
@@ -69,7 +70,7 @@ public class CraftingHandler
             }
         }
 
-        if (event.getLeft().getItem() == ModItems.SIGIL_HOLDING)
+        if (event.getLeft().getItem() == RegistrarBloodMagicItems.SIGIL_HOLDING)
         {
             if (event.getRight().getItem() == Items.NAME_TAG)
             {
@@ -90,7 +91,7 @@ public class CraftingHandler
                 ItemStack output = event.getLeft().copy();
                 if (!output.hasTagCompound())
                     output.setTagCompound(new NBTTagCompound());
-                output.getTagCompound().setString(Constants.NBT.COLOR, String.valueOf(dyeColor.getMapColor().colorValue));
+                output.getTagCompound().setString(Constants.NBT.COLOR, String.valueOf(dyeColor.getColorValue()));
                 event.setCost(1);
 
                 event.setOutput(output);
@@ -101,9 +102,9 @@ public class CraftingHandler
 
         if (event.getLeft().getItem() == Items.BOOK && event.getRight().getItem() == Items.ELYTRA && !event.getRight().isItemDamaged())
         {
-            ItemStack output = new ItemStack(ModItems.UPGRADE_TOME);
+            ItemStack output = new ItemStack(RegistrarBloodMagicItems.UPGRADE_TOME);
             output = NBTHelper.checkNBT(output);
-            ItemHelper.LivingUpgrades.setKey(output, Constants.Mod.MODID + ".upgrade.elytra");
+            ItemHelper.LivingUpgrades.setKey(output, BloodMagic.MODID + ".upgrade.elytra");
             ItemHelper.LivingUpgrades.setLevel(output, 1);
             event.setCost(30);
 
@@ -112,7 +113,7 @@ public class CraftingHandler
             return;
         }
 
-        if (event.getLeft().getItem() == ModItems.UPGRADE_TOME && event.getRight().getItem() == ModItems.UPGRADE_TOME)
+        if (event.getLeft().getItem() == RegistrarBloodMagicItems.UPGRADE_TOME && event.getRight().getItem() == RegistrarBloodMagicItems.UPGRADE_TOME)
         {
             LivingArmourUpgrade leftUpgrade = ItemHelper.LivingUpgrades.getUpgrade(event.getLeft());
             if (leftUpgrade != null && !leftUpgrade.isDowngrade() && ItemHelper.LivingUpgrades.getKey(event.getLeft()).equals(ItemHelper.LivingUpgrades.getKey(event.getRight())))
@@ -133,7 +134,7 @@ public class CraftingHandler
             }
         }
 
-        if (event.getLeft().getItem() instanceof IUpgradeTrainer && event.getRight().getItem() == ModItems.UPGRADE_TOME)
+        if (event.getLeft().getItem() instanceof IUpgradeTrainer && event.getRight().getItem() == RegistrarBloodMagicItems.UPGRADE_TOME)
         {
             LivingArmourUpgrade rightUpgrade = ItemHelper.LivingUpgrades.getUpgrade(event.getRight());
             if (rightUpgrade != null)

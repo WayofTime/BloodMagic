@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +20,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.IDemonWillGem;
 import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.client.IVariantProvider;
@@ -36,8 +34,8 @@ public class BlockDemonCrucible extends Block implements IVariantProvider
     {
         super(Material.ROCK);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".demonCrucible");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".demonCrucible");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 0);

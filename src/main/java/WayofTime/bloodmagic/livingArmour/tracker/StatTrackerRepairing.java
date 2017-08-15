@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
@@ -29,7 +29,7 @@ public class StatTrackerRepairing extends StatTracker
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.repair";
+        return BloodMagic.MODID + ".tracker.repair";
     }
 
     @Override
@@ -41,13 +41,13 @@ public class StatTrackerRepairing extends StatTracker
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalDamage = tag.getDouble(Constants.Mod.MODID + ".tracker.repair");
+        totalDamage = tag.getDouble(BloodMagic.MODID + ".tracker.repair");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setDouble(Constants.Mod.MODID + ".tracker.repair", totalDamage);
+        tag.setDouble(BloodMagic.MODID + ".tracker.repair", totalDamage);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class StatTrackerRepairing extends StatTracker
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.repair");
+        return key.equals(BloodMagic.MODID + ".upgrade.repair");
     }
 
     @Override

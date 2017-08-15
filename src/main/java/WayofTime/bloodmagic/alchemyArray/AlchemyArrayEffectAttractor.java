@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -28,7 +29,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
 import WayofTime.bloodmagic.fakePlayer.FakePlayerBM;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
@@ -400,7 +400,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
     {
         public Target(World world, BlockPos pos)
         {
-            super(world, pos, new GameProfile(null, Constants.Mod.MODID + "ArrayAttractor" + ":" + pos));
+            super(world, pos, new GameProfile(null, BloodMagic.MODID + "ArrayAttractor" + ":" + pos));
             posY += 1;
         }
     }

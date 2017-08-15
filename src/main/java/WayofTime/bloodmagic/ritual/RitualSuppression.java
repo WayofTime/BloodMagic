@@ -2,11 +2,11 @@ package WayofTime.bloodmagic.ritual;
 
 import java.util.ArrayList;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -21,7 +21,7 @@ public class RitualSuppression extends Ritual
 
     public RitualSuppression()
     {
-        super("ritualSuppression", 0, 10000, "ritual." + Constants.Mod.MODID + ".suppressionRitual");
+        super("ritualSuppression", 0, 10000, "ritual." + BloodMagic.MODID + ".suppressionRitual");
         addBlockRange(SUPPRESSION_RANGE, new AreaDescriptor.HemiSphere(new BlockPos(0, 0, 0), 10));
     }
 

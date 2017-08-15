@@ -19,9 +19,8 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -29,10 +28,10 @@ public class ItemArcaneAshes extends Item implements IVariantProvider
 {
     public ItemArcaneAshes()
     {
-        setUnlocalizedName(Constants.Mod.MODID + ".arcaneAshes");
+        setUnlocalizedName(BloodMagic.MODID + ".arcaneAshes");
         setMaxStackSize(1);
         setMaxDamage(19); //Allows for 20 uses
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class ItemArcaneAshes extends Item implements IVariantProvider
             if (!world.isRemote)
             {
                 EnumFacing rotation = EnumFacing.fromAngle(player.getRotationYawHead());
-                world.setBlockState(newPos, ModBlocks.ALCHEMY_ARRAY.getDefaultState());
+                world.setBlockState(newPos, RegistrarBloodMagicBlocks.ALCHEMY_ARRAY.getDefaultState());
                 TileEntity tile = world.getTileEntity(newPos);
                 if (tile instanceof TileAlchemyArray)
                 {

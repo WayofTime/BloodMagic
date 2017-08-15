@@ -34,8 +34,8 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".focus.");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".focus.");
+        setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
         setHasSubtypes(true);
     }

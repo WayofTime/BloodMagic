@@ -26,7 +26,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.IAltarManipulator;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.iface.IBindable;
@@ -47,8 +46,8 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
     {
         super(Material.ROCK);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".altar");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".altar");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 1);
@@ -73,7 +72,7 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
             TileAltar altar = (TileAltar) tile;
             ItemStack orbStack = altar.getStackInSlot(0);
 
-            if (world.getBlockState(pos.down()).getBlock() instanceof BlockBloodStoneBrick)
+            if (world.getBlockState(pos.down()).getBlock() instanceof BlockDecorative)
             {
                 if (orbStack.getItem() instanceof IBloodOrb && orbStack.getItem() instanceof IBindable)
                 {

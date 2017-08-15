@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.api.ritual;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
@@ -9,12 +7,15 @@ import net.minecraft.util.math.BlockPos;
  * Used to set a {@link EnumRuneType} type to a given {@link BlockPos} for usage
  * in Ritual creation.
  */
-@Getter
-@RequiredArgsConstructor
 public class RitualComponent
 {
     private final BlockPos offset;
     private final EnumRuneType runeType;
+
+    public RitualComponent(BlockPos offset, EnumRuneType runeType) {
+        this.offset = offset;
+        this.runeType = runeType;
+    }
 
     public int getX(EnumFacing direction)
     {
@@ -54,5 +55,13 @@ public class RitualComponent
     public BlockPos getOffset(EnumFacing direction)
     {
         return new BlockPos(getX(direction), offset.getY(), getZ(direction));
+    }
+
+    public BlockPos getOffset() {
+        return offset;
+    }
+
+    public EnumRuneType getRuneType() {
+        return runeType;
     }
 }

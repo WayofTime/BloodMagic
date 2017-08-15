@@ -1,14 +1,10 @@
 package WayofTime.bloodmagic.demonAura;
 
 import WayofTime.bloodmagic.api.soul.DemonWillHolder;
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.world.chunk.Chunk;
 
 import java.lang.ref.WeakReference;
 
-@Getter
-@Setter
 public class WillChunk
 {
     PosXY loc;
@@ -23,7 +19,7 @@ public class WillChunk
 
     public WillChunk(Chunk chunk, short base, DemonWillHolder currentWill)
     {
-        this.loc = new PosXY(chunk.xPosition, chunk.zPosition);
+        this.loc = new PosXY(chunk.x, chunk.z);
         this.chunkRef = new WeakReference(chunk);
         this.base = base;
         this.currentWill = currentWill;
@@ -31,5 +27,37 @@ public class WillChunk
 
     public boolean isModified() {
         return (this.chunkRef != null) && (this.chunkRef.get() != null) && this.chunkRef.get().needsSaving(false);
+    }
+
+    public PosXY getLoc() {
+        return loc;
+    }
+
+    public void setLoc(PosXY loc) {
+        this.loc = loc;
+    }
+
+    public short getBase() {
+        return base;
+    }
+
+    public void setBase(short base) {
+        this.base = base;
+    }
+
+    public DemonWillHolder getCurrentWill() {
+        return currentWill;
+    }
+
+    public void setCurrentWill(DemonWillHolder currentWill) {
+        this.currentWill = currentWill;
+    }
+
+    public WeakReference<Chunk> getChunkRef() {
+        return chunkRef;
+    }
+
+    public void setChunkRef(WeakReference<Chunk> chunkRef) {
+        this.chunkRef = chunkRef;
     }
 }

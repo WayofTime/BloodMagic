@@ -22,8 +22,6 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionAugmentRecipe;
 
-import com.google.common.base.Objects;
-
 public class BMPotionUtils
 {
     public static Random rand = new Random();
@@ -50,7 +48,7 @@ public class BMPotionUtils
             BlockPos blockPos = entity.getPosition().add(rand.nextInt(horizontalRadius * 2 + 1) - horizontalRadius, rand.nextInt(verticalRadius * 2 + 1) - verticalRadius, rand.nextInt(horizontalRadius * 2 + 1) - horizontalRadius);
             Block block = world.getBlockState(blockPos).getBlock();
 
-            if (!BloodMagicAPI.getGreenGroveBlacklist().contains(block))
+            if (!BloodMagicAPI.greenGroveBlacklist.contains(block))
             {
                 if (block instanceof IPlantable || block instanceof IGrowable)
                 {
@@ -79,7 +77,7 @@ public class BMPotionUtils
 
         if (incurredDamage > 0)
         {
-            entity.attackEntityFrom(BloodMagicAPI.getDamageSource(), (float) incurredDamage);
+            entity.attackEntityFrom(BloodMagicAPI.damageSource, (float) incurredDamage);
         }
 
         return incurredDamage;
@@ -125,7 +123,7 @@ public class BMPotionUtils
             return stack;
         } else
         {
-            NBTTagCompound nbttagcompound = (NBTTagCompound) Objects.firstNonNull(stack.getTagCompound(), new NBTTagCompound());
+            NBTTagCompound nbttagcompound = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
             NBTTagList nbttaglist = new NBTTagList();
 
             for (PotionEffect potioneffect : effects)

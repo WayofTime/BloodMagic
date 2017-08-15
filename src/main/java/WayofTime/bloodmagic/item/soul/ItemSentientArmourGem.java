@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
@@ -23,8 +22,8 @@ public class ItemSentientArmourGem extends Item
     {
         super();
 
-        setCreativeTab(BloodMagic.tabBloodMagic);
-        setUnlocalizedName(Constants.Mod.MODID + ".sentientArmourGem");
+        setCreativeTab(BloodMagic.TAB_BM);
+        setUnlocalizedName(BloodMagic.MODID + ".sentientArmourGem");
         setMaxStackSize(1);
     }
 

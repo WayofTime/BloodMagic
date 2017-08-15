@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.livingArmour.downgrade;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
@@ -34,8 +34,8 @@ public class LivingArmourUpgradeSlippery extends LivingArmourUpgrade
                     f6 = world.getBlockState(blockpos$pooledmutableblockpos).getBlock().slipperiness * 0.91F;
                 }
 
-                player.motionX /= (double) (f6 / 0.91);
-                player.motionZ /= (double) (f6 / 0.91);
+                player.motionX /= f6 / 0.91;
+                player.motionZ /= f6 / 0.91;
 
                 float f7 = 0.16277136F / (f6 * f6 * f6);
                 float f8;
@@ -48,9 +48,9 @@ public class LivingArmourUpgradeSlippery extends LivingArmourUpgrade
                     f8 = player.jumpMovementFactor;
                 }
 
-                player.moveRelative(-player.moveStrafing, -player.moveForward, f8);
+                player.moveRelative(-player.moveStrafing, -player.moveForward, f8, 0.02F);
 
-                player.moveRelative(player.moveStrafing, player.moveForward, f8 / 10);
+                player.moveRelative(player.moveStrafing, player.moveForward, f8 / 10, 0.02F);
 
                 player.motionX *= 0.90;
                 player.motionY *= 0.90;
@@ -67,7 +67,7 @@ public class LivingArmourUpgradeSlippery extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.slippery";
+        return BloodMagic.MODID + ".upgrade.slippery";
     }
 
     @Override

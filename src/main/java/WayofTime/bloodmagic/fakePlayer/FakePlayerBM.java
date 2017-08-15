@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
@@ -14,11 +15,16 @@ import com.mojang.authlib.GameProfile;
 /**
  * All credits for this go to CrazyPants, from EIO
  */
+@SuppressWarnings("EntityConstructor")
 public class FakePlayerBM extends FakePlayer
 {
+    public FakePlayerBM(WorldServer world, GameProfile name) {
+        super(world, name);
+    }
+
     public FakePlayerBM(World world, BlockPos pos, GameProfile profile)
     {
-        super(FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(world.provider.getDimension()), profile);
+        super(FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(world.provider.getDimension()), profile);
         posX = pos.getX() + 0.5;
         posY = pos.getY() + 0.5;
         posZ = pos.getZ() + 0.5;

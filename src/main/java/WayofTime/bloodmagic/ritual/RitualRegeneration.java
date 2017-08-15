@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -12,7 +13,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -33,7 +33,7 @@ public class RitualRegeneration extends Ritual
 
     public RitualRegeneration()
     {
-        super("ritualRegeneration", 0, 25000, "ritual." + Constants.Mod.MODID + ".regenerationRitual");
+        super("ritualRegeneration", 0, 25000, "ritual." + BloodMagic.MODID + ".regenerationRitual");
         addBlockRange(HEAL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-15, -15, -15), 31));
         addBlockRange(VAMPIRE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-15, -15, -15), 31));
 
@@ -105,7 +105,7 @@ public class RitualRegeneration extends Ritual
 
                         float currentHealth = damagedEntity.getHealth();
 
-                        damagedEntity.attackEntityFrom(BloodMagicAPI.getDamageSource(), Math.min(player.getMaxHealth() - player.getHealth(), syphonedHealthAmount));
+                        damagedEntity.attackEntityFrom(BloodMagicAPI.damageSource, Math.min(player.getMaxHealth() - player.getHealth(), syphonedHealthAmount));
 
                         float healthDifference = currentHealth - damagedEntity.getHealth();
                         if (healthDifference > 0)

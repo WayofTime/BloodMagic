@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.client.hud;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -28,15 +28,15 @@ public class HUDElementHolding extends HUDElement
     {
         ItemStack sigilHolding = minecraft.player.getHeldItemMainhand();
         // Check mainhand for Sigil of Holding
-        if (!(sigilHolding.getItem() == ModItems.SIGIL_HOLDING))
+        if (!(sigilHolding.getItem() == RegistrarBloodMagicItems.SIGIL_HOLDING))
             sigilHolding = minecraft.player.getHeldItemOffhand();
         // Check offhand for Sigil of Holding
-        if (!(sigilHolding.getItem() == ModItems.SIGIL_HOLDING))
+        if (!(sigilHolding.getItem() == RegistrarBloodMagicItems.SIGIL_HOLDING))
             return;
 
         Gui ingameGui = minecraft.ingameGUI;
 
-        minecraft.getTextureManager().bindTexture(new ResourceLocation(Constants.Mod.MODID, "textures/gui/widgets.png"));
+        minecraft.getTextureManager().bindTexture(new ResourceLocation(BloodMagic.MODID, "textures/gui/widgets.png"));
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         ingameGui.drawTexturedModalRect(resolution.getScaledWidth() / 2 + 100 + getXOffset(), resolution.getScaledHeight() - 22 + getYOffset(), 0, 0, 102, 22);
         int currentSlot = ItemSigilHolding.getCurrentItemOrdinal(sigilHolding);

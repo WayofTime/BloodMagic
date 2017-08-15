@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry.AltarRecipe;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
@@ -19,8 +19,8 @@ import WayofTime.bloodmagic.compat.guideapi.page.PageAlchemyArray;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAltarRecipe;
 import WayofTime.bloodmagic.compat.guideapi.page.PageTartaricForgeRecipe;
 import WayofTime.bloodmagic.item.ItemComponent;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.RecipeHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.IPage;
@@ -33,7 +33,7 @@ public class CategoryArchitect
     public static Map<ResourceLocation, EntryAbstract> buildCategory()
     {
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
-        String keyBase = "guide." + Constants.Mod.MODID + ".entry.architect.";
+        String keyBase = "guide." + BloodMagic.MODID + ".entry.architect.";
 
         List<IPage> introPages = new ArrayList<IPage>();
         introPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro" + ".info"), 370));
@@ -42,7 +42,7 @@ public class CategoryArchitect
 
         List<IPage> altarPages = new ArrayList<IPage>();
 
-        IRecipe altarRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.ALTAR));
+        IRecipe altarRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.ALTAR));
         if (altarRecipe != null)
         {
             altarPages.add(BookUtils.getPageForRecipe(altarRecipe));
@@ -50,7 +50,7 @@ public class CategoryArchitect
 
         altarPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodaltar" + ".info.1"), 370));
 
-        IRecipe daggerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModItems.SACRIFICIAL_DAGGER));
+        IRecipe daggerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.SACRIFICIAL_DAGGER));
         if (daggerRecipe != null)
         {
             altarPages.add(BookUtils.getPageForRecipe(daggerRecipe));
@@ -61,7 +61,7 @@ public class CategoryArchitect
 
         List<IPage> ashPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe ashRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.ARCANE_ASHES));
+        TartaricForgeRecipe ashRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES));
         if (ashRecipe != null)
         {
             ashPages.add(new PageTartaricForgeRecipe(ashRecipe));
@@ -71,7 +71,7 @@ public class CategoryArchitect
 
         List<IPage> divinationPages = new ArrayList<IPage>();
 
-        PageAlchemyArray divinationRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_DIVINATION));
+        PageAlchemyArray divinationRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_DIVINATION));
         if (divinationRecipePage != null)
         {
             divinationPages.add(divinationRecipePage);
@@ -88,7 +88,7 @@ public class CategoryArchitect
         List<IPage> weakorbPages = new ArrayList<IPage>();
         weakorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakorb" + ".info.1"), 370));
 
-        AltarRecipe weakorbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(ModItems.ORB_WEAK));
+        AltarRecipe weakorbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_WEAK));
         if (weakorbRecipe != null)
         {
             weakorbPages.add(new PageAltarRecipe(weakorbRecipe));
@@ -99,7 +99,7 @@ public class CategoryArchitect
 
         List<IPage> incensePages = new ArrayList<IPage>();
 
-        IRecipe incenseRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.INCENSE_ALTAR));
+        IRecipe incenseRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.INCENSE_ALTAR));
         if (incenseRecipe != null)
         {
             incensePages.add(BookUtils.getPageForRecipe(incenseRecipe));
@@ -107,7 +107,7 @@ public class CategoryArchitect
 
         incensePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "incense" + ".info.1"), 370));
 
-        IRecipe woodPathRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.PATH_BLOCK, 1, 0));
+        IRecipe woodPathRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 0));
         if (woodPathRecipe != null)
         {
             incensePages.add(BookUtils.getPageForRecipe(woodPathRecipe));
@@ -118,7 +118,7 @@ public class CategoryArchitect
 
         List<IPage> runePages = new ArrayList<IPage>();
 
-        IRecipe runeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 0));
+        IRecipe runeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 0));
         if (runeRecipe != null)
         {
             runePages.add(BookUtils.getPageForRecipe(runeRecipe));
@@ -129,7 +129,7 @@ public class CategoryArchitect
 
         List<IPage> inspectPages = new ArrayList<IPage>();
 
-        AltarRecipe inspectRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(ModItems.SANGUINE_BOOK));
+        AltarRecipe inspectRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.SANGUINE_BOOK));
         if (inspectRecipe != null)
         {
             inspectPages.add(new PageAltarRecipe(inspectRecipe));
@@ -140,7 +140,7 @@ public class CategoryArchitect
 
         List<IPage> speedRunePages = new ArrayList<IPage>();
 
-        IRecipe speedRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 1));
+        IRecipe speedRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 1));
         if (speedRecipe != null)
         {
             speedRunePages.add(BookUtils.getPageForRecipe(speedRecipe));
@@ -157,7 +157,7 @@ public class CategoryArchitect
             waterPages.add(new PageTartaricForgeRecipe(waterRecipe));
         }
 
-        PageAlchemyArray waterRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_WATER));
+        PageAlchemyArray waterRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_WATER));
         if (waterRecipePage != null)
         {
             waterPages.add(waterRecipePage);
@@ -174,7 +174,7 @@ public class CategoryArchitect
             lavaPages.add(new PageTartaricForgeRecipe(lavaRecipe));
         }
 
-        PageAlchemyArray lavaRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_LAVA));
+        PageAlchemyArray lavaRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_LAVA));
         if (lavaRecipePage != null)
         {
             lavaPages.add(lavaRecipePage);
@@ -185,7 +185,7 @@ public class CategoryArchitect
 
         List<IPage> lavaCrystalPages = new ArrayList<IPage>();
 
-        IRecipe lavaCrystalRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModItems.LAVA_CRYSTAL));
+        IRecipe lavaCrystalRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.LAVA_CRYSTAL));
         if (lavaCrystalRecipe != null)
         {
             lavaCrystalPages.add(BookUtils.getPageForRecipe(lavaCrystalRecipe));
@@ -196,7 +196,7 @@ public class CategoryArchitect
 
         List<IPage> apprenticeorbPages = new ArrayList<IPage>();
 
-        AltarRecipe apprenticeorbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(ModItems.ORB_APPRENTICE));
+        AltarRecipe apprenticeorbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_APPRENTICE));
         if (apprenticeorbRecipe != null)
         {
             apprenticeorbPages.add(new PageAltarRecipe(apprenticeorbRecipe));
@@ -207,7 +207,7 @@ public class CategoryArchitect
 
         List<IPage> daggerPages = new ArrayList<IPage>();
 
-        AltarRecipe daggerOfSacrificeRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(ModItems.DAGGER_OF_SACRIFICE));
+        AltarRecipe daggerOfSacrificeRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.DAGGER_OF_SACRIFICE));
         if (daggerOfSacrificeRecipe != null)
         {
             daggerPages.add(new PageAltarRecipe(daggerOfSacrificeRecipe));
@@ -218,7 +218,7 @@ public class CategoryArchitect
 
         List<IPage> runeSacrificePages = new ArrayList<IPage>();
 
-        IRecipe runeSacrificeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 3));
+        IRecipe runeSacrificeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 3));
         if (runeSacrificeRecipe != null)
         {
             runeSacrificePages.add(BookUtils.getPageForRecipe(runeSacrificeRecipe));
@@ -229,7 +229,7 @@ public class CategoryArchitect
 
         List<IPage> runeSelfSacrificePages = new ArrayList<IPage>();
 
-        IRecipe runeSelfSacrificeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 4));
+        IRecipe runeSelfSacrificeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4));
         if (runeSelfSacrificeRecipe != null)
         {
             runeSelfSacrificePages.add(BookUtils.getPageForRecipe(runeSelfSacrificeRecipe));
@@ -246,7 +246,7 @@ public class CategoryArchitect
             holdingPages.add(new PageTartaricForgeRecipe(holdingRecipe));
         }
 
-        PageAlchemyArray holdingRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_HOLDING));
+        PageAlchemyArray holdingRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_HOLDING));
         if (holdingRecipePage != null)
         {
             holdingPages.add(holdingRecipePage);
@@ -263,7 +263,7 @@ public class CategoryArchitect
             airPages.add(new PageTartaricForgeRecipe(airRecipe));
         }
 
-        PageAlchemyArray airRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_AIR));
+        PageAlchemyArray airRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_AIR));
         if (airRecipePage != null)
         {
             airPages.add(airRecipePage);
@@ -280,7 +280,7 @@ public class CategoryArchitect
             voidPages.add(new PageTartaricForgeRecipe(voidRecipe));
         }
 
-        PageAlchemyArray voidRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_VOID));
+        PageAlchemyArray voidRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_VOID));
         if (voidRecipePage != null)
         {
             voidPages.add(voidRecipePage);
@@ -297,7 +297,7 @@ public class CategoryArchitect
             greenGrovePages.add(new PageTartaricForgeRecipe(greenGroveRecipe));
         }
 
-        PageAlchemyArray greenGroveRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_GREEN_GROVE));
+        PageAlchemyArray greenGroveRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_GREEN_GROVE));
         if (greenGroveRecipePage != null)
         {
             greenGrovePages.add(greenGroveRecipePage);
@@ -314,7 +314,7 @@ public class CategoryArchitect
             fastMinerPages.add(new PageTartaricForgeRecipe(fastMinerRecipe));
         }
 
-        PageAlchemyArray fastMinerRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_FAST_MINER));
+        PageAlchemyArray fastMinerRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_FAST_MINER));
         if (fastMinerRecipePage != null)
         {
             fastMinerPages.add(fastMinerRecipePage);
@@ -331,7 +331,7 @@ public class CategoryArchitect
             seerPages.add(new PageTartaricForgeRecipe(seerRecipe));
         }
 
-        PageAlchemyArray seerRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_SEER));
+        PageAlchemyArray seerRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_SEER));
         if (seerRecipePage != null)
         {
             seerPages.add(seerRecipePage);
@@ -342,7 +342,7 @@ public class CategoryArchitect
 
         List<IPage> magicianOrbPages = new ArrayList<IPage>();
 
-        AltarRecipe magicianOrbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(ModItems.ORB_MAGICIAN));
+        AltarRecipe magicianOrbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MAGICIAN));
         if (magicianOrbRecipe != null)
         {
             magicianOrbPages.add(new PageAltarRecipe(magicianOrbRecipe));
@@ -353,7 +353,7 @@ public class CategoryArchitect
 
         List<IPage> capacityPages = new ArrayList<IPage>();
 
-        IRecipe capacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 4));
+        IRecipe capacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4));
         if (capacityRecipe != null)
         {
             capacityPages.add(BookUtils.getPageForRecipe(capacityRecipe));
@@ -364,7 +364,7 @@ public class CategoryArchitect
 
         List<IPage> displacementPages = new ArrayList<IPage>();
 
-        IRecipe displacementRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 4));
+        IRecipe displacementRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4));
         if (displacementRecipe != null)
         {
             displacementPages.add(BookUtils.getPageForRecipe(displacementRecipe));
@@ -381,7 +381,7 @@ public class CategoryArchitect
             affinityPages.add(new PageTartaricForgeRecipe(affinityRecipe));
         }
 
-        PageAlchemyArray affinityRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_ELEMENTAL_AFFINITY));
+        PageAlchemyArray affinityRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_ELEMENTAL_AFFINITY));
         if (affinityRecipePage != null)
         {
             affinityPages.add(affinityRecipePage);
@@ -398,7 +398,7 @@ public class CategoryArchitect
             lampPages.add(new PageTartaricForgeRecipe(lampRecipe));
         }
 
-        PageAlchemyArray lampRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_BLOOD_LIGHT));
+        PageAlchemyArray lampRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_BLOOD_LIGHT));
         if (lampRecipePage != null)
         {
             lampPages.add(lampRecipePage);
@@ -415,7 +415,7 @@ public class CategoryArchitect
             magnetismPages.add(new PageTartaricForgeRecipe(magnetismRecipe));
         }
 
-        PageAlchemyArray magnetismRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_MAGNETISM));
+        PageAlchemyArray magnetismRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_MAGNETISM));
         if (magnetismRecipePage != null)
         {
             magnetismPages.add(magnetismRecipePage);
@@ -426,7 +426,7 @@ public class CategoryArchitect
 
         List<IPage> peritiaPages = new ArrayList<IPage>();
 
-        IRecipe peritiaRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModItems.EXPERIENCE_TOME));
+        IRecipe peritiaRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.EXPERIENCE_TOME));
         if (peritiaRecipe != null)
         {
             peritiaPages.add(BookUtils.getPageForRecipe(peritiaRecipe));
@@ -443,25 +443,25 @@ public class CategoryArchitect
             livingArmourPages.add(new PageTartaricForgeRecipe(bindingRecipe));
         }
 
-        PageAlchemyArray bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.LIVING_ARMOUR_CHEST));
+        PageAlchemyArray bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST));
         if (bindingRecipePage != null)
         {
             livingArmourPages.add(bindingRecipePage);
         }
 
-        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.LIVING_ARMOUR_HELMET));
+        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET));
         if (bindingRecipePage != null)
         {
             livingArmourPages.add(bindingRecipePage);
         }
 
-        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.LIVING_ARMOUR_LEGS));
+        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_LEGS));
         if (bindingRecipePage != null)
         {
             livingArmourPages.add(bindingRecipePage);
         }
 
-        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.LIVING_ARMOUR_BOOTS));
+        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_BOOTS));
         if (bindingRecipePage != null)
         {
             livingArmourPages.add(bindingRecipePage);
@@ -482,13 +482,13 @@ public class CategoryArchitect
 
         List<IPage> teleposerPages = new ArrayList<IPage>();
 
-        AltarRecipe teleposerFocusRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(ModItems.TELEPOSITION_FOCUS));
+        AltarRecipe teleposerFocusRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.TELEPOSITION_FOCUS));
         if (teleposerFocusRecipe != null)
         {
             teleposerPages.add(new PageAltarRecipe(teleposerFocusRecipe));
         }
 
-        IRecipe teleposerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.TELEPOSER));
+        IRecipe teleposerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.TELEPOSER));
         if (teleposerRecipe != null)
         {
             teleposerPages.add(BookUtils.getPageForRecipe(teleposerRecipe));
@@ -499,7 +499,7 @@ public class CategoryArchitect
 
         List<IPage> boundBladePages = new ArrayList<IPage>();
 
-        PageAlchemyArray boundBladePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.BOUND_SWORD));
+        PageAlchemyArray boundBladePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_SWORD));
         if (boundBladePage != null)
         {
             boundBladePages.add(boundBladePage);
@@ -510,19 +510,19 @@ public class CategoryArchitect
 
         List<IPage> boundToolPages = new ArrayList<IPage>();
 
-        PageAlchemyArray boundToolPage = BookUtils.getAlchemyPage(new ItemStack(ModItems.BOUND_PICKAXE));
+        PageAlchemyArray boundToolPage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_PICKAXE));
         if (boundToolPage != null)
         {
             boundToolPages.add(boundToolPage);
         }
 
-        boundToolPage = BookUtils.getAlchemyPage(new ItemStack(ModItems.BOUND_AXE));
+        boundToolPage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_AXE));
         if (boundToolPage != null)
         {
             boundToolPages.add(boundToolPage);
         }
 
-        boundToolPage = BookUtils.getAlchemyPage(new ItemStack(ModItems.BOUND_SHOVEL));
+        boundToolPage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_SHOVEL));
         if (boundToolPage != null)
         {
             boundToolPages.add(boundToolPage);
@@ -538,7 +538,7 @@ public class CategoryArchitect
 
         List<IPage> masterOrbPages = new ArrayList<IPage>();
 
-        AltarRecipe masterOrbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(ModItems.ORB_MASTER));
+        AltarRecipe masterOrbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MASTER));
         if (magicianOrbRecipe != null)
         {
             masterOrbPages.add(new PageAltarRecipe(masterOrbRecipe));
@@ -549,7 +549,7 @@ public class CategoryArchitect
 
         List<IPage> orbRunePages = new ArrayList<IPage>();
 
-        IRecipe orbRuneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 8));
+        IRecipe orbRuneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 8));
         if (orbRuneRecipe != null)
         {
             orbRunePages.add(BookUtils.getPageForRecipe(orbRuneRecipe));
@@ -560,7 +560,7 @@ public class CategoryArchitect
 
         List<IPage> augmentedCapacityPages = new ArrayList<IPage>();
 
-        IRecipe augmentedCapacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 7));
+        IRecipe augmentedCapacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 7));
         if (orbRuneRecipe != null)
         {
             augmentedCapacityPages.add(BookUtils.getPageForRecipe(augmentedCapacityRecipe));
@@ -571,7 +571,7 @@ public class CategoryArchitect
 
         List<IPage> chargingPages = new ArrayList<IPage>();
 
-        IRecipe chargingRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 10));
+        IRecipe chargingRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 10));
         if (orbRuneRecipe != null)
         {
             chargingPages.add(BookUtils.getPageForRecipe(chargingRecipe));
@@ -582,7 +582,7 @@ public class CategoryArchitect
 
         List<IPage> accelerationPages = new ArrayList<IPage>();
 
-        IRecipe accelerationRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.BLOOD_RUNE, 1, 9));
+        IRecipe accelerationRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 9));
         if (orbRuneRecipe != null)
         {
             accelerationPages.add(BookUtils.getPageForRecipe(accelerationRecipe));
@@ -599,7 +599,7 @@ public class CategoryArchitect
             suppressionPages.add(new PageTartaricForgeRecipe(suppressionRecipe));
         }
 
-        PageAlchemyArray suppressionRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_SUPPRESSION));
+        PageAlchemyArray suppressionRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_SUPPRESSION));
         if (suppressionRecipePage != null)
         {
             suppressionPages.add(suppressionRecipePage);
@@ -616,7 +616,7 @@ public class CategoryArchitect
             hastePages.add(new PageTartaricForgeRecipe(hasteRecipe));
         }
 
-        PageAlchemyArray hasteRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_HASTE));
+        PageAlchemyArray hasteRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_HASTE));
         if (hasteRecipePage != null)
         {
             hastePages.add(hasteRecipePage);
@@ -633,7 +633,7 @@ public class CategoryArchitect
             severancePages.add(new PageTartaricForgeRecipe(severanceRecipe));
         }
 
-        PageAlchemyArray severanceRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_ENDER_SEVERANCE));
+        PageAlchemyArray severanceRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_ENDER_SEVERANCE));
         if (severanceRecipePage != null)
         {
             severancePages.add(severanceRecipePage);
@@ -650,7 +650,7 @@ public class CategoryArchitect
             telepositionPages.add(new PageTartaricForgeRecipe(telepositionRecipe));
         }
 
-        PageAlchemyArray telepositionRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_TELEPOSITION));
+        PageAlchemyArray telepositionRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_TELEPOSITION));
         if (telepositionRecipePage != null)
         {
             telepositionPages.add(telepositionRecipePage);
@@ -667,7 +667,7 @@ public class CategoryArchitect
             compressionPages.add(new PageTartaricForgeRecipe(compressionRecipe));
         }
 
-        PageAlchemyArray compressionRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_COMPRESSION));
+        PageAlchemyArray compressionRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_COMPRESSION));
         if (compressionRecipePage != null)
         {
             compressionPages.add(compressionRecipePage);
@@ -684,7 +684,7 @@ public class CategoryArchitect
             bridgePages.add(new PageTartaricForgeRecipe(bridgeRecipe));
         }
 
-        PageAlchemyArray bridgeRecipePage = BookUtils.getAlchemyPage(new ItemStack(ModItems.SIGIL_PHANTOM_BRIDGE));
+        PageAlchemyArray bridgeRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_PHANTOM_BRIDGE));
         if (bridgeRecipePage != null)
         {
             bridgePages.add(bridgeRecipePage);
@@ -695,7 +695,7 @@ public class CategoryArchitect
 
         List<IPage> mimicPages = new ArrayList<IPage>();
 
-        IRecipe mimicRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.MIMIC, 1, 1));
+        IRecipe mimicRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.MIMIC, 1, 1));
         if (mimicRecipe != null)
         {
             mimicPages.add(BookUtils.getPageForRecipe(mimicRecipe));

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
@@ -29,7 +29,7 @@ public class StatTrackerSprintAttack extends StatTracker
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.sprintAttack";
+        return BloodMagic.MODID + ".tracker.sprintAttack";
     }
 
     @Override
@@ -41,13 +41,13 @@ public class StatTrackerSprintAttack extends StatTracker
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalDamageDealt = tag.getDouble(Constants.Mod.MODID + ".tracker.sprintAttack");
+        totalDamageDealt = tag.getDouble(BloodMagic.MODID + ".tracker.sprintAttack");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setDouble(Constants.Mod.MODID + ".tracker.sprintAttack", totalDamageDealt);
+        tag.setDouble(BloodMagic.MODID + ".tracker.sprintAttack", totalDamageDealt);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class StatTrackerSprintAttack extends StatTracker
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.sprintAttack");
+        return key.equals(BloodMagic.MODID + ".upgrade.sprintAttack");
     }
 
     @Override

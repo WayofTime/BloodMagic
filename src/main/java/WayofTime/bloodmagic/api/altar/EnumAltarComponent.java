@@ -2,12 +2,9 @@ package WayofTime.bloodmagic.api.altar;
 
 import java.util.Locale;
 
-import lombok.Getter;
-
 /**
  * List of different components used to construct different tiers of altars.
  */
-@Getter
 public enum EnumAltarComponent
 {
     GLOWSTONE,
@@ -23,5 +20,9 @@ public enum EnumAltarComponent
     EnumAltarComponent()
     {
         this.key = BASE + name().toLowerCase(Locale.ENGLISH);
+    }
+
+    public String getKey() {
+        return key;
     }
 }

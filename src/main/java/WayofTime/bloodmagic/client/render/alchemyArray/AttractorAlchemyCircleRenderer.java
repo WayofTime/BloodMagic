@@ -50,7 +50,7 @@ public class AttractorAlchemyCircleRenderer extends AlchemyCircleRenderer
         {
             if (craftTime < secondaryOffset)
             {
-                float modifier = 90 * (craftTime - offset) / (float) (secondaryOffset - offset);
+                float modifier = 90 * (craftTime - offset) / (secondaryOffset - offset);
                 return modifier;
             } else
             {

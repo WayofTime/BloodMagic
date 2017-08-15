@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -15,22 +16,21 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.incense.IIncensePath;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumPath;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath, IVariantProvider
+public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath
 {
 
     public BlockPath()
     {
         super(Material.ROCK, EnumPath.class);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".path.");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".path.");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);
         setSoundType(SoundType.STONE);
@@ -46,10 +46,10 @@ public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath, IVar
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag tooltipFlag)
     {
         tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.decoration.safe"));
-        super.addInformation(stack, player, tooltip, advanced);
+        super.addInformation(stack, world, tooltip, tooltipFlag);
     }
 
     @Override
@@ -72,14 +72,5 @@ public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath, IVar
         default:
             return 0;
         }
-    }
-
-    @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < this.getTypes().length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
-        return ret;
     }
 }

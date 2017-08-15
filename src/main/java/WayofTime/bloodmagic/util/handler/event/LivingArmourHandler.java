@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.util.handler.event;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -58,7 +59,7 @@ public class LivingArmourHandler
                 if (armour != null)
                 {
                     double modifier = 1;
-                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.slowHeal", chestStack);
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.slowHeal", chestStack);
 
                     if (upgrade instanceof LivingArmourUpgradeSlowHeal)
                     {
@@ -121,7 +122,7 @@ public class LivingArmourHandler
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)
                 {
-                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.stormTrooper", chestStack);
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.stormTrooper", chestStack);
 
                     if (upgrade instanceof LivingArmourUpgradeStormTrooper)
                     {
@@ -151,7 +152,7 @@ public class LivingArmourHandler
                 {
                     if (event.getHand() == EnumHand.OFF_HAND)
                     {
-                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.crippledArm", chestStack);
+                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.crippledArm", chestStack);
 
                         if (upgrade instanceof LivingArmourUpgradeCrippledArm)
                         {
@@ -164,7 +165,7 @@ public class LivingArmourHandler
                         ItemStack drinkStack = event.getItemStack();
 
                         //TODO: See if the item is a splash potion? Those should be usable.
-                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.quenched", chestStack);
+                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.quenched", chestStack);
 
                         if (upgrade instanceof LivingArmourUpgradeQuenched)
                         {
@@ -192,7 +193,7 @@ public class LivingArmourHandler
                 {
                     StatTrackerGrimReaperSprint.incrementCounter(armour);
 
-                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.grimReaper", chestStack);
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.grimReaper", chestStack);
 
                     if (upgrade instanceof LivingArmourUpgradeGrimReaperSprint && ((LivingArmourUpgradeGrimReaperSprint) upgrade).canSavePlayer(player))
                     {
@@ -225,7 +226,7 @@ public class LivingArmourHandler
 
                     if (!player.isSneaking())
                     {
-                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(Constants.Mod.MODID + ".upgrade.jump", chestStack);
+                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(BloodMagic.MODID + ".upgrade.jump", chestStack);
 
                         if (upgrade instanceof LivingArmourUpgradeJump)
                         {
@@ -257,7 +258,7 @@ public class LivingArmourHandler
                     LivingArmour armour = ItemLivingArmour.getLivingArmourFromStack(chestStack);
                     if (armour != null)
                     {
-                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.stepAssist", chestStack);
+                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.stepAssist", chestStack);
 
                         if (upgrade instanceof LivingArmourUpgradeStepAssist)
                         {
@@ -279,7 +280,7 @@ public class LivingArmourHandler
                 LivingArmour armour = ItemLivingArmour.getLivingArmourFromStack(chestStack);
                 if (armour != null)
                 {
-                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(Constants.Mod.MODID + ".upgrade.movement", chestStack);
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(BloodMagic.MODID + ".upgrade.movement", chestStack);
 
                     if (upgrade instanceof LivingArmourUpgradeSpeed)
                     {
@@ -298,7 +299,7 @@ public class LivingArmourHandler
 
             if (percentIncrease > 0 && (player.onGround || player.capabilities.isFlying) && (Math.abs(player.moveForward) > 0 || Math.abs(player.moveStrafing) > 0))
             {
-                player.moveRelative(player.moveStrafing, player.moveForward, player.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease);
+                player.moveRelative(player.moveStrafing, player.moveForward, player.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease, 0.02F);
             }
         }
     }
@@ -323,7 +324,7 @@ public class LivingArmourHandler
             {
                 StatTrackerArrowShot.incrementCounter(armour);
 
-                LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.arrowShot", chestStack);
+                LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.arrowShot", chestStack);
                 if (upgrade instanceof LivingArmourUpgradeArrowShot)
                 {
                     int charge = event.getCharge();

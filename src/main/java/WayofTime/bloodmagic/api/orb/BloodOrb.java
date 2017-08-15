@@ -1,22 +1,23 @@
 package WayofTime.bloodmagic.api.orb;
 
-import WayofTime.bloodmagic.api.registry.OrbRegistry;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Base object for all Blood Orbs. Makes Orb creation quite a bit easier.
  * 
- * Just create a new BloodOrb instance then register it with
- * {@link OrbRegistry#registerOrb(BloodOrb)} This will allow the use of just one
- * item ID for all orbs. If an addon dev needs more control over the intricacies
- * of their orb (custom right clicking, renderers, etc), they can just create
- * their own item as normal.
+ * Just create a new BloodOrb instance then register it in {@link net.minecraftforge.event.RegistryEvent.Register<BloodOrb>}
  */
-public class BloodOrb
+public class BloodOrb extends IForgeRegistryEntry.Impl<BloodOrb>
 {
-    private String name;
-    private int tier;
-    private int capacity;
-    private String owner = "BloodMagic";
+    private final String name;
+    private final int tier;
+    private final int capacity;
+    @Nullable
+    private ModelResourceLocation modelLocation;
 
     /**
      * A base object for BloodOrbs. A bit cleaner than the old way through
@@ -51,26 +52,19 @@ public class BloodOrb
         return capacity;
     }
 
-    public String getOwner()
-    {
-        return owner;
+    @Nullable
+    public ModelResourceLocation getModelLocation() {
+        return modelLocation;
     }
 
-    /**
-     * For setting the MODID of the mod that creates the Orb. Not required, but
-     * preferred.
-     * 
-     * @return - The BloodOrb object for further use.
-     */
-    public BloodOrb setOwner(String owner)
-    {
-        this.owner = owner;
+    public BloodOrb withModel(@Nonnull ModelResourceLocation modelLocation) {
+        this.modelLocation = modelLocation;
         return this;
     }
 
     @Override
     public String toString()
     {
-        return "BloodOrb{" + "name='" + name + '\'' + ", tier=" + tier + ", capacity=" + capacity + ", owner=" + owner + '}';
+        return "BloodOrb{" + "name='" + name + '\'' + ", tier=" + tier + ", capacity=" + capacity + ", owner=" + getRegistryName() + '}';
     }
 }

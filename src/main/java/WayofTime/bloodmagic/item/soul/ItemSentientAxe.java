@@ -40,7 +40,7 @@ import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionMultiWill;
 import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.HashMultimap;
@@ -80,8 +80,8 @@ public class ItemSentientAxe extends ItemAxe implements IDemonWillWeapon, IMeshP
         setMaxDamage(getMaxDamage() * 2);
 //        super(ModItems.soulToolMaterial);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".sentientAxe");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".sentientAxe");
+        setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class ItemSentientAxe extends ItemAxe implements IDemonWillWeapon, IMeshP
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {
-        return ModItems.ITEM_DEMON_CRYSTAL == repair.getItem() || super.getIsRepairable(toRepair, repair);
+        return RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL == repair.getItem() || super.getIsRepairable(toRepair, repair);
     }
 
     public void recalculatePowers(ItemStack stack, World world, EntityPlayer player)
@@ -372,7 +372,7 @@ public class ItemSentientAxe extends ItemAxe implements IDemonWillWeapon, IMeshP
 
         double willModifier = killedEntity instanceof EntitySlime ? 0.67 : 1;
 
-        IDemonWill soul = ((IDemonWill) ModItems.MONSTER_SOUL);
+        IDemonWill soul = ((IDemonWill) RegistrarBloodMagicItems.MONSTER_SOUL);
 
         EnumDemonWillType type = this.getCurrentType(stack);
 

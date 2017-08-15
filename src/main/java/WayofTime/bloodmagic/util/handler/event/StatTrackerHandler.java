@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.util.handler.event;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +18,6 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import WayofTime.bloodmagic.annot.Handler;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
@@ -106,7 +106,7 @@ public class StatTrackerHandler
     public void entityHurt(LivingHurtEvent event)
     {
         DamageSource source = event.getSource();
-        Entity sourceEntity = event.getSource().getEntity();
+        Entity sourceEntity = event.getSource().getTrueSource();
         EntityLivingBase attackedEntity = event.getEntityLiving();
 
         if (attackedEntity instanceof EntityPlayer)
@@ -196,7 +196,7 @@ public class StatTrackerHandler
             LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
             if (armour != null)
             {
-                LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.experienced", chestStack);
+                LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.experienced", chestStack);
                 if (upgrade instanceof LivingArmourUpgradeExperience)
                 {
                     double modifier = ((LivingArmourUpgradeExperience) upgrade).getExperienceModifier();

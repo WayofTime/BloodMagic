@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import WayofTime.bloodmagic.tile.base.TileTicking;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,15 +25,13 @@ import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.ChatUtil;
 
 import com.google.common.base.Strings;
 
 import javax.annotation.Nullable;
 
-@Getter
-@NoArgsConstructor
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone
 {
     private String owner;
@@ -46,11 +41,8 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     private int activeTime;
     private int cooldown;
     private Ritual currentRitual;
-    @Setter
     private EnumFacing direction = EnumFacing.NORTH;
-    @Setter
     private boolean inverted;
-
     private List<EnumDemonWillType> currentActiveWillConfig = new ArrayList<EnumDemonWillType>();
 
     @Override
@@ -70,7 +62,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         if (!isActive() && !isPowered() && isRedstoned() && getCurrentRitual() != null)
         {
             active = true;
-            ItemStack crystalStack = NBTHelper.checkNBT(new ItemStack(ModItems.ACTIVATION_CRYSTAL, 1, getCurrentRitual().getCrystalLevel()));
+            ItemStack crystalStack = NBTHelper.checkNBT(new ItemStack(RegistrarBloodMagicItems.ACTIVATION_CRYSTAL, 1, getCurrentRitual().getCrystalLevel()));
             crystalStack.getTagCompound().setString(Constants.NBT.OWNER_UUID, getOwner());
             activateRitual(crystalStack, null, getCurrentRitual());
             redstoned = false;
@@ -419,5 +411,65 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
             return !getWorld().isBlockPowered(getPos());
 
         return getWorld().isBlockPowered(getPos());
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public SoulNetwork getCachedNetwork() {
+        return cachedNetwork;
+    }
+
+    public void setCachedNetwork(SoulNetwork cachedNetwork) {
+        this.cachedNetwork = cachedNetwork;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public boolean isRedstoned() {
+        return redstoned;
+    }
+
+    public void setRedstoned(boolean redstoned) {
+        this.redstoned = redstoned;
+    }
+
+    public int getActiveTime() {
+        return activeTime;
+    }
+
+    public void setActiveTime(int activeTime) {
+        this.activeTime = activeTime;
+    }
+
+    public Ritual getCurrentRitual() {
+        return currentRitual;
+    }
+
+    public void setCurrentRitual(Ritual currentRitual) {
+        this.currentRitual = currentRitual;
+    }
+
+    public void setDirection(EnumFacing direction) {
+        this.direction = direction;
+    }
+
+    public boolean isInverted() {
+        return inverted;
+    }
+
+    public void setInverted(boolean inverted) {
+        this.inverted = inverted;
+    }
+
+    public List<EnumDemonWillType> getCurrentActiveWillConfig() {
+        return currentActiveWillConfig;
+    }
+
+    public void setCurrentActiveWillConfig(List<EnumDemonWillType> currentActiveWillConfig) {
+        this.currentActiveWillConfig = currentActiveWillConfig;
     }
 }

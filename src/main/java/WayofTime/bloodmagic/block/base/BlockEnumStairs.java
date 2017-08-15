@@ -71,7 +71,7 @@ public class BlockEnumStairs<E extends Enum<E> & IStringSerializable> extends Bl
     }
 
     @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn)
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean bool)
     {
         state = this.getActualState(state, worldIn, pos);
 

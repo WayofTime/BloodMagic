@@ -4,7 +4,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 
 import javax.annotation.Nullable;
@@ -15,8 +14,8 @@ public class BlockMasterRoutingNode extends BlockRoutingNode
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".masterRouting");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".masterRouting");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 2);

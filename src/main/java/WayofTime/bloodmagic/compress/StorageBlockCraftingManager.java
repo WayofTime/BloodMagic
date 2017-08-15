@@ -27,7 +27,7 @@ public class StorageBlockCraftingManager
     {
         this.recipes = new StorageBlockCraftingRecipeAssimilator().getPackingRecipes();
 
-        BloodMagic.instance.getLogger().info("Total number of compression recipes: " + this.recipes.size());
+        BloodMagic.instance.logger.info("Total number of compression recipes: " + this.recipes.size());
     }
 
     private static boolean isResultStackReversible(ItemStack stack, int gridSize, World world, List list)

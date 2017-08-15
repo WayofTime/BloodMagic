@@ -31,7 +31,7 @@ import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -56,15 +56,15 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     public ItemSentientArmour(EntityEquipmentSlot armorType)
     {
         super(ItemArmor.ArmorMaterial.IRON, 0, armorType);
-        setUnlocalizedName(Constants.Mod.MODID + ".sentientArmour.");
+        setUnlocalizedName(BloodMagic.MODID + ".sentientArmour.");
         setMaxDamage(250);
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type)
     {
-        if (this == ModItems.SENTIENT_ARMOUR_CHEST || this == ModItems.SENTIENT_ARMOUR_HELMET || this == ModItems.SENTIENT_ARMOUR_BOOTS)
+        if (this == RegistrarBloodMagicItems.SENTIENT_ARMOUR_CHEST || this == RegistrarBloodMagicItems.SENTIENT_ARMOUR_HELMET || this == RegistrarBloodMagicItems.SENTIENT_ARMOUR_BOOTS)
         {
             switch (this.getCurrentType(stack))
             {
@@ -82,7 +82,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             return "bloodmagic:models/armor/sentientArmour_layer_1.png";
         }
 
-        if (this == ModItems.SENTIENT_ARMOUR_LEGS)
+        if (this == RegistrarBloodMagicItems.SENTIENT_ARMOUR_LEGS)
         {
             switch (this.getCurrentType(stack))
             {
@@ -159,13 +159,13 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         double armourReduction = 0.0;
         double damageAmount = 0.25;
 
-        if (this == ModItems.SENTIENT_ARMOUR_BOOTS || this == ModItems.SENTIENT_ARMOUR_HELMET)
+        if (this == RegistrarBloodMagicItems.SENTIENT_ARMOUR_BOOTS || this == RegistrarBloodMagicItems.SENTIENT_ARMOUR_HELMET)
         {
             damageAmount = 3d / 20d * 0.6;
-        } else if (this == ModItems.SENTIENT_ARMOUR_LEGS)
+        } else if (this == RegistrarBloodMagicItems.SENTIENT_ARMOUR_LEGS)
         {
             damageAmount = 6d / 20d * 0.6;
-        } else if (this == ModItems.SENTIENT_ARMOUR_CHEST)
+        } else if (this == RegistrarBloodMagicItems.SENTIENT_ARMOUR_CHEST)
         {
             damageAmount = 0.64;
         }
@@ -184,7 +184,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             return new ArmorProperties(-1, 0, 0);
         }
 
-        if (this == ModItems.SENTIENT_ARMOUR_CHEST)
+        if (this == RegistrarBloodMagicItems.SENTIENT_ARMOUR_CHEST)
         {
             armourReduction = 0.24 / 0.64; // This values puts it at iron level
 
@@ -230,22 +230,22 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     @Override
     public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot)
     {
-        if (armor.getItem() == ModItems.SENTIENT_ARMOUR_HELMET)
+        if (armor.getItem() == RegistrarBloodMagicItems.SENTIENT_ARMOUR_HELMET)
         {
             return 3;
         }
 
-        if (armor.getItem() == ModItems.SENTIENT_ARMOUR_CHEST)
+        if (armor.getItem() == RegistrarBloodMagicItems.SENTIENT_ARMOUR_CHEST)
         {
             return 8;
         }
 
-        if (armor.getItem() == ModItems.SENTIENT_ARMOUR_LEGS)
+        if (armor.getItem() == RegistrarBloodMagicItems.SENTIENT_ARMOUR_LEGS)
         {
             return 6;
         }
 
-        if (armor.getItem() == ModItems.SENTIENT_ARMOUR_BOOTS)
+        if (armor.getItem() == RegistrarBloodMagicItems.SENTIENT_ARMOUR_BOOTS)
         {
             return 3;
         }
@@ -329,13 +329,13 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             public ModelResourceLocation getModelLocation(ItemStack stack)
             {
                 assert getCustomLocation() != null;
-                EnumDemonWillType type = ((ItemSentientArmour) ModItems.SENTIENT_ARMOUR_HELMET).getCurrentType(stack);
+                EnumDemonWillType type = ((ItemSentientArmour) RegistrarBloodMagicItems.SENTIENT_ARMOUR_HELMET).getCurrentType(stack);
                 String additional = "_" + type.getName().toLowerCase();
-                if (stack.getItem() == ModItems.SENTIENT_ARMOUR_HELMET)
+                if (stack.getItem() == RegistrarBloodMagicItems.SENTIENT_ARMOUR_HELMET)
                     return new ModelResourceLocation(getCustomLocation(), "armour=head" + additional);
-                else if (stack.getItem() == ModItems.SENTIENT_ARMOUR_CHEST)
+                else if (stack.getItem() == RegistrarBloodMagicItems.SENTIENT_ARMOUR_CHEST)
                     return new ModelResourceLocation(getCustomLocation(), "armour=body" + additional);
-                else if (stack.getItem() == ModItems.SENTIENT_ARMOUR_LEGS)
+                else if (stack.getItem() == RegistrarBloodMagicItems.SENTIENT_ARMOUR_LEGS)
                     return new ModelResourceLocation(getCustomLocation(), "armour=leg" + additional);
                 else
                     return new ModelResourceLocation(getCustomLocation(), "armour=feet" + additional);
@@ -346,7 +346,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     @Override
     public ResourceLocation getCustomLocation()
     {
-        return new ResourceLocation(Constants.Mod.MODID, "item/ItemSentientArmour");
+        return new ResourceLocation(BloodMagic.MODID, "item/ItemSentientArmour");
     }
 
     @Override
@@ -440,10 +440,10 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         ItemStack bootsStack = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 
         {
-            ItemStack omegaHelmetStack = ((ItemSentientArmour) ModItems.SENTIENT_ARMOUR_HELMET).getSubstituteStack(type, will, helmetStack);
-            ItemStack omegaChestStack = ((ItemSentientArmour) ModItems.SENTIENT_ARMOUR_CHEST).getSubstituteStack(type, will, chestStack);
-            ItemStack omegaLeggingsStack = ((ItemSentientArmour) ModItems.SENTIENT_ARMOUR_LEGS).getSubstituteStack(type, will, leggingsStack);
-            ItemStack omegaBootsStack = ((ItemSentientArmour) ModItems.SENTIENT_ARMOUR_BOOTS).getSubstituteStack(type, will, bootsStack);
+            ItemStack omegaHelmetStack = ((ItemSentientArmour) RegistrarBloodMagicItems.SENTIENT_ARMOUR_HELMET).getSubstituteStack(type, will, helmetStack);
+            ItemStack omegaChestStack = ((ItemSentientArmour) RegistrarBloodMagicItems.SENTIENT_ARMOUR_CHEST).getSubstituteStack(type, will, chestStack);
+            ItemStack omegaLeggingsStack = ((ItemSentientArmour) RegistrarBloodMagicItems.SENTIENT_ARMOUR_LEGS).getSubstituteStack(type, will, leggingsStack);
+            ItemStack omegaBootsStack = ((ItemSentientArmour) RegistrarBloodMagicItems.SENTIENT_ARMOUR_BOOTS).getSubstituteStack(type, will, bootsStack);
 
             player.setItemStackToSlot(EntityEquipmentSlot.HEAD, omegaHelmetStack);
             player.setItemStackToSlot(EntityEquipmentSlot.CHEST, omegaChestStack);

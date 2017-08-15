@@ -1,12 +1,10 @@
 package WayofTime.bloodmagic.api.altar;
 
-import lombok.Getter;
 import net.minecraft.util.math.BlockPos;
 
 /**
  * Used for building the altar structure.
  */
-@Getter
 public class AltarComponent
 {
     private BlockPos offset;
@@ -49,5 +47,17 @@ public class AltarComponent
     {
         this.upgradeSlot = true;
         return this;
+    }
+
+    public BlockPos getOffset() {
+        return offset;
+    }
+
+    public boolean isUpgradeSlot() {
+        return upgradeSlot;
+    }
+
+    public EnumAltarComponent getComponent() {
+        return component;
     }
 }

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.client.render;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -31,7 +31,7 @@ public class LayerBloodElytra implements LayerRenderer<AbstractClientPlayer>
         if (LivingArmour.hasFullSet(clientPlayer))
         {
             ItemStack chestStack = clientPlayer.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-            if (ItemLivingArmour.hasUpgrade(Constants.Mod.MODID + ".upgrade.elytra", chestStack))
+            if (ItemLivingArmour.hasUpgrade(BloodMagic.MODID + ".upgrade.elytra", chestStack))
             {
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 GlStateManager.enableBlend();

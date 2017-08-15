@@ -14,7 +14,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumInversionCap;
 import WayofTime.bloodmagic.client.IVariantProvider;
@@ -25,8 +24,8 @@ public class BlockInversionPillarEnd extends BlockEnum<EnumInversionCap> impleme
     {
         super(Material.ROCK, EnumInversionCap.class);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".inversionpillarend.");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".inversionpillarend.");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);
         setSoundType(SoundType.STONE);

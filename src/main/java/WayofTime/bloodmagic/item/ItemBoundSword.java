@@ -35,7 +35,7 @@ import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.base.Strings;
@@ -46,10 +46,10 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
 {
     public ItemBoundSword()
     {
-        super(ModItems.BOUND_TOOL_MATERIAL);
+        super(RegistrarBloodMagicItems.BOUND_TOOL_MATERIAL);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".bound.sword");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".bound.sword");
+        setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override

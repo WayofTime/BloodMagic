@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.client.render.block;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.INodeRenderer;
 import WayofTime.bloodmagic.client.helper.ShaderHelper;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRoutingNode>
 {
-    private static final ResourceLocation beamTexture = new ResourceLocation(Constants.Mod.MODID, "textures/entities/nodeBeam.png");
+    private static final ResourceLocation beamTexture = new ResourceLocation(BloodMagic.MODID, "textures/entities/nodeBeam.png");
     private static final Minecraft mc = Minecraft.getMinecraft();
 
 //    private static final ResourceLocation test = new ResourceLocation("luminescence:textures/models/InputMirror.png");
@@ -71,11 +71,11 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
                 double d23 = width / 2;
                 double d24 = width / 2;
                 double d25 = width / 2;
-                double d26 = (double) (distance * f1);
+                double d26 = distance * f1;
                 double d27 = 0.0D;
                 double d28 = 1.0D;
                 double d29 = (double) (f3) + test;
-                double d30 = (double) (distance * f1) + d29;
+                double d30 = distance * f1 + d29;
 
                 GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
 

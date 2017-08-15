@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.client.mesh;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IMultiWillTool;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 
@@ -23,9 +23,9 @@ public class CustomMeshDefinitionMultiWill implements ItemMeshDefinition
         if (stack != null && stack.getItem() instanceof IMultiWillTool)
         {
             EnumDemonWillType type = ((IMultiWillTool) stack.getItem()).getCurrentType(stack);
-            return new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + name), "type=" + type.getName().toLowerCase());
+            return new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/" + name), "type=" + type.getName().toLowerCase());
         }
 
-        return new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + name), "type=default");
+        return new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/" + name), "type=default");
     }
 }

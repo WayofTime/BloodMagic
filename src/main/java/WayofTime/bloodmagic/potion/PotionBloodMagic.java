@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.potion;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
@@ -11,9 +11,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PotionBloodMagic extends Potion
 {
-    public static ResourceLocation texture = new ResourceLocation(Constants.Mod.MODID, "textures/misc/potions.png");
+    public static ResourceLocation texture = new ResourceLocation(BloodMagic.MODID, "textures/misc/potions.png");
 
-    public PotionBloodMagic(String name, ResourceLocation texture, boolean badEffect, int potionColor, int iconIndexX, int iconIndexY)
+    public PotionBloodMagic(String name, boolean badEffect, int potionColor, int iconIndexX, int iconIndexY)
     {
         super(badEffect, potionColor);
         this.setPotionName(name);

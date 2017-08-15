@@ -38,7 +38,7 @@ import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionMultiWill;
 import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.HashMultimap;
@@ -70,16 +70,16 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
 
     public ItemSentientSword()
     {
-        super(ModItems.SOUL_TOOL_MATERIAL);
+        super(RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".sentientSword");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".sentientSword");
+        setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {
-        return ModItems.ITEM_DEMON_CRYSTAL == repair.getItem() || super.getIsRepairable(toRepair, repair);
+        return RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL == repair.getItem() || super.getIsRepairable(toRepair, repair);
     }
 
     public void recalculatePowers(ItemStack stack, World world, EntityPlayer player)
@@ -343,7 +343,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
 
         double willModifier = killedEntity instanceof EntitySlime ? 0.67 : 1;
 
-        IDemonWill soul = ((IDemonWill) ModItems.MONSTER_SOUL);
+        IDemonWill soul = ((IDemonWill) RegistrarBloodMagicItems.MONSTER_SOUL);
 
         EnumDemonWillType type = this.getCurrentType(stack);
 

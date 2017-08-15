@@ -5,26 +5,21 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
-        classpath 'org.ajoberstar:gradle-git:0.10.1'
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 
 plugins {
 	id "net.minecraftforge.gradle.forge" version "2.0.2"
     id 'com.matthewprenger.cursegradle' version '1.0.9'
-	id 'io.franzbecker.gradle-lombok' version '1.6'
+    id 'maven-publish'
 }
 
-apply plugin: 'maven-publish'
-
 def build_number = 'CUSTOM'
-
 if (System.getenv('BUILD_NUMBER') != null)
     build_number = System.getenv('BUILD_NUMBER')
 
-def username = 'BloodMagicDev'
-
+def username = "${mod_name}"
 if (project.hasProperty('dev_username'))
     username = "${dev_username}"
 
@@ -32,38 +27,15 @@ group = package_group
 archivesBaseName = mod_name
 version = "${mc_version}-${mod_version}-${build_number}"
 
-if (project.hasProperty('gitpush'))
-    version += "-ss"
-
-import org.ajoberstar.grgit.*
-
-ext.repo = Grgit.open(project.file('.'))
-def gitHash = 'unknown'
-
-if (new File(projectDir, '.git').exists())
-    gitHash = repo.log().find().abbreviatedId
-
 repositories {
     maven { url "http://dvs1.progwml6.com/files/maven" }
     maven {	url "http://tehnut.info/maven" }
-	
-    ivy {
-        name "Thaumcraft"
-        artifactPattern "https://dl.dropboxusercontent.com/u/47135879/[module]-[revision]-deobf.[ext]"
-    }
-    ivy {
-        name "Baubles"
-        artifactPattern "https://dl.dropboxusercontent.com/u/47135879/[module]-1.8.9-[revision]-deobf.[ext]"
-    }
 }
 
 dependencies {
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
     deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}_${mc_version}"
     deobfCompile "info.amerifrance.guideapi:Guide-API:${mc_version}-${guideapi_version}"
-
-//    compile name: "Thaumcraft", version: "${mc_version}-${thaumcraft_version}", ext: "jar"
-//    compile name: 'Baubles', version: "${baubles_version}", ext: 'jar'
 }
 
 minecraft {
@@ -104,23 +76,6 @@ if (JavaVersion.current().isJava8Compatible()) {
     }
 }
 
-lombok {
-    version = "1.16.6"
-    sha256 = "e0a471be03e1e6b02bf019480cec7a3ac9801702bf7bf62f15d077ad4df8dd5d"
-}
-
-import io.franzbecker.gradle.lombok.task.DelombokTask
-
-task delombok(type: DelombokTask) {
-    args("src/main/java", "-d", "build/sources/delomboked/java")
-}
-
-task delombokHelp(type: DelombokTask) {
-    args "--help"
-}
-
-tasks.eclipse.dependsOn installLombok
-
 jar {
     classifier = ''
     manifest.mainAttributes(
@@ -128,7 +83,6 @@ jar {
         "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
         "Implementation-Title": project.name,
         "Implementation-Version": project.version,
-        "Git-Hash": gitHash,
         "Built-On": "${mc_version}-${forge_version}"
     )
 }
@@ -147,11 +101,6 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
 }
 
-javadoc {
-    source = projectDir.path + "/build/sources/delomboked/java"
-}
-
-tasks.javadoc.dependsOn delombok
 tasks.build.dependsOn javadoc, javadocJar, apiJar
 
 tasks.withType(JavaCompile) { task ->
@@ -202,7 +151,7 @@ String getChangelogText() {
 
 def curseRelations = {
     optionalLibrary 'just-enough-items-jei'
-    optionalLibrary 'waila'
+    optionalLibrary 'hwyla'
     requiredLibrary 'guide-api'
 }
 
@@ -216,7 +165,6 @@ curseforge {
         releaseType = 'beta'
 
         relations curseRelations
-        addGameVersion '1.11.2'
 
         addArtifact javadocJar
         addArtifact sourceJar

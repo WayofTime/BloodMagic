@@ -2,9 +2,6 @@ package WayofTime.bloodmagic.meteor;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -15,13 +12,15 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.bloodmagic.util.Utils;
 
-@Getter
-@Setter
-@AllArgsConstructor
 public class MeteorComponent
 {
     public int weight;
     public String oreName;
+
+    public MeteorComponent(int weight, String oreName) {
+        this.weight = weight;
+        this.oreName = oreName;
+    }
 
     public IBlockState getStateFromOre()
     {
@@ -59,5 +58,21 @@ public class MeteorComponent
         }
 
         return null;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public String getOreName() {
+        return oreName;
+    }
+
+    public void setOreName(String oreName) {
+        this.oreName = oreName;
     }
 }

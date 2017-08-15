@@ -17,7 +17,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
 import WayofTime.bloodmagic.item.sigil.ItemSigilSeer;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -64,8 +64,8 @@ public class DataProviderBloodAltar implements IWailaDataProvider
         }
         case 2:
         {
-            hasSeer = hasStack(new ItemStack(ModItems.SIGIL_SEER), accessor.getPlayer());
-            hasSigil = hasSeer || hasStack(new ItemStack(ModItems.SIGIL_DIVINATION), accessor.getPlayer());
+            hasSeer = hasStack(new ItemStack(RegistrarBloodMagicItems.SIGIL_SEER), accessor.getPlayer());
+            hasSigil = hasSeer || hasStack(new ItemStack(RegistrarBloodMagicItems.SIGIL_DIVINATION), accessor.getPlayer());
             break;
         }
         default:

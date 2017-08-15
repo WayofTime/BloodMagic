@@ -30,8 +30,8 @@ public class ItemMonsterSoul extends Item implements IDemonWill, IVariantProvide
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".monsterSoul.");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".monsterSoul.");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHasSubtypes(true);
         setMaxStackSize(1);
     }

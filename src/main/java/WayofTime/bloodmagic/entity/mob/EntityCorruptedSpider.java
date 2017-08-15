@@ -207,9 +207,9 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase
         /**
          * Returns whether an in-progress EntityAIBase should continue executing
          */
-        public boolean continueExecuting()
+        public boolean shouldContinueExecuting()
         {
-            float f = this.attacker.getBrightness(1.0F);
+            float f = this.attacker.getBrightness();
 
             if (f >= 0.5F && this.attacker.getRNG().nextInt(100) == 0)
             {
@@ -217,7 +217,7 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase
                 return false;
             } else
             {
-                return super.continueExecuting();
+                return super.shouldContinueExecuting();
             }
         }
 
@@ -239,7 +239,7 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase
          */
         public boolean shouldExecute()
         {
-            float f = this.taskOwner.getBrightness(1.0F);
+            float f = this.taskOwner.getBrightness();
             return !(f >= 0.5F) && super.shouldExecute();
         }
     }

@@ -20,7 +20,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.api.util.helper.PurificationHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
@@ -30,8 +29,8 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
     public ItemDaggerOfSacrifice()
     {
         super();
-        setUnlocalizedName(Constants.Mod.MODID + ".daggerOfSacrifice");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".daggerOfSacrifice");
+        setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
         setFull3D();
     }

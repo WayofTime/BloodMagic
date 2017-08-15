@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.livingArmour.downgrade;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
@@ -43,7 +43,7 @@ public class LivingArmourUpgradeBattleHungry extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.battleHunger";
+        return BloodMagic.MODID + ".upgrade.battleHunger";
     }
 
     @Override

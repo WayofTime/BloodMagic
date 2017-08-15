@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.AltarComponent;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
@@ -10,7 +10,7 @@ import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.block.BlockBloodRune;
-import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -38,7 +38,7 @@ public class RitualAltarBuilder extends Ritual
 
     public RitualAltarBuilder()
     {
-        super("ritualAltarBuilder", 0, 450, "ritual." + Constants.Mod.MODID + ".altarBuilderRitual");
+        super("ritualAltarBuilder", 0, 450, "ritual." + BloodMagic.MODID + ".altarBuilderRitual");
     }
 
     @Override
@@ -61,9 +61,9 @@ public class RitualAltarBuilder extends Ritual
             altarComponentsIterator = new ArrayList<AltarComponent>(EnumAltarTier.SIX.getAltarComponents()).iterator();
         }
 
-        if (world.getBlockState(altarPos).getBlock().isReplaceable(world, altarPos) && hasItem(tileEntity, Item.getItemFromBlock(ModBlocks.ALTAR), 0, true))
+        if (world.getBlockState(altarPos).getBlock().isReplaceable(world, altarPos) && hasItem(tileEntity, Item.getItemFromBlock(RegistrarBloodMagicBlocks.ALTAR), 0, true))
         {
-            world.setBlockState(altarPos, ModBlocks.ALTAR.getDefaultState());
+            world.setBlockState(altarPos, RegistrarBloodMagicBlocks.ALTAR.getDefaultState());
             lightning(world, altarPos);
             masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
         }
@@ -290,7 +290,7 @@ public class RitualAltarBuilder extends Ritual
                     if (!itemHandler.getStackInSlot(i).isEmpty() && itemHandler.getStackInSlot(i).getItem() instanceof ItemBlock && !(Block.getBlockFromItem(itemHandler.getStackInSlot(i).getItem()) instanceof BlockBloodRune) && itemHandler.extractItem(i, 1, true) != null)
                     {
                         Block block = Block.getBlockFromItem(itemHandler.getStackInSlot(i).getItem());
-                        if (block != null && block != Blocks.GLOWSTONE && block != ModBlocks.BLOOD_STONE && block != ModBlocks.CRYSTAL)
+                        if (block != null && block != Blocks.GLOWSTONE && block != RegistrarBloodMagicBlocks.DECORATIVE_BRICK && block != RegistrarBloodMagicBlocks.CRYSTAL)
                         {
                             BlockStack blockStack = new BlockStack(block, itemHandler.getStackInSlot(i).getItemDamage());
                             itemHandler.extractItem(i, 1, false);
@@ -306,7 +306,7 @@ public class RitualAltarBuilder extends Ritual
                     if (!inv.getStackInSlot(i).isEmpty() && inv.getStackInSlot(i).getItem() instanceof ItemBlock && !(Block.getBlockFromItem(inv.getStackInSlot(i).getItem()) instanceof BlockBloodRune))
                     {
                         Block block = Block.getBlockFromItem(inv.getStackInSlot(i).getItem());
-                        if (block != Blocks.GLOWSTONE && block != ModBlocks.BLOOD_STONE && block != ModBlocks.CRYSTAL)
+                        if (block != Blocks.GLOWSTONE && block != RegistrarBloodMagicBlocks.DECORATIVE_BRICK && block != RegistrarBloodMagicBlocks.CRYSTAL)
                         {
                             BlockStack blockStack = new BlockStack(block, inv.getStackInSlot(i).getItemDamage());
                             inv.decrStackSize(i, 1);

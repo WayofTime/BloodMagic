@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.Lists;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.IStringSerializable;
@@ -10,18 +11,17 @@ import net.minecraft.util.IStringSerializable;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.base.BlockEnumWall;
 import WayofTime.bloodmagic.client.IVariantProvider;
 
-public class BlockDemonWallBase<E extends Enum<E> & IStringSerializable> extends BlockEnumWall<E> implements IVariantProvider
+public class BlockDemonWallBase<E extends Enum<E> & IStringSerializable> extends BlockEnumWall<E>
 {
     public BlockDemonWallBase(String baseName, Material materialIn, Class<E> enumClass)
     {
         super(materialIn, enumClass);
 
-        setUnlocalizedName(Constants.Mod.MODID + "." + baseName + ".");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + "." + baseName + ".");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);
         setSoundType(SoundType.STONE);
@@ -31,7 +31,7 @@ public class BlockDemonWallBase<E extends Enum<E> & IStringSerializable> extends
     @Override
     public List<Pair<Integer, String>> getVariants()
     {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        List<Pair<Integer, String>> ret = Lists.newArrayList();
 
         for (int i = 0; i < this.getTypes().length; i++)
             ret.add(Pair.of(i, "east=true,north=false,south=false,type=" + this.getTypes()[i] + ",up=true,west=true"));

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.client.gui;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.tile.container.ContainerMasterRoutingNode;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -35,7 +35,7 @@ public class GuiMasterRoutingNode extends GuiContainer
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        ResourceLocation soulForgeGuiTextures = new ResourceLocation(Constants.Mod.MODID + ":textures/gui/masterRoutingNode.png");
+        ResourceLocation soulForgeGuiTextures = new ResourceLocation(BloodMagic.MODID + ":textures/gui/masterRoutingNode.png");
         this.mc.getTextureManager().bindTexture(soulForgeGuiTextures);
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;

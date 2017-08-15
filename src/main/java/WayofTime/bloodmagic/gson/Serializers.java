@@ -40,7 +40,12 @@ public class Serializers
         @Override
         public DataParameter<EnumDemonWillType> createKey(int id)
         {
-            return new DataParameter<EnumDemonWillType>(id, this);
+            return new DataParameter<>(id, this);
+        }
+
+        @Override
+        public EnumDemonWillType copyValue(EnumDemonWillType value) {
+            return EnumDemonWillType.valueOf(value.getName());
         }
     };
 

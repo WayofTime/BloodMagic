@@ -35,7 +35,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.block.BlockMimic;
 import WayofTime.bloodmagic.entity.ai.EntityAIMimicReform;
-import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.tile.TileMimic;
 
 public class EntityMimic extends EntityDemonBase
@@ -110,7 +110,7 @@ public class EntityMimic extends EntityDemonBase
     {
         if (world.isAirBlock(pos))
         {
-            IBlockState mimicState = ModBlocks.MIMIC.getStateFromMeta(BlockMimic.sentientMimicMeta);
+            IBlockState mimicState = RegistrarBloodMagicBlocks.MIMIC.getStateFromMeta(BlockMimic.sentientMimicMeta);
             world.setBlockState(pos, mimicState, 3);
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileMimic)
@@ -367,15 +367,6 @@ public class EntityMimic extends EntityDemonBase
             super(spider, 1.0D, true);
         }
 
-        /**
-         * Returns whether an in-progress EntityAIBase should continue executing
-         */
-        @Override
-        public boolean continueExecuting()
-        {
-            return super.continueExecuting();
-        }
-
         @Override
         protected double getAttackReachSqr(EntityLivingBase attackTarget)
         {
@@ -388,14 +379,6 @@ public class EntityMimic extends EntityDemonBase
         public AISpiderTarget(EntityMimic spider, Class<T> classTarget)
         {
             super(spider, classTarget, true);
-        }
-
-        /**
-         * Returns whether the EntityAIBase should begin execution.
-         */
-        public boolean shouldExecute()
-        {
-            return super.shouldExecute();
         }
     }
 }

@@ -1,15 +1,14 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class LivingArmourUpgradeGrimReaperSprint extends LivingArmourUpgrade
@@ -41,7 +40,7 @@ public class LivingArmourUpgradeGrimReaperSprint extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.grimReaper";
+        return BloodMagic.MODID + ".upgrade.grimReaper";
     }
 
     @Override
@@ -59,13 +58,13 @@ public class LivingArmourUpgradeGrimReaperSprint extends LivingArmourUpgrade
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        deathTimer = tag.getInteger(Constants.Mod.MODID + ".tracker.grimReaper");
+        deathTimer = tag.getInteger(BloodMagic.MODID + ".tracker.grimReaper");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setInteger(Constants.Mod.MODID + ".tracker.grimReaper", deathTimer);
+        tag.setInteger(BloodMagic.MODID + ".tracker.grimReaper", deathTimer);
     }
 
     @Override

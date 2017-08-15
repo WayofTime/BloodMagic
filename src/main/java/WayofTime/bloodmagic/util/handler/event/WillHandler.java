@@ -34,7 +34,7 @@ import WayofTime.bloodmagic.demonAura.PosXY;
 import WayofTime.bloodmagic.demonAura.WillChunk;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.registry.ModPotions;
 
 @Handler
@@ -47,7 +47,7 @@ public class WillHandler
     @SubscribeEvent
     public void onItemPickup(EntityItemPickupEvent event)
     {
-        ItemStack stack = event.getItem().getEntityItem();
+        ItemStack stack = event.getItem().getItem();
         if (stack.getItem() instanceof IDemonWill)
         {
             EntityPlayer player = event.getEntityPlayer();
@@ -67,7 +67,7 @@ public class WillHandler
     {
         if (event.getSource() instanceof EntityDamageSourceIndirect)
         {
-            Entity sourceEntity = event.getSource().getSourceOfDamage();
+            Entity sourceEntity = event.getSource().getImmediateSource();
 
             if (sourceEntity instanceof EntitySentientArrow)
             {
@@ -82,7 +82,7 @@ public class WillHandler
     {
         EntityLivingBase attackedEntity = event.getEntityLiving();
         DamageSource source = event.getSource();
-        Entity entity = source.getEntity();
+        Entity entity = source.getTrueSource();
 
         if (attackedEntity.isPotionActive(ModPotions.soulSnare) && (attackedEntity instanceof EntityMob || attackedEntity.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL))
         {
@@ -90,7 +90,7 @@ public class WillHandler
             int lvl = eff.getAmplifier();
 
             double amountOfSouls = attackedEntity.getEntityWorld().rand.nextDouble() * (lvl + 1) * (lvl + 1) * 5;
-            ItemStack soulStack = ((IDemonWill) ModItems.MONSTER_SOUL).createWill(0, amountOfSouls);
+            ItemStack soulStack = ((IDemonWill) RegistrarBloodMagicItems.MONSTER_SOUL).createWill(0, amountOfSouls);
             event.getDrops().add(new EntityItem(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
         }
 
@@ -159,18 +159,18 @@ public class WillHandler
     public void chunkSave(ChunkDataEvent.Save event)
     {
         int dim = event.getWorld().provider.getDimension();
-        ChunkPos loc = event.getChunk().getChunkCoordIntPair();
+        ChunkPos loc = event.getChunk().getPos();
 
         NBTTagCompound nbt = new NBTTagCompound();
         event.getData().setTag("BloodMagic", nbt);
 
-        WillChunk ac = WorldDemonWillHandler.getWillChunk(dim, loc.chunkXPos, loc.chunkZPos);
+        WillChunk ac = WorldDemonWillHandler.getWillChunk(dim, loc.x, loc.z);
         if (ac != null)
         {
             nbt.setShort("base", ac.getBase());
             ac.getCurrentWill().writeToNBT(nbt, "current");
             if (!event.getChunk().isLoaded())
-                WorldDemonWillHandler.removeWillChunk(dim, loc.chunkXPos, loc.chunkZPos);
+                WorldDemonWillHandler.removeWillChunk(dim, loc.x, loc.z);
         }
     }
 

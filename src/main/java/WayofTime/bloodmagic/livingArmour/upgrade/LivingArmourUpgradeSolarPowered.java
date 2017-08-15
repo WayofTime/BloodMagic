@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -7,7 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
@@ -58,7 +58,7 @@ public class LivingArmourUpgradeSolarPowered extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.solarPowered";
+        return BloodMagic.MODID + ".upgrade.solarPowered";
     }
 
     @Override
@@ -76,13 +76,13 @@ public class LivingArmourUpgradeSolarPowered extends LivingArmourUpgrade
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setInteger(Constants.Mod.MODID + ".tracker.solarPowered", counter);
+        tag.setInteger(BloodMagic.MODID + ".tracker.solarPowered", counter);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        counter = tag.getInteger(Constants.Mod.MODID + ".tracker.solarPowered");
+        counter = tag.getInteger(BloodMagic.MODID + ".tracker.solarPowered");
     }
 
     @Override

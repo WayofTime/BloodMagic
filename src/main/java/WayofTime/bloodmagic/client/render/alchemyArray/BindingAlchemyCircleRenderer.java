@@ -96,7 +96,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer
         float offset = 2;
         if (circle == -1)
         {
-            return (float) (craftTime * 360 * 2 / 5 / sweepTime);
+            return craftTime * 360 * 2 / 5 / sweepTime;
         }
         if (craftTime >= offset)
         {

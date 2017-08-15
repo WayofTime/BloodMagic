@@ -43,7 +43,7 @@ public class SigilHoldingPacketProcessor implements IMessage, IMessageHandler<Si
 
         if (message.slot > -1 && message.slot < 9)
         {
-            itemStack = ctx.getServerHandler().playerEntity.inventory.getStackInSlot(message.slot);
+            itemStack = ctx.getServerHandler().player.inventory.getStackInSlot(message.slot);
         }
 
         if (!itemStack.isEmpty())

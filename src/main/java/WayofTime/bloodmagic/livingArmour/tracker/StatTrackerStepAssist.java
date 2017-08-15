@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
@@ -26,7 +26,7 @@ public class StatTrackerStepAssist extends StatTracker
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.stepAssist";
+        return BloodMagic.MODID + ".tracker.stepAssist";
     }
 
     @Override
@@ -38,13 +38,13 @@ public class StatTrackerStepAssist extends StatTracker
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalMovement = tag.getDouble(Constants.Mod.MODID + ".tracker.stepAssist");
+        totalMovement = tag.getDouble(BloodMagic.MODID + ".tracker.stepAssist");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setDouble(Constants.Mod.MODID + ".tracker.stepAssist", totalMovement);
+        tag.setDouble(BloodMagic.MODID + ".tracker.stepAssist", totalMovement);
 
     }
 
@@ -115,7 +115,7 @@ public class StatTrackerStepAssist extends StatTracker
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.stepAssist");
+        return key.equals(BloodMagic.MODID + ".upgrade.stepAssist");
     }
 
     @Override

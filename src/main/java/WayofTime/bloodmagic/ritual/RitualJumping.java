@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,7 +17,7 @@ public class RitualJumping extends Ritual
 
     public RitualJumping()
     {
-        super("ritualJump", 0, 5000, "ritual." + Constants.Mod.MODID + ".jumpRitual");
+        super("ritualJump", 0, 5000, "ritual." + BloodMagic.MODID + ".jumpRitual");
         addBlockRange(JUMP_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 1, -1), 3, 1, 3));
         setMaximumVolumeAndDistanceOfRange(JUMP_RANGE, 0, 5, 5);
     }

@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
 public class LivingArmourUpgradeArrowProtect extends LivingArmourUpgrade
@@ -30,7 +30,7 @@ public class LivingArmourUpgradeArrowProtect extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.arrowProtect";
+        return BloodMagic.MODID + ".upgrade.arrowProtect";
     }
 
     @Override

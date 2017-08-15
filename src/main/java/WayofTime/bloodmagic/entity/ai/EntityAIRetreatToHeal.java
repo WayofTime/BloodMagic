@@ -40,13 +40,7 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase
 
     public EntityAIRetreatToHeal(EntityDemonBase theEntityIn, Class<T> classToAvoidIn, Predicate<? super T> avoidTargetSelectorIn, float avoidDistanceIn, double farSpeedIn, double nearSpeedIn)
     {
-        this.canBeSeenSelector = new Predicate<Entity>()
-        {
-            public boolean apply(@Nullable Entity p_apply_1_)
-            {
-                return p_apply_1_.isEntityAlive() && EntityAIRetreatToHeal.this.theEntity.getEntitySenses().canSee(p_apply_1_);
-            }
-        };
+        this.canBeSeenSelector = p_apply_1_ -> p_apply_1_.isEntityAlive() && EntityAIRetreatToHeal.this.theEntity.getEntitySenses().canSee(p_apply_1_);
         this.theEntity = theEntityIn;
         this.classToAvoid = classToAvoidIn;
         this.avoidTargetSelector = avoidTargetSelectorIn;
@@ -69,7 +63,7 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase
         }
 
         //This part almost doesn't matter
-        List<T> list = this.theEntity.getEntityWorld().<T>getEntitiesWithinAABB(this.classToAvoid, this.theEntity.getEntityBoundingBox().expand((double) this.avoidDistance, 3.0D, (double) this.avoidDistance), Predicates.and(new Predicate[] { EntitySelectors.CAN_AI_TARGET, this.canBeSeenSelector, this.avoidTargetSelector }));
+        List<T> list = this.theEntity.getEntityWorld().getEntitiesWithinAABB(this.classToAvoid, this.theEntity.getEntityBoundingBox().expand((double) this.avoidDistance, 3.0D, (double) this.avoidDistance), Predicates.and(EntitySelectors.CAN_AI_TARGET, this.canBeSeenSelector, this.avoidTargetSelector));
 
         if (list.isEmpty())
         {
@@ -82,12 +76,12 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase
             if (vec3d == null)
             {
                 return false; //Nowhere to run, gotta fight!
-            } else if (this.closestLivingEntity.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) < this.closestLivingEntity.getDistanceSqToEntity(this.theEntity))
+            } else if (this.closestLivingEntity.getDistanceSq(vec3d.x, vec3d.y, vec3d.z) < this.closestLivingEntity.getDistanceSqToEntity(this.theEntity))
             {
                 return false; //I'll be headed off if I choose this direction.
             } else
             {
-                this.entityPathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
+                this.entityPathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.x, vec3d.y, vec3d.z);
                 return this.entityPathEntity != null;
             }
         }
@@ -97,7 +91,7 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     @Override
-    public boolean continueExecuting()
+    public boolean shouldContinueExecuting()
     {
         return this.theEntity.shouldEmergencyHeal();//!this.entityPathNavigate.noPath();
     }

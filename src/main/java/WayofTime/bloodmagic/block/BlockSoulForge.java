@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -37,12 +35,12 @@ public class BlockSoulForge extends Block implements IVariantProvider
     {
         super(Material.IRON);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".soulForge");
+        setUnlocalizedName(BloodMagic.MODID + ".soulForge");
         setHardness(2.0F);
         setResistance(5.0F);
         setSoundType(SoundType.METAL);
         setHarvestLevel("pickaxe", 1);
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override

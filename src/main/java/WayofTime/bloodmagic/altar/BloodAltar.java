@@ -2,7 +2,6 @@ package WayofTime.bloodmagic.altar;
 
 import java.util.List;
 
-import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -54,7 +53,7 @@ public class BloodAltar implements IFluidHandler
     private EnumAltarTier altarTier = EnumAltarTier.ONE;
     private AltarUpgrade upgrade;
     private int capacity = Fluid.BUCKET_VOLUME * 10;
-    private FluidStack fluid = new FluidStack(BloodMagicAPI.getLifeEssence(), 0);
+    private FluidStack fluid = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);
     private int liquidRequired; // mB
     private boolean canBeFilled;
     private int consumptionRate;
@@ -84,7 +83,6 @@ public class BloodAltar implements IFluidHandler
     private AltarRecipe recipe;
     private ItemStack result = ItemStack.EMPTY;
 
-    @Getter
     private EnumAltarTier currentTierDisplayed = EnumAltarTier.ONE;
 
     public BloodAltar(TileAltar tileAltar)
@@ -132,9 +130,9 @@ public class BloodAltar implements IFluidHandler
                 } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent())) // Special case Vanilla
                 {
                     return false;
-                } else if (BloodMagicAPI.getAltarComponents().get(worldBlock.getState()) != null) // Mod compat
+                } else if (BloodMagicAPI.altarComponents.get(worldBlock.getState()) != null) // Mod compat
                 {
-                    return BloodMagicAPI.getAltarComponents().get(worldBlock.getState()) == altarComponent.getComponent();
+                    return BloodMagicAPI.altarComponents.get(worldBlock.getState()) == altarComponent.getComponent();
                 }
             } else
             {
@@ -261,10 +259,10 @@ public class BloodAltar implements IFluidHandler
             if (fluid != null)
                 setMainFluid(fluid);
 
-            FluidStack fluidOut = new FluidStack(BloodMagicAPI.getLifeEssence(), tagCompound.getInteger(Constants.NBT.OUTPUT_AMOUNT));
+            FluidStack fluidOut = new FluidStack(BloodMagicAPI.lifeEssence, tagCompound.getInteger(Constants.NBT.OUTPUT_AMOUNT));
             setOutputFluid(fluidOut);
 
-            FluidStack fluidIn = new FluidStack(BloodMagicAPI.getLifeEssence(), tagCompound.getInteger(Constants.NBT.INPUT_AMOUNT));
+            FluidStack fluidIn = new FluidStack(BloodMagicAPI.lifeEssence, tagCompound.getInteger(Constants.NBT.INPUT_AMOUNT));
             setInputFluid(fluidIn);
         }
 
@@ -879,5 +877,9 @@ public class BloodAltar implements IFluidHandler
     public IFluidTankProperties[] getTankProperties()
     {
         return new IFluidTankProperties[] { new FluidTankPropertiesWrapper(new FluidTank(fluid, capacity)) };
+    }
+
+    public EnumAltarTier getCurrentTierDisplayed() {
+        return currentTierDisplayed;
     }
 }

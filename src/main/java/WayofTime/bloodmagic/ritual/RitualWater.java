@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.ritual.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +14,7 @@ public class RitualWater extends Ritual
 
     public RitualWater()
     {
-        super("ritualWater", 0, 500, "ritual." + Constants.Mod.MODID + ".waterRitual");
+        super("ritualWater", 0, 500, "ritual." + BloodMagic.MODID + ".waterRitual");
         addBlockRange(WATER_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
         setMaximumVolumeAndDistanceOfRange(WATER_RANGE, 9, 3, 3);
     }

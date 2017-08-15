@@ -37,10 +37,10 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".soulGem.");
+        setUnlocalizedName(BloodMagic.MODID + ".soulGem.");
         setHasSubtypes(true);
         setMaxStackSize(1);
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override

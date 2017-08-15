@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
@@ -22,7 +22,7 @@ import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 
 import com.google.common.collect.Iterables;
 
@@ -32,7 +32,7 @@ public class RitualUpgradeRemove extends Ritual
 
     public RitualUpgradeRemove()
     {
-        super("ritualUpgradeRemove", 0, 25000, "ritual." + Constants.Mod.MODID + ".upgradeRemoveRitual");
+        super("ritualUpgradeRemove", 0, 25000, "ritual." + BloodMagic.MODID + ".upgradeRemoveRitual");
         addBlockRange(CHECK_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1, 2, 1));
     }
 
@@ -70,7 +70,7 @@ public class RitualUpgradeRemove extends Ritual
                         LivingArmourUpgrade upgrade = entry.getValue();
                         String upgradeKey = entry.getKey();
 
-                        ItemStack upgradeStack = new ItemStack(ModItems.UPGRADE_TOME);
+                        ItemStack upgradeStack = new ItemStack(RegistrarBloodMagicItems.UPGRADE_TOME);
                         LivingUpgrades.setKey(upgradeStack, upgradeKey);
                         LivingUpgrades.setLevel(upgradeStack, upgrade.getUpgradeLevel());
 

@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.api;
 
 import java.util.Locale;
 
-import lombok.Getter;
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -132,11 +132,7 @@ public class Constants
 
     public static class Mod
     {
-        public static final String MODID = "bloodmagic";
-        public static final String DOMAIN = MODID.toLowerCase(Locale.ENGLISH) + ":";
-        public static final String NAME = "Blood Magic: Alchemical Wizardry";
-        public static final String VERSION = "@VERSION@";
-        public static final String DEPEND = "required-after:guideapi;";
+        public static final String DOMAIN = BloodMagic.MODID.toLowerCase(Locale.ENGLISH) + ":";
     }
 
     public static final class Gui
@@ -151,19 +147,19 @@ public class Constants
 
     public static class Compat
     {
-        public static final String JEI_CATEGORY_ALTAR = Mod.MODID + ":altar";
-        public static final String JEI_CATEGORY_BINDING = Mod.MODID + ":binding";
-        public static final String JEI_CATEGORY_ALCHEMYARRAY = Mod.MODID + ":alchemyArray";
-        public static final String JEI_CATEGORY_SOULFORGE = Mod.MODID + ":soulForge";
-        public static final String JEI_CATEGORY_ALCHEMYTABLE = Mod.MODID + ":salchemyTable";
-        public static final String JEI_CATEGORY_ARMOURDOWNGRADE = Mod.MODID + ":armourDowngrade";
+        public static final String JEI_CATEGORY_ALTAR = BloodMagic.MODID + ":altar";
+        public static final String JEI_CATEGORY_BINDING = BloodMagic.MODID + ":binding";
+        public static final String JEI_CATEGORY_ALCHEMYARRAY = BloodMagic.MODID + ":alchemyArray";
+        public static final String JEI_CATEGORY_SOULFORGE = BloodMagic.MODID + ":soulForge";
+        public static final String JEI_CATEGORY_ALCHEMYTABLE = BloodMagic.MODID + ":salchemyTable";
+        public static final String JEI_CATEGORY_ARMOURDOWNGRADE = BloodMagic.MODID + ":armourDowngrade";
 
-        public static final String WAILA_CONFIG_BYPASS_SNEAK = Mod.MODID + ".bypassSneak";
-        public static final String WAILA_CONFIG_ALTAR = Mod.MODID + ".bloodAltar";
-        public static final String WAILA_CONFIG_TELEPOSER = Mod.MODID + ".teleposer";
-        public static final String WAILA_CONFIG_RITUAL = Mod.MODID + ".ritualController";
-        public static final String WAILA_CONFIG_ARRAY = Mod.MODID + ".array";
-        public static final String WAILA_CONFIG_BLOOD_TANK = Mod.MODID + ".bloodTank";
+        public static final String WAILA_CONFIG_BYPASS_SNEAK = BloodMagic.MODID + ".bypassSneak";
+        public static final String WAILA_CONFIG_ALTAR = BloodMagic.MODID + ".bloodAltar";
+        public static final String WAILA_CONFIG_TELEPOSER = BloodMagic.MODID + ".teleposer";
+        public static final String WAILA_CONFIG_RITUAL = BloodMagic.MODID + ".ritualController";
+        public static final String WAILA_CONFIG_ARRAY = BloodMagic.MODID + ".array";
+        public static final String WAILA_CONFIG_BLOOD_TANK = BloodMagic.MODID + ".bloodTank";
 
         public static final Item THAUMCRAFT_GOGGLES = ForgeRegistries.ITEMS.getValue(new ResourceLocation("Thaumcraft", "goggles"));
     }
@@ -187,12 +183,6 @@ public class Constants
         BOUND_PICKAXE("ItemBoundPickaxe"),
         BOUND_SHOVEL("ItemBoundShovel"),
         BOUND_SWORD("ItemBoundSword"),
-        /**
-         * @deprecated - Use
-         *             {@code UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, BloodMagicAPI.getLifeEssence())}
-         **/
-        @Deprecated
-        BUCKET_ESSENCE("ItemBucketEssence"),
         COMPONENT("ItemComponent"),
         CUTTING_FLUID("ItemCuttingFluid"),
         DEMON_CRYSTAL("ItemDemonCrystal"),
@@ -257,7 +247,6 @@ public class Constants
         SIGIL_BOUNCE("ItemSigilBounce"),
         SIGIL_FROST("ItemSigilFrost");
 
-        @Getter
         private final String regName;
 
         BloodMagicItem(String regName)
@@ -267,7 +256,12 @@ public class Constants
 
         public Item getItem()
         {
-            return BloodMagicAPI.getItem(getRegName());
+            return BloodMagicAPI.getItem(regName);
+        }
+
+        public String getRegName()
+        {
+            return regName;
         }
     }
 
@@ -319,7 +313,6 @@ public class Constants
         INVERSION_PILLAR("BlockInversionPillar"),
         INVERSION_PILLAR_END("BlockInversionPillarEnd");
 
-        @Getter
         private final String regName;
 
         BloodMagicBlock(String regName)
@@ -329,7 +322,12 @@ public class Constants
 
         public Block getBlock()
         {
-            return BloodMagicAPI.getBlock(getRegName());
+            return BloodMagicAPI.getBlock(regName);
+        }
+
+        public String getRegName()
+        {
+            return regName;
         }
     }
 }

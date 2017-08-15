@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -78,7 +79,7 @@ import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrific
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.DemonAuraPacketProcessor;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
@@ -160,7 +161,7 @@ public class GenericHandler
         EntityItem itemEntity = event.getEntityItem();
         if (itemEntity != null)
         {
-            ItemStack stack = itemEntity.getEntityItem();
+            ItemStack stack = itemEntity.getItem();
             Item item = stack.getItem();
             if (stack.hasTagCompound() && item instanceof ISentientTool)
             {
@@ -180,7 +181,7 @@ public class GenericHandler
         Vec3d position = exp.getPosition();
         double radius = 3;
 
-        AxisAlignedBB bb = new AxisAlignedBB(position.xCoord - radius, position.yCoord - radius, position.zCoord - radius, position.xCoord + radius, position.yCoord + radius, position.zCoord + radius);
+        AxisAlignedBB bb = new AxisAlignedBB(position.x - radius, position.y - radius, position.z - radius, position.x + radius, position.y + radius, position.z + radius);
         List<EntitySentientSpecter> specterList = world.getEntitiesWithinAABB(EntitySentientSpecter.class, bb);
         if (!specterList.isEmpty())
         {
@@ -201,9 +202,9 @@ public class GenericHandler
         if (event.getEntity().getEntityWorld().isRemote)
             return;
 
-        if (event.getSource().getEntity() instanceof EntityPlayer && !PlayerHelper.isFakePlayer((EntityPlayer) event.getSource().getEntity()))
+        if (event.getSource().getTrueSource() instanceof EntityPlayer && !PlayerHelper.isFakePlayer((EntityPlayer) event.getSource().getTrueSource()))
         {
-            EntityPlayer player = (EntityPlayer) event.getSource().getEntity();
+            EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
 
             if (!player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).isEmpty() && player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() instanceof ItemPackSacrifice)
             {
@@ -224,7 +225,7 @@ public class GenericHandler
                 if (armour != null)
                 {
 
-                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.battleHunger", chestStack);
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.battleHunger", chestStack);
                     if (upgrade instanceof LivingArmourUpgradeBattleHungry)
                     {
                         ((LivingArmourUpgradeBattleHungry) upgrade).resetTimer();
@@ -368,7 +369,7 @@ public class GenericHandler
         if (ConfigHandler.teleposerBlacklist.contains(event.initialStack) || ConfigHandler.teleposerBlacklist.contains(event.finalStack))
             event.setCanceled(true);
 
-        if (BloodMagicAPI.getTeleposerBlacklist().contains(event.initialStack) || BloodMagicAPI.getTeleposerBlacklist().contains(event.finalStack))
+        if (BloodMagicAPI.teleposerBlacklist.contains(event.initialStack) || BloodMagicAPI.teleposerBlacklist.contains(event.finalStack))
             event.setCanceled(true);
     }
 
@@ -443,7 +444,7 @@ public class GenericHandler
             if (armour != null)
             {
                 StatTrackerSelfSacrifice.incrementCounter(armour, event.healthDrained / 2);
-                LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.selfSacrifice", chestStack);
+                LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.selfSacrifice", chestStack);
 
                 if (upgrade instanceof LivingArmourUpgradeSelfSacrifice)
                 {
@@ -461,17 +462,17 @@ public class GenericHandler
     {
         EntityLivingBase attackedEntity = event.getEntityLiving();
         DamageSource source = event.getSource();
-        Entity entity = source.getEntity();
+        Entity entity = source.getTrueSource();
 
         if (entity != null && entity instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) entity;
             ItemStack heldStack = player.getHeldItemMainhand();
 
-            if (!heldStack.isEmpty() && heldStack.getItem() == ModItems.BOUND_SWORD && !(attackedEntity instanceof EntityAnimal))
+            if (!heldStack.isEmpty() && heldStack.getItem() == RegistrarBloodMagicItems.BOUND_SWORD && !(attackedEntity instanceof EntityAnimal))
                 for (int i = 0; i <= EnchantmentHelper.getLootingModifier(player); i++)
                     if (attackedEntity.getEntityWorld().rand.nextDouble() < 0.2)
-                        event.getDrops().add(new EntityItem(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(ModItems.BLOOD_SHARD, 1, 0)));
+                        event.getDrops().add(new EntityItem(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD, 1, 0)));
         }
     }
 

@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.ritual;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -14,7 +15,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
@@ -48,7 +48,7 @@ public class RitualFeatheredKnife extends Ritual
 
     public RitualFeatheredKnife()
     {
-        super("ritualFeatheredKnife", 0, 25000, "ritual." + Constants.Mod.MODID + ".featheredKnifeRitual");
+        super("ritualFeatheredKnife", 0, 25000, "ritual." + BloodMagic.MODID + ".featheredKnifeRitual");
         addBlockRange(ALTAR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-5, -10, -5), 11, 21, 11));
         addBlockRange(DAMAGE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-15, -20, -15), 31, 41, 31));
 
@@ -161,7 +161,7 @@ public class RitualFeatheredKnife extends Ritual
                         LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                         if (armour != null)
                         {
-                            LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.selfSacrifice", chestStack);
+                            LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.selfSacrifice", chestStack);
 
                             if (upgrade instanceof LivingArmourUpgradeSelfSacrifice)
                             {

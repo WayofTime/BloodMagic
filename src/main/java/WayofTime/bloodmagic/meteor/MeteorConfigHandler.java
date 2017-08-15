@@ -32,7 +32,7 @@ public class MeteorConfigHandler
     public static void handleMeteors(boolean checkNewVersion)
     {
         if (meteorDir == null) {
-            BloodMagic.instance.getLogger().error("Attempted to handle meteor config but the folder has not been initialized. Was this run too early?");
+            BloodMagic.instance.logger.error("Attempted to handle meteor config but the folder has not been initialized. Was this run too early?");
             return;
         }
 
@@ -64,11 +64,13 @@ public class MeteorConfigHandler
             // Filter names so we can compare to defaults
             for (File meteorFile : meteorFiles)
             {
-                Meteor meteor = Serializers.GSON.fromJson(new FileReader(meteorFile), Meteor.class);
+                FileReader reader = new FileReader(meteorFile);
+                Meteor meteor = Serializers.GSON.fromJson(reader, Meteor.class);
                 meteors.add(Pair.of(FilenameUtils.removeExtension(meteorFile.getName()), meteor));
+                reader.close();
             }
 
-            if (checkNewVersion && ConfigHandler.getConfig().getBoolean("resyncOnVersionChange", "Meteors", true, "Should the default meteors be regenerated if the mod has updated them"))
+            if (checkNewVersion && ConfigHandler.config.getBoolean("resyncOnVersionChange", "Meteors", true, "Should the default meteors be regenerated if the mod has updated them"))
             {
                 Set<String> discoveredDefaults = Sets.newHashSet();
 
@@ -103,7 +105,7 @@ public class MeteorConfigHandler
             e.printStackTrace();
         }
 
-        ConfigHandler.getConfig().save();
+        ConfigHandler.config.save();
     }
 
     private static List<Pair<String, Meteor>> getDefaultMeteors()

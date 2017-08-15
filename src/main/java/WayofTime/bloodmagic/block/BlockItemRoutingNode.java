@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.block;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.routing.TileItemRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 
@@ -16,7 +16,7 @@ public class BlockItemRoutingNode extends BlockRoutingNode
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".itemRouting");
+        setUnlocalizedName(BloodMagic.MODID + ".itemRouting");
     }
 
     @Override

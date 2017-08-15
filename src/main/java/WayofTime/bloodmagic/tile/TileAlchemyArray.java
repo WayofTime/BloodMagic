@@ -1,12 +1,8 @@
 package WayofTime.bloodmagic.tile;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import WayofTime.bloodmagic.api.Constants;
@@ -18,9 +14,6 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
 {
     public boolean isActive = false;
     public int activeCounter = 0;
-
-    @Getter
-    @Setter
     public EnumFacing rotation = EnumFacing.HORIZONTALS[0];;
 
     private String key = "empty";
@@ -152,5 +145,14 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
         }
 
         return false;
+    }
+
+    @Override
+    public EnumFacing getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(EnumFacing rotation) {
+        this.rotation = rotation;
     }
 }

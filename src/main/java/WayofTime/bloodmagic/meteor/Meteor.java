@@ -3,15 +3,12 @@ package WayofTime.bloodmagic.meteor;
 import java.util.List;
 import java.util.Random;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.util.Utils;
 
-@Getter
 public class Meteor
 {
     private static final Random RAND = new Random();
@@ -21,8 +18,6 @@ public class Meteor
     private final float explosionStrength;
     private final int radius;
     private final int maxWeight;
-
-    @Setter
     public int version;
 
     public Meteor(ItemStack catalystStack, List<MeteorComponent> components, float explosionStrength, int radius)
@@ -93,5 +88,33 @@ public class Meteor
         }
 
         return RAND.nextDouble() > fillerChance ? fillerBlock : null;
+    }
+
+    public ItemStack getCatalystStack() {
+        return catalystStack;
+    }
+
+    public List<MeteorComponent> getComponents() {
+        return components;
+    }
+
+    public float getExplosionStrength() {
+        return explosionStrength;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public int getMaxWeight() {
+        return maxWeight;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

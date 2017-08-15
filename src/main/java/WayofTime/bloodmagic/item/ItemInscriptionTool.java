@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +36,7 @@ public class ItemInscriptionTool extends ItemBindableBase implements IVariantPro
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".scribe.");
+        setUnlocalizedName(BloodMagic.MODID + ".scribe.");
         setHasSubtypes(true);
     }
 

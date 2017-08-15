@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -23,7 +23,7 @@ public class LivingArmourUpgradeSelfSacrifice extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.selfSacrifice";
+        return BloodMagic.MODID + ".upgrade.selfSacrifice";
     }
 
     @Override

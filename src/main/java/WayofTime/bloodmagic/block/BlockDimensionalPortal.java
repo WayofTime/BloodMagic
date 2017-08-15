@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.block;
 import java.util.ArrayList;
 import java.util.Random;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.block.base.BlockInteger;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,7 +17,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.teleport.PortalLocation;
 import WayofTime.bloodmagic.api.teleport.TeleportQueue;
@@ -35,7 +35,7 @@ public class BlockDimensionalPortal extends BlockInteger
     public BlockDimensionalPortal()
     {
         super(Material.PORTAL, 2);
-        setUnlocalizedName(Constants.Mod.MODID + ".dimensionalPortal");
+        setUnlocalizedName(BloodMagic.MODID + ".dimensionalPortal");
         setBlockUnbreakable();
         setResistance(2000);
         setLightOpacity(0);

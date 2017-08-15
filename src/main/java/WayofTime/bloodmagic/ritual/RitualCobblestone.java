@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
@@ -19,7 +19,7 @@ public class RitualCobblestone extends Ritual
 
     public RitualCobblestone()
     {
-        super("ritualCobblestone", 0, 500, "ritual." + Constants.Mod.MODID + ".cobblestoneRitual");
+        super("ritualCobblestone", 0, 500, "ritual." + BloodMagic.MODID + ".cobblestoneRitual");
         addBlockRange(COBBLESTONE_RANGE, new AreaDescriptor.Cross(new BlockPos(0, 1, 0), 1));
     }
 

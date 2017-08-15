@@ -10,9 +10,9 @@ public class ModCorruptionBlocks
     {
         for (EnumDemonWillType type : EnumDemonWillType.values())
         {
-            CorruptionHandler.registerBlockCorruption(type, Blocks.STONE, 0, ModBlocks.DEMON_EXTRAS.getStateFromMeta(type.ordinal()));
-            CorruptionHandler.registerBlockCorruption(type, Blocks.GRASS, 0, ModBlocks.DEMON_EXTRAS.getStateFromMeta(type.ordinal()));
-            CorruptionHandler.registerBlockCorruption(type, Blocks.DIRT, 0, ModBlocks.DEMON_EXTRAS.getStateFromMeta(type.ordinal()));
+            CorruptionHandler.registerBlockCorruption(type, Blocks.STONE, 0, RegistrarBloodMagicBlocks.DEMON_EXTRAS.getStateFromMeta(type.ordinal()));
+            CorruptionHandler.registerBlockCorruption(type, Blocks.GRASS, 0, RegistrarBloodMagicBlocks.DEMON_EXTRAS.getStateFromMeta(type.ordinal()));
+            CorruptionHandler.registerBlockCorruption(type, Blocks.DIRT, 0, RegistrarBloodMagicBlocks.DEMON_EXTRAS.getStateFromMeta(type.ordinal()));
         }
     }
 }

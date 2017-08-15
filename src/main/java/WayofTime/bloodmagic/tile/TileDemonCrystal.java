@@ -1,8 +1,6 @@
 package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.tile.base.TileTicking;
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -25,12 +23,7 @@ public class TileDemonCrystal extends TileTicking
 
     public double progressToNextCrystal = 0;
     public int internalCounter = 0;
-
-    @Getter
-    @Setter
     public int crystalCount = 1;
-    @Getter
-    @Setter
     public EnumFacing placement = EnumFacing.UP; //Side that this crystal is placed on.
 
     public TileDemonCrystal()
@@ -187,5 +180,21 @@ public class TileDemonCrystal extends TileTicking
         tag.setInteger("placement", placement.getIndex());
         tag.setDouble("progress", progressToNextCrystal);
         return tag;
+    }
+
+    public int getCrystalCount() {
+        return crystalCount;
+    }
+
+    public void setCrystalCount(int crystalCount) {
+        this.crystalCount = crystalCount;
+    }
+
+    public EnumFacing getPlacement() {
+        return placement;
+    }
+
+    public void setPlacement(EnumFacing placement) {
+        this.placement = placement;
     }
 }

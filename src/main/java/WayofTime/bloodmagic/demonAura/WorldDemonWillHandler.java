@@ -54,14 +54,14 @@ public class WorldDemonWillHandler
         if (!containedWills.containsKey(dim))
         {
             containedWills.put(dim, new WillWorld(dim));
-            BloodMagicAPI.getLogger().info("Creating demon will cache for world " + dim);
+            BloodMagicAPI.logger.info("Creating demon will cache for world " + dim);
         }
     }
 
     public static void removeWillWorld(int dim)
     {
         containedWills.remove(dim);
-        BloodMagicAPI.getLogger().info("Removing demon will cache for world " + dim);
+        BloodMagicAPI.logger.info("Removing demon will cache for world " + dim);
     }
 
     public static void addWillChunk(int dim, Chunk chunk, short base, DemonWillHolder currentWill)
@@ -71,7 +71,7 @@ public class WorldDemonWillHandler
         {
             aw = new WillWorld(dim);
         }
-        aw.getWillChunks().put(new PosXY(chunk.xPosition, chunk.zPosition), new WillChunk(chunk, base, currentWill));
+        aw.getWillChunks().put(new PosXY(chunk.x, chunk.z), new WillChunk(chunk, base, currentWill));
 
         containedWills.put(dim, aw);
     }

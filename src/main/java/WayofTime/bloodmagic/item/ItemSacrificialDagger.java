@@ -24,9 +24,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
@@ -34,7 +31,6 @@ import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -48,8 +44,8 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".sacrificialDagger.");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".sacrificialDagger.");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHasSubtypes(true);
         setMaxStackSize(1);
         setFull3D();
@@ -203,7 +199,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
                 if (canUseForSacrifice(stack))
                     variant = "type=ceremonial";
 
-                return new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/ItemSacrificialDagger"), variant);
+                return new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/ItemSacrificialDagger"), variant);
             }
         };
     }

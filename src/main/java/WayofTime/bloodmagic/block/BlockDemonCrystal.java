@@ -1,12 +1,10 @@
 package WayofTime.bloodmagic.block;
 
-import java.util.List;
 import java.util.Random;
 
+import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -14,6 +12,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -26,7 +25,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
@@ -34,7 +32,7 @@ import WayofTime.bloodmagic.tile.TileDemonCrystal;
 
 import javax.annotation.Nullable;
 
-public class BlockDemonCrystal extends Block
+public class BlockDemonCrystal extends Block implements IBMBlock
 {
     public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 6);
     public static final PropertyEnum<EnumDemonWillType> TYPE = PropertyEnum.<EnumDemonWillType>create("type", EnumDemonWillType.class);
@@ -45,8 +43,8 @@ public class BlockDemonCrystal extends Block
         super(Material.ROCK);
         this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, EnumDemonWillType.DEFAULT).withProperty(ATTACHED, EnumFacing.UP));
 
-        setUnlocalizedName(Constants.Mod.MODID + ".demonCrystal.");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".demonCrystal.");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 2);
@@ -89,8 +87,7 @@ public class BlockDemonCrystal extends Block
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs creativeTabs, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs creativeTabs, NonNullList<ItemStack> list)
     {
         for (int i = 0; i < EnumDemonWillType.values().length; i++)
             list.add(new ItemStack(this, 1, i));
@@ -231,6 +228,11 @@ public class BlockDemonCrystal extends Block
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileDemonCrystal();
+    }
+
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlockDemonCrystal(this);
     }
 
     //    @Override

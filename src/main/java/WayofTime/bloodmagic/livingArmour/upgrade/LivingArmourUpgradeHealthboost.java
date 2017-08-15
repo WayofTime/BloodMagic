@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import com.google.common.collect.HashMultimap;
@@ -44,7 +44,7 @@ public class LivingArmourUpgradeHealthboost extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.health";
+        return BloodMagic.MODID + ".upgrade.health";
     }
 
     @Override

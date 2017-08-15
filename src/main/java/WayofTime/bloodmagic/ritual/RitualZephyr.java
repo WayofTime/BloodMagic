@@ -3,13 +3,13 @@ package WayofTime.bloodmagic.ritual;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -24,7 +24,7 @@ public class RitualZephyr extends Ritual
 
     public RitualZephyr()
     {
-        super("ritualZephyr", 0, 1000, "ritual." + Constants.Mod.MODID + ".zephyrRitual");
+        super("ritualZephyr", 0, 1000, "ritual." + BloodMagic.MODID + ".zephyrRitual");
         addBlockRange(ZEPHYR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
 
@@ -60,7 +60,7 @@ public class RitualZephyr extends Ritual
                     continue;
                 }
 
-                ItemStack copyStack = entityItem.getEntityItem().copy();
+                ItemStack copyStack = entityItem.getItem().copy();
                 int originalAmount = copyStack.getCount();
                 ItemStack newStack = Utils.insertStackIntoTile(copyStack, tileInventory, EnumFacing.DOWN);
 
@@ -70,7 +70,7 @@ public class RitualZephyr extends Ritual
                     if (newStack.isEmpty())
                         entityItem.setDead();
 
-                    entityItem.getEntityItem().setCount(newStack.getCount());
+                    entityItem.getItem().setCount(newStack.getCount());
                 }
 
                 if (newStack.isEmpty())

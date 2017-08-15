@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.ritual;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,7 +21,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -49,7 +49,7 @@ public class RitualLava extends Ritual
 
     public RitualLava()
     {
-        super("ritualLava", 0, 10000, "ritual." + Constants.Mod.MODID + ".lavaRitual");
+        super("ritualLava", 0, 10000, "ritual." + BloodMagic.MODID + ".lavaRitual");
         addBlockRange(LAVA_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
         addBlockRange(FIRE_FUSE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, -2, -2), 5));
         addBlockRange(FIRE_RESIST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 1));
@@ -231,7 +231,7 @@ public class RitualLava extends Ritual
 
                 if (!entity.isDead && entity.hurtTime <= 0 && Utils.isImmuneToFireDamage(entity))
                 {
-                    if (entity.attackEntityFrom(BloodMagicAPI.getDamageSource(), damage))
+                    if (entity.attackEntityFrom(BloodMagicAPI.damageSource, damage))
                     {
                         corrosiveDrained += corrosiveWillDrain;
                         corrosiveWill -= corrosiveWillDrain;

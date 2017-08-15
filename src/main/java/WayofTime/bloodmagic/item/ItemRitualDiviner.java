@@ -18,7 +18,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,7 +36,7 @@ import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
@@ -52,8 +51,8 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     public ItemRitualDiviner()
     {
-        setUnlocalizedName(Constants.Mod.MODID + ".ritualDiviner");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".ritualDiviner");
+        setCreativeTab(BloodMagic.TAB_BM);
         setHasSubtypes(true);
         setMaxStackSize(1);
     }
@@ -166,7 +165,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                             return false;
                         }
                         int meta = component.getRuneType().ordinal();
-                        IBlockState newState = ModBlocks.RITUAL_STONE.getStateFromMeta(meta);
+                        IBlockState newState = RegistrarBloodMagicBlocks.RITUAL_STONE.getStateFromMeta(meta);
                         world.setBlockState(newPos, newState);
                         return true;
                     } else
@@ -224,7 +223,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
             if (item instanceof ItemBlock)
             {
                 Block block = ((ItemBlock) item).getBlock();
-                if (block == ModBlocks.RITUAL_STONE)
+                if (block == RegistrarBloodMagicBlocks.RITUAL_STONE)
                 {
                     newStack.shrink(1);
                     return true;

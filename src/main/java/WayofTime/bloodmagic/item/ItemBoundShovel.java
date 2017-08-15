@@ -66,7 +66,7 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider
 
         boolean silkTouch = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0;
         int fortuneLvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);
-        int range = (int) (charge / 6); //Charge is a max of 30 - want 5 to be the max
+        int range = charge / 6; //Charge is a max of 30 - want 5 to be the max
 
         HashMultiset<ItemStackWrapper> drops = HashMultiset.create();
 

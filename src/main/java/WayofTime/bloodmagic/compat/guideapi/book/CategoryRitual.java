@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry.AltarRecipe;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.compat.guideapi.BookUtils;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAltarRecipe;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.RecipeHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.IPage;
@@ -26,7 +26,7 @@ import amerifrance.guideapi.page.PageText;
 
 public class CategoryRitual
 {
-    static String keyBase = "guide." + Constants.Mod.MODID + ".entry.ritual.";
+    static String keyBase = "guide." + BloodMagic.MODID + ".entry.ritual.";
 
     public static Map<ResourceLocation, EntryAbstract> buildCategory()
     {
@@ -37,7 +37,7 @@ public class CategoryRitual
 
         List<IPage> ritualStonePages = new ArrayList<IPage>();
 
-        IRecipe ritualStoneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.RITUAL_STONE));
+        IRecipe ritualStoneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_STONE));
         if (ritualStoneRecipe != null)
         {
             ritualStonePages.add(BookUtils.getPageForRecipe(ritualStoneRecipe));
@@ -60,7 +60,7 @@ public class CategoryRitual
 
         List<IPage> masterRitualStonePages = new ArrayList<IPage>();
 
-        IRecipe masterRitualStoneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.RITUAL_CONTROLLER, 1, 0));
+        IRecipe masterRitualStoneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER, 1, 0));
         if (masterRitualStoneRecipe != null)
         {
             masterRitualStonePages.add(BookUtils.getPageForRecipe(masterRitualStoneRecipe));
@@ -73,7 +73,7 @@ public class CategoryRitual
 
         activationCrystalPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "activationCrystal" + ".info.1"), 370));
 
-        AltarRecipe crystalRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(ModItems.ACTIVATION_CRYSTAL));
+        AltarRecipe crystalRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.ACTIVATION_CRYSTAL));
         if (crystalRecipe != null)
         {
             activationCrystalPages.add(new PageAltarRecipe(crystalRecipe));
@@ -86,7 +86,7 @@ public class CategoryRitual
 
         divinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "diviner" + ".info.1"), 370));
 
-        IRecipe divinerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModItems.RITUAL_DIVINER));
+        IRecipe divinerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.RITUAL_DIVINER));
         if (divinerRecipe != null)
         {
             divinerPages.add(BookUtils.getPageForRecipe(divinerRecipe));

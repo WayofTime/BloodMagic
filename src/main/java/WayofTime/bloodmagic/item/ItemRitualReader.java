@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -38,7 +39,7 @@ public class ItemRitualReader extends Item implements IVariantProvider
     public ItemRitualReader()
     {
         super();
-        setUnlocalizedName(Constants.Mod.MODID + ".ritualReader");
+        setUnlocalizedName(BloodMagic.MODID + ".ritualReader");
         setMaxStackSize(1);
     }
 

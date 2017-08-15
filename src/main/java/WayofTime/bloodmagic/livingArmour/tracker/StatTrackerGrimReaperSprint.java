@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
@@ -23,7 +23,7 @@ public class StatTrackerGrimReaperSprint extends StatTracker
 
     public static void incrementCounter(LivingArmour armour)
     {
-        StatTracker tracker = armour.getTracker(Constants.Mod.MODID + ".tracker.grimReaper");
+        StatTracker tracker = armour.getTracker(BloodMagic.MODID + ".tracker.grimReaper");
         if (tracker instanceof StatTrackerGrimReaperSprint)
         {
             ((StatTrackerGrimReaperSprint) tracker).totalDeaths++;
@@ -36,7 +36,7 @@ public class StatTrackerGrimReaperSprint extends StatTracker
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.grimReaper";
+        return BloodMagic.MODID + ".tracker.grimReaper";
     }
 
     @Override
@@ -48,13 +48,13 @@ public class StatTrackerGrimReaperSprint extends StatTracker
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalDeaths = tag.getInteger(Constants.Mod.MODID + ".tracker.grimReaper");
+        totalDeaths = tag.getInteger(BloodMagic.MODID + ".tracker.grimReaper");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setInteger(Constants.Mod.MODID + ".tracker.grimReaper", totalDeaths);
+        tag.setInteger(BloodMagic.MODID + ".tracker.grimReaper", totalDeaths);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class StatTrackerGrimReaperSprint extends StatTracker
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.grimReaper");
+        return key.equals(BloodMagic.MODID + ".upgrade.grimReaper");
     }
 
     @Override

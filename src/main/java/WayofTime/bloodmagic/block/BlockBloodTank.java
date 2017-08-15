@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.base.BlockInteger;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.item.block.ItemBlockBloodTank;
 import WayofTime.bloodmagic.tile.TileBloodTank;
 import com.google.common.collect.Lists;
 import net.minecraft.block.SoundType;
@@ -11,6 +11,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -31,12 +32,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockBloodTank extends BlockInteger implements IVariantProvider
+public class BlockBloodTank extends BlockInteger implements IVariantProvider, IBMBlock
 {
     public static final AxisAlignedBB BOX = new AxisAlignedBB(0.25, 0, 0.25, 0.75, 0.8, 0.75);
 
@@ -44,12 +44,12 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider
     {
         super(Material.IRON, TileBloodTank.CAPACITIES.length - 1, "tier");
 
-        setUnlocalizedName(Constants.Mod.MODID + ".bloodTank");
+        setUnlocalizedName(BloodMagic.MODID + ".bloodTank");
         setHardness(2.0F);
         setResistance(5.0F);
         setSoundType(SoundType.GLASS);
         setHarvestLevel("pickaxe", 1);
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.TAB_BM);
         setLightOpacity(0);
     }
 
@@ -105,12 +105,9 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider
     @Override
     public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        ItemStack held = player.getHeldItem(hand);
-        TileBloodTank fluidHandler = (TileBloodTank) world.getTileEntity(blockPos);
-        FluidActionResult result = FluidUtil.interactWithFluidHandler(held, fluidHandler.getTank(), player);
-        if (result.isSuccess())
+        boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, blockPos, side);
+        if (success)
         {
-            player.setHeldItem(hand, result.getResult());
             world.checkLight(blockPos);
             world.updateComparatorOutputLevel(blockPos, this);
             world.markAndNotifyBlock(blockPos, world.getChunkFromBlockCoords(blockPos), state, state, 3);
@@ -216,14 +213,19 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider
         return true;
     }
 
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlockBloodTank(this);
+    }
+
     // IVariantProvider
 
     @Override
     public List<Pair<Integer, String>> getVariants()
     {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        List<Pair<Integer, String>> ret = Lists.newArrayList();
         for (int i = 0; i < TileBloodTank.CAPACITIES.length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "inventory"));
+            ret.add(Pair.of(i, "inventory"));
 
         return ret;
     }

@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.ritual;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
@@ -10,7 +11,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -30,7 +30,7 @@ public class RitualSpeed extends Ritual
 
     public RitualSpeed()
     {
-        super("ritualSpeed", 0, 1000, "ritual." + Constants.Mod.MODID + ".speedRitual");
+        super("ritualSpeed", 0, 1000, "ritual." + BloodMagic.MODID + ".speedRitual");
         addBlockRange(SPEED_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 1, -2), new BlockPos(2, 5, 2)));
         setMaximumVolumeAndDistanceOfRange(SPEED_RANGE, 0, 2, 5);
     }

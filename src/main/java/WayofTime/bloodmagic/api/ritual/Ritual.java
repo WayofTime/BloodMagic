@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,15 +17,12 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.soul.DemonWillHolder;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Abstract class for creating new rituals. Rituals need be registered with
  * {@link WayofTime.bloodmagic.api.registry.RitualRegistry#registerRitual(Ritual, String)}
  */
-@Getter
-@RequiredArgsConstructor
-@EqualsAndHashCode(exclude = { "modableRangeMap", "ritualComponents", "renderer", "volumeRangeMap", "horizontalRangeMap", "verticalRangeMap" })
-@ToString
 public abstract class Ritual
 {
     public final ArrayList<RitualComponent> ritualComponents = new ArrayList<RitualComponent>();
@@ -43,6 +36,14 @@ public abstract class Ritual
     protected final Map<String, Integer> volumeRangeMap = new HashMap<String, Integer>();
     protected final Map<String, Integer> horizontalRangeMap = new HashMap<String, Integer>();
     protected final Map<String, Integer> verticalRangeMap = new HashMap<String, Integer>();
+
+    public Ritual(String name, int crystalLevel, int activationCost, RitualRenderer renderer, String unlocalizedName) {
+        this.name = name;
+        this.crystalLevel = crystalLevel;
+        this.activationCost = activationCost;
+        this.renderer = renderer;
+        this.unlocalizedName = unlocalizedName;
+    }
 
     /**
      * @param name
@@ -365,4 +366,84 @@ public abstract class Ritual
     }
 
     public abstract Ritual getNewCopy();
+
+    public ArrayList<RitualComponent> getRitualComponents() {
+        return ritualComponents;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getCrystalLevel() {
+        return crystalLevel;
+    }
+
+    public int getActivationCost() {
+        return activationCost;
+    }
+
+    public RitualRenderer getRenderer() {
+        return renderer;
+    }
+
+    public String getUnlocalizedName() {
+        return unlocalizedName;
+    }
+
+    public Map<String, AreaDescriptor> getModableRangeMap() {
+        return modableRangeMap;
+    }
+
+    public Map<String, Integer> getVolumeRangeMap() {
+        return volumeRangeMap;
+    }
+
+    public Map<String, Integer> getHorizontalRangeMap() {
+        return horizontalRangeMap;
+    }
+
+    public Map<String, Integer> getVerticalRangeMap() {
+        return verticalRangeMap;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("ritualComponents", ritualComponents)
+                .append("name", name)
+                .append("crystalLevel", crystalLevel)
+                .append("activationCost", activationCost)
+                .append("renderer", renderer)
+                .append("unlocalizedName", unlocalizedName)
+                .append("modableRangeMap", modableRangeMap)
+                .append("volumeRangeMap", volumeRangeMap)
+                .append("horizontalRangeMap", horizontalRangeMap)
+                .append("verticalRangeMap", verticalRangeMap)
+                .append("refreshTime", getRefreshTime())
+                .append("listOfRanges", getListOfRanges())
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Ritual)) return false;
+
+        Ritual ritual = (Ritual) o;
+
+        if (crystalLevel != ritual.crystalLevel) return false;
+        if (activationCost != ritual.activationCost) return false;
+        if (name != null ? !name.equals(ritual.name) : ritual.name != null) return false;
+        return unlocalizedName != null ? unlocalizedName.equals(ritual.unlocalizedName) : ritual.unlocalizedName == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + crystalLevel;
+        result = 31 * result + activationCost;
+        result = 31 * result + (unlocalizedName != null ? unlocalizedName.hashCode() : 0);
+        return result;
+    }
 }

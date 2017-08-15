@@ -3,11 +3,11 @@ package WayofTime.bloodmagic.livingArmour.tracker;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
@@ -23,7 +23,7 @@ public class StatTrackerPoison extends StatTracker
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.poison";
+        return BloodMagic.MODID + ".tracker.poison";
     }
 
     @Override
@@ -35,13 +35,13 @@ public class StatTrackerPoison extends StatTracker
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalPoisonTicks = tag.getInteger(Constants.Mod.MODID + ".tracker.poison");
+        totalPoisonTicks = tag.getInteger(BloodMagic.MODID + ".tracker.poison");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setInteger(Constants.Mod.MODID + ".tracker.poison", totalPoisonTicks);
+        tag.setInteger(BloodMagic.MODID + ".tracker.poison", totalPoisonTicks);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class StatTrackerPoison extends StatTracker
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.poisonResist");
+        return key.equals(BloodMagic.MODID + ".upgrade.poisonResist");
     }
 
     @Override

@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.entity.projectile;
 
-import lombok.Setter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -24,7 +23,6 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
     protected double explosionModifier = 1;
     protected double fillerChance = 0;
 
-    @Setter
     public ItemStack meteorStack = ItemStack.EMPTY;
 
     public EntityMeteor(World world)
@@ -149,5 +147,9 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity
     public void setThrower(Entity entity)
     {
 
+    }
+
+    public void setMeteorStack(ItemStack meteorStack) {
+        this.meteorStack = meteorStack;
     }
 }

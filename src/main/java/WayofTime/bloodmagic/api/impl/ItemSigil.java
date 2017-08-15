@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.api.impl;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import lombok.Getter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -13,7 +12,6 @@ import net.minecraft.world.World;
  */
 public class ItemSigil extends ItemBindable implements ISigil
 {
-    @Getter
     private int lpUsed;
 
     public ItemSigil(int lpUsed)
@@ -48,5 +46,9 @@ public class ItemSigil extends ItemBindable implements ISigil
     public boolean hasArrayEffect()
     {
         return false;
+    }
+
+    public int getLpUsed() {
+        return lpUsed;
     }
 }

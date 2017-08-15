@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.compat.guideapi.book;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.compat.guideapi.BookUtils;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAlchemyArray;
 import WayofTime.bloodmagic.compat.guideapi.page.PageTartaricForgeRecipe;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.RecipeHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.IPage;
@@ -27,7 +27,7 @@ public class CategoryAlchemy
     public static Map<ResourceLocation, EntryAbstract> buildCategory()
     {
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
-        String keyBase = "guide." + Constants.Mod.MODID + ".entry.alchemy.";
+        String keyBase = "guide." + BloodMagic.MODID + ".entry.alchemy.";
 
         List<IPage> introPages = new ArrayList<IPage>();
         introPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro" + ".info"), 370));
@@ -35,7 +35,7 @@ public class CategoryAlchemy
 
         List<IPage> ashPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe ashRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.ARCANE_ASHES));
+        TartaricForgeRecipe ashRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES));
         if (ashRecipe != null)
         {
             ashPages.add(new PageTartaricForgeRecipe(ashRecipe));

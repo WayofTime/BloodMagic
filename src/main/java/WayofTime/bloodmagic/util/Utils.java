@@ -25,7 +25,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -33,7 +32,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -46,12 +44,10 @@ import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.InvWrapper;
-import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import WayofTime.bloodmagic.BloodMagic;
@@ -62,7 +58,7 @@ import WayofTime.bloodmagic.api.iface.IDemonWillViewer;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.PlayerVelocityPacketProcessor;
-import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.tile.TileInventory;
 
 import com.google.common.collect.Iterables;
@@ -142,7 +138,7 @@ public class Utils
     public static boolean canEntitySeeBlock(World world, Entity entity, BlockPos pos)
     {
         Vec3d relativePosition = new Vec3d(entity.posX - pos.getX() - 0.5, entity.posY + (double) entity.getEyeHeight() - pos.getY() - 0.5, entity.posZ - pos.getZ() - 0.5);
-        EnumFacing dir = EnumFacing.getFacingFromVector((float) relativePosition.xCoord, (float) relativePosition.yCoord, (float) relativePosition.zCoord);
+        EnumFacing dir = EnumFacing.getFacingFromVector((float) relativePosition.x, (float) relativePosition.y, (float) relativePosition.z);
         RayTraceResult result = world.rayTraceBlocks(new Vec3d(entity.posX, entity.posY + (double) entity.getEyeHeight(), entity.posZ), new Vec3d(pos.getX() + 0.5 + dir.getFrontOffsetX() * 0.4, pos.getY() + 0.5 + dir.getFrontOffsetY() * 0.4, pos.getZ() + 0.5 + dir.getFrontOffsetZ() * 0.4), false, true, true);
         return result == null || pos.equals(result.getBlockPos());
     }
@@ -226,7 +222,7 @@ public class Utils
 
         World world = itemEntity.getEntityWorld();
         BlockPos pos = itemEntity.getPosition();
-        ItemStack stack = itemEntity.getEntityItem();
+        ItemStack stack = itemEntity.getItem();
 
         int planted = plantItemStack(world, pos, stack, horizontalRadius, verticalRadius);
 
@@ -408,13 +404,13 @@ public class Utils
         case GLOWSTONE:
             return Blocks.GLOWSTONE;
         case BLOODSTONE:
-            return ModBlocks.BLOOD_STONE;
+            return RegistrarBloodMagicBlocks.DECORATIVE_BRICK;
         case BEACON:
             return Blocks.BEACON;
         case BLOODRUNE:
-            return ModBlocks.BLOOD_RUNE;
+            return RegistrarBloodMagicBlocks.BLOOD_RUNE;
         case CRYSTAL:
-            return ModBlocks.CRYSTAL;
+            return RegistrarBloodMagicBlocks.CRYSTAL;
         case NOTAIR:
             return Blocks.STONEBRICK;
         default:
@@ -1016,7 +1012,7 @@ public class Utils
             }
         }
 
-        entityItem.setEntityItemStack(stack);
+        entityItem.setItem(stack);
         return world.spawnEntity(entityItem);
     }
 
@@ -1120,7 +1116,7 @@ public class Utils
                 Class<?> handlerClass = Class.forName(data.getClassName());
                 Object handlerImpl = handlerClass.newInstance();
                 MinecraftForge.EVENT_BUS.register(handlerImpl);
-                BloodMagic.instance.getLogger().debug("Registering event handler for class {}", data.getClassName());
+                BloodMagic.instance.logger.debug("Registering event handler for class {}", data.getClassName());
             } catch (Exception e)
             {
                 // No-op

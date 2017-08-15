@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -21,7 +20,6 @@ import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.GuiHelper;
 import amerifrance.guideapi.gui.GuiBase;
 
-@AllArgsConstructor
 public class PageAlchemyArray extends Page
 {
     public static final double scale = 58d / 256d;
@@ -30,6 +28,13 @@ public class PageAlchemyArray extends Page
     public final ItemStack catalystStack;
 
     public final ItemStack outputStack;
+
+    public PageAlchemyArray(List<ResourceLocation> arrayResources, ItemStack inputStack, ItemStack catalystStack, ItemStack outputStack) {
+        this.arrayResources = arrayResources;
+        this.inputStack = inputStack;
+        this.catalystStack = catalystStack;
+        this.outputStack = outputStack;
+    }
 
     public PageAlchemyArray(List<ResourceLocation> resources, ItemStack inputStack, ItemStack catalystStack)
     {

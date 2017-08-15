@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.compat.guideapi.BookUtils;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
 import WayofTime.bloodmagic.compat.guideapi.page.PageTartaricForgeRecipe;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.RecipeHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.IPage;
@@ -29,7 +29,7 @@ public class CategoryDemon
     public static Map<ResourceLocation, EntryAbstract> buildCategory()
     {
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
-        String keyBase = "guide." + Constants.Mod.MODID + ".entry.demon.";
+        String keyBase = "guide." + BloodMagic.MODID + ".entry.demon.";
 
         List<IPage> introPages = new ArrayList<IPage>();
         introPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro" + ".info"), 370));
@@ -39,7 +39,7 @@ public class CategoryDemon
         List<IPage> snarePages = new ArrayList<IPage>();
         snarePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "snare" + ".info.1"), 370));
 
-        IRecipe snareRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModItems.SOUL_SNARE));
+        IRecipe snareRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.SOUL_SNARE));
         if (snareRecipe != null)
         {
             snarePages.add(BookUtils.getPageForRecipe(snareRecipe));
@@ -51,7 +51,7 @@ public class CategoryDemon
         List<IPage> forgePages = new ArrayList<IPage>();
         forgePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "forge" + ".info.1"), 370));
 
-        IRecipe forgeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(ModBlocks.SOUL_FORGE));
+        IRecipe forgeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.SOUL_FORGE));
         if (forgeRecipe != null)
         {
             forgePages.add(BookUtils.getPageForRecipe(forgeRecipe));
@@ -62,7 +62,7 @@ public class CategoryDemon
 
         List<IPage> pettyPages = new ArrayList<IPage>();
         pettyPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "petty" + ".info.1"), 370));
-        TartaricForgeRecipe pettyRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.SOUL_GEM));
+        TartaricForgeRecipe pettyRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM));
         if (pettyRecipe != null)
         {
             pettyPages.add(new PageTartaricForgeRecipe(pettyRecipe));
@@ -72,7 +72,7 @@ public class CategoryDemon
 
         List<IPage> swordPages = new ArrayList<IPage>();
         swordPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "sword" + ".info.1"), 370));
-        TartaricForgeRecipe swordRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.SENTIENT_SWORD));
+        TartaricForgeRecipe swordRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.SENTIENT_SWORD));
         if (swordRecipe != null)
         {
             swordPages.add(new PageTartaricForgeRecipe(swordRecipe));
@@ -82,7 +82,7 @@ public class CategoryDemon
 
         List<IPage> lesserPages = new ArrayList<IPage>();
         lesserPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lesser" + ".info.1"), 370));
-        TartaricForgeRecipe lesserRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.SOUL_GEM, 1, 1));
+        TartaricForgeRecipe lesserRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1));
         if (lesserRecipe != null)
         {
             lesserPages.add(new PageTartaricForgeRecipe(lesserRecipe));
@@ -100,28 +100,28 @@ public class CategoryDemon
         entries.put(new ResourceLocation(keyBase + "sentientGem"), new EntryText(sentientGemPages, TextHelper.localize(keyBase + "sentientGem"), true));
 
         List<IPage> routingPages = new ArrayList<IPage>();
-        TartaricForgeRecipe nodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.ITEM_ROUTING_NODE));
+        TartaricForgeRecipe nodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.ITEM_ROUTING_NODE));
         if (nodeRecipe != null)
         {
             routingPages.add(new PageTartaricForgeRecipe(nodeRecipe));
         }
-        TartaricForgeRecipe inputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.INPUT_ROUTING_NODE));
+        TartaricForgeRecipe inputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.INPUT_ROUTING_NODE));
         if (inputNodeRecipe != null)
         {
             routingPages.add(new PageTartaricForgeRecipe(inputNodeRecipe));
         }
-        TartaricForgeRecipe outputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.OUTPUT_ROUTING_NODE));
+        TartaricForgeRecipe outputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.OUTPUT_ROUTING_NODE));
         if (outputNodeRecipe != null)
         {
             routingPages.add(new PageTartaricForgeRecipe(outputNodeRecipe));
         }
-        TartaricForgeRecipe masterNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.MASTER_ROUTING_NODE));
+        TartaricForgeRecipe masterNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.MASTER_ROUTING_NODE));
         if (masterNodeRecipe != null)
         {
             routingPages.add(new PageTartaricForgeRecipe(masterNodeRecipe));
         }
 
-        TartaricForgeRecipe nodeRouterRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.NODE_ROUTER));
+        TartaricForgeRecipe nodeRouterRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.NODE_ROUTER));
         if (nodeRouterRecipe != null)
         {
             routingPages.add(new PageTartaricForgeRecipe(nodeRouterRecipe));
@@ -142,7 +142,7 @@ public class CategoryDemon
 
         List<IPage> cruciblePages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe crucibleRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.DEMON_CRUCIBLE));
+        TartaricForgeRecipe crucibleRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRUCIBLE));
         if (crucibleRecipe != null)
         {
             cruciblePages.add(new PageTartaricForgeRecipe(crucibleRecipe));
@@ -153,7 +153,7 @@ public class CategoryDemon
 
         List<IPage> crystallizerPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe crystallizerRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.DEMON_CRYSTALLIZER));
+        TartaricForgeRecipe crystallizerRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTALLIZER));
         if (crystallizerRecipe != null)
         {
             crystallizerPages.add(new PageTartaricForgeRecipe(crystallizerRecipe));
@@ -164,7 +164,7 @@ public class CategoryDemon
 
         List<IPage> clusterPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe clusterRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.DEMON_CRYSTAL));
+        TartaricForgeRecipe clusterRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTAL));
         if (clusterRecipe != null)
         {
             clusterPages.add(new PageTartaricForgeRecipe(clusterRecipe));
@@ -175,7 +175,7 @@ public class CategoryDemon
 
         List<IPage> pylonPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe pylonRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModBlocks.DEMON_PYLON));
+        TartaricForgeRecipe pylonRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.DEMON_PYLON));
         if (pylonRecipe != null)
         {
             pylonPages.add(new PageTartaricForgeRecipe(pylonRecipe));
@@ -186,7 +186,7 @@ public class CategoryDemon
 
         List<IPage> gaugePages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe gaugeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(ModItems.DEMON_WILL_GAUGE));
+        TartaricForgeRecipe gaugeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.DEMON_WILL_GAUGE));
         if (gaugeRecipe != null)
         {
             gaugePages.add(new PageTartaricForgeRecipe(gaugeRecipe));

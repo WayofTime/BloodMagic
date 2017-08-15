@@ -37,6 +37,8 @@ import net.minecraft.world.WorldServer;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 
+import javax.annotation.Nullable;
+
 public class EntityDemonBase extends EntityCreature implements IEntityOwnable
 {
     protected static final DataParameter<Byte> TAMED = EntityDataManager.createKey(EntityDemonBase.class, DataSerializers.BYTE);
@@ -286,7 +288,12 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable
         return SoundEvents.ENTITY_COW_AMBIENT;
     }
 
+    @Nullable
     @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return getHurtSound();
+    }
+
     protected SoundEvent getHurtSound()
     {
         return SoundEvents.ENTITY_COW_HURT;

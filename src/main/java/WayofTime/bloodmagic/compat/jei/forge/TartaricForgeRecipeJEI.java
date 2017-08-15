@@ -1,21 +1,17 @@
 package WayofTime.bloodmagic.compat.jei.forge;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
-import com.google.common.collect.Lists;
 import lombok.Getter;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
@@ -58,12 +54,12 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
 
     public enum DefaultWill
     {
-        SOUL(new ItemStack(ModItems.MONSTER_SOUL, 1, 0), 64),
-        PETTY(new ItemStack(ModItems.SOUL_GEM, 1, 0), 64),
-        LESSER(new ItemStack(ModItems.SOUL_GEM, 1, 1), 256),
-        COMMON(new ItemStack(ModItems.SOUL_GEM, 1, 2), 1024),
-        GREATER(new ItemStack(ModItems.SOUL_GEM, 1, 3), 4096),
-        GRAND(new ItemStack(ModItems.SOUL_GEM, 1, 4), 16384);
+        SOUL(new ItemStack(RegistrarBloodMagicItems.MONSTER_SOUL, 1, 0), 64),
+        PETTY(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 0), 64),
+        LESSER(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1), 256),
+        COMMON(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 2), 1024),
+        GREATER(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 3), 4096),
+        GRAND(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 4), 16384);
 
         public final ItemStack willStack;
         public final double minSouls;

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,7 +24,7 @@ public class ItemActivationCrystal extends ItemBindableBase implements IVariantP
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".activationCrystal.");
+        setUnlocalizedName(BloodMagic.MODID + ".activationCrystal.");
         setHasSubtypes(true);
     }
 

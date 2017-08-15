@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.client.render.entity;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.render.model.ModelMeteor;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 
@@ -13,7 +13,7 @@ public class RenderEntityMeteor extends Render<EntityMeteor>
 {
     public ModelBase model = new ModelMeteor();
     private float scale = 1;
-    private static final ResourceLocation resource = new ResourceLocation(Constants.Mod.MODID, "textures/models/Meteor.png");
+    private static final ResourceLocation resource = new ResourceLocation(BloodMagic.MODID, "textures/models/Meteor.png");
 
     public RenderEntityMeteor(RenderManager renderManagerIn)
     {

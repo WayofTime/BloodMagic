@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -26,13 +24,11 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.inversion.InversionPillarHandler;
-import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.tile.base.TileTicking;
 
 import com.google.common.collect.ImmutableMap;
 
-@Getter
-@Setter
 public class TileInversionPillar extends TileTicking
 {
     public static double willPerOperation = 0.5;
@@ -73,7 +69,7 @@ public class TileInversionPillar extends TileTicking
     public TileInversionPillar(EnumDemonWillType type)
     {
         this.type = type;
-        asm = BloodMagic.proxy.load(new ResourceLocation(Constants.Mod.MODID.toLowerCase(), "asms/block/inversion_pillar.json"), ImmutableMap.<String, ITimeValue>of("offset", animationOffset, "cycle_length", cycleLength));
+        asm = BloodMagic.proxy.load(new ResourceLocation(BloodMagic.MODID.toLowerCase(), "asms/block/inversion_pillar.json"), ImmutableMap.<String, ITimeValue>of("offset", animationOffset, "cycle_length", cycleLength));
         animationOffsetValue = -1;
     }
 
@@ -156,9 +152,9 @@ public class TileInversionPillar extends TileTicking
                 if (!candidatePos.equals(BlockPos.ORIGIN))
                 {
                     currentInversion = 0;
-                    IBlockState pillarState = ModBlocks.INVERSION_PILLAR.getStateFromMeta(type.ordinal());
-                    IBlockState bottomState = ModBlocks.INVERSION_PILLAR_END.getStateFromMeta(type.ordinal() * 2);
-                    IBlockState topState = ModBlocks.INVERSION_PILLAR_END.getStateFromMeta(type.ordinal() * 2 + 1);
+                    IBlockState pillarState = RegistrarBloodMagicBlocks.INVERSION_PILLAR.getStateFromMeta(type.ordinal());
+                    IBlockState bottomState = RegistrarBloodMagicBlocks.INVERSION_PILLAR_END.getStateFromMeta(type.ordinal() * 2);
+                    IBlockState topState = RegistrarBloodMagicBlocks.INVERSION_PILLAR_END.getStateFromMeta(type.ordinal() * 2 + 1);
                     getWorld().setBlockState(candidatePos, pillarState);
                     getWorld().setBlockState(candidatePos.down(), bottomState);
                     getWorld().setBlockState(candidatePos.up(), topState);
@@ -178,9 +174,9 @@ public class TileInversionPillar extends TileTicking
         {
             Vec3d vec = new Vec3d(getWorld().rand.nextDouble() * 2 - 1, getWorld().rand.nextDouble() * 2 - 1, getWorld().rand.nextDouble() * 2 - 1).normalize().scale(2 * currentInfectionRadius);
 
-            BlockPos centralPos = pos.add(vec.xCoord, vec.yCoord, vec.zCoord);
+            BlockPos centralPos = pos.add(vec.x, vec.y, vec.z);
 
-            getWorld().setBlockState(centralPos, ModBlocks.DEMON_EXTRAS.getStateFromMeta(0));
+            getWorld().setBlockState(centralPos, RegistrarBloodMagicBlocks.DEMON_EXTRAS.getStateFromMeta(0));
             currentInversion -= 1000;
         }
     }
@@ -197,7 +193,7 @@ public class TileInversionPillar extends TileTicking
 
             Vec3d vec = new Vec3d(world.rand.nextDouble() * 2 - 1, world.rand.nextDouble() * 2 - 1, world.rand.nextDouble() * 2 - 1).normalize().scale(wantedAverageDistance);
 
-            BlockPos centralPos = pillarPos.add(vec.xCoord, vec.yCoord, vec.zCoord);
+            BlockPos centralPos = pillarPos.add(vec.x, vec.y, vec.z);
             BlockPos testPos = null;
             candidateTest: for (int h = 0; h <= heightCheckRange; h++)
             {
@@ -385,7 +381,7 @@ public class TileInversionPillar extends TileTicking
                 Block block = state.getBlock();
                 if (block == Blocks.DIRT || block == Blocks.STONE || block == Blocks.GRASS)
                 {
-                    if (getWorld().setBlockState(offsetPos, ModBlocks.DEMON_EXTRAS.getStateFromMeta(0)))
+                    if (getWorld().setBlockState(offsetPos, RegistrarBloodMagicBlocks.DEMON_EXTRAS.getStateFromMeta(0)))
                     {
                         WorldDemonWillHandler.drainWill(getWorld(), pos, type, willPerOperation, true);
                         currentInversion -= inversionPerOperation;
@@ -433,5 +429,165 @@ public class TileInversionPillar extends TileTicking
             return CapabilityAnimation.ANIMATION_CAPABILITY.cast(asm);
         }
         return super.getCapability(capability, side);
+    }
+
+    public static double getWillPerOperation() {
+        return willPerOperation;
+    }
+
+    public static void setWillPerOperation(double willPerOperation) {
+        TileInversionPillar.willPerOperation = willPerOperation;
+    }
+
+    public static double getInversionPerOperation() {
+        return inversionPerOperation;
+    }
+
+    public static void setInversionPerOperation(double inversionPerOperation) {
+        TileInversionPillar.inversionPerOperation = inversionPerOperation;
+    }
+
+    public static double getAddedInversionPerFailedCheck() {
+        return addedInversionPerFailedCheck;
+    }
+
+    public static void setAddedInversionPerFailedCheck(double addedInversionPerFailedCheck) {
+        TileInversionPillar.addedInversionPerFailedCheck = addedInversionPerFailedCheck;
+    }
+
+    public static double getInversionToIncreaseRadius() {
+        return inversionToIncreaseRadius;
+    }
+
+    public static void setInversionToIncreaseRadius(double inversionToIncreaseRadius) {
+        TileInversionPillar.inversionToIncreaseRadius = inversionToIncreaseRadius;
+    }
+
+    public static double getInversionToAddPillar() {
+        return inversionToAddPillar;
+    }
+
+    public static void setInversionToAddPillar(double inversionToAddPillar) {
+        TileInversionPillar.inversionToAddPillar = inversionToAddPillar;
+    }
+
+    public static double getOperationThreshold() {
+        return operationThreshold;
+    }
+
+    public static void setOperationThreshold(double operationThreshold) {
+        TileInversionPillar.operationThreshold = operationThreshold;
+    }
+
+    public static double getInversionToSpreadWill() {
+        return inversionToSpreadWill;
+    }
+
+    public static void setInversionToSpreadWill(double inversionToSpreadWill) {
+        TileInversionPillar.inversionToSpreadWill = inversionToSpreadWill;
+    }
+
+    public static double getWillPushRate() {
+        return willPushRate;
+    }
+
+    public static void setWillPushRate(double willPushRate) {
+        TileInversionPillar.willPushRate = willPushRate;
+    }
+
+    public static double getInversionCostPerWillSpread() {
+        return inversionCostPerWillSpread;
+    }
+
+    public static void setInversionCostPerWillSpread(double inversionCostPerWillSpread) {
+        TileInversionPillar.inversionCostPerWillSpread = inversionCostPerWillSpread;
+    }
+
+    public static double getMinimumWillForChunkWhenSpreading() {
+        return minimumWillForChunkWhenSpreading;
+    }
+
+    public static void setMinimumWillForChunkWhenSpreading(double minimumWillForChunkWhenSpreading) {
+        TileInversionPillar.minimumWillForChunkWhenSpreading = minimumWillForChunkWhenSpreading;
+    }
+
+    public IAnimationStateMachine getAsm() {
+        return asm;
+    }
+
+    public float getAnimationOffsetValue() {
+        return animationOffsetValue;
+    }
+
+    public void setAnimationOffsetValue(float animationOffsetValue) {
+        this.animationOffsetValue = animationOffsetValue;
+    }
+
+    public VariableValue getAnimationOffset() {
+        return animationOffset;
+    }
+
+    public VariableValue getCycleLength() {
+        return cycleLength;
+    }
+
+    public EnumDemonWillType getType() {
+        return type;
+    }
+
+    public void setType(EnumDemonWillType type) {
+        this.type = type;
+    }
+
+    public double getCurrentInversion() {
+        return currentInversion;
+    }
+
+    public void setCurrentInversion(double currentInversion) {
+        this.currentInversion = currentInversion;
+    }
+
+    public int getConsecutiveFailedChecks() {
+        return consecutiveFailedChecks;
+    }
+
+    public void setConsecutiveFailedChecks(int consecutiveFailedChecks) {
+        this.consecutiveFailedChecks = consecutiveFailedChecks;
+    }
+
+    public int getConsecutiveFailedAirChecks() {
+        return consecutiveFailedAirChecks;
+    }
+
+    public void setConsecutiveFailedAirChecks(int consecutiveFailedAirChecks) {
+        this.consecutiveFailedAirChecks = consecutiveFailedAirChecks;
+    }
+
+    public int getCurrentInfectionRadius() {
+        return currentInfectionRadius;
+    }
+
+    public void setCurrentInfectionRadius(int currentInfectionRadius) {
+        this.currentInfectionRadius = currentInfectionRadius;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
+    public boolean isRegistered() {
+        return isRegistered;
+    }
+
+    public void setRegistered(boolean registered) {
+        isRegistered = registered;
+    }
+
+    public static double getMaxWillForChunk() {
+        return maxWillForChunk;
     }
 }

@@ -38,8 +38,8 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
 
     public ItemSanguineBook()
     {
-        setUnlocalizedName(Constants.Mod.MODID + ".sanguineBook");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".sanguineBook");
+        setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
     }
 

@@ -12,8 +12,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -22,7 +22,7 @@ public class DataProviderAlchemyArray implements IWailaDataProvider
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
-        return new ItemStack(ModItems.ARCANE_ASHES).setStackDisplayName(TextHelper.getFormattedText(ModBlocks.ALCHEMY_ARRAY.getLocalizedName()));
+        return new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES).setStackDisplayName(TextHelper.getFormattedText(RegistrarBloodMagicBlocks.ALCHEMY_ARRAY.getLocalizedName()));
     }
 
     @Override

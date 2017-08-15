@@ -36,7 +36,7 @@ public class EntityAIProtectAlly extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        AxisAlignedBB bb = new AxisAlignedBB(entity.posX - 0.5, entity.posY - 0.5, entity.posZ - 0.5, entity.posX + 0.5, entity.posY + 0.5, entity.posZ + 0.5).expandXyz(5);
+        AxisAlignedBB bb = new AxisAlignedBB(entity.posX - 0.5, entity.posY - 0.5, entity.posZ - 0.5, entity.posX + 0.5, entity.posY + 0.5, entity.posZ + 0.5).grow(5);
         List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, bb, new EntityAspectedDemonBase.WillTypePredicate(entity.getType()));
         for (EntityLivingBase testEntity : list)
         {
@@ -76,7 +76,7 @@ public class EntityAIProtectAlly extends EntityAIBase
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     @Override
-    public boolean continueExecuting()
+    public boolean shouldContinueExecuting()
     {
         return castTimer > 0;
     }
@@ -90,7 +90,7 @@ public class EntityAIProtectAlly extends EntityAIBase
         this.castTimer = Math.max(0, this.castTimer - 1);
         if (castTimer == 0)
         {
-            AxisAlignedBB bb = new AxisAlignedBB(entity.posX - 0.5, entity.posY - 0.5, entity.posZ - 0.5, entity.posX + 0.5, entity.posY + 0.5, entity.posZ + 0.5).expandXyz(5);
+            AxisAlignedBB bb = new AxisAlignedBB(entity.posX - 0.5, entity.posY - 0.5, entity.posZ - 0.5, entity.posX + 0.5, entity.posY + 0.5, entity.posZ + 0.5).grow(5);
             List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, bb, new EntityAspectedDemonBase.WillTypePredicate(entity.getType()));
             for (EntityLivingBase testEntity : list)
             {

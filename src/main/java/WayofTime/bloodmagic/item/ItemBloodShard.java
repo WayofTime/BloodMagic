@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -23,8 +22,8 @@ public class ItemBloodShard extends Item implements IVariantProvider
     {
         super();
 
-        setCreativeTab(BloodMagic.tabBloodMagic);
-        setUnlocalizedName(Constants.Mod.MODID + ".bloodShard.");
+        setCreativeTab(BloodMagic.TAB_BM);
+        setUnlocalizedName(BloodMagic.MODID + ".bloodShard.");
         setHasSubtypes(true);
     }
 

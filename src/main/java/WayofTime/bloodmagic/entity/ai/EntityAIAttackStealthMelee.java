@@ -79,9 +79,9 @@ public class EntityAIAttackStealthMelee extends EntityAIBase
     }
 
     @Override
-    public boolean continueExecuting()
+    public boolean shouldContinueExecuting()
     {
-        return chicken.attackStateMachine == 1 && super.continueExecuting();
+        return chicken.attackStateMachine == 1 && super.shouldContinueExecuting();
     }
 
     @Override
@@ -114,7 +114,7 @@ public class EntityAIAttackStealthMelee extends EntityAIBase
                 if (this.chicken.getNavigator().getPath() != null)
                 {
                     net.minecraft.pathfinding.PathPoint finalPathPoint = this.chicken.getNavigator().getPath().getFinalPathPoint();
-                    if (finalPathPoint != null && entitylivingbase.getDistanceSq(finalPathPoint.xCoord, finalPathPoint.yCoord, finalPathPoint.zCoord) < 1)
+                    if (finalPathPoint != null && entitylivingbase.getDistanceSq(finalPathPoint.x, finalPathPoint.y, finalPathPoint.z) < 1)
                         failedPathFindingPenalty = 0;
                     else
                         failedPathFindingPenalty += 10;

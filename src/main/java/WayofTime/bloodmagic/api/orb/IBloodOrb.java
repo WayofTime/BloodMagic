@@ -1,10 +1,11 @@
 package WayofTime.bloodmagic.api.orb;
 
+import net.minecraft.item.ItemStack;
+
+import javax.annotation.Nullable;
+
 public interface IBloodOrb
 {
-    BloodOrb getOrb(int meta);
-
-    int getMaxEssence(int meta);
-
-    int getOrbLevel(int meta);
+    @Nullable
+    BloodOrb getOrb(ItemStack stack);
 }

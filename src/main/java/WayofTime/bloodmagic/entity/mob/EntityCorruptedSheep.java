@@ -6,7 +6,6 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -53,7 +52,6 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
      */
     private int sheepTimer;
 
-    @Getter
     private int castTimer = 0;
     private EntityAIEatAndCorruptBlock entityAIEatGrass;
     private EntityAIProtectAlly entityAIProtectAlly;
@@ -66,7 +64,7 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
 
     public static float[] getDyeRgb(EnumDyeColor dyeColor)
     {
-        return (float[]) DYE_TO_RGB.get(dyeColor);
+        return DYE_TO_RGB.get(dyeColor);
     }
 
     public EntityCorruptedSheep(World world)
@@ -289,7 +287,7 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
      */
     public EnumDyeColor getFleeceColor()
     {
-        return EnumDyeColor.byMetadata(((Byte) this.dataManager.get(DYE_COLOR)).byteValue() & 15);
+        return EnumDyeColor.byMetadata(this.dataManager.get(DYE_COLOR).byteValue() & 15);
     }
 
     /**
@@ -297,7 +295,7 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
      */
     public void setFleeceColor(EnumDyeColor color)
     {
-        byte b0 = ((Byte) this.dataManager.get(DYE_COLOR)).byteValue();
+        byte b0 = this.dataManager.get(DYE_COLOR).byteValue();
         this.dataManager.set(DYE_COLOR, Byte.valueOf((byte) (b0 & 240 | color.getMetadata() & 15)));
     }
 
@@ -306,7 +304,7 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
      */
     public boolean getSheared()
     {
-        return (((Byte) this.dataManager.get(DYE_COLOR)).byteValue() & 16) != 0;
+        return (this.dataManager.get(DYE_COLOR).byteValue() & 16) != 0;
     }
 
     /**
@@ -314,7 +312,7 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
      */
     public void setSheared(boolean sheared)
     {
-        byte b0 = ((Byte) this.dataManager.get(DYE_COLOR)).byteValue();
+        byte b0 = this.dataManager.get(DYE_COLOR).byteValue();
 
         if (sheared)
         {
@@ -407,5 +405,9 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
 
         this.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1.0F, 1.0F);
         return ret;
+    }
+
+    public int getCastTimer() {
+        return castTimer;
     }
 }

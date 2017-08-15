@@ -2,12 +2,12 @@ package WayofTime.bloodmagic.livingArmour.upgrade;
 
 import java.util.HashMap;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
@@ -55,7 +55,7 @@ public class LivingArmourUpgradeDigging extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.digging";
+        return BloodMagic.MODID + ".upgrade.digging";
     }
 
     @Override

@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.teleport.PortalLocation;
-import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;
 import net.minecraft.block.state.IBlockState;
@@ -29,7 +29,7 @@ public class RitualPortal extends Ritual
 
     public RitualPortal()
     {
-        super("ritualPortal", 0, 50000, "ritual." + Constants.Mod.MODID + ".portalRitual");
+        super("ritualPortal", 0, 50000, "ritual." + BloodMagic.MODID + ".portalRitual");
         portalRitualTag = new NBTTagCompound();
     }
 
@@ -55,7 +55,7 @@ public class RitualPortal extends Ritual
                 {
                     for (int k = z - 2; k <= z + 2; k++)
                     {
-                        if (!world.isAirBlock(new BlockPos(i, y, k)) && !(getBlockState(world, i, y, k).getBlock() == ModBlocks.RITUAL_STONE))
+                        if (!world.isAirBlock(new BlockPos(i, y, k)) && !(getBlockState(world, i, y, k).getBlock() == RegistrarBloodMagicBlocks.RITUAL_STONE))
                         {
                             blockState = getBlockState(world, i, y, k);
                             name = addStringToEnd(name, ForgeRegistries.BLOCKS.getKey(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
@@ -64,7 +64,7 @@ public class RitualPortal extends Ritual
                 }
                 for (int j = y + 1; j <= y + 5; j++)
                 {
-                    if (!world.isAirBlock(new BlockPos(x - 3, j, z)) && !(getBlockState(world, x - 3, j, z).getBlock() == ModBlocks.RITUAL_STONE))
+                    if (!world.isAirBlock(new BlockPos(x - 3, j, z)) && !(getBlockState(world, x - 3, j, z).getBlock() == RegistrarBloodMagicBlocks.RITUAL_STONE))
                     {
                         blockState = getBlockState(world, x - 3, j, z);
                         name = addStringToEnd(name, ForgeRegistries.BLOCKS.getKey(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
@@ -72,7 +72,7 @@ public class RitualPortal extends Ritual
                 }
                 for (int j = y + 1; j <= y + 5; j++)
                 {
-                    if (!world.isAirBlock(new BlockPos(x + 3, j, z)) && !(getBlockState(world, x + 3, j, z) == ModBlocks.RITUAL_STONE))
+                    if (!world.isAirBlock(new BlockPos(x + 3, j, z)) && !(getBlockState(world, x + 3, j, z) == RegistrarBloodMagicBlocks.RITUAL_STONE))
                     {
                         blockState = getBlockState(world, x + 3, j, z);
                         name = addStringToEnd(name, ForgeRegistries.BLOCKS.getKey(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
@@ -84,7 +84,7 @@ public class RitualPortal extends Ritual
                 {
                     for (int i = x - 2; i <= x + 2; i++)
                     {
-                        if (!world.isAirBlock(new BlockPos(i, y, k)) && !(getBlockState(world, i, y, k).getBlock() == ModBlocks.RITUAL_STONE))
+                        if (!world.isAirBlock(new BlockPos(i, y, k)) && !(getBlockState(world, i, y, k).getBlock() == RegistrarBloodMagicBlocks.RITUAL_STONE))
                         {
                             blockState = getBlockState(world, i, y, k);
                             name = addStringToEnd(name, ForgeRegistries.BLOCKS.getKey(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
@@ -93,7 +93,7 @@ public class RitualPortal extends Ritual
                 }
                 for (int j = y + 1; j <= y + 5; j++)
                 {
-                    if (!world.isAirBlock(new BlockPos(x, j, z - 3)) && !(getBlockState(world, x, j, z - 3).getBlock() == ModBlocks.RITUAL_STONE))
+                    if (!world.isAirBlock(new BlockPos(x, j, z - 3)) && !(getBlockState(world, x, j, z - 3).getBlock() == RegistrarBloodMagicBlocks.RITUAL_STONE))
                     {
                         blockState = getBlockState(world, x, j, z - 3);
                         name = addStringToEnd(name, ForgeRegistries.BLOCKS.getKey(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
@@ -101,7 +101,7 @@ public class RitualPortal extends Ritual
                 }
                 for (int j = y + 1; j <= y + 5; j++)
                 {
-                    if (!world.isAirBlock(new BlockPos(x, j, z + 3)) && !(getBlockState(world, x, j, z + 3).getBlock() == ModBlocks.RITUAL_STONE))
+                    if (!world.isAirBlock(new BlockPos(x, j, z + 3)) && !(getBlockState(world, x, j, z + 3).getBlock() == RegistrarBloodMagicBlocks.RITUAL_STONE))
                     {
                         blockState = getBlockState(world, x, j, z + 3);
                         name = addStringToEnd(name, ForgeRegistries.BLOCKS.getKey(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
@@ -142,7 +142,7 @@ public class RitualPortal extends Ritual
 
                     if (world.isAirBlock(tempPos))
                     {
-                        IBlockState blockState = ModBlocks.DIMENSIONAL_PORTAL.getStateFromMeta(0);
+                        IBlockState blockState = RegistrarBloodMagicBlocks.DIMENSIONAL_PORTAL.getStateFromMeta(0);
                         world.setBlockState(tempPos, blockState, 3);
 
                         if (world.getTileEntity(tempPos) != null && world.getTileEntity(tempPos) instanceof TileDimensionalPortal)
@@ -163,7 +163,7 @@ public class RitualPortal extends Ritual
                     BlockPos tempPos = new BlockPos(x, j, k);
                     if (world.isAirBlock(tempPos))
                     {
-                        IBlockState blockState = ModBlocks.DIMENSIONAL_PORTAL.getStateFromMeta(1);
+                        IBlockState blockState = RegistrarBloodMagicBlocks.DIMENSIONAL_PORTAL.getStateFromMeta(1);
                         world.setBlockState(tempPos, blockState, 3);
 
                         if (world.getTileEntity(tempPos) != null && world.getTileEntity(tempPos) instanceof TileDimensionalPortal)
@@ -196,7 +196,7 @@ public class RitualPortal extends Ritual
             {
                 for (int j = y + 1; j <= y + 3; j++)
                 {
-                    if (getBlockState(world, i, j, z).getBlock() == ModBlocks.DIMENSIONAL_PORTAL)
+                    if (getBlockState(world, i, j, z).getBlock() == RegistrarBloodMagicBlocks.DIMENSIONAL_PORTAL)
                     {
                         world.setBlockToAir(new BlockPos(i, j, z));
                     }
@@ -208,7 +208,7 @@ public class RitualPortal extends Ritual
             {
                 for (int j = y + 1; j <= y + 3; j++)
                 {
-                    if (getBlockState(world, x, j, k).getBlock() == ModBlocks.DIMENSIONAL_PORTAL)
+                    if (getBlockState(world, x, j, k).getBlock() == RegistrarBloodMagicBlocks.DIMENSIONAL_PORTAL)
                     {
                         world.setBlockToAir(new BlockPos(x, j, k));
                     }

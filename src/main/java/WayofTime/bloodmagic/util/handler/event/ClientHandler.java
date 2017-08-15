@@ -218,7 +218,7 @@ public class ClientHandler
     @SubscribeEvent
     public void onModelBake(ModelBakeEvent event)
     {
-        if (BloodMagic.isDev() && SUPPRESS_ASSET_ERRORS)
+        if (BloodMagic.IS_DEV && SUPPRESS_ASSET_ERRORS)
             return;
 
         Stopwatch stopwatch = Stopwatch.createStarted();
@@ -228,13 +228,13 @@ public class ClientHandler
         // Collect all Blood Magic model errors
         List<ResourceLocation> errored = new ArrayList<ResourceLocation>();
         for (ResourceLocation modelError : modelErrors.keySet())
-            if (modelError.getResourceDomain().equalsIgnoreCase(Constants.Mod.MODID))
+            if (modelError.getResourceDomain().equalsIgnoreCase(BloodMagic.MODID))
                 errored.add(modelError);
 
         // Collect all Blood Magic variant errors
         List<ModelResourceLocation> missing = new ArrayList<ModelResourceLocation>();
         for (ModelResourceLocation missingVariant : missingVariants)
-            if (missingVariant.getResourceDomain().equalsIgnoreCase(Constants.Mod.MODID))
+            if (missingVariant.getResourceDomain().equalsIgnoreCase(BloodMagic.MODID))
                 missing.add(missingVariant);
 
         // Remove discovered model errors
@@ -245,17 +245,17 @@ public class ClientHandler
         missingVariants.removeAll(missing);
 
         if (errored.size() > 0)
-            BloodMagic.instance.getLogger().info("Suppressed {} model errors from Blood Magic.", errored.size());
+            BloodMagic.instance.logger.info("Suppressed {} model errors from Blood Magic.", errored.size());
         if (missing.size() > 0)
-            BloodMagic.instance.getLogger().info("Suppressed {} variant errors from Blood Magic.", missing.size());
-        BloodMagic.instance.getLogger().debug("Suppressed discovered model/variant errors in {}", stopwatch.stop());
+            BloodMagic.instance.logger.info("Suppressed {} variant errors from Blood Magic.", missing.size());
+        BloodMagic.instance.logger.debug("Suppressed discovered model/variant errors in {}", stopwatch.stop());
     }
 
     // For some reason, we need some bad textures to be listed in the Crystal and Node models. This will hide that from the end user.
     @SubscribeEvent
     public void onTextureStitch(TextureStitchEvent.Post event)
     {
-        if (BloodMagic.isDev() && SUPPRESS_ASSET_ERRORS)
+        if (BloodMagic.IS_DEV && SUPPRESS_ASSET_ERRORS)
             return;
 
         Stopwatch stopwatch = Stopwatch.createStarted();
@@ -284,7 +284,7 @@ public class ClientHandler
             missingTextures.keySet().remove(mc);
             badTextureDomains.remove(mc);
         }
-        BloodMagic.instance.getLogger().debug("Suppressed required texture errors in {}", stopwatch.stop());
+        BloodMagic.instance.logger.debug("Suppressed required texture errors in {}", stopwatch.stop());
     }
 
     public static void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel)

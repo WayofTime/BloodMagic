@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +20,6 @@ import net.minecraft.world.World;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.compress.CompressionRegistry;
 import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
 import WayofTime.bloodmagic.api.registry.AlchemyTableRecipeRegistry;
@@ -30,7 +30,7 @@ import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.util.Utils;
 
 public class RitualCrushing extends Ritual
@@ -51,7 +51,7 @@ public class RitualCrushing extends Ritual
 
     public RitualCrushing()
     {
-        super("ritualCrushing", 0, 5000, "ritual." + Constants.Mod.MODID + ".crushingRitual");
+        super("ritualCrushing", 0, 5000, "ritual." + BloodMagic.MODID + ".crushingRitual");
         addBlockRange(CRUSHING_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, -3, -1), 3));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
 
@@ -117,7 +117,7 @@ public class RitualCrushing extends Ritual
 
             IBlockState state = world.getBlockState(newPos);
             Block block = state.getBlock();
-            if (block.equals(ModBlocks.RITUAL_CONTROLLER) || block.equals(ModBlocks.RITUAL_STONE) || block.getBlockHardness(state, world, newPos) == -1.0F || Utils.isBlockLiquid(state))
+            if (block.equals(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER) || block.equals(RegistrarBloodMagicBlocks.RITUAL_STONE) || block.getBlockHardness(state, world, newPos) == -1.0F || Utils.isBlockLiquid(state))
             {
                 continue;
             }

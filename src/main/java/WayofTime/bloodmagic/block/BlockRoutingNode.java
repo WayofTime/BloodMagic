@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.block;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -18,7 +18,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 
-public class BlockRoutingNode extends Block
+public class BlockRoutingNode extends Block implements IBMBlock
 {
     protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.378F, 0.378F, 0.378F, 0.625F, 0.625F, 0.625F);
 
@@ -33,7 +33,7 @@ public class BlockRoutingNode extends Block
     {
         super(Material.ROCK);
 
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 2);
@@ -139,5 +139,10 @@ public class BlockRoutingNode extends Block
         }
 
         super.breakBlock(world, pos, blockState);
+    }
+
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlock(this);
     }
 }

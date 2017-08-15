@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,7 +25,7 @@ public class LivingArmourUpgradeElytra extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.elytra";
+        return BloodMagic.MODID + ".upgrade.elytra";
     }
 
     @Override

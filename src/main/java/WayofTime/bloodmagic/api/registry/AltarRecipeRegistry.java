@@ -5,11 +5,9 @@ import WayofTime.bloodmagic.api.ItemStackWrapper;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +32,7 @@ public class AltarRecipeRegistry
         if (!recipes.containsValue(altarRecipe) && altarRecipe.getInput().size() > 0)
             recipes.put(altarRecipe.getInput(), altarRecipe);
         else
-            BloodMagicAPI.getLogger().error("Error adding altar recipe for input [{}].", altarRecipe.toString());
+            BloodMagicAPI.logger.error("Error adding altar recipe for input [{}].", altarRecipe.toString());
     }
 
     public static void registerFillRecipe(ItemStack orbStack, EnumAltarTier tier, int maxForOrb, int consumeRate, int drainRate)
@@ -87,9 +85,6 @@ public class AltarRecipeRegistry
         return HashBiMap.create(recipes);
     }
 
-    @Getter
-    @ToString
-    @EqualsAndHashCode
     public static class AltarRecipe
     {
         private final List<ItemStackWrapper> input;
@@ -173,6 +168,75 @@ public class AltarRecipeRegistry
             }
 
             return false;
+        }
+
+        public List<ItemStackWrapper> getInput() {
+            return input;
+        }
+
+        public ItemStack getOutput() {
+            return output;
+        }
+
+        public EnumAltarTier getMinTier() {
+            return minTier;
+        }
+
+        public int getSyphon() {
+            return syphon;
+        }
+
+        public int getConsumeRate() {
+            return consumeRate;
+        }
+
+        public int getDrainRate() {
+            return drainRate;
+        }
+
+        public boolean isFillable() {
+            return fillable;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof AltarRecipe)) return false;
+
+            AltarRecipe that = (AltarRecipe) o;
+
+            if (syphon != that.syphon) return false;
+            if (consumeRate != that.consumeRate) return false;
+            if (drainRate != that.drainRate) return false;
+            if (fillable != that.fillable) return false;
+            if (input != null ? !input.equals(that.input) : that.input != null) return false;
+            if (output != null ? !output.equals(that.output) : that.output != null) return false;
+            return minTier == that.minTier;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = input != null ? input.hashCode() : 0;
+            result = 31 * result + (output != null ? output.hashCode() : 0);
+            result = 31 * result + (minTier != null ? minTier.hashCode() : 0);
+            result = 31 * result + syphon;
+            result = 31 * result + consumeRate;
+            result = 31 * result + drainRate;
+            result = 31 * result + (fillable ? 1 : 0);
+            return result;
+        }
+
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this)
+                    .append("input", input)
+                    .append("output", output)
+                    .append("minTier", minTier)
+                    .append("syphon", syphon)
+                    .append("consumeRate", consumeRate)
+                    .append("drainRate", drainRate)
+                    .append("fillable", fillable)
+                    .toString();
         }
     }
 }

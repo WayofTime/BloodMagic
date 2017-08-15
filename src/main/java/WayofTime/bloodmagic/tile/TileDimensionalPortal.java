@@ -13,11 +13,6 @@ public class TileDimensionalPortal extends TileBase
     public int masterStoneY;
     public int masterStoneZ;
 
-    public TileDimensionalPortal()
-    {
-        ;
-    }
-
     public void deserialize(NBTTagCompound tagCompound)
     {
         portalID = tagCompound.getString(RitualPortal.PORTAL_ID_TAG);

@@ -1,11 +1,10 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -31,7 +30,7 @@ public class RitualFelling extends Ritual
 
     public RitualFelling()
     {
-        super("ritualFelling", 0, 20000, "ritual." + Constants.Mod.MODID + ".fellingRitual");
+        super("ritualFelling", 0, 20000, "ritual." + BloodMagic.MODID + ".fellingRitual");
         addBlockRange(FELLING_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -3, -10), new BlockPos(11, 27, 11)));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
 

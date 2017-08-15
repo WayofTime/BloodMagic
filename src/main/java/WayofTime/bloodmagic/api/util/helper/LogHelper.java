@@ -15,19 +15,19 @@ public class LogHelper
 
     public void info(String info, Object... format)
     {
-        if (BloodMagicAPI.isLoggingEnabled())
+        if (BloodMagicAPI.loggingEnabled)
             logger.info(info, format);
     }
 
     public void error(String error, Object... format)
     {
-        if (BloodMagicAPI.isLoggingEnabled())
+        if (BloodMagicAPI.loggingEnabled)
             logger.error(error, format);
     }
 
     public void debug(String debug, Object... format)
     {
-        if (BloodMagicAPI.isLoggingEnabled())
+        if (BloodMagicAPI.loggingEnabled)
             logger.debug(debug, format);
     }
 

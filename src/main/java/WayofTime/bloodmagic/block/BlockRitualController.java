@@ -1,8 +1,5 @@
 package WayofTime.bloodmagic.block;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nullable;
 
 import WayofTime.bloodmagic.api.iface.IBindable;
@@ -21,36 +18,28 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Optional;
-
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.block.enums.EnumRitualController;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
-import WayofTime.bloodmagic.util.ChatUtil;
 import amerifrance.guideapi.api.IGuideLinked;
 
-@Optional.Interface(modid = "guideapi", iface = "amerifrance.guideapi.api.IGuideLinked")
-public class BlockRitualController extends BlockEnum<EnumRitualController> implements IVariantProvider, IGuideLinked
+public class BlockRitualController extends BlockEnum<EnumRitualController> implements IGuideLinked
 {
     public BlockRitualController()
     {
         super(Material.ROCK, EnumRitualController.class);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".stone.ritual.");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".stone.ritual.");
+        setCreativeTab(BloodMagic.TAB_BM);
         setSoundType(SoundType.STONE);
         setHardness(2.0F);
         setResistance(5.0F);
@@ -65,7 +54,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
 
         if (state.getValue(getProperty()) != EnumRitualController.IMPERFECT && tile instanceof TileMasterRitualStone)
         {
-            if (heldItem.getItem() == ModItems.ACTIVATION_CRYSTAL)
+            if (heldItem.getItem() == RegistrarBloodMagicItems.ACTIVATION_CRYSTAL)
             {
                 IBindable bindable = (IBindable) heldItem.getItem();
                 if (Strings.isNullOrEmpty(bindable.getOwnerName(heldItem)))
@@ -127,17 +116,6 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
     public TileEntity createTileEntity(World world, IBlockState state)
     {
         return state.getValue(getProperty()) != EnumRitualController.IMPERFECT ? new TileMasterRitualStone() : new TileImperfectRitualStone();
-    }
-
-    // IVariantProvider
-
-    @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < this.getTypes().length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
-        return ret;
     }
 
     // IGuideLinked

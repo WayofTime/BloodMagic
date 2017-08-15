@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.block.base;
 
-import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
@@ -21,7 +20,6 @@ import org.apache.commons.lang3.ArrayUtils;
  * way, each value is {@code toLowerCase()}'ed, so the blockstate JSON needs all
  * values to be lowercase.
  */
-@Getter
 public class BlockString extends Block
 {
     private final int maxMeta;
@@ -78,10 +76,10 @@ public class BlockString extends Block
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item item, CreativeTabs tab, NonNullList<ItemStack> subBlocks)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> subBlocks)
     {
         for (int i = 0; i < maxMeta; i++)
-            subBlocks.add(new ItemStack(item, 1, i));
+            subBlocks.add(new ItemStack(this, 1, i));
     }
 
     protected BlockStateContainer createStateContainer()
@@ -90,5 +88,21 @@ public class BlockString extends Block
         BlockStateContainer ctn = new BlockStateContainer.Builder(this).add(property).build();
         System.out.println("Number of states: " + ctn.getValidStates().size());
         return ctn;
+    }
+
+    public int getMaxMeta() {
+        return maxMeta;
+    }
+
+    public String[] getTypes() {
+        return types;
+    }
+
+    public PropertyString getProperty() {
+        return property;
+    }
+
+    public BlockStateContainer getRealStateContainer() {
+        return realStateContainer;
     }
 }

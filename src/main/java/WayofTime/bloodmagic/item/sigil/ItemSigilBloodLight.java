@@ -15,7 +15,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
-import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 
 public class ItemSigilBloodLight extends ItemSigilBase
 {
@@ -51,7 +51,7 @@ public class ItemSigilBloodLight extends ItemSigilBase
 
             if (world.isAirBlock(blockPos))
             {
-                world.setBlockState(blockPos, ModBlocks.BLOOD_LIGHT.getDefaultState());
+                world.setBlockState(blockPos, RegistrarBloodMagicBlocks.BLOOD_LIGHT.getDefaultState());
                 if (!world.isRemote)
                     NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed());
                 resetCooldown(stack);

@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.ritual.portal;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.teleport.PortalLocation;
 import net.minecraftforge.common.DimensionManager;
 
@@ -13,7 +13,7 @@ public class LocationsHandler implements Serializable
 {
 
     public static final long serialVersionUID = 10102001;
-    private static final String fileName = String.valueOf(DimensionManager.getCurrentSaveRootDirectory()) + "/" + Constants.Mod.MODID + "/PortalLocations.dat";
+    private static final String fileName = String.valueOf(DimensionManager.getCurrentSaveRootDirectory()) + "/" + BloodMagic.MODID + "/PortalLocations.dat";
     private static HashMap<String, ArrayList<PortalLocation>> portals;
     private static LocationsHandler locationsHandler;
 
@@ -47,11 +47,11 @@ public class LocationsHandler implements Serializable
                 {
                     if (file.createNewFile())
                     {
-                        BloodMagicAPI.getLogger().info("Creating " + fileName + " in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
+                        BloodMagicAPI.logger.info("Creating " + fileName + " in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
                     }
                 } else if (file.createNewFile())
                 {
-                    BloodMagicAPI.getLogger().info("Creating " + fileName + " in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
+                    BloodMagicAPI.logger.info("Creating " + fileName + " in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
                 }
             }
             FileInputStream fileIn = new FileInputStream(file);
@@ -65,7 +65,7 @@ public class LocationsHandler implements Serializable
             return null;
         } catch (ClassNotFoundException e)
         {
-            BloodMagicAPI.getLogger().error(String.valueOf(file) + " was not found in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
+            BloodMagicAPI.logger.error(String.valueOf(file) + " was not found in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
             return null;
         }
     }
@@ -94,13 +94,13 @@ public class LocationsHandler implements Serializable
         }
         if (!portals.get(name).isEmpty() && portals.get(name).size() >= 2)
         {
-            BloodMagicAPI.getLogger().info("Location " + name + " already exists.");
+            BloodMagicAPI.logger.info("Location " + name + " already exists.");
             updateFile(fileName, portals);
             return false;
         } else
         {
             portals.get(name).add(location);
-            BloodMagicAPI.getLogger().info("Adding " + name);
+            BloodMagicAPI.logger.info("Adding " + name);
             updateFile(fileName, portals);
             return true;
         }
@@ -113,12 +113,12 @@ public class LocationsHandler implements Serializable
             if (portals.get(name).contains(location))
             {
                 portals.get(name).remove(location);
-                BloodMagicAPI.getLogger().info("Removing " + name);
+                BloodMagicAPI.logger.info("Removing " + name);
                 updateFile(fileName, portals);
                 return true;
             } else
             {
-                BloodMagicAPI.getLogger().info("No location matching " + name);
+                BloodMagicAPI.logger.info("No location matching " + name);
                 updateFile(fileName, portals);
                 return false;
             }

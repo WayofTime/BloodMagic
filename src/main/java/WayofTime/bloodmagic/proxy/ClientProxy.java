@@ -57,8 +57,8 @@ import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
@@ -92,10 +92,10 @@ public class ClientProxy extends CommonProxy
         renderHelper = new InventoryRenderHelper(Constants.Mod.DOMAIN);
         renderHelperV2 = new InventoryRenderHelperV2(Constants.Mod.DOMAIN);
 
-        OBJLoader.INSTANCE.addDomain(Constants.Mod.MODID);
+        OBJLoader.INSTANCE.addDomain(BloodMagic.MODID);
 
-        ModBlocks.initRenders();
-        ModItems.initRenders();
+        RegistrarBloodMagicBlocks.initRenders();
+        RegistrarBloodMagicItems.initRenders();
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileInversionPillar.class, new AnimationTESR<TileInversionPillar>()
         {
@@ -155,7 +155,7 @@ public class ClientProxy extends CommonProxy
                 }
                 return -1;
             }
-        }, ModItems.SIGIL_HOLDING);
+        }, RegistrarBloodMagicItems.SIGIL_HOLDING);
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor()
         {
             @Override
@@ -169,7 +169,7 @@ public class ClientProxy extends CommonProxy
 
                 return PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(stack));
             }
-        }, ModItems.POTION_FLASK);
+        }, RegistrarBloodMagicItems.POTION_FLASK);
 
         addElytraLayer();
     }
@@ -188,7 +188,7 @@ public class ClientProxy extends CommonProxy
         {
             IVariantProvider variantProvider = (IVariantProvider) block;
             for (Pair<Integer, String> variant : variantProvider.getVariants())
-                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, name), variant.getRight()));
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, name), variant.getRight()));
         }
     }
 
@@ -201,14 +201,14 @@ public class ClientProxy extends CommonProxy
             ModelLoader.setCustomMeshDefinition(item, meshProvider.getMeshDefinition());
             ResourceLocation resourceLocation = meshProvider.getCustomLocation();
             if (resourceLocation == null)
-                resourceLocation = new ResourceLocation(Constants.Mod.MODID, "item/" + name);
+                resourceLocation = new ResourceLocation(BloodMagic.MODID, "item/" + name);
             for (String variant : meshProvider.getVariants())
                 ModelLoader.registerItemVariants(item, new ModelResourceLocation(resourceLocation, variant));
         } else if (item instanceof IVariantProvider)
         {
             IVariantProvider variantProvider = (IVariantProvider) item;
             for (Pair<Integer, String> variant : variantProvider.getVariants())
-                ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + name), variant.getRight()));
+                ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/" + name), variant.getRight()));
         }
     }
 
@@ -219,11 +219,11 @@ public class ClientProxy extends CommonProxy
         {
             RenderPlayer renderPlayer = ObfuscationReflectionHelper.getPrivateValue(RenderManager.class, renderManager, "playerRenderer", "field_178637_m");
             renderPlayer.addLayer(new LayerBloodElytra(renderPlayer));
-            BloodMagic.instance.getLogger().info("Elytra layer added");
+            BloodMagic.instance.logger.info("Elytra layer added");
         } catch (Exception e)
         {
-            BloodMagic.instance.getLogger().error("Failed to set custom Elytra Layer for Elytra Living Armour Upgrade.");
-            BloodMagic.instance.getLogger().error(e.getLocalizedMessage());
+            BloodMagic.instance.logger.error("Failed to set custom Elytra Layer for Elytra Living Armour Upgrade.");
+            BloodMagic.instance.logger.error(e.getLocalizedMessage());
         }
     }
 

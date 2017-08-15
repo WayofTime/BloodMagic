@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,7 +19,7 @@ public class LivingArmourUpgradePhysicalProtect extends LivingArmourUpgrade
     @Override
     public double getArmourProtection(EntityLivingBase wearer, DamageSource source)
     {
-        if (source.getEntity() != null && !source.isMagicDamage() && !source.isProjectile())
+        if (source.getTrueSource() != null && !source.isMagicDamage() && !source.isProjectile())
         {
             return protectionLevel[this.level];
         }
@@ -30,7 +30,7 @@ public class LivingArmourUpgradePhysicalProtect extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.physicalProtect";
+        return BloodMagic.MODID + ".upgrade.physicalProtect";
     }
 
     @Override

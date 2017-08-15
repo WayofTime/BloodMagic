@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.livingArmour.upgrade;
 
 import java.util.UUID;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,7 +10,6 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
@@ -72,7 +72,7 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.movement";
+        return BloodMagic.MODID + ".upgrade.movement";
     }
 
     @Override

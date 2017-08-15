@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.client.gui;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.item.inventory.ContainerHolding;
 import WayofTime.bloodmagic.item.inventory.InventoryHolding;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiHolding extends GuiContainer
 {
-    private ResourceLocation texture = new ResourceLocation(Constants.Mod.MODID, "gui/SigilHolding.png");
+    private ResourceLocation texture = new ResourceLocation(BloodMagic.MODID, "gui/SigilHolding.png");
     private EntityPlayer player;
 
     public GuiHolding(EntityPlayer player, InventoryHolding inventoryHolding)
@@ -43,7 +43,7 @@ public class GuiHolding extends GuiContainer
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-        if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == ModItems.SIGIL_HOLDING)
+        if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == RegistrarBloodMagicItems.SIGIL_HOLDING)
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.drawTexturedModalRect(4 + x + 36 * ItemSigilHolding.getCurrentItemOrdinal(player.getHeldItemMainhand()), y + 13, 0, 123, 24, 24);

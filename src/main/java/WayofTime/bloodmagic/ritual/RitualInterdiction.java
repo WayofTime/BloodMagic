@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,7 +16,7 @@ public class RitualInterdiction extends Ritual
 
     public RitualInterdiction()
     {
-        super("ritualInterdiction", 0, 1000, "ritual." + Constants.Mod.MODID + ".interdictionRitual");
+        super("ritualInterdiction", 0, 1000, "ritual." + BloodMagic.MODID + ".interdictionRitual");
         addBlockRange(INTERDICTION_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 0, -2), 5));
         setMaximumVolumeAndDistanceOfRange(INTERDICTION_RANGE, 0, 10, 10);
     }

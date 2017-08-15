@@ -9,11 +9,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 
 public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
 {
-    public static final ItemStack basePotionFlaskStack = new ItemStack(ModItems.POTION_FLASK, 1, OreDictionary.WILDCARD_VALUE);
+    public static final ItemStack basePotionFlaskStack = new ItemStack(RegistrarBloodMagicItems.POTION_FLASK, 1, OreDictionary.WILDCARD_VALUE);
     protected PotionEffect baseEffect;
 
     public static final int temporaryMaximumEffectsOnThePotionFlaskYesThisIsALongFieldItIsJustSoIRemember = 3;
@@ -50,7 +50,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
 
             if (slot != null)
             {
-                boolean match = slot.getItem() == ModItems.POTION_FLASK;
+                boolean match = slot.getItem() == RegistrarBloodMagicItems.POTION_FLASK;
 
                 if (match)
                 {
@@ -91,7 +91,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
                     }
 
                     if (match) {
-                        if (next instanceof ItemStack && ((ItemStack) next).getItem() == ModItems.POTION_FLASK) {
+                        if (next instanceof ItemStack && ((ItemStack) next).getItem() == RegistrarBloodMagicItems.POTION_FLASK) {
                             if (!isPotionFlaskValidInput(slot)) {
                                 break;
                             }
@@ -135,7 +135,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
     {
         if (inputStack.isEmpty())
         {
-            ItemStack outputStack = new ItemStack(ModItems.POTION_FLASK);
+            ItemStack outputStack = new ItemStack(RegistrarBloodMagicItems.POTION_FLASK);
 
             List<PotionEffect> effectList = new ArrayList<PotionEffect>();
             effectList.add(baseEffect);

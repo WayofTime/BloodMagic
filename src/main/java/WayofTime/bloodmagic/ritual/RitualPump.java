@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.ritual.*;
 import com.google.common.collect.Lists;
 import net.minecraft.block.BlockLiquid;
@@ -31,7 +31,7 @@ public class RitualPump extends Ritual
 
     public RitualPump()
     {
-        super("ritualPump", 0, 500, "ritual." + Constants.Mod.MODID + ".pumpRitual");
+        super("ritualPump", 0, 500, "ritual." + BloodMagic.MODID + ".pumpRitual");
         addBlockRange(PUMP_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-16, -16, -16), new BlockPos(17, 17, 17)));
 
         setMaximumVolumeAndDistanceOfRange(PUMP_RANGE, 0, 16, 16);

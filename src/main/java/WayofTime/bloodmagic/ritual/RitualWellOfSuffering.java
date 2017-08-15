@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.ritual;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.tile.TileAltar;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,7 +27,7 @@ public class RitualWellOfSuffering extends Ritual
 
     public RitualWellOfSuffering()
     {
-        super("ritualWellOfSuffering", 0, 40000, "ritual." + Constants.Mod.MODID + ".wellOfSufferingRitual");
+        super("ritualWellOfSuffering", 0, 40000, "ritual." + BloodMagic.MODID + ".wellOfSufferingRitual");
         addBlockRange(ALTAR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-5, -10, -5), 11, 21, 11));
         addBlockRange(DAMAGE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -10, -10), 21));
 
@@ -89,7 +89,7 @@ public class RitualWellOfSuffering extends Ritual
                     continue;
 
                 String simpleClassName = entity.getClass().getSimpleName();
-                if (BloodMagicAPI.getEntitySacrificeValues().containsKey(simpleClassName) && BloodMagicAPI.getEntitySacrificeValues().get(simpleClassName) <= 0)
+                if (BloodMagicAPI.entitySacrificeValues.containsKey(simpleClassName) && BloodMagicAPI.entitySacrificeValues.get(simpleClassName) <= 0)
                     continue;
 
                 if (entity.isEntityAlive() && !(entity instanceof EntityPlayer))
@@ -103,8 +103,8 @@ public class RitualWellOfSuffering extends Ritual
                         if (ConfigHandler.entitySacrificeValues.containsKey(entityName))
                             lifeEssenceRatio = ConfigHandler.entitySacrificeValues.get(entityName);
 
-                        if (BloodMagicAPI.getEntitySacrificeValues().containsKey(entityName))
-                            lifeEssenceRatio = BloodMagicAPI.getEntitySacrificeValues().get(entityName);
+                        if (BloodMagicAPI.entitySacrificeValues.containsKey(entityName))
+                            lifeEssenceRatio = BloodMagicAPI.entitySacrificeValues.get(entityName);
 
                         if (entity.isChild())
                             lifeEssenceRatio *= 0.5F;

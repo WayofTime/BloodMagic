@@ -1,60 +1,55 @@
 package WayofTime.bloodmagic.compat.guideapi;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.compat.guideapi.book.*;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import amerifrance.guideapi.api.GuideAPI;
 import amerifrance.guideapi.api.GuideBook;
 import amerifrance.guideapi.api.IGuideBook;
 import amerifrance.guideapi.api.impl.Book;
 import amerifrance.guideapi.category.CategoryItemStack;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.Color;
 
-@GuideBook
-public class GuideBloodMagic implements IGuideBook
-{
-    public static Book guideBook;
+@GuideBook(priority = EventPriority.HIGHEST)
+public class GuideBloodMagic implements IGuideBook {
+
+    public static final Book GUIDE_BOOK = new Book();
 
     @Nullable
     @Override
     public Book buildBook() {
-        guideBook = new Book();
-        guideBook.setTitle("guide.bloodmagic.title");
-        guideBook.setDisplayName("guide.bloodmagic.display");
-        guideBook.setWelcomeMessage("guide.bloodmagic.welcome");
-        guideBook.setAuthor("guide.bloodmagic.author");
-        guideBook.setRegistryName(new ResourceLocation(Constants.Mod.MODID, "guide"));
-        guideBook.setColor(Color.RED);
+        GUIDE_BOOK.setTitle("guide.bloodmagic.title");
+        GUIDE_BOOK.setDisplayName("guide.bloodmagic.display");
+        GUIDE_BOOK.setWelcomeMessage("guide.bloodmagic.welcome");
+        GUIDE_BOOK.setAuthor("guide.bloodmagic.author");
+        GUIDE_BOOK.setRegistryName(new ResourceLocation(BloodMagic.MODID, "guide"));
+        GUIDE_BOOK.setColor(Color.RED);
 
-        return guideBook;
-    }
-
-    @Override
-    public void handleModel(ItemStack bookStack) {
-        GuideAPI.setModel(guideBook);
+        return GUIDE_BOOK;
     }
 
     @Override
     public void handlePost(ItemStack bookStack) {
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-            guideBook.addCategory(new CategoryItemStack(CategoryAlchemy.buildCategory(), "guide.bloodmagic.category.alchemy", new ItemStack(ModItems.ARCANE_ASHES)));
-            guideBook.addCategory(new CategoryItemStack(CategoryArchitect.buildCategory(), "guide.bloodmagic.category.architect", new ItemStack(ModItems.SIGIL_DIVINATION)));
-            guideBook.addCategory(new CategoryItemStack(CategoryDemon.buildCategory(), "guide.bloodmagic.category.demon", new ItemStack(ModItems.BLOOD_SHARD)));
-            guideBook.addCategory(new CategoryItemStack(CategoryRitual.buildCategory(), "guide.bloodmagic.category.ritual", new ItemStack(ModBlocks.RITUAL_CONTROLLER)));
-//          guideBook.addCategory(new CategoryItemStack(CategorySpell.buildCategory(), "guide.bloodmagic.category.spell", new ItemStack(ModItems.ritualDiviner)));
-        }
+        GUIDE_BOOK.addCategory(new CategoryItemStack(CategoryAlchemy.buildCategory(), "guide.bloodmagic.category.alchemy", new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES)));
+        GUIDE_BOOK.addCategory(new CategoryItemStack(CategoryArchitect.buildCategory(), "guide.bloodmagic.category.architect", new ItemStack(RegistrarBloodMagicItems.SIGIL_DIVINATION)));
+        GUIDE_BOOK.addCategory(new CategoryItemStack(CategoryDemon.buildCategory(), "guide.bloodmagic.category.demon", new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD)));
+        GUIDE_BOOK.addCategory(new CategoryItemStack(CategoryRitual.buildCategory(), "guide.bloodmagic.category.ritual", new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER)));
+//        guideBook.addCategory(new CategoryItemStack(CategorySpell.buildCategory(), "guide.bloodmagic.category.spell", new ItemStack(ModItems.ritualDiviner)));
+    }
 
-        GameRegistry.addRecipe(new ShapelessOreRecipe(GuideAPI.getStackFromBook(GuideBloodMagic.guideBook), new ItemStack(Items.BOOK), Blocks.GLASS, Items.FEATHER));
+    @Nullable
+    @Override
+    public IRecipe getRecipe(@Nonnull ItemStack bookStack) {
+        return new ShapelessOreRecipe(new ResourceLocation(BloodMagic.MODID, "guide"), GuideAPI.getStackFromBook(GUIDE_BOOK), new ItemStack(Items.BOOK), "glass", "feather");
     }
 }

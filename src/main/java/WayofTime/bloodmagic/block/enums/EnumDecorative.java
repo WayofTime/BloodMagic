@@ -4,20 +4,23 @@ import java.util.Locale;
 
 import net.minecraft.util.IStringSerializable;
 
-public enum EnumBrickSize implements IStringSerializable
+public enum EnumDecorative implements IStringSerializable
 {
-    LARGE,
-    BRICK;
+    BLOODSTONE_TILE,
+    BLOODSTONE_BRICK,
+    CRYSTAL_TILE,
+    CRYSTAL_BRICK,
+    ;
 
     @Override
     public String toString()
     {
-        return name().toLowerCase(Locale.ENGLISH);
+        return name().toLowerCase(Locale.ROOT);
     }
 
     @Override
     public String getName()
     {
-        return this.toString();
+        return toString();
     }
 }

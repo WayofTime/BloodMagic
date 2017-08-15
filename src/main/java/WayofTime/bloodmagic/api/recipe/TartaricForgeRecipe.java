@@ -1,28 +1,22 @@
 package WayofTime.bloodmagic.api.recipe;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@EqualsAndHashCode
-@ToString
 public class TartaricForgeRecipe
 {
     protected ItemStack output = null;
     protected List<Object> input = new ArrayList<Object>();
-    @Getter
     protected double minimumSouls;
-    @Getter
     protected double soulsDrained;
 
     public TartaricForgeRecipe(Block result, double minSouls, double drain, Object... recipe)
@@ -144,5 +138,51 @@ public class TartaricForgeRecipe
     public List<Object> getInput()
     {
         return this.input;
+    }
+
+    public double getMinimumSouls() {
+        return minimumSouls;
+    }
+
+    public double getSoulsDrained() {
+        return soulsDrained;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("output", output)
+                .append("input", input)
+                .append("minimumSouls", minimumSouls)
+                .append("soulsDrained", soulsDrained)
+                .append("recipeSize", getRecipeSize())
+                .append("recipeOutput", getRecipeOutput())
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TartaricForgeRecipe)) return false;
+
+        TartaricForgeRecipe that = (TartaricForgeRecipe) o;
+
+        if (Double.compare(that.minimumSouls, minimumSouls) != 0) return false;
+        if (Double.compare(that.soulsDrained, soulsDrained) != 0) return false;
+        if (output != null ? !output.equals(that.output) : that.output != null) return false;
+        return input != null ? input.equals(that.input) : that.input == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = output != null ? output.hashCode() : 0;
+        result = 31 * result + (input != null ? input.hashCode() : 0);
+        temp = Double.doubleToLongBits(minimumSouls);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(soulsDrained);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }

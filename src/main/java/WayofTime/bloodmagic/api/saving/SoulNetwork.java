@@ -5,7 +5,6 @@ import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
 import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import com.google.common.base.Strings;
-import lombok.Getter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,7 +17,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-@Getter
 public class SoulNetwork implements INBTSerializable<NBTTagCompound>
 {
     private BMWorldSavedData parent;
@@ -129,7 +127,7 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound>
                 if (!user.capabilities.isCreativeMode)
                 {
                     user.hurtResistantTime = 0;
-                    user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 1.0F);
+                    user.attackEntityFrom(BloodMagicAPI.damageSource, 1.0F);
                 }
 
             } else if (syphon >= 100)
@@ -139,7 +137,7 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound>
                     for (int i = 0; i < ((syphon + 99) / 100); i++)
                     {
                         user.hurtResistantTime = 0;
-                        user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 1.0F);
+                        user.attackEntityFrom(BloodMagicAPI.damageSource, 1.0F);
                     }
                 }
             }
@@ -151,7 +149,7 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound>
         if (getParent() != null)
             getParent().markDirty();
         else
-            BloodMagicAPI.getLogger().error("A SoulNetwork was created, but a parent was not set to allow saving.");
+            BloodMagicAPI.logger.error("A SoulNetwork was created, but a parent was not set to allow saving.");
     }
 
     @Nullable
@@ -182,6 +180,26 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound>
         this.parent = parent;
         markDirty();
         return this;
+    }
+
+    public BMWorldSavedData getParent() {
+        return parent;
+    }
+
+    public EntityPlayer getCachedPlayer() {
+        return cachedPlayer;
+    }
+
+    public UUID getPlayerId() {
+        return playerId;
+    }
+
+    public int getCurrentEssence() {
+        return currentEssence;
+    }
+
+    public int getOrbTier() {
+        return orbTier;
     }
 
     // INBTSerializable

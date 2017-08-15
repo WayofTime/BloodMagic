@@ -1,9 +1,6 @@
 package WayofTime.bloodmagic.api.ritual.imperfect;
 
 import WayofTime.bloodmagic.api.BlockStack;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
@@ -12,9 +9,6 @@ import net.minecraft.world.World;
  * registered with
  * {@link WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry#registerRitual(ImperfectRitual)}
  */
-@RequiredArgsConstructor
-@Getter
-@EqualsAndHashCode
 public abstract class ImperfectRitual
 {
 
@@ -23,6 +17,14 @@ public abstract class ImperfectRitual
     private final int activationCost;
     private final boolean lightshow;
     private final String unlocalizedName;
+
+    public ImperfectRitual(String name, BlockStack requiredBlock, int activationCost, boolean lightshow, String unlocalizedName) {
+        this.name = name;
+        this.requiredBlock = requiredBlock;
+        this.activationCost = activationCost;
+        this.lightshow = lightshow;
+        this.unlocalizedName = unlocalizedName;
+    }
 
     /**
      * @param name
@@ -49,9 +51,54 @@ public abstract class ImperfectRitual
      */
     public abstract boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player);
 
+    public String getName() {
+        return name;
+    }
+
+    public BlockStack getRequiredBlock() {
+        return requiredBlock;
+    }
+
+    public int getActivationCost() {
+        return activationCost;
+    }
+
+    public boolean isLightshow() {
+        return lightshow;
+    }
+
+    public String getUnlocalizedName() {
+        return unlocalizedName;
+    }
+
     @Override
     public String toString()
     {
         return getName() + ":" + getRequiredBlock().toString() + "@" + getActivationCost();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ImperfectRitual)) return false;
+
+        ImperfectRitual that = (ImperfectRitual) o;
+
+        if (activationCost != that.activationCost) return false;
+        if (lightshow != that.lightshow) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (requiredBlock != null ? !requiredBlock.equals(that.requiredBlock) : that.requiredBlock != null)
+            return false;
+        return unlocalizedName != null ? unlocalizedName.equals(that.unlocalizedName) : that.unlocalizedName == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (requiredBlock != null ? requiredBlock.hashCode() : 0);
+        result = 31 * result + activationCost;
+        result = 31 * result + (lightshow ? 1 : 0);
+        result = 31 * result + (unlocalizedName != null ? unlocalizedName.hashCode() : 0);
+        return result;
     }
 }

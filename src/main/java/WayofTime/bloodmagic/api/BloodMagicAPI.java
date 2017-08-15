@@ -1,9 +1,8 @@
 package WayofTime.bloodmagic.api;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.util.helper.LogHelper;
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,38 +34,27 @@ import java.util.Map;
  */
 public class BloodMagicAPI
 {
-    @Getter
-    private static final List<BlockStack> teleposerBlacklist = new ArrayList<BlockStack>();
-    @Getter
-    private static final List<BlockStack> transpositionBlacklist = new ArrayList<BlockStack>();
-    @Getter
-    private static final Map<String, Integer> entitySacrificeValues = new HashMap<String, Integer>();
-    @Getter
-    private static final ArrayList<Block> greenGroveBlacklist = new ArrayList<Block>();
-    @Getter
-    private static final Map<IBlockState, EnumAltarComponent> altarComponents = new HashMap<IBlockState, EnumAltarComponent>();
+    public static final List<BlockStack> teleposerBlacklist = new ArrayList<BlockStack>();
+    public static final List<BlockStack> transpositionBlacklist = new ArrayList<BlockStack>();
+    public static final Map<String, Integer> entitySacrificeValues = new HashMap<String, Integer>();
+    public static final ArrayList<Block> greenGroveBlacklist = new ArrayList<Block>();
+    public static final Map<IBlockState, EnumAltarComponent> altarComponents = new HashMap<IBlockState, EnumAltarComponent>();
 
-    @Getter
-    @Setter
-    private static boolean loggingEnabled;
+    public static boolean loggingEnabled;
 
-    @Getter
-    private static LogHelper logger = new LogHelper("BloodMagic|API");
+    public static LogHelper logger = new LogHelper("BloodMagic|API");
 
-    @Getter
-    private static DamageSource damageSource = new DamageSourceBloodMagic();
+    public static DamageSource damageSource = new DamageSourceBloodMagic();
 
-    @Getter
-    @Setter
-    private static Fluid lifeEssence;
-    private static ItemStack lifeEssenceBucket;
+    public static Fluid lifeEssence;
+    public static ItemStack lifeEssenceBucket;
 
     public static ItemStack getLifeEssenceBucket()
     {
         if (lifeEssenceBucket != null)
             return lifeEssenceBucket;
 
-        lifeEssenceBucket = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, getLifeEssence());
+        lifeEssenceBucket = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, lifeEssence);
         return lifeEssenceBucket;
     }
 
@@ -82,7 +70,7 @@ public class BloodMagicAPI
      */
     public static Item getItem(String name)
     {
-        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(Constants.Mod.MODID, name));
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(BloodMagic.MODID, name));
     }
 
     /**
@@ -110,7 +98,7 @@ public class BloodMagicAPI
      */
     public static Block getBlock(String name)
     {
-        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(Constants.Mod.MODID, name));
+        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(BloodMagic.MODID, name));
     }
 
     /**

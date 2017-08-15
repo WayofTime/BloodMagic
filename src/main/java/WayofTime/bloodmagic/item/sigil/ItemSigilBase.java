@@ -17,7 +17,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -31,8 +30,8 @@ public class ItemSigilBase extends ItemSigil implements IVariantProvider
     {
         super(lpUsed);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".sigil." + name);
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".sigil." + name);
+        setCreativeTab(BloodMagic.TAB_BM);
 
         this.name = name;
         this.tooltipBase = "tooltip.bloodmagic.sigil." + name + ".";

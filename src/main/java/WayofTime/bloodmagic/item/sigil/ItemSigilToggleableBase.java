@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.impl.ItemSigilToggleable;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
@@ -32,8 +30,8 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable implements IMes
     {
         super(lpUsed);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".sigil." + name);
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".sigil." + name);
+        setCreativeTab(BloodMagic.TAB_BM);
 
         this.name = name;
         this.tooltipBase = "tooltip.bloodmagic.sigil." + name + ".";

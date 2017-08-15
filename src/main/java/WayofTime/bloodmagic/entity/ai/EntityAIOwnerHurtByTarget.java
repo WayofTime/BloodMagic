@@ -34,7 +34,7 @@ public class EntityAIOwnerHurtByTarget extends EntityAITarget
                 return false;
             } else
             {
-                this.theOwnerAttacker = owner.getAITarget();
+                this.theOwnerAttacker = owner.getRevengeTarget();
                 int i = owner.getRevengeTimer();
                 return i != this.timestamp && this.isSuitableTarget(this.theOwnerAttacker, false) && this.theDefendingTameable.shouldAttackEntity(this.theOwnerAttacker, owner);
             }

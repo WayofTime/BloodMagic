@@ -1,12 +1,10 @@
 package WayofTime.bloodmagic.api.altar;
 
-import lombok.Getter;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 
 //@formatter:off
-@Getter
 public enum EnumAltarTier
 {
     ONE(), TWO()
@@ -151,5 +149,9 @@ public enum EnumAltarTier
     public int toInt()
     {
         return ordinal() + 1;
+    }
+
+    public ArrayList<AltarComponent> getAltarComponents() {
+        return altarComponents;
     }
 }

@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IUpgradeTrainer;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
@@ -28,8 +27,8 @@ public class ItemUpgradeTrainer extends Item implements IUpgradeTrainer, IVarian
     {
         super();
 
-        setCreativeTab(BloodMagic.tabUpgradeTome);
-        setUnlocalizedName(Constants.Mod.MODID + ".upgradeTrainer");
+        setCreativeTab(BloodMagic.TAB_TOMES);
+        setUnlocalizedName(BloodMagic.MODID + ".upgradeTrainer");
         setHasSubtypes(true);
         setMaxStackSize(1);
     }

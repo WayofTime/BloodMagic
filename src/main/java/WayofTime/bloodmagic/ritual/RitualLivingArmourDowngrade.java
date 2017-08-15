@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.ritual;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.recipe.LivingArmourDowngradeRecipe;
 import WayofTime.bloodmagic.api.registry.LivingArmourDowngradeRecipeRegistry;
@@ -37,7 +37,7 @@ public class RitualLivingArmourDowngrade extends Ritual
 
     public RitualLivingArmourDowngrade()
     {
-        super("ritualDowngrade", 0, 10000, "ritual." + Constants.Mod.MODID + ".downgradeRitual");
+        super("ritualDowngrade", 0, 10000, "ritual." + BloodMagic.MODID + ".downgradeRitual");
         addBlockRange(DOWNGRADE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-3, 0, -3), 7));
     }
 

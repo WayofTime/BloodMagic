@@ -56,7 +56,7 @@ public class EntityAIPickUpAlly extends EntityAIBase
             return false;
         }
 
-        AxisAlignedBB bb = new AxisAlignedBB(entity.posX - 0.5, entity.posY - 0.5, entity.posZ - 0.5, entity.posX + 0.5, entity.posY + 0.5, entity.posZ + 0.5).expandXyz(5);
+        AxisAlignedBB bb = new AxisAlignedBB(entity.posX - 0.5, entity.posY - 0.5, entity.posZ - 0.5, entity.posX + 0.5, entity.posY + 0.5, entity.posZ + 0.5).grow(5);
         List<EntityLivingBase> list = this.entity.getEntityWorld().getEntitiesWithinAABB(EntityLivingBase.class, bb, new EntityAspectedDemonBase.WillTypePredicate(entity.getType()));
         for (EntityLivingBase testEntity : list)
         {
@@ -124,7 +124,7 @@ public class EntityAIPickUpAlly extends EntityAIBase
                 if (this.entity.getNavigator().getPath() != null)
                 {
                     net.minecraft.pathfinding.PathPoint finalPathPoint = this.entity.getNavigator().getPath().getFinalPathPoint();
-                    if (finalPathPoint != null && entitylivingbase.getDistanceSq(finalPathPoint.xCoord, finalPathPoint.yCoord, finalPathPoint.zCoord) < 1)
+                    if (finalPathPoint != null && entitylivingbase.getDistanceSq(finalPathPoint.x, finalPathPoint.y, finalPathPoint.z) < 1)
                         failedPathFindingPenalty = 0;
                     else
                         failedPathFindingPenalty += 10;

@@ -41,7 +41,7 @@ import WayofTime.bloodmagic.api.event.BoundToolEvent;
 import WayofTime.bloodmagic.api.iface.IActivatable;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.ImmutableSet;
@@ -60,9 +60,9 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
 
     public ItemBoundTool(String name, float damage, Set<Block> effectiveBlocks)
     {
-        super(damage, 1, ModItems.BOUND_TOOL_MATERIAL, effectiveBlocks);
-        setUnlocalizedName(Constants.Mod.MODID + ".bound." + name);
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        super(damage, 1, RegistrarBloodMagicItems.BOUND_TOOL_MATERIAL, effectiveBlocks);
+        setUnlocalizedName(BloodMagic.MODID + ".bound." + name);
+        setCreativeTab(BloodMagic.TAB_BM);
         setHarvestLevel(name, 4);
 
         this.name = name;

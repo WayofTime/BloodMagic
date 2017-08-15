@@ -19,7 +19,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -28,9 +27,9 @@ public class ItemExperienceBook extends Item implements IVariantProvider
 {
     public ItemExperienceBook()
     {
-        setUnlocalizedName(Constants.Mod.MODID + ".experienceTome");
+        setUnlocalizedName(BloodMagic.MODID + ".experienceTome");
         setMaxStackSize(1);
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override

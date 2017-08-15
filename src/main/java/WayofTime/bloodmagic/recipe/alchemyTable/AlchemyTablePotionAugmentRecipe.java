@@ -7,7 +7,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 
 public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe
 {
@@ -60,7 +60,7 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe
     {
         if (inputStack == null)
         {
-            ItemStack outputStack = new ItemStack(ModItems.POTION_FLASK);
+            ItemStack outputStack = new ItemStack(RegistrarBloodMagicItems.POTION_FLASK);
 
             List<PotionEffect> effectList = new ArrayList<PotionEffect>();
             int potionLength = wantedPotion.isInstant() ? 1 : BMPotionUtils.getAugmentedLength(baseEffect.getDuration(), lengthAugment, powerAugment - baseEffect.getAmplifier());
@@ -95,7 +95,7 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe
 
     public static ItemStack getAugmentedPotionFlask(PotionEffect baseEffect)
     {
-        ItemStack outputStack = new ItemStack(ModItems.POTION_FLASK);
+        ItemStack outputStack = new ItemStack(RegistrarBloodMagicItems.POTION_FLASK);
 
         List<PotionEffect> effectList = new ArrayList<PotionEffect>();
         effectList.add(baseEffect);

@@ -34,8 +34,8 @@ public class EntityAIOwnerHurtTarget extends EntityAITarget
                 return false;
             } else
             {
-                this.theTarget = entitylivingbase.getLastAttacker();
-                int i = entitylivingbase.getLastAttackerTime();
+                this.theTarget = entitylivingbase.getLastAttackedEntity();
+                int i = entitylivingbase.getLastAttackedEntityTime();
                 return i != this.timestamp && this.isSuitableTarget(this.theTarget, false) && this.theEntityDemonBase.shouldAttackEntity(this.theTarget, entitylivingbase);
             }
         }
@@ -51,7 +51,7 @@ public class EntityAIOwnerHurtTarget extends EntityAITarget
 
         if (entitylivingbase != null)
         {
-            this.timestamp = entitylivingbase.getLastAttackerTime();
+            this.timestamp = entitylivingbase.getLastAttackedEntityTime();
         }
 
         super.startExecuting();

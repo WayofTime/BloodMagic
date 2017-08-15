@@ -42,7 +42,7 @@ public class PlayerFallDistancePacketProcessor implements IMessage, IMessageHand
     {
         if (ctx.side == Side.SERVER)
         {
-            message.onMessageFromClient(ctx.getServerHandler().playerEntity);
+            message.onMessageFromClient(ctx.getServerHandler().player);
         }
         return null;
     }

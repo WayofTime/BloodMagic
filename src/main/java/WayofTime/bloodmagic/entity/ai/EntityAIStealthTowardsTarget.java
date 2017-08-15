@@ -48,9 +48,9 @@ public class EntityAIStealthTowardsTarget extends EntityAIBase
         } else
         {
             ticksLeft = this.entity.getEntityWorld().rand.nextInt(200) + 100;
-            this.xPosition = vec3d.xCoord;
-            this.yPosition = vec3d.yCoord;
-            this.zPosition = vec3d.zCoord;
+            this.xPosition = vec3d.x;
+            this.yPosition = vec3d.y;
+            this.zPosition = vec3d.z;
             return true;
         }
     }
@@ -62,7 +62,7 @@ public class EntityAIStealthTowardsTarget extends EntityAIBase
     }
 
     @Override
-    public boolean continueExecuting()
+    public boolean shouldContinueExecuting()
     {
         ticksLeft--;
         if (ticksLeft <= 0)
@@ -86,9 +86,9 @@ public class EntityAIStealthTowardsTarget extends EntityAIBase
 
             if (vec3d != null)
             {
-                this.xPosition = vec3d.xCoord;
-                this.yPosition = vec3d.yCoord;
-                this.zPosition = vec3d.zCoord;
+                this.xPosition = vec3d.x;
+                this.yPosition = vec3d.y;
+                this.zPosition = vec3d.z;
                 this.entity.getNavigator().tryMoveToXYZ(this.xPosition, this.yPosition, this.zPosition, this.speed);
             }
         }

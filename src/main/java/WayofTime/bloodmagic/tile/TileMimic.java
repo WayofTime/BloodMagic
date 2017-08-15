@@ -27,8 +27,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import WayofTime.bloodmagic.block.BlockMimic;
 import WayofTime.bloodmagic.entity.mob.EntityMimic;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
 
@@ -79,7 +79,7 @@ public class TileMimic extends TileInventory implements ITickable
                         double posY = this.pos.getY() + 0.5 + (2 * getWorld().rand.nextDouble() - 1) * potionSpawnRadius;
                         double posZ = this.pos.getZ() + 0.5 + (2 * getWorld().rand.nextDouble() - 1) * potionSpawnRadius;
 
-                        ItemStack newStack = new ItemStack(potionStack.getItem() == ModItems.POTION_FLASK ? Items.SPLASH_POTION : potionStack.getItem());
+                        ItemStack newStack = new ItemStack(potionStack.getItem() == RegistrarBloodMagicItems.POTION_FLASK ? Items.SPLASH_POTION : potionStack.getItem());
                         newStack.setTagCompound(potionStack.getTagCompound());
 
                         EntityPotion potionEntity = new EntityPotion(getWorld(), posX, posY, posZ, newStack);
@@ -122,7 +122,7 @@ public class TileMimic extends TileInventory implements ITickable
                     ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionSet"));
                 }
                 return true;
-            } else if (heldItem.getItem() == ModItems.POTION_FLASK)
+            } else if (heldItem.getItem() == RegistrarBloodMagicItems.POTION_FLASK)
             {
                 //The potion flask is empty, therefore we have to reset the stored potion.
                 if (!world.isRemote)
@@ -143,7 +143,7 @@ public class TileMimic extends TileInventory implements ITickable
         if (player.isSneaking())
             return false;
 
-        if (!player.getHeldItem(hand).isEmpty() && player.getHeldItem(hand).getItem() == new ItemStack(ModBlocks.MIMIC).getItem())
+        if (!player.getHeldItem(hand).isEmpty() && player.getHeldItem(hand).getItem() == new ItemStack(RegistrarBloodMagicBlocks.MIMIC).getItem())
             return false;
 
         if (!getStackInSlot(0).isEmpty() && !player.getHeldItem(hand).isEmpty())

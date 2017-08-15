@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
@@ -29,7 +29,7 @@ public class StatTrackerPhysicalProtect extends StatTracker
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.physicalProtect";
+        return BloodMagic.MODID + ".tracker.physicalProtect";
     }
 
     @Override
@@ -41,13 +41,13 @@ public class StatTrackerPhysicalProtect extends StatTracker
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalDamage = tag.getInteger(Constants.Mod.MODID + ".tracker.physicalProtect");
+        totalDamage = tag.getInteger(BloodMagic.MODID + ".tracker.physicalProtect");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setInteger(Constants.Mod.MODID + ".tracker.physicalProtect", totalDamage);
+        tag.setInteger(BloodMagic.MODID + ".tracker.physicalProtect", totalDamage);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class StatTrackerPhysicalProtect extends StatTracker
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.physicalProtect");
+        return key.equals(BloodMagic.MODID + ".upgrade.physicalProtect");
     }
 
     @Override

@@ -20,7 +20,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
@@ -35,8 +34,8 @@ public class ItemUpgradeTome extends Item implements IVariantProvider
     {
         super();
 
-        setCreativeTab(BloodMagic.tabUpgradeTome);
-        setUnlocalizedName(Constants.Mod.MODID + ".upgradeTome");
+        setCreativeTab(BloodMagic.TAB_TOMES);
+        setUnlocalizedName(BloodMagic.MODID + ".upgradeTome");
         setHasSubtypes(true);
         setMaxStackSize(1);
     }
@@ -82,7 +81,7 @@ public class ItemUpgradeTome extends Item implements IVariantProvider
 
         LivingArmourUpgrade upgrade = LivingUpgrades.getUpgrade(stack);
         if (upgrade != null && upgrade.isDowngrade())
-            return "item." + Constants.Mod.MODID + ".downgradeTome";
+            return "item." + BloodMagic.MODID + ".downgradeTome";
 
         return super.getUnlocalizedName(stack);
     }

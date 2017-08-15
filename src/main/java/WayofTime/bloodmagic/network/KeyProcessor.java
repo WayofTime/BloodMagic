@@ -41,7 +41,7 @@ public class KeyProcessor implements IMessage, IMessageHandler<KeyProcessor, IMe
     @Override
     public IMessage onMessage(KeyProcessor msg, MessageContext ctx)
     {
-        EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;
+        EntityPlayer entityPlayer = ctx.getServerHandler().player;
 
         if (entityPlayer != null)
         {

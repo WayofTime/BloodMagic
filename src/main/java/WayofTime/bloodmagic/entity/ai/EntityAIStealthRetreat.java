@@ -48,12 +48,12 @@ public class EntityAIStealthRetreat extends EntityAIBase
             if (vec3d == null)
             {
                 return false;
-            } else if (attacked.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) < attacked.getDistanceSqToEntity(this.entity))
+            } else if (attacked.getDistanceSq(vec3d.x, vec3d.y, vec3d.z) < attacked.getDistanceSqToEntity(this.entity))
             {
                 return false;
             } else
             {
-                this.entityPathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
+                this.entityPathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.x, vec3d.y, vec3d.z);
                 return this.entityPathEntity != null;
             }
         }
@@ -62,7 +62,7 @@ public class EntityAIStealthRetreat extends EntityAIBase
     }
 
     @Override
-    public boolean continueExecuting()
+    public boolean shouldContinueExecuting()
     {
         if (this.entityPathNavigate.noPath())
         {

@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.incense;
 import WayofTime.bloodmagic.api.incense.EnumTranquilityType;
 import WayofTime.bloodmagic.api.incense.ITranquilityHandler;
 import WayofTime.bloodmagic.api.incense.TranquilityStack;
-import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -122,7 +122,7 @@ public class TranquilityHandlers
                 return new TranquilityStack(EnumTranquilityType.WATER, 1);
             }
 
-            if (block == ModBlocks.LIFE_ESSENCE)
+            if (block == RegistrarBloodMagicBlocks.LIFE_ESSENCE)
             {
                 return new TranquilityStack(EnumTranquilityType.WATER, 1.5);
             }

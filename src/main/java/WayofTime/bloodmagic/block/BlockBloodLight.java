@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.block;
 
 import java.util.Random;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,8 +17,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 
 import javax.annotation.Nullable;
 
@@ -29,7 +29,7 @@ public class BlockBloodLight extends Block
     {
         super(Material.CLOTH);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".bloodLight");
+        setUnlocalizedName(BloodMagic.MODID + ".bloodLight");
     }
 
     @Nullable
@@ -109,7 +109,7 @@ public class BlockBloodLight extends Block
         if (rand.nextInt(3) != 0)
         {
             world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
-            if (!playerSP.getActiveItemStack().isEmpty() && playerSP.getActiveItemStack().getItem() == ModItems.SIGIL_BLOOD_LIGHT)
+            if (!playerSP.getActiveItemStack().isEmpty() && playerSP.getActiveItemStack().getItem() == RegistrarBloodMagicItems.SIGIL_BLOOD_LIGHT)
             {
                 world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
                 world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +18,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.items.IItemHandler;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
@@ -35,7 +35,7 @@ public class RitualExpulsion extends Ritual
 
     public RitualExpulsion()
     {
-        super("ritualExpulsion", 0, 10000, "ritual." + Constants.Mod.MODID + ".expulsionRitual");
+        super("ritualExpulsion", 0, 10000, "ritual." + BloodMagic.MODID + ".expulsionRitual");
         addBlockRange(EXPULSION_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-12, 0, -12), 25));
         setMaximumVolumeAndDistanceOfRange(EXPULSION_RANGE, 0, 12, 12);
     }

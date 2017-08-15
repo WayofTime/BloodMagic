@@ -35,7 +35,7 @@ public class LayerAlchemyCircle<T extends EntityCorruptedSheep> implements Layer
         VertexBuffer wr = tessellator.getBuffer();
 
         GlStateManager.pushMatrix();
-        float rot = (float) this.rotationspeed * (partialTicks + demon.ticksExisted);
+        float rot = this.rotationspeed * (partialTicks + demon.ticksExisted);
         float secondaryRot = 0;
 
         float size = 3.0F;

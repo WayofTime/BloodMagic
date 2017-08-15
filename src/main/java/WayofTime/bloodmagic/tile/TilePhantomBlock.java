@@ -2,13 +2,14 @@ package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.base.TileTicking;
-import lombok.NoArgsConstructor;
 import net.minecraft.nbt.NBTTagCompound;
 
-@NoArgsConstructor
 public class TilePhantomBlock extends TileTicking
 {
     private int ticksRemaining = 10;
+
+    public TilePhantomBlock() {
+    }
 
     public TilePhantomBlock(int ticksRemaining)
     {

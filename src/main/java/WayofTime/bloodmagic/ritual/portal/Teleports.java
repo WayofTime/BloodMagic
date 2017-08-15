@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.teleport.Teleport;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import lombok.Getter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -18,7 +17,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
@@ -102,7 +100,6 @@ public class Teleports
         }
     }
 
-    @Getter
     public static class TeleportToDim extends Teleport
     {
         private World oldWorld;
@@ -130,8 +127,8 @@ public class Teleports
                 if (entity.timeUntilPortal <= 0)
                 {
                     MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-                    WorldServer oldWorldServer = server.worldServerForDimension(entity.dimension);
-                    WorldServer newWorldServer = server.worldServerForDimension(newWorldID);
+                    WorldServer oldWorldServer = server.getWorld(entity.dimension);
+                    WorldServer newWorldServer = server.getWorld(newWorldID);
 
                     if (entity instanceof EntityPlayer)
                     {
@@ -201,6 +198,18 @@ public class Teleports
         public int getTeleportCost()
         {
             return 10000;
+        }
+
+        public World getOldWorld() {
+            return oldWorld;
+        }
+
+        public int getNewWorldID() {
+            return newWorldID;
+        }
+
+        public boolean isTeleposer() {
+            return teleposer;
         }
     }
 }

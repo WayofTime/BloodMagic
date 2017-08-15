@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.client.gui;
 
 import java.io.IOException;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
@@ -15,7 +16,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.ItemRouterAmountPacketProcessor;
 import WayofTime.bloodmagic.network.ItemRouterButtonPacketProcessor;
@@ -211,7 +211,7 @@ public class GuiItemRoutingNode extends GuiContainer
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        ResourceLocation soulForgeGuiTextures = new ResourceLocation(Constants.Mod.MODID + ":textures/gui/routingNode.png");
+        ResourceLocation soulForgeGuiTextures = new ResourceLocation(BloodMagic.MODID + ":textures/gui/routingNode.png");
         this.mc.getTextureManager().bindTexture(soulForgeGuiTextures);
         this.drawTexturedModalRect(left, top, 0, 0, this.xSize, this.ySize);
         GlStateManager.disableLighting();

@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
+import com.google.common.collect.Lists;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,16 +16,14 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 
 public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVariantProvider
 {
-    @Getter
-    private static ArrayList<String> names = new ArrayList<String>();
+    public static final ArrayList<String> NAMES = Lists.newArrayList();
 
     public static final String CRYSTAL_DEFAULT = "crystalDefault";
     public static final String CRYSTAL_CORROSIVE = "crystalCorrosive";
@@ -37,39 +35,42 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".demonCrystal.");
+        setUnlocalizedName(BloodMagic.MODID + ".demonCrystal.");
         setHasSubtypes(true);
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.TAB_BM);
 
         buildItemList();
     }
 
     private void buildItemList()
     {
-        names.add(0, CRYSTAL_DEFAULT);
-        names.add(1, CRYSTAL_CORROSIVE);
-        names.add(2, CRYSTAL_DESTRUCTIVE);
-        names.add(3, CRYSTAL_VENGEFUL);
-        names.add(4, CRYSTAL_STEADFAST);
+        NAMES.add(0, CRYSTAL_DEFAULT);
+        NAMES.add(1, CRYSTAL_CORROSIVE);
+        NAMES.add(2, CRYSTAL_DESTRUCTIVE);
+        NAMES.add(3, CRYSTAL_VENGEFUL);
+        NAMES.add(4, CRYSTAL_STEADFAST);
     }
 
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return super.getUnlocalizedName(stack) + names.get(stack.getItemDamage());
+        return super.getUnlocalizedName(stack) + NAMES.get(stack.getItemDamage());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
-        for (int i = 0; i < names.size(); i++)
-            list.add(new ItemStack(id, 1, i));
+        if (!isInCreativeTab(creativeTab))
+            return;
+
+        for (int i = 0; i < NAMES.size(); i++)
+            list.add(new ItemStack(this, 1, i));
     }
 
     public static ItemStack getStack(String name)
     {
-        return new ItemStack(ModItems.ITEM_DEMON_CRYSTAL, 1, names.indexOf(name));
+        return new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, 1, NAMES.indexOf(name));
     }
 
     @Override
@@ -109,8 +110,8 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (String name : names)
-            ret.add(new ImmutablePair<Integer, String>(names.indexOf(name), "type=" + name));
+        for (String name : NAMES)
+            ret.add(new ImmutablePair<Integer, String>(NAMES.indexOf(name), "type=" + name));
         return ret;
     }
 }

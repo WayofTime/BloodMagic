@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.client.key;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -11,7 +11,7 @@ public class KeyBindingBloodMagic extends KeyBinding
 {
     public KeyBindingBloodMagic(KeyBindings key)
     {
-        super(key.getDescription(), key.getKeyConflictContext(), key.getKeyModifier(), key.getKeyCode(), Constants.Mod.NAME);
+        super(key.getDescription(), key.getKeyConflictContext(), key.getKeyModifier(), key.getKeyCode(), BloodMagic.NAME);
 
         ClientRegistry.registerKeyBinding(this);
     }

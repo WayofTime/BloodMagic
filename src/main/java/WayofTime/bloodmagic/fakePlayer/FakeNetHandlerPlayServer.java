@@ -34,7 +34,7 @@ public class FakeNetHandlerPlayServer extends NetHandlerPlayServer
     }
 
     @Override
-    public void disconnect(String reason)
+    public void disconnect(final ITextComponent textComponent)
     {
     }
 

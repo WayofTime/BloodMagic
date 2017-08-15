@@ -17,7 +17,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.inventory.ItemInventory;
 import WayofTime.bloodmagic.routing.DefaultItemFilter;
@@ -37,9 +36,9 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".itemFilter.");
+        setUnlocalizedName(BloodMagic.MODID + ".itemFilter.");
         setHasSubtypes(true);
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override

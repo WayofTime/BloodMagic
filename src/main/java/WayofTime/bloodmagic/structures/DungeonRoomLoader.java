@@ -9,19 +9,15 @@ import java.net.URL;
 import java.util.List;
 import java.util.Random;
 
+import WayofTime.bloodmagic.BloodMagic;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.google.common.reflect.TypeToken;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
 import org.apache.commons.io.IOUtils;
 
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.gson.Serializers;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class DungeonRoomLoader
 {
@@ -73,7 +69,7 @@ public class DungeonRoomLoader
 
     public static void test()
     {
-        ResourceLocation id = new ResourceLocation(Constants.Mod.MODID, "testGson");
+        ResourceLocation id = new ResourceLocation(BloodMagic.MODID, "testGson");
         String s = id.getResourceDomain();
         String s1 = id.getResourcePath();
         InputStream inputstream = null;

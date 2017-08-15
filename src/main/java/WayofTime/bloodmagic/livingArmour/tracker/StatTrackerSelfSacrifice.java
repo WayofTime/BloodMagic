@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
@@ -29,7 +29,7 @@ public class StatTrackerSelfSacrifice extends StatTracker
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.selfSacrifice";
+        return BloodMagic.MODID + ".tracker.selfSacrifice";
     }
 
     @Override
@@ -41,13 +41,13 @@ public class StatTrackerSelfSacrifice extends StatTracker
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalSacrifices = tag.getInteger(Constants.Mod.MODID + ".tracker.selfSacrifice");
+        totalSacrifices = tag.getInteger(BloodMagic.MODID + ".tracker.selfSacrifice");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setInteger(Constants.Mod.MODID + ".tracker.selfSacrifice", totalSacrifices);
+        tag.setInteger(BloodMagic.MODID + ".tracker.selfSacrifice", totalSacrifices);
 
     }
 
@@ -106,7 +106,7 @@ public class StatTrackerSelfSacrifice extends StatTracker
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.selfSacrifice");
+        return key.equals(BloodMagic.MODID + ".upgrade.selfSacrifice");
     }
 
     @Override

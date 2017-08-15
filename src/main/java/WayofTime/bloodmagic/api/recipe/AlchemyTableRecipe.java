@@ -5,27 +5,20 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@EqualsAndHashCode
-@ToString
 public class AlchemyTableRecipe
 {
     protected ItemStack output = ItemStack.EMPTY;
     protected ArrayList<Object> input = new ArrayList<Object>();
-    @Getter
     protected int lpDrained;
-    @Getter
     protected int ticksRequired;
-    @Getter
     protected int tierRequired;
 
     public AlchemyTableRecipe(Block result, int lpDrained, int ticksRequired, int tierRequired, Object... recipe)
@@ -185,5 +178,53 @@ public class AlchemyTableRecipe
         }
 
         return copyStack;
+    }
+
+    public int getLpDrained() {
+        return lpDrained;
+    }
+
+    public int getTicksRequired() {
+        return ticksRequired;
+    }
+
+    public int getTierRequired() {
+        return tierRequired;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("output", output)
+                .append("input", input)
+                .append("lpDrained", lpDrained)
+                .append("ticksRequired", ticksRequired)
+                .append("tierRequired", tierRequired)
+                .append("recipeSize", getRecipeSize())
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AlchemyTableRecipe)) return false;
+
+        AlchemyTableRecipe that = (AlchemyTableRecipe) o;
+
+        if (lpDrained != that.lpDrained) return false;
+        if (ticksRequired != that.ticksRequired) return false;
+        if (tierRequired != that.tierRequired) return false;
+        if (output != null ? !output.equals(that.output) : that.output != null) return false;
+        return input != null ? input.equals(that.input) : that.input == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = output != null ? output.hashCode() : 0;
+        result = 31 * result + (input != null ? input.hashCode() : 0);
+        result = 31 * result + lpDrained;
+        result = 31 * result + ticksRequired;
+        result = 31 * result + tierRequired;
+        return result;
     }
 }

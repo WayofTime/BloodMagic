@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.client.gui.config;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.fml.client.config.GuiConfig;
@@ -15,7 +15,7 @@ public class ConfigGui extends GuiConfig
 
     public ConfigGui(GuiScreen parentScreen)
     {
-        super(parentScreen, getConfigElements(parentScreen), Constants.Mod.MODID, false, false, "BloodMagic Configuration");
+        super(parentScreen, getConfigElements(parentScreen), BloodMagic.MODID, false, false, "BloodMagic Configuration");
     }
 
     @SuppressWarnings("rawtypes")

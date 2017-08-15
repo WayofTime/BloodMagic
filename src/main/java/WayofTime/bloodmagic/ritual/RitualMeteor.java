@@ -3,11 +3,11 @@ package WayofTime.bloodmagic.ritual;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -25,7 +25,7 @@ public class RitualMeteor extends Ritual
 
     public RitualMeteor()
     {
-        super("ritualMeteor", 0, 1000000, "ritual." + Constants.Mod.MODID + ".meteorRitual");
+        super("ritualMeteor", 0, 1000000, "ritual." + BloodMagic.MODID + ".meteorRitual");
         addBlockRange(ITEM_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
         setMaximumVolumeAndDistanceOfRange(ITEM_RANGE, 0, 10, 10);
     }
@@ -57,7 +57,7 @@ public class RitualMeteor extends Ritual
 
         for (EntityItem entityItem : itemList)
         {
-            ItemStack stack = entityItem.getEntityItem();
+            ItemStack stack = entityItem.getItem();
             if (MeteorRegistry.hasMeteorForItem(stack))
             {
                 EntityMeteor meteor = new EntityMeteor(world, pos.getX(), 260, pos.getZ(), 0, -0.1, 0, radiusModifier, explosionModifier, fillerChance);

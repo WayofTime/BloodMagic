@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.client.key;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.KeyProcessor;
@@ -106,6 +106,6 @@ public enum KeyBindings
 
     public String getDescription()
     {
-        return Constants.Mod.MODID + ".keybind." + name().toLowerCase(Locale.ENGLISH);
+        return BloodMagic.MODID + ".keybind." + name().toLowerCase(Locale.ENGLISH);
     }
 }

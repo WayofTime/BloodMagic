@@ -2,9 +2,8 @@ package WayofTime.bloodmagic.block;
 
 import java.awt.Color;
 
-import lombok.Getter;
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -19,16 +18,15 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class BlockLifeEssence extends BlockFluidClassic
 {
-    @Getter
-    private static Fluid lifeEssence = new FluidLifeEssence();
+    private static final Fluid LIFE_ESSENCE = new FluidLifeEssence();
 
     public BlockLifeEssence()
     {
-        super(lifeEssence, Material.WATER);
+        super(LIFE_ESSENCE, Material.WATER);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".fluid.lifeEssence");
+        setUnlocalizedName(BloodMagic.MODID + ".fluid.lifeEssence");
         getLifeEssence().setBlock(this);
-        BloodMagicAPI.setLifeEssence(getLifeEssence());
+        BloodMagicAPI.lifeEssence = LIFE_ESSENCE;
     }
 
     @Override
@@ -41,6 +39,10 @@ public class BlockLifeEssence extends BlockFluidClassic
     public boolean displaceIfPossible(World world, BlockPos blockPos)
     {
         return !world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isLiquid() && super.displaceIfPossible(world, blockPos);
+    }
+
+    public static Fluid getLifeEssence() {
+        return LIFE_ESSENCE;
     }
 
     @Override

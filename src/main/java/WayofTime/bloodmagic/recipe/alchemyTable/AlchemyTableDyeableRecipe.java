@@ -91,7 +91,7 @@ public class AlchemyTableDyeableRecipe extends AlchemyTableRecipe
                     outputStack.setTagCompound(new NBTTagCompound());
                 }
 
-                outputStack.getTagCompound().setString(Constants.NBT.COLOR, String.valueOf(dyeColor.getMapColor().colorValue));
+                outputStack.getTagCompound().setString(Constants.NBT.COLOR, String.valueOf(dyeColor.getColorValue()));
 
                 return outputStack;
             }

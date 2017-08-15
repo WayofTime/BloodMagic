@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.tile.base.TileTicking;
 import com.google.common.base.Strings;
 import net.minecraft.block.Block;
@@ -88,7 +88,7 @@ public class TileSpectralBlock extends TileTicking
         if (world.isAirBlock(blockPos))
             return;
         IBlockState cachedState = world.getBlockState(blockPos);
-        world.setBlockState(blockPos, ModBlocks.SPECTRAL_BLOCK.getDefaultState());
+        world.setBlockState(blockPos, RegistrarBloodMagicBlocks.SPECTRAL.getDefaultState());
         TileSpectralBlock tile = (TileSpectralBlock) world.getTileEntity(blockPos);
         tile.setContainedBlockInfo(cachedState);
         tile.setDuration(duration);

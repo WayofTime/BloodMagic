@@ -31,7 +31,7 @@ import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 
 import java.util.Locale;
 
@@ -47,8 +47,8 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
     public ItemSentientBow()
     {
         super();
-        setUnlocalizedName(Constants.Mod.MODID + ".sentientBow");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".sentientBow");
+        setCreativeTab(BloodMagic.TAB_BM);
         this.addPropertyOverride(new ResourceLocation("pull"), new IItemPropertyGetter()
         {
             @SideOnly(Side.CLIENT)
@@ -60,7 +60,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
                 } else
                 {
                     ItemStack itemstack = entityIn.getActiveItemStack();
-                    return !itemstack.isEmpty() && itemstack.getItem() == ModItems.SENTIENT_BOW ? (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F : 0.0F;
+                    return !itemstack.isEmpty() && itemstack.getItem() == RegistrarBloodMagicItems.SENTIENT_BOW ? (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F : 0.0F;
                 }
             }
         });
@@ -77,7 +77,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, World world, EntityLivingBase entityIn)
             {
-                return ((ItemSentientBow) ModItems.SENTIENT_BOW).getCurrentType(stack).ordinal();
+                return ((ItemSentientBow) RegistrarBloodMagicItems.SENTIENT_BOW).getCurrentType(stack).ordinal();
             }
         });
     }
@@ -85,7 +85,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {
-        return ModItems.ITEM_DEMON_CRYSTAL == repair.getItem() || super.getIsRepairable(toRepair, repair);
+        return RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL == repair.getItem() || super.getIsRepairable(toRepair, repair);
     }
 
     public void recalculatePowers(ItemStack stack, World world, EntityPlayer player)

@@ -8,11 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import WayofTime.bloodmagic.meteor.MeteorConfigHandler;
-import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -26,28 +24,23 @@ import WayofTime.bloodmagic.util.Utils;
 @Handler
 public class ConfigHandler
 {
-    @Getter
-    private static Configuration config;
+    public static Configuration config;
 
     // Teleposer
     public static String[] teleposerBlacklisting;
-    public static ArrayList<BlockStack> teleposerBlacklist = new ArrayList<BlockStack>();
+    public static ArrayList<BlockStack> teleposerBlacklist = new ArrayList<>();
     public static List<String> teleposerBlacklistEntity;
 
     // Transposition Sigil
     public static String[] transpositionBlacklisting;
-    public static ArrayList<BlockStack> transpositionBlacklist = new ArrayList<BlockStack>();
-
-    // Item/Block Disabling
-    public static List<String> itemBlacklist;
-    public static List<String> blockBlacklist;
+    public static ArrayList<BlockStack> transpositionBlacklist = new ArrayList<>();
 
     // Well of Suffering Blacklist
     public static List<String> wellOfSufferingBlacklist;
 
     // Blood Altar Sacrificial Values
     public static String[] entitySacrificeValuesList;
-    public static Map<String, Integer> entitySacrificeValues = new HashMap<String, Integer>();
+    public static Map<String, Integer> entitySacrificeValues = new HashMap<>();
 
     // Rituals
     public static boolean ritualAnimalGrowth;
@@ -167,23 +160,11 @@ public class ConfigHandler
 
     public static void syncConfig()
     {
-        boolean configVersionChanged = false;
-
         String category;
-
-        category = "Version";
-        Property prop = config.get(category, "Config Version", Constants.Mod.VERSION);
-        if (!prop.getString().equals(Constants.Mod.VERSION))
-        {
-            configVersionChanged = true;
-            prop.setValue(Constants.Mod.VERSION);
-        }
 
         category = "Item/Block Blacklisting";
         config.addCustomCategoryComment(category, "Allows disabling of specific Blocks/Items.\nNote that using this may result in crashes. Use is not supported.");
         config.setCategoryRequiresMcRestart(category, true);
-        itemBlacklist = Arrays.asList(config.getStringList("itemBlacklist", category, new String[] {}, "Items to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
-        blockBlacklist = Arrays.asList(config.getStringList("blockBlacklist", category, new String[] {}, "Blocks to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
 
         category = "Teleposer Blacklist";
         config.addCustomCategoryComment(category, "Block blacklisting");
@@ -306,7 +287,7 @@ public class ConfigHandler
 
         category = "General";
         config.addCustomCategoryComment(category, "General settings");
-        BloodMagicAPI.setLoggingEnabled(config.getBoolean("enableLogging", category, true, "Allows logging information to the console. Fatal errors will bypass this"));
+        BloodMagicAPI.loggingEnabled = config.getBoolean("enableLogging", category, true, "Allows logging information to the console. Fatal errors will bypass this");
         sacrificialPackConversion = config.getInt("sacrificialPackConversion", category, 20, 0, 100, "Base multiplier for the Coat of Arms. DamageDealt * sacrificialPackConversion");
         sacrificialDaggerDamage = config.getInt("sacrificialDaggerDamage", category, 2, 0, 10000, "Damage done from using the Sacrificial Dagger");
         sacrificialDaggerConversion = config.getInt("sacrificialDaggerConversion", category, 100, 0, 10000, "Amount of LP received per damage point (not heart!)");
@@ -376,7 +357,7 @@ public class ConfigHandler
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent event)
     {
-        if (event.getModID().equals(Constants.Mod.MODID))
+        if (event.getModID().equals(BloodMagic.MODID))
         {
             syncConfig();
             MeteorConfigHandler.handleMeteors(false);

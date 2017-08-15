@@ -41,8 +41,8 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
     public ItemAltarMaker()
     {
         super();
-        setUnlocalizedName(Constants.Mod.MODID + ".altarMaker");
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setUnlocalizedName(BloodMagic.MODID + ".altarMaker");
+        setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
         setFull3D();
     }

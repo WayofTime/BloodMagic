@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.client.mesh;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.iface.IActivatable;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -21,8 +21,8 @@ public class CustomMeshDefinitionActivatable implements ItemMeshDefinition
     {
         if (stack != null && stack.getItem() instanceof IActivatable)
             if (((IActivatable) stack.getItem()).getActivated(stack))
-                return new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + name), "active=true");
+                return new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/" + name), "active=true");
 
-        return new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + name), "active=false");
+        return new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/" + name), "active=false");
     }
 }

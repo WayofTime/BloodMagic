@@ -17,11 +17,10 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.ICustomAlchemyConsumable;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomAlchemyConsumable
@@ -36,9 +35,9 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
     {
         super();
 
-        setUnlocalizedName(Constants.Mod.MODID + ".cuttingFluid.");
+        setUnlocalizedName(BloodMagic.MODID + ".cuttingFluid.");
         setHasSubtypes(true);
-        setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
 
         buildItemList();
@@ -76,7 +75,7 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
 
     public static ItemStack getStack(String name)
     {
-        return new ItemStack(ModItems.CUTTING_FLUID, 1, names.indexOf(name));
+        return new ItemStack(RegistrarBloodMagicItems.CUTTING_FLUID, 1, names.indexOf(name));
     }
 
     @Override

@@ -2,11 +2,11 @@ package WayofTime.bloodmagic.ritual;
 
 import java.util.ArrayList;
 
+import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -20,7 +20,7 @@ public class RitualCrystalHarvest extends Ritual
 
     public RitualCrystalHarvest()
     {
-        super("ritualCrystalHarvest", 0, 40000, "ritual." + Constants.Mod.MODID + ".crystalHarvestRitual");
+        super("ritualCrystalHarvest", 0, 40000, "ritual." + BloodMagic.MODID + ".crystalHarvestRitual");
         addBlockRange(CRYSTAL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-3, 2, -3), 7, 5, 7));
 
         setMaximumVolumeAndDistanceOfRange(CRYSTAL_RANGE, 250, 5, 7);
