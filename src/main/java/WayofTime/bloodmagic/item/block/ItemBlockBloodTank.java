@@ -61,9 +61,10 @@ public class ItemBlockBloodTank extends ItemBlock {
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
+            return;
 
-            for (int i = 0; i < TileBloodTank.CAPACITIES.length; i++)
-                list.add(new ItemStack(this, 1, i));
+        for (int i = 0; i < TileBloodTank.CAPACITIES.length; i++)
+            list.add(new ItemStack(this, 1, i));
     }
 
     public int getCapacity(ItemStack container) {

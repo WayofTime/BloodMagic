@@ -8,7 +8,7 @@ import WayofTime.bloodmagic.tile.routing.TileInputRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileItemRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import java.util.Set;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
@@ -66,14 +66,14 @@ public class RegistrarBloodMagicBlocks {
     public static final Block INVERSION_PILLAR = Blocks.AIR;
     public static final Block INVERSION_PILLAR_END = Blocks.AIR;
 
-    static Set<Block> blocks;
+    static List<Block> blocks;
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
         FluidRegistry.addBucketForFluid(BlockLifeEssence.getLifeEssence());
 
-        blocks = Sets.newHashSet(
+        blocks = Lists.newArrayList(
                 new BlockAltar().setRegistryName("altar"),
                 new BlockBloodRune().setRegistryName("blood_rune"),
                 new BlockRitualController().setRegistryName("ritual_controller"),

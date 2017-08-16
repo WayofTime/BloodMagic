@@ -74,7 +74,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
 
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
-        if (isInCreativeTab(tab))
+        if (!isInCreativeTab(tab))
             return;
 
         subItems.add(Utils.setUnbreakable(new ItemStack(this)));

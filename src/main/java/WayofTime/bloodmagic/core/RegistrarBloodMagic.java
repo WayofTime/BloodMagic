@@ -60,13 +60,14 @@ public class RegistrarBloodMagic {
 
     @SubscribeEvent
     public static void registerBloodOrbs(RegistryEvent.Register<BloodOrb> event) {
+        ResourceLocation orb = RegistrarBloodMagicItems.BLOOD_ORB.getRegistryName();
         event.getRegistry().registerAll(
-                new BloodOrb("weak", 1, 5000).setRegistryName("weak"),
-                new BloodOrb("apprentice", 2, 25000).setRegistryName("apprentice"),
-                new BloodOrb("magician", 3, 150000).setRegistryName("magician"),
-                new BloodOrb("master", 4, 1000000).setRegistryName("master"),
-                new BloodOrb("archmage", 5, 10000000).setRegistryName("archmage"),
-                new BloodOrb("transcendent", 6, 30000000).setRegistryName("transcendent")
+                new BloodOrb("weak", 1, 5000).withModel(new ModelResourceLocation(orb, "type=weak")).setRegistryName("weak"),
+                new BloodOrb("apprentice", 2, 25000).withModel(new ModelResourceLocation(orb, "type=apprentice")).setRegistryName("apprentice"),
+                new BloodOrb("magician", 3, 150000).withModel(new ModelResourceLocation(orb, "type=magician")).setRegistryName("magician"),
+                new BloodOrb("master", 4, 1000000).withModel(new ModelResourceLocation(orb, "type=master")).setRegistryName("master"),
+                new BloodOrb("archmage", 5, 10000000).withModel(new ModelResourceLocation(orb, "type=archmage")).setRegistryName("archmage"),
+                new BloodOrb("transcendent", 6, 30000000).withModel(new ModelResourceLocation(orb, "type=transcendent")).setRegistryName("transcendent")
         );
     }
 

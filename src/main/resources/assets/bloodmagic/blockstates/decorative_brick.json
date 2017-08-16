@@ -7,14 +7,24 @@
   },
   "variants": {
     "type": {
-      "large": {
+      "bloodstone_tile": {
         "textures": {
           "all": "bloodmagic:blocks/LargeBloodStoneBrick"
         }
       },
-      "brick": {
+      "bloodstone_brick": {
         "textures": {
           "all": "bloodmagic:blocks/BloodStoneBrick"
+        }
+      },
+      "crystal_tile": {
+        "textures": {
+          "all": "bloodmagic:blocks/shardcluster"
+        }
+      },
+      "crystal_brick": {
+        "textures": {
+          "all": "bloodmagic:blocks/shardclusterbrick"
         }
       }
     }
