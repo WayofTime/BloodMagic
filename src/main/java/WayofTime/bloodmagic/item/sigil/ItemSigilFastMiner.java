@@ -34,7 +34,7 @@ public class ItemSigilFastMiner extends ItemSigilToggleableBase
         int ticks = 600;
         int potionPotency = 2;
 
-        AxisAlignedBB bb = new AxisAlignedBB(pos).expandXyz(radius);
+        AxisAlignedBB bb = new AxisAlignedBB(pos).grow(radius);
         List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, bb);
         for (EntityPlayer player : playerList)
         {
@@ -44,7 +44,7 @@ public class ItemSigilFastMiner extends ItemSigilToggleableBase
                 if (!player.capabilities.isCreativeMode)
                 {
                     player.hurtResistantTime = 0;
-                    player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 1.0F);
+                    player.attackEntityFrom(BloodMagicAPI.damageSource, 1.0F);
                 }
             }
         }

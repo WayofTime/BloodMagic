@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
@@ -71,5 +72,10 @@ public class AltarRecipeCategory implements IRecipeCategory
             recipeLayout.getItemStacks().set(INPUT_SLOT, ingredients.getInputs(ItemStack.class).get(0));
             recipeLayout.getItemStacks().set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
         }
+    }
+
+    @Override
+    public String getModName() {
+        return BloodMagic.NAME;
     }
 }

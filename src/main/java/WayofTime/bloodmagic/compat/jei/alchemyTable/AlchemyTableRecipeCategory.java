@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.compat.jei.alchemyTable;
 
 import javax.annotation.Nonnull;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -74,5 +75,10 @@ public class AlchemyTableRecipeCategory extends BlankRecipeCategory<AlchemyTable
         guiItemStacks.set(ORB_SLOT, OrbRegistry.getOrbsDownToTier(recipeWrapper.getRecipe().getTierRequired()));
         guiItemStacks.set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
         craftingGridHelper.setInputs(guiItemStacks, ingredients.getInputs(ItemStack.class), 3, 2);
+    }
+
+    @Override
+    public String getModName() {
+        return BloodMagic.NAME;
     }
 }

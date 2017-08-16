@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import lombok.Getter;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +35,6 @@ import com.google.common.collect.Iterables;
 
 public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvider
 {
-    @Getter
     private static ArrayList<String> names = new ArrayList<String>();
 
     public static final String DRAFT_ANGELUS = "draftAngelus";
@@ -53,7 +52,7 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
     {
         if (!stack.hasTagCompound())
             return;
@@ -128,10 +127,13 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
+        if (!isInCreativeTab(creativeTab))
+            return;
+
         for (int i = 0; i < names.size(); i++)
-            list.add(new ItemStack(id, 1, i));
+            list.add(new ItemStack(this, 1, i));
     }
 
     public static ItemStack getStack(String name)
@@ -154,5 +156,9 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
         stack.setCount(stackSize);
 
         return stack;
+    }
+
+    public static ArrayList<String> getNames() {
+        return names;
     }
 }

@@ -10,7 +10,6 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 public abstract class HUDElement
 {
-
     private int xOffset;
     private int yOffset;
     private final int xOffsetDefault;
@@ -57,19 +56,19 @@ public abstract class HUDElement
         tessellator.draw();
     }
 
-    public int getxOffset() {
+    public int getXOffset() {
         return xOffset;
     }
 
-    public int getyOffset() {
+    public int getYOffset() {
         return yOffset;
     }
 
-    public int getxOffsetDefault() {
+    public int getXOffsetDefault() {
         return xOffsetDefault;
     }
 
-    public int getyOffsetDefault() {
+    public int getYOffsetDefault() {
         return yOffsetDefault;
     }
 

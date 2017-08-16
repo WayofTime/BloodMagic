@@ -28,7 +28,7 @@ public class ImperfectRitualRegistry
         if (imperfectRitual != null)
         {
             if (registry.containsKey(id))
-                BloodMagicAPI.getLogger().error("Duplicate imperfect ritual id: %s", id);
+                BloodMagicAPI.logger.error("Duplicate imperfect ritual id: %s", id);
             else
             {
                 registry.put(id, imperfectRitual);
@@ -88,7 +88,7 @@ public class ImperfectRitualRegistry
             return enabledRituals.get(imperfectRitual);
         } catch (NullPointerException e)
         {
-            BloodMagicAPI.getLogger().error("Invalid Imperfect Ritual was called");
+            BloodMagicAPI.logger.error("Invalid Imperfect Ritual was called");
             return false;
         }
     }

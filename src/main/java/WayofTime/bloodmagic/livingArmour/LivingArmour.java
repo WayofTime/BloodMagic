@@ -21,8 +21,6 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
-import WayofTime.bloodmagic.registry.ModPotions;
-import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.HashMultimap;
@@ -39,13 +37,7 @@ public class LivingArmour implements ILivingArmour
 
     public StatTracker getTracker(String key)
     {
-        if (trackerMap.containsKey(key))
-        {
-            return trackerMap.get(key);
-        } else
-        {
-            return null;
-        }
+        return trackerMap.get(key);
     }
 
     public double getAdditionalDamageOnHit(double damage, EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon)

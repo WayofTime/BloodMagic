@@ -41,11 +41,11 @@ public class LayerCorruptedSpiderEyes implements LayerRenderer<EntityCorruptedSp
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) j, (float) k);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.spiderRenderer.getMainModel().render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-        i = entitylivingbaseIn.getBrightnessForRender(partialTicks);
+        i = entitylivingbaseIn.getBrightnessForRender();
         j = i % 65536;
         k = i / 65536;
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) j, (float) k);
-        this.spiderRenderer.setLightmap(entitylivingbaseIn, partialTicks);
+        this.spiderRenderer.setLightmap(entitylivingbaseIn);
         GlStateManager.disableBlend();
         GlStateManager.enableAlpha();
     }

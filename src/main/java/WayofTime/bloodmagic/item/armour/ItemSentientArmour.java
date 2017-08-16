@@ -129,9 +129,9 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
 
     public void onPlayerAttacked(ItemStack stack, DamageSource source, EntityPlayer attackedPlayer)
     {
-        if (source.getEntity() instanceof EntityLivingBase)
+        if (source.getTrueSource() instanceof EntityLivingBase)
         {
-            EntityLivingBase attacker = (EntityLivingBase) source.getEntity();
+            EntityLivingBase attacker = (EntityLivingBase) source.getTrueSource();
             EnumDemonWillType type = this.getCurrentType(stack);
             switch (type)
             {

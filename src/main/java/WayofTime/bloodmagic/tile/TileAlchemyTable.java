@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.tile;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.orb.BloodOrb;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -307,7 +308,8 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         {
             if (orbStack.getItem() instanceof IBloodOrb)
             {
-                return ((IBloodOrb) orbStack.getItem()).getOrbLevel(orbStack.getMetadata());
+                BloodOrb orb = ((IBloodOrb) orbStack.getItem()).getOrb(orbStack);
+                return orb == null ? 0 : orb.getTier();
             }
         }
 

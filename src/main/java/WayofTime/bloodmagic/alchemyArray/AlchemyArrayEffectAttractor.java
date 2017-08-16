@@ -235,7 +235,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
         {
             EntityMob mod = (EntityMob) ent;
             mod.faceEntity(getTarget(ent.getEntityWorld(), pos), 180, 0);
-            mod.moveEntityWithHeading(0, 0.3f);
+            mod.getMoveHelper().strafe(0, 0.3f);
             if (mod.posY < pos.getY())
             {
                 mod.setJumping(true);
@@ -313,7 +313,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
             if (entry.action instanceof AttractTask)
             {
                 AttractTask at = (AttractTask) entry.action;
-                if (at.coord.equals(pos) || !at.continueExecuting())
+                if (at.coord.equals(pos) || !at.shouldExecute())
                 {
                     remove = entry.action;
                 } else
@@ -424,19 +424,6 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
         @Override
         public boolean shouldExecute()
         {
-            return continueExecuting();
-        }
-
-        @Override
-        public void resetTask()
-        {
-            started = false;
-            updatesSincePathing = 0;
-        }
-
-        @Override
-        public boolean continueExecuting()
-        {
             boolean res = false;
             //TODO:
             TileEntity te = mob.getEntityWorld().getTileEntity(coord);
@@ -446,6 +433,13 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect
             }
 
             return res;
+        }
+
+        @Override
+        public void resetTask()
+        {
+            started = false;
+            updatesSincePathing = 0;
         }
 
         @Override

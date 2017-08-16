@@ -1,23 +1,16 @@
 package WayofTime.bloodmagic.api.teleport;
 
 import WayofTime.bloodmagic.api.Constants;
-import lombok.Getter;
-import lombok.ToString;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 
 import java.io.Serializable;
 
-@ToString
 public class PortalLocation implements Serializable
 {
-    @Getter
     private int x;
-    @Getter
     private int y;
-    @Getter
     private int z;
-    @Getter
     private int dimension;
 
     public PortalLocation(int x, int y, int z, int dimension)
@@ -86,5 +79,21 @@ public class PortalLocation implements Serializable
         result = 31 * result + y;
         result = 31 * result + z;
         return result;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getZ() {
+        return z;
+    }
+
+    public int getDimension() {
+        return dimension;
     }
 }

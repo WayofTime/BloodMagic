@@ -31,7 +31,7 @@ public class GuiHolding extends GuiContainer
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         //the parameters for drawString are: string, x, y, color
-        fontRendererObj.drawString(TextHelper.localize("item.bloodmagic.sigil.holding.name"), 53, 4, 4210752);
+        fontRenderer.drawString(TextHelper.localize("item.bloodmagic.sigil.holding.name"), 53, 4, 4210752);
     }
 
     @Override

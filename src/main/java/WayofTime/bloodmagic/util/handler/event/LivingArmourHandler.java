@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,7 +42,6 @@ import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSp
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeJump;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSpeed;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeStepAssist;
-import WayofTime.bloodmagic.registry.ModPotions;
 
 @Handler
 public class LivingArmourHandler
@@ -246,7 +246,7 @@ public class LivingArmourHandler
         {
             EntityPlayer player = (EntityPlayer) event.getEntityLiving();
             boolean hasAssist = false;
-            if (event.getEntityLiving().isPotionActive(ModPotions.boost))
+            if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.BOOST))
             {
                 hasAssist = true;
                 player.stepHeight = Constants.Misc.ALTERED_STEP_HEIGHT;
@@ -289,9 +289,9 @@ public class LivingArmourHandler
                 }
             }
 
-            if (event.getEntityLiving().isPotionActive(ModPotions.boost))
+            if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.BOOST))
             {
-                int i = event.getEntityLiving().getActivePotionEffect(ModPotions.boost).getAmplifier();
+                int i = event.getEntityLiving().getActivePotionEffect(RegistrarBloodMagic.BOOST).getAmplifier();
                 {
                     percentIncrease += (i + 1) * 0.05f;
                 }

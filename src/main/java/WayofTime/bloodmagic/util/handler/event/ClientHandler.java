@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import WayofTime.bloodmagic.client.key.KeyBindings;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
@@ -53,7 +54,6 @@ import WayofTime.bloodmagic.item.ItemRitualDiviner;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.SigilHoldingPacketProcessor;
-import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -117,7 +117,7 @@ public class ClientHandler
     public void onSoundEvent(PlaySoundEvent event)
     {
         EntityPlayer player = Minecraft.getMinecraft().player;
-        if (player != null && player.isPotionActive(ModPotions.deafness))
+        if (player != null && player.isPotionActive(RegistrarBloodMagic.DEAFNESS))
         {
             event.setResultSound(null);
         }

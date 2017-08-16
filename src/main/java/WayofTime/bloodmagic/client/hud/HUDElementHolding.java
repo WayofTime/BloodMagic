@@ -80,7 +80,7 @@ public class HUDElementHolding extends HUDElement
             if (animation > 0.0F)
                 GlStateManager.popMatrix();
 
-            Minecraft.getMinecraft().getRenderItem().renderItemOverlays(Minecraft.getMinecraft().fontRendererObj, stack, x, y);
+            Minecraft.getMinecraft().getRenderItem().renderItemOverlays(Minecraft.getMinecraft().fontRenderer, stack, x, y);
         }
     }
 }

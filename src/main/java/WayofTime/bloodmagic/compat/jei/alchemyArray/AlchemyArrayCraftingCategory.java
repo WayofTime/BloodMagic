@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.compat.jei.alchemyArray;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.BloodMagic;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
@@ -73,5 +74,10 @@ public class AlchemyArrayCraftingCategory implements IRecipeCategory
             recipeLayout.getItemStacks().set(CATALYST_SLOT, ingredients.getInputs(ItemStack.class).get(ingredients.getInputs(ItemStack.class).size() - 1));
             recipeLayout.getItemStacks().set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
         }
+    }
+
+    @Override
+    public String getModName() {
+        return BloodMagic.NAME;
     }
 }

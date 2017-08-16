@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -17,7 +18,6 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.iface.ISentientSwordEffectProvider;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.registry.ModPotions;
 
 public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectProvider
 {
@@ -42,9 +42,9 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
             double wantedVelocity = 1.7;
 
             // TODO - Revisit after potions
-            if (player.isPotionActive(ModPotions.boost))
+            if (player.isPotionActive(RegistrarBloodMagic.BOOST))
             {
-                int amplifier = player.getActivePotionEffect(ModPotions.boost).getAmplifier();
+                int amplifier = player.getActivePotionEffect(RegistrarBloodMagic.BOOST).getAmplifier();
                 wantedVelocity += (1 + amplifier) * (0.35);
             }
 

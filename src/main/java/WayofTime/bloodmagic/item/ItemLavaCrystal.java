@@ -41,6 +41,9 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
 
     @Override
     public int getItemBurnTime(ItemStack stack) {
+        if (!stack.hasTagCompound())
+            return -1;
+
         if (getOwnerUUID(stack) == null)
             return -1;
 

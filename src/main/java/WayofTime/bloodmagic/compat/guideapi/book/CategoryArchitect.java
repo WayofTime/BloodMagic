@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -88,7 +89,7 @@ public class CategoryArchitect
         List<IPage> weakorbPages = new ArrayList<IPage>();
         weakorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakorb" + ".info.1"), 370));
 
-        AltarRecipe weakorbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_WEAK));
+        AltarRecipe weakorbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK));
         if (weakorbRecipe != null)
         {
             weakorbPages.add(new PageAltarRecipe(weakorbRecipe));
@@ -196,7 +197,7 @@ public class CategoryArchitect
 
         List<IPage> apprenticeorbPages = new ArrayList<IPage>();
 
-        AltarRecipe apprenticeorbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_APPRENTICE));
+        AltarRecipe apprenticeorbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_APPRENTICE));
         if (apprenticeorbRecipe != null)
         {
             apprenticeorbPages.add(new PageAltarRecipe(apprenticeorbRecipe));
@@ -342,7 +343,7 @@ public class CategoryArchitect
 
         List<IPage> magicianOrbPages = new ArrayList<IPage>();
 
-        AltarRecipe magicianOrbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MAGICIAN));
+        AltarRecipe magicianOrbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_MAGICIAN));
         if (magicianOrbRecipe != null)
         {
             magicianOrbPages.add(new PageAltarRecipe(magicianOrbRecipe));
@@ -538,7 +539,7 @@ public class CategoryArchitect
 
         List<IPage> masterOrbPages = new ArrayList<IPage>();
 
-        AltarRecipe masterOrbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MASTER));
+        AltarRecipe masterOrbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_MASTER));
         if (magicianOrbRecipe != null)
         {
             masterOrbPages.add(new PageAltarRecipe(masterOrbRecipe));

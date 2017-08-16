@@ -25,15 +25,15 @@ public class ConfigGui extends GuiConfig
 
         // adds sections declared in ConfigHandler. toLowerCase() is used
         // because the configuration class automatically does this, so must we.
-        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Potions".toLowerCase())));
-        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Client".toLowerCase())));
-        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Compatibility".toLowerCase())));
-        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Teleposer Blacklist".toLowerCase())));
-        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Well of Suffering Blacklist".toLowerCase())));
-        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Item/Block Blacklisting".toLowerCase())));
-        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("General".toLowerCase())));
-        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Rituals".toLowerCase())));
-        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Blood Altar Sacrificial Values".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.config.getCategory("Potions".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.config.getCategory("Client".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.config.getCategory("Compatibility".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.config.getCategory("Teleposer Blacklist".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.config.getCategory("Well of Suffering Blacklist".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.config.getCategory("Item/Block Blacklisting".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.config.getCategory("General".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.config.getCategory("Rituals".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.config.getCategory("Blood Altar Sacrificial Values".toLowerCase())));
 
         return list;
     }

@@ -4,8 +4,10 @@ import java.util.List;
 
 import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,9 +18,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
@@ -32,9 +32,9 @@ public class ItemSigilTransposition extends ItemSigilBase
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
     {
-        super.addInformation(stack, player, tooltip, advanced);
+        super.addInformation(stack, world, tooltip, flag);
 
         if (!stack.hasTagCompound())
             return;
@@ -80,19 +80,18 @@ public class ItemSigilTransposition extends ItemSigilBase
         IBlockState state = world.getBlockState(blockPos);
         if (!world.isRemote)
         {
-            BlockStack rightClickedBlock = BlockStack.getStackFromPos(world, blockPos);
-            if (BloodMagicAPI.getTranspositionBlacklist().contains(rightClickedBlock))
+            if (BloodMagicAPI.INSTANCE.getBlacklist().getTransposition().contains(state))
                 return EnumActionResult.FAIL;
 
-            if (!ConfigHandler.transpositionBlacklist.contains(rightClickedBlock) && player.isSneaking() && (!stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_NAME) || !stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_META)))
+            if (player.isSneaking() && (!stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_NAME) || !stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_META)))
             {
-                if (rightClickedBlock.getState().getPlayerRelativeBlockHardness(player, world, blockPos) >= 0 && rightClickedBlock.getState().getBlockHardness(world, blockPos) >= 0)
+                if (state.getPlayerRelativeBlockHardness(player, world, blockPos) >= 0 && state.getBlockHardness(world, blockPos) >= 0)
                 {
                     int cost = getLpUsed();
 
                     NBTTagCompound tileNBTTag = new NBTTagCompound();
-                    String blockName = rightClickedBlock.getBlock().getRegistryName().toString();
-                    byte metadata = (byte) rightClickedBlock.getMeta();
+                    String blockName = state.getBlock().getRegistryName().toString();
+                    byte metadata = (byte) state.getBlock().getMetaFromState(state);
 
                     if (world.getTileEntity(blockPos) != null)
                     {

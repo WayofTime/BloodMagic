@@ -7,13 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
-import WayofTime.bloodmagic.api.recipe.ShapedBloodOrbRecipe;
-import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.client.render.alchemyArray.DualAlchemyCircleRenderer;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAlchemyArray;
-import WayofTime.bloodmagic.compat.guideapi.page.recipeRenderer.ShapedBloodOrbRecipeRenderer;
-import WayofTime.bloodmagic.compat.guideapi.page.recipeRenderer.ShapelessBloodOrbRecipeRenderer;
 import amerifrance.guideapi.page.PageIRecipe;
 
 public class BookUtils
@@ -72,14 +68,6 @@ public class BookUtils
 
     public static PageIRecipe getPageForRecipe(IRecipe recipe)
     {
-        if (recipe instanceof ShapedBloodOrbRecipe)
-        {
-            return new PageIRecipe(recipe, new ShapedBloodOrbRecipeRenderer((ShapedBloodOrbRecipe) recipe));
-        } else if (recipe instanceof ShapelessBloodOrbRecipe)
-        {
-            return new PageIRecipe(recipe, new ShapelessBloodOrbRecipeRenderer((ShapelessBloodOrbRecipe) recipe));
-        }
-
         return new PageIRecipe(recipe);
     }
 }

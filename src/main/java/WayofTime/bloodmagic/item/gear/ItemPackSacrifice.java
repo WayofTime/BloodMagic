@@ -9,6 +9,7 @@ import WayofTime.bloodmagic.api.util.helper.ItemHelper.LPContainer;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
@@ -73,7 +74,7 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced)
+    public void addInformation(ItemStack stack, World world, List<String> list, ITooltipFlag flag)
     {
         if (!stack.hasTagCompound())
             return;

@@ -5,6 +5,7 @@ import java.util.*;
 import javax.annotation.Nullable;
 
 import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -273,7 +274,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
     {
         if (!stack.hasTagCompound())
             return;

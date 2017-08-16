@@ -18,6 +18,7 @@ import com.mojang.authlib.GameProfile;
 @SuppressWarnings("EntityConstructor")
 public class FakePlayerBM extends FakePlayer
 {
+
     public FakePlayerBM(WorldServer world, GameProfile name) {
         super(world, name);
     }

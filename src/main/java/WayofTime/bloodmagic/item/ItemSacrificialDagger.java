@@ -8,6 +8,7 @@ import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -59,14 +60,17 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
+        if (!isInCreativeTab(creativeTab))
+            return;
+
         for (int i = 0; i < names.length; i++)
-            list.add(new ItemStack(id, 1, i));
+            list.add(new ItemStack(this, 1, i));
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced)
+    public void addInformation(ItemStack stack, World world, List<String> list, ITooltipFlag flag)
     {
         list.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sacrificialDagger.desc"))));
 
@@ -126,11 +130,11 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
             if (evt.shouldDrainHealth)
             {
                 player.hurtResistantTime = 0;
-                player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0.001F);
+                player.attackEntityFrom(BloodMagicAPI.damageSource, 0.001F);
                 player.setHealth(Math.max(player.getHealth() - ConfigHandler.sacrificialDaggerDamage, 0.0001f));
                 if (player.getHealth() <= 0.001f)
                 {
-                    player.onDeath(BloodMagicAPI.getDamageSource());
+                    player.onDeath(BloodMagicAPI.damageSource);
                     player.setHealth(0);
                 }
 //                player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 2.0F);

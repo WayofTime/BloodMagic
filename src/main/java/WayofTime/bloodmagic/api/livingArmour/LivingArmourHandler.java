@@ -36,7 +36,7 @@ public class LivingArmourHandler
             Constructor<? extends LivingArmourUpgrade> ctor = clazz.getConstructor(int.class);
             if (ctor == null)
             {
-                BloodMagicAPI.getLogger().error("Error adding living armour upgrade {} as it doesn't have a valid constructor.", upgrade.getUniqueIdentifier());
+                BloodMagicAPI.logger.error("Error adding living armour upgrade {} as it doesn't have a valid constructor.", upgrade.getUniqueIdentifier());
             } else
             {
                 upgradeConstructorMap.put(upgrade.getUniqueIdentifier(), ctor);

@@ -33,7 +33,7 @@ public class BindingRecipeMaker
                 ItemStack catalyst = entry.getKey().toStack();
                 if (AlchemyArrayRecipeRegistry.getAlchemyArrayEffect(input, catalyst) instanceof AlchemyArrayEffectBinding)
                 {
-                    ItemStack output = ((AlchemyArrayEffectBinding) itemStackAlchemyArrayRecipeEntry.getValue().getAlchemyArrayEffectForCatalyst(catalyst)).getOutputStack();
+                    ItemStack output = ((AlchemyArrayEffectBinding) itemStackAlchemyArrayRecipeEntry.getValue().getAlchemyArrayEffectForCatalyst(catalyst)).outputStack;
 
                     BindingRecipeJEI recipe = new BindingRecipeJEI(input, catalyst, output);
                     recipes.add(recipe);

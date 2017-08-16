@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -117,7 +118,7 @@ public class ItemPotionFlask extends Item implements IMeshProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
     {
         PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
         tooltip.add("");
@@ -139,16 +140,11 @@ public class ItemPotionFlask extends Item implements IMeshProvider
     @Override
     public ItemMeshDefinition getMeshDefinition()
     {
-        return new ItemMeshDefinition()
-        {
-            @Override
-            public ModelResourceLocation getModelLocation(ItemStack stack)
-            {
-                boolean full = true;
-                if (stack.hasTagCompound() && stack.getTagCompound().hasKey("empty"))
-                    full = false;
-                return new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/" + getRegistryName().getResourcePath()), "full=" + (full ? "true" : "false"));
-            }
+        return stack -> {
+            boolean full = true;
+            if (stack.hasTagCompound() && stack.getTagCompound().hasKey("empty"))
+                full = false;
+            return new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/" + getRegistryName().getResourcePath()), "full=" + (full ? "true" : "false"));
         };
     }
 

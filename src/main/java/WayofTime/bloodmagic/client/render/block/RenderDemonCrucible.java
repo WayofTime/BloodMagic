@@ -20,7 +20,7 @@ public class RenderDemonCrucible extends TileEntitySpecialRenderer<TileDemonCruc
     public static float maxHeight = 0.79f;
 
     @Override
-    public void renderTileEntityAt(TileDemonCrucible tile, double x, double y, double z, float partialTicks, int destroyStage)
+    public void render(TileDemonCrucible tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
         ItemStack inputStack = tile.getStackInSlot(0);
 
@@ -33,11 +33,11 @@ public class RenderDemonCrucible extends TileEntitySpecialRenderer<TileDemonCruc
     private void renderItem(World world, ItemStack stack, float partialTicks)
     {
         RenderItem itemRenderer = mc.getRenderItem();
-        if (stack != null)
+        if (!stack.isEmpty())
         {
             GlStateManager.translate(0.5, 1.5, 0.5);
             EntityItem entityitem = new EntityItem(world, 0.0D, 0.0D, 0.0D, stack);
-            entityitem.getEntityItem().setCount(1);
+            entityitem.getItem().setCount(1);
             entityitem.hoverStart = 0.0F;
             GlStateManager.pushMatrix();
             GlStateManager.disableLighting();
@@ -48,7 +48,7 @@ public class RenderDemonCrucible extends TileEntitySpecialRenderer<TileDemonCruc
             GlStateManager.scale(0.5F, 0.5F, 0.5F);
             GlStateManager.pushAttrib();
             RenderHelper.enableStandardItemLighting();
-            itemRenderer.renderItem(entityitem.getEntityItem(), ItemCameraTransforms.TransformType.FIXED);
+            itemRenderer.renderItem(entityitem.getItem(), ItemCameraTransforms.TransformType.FIXED);
             RenderHelper.disableStandardItemLighting();
             GlStateManager.popAttrib();
 

@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,7 +19,6 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 
 public class ItemComponent extends Item implements IVariantProvider
 {
-    @Getter
     private static ArrayList<String> names = new ArrayList<String>();
 
     public static final String REAGENT_WATER = "reagentWater";
@@ -113,15 +111,18 @@ public class ItemComponent extends Item implements IVariantProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
+        if (!isInCreativeTab(creativeTab))
+            return;
+
         for (int i = 0; i < names.size(); i++)
-            list.add(new ItemStack(id, 1, i));
+            list.add(new ItemStack(this, 1, i));
     }
 
     public static ItemStack getStack(String name)
     {
-        return new ItemStack(RegistrarBloodMagicItems.ITEM_COMPONENT, 1, names.indexOf(name));
+        return new ItemStack(RegistrarBloodMagicItems.COMPONENT, 1, names.indexOf(name));
     }
 
     @Override
@@ -139,5 +140,9 @@ public class ItemComponent extends Item implements IVariantProvider
         stack.setCount(stackSize);
 
         return stack;
+    }
+
+    public static ArrayList<String> getNames() {
+        return names;
     }
 }

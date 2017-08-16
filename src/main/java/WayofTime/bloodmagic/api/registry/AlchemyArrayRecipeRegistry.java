@@ -7,9 +7,6 @@ import java.util.Map.Entry;
 
 import javax.annotation.Nullable;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
@@ -128,8 +125,8 @@ public class AlchemyArrayRecipeRegistry
                     if (effectEntry.getValue() instanceof AlchemyArrayEffectCrafting)
                     {
                         AlchemyArrayEffectCrafting craftingEffect = (AlchemyArrayEffectCrafting) effectEntry.getValue();
-                        ItemStack resultStack = craftingEffect.getOutputStack();
-                        if (resultStack != null && resultStack.getItem() != null)
+                        ItemStack resultStack = craftingEffect.outputStack;
+                        if (!resultStack.isEmpty())
                         {
                             if (resultStack.getItem() == stack.getItem() && resultStack.getItemDamage() == stack.getItemDamage())
                             {
@@ -291,9 +288,6 @@ public class AlchemyArrayRecipeRegistry
         return getAlchemyCircleRenderer(Collections.singletonList(itemStack), catalystStack);
     }
 
-    @Getter
-    @ToString
-    @EqualsAndHashCode
     public static class AlchemyArrayRecipe
     {
         public AlchemyCircleRenderer defaultCircleRenderer;
@@ -383,6 +377,45 @@ public class AlchemyArrayRecipeRegistry
             }
 
             return defaultCircleRenderer;
+        }
+
+        public AlchemyCircleRenderer getDefaultCircleRenderer() {
+            return defaultCircleRenderer;
+        }
+
+        public List<ItemStack> getInput() {
+            return input;
+        }
+
+        public BiMap<ItemStackWrapper, AlchemyArrayEffect> getCatalystMap() {
+            return catalystMap;
+        }
+
+        public BiMap<ItemStackWrapper, AlchemyCircleRenderer> getCircleMap() {
+            return circleMap;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof AlchemyArrayRecipe)) return false;
+
+            AlchemyArrayRecipe that = (AlchemyArrayRecipe) o;
+
+            if (defaultCircleRenderer != null ? !defaultCircleRenderer.equals(that.defaultCircleRenderer) : that.defaultCircleRenderer != null)
+                return false;
+            if (input != null ? !input.equals(that.input) : that.input != null) return false;
+            if (catalystMap != null ? !catalystMap.equals(that.catalystMap) : that.catalystMap != null) return false;
+            return circleMap != null ? circleMap.equals(that.circleMap) : that.circleMap == null;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = defaultCircleRenderer != null ? defaultCircleRenderer.hashCode() : 0;
+            result = 31 * result + (input != null ? input.hashCode() : 0);
+            result = 31 * result + (catalystMap != null ? catalystMap.hashCode() : 0);
+            result = 31 * result + (circleMap != null ? circleMap.hashCode() : 0);
+            return result;
         }
     }
 

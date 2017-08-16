@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -35,7 +36,6 @@ import WayofTime.bloodmagic.demonAura.WillChunk;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.registry.ModPotions;
 
 @Handler
 public class WillHandler
@@ -84,9 +84,9 @@ public class WillHandler
         DamageSource source = event.getSource();
         Entity entity = source.getTrueSource();
 
-        if (attackedEntity.isPotionActive(ModPotions.soulSnare) && (attackedEntity instanceof EntityMob || attackedEntity.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL))
+        if (attackedEntity.isPotionActive(RegistrarBloodMagic.SOUL_SNARE) && (attackedEntity instanceof EntityMob || attackedEntity.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL))
         {
-            PotionEffect eff = attackedEntity.getActivePotionEffect(ModPotions.soulSnare);
+            PotionEffect eff = attackedEntity.getActivePotionEffect(RegistrarBloodMagic.SOUL_SNARE);
             int lvl = eff.getAmplifier();
 
             double amountOfSouls = attackedEntity.getEntityWorld().rand.nextDouble() * (lvl + 1) * (lvl + 1) * 5;

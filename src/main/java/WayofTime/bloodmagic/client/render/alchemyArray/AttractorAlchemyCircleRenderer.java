@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.client.render.alchemyArray;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -71,7 +71,7 @@ public class AttractorAlchemyCircleRenderer extends AlchemyCircleRenderer
         TileAlchemyArray tileArray = (TileAlchemyArray) tile;
 
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer wr = tessellator.getBuffer();
+        BufferBuilder wr = tessellator.getBuffer();
 
         GlStateManager.pushMatrix();
 

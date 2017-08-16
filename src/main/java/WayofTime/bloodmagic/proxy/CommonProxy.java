@@ -13,24 +13,11 @@ import WayofTime.bloodmagic.api.ritual.CapabilityRuneType;
 import WayofTime.bloodmagic.api.ritual.IRitualStone;
 import WayofTime.bloodmagic.api.teleport.TeleportQueue;
 import WayofTime.bloodmagic.fuel.FuelHandler;
-import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
-import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 
 import com.google.common.collect.ImmutableMap;
 
 public class CommonProxy
 {
-    @Deprecated
-    public InventoryRenderHelper getRenderHelper()
-    {
-        return null;
-    }
-
-    public InventoryRenderHelperV2 getRenderHelperV2()
-    {
-        return null;
-    }
-
     public void preInit()
     {
         MinecraftForge.EVENT_BUS.register(TeleportQueue.getInstance());

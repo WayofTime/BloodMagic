@@ -3,13 +3,13 @@ package WayofTime.bloodmagic.item.alchemy;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,7 +25,6 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomAlchemyConsumable
 {
-    @Getter
     private static ArrayList<String> names = new ArrayList<String>();
 
     public static final String BASIC = "basicCuttingFluid";
@@ -45,7 +44,7 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
     {
         if (!stack.hasTagCompound())
             return;
@@ -67,10 +66,13 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
+        if (!isInCreativeTab(creativeTab))
+            return;
+
         for (int i = 0; i < names.size(); i++)
-            list.add(new ItemStack(id, 1, i));
+            list.add(new ItemStack(this, 1, i));
     }
 
     public static ItemStack getStack(String name)
@@ -138,5 +140,9 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
         }
 
         return stack;
+    }
+
+    public static ArrayList<String> getNames() {
+        return names;
     }
 }

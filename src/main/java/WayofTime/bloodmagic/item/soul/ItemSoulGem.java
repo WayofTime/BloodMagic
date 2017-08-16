@@ -7,6 +7,7 @@ import java.util.Locale;
 import javax.annotation.Nullable;
 
 import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -93,9 +94,11 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
+        if (!isInCreativeTab(creativeTab))
+            return;
+
         for (int i = 0; i < names.length; i++)
         {
             ItemStack emptyStack = new ItemStack(this, 1, i);
@@ -115,7 +118,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
     {
         if (!stack.hasTagCompound())
             return;
@@ -125,7 +128,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
         tooltip.add(TextHelper.localize("tooltip.bloodmagic.will", getWill(type, stack)));
         tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentType." + getCurrentType(stack).getName().toLowerCase()));
 
-        super.addInformation(stack, player, tooltip, advanced);
+        super.addInformation(stack, world, tooltip, flag);
     }
 
     @Override

@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.registry.ModPotions;
 
 public class ItemSigilClaw extends ItemSigilToggleableBase
 {
@@ -20,6 +20,6 @@ public class ItemSigilClaw extends ItemSigilToggleableBase
         if (PlayerHelper.isFakePlayer(player))
             return;
 
-        player.addPotionEffect(new PotionEffect(ModPotions.cling, 2, 0, true, false));
+        player.addPotionEffect(new PotionEffect(RegistrarBloodMagic.CLING, 2, 0, true, false));
     }
 }

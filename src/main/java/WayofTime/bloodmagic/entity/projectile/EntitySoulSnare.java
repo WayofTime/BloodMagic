@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.entity.projectile;
 
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.potion.PotionEffect;
@@ -7,7 +8,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.registry.ModPotions;
 
 public class EntitySoulSnare extends EntityThrowable
 {
@@ -41,7 +41,7 @@ public class EntitySoulSnare extends EntityThrowable
         {
             if (result.entityHit instanceof EntityLivingBase && result.entityHit.getEntityWorld().rand.nextDouble() < 0.25)
             {
-                ((EntityLivingBase) result.entityHit).addPotionEffect(new PotionEffect(ModPotions.soulSnare, 300, 0));
+                ((EntityLivingBase) result.entityHit).addPotionEffect(new PotionEffect(RegistrarBloodMagic.SOUL_SNARE, 300, 0));
             }
 
             result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) 0);

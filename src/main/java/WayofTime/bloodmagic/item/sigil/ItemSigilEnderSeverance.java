@@ -3,13 +3,13 @@ package WayofTime.bloodmagic.item.sigil;
 import java.util.List;
 
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.registry.ModPotions;
 
 public class ItemSigilEnderSeverance extends ItemSigilToggleableBase
 {
@@ -28,7 +28,7 @@ public class ItemSigilEnderSeverance extends ItemSigilToggleableBase
         for (Entity entity : entityList)
         {
             if (entity instanceof EntityEnderman)
-                ((EntityEnderman) entity).addPotionEffect(new PotionEffect(ModPotions.planarBinding, 40, 0));
+                ((EntityEnderman) entity).addPotionEffect(new PotionEffect(RegistrarBloodMagic.PLANAR_BINDING, 40, 0));
         }
     }
 }

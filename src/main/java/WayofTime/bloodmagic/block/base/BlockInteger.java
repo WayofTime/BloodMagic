@@ -72,4 +72,16 @@ public class BlockInteger extends Block
     protected BlockStateContainer createStateContainer() {
         return new BlockStateContainer.Builder(this).add(property).build();
     }
+
+    public int getMaxMeta() {
+        return maxMeta;
+    }
+
+    public PropertyInteger getProperty() {
+        return property;
+    }
+
+    public BlockStateContainer getRealStateContainer() {
+        return realStateContainer;
+    }
 }

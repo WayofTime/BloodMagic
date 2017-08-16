@@ -410,7 +410,7 @@ public class Utils
         case BLOODRUNE:
             return RegistrarBloodMagicBlocks.BLOOD_RUNE;
         case CRYSTAL:
-            return RegistrarBloodMagicBlocks.CRYSTAL;
+            return RegistrarBloodMagicBlocks.BLOOD_RUNE;
         case NOTAIR:
             return Blocks.STONEBRICK;
         default:

@@ -7,7 +7,6 @@ import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -74,7 +73,7 @@ public class HUDElementDemonWillAura extends HUDElement
                 String value = "" + (int) amount;
                 GlStateManager.translate(x - 2 * textureXOffset - value.length() * 0 + 70, (y - 1), 0);
                 GlStateManager.scale(0.5, 0.5, 1);
-                minecraft.fontRendererObj.drawStringWithShadow("" + (int) amount, 0, 2, 0xffffff);
+                minecraft.fontRenderer.drawStringWithShadow("" + (int) amount, 0, 2, 0xffffff);
                 GlStateManager.popMatrix();
             }
         }

@@ -5,8 +5,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import mezz.jei.api.*;
+import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
@@ -29,8 +29,6 @@ import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeMaker;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeCategory;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeMaker;
-import WayofTime.bloodmagic.compat.jei.orb.ShapedOrbRecipeHandler;
-import WayofTime.bloodmagic.compat.jei.orb.ShapelessOrbRecipeHandler;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 
@@ -44,9 +42,14 @@ public class BloodMagicPlugin extends BlankModPlugin
     {
         jeiHelper = registry.getJeiHelpers();
 
-        registry.addRecipeCategories(new AltarRecipeCategory(), new BindingRecipeCategory(), new AlchemyArrayCraftingCategory(), new TartaricForgeRecipeCategory(), new AlchemyTableRecipeCategory(), new ArmourDowngradeRecipeCategory());
-
-        registry.addRecipeHandlers(new AltarRecipeHandler(), new BindingRecipeHandler(), new AlchemyArrayCraftingRecipeHandler(), new TartaricForgeRecipeHandler(), new AlchemyTableRecipeHandler(), new ArmourDowngradeRecipeHandler(), new ShapedOrbRecipeHandler(), new ShapelessOrbRecipeHandler());
+        registry.addRecipeHandlers(
+                new AltarRecipeHandler(),
+                new BindingRecipeHandler(),
+                new AlchemyArrayCraftingRecipeHandler(),
+                new TartaricForgeRecipeHandler(),
+                new AlchemyTableRecipeHandler(),
+                new ArmourDowngradeRecipeHandler()
+        );
 
         registry.addRecipes(AltarRecipeMaker.getRecipes());
         registry.addRecipes(BindingRecipeMaker.getRecipes());
@@ -55,14 +58,8 @@ public class BloodMagicPlugin extends BlankModPlugin
         registry.addRecipes(AlchemyTableRecipeMaker.getRecipes());
         registry.addRecipes(ArmourDowngradeRecipeMaker.getRecipes());
 
-        registry.addDescription(new ItemStack(RegistrarBloodMagicItems.ALTAR_MAKER), "jei.bloodmagic.desc.altarBuilder");
-        registry.addDescription(new ItemStack(RegistrarBloodMagicItems.MONSTER_SOUL), "jei.bloodmagic.desc.demonicWill");
-
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_LIGHT));
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(RegistrarBloodMagicBlocks.SPECTRAL));
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(RegistrarBloodMagicBlocks.PHANTOM));
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(RegistrarBloodMagicBlocks.ALCHEMY_ARRAY));
-        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(RegistrarBloodMagicBlocks.DIMENSIONAL_PORTAL, 1, OreDictionary.WILDCARD_VALUE));
+        registry.addIngredientInfo(new ItemStack(RegistrarBloodMagicItems.ALTAR_MAKER), ItemStack.class, "jei.bloodmagic.desc.altarBuilder");
+        registry.addIngredientInfo(new ItemStack(RegistrarBloodMagicItems.MONSTER_SOUL), ItemStack.class, "jei.bloodmagic.desc.demonicWill");
 
         for (Map.Entry<String, Integer> entry : LivingArmourHandler.upgradeMaxLevelMap.entrySet())
         {
@@ -73,22 +70,37 @@ public class BloodMagicPlugin extends BlankModPlugin
                 ItemStack stack = new ItemStack(RegistrarBloodMagicItems.UPGRADE_TOME);
                 LivingUpgrades.setKey(stack, key);
                 LivingUpgrades.setLevel(stack, i);
-                jeiHelper.getItemBlacklist().addItemToBlacklist(stack);
+                jeiHelper.getIngredientBlacklist().addIngredientToBlacklist(stack);
             }
         }
 
         registry.addRecipeClickArea(GuiSoulForge.class, 115, 15, 16, 88, Constants.Compat.JEI_CATEGORY_SOULFORGE);
 
-        registry.addRecipeCategoryCraftingItem(new ItemStack(RegistrarBloodMagicBlocks.ALTAR), Constants.Compat.JEI_CATEGORY_ALTAR);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(RegistrarBloodMagicBlocks.SOUL_FORGE), Constants.Compat.JEI_CATEGORY_SOULFORGE);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES), Constants.Compat.JEI_CATEGORY_ALCHEMYARRAY);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES), Constants.Compat.JEI_CATEGORY_BINDING);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(RegistrarBloodMagicBlocks.ALCHEMY_TABLE), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
-        registry.addRecipeCategoryCraftingItem(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER), Constants.Compat.JEI_CATEGORY_ARMOURDOWNGRADE);
+        registry.addRecipeCatalyst(new ItemStack(RegistrarBloodMagicBlocks.ALTAR), Constants.Compat.JEI_CATEGORY_ALTAR);
+        registry.addRecipeCatalyst(new ItemStack(RegistrarBloodMagicBlocks.SOUL_FORGE), Constants.Compat.JEI_CATEGORY_SOULFORGE);
+        registry.addRecipeCatalyst(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES), Constants.Compat.JEI_CATEGORY_ALCHEMYARRAY);
+        registry.addRecipeCatalyst(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES), Constants.Compat.JEI_CATEGORY_BINDING);
+        registry.addRecipeCatalyst(new ItemStack(RegistrarBloodMagicBlocks.ALCHEMY_TABLE), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
+        registry.addRecipeCatalyst(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER), Constants.Compat.JEI_CATEGORY_ARMOURDOWNGRADE);
     }
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
         subtypeRegistry.useNbtForSubtypes(RegistrarBloodMagicItems.UPGRADE_TOME);
+    }
+
+    @Override
+    public void registerCategories(IRecipeCategoryRegistration registry) {
+        if (jeiHelper == null)
+            jeiHelper = registry.getJeiHelpers();
+
+        registry.addRecipeCategories(
+                new AltarRecipeCategory(),
+                new BindingRecipeCategory(),
+                new AlchemyArrayCraftingCategory(),
+                new TartaricForgeRecipeCategory(),
+                new AlchemyTableRecipeCategory(),
+                new ArmourDowngradeRecipeCategory()
+        );
     }
 }

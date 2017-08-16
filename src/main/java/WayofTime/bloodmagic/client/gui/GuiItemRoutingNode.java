@@ -80,7 +80,7 @@ public class GuiItemRoutingNode extends GuiContainer
         this.buttonList.add(this.decrementButton = new GuiButton(7, left + 132, top + 50, 10, 18, "<"));
         disableDirectionalButton(inventory.currentActiveSlot);
 
-        this.textBox = new GuiTextField(0, this.fontRendererObj, left + 94, top + 37, 70, 12);
+        this.textBox = new GuiTextField(0, this.fontRenderer, left + 94, top + 37, 70, 12);
         this.textBox.setEnableBackgroundDrawing(false);
         this.textBox.setText("");
     }
@@ -155,7 +155,7 @@ public class GuiItemRoutingNode extends GuiContainer
     {
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        Minecraft.getMinecraft().fontRendererObj.drawString(inventory.getName(), xSize, ySize / 4, 4210752);
+        Minecraft.getMinecraft().fontRenderer.drawString(inventory.getName(), xSize, ySize / 4, 4210752);
     }
 
     /**
@@ -193,7 +193,7 @@ public class GuiItemRoutingNode extends GuiContainer
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        this.fontRendererObj.drawString("" + getCurrentActiveSlotPriority(), 143 + 5, 51 + 4, 0xFFFFFF);
+        this.fontRenderer.drawString("" + getCurrentActiveSlotPriority(), 143 + 5, 51 + 4, 0xFFFFFF);
         String s = "";
         if (container.lastGhostSlotClicked != -1)
         {
@@ -204,7 +204,7 @@ public class GuiItemRoutingNode extends GuiContainer
             }
         }
 
-        this.fontRendererObj.drawStringWithShadow(s.substring(0, Math.min(16, s.length())), 81, 19, 0xFFFFFF);
+        this.fontRenderer.drawStringWithShadow(s.substring(0, Math.min(16, s.length())), 81, 19, 0xFFFFFF);
     }
 
     @Override

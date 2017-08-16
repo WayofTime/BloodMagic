@@ -29,8 +29,8 @@ public class GuiAlchemyTable extends GuiContainer
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        this.fontRendererObj.drawString(TextHelper.localize("tile.bloodmagic.alchemyTable.name"), 8, 5, 4210752);
-        this.fontRendererObj.drawString(TextHelper.localize("container.inventory"), 8, 111, 4210752);
+        this.fontRenderer.drawString(TextHelper.localize("tile.bloodmagic.alchemyTable.name"), 8, 5, 4210752);
+        this.fontRenderer.drawString(TextHelper.localize("container.inventory"), 8, 111, 4210752);
     }
 
     @Override

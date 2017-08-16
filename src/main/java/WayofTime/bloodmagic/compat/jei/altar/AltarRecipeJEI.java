@@ -55,7 +55,7 @@ public class AltarRecipeJEI extends BlankRecipeWrapper
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
-        minecraft.fontRendererObj.drawString(infoString[0], 90 - minecraft.fontRendererObj.getStringWidth(infoString[0]) / 2, 0, Color.gray.getRGB());
-        minecraft.fontRendererObj.drawString(infoString[1], 90 - minecraft.fontRendererObj.getStringWidth(infoString[1]) / 2, 10, Color.gray.getRGB());
+        minecraft.fontRenderer.drawString(infoString[0], 90 - minecraft.fontRenderer.getStringWidth(infoString[0]) / 2, 0, Color.gray.getRGB());
+        minecraft.fontRenderer.drawString(infoString[1], 90 - minecraft.fontRenderer.getStringWidth(infoString[1]) / 2, 10, Color.gray.getRGB());
     }
 }

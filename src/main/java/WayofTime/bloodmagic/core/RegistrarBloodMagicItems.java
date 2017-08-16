@@ -77,7 +77,7 @@ public class RegistrarBloodMagicItems
     public static final Item SIGIL_CLAW = Items.AIR;
     public static final Item SIGIL_BOUNCE = Items.AIR;
     public static final Item SIGIL_FROST = Items.AIR;
-    public static final Item ITEM_COMPONENT = Items.AIR;
+    public static final Item COMPONENT = Items.AIR;
     public static final Item ITEM_DEMON_CRYSTAL = Items.AIR;
     public static final Item TELEPOSITION_FOCUS = Items.AIR;
     public static final Item EXPERIENCE_TOME = Items.AIR;
@@ -160,7 +160,7 @@ public class RegistrarBloodMagicItems
                 new ItemSigilBounce().setRegistryName("sigil_bounce"),
                 new ItemSigilFrost().setRegistryName("sigil_frost"),
                 new ItemComponent().setRegistryName("component"),
-                new ItemDemonCrystal().setRegistryName("demon_crystal"),
+                new ItemDemonCrystal().setRegistryName("item_demon_crystal"),
                 new ItemTelepositionFocus().setRegistryName("teleposition_focus"),
                 new ItemExperienceBook().setRegistryName("experience_book"),
                 new ItemBloodShard().setRegistryName("blood_shard"),

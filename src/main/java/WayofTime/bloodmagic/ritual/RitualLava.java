@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,7 +30,6 @@ import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.soul.DemonWillHolder;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.util.Utils;
 
 public class RitualLava extends Ritual
@@ -166,9 +166,9 @@ public class RitualLava extends Ritual
                     continue;
                 }
 
-                if (!entity.isPotionActive(ModPotions.fireFuse))
+                if (!entity.isPotionActive(RegistrarBloodMagic.FIRE_FUSE))
                 {
-                    entity.addPotionEffect(new PotionEffect(ModPotions.fireFuse, 100, 0));
+                    entity.addPotionEffect(new PotionEffect(RegistrarBloodMagic.FIRE_FUSE, 100, 0));
 
                     vengefulDrained += vengefulWillDrain;
                     vengefulWill -= vengefulWillDrain;

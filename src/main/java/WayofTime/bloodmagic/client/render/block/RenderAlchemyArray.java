@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 public class RenderAlchemyArray extends TileEntitySpecialRenderer<TileAlchemyArray>
 {
     @Override
-    public void renderTileEntityAt(TileAlchemyArray alchemyArray, double x, double y, double z, float partialTicks, int destroyStage)
+    public void render(TileAlchemyArray alchemyArray, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
         ItemStack inputStack = alchemyArray.getStackInSlot(0);
         ItemStack catalystStack = alchemyArray.getStackInSlot(1);

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.BloodMagic;
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -100,5 +101,10 @@ public class TartaricForgeRecipeCategory implements IRecipeCategory
             guiItemStacks.set(INPUT_SLOT, ingredients.getInputs(ItemStack.class).get(0));
             craftingGridHelper.setInputs(guiItemStacks, inputs);
         }
+    }
+
+    @Override
+    public String getModName() {
+        return BloodMagic.NAME;
     }
 }

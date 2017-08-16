@@ -7,6 +7,7 @@ import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.iface.IDocumentedBlock;
+import WayofTime.bloodmagic.api.orb.BloodOrb;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -76,13 +77,13 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
             {
                 if (orbStack.getItem() instanceof IBloodOrb && orbStack.getItem() instanceof IBindable)
                 {
-                    IBloodOrb bloodOrb = (IBloodOrb) orbStack.getItem();
+                    BloodOrb orb = ((IBloodOrb) orbStack.getItem()).getOrb(orbStack);
                     IBindable bindable = (IBindable) orbStack.getItem();
-                    if (!Strings.isNullOrEmpty(bindable.getOwnerUUID(orbStack)))
+                    if (orb != null && !Strings.isNullOrEmpty(bindable.getOwnerUUID(orbStack)))
                     {
                         SoulNetwork soulNetwork = NetworkHelper.getSoulNetwork(bindable.getOwnerUUID(orbStack));
 
-                        int maxEssence = bloodOrb.getMaxEssence(orbStack.getItemDamage());
+                        int maxEssence = orb.getCapacity();
                         int currentEssence = soulNetwork.getCurrentEssence();
                         int level = currentEssence * 15 / maxEssence;
                         return Math.min(15, level) % 16;

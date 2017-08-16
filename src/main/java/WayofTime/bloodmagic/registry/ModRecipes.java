@@ -89,7 +89,7 @@ public class ModRecipes
     {
         initOreDict();
         addFurnaceRecipes();
-        addCraftingRecipes();
+//        addCraftingRecipes();
         addAltarRecipes();
         addAlchemyArrayRecipes();
         addSoulForgeRecipes();

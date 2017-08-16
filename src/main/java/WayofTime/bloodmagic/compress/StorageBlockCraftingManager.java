@@ -25,7 +25,7 @@ public class StorageBlockCraftingManager
 
     public void addStorageBlockRecipes()
     {
-        this.recipes = new StorageBlockCraftingRecipeAssimilator().getPackingRecipes();
+//        this.recipes = new StorageBlockCraftingRecipeAssimilator().getPackingRecipes();
 
         BloodMagic.instance.logger.info("Total number of compression recipes: " + this.recipes.size());
     }

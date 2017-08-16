@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.client.render.entity.layer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -32,7 +32,7 @@ public class LayerAlchemyCircle<T extends EntityCorruptedSheep> implements Layer
         }
 
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer wr = tessellator.getBuffer();
+        BufferBuilder wr = tessellator.getBuffer();
 
         GlStateManager.pushMatrix();
         float rot = this.rotationspeed * (partialTicks + demon.ticksExisted);

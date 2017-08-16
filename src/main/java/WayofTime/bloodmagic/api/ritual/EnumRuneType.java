@@ -1,9 +1,11 @@
 package WayofTime.bloodmagic.api.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.Locale;
 
@@ -16,6 +18,9 @@ public enum EnumRuneType implements IStringSerializable
     AIR(TextFormatting.WHITE),
     DUSK(TextFormatting.DARK_GRAY),
     DAWN(TextFormatting.GOLD);
+
+    @GameRegistry.ObjectHolder("bloodmagic:inscription_tool")
+    public static final Item INSCRIPTION_TOOL = Items.AIR;
 
     public final TextFormatting colorCode;
 
@@ -34,7 +39,7 @@ public enum EnumRuneType implements IStringSerializable
 
     public ItemStack getScribeStack()
     {
-        return new ItemStack(Constants.BloodMagicItem.INSCRIPTION_TOOL.getItem(), 1, ordinal());
+        return new ItemStack(INSCRIPTION_TOOL, 1, ordinal());
     }
 
     @Override

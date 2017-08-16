@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.compat.jei.armourDowngrade;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.BloodMagic;
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -93,5 +94,10 @@ public class ArmourDowngradeRecipeCategory implements IRecipeCategory
             guiItemStacks.set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
             craftingGridHelper.setInputs(guiItemStacks, ingredients.getInputs(ItemStack.class), 3, 2);
         }
+    }
+
+    @Override
+    public String getModName() {
+        return BloodMagic.NAME;
     }
 }

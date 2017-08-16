@@ -6,9 +6,9 @@ import WayofTime.bloodmagic.api.iface.INodeRenderer;
 import WayofTime.bloodmagic.client.helper.ShaderHelper;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -23,10 +23,8 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
     private static final ResourceLocation beamTexture = new ResourceLocation(BloodMagic.MODID, "textures/entities/nodeBeam.png");
     private static final Minecraft mc = Minecraft.getMinecraft();
 
-//    private static final ResourceLocation test = new ResourceLocation("luminescence:textures/models/InputMirror.png");
-
     @Override
-    public void renderTileEntityAt(TileRoutingNode tileNode, double x, double y, double z, float partialTicks, int destroyStage)
+    public void render(TileRoutingNode tileNode, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
         if (mc.player.getHeldItemMainhand().getItem() instanceof INodeRenderer || ConfigHandler.alwaysRenderRoutingLines)
         {
@@ -48,7 +46,7 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
                 GlStateManager.pushMatrix();
                 float f1 = 1.0f;
                 Tessellator tessellator = Tessellator.getInstance();
-                VertexBuffer wr = tessellator.getBuffer();
+                BufferBuilder wr = tessellator.getBuffer();
                 this.bindTexture(beamTexture);
                 GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
                 GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);

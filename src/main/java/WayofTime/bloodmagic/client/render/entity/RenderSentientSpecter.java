@@ -40,18 +40,8 @@ public class RenderSentientSpecter extends RenderBiped<EntitySentientSpecter>
      */
     public void doRender(EntitySentientSpecter entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-//        if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Pre(entity, this, partialTicks, x, y, z)))
-//            return;
-//        if (!entity.isUser() || this.renderManager.renderViewEntity == entity)
-        {
-            double d0 = y;
-
-            this.setModelVisibilities(entity);
-//            GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
-            super.doRender(entity, x, d0, z, entityYaw, partialTicks);
-//            GlStateManager.disableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
-        }
-//        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Post(entity, this, partialTicks, x, y, z));
+        this.setModelVisibilities(entity);
+        super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 
     private void setModelVisibilities(EntitySentientSpecter clientPlayer)
@@ -60,13 +50,13 @@ public class RenderSentientSpecter extends RenderBiped<EntitySentientSpecter>
 
         ItemStack itemstack = clientPlayer.getHeldItemMainhand();
         ItemStack itemstack1 = clientPlayer.getHeldItemOffhand();
-        modelplayer.setInvisible(true);
+        modelplayer.setVisible(false);
 
         modelplayer.isSneak = clientPlayer.isSneaking();
         ModelBiped.ArmPose modelbiped$armpose = ModelBiped.ArmPose.EMPTY;
         ModelBiped.ArmPose modelbiped$armpose1 = ModelBiped.ArmPose.EMPTY;
 
-        if (itemstack != null)
+        if (!itemstack.isEmpty())
         {
             modelbiped$armpose = ModelBiped.ArmPose.ITEM;
 
@@ -84,7 +74,7 @@ public class RenderSentientSpecter extends RenderBiped<EntitySentientSpecter>
             }
         }
 
-        if (itemstack1 != null)
+        if (!itemstack1.isEmpty())
         {
             modelbiped$armpose1 = ModelBiped.ArmPose.ITEM;
 
@@ -134,40 +124,4 @@ public class RenderSentientSpecter extends RenderBiped<EntitySentientSpecter>
         float f = 0.9375F;
         GlStateManager.scale(0.9375F, 0.9375F, 0.9375F);
     }
-
-//    public void renderRightArm(EntitySentientSpecter clientPlayer)
-//    {
-//        float f = 1.0F;
-//        GlStateManager.color(1.0F, 1.0F, 1.0F);
-//        float f1 = 0.0625F;
-//        ModelBiped modelplayer = this.getMainModel();
-//        this.setModelVisibilities(clientPlayer);
-//        GlStateManager.enableBlend();
-//        modelplayer.swingProgress = 0.0F;
-//        modelplayer.isSneak = false;
-//        modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, clientPlayer);
-//        modelplayer.bipedRightArm.rotateAngleX = 0.0F;
-//        modelplayer.bipedRightArm.render(0.0625F);
-//        modelplayer.bipedRightArmwear.rotateAngleX = 0.0F;
-//        modelplayer.bipedRightArmwear.render(0.0625F);
-//        GlStateManager.disableBlend();
-//    }
-//
-//    public void renderLeftArm(EntitySentientSpecter clientPlayer)
-//    {
-//        float f = 1.0F;
-//        GlStateManager.color(1.0F, 1.0F, 1.0F);
-//        float f1 = 0.0625F;
-//        ModelBiped modelplayer = this.getMainModel();
-//        this.setModelVisibilities(clientPlayer);
-//        GlStateManager.enableBlend();
-//        modelplayer.isSneak = false;
-//        modelplayer.swingProgress = 0.0F;
-//        modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, clientPlayer);
-//        modelplayer.bipedLeftArm.rotateAngleX = 0.0F;
-//        modelplayer.bipedLeftArm.render(0.0625F);
-//        modelplayer.bipedLeftArmwear.rotateAngleX = 0.0F;
-//        modelplayer.bipedLeftArmwear.render(0.0625F);
-//        GlStateManager.disableBlend();
-//    }
 }

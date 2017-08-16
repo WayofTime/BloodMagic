@@ -155,19 +155,6 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect
         @Override
         public boolean shouldExecute()
         {
-            return continueExecuting();
-        }
-
-        @Override
-        public void resetTask()
-        {
-            started = false;
-            updatesSincePathing = 0;
-        }
-
-        @Override
-        public boolean continueExecuting()
-        {
             boolean res = false;
             //TODO:
             TileEntity te = mob.getEntityWorld().getTileEntity(coord);
@@ -177,6 +164,13 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect
             }
 
             return res;
+        }
+
+        @Override
+        public void resetTask()
+        {
+            started = false;
+            updatesSincePathing = 0;
         }
 
         @Override

@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.api.util.helper;
 
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
+import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.api.saving.BMWorldSavedData;
@@ -87,9 +88,11 @@ public class NetworkHelper
         if (tier > OrbRegistry.getTierMap().size() || tier < 0)
             return ret;
 
-        for (ItemStack orbStack : OrbRegistry.getOrbsForTier(tier))
-            if (((IBloodOrb) orbStack.getItem()).getMaxEssence(orbStack.getItemDamage()) > ret)
-                ret = ((IBloodOrb) orbStack.getItem()).getMaxEssence(orbStack.getItemDamage());
+        for (ItemStack orbStack : OrbRegistry.getOrbsForTier(tier)) {
+            BloodOrb orb = ((IBloodOrb) orbStack.getItem()).getOrb(orbStack);
+            if (orb.getCapacity() > ret)
+                ret = orb.getCapacity();
+        }
 
         return ret;
     }

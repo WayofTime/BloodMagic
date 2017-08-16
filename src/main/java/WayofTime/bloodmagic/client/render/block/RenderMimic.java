@@ -10,14 +10,14 @@ import WayofTime.bloodmagic.tile.TileMimic;
 @SideOnly(Side.CLIENT)
 public class RenderMimic extends TileEntitySpecialRenderer<TileMimic>
 {
-    public void renderTileEntityAt(TileMimic mimic, double x, double y, double z, float partialTicks, int destroyStage)
+    public void render(TileMimic mimic, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
         if (mimic.getStackInSlot(0) != null)
         {
             TileEntity testTile = mimic.mimicedTile;
             if (mimic != null)
             {
-                TileEntityRendererDispatcher.instance.renderTileEntityAt(testTile, x, y, z, partialTicks, destroyStage);
+                TileEntityRendererDispatcher.instance.render(testTile, x, y, z, partialTicks, destroyStage);
             }
         }
     }

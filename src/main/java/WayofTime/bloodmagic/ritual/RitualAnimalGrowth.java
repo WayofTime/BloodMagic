@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -22,7 +23,6 @@ import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.util.Utils;
 
 public class RitualAnimalGrowth extends Ritual
@@ -126,9 +126,9 @@ public class RitualAnimalGrowth extends Ritual
                 {
                     if (destructiveWill >= destructiveWillDrain)
                     {
-                        if (!animal.isPotionActive(ModPotions.sacrificialLamb))
+                        if (!animal.isPotionActive(RegistrarBloodMagic.SACRIFICIAL_LAMB))
                         {
-                            animal.addPotionEffect(new PotionEffect(ModPotions.sacrificialLamb, 1200));
+                            animal.addPotionEffect(new PotionEffect(RegistrarBloodMagic.SACRIFICIAL_LAMB, 1200));
                             destructiveDrain += destructiveWillDrain;
                             destructiveWill -= destructiveWillDrain;
                             performedEffect = true;

@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.api.alchemyCrafting;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -81,7 +81,7 @@ public class AlchemyCircleRenderer
         TileAlchemyArray tileArray = (TileAlchemyArray) tile;
 
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer wr = tessellator.getBuffer();
+        BufferBuilder wr = tessellator.getBuffer();
 
         GlStateManager.pushMatrix();
         // float rot = (float)(this.worldObj.provider.getWorldTime() % (360 /

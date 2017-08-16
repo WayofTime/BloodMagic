@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -28,7 +29,6 @@ import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
-import WayofTime.bloodmagic.registry.ModPotions;
 
 public class RitualFeatheredKnife extends Ritual
 {
@@ -135,7 +135,7 @@ public class RitualFeatheredKnife extends Ritual
                 float sacrificedHealth = 1;
                 double lpModifier = 1;
 
-                if ((health / player.getMaxHealth() > healthThreshold) && (!useIncense || !player.isPotionActive(ModPotions.soulFray)))
+                if ((health / player.getMaxHealth() > healthThreshold) && (!useIncense || !player.isPotionActive(RegistrarBloodMagic.SOUL_FRAY)))
                 {
                     if (useIncense)
                     {
@@ -145,7 +145,7 @@ public class RitualFeatheredKnife extends Ritual
                         lpModifier *= PlayerSacrificeHelper.getModifier(incenseAmount);
 
                         PlayerSacrificeHelper.setPlayerIncense(player, 0);
-                        player.addPotionEffect(new PotionEffect(ModPotions.soulFray, PlayerSacrificeHelper.soulFrayDuration));
+                        player.addPotionEffect(new PotionEffect(RegistrarBloodMagic.SOUL_FRAY, PlayerSacrificeHelper.soulFrayDuration));
                     }
 
                     if (destructiveWill >= destructiveWillDrain * sacrificedHealth)

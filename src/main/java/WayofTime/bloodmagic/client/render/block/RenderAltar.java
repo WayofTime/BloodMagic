@@ -30,7 +30,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
     public static float maxHeight = 0.745f;
 
     @Override
-    public void renderTileEntityAt(TileAltar tileAltar, double x, double y, double z, float partialTicks, int destroyStage)
+    public void render(TileAltar tileAltar, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
         ItemStack inputStack = tileAltar.getStackInSlot(0);
 
@@ -40,7 +40,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
         GlStateManager.translate(x, y, z);
         if (level > 0)
             this.renderFluid(getWorld(), level);
-        this.renderItem(tileAltar.getWorld(), inputStack, partialTicks);
+        this.renderItem(tileAltar.getWorld(), inputStack);
         GlStateManager.popMatrix();
 
         if (tileAltar.getCurrentTierDisplayed() != EnumAltarTier.ONE)
@@ -59,7 +59,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
         GlStateManager.translate(0.5, minHeight + (fluidLevel) * (maxHeight - minHeight), 0.5);
 
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer wr = tessellator.getBuffer();
+        BufferBuilder wr = tessellator.getBuffer();
 
         float size = 0.8f;
 
@@ -95,14 +95,14 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
         GlStateManager.color(red, green, blue, 1.0F);
     }
 
-    private void renderItem(World world, ItemStack stack, float partialTicks)
+    private void renderItem(World world, ItemStack stack)
     {
         RenderItem itemRenderer = mc.getRenderItem();
-        if (stack != null)
+        if (!stack.isEmpty())
         {
             GlStateManager.translate(0.5, 1, 0.5);
             EntityItem entityitem = new EntityItem(world, 0.0D, 0.0D, 0.0D, stack);
-            entityitem.getEntityItem().setCount(1);
+            entityitem.getItem().setCount(1);
             entityitem.hoverStart = 0.0F;
             GlStateManager.pushMatrix();
             GlStateManager.disableLighting();
@@ -113,7 +113,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
             GlStateManager.scale(0.5F, 0.5F, 0.5F);
             GlStateManager.pushAttrib();
             RenderHelper.enableStandardItemLighting();
-            itemRenderer.renderItem(entityitem.getEntityItem(), ItemCameraTransforms.TransformType.FIXED);
+            itemRenderer.renderItem(entityitem.getItem(), ItemCameraTransforms.TransformType.FIXED);
             RenderHelper.disableStandardItemLighting();
             GlStateManager.popAttrib();
 

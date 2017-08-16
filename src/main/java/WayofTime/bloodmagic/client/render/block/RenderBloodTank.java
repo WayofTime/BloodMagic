@@ -2,10 +2,10 @@ package WayofTime.bloodmagic.client.render.block;
 
 import WayofTime.bloodmagic.tile.TileBloodTank;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -21,7 +21,7 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
     private static final Minecraft mc = Minecraft.getMinecraft();
 
     @Override
-    public void renderTileEntityAt(TileBloodTank bloodTank, double x, double y, double z, float partialTicks, int destroyStage)
+    public void render(TileBloodTank bloodTank, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
         if (bloodTank == null)
             return;
@@ -50,7 +50,7 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
         GlStateManager.disableBlend();
 
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer buffer = tessellator.getBuffer();
+        BufferBuilder buffer = tessellator.getBuffer();
 
         TextureAtlasSprite fluid = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(renderFluid.getStill().toString());
         fluid = fluid == null ? mc.getTextureMapBlocks().getMissingSprite() : fluid;

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
-import lombok.Getter;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
@@ -16,9 +15,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
 {
-    @Getter
     private TartaricForgeRecipe recipe;
-    @Getter
     private List<ItemStack> validGems = new ArrayList<ItemStack>();
 
     public TartaricForgeRecipeJEI(TartaricForgeRecipe recipe)
@@ -69,5 +66,13 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
             this.willStack = willStack;
             this.minSouls = minSouls;
         }
+    }
+
+    public TartaricForgeRecipe getRecipe() {
+        return recipe;
+    }
+
+    public List<ItemStack> getValidGems() {
+        return validGems;
     }
 }

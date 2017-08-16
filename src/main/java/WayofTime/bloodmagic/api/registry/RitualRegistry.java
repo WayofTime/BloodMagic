@@ -33,15 +33,15 @@ public class RitualRegistry
     {
         if (locked)
         {
-            BloodMagicAPI.getLogger().error("This registry has been locked. Please register your ritual earlier.");
-            BloodMagicAPI.getLogger().error("If you reflect this, I will hunt you down. - TehNut");
+            BloodMagicAPI.logger.error("This registry has been locked. Please register your ritual earlier.");
+            BloodMagicAPI.logger.error("If you reflect this, I will hunt you down. - TehNut");
             return;
         }
 
         if (ritual != null)
         {
             if (registry.containsKey(id))
-                BloodMagicAPI.getLogger().error("Duplicate ritual id: %s", id);
+                BloodMagicAPI.logger.error("Duplicate ritual id: %s", id);
             else
             {
                 registry.put(id, ritual);
@@ -95,7 +95,7 @@ public class RitualRegistry
             return enabledRituals.get(ritual);
         } catch (NullPointerException e)
         {
-            BloodMagicAPI.getLogger().error("Invalid Ritual was called");
+            BloodMagicAPI.logger.error("Invalid Ritual was called");
             return false;
         }
     }

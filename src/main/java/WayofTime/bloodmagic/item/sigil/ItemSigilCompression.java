@@ -20,6 +20,9 @@ public class ItemSigilCompression extends ItemSigilToggleableBase
     @Override
     public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
     {
+        if (true)
+            return; // TODO - Rewrite compression system
+
         if (PlayerHelper.isFakePlayer(player))
             return;
 

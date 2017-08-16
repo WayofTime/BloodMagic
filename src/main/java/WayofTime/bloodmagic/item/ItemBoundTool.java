@@ -12,9 +12,9 @@ import WayofTime.bloodmagic.util.Utils;
 import com.google.common.base.Strings;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -47,7 +47,6 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multiset;
 
-@Getter
 public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
 {
     protected final String tooltipBase;
@@ -72,7 +71,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     @Override
     public float getStrVsBlock(ItemStack stack, IBlockState state)
     {
-        return getActivated(stack) ? getToolMaterial().getEfficiencyOnProperMaterial() : 1.0F;
+        return getActivated(stack) ? toolMaterial.getEfficiencyOnProperMaterial() : 1.0F;
     }
 
     @Override
@@ -82,10 +81,12 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
-        subItems.add(Utils.setUnbreakable(new ItemStack(itemIn)));
+        if (isInCreativeTab(tab))
+            return;
+
+        subItems.add(Utils.setUnbreakable(new ItemStack(this)));
     }
 
     @Override
@@ -146,10 +147,10 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
         {
             BoundToolEvent.Charge event = new BoundToolEvent.Charge(player, stack);
             if (MinecraftForge.EVENT_BUS.post(event))
-                return new ActionResult<ItemStack>(EnumActionResult.FAIL, event.result);
+                return new ActionResult<>(EnumActionResult.FAIL, event.result);
 
             player.setActiveHand(hand);
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+            return new ActionResult<>(EnumActionResult.SUCCESS, stack);
         }
 
         return super.onItemRightClick(world, player, hand);
@@ -207,7 +208,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
     {
         if (TextHelper.canTranslate(tooltipBase + "desc"))
             tooltip.add(TextHelper.localizeEffect(tooltipBase + "desc"));
@@ -220,7 +221,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
         if (!Strings.isNullOrEmpty(getOwnerUUID(stack)))
             tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
 
-        super.addInformation(stack, player, tooltip, advanced);
+        super.addInformation(stack, world, tooltip, flag);
     }
 
     @Override
@@ -303,5 +304,25 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
         }
 
         return null;
+    }
+
+    public String getTooltipBase() {
+        return tooltipBase;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Map<ItemStack, Boolean> getHeldDownMap() {
+        return heldDownMap;
+    }
+
+    public Map<ItemStack, Integer> getHeldDownCountMap() {
+        return heldDownCountMap;
+    }
+
+    public int getChargeTime() {
+        return chargeTime;
     }
 }

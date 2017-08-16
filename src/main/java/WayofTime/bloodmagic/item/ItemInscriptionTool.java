@@ -6,6 +6,7 @@ import java.util.List;
 
 import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -48,11 +49,14 @@ public class ItemInscriptionTool extends ItemBindableBase implements IVariantPro
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, NonNullList<ItemStack> list)
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
     {
+        if (!isInCreativeTab(creativeTab))
+            return;
+
         for (int i = 1; i < EnumRuneType.values().length; i++)
         {
-            ItemStack stack = NBTHelper.checkNBT(new ItemStack(id, 1, i));
+            ItemStack stack = NBTHelper.checkNBT(new ItemStack(this, 1, i));
             stack.getTagCompound().setInteger(Constants.NBT.USES, 10);
             list.add(stack);
         }
@@ -106,10 +110,10 @@ public class ItemInscriptionTool extends ItemBindableBase implements IVariantPro
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced)
+    public void addInformation(ItemStack stack, World world, List<String> list, ITooltipFlag flag)
     {
         list.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.inscriber.desc"))));
-        super.addInformation(stack, player, list, advanced);
+        super.addInformation(stack, world, list, flag);
     }
 
     @Override

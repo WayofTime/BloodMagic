@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.api.util.helper;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
-import WayofTime.bloodmagic.registry.ModPotions;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -82,7 +82,7 @@ public class PlayerSacrificeHelper
                 {
                     player.setHealth(maxHealth / 10.0f);
                     setPlayerIncense(player, 0);
-                    player.addPotionEffect(new PotionEffect(ModPotions.soulFray, soulFrayDuration));
+                    player.addPotionEffect(new PotionEffect(RegistrarBloodMagic.SOUL_FRAY, soulFrayDuration));
 
                     return true;
                 }

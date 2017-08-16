@@ -20,7 +20,7 @@ public class CustomMeshDefinitionMultiWill implements ItemMeshDefinition
     @Override
     public ModelResourceLocation getModelLocation(ItemStack stack)
     {
-        if (stack != null && stack.getItem() instanceof IMultiWillTool)
+        if (!stack.isEmpty() && stack.getItem() instanceof IMultiWillTool)
         {
             EnumDemonWillType type = ((IMultiWillTool) stack.getItem()).getCurrentType(stack);
             return new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/" + name), "type=" + type.getName().toLowerCase());

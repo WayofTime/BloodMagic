@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.api.alchemyCrafting;
 
-import lombok.Getter;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,7 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect
 {
-    @Getter
     public final ItemStack outputStack;
     public int tickLimit;
 

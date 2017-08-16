@@ -287,10 +287,10 @@ public class RitualAltarBuilder extends Ritual
 
                 for (int i = 0; i < itemHandler.getSlots(); i++)
                 {
-                    if (!itemHandler.getStackInSlot(i).isEmpty() && itemHandler.getStackInSlot(i).getItem() instanceof ItemBlock && !(Block.getBlockFromItem(itemHandler.getStackInSlot(i).getItem()) instanceof BlockBloodRune) && itemHandler.extractItem(i, 1, true) != null)
+                    if (!itemHandler.getStackInSlot(i).isEmpty() && itemHandler.getStackInSlot(i).getItem() instanceof ItemBlock && !(Block.getBlockFromItem(itemHandler.getStackInSlot(i).getItem()) instanceof BlockBloodRune) && !itemHandler.extractItem(i, 1, true).isEmpty())
                     {
                         Block block = Block.getBlockFromItem(itemHandler.getStackInSlot(i).getItem());
-                        if (block != null && block != Blocks.GLOWSTONE && block != RegistrarBloodMagicBlocks.DECORATIVE_BRICK && block != RegistrarBloodMagicBlocks.CRYSTAL)
+                        if (block != Blocks.AIR && block != Blocks.GLOWSTONE && block != RegistrarBloodMagicBlocks.DECORATIVE_BRICK)
                         {
                             BlockStack blockStack = new BlockStack(block, itemHandler.getStackInSlot(i).getItemDamage());
                             itemHandler.extractItem(i, 1, false);
@@ -306,7 +306,7 @@ public class RitualAltarBuilder extends Ritual
                     if (!inv.getStackInSlot(i).isEmpty() && inv.getStackInSlot(i).getItem() instanceof ItemBlock && !(Block.getBlockFromItem(inv.getStackInSlot(i).getItem()) instanceof BlockBloodRune))
                     {
                         Block block = Block.getBlockFromItem(inv.getStackInSlot(i).getItem());
-                        if (block != Blocks.GLOWSTONE && block != RegistrarBloodMagicBlocks.DECORATIVE_BRICK && block != RegistrarBloodMagicBlocks.CRYSTAL)
+                        if (block != Blocks.GLOWSTONE && block != RegistrarBloodMagicBlocks.DECORATIVE_BRICK)
                         {
                             BlockStack blockStack = new BlockStack(block, inv.getStackInSlot(i).getItemDamage());
                             inv.decrStackSize(i, 1);

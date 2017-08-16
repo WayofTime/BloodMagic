@@ -5,7 +5,6 @@ import java.util.List;
 
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
 import com.google.common.collect.Lists;
-import lombok.Getter;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
@@ -14,7 +13,6 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class AlchemyTableRecipeJEI extends BlankRecipeWrapper
 {
-    @Getter
     private AlchemyTableRecipe recipe;
 
     public AlchemyTableRecipeJEI(AlchemyTableRecipe recipe)
@@ -40,5 +38,9 @@ public class AlchemyTableRecipeJEI extends BlankRecipeWrapper
             ret.add(TextHelper.localize("jei.bloodmagic.recipe.ticksRequired", recipe.getTicksRequired()));
         }
         return ret;
+    }
+
+    public AlchemyTableRecipe getRecipe() {
+        return recipe;
     }
 }

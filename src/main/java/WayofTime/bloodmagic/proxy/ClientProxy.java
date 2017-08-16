@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.proxy;
 
 import java.awt.Color;
+import java.util.Map;
 
 import WayofTime.bloodmagic.client.key.KeyBindings;
 import WayofTime.bloodmagic.client.render.block.*;
@@ -8,11 +9,9 @@ import WayofTime.bloodmagic.tile.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
@@ -57,11 +56,8 @@ import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
-import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
-import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -69,33 +65,12 @@ public class ClientProxy extends CommonProxy
 {
     public static DemonWillHolder currentAura = new DemonWillHolder();
 
-    private InventoryRenderHelper renderHelper;
-    private InventoryRenderHelperV2 renderHelperV2;
-
-    @Override
-    public InventoryRenderHelper getRenderHelper()
-    {
-        return renderHelper;
-    }
-
-    @Override
-    public InventoryRenderHelperV2 getRenderHelperV2()
-    {
-        return renderHelperV2;
-    }
-
     @Override
     public void preInit()
     {
         super.preInit();
 
-        renderHelper = new InventoryRenderHelper(Constants.Mod.DOMAIN);
-        renderHelperV2 = new InventoryRenderHelperV2(Constants.Mod.DOMAIN);
-
         OBJLoader.INSTANCE.addDomain(BloodMagic.MODID);
-
-        RegistrarBloodMagicBlocks.initRenders();
-        RegistrarBloodMagicItems.initRenders();
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileInversionPillar.class, new AnimationTESR<TileInversionPillar>()
         {
@@ -139,36 +114,26 @@ public class ClientProxy extends CommonProxy
     public void init()
     {
         super.init();
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor()
-        {
-            @Override
-            public int getColorFromItemstack(ItemStack stack, int tintIndex)
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) -> {
+            try
             {
-                try
-                {
-                    if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.COLOR))
-                        if (tintIndex == 1)
-                            return Color.decode(stack.getTagCompound().getString(Constants.NBT.COLOR)).getRGB();
-                } catch (NumberFormatException e)
-                {
-                    return -1;
-                }
+                if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.COLOR))
+                    if (tintIndex == 1)
+                        return Color.decode(stack.getTagCompound().getString(Constants.NBT.COLOR)).getRGB();
+            } catch (NumberFormatException e)
+            {
                 return -1;
             }
+            return -1;
         }, RegistrarBloodMagicItems.SIGIL_HOLDING);
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor()
-        {
-            @Override
-            public int getColorFromItemstack(ItemStack stack, int tintIndex)
-            {
-                if (tintIndex != 0 && tintIndex != 2)
-                    return -1;
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) -> {
+            if (tintIndex != 0 && tintIndex != 2)
+                return -1;
 
-                if (stack.hasTagCompound() && stack.getTagCompound().hasKey("empty"))
-                    return -1;
+            if (stack.hasTagCompound() && stack.getTagCompound().hasKey("empty"))
+                return -1;
 
-                return PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(stack));
-            }
+            return PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(stack));
         }, RegistrarBloodMagicItems.POTION_FLASK);
 
         addElytraLayer();
@@ -217,8 +182,9 @@ public class ClientProxy extends CommonProxy
         RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
         try
         {
-            RenderPlayer renderPlayer = ObfuscationReflectionHelper.getPrivateValue(RenderManager.class, renderManager, "playerRenderer", "field_178637_m");
-            renderPlayer.addLayer(new LayerBloodElytra(renderPlayer));
+            Map<String, RenderPlayer> skinMap = ObfuscationReflectionHelper.getPrivateValue(RenderManager.class, renderManager, "skinMap", "field_178636_l");
+            skinMap.get("default").addLayer(new LayerBloodElytra(skinMap.get("default")));
+            skinMap.get("slim").addLayer(new LayerBloodElytra(skinMap.get("slim")));
             BloodMagic.instance.logger.info("Elytra layer added");
         } catch (Exception e)
         {
