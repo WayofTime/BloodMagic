@@ -61,7 +61,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     @Override
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
-        return new CustomMeshDefinitionWillGem("ItemSoulGem");
+        return new CustomMeshDefinitionWillGem("soul_gem");
     }
 
     @Nullable

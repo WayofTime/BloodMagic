@@ -17,7 +17,7 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
     private int range = 3;
 
     public ItemSigilPhantomBridge() {
-        super("phantomBridge", 100);
+        super("phantom_bridge", 100);
     }
 
     @Override

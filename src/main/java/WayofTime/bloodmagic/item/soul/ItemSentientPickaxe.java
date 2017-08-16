@@ -296,7 +296,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     @Override
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
-        return new CustomMeshDefinitionMultiWill("ItemSentientPickaxe");
+        return new CustomMeshDefinitionMultiWill("sentient_pickaxe");
     }
 
     @Nullable

@@ -1,8 +1,10 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -17,8 +19,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class BlockRoutingNode extends Block implements IBMBlock {
+import java.util.List;
+
+public class BlockRoutingNode extends Block implements IBMBlock, IVariantProvider {
     public static final PropertyBool UP = PropertyBool.create("up");
     public static final PropertyBool DOWN = PropertyBool.create("down");
     public static final PropertyBool NORTH = PropertyBool.create("north");
@@ -124,5 +129,10 @@ public class BlockRoutingNode extends Block implements IBMBlock {
     @Override
     public ItemBlock getItem() {
         return new ItemBlock(this);
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        return Lists.newArrayList(Pair.of(0, "inventory"));
     }
 }

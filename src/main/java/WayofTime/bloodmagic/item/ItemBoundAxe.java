@@ -120,7 +120,7 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
-        return new CustomMeshDefinitionActivatable("ItemBoundAxe");
+        return new CustomMeshDefinitionActivatable("bound_axe");
     }
 
     @Nullable

@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class ItemSigilGreenGrove extends ItemSigilToggleableBase {
     public ItemSigilGreenGrove() {
-        super("greenGrove", 150);
+        super("green_grove", 150);
     }
 
     @Override

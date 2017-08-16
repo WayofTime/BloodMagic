@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ItemSigilFastMiner extends ItemSigilToggleableBase {
     public ItemSigilFastMiner() {
-        super("fastMiner", 100);
+        super("fast_miner", 100);
     }
 
     @Override

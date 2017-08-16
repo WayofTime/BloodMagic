@@ -297,7 +297,7 @@ public class ItemSentientShovel extends ItemSpade implements IDemonWillWeapon, I
     @Override
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
-        return new CustomMeshDefinitionMultiWill("ItemSentientShovel");
+        return new CustomMeshDefinitionMultiWill("sentient_shovel");
     }
 
     @Nullable

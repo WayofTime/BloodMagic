@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 public class ItemSigilBloodLight extends ItemSigilBase {
     public ItemSigilBloodLight() {
-        super("bloodLight", 10);
+        super("blood_light", 10);
     }
 
     @Override

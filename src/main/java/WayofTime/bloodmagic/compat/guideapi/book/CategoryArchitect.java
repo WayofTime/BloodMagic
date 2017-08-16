@@ -410,7 +410,7 @@ public class CategoryArchitect {
             livingArmourPages.add(bindingRecipePage);
         }
 
-        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_LEGS));
+        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_LEGGINGS));
         if (bindingRecipePage != null) {
             livingArmourPages.add(bindingRecipePage);
         }

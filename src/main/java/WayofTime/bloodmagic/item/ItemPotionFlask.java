@@ -127,7 +127,7 @@ public class ItemPotionFlask extends Item implements IMeshProvider {
             boolean full = true;
             if (stack.hasTagCompound() && stack.getTagCompound().hasKey("empty"))
                 full = false;
-            return new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/" + getRegistryName().getResourcePath()), "full=" + (full ? "true" : "false"));
+            return new ModelResourceLocation(getRegistryName(), "full=" + full);
         };
     }
 

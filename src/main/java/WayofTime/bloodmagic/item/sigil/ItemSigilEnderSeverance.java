@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ItemSigilEnderSeverance extends ItemSigilToggleableBase {
     public ItemSigilEnderSeverance() {
-        super("enderSeverance", 200);
+        super("ender_severance", 200);
     }
 
     @Override

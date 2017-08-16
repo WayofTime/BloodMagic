@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.core;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.block.IBMBlock;
+import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.*;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
@@ -83,11 +84,11 @@ public class RegistrarBloodMagicItems {
     public static final Item BLOOD_SHARD = Items.AIR;
     public static final Item LIVING_ARMOUR_HELMET = Items.AIR;
     public static final Item LIVING_ARMOUR_CHEST = Items.AIR;
-    public static final Item LIVING_ARMOUR_LEGS = Items.AIR;
+    public static final Item LIVING_ARMOUR_LEGGINGS = Items.AIR;
     public static final Item LIVING_ARMOUR_BOOTS = Items.AIR;
     public static final Item SENTIENT_ARMOUR_HELMET = Items.AIR;
     public static final Item SENTIENT_ARMOUR_CHEST = Items.AIR;
-    public static final Item SENTIENT_ARMOUR_LEGS = Items.AIR;
+    public static final Item SENTIENT_ARMOUR_LEGGINGS = Items.AIR;
     public static final Item SENTIENT_ARMOUR_BOOTS = Items.AIR;
     public static final Item ALTAR_MAKER = Items.AIR;
     public static final Item UPGRADE_TOME = Items.AIR;
@@ -169,11 +170,11 @@ public class RegistrarBloodMagicItems {
                 new ItemTelepositionFocus().setRegistryName("teleposition_focus"),
                 new ItemExperienceBook().setRegistryName("experience_tome"),
                 new ItemBloodShard().setRegistryName("blood_shard"),
-                new ItemLivingArmour(EntityEquipmentSlot.HEAD).setRegistryName("living_armour_helm"),
+                new ItemLivingArmour(EntityEquipmentSlot.HEAD).setRegistryName("living_armour_helmet"),
                 new ItemLivingArmour(EntityEquipmentSlot.CHEST).setRegistryName("living_armour_chest"),
                 new ItemLivingArmour(EntityEquipmentSlot.LEGS).setRegistryName("living_armour_leggings"),
                 new ItemLivingArmour(EntityEquipmentSlot.FEET).setRegistryName("living_armour_boots"),
-                new ItemSentientArmour(EntityEquipmentSlot.HEAD).setRegistryName("sentient_armour_helm"),
+                new ItemSentientArmour(EntityEquipmentSlot.HEAD).setRegistryName("sentient_armour_helmet"),
                 new ItemSentientArmour(EntityEquipmentSlot.CHEST).setRegistryName("sentient_armour_chest"),
                 new ItemSentientArmour(EntityEquipmentSlot.LEGS).setRegistryName("sentient_armour_leggings"),
                 new ItemSentientArmour(EntityEquipmentSlot.FEET).setRegistryName("sentient_armour_boots"),
@@ -206,19 +207,30 @@ public class RegistrarBloodMagicItems {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public static void registerRenders(ModelRegistryEvent event) {
-        items.stream().filter(i -> i instanceof IVariantProvider).forEach(item -> {
-            IVariantProvider variantProvider = (IVariantProvider) item;
+        items.stream().filter(i -> i instanceof IVariantProvider).forEach(i -> {
+            IVariantProvider variantProvider = (IVariantProvider) i;
             for (Pair<Integer, String> variant : variantProvider.getVariants())
-                ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(item.getRegistryName(), variant.getRight()));
+                ModelLoader.setCustomModelResourceLocation(i, variant.getLeft(), new ModelResourceLocation(i.getRegistryName(), variant.getRight()));
         });
 
-        RegistrarBloodMagicBlocks.blocks.stream().filter(i -> i instanceof IVariantProvider).forEach(block -> {
-            IVariantProvider variantProvider = (IVariantProvider) block;
-            for (Pair<Integer, String> variant : variantProvider.getVariants())
-                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(block.getRegistryName(), variant.getRight()));
+        items.stream().filter(i -> i instanceof IMeshProvider).forEach(i -> {
+            IMeshProvider mesh = (IMeshProvider) i;
+            ResourceLocation loc = mesh.getCustomLocation();
+            if (loc == null)
+                loc = i.getRegistryName();
+            for (String variant : mesh.getVariants())
+                ModelLoader.registerItemVariants(i, new ModelResourceLocation(loc, variant));
+
+            ModelLoader.setCustomMeshDefinition(i, mesh.getMeshDefinition());
         });
 
-        final ResourceLocation holdingLoc = new ResourceLocation("bloodmagic", "item/ItemSigilHolding");
+        RegistrarBloodMagicBlocks.blocks.stream().filter(b -> b instanceof IVariantProvider).forEach(b -> {
+            IVariantProvider variantProvider = (IVariantProvider) b;
+            for (Pair<Integer, String> variant : variantProvider.getVariants())
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(b), variant.getLeft(), new ModelResourceLocation(b.getRegistryName(), variant.getRight()));
+        });
+
+        final ResourceLocation holdingLoc = SIGIL_HOLDING.getRegistryName();
         ModelLoader.setCustomMeshDefinition(SIGIL_HOLDING, stack -> {
             if (stack.hasTagCompound() && stack.getTagCompound().hasKey("color"))
                 return new ModelResourceLocation(holdingLoc, "type=color");

@@ -170,18 +170,15 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
-        return new ItemMeshDefinition() {
-            @Override
-            public ModelResourceLocation getModelLocation(ItemStack stack) {
-                String variant = "type=normal";
-                if (stack.getItemDamage() != 0)
-                    variant = "type=creative";
+        return stack -> {
+            String variant = "type=normal";
+            if (stack.getItemDamage() != 0)
+                variant = "type=creative";
 
-                if (canUseForSacrifice(stack))
-                    variant = "type=ceremonial";
+            if (canUseForSacrifice(stack))
+                variant = "type=ceremonial";
 
-                return new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/ItemSacrificialDagger"), variant);
-            }
+            return new ModelResourceLocation(getRegistryName(), variant);
         };
     }
 

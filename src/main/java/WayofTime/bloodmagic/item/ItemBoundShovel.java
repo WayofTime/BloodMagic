@@ -119,7 +119,7 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
-        return new CustomMeshDefinitionActivatable("ItemBoundShovel");
+        return new CustomMeshDefinitionActivatable("bound_shovel");
     }
 
     @Nullable

@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
-import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -14,7 +13,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -28,7 +26,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockDemonCrystal extends Block implements IBMBlock {
+public class BlockDemonCrystal extends Block {
     public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 6);
     public static final PropertyEnum<EnumDemonWillType> TYPE = PropertyEnum.<EnumDemonWillType>create("type", EnumDemonWillType.class);
     public static final PropertyEnum<EnumFacing> ATTACHED = PropertyEnum.<EnumFacing>create("attached", EnumFacing.class);
@@ -177,11 +175,6 @@ public class BlockDemonCrystal extends Block implements IBMBlock {
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileDemonCrystal();
-    }
-
-    @Override
-    public ItemBlock getItem() {
-        return new ItemBlockDemonCrystal(this);
     }
 
     public static ItemStack getItemStackDropped(EnumDemonWillType type, int crystalNumber) {

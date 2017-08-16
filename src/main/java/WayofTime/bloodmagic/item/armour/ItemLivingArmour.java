@@ -76,7 +76,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             return "bloodmagic:models/armor/livingArmour_layer_1.png";
         }
 
-        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_LEGS) {
+        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_LEGGINGS) {
             return "bloodmagic:models/armor/livingArmour_layer_2.png";
         } else {
             return null;
@@ -107,7 +107,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 
         if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_BOOTS || this == RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET) {
             damageAmount = 3d / 20d * 0.6;
-        } else if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_LEGS) {
+        } else if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_LEGGINGS) {
             damageAmount = 6d / 20d * 0.6;
         } else if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST) {
             damageAmount = 0.64;
@@ -182,7 +182,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             return 8;
         }
 
-        if (armor.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_LEGS) {
+        if (armor.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_LEGGINGS) {
             return 6;
         }
 
@@ -348,25 +348,21 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     @Override
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
-        return new ItemMeshDefinition() {
-            @Override
-            public ModelResourceLocation getModelLocation(ItemStack stack) {
-                assert getCustomLocation() != null;
-                if (stack.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET)
-                    return new ModelResourceLocation(getCustomLocation(), "armour=head");
-                else if (stack.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST)
-                    return new ModelResourceLocation(getCustomLocation(), "armour=body");
-                else if (stack.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_LEGS)
-                    return new ModelResourceLocation(getCustomLocation(), "armour=leg");
-                else
-                    return new ModelResourceLocation(getCustomLocation(), "armour=feet");
-            }
+        return stack -> {
+            if (stack.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET)
+                return new ModelResourceLocation(getCustomLocation(), "armour=head");
+            else if (stack.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST)
+                return new ModelResourceLocation(getCustomLocation(), "armour=body");
+            else if (stack.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_LEGGINGS)
+                return new ModelResourceLocation(getCustomLocation(), "armour=leg");
+            else
+                return new ModelResourceLocation(getCustomLocation(), "armour=feet");
         };
     }
 
     @Override
     public ResourceLocation getCustomLocation() {
-        return new ResourceLocation(BloodMagic.MODID, "item/ItemLivingArmour");
+        return new ResourceLocation(BloodMagic.MODID, "living_armour");
     }
 
     @Override

@@ -19,6 +19,7 @@ import org.apache.commons.lang3.text.WordUtils;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ItemSigilToggleableBase extends ItemSigilToggleable implements IMeshProvider {
     protected final String tooltipBase;
@@ -49,7 +50,7 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable implements IMes
     @Override
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
-        return new CustomMeshDefinitionActivatable("ItemSigil" + WordUtils.capitalize(name));
+        return new CustomMeshDefinitionActivatable("sigil_" + name.toLowerCase(Locale.ROOT));
     }
 
     @Nullable

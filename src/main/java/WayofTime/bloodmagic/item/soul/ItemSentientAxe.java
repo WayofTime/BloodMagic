@@ -297,7 +297,7 @@ public class ItemSentientAxe extends ItemAxe implements IDemonWillWeapon, IMeshP
     @Override
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
-        return new CustomMeshDefinitionMultiWill("ItemSentientAxe");
+        return new CustomMeshDefinitionMultiWill("sentient_axe");
     }
 
     @Nullable

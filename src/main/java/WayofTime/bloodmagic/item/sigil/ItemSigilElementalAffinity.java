@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class ItemSigilElementalAffinity extends ItemSigilToggleableBase {
     public ItemSigilElementalAffinity() {
-        super("elementalAffinity", 200);
+        super("elemental_affinity", 200);
     }
 
     @Override

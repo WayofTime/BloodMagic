@@ -7,9 +7,11 @@ import WayofTime.bloodmagic.api.iface.ISentientTool;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
+import com.google.common.collect.Lists;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,10 +34,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.List;
 import java.util.Locale;
 
-public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentientTool//, IMeshProvider
+public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentientTool, IVariantProvider//, IMeshProvider
 {
     public static int[] soulBracket = new int[]{16, 60, 200, 400, 1000};
     public static double[] defaultDamageAdded = new double[]{0.25, 0.5, 0.75, 1, 1.25};
@@ -246,6 +250,11 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
         ItemStack stack = player.getHeldItem(hand);
         this.recalculatePowers(stack, world, player);
         return super.onItemRightClick(world, player, hand);
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        return Lists.newArrayList(Pair.of(0, "inventory"));
     }
 
     public EntityTippedArrow getArrowEntity(World world, ItemStack stack, EntityLivingBase target, EntityLivingBase user, float velocity) {

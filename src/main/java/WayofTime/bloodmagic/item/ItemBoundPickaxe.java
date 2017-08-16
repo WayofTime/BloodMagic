@@ -133,7 +133,7 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
-        return new CustomMeshDefinitionActivatable("ItemBoundPickaxe");
+        return new CustomMeshDefinitionActivatable("bound_pickaxe");
     }
 
     @Nullable

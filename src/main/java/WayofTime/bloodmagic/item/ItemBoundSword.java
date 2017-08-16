@@ -130,7 +130,7 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     @Override
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
-        return new CustomMeshDefinitionActivatable("ItemBoundSword");
+        return new CustomMeshDefinitionActivatable("bound_sword");
     }
 
     @Nullable
