@@ -63,7 +63,7 @@ public class BloodMagic
         {
             return true;
         }
-    }.setNoTitle().setBackgroundImageName("items_search.png");
+    }.setNoTitle().setBackgroundImageName("item_search.png");
     public static final boolean IS_DEV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
     public static final List<Pair<IBloodMagicPlugin, BloodMagicPlugin>> PLUGINS = Lists.newArrayList();
 

@@ -7,6 +7,8 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.orb.BloodOrb;
+import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.block.enums.EnumBloodRune;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
@@ -229,6 +231,8 @@ public class ModRecipes
 
             GameRegistry.addSmelting(baseStoneStack, polishedStoneStack, 0.15f);
         }
+
+        generateConstants();
     }
 
     public static void addAltarRecipes()
@@ -718,6 +722,14 @@ public class ModRecipes
         }
         if (thing instanceof ItemStack) {
             ItemStack stack = (ItemStack) thing;
+
+            if (stack.getItem() instanceof IBloodOrb) {
+                Map<String, Object> ret = new HashMap<>();
+                BloodOrb orb = ((IBloodOrb) stack.getItem()).getOrb(stack);
+                ret.put("orb", orb == null ? RegistrarBloodMagic.ORB_WEAK.getRegistryName().toString() : orb.getRegistryName().toString());
+                return ret;
+            }
+
             Map<String, Object> ret = new HashMap<>();
             ret.put("item", stack.getItem().getRegistryName().toString());
             if (stack.getItem().getHasSubtypes() || stack.getItemDamage() != 0) {

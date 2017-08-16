@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -22,7 +23,7 @@ import WayofTime.bloodmagic.tile.TileIncenseAltar;
 
 import javax.annotation.Nullable;
 
-public class BlockIncenseAltar extends Block implements IVariantProvider
+public class BlockIncenseAltar extends Block implements IVariantProvider, IBMBlock
 {
     protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.3F, 0F, 0.3F, 0.72F, 1F, 0.72F);
 
@@ -100,5 +101,10 @@ public class BlockIncenseAltar extends Block implements IVariantProvider
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "normal"));
         return ret;
+    }
+
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlock(this);
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -24,7 +25,7 @@ import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.tile.TileTeleposer;
 
-public class BlockTeleposer extends BlockContainer implements IVariantProvider
+public class BlockTeleposer extends BlockContainer implements IVariantProvider, IBMBlock
 {
     public BlockTeleposer()
     {
@@ -77,5 +78,10 @@ public class BlockTeleposer extends BlockContainer implements IVariantProvider
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "normal"));
         return ret;
+    }
+
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlock(this);
     }
 }

@@ -8,6 +8,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -27,7 +28,7 @@ import WayofTime.bloodmagic.tile.TileSoulForge;
 
 import javax.annotation.Nullable;
 
-public class BlockSoulForge extends Block implements IVariantProvider
+public class BlockSoulForge extends Block implements IVariantProvider, IBMBlock
 {
     protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.06F, 0.0F, 0.06F, 0.94F, 0.75F, 0.94F);
 
@@ -115,5 +116,10 @@ public class BlockSoulForge extends Block implements IVariantProvider
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "normal"));
         return ret;
+    }
+
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlock(this);
     }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -20,7 +21,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileDemonCrystallizer;
 
-public class BlockDemonCrystallizer extends BlockContainer implements IVariantProvider
+public class BlockDemonCrystallizer extends BlockContainer implements IVariantProvider, IBMBlock
 {
     public BlockDemonCrystallizer()
     {
@@ -83,5 +84,10 @@ public class BlockDemonCrystallizer extends BlockContainer implements IVariantPr
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "normal"));
         return ret;
+    }
+
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlock(this);
     }
 }

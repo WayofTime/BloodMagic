@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -28,7 +29,7 @@ import WayofTime.bloodmagic.util.Utils;
 
 import javax.annotation.Nullable;
 
-public class BlockDemonCrucible extends Block implements IVariantProvider
+public class BlockDemonCrucible extends Block implements IVariantProvider, IBMBlock
 {
     public BlockDemonCrucible()
     {
@@ -117,5 +118,10 @@ public class BlockDemonCrucible extends Block implements IVariantProvider
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "normal"));
         return ret;
+    }
+
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlock(this);
     }
 }

@@ -138,7 +138,7 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
 
     public static ItemStack getStack(String name)
     {
-        return new ItemStack(RegistrarBloodMagicItems.ITEM_POINTS_UPGRADE, 1, names.indexOf(name));
+        return new ItemStack(RegistrarBloodMagicItems.POINTS_UPGRADE, 1, names.indexOf(name));
     }
 
     @Override

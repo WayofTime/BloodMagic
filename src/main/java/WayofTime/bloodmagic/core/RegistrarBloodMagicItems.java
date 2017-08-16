@@ -2,11 +2,13 @@ package WayofTime.bloodmagic.core;
 
 import WayofTime.bloodmagic.block.IBMBlock;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -32,6 +34,8 @@ import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.item.soul.*;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
@@ -108,26 +112,33 @@ public class RegistrarBloodMagicItems
     public static final Item BASE_FLUID_FILTER = Items.AIR;
     public static final Item CUTTING_FLUID = Items.AIR;
     public static final Item SANGUINE_BOOK = Items.AIR;
-    public static final Item ITEM_POINTS_UPGRADE = Items.AIR;
+    public static final Item POINTS_UPGRADE = Items.AIR;
     public static final Item DEMON_WILL_GAUGE = Items.AIR;
     public static final Item POTION_FLASK = Items.AIR;
 
     public static Item.ToolMaterial BOUND_TOOL_MATERIAL = EnumHelper.addToolMaterial("bound", 4, 1, 10, 8, 50);
     public static Item.ToolMaterial SOUL_TOOL_MATERIAL = EnumHelper.addToolMaterial("demonic", 4, 520, 7, 8, 50);
 
-    private static Set<Item> items;
+    public static List<Item> items;
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
-        items = Sets.newHashSet(
+        items = Lists.newArrayList();
+
+        RegistrarBloodMagicBlocks.blocks.stream().filter(block -> block instanceof IBMBlock && ((IBMBlock) block).getItem() != null).forEach(block -> {
+            IBMBlock bmBlock = (IBMBlock) block;
+            items.add(bmBlock.getItem().setRegistryName(block.getRegistryName()));
+        });
+
+        items.addAll(Lists.newArrayList(
                 new ItemBloodOrb().setRegistryName("blood_orb"),
                 new ItemActivationCrystal().setRegistryName("activation_crystal"),
                 new ItemSlate().setRegistryName("slate"),
                 new ItemInscriptionTool().setRegistryName("inscription_tool"),
                 new ItemSacrificialDagger().setRegistryName("sacrificial_dagger"),
-                new ItemPackSacrifice().setRegistryName("sacrificial_pack"),
-                new ItemPackSelfSacrifice().setRegistryName("pack_of_sacrifice"),
+                new ItemPackSacrifice().setRegistryName("pack_sacrifice"),
+                new ItemPackSelfSacrifice().setRegistryName("pack_self_sacrifice"),
                 new ItemDaggerOfSacrifice().setRegistryName("dagger_of_sacrifice"),
                 new ItemRitualDiviner().setRegistryName("ritual_diviner"),
                 new ItemRitualReader().setRegistryName("ritual_reader"),
@@ -141,18 +152,18 @@ public class RegistrarBloodMagicItems
                 new ItemSigilWater().setRegistryName("sigil_water"),
                 new ItemSigilLava().setRegistryName("sigil_lava"),
                 new ItemSigilVoid().setRegistryName("sigil_void"),
-                new ItemSigilGreenGrove().setRegistryName("sigil_growth"),
-                new ItemSigilBloodLight().setRegistryName("sigil_light"),
-                new ItemSigilElementalAffinity().setRegistryName("sigil_elemental"),
+                new ItemSigilGreenGrove().setRegistryName("sigil_green_grove"),
+                new ItemSigilBloodLight().setRegistryName("sigil_blood_light"),
+                new ItemSigilElementalAffinity().setRegistryName("sigil_elemental_affinity"),
                 new ItemSigilMagnetism().setRegistryName("sigil_magnetism"),
                 new ItemSigilSuppression().setRegistryName("sigil_suppression"),
                 new ItemSigilHaste().setRegistryName("sigil_haste"),
                 new ItemSigilFastMiner().setRegistryName("sigil_fast_miner"),
                 new ItemSigilSeer().setRegistryName("sigil_seer"),
-                new ItemSigilPhantomBridge().setRegistryName("sigil_bridge"),
+                new ItemSigilPhantomBridge().setRegistryName("sigil_phantom_bridge"),
                 new ItemSigilWhirlwind().setRegistryName("sigil_whirlwind"),
                 new ItemSigilCompression().setRegistryName("sigil_compression"),
-                new ItemSigilEnderSeverance().setRegistryName("sigil_severance"),
+                new ItemSigilEnderSeverance().setRegistryName("sigil_ender_severance"),
                 new ItemSigilHolding().setRegistryName("sigil_holding"),
                 new ItemSigilTeleposition().setRegistryName("sigil_teleposition"),
                 new ItemSigilTransposition().setRegistryName("sigil_transposition"),
@@ -162,16 +173,16 @@ public class RegistrarBloodMagicItems
                 new ItemComponent().setRegistryName("component"),
                 new ItemDemonCrystal().setRegistryName("item_demon_crystal"),
                 new ItemTelepositionFocus().setRegistryName("teleposition_focus"),
-                new ItemExperienceBook().setRegistryName("experience_book"),
+                new ItemExperienceBook().setRegistryName("experience_tome"),
                 new ItemBloodShard().setRegistryName("blood_shard"),
-                new ItemLivingArmour(EntityEquipmentSlot.HEAD).setRegistryName("living_helm"),
-                new ItemLivingArmour(EntityEquipmentSlot.CHEST).setRegistryName("living_chest"),
-                new ItemLivingArmour(EntityEquipmentSlot.LEGS).setRegistryName("living_leggings"),
-                new ItemLivingArmour(EntityEquipmentSlot.FEET).setRegistryName("living_boots"),
-                new ItemSentientArmour(EntityEquipmentSlot.HEAD).setRegistryName("sentient_helm"),
-                new ItemSentientArmour(EntityEquipmentSlot.CHEST).setRegistryName("sentient_chest"),
-                new ItemSentientArmour(EntityEquipmentSlot.LEGS).setRegistryName("sentient_leggings"),
-                new ItemSentientArmour(EntityEquipmentSlot.FEET).setRegistryName("sentient_boots"),
+                new ItemLivingArmour(EntityEquipmentSlot.HEAD).setRegistryName("living_armour_helm"),
+                new ItemLivingArmour(EntityEquipmentSlot.CHEST).setRegistryName("living_armour_chest"),
+                new ItemLivingArmour(EntityEquipmentSlot.LEGS).setRegistryName("living_armour_leggings"),
+                new ItemLivingArmour(EntityEquipmentSlot.FEET).setRegistryName("living_armour_boots"),
+                new ItemSentientArmour(EntityEquipmentSlot.HEAD).setRegistryName("sentient_armour_helm"),
+                new ItemSentientArmour(EntityEquipmentSlot.CHEST).setRegistryName("sentient_armour_chest"),
+                new ItemSentientArmour(EntityEquipmentSlot.LEGS).setRegistryName("sentient_armour_leggings"),
+                new ItemSentientArmour(EntityEquipmentSlot.FEET).setRegistryName("sentient_armour_boots"),
                 new ItemAltarMaker().setRegistryName("altar_maker"),
                 new ItemUpgradeTome().setRegistryName("upgrade_tome"),
                 new ItemUpgradeTrainer().setRegistryName("upgrade_trainer"),
@@ -181,24 +192,19 @@ public class RegistrarBloodMagicItems
                 new ItemSoulSnare().setRegistryName("soul_snare"),
                 new ItemSentientSword().setRegistryName("sentient_sword"),
                 new ItemSentientBow().setRegistryName("sentient_bow"),
-                new ItemSentientArmourGem().setRegistryName("armour_gem"),
+                new ItemSentientArmourGem().setRegistryName("sentient_armour_gem"),
                 new ItemSentientAxe().setRegistryName("sentient_axe"),
                 new ItemSentientPickaxe().setRegistryName("sentient_pickaxe"),
                 new ItemSentientShovel().setRegistryName("sentient_shovel"),
                 new ItemNodeRouter().setRegistryName("node_router"),
-                new ItemRouterFilter().setRegistryName("router_filter"),
-                new ItemFluidRouterFilter().setRegistryName("fluid_router_filter"),
+                new ItemRouterFilter().setRegistryName("base_item_filter"),
+                new ItemFluidRouterFilter().setRegistryName("base_fluid_filter"),
                 new ItemCuttingFluid().setRegistryName("cutting_fluid"),
                 new ItemSanguineBook().setRegistryName("sanguine_book"),
-                new ItemLivingArmourPointsUpgrade().setRegistryName("living_armor_point_upgrade"),
+                new ItemLivingArmourPointsUpgrade().setRegistryName("points_upgrade"),
                 new ItemDemonWillGauge().setRegistryName("demon_will_gauge"),
                 new ItemPotionFlask().setRegistryName("potion_flask")
-        );
-
-        RegistrarBloodMagicBlocks.blocks.stream().filter(block -> block instanceof IBMBlock && ((IBMBlock) block).getItem() != null).forEach(block -> {
-            IBMBlock bmBlock = (IBMBlock) block;
-            items.add(bmBlock.getItem().setRegistryName(block.getRegistryName()));
-        });
+        ));
 
         event.getRegistry().registerAll(items.toArray(new Item[0]));
     }

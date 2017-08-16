@@ -12,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -41,7 +42,7 @@ import com.google.common.base.Strings;
 
 import javax.annotation.Nullable;
 
-public class BlockAltar extends Block implements IVariantProvider, IDocumentedBlock
+public class BlockAltar extends Block implements IVariantProvider, IDocumentedBlock, IBMBlock
 {
     public BlockAltar()
     {
@@ -203,5 +204,10 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
             docs.add(new TextComponentTranslation("chat.bloodmagic.altar.nextTier", new TextComponentTranslation(missingBlock.getRight().getKey()), Utils.prettifyBlockPosString(missingBlock.getLeft())));
 
         return docs;
+    }
+
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlock(this);
     }
 }
