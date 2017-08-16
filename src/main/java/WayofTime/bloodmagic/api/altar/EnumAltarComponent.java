@@ -14,6 +14,7 @@ public enum EnumAltarComponent
     CRYSTAL,
     NOTAIR;
 
+    public static final EnumAltarComponent[] VALUES = values();
     private static final String BASE = "chat.bloodmagic.altar.comp.";
     private String key;
 

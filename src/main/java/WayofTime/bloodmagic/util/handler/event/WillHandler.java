@@ -34,7 +34,7 @@ import WayofTime.bloodmagic.demonAura.PosXY;
 import WayofTime.bloodmagic.demonAura.WillChunk;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.registry.ModPotions;
 
 @Handler

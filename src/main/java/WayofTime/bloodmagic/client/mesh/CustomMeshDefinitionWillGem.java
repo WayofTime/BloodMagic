@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 
 public class CustomMeshDefinitionWillGem implements ItemMeshDefinition
 {

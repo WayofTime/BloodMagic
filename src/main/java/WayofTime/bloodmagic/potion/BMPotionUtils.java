@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
@@ -16,8 +17,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionAugmentRecipe;
@@ -46,11 +45,11 @@ public class BMPotionUtils
         for (int i = 0; i < maxPlantsGrown; i++)
         {
             BlockPos blockPos = entity.getPosition().add(rand.nextInt(horizontalRadius * 2 + 1) - horizontalRadius, rand.nextInt(verticalRadius * 2 + 1) - verticalRadius, rand.nextInt(horizontalRadius * 2 + 1) - horizontalRadius);
-            Block block = world.getBlockState(blockPos).getBlock();
+            IBlockState state = world.getBlockState(blockPos);
 
-            if (!BloodMagicAPI.greenGroveBlacklist.contains(block))
+            if (!BloodMagicAPI.INSTANCE.getBlacklist().getGreenGrove().contains(state))
             {
-                if (block instanceof IPlantable || block instanceof IGrowable)
+                if (state.getBlock() instanceof IGrowable)
                 {
                     growList.add(blockPos);
                 }
@@ -77,7 +76,7 @@ public class BMPotionUtils
 
         if (incurredDamage > 0)
         {
-            entity.attackEntityFrom(BloodMagicAPI.damageSource, (float) incurredDamage);
+            entity.attackEntityFrom(WayofTime.bloodmagic.api.BloodMagicAPI.damageSource, (float) incurredDamage);
         }
 
         return incurredDamage;

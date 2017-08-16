@@ -58,7 +58,7 @@ import WayofTime.bloodmagic.api.iface.IDemonWillViewer;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.PlayerVelocityPacketProcessor;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.tile.TileInventory;
 
 import com.google.common.collect.Iterables;

@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.client.render.entity;
 
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;

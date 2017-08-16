@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.registry;
+package WayofTime.bloodmagic.core;
 
 import WayofTime.bloodmagic.block.IBMBlock;
 import WayofTime.bloodmagic.client.IVariantProvider;

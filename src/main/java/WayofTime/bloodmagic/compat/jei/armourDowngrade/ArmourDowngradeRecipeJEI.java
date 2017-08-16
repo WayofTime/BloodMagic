@@ -8,7 +8,7 @@ import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import WayofTime.bloodmagic.api.recipe.LivingArmourDowngradeRecipe;
 import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 
 import java.util.List;
 

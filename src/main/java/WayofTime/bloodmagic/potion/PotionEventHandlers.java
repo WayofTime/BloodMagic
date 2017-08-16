@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.potion;
 
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.projectile.EntityArrow;

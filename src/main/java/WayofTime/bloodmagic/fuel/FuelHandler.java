@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.fuel;
 
 import WayofTime.bloodmagic.item.ItemComponent;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.IFuelHandler;
 

@@ -31,8 +31,8 @@ import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeMaker;
 import WayofTime.bloodmagic.compat.jei.orb.ShapedOrbRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.orb.ShapelessOrbRecipeHandler;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 
 @JEIPlugin
 public class BloodMagicPlugin extends BlankModPlugin

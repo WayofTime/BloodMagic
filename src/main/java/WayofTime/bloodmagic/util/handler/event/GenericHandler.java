@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.Random;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.orb.BloodOrb;
+import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -49,7 +52,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.annot.Handler;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.ItemBindEvent;
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
@@ -79,13 +81,14 @@ import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrific
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.DemonAuraPacketProcessor;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.registry.ModPotions;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.base.Strings;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 @Handler
 public class GenericHandler
@@ -99,7 +102,7 @@ public class GenericHandler
         if (event.getEntityLiving() instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-            if (player.isPotionActive(ModPotions.bounce) && !player.isSneaking() && event.getDistance() > 2)
+            if (player.isPotionActive(RegistrarBloodMagic.BOUNCE) && !player.isSneaking() && event.getDistance() > 2)
             {
                 event.setDamageMultiplier(0);
 
@@ -144,10 +147,10 @@ public class GenericHandler
     @SubscribeEvent
     public void onPlayerClick(PlayerInteractEvent event)
     {
-        if (event.isCancelable() && event.getEntityPlayer().isPotionActive(ModPotions.constrict))
+        if (event.isCancelable() && event.getEntityPlayer().isPotionActive(RegistrarBloodMagic.CONSTRICT))
         {
             EntityPlayer player = event.getEntityPlayer();
-            int level = player.getActivePotionEffect(ModPotions.constrict).getAmplifier();
+            int level = player.getActivePotionEffect(RegistrarBloodMagic.CONSTRICT).getAmplifier();
             if (event.getHand() == EnumHand.OFF_HAND || level > 1)
             {
                 event.setCanceled(true);
@@ -253,7 +256,7 @@ public class GenericHandler
             if (event.getEntityLiving() instanceof EntityAnimal)
             {
                 EntityAnimal animal = (EntityAnimal) event.getEntityLiving();
-                if (animal.isPotionActive(ModPotions.sacrificialLamb))
+                if (animal.isPotionActive(RegistrarBloodMagic.SACRIFICIAL_LAMB))
                 {
                     if (!targetTaskMap.containsKey(animal))
                     {
@@ -267,7 +270,7 @@ public class GenericHandler
 
                     if (animal.getAttackTarget() != null && animal.getDistanceSqToEntity(animal.getAttackTarget()) < 4)
                     {
-                        animal.getEntityWorld().createExplosion(null, animal.posX, animal.posY + (double) (animal.height / 16.0F), animal.posZ, 2 + animal.getActivePotionEffect(ModPotions.sacrificialLamb).getAmplifier() * 1.5f, false);
+                        animal.getEntityWorld().createExplosion(null, animal.posX, animal.posY + (double) (animal.height / 16.0F), animal.posZ, 2 + animal.getActivePotionEffect(RegistrarBloodMagic.SACRIFICIAL_LAMB).getAmplifier() * 1.5f, false);
                         targetTaskMap.remove(animal);
                         attackTaskMap.remove(animal);
                     }
@@ -284,7 +287,7 @@ public class GenericHandler
         if (entity instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) entity;
-            if (player.isSneaking() && player.isPotionActive(ModPotions.cling) && Utils.isPlayerBesideSolidBlockFace(player) && !player.onGround)
+            if (player.isSneaking() && player.isPotionActive(RegistrarBloodMagic.CLING) && Utils.isPlayerBesideSolidBlockFace(player) && !player.onGround)
             {
                 if (player.getEntityWorld().isRemote)
                 {
@@ -307,24 +310,24 @@ public class GenericHandler
             }
         }
 
-        if (entity.isPotionActive(ModPotions.fireFuse))
+        if (entity.isPotionActive(RegistrarBloodMagic.FIRE_FUSE))
         {
             Random random = entity.getEntityWorld().rand;
             entity.getEntityWorld().spawnParticle(EnumParticleTypes.FLAME, entity.posX + random.nextDouble() * 0.3, entity.posY + random.nextDouble() * 0.3, entity.posZ + random.nextDouble() * 0.3, 0, 0.06d, 0);
 
-            int r = entity.getActivePotionEffect(ModPotions.fireFuse).getAmplifier();
-            int radius = 1 * r + 1;
+            int r = entity.getActivePotionEffect(RegistrarBloodMagic.FIRE_FUSE).getAmplifier();
+            int radius = r + 1;
 
-            if (entity.getActivePotionEffect(ModPotions.fireFuse).getDuration() <= 3)
+            if (entity.getActivePotionEffect(RegistrarBloodMagic.FIRE_FUSE).getDuration() <= 3)
             {
                 entity.getEntityWorld().createExplosion(null, entity.posX, entity.posY, entity.posZ, radius, false);
             }
         }
 
-        if (entity.isPotionActive(ModPotions.plantLeech))
+        if (entity.isPotionActive(RegistrarBloodMagic.PLANT_LEECH))
         {
-            int amplifier = entity.getActivePotionEffect(ModPotions.plantLeech).getAmplifier();
-            int timeRemaining = entity.getActivePotionEffect(ModPotions.plantLeech).getDuration();
+            int amplifier = entity.getActivePotionEffect(RegistrarBloodMagic.PLANT_LEECH).getAmplifier();
+            int timeRemaining = entity.getActivePotionEffect(RegistrarBloodMagic.PLANT_LEECH).getDuration();
             if (timeRemaining % 10 == 0)
             {
                 BMPotionUtils.damageMobAndGrowSurroundingPlants(entity, 2 + amplifier, 1, 0.5 * 3 / (amplifier + 3), 25 * (1 + amplifier));
@@ -366,10 +369,7 @@ public class GenericHandler
     @SubscribeEvent
     public void onTelepose(TeleposeEvent event)
     {
-        if (ConfigHandler.teleposerBlacklist.contains(event.initialStack) || ConfigHandler.teleposerBlacklist.contains(event.finalStack))
-            event.setCanceled(true);
-
-        if (BloodMagicAPI.teleposerBlacklist.contains(event.initialStack) || BloodMagicAPI.teleposerBlacklist.contains(event.finalStack))
+        if (BloodMagicAPI.INSTANCE.getBlacklist().getTeleposer().contains(event.initialState) || BloodMagicAPI.INSTANCE.getBlacklist().getTeleposer().contains(event.finalState))
             event.setCanceled(true);
     }
 
@@ -377,7 +377,8 @@ public class GenericHandler
     @SubscribeEvent
     public void onTeleposeEntity(TeleposeEvent.Ent event)
     {
-        if (ConfigHandler.teleposerBlacklistEntity.contains(event.entity.getClass().getSimpleName()))
+        EntityEntry entry = EntityRegistry.getEntry(event.entity.getClass());
+        if (BloodMagicAPI.INSTANCE.getBlacklist().getTeleposerEntities().contains(entry.getRegistryName()))
             event.setCanceled(true);
     }
 
@@ -427,8 +428,12 @@ public class GenericHandler
             IBloodOrb bloodOrb = (IBloodOrb) held.getItem();
             SoulNetwork network = NetworkHelper.getSoulNetwork(player);
 
-            if (bloodOrb.getOrbLevel(held.getItemDamage()) > network.getOrbTier())
-                network.setOrbTier(bloodOrb.getOrbLevel(held.getItemDamage()));
+            BloodOrb orb = bloodOrb.getOrb(held);
+            if (orb == null)
+                return;
+
+            if (orb.getTier() > network.getOrbTier())
+                network.setOrbTier(orb.getTier());
         }
     }
 

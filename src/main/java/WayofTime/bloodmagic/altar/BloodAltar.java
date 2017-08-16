@@ -2,6 +2,8 @@ package WayofTime.bloodmagic.altar;
 
 import java.util.List;
 
+import WayofTime.bloodmagic.api.orb.BloodOrb;
+import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,7 +24,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.AltarComponent;
 import WayofTime.bloodmagic.api.altar.AltarUpgrade;
@@ -118,27 +119,20 @@ public class BloodAltar implements IFluidHandler
         for (AltarComponent altarComponent : EnumAltarTier.values()[altarTier].getAltarComponents())
         {
             BlockPos componentPos = worldPos.add(altarComponent.getOffset());
-            BlockStack worldBlock = new BlockStack(world.getBlockState(componentPos).getBlock(), world.getBlockState(componentPos).getBlock().getMetaFromState(world.getBlockState(componentPos)));
+            IBlockState state = world.getBlockState(componentPos);
 
-            if (altarComponent.getComponent() != EnumAltarComponent.NOTAIR)
-            {
-                if (worldBlock.getBlock() instanceof IAltarComponent)
-                {
-                    EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(world, worldBlock.getState(), componentPos);
-                    if (component == null || component != altarComponent.getComponent())
-                        return false;
-                } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent())) // Special case Vanilla
-                {
-                    return false;
-                } else if (BloodMagicAPI.altarComponents.get(worldBlock.getState()) != null) // Mod compat
-                {
-                    return BloodMagicAPI.altarComponents.get(worldBlock.getState()) == altarComponent.getComponent();
-                }
-            } else
-            {
-                if (world.isAirBlock(componentPos))
+            if (altarComponent.getComponent() == EnumAltarComponent.NOTAIR && world.isAirBlock(componentPos))
+                return false;
+
+            if (state.getBlock() instanceof IAltarComponent) {
+                EnumAltarComponent component = ((IAltarComponent) state.getBlock()).getType(world, state, componentPos);
+                if (component == null || component != altarComponent.getComponent())
                     return false;
             }
+
+            EnumAltarComponent component = BloodMagicAPI.INSTANCE.getAltarComponents().get(state);
+            if (component == null || component != altarComponent.getComponent())
+                return false;
         }
 
         return true;
@@ -259,10 +253,10 @@ public class BloodAltar implements IFluidHandler
             if (fluid != null)
                 setMainFluid(fluid);
 
-            FluidStack fluidOut = new FluidStack(BloodMagicAPI.lifeEssence, tagCompound.getInteger(Constants.NBT.OUTPUT_AMOUNT));
+            FluidStack fluidOut = new FluidStack(BlockLifeEssence.getLifeEssence(), tagCompound.getInteger(Constants.NBT.OUTPUT_AMOUNT));
             setOutputFluid(fluidOut);
 
-            FluidStack fluidIn = new FluidStack(BloodMagicAPI.lifeEssence, tagCompound.getInteger(Constants.NBT.INPUT_AMOUNT));
+            FluidStack fluidIn = new FluidStack(BlockLifeEssence.getLifeEssence(), tagCompound.getInteger(Constants.NBT.INPUT_AMOUNT));
             setInputFluid(fluidIn);
         }
 
@@ -540,8 +534,8 @@ public class BloodAltar implements IFluidHandler
             {
                 int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
 
-                int drain = NetworkHelper.getSoulNetwork(ownerUUID).add(liquidDrained, (int) (item.getMaxEssence(returnedItem.getMetadata()) * this.orbCapacityMultiplier));
-
+                BloodOrb orb = item.getOrb(returnedItem);
+                int drain = orb == null ? 0 : NetworkHelper.getSoulNetwork(ownerUUID).add(liquidDrained, (int) (orb.getCapacity() * this.orbCapacityMultiplier));
                 fluid.amount = fluid.amount - drain;
 
                 if (drain > 0 && internalCounter % 4 == 0 && world instanceof WorldServer)

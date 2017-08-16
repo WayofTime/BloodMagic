@@ -35,7 +35,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.block.BlockMimic;
 import WayofTime.bloodmagic.entity.ai.EntityAIMimicReform;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.tile.TileMimic;
 
 public class EntityMimic extends EntityDemonBase

@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.block;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.SoundType;
@@ -14,15 +13,12 @@ import net.minecraft.world.World;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IRitualStone;
 import WayofTime.bloodmagic.block.base.BlockEnum;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class BlockRitualStone extends BlockEnum<EnumRuneType> implements IRitualStone

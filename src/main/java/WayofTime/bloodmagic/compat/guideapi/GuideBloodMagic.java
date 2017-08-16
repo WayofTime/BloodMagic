@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.compat.guideapi;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.compat.guideapi.book.*;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import amerifrance.guideapi.api.GuideAPI;
 import amerifrance.guideapi.api.GuideBook;
 import amerifrance.guideapi.api.IGuideBook;

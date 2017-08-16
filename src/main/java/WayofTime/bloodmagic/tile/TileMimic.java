@@ -27,8 +27,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import WayofTime.bloodmagic.block.BlockMimic;
 import WayofTime.bloodmagic.entity.mob.EntityMimic;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
 

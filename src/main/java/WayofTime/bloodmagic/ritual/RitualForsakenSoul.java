@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,6 +21,8 @@ import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class RitualForsakenSoul extends Ritual
 {
@@ -116,29 +119,31 @@ public class RitualForsakenSoul extends Ritual
 
         for (EntityLivingBase entity : entities)
         {
-            if (!ConfigHandler.wellOfSufferingBlacklist.contains(entity.getClass().getSimpleName()))
+            EntityEntry entityEntry = EntityRegistry.getEntry(entity.getClass());
+
+            if (BloodMagicAPI.INSTANCE.getBlacklist().getSacrifice().contains(entityEntry.getRegistryName()))
+                continue;
+
+            if (entity.isEntityAlive() && !(entity instanceof EntityPlayer))
             {
-                if (entity.isEntityAlive() && !(entity instanceof EntityPlayer))
+                if (entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, 1))
                 {
-                    if (entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, 1))
+                    if (!entity.isEntityAlive())
                     {
-                        if (!entity.isEntityAlive())
+                        int uniqueness = calculateUniqueness(entity);
+                        double modifier = 1;
+                        if (entity instanceof EntityAnimal && !entity.isCollided)
                         {
-                            int uniqueness = calculateUniqueness(entity);
-                            double modifier = 1;
-                            if (entity instanceof EntityAnimal && !entity.isCollided)
-                            {
-                                modifier = 4;
-                            }
+                            modifier = 4;
+                        }
 
-                            willBuffer += modifier * getWillForUniqueness(uniqueness) / HEALTH_THRESHOLD * entity.getMaxHealth();
-                            crystalBuffer += modifier * entity.getMaxHealth() / HEALTH_THRESHOLD;
+                        willBuffer += modifier * getWillForUniqueness(uniqueness) / HEALTH_THRESHOLD * entity.getMaxHealth();
+                        crystalBuffer += modifier * entity.getMaxHealth() / HEALTH_THRESHOLD;
 
-                            totalEffects++;
-                            if (totalEffects >= maxEffects)
-                            {
-                                break;
-                            }
+                        totalEffects++;
+                        if (totalEffects >= maxEffects)
+                        {
+                            break;
                         }
                     }
                 }

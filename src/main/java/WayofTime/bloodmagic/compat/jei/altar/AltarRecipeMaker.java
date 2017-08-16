@@ -6,12 +6,15 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.ItemStackWrapper;
+import WayofTime.bloodmagic.block.BlockLifeEssence;
 import net.minecraft.item.ItemStack;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 
 public class AltarRecipeMaker
 {
@@ -35,7 +38,7 @@ public class AltarRecipeMaker
                 int drainRate = itemStackAltarRecipeEntry.getValue().getDrainRate();
 
                 if (output.getItem() == ForgeModContainer.getInstance().universalBucket && requiredLP == 1000)
-                    output = BloodMagicAPI.getLifeEssenceBucket();
+                    output = FluidUtil.getFilledBucket(new FluidStack(BlockLifeEssence.getLifeEssence(), Fluid.BUCKET_VOLUME));
 
                 AltarRecipeJEI recipe = new AltarRecipeJEI(input, output, requiredTier, requiredLP, consumptionRate, drainRate);
                 recipes.add(recipe);

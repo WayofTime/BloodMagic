@@ -17,7 +17,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
 import WayofTime.bloodmagic.item.sigil.ItemSigilSeer;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 

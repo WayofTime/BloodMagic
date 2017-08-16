@@ -8,6 +8,9 @@ import java.util.Map.Entry;
 
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.block.enums.EnumBloodRune;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.tile.TileBloodTank;
 import com.google.common.collect.ImmutableMap;

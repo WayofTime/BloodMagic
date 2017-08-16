@@ -1,6 +1,5 @@
-package WayofTime.bloodmagic.registry;
+package WayofTime.bloodmagic.core;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.block.*;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
@@ -149,8 +148,7 @@ public class RegistrarBloodMagicBlocks
         registerTiles();
     }
 
-    private static void registerTiles()
-    {
+    private static void registerTiles() {
         GameRegistry.registerTileEntity(TileAltar.class, BloodMagic.MODID + ":" + TileAltar.class.getSimpleName());
         GameRegistry.registerTileEntity(TileImperfectRitualStone.class, BloodMagic.MODID + ":" + TileImperfectRitualStone.class.getSimpleName());
         GameRegistry.registerTileEntity(TileMasterRitualStone.class, BloodMagic.MODID + ":" + TileMasterRitualStone.class.getSimpleName());
@@ -174,16 +172,5 @@ public class RegistrarBloodMagicBlocks
         GameRegistry.registerTileEntity(TileBloodTank.class, BloodMagic.MODID + ":" + TileBloodTank.class.getSimpleName());
         GameRegistry.registerTileEntity(TileMimic.class, BloodMagic.MODID + ":" + TileMimic.class.getSimpleName());
         GameRegistry.registerTileEntity(TileInversionPillar.class, BloodMagic.MODID + ":" + TileInversionPillar.class.getSimpleName());
-    }
-
-    public static void registerBlacklists() {
-        BloodMagicAPI.addToTeleposerBlacklist(INPUT_ROUTING_NODE);
-        BloodMagicAPI.addToTranspositionBlacklist(INPUT_ROUTING_NODE);
-        BloodMagicAPI.addToTeleposerBlacklist(OUTPUT_ROUTING_NODE);
-        BloodMagicAPI.addToTranspositionBlacklist(OUTPUT_ROUTING_NODE);
-        BloodMagicAPI.addToTeleposerBlacklist(ITEM_ROUTING_NODE);
-        BloodMagicAPI.addToTranspositionBlacklist(ITEM_ROUTING_NODE);
-        BloodMagicAPI.addToTeleposerBlacklist(DEMON_CRYSTAL);
-        BloodMagicAPI.addToTranspositionBlacklist(DEMON_CRYSTAL);
     }
 }

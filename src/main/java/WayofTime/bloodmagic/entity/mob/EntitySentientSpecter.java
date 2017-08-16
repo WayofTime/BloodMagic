@@ -50,7 +50,7 @@ import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtByTarget;
 import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtTarget;
 import WayofTime.bloodmagic.entity.ai.EntityAIRetreatToHeal;
 import WayofTime.bloodmagic.item.soul.ItemSentientBow;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 
 public class EntitySentientSpecter extends EntityDemonBase
 {

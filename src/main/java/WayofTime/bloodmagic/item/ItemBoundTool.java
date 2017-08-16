@@ -41,7 +41,7 @@ import WayofTime.bloodmagic.api.event.BoundToolEvent;
 import WayofTime.bloodmagic.api.iface.IActivatable;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.ImmutableSet;

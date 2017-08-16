@@ -45,7 +45,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerRepairing;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeElytra;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.PlayerFallDistancePacketProcessor;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 

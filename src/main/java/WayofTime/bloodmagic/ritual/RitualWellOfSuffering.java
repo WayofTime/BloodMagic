@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
 import WayofTime.bloodmagic.tile.TileAltar;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +12,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,27 +87,20 @@ public class RitualWellOfSuffering extends Ritual
 
             for (EntityLivingBase entity : entities)
             {
-                if (ConfigHandler.wellOfSufferingBlacklist.contains(entity.getClass().getSimpleName()))
+                EntityEntry entityEntry = EntityRegistry.getEntry(entity.getClass());
+
+                if (BloodMagicAPI.INSTANCE.getBlacklist().getSacrifice().contains(entityEntry.getRegistryName()))
                     continue;
 
-                String simpleClassName = entity.getClass().getSimpleName();
-                if (BloodMagicAPI.entitySacrificeValues.containsKey(simpleClassName) && BloodMagicAPI.entitySacrificeValues.get(simpleClassName) <= 0)
+                int lifeEssenceRatio = BloodMagicAPI.INSTANCE.getSacrificialValues().getOrDefault(entityEntry.getRegistryName(), SACRIFICE_AMOUNT);
+
+                if (lifeEssenceRatio <= 0)
                     continue;
 
                 if (entity.isEntityAlive() && !(entity instanceof EntityPlayer))
                 {
                     if (entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, 1))
                     {
-                        String entityName = entity.getClass().getSimpleName();
-
-                        int lifeEssenceRatio = SACRIFICE_AMOUNT;
-
-                        if (ConfigHandler.entitySacrificeValues.containsKey(entityName))
-                            lifeEssenceRatio = ConfigHandler.entitySacrificeValues.get(entityName);
-
-                        if (BloodMagicAPI.entitySacrificeValues.containsKey(entityName))
-                            lifeEssenceRatio = BloodMagicAPI.entitySacrificeValues.get(entityName);
-
                         if (entity.isChild())
                             lifeEssenceRatio *= 0.5F;
 

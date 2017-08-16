@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.entity.projectile;
 
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

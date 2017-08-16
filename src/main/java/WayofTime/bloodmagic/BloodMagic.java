@@ -1,10 +1,16 @@
 package WayofTime.bloodmagic;
 
 import java.io.File;
+import java.util.List;
 
+import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
+import WayofTime.bloodmagic.apiv2.BloodMagicPlugin;
+import WayofTime.bloodmagic.apiv2.IBloodMagicPlugin;
 import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.meteor.MeteorConfigHandler;
+import WayofTime.bloodmagic.util.PluginUtil;
+import com.google.common.collect.Lists;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
@@ -19,15 +25,15 @@ import WayofTime.bloodmagic.client.gui.GuiHandler;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.proxy.CommonProxy;
 import WayofTime.bloodmagic.registry.ModArmourTrackers;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.registry.ModCorruptionBlocks;
-import WayofTime.bloodmagic.registry.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.registry.ModRecipes;
 import WayofTime.bloodmagic.registry.ModRituals;
 import WayofTime.bloodmagic.registry.ModTranquilityHandlers;
 import WayofTime.bloodmagic.structures.ModDungeons;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.handler.IMCHandler;
+import org.apache.commons.lang3.tuple.Pair;
 
 @Mod(modid = BloodMagic.MODID, name = BloodMagic.NAME, version = BloodMagic.VERSION, dependencies = BloodMagic.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.config.ConfigGuiFactory")
 public class BloodMagic
@@ -59,6 +65,7 @@ public class BloodMagic
         }
     }.setNoTitle().setBackgroundImageName("items_search.png");
     public static final boolean IS_DEV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+    public static final List<Pair<IBloodMagicPlugin, BloodMagicPlugin>> PLUGINS = Lists.newArrayList();
 
     static
     {
@@ -79,6 +86,8 @@ public class BloodMagic
         configDir = new File(event.getModConfigurationDirectory(), "BloodMagic");
         ConfigHandler.init(new File(configDir, "BloodMagic.cfg"));
 
+        PLUGINS.addAll(PluginUtil.getPlugins(event.getAsmData()));
+
         ModTranquilityHandlers.init();
         ModDungeons.init();
 
@@ -90,7 +99,8 @@ public class BloodMagic
     public void init(FMLInitializationEvent event)
     {
         BloodMagicPacketHandler.init();
-        RegistrarBloodMagicBlocks.registerBlacklists();
+        for (Pair<IBloodMagicPlugin, BloodMagicPlugin> plugin : PLUGINS)
+            plugin.getLeft().register(BloodMagicAPI.INSTANCE);
 
         ModRecipes.init();
         ModRituals.initRituals();

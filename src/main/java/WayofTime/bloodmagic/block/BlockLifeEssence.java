@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -26,7 +25,6 @@ public class BlockLifeEssence extends BlockFluidClassic
 
         setUnlocalizedName(BloodMagic.MODID + ".fluid.lifeEssence");
         getLifeEssence().setBlock(this);
-        BloodMagicAPI.lifeEssence = LIFE_ESSENCE;
     }
 
     @Override
