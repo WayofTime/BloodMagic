@@ -9,48 +9,75 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class LocationsHandler implements Serializable
-{
+public class LocationsHandler implements Serializable {
 
     public static final long serialVersionUID = 10102001;
     private static final String fileName = String.valueOf(DimensionManager.getCurrentSaveRootDirectory()) + "/" + BloodMagic.MODID + "/PortalLocations.dat";
     private static HashMap<String, ArrayList<PortalLocation>> portals;
     private static LocationsHandler locationsHandler;
 
-    private LocationsHandler()
-    {
+    private LocationsHandler() {
         portals = new HashMap<String, ArrayList<PortalLocation>>();
     }
 
-    public static LocationsHandler getLocationsHandler()
-    {
-        if (locationsHandler == null || loadFile() == null)
-        {
+    public boolean addLocation(String name, PortalLocation location) {
+        ArrayList<PortalLocation> portalLocations = portals.get(name);
+        if (portalLocations == null) {
+            portals.put(name, new ArrayList<PortalLocation>());
+            updateFile(fileName, portals);
+        }
+        if (!portals.get(name).isEmpty() && portals.get(name).size() >= 2) {
+            BloodMagicAPI.logger.info("Location " + name + " already exists.");
+            updateFile(fileName, portals);
+            return false;
+        } else {
+            portals.get(name).add(location);
+            BloodMagicAPI.logger.info("Adding " + name);
+            updateFile(fileName, portals);
+            return true;
+        }
+    }
+
+    public boolean removeLocation(String name, PortalLocation location) {
+        if (portals.get(name) != null && !portals.get(name).isEmpty()) {
+            if (portals.get(name).contains(location)) {
+                portals.get(name).remove(location);
+                BloodMagicAPI.logger.info("Removing " + name);
+                updateFile(fileName, portals);
+                return true;
+            } else {
+                BloodMagicAPI.logger.info("No location matching " + name);
+                updateFile(fileName, portals);
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<PortalLocation> getLinkedLocations(String name) {
+        return portals.get(name);
+    }
+
+    public static LocationsHandler getLocationsHandler() {
+        if (locationsHandler == null || loadFile() == null) {
             locationsHandler = new LocationsHandler();
             return locationsHandler;
-        } else
-        {
+        } else {
             portals = loadFile();
             return locationsHandler;
         }
     }
 
-    private static HashMap<String, ArrayList<PortalLocation>> loadFile()
-    {
+    private static HashMap<String, ArrayList<PortalLocation>> loadFile() {
         HashMap<String, ArrayList<PortalLocation>> map;
         File file = new File(fileName);
-        try
-        {
-            if (!file.exists())
-            {
-                if (file.getParentFile().mkdir())
-                {
-                    if (file.createNewFile())
-                    {
+        try {
+            if (!file.exists()) {
+                if (file.getParentFile().mkdir()) {
+                    if (file.createNewFile()) {
                         BloodMagicAPI.logger.info("Creating " + fileName + " in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
                     }
-                } else if (file.createNewFile())
-                {
+                } else if (file.createNewFile()) {
                     BloodMagicAPI.logger.info("Creating " + fileName + " in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
                 }
             }
@@ -60,74 +87,22 @@ public class LocationsHandler implements Serializable
             in.close();
             fileIn.close();
             return map;
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             return null;
-        } catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             BloodMagicAPI.logger.error(String.valueOf(file) + " was not found in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
             return null;
         }
     }
 
-    private static void updateFile(String file, HashMap<String, ArrayList<PortalLocation>> object)
-    {
-        try
-        {
+    private static void updateFile(String file, HashMap<String, ArrayList<PortalLocation>> object) {
+        try {
             FileOutputStream fos = new FileOutputStream(file);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(object);
             oos.close();
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public boolean addLocation(String name, PortalLocation location)
-    {
-        ArrayList<PortalLocation> portalLocations = portals.get(name);
-        if (portalLocations == null)
-        {
-            portals.put(name, new ArrayList<PortalLocation>());
-            updateFile(fileName, portals);
-        }
-        if (!portals.get(name).isEmpty() && portals.get(name).size() >= 2)
-        {
-            BloodMagicAPI.logger.info("Location " + name + " already exists.");
-            updateFile(fileName, portals);
-            return false;
-        } else
-        {
-            portals.get(name).add(location);
-            BloodMagicAPI.logger.info("Adding " + name);
-            updateFile(fileName, portals);
-            return true;
-        }
-    }
-
-    public boolean removeLocation(String name, PortalLocation location)
-    {
-        if (portals.get(name) != null && !portals.get(name).isEmpty())
-        {
-            if (portals.get(name).contains(location))
-            {
-                portals.get(name).remove(location);
-                BloodMagicAPI.logger.info("Removing " + name);
-                updateFile(fileName, portals);
-                return true;
-            } else
-            {
-                BloodMagicAPI.logger.info("No location matching " + name);
-                updateFile(fileName, portals);
-                return false;
-            }
-        }
-        return false;
-    }
-
-    public ArrayList<PortalLocation> getLinkedLocations(String name)
-    {
-        return portals.get(name);
     }
 }

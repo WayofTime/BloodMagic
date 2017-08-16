@@ -1,54 +1,46 @@
 package WayofTime.bloodmagic.livingArmour.tracker;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import WayofTime.bloodmagic.BloodMagic;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePoisonResist;
 import WayofTime.bloodmagic.util.Utils;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 
-public class StatTrackerPoison extends StatTracker
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class StatTrackerPoison extends StatTracker {
+    public static int[] poisonTicksRequired = new int[]{60 * 20, 3 * 60 * 20, 10 * 60 * 20, 20 * 60 * 20, 25 * 60 * 20};
     public int totalPoisonTicks = 0;
 
-    public static int[] poisonTicksRequired = new int[] { 60 * 20, 3 * 60 * 20, 10 * 60 * 20, 20 * 60 * 20, 25 * 60 * 20 };
-
     @Override
-    public String getUniqueIdentifier()
-    {
+    public String getUniqueIdentifier() {
         return BloodMagic.MODID + ".tracker.poison";
     }
 
     @Override
-    public void resetTracker()
-    {
+    public void resetTracker() {
         this.totalPoisonTicks = 0;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
         totalPoisonTicks = tag.getInteger(BloodMagic.MODID + ".tracker.poison");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
         tag.setInteger(BloodMagic.MODID + ".tracker.poison", totalPoisonTicks);
     }
 
     @Override
-    public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour)
-    {
-        if (player.isPotionActive(MobEffects.POISON))
-        {
+    public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+        if (player.isPotionActive(MobEffects.POISON)) {
             totalPoisonTicks++;
             this.markDirty();
             return true;
@@ -58,20 +50,16 @@ public class StatTrackerPoison extends StatTracker
     }
 
     @Override
-    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour)
-    {
+    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour) {
 
     }
 
     @Override
-    public List<LivingArmourUpgrade> getUpgrades()
-    {
+    public List<LivingArmourUpgrade> getUpgrades() {
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
 
-        for (int i = 0; i < 5; i++)
-        {
-            if (totalPoisonTicks >= poisonTicksRequired[i])
-            {
+        for (int i = 0; i < 5; i++) {
+            if (totalPoisonTicks >= poisonTicksRequired[i]) {
                 upgradeList.add(new LivingArmourUpgradePoisonResist(i));
             }
         }
@@ -80,25 +68,20 @@ public class StatTrackerPoison extends StatTracker
     }
 
     @Override
-    public double getProgress(LivingArmour livingArmour, int currentLevel)
-    {
+    public double getProgress(LivingArmour livingArmour, int currentLevel) {
         return Utils.calculateStandardProgress(totalPoisonTicks, poisonTicksRequired, currentLevel);
     }
 
     @Override
-    public boolean providesUpgrade(String key)
-    {
+    public boolean providesUpgrade(String key) {
         return key.equals(BloodMagic.MODID + ".upgrade.poisonResist");
     }
 
     @Override
-    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
-    {
-        if (upgrade instanceof LivingArmourUpgradePoisonResist)
-        {
+    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade) {
+        if (upgrade instanceof LivingArmourUpgradePoisonResist) {
             int level = upgrade.getUpgradeLevel();
-            if (level < poisonTicksRequired.length)
-            {
+            if (level < poisonTicksRequired.length) {
                 totalPoisonTicks = Math.max(totalPoisonTicks, poisonTicksRequired[level]);
                 this.markDirty();
             }

@@ -1,9 +1,8 @@
 package WayofTime.bloodmagic.alchemyArray;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
+import WayofTime.bloodmagic.tile.TileAlchemyArray;
+import com.google.common.base.Predicate;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -18,35 +17,29 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
-import WayofTime.bloodmagic.tile.TileAlchemyArray;
 
-import com.google.common.base.Predicate;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Credits for the initial code go to Crazy Pants of EIO.
  */
-public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect
-{
-    private EntitySkeleton turret;
-
-    public static Predicate<EntityMob> checkSkeleton = new Predicate<EntityMob>()
-    {
+public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect {
+    public static Predicate<EntityMob> checkSkeleton = new Predicate<EntityMob>() {
         @Override
-        public boolean apply(EntityMob input)
-        {
+        public boolean apply(EntityMob input) {
             return !(input instanceof EntitySkeleton);
         }
     };
+    private EntitySkeleton turret;
 
-    public AlchemyArrayEffectSkeletonTurret(String key)
-    {
+    public AlchemyArrayEffectSkeletonTurret(String key) {
         super(key);
     }
 
     @Override
-    public boolean update(TileEntity tile, int ticksActive)
-    {
+    public boolean update(TileEntity tile, int ticksActive) {
 //        if (tile.getWorld().isRemote)
 //        {
 //            return false;
@@ -54,15 +47,13 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect
 
         BlockPos pos = tile.getPos();
 
-        if (turret != null && !turret.isDead)
-        {
+        if (turret != null && !turret.isDead) {
             double x = (pos.getX() + 0.5D - turret.posX);
             double y = (pos.getY() + 1D - turret.posY);
             double z = (pos.getZ() + 0.5D - turret.posZ);
             double distance = Math.sqrt(x * x + y * y + z * z);
 
-            if (distance < 2)
-            {
+            if (distance < 2) {
 //                turret.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 100, 100));
                 return false;
             }
@@ -72,8 +63,7 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect
 
         List<EntitySkeleton> skeletonsInRange = world.getEntitiesWithinAABB(EntitySkeleton.class, getBounds(pos));
 
-        for (EntitySkeleton entity : skeletonsInRange)
-        {
+        for (EntitySkeleton entity : skeletonsInRange) {
             if (!entity.isDead)// && isMobInFilter(ent))
             {
                 modifyAITargetTasks(entity);
@@ -85,13 +75,11 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect
         return false;
     }
 
-    public AxisAlignedBB getBounds(BlockPos pos)
-    {
+    public AxisAlignedBB getBounds(BlockPos pos) {
         return new AxisAlignedBB(pos).expand(getRange(), getRange(), getRange());
     }
 
-    public float getRange()
-    {
+    public float getRange() {
         return 0;
     }
 
@@ -105,8 +93,7 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect
 //        e.getEntityData().setBoolean("BM:tracked", true);
 //    }
 
-    private boolean modifyAITargetTasks(EntitySkeleton entity)
-    {
+    private boolean modifyAITargetTasks(EntitySkeleton entity) {
         cancelCurrentTargetTasks(entity);
 
 //        entity.setCombatTask();
@@ -116,13 +103,11 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect
         return true;
     }
 
-    private void cancelCurrentTargetTasks(EntityLiving entity)
-    {
+    private void cancelCurrentTargetTasks(EntityLiving entity) {
         Iterator<EntityAITaskEntry> iterator = entity.targetTasks.taskEntries.iterator();
 
         List<EntityAITasks.EntityAITaskEntry> currentTasks = new ArrayList<EntityAITasks.EntityAITaskEntry>();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             EntityAITaskEntry entityaitaskentry = iterator.next();
             if (entityaitaskentry != null)// && entityaitaskentry.action instanceof EntityAITarget)
             {
@@ -130,14 +115,27 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect
             }
         }
 
-        for (EntityAITaskEntry task : currentTasks)
-        {
+        for (EntityAITaskEntry task : currentTasks) {
             entity.targetTasks.removeTask(task.action);
         }
     }
 
-    private static class AttractTask extends EntityAIBase
-    {
+    @Override
+    public void writeToNBT(NBTTagCompound tag) {
+
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag) {
+
+    }
+
+    @Override
+    public AlchemyArrayEffect getNewCopy() {
+        return new AlchemyArrayEffectSkeletonTurret(key);
+    }
+
+    private static class AttractTask extends EntityAIBase {
         private EntityLiving mob;
         private BlockPos coord;
         private FakePlayer target;
@@ -145,21 +143,18 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect
 
         private boolean started = false;
 
-        private AttractTask(EntityLiving mob, FakePlayer target, BlockPos coord)
-        {
+        private AttractTask(EntityLiving mob, FakePlayer target, BlockPos coord) {
             this.mob = mob;
             this.coord = coord;
             this.target = target;
         }
 
         @Override
-        public boolean shouldExecute()
-        {
+        public boolean shouldExecute() {
             boolean res = false;
             //TODO:
             TileEntity te = mob.getEntityWorld().getTileEntity(coord);
-            if (te instanceof TileAlchemyArray)
-            {
+            if (te instanceof TileAlchemyArray) {
                 res = true;
             }
 
@@ -167,55 +162,31 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect
         }
 
         @Override
-        public void resetTask()
-        {
+        public void resetTask() {
             started = false;
             updatesSincePathing = 0;
         }
 
         @Override
-        public boolean isInterruptible()
-        {
+        public boolean isInterruptible() {
             return true;
         }
 
         @Override
-        public void updateTask()
-        {
-            if (!started || updatesSincePathing > 20)
-            {
+        public void updateTask() {
+            if (!started || updatesSincePathing > 20) {
                 started = true;
                 int speed = 1;
                 // mob.getNavigator().setAvoidsWater(false);
                 boolean res = mob.getNavigator().tryMoveToEntityLiving(target, speed);
-                if (!res)
-                {
+                if (!res) {
                     mob.getNavigator().tryMoveToXYZ(target.posX, target.posY + 1, target.posZ, speed);
                 }
                 updatesSincePathing = 0;
-            } else
-            {
+            } else {
                 updatesSincePathing++;
             }
         }
 
-    }
-
-    @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
-
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
-
-    }
-
-    @Override
-    public AlchemyArrayEffect getNewCopy()
-    {
-        return new AlchemyArrayEffectSkeletonTurret(key);
     }
 }

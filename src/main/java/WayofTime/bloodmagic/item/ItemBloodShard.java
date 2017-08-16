@@ -14,12 +14,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemBloodShard extends Item implements IVariantProvider
-{
-    public String[] names = { "weak", "demon" };
+public class ItemBloodShard extends Item implements IVariantProvider {
+    public String[] names = {"weak", "demon"};
 
-    public ItemBloodShard()
-    {
+    public ItemBloodShard() {
         super();
 
         setCreativeTab(BloodMagic.TAB_BM);
@@ -29,8 +27,7 @@ public class ItemBloodShard extends Item implements IVariantProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
-    {
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
@@ -39,14 +36,12 @@ public class ItemBloodShard extends Item implements IVariantProvider
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+    public String getUnlocalizedName(ItemStack stack) {
         return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "type=weak"));
         ret.add(new ImmutablePair<Integer, String>(1, "type=demonic"));

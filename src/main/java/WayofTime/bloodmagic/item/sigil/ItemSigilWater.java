@@ -10,12 +10,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -24,34 +19,28 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class ItemSigilWater extends ItemSigilBase
-{
-    public ItemSigilWater()
-    {
+public class ItemSigilWater extends ItemSigilBase {
+    public ItemSigilWater() {
         super("water", 100);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() instanceof ISigil.Holding)
             stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
-        if (!world.isRemote && !isUnusable(stack))
-        {
+        if (!world.isRemote && !isUnusable(stack)) {
             RayTraceResult rayTrace = this.rayTrace(world, player, false);
 
-            if (rayTrace != null)
-            {
+            if (rayTrace != null) {
                 ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, world, stack, rayTrace);
                 if (ret != null)
                     return ret;
 
-                if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
-                {
+                if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
                     BlockPos blockpos = rayTrace.getBlockPos();
 
                     if (!world.isBlockModifiable(player, blockpos))
@@ -75,8 +64,7 @@ public class ItemSigilWater extends ItemSigilBase
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote || player.isSneaking() || isUnusable(stack))
             return EnumActionResult.FAIL;
@@ -85,14 +73,12 @@ public class ItemSigilWater extends ItemSigilBase
             return EnumActionResult.FAIL;
 
         TileEntity tile = world.getTileEntity(blockPos);
-        if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
-        {
+        if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) {
             IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
             FluidStack fluid = new FluidStack(FluidRegistry.WATER, 1000);
             int amount = handler.fill(fluid, false);
 
-            if (amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
-            {
+            if (amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed())) {
                 handler.fill(fluid, true);
                 return EnumActionResult.SUCCESS;
             }
@@ -100,8 +86,7 @@ public class ItemSigilWater extends ItemSigilBase
             return EnumActionResult.FAIL;
         }
 
-        if (world.getBlockState(blockPos).getBlock() == Blocks.CAULDRON && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
-        {
+        if (world.getBlockState(blockPos).getBlock() == Blocks.CAULDRON && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed())) {
             world.setBlockState(blockPos, Blocks.CAULDRON.getDefaultState().withProperty(BlockCauldron.LEVEL, 3));
             return EnumActionResult.SUCCESS;
         }
@@ -109,8 +94,7 @@ public class ItemSigilWater extends ItemSigilBase
         return EnumActionResult.FAIL;
     }
 
-    public boolean canPlaceWater(World world, BlockPos blockPos)
-    {
+    public boolean canPlaceWater(World world, BlockPos blockPos) {
         if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isSolid())
             return false;
         else if ((world.getBlockState(blockPos).getBlock() == Blocks.WATER || world.getBlockState(blockPos).getBlock() == Blocks.FLOWING_WATER) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
@@ -119,19 +103,15 @@ public class ItemSigilWater extends ItemSigilBase
             return true;
     }
 
-    public boolean tryPlaceWater(World worldIn, BlockPos pos)
-    {
+    public boolean tryPlaceWater(World worldIn, BlockPos pos) {
 
         Material material = worldIn.getBlockState(pos).getBlock().getMaterial(worldIn.getBlockState(pos));
         boolean notSolid = !material.isSolid();
 
-        if (!worldIn.isAirBlock(pos) && !notSolid)
-        {
+        if (!worldIn.isAirBlock(pos) && !notSolid) {
             return false;
-        } else
-        {
-            if (worldIn.provider.doesWaterVaporize())
-            {
+        } else {
+            if (worldIn.provider.doesWaterVaporize()) {
                 int i = pos.getX();
                 int j = pos.getY();
                 int k = pos.getZ();
@@ -139,8 +119,7 @@ public class ItemSigilWater extends ItemSigilBase
 
                 for (int l = 0; l < 8; ++l)
                     worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D, 0);
-            } else
-            {
+            } else {
                 if (!worldIn.isRemote && notSolid && !material.isLiquid())
                     worldIn.destroyBlock(pos, true);
 

@@ -17,20 +17,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class MeteorConfigHandler
-{
+public class MeteorConfigHandler {
     private static final Map<String, Meteor> DEFAULT_METEORS = Maps.newHashMap();
 
     private static File meteorDir;
 
-    public static void init(File meteorDirectory)
-    {
+    public static void init(File meteorDirectory) {
         meteorDir = meteorDirectory;
         handleMeteors(true);
     }
 
-    public static void handleMeteors(boolean checkNewVersion)
-    {
+    public static void handleMeteors(boolean checkNewVersion) {
         if (meteorDir == null) {
             BloodMagic.instance.logger.error("Attempted to handle meteor config but the folder has not been initialized. Was this run too early?");
             return;
@@ -40,13 +37,10 @@ public class MeteorConfigHandler
         MeteorRegistry.meteorMap.clear();
         List<Pair<String, Meteor>> defaultMeteors = getDefaultMeteors();
 
-        try
-        {
+        try {
             // Create defaults if the folder doesn't exist
-            if (!meteorDir.exists() && meteorDir.mkdir())
-            {
-                for (Pair<String, Meteor> meteor : defaultMeteors)
-                {
+            if (!meteorDir.exists() && meteorDir.mkdir()) {
+                for (Pair<String, Meteor> meteor : defaultMeteors) {
                     String json = Serializers.GSON.toJson(meteor.getRight());
                     FileWriter writer = new FileWriter(new File(meteorDir, meteor.getLeft() + ".json"));
                     writer.write(json);
@@ -62,24 +56,20 @@ public class MeteorConfigHandler
             List<Pair<String, Meteor>> meteors = Lists.newArrayList();
 
             // Filter names so we can compare to defaults
-            for (File meteorFile : meteorFiles)
-            {
+            for (File meteorFile : meteorFiles) {
                 FileReader reader = new FileReader(meteorFile);
                 Meteor meteor = Serializers.GSON.fromJson(reader, Meteor.class);
                 meteors.add(Pair.of(FilenameUtils.removeExtension(meteorFile.getName()), meteor));
                 reader.close();
             }
 
-            if (checkNewVersion && ConfigHandler.config.getBoolean("resyncOnVersionChange", "Meteors", true, "Should the default meteors be regenerated if the mod has updated them"))
-            {
+            if (checkNewVersion && ConfigHandler.config.getBoolean("resyncOnVersionChange", "Meteors", true, "Should the default meteors be regenerated if the mod has updated them")) {
                 Set<String> discoveredDefaults = Sets.newHashSet();
 
                 // Check existing defaults for new version
-                for (Pair<String, Meteor> meteor : meteors)
-                {
+                for (Pair<String, Meteor> meteor : meteors) {
                     Meteor defaultMeteor = DEFAULT_METEORS.get(meteor.getLeft());
-                    if (defaultMeteor != null)
-                    {
+                    if (defaultMeteor != null) {
                         discoveredDefaults.add(meteor.getLeft());
                         if (defaultMeteor.version > meteor.getRight().version) {
                             writeMeteor(meteor.getLeft(), defaultMeteor);
@@ -100,16 +90,14 @@ public class MeteorConfigHandler
             // Finally, register all of our meteors
             for (Pair<String, Meteor> meteor : meteors)
                 MeteorRegistry.registerMeteor(meteor.getRight().getCatalystStack(), meteor.getRight());
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         ConfigHandler.config.save();
     }
 
-    private static List<Pair<String, Meteor>> getDefaultMeteors()
-    {
+    private static List<Pair<String, Meteor>> getDefaultMeteors() {
         List<Pair<String, Meteor>> holders = Lists.newArrayList();
 
         // Iron

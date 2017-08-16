@@ -1,11 +1,10 @@
 package WayofTime.bloodmagic.block.enums;
 
-import java.util.Locale;
-
 import net.minecraft.util.IStringSerializable;
 
-public enum EnumMimic implements IStringSerializable
-{
+import java.util.Locale;
+
+public enum EnumMimic implements IStringSerializable {
     NOHITBOX,
     SOLIDOPAQUE,
     SOLIDCLEAR,
@@ -13,14 +12,12 @@ public enum EnumMimic implements IStringSerializable
     SENTIENT;
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return name().toLowerCase(Locale.ENGLISH);
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return this.toString();
     }
 }

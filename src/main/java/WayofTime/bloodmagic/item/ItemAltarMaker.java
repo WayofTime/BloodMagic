@@ -1,9 +1,19 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.altar.BloodAltar;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.altar.AltarComponent;
+import WayofTime.bloodmagic.api.altar.EnumAltarTier;
+import WayofTime.bloodmagic.api.altar.IAltarManipulator;
+import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.block.BlockAltar;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -17,30 +27,16 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.altar.BloodAltar;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.altar.AltarComponent;
-import WayofTime.bloodmagic.api.altar.EnumAltarTier;
-import WayofTime.bloodmagic.api.altar.IAltarManipulator;
-import WayofTime.bloodmagic.api.altar.IBloodAltar;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.block.BlockAltar;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.util.ChatUtil;
-import WayofTime.bloodmagic.util.Utils;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantProvider
-{
+public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantProvider {
     private EnumAltarTier tierToBuild = EnumAltarTier.ONE;
 
-    public ItemAltarMaker()
-    {
+    public ItemAltarMaker() {
         super();
         setUnlocalizedName(BloodMagic.MODID + ".altarMaker");
         setCreativeTab(BloodMagic.TAB_BM);
@@ -50,30 +46,26 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         if (!stack.hasTagCompound())
             return;
         tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentTier", stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote)
             return super.onItemRightClick(world, player, hand);
 
-        if (!player.capabilities.isCreativeMode)
-        {
+        if (!player.capabilities.isCreativeMode) {
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.bloodmagic.altarMaker.creativeOnly"));
             return super.onItemRightClick(world, player, hand);
         }
 
         stack = NBTHelper.checkNBT(stack);
 
-        if (player.isSneaking())
-        {
+        if (player.isSneaking()) {
             if (stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) >= EnumAltarTier.MAXTIERS - 1)
                 stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, 0);
             else
@@ -88,8 +80,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
         if (rayTrace == null || rayTrace.typeOfHit == RayTraceResult.Type.MISS || rayTrace.typeOfHit == RayTraceResult.Type.ENTITY)
             return super.onItemRightClick(world, player, hand);
 
-        if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK && world.getBlockState(rayTrace.getBlockPos()).getBlock() instanceof BlockAltar)
-        {
+        if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK && world.getBlockState(rayTrace.getBlockPos()).getBlock() instanceof BlockAltar) {
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.bloodmagic.altarMaker.building", NumeralHelper.toRoman(tierToBuild.toInt())));
             buildAltar(world, rayTrace.getBlockPos());
             IBlockState state = world.getBlockState(rayTrace.getBlockPos());
@@ -101,28 +92,24 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "type=altarmaker"));
         return ret;
     }
 
-    public void setTierToBuild(EnumAltarTier tierToBuild)
-    {
+    public void setTierToBuild(EnumAltarTier tierToBuild) {
         this.tierToBuild = tierToBuild;
     }
 
-    public void buildAltar(World world, BlockPos pos)
-    {
+    public void buildAltar(World world, BlockPos pos) {
         if (world.isRemote)
             return;
 
         if (tierToBuild == EnumAltarTier.ONE)
             return;
 
-        for (AltarComponent altarComponent : tierToBuild.getAltarComponents())
-        {
+        for (AltarComponent altarComponent : tierToBuild.getAltarComponents()) {
             BlockPos componentPos = pos.add(altarComponent.getOffset());
             Block blockForComponent = Utils.getBlockForComponent(altarComponent.getComponent());
 
@@ -132,8 +119,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
         ((IBloodAltar) world.getTileEntity(pos)).checkTier();
     }
 
-    public String destroyAltar(EntityPlayer player)
-    {
+    public String destroyAltar(EntityPlayer player) {
         World world = player.getEntityWorld();
         if (world.isRemote)
             return "";
@@ -145,10 +131,8 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
 
         if (altarTier.equals(EnumAltarTier.ONE))
             return "" + altarTier.toInt();
-        else
-        {
-            for (AltarComponent altarComponent : altarTier.getAltarComponents())
-            {
+        else {
+            for (AltarComponent altarComponent : altarTier.getAltarComponents()) {
                 BlockPos componentPos = pos.add(altarComponent.getOffset());
                 IBlockState componentState = world.getBlockState(pos);
 

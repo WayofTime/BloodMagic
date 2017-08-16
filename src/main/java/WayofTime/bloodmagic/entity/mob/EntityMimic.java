@@ -1,19 +1,15 @@
 package WayofTime.bloodmagic.entity.mob;
 
+import WayofTime.bloodmagic.block.BlockMimic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.entity.ai.EntityAIMimicReform;
+import WayofTime.bloodmagic.tile.TileMimic;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILeapAtTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -33,13 +29,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.block.BlockMimic;
-import WayofTime.bloodmagic.entity.ai.EntityAIMimicReform;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
-import WayofTime.bloodmagic.tile.TileMimic;
 
-public class EntityMimic extends EntityDemonBase
-{
+public class EntityMimic extends EntityDemonBase {
     /**
      * Copy of EntitySpider's AI (should be pretty evident...)
      */
@@ -50,8 +41,7 @@ public class EntityMimic extends EntityDemonBase
     public int metaOfReplacedBlock = 0;
     public int playerCheckRadius = 5;
 
-    public EntityMimic(World worldIn)
-    {
+    public EntityMimic(World worldIn) {
         super(worldIn);
         this.setSize(0.9F, 0.9F);
 
@@ -70,8 +60,7 @@ public class EntityMimic extends EntityDemonBase
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound tag)
-    {
+    public void writeEntityToNBT(NBTTagCompound tag) {
         super.writeEntityToNBT(tag);
 
         tag.setBoolean("dropItemsOnBreak", dropItemsOnBreak);
@@ -81,8 +70,7 @@ public class EntityMimic extends EntityDemonBase
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound tag)
-    {
+    public void readEntityFromNBT(NBTTagCompound tag) {
         super.readEntityFromNBT(tag);
 
         dropItemsOnBreak = tag.getBoolean("dropItemsOnBreak");
@@ -91,30 +79,24 @@ public class EntityMimic extends EntityDemonBase
         playerCheckRadius = tag.getInteger("playerCheckRadius");
     }
 
-    public ItemStack getMimicItemStack()
-    {
+    public ItemStack getMimicItemStack() {
         return this.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
     }
 
-    public void setMimicItemStack(ItemStack stack)
-    {
+    public void setMimicItemStack(ItemStack stack) {
         this.setItemStackToSlot(EntityEquipmentSlot.CHEST, stack);
     }
 
-    public boolean spawnHeldBlockOnDeath(World world, BlockPos pos)
-    {
+    public boolean spawnHeldBlockOnDeath(World world, BlockPos pos) {
         return world.isAirBlock(pos) && TileMimic.replaceMimicWithBlockActual(world, pos, getMimicItemStack(), tileTag, metaOfReplacedBlock);
     }
 
-    public boolean spawnMimicBlockAtPosition(World world, BlockPos pos)
-    {
-        if (world.isAirBlock(pos))
-        {
+    public boolean spawnMimicBlockAtPosition(World world, BlockPos pos) {
+        if (world.isAirBlock(pos)) {
             IBlockState mimicState = RegistrarBloodMagicBlocks.MIMIC.getStateFromMeta(BlockMimic.sentientMimicMeta);
             world.setBlockState(pos, mimicState, 3);
             TileEntity tile = world.getTileEntity(pos);
-            if (tile instanceof TileMimic)
-            {
+            if (tile instanceof TileMimic) {
                 TileMimic mimic = (TileMimic) tile;
                 mimic.metaOfReplacedBlock = metaOfReplacedBlock;
                 mimic.tileTag = tileTag;
@@ -129,8 +111,7 @@ public class EntityMimic extends EntityDemonBase
         return false;
     }
 
-    public void initializeMimic(ItemStack heldStack, NBTTagCompound tileTag, boolean dropItemsOnBreak, int metaOfReplacedBlock, int playerCheckRadius, BlockPos homePosition)
-    {
+    public void initializeMimic(ItemStack heldStack, NBTTagCompound tileTag, boolean dropItemsOnBreak, int metaOfReplacedBlock, int playerCheckRadius, BlockPos homePosition) {
         this.setMimicItemStack(heldStack);
         this.tileTag = tileTag;
         this.dropItemsOnBreak = dropItemsOnBreak;
@@ -139,29 +120,21 @@ public class EntityMimic extends EntityDemonBase
         this.setHomePosAndDistance(homePosition, 2); //TODO: Save this.
     }
 
-    public boolean reformIntoMimicBlock(BlockPos centerPos)
-    {
+    public boolean reformIntoMimicBlock(BlockPos centerPos) {
         int horizontalRadius = 1;
         int verticalRadius = 1;
 
-        for (int hR = 0; hR <= horizontalRadius; hR++)
-        {
-            for (int vR = 0; vR <= verticalRadius; vR++)
-            {
-                for (int i = -hR; i <= hR; i++)
-                {
-                    for (int k = -hR; k <= hR; k++)
-                    {
-                        for (int j = -vR; j <= vR; j += 2 * vR + (vR > 0 ? 0 : 1))
-                        {
-                            if (!(Math.abs(i) == hR || Math.abs(k) == hR))
-                            {
+        for (int hR = 0; hR <= horizontalRadius; hR++) {
+            for (int vR = 0; vR <= verticalRadius; vR++) {
+                for (int i = -hR; i <= hR; i++) {
+                    for (int k = -hR; k <= hR; k++) {
+                        for (int j = -vR; j <= vR; j += 2 * vR + (vR > 0 ? 0 : 1)) {
+                            if (!(Math.abs(i) == hR || Math.abs(k) == hR)) {
                                 continue;
                             }
 
                             BlockPos newPos = centerPos.add(i, j, k);
-                            if (spawnMimicBlockAtPosition(getEntityWorld(), newPos))
-                            {
+                            if (spawnMimicBlockAtPosition(getEntityWorld(), newPos)) {
                                 return true;
                             }
                         }
@@ -174,35 +147,26 @@ public class EntityMimic extends EntityDemonBase
     }
 
     @Override
-    public void onDeath(DamageSource cause)
-    {
+    public void onDeath(DamageSource cause) {
         super.onDeath(cause);
 
-        if (!getEntityWorld().isRemote)
-        {
+        if (!getEntityWorld().isRemote) {
             BlockPos centerPos = this.getPosition();
 
             int horizontalRadius = 1;
             int verticalRadius = 1;
 
-            for (int hR = 0; hR <= horizontalRadius; hR++)
-            {
-                for (int vR = 0; vR <= verticalRadius; vR++)
-                {
-                    for (int i = -hR; i <= hR; i++)
-                    {
-                        for (int k = -hR; k <= hR; k++)
-                        {
-                            for (int j = -vR; j <= vR; j += 2 * vR + (vR > 0 ? 0 : 1))
-                            {
-                                if (!(Math.abs(i) == hR || Math.abs(k) == hR))
-                                {
+            for (int hR = 0; hR <= horizontalRadius; hR++) {
+                for (int vR = 0; vR <= verticalRadius; vR++) {
+                    for (int i = -hR; i <= hR; i++) {
+                        for (int k = -hR; k <= hR; k++) {
+                            for (int j = -vR; j <= vR; j += 2 * vR + (vR > 0 ? 0 : 1)) {
+                                if (!(Math.abs(i) == hR || Math.abs(k) == hR)) {
                                     continue;
                                 }
 
                                 BlockPos newPos = centerPos.add(i, j, k);
-                                if (spawnHeldBlockOnDeath(getEntityWorld(), newPos))
-                                {
+                                if (spawnHeldBlockOnDeath(getEntityWorld(), newPos)) {
                                     return;
                                 }
                             }
@@ -218,8 +182,7 @@ public class EntityMimic extends EntityDemonBase
      * this one.
      */
     @Override
-    public double getMountedYOffset()
-    {
+    public double getMountedYOffset() {
         return (double) (this.height * 0.5F);
     }
 
@@ -227,14 +190,12 @@ public class EntityMimic extends EntityDemonBase
      * Returns new PathNavigateGround instance
      */
     @Override
-    protected PathNavigate createNavigator(World worldIn)
-    {
+    protected PathNavigate createNavigator(World worldIn) {
         return new PathNavigateClimber(this, worldIn);
     }
 
     @Override
-    protected void entityInit()
-    {
+    protected void entityInit() {
         super.entityInit();
         this.dataManager.register(CLIMBING, (byte) 0);
 //        this.dataManager.register(ITEMSTACK, null);
@@ -244,53 +205,44 @@ public class EntityMimic extends EntityDemonBase
      * Called to update the entity's position/logic.
      */
     @Override
-    public void onUpdate()
-    {
-        if (!this.getEntityWorld().isRemote && this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL)
-        {
-            if (reformIntoMimicBlock(this.getPosition()))
-            {
+    public void onUpdate() {
+        if (!this.getEntityWorld().isRemote && this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
+            if (reformIntoMimicBlock(this.getPosition())) {
                 this.setDead();
             }
         }
 
         super.onUpdate();
 
-        if (!this.getEntityWorld().isRemote)
-        {
+        if (!this.getEntityWorld().isRemote) {
             this.setBesideClimbableBlock(this.isCollidedHorizontally);
         }
     }
 
     @Override
-    protected void applyEntityAttributes()
-    {
+    protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(16.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3D);
     }
 
     @Override
-    protected SoundEvent getAmbientSound()
-    {
+    protected SoundEvent getAmbientSound() {
         return SoundEvents.ENTITY_SPIDER_AMBIENT;
     }
 
     @Override
-    protected SoundEvent getHurtSound()
-    {
+    protected SoundEvent getHurtSound() {
         return SoundEvents.ENTITY_SPIDER_HURT;
     }
 
     @Override
-    protected SoundEvent getDeathSound()
-    {
+    protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_SPIDER_DEATH;
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, Block blockIn)
-    {
+    protected void playStepSound(BlockPos pos, Block blockIn) {
         this.playSound(SoundEvents.ENTITY_SPIDER_STEP, 0.15F, 1.0F);
     }
 
@@ -298,8 +250,7 @@ public class EntityMimic extends EntityDemonBase
      * returns true if this entity is by a ladder, false otherwise
      */
     @Override
-    public boolean isOnLadder()
-    {
+    public boolean isOnLadder() {
         return this.isBesideClimbableBlock();
     }
 
@@ -307,8 +258,7 @@ public class EntityMimic extends EntityDemonBase
      * Sets the Entity inside a web block.
      */
     @Override
-    public void setInWeb()
-    {
+    public void setInWeb() {
 
     }
 
@@ -316,14 +266,12 @@ public class EntityMimic extends EntityDemonBase
      * Get this Entity's EnumCreatureAttribute
      */
     @Override
-    public EnumCreatureAttribute getCreatureAttribute()
-    {
+    public EnumCreatureAttribute getCreatureAttribute() {
         return EnumCreatureAttribute.ARTHROPOD;
     }
 
     @Override
-    public boolean isPotionApplicable(PotionEffect potioneffectIn)
-    {
+    public boolean isPotionApplicable(PotionEffect potioneffectIn) {
         return potioneffectIn.getPotion() != MobEffects.POISON && super.isPotionApplicable(potioneffectIn);
     }
 
@@ -331,8 +279,7 @@ public class EntityMimic extends EntityDemonBase
      * Returns true if the WatchableObject (Byte) is 0x01 otherwise returns
      * false. The WatchableObject is updated using setBesideClimableBlock.
      */
-    public boolean isBesideClimbableBlock()
-    {
+    public boolean isBesideClimbableBlock() {
         return (this.dataManager.get(CLIMBING) & 1) != 0;
     }
 
@@ -340,44 +287,35 @@ public class EntityMimic extends EntityDemonBase
      * Updates the WatchableObject (Byte) created in entityInit(), setting it to
      * 0x01 if par1 is true or 0x00 if it is false.
      */
-    public void setBesideClimbableBlock(boolean climbing)
-    {
+    public void setBesideClimbableBlock(boolean climbing) {
         byte b0 = this.dataManager.get(CLIMBING);
 
-        if (climbing)
-        {
+        if (climbing) {
             b0 = (byte) (b0 | 1);
-        } else
-        {
+        } else {
             b0 = (byte) (b0 & -2);
         }
 
         this.dataManager.set(CLIMBING, b0);
     }
 
-    public float getEyeHeight()
-    {
+    public float getEyeHeight() {
         return 0.65F;
     }
 
-    static class AISpiderAttack extends EntityAIAttackMelee
-    {
-        public AISpiderAttack(EntityMimic spider)
-        {
+    static class AISpiderAttack extends EntityAIAttackMelee {
+        public AISpiderAttack(EntityMimic spider) {
             super(spider, 1.0D, true);
         }
 
         @Override
-        protected double getAttackReachSqr(EntityLivingBase attackTarget)
-        {
+        protected double getAttackReachSqr(EntityLivingBase attackTarget) {
             return (double) (4.0F + attackTarget.width);
         }
     }
 
-    static class AISpiderTarget<T extends EntityLivingBase> extends EntityAINearestAttackableTarget<T>
-    {
-        public AISpiderTarget(EntityMimic spider, Class<T> classTarget)
-        {
+    static class AISpiderTarget<T extends EntityLivingBase> extends EntityAINearestAttackableTarget<T> {
+        public AISpiderTarget(EntityMimic spider, Class<T> classTarget) {
             super(spider, classTarget, true);
         }
     }

@@ -7,8 +7,8 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -22,15 +22,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class RitualPump extends Ritual
-{
+public class RitualPump extends Ritual {
     public static final String PUMP_RANGE = "pumpRange";
 
     private List<Pair<BlockPos, FluidStack>> liquidsCache;
     private Iterator<Pair<BlockPos, FluidStack>> blockPosIterator;
 
-    public RitualPump()
-    {
+    public RitualPump() {
         super("ritualPump", 0, 500, "ritual." + BloodMagic.MODID + ".pumpRitual");
         addBlockRange(PUMP_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-16, -16, -16), new BlockPos(17, 17, 17)));
 
@@ -39,14 +37,12 @@ public class RitualPump extends Ritual
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
         TileEntity tileEntity = world.getTileEntity(masterRitualStone.getBlockPos().up());
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -90,14 +86,12 @@ public class RitualPump extends Ritual
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 25;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         addRune(components, 1, 0, 1, EnumRuneType.WATER);
@@ -111,8 +105,7 @@ public class RitualPump extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualPump();
     }
 }

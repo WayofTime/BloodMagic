@@ -1,25 +1,8 @@
 package WayofTime.bloodmagic.core;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.block.IBMBlock;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.item.*;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
@@ -32,17 +15,29 @@ import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
 import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
 import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.item.soul.*;
+import com.google.common.collect.Lists;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
 @SuppressWarnings("unchecked")
-public class RegistrarBloodMagicItems
-{
+public class RegistrarBloodMagicItems {
     public static final Item BLOOD_ORB = Items.AIR;
     public static final Item ACTIVATION_CRYSTAL = Items.AIR;
     public static final Item SLATE = Items.AIR;
@@ -122,8 +117,7 @@ public class RegistrarBloodMagicItems
     public static List<Item> items;
 
     @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event)
-    {
+    public static void registerItems(RegistryEvent.Register<Item> event) {
         items = Lists.newArrayList();
 
         RegistrarBloodMagicBlocks.blocks.stream().filter(block -> block instanceof IBMBlock && ((IBMBlock) block).getItem() != null).forEach(block -> {
@@ -211,8 +205,7 @@ public class RegistrarBloodMagicItems
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public static void registerRenders(ModelRegistryEvent event)
-    {
+    public static void registerRenders(ModelRegistryEvent event) {
         items.stream().filter(i -> i instanceof IVariantProvider).forEach(item -> {
             IVariantProvider variantProvider = (IVariantProvider) item;
             for (Pair<Integer, String> variant : variantProvider.getVariants())

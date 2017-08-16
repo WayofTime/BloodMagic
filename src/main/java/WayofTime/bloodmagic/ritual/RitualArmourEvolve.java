@@ -14,23 +14,19 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RitualArmourEvolve extends Ritual
-{
+public class RitualArmourEvolve extends Ritual {
     public static final String CHECK_RANGE = "fillRange";
 
-    public RitualArmourEvolve()
-    {
+    public RitualArmourEvolve() {
         super("ritualArmourEvolve", 0, 50000, "ritual." + BloodMagic.MODID + ".armourEvolveRitual");
         addBlockRange(CHECK_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1, 2, 1));
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
 
-        if (world.isRemote)
-        {
+        if (world.isRemote) {
             return;
         }
 
@@ -40,16 +36,12 @@ public class RitualArmourEvolve extends Ritual
 
         List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, checkRange.getAABB(pos));
 
-        for (EntityPlayer player : playerList)
-        {
-            if (LivingArmour.hasFullSet(player))
-            {
+        for (EntityPlayer player : playerList) {
+            if (LivingArmour.hasFullSet(player)) {
                 ItemStack chestStack = Iterables.toArray(player.getArmorInventoryList(), ItemStack.class)[2];
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-                if (armour != null)
-                {
-                    if (armour.maxUpgradePoints < 300)
-                    {
+                if (armour != null) {
+                    if (armour.maxUpgradePoints < 300) {
                         armour.maxUpgradePoints = 300;
                         ((ItemLivingArmour) chestStack.getItem()).setLivingArmour(chestStack, armour, true);
 
@@ -63,20 +55,17 @@ public class RitualArmourEvolve extends Ritual
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 1;
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 0;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         this.addCornerRunes(components, 1, 0, EnumRuneType.DUSK);
@@ -87,8 +76,7 @@ public class RitualArmourEvolve extends Ritual
         this.addCornerRunes(components, 1, 3, EnumRuneType.DUSK);
         this.addParallelRunes(components, 1, 4, EnumRuneType.EARTH);
 
-        for (int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             this.addCornerRunes(components, 3, i, EnumRuneType.EARTH);
         }
 
@@ -96,8 +84,7 @@ public class RitualArmourEvolve extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualArmourEvolve();
     }
 }

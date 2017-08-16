@@ -16,26 +16,22 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 
 import java.util.ArrayList;
 
-public class RitualHelper
-{
+public class RitualHelper {
     @CapabilityInject(IRitualStone.Tile.class)
     static Capability<IRitualStone.Tile> RUNE_CAPABILITY = null;
 
-    public static boolean canCrystalActivate(Ritual ritual, int crystalLevel)
-    {
+    public static boolean canCrystalActivate(Ritual ritual, int crystalLevel) {
         return ritual.getCrystalLevel() <= crystalLevel && RitualRegistry.ritualEnabled(ritual);
     }
 
-    public static String getNextRitualKey(String currentKey)
-    {
+    public static String getNextRitualKey(String currentKey) {
         int currentIndex = RitualRegistry.getIds().indexOf(currentKey);
         int nextIndex = RitualRegistry.getRituals().listIterator(currentIndex).nextIndex();
 
         return RitualRegistry.getIds().get(nextIndex);
     }
 
-    public static String getPrevRitualKey(String currentKey)
-    {
+    public static String getPrevRitualKey(String currentKey) {
         int currentIndex = RitualRegistry.getIds().indexOf(currentKey);
         int previousIndex = RitualRegistry.getIds().listIterator(currentIndex).previousIndex();
 
@@ -45,23 +41,16 @@ public class RitualHelper
     /**
      * Checks the RitualRegistry to see if the configuration of the ritual
      * stones in the world is valid for the given EnumFacing.
-     * 
-     * @param world
-     *        - The world
-     * @param pos
-     *        - Location of the MasterRitualStone
-     * 
+     *
+     * @param world - The world
+     * @param pos   - Location of the MasterRitualStone
      * @return The ID of the valid ritual
      */
-    public static String getValidRitual(World world, BlockPos pos)
-    {
-        for (String key : RitualRegistry.getIds())
-        {
-            for (EnumFacing direction : EnumFacing.HORIZONTALS)
-            {
+    public static String getValidRitual(World world, BlockPos pos) {
+        for (String key : RitualRegistry.getIds()) {
+            for (EnumFacing direction : EnumFacing.HORIZONTALS) {
                 boolean test = checkValidRitual(world, pos, key, direction);
-                if (test)
-                {
+                if (test) {
                     return key;
                 }
             }
@@ -70,13 +59,10 @@ public class RitualHelper
         return "";
     }
 
-    public static EnumFacing getDirectionOfRitual(World world, BlockPos pos, String key)
-    {
-        for (EnumFacing direction : EnumFacing.HORIZONTALS)
-        {
+    public static EnumFacing getDirectionOfRitual(World world, BlockPos pos, String key) {
+        for (EnumFacing direction : EnumFacing.HORIZONTALS) {
             boolean test = checkValidRitual(world, pos, key, direction);
-            if (test)
-            {
+            if (test) {
                 return direction;
             }
         }
@@ -84,11 +70,9 @@ public class RitualHelper
         return null;
     }
 
-    public static boolean checkValidRitual(World world, BlockPos pos, String ritualId, EnumFacing direction)
-    {
+    public static boolean checkValidRitual(World world, BlockPos pos, String ritualId, EnumFacing direction) {
         Ritual ritual = RitualRegistry.getRitualForId(ritualId);
-        if (ritual == null)
-        {
+        if (ritual == null) {
             return false;
         }
 
@@ -97,14 +81,11 @@ public class RitualHelper
         if (components == null)
             return false;
 
-        for (RitualComponent component : components)
-        {
+        for (RitualComponent component : components) {
             BlockPos newPos = pos.add(component.getOffset(direction));
-            if (isRuneType(world, newPos, component.getRuneType()))
-            {
+            if (isRuneType(world, newPos, component.getRuneType())) {
                 continue;
-            } else
-            {
+            } else {
                 return false;
             }
         }
@@ -112,8 +93,7 @@ public class RitualHelper
         return true;
     }
 
-    public static boolean isRuneType(World world, BlockPos pos, EnumRuneType type)
-    {
+    public static boolean isRuneType(World world, BlockPos pos, EnumRuneType type) {
         if (world == null)
             return false;
         Block block = world.getBlockState(pos).getBlock();
@@ -129,8 +109,7 @@ public class RitualHelper
         return false;
     }
 
-    public static boolean isRune(World world, BlockPos pos)
-    {
+    public static boolean isRune(World world, BlockPos pos) {
         if (world == null)
             return false;
         Block block = world.getBlockState(pos).getBlock();
@@ -146,8 +125,7 @@ public class RitualHelper
         return false;
     }
 
-    public static void setRuneType(World world, BlockPos pos, EnumRuneType type)
-    {
+    public static void setRuneType(World world, BlockPos pos, EnumRuneType type) {
         if (world == null)
             return;
         IBlockState state = world.getBlockState(pos);
@@ -157,8 +135,7 @@ public class RitualHelper
             ((IRitualStone) state.getBlock()).setRuneType(world, pos, type);
         else if (tile instanceof IRitualStone.Tile)
             ((IRitualStone.Tile) tile).setRuneType(type);
-        else if (tile != null && tile.hasCapability(RUNE_CAPABILITY, null))
-        {
+        else if (tile != null && tile.hasCapability(RUNE_CAPABILITY, null)) {
             tile.getCapability(RUNE_CAPABILITY, null).setRuneType(type);
             world.notifyBlockUpdate(pos, state, state, 3);
         }

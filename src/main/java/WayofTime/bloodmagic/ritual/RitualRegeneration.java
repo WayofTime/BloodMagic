@@ -1,10 +1,11 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -12,18 +13,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.util.Utils;
 
-public class RitualRegeneration extends Ritual
-{
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class RitualRegeneration extends Ritual {
     public static final String HEAL_RANGE = "heal";
     public static final String VAMPIRE_RANGE = "vampire";
 
@@ -31,8 +26,7 @@ public class RitualRegeneration extends Ritual
 
     public static final double corrosiveWillDrain = 0.04;
 
-    public RitualRegeneration()
-    {
+    public RitualRegeneration() {
         super("ritualRegeneration", 0, 25000, "ritual." + BloodMagic.MODID + ".regenerationRitual");
         addBlockRange(HEAL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-15, -15, -15), 31));
         addBlockRange(VAMPIRE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-15, -15, -15), 31));
@@ -42,13 +36,11 @@ public class RitualRegeneration extends Ritual
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -88,18 +80,13 @@ public class RitualRegeneration extends Ritual
         List<EntityPlayer> players = world.getEntitiesWithinAABB(EntityPlayer.class, healRange);
         List<EntityLivingBase> damagedEntities = world.getEntitiesWithinAABB(EntityLivingBase.class, damageRange);
 
-        if (syphonHealth)
-        {
-            for (EntityPlayer player : players)
-            {
-                if (player.getHealth() <= player.getMaxHealth() - 1)
-                {
+        if (syphonHealth) {
+            for (EntityPlayer player : players) {
+                if (player.getHealth() <= player.getMaxHealth() - 1) {
                     float syphonedHealthAmount = getSyphonAmountForWill(corrosiveWill);
                     Collections.shuffle(damagedEntities);
-                    for (EntityLivingBase damagedEntity : damagedEntities)
-                    {
-                        if (damagedEntity instanceof EntityPlayer)
-                        {
+                    for (EntityLivingBase damagedEntity : damagedEntities) {
+                        if (damagedEntity instanceof EntityPlayer) {
                             continue;
                         }
 
@@ -108,8 +95,7 @@ public class RitualRegeneration extends Ritual
                         damagedEntity.attackEntityFrom(BloodMagicAPI.damageSource, Math.min(player.getMaxHealth() - player.getHealth(), syphonedHealthAmount));
 
                         float healthDifference = currentHealth - damagedEntity.getHealth();
-                        if (healthDifference > 0)
-                        {
+                        if (healthDifference > 0) {
                             corrosiveDrain += corrosiveWillDrain;
                             corrosiveWill -= corrosiveWillDrain;
                             player.heal(healthDifference);
@@ -121,19 +107,14 @@ public class RitualRegeneration extends Ritual
             }
         }
 
-        for (EntityLivingBase entity : entities)
-        {
+        for (EntityLivingBase entity : entities) {
             float health = entity.getHealth();
-            if (health <= entity.getMaxHealth() - 1)
-            {
-                if (entity.isPotionApplicable(new PotionEffect(MobEffects.REGENERATION)))
-                {
-                    if (entity instanceof EntityPlayer)
-                    {
+            if (health <= entity.getMaxHealth() - 1) {
+                if (entity.isPotionApplicable(new PotionEffect(MobEffects.REGENERATION))) {
+                    if (entity instanceof EntityPlayer) {
                         totalCost += getRefreshCost();
                         currentEssence -= getRefreshCost();
-                    } else
-                    {
+                    } else {
                         totalCost += getRefreshCost() / 10;
                         currentEssence -= getRefreshCost() / 10;
                     }
@@ -142,23 +123,19 @@ public class RitualRegeneration extends Ritual
 
                     totalEffects++;
 
-                    if (totalEffects >= maxEffects)
-                    {
+                    if (totalEffects >= maxEffects) {
                         break;
                     }
                 }
             }
-            if (applyAbsorption && entity instanceof EntityPlayer)
-            {
-                if (applyAbsorption)
-                {
+            if (applyAbsorption && entity instanceof EntityPlayer) {
+                if (applyAbsorption) {
                     float added = Utils.addAbsorptionToMaximum(entity, absorptionRate, maxAbsorption, 1000);
                 }
             }
         }
 
-        if (corrosiveDrain > 0)
-        {
+        if (corrosiveDrain > 0) {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrain, true);
         }
 
@@ -166,20 +143,17 @@ public class RitualRegeneration extends Ritual
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 50;
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return SACRIFICE_AMOUNT;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         components.add(new RitualComponent(new BlockPos(4, 0, 0), EnumRuneType.AIR));
@@ -204,13 +178,11 @@ public class RitualRegeneration extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualRegeneration();
     }
 
-    public float getSyphonAmountForWill(double corrosiveWill)
-    {
+    public float getSyphonAmountForWill(double corrosiveWill) {
         return 1;
     }
 }

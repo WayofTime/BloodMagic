@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.registry;
 
-import net.minecraft.init.Blocks;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
@@ -9,35 +8,7 @@ import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
-import WayofTime.bloodmagic.ritual.RitualAltarBuilder;
-import WayofTime.bloodmagic.ritual.RitualAnimalGrowth;
-import WayofTime.bloodmagic.ritual.RitualArmourEvolve;
-import WayofTime.bloodmagic.ritual.RitualContainment;
-import WayofTime.bloodmagic.ritual.RitualCrushing;
-import WayofTime.bloodmagic.ritual.RitualCrystalHarvest;
-import WayofTime.bloodmagic.ritual.RitualExpulsion;
-import WayofTime.bloodmagic.ritual.RitualFeatheredKnife;
-import WayofTime.bloodmagic.ritual.RitualFelling;
-import WayofTime.bloodmagic.ritual.RitualForsakenSoul;
-import WayofTime.bloodmagic.ritual.RitualFullStomach;
-import WayofTime.bloodmagic.ritual.RitualGreenGrove;
-import WayofTime.bloodmagic.ritual.RitualHarvest;
-import WayofTime.bloodmagic.ritual.RitualInterdiction;
-import WayofTime.bloodmagic.ritual.RitualJumping;
-import WayofTime.bloodmagic.ritual.RitualLava;
-import WayofTime.bloodmagic.ritual.RitualLivingArmourDowngrade;
-import WayofTime.bloodmagic.ritual.RitualMagnetic;
-import WayofTime.bloodmagic.ritual.RitualMeteor;
-import WayofTime.bloodmagic.ritual.RitualPlacer;
-import WayofTime.bloodmagic.ritual.RitualPortal;
-import WayofTime.bloodmagic.ritual.RitualPump;
-import WayofTime.bloodmagic.ritual.RitualRegeneration;
-import WayofTime.bloodmagic.ritual.RitualSpeed;
-import WayofTime.bloodmagic.ritual.RitualSuppression;
-import WayofTime.bloodmagic.ritual.RitualUpgradeRemove;
-import WayofTime.bloodmagic.ritual.RitualWater;
-import WayofTime.bloodmagic.ritual.RitualWellOfSuffering;
-import WayofTime.bloodmagic.ritual.RitualZephyr;
+import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerPlantable;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerStem;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerTall;
@@ -45,9 +16,9 @@ import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualNight;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRain;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualResistance;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualZombie;
+import net.minecraft.init.Blocks;
 
-public class ModRituals
-{
+public class ModRituals {
     public static Ritual waterRitual;
     public static Ritual lavaRitual;
     public static Ritual greenGroveRitual;
@@ -71,7 +42,7 @@ public class ModRituals
     public static Ritual forsakenSoulRitual;
     public static Ritual crystalHarvestRitual;
 
-//    public static Ritual cobblestoneRitual;
+    //    public static Ritual cobblestoneRitual;
     public static Ritual placerRitual;
     public static Ritual fellingRitual;
     public static Ritual pumpRitual;
@@ -87,8 +58,7 @@ public class ModRituals
     public static ImperfectRitual imperfectResistance;
     public static ImperfectRitual imperfectZombie;
 
-    public static void initRituals()
-    {
+    public static void initRituals() {
         waterRitual = new RitualWater();
         RitualRegistry.registerRitual(waterRitual, ConfigHandler.ritualWater);
         lavaRitual = new RitualLava();
@@ -157,8 +127,7 @@ public class ModRituals
         RitualCrushing.registerCuttingFluid(ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE), 25, 0.05);
     }
 
-    public static void initImperfectRituals()
-    {
+    public static void initImperfectRituals() {
         imperfectNight = new ImperfectRitualNight();
         ImperfectRitualRegistry.registerRitual(imperfectNight, ConfigHandler.imperfectRitualNight);
         imperfectRain = new ImperfectRitualRain();
@@ -169,8 +138,7 @@ public class ModRituals
         ImperfectRitualRegistry.registerRitual(imperfectZombie, ConfigHandler.imperfectRitualZombie);
     }
 
-    public static void initHarvestHandlers()
-    {
+    public static void initHarvestHandlers() {
         HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.DIAMOND_BLOCK), 15);
         HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.GOLD_BLOCK), 10);
         HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.IRON_BLOCK), 6);

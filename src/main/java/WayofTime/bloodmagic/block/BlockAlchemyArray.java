@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.block;
 
-import java.util.List;
-import java.util.Random;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.tile.TileAlchemyArray;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -22,18 +22,15 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.tile.TileAlchemyArray;
-import WayofTime.bloodmagic.util.Utils;
 
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
 
-public class BlockAlchemyArray extends Block
-{
+public class BlockAlchemyArray extends Block {
     protected static final AxisAlignedBB ARRAY_AABB = new AxisAlignedBB(0, 0, 0, 1, 0.1, 1);
 
-    public BlockAlchemyArray()
-    {
+    public BlockAlchemyArray() {
         super(Material.CLOTH);
 
         setUnlocalizedName(BloodMagic.MODID + ".alchemyArray");
@@ -46,61 +43,51 @@ public class BlockAlchemyArray extends Block
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity)
-    {
+    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
         TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof TileAlchemyArray)
-        {
+        if (tile instanceof TileAlchemyArray) {
             ((TileAlchemyArray) tile).onEntityCollidedWithBlock(state, entity);
         }
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return ARRAY_AABB;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
-    {
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state)
-    {
+    public boolean causesSuffocation(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
+    public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.INVISIBLE;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         //TODO: Right click should rotate it
         TileAlchemyArray array = (TileAlchemyArray) world.getTileEntity(pos);
 
@@ -109,17 +96,13 @@ public class BlockAlchemyArray extends Block
 
         ItemStack playerItem = player.getHeldItem(hand);
 
-        if (!playerItem.isEmpty())
-        {
-            if (array.getStackInSlot(0).isEmpty())
-            {
+        if (!playerItem.isEmpty()) {
+            if (array.getStackInSlot(0).isEmpty()) {
                 Utils.insertItemToTile(array, player, 0);
-            } else if (!array.getStackInSlot(0).isEmpty())
-            {
+            } else if (!array.getStackInSlot(0).isEmpty()) {
                 Utils.insertItemToTile(array, player, 1);
                 array.attemptCraft();
-            } else
-            {
+            } else {
                 return true;
             }
         }
@@ -129,20 +112,17 @@ public class BlockAlchemyArray extends Block
     }
 
     @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
-    {
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES);
     }
 
     @Override
-    public int quantityDropped(Random random)
-    {
+    public int quantityDropped(Random random) {
         return 0;
     }
 
     @Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
-    {
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
         TileAlchemyArray alchemyArray = (TileAlchemyArray) world.getTileEntity(blockPos);
         if (alchemyArray != null)
             alchemyArray.dropItems();

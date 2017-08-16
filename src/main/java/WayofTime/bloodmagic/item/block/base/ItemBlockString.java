@@ -10,7 +10,7 @@ public class ItemBlockString extends ItemBlock {
     public ItemBlockString(BlockString block) {
         super(block);
 
-        if (block.getTypes().length> 1)
+        if (block.getTypes().length > 1)
             setHasSubtypes(true);
     }
 

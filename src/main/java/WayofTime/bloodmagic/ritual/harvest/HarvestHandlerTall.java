@@ -17,35 +17,28 @@ import java.util.List;
  * Register a new crop for this handler with
  * {@link HarvestRegistry#registerTallCrop(BlockStack)}
  */
-public class HarvestHandlerTall implements IHarvestHandler
-{
-    public HarvestHandlerTall()
-    {
+public class HarvestHandlerTall implements IHarvestHandler {
+    public HarvestHandlerTall() {
         HarvestRegistry.registerTallCrop(new BlockStack(Blocks.REEDS));
         HarvestRegistry.registerTallCrop(new BlockStack(Blocks.CACTUS));
     }
 
     @Override
-    public boolean harvestAndPlant(World world, BlockPos pos, BlockStack blockStack)
-    {
+    public boolean harvestAndPlant(World world, BlockPos pos, BlockStack blockStack) {
         boolean retFlag = false;
 
         List<ItemStack> drops = new ArrayList<ItemStack>();
-        if (HarvestRegistry.getTallCrops().contains(blockStack))
-        {
+        if (HarvestRegistry.getTallCrops().contains(blockStack)) {
             BlockStack up = BlockStack.getStackFromPos(world, pos.up());
-            if (up.equals(blockStack))
-            {
+            if (up.equals(blockStack)) {
                 drops = up.getBlock().getDrops(world, pos.up(), up.getState(), 0);
                 world.destroyBlock(pos.up(), false);
                 retFlag = true;
             }
         }
 
-        if (!world.isRemote)
-        {
-            for (ItemStack drop : drops)
-            {
+        if (!world.isRemote) {
+            for (ItemStack drop : drops) {
                 EntityItem item = new EntityItem(world, pos.getX(), pos.getY() + 0.5, pos.getZ(), drop);
                 world.spawnEntity(item);
             }

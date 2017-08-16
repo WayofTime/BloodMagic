@@ -1,11 +1,16 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
@@ -25,24 +30,15 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
-import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class ItemSacrificialDagger extends Item implements IMeshProvider
-{
-    public static String[] names = { "normal", "creative" };
+public class ItemSacrificialDagger extends Item implements IMeshProvider {
+    public static String[] names = {"normal", "creative"};
 
-    public ItemSacrificialDagger()
-    {
+    public ItemSacrificialDagger() {
         super();
 
         setUnlocalizedName(BloodMagic.MODID + ".sacrificialDagger.");
@@ -53,15 +49,13 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+    public String getUnlocalizedName(ItemStack stack) {
         return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
-    {
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
@@ -70,8 +64,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<String> list, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<String> list, ITooltipFlag flag) {
         list.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sacrificialDagger.desc"))));
 
         if (stack.getItemDamage() == 1)
@@ -79,33 +72,28 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
-    {
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
         if (entityLiving instanceof EntityPlayer && !entityLiving.getEntityWorld().isRemote)
             PlayerSacrificeHelper.sacrificePlayerHealth((EntityPlayer) entityLiving);
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack stack)
-    {
+    public int getMaxItemUseDuration(ItemStack stack) {
         return 72000;
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack stack)
-    {
+    public EnumAction getItemUseAction(ItemStack stack) {
         return EnumAction.BOW;
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return super.onItemRightClick(world, player, hand);
 
-        if (this.canUseForSacrifice(stack))
-        {
+        if (this.canUseForSacrifice(stack)) {
             player.setActiveHand(hand);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
@@ -113,27 +101,23 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
         int lpAdded = ConfigHandler.sacrificialDaggerConversion * ConfigHandler.sacrificialDaggerDamage;
 
         RayTraceResult rayTrace = rayTrace(world, player, false);
-        if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
-        {
+        if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
             TileEntity tile = world.getTileEntity(rayTrace.getBlockPos());
 
             if (tile != null && tile instanceof TileAltar && stack.getItemDamage() == 1)
                 lpAdded = ((TileAltar) tile).getCapacity();
         }
 
-        if (!player.capabilities.isCreativeMode)
-        {
+        if (!player.capabilities.isCreativeMode) {
             SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, ConfigHandler.sacrificialDaggerDamage, lpAdded);
             if (MinecraftForge.EVENT_BUS.post(evt))
                 return super.onItemRightClick(world, player, hand);
 
-            if (evt.shouldDrainHealth)
-            {
+            if (evt.shouldDrainHealth) {
                 player.hurtResistantTime = 0;
                 player.attackEntityFrom(BloodMagicAPI.damageSource, 0.001F);
                 player.setHealth(Math.max(player.getHealth() - ConfigHandler.sacrificialDaggerDamage, 0.0001f));
-                if (player.getHealth() <= 0.001f)
-                {
+                if (player.getHealth() <= 0.001f) {
                     player.onDeath(BloodMagicAPI.damageSource);
                     player.setHealth(0);
                 }
@@ -164,38 +148,31 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
-    {
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
         if (!world.isRemote && entity instanceof EntityPlayer)
             this.setUseForSacrifice(stack, this.isPlayerPreparedForSacrifice(world, (EntityPlayer) entity));
     }
 
-    public boolean isPlayerPreparedForSacrifice(World world, EntityPlayer player)
-    {
+    public boolean isPlayerPreparedForSacrifice(World world, EntityPlayer player) {
         return !world.isRemote && (PlayerSacrificeHelper.getPlayerIncense(player) > 0);
     }
 
-    public boolean canUseForSacrifice(ItemStack stack)
-    {
+    public boolean canUseForSacrifice(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
         return stack.getTagCompound().getBoolean(Constants.NBT.SACRIFICE);
     }
 
-    public void setUseForSacrifice(ItemStack stack, boolean sacrifice)
-    {
+    public void setUseForSacrifice(ItemStack stack, boolean sacrifice) {
         stack = NBTHelper.checkNBT(stack);
         stack.getTagCompound().setBoolean(Constants.NBT.SACRIFICE, sacrifice);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public ItemMeshDefinition getMeshDefinition()
-    {
-        return new ItemMeshDefinition()
-        {
+    public ItemMeshDefinition getMeshDefinition() {
+        return new ItemMeshDefinition() {
             @Override
-            public ModelResourceLocation getModelLocation(ItemStack stack)
-            {
+            public ModelResourceLocation getModelLocation(ItemStack stack) {
                 String variant = "type=normal";
                 if (stack.getItemDamage() != 0)
                     variant = "type=creative";
@@ -209,8 +186,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
     }
 
     @Override
-    public List<String> getVariants()
-    {
+    public List<String> getVariants() {
         List<String> variants = new ArrayList<String>();
         variants.add("type=normal");
         variants.add("type=creative");
@@ -220,8 +196,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
 
     @Nullable
     @Override
-    public ResourceLocation getCustomLocation()
-    {
+    public ResourceLocation getCustomLocation() {
         return null;
     }
 }

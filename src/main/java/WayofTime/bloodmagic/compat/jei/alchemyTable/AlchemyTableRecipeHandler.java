@@ -1,36 +1,31 @@
 package WayofTime.bloodmagic.compat.jei.alchemyTable;
 
-import javax.annotation.Nonnull;
-
+import WayofTime.bloodmagic.api.Constants;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import WayofTime.bloodmagic.api.Constants;
 
-public class AlchemyTableRecipeHandler implements IRecipeHandler<AlchemyTableRecipeJEI>
-{
+import javax.annotation.Nonnull;
+
+public class AlchemyTableRecipeHandler implements IRecipeHandler<AlchemyTableRecipeJEI> {
     @Nonnull
     @Override
-    public Class<AlchemyTableRecipeJEI> getRecipeClass()
-    {
+    public Class<AlchemyTableRecipeJEI> getRecipeClass() {
         return AlchemyTableRecipeJEI.class;
     }
 
     @Override
-    public String getRecipeCategoryUid(@Nonnull AlchemyTableRecipeJEI recipe)
-    {
+    public String getRecipeCategoryUid(@Nonnull AlchemyTableRecipeJEI recipe) {
         return Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE;
     }
 
     @Nonnull
     @Override
-    public IRecipeWrapper getRecipeWrapper(@Nonnull AlchemyTableRecipeJEI recipe)
-    {
+    public IRecipeWrapper getRecipeWrapper(@Nonnull AlchemyTableRecipeJEI recipe) {
         return recipe;
     }
 
     @Override
-    public boolean isRecipeValid(@Nonnull AlchemyTableRecipeJEI recipe)
-    {
+    public boolean isRecipeValid(@Nonnull AlchemyTableRecipeJEI recipe) {
         return true;
     }
 }

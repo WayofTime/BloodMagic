@@ -9,8 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ModelCorruptedChicken extends ModelBase
-{
+public class ModelCorruptedChicken extends ModelBase {
     public ModelRenderer head;
     public ModelRenderer body;
     public ModelRenderer rightLeg;
@@ -20,8 +19,7 @@ public class ModelCorruptedChicken extends ModelBase
     public ModelRenderer bill;
     public ModelRenderer chin;
 
-    public ModelCorruptedChicken(float scale)
-    {
+    public ModelCorruptedChicken(float scale) {
         this.head = new ModelRenderer(this, 0, 0);
         this.head.addBox(-2.0F, -6.0F, -2.0F, 4, 6, 3, scale);
         this.head.setRotationPoint(0.0F, 15.0F, -4.0F);
@@ -51,12 +49,10 @@ public class ModelCorruptedChicken extends ModelBase
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
-    {
+    public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
 
-        if (this.isChild)
-        {
+        if (this.isChild) {
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, 5.0F * scale, 2.0F * scale);
             this.head.render(scale);
@@ -72,8 +68,7 @@ public class ModelCorruptedChicken extends ModelBase
             this.rightWing.render(scale);
             this.leftWing.render(scale);
             GlStateManager.popMatrix();
-        } else
-        {
+        } else {
             this.head.render(scale);
             this.bill.render(scale);
             this.chin.render(scale);
@@ -91,8 +86,7 @@ public class ModelCorruptedChicken extends ModelBase
      * the time(so that arms and legs swing back and forth) and par2 represents
      * how "far" arms and legs can swing at most.
      */
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
-    {
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
         this.head.rotateAngleX = headPitch * 0.017453292F;
         this.head.rotateAngleY = netHeadYaw * 0.017453292F;
         this.bill.rotateAngleX = this.head.rotateAngleX;

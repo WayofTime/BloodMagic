@@ -1,6 +1,13 @@
 package WayofTime.bloodmagic.core;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.block.*;
+import WayofTime.bloodmagic.block.enums.*;
+import WayofTime.bloodmagic.tile.*;
+import WayofTime.bloodmagic.tile.routing.TileInputRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileItemRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -10,45 +17,13 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.block.enums.EnumDemonBlock1;
-import WayofTime.bloodmagic.block.enums.EnumDemonBlock2;
-import WayofTime.bloodmagic.block.enums.EnumDemonBlock3;
-import WayofTime.bloodmagic.block.enums.EnumSubWillType;
-import WayofTime.bloodmagic.block.enums.EnumSubWillType1;
-import WayofTime.bloodmagic.block.enums.EnumSubWillType2;
-import WayofTime.bloodmagic.block.enums.EnumSubWillType3;
-import WayofTime.bloodmagic.block.enums.EnumWillWall;
-import WayofTime.bloodmagic.tile.TileAlchemyArray;
-import WayofTime.bloodmagic.tile.TileAlchemyTable;
-import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.tile.TileBloodTank;
-import WayofTime.bloodmagic.tile.TileDemonCrucible;
-import WayofTime.bloodmagic.tile.TileDemonCrystal;
-import WayofTime.bloodmagic.tile.TileDemonCrystallizer;
-import WayofTime.bloodmagic.tile.TileDemonPylon;
-import WayofTime.bloodmagic.tile.TileDimensionalPortal;
-import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
-import WayofTime.bloodmagic.tile.TileIncenseAltar;
-import WayofTime.bloodmagic.tile.TileInversionPillar;
-import WayofTime.bloodmagic.tile.TileMasterRitualStone;
-import WayofTime.bloodmagic.tile.TileMimic;
-import WayofTime.bloodmagic.tile.TilePhantomBlock;
-import WayofTime.bloodmagic.tile.TileSoulForge;
-import WayofTime.bloodmagic.tile.TileSpectralBlock;
-import WayofTime.bloodmagic.tile.TileTeleposer;
-import WayofTime.bloodmagic.tile.routing.TileInputRoutingNode;
-import WayofTime.bloodmagic.tile.routing.TileItemRoutingNode;
-import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
-import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
 
 import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
 @SuppressWarnings("unused")
-public class RegistrarBloodMagicBlocks
-{
+public class RegistrarBloodMagicBlocks {
     public static final Block ALTAR = Blocks.AIR;
     public static final Block BLOOD_RUNE = Blocks.AIR;
     public static final Block RITUAL_CONTROLLER = Blocks.AIR;
@@ -94,11 +69,10 @@ public class RegistrarBloodMagicBlocks
     static Set<Block> blocks;
 
     @SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Block> event)
-    {
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
         FluidRegistry.addBucketForFluid(BlockLifeEssence.getLifeEssence());
-        
+
         blocks = Sets.newHashSet(
                 new BlockAltar().setRegistryName("altar"),
                 new BlockBloodRune().setRegistryName("blood_rune"),

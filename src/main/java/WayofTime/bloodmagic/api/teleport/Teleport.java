@@ -3,16 +3,14 @@ package WayofTime.bloodmagic.api.teleport;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 
-public abstract class Teleport implements ITeleport
-{
+public abstract class Teleport implements ITeleport {
     protected int x;
     protected int y;
     protected int z;
     protected Entity entity;
     protected String networkToDrain;
 
-    public Teleport(int x, int y, int z, Entity entity, String networkToDrain)
-    {
+    public Teleport(int x, int y, int z, Entity entity, String networkToDrain) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -20,8 +18,7 @@ public abstract class Teleport implements ITeleport
         this.networkToDrain = networkToDrain;
     }
 
-    public Teleport(BlockPos blockPos, Entity entity, String networkToDrain)
-    {
+    public Teleport(BlockPos blockPos, Entity entity, String networkToDrain) {
         this(blockPos.getX(), blockPos.getY(), blockPos.getZ(), entity, networkToDrain);
     }
 

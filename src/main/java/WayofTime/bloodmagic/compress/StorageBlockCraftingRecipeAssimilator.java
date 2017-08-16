@@ -1,21 +1,6 @@
 package WayofTime.bloodmagic.compress;
 
-import WayofTime.bloodmagic.BloodMagic;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.*;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
-
-import java.util.*;
-
-public class StorageBlockCraftingRecipeAssimilator
-{
+public class StorageBlockCraftingRecipeAssimilator {
 //    public static final List<Class> ignore = new ArrayList<Class>();
 //
 //    public List<IRecipe> getPackingRecipes()

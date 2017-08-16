@@ -10,33 +10,28 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class RitualContainment extends Ritual
-{
+public class RitualContainment extends Ritual {
     public static final String CONTAINMENT_RANGE = "containmentRange";
 
-    public RitualContainment()
-    {
+    public RitualContainment() {
         super("ritualContainment", 0, 2000, "ritual." + BloodMagic.MODID + ".containmentRitual");
         addBlockRange(CONTAINMENT_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-3, 0, -3), 7));
         setMaximumVolumeAndDistanceOfRange(CONTAINMENT_RANGE, 0, 10, 10);
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
 
         AreaDescriptor containmentRange = getBlockRange(CONTAINMENT_RANGE);
 
-        for (EntityLivingBase entity : world.getEntitiesWithinAABB(EntityLivingBase.class, containmentRange.getAABB(masterRitualStone.getBlockPos())))
-        {
+        for (EntityLivingBase entity : world.getEntitiesWithinAABB(EntityLivingBase.class, containmentRange.getAABB(masterRitualStone.getBlockPos()))) {
             if (entity instanceof EntityPlayer && (((EntityPlayer) entity).capabilities.isCreativeMode || PlayerHelper.getUUIDFromPlayer((EntityPlayer) entity).toString().equals(masterRitualStone.getOwner())))
                 continue;
 
@@ -52,20 +47,17 @@ public class RitualContainment extends Ritual
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 1;
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 1;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         this.addParallelRunes(components, 1, 0, EnumRuneType.EARTH);
@@ -77,8 +69,7 @@ public class RitualContainment extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualContainment();
     }
 }

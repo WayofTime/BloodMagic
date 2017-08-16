@@ -1,23 +1,13 @@
 package WayofTime.bloodmagic.block;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumSubWillType;
-import WayofTime.bloodmagic.client.IVariantProvider;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 
-public class BlockDemonLight extends BlockEnum<EnumSubWillType>
-{
-    public BlockDemonLight()
-    {
+public class BlockDemonLight extends BlockEnum<EnumSubWillType> {
+    public BlockDemonLight() {
         super(Material.ROCK, EnumSubWillType.class);
 
         setUnlocalizedName(BloodMagic.MODID + ".demonlight.");

@@ -6,15 +6,13 @@ import com.google.common.base.Strings;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 
-public class TileDimensionalPortal extends TileBase
-{
+public class TileDimensionalPortal extends TileBase {
     public String portalID = "";
     public int masterStoneX;
     public int masterStoneY;
     public int masterStoneZ;
 
-    public void deserialize(NBTTagCompound tagCompound)
-    {
+    public void deserialize(NBTTagCompound tagCompound) {
         portalID = tagCompound.getString(RitualPortal.PORTAL_ID_TAG);
 
         masterStoneX = tagCompound.getInteger("masterStoneX");
@@ -22,8 +20,7 @@ public class TileDimensionalPortal extends TileBase
         masterStoneZ = tagCompound.getInteger("masterStoneZ");
     }
 
-    public NBTTagCompound serialize(NBTTagCompound tagCompound)
-    {
+    public NBTTagCompound serialize(NBTTagCompound tagCompound) {
         tagCompound.setString(RitualPortal.PORTAL_ID_TAG, Strings.isNullOrEmpty(portalID) ? "" : portalID);
 
         tagCompound.setInteger("masterStoneX", masterStoneX);
@@ -32,13 +29,11 @@ public class TileDimensionalPortal extends TileBase
         return tagCompound;
     }
 
-    public BlockPos getMasterStonePos()
-    {
+    public BlockPos getMasterStonePos() {
         return new BlockPos(masterStoneX, masterStoneY, masterStoneZ);
     }
 
-    public void setMasterStonePos(BlockPos blockPos)
-    {
+    public void setMasterStonePos(BlockPos blockPos) {
         this.masterStoneX = blockPos.getX();
         this.masterStoneY = blockPos.getY();
         this.masterStoneZ = blockPos.getZ();

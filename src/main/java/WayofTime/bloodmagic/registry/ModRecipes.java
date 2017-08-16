@@ -1,20 +1,37 @@
 package WayofTime.bloodmagic.registry;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.*;
-import java.util.Map.Entry;
-
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.alchemyArray.*;
+import WayofTime.bloodmagic.api.altar.EnumAltarTier;
+import WayofTime.bloodmagic.api.compress.CompressionRegistry;
+import WayofTime.bloodmagic.api.iface.ISigil;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
+import WayofTime.bloodmagic.api.recipe.AlchemyTableCustomRecipe;
+import WayofTime.bloodmagic.api.registry.*;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.block.enums.EnumBloodRune;
+import WayofTime.bloodmagic.client.render.alchemyArray.*;
+import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
+import WayofTime.bloodmagic.compress.BaseCompressionHandler;
+import WayofTime.bloodmagic.compress.StorageBlockCraftingManager;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.item.ItemComponent;
+import WayofTime.bloodmagic.item.ItemDemonCrystal;
+import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
+import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
+import WayofTime.bloodmagic.livingArmour.downgrade.*;
+import WayofTime.bloodmagic.potion.BMPotionUtils;
+import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
+import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionRecipe;
 import WayofTime.bloodmagic.tile.TileBloodTank;
+import WayofTime.bloodmagic.util.Utils;
+import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,63 +49,23 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectAttractor;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBinding;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBounce;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectMovement;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectSigil;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectSkeletonTurret;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectUpdraft;
-import WayofTime.bloodmagic.api.altar.EnumAltarTier;
-import WayofTime.bloodmagic.api.compress.CompressionRegistry;
-import WayofTime.bloodmagic.api.iface.ISigil;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.recipe.AlchemyTableCustomRecipe;
-import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
-import WayofTime.bloodmagic.api.registry.AlchemyTableRecipeRegistry;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
-import WayofTime.bloodmagic.api.registry.LivingArmourDowngradeRecipeRegistry;
-import WayofTime.bloodmagic.api.registry.OrbRegistry;
-import WayofTime.bloodmagic.api.registry.TartaricForgeRecipeRegistry;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.client.render.alchemyArray.AttractorAlchemyCircleRenderer;
-import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
-import WayofTime.bloodmagic.client.render.alchemyArray.DualAlchemyCircleRenderer;
-import WayofTime.bloodmagic.client.render.alchemyArray.SingleAlchemyCircleRenderer;
-import WayofTime.bloodmagic.client.render.alchemyArray.StaticAlchemyCircleRenderer;
-import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
-import WayofTime.bloodmagic.compress.BaseCompressionHandler;
-import WayofTime.bloodmagic.compress.StorageBlockCraftingManager;
-import WayofTime.bloodmagic.item.ItemComponent;
-import WayofTime.bloodmagic.item.ItemDemonCrystal;
-import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
-import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeBattleHungry;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeDigSlowdown;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeDisoriented;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeMeleeDecrease;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowHeal;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowness;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeStormTrooper;
-import WayofTime.bloodmagic.potion.BMPotionUtils;
-import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
-import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionRecipe;
-import WayofTime.bloodmagic.util.Utils;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
+import java.util.Map.Entry;
 
-import com.google.common.base.Stopwatch;
-
-public class ModRecipes
-{
+public class ModRecipes {
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private static final Set<String> USED_OD_NAMES = new TreeSet<>();
     public static ArrayList<String> addedOreRecipeList = new ArrayList<String>();
+    static ItemStack mundaneLengtheningStack = ItemComponent.getStack(ItemComponent.CATALYST_LENGTH_1);
+    static ItemStack mundanePowerStack = ItemComponent.getStack(ItemComponent.CATALYST_POWER_1);
+    private static File RECIPE_DIR = null;
 
-    public static void init()
-    {
+    public static void init() {
         initOreDict();
         addFurnaceRecipes();
 //        addCraftingRecipes();
@@ -101,21 +78,18 @@ public class ModRecipes
         addLivingArmourDowngradeRecipes();
     }
 
-    public static void initOreDict()
-    {
+    public static void initOreDict() {
         OreDictionary.registerOre("dustIron", ItemComponent.getStack(ItemComponent.SAND_IRON));
         OreDictionary.registerOre("dustGold", ItemComponent.getStack(ItemComponent.SAND_GOLD));
         OreDictionary.registerOre("dustCoal", ItemComponent.getStack(ItemComponent.SAND_COAL));
     }
 
-    public static void addFurnaceRecipes()
-    {
+    public static void addFurnaceRecipes() {
         FurnaceRecipes.instance().addSmeltingRecipe(ItemComponent.getStack(ItemComponent.SAND_IRON), new ItemStack(Items.IRON_INGOT), (float) 0.15);
         FurnaceRecipes.instance().addSmeltingRecipe(ItemComponent.getStack(ItemComponent.SAND_GOLD), new ItemStack(Items.GOLD_INGOT), (float) 0.15);
     }
 
-    public static void addCraftingRecipes()
-    {
+    public static void addCraftingRecipes() {
         addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.SOUL_FORGE), "i i", "sgs", "sos", 'i', "ingotIron", 's', "stone", 'g', "ingotGold", 'o', "blockIron");
         addShapedRecipe(new ItemStack(RegistrarBloodMagicItems.SACRIFICIAL_DAGGER), "aaa", " ba", "c a", 'a', "blockGlass", 'b', "ingotGold", 'c', "ingotIron");
         addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.ALTAR), "a a", "aba", "cdc", 'a', "stone", 'b', Blocks.FURNACE, 'c', "ingotGold", 'd', new ItemStack(RegistrarBloodMagicItems.MONSTER_SOUL));
@@ -179,10 +153,8 @@ public class ModRecipes
         for (int i = 1; i < EnumBloodRune.values().length; i++)
             addShapelessRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, i));
 
-        for (int i = 0; i < ItemSoulGem.names.length; i++)
-        {
-            for (int j = 0; j < ItemDemonCrystal.NAMES.size(); j++)
-            {
+        for (int i = 0; i < ItemSoulGem.names.length; i++) {
+            for (int j = 0; j < ItemDemonCrystal.NAMES.size(); j++) {
                 ItemStack baseGemStack = new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, i);
                 ItemStack newGemStack = new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, i);
 
@@ -198,8 +170,7 @@ public class ModRecipes
 //        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.MIMIC, 4, 2), "bsb", "srs", "bob", 'b', new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK), 'r', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), 's', "blockGlass", 'o', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MAGICIAN)));
 //        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.MIMIC, 2, 3), "bnb", "trt", "bob", 'b', new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK), 'r', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), 'n', "glowstone", 't', "torch", 'o', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MAGICIAN)));
 
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             ItemStack crystalStack = new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, 1, i);
             ItemStack baseStoneStack = new ItemStack(RegistrarBloodMagicBlocks.DEMON_EXTRAS, 1, i);
             ItemStack baseStoneStackCrafted = new ItemStack(RegistrarBloodMagicBlocks.DEMON_EXTRAS, 16, i);
@@ -235,8 +206,7 @@ public class ModRecipes
         generateConstants();
     }
 
-    public static void addAltarRecipes()
-    {
+    public static void addAltarRecipes() {
         // ONE
         AltarRecipeRegistry.registerFillRecipe(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK), EnumAltarTier.ONE, RegistrarBloodMagic.ORB_WEAK.getCapacity(), 2, 1);
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Items.DIAMOND), OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK), EnumAltarTier.ONE, 2000, 2, 1));
@@ -279,8 +249,7 @@ public class ModRecipes
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Blocks.GLOWSTONE), EnumRuneType.DAWN.getScribeStack(), EnumAltarTier.SIX, 200000, 100, 200));
     }
 
-    public static void addAlchemyArrayRecipes()
-    {
+    public static void addAlchemyArrayRecipes() {
         AlchemyArrayRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), new ItemStack(Items.DIAMOND_SWORD), new AlchemyArrayEffectBinding("boundSword", Utils.setUnbreakable(new ItemStack(RegistrarBloodMagicItems.BOUND_SWORD))), new BindingAlchemyCircleRenderer());
         AlchemyArrayRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), new ItemStack(Items.DIAMOND_AXE), new AlchemyArrayEffectBinding("boundAxe", Utils.setUnbreakable(new ItemStack(RegistrarBloodMagicItems.BOUND_AXE))));
         AlchemyArrayRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), new ItemStack(Items.DIAMOND_PICKAXE), new AlchemyArrayEffectBinding("boundPickaxe", Utils.setUnbreakable(new ItemStack(RegistrarBloodMagicItems.BOUND_PICKAXE))));
@@ -325,8 +294,7 @@ public class ModRecipes
 
     }
 
-    public static void addCompressionHandlers()
-    {
+    public static void addCompressionHandlers() {
         Stopwatch stopwatch = Stopwatch.createStarted();
         StorageBlockCraftingManager.getInstance().addStorageBlockRecipes();
         CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.GLOWSTONE_DUST, 4, 0), new ItemStack(Blocks.GLOWSTONE), 64));
@@ -339,8 +307,7 @@ public class ModRecipes
         BloodMagic.instance.logger.info("Added compression recipes in {}", stopwatch);
     }
 
-    public static void addSoulForgeRecipes()
-    {
+    public static void addSoulForgeRecipes() {
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM), 1, 1, "dustRedstone", "ingotGold", "blockGlass", "dyeBlue");
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1), 60, 20, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM), "gemDiamond", "blockRedstone", "blockLapis");
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 2), 240, 50, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1), "gemDiamond", "blockGold", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2));
@@ -396,8 +363,7 @@ public class ModRecipes
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(RegistrarBloodMagicItems.DEMON_WILL_GAUGE), 400, 50, "ingotGold", "dustRedstone", "blockGlass", RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL);
     }
 
-    public static void addAlchemyTableRecipes()
-    {
+    public static void addAlchemyTableRecipes() {
         AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.STRING, 4), 0, 100, 0, Blocks.WOOL, Items.FLINT);
         AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.FLINT, 2), 0, 20, 0, Blocks.GRAVEL, Items.FLINT);
         AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.LEATHER, 4), 100, 200, 1, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.FLINT, Items.WATER_BUCKET);
@@ -448,19 +414,15 @@ public class ModRecipes
         AlchemyTableRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.CATALYST_POWER_1), 1000, 100, 2, "gunpowder", "cropNetherWart", "dustRedstone");
     }
 
-    public static void addOreDoublingAlchemyRecipes()
-    {
+    public static void addOreDoublingAlchemyRecipes() {
         String[] oreList = OreDictionary.getOreNames().clone();
-        for (String ore : oreList)
-        {
-            if (ore.startsWith("ore") && !addedOreRecipeList.contains(ore))
-            {
+        for (String ore : oreList) {
+            if (ore.startsWith("ore") && !addedOreRecipeList.contains(ore)) {
                 String dustName = ore.replaceFirst("ore", "dust");
 
                 List<ItemStack> discoveredOres = OreDictionary.getOres(ore);
                 List<ItemStack> dustList = OreDictionary.getOres(dustName);
-                if (dustList != null && !dustList.isEmpty() && discoveredOres != null && !discoveredOres.isEmpty())
-                {
+                if (dustList != null && !dustList.isEmpty() && discoveredOres != null && !discoveredOres.isEmpty()) {
                     ItemStack dustStack = dustList.get(0).copy();
                     dustStack.setCount(2);
                     AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(dustStack, 400, 200, 1, ore, ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC)));
@@ -470,8 +432,7 @@ public class ModRecipes
         }
     }
 
-    public static void addPotionRecipes()
-    {
+    public static void addPotionRecipes() {
         addPotionRecipe(1000, 1, new ItemStack(Items.GHAST_TEAR), new PotionEffect(MobEffects.REGENERATION, 450));
         addPotionRecipe(1000, 1, new ItemStack(Items.GOLDEN_CARROT), new PotionEffect(MobEffects.NIGHT_VISION, 2 * 60 * 20));
         addPotionRecipe(1000, 1, new ItemStack(Items.MAGMA_CREAM), new PotionEffect(MobEffects.FIRE_RESISTANCE, 2 * 60 * 20));
@@ -497,11 +458,7 @@ public class ModRecipes
 //        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTablePotionRecipe(5000, 100, 4, new ItemStack("string"), new PotionEffect(ModPotions.bounce, 15 * 60 * 20)));
     }
 
-    static ItemStack mundaneLengtheningStack = ItemComponent.getStack(ItemComponent.CATALYST_LENGTH_1);
-    static ItemStack mundanePowerStack = ItemComponent.getStack(ItemComponent.CATALYST_POWER_1);
-
-    public static void addPotionRecipe(int lpDrained, int tier, ItemStack inputStack, PotionEffect baseEffect)
-    {
+    public static void addPotionRecipe(int lpDrained, int tier, ItemStack inputStack, PotionEffect baseEffect) {
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTablePotionRecipe(lpDrained, 100, tier, inputStack, baseEffect));
 
         List<ItemStack> lengtheningList = new ArrayList<ItemStack>();
@@ -515,8 +472,7 @@ public class ModRecipes
         AlchemyTableRecipeRegistry.registerRecipe(BMPotionUtils.getPowerAugmentRecipe(lpDrained, 100, tier, powerList, baseEffect, 1));
     }
 
-    public static void addLivingArmourDowngradeRecipes()
-    {
+    public static void addLivingArmourDowngradeRecipes() {
         String messageBase = "ritual.bloodmagic.downgradeRitual.dialogue.";
 
         ItemStack bowStack = new ItemStack(Items.BOW);
@@ -530,18 +486,16 @@ public class ModRecipes
         ItemStack stringStack = new ItemStack(Items.STRING);
 
         Map<ItemStack, Pair<String, int[]>> dialogueMap = new HashMap<ItemStack, Pair<String, int[]>>();
-        dialogueMap.put(bowStack, Pair.of("bow", new int[] { 1, 100, 300, 500 }));
-        dialogueMap.put(bottleStack, Pair.of("quenched", new int[] { 1, 100, 300, 500 }));
-        dialogueMap.put(swordStack, Pair.of("dulledBlade", new int[] { 1, 100, 300, 500, 700 }));
-        dialogueMap.put(goldenAppleStack, Pair.of("slowHeal", new int[] { 1, 100, 300, 500, 700 }));
+        dialogueMap.put(bowStack, Pair.of("bow", new int[]{1, 100, 300, 500}));
+        dialogueMap.put(bottleStack, Pair.of("quenched", new int[]{1, 100, 300, 500}));
+        dialogueMap.put(swordStack, Pair.of("dulledBlade", new int[]{1, 100, 300, 500, 700}));
+        dialogueMap.put(goldenAppleStack, Pair.of("slowHeal", new int[]{1, 100, 300, 500, 700}));
 
-        for (Entry<ItemStack, Pair<String, int[]>> entry : dialogueMap.entrySet())
-        {
+        for (Entry<ItemStack, Pair<String, int[]>> entry : dialogueMap.entrySet()) {
             ItemStack keyStack = entry.getKey();
             String str = entry.getValue().getKey();
             Map<Integer, List<ITextComponent>> textMap = new HashMap<Integer, List<ITextComponent>>();
-            for (int tick : entry.getValue().getValue())
-            {
+            for (int tick : entry.getValue().getValue()) {
                 List<ITextComponent> textList = new ArrayList<ITextComponent>();
                 textList.add(new TextComponentTranslation("\u00A74%s", new TextComponentTranslation(messageBase + str + "." + tick)));
                 textMap.put(tick, textList);
@@ -559,8 +513,7 @@ public class ModRecipes
         LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeQuenched(0), bottleStack, Items.DRAGON_BREATH);
         LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeCrippledArm(0), shieldStack, "gemDiamond");
 
-        for (int i = 0; i < 10; i++)
-        {
+        for (int i = 0; i < 10; i++) {
             addRecipeForTieredDowngrade(new LivingArmourUpgradeMeleeDecrease(i), swordStack, i);
             addRecipeForTieredDowngrade(new LivingArmourUpgradeSlowHeal(i), goldenAppleStack, i);
             addRecipeForTieredDowngrade(new LivingArmourUpgradeBattleHungry(i), fleshStack, i);
@@ -570,45 +523,39 @@ public class ModRecipes
         }
     }
 
-    public static void addRecipeForTieredDowngrade(LivingArmourUpgrade upgrade, ItemStack stack, int tier)
-    {
-        switch (tier)
-        {
-        case 0:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "ingotIron", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 0));
-            break;
-        case 1:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "dustRedstone", "dustRedstone", "ingotIron", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 0));
-            break;
-        case 2:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "ingotGold", "gemLapis", "gemLapis", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1));
-            break;
-        case 3:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.VINE, "dyeRed", Items.GOLDEN_CARROT, new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1));
-            break;
-        case 4:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.GOLDEN_APPLE, "treeSapling", "treeSapling", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2));
-            break;
-        case 5:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.IRON_BLOCK, Blocks.REDSTONE_BLOCK, new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2));
-            break;
-        case 6:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.IRON_BLOCK, Blocks.GLOWSTONE, "ingotGold", "ingotGold", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3));
-            break;
-        case 7:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.GOLD_BLOCK, Blocks.LAPIS_BLOCK, "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3));
-            break;
-        case 8:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.DRAGON_BREATH, "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 4));
-            break;
-        case 9:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.NETHER_STAR, "gemDiamond", "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 4));
+    public static void addRecipeForTieredDowngrade(LivingArmourUpgrade upgrade, ItemStack stack, int tier) {
+        switch (tier) {
+            case 0:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "ingotIron", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 0));
+                break;
+            case 1:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "dustRedstone", "dustRedstone", "ingotIron", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 0));
+                break;
+            case 2:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "ingotGold", "gemLapis", "gemLapis", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1));
+                break;
+            case 3:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.VINE, "dyeRed", Items.GOLDEN_CARROT, new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1));
+                break;
+            case 4:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.GOLDEN_APPLE, "treeSapling", "treeSapling", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2));
+                break;
+            case 5:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.IRON_BLOCK, Blocks.REDSTONE_BLOCK, new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2));
+                break;
+            case 6:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.IRON_BLOCK, Blocks.GLOWSTONE, "ingotGold", "ingotGold", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3));
+                break;
+            case 7:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.GOLD_BLOCK, Blocks.LAPIS_BLOCK, "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3));
+                break;
+            case 8:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.DRAGON_BREATH, "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 4));
+                break;
+            case 9:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.NETHER_STAR, "gemDiamond", "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 4));
         }
     }
-
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static File RECIPE_DIR = null;
-    private static final Set<String> USED_OD_NAMES = new TreeSet<>();
 
     private static void setupDir() {
         if (RECIPE_DIR == null) {
@@ -675,8 +622,7 @@ public class ModRecipes
         }
     }
 
-    private static void addShapelessRecipe(ItemStack result, Object... components)
-    {
+    private static void addShapelessRecipe(ItemStack result, Object... components) {
         setupDir();
 
         // addShapelessRecipe(result, components);
@@ -768,7 +714,7 @@ public class ModRecipes
             GSON.toJson(json, w);
         } catch (IOException e) {
             e.printStackTrace();
-     
+
         }
     }
 }

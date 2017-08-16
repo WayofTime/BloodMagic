@@ -4,54 +4,45 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class LivingArmourUpgradeExperience extends LivingArmourUpgrade
-{
-    public static final int[] costs = new int[] { 7, 13, 22, 40, 65, 90, 130, 180, 250, 350 };
-    public static final double[] experienceModifier = new double[] { 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1.05, 1.2, 1.35, 1.5 };
+public class LivingArmourUpgradeExperience extends LivingArmourUpgrade {
+    public static final int[] costs = new int[]{7, 13, 22, 40, 65, 90, 130, 180, 250, 350};
+    public static final double[] experienceModifier = new double[]{0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1.05, 1.2, 1.35, 1.5};
 
-    public LivingArmourUpgradeExperience(int level)
-    {
+    public LivingArmourUpgradeExperience(int level) {
         super(level);
     }
 
-    public double getExperienceModifier()
-    {
+    public double getExperienceModifier() {
         return experienceModifier[this.level];
     }
 
     @Override
-    public String getUniqueIdentifier()
-    {
+    public String getUniqueIdentifier() {
         return BloodMagic.MODID + ".upgrade.experienced";
     }
 
     @Override
-    public int getMaxTier()
-    {
+    public int getMaxTier() {
         return 10; // Set to here until I can add more upgrades to it.
     }
 
     @Override
-    public int getCostOfUpgrade()
-    {
+    public int getCostOfUpgrade() {
         return costs[this.level];
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
         // EMPTY
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
         // EMPTY
     }
 
     @Override
-    public String getUnlocalizedName()
-    {
+    public String getUnlocalizedName() {
         return tooltipBase + "experienced";
     }
 }

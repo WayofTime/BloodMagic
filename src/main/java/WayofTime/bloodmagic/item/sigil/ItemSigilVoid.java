@@ -19,59 +19,48 @@ import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class ItemSigilVoid extends ItemSigilBase
-{
-    public ItemSigilVoid()
-    {
+public class ItemSigilVoid extends ItemSigilBase {
+    public ItemSigilVoid() {
         super("void", 50);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() instanceof ISigil.Holding)
             stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
-        if (!world.isRemote && !isUnusable(stack))
-        {
+        if (!world.isRemote && !isUnusable(stack)) {
             RayTraceResult rayTrace = this.rayTrace(world, player, true);
 
-            if (rayTrace != null)
-            {
+            if (rayTrace != null) {
                 ActionResult<ItemStack> ret = ForgeEventFactory.onBucketUse(player, world, stack, rayTrace);
                 if (ret != null)
                     return ret;
 
-                if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
-                {
+                if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
                     BlockPos blockpos = rayTrace.getBlockPos();
 
-                    if (!world.isBlockModifiable(player, blockpos))
-                    {
+                    if (!world.isBlockModifiable(player, blockpos)) {
                         return super.onItemRightClick(world, player, hand);
                     }
 
-                    if (!player.canPlayerEdit(blockpos.offset(rayTrace.sideHit), rayTrace.sideHit, stack))
-                    {
+                    if (!player.canPlayerEdit(blockpos.offset(rayTrace.sideHit), rayTrace.sideHit, stack)) {
                         return super.onItemRightClick(world, player, hand);
                     }
 
-                    if (!player.canPlayerEdit(blockpos, rayTrace.sideHit, stack))
-                    {
+                    if (!player.canPlayerEdit(blockpos, rayTrace.sideHit, stack)) {
                         return super.onItemRightClick(world, player, hand);
                     }
 
-                    if (world.getBlockState(blockpos).getBlock().getMaterial(world.getBlockState(blockpos)).isLiquid() && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
-                    {
+                    if (world.getBlockState(blockpos).getBlock().getMaterial(world.getBlockState(blockpos)).isLiquid() && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed())) {
                         world.setBlockToAir(blockpos);
                         return super.onItemRightClick(world, player, hand);
                     }
                 }
-            } else
-            {
+            } else {
                 return super.onItemRightClick(world, player, hand);
             }
 
@@ -83,30 +72,25 @@ public class ItemSigilVoid extends ItemSigilBase
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return EnumActionResult.FAIL;
 
-        if (world.isRemote || player.isSneaking() || isUnusable(stack))
-        {
+        if (world.isRemote || player.isSneaking() || isUnusable(stack)) {
             return EnumActionResult.FAIL;
         }
 
-        if (!world.canMineBlockBody(player, blockPos))
-        {
+        if (!world.canMineBlockBody(player, blockPos)) {
             return EnumActionResult.FAIL;
         }
 
         TileEntity tile = world.getTileEntity(blockPos);
-        if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
-        {
+        if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) {
             IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
             FluidStack amount = handler.drain(1000, false);
 
-            if (amount != null && amount.amount > 0 && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()))
-            {
+            if (amount != null && amount.amount > 0 && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed())) {
                 handler.drain(1000, true);
                 return EnumActionResult.SUCCESS;
             }
@@ -116,13 +100,11 @@ public class ItemSigilVoid extends ItemSigilBase
 
         BlockPos newPos = blockPos.offset(side);
 
-        if (!player.canPlayerEdit(newPos, side, stack))
-        {
+        if (!player.canPlayerEdit(newPos, side, stack)) {
             return EnumActionResult.FAIL;
         }
 
-        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()))
-        {
+        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed())) {
             world.setBlockToAir(newPos);
             return EnumActionResult.SUCCESS;
         }

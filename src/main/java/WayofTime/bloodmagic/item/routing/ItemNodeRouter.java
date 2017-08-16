@@ -29,10 +29,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvider
-{
-    public ItemNodeRouter()
-    {
+public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvider {
+    public ItemNodeRouter() {
         setUnlocalizedName(BloodMagic.MODID + ".nodeRouter");
         setMaxStackSize(1);
         setCreativeTab(BloodMagic.TAB_BM);
@@ -40,36 +38,30 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         if (!stack.hasTagCompound())
             return;
         NBTTagCompound tag = stack.getTagCompound();
         BlockPos coords = getBlockPos(stack);
 
-        if (coords != null && tag != null)
-        {
+        if (coords != null && tag != null) {
             tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.coords", coords.getX(), coords.getY(), coords.getZ()));
         }
     }
 
     @Override
-    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
-    {
+    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (world.isRemote)
-        {
+        if (world.isRemote) {
             return EnumActionResult.PASS;
         }
 
         TileEntity tileHit = world.getTileEntity(pos);
 
-        if (!(tileHit instanceof IRoutingNode))
-        {
+        if (!(tileHit instanceof IRoutingNode)) {
             // TODO: Remove contained position?
             BlockPos containedPos = getBlockPos(stack);
-            if (!containedPos.equals(BlockPos.ORIGIN))
-            {
+            if (!containedPos.equals(BlockPos.ORIGIN)) {
                 this.setBlockPos(stack, BlockPos.ORIGIN);
                 player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.remove"), true);
                 return EnumActionResult.FAIL;
@@ -78,23 +70,18 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
         }
         IRoutingNode node = (IRoutingNode) tileHit;
         BlockPos containedPos = getBlockPos(stack);
-        if (containedPos.equals(BlockPos.ORIGIN))
-        {
+        if (containedPos.equals(BlockPos.ORIGIN)) {
             this.setBlockPos(stack, pos);
             player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.set"), true);
             return EnumActionResult.SUCCESS;
-        } else
-        {
+        } else {
             TileEntity pastTile = world.getTileEntity(containedPos);
-            if (pastTile instanceof IRoutingNode)
-            {
+            if (pastTile instanceof IRoutingNode) {
                 IRoutingNode pastNode = (IRoutingNode) pastTile;
-                if (pastNode instanceof IMasterRoutingNode)
-                {
+                if (pastNode instanceof IMasterRoutingNode) {
                     IMasterRoutingNode master = (IMasterRoutingNode) pastNode;
 
-                    if (!node.isMaster(master))
-                    {
+                    if (!node.isMaster(master)) {
                         if (node.getMasterPos().equals(BlockPos.ORIGIN)) //If the node is not the master and it is receptive
                         {
                             node.connectMasterToRemainingNode(world, new LinkedList<BlockPos>(), master);
@@ -105,8 +92,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                             this.setBlockPos(stack, BlockPos.ORIGIN);
                             return EnumActionResult.SUCCESS;
                         }
-                    } else
-                    {
+                    } else {
                         master.addConnection(pos, containedPos);
                         node.addConnection(containedPos);
                         player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.link.master"), true);
@@ -114,12 +100,10 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                         return EnumActionResult.SUCCESS;
                     }
 
-                } else if (node instanceof IMasterRoutingNode)
-                {
+                } else if (node instanceof IMasterRoutingNode) {
                     IMasterRoutingNode master = (IMasterRoutingNode) node;
 
-                    if (!pastNode.isMaster(master))
-                    {
+                    if (!pastNode.isMaster(master)) {
                         if (pastNode.getMasterPos().equals(BlockPos.ORIGIN)) //TODO: This is where the issue is
                         {
                             pastNode.connectMasterToRemainingNode(world, new LinkedList<BlockPos>(), master);
@@ -130,24 +114,19 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                             this.setBlockPos(stack, BlockPos.ORIGIN);
                             return EnumActionResult.SUCCESS;
                         }
-                    } else
-                    {
+                    } else {
                         master.addConnection(pos, containedPos);
                         pastNode.addConnection(pos);
                         player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.link.master"), true);
                         this.setBlockPos(stack, BlockPos.ORIGIN);
                         return EnumActionResult.SUCCESS;
                     }
-                } else
-                {
+                } else {
                     //Both nodes are not master nodes, so normal linking
-                    if (pastNode.getMasterPos().equals(node.getMasterPos()))
-                    {
-                        if (!pastNode.getMasterPos().equals(BlockPos.ORIGIN))
-                        {
+                    if (pastNode.getMasterPos().equals(node.getMasterPos())) {
+                        if (!pastNode.getMasterPos().equals(BlockPos.ORIGIN)) {
                             TileEntity testTile = world.getTileEntity(pastNode.getMasterPos());
-                            if (testTile instanceof IMasterRoutingNode)
-                            {
+                            if (testTile instanceof IMasterRoutingNode) {
                                 IMasterRoutingNode master = (IMasterRoutingNode) testTile;
                                 master.addConnection(pos, containedPos);
                             }
@@ -160,8 +139,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                     } else if (pastNode.getMasterPos().equals(BlockPos.ORIGIN)) //pastNode is not connected to a master, but node is
                     {
                         TileEntity tile = world.getTileEntity(node.getMasterPos());
-                        if (tile instanceof IMasterRoutingNode)
-                        {
+                        if (tile instanceof IMasterRoutingNode) {
                             IMasterRoutingNode master = (IMasterRoutingNode) tile;
                             master.addConnection(pos, containedPos);
                             master.addNodeToList(pastNode);
@@ -175,8 +153,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                     } else if (node.getMasterPos().equals(BlockPos.ORIGIN)) //node is not connected to a master, but pastNode is
                     {
                         TileEntity tile = world.getTileEntity(pastNode.getMasterPos());
-                        if (tile instanceof IMasterRoutingNode)
-                        {
+                        if (tile instanceof IMasterRoutingNode) {
                             IMasterRoutingNode master = (IMasterRoutingNode) tile;
                             master.addConnection(pos, containedPos);
                             master.addNodeToList(node);
@@ -187,8 +164,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                         player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.link"), true);
                         this.setBlockPos(stack, BlockPos.ORIGIN);
                         return EnumActionResult.SUCCESS;
-                    } else
-                    {
+                    } else {
                         this.setBlockPos(stack, BlockPos.ORIGIN);
                         return EnumActionResult.SUCCESS;
                     }
@@ -200,21 +176,18 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
         return ret;
     }
 
-    public BlockPos getBlockPos(ItemStack stack)
-    {
+    public BlockPos getBlockPos(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
         return new BlockPos(stack.getTagCompound().getInteger(Constants.NBT.X_COORD), stack.getTagCompound().getInteger(Constants.NBT.Y_COORD), stack.getTagCompound().getInteger(Constants.NBT.Z_COORD));
     }
 
-    public ItemStack setBlockPos(ItemStack stack, BlockPos pos)
-    {
+    public ItemStack setBlockPos(ItemStack stack, BlockPos pos) {
         NBTHelper.checkNBT(stack);
         NBTTagCompound itemTag = stack.getTagCompound();
         itemTag.setInteger(Constants.NBT.X_COORD, pos.getX());

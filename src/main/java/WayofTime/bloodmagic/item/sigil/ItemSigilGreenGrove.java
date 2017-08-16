@@ -14,23 +14,18 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
-public class ItemSigilGreenGrove extends ItemSigilToggleableBase
-{
-    public ItemSigilGreenGrove()
-    {
+public class ItemSigilGreenGrove extends ItemSigilToggleableBase {
+    public ItemSigilGreenGrove() {
         super("greenGrove", 150);
     }
 
     @Override
-    public boolean onSigilUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public boolean onSigilUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (PlayerHelper.isFakePlayer(player))
             return false;
 
-        if (applyBonemeal(world, blockPos, player, stack))
-        {
-            if (!world.isRemote)
-            {
+        if (applyBonemeal(world, blockPos, player, stack)) {
+            if (!world.isRemote) {
                 world.playEvent(2005, blockPos, 0);
             }
             return true;
@@ -40,8 +35,7 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
     }
 
     @Override
-    public void onSigilUpdate(ItemStack stack, World worldIn, EntityPlayer player, int itemSlot, boolean isSelected)
-    {
+    public void onSigilUpdate(ItemStack stack, World worldIn, EntityPlayer player, int itemSlot, boolean isSelected) {
         if (PlayerHelper.isFakePlayer(player))
             return;
 
@@ -51,21 +45,15 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
         int posY = (int) player.posY;
         int posZ = (int) Math.round(player.posZ - 0.5f);
 
-        for (int ix = posX - range; ix <= posX + range; ix++)
-        {
-            for (int iz = posZ - range; iz <= posZ + range; iz++)
-            {
-                for (int iy = posY - verticalRange; iy <= posY + verticalRange; iy++)
-                {
+        for (int ix = posX - range; ix <= posX + range; ix++) {
+            for (int iz = posZ - range; iz <= posZ + range; iz++) {
+                for (int iy = posY - verticalRange; iy <= posY + verticalRange; iy++) {
                     BlockPos blockPos = new BlockPos(ix, iy, iz);
                     IBlockState state = worldIn.getBlockState(blockPos);
 
-                    if (!BloodMagicAPI.INSTANCE.getBlacklist().getGreenGrove().contains(state))
-                    {
-                        if (state.getBlock() instanceof IGrowable)
-                        {
-                            if (worldIn.rand.nextInt(50) == 0)
-                            {
+                    if (!BloodMagicAPI.INSTANCE.getBlacklist().getGreenGrove().contains(state)) {
+                        if (state.getBlock() instanceof IGrowable) {
+                            if (worldIn.rand.nextInt(50) == 0) {
                                 IBlockState preBlockState = worldIn.getBlockState(blockPos);
                                 state.getBlock().updateTick(worldIn, blockPos, state, worldIn.rand);
 
@@ -80,8 +68,7 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
         }
     }
 
-    private boolean applyBonemeal(World worldIn, BlockPos target, EntityPlayer player, ItemStack sigilStack)
-    {
+    private boolean applyBonemeal(World worldIn, BlockPos target, EntityPlayer player, ItemStack sigilStack) {
         IBlockState iblockstate = worldIn.getBlockState(target);
 
         BonemealEvent event = new BonemealEvent(player, worldIn, target, iblockstate, EnumHand.MAIN_HAND, sigilStack);
@@ -90,14 +77,11 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
         else if (event.getResult() == Result.ALLOW)
             return true;
 
-        if (iblockstate.getBlock() instanceof IGrowable)
-        {
+        if (iblockstate.getBlock() instanceof IGrowable) {
             IGrowable igrowable = (IGrowable) iblockstate.getBlock();
 
-            if (igrowable.canGrow(worldIn, target, iblockstate, worldIn.isRemote))
-            {
-                if (!worldIn.isRemote)
-                {
+            if (igrowable.canGrow(worldIn, target, iblockstate, worldIn.isRemote)) {
+                if (!worldIn.isRemote) {
                     if (igrowable.canUseBonemeal(worldIn, worldIn.rand, target, iblockstate))
                         igrowable.grow(worldIn, worldIn.rand, target, iblockstate);
                 }

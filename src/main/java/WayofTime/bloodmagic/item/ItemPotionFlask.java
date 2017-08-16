@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -25,14 +24,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import WayofTime.bloodmagic.BloodMagic;
-
 import javax.annotation.Nullable;
+import java.util.List;
 
-public class ItemPotionFlask extends Item implements IMeshProvider
-{
-    public ItemPotionFlask()
-    {
+public class ItemPotionFlask extends Item implements IMeshProvider {
+    public ItemPotionFlask() {
         setUnlocalizedName(BloodMagic.MODID + ".potionFlask");
         setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
@@ -41,27 +37,22 @@ public class ItemPotionFlask extends Item implements IMeshProvider
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entityLiving)
-    {
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entityLiving) {
         EntityPlayer player = entityLiving instanceof EntityPlayer ? (EntityPlayer) entityLiving : null;
 
         int remainingUses = stack.getMaxDamage() - stack.getItemDamage();
-        if (remainingUses <= 0)
-        {
+        if (remainingUses <= 0) {
             NBTHelper.checkNBT(stack);
             stack.getTagCompound().setBoolean("empty", true);
             return stack;
         }
 
-        if (player == null || !player.capabilities.isCreativeMode)
-        {
+        if (player == null || !player.capabilities.isCreativeMode) {
             stack.setItemDamage(stack.getItemDamage() + 1);
         }
 
-        if (!world.isRemote)
-        {
-            for (PotionEffect potioneffect : PotionUtils.getEffectsFromStack(stack))
-            {
+        if (!world.isRemote) {
+            for (PotionEffect potioneffect : PotionUtils.getEffectsFromStack(stack)) {
                 entityLiving.addPotionEffect(new PotionEffect(potioneffect));
             }
         }
@@ -70,20 +61,17 @@ public class ItemPotionFlask extends Item implements IMeshProvider
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack stack)
-    {
+    public int getMaxItemUseDuration(ItemStack stack) {
         return 32;
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack stack)
-    {
+    public EnumAction getItemUseAction(ItemStack stack) {
         return EnumAction.DRINK;
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-    {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         int remainingUses = stack.getMaxDamage() - stack.getItemDamage();
         if (remainingUses > 0 || !stack.hasTagCompound() || !stack.getTagCompound().hasKey("empty"))
@@ -91,8 +79,7 @@ public class ItemPotionFlask extends Item implements IMeshProvider
 
         RayTraceResult trace = rayTrace(world, player, true);
 
-        if (trace.typeOfHit == RayTraceResult.Type.BLOCK && world.getBlockState(trace.getBlockPos()).getMaterial() == Material.WATER)
-        {
+        if (trace.typeOfHit == RayTraceResult.Type.BLOCK && world.getBlockState(trace.getBlockPos()).getMaterial() == Material.WATER) {
             world.playSound(player, player.posX, player.posY, player.posZ, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
             player.setHeldItem(hand, new ItemStack(this));
             return EnumActionResult.SUCCESS;
@@ -102,12 +89,10 @@ public class ItemPotionFlask extends Item implements IMeshProvider
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         int remainingUses = stack.getMaxDamage() - stack.getItemDamage();
-        if (remainingUses <= 0)
-        {
+        if (remainingUses <= 0) {
             NBTHelper.checkNBT(stack);
             stack.getTagCompound().setBoolean("empty", true);
             return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
@@ -118,8 +103,7 @@ public class ItemPotionFlask extends Item implements IMeshProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
         tooltip.add("");
         tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.potion.uses", stack.getMaxDamage() - stack.getItemDamage()));
@@ -138,8 +122,7 @@ public class ItemPotionFlask extends Item implements IMeshProvider
 
     @SideOnly(Side.CLIENT)
     @Override
-    public ItemMeshDefinition getMeshDefinition()
-    {
+    public ItemMeshDefinition getMeshDefinition() {
         return stack -> {
             boolean full = true;
             if (stack.hasTagCompound() && stack.getTagCompound().hasKey("empty"))
@@ -150,14 +133,12 @@ public class ItemPotionFlask extends Item implements IMeshProvider
 
     @Nullable
     @Override
-    public ResourceLocation getCustomLocation()
-    {
+    public ResourceLocation getCustomLocation() {
         return null;
     }
 
     @Override
-    public List<String> getVariants()
-    {
+    public List<String> getVariants() {
         return Lists.newArrayList("full=true", "full=false");
     }
 }

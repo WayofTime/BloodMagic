@@ -1,17 +1,15 @@
 package WayofTime.bloodmagic.block;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 
 import javax.annotation.Nullable;
 
-public class BlockMasterRoutingNode extends BlockRoutingNode
-{
-    public BlockMasterRoutingNode()
-    {
+public class BlockMasterRoutingNode extends BlockRoutingNode {
+    public BlockMasterRoutingNode() {
         super();
 
         setUnlocalizedName(BloodMagic.MODID + ".masterRouting");

@@ -1,12 +1,13 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.api.soul.DemonWillHolder;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.IGrowable;
@@ -20,19 +21,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.soul.DemonWillHolder;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.util.Utils;
 
-public class RitualGreenGrove extends Ritual
-{
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class RitualGreenGrove extends Ritual {
     public static final String GROW_RANGE = "growing";
     public static final String LEECH_RANGE = "leech";
     public static final String HYDRATE_RANGE = "hydrate";
@@ -41,16 +35,12 @@ public class RitualGreenGrove extends Ritual
     public static double rawWillDrain = 0.05;
     public static double vengefulWillDrain = 0.05;
     public static double steadfastWillDrain = 0.05;
-
-    public int refreshTime = 20;
     public static int defaultRefreshTime = 20;
-
     public static double defaultGrowthChance = 0.3;
-
     public static IBlockState farmlandState = Blocks.FARMLAND.getDefaultState().withProperty(BlockFarmland.MOISTURE, 7);
+    public int refreshTime = 20;
 
-    public RitualGreenGrove()
-    {
+    public RitualGreenGrove() {
         super("ritualGreenGrove", 0, 5000, "ritual." + BloodMagic.MODID + ".greenGroveRitual");
         addBlockRange(GROW_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 2, -1), 3, 1, 3));
         addBlockRange(LEECH_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 1));
@@ -61,14 +51,12 @@ public class RitualGreenGrove extends Ritual
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         BlockPos pos = masterRitualStone.getBlockPos();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -96,34 +84,26 @@ public class RitualGreenGrove extends Ritual
         AreaDescriptor growingRange = getBlockRange(GROW_RANGE);
 
         int maxGrowthVolume = getMaxVolumeForRange(GROW_RANGE, willConfig, holder);
-        if (!growingRange.isWithinRange(getMaxVerticalRadiusForRange(GROW_RANGE, willConfig, holder), getMaxHorizontalRadiusForRange(GROW_RANGE, willConfig, holder)) || (maxGrowthVolume != 0 && growingRange.getVolume() > maxGrowthVolume))
-        {
+        if (!growingRange.isWithinRange(getMaxVerticalRadiusForRange(GROW_RANGE, willConfig, holder), getMaxHorizontalRadiusForRange(GROW_RANGE, willConfig, holder)) || (maxGrowthVolume != 0 && growingRange.getVolume() > maxGrowthVolume)) {
             return;
         }
 
-        for (BlockPos newPos : growingRange.getContainedPositions(pos))
-        {
+        for (BlockPos newPos : growingRange.getContainedPositions(pos)) {
             IBlockState state = world.getBlockState(newPos);
 
-            if (!BloodMagicAPI.INSTANCE.getBlacklist().getGreenGrove().contains(state))
-            {
-                if (state.getBlock() instanceof IGrowable)
-                {
-                    if (world.rand.nextDouble() < growthChance)
-                    {
+            if (!BloodMagicAPI.INSTANCE.getBlacklist().getGreenGrove().contains(state)) {
+                if (state.getBlock() instanceof IGrowable) {
+                    if (world.rand.nextDouble() < growthChance) {
                         state.getBlock().updateTick(world, newPos, state, new Random());
                         IBlockState newState = world.getBlockState(newPos);
-                        if (!newState.equals(state))
-                        {
+                        if (!newState.equals(state)) {
                             totalGrowths++;
-                            if (consumeRawWill)
-                            {
+                            if (consumeRawWill) {
                                 rawWill -= rawWillDrain;
                                 rawDrain += rawWillDrain;
                             }
 
-                            if (consumeVengefulWill)
-                            {
+                            if (consumeVengefulWill) {
                                 vengefulWill -= vengefulWillDrain;
                                 vengefulDrain += vengefulWillDrain;
                             }
@@ -132,35 +112,29 @@ public class RitualGreenGrove extends Ritual
                 }
             }
 
-            if (totalGrowths >= maxGrowths || (consumeRawWill && rawWill < rawWillDrain) || (consumeVengefulWill && vengefulWill < vengefulWillDrain))
-            {
+            if (totalGrowths >= maxGrowths || (consumeRawWill && rawWill < rawWillDrain) || (consumeVengefulWill && vengefulWill < vengefulWillDrain)) {
                 break;
             }
         }
 
-        if (rawDrain > 0)
-        {
+        if (rawDrain > 0) {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrain, true);
         }
 
-        if (vengefulDrain > 0)
-        {
+        if (vengefulDrain > 0) {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrain, true);
         }
 
         AreaDescriptor hydrateRange = getBlockRange(HYDRATE_RANGE);
 
         double steadfastDrain = 0;
-        if (steadfastWill > steadfastWillDrain)
-        {
+        if (steadfastWill > steadfastWillDrain) {
             AxisAlignedBB aabb = hydrateRange.getAABB(pos);
             steadfastDrain += steadfastWillDrain * Utils.plantSeedsInArea(world, aabb, 2, 1);
             steadfastWill -= steadfastDrain;
 
-            for (BlockPos newPos : hydrateRange.getContainedPositions(pos))
-            {
-                if (steadfastWill < steadfastWillDrain)
-                {
+            for (BlockPos newPos : hydrateRange.getContainedPositions(pos)) {
+                if (steadfastWill < steadfastWillDrain) {
                     break;
                 }
 
@@ -168,53 +142,43 @@ public class RitualGreenGrove extends Ritual
                 Block block = state.getBlock();
 
                 boolean hydratedBlock = false;
-                if (block == Blocks.DIRT || block == Blocks.GRASS)
-                {
+                if (block == Blocks.DIRT || block == Blocks.GRASS) {
                     world.setBlockState(newPos, farmlandState);
                     hydratedBlock = true;
-                } else if (block == Blocks.FARMLAND)
-                {
+                } else if (block == Blocks.FARMLAND) {
                     int meta = block.getMetaFromState(state);
-                    if (meta < 7)
-                    {
+                    if (meta < 7) {
                         world.setBlockState(newPos, farmlandState);
                         hydratedBlock = true;
                     }
                 }
 
-                if (hydratedBlock)
-                {
+                if (hydratedBlock) {
                     steadfastWill -= steadfastWillDrain;
                     steadfastDrain += steadfastWillDrain;
                 }
             }
         }
 
-        if (steadfastDrain > 0)
-        {
+        if (steadfastDrain > 0) {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastDrain, true);
         }
 
         double corrosiveDrain = 0;
-        if (corrosiveWill > corrosiveWillDrain)
-        {
+        if (corrosiveWill > corrosiveWillDrain) {
             AreaDescriptor leechRange = getBlockRange(LEECH_RANGE);
             AxisAlignedBB mobArea = leechRange.getAABB(pos);
             List<EntityLivingBase> entityList = world.getEntitiesWithinAABB(EntityLivingBase.class, mobArea);
-            for (EntityLivingBase entityLiving : entityList)
-            {
-                if (corrosiveWill < corrosiveWillDrain)
-                {
+            for (EntityLivingBase entityLiving : entityList) {
+                if (corrosiveWill < corrosiveWillDrain) {
                     break;
                 }
 
-                if (entityLiving instanceof EntityPlayer)
-                {
+                if (entityLiving instanceof EntityPlayer) {
                     continue;
                 }
 
-                if (entityLiving.isPotionActive(RegistrarBloodMagic.PLANT_LEECH) || !entityLiving.isPotionApplicable(new PotionEffect(RegistrarBloodMagic.PLANT_LEECH)))
-                {
+                if (entityLiving.isPotionActive(RegistrarBloodMagic.PLANT_LEECH) || !entityLiving.isPotionApplicable(new PotionEffect(RegistrarBloodMagic.PLANT_LEECH))) {
                     continue;
                 }
 
@@ -224,8 +188,7 @@ public class RitualGreenGrove extends Ritual
                 corrosiveDrain += corrosiveWillDrain;
             }
 
-            if (corrosiveDrain > 0)
-            {
+            if (corrosiveDrain > 0) {
                 WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrain, true);
             }
         }
@@ -233,20 +196,16 @@ public class RitualGreenGrove extends Ritual
         masterRitualStone.getOwnerNetwork().syphon(totalGrowths * getRefreshCost());
     }
 
-    public double getPlantGrowthChanceForWill(double will)
-    {
-        if (will > 0)
-        {
+    public double getPlantGrowthChanceForWill(double will) {
+        if (will > 0) {
             return 0.3 + will / 200;
         }
 
         return defaultGrowthChance;
     }
 
-    public int getRefreshTimeForRawWill(double rawWill)
-    {
-        if (rawWill > 0)
-        {
+    public int getRefreshTimeForRawWill(double rawWill) {
+        if (rawWill > 0) {
             return 10;
         }
 
@@ -254,19 +213,15 @@ public class RitualGreenGrove extends Ritual
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return refreshTime;
     }
 
     @Override
-    public int getMaxVolumeForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder)
-    {
-        if (GROW_RANGE.equals(range) && activeTypes.contains(EnumDemonWillType.DESTRUCTIVE))
-        {
+    public int getMaxVolumeForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder) {
+        if (GROW_RANGE.equals(range) && activeTypes.contains(EnumDemonWillType.DESTRUCTIVE)) {
             double destructiveWill = holder.getWill(EnumDemonWillType.DESTRUCTIVE);
-            if (destructiveWill > 0)
-            {
+            if (destructiveWill > 0) {
                 return 81 + (int) Math.pow(destructiveWill / 4, 1.5);
             }
         }
@@ -275,13 +230,10 @@ public class RitualGreenGrove extends Ritual
     }
 
     @Override
-    public int getMaxVerticalRadiusForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder)
-    {
-        if (GROW_RANGE.equals(range) && activeTypes.contains(EnumDemonWillType.DESTRUCTIVE))
-        {
+    public int getMaxVerticalRadiusForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder) {
+        if (GROW_RANGE.equals(range) && activeTypes.contains(EnumDemonWillType.DESTRUCTIVE)) {
             double destructiveWill = holder.getWill(EnumDemonWillType.DESTRUCTIVE);
-            if (destructiveWill > 0)
-            {
+            if (destructiveWill > 0) {
                 return (int) (4 + destructiveWill / 10d);
             }
         }
@@ -290,13 +242,10 @@ public class RitualGreenGrove extends Ritual
     }
 
     @Override
-    public int getMaxHorizontalRadiusForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder)
-    {
-        if (GROW_RANGE.equals(range) && activeTypes.contains(EnumDemonWillType.DESTRUCTIVE))
-        {
+    public int getMaxHorizontalRadiusForRange(String range, List<EnumDemonWillType> activeTypes, DemonWillHolder holder) {
+        if (GROW_RANGE.equals(range) && activeTypes.contains(EnumDemonWillType.DESTRUCTIVE)) {
             double destructiveWill = holder.getWill(EnumDemonWillType.DESTRUCTIVE);
-            if (destructiveWill > 0)
-            {
+            if (destructiveWill > 0) {
                 return (int) (4 + destructiveWill / 10d);
             }
         }
@@ -305,14 +254,12 @@ public class RitualGreenGrove extends Ritual
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 20; //TODO: Need to find a way to balance this
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         this.addCornerRunes(components, 1, 0, EnumRuneType.EARTH);
@@ -322,14 +269,12 @@ public class RitualGreenGrove extends Ritual
     }
 
     @Override
-    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player)
-    {
-        return new ITextComponent[] { new TextComponentTranslation(this.getUnlocalizedName() + ".info"), new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".destructive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".vengeful.info") };
+    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
+        return new ITextComponent[]{new TextComponentTranslation(this.getUnlocalizedName() + ".info"), new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".destructive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".vengeful.info")};
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualGreenGrove();
     }
 }

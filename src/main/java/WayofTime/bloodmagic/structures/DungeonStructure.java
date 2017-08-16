@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.structures;
 
-import java.util.Random;
-
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -10,17 +8,16 @@ import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 
-public class DungeonStructure
-{
+import java.util.Random;
+
+public class DungeonStructure {
     public ResourceLocation resource;
 
-    public DungeonStructure(ResourceLocation resource)
-    {
+    public DungeonStructure(ResourceLocation resource) {
         this.resource = resource;
     }
 
-    public boolean placeStructureAtPosition(Random rand, PlacementSettings settings, WorldServer world, BlockPos pos)
-    {
+    public boolean placeStructureAtPosition(Random rand, PlacementSettings settings, WorldServer world, BlockPos pos) {
         if (pos == null)
             return false;
 
@@ -29,8 +26,7 @@ public class DungeonStructure
 
         Template template = templatemanager.getTemplate(minecraftserver, resource);
 
-        if (template == null)
-        {
+        if (template == null) {
             System.out.println("Invalid template for location: " + resource);
             return false;
         }
@@ -44,8 +40,7 @@ public class DungeonStructure
         return true;
     }
 
-    public DungeonStructure copy()
-    {
+    public DungeonStructure copy() {
         return new DungeonStructure(resource);
     }
 }

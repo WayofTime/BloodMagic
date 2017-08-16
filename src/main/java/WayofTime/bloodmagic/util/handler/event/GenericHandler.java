@@ -1,14 +1,41 @@
 package WayofTime.bloodmagic.util.handler.event;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.annot.Handler;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.ItemBindEvent;
+import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
+import WayofTime.bloodmagic.api.event.TeleposeEvent;
+import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.api.iface.ISentientTool;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
+import WayofTime.bloodmagic.api.orb.IBloodOrb;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
+import WayofTime.bloodmagic.api.soul.DemonWillHolder;
+import WayofTime.bloodmagic.api.util.helper.*;
 import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
+import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
+import WayofTime.bloodmagic.item.ItemAltarMaker;
+import WayofTime.bloodmagic.item.ItemExperienceBook;
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeBattleHungry;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.network.DemonAuraPacketProcessor;
+import WayofTime.bloodmagic.potion.BMPotionUtils;
+import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.util.helper.TextHelper;
+import com.google.common.base.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -50,69 +77,33 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.annot.Handler;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.ItemBindEvent;
-import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
-import WayofTime.bloodmagic.api.event.TeleposeEvent;
-import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.iface.ISentientTool;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.orb.IBloodOrb;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
-import WayofTime.bloodmagic.api.soul.DemonWillHolder;
-import WayofTime.bloodmagic.api.util.helper.BindableHelper;
-import WayofTime.bloodmagic.api.util.helper.ItemHelper;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.block.BlockAltar;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
-import WayofTime.bloodmagic.item.ItemAltarMaker;
-import WayofTime.bloodmagic.item.ItemExperienceBook;
-import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
-import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeBattleHungry;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
-import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
-import WayofTime.bloodmagic.network.DemonAuraPacketProcessor;
-import WayofTime.bloodmagic.potion.BMPotionUtils;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.util.ChatUtil;
-import WayofTime.bloodmagic.util.Utils;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-
-import com.google.common.base.Strings;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 @Handler
-public class GenericHandler
-{
+public class GenericHandler {
     public static Map<EntityPlayer, Double> bounceMap = new HashMap<EntityPlayer, Double>();
     public static Map<EntityPlayer, Integer> filledHandMap = new HashMap<EntityPlayer, Integer>();
+    private static Map<EntityAnimal, EntityAITarget> targetTaskMap = new HashMap<EntityAnimal, EntityAITarget>();
+    private static Map<EntityAnimal, EntityAIBase> attackTaskMap = new HashMap<EntityAnimal, EntityAIBase>();
 
     @SubscribeEvent
-    public void onEntityFall(LivingFallEvent event)
-    {
-        if (event.getEntityLiving() instanceof EntityPlayer)
-        {
+    public void onEntityFall(LivingFallEvent event) {
+        if (event.getEntityLiving() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-            if (player.isPotionActive(RegistrarBloodMagic.BOUNCE) && !player.isSneaking() && event.getDistance() > 2)
-            {
+            if (player.isPotionActive(RegistrarBloodMagic.BOUNCE) && !player.isSneaking() && event.getDistance() > 2) {
                 event.setDamageMultiplier(0);
 
-                if (player.getEntityWorld().isRemote)
-                {
+                if (player.getEntityWorld().isRemote) {
                     player.motionY *= -0.9;
                     player.fallDistance = 0;
                     bounceMap.put(player, player.motionY);
-                } else
-                {
+                } else {
                     player.fallDistance = 0;
                     event.setCanceled(true);
                 }
@@ -121,23 +112,17 @@ public class GenericHandler
     }
 
     @SubscribeEvent
-    public void playerTickPost(TickEvent.PlayerTickEvent event)
-    {
-        if (event.phase == TickEvent.Phase.END && bounceMap.containsKey(event.player))
-        {
+    public void playerTickPost(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END && bounceMap.containsKey(event.player)) {
             event.player.motionY = bounceMap.remove(event.player);
         }
 
-        if (event.phase == TickEvent.Phase.END)
-        {
-            if (filledHandMap.containsKey(event.player))
-            {
+        if (event.phase == TickEvent.Phase.END) {
+            if (filledHandMap.containsKey(event.player)) {
                 int value = filledHandMap.get(event.player) - 1;
-                if (value <= 0)
-                {
+                if (value <= 0) {
                     filledHandMap.remove(event.player);
-                } else
-                {
+                } else {
                     filledHandMap.put(event.player, value);
                 }
             }
@@ -145,31 +130,24 @@ public class GenericHandler
     }
 
     @SubscribeEvent
-    public void onPlayerClick(PlayerInteractEvent event)
-    {
-        if (event.isCancelable() && event.getEntityPlayer().isPotionActive(RegistrarBloodMagic.CONSTRICT))
-        {
+    public void onPlayerClick(PlayerInteractEvent event) {
+        if (event.isCancelable() && event.getEntityPlayer().isPotionActive(RegistrarBloodMagic.CONSTRICT)) {
             EntityPlayer player = event.getEntityPlayer();
             int level = player.getActivePotionEffect(RegistrarBloodMagic.CONSTRICT).getAmplifier();
-            if (event.getHand() == EnumHand.OFF_HAND || level > 1)
-            {
+            if (event.getHand() == EnumHand.OFF_HAND || level > 1) {
                 event.setCanceled(true);
             }
         }
     }
 
     @SubscribeEvent
-    public void onPlayerDropItem(ItemTossEvent event)
-    {
+    public void onPlayerDropItem(ItemTossEvent event) {
         EntityItem itemEntity = event.getEntityItem();
-        if (itemEntity != null)
-        {
+        if (itemEntity != null) {
             ItemStack stack = itemEntity.getItem();
             Item item = stack.getItem();
-            if (stack.hasTagCompound() && item instanceof ISentientTool)
-            {
-                if (((ISentientTool) item).spawnSentientEntityOnDrop(stack, event.getPlayer()))
-                {
+            if (stack.hasTagCompound() && item instanceof ISentientTool) {
+                if (((ISentientTool) item).spawnSentientEntityOnDrop(stack, event.getPlayer())) {
                     event.setCanceled(true);
                 }
             }
@@ -177,8 +155,7 @@ public class GenericHandler
     }
 
     @SubscribeEvent
-    public void onExplosion(ExplosionEvent.Start event)
-    {
+    public void onExplosion(ExplosionEvent.Start event) {
         World world = event.getWorld();
         Explosion exp = event.getExplosion();
         Vec3d position = exp.getPosition();
@@ -186,12 +163,9 @@ public class GenericHandler
 
         AxisAlignedBB bb = new AxisAlignedBB(position.x - radius, position.y - radius, position.z - radius, position.x + radius, position.y + radius, position.z + radius);
         List<EntitySentientSpecter> specterList = world.getEntitiesWithinAABB(EntitySentientSpecter.class, bb);
-        if (!specterList.isEmpty())
-        {
-            for (EntitySentientSpecter specter : specterList)
-            {
-                if (specter.absorbExplosion(exp))
-                {
+        if (!specterList.isEmpty()) {
+            for (EntitySentientSpecter specter : specterList) {
+                if (specter.absorbExplosion(exp)) {
                     event.setCanceled(true);
                     return;
                 }
@@ -200,17 +174,14 @@ public class GenericHandler
     }
 
     @SubscribeEvent
-    public void onEntityHurt(LivingHurtEvent event)
-    {
+    public void onEntityHurt(LivingHurtEvent event) {
         if (event.getEntity().getEntityWorld().isRemote)
             return;
 
-        if (event.getSource().getTrueSource() instanceof EntityPlayer && !PlayerHelper.isFakePlayer((EntityPlayer) event.getSource().getTrueSource()))
-        {
+        if (event.getSource().getTrueSource() instanceof EntityPlayer && !PlayerHelper.isFakePlayer((EntityPlayer) event.getSource().getTrueSource())) {
             EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
 
-            if (!player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).isEmpty() && player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() instanceof ItemPackSacrifice)
-            {
+            if (!player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).isEmpty() && player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() instanceof ItemPackSacrifice) {
                 ItemPackSacrifice pack = (ItemPackSacrifice) player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem();
 
                 boolean shouldSyphon = pack.getStoredLP(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST)) < pack.CAPACITY;
@@ -221,16 +192,13 @@ public class GenericHandler
                     ItemHelper.LPContainer.addLPToItem(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST), totalLP, pack.CAPACITY);
             }
 
-            if (LivingArmour.hasFullSet(player))
-            {
+            if (LivingArmour.hasFullSet(player)) {
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-                if (armour != null)
-                {
+                if (armour != null) {
 
                     LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.battleHunger", chestStack);
-                    if (upgrade instanceof LivingArmourUpgradeBattleHungry)
-                    {
+                    if (upgrade instanceof LivingArmourUpgradeBattleHungry) {
                         ((LivingArmourUpgradeBattleHungry) upgrade).resetTimer();
                     }
                 }
@@ -238,28 +206,20 @@ public class GenericHandler
         }
     }
 
-    private static Map<EntityAnimal, EntityAITarget> targetTaskMap = new HashMap<EntityAnimal, EntityAITarget>();
-    private static Map<EntityAnimal, EntityAIBase> attackTaskMap = new HashMap<EntityAnimal, EntityAIBase>();
-
     // Handles sending the client the Demon Will Aura updates
     @SubscribeEvent
-    public void onLivingUpdate(LivingUpdateEvent event)
-    {
-        if (!event.getEntityLiving().getEntityWorld().isRemote)
-        {
+    public void onLivingUpdate(LivingUpdateEvent event) {
+        if (!event.getEntityLiving().getEntityWorld().isRemote) {
             EntityLivingBase entity = event.getEntityLiving();
             if (entity instanceof EntityPlayer && entity.ticksExisted % 50 == 0) //TODO: Change to an incremental counter
             {
                 sendPlayerDemonWillAura((EntityPlayer) entity);
             }
 
-            if (event.getEntityLiving() instanceof EntityAnimal)
-            {
+            if (event.getEntityLiving() instanceof EntityAnimal) {
                 EntityAnimal animal = (EntityAnimal) event.getEntityLiving();
-                if (animal.isPotionActive(RegistrarBloodMagic.SACRIFICIAL_LAMB))
-                {
-                    if (!targetTaskMap.containsKey(animal))
-                    {
+                if (animal.isPotionActive(RegistrarBloodMagic.SACRIFICIAL_LAMB)) {
+                    if (!targetTaskMap.containsKey(animal)) {
                         EntityAITarget task = new EntityAINearestAttackableTarget<EntityMob>(animal, EntityMob.class, false);
                         EntityAIBase attackTask = new EntityAIAttackMelee(animal, 1.0D, false);
                         animal.targetTasks.addTask(1, task);
@@ -268,14 +228,12 @@ public class GenericHandler
                         attackTaskMap.put(animal, attackTask);
                     }
 
-                    if (animal.getAttackTarget() != null && animal.getDistanceSqToEntity(animal.getAttackTarget()) < 4)
-                    {
+                    if (animal.getAttackTarget() != null && animal.getDistanceSqToEntity(animal.getAttackTarget()) < 4) {
                         animal.getEntityWorld().createExplosion(null, animal.posX, animal.posY + (double) (animal.height / 16.0F), animal.posZ, 2 + animal.getActivePotionEffect(RegistrarBloodMagic.SACRIFICIAL_LAMB).getAmplifier() * 1.5f, false);
                         targetTaskMap.remove(animal);
                         attackTaskMap.remove(animal);
                     }
-                } else if (targetTaskMap.containsKey(animal))
-                {
+                } else if (targetTaskMap.containsKey(animal)) {
                     targetTaskMap.remove(animal);
                     attackTaskMap.remove(animal);
                 }
@@ -284,69 +242,55 @@ public class GenericHandler
 
         EntityLivingBase entity = event.getEntityLiving();
 
-        if (entity instanceof EntityPlayer)
-        {
+        if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
-            if (player.isSneaking() && player.isPotionActive(RegistrarBloodMagic.CLING) && Utils.isPlayerBesideSolidBlockFace(player) && !player.onGround)
-            {
-                if (player.getEntityWorld().isRemote)
-                {
+            if (player.isSneaking() && player.isPotionActive(RegistrarBloodMagic.CLING) && Utils.isPlayerBesideSolidBlockFace(player) && !player.onGround) {
+                if (player.getEntityWorld().isRemote) {
                     player.motionY = 0;
                     player.motionX *= 0.8;
                     player.motionZ *= 0.8;
-                } else
-                {
+                } else {
                     player.fallDistance = 0;
                 }
             }
         }
 
-        if (entity.isPotionActive(MobEffects.NIGHT_VISION))
-        {
+        if (entity.isPotionActive(MobEffects.NIGHT_VISION)) {
             int duration = entity.getActivePotionEffect(MobEffects.NIGHT_VISION).getDuration();
-            if (duration == Constants.Misc.NIGHT_VISION_CONSTANT_END)
-            {
+            if (duration == Constants.Misc.NIGHT_VISION_CONSTANT_END) {
                 entity.removePotionEffect(MobEffects.NIGHT_VISION);
             }
         }
 
-        if (entity.isPotionActive(RegistrarBloodMagic.FIRE_FUSE))
-        {
+        if (entity.isPotionActive(RegistrarBloodMagic.FIRE_FUSE)) {
             Random random = entity.getEntityWorld().rand;
             entity.getEntityWorld().spawnParticle(EnumParticleTypes.FLAME, entity.posX + random.nextDouble() * 0.3, entity.posY + random.nextDouble() * 0.3, entity.posZ + random.nextDouble() * 0.3, 0, 0.06d, 0);
 
             int r = entity.getActivePotionEffect(RegistrarBloodMagic.FIRE_FUSE).getAmplifier();
             int radius = r + 1;
 
-            if (entity.getActivePotionEffect(RegistrarBloodMagic.FIRE_FUSE).getDuration() <= 3)
-            {
+            if (entity.getActivePotionEffect(RegistrarBloodMagic.FIRE_FUSE).getDuration() <= 3) {
                 entity.getEntityWorld().createExplosion(null, entity.posX, entity.posY, entity.posZ, radius, false);
             }
         }
 
-        if (entity.isPotionActive(RegistrarBloodMagic.PLANT_LEECH))
-        {
+        if (entity.isPotionActive(RegistrarBloodMagic.PLANT_LEECH)) {
             int amplifier = entity.getActivePotionEffect(RegistrarBloodMagic.PLANT_LEECH).getAmplifier();
             int timeRemaining = entity.getActivePotionEffect(RegistrarBloodMagic.PLANT_LEECH).getDuration();
-            if (timeRemaining % 10 == 0)
-            {
+            if (timeRemaining % 10 == 0) {
                 BMPotionUtils.damageMobAndGrowSurroundingPlants(entity, 2 + amplifier, 1, 0.5 * 3 / (amplifier + 3), 25 * (1 + amplifier));
             }
         }
     }
 
-//    @SideOnly(Side.SERVER)
-    public void sendPlayerDemonWillAura(EntityPlayer player)
-    {
-        if (player instanceof EntityPlayerMP)
-        {
+    //    @SideOnly(Side.SERVER)
+    public void sendPlayerDemonWillAura(EntityPlayer player) {
+        if (player instanceof EntityPlayerMP) {
             BlockPos pos = player.getPosition();
             DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(player.getEntityWorld().provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);
-            if (holder != null)
-            {
+            if (holder != null) {
                 BloodMagicPacketHandler.sendTo(new DemonAuraPacketProcessor(holder), (EntityPlayerMP) player);
-            } else
-            {
+            } else {
                 BloodMagicPacketHandler.sendTo(new DemonAuraPacketProcessor(new DemonWillHolder()), (EntityPlayerMP) player);
             }
         }
@@ -354,12 +298,10 @@ public class GenericHandler
 
     // Handles destroying altar
     @SubscribeEvent
-    public void harvestEvent(PlayerEvent.HarvestCheck event)
-    {
+    public void harvestEvent(PlayerEvent.HarvestCheck event) {
         IBlockState state = event.getTargetBlock();
         Block block = state.getBlock();
-        if (block instanceof BlockAltar && event.getEntityPlayer() != null && event.getEntityPlayer() instanceof EntityPlayerMP && !event.getEntityPlayer().getHeldItemMainhand().isEmpty() && event.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemAltarMaker)
-        {
+        if (block instanceof BlockAltar && event.getEntityPlayer() != null && event.getEntityPlayer() instanceof EntityPlayerMP && !event.getEntityPlayer().getHeldItemMainhand().isEmpty() && event.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemAltarMaker) {
             ItemAltarMaker altarMaker = (ItemAltarMaker) event.getEntityPlayer().getHeldItemMainhand().getItem();
             ChatUtil.sendNoSpam(event.getEntityPlayer(), TextHelper.localizeEffect("chat.bloodmagic.altarMaker.destroy", altarMaker.destroyAltar(event.getEntityPlayer())));
         }
@@ -367,16 +309,14 @@ public class GenericHandler
 
     // Handle Teleposer block blacklist
     @SubscribeEvent
-    public void onTelepose(TeleposeEvent event)
-    {
+    public void onTelepose(TeleposeEvent event) {
         if (BloodMagicAPI.INSTANCE.getBlacklist().getTeleposer().contains(event.initialState) || BloodMagicAPI.INSTANCE.getBlacklist().getTeleposer().contains(event.finalState))
             event.setCanceled(true);
     }
 
     // Handle Teleposer entity blacklist
     @SubscribeEvent
-    public void onTeleposeEntity(TeleposeEvent.Ent event)
-    {
+    public void onTeleposeEntity(TeleposeEvent.Ent event) {
         EntityEntry entry = EntityRegistry.getEntry(event.entity.getClass());
         if (BloodMagicAPI.INSTANCE.getBlacklist().getTeleposerEntities().contains(entry.getRegistryName()))
             event.setCanceled(true);
@@ -384,15 +324,13 @@ public class GenericHandler
 
     // Sets teleport cooldown for Teleposed entities to 5 ticks (1/4 second) instead of 150 (7.5 seconds)
     @SubscribeEvent
-    public void onTeleposeEntityPost(TeleposeEvent.Ent.Post event)
-    {
+    public void onTeleposeEntityPost(TeleposeEvent.Ent.Post event) {
         event.entity.timeUntilPortal = 5;
     }
 
     // Handles binding of IBindable's as well as setting a player's highest orb tier
     @SubscribeEvent
-    public void onInteract(PlayerInteractEvent.RightClickItem event)
-    {
+    public void onInteract(PlayerInteractEvent.RightClickItem event) {
         if (event.getWorld().isRemote)
             return;
 
@@ -402,14 +340,11 @@ public class GenericHandler
             return;
 
         ItemStack held = event.getItemStack();
-        if (!held.isEmpty() && held.getItem() instanceof IBindable)
-        {
+        if (!held.isEmpty() && held.getItem() instanceof IBindable) {
             held = NBTHelper.checkNBT(held);
             IBindable bindable = (IBindable) held.getItem();
-            if (Strings.isNullOrEmpty(bindable.getOwnerUUID(held)))
-            {
-                if (bindable.onBind(player, held))
-                {
+            if (Strings.isNullOrEmpty(bindable.getOwnerUUID(held))) {
+                if (bindable.onBind(player, held)) {
                     String uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
                     ItemBindEvent toPost = new ItemBindEvent(player, uuid, held);
                     if (MinecraftForge.EVENT_BUS.post(toPost) || toPost.getResult() == Result.DENY)
@@ -422,8 +357,7 @@ public class GenericHandler
                 BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
         }
 
-        if (!held.isEmpty() && held.getItem() instanceof IBloodOrb)
-        {
+        if (!held.isEmpty() && held.getItem() instanceof IBloodOrb) {
             held = NBTHelper.checkNBT(held);
             IBloodOrb bloodOrb = (IBloodOrb) held.getItem();
             SoulNetwork network = NetworkHelper.getSoulNetwork(player);
@@ -438,21 +372,17 @@ public class GenericHandler
     }
 
     @SubscribeEvent
-    public void selfSacrificeEvent(SacrificeKnifeUsedEvent event)
-    {
+    public void selfSacrificeEvent(SacrificeKnifeUsedEvent event) {
         EntityPlayer player = event.player;
 
-        if (LivingArmour.hasFullSet(player))
-        {
+        if (LivingArmour.hasFullSet(player)) {
             ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
             LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-            if (armour != null)
-            {
+            if (armour != null) {
                 StatTrackerSelfSacrifice.incrementCounter(armour, event.healthDrained / 2);
                 LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.selfSacrifice", chestStack);
 
-                if (upgrade instanceof LivingArmourUpgradeSelfSacrifice)
-                {
+                if (upgrade instanceof LivingArmourUpgradeSelfSacrifice) {
                     double modifier = ((LivingArmourUpgradeSelfSacrifice) upgrade).getSacrificeModifier();
 
                     event.lpAdded = (int) (event.lpAdded * (1 + modifier));
@@ -463,14 +393,12 @@ public class GenericHandler
 
     // Drop Blood Shards
     @SubscribeEvent
-    public void onLivingDrops(LivingDropsEvent event)
-    {
+    public void onLivingDrops(LivingDropsEvent event) {
         EntityLivingBase attackedEntity = event.getEntityLiving();
         DamageSource source = event.getSource();
         Entity entity = source.getTrueSource();
 
-        if (entity != null && entity instanceof EntityPlayer)
-        {
+        if (entity != null && entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
             ItemStack heldStack = player.getHeldItemMainhand();
 
@@ -483,24 +411,19 @@ public class GenericHandler
 
     // Experience Tome
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onExperiencePickup(PlayerPickupXpEvent event)
-    {
+    public void onExperiencePickup(PlayerPickupXpEvent event) {
         EntityPlayer player = event.getEntityPlayer();
         ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, player);
 
-        if (!itemstack.isEmpty() && itemstack.isItemDamaged())
-        {
+        if (!itemstack.isEmpty() && itemstack.isItemDamaged()) {
             int i = Math.min(xpToDurability(event.getOrb().xpValue), itemstack.getItemDamage());
             event.getOrb().xpValue -= durabilityToXp(i);
             itemstack.setItemDamage(itemstack.getItemDamage() - i);
         }
 
-        if (!player.getEntityWorld().isRemote)
-        {
-            for (ItemStack stack : player.inventory.mainInventory)
-            {
-                if (stack.getItem() instanceof ItemExperienceBook)
-                {
+        if (!player.getEntityWorld().isRemote) {
+            for (ItemStack stack : player.inventory.mainInventory) {
+                if (stack.getItem() instanceof ItemExperienceBook) {
                     ItemExperienceBook.addExperience(stack, event.getOrb().xpValue);
                     event.getOrb().xpValue = 0;
                     break;
@@ -509,13 +432,11 @@ public class GenericHandler
         }
     }
 
-    private int xpToDurability(int xp)
-    {
+    private int xpToDurability(int xp) {
         return xp * 2;
     }
 
-    private int durabilityToXp(int durability)
-    {
+    private int durabilityToXp(int durability) {
         return durability / 2;
     }
 }

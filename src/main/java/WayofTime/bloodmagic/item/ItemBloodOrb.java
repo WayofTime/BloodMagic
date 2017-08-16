@@ -1,9 +1,14 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.List;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.api.orb.BloodOrb;
+import WayofTime.bloodmagic.api.orb.IBloodOrb;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
+import WayofTime.bloodmagic.util.helper.TextHelper;
+import com.google.common.base.Strings;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,29 +19,19 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.orb.BloodOrb;
-import WayofTime.bloodmagic.api.orb.IBloodOrb;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-
-import com.google.common.base.Strings;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
-public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindable
-{
-    public ItemBloodOrb()
-    {
+public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindable {
+    public ItemBloodOrb() {
         setUnlocalizedName(BloodMagic.MODID + ".orb");
         this.setMaxDamage(0);
         setHasSubtypes(true);
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+    public String getUnlocalizedName(ItemStack stack) {
         BloodOrb orb = getOrb(stack);
         if (orb == null)
             return super.getUnlocalizedName(stack);
@@ -45,8 +40,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
     }
 
     @Override
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
-    {
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
@@ -60,8 +54,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         BloodOrb orb = getOrb(stack);
 
@@ -76,8 +69,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
         if (PlayerHelper.isFakePlayer(player))
             return super.onItemRightClick(world, player, hand);
 
-        if (!stack.hasTagCompound())
-        {
+        if (!stack.hasTagCompound()) {
             return super.onItemRightClick(world, player, hand);
         }
 
@@ -97,8 +89,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.orb.desc"));
 
         BloodOrb orb = getOrb(stack);
@@ -109,22 +100,19 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
     }
 
     @Override
-    public ItemStack getContainerItem(ItemStack stack)
-    {
+    public ItemStack getContainerItem(ItemStack stack) {
         return stack.copy();
     }
 
     @Override
-    public boolean hasContainerItem(ItemStack stack)
-    {
+    public boolean hasContainerItem(ItemStack stack) {
         return true;
     }
 
     // IBindable
 
     @Override
-    public boolean onBind(EntityPlayer player, ItemStack stack)
-    {
+    public boolean onBind(EntityPlayer player, ItemStack stack) {
         return true;
     }
 

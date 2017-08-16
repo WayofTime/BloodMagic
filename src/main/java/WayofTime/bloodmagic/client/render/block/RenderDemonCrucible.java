@@ -12,16 +12,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class RenderDemonCrucible extends TileEntitySpecialRenderer<TileDemonCrucible>
-{
+public class RenderDemonCrucible extends TileEntitySpecialRenderer<TileDemonCrucible> {
     public static Minecraft mc = Minecraft.getMinecraft();
     public static ResourceLocation resource = new ResourceLocation("bloodmagic", "textures/blocks/lifeEssenceStill.png");
     public static float minHeight = 0.6497f;
     public static float maxHeight = 0.79f;
 
     @Override
-    public void render(TileDemonCrucible tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
-    {
+    public void render(TileDemonCrucible tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         ItemStack inputStack = tile.getStackInSlot(0);
 
         GlStateManager.pushMatrix();
@@ -30,11 +28,9 @@ public class RenderDemonCrucible extends TileEntitySpecialRenderer<TileDemonCruc
         GlStateManager.popMatrix();
     }
 
-    private void renderItem(World world, ItemStack stack, float partialTicks)
-    {
+    private void renderItem(World world, ItemStack stack, float partialTicks) {
         RenderItem itemRenderer = mc.getRenderItem();
-        if (!stack.isEmpty())
-        {
+        if (!stack.isEmpty()) {
             GlStateManager.translate(0.5, 1.5, 0.5);
             EntityItem entityitem = new EntityItem(world, 0.0D, 0.0D, 0.0D, stack);
             entityitem.getItem().setCount(1);

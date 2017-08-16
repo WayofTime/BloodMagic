@@ -1,8 +1,10 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import com.google.common.collect.Lists;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -11,18 +13,13 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVariantProvider
-{
+public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVariantProvider {
     public static final ArrayList<String> NAMES = Lists.newArrayList();
 
     public static final String CRYSTAL_DEFAULT = "crystalDefault";
@@ -31,8 +28,7 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
     public static final String CRYSTAL_DESTRUCTIVE = "crystalDestructive";
     public static final String CRYSTAL_STEADFAST = "crystalSteadfast";
 
-    public ItemDemonCrystal()
-    {
+    public ItemDemonCrystal() {
         super();
 
         setUnlocalizedName(BloodMagic.MODID + ".demonCrystal.");
@@ -42,8 +38,7 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
         buildItemList();
     }
 
-    private void buildItemList()
-    {
+    private void buildItemList() {
         NAMES.add(0, CRYSTAL_DEFAULT);
         NAMES.add(1, CRYSTAL_CORROSIVE);
         NAMES.add(2, CRYSTAL_DESTRUCTIVE);
@@ -52,15 +47,13 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+    public String getUnlocalizedName(ItemStack stack) {
         return super.getUnlocalizedName(stack) + NAMES.get(stack.getItemDamage());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
-    {
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
@@ -68,25 +61,17 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
             list.add(new ItemStack(this, 1, i));
     }
 
-    public static ItemStack getStack(String name)
-    {
-        return new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, 1, NAMES.indexOf(name));
-    }
-
     @Override
-    public double getWill(ItemStack willStack)
-    {
+    public double getWill(ItemStack willStack) {
         return getDiscretization(willStack) * willStack.getCount();
     }
 
     @Override
-    public double drainWill(ItemStack willStack, double drainAmount)
-    {
+    public double drainWill(ItemStack willStack, double drainAmount) {
         double discretization = getDiscretization(willStack);
         int drainedNumber = (int) Math.floor(Math.min(willStack.getCount() * discretization, drainAmount) / discretization);
 
-        if (drainedNumber > 0)
-        {
+        if (drainedNumber > 0) {
             willStack.shrink(drainedNumber);
             return drainedNumber * discretization;
         }
@@ -95,23 +80,24 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
     }
 
     @Override
-    public double getDiscretization(ItemStack willStack)
-    {
+    public double getDiscretization(ItemStack willStack) {
         return 50;
     }
 
     @Override
-    public EnumDemonWillType getType(ItemStack willStack)
-    {
+    public EnumDemonWillType getType(ItemStack willStack) {
         return EnumDemonWillType.values()[MathHelper.clamp(willStack.getMetadata(), 0, EnumDemonWillType.values().length - 1)];
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         for (String name : NAMES)
             ret.add(new ImmutablePair<Integer, String>(NAMES.indexOf(name), "type=" + name));
         return ret;
+    }
+
+    public static ItemStack getStack(String name) {
+        return new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, 1, NAMES.indexOf(name));
     }
 }

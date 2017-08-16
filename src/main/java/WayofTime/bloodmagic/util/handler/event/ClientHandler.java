@@ -1,17 +1,29 @@
 package WayofTime.bloodmagic.util.handler.event;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.annot.Handler;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.registry.RitualRegistry;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.client.hud.HUDElement;
 import WayofTime.bloodmagic.client.key.KeyBindings;
+import WayofTime.bloodmagic.client.render.block.RenderFakeBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
+import WayofTime.bloodmagic.item.ItemRitualDiviner;
+import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.network.SigilHoldingPacketProcessor;
+import WayofTime.bloodmagic.tile.TileMasterRitualStone;
+import WayofTime.bloodmagic.util.GhostItemHelper;
+import WayofTime.bloodmagic.util.helper.TextHelper;
+import com.google.common.base.Stopwatch;
+import com.google.common.collect.SetMultimap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.block.model.*;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,11 +36,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -38,36 +46,16 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.annot.Handler;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.registry.RitualRegistry;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.client.hud.HUDElement;
-import WayofTime.bloodmagic.client.render.block.RenderFakeBlocks;
-import WayofTime.bloodmagic.item.ItemRitualDiviner;
-import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
-import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
-import WayofTime.bloodmagic.network.SigilHoldingPacketProcessor;
-import WayofTime.bloodmagic.tile.TileMasterRitualStone;
-import WayofTime.bloodmagic.util.GhostItemHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-
-import com.google.common.base.Stopwatch;
-import com.google.common.collect.SetMultimap;
+import java.util.*;
 
 @Handler
 @SideOnly(Side.CLIENT)
-public class ClientHandler
-{
+public class ClientHandler {
     // Quick toggle for error suppression. Set to false if you wish to hide model errors.
     public static final boolean SUPPRESS_ASSET_ERRORS = true;
-
+    public static final List<HUDElement> hudElements = new ArrayList<HUDElement>();
     public static TextureAtlasSprite ritualStoneBlank;
     public static TextureAtlasSprite ritualStoneWater;
     public static TextureAtlasSprite ritualStoneFire;
@@ -75,57 +63,45 @@ public class ClientHandler
     public static TextureAtlasSprite ritualStoneAir;
     public static TextureAtlasSprite ritualStoneDawn;
     public static TextureAtlasSprite ritualStoneDusk;
-
     public static TextureAtlasSprite blankBloodRune;
     public static TextureAtlasSprite stoneBrick;
     public static TextureAtlasSprite glowstone;
     public static TextureAtlasSprite bloodStoneBrick;
     public static TextureAtlasSprite beacon;
     public static TextureAtlasSprite crystalCluster;
-
     public static Minecraft minecraft = Minecraft.getMinecraft();
-    public static final List<HUDElement> hudElements = new ArrayList<HUDElement>();
-
     private static TileMasterRitualStone mrsHoloTile;
     private static Ritual mrsHoloRitual;
     private static EnumFacing mrsHoloDirection;
     private static boolean mrsHoloDisplay;
 
     @SubscribeEvent
-    public void onTooltipEvent(ItemTooltipEvent event)
-    {
+    public void onTooltipEvent(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
-        if (stack.isEmpty())
-        {
+        if (stack.isEmpty()) {
             return;
         }
 
-        if (GhostItemHelper.hasGhostAmount(stack))
-        {
+        if (GhostItemHelper.hasGhostAmount(stack)) {
             int amount = GhostItemHelper.getItemGhostAmount(stack);
-            if (amount == 0)
-            {
+            if (amount == 0) {
                 event.getToolTip().add(TextHelper.localize("tooltip.bloodmagic.ghost.everything"));
-            } else
-            {
+            } else {
                 event.getToolTip().add(TextHelper.localize("tooltip.bloodmagic.ghost.amount", amount));
             }
         }
     }
 
     @SubscribeEvent
-    public void onSoundEvent(PlaySoundEvent event)
-    {
+    public void onSoundEvent(PlaySoundEvent event) {
         EntityPlayer player = Minecraft.getMinecraft().player;
-        if (player != null && player.isPotionActive(RegistrarBloodMagic.DEAFNESS))
-        {
+        if (player != null && player.isPotionActive(RegistrarBloodMagic.DEAFNESS)) {
             event.setResultSound(null);
         }
     }
 
     @SubscribeEvent
-    public void onTextureStitch(TextureStitchEvent.Pre event)
-    {
+    public void onTextureStitch(TextureStitchEvent.Pre event) {
         final String BLOCKS = "blocks";
 
         ritualStoneBlank = forName(event.getMap(), "RitualStone", BLOCKS);
@@ -145,21 +121,17 @@ public class ClientHandler
     }
 
     @SubscribeEvent
-    public void render(RenderWorldLastEvent event)
-    {
+    public void render(RenderWorldLastEvent event) {
         EntityPlayerSP player = minecraft.player;
         World world = player.getEntityWorld();
 
-        if (mrsHoloTile != null)
-        {
-            if (world.getTileEntity(mrsHoloTile.getPos()) instanceof TileMasterRitualStone)
-            {
+        if (mrsHoloTile != null) {
+            if (world.getTileEntity(mrsHoloTile.getPos()) instanceof TileMasterRitualStone) {
                 if (mrsHoloDisplay)
                     renderRitualStones(mrsHoloTile, event.getPartialTicks());
                 else
                     ClientHandler.setRitualHoloToNull();
-            } else
-            {
+            } else {
                 ClientHandler.setRitualHoloToNull();
             }
         }
@@ -174,20 +146,16 @@ public class ClientHandler
     }
 
     @SubscribeEvent
-    public void onMouseEvent(MouseEvent event)
-    {
+    public void onMouseEvent(MouseEvent event) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        if (event.getDwheel() != 0 && player != null && player.isSneaking())
-        {
+        if (event.getDwheel() != 0 && player != null && player.isSneaking()) {
             ItemStack stack = player.getHeldItemMainhand();
 
-            if (!stack.isEmpty())
-            {
+            if (!stack.isEmpty()) {
                 Item item = stack.getItem();
 
-                if (item instanceof ItemSigilHolding)
-                {
+                if (item instanceof ItemSigilHolding) {
                     cycleSigil(stack, player, event.getDwheel());
                     event.setCanceled(true);
                 }
@@ -196,8 +164,7 @@ public class ClientHandler
     }
 
     @SubscribeEvent
-    public void onKey(InputEvent event)
-    {
+    public void onKey(InputEvent event) {
         if (!minecraft.inGameHasFocus)
             return;
 
@@ -207,8 +174,7 @@ public class ClientHandler
     }
 
     @SubscribeEvent
-    public void onHudRender(RenderGameOverlayEvent.Pre event)
-    {
+    public void onHudRender(RenderGameOverlayEvent.Pre event) {
         for (HUDElement element : hudElements)
             if (element.getElementType() == event.getType() && element.shouldRender(minecraft))
                 element.render(minecraft, event.getResolution(), event.getPartialTicks());
@@ -216,8 +182,7 @@ public class ClientHandler
 
     // Stolen from Chisel
     @SubscribeEvent
-    public void onModelBake(ModelBakeEvent event)
-    {
+    public void onModelBake(ModelBakeEvent event) {
         if (BloodMagic.IS_DEV && SUPPRESS_ASSET_ERRORS)
             return;
 
@@ -253,8 +218,7 @@ public class ClientHandler
 
     // For some reason, we need some bad textures to be listed in the Crystal and Node models. This will hide that from the end user.
     @SubscribeEvent
-    public void onTextureStitch(TextureStitchEvent.Post event)
-    {
+    public void onTextureStitch(TextureStitchEvent.Post event) {
         if (BloodMagic.IS_DEV && SUPPRESS_ASSET_ERRORS)
             return;
 
@@ -267,8 +231,7 @@ public class ClientHandler
         Set<ResourceLocation> toRemove = new HashSet<ResourceLocation>();
 
         // Find our missing textures and mark them for removal. Cannot directly remove as it would cause a CME
-        if (missingTextures.containsKey(mc))
-        {
+        if (missingTextures.containsKey(mc)) {
             Set<ResourceLocation> missingMCTextures = missingTextures.get(mc);
             for (ResourceLocation texture : missingMCTextures)
                 if (texture.getResourcePath().equalsIgnoreCase(String.format(format, "node")) || texture.getResourcePath().equalsIgnoreCase(String.format(format, "crystal")))
@@ -279,36 +242,14 @@ public class ClientHandler
         missingTextures.get(mc).removeAll(toRemove);
 
         // Make sure to only remove the bad MC domain if no other textures are missing
-        if (missingTextures.get(mc).isEmpty())
-        {
+        if (missingTextures.get(mc).isEmpty()) {
             missingTextures.keySet().remove(mc);
             badTextureDomains.remove(mc);
         }
         BloodMagic.instance.logger.debug("Suppressed required texture errors in {}", stopwatch.stop());
     }
 
-    public static void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel)
-    {
-        int mode = dWheel;
-        if (!ConfigHandler.sigilHoldingSkipsEmptySlots)
-        {
-            mode = ItemSigilHolding.getCurrentItemOrdinal(stack);
-            mode = dWheel < 0 ? ItemSigilHolding.next(mode) : ItemSigilHolding.prev(mode);
-        }
-
-        ItemSigilHolding.cycleToNextSigil(stack, mode);
-        BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacketProcessor(player.inventory.currentItem, mode));
-        ItemStack newStack = ItemSigilHolding.getItemStackInSlot(stack, ItemSigilHolding.getCurrentItemOrdinal(stack));
-        player.sendStatusMessage(newStack.isEmpty() ? new TextComponentString("") : newStack.getTextComponent(), true);
-    }
-
-    private static TextureAtlasSprite forName(TextureMap textureMap, String name, String dir)
-    {
-        return textureMap.registerSprite(new ResourceLocation(Constants.Mod.DOMAIN + dir + "/" + name));
-    }
-
-    private void renderRitualStones(EntityPlayerSP player, float partialTicks)
-    {
+    private void renderRitualStones(EntityPlayerSP player, float partialTicks) {
         World world = player.getEntityWorld();
         ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getCurrentItem().getItem();
         EnumFacing direction = ritualDiviner.getDirection(player.inventory.getCurrentItem());
@@ -328,40 +269,37 @@ public class ClientHandler
         double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
         double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
 
-        for (RitualComponent ritualComponent : ritual.getComponents())
-        {
+        for (RitualComponent ritualComponent : ritual.getComponents()) {
             vX = vec3.add(ritualComponent.getOffset(direction));
             double minX = vX.getX() - posX;
             double minY = vX.getY() - posY;
             double minZ = vX.getZ() - posZ;
 
-            if (!world.getBlockState(vX).isOpaqueCube())
-            {
+            if (!world.getBlockState(vX).isOpaqueCube()) {
                 TextureAtlasSprite texture = null;
 
-                switch (ritualComponent.getRuneType())
-                {
-                case BLANK:
-                    texture = ritualStoneBlank;
-                    break;
-                case WATER:
-                    texture = ritualStoneWater;
-                    break;
-                case FIRE:
-                    texture = ritualStoneFire;
-                    break;
-                case EARTH:
-                    texture = ritualStoneEarth;
-                    break;
-                case AIR:
-                    texture = ritualStoneAir;
-                    break;
-                case DAWN:
-                    texture = ritualStoneDawn;
-                    break;
-                case DUSK:
-                    texture = ritualStoneDusk;
-                    break;
+                switch (ritualComponent.getRuneType()) {
+                    case BLANK:
+                        texture = ritualStoneBlank;
+                        break;
+                    case WATER:
+                        texture = ritualStoneWater;
+                        break;
+                    case FIRE:
+                        texture = ritualStoneFire;
+                        break;
+                    case EARTH:
+                        texture = ritualStoneEarth;
+                        break;
+                    case AIR:
+                        texture = ritualStoneAir;
+                        break;
+                    case DAWN:
+                        texture = ritualStoneDawn;
+                        break;
+                    case DUSK:
+                        texture = ritualStoneDusk;
+                        break;
                 }
 
                 RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
@@ -371,8 +309,24 @@ public class ClientHandler
         GlStateManager.popMatrix();
     }
 
-    public static void renderRitualStones(TileMasterRitualStone masterRitualStone, float partialTicks)
-    {
+    public static void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel) {
+        int mode = dWheel;
+        if (!ConfigHandler.sigilHoldingSkipsEmptySlots) {
+            mode = ItemSigilHolding.getCurrentItemOrdinal(stack);
+            mode = dWheel < 0 ? ItemSigilHolding.next(mode) : ItemSigilHolding.prev(mode);
+        }
+
+        ItemSigilHolding.cycleToNextSigil(stack, mode);
+        BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacketProcessor(player.inventory.currentItem, mode));
+        ItemStack newStack = ItemSigilHolding.getItemStackInSlot(stack, ItemSigilHolding.getCurrentItemOrdinal(stack));
+        player.sendStatusMessage(newStack.isEmpty() ? new TextComponentString("") : newStack.getTextComponent(), true);
+    }
+
+    private static TextureAtlasSprite forName(TextureMap textureMap, String name, String dir) {
+        return textureMap.registerSprite(new ResourceLocation(Constants.Mod.DOMAIN + dir + "/" + name));
+    }
+
+    public static void renderRitualStones(TileMasterRitualStone masterRitualStone, float partialTicks) {
         EntityPlayerSP player = minecraft.player;
         World world = player.getEntityWorld();
         EnumFacing direction = mrsHoloDirection;
@@ -392,40 +346,37 @@ public class ClientHandler
         double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
         double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
 
-        for (RitualComponent ritualComponent : ritual.getComponents())
-        {
+        for (RitualComponent ritualComponent : ritual.getComponents()) {
             vX = vec3.add(ritualComponent.getOffset(direction));
             double minX = vX.getX() - posX;
             double minY = vX.getY() - posY;
             double minZ = vX.getZ() - posZ;
 
-            if (!world.getBlockState(vX).isOpaqueCube())
-            {
+            if (!world.getBlockState(vX).isOpaqueCube()) {
                 TextureAtlasSprite texture = null;
 
-                switch (ritualComponent.getRuneType())
-                {
-                case BLANK:
-                    texture = ritualStoneBlank;
-                    break;
-                case WATER:
-                    texture = ritualStoneWater;
-                    break;
-                case FIRE:
-                    texture = ritualStoneFire;
-                    break;
-                case EARTH:
-                    texture = ritualStoneEarth;
-                    break;
-                case AIR:
-                    texture = ritualStoneAir;
-                    break;
-                case DAWN:
-                    texture = ritualStoneDawn;
-                    break;
-                case DUSK:
-                    texture = ritualStoneDusk;
-                    break;
+                switch (ritualComponent.getRuneType()) {
+                    case BLANK:
+                        texture = ritualStoneBlank;
+                        break;
+                    case WATER:
+                        texture = ritualStoneWater;
+                        break;
+                    case FIRE:
+                        texture = ritualStoneFire;
+                        break;
+                    case EARTH:
+                        texture = ritualStoneEarth;
+                        break;
+                    case AIR:
+                        texture = ritualStoneAir;
+                        break;
+                    case DAWN:
+                        texture = ritualStoneDawn;
+                        break;
+                    case DUSK:
+                        texture = ritualStoneDusk;
+                        break;
                 }
 
                 RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
@@ -435,16 +386,14 @@ public class ClientHandler
         GlStateManager.popMatrix();
     }
 
-    public static void setRitualHolo(TileMasterRitualStone masterRitualStone, Ritual ritual, EnumFacing direction, boolean displayed)
-    {
+    public static void setRitualHolo(TileMasterRitualStone masterRitualStone, Ritual ritual, EnumFacing direction, boolean displayed) {
         mrsHoloDisplay = displayed;
         mrsHoloTile = masterRitualStone;
         mrsHoloRitual = ritual;
         mrsHoloDirection = direction;
     }
 
-    public static void setRitualHoloToNull()
-    {
+    public static void setRitualHoloToNull() {
         mrsHoloDisplay = false;
         mrsHoloTile = null;
         mrsHoloRitual = null;

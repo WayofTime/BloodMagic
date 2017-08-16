@@ -8,16 +8,14 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
-public abstract class HUDElement
-{
-    private int xOffset;
-    private int yOffset;
+public abstract class HUDElement {
     private final int xOffsetDefault;
     private final int yOffsetDefault;
     private final RenderGameOverlayEvent.ElementType elementType;
+    private int xOffset;
+    private int yOffset;
 
-    public HUDElement(int xOffset, int yOffset, RenderGameOverlayEvent.ElementType elementType)
-    {
+    public HUDElement(int xOffset, int yOffset, RenderGameOverlayEvent.ElementType elementType) {
         this.xOffset = xOffset;
         this.xOffsetDefault = xOffset;
         this.yOffset = yOffset;
@@ -31,19 +29,16 @@ public abstract class HUDElement
 
     public abstract boolean shouldRender(Minecraft minecraft);
 
-    public void onPositionChanged()
-    {
+    public void onPositionChanged() {
 
     }
 
-    public void resetToDefault()
-    {
+    public void resetToDefault() {
         this.xOffset = xOffsetDefault;
         this.yOffset = yOffsetDefault;
     }
 
-    public void drawTexturedModalRect(double x, double y, double textureX, double textureY, double width, double height)
-    {
+    public void drawTexturedModalRect(double x, double y, double textureX, double textureY, double width, double height) {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
         Tessellator tessellator = Tessellator.getInstance();

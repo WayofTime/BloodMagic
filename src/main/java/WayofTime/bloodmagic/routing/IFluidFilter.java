@@ -1,26 +1,23 @@
 package WayofTime.bloodmagic.routing;
 
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public interface IFluidFilter extends IRoutingFilter
-{
+import java.util.List;
+
+public interface IFluidFilter extends IRoutingFilter {
     void initializeFilter(List<ItemStack> filteredList, TileEntity tile, IFluidHandler fluidHandler, boolean isFilterOutput);
 
     /**
      * This method is only called when the output tank this filter is managing
      * receives an ItemStack. Should only really be called by the Input filter
      * via it's transfer method.
-     * 
-     * @param fluidStack
-     *        - The stack to filter
-     * 
+     *
+     * @param fluidStack - The stack to filter
      * @return - The remainder of the stack after it has been absorbed into the
-     *         tank.
+     * tank.
      */
     FluidStack transferStackThroughOutputFilter(FluidStack fluidStack);
 

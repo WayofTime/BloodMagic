@@ -1,9 +1,20 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.registry.RitualRegistry;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.util.helper.RitualHelper;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.tile.TileMasterRitualStone;
+import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.util.handler.event.ClientHandler;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -23,35 +34,19 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.input.Keyboard;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.registry.RitualRegistry;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.util.helper.RitualHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
-import WayofTime.bloodmagic.tile.TileMasterRitualStone;
-import WayofTime.bloodmagic.util.ChatUtil;
-import WayofTime.bloodmagic.util.Utils;
-import WayofTime.bloodmagic.util.handler.event.ClientHandler;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class ItemRitualDiviner extends Item implements IVariantProvider
-{
-    public static String[] names = { "normal", "dusk", "dawn" };
-
+public class ItemRitualDiviner extends Item implements IVariantProvider {
     public static final String tooltipBase = "tooltip.bloodmagic.diviner.";
+    public static String[] names = {"normal", "dusk", "dawn"};
 
-    public ItemRitualDiviner()
-    {
+    public ItemRitualDiviner() {
         setUnlocalizedName(BloodMagic.MODID + ".ritualDiviner");
         setCreativeTab(BloodMagic.TAB_BM);
         setHasSubtypes(true);
@@ -59,14 +54,12 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+    public String getUnlocalizedName(ItemStack stack) {
         return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
     }
 
     @Override
-    public String getHighlightTip(ItemStack stack, String displayName)
-    {
+    public String getHighlightTip(ItemStack stack, String displayName) {
         if (Strings.isNullOrEmpty(getCurrentRitual(stack)))
             return displayName;
 
@@ -79,8 +72,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
-    {
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
@@ -89,21 +81,16 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-    {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
-        if (player.isSneaking())
-        {
-            if (world.isRemote)
-            {
+        if (player.isSneaking()) {
+            if (world.isRemote) {
                 trySetDisplayedRitual(stack, world, pos);
             }
 
             return EnumActionResult.SUCCESS;
-        } else if (addRuneToRitual(stack, world, pos, player))
-        {
-            if (world.isRemote)
-            {
+        } else if (addRuneToRitual(stack, world, pos, player)) {
+            if (world.isRemote) {
                 spawnParticles(world, pos.up(), 15);
             }
 
@@ -116,64 +103,47 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     /**
      * Adds a single rune to the ritual.
-     * 
-     * @param stack
-     *        - The Ritual Diviner stack
-     * @param world
-     *        - The World
-     * @param pos
-     *        - Block Position of the MRS.
-     * @param player
-     *        - The Player attempting to place the ritual
-     * 
+     *
+     * @param stack  - The Ritual Diviner stack
+     * @param world  - The World
+     * @param pos    - Block Position of the MRS.
+     * @param player - The Player attempting to place the ritual
      * @return - True if a rune was successfully added
      */
-    public boolean addRuneToRitual(ItemStack stack, World world, BlockPos pos, EntityPlayer player)
-    {
+    public boolean addRuneToRitual(ItemStack stack, World world, BlockPos pos, EntityPlayer player) {
         TileEntity tile = world.getTileEntity(pos);
 
-        if (tile instanceof TileMasterRitualStone)
-        {
+        if (tile instanceof TileMasterRitualStone) {
             Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(stack));
-            if (ritual != null)
-            {
+            if (ritual != null) {
                 EnumFacing direction = getDirection(stack);
-                for (RitualComponent component : ritual.getComponents())
-                {
-                    if (!canPlaceRitualStone(component.getRuneType(), stack))
-                    {
+                for (RitualComponent component : ritual.getComponents()) {
+                    if (!canPlaceRitualStone(component.getRuneType(), stack)) {
                         return false;
                     }
                     BlockPos offset = component.getOffset(direction);
                     BlockPos newPos = pos.add(offset);
                     IBlockState state = world.getBlockState(newPos);
                     Block block = state.getBlock();
-                    if (RitualHelper.isRune(world, newPos))
-                    {
-                        if (RitualHelper.isRuneType(world, newPos, component.getRuneType()))
-                        {
-                            if (world.isRemote)
-                            {
+                    if (RitualHelper.isRune(world, newPos)) {
+                        if (RitualHelper.isRuneType(world, newPos, component.getRuneType())) {
+                            if (world.isRemote) {
                                 undisplayHologram();
                             }
-                        } else
-                        {
+                        } else {
                             // Replace existing ritual stone
                             RitualHelper.setRuneType(world, newPos, component.getRuneType());
                             return true;
                         }
-                    } else if (block.isAir(state, world, newPos) || block.isReplaceable(world, newPos))
-                    {
-                        if (!consumeStone(stack, world, player))
-                        {
+                    } else if (block.isAir(state, world, newPos) || block.isReplaceable(world, newPos)) {
+                        if (!consumeStone(stack, world, player)) {
                             return false;
                         }
                         int meta = component.getRuneType().ordinal();
                         IBlockState newState = RegistrarBloodMagicBlocks.RITUAL_STONE.getStateFromMeta(meta);
                         world.setBlockState(newPos, newState);
                         return true;
-                    } else
-                    {
+                    } else {
                         return false; // TODO: Possibly replace the block with a
                         // ritual stone
                     }
@@ -185,17 +155,14 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     }
 
     @SideOnly(Side.CLIENT)
-    public void trySetDisplayedRitual(ItemStack itemStack, World world, BlockPos pos)
-    {
+    public void trySetDisplayedRitual(ItemStack itemStack, World world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
 
-        if (tile instanceof TileMasterRitualStone)
-        {
+        if (tile instanceof TileMasterRitualStone) {
             Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(itemStack));
             TileMasterRitualStone masterRitualStone = (TileMasterRitualStone) tile;
 
-            if (ritual != null)
-            {
+            if (ritual != null) {
                 EnumFacing direction = getDirection(itemStack);
                 ClientHandler.setRitualHolo(masterRitualStone, ritual, direction, true);
             }
@@ -203,32 +170,26 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     }
 
     @SideOnly(Side.CLIENT)
-    public void undisplayHologram()
-    {
+    public void undisplayHologram() {
         ClientHandler.setRitualHoloToNull();
     }
 
     // TODO: Make this work for any IRitualStone
-    public boolean consumeStone(ItemStack stack, World world, EntityPlayer player)
-    {
-        if (player.capabilities.isCreativeMode)
-        {
+    public boolean consumeStone(ItemStack stack, World world, EntityPlayer player) {
+        if (player.capabilities.isCreativeMode) {
             return true;
         }
 
         NonNullList<ItemStack> inventory = player.inventory.mainInventory;
-        for (ItemStack newStack : inventory)
-        {
+        for (ItemStack newStack : inventory) {
             if (newStack.isEmpty()) {
 
                 continue;
             }
             Item item = newStack.getItem();
-            if (item instanceof ItemBlock)
-            {
+            if (item instanceof ItemBlock) {
                 Block block = ((ItemBlock) item).getBlock();
-                if (block == RegistrarBloodMagicBlocks.RITUAL_STONE)
-                {
+                if (block == RegistrarBloodMagicBlocks.RITUAL_STONE) {
                     newStack.shrink(1);
                     return true;
                 }
@@ -240,32 +201,26 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         if (!stack.hasTagCompound())
             return;
 
         Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(stack));
-        if (ritual != null)
-        {
+        if (ritual != null) {
             tooltip.add(TextHelper.localize("tooltip.bloodmagic.diviner.currentRitual") + TextHelper.localize(ritual.getUnlocalizedName()));
 
             boolean sneaking = Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
             boolean extraInfo = sneaking && Keyboard.isKeyDown(Keyboard.KEY_M);
 
-            if (extraInfo)
-            {
+            if (extraInfo) {
                 tooltip.add("");
 
-                for (EnumDemonWillType type : EnumDemonWillType.values())
-                {
-                    if (TextHelper.canTranslate(ritual.getUnlocalizedName() + "." + type.getName().toLowerCase() + ".info"))
-                    {
+                for (EnumDemonWillType type : EnumDemonWillType.values()) {
+                    if (TextHelper.canTranslate(ritual.getUnlocalizedName() + "." + type.getName().toLowerCase() + ".info")) {
                         tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(ritual.getUnlocalizedName() + "." + type.getName().toLowerCase() + ".info"))));
                     }
                 }
-            } else if (sneaking)
-            {
+            } else if (sneaking) {
                 tooltip.add(TextHelper.localize(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).getName())));
                 tooltip.add("");
                 ArrayList<RitualComponent> componentList = ritual.getComponents();
@@ -279,31 +234,29 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
                 int dawnRunes = 0;
                 int totalRunes = componentList.size();
 
-                for (RitualComponent component : componentList)
-                {
-                    switch (component.getRuneType())
-                    {
-                    case BLANK:
-                        blankRunes++;
-                        break;
-                    case AIR:
-                        airRunes++;
-                        break;
-                    case EARTH:
-                        earthRunes++;
-                        break;
-                    case FIRE:
-                        fireRunes++;
-                        break;
-                    case WATER:
-                        waterRunes++;
-                        break;
-                    case DUSK:
-                        duskRunes++;
-                        break;
-                    case DAWN:
-                        dawnRunes++;
-                        break;
+                for (RitualComponent component : componentList) {
+                    switch (component.getRuneType()) {
+                        case BLANK:
+                            blankRunes++;
+                            break;
+                        case AIR:
+                            airRunes++;
+                            break;
+                        case EARTH:
+                            earthRunes++;
+                            break;
+                        case FIRE:
+                            fireRunes++;
+                            break;
+                        case WATER:
+                            waterRunes++;
+                            break;
+                        case DUSK:
+                            duskRunes++;
+                            break;
+                        case DAWN:
+                            dawnRunes++;
+                            break;
                     }
                 }
 
@@ -324,11 +277,9 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
                 tooltip.add("");
                 tooltip.add(TextHelper.localize(tooltipBase + "totalRune", totalRunes));
-            } else
-            {
+            } else {
                 tooltip.add("");
-                if (TextHelper.canTranslate(ritual.getUnlocalizedName() + ".info"))
-                {
+                if (TextHelper.canTranslate(ritual.getUnlocalizedName() + ".info")) {
                     tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(ritual.getUnlocalizedName() + ".info"))));
                     tooltip.add("");
                 }
@@ -340,19 +291,15 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         RayTraceResult ray = this.rayTrace(world, player, false);
-        if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
-        {
+        if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK) {
             return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
         }
 
-        if (player.isSneaking())
-        {
-            if (!world.isRemote)
-            {
+        if (player.isSneaking()) {
+            if (!world.isRemote) {
                 cycleRitual(stack, player);
             }
 
@@ -363,25 +310,19 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     }
 
     @Override
-    public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
-    {
-        if (entityLiving instanceof EntityPlayer)
-        {
+    public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack) {
+        if (entityLiving instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entityLiving;
 
             RayTraceResult ray = this.rayTrace(player.getEntityWorld(), player, false);
-            if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
-            {
+            if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK) {
                 return false;
             }
 
-            if (!player.isSwingInProgress)
-            {
-                if (player.isSneaking())
-                {
+            if (!player.isSwingInProgress) {
+                if (player.isSneaking()) {
                     cycleRitualBackwards(stack, player);
-                } else
-                {
+                } else {
                     cycleDirection(stack, player);
                 }
             }
@@ -391,8 +332,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "type=basic"));
         ret.add(new ImmutablePair<Integer, String>(1, "type=dusk"));
@@ -400,41 +340,36 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         return ret;
     }
 
-    public void cycleDirection(ItemStack stack, EntityPlayer player)
-    {
+    public void cycleDirection(ItemStack stack, EntityPlayer player) {
         EnumFacing direction = getDirection(stack);
         EnumFacing newDirection;
-        switch (direction)
-        {
-        case NORTH:
-            newDirection = EnumFacing.EAST;
-            break;
-        case EAST:
-            newDirection = EnumFacing.SOUTH;
-            break;
-        case SOUTH:
-            newDirection = EnumFacing.WEST;
-            break;
-        case WEST:
-            newDirection = EnumFacing.NORTH;
-            break;
-        default:
-            newDirection = EnumFacing.NORTH;
+        switch (direction) {
+            case NORTH:
+                newDirection = EnumFacing.EAST;
+                break;
+            case EAST:
+                newDirection = EnumFacing.SOUTH;
+                break;
+            case SOUTH:
+                newDirection = EnumFacing.WEST;
+                break;
+            case WEST:
+                newDirection = EnumFacing.NORTH;
+                break;
+            default:
+                newDirection = EnumFacing.NORTH;
         }
 
         setDirection(stack, newDirection);
         notifyDirectionChange(newDirection, player);
     }
 
-    public void notifyDirectionChange(EnumFacing direction, EntityPlayer player)
-    {
+    public void notifyDirectionChange(EnumFacing direction, EntityPlayer player) {
         ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentDirection", Utils.toFancyCasing(direction.getName())));
     }
 
-    public void setDirection(ItemStack stack, EnumFacing direction)
-    {
-        if (!stack.hasTagCompound())
-        {
+    public void setDirection(ItemStack stack, EnumFacing direction) {
+        if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
         }
 
@@ -443,10 +378,8 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
     }
 
-    public EnumFacing getDirection(ItemStack stack)
-    {
-        if (!stack.hasTagCompound())
-        {
+    public EnumFacing getDirection(ItemStack stack) {
+        if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
             return EnumFacing.NORTH;
         }
@@ -454,8 +387,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         NBTTagCompound tag = stack.getTagCompound();
 
         int dir = tag.getInteger(Constants.NBT.DIRECTION);
-        if (dir == 0)
-        {
+        if (dir == 0) {
             return EnumFacing.NORTH;
         }
 
@@ -464,52 +396,42 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     /**
      * Cycles the selected ritual to the next available ritual that is enabled.
-     * 
-     * @param stack
-     *        - The ItemStack of the ritual diviner
-     * @param player
-     *        - The player using the ritual diviner
+     *
+     * @param stack  - The ItemStack of the ritual diviner
+     * @param player - The player using the ritual diviner
      */
-    public void cycleRitual(ItemStack stack, EntityPlayer player)
-    {
+    public void cycleRitual(ItemStack stack, EntityPlayer player) {
         String key = getCurrentRitual(stack);
         List<String> idList = RitualRegistry.getOrderedIds();
         String firstId = "";
         boolean foundId = false;
         boolean foundFirst = false;
 
-        for (String str : idList)
-        {
+        for (String str : idList) {
             Ritual ritual = RitualRegistry.getRitualForId(str);
 
-            if (!RitualRegistry.ritualEnabled(ritual) || !canDivinerPerformRitual(stack, ritual))
-            {
+            if (!RitualRegistry.ritualEnabled(ritual) || !canDivinerPerformRitual(stack, ritual)) {
                 continue;
             }
 
-            if (!foundFirst)
-            {
+            if (!foundFirst) {
                 firstId = str;
                 foundFirst = true;
             }
 
-            if (foundId)
-            {
+            if (foundId) {
                 setCurrentRitual(stack, str);
                 notifyRitualChange(str, player);
                 return;
-            } else
-            {
-                if (str.equals(key))
-                {
+            } else {
+                if (str.equals(key)) {
                     foundId = true;
                     continue;
                 }
             }
         }
 
-        if (foundFirst)
-        {
+        if (foundFirst) {
             setCurrentRitual(stack, firstId);
             notifyRitualChange(firstId, player);
         }
@@ -517,68 +439,56 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
 
     /**
      * Does the same as cycleRitual but instead cycles backwards.
-     * 
+     *
      * @param stack
      * @param player
      */
-    public void cycleRitualBackwards(ItemStack stack, EntityPlayer player)
-    {
+    public void cycleRitualBackwards(ItemStack stack, EntityPlayer player) {
         String key = getCurrentRitual(stack);
         List<String> idList = RitualRegistry.getOrderedIds();
         String firstId = "";
         boolean foundId = false;
         boolean foundFirst = false;
 
-        for (int i = idList.size() - 1; i >= 0; i--)
-        {
+        for (int i = idList.size() - 1; i >= 0; i--) {
             String str = idList.get(i);
             Ritual ritual = RitualRegistry.getRitualForId(str);
 
-            if (!RitualRegistry.ritualEnabled(ritual) || !canDivinerPerformRitual(stack, ritual))
-            {
+            if (!RitualRegistry.ritualEnabled(ritual) || !canDivinerPerformRitual(stack, ritual)) {
                 continue;
             }
 
-            if (!foundFirst)
-            {
+            if (!foundFirst) {
                 firstId = str;
                 foundFirst = true;
             }
 
-            if (foundId)
-            {
+            if (foundId) {
                 setCurrentRitual(stack, str);
                 notifyRitualChange(str, player);
                 return;
-            } else
-            {
-                if (str.equals(key))
-                {
+            } else {
+                if (str.equals(key)) {
                     foundId = true;
                     continue;
                 }
             }
         }
 
-        if (foundFirst)
-        {
+        if (foundFirst) {
             setCurrentRitual(stack, firstId);
             notifyRitualChange(firstId, player);
         }
     }
 
-    public boolean canDivinerPerformRitual(ItemStack stack, Ritual ritual)
-    {
-        if (ritual == null)
-        {
+    public boolean canDivinerPerformRitual(ItemStack stack, Ritual ritual) {
+        if (ritual == null) {
             return false;
         }
 
         ArrayList<RitualComponent> components = ritual.getComponents();
-        for (RitualComponent component : components)
-        {
-            if (!canPlaceRitualStone(component.getRuneType(), stack))
-            {
+        for (RitualComponent component : components) {
+            if (!canPlaceRitualStone(component.getRuneType(), stack)) {
                 return false;
             }
         }
@@ -586,19 +496,15 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         return true;
     }
 
-    public void notifyRitualChange(String key, EntityPlayer player)
-    {
+    public void notifyRitualChange(String key, EntityPlayer player) {
         Ritual ritual = RitualRegistry.getRitualForId(key);
-        if (ritual != null)
-        {
+        if (ritual != null) {
             player.sendStatusMessage(new TextComponentTranslation(ritual.getUnlocalizedName()), true);
         }
     }
 
-    public void setCurrentRitual(ItemStack stack, String key)
-    {
-        if (!stack.hasTagCompound())
-        {
+    public void setCurrentRitual(ItemStack stack, String key) {
+        if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
         }
 
@@ -607,10 +513,8 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         tag.setString(Constants.NBT.CURRENT_RITUAL, key);
     }
 
-    public String getCurrentRitual(ItemStack stack)
-    {
-        if (!stack.hasTagCompound())
-        {
+    public String getCurrentRitual(ItemStack stack) {
+        if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
         }
 
@@ -618,44 +522,37 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         return tag.getString(Constants.NBT.CURRENT_RITUAL);
     }
 
-    public boolean canPlaceRitualStone(EnumRuneType rune, ItemStack stack)
-    {
+    public boolean canPlaceRitualStone(EnumRuneType rune, ItemStack stack) {
         int meta = stack.getItemDamage();
-        switch (rune)
-        {
-        case BLANK:
-        case AIR:
-        case EARTH:
-        case FIRE:
-        case WATER:
-            return true;
-        case DUSK:
-            return meta >= 1;
-        case DAWN:
-            return meta >= 2;
+        switch (rune) {
+            case BLANK:
+            case AIR:
+            case EARTH:
+            case FIRE:
+            case WATER:
+                return true;
+            case DUSK:
+                return meta >= 1;
+            case DAWN:
+                return meta >= 2;
         }
 
         return false;
     }
 
-    public static void spawnParticles(World worldIn, BlockPos pos, int amount)
-    {
+    public static void spawnParticles(World worldIn, BlockPos pos, int amount) {
         IBlockState state = worldIn.getBlockState(pos);
         Block block = worldIn.getBlockState(pos).getBlock();
 
-        if (block.isAir(state, worldIn, pos))
-        {
-            for (int i = 0; i < amount; ++i)
-            {
+        if (block.isAir(state, worldIn, pos)) {
+            for (int i = 0; i < amount; ++i) {
                 double d0 = itemRand.nextGaussian() * 0.02D;
                 double d1 = itemRand.nextGaussian() * 0.02D;
                 double d2 = itemRand.nextGaussian() * 0.02D;
                 worldIn.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) pos.getX() + itemRand.nextFloat()), (double) pos.getY() + (double) itemRand.nextFloat(), (double) ((float) pos.getZ() + itemRand.nextFloat()), d0, d1, d2, new int[0]);
             }
-        } else
-        {
-            for (int i1 = 0; i1 < amount; ++i1)
-            {
+        } else {
+            for (int i1 = 0; i1 < amount; ++i1) {
                 double d0 = itemRand.nextGaussian() * 0.02D;
                 double d1 = itemRand.nextGaussian() * 0.02D;
                 double d2 = itemRand.nextGaussian() * 0.02D;

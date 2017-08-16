@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.routing;
 
-public interface IRoutingFilter
-{
+public interface IRoutingFilter {
 
 }

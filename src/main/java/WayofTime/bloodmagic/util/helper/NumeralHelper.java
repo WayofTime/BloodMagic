@@ -2,13 +2,11 @@ package WayofTime.bloodmagic.util.helper;
 
 import java.util.TreeMap;
 
-public class NumeralHelper
-{
+public class NumeralHelper {
 
     private static final TreeMap<Integer, String> romanNumerals = new TreeMap<Integer, String>();
 
-    static
-    {
+    static {
         romanNumerals.put(1000, "M");
         romanNumerals.put(900, "CM");
         romanNumerals.put(500, "D");
@@ -24,8 +22,7 @@ public class NumeralHelper
         romanNumerals.put(1, "I");
     }
 
-    public static String toRoman(int arabic)
-    {
+    public static String toRoman(int arabic) {
         int convert = romanNumerals.floorKey(arabic);
         if (arabic == convert)
             return romanNumerals.get(convert);

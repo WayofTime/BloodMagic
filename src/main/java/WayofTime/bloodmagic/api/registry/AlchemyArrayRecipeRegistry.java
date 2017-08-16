@@ -1,25 +1,22 @@
 package WayofTime.bloodmagic.api.registry;
 
+import WayofTime.bloodmagic.api.ItemStackWrapper;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffectCrafting;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.oredict.OreDictionary;
+
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.oredict.OreDictionary;
-import WayofTime.bloodmagic.api.ItemStackWrapper;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffectCrafting;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
-
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-
-public class AlchemyArrayRecipeRegistry
-{
+public class AlchemyArrayRecipeRegistry {
     public static final AlchemyCircleRenderer defaultRenderer = new AlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BaseArray.png"));
 
     private static BiMap<List<ItemStack>, AlchemyArrayRecipe> recipes = HashBiMap.create();
@@ -27,42 +24,30 @@ public class AlchemyArrayRecipeRegistry
 
     /**
      * General case for creating an AlchemyArrayEffect for a given input.
-     * 
-     * @param input
-     *        - Input item(s) that is used to change the Alchemy Circle into the
-     *        circle that you are making
-     * @param catalystStack
-     *        - Catalyst item that, when right-clicked onto the array, will
-     *        cause an effect
-     * @param arrayEffect
-     *        - The effect that will be activated once the array is activated
-     * @param circleRenderer
-     *        - Circle rendered when the array is passive - can be substituted
-     *        for a special renderer
+     *
+     * @param input          - Input item(s) that is used to change the Alchemy Circle into the
+     *                       circle that you are making
+     * @param catalystStack  - Catalyst item that, when right-clicked onto the array, will
+     *                       cause an effect
+     * @param arrayEffect    - The effect that will be activated once the array is activated
+     * @param circleRenderer - Circle rendered when the array is passive - can be substituted
+     *                       for a special renderer
      */
-    public static void registerRecipe(List<ItemStack> input, @Nullable ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer)
-    {
+    public static void registerRecipe(List<ItemStack> input, @Nullable ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer) {
         effectMap.put(arrayEffect.getKey(), arrayEffect);
 
-        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet())
-        {
+        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet()) {
             AlchemyArrayRecipe arrayRecipe = entry.getValue();
-            if (arrayRecipe.doesInputMatchRecipe(input))
-            {
+            if (arrayRecipe.doesInputMatchRecipe(input)) {
                 AlchemyArrayEffect eff = arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack);
-                if (eff != null)
-                {
+                if (eff != null) {
                     return; // Recipe already exists!
-                } else
-                {
+                } else {
                     arrayRecipe.catalystMap.put(ItemStackWrapper.getHolder(catalystStack), arrayEffect);
-                    if (circleRenderer != null)
-                    {
-                        if (arrayRecipe.defaultCircleRenderer == null)
-                        {
+                    if (circleRenderer != null) {
+                        if (arrayRecipe.defaultCircleRenderer == null) {
                             arrayRecipe.defaultCircleRenderer = circleRenderer;
-                        } else
-                        {
+                        } else {
                             arrayRecipe.circleMap.put(ItemStackWrapper.getHolder(catalystStack), circleRenderer);
                         }
                     }
@@ -74,63 +59,48 @@ public class AlchemyArrayRecipeRegistry
         recipes.put(input, new AlchemyArrayRecipe(input, catalystStack, arrayEffect, circleRenderer == null ? defaultRenderer : circleRenderer));
     }
 
-    public static AlchemyArrayEffect getAlchemyArrayEffect(String key)
-    {
+    public static AlchemyArrayEffect getAlchemyArrayEffect(String key) {
         return effectMap.get(key);
     }
 
     /**
-     * 
      * @param key
      * @return an array of two ItemStacks - first index is the input stack,
-     *         second is the catalyst stack. Returns {null, null} if no recipe
-     *         is valid.
+     * second is the catalyst stack. Returns {null, null} if no recipe
+     * is valid.
      */
-    public static ItemStack[] getRecipeForArrayEffect(String key)
-    {
-        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet())
-        {
+    public static ItemStack[] getRecipeForArrayEffect(String key) {
+        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet()) {
             AlchemyArrayRecipe recipe = entry.getValue();
-            if (recipe != null && entry.getKey().size() > 0)
-            {
-                for (Entry<ItemStackWrapper, AlchemyArrayEffect> effectEntry : recipe.catalystMap.entrySet())
-                {
-                    if (effectEntry.getValue() != null && effectEntry.getValue().key.equals(key))
-                    {
-                        return new ItemStack[] { entry.getKey().get(0), effectEntry.getKey().toStack() };
+            if (recipe != null && entry.getKey().size() > 0) {
+                for (Entry<ItemStackWrapper, AlchemyArrayEffect> effectEntry : recipe.catalystMap.entrySet()) {
+                    if (effectEntry.getValue() != null && effectEntry.getValue().key.equals(key)) {
+                        return new ItemStack[]{entry.getKey().get(0), effectEntry.getKey().toStack()};
                     }
                 }
             }
         }
 
-        return new ItemStack[] { null, null };
+        return new ItemStack[]{null, null};
     }
 
     /**
-     * @param stack
-     *        of the recipe
+     * @param stack of the recipe
      * @return an array of two ItemStacks - first index is the input stack,
-     *         second is the catalyst stack. Returns {null, null} if no recipe
-     *         is valid.
+     * second is the catalyst stack. Returns {null, null} if no recipe
+     * is valid.
      */
-    public static ItemStack[] getRecipeForOutputStack(ItemStack stack)
-    {
-        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet())
-        {
+    public static ItemStack[] getRecipeForOutputStack(ItemStack stack) {
+        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet()) {
             AlchemyArrayRecipe recipe = entry.getValue();
-            if (recipe != null && entry.getKey().size() > 0)
-            {
-                for (Entry<ItemStackWrapper, AlchemyArrayEffect> effectEntry : recipe.catalystMap.entrySet())
-                {
-                    if (effectEntry.getValue() instanceof AlchemyArrayEffectCrafting)
-                    {
+            if (recipe != null && entry.getKey().size() > 0) {
+                for (Entry<ItemStackWrapper, AlchemyArrayEffect> effectEntry : recipe.catalystMap.entrySet()) {
+                    if (effectEntry.getValue() instanceof AlchemyArrayEffectCrafting) {
                         AlchemyArrayEffectCrafting craftingEffect = (AlchemyArrayEffectCrafting) effectEntry.getValue();
                         ItemStack resultStack = craftingEffect.outputStack;
-                        if (!resultStack.isEmpty())
-                        {
-                            if (resultStack.getItem() == stack.getItem() && resultStack.getItemDamage() == stack.getItemDamage())
-                            {
-                                return new ItemStack[] { entry.getKey().get(0), effectEntry.getKey().toStack() };
+                        if (!resultStack.isEmpty()) {
+                            if (resultStack.getItem() == stack.getItem() && resultStack.getItemDamage() == stack.getItemDamage()) {
+                                return new ItemStack[]{entry.getKey().get(0), effectEntry.getKey().toStack()};
                             }
                         }
                     }
@@ -138,123 +108,97 @@ public class AlchemyArrayRecipeRegistry
             }
         }
 
-        return new ItemStack[] { null, null };
+        return new ItemStack[]{null, null};
     }
 
-    public static void registerCraftingRecipe(ItemStack input, ItemStack catalystStack, ItemStack outputStack, ResourceLocation arrayResource)
-    {
+    public static void registerCraftingRecipe(ItemStack input, ItemStack catalystStack, ItemStack outputStack, ResourceLocation arrayResource) {
         registerRecipe(input, catalystStack, new AlchemyArrayEffectCrafting(outputStack), arrayResource);
     }
 
-    public static void registerCraftingRecipe(List<ItemStack> inputStacks, ItemStack catalystStack, ItemStack outputStack, ResourceLocation arrayResource)
-    {
+    public static void registerCraftingRecipe(List<ItemStack> inputStacks, ItemStack catalystStack, ItemStack outputStack, ResourceLocation arrayResource) {
         registerRecipe(inputStacks, catalystStack, new AlchemyArrayEffectCrafting(outputStack), arrayResource);
     }
 
-    public static void registerCraftingRecipe(String inputOreDict, ItemStack catalystStack, ItemStack outputStack, ResourceLocation arrayResource)
-    {
+    public static void registerCraftingRecipe(String inputOreDict, ItemStack catalystStack, ItemStack outputStack, ResourceLocation arrayResource) {
         registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, new AlchemyArrayEffectCrafting(outputStack), arrayResource);
     }
 
-    public static void registerCraftingRecipe(ItemStack input, ItemStack catalystStack, ItemStack outputStack)
-    {
+    public static void registerCraftingRecipe(ItemStack input, ItemStack catalystStack, ItemStack outputStack) {
         registerRecipe(input, catalystStack, new AlchemyArrayEffectCrafting(outputStack));
     }
 
-    public static void registerCraftingRecipe(List<ItemStack> inputStacks, ItemStack catalystStack, ItemStack outputStack)
-    {
+    public static void registerCraftingRecipe(List<ItemStack> inputStacks, ItemStack catalystStack, ItemStack outputStack) {
         registerRecipe(inputStacks, catalystStack, new AlchemyArrayEffectCrafting(outputStack));
     }
 
-    public static void registerCraftingRecipe(String inputOreDict, ItemStack catalystStack, ItemStack outputStack)
-    {
+    public static void registerCraftingRecipe(String inputOreDict, ItemStack catalystStack, ItemStack outputStack) {
         registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, new AlchemyArrayEffectCrafting(outputStack));
     }
 
-    public static void registerRecipe(ItemStack inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource)
-    {
+    public static void registerRecipe(ItemStack inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource) {
         AlchemyCircleRenderer circleRenderer = arrayResource == null ? defaultRenderer : new AlchemyCircleRenderer(arrayResource);
         registerRecipe(Collections.singletonList(inputStacks), catalystStack, arrayEffect, circleRenderer);
     }
 
-    public static void registerRecipe(ItemStack inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer)
-    {
+    public static void registerRecipe(ItemStack inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer) {
         registerRecipe(Collections.singletonList(inputStacks), catalystStack, arrayEffect, circleRenderer);
     }
 
-    public static void registerRecipe(List<ItemStack> inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource)
-    {
+    public static void registerRecipe(List<ItemStack> inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource) {
         AlchemyCircleRenderer circleRenderer = arrayResource == null ? defaultRenderer : new AlchemyCircleRenderer(arrayResource);
         registerRecipe(inputStacks, catalystStack, arrayEffect, circleRenderer);
     }
 
-    public static void registerRecipe(String inputOreDict, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource)
-    {
+    public static void registerRecipe(String inputOreDict, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource) {
         AlchemyCircleRenderer circleRenderer = arrayResource == null ? defaultRenderer : new AlchemyCircleRenderer(arrayResource);
         registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, arrayEffect, circleRenderer);
     }
 
-    public static void registerRecipe(ItemStack input, ItemStack catalystStack, AlchemyArrayEffect arrayEffect)
-    {
+    public static void registerRecipe(ItemStack input, ItemStack catalystStack, AlchemyArrayEffect arrayEffect) {
         registerRecipe(Collections.singletonList(input), catalystStack, arrayEffect, (AlchemyCircleRenderer) null);
     }
 
-    public static void registerRecipe(List<ItemStack> inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect)
-    {
+    public static void registerRecipe(List<ItemStack> inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect) {
         registerRecipe(inputStacks, catalystStack, arrayEffect, (AlchemyCircleRenderer) null);
     }
 
-    public static void registerRecipe(String inputOreDict, ItemStack catalystStack, AlchemyArrayEffect arrayEffect)
-    {
+    public static void registerRecipe(String inputOreDict, ItemStack catalystStack, AlchemyArrayEffect arrayEffect) {
         registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, arrayEffect, (AlchemyCircleRenderer) null);
     }
 
-    public static void replaceAlchemyCircle(List<ItemStack> input, AlchemyCircleRenderer circleRenderer)
-    {
+    public static void replaceAlchemyCircle(List<ItemStack> input, AlchemyCircleRenderer circleRenderer) {
         if (circleRenderer == null)
             return;
 
-        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet())
-        {
+        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet()) {
             AlchemyArrayRecipe arrayRecipe = entry.getValue();
             if (arrayRecipe.doesInputMatchRecipe(input))
                 arrayRecipe.defaultCircleRenderer = circleRenderer;
         }
     }
 
-    public static AlchemyArrayRecipe getRecipeForInput(List<ItemStack> input)
-    {
+    public static AlchemyArrayRecipe getRecipeForInput(List<ItemStack> input) {
         return recipes.get(input);
     }
 
-    public static AlchemyArrayEffect getAlchemyArrayEffect(List<ItemStack> input, @Nullable ItemStack catalystStack)
-    {
-        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet())
-        {
+    public static AlchemyArrayEffect getAlchemyArrayEffect(List<ItemStack> input, @Nullable ItemStack catalystStack) {
+        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet()) {
             AlchemyArrayRecipe arrayRecipe = entry.getValue();
-            if (input.size() == 1 && arrayRecipe.getInput().size() == 1)
-            {
-                if (ItemStackWrapper.getHolder(arrayRecipe.getInput().get(0)).equals(ItemStackWrapper.getHolder(input.get(0))))
-                {
+            if (input.size() == 1 && arrayRecipe.getInput().size() == 1) {
+                if (ItemStackWrapper.getHolder(arrayRecipe.getInput().get(0)).equals(ItemStackWrapper.getHolder(input.get(0)))) {
                     AlchemyArrayEffect effect = arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack);
-                    if (effect != null)
-                    {
+                    if (effect != null) {
                         return effect.getNewCopy();
-                    } else
-                    {
+                    } else {
                         return null;
                     }
                 }
-            } else
-            {
-                if (input.equals(arrayRecipe.getInput()))
-                {
+            } else {
+                if (input.equals(arrayRecipe.getInput())) {
                     AlchemyArrayEffect effect = arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack);
-                    if (effect != null)
-                    {
+                    if (effect != null) {
                         return effect.getNewCopy();
-                    } else
-                    {
+                    } else {
                         return null;
                     }
                 }
@@ -264,18 +208,14 @@ public class AlchemyArrayRecipeRegistry
         return null;
     }
 
-    public static AlchemyArrayEffect getAlchemyArrayEffect(ItemStack input, @Nullable ItemStack catalystStack)
-    {
+    public static AlchemyArrayEffect getAlchemyArrayEffect(ItemStack input, @Nullable ItemStack catalystStack) {
         return getAlchemyArrayEffect(Collections.singletonList(input), catalystStack);
     }
 
-    public static AlchemyCircleRenderer getAlchemyCircleRenderer(List<ItemStack> input, @Nullable ItemStack catalystStack)
-    {
-        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet())
-        {
+    public static AlchemyCircleRenderer getAlchemyCircleRenderer(List<ItemStack> input, @Nullable ItemStack catalystStack) {
+        for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet()) {
             AlchemyArrayRecipe arrayRecipe = entry.getValue();
-            if (arrayRecipe.doesInputMatchRecipe(input))
-            {
+            if (arrayRecipe.doesInputMatchRecipe(input)) {
                 return arrayRecipe.getAlchemyArrayRendererForCatalyst(catalystStack);
             }
         }
@@ -283,20 +223,21 @@ public class AlchemyArrayRecipeRegistry
         return defaultRenderer;
     }
 
-    public static AlchemyCircleRenderer getAlchemyCircleRenderer(ItemStack itemStack, @Nullable ItemStack catalystStack)
-    {
+    public static AlchemyCircleRenderer getAlchemyCircleRenderer(ItemStack itemStack, @Nullable ItemStack catalystStack) {
         return getAlchemyCircleRenderer(Collections.singletonList(itemStack), catalystStack);
     }
 
-    public static class AlchemyArrayRecipe
-    {
-        public AlchemyCircleRenderer defaultCircleRenderer;
+    public static BiMap<List<ItemStack>, AlchemyArrayRecipe> getRecipes() {
+        return HashBiMap.create(recipes);
+    }
+
+    public static class AlchemyArrayRecipe {
         public final List<ItemStack> input;
         public final BiMap<ItemStackWrapper, AlchemyArrayEffect> catalystMap = HashBiMap.create();
         public final BiMap<ItemStackWrapper, AlchemyCircleRenderer> circleMap = HashBiMap.create();
+        public AlchemyCircleRenderer defaultCircleRenderer;
 
-        private AlchemyArrayRecipe(List<ItemStack> input, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer, boolean useless)
-        {
+        private AlchemyArrayRecipe(List<ItemStack> input, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer, boolean useless) {
             this.input = input;
 
             catalystMap.put(ItemStackWrapper.getHolder(catalystStack), arrayEffect);
@@ -304,47 +245,37 @@ public class AlchemyArrayRecipeRegistry
             this.defaultCircleRenderer = circleRenderer;
         }
 
-        public AlchemyArrayRecipe(ItemStack inputStack, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer)
-        {
+        public AlchemyArrayRecipe(ItemStack inputStack, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer) {
             this(Collections.singletonList(inputStack), catalystStack, arrayEffect, circleRenderer, false);
         }
 
-        public AlchemyArrayRecipe(String inputOreDict, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer)
-        {
+        public AlchemyArrayRecipe(String inputOreDict, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer) {
             this(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, arrayEffect, circleRenderer, false);
         }
 
-        public AlchemyArrayRecipe(List<ItemStack> inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer)
-        {
+        public AlchemyArrayRecipe(List<ItemStack> inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer) {
             this(inputStacks, catalystStack, arrayEffect, circleRenderer, false);
         }
 
         /**
          * Compares the inputed list of ItemStacks to see if it matches with the
          * recipe's list.
-         * 
-         * @param comparedList
-         *        - The list to compare with
-         * 
+         *
+         * @param comparedList - The list to compare with
          * @return - True if the ItemStack(s) is a compatible item
          */
-        public boolean doesInputMatchRecipe(List<ItemStack> comparedList)
-        {
+        public boolean doesInputMatchRecipe(List<ItemStack> comparedList) {
             return !(comparedList == null || this.input == null) && (this.input.size() == 1 && comparedList.size() == 1 ? this.input.get(0).isItemEqual(comparedList.get(0)) : this.input.equals(comparedList));
         }
 
         /**
          * Gets the actual AlchemyArrayEffect for the given catalyst.
-         * 
-         * @param comparedStack
-         *        The catalyst that is being checked
-         * 
+         *
+         * @param comparedStack The catalyst that is being checked
          * @return - The effect
          */
-        public AlchemyArrayEffect getAlchemyArrayEffectForCatalyst(@Nullable ItemStack comparedStack)
-        {
-            for (Entry<ItemStackWrapper, AlchemyArrayEffect> entry : catalystMap.entrySet())
-            {
+        public AlchemyArrayEffect getAlchemyArrayEffectForCatalyst(@Nullable ItemStack comparedStack) {
+            for (Entry<ItemStackWrapper, AlchemyArrayEffect> entry : catalystMap.entrySet()) {
                 ItemStack catalystStack = entry.getKey().toStack();
 
                 if (comparedStack == null && catalystStack == null)
@@ -360,10 +291,8 @@ public class AlchemyArrayRecipeRegistry
             return null;
         }
 
-        public AlchemyCircleRenderer getAlchemyArrayRendererForCatalyst(@Nullable ItemStack comparedStack)
-        {
-            for (Entry<ItemStackWrapper, AlchemyCircleRenderer> entry : circleMap.entrySet())
-            {
+        public AlchemyCircleRenderer getAlchemyArrayRendererForCatalyst(@Nullable ItemStack comparedStack) {
+            for (Entry<ItemStackWrapper, AlchemyCircleRenderer> entry : circleMap.entrySet()) {
                 ItemStack catalystStack = entry.getKey().toStack();
 
                 if (comparedStack == null && catalystStack == null)
@@ -417,10 +346,5 @@ public class AlchemyArrayRecipeRegistry
             result = 31 * result + (circleMap != null ? circleMap.hashCode() : 0);
             return result;
         }
-    }
-
-    public static BiMap<List<ItemStack>, AlchemyArrayRecipe> getRecipes()
-    {
-        return HashBiMap.create(recipes);
     }
 }

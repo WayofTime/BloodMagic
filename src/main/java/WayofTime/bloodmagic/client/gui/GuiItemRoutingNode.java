@@ -1,8 +1,12 @@
 package WayofTime.bloodmagic.client.gui;
 
-import java.io.IOException;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.network.ItemRouterAmountPacketProcessor;
+import WayofTime.bloodmagic.network.ItemRouterButtonPacketProcessor;
+import WayofTime.bloodmagic.tile.container.ContainerItemRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
+import WayofTime.bloodmagic.util.GhostItemHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
@@ -16,16 +20,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
-import WayofTime.bloodmagic.network.ItemRouterAmountPacketProcessor;
-import WayofTime.bloodmagic.network.ItemRouterButtonPacketProcessor;
-import WayofTime.bloodmagic.tile.container.ContainerItemRoutingNode;
-import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
-import WayofTime.bloodmagic.util.GhostItemHelper;
+
+import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
-public class GuiItemRoutingNode extends GuiContainer
-{
+public class GuiItemRoutingNode extends GuiContainer {
     private GuiButton downButton;
     private GuiButton upButton;
     private GuiButton northButton;
@@ -42,8 +41,7 @@ public class GuiItemRoutingNode extends GuiContainer
 
     private int left, top;
 
-    public GuiItemRoutingNode(InventoryPlayer playerInventory, IInventory tileRoutingNode)
-    {
+    public GuiItemRoutingNode(InventoryPlayer playerInventory, IInventory tileRoutingNode) {
         super(new ContainerItemRoutingNode(playerInventory, tileRoutingNode));
         this.xSize = 201;
         this.ySize = 169;
@@ -51,11 +49,9 @@ public class GuiItemRoutingNode extends GuiContainer
         container = (ContainerItemRoutingNode) this.inventorySlots;
     }
 
-    private int getCurrentActiveSlotPriority()
-    {
+    private int getCurrentActiveSlotPriority() {
         EnumFacing direction = EnumFacing.getFront(inventory.currentActiveSlot);
-        if (direction != null)
-        {
+        if (direction != null) {
             return inventory.getPriority(direction);
         }
 
@@ -63,8 +59,7 @@ public class GuiItemRoutingNode extends GuiContainer
     }
 
     @Override
-    public void initGui()
-    {
+    public void initGui() {
         super.initGui();
         left = (this.width - this.xSize) / 2;
         top = (this.height - this.ySize) / 2;
@@ -86,41 +81,32 @@ public class GuiItemRoutingNode extends GuiContainer
     }
 
     @Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException
-    {
-        if (this.textBox.textboxKeyTyped(typedChar, keyCode))
-        {
-            if (container.lastGhostSlotClicked != -1)
-            {
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        if (this.textBox.textboxKeyTyped(typedChar, keyCode)) {
+            if (container.lastGhostSlotClicked != -1) {
 //              this.renameItem();
                 String str = this.textBox.getText();
                 int amount = 0;
 
-                if (!str.isEmpty())
-                {
-                    try
-                    {
+                if (!str.isEmpty()) {
+                    try {
                         Integer testVal = Integer.decode(str);
-                        if (testVal != null)
-                        {
+                        if (testVal != null) {
                             amount = testVal.intValue();
                         }
-                    } catch (NumberFormatException d)
-                    {
+                    } catch (NumberFormatException d) {
                     }
                 }
 
 //                inventory.setGhostItemAmount(container.lastGhostSlotClicked, amount);
                 setValueOfGhostItemInSlot(container.lastGhostSlotClicked, amount);
             }
-        } else
-        {
+        } else {
             super.keyTyped(typedChar, keyCode);
         }
     }
 
-    private void setValueOfGhostItemInSlot(int ghostItemSlot, int amount)
-    {
+    private void setValueOfGhostItemInSlot(int ghostItemSlot, int amount) {
         BloodMagicPacketHandler.INSTANCE.sendToServer(new ItemRouterAmountPacketProcessor(ghostItemSlot, amount, inventory.getPos(), inventory.getWorld()));
     }
 
@@ -128,20 +114,16 @@ public class GuiItemRoutingNode extends GuiContainer
      * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
      */
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
-    {
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
         this.textBox.mouseClicked(mouseX, mouseY, mouseButton);
-        if (container.lastGhostSlotClicked != -1)
-        {
+        if (container.lastGhostSlotClicked != -1) {
             Slot slot = container.getSlot(container.lastGhostSlotClicked + 1);
             ItemStack stack = slot.getStack();
-            if (stack != null)
-            {
+            if (stack != null) {
                 int amount = GhostItemHelper.getItemGhostAmount(stack);
                 this.textBox.setText("" + amount);
-            } else
-            {
+            } else {
                 this.textBox.setText("");
             }
         }
@@ -151,8 +133,7 @@ public class GuiItemRoutingNode extends GuiContainer
      * Draws the screen and all the components in it.
      */
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks)
-    {
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
 
         Minecraft.getMinecraft().fontRenderer.drawString(inventory.getName(), xSize, ySize / 4, 4210752);
@@ -163,13 +144,10 @@ public class GuiItemRoutingNode extends GuiContainer
      * for buttons)
      */
     @Override
-    protected void actionPerformed(GuiButton button) throws IOException
-    {
-        if (button.enabled)
-        {
+    protected void actionPerformed(GuiButton button) throws IOException {
+        if (button.enabled) {
             BloodMagicPacketHandler.INSTANCE.sendToServer(new ItemRouterButtonPacketProcessor(button.id, inventory.getPos(), inventory.getWorld()));
-            if (button.id < 6)
-            {
+            if (button.id < 6) {
                 inventory.currentActiveSlot = button.id;
                 enableAllDirectionalButtons();
                 button.enabled = false;
@@ -177,29 +155,23 @@ public class GuiItemRoutingNode extends GuiContainer
         }
     }
 
-    private void enableAllDirectionalButtons()
-    {
-        for (GuiButton button : this.buttonList)
-        {
+    private void enableAllDirectionalButtons() {
+        for (GuiButton button : this.buttonList) {
             button.enabled = true;
         }
     }
 
-    private void disableDirectionalButton(int id)
-    {
+    private void disableDirectionalButton(int id) {
         this.buttonList.get(id).enabled = false;
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
-    {
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         this.fontRenderer.drawString("" + getCurrentActiveSlotPriority(), 143 + 5, 51 + 4, 0xFFFFFF);
         String s = "";
-        if (container.lastGhostSlotClicked != -1)
-        {
+        if (container.lastGhostSlotClicked != -1) {
             ItemStack clickedStack = inventorySlots.getSlot(1 + container.lastGhostSlotClicked).getStack();
-            if (clickedStack != null)
-            {
+            if (clickedStack != null) {
                 s = clickedStack.getDisplayName();
             }
         }
@@ -208,8 +180,7 @@ public class GuiItemRoutingNode extends GuiContainer
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
-    {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         ResourceLocation soulForgeGuiTextures = new ResourceLocation(BloodMagic.MODID + ":textures/gui/routingNode.png");
         this.mc.getTextureManager().bindTexture(soulForgeGuiTextures);

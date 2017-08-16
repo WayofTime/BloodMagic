@@ -21,55 +21,45 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class ItemSigilLava extends ItemSigilBase
-{
-    public ItemSigilLava()
-    {
+public class ItemSigilLava extends ItemSigilBase {
+    public ItemSigilLava() {
         super("lava", 1000);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() instanceof ISigil.Holding)
             stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
-        if (!world.isRemote && !isUnusable(stack))
-        {
+        if (!world.isRemote && !isUnusable(stack)) {
             RayTraceResult rayTrace = this.rayTrace(world, player, false);
 
-            if (rayTrace != null)
-            {
+            if (rayTrace != null) {
                 ActionResult<ItemStack> ret = ForgeEventFactory.onBucketUse(player, world, stack, rayTrace);
                 if (ret != null)
                     return ret;
 
-                if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
-                {
+                if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
                     BlockPos blockpos = rayTrace.getBlockPos();
 
-                    if (!world.isBlockModifiable(player, blockpos))
-                    {
+                    if (!world.isBlockModifiable(player, blockpos)) {
                         return super.onItemRightClick(world, player, hand);
                     }
 
-                    if (!player.canPlayerEdit(blockpos.offset(rayTrace.sideHit), rayTrace.sideHit, stack))
-                    {
+                    if (!player.canPlayerEdit(blockpos.offset(rayTrace.sideHit), rayTrace.sideHit, stack)) {
                         return super.onItemRightClick(world, player, hand);
                     }
 
                     BlockPos blockpos1 = blockpos.offset(rayTrace.sideHit);
 
-                    if (!player.canPlayerEdit(blockpos1, rayTrace.sideHit, stack))
-                    {
+                    if (!player.canPlayerEdit(blockpos1, rayTrace.sideHit, stack)) {
                         return super.onItemRightClick(world, player, hand);
                     }
 
-                    if (this.canPlaceLava(world, blockpos1) && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()) && this.tryPlaceLava(world, blockpos1))
-                    {
+                    if (this.canPlaceLava(world, blockpos1) && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()) && this.tryPlaceLava(world, blockpos1)) {
                         return super.onItemRightClick(world, player, hand);
                     }
                 }
@@ -80,27 +70,22 @@ public class ItemSigilLava extends ItemSigilBase
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
-        if (world.isRemote || player.isSneaking() || isUnusable(stack))
-        {
+        if (world.isRemote || player.isSneaking() || isUnusable(stack)) {
             return EnumActionResult.FAIL;
         }
-        if (!world.canMineBlockBody(player, blockPos))
-        {
+        if (!world.canMineBlockBody(player, blockPos)) {
             return EnumActionResult.FAIL;
         }
 
         TileEntity tile = world.getTileEntity(blockPos);
-        if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
-        {
+        if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) {
             IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
             FluidStack fluid = new FluidStack(FluidRegistry.LAVA, 1000);
             int amount = handler.fill(fluid, false);
 
-            if (amount > 0 && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed()))
-            {
+            if (amount > 0 && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed())) {
                 handler.fill(fluid, true);
                 return EnumActionResult.SUCCESS;
             }
@@ -111,23 +96,18 @@ public class ItemSigilLava extends ItemSigilBase
         return EnumActionResult.FAIL;
     }
 
-    public boolean canPlaceLava(World world, BlockPos blockPos)
-    {
-        if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isSolid())
-        {
+    public boolean canPlaceLava(World world, BlockPos blockPos) {
+        if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isSolid()) {
             return false;
-        } else if ((world.getBlockState(blockPos).getBlock() == Blocks.LAVA || world.getBlockState(blockPos).getBlock() == Blocks.FLOWING_LAVA) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
-        {
+        } else if ((world.getBlockState(blockPos).getBlock() == Blocks.LAVA || world.getBlockState(blockPos).getBlock() == Blocks.FLOWING_LAVA) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0) {
             return false;
-        } else
-        {
+        } else {
             world.setBlockState(blockPos, Blocks.FLOWING_LAVA.getBlockState().getBaseState(), 3);
             return true;
         }
     }
 
-    public boolean tryPlaceLava(World world, BlockPos pos)
-    {
+    public boolean tryPlaceLava(World world, BlockPos pos) {
         Material material = world.getBlockState(pos).getBlock().getMaterial(world.getBlockState(pos));
 
         return world.isAirBlock(pos) && !material.isSolid();

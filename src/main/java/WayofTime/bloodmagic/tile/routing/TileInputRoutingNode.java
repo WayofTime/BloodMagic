@@ -1,51 +1,39 @@
 package WayofTime.bloodmagic.tile.routing;
 
+import WayofTime.bloodmagic.item.routing.IFluidFilterProvider;
+import WayofTime.bloodmagic.item.routing.IItemFilterProvider;
+import WayofTime.bloodmagic.routing.*;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
-import WayofTime.bloodmagic.item.routing.IFluidFilterProvider;
-import WayofTime.bloodmagic.item.routing.IItemFilterProvider;
-import WayofTime.bloodmagic.routing.DefaultItemFilter;
-import WayofTime.bloodmagic.routing.IFluidFilter;
-import WayofTime.bloodmagic.routing.IInputFluidRoutingNode;
-import WayofTime.bloodmagic.routing.IInputItemRoutingNode;
-import WayofTime.bloodmagic.routing.IItemFilter;
-import WayofTime.bloodmagic.util.Utils;
 
-public class TileInputRoutingNode extends TileFilteredRoutingNode implements IInputItemRoutingNode, IInputFluidRoutingNode
-{
-    public TileInputRoutingNode()
-    {
+public class TileInputRoutingNode extends TileFilteredRoutingNode implements IInputItemRoutingNode, IInputFluidRoutingNode {
+    public TileInputRoutingNode() {
         super(6, "inputNode");
     }
 
     @Override
-    public boolean isInput(EnumFacing side)
-    {
+    public boolean isInput(EnumFacing side) {
         return true;
     }
 
     @Override
-    public IItemFilter getInputFilterForSide(EnumFacing side)
-    {
+    public IItemFilter getInputFilterForSide(EnumFacing side) {
         TileEntity tile = getWorld().getTileEntity(pos.offset(side));
-        if (tile != null)
-        {
+        if (tile != null) {
             IItemHandler handler = Utils.getInventory(tile, side.getOpposite());
-            if (handler != null)
-            {
+            if (handler != null) {
                 ItemStack filterStack = this.getFilterStack(side);
 
-                if (filterStack.isEmpty())
-                {
+                if (filterStack.isEmpty()) {
                     IItemFilter filter = new DefaultItemFilter();
                     filter.initializeFilter(null, tile, handler, false);
                     return filter;
-                } else if (!(filterStack.getItem() instanceof IItemFilterProvider))
-                {
+                } else if (!(filterStack.getItem() instanceof IItemFilterProvider)) {
                     return null;
                 }
 
@@ -58,21 +46,17 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
     }
 
     @Override
-    public boolean isFluidInput(EnumFacing side)
-    {
+    public boolean isFluidInput(EnumFacing side) {
         return true;
     }
 
     @Override
-    public IFluidFilter getInputFluidFilterForSide(EnumFacing side)
-    {
+    public IFluidFilter getInputFluidFilterForSide(EnumFacing side) {
         TileEntity tile = getWorld().getTileEntity(pos.offset(side));
-        if (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
-        {
+        if (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) {
             IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
             ItemStack filterStack = this.getFilterStack(side);
-            if (filterStack == null || !(filterStack.getItem() instanceof IFluidFilterProvider))
-            {
+            if (filterStack == null || !(filterStack.getItem() instanceof IFluidFilterProvider)) {
                 return null;
             }
 
@@ -83,8 +67,7 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
     }
 
     @Override
-    public boolean isTankConnectedToSide(EnumFacing side)
-    {
+    public boolean isTankConnectedToSide(EnumFacing side) {
         return true;
     }
 }

@@ -2,10 +2,8 @@ package WayofTime.bloodmagic.api.soul;
 
 /**
  * Implement this interface on a block that can accept and store Demonic Will.
- * 
  */
-public interface IDemonWillConduit
-{
+public interface IDemonWillConduit {
     int getWeight();
 
     double fillDemonWill(EnumDemonWillType type, double amount, boolean doFill);

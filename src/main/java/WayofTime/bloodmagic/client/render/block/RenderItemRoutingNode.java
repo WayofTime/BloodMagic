@@ -18,19 +18,15 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
-public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRoutingNode>
-{
+public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRoutingNode> {
     private static final ResourceLocation beamTexture = new ResourceLocation(BloodMagic.MODID, "textures/entities/nodeBeam.png");
     private static final Minecraft mc = Minecraft.getMinecraft();
 
     @Override
-    public void render(TileRoutingNode tileNode, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
-    {
-        if (mc.player.getHeldItemMainhand().getItem() instanceof INodeRenderer || ConfigHandler.alwaysRenderRoutingLines)
-        {
+    public void render(TileRoutingNode tileNode, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+        if (mc.player.getHeldItemMainhand().getItem() instanceof INodeRenderer || ConfigHandler.alwaysRenderRoutingLines) {
             List<BlockPos> connectionList = tileNode.getConnected();
-            for (BlockPos wantedPos : connectionList)
-            {
+            for (BlockPos wantedPos : connectionList) {
                 BlockPos offsetPos = wantedPos.subtract(tileNode.getPos());
 
                 //The beam renders towards the east by default.

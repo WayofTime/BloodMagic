@@ -1,7 +1,8 @@
 package WayofTime.bloodmagic.client.render.entity;
 
-import java.util.UUID;
-
+import WayofTime.bloodmagic.client.render.model.ModelMimic;
+import WayofTime.bloodmagic.entity.mob.EntityMimic;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -21,34 +22,25 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.client.render.model.ModelMimic;
-import WayofTime.bloodmagic.entity.mob.EntityMimic;
-
-import com.mojang.authlib.GameProfile;
 
 @SideOnly(Side.CLIENT)
-public class RenderEntityMimic extends RenderLiving<EntityMimic>
-{
+public class RenderEntityMimic extends RenderLiving<EntityMimic> {
     private static final ResourceLocation SPIDER_TEXTURES = new ResourceLocation("textures/entity/spider/spider.png");
     Minecraft minecraft = Minecraft.getMinecraft();
 
-    public RenderEntityMimic(RenderManager renderManagerIn)
-    {
+    public RenderEntityMimic(RenderManager renderManagerIn) {
         super(renderManagerIn, new ModelMimic(), 1.0F);
     }
 
     @Override
-    public void doRender(EntityMimic mimic, double x, double y, double z, float entityYaw, float partialTicks)
-    {
+    public void doRender(EntityMimic mimic, double x, double y, double z, float entityYaw, float partialTicks) {
         super.doRender(mimic, x, y, z, entityYaw, partialTicks);
 
         GlStateManager.pushMatrix();
-        if (mimic.getMimicItemStack() != null)
-        {
+        if (mimic.getMimicItemStack() != null) {
             GlStateManager.pushMatrix();
 
-            if (this.renderOutlines)
-            {
+            if (this.renderOutlines) {
                 GlStateManager.enableColorMaterial();
                 GlStateManager.enableOutlineMode(this.getTeamColor(mimic));
             }
@@ -62,26 +54,21 @@ public class RenderEntityMimic extends RenderLiving<EntityMimic>
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-            if (item == Items.SKULL)
-            {
+            if (item == Items.SKULL) {
                 float f2 = 1.1875F;
                 GlStateManager.scale(1.1875F, -1.1875F, -1.1875F);
 
                 GameProfile gameprofile = null;
 
-                if (itemstack.hasTagCompound())
-                {
+                if (itemstack.hasTagCompound()) {
                     NBTTagCompound nbttagcompound = itemstack.getTagCompound();
 
-                    if (nbttagcompound.hasKey("SkullOwner", 10))
-                    {
+                    if (nbttagcompound.hasKey("SkullOwner", 10)) {
                         gameprofile = NBTUtil.readGameProfileFromNBT(nbttagcompound.getCompoundTag("SkullOwner"));
-                    } else if (nbttagcompound.hasKey("SkullOwner", 8))
-                    {
+                    } else if (nbttagcompound.hasKey("SkullOwner", 8)) {
                         String s = nbttagcompound.getString("SkullOwner");
 
-                        if (!StringUtils.isNullOrEmpty(s))
-                        {
+                        if (!StringUtils.isNullOrEmpty(s)) {
                             gameprofile = TileEntitySkull.updateGameprofile(new GameProfile(null, s));
                             nbttagcompound.setTag("SkullOwner", NBTUtil.writeGameProfile(new NBTTagCompound(), gameprofile));
                         }
@@ -89,8 +76,7 @@ public class RenderEntityMimic extends RenderLiving<EntityMimic>
                 }
 
                 TileEntitySkullRenderer.instance.renderSkull(-0.5F, 0.0F, -0.5F, EnumFacing.UP, 180.0F, itemstack.getMetadata(), gameprofile, -1, 0);
-            } else if (!(item instanceof ItemArmor) || ((ItemArmor) item).getEquipmentSlot() != EntityEquipmentSlot.HEAD)
-            {
+            } else if (!(item instanceof ItemArmor) || ((ItemArmor) item).getEquipmentSlot() != EntityEquipmentSlot.HEAD) {
                 GlStateManager.translate(0, 0.5f, 0);
                 GlStateManager.rotate(-(mimic.prevRotationYawHead + partialTicks * (mimic.rotationYawHead - mimic.prevRotationYawHead)) - 180, 0, 1, 0);
 
@@ -99,8 +85,7 @@ public class RenderEntityMimic extends RenderLiving<EntityMimic>
 
             GlStateManager.popMatrix();
 
-            if (this.renderOutlines)
-            {
+            if (this.renderOutlines) {
                 GlStateManager.disableOutlineMode();
                 GlStateManager.disableColorMaterial();
             }
@@ -111,15 +96,13 @@ public class RenderEntityMimic extends RenderLiving<EntityMimic>
         }
         GlStateManager.popMatrix();
 
-        if (!this.renderOutlines)
-        {
+        if (!this.renderOutlines) {
             this.renderLeash(mimic, x, y, z, entityYaw, partialTicks);
         }
     }
 
     @Override
-    protected float getDeathMaxRotation(EntityMimic mimic)
-    {
+    protected float getDeathMaxRotation(EntityMimic mimic) {
         return 180.0F;
     }
 
@@ -128,8 +111,7 @@ public class RenderEntityMimic extends RenderLiving<EntityMimic>
      * unless you call Render.bindEntityTexture.
      */
     @Override
-    protected ResourceLocation getEntityTexture(EntityMimic mimic)
-    {
+    protected ResourceLocation getEntityTexture(EntityMimic mimic) {
         return SPIDER_TEXTURES;
     }
 }

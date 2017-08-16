@@ -12,20 +12,17 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class ItemRouterAmountPacketProcessor implements IMessage, IMessageHandler<ItemRouterAmountPacketProcessor, IMessage>
-{
+public class ItemRouterAmountPacketProcessor implements IMessage, IMessageHandler<ItemRouterAmountPacketProcessor, IMessage> {
     private int ghostItemSlot;
     private int amount;
     private int dimension;
     private BlockPos pos;
 
-    public ItemRouterAmountPacketProcessor()
-    {
+    public ItemRouterAmountPacketProcessor() {
 
     }
 
-    public ItemRouterAmountPacketProcessor(int ghostItemSlot, int amount, BlockPos pos, World world)
-    {
+    public ItemRouterAmountPacketProcessor(int ghostItemSlot, int amount, BlockPos pos, World world) {
         this.ghostItemSlot = ghostItemSlot;
         this.amount = amount;
         this.pos = pos;
@@ -33,8 +30,7 @@ public class ItemRouterAmountPacketProcessor implements IMessage, IMessageHandle
     }
 
     @Override
-    public void fromBytes(ByteBuf buffer)
-    {
+    public void fromBytes(ByteBuf buffer) {
         PacketBuffer buff = new PacketBuffer(buffer);
         dimension = buff.readInt();
         pos = buff.readBlockPos();
@@ -43,8 +39,7 @@ public class ItemRouterAmountPacketProcessor implements IMessage, IMessageHandle
     }
 
     @Override
-    public void toBytes(ByteBuf buffer)
-    {
+    public void toBytes(ByteBuf buffer) {
         PacketBuffer buff = new PacketBuffer(buffer);
         buff.writeInt(dimension);
         buff.writeBlockPos(pos);
@@ -53,26 +48,21 @@ public class ItemRouterAmountPacketProcessor implements IMessage, IMessageHandle
     }
 
     @Override
-    public IMessage onMessage(ItemRouterAmountPacketProcessor message, MessageContext ctx)
-    {
-        if (ctx.side == Side.SERVER)
-        {
+    public IMessage onMessage(ItemRouterAmountPacketProcessor message, MessageContext ctx) {
+        if (ctx.side == Side.SERVER) {
             message.onMessageFromClient();
         }
         return null;
     }
 
-    public void onMessageFromClient()
-    {
+    public void onMessageFromClient() {
         World world = DimensionManager.getWorld(dimension);
-        if (world != null)
-        {
+        if (world != null) {
             if (!world.isBlockLoaded(pos))
                 return;
 
             TileEntity tile = world.getTileEntity(pos);
-            if (tile instanceof TileFilteredRoutingNode)
-            {
+            if (tile instanceof TileFilteredRoutingNode) {
                 ((TileFilteredRoutingNode) tile).setGhostItemAmount(ghostItemSlot, amount);
             }
         }

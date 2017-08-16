@@ -1,11 +1,10 @@
 package WayofTime.bloodmagic.block.enums;
 
-import java.util.Locale;
-
 import net.minecraft.util.IStringSerializable;
 
-public enum EnumDemonBlock1 implements IStringSerializable
-{
+import java.util.Locale;
+
+public enum EnumDemonBlock1 implements IStringSerializable {
     BRICK1_RAW,
     BRICK1_CORROSIVE,
     BRICK1_DESTRUCTIVE,
@@ -13,14 +12,12 @@ public enum EnumDemonBlock1 implements IStringSerializable
     BRICK1_STEADFAST;
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return name().toLowerCase(Locale.ENGLISH);
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return this.toString();
     }
 }

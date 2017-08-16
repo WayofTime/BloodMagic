@@ -1,13 +1,21 @@
 package WayofTime.bloodmagic.block;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.api.altar.IAltarManipulator;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import WayofTime.bloodmagic.api.iface.IAltarReader;
+import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.iface.IDocumentedBlock;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
+import WayofTime.bloodmagic.api.orb.IBloodOrb;
+import WayofTime.bloodmagic.api.saving.SoulNetwork;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.util.Utils;
+import com.google.common.base.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -23,29 +31,15 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.altar.IAltarManipulator;
-import WayofTime.bloodmagic.api.iface.IAltarReader;
-import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.saving.SoulNetwork;
-import WayofTime.bloodmagic.api.orb.IBloodOrb;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.util.Utils;
-
-import com.google.common.base.Strings;
-
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BlockAltar extends Block implements IVariantProvider, IDocumentedBlock, IBMBlock
-{
-    public BlockAltar()
-    {
+public class BlockAltar extends Block implements IVariantProvider, IDocumentedBlock, IBMBlock {
+    public BlockAltar() {
         super(Material.ROCK);
 
         setUnlocalizedName(BloodMagic.MODID + ".altar");
@@ -56,32 +50,26 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
     }
 
     @Override
-    public boolean hasComparatorInputOverride(IBlockState state)
-    {
+    public boolean hasComparatorInputOverride(IBlockState state) {
         return true;
     }
 
     @Override
-    public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos)
-    {
+    public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
         if (world.isRemote)
             return 0;
 
         TileEntity tile = world.getTileEntity(pos);
 
-        if (tile != null && tile instanceof TileAltar)
-        {
+        if (tile != null && tile instanceof TileAltar) {
             TileAltar altar = (TileAltar) tile;
             ItemStack orbStack = altar.getStackInSlot(0);
 
-            if (world.getBlockState(pos.down()).getBlock() instanceof BlockDecorative)
-            {
-                if (orbStack.getItem() instanceof IBloodOrb && orbStack.getItem() instanceof IBindable)
-                {
+            if (world.getBlockState(pos.down()).getBlock() instanceof BlockDecorative) {
+                if (orbStack.getItem() instanceof IBloodOrb && orbStack.getItem() instanceof IBindable) {
                     BloodOrb orb = ((IBloodOrb) orbStack.getItem()).getOrb(orbStack);
                     IBindable bindable = (IBindable) orbStack.getItem();
-                    if (orb != null && !Strings.isNullOrEmpty(bindable.getOwnerUUID(orbStack)))
-                    {
+                    if (orb != null && !Strings.isNullOrEmpty(bindable.getOwnerUUID(orbStack))) {
                         SoulNetwork soulNetwork = NetworkHelper.getSoulNetwork(bindable.getOwnerUUID(orbStack));
 
                         int maxEssence = orb.getCapacity();
@@ -90,8 +78,7 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
                         return Math.min(15, level) % 16;
                     }
                 }
-            } else
-            {
+            } else {
                 int maxEssence = altar.getCapacity();
                 int currentEssence = altar.getCurrentBlood();
                 int level = currentEssence * 15 / maxEssence;
@@ -103,38 +90,32 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
-    {
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state)
-    {
+    public boolean causesSuffocation(IBlockState state) {
         return true;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
+    public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileAltar altar = (TileAltar) world.getTileEntity(pos);
 
         if (altar == null || player.isSneaking())
@@ -142,8 +123,7 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
 
         ItemStack playerItem = player.inventory.getCurrentItem();
 
-        if (playerItem.getItem() instanceof IAltarReader || playerItem.getItem() instanceof IAltarManipulator)
-        {
+        if (playerItem.getItem() instanceof IAltarReader || playerItem.getItem() instanceof IAltarManipulator) {
             playerItem.getItem().onItemRightClick(world, player, hand);
             return true;
         }
@@ -158,11 +138,9 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
     }
 
     @Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
-    {
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
         TileEntity tile = world.getTileEntity(blockPos);
-        if (tile instanceof TileAltar)
-        {
+        if (tile instanceof TileAltar) {
             TileAltar tileAltar = (TileAltar) world.getTileEntity(blockPos);
             if (tileAltar != null)
                 tileAltar.dropItems();
@@ -185,8 +163,7 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
     // IVariantProvider
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "normal"));
         return ret;
@@ -195,8 +172,7 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
     // IDocumentedBlock
 
     @Override
-    public List<ITextComponent> getDocumentation(EntityPlayer player, World world, BlockPos pos, IBlockState state)
-    {
+    public List<ITextComponent> getDocumentation(EntityPlayer player, World world, BlockPos pos, IBlockState state) {
         List<ITextComponent> docs = new ArrayList<ITextComponent>();
         IBloodAltar altar = ((IBloodAltar) world.getTileEntity(pos));
         Pair<BlockPos, EnumAltarComponent> missingBlock = BloodAltar.getAltarMissingBlock(world, pos, altar.getTier().toInt());

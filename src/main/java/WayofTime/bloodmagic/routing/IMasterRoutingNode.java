@@ -4,8 +4,7 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.List;
 
-public interface IMasterRoutingNode extends IRoutingNode
-{
+public interface IMasterRoutingNode extends IRoutingNode {
     boolean isConnected(List<BlockPos> path, BlockPos nodePos);
 
     void addNodeToList(IRoutingNode node);

@@ -1,9 +1,21 @@
 package WayofTime.bloodmagic.altar;
 
-import java.util.List;
-
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.altar.*;
+import WayofTime.bloodmagic.api.event.AltarCraftedEvent;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
+import WayofTime.bloodmagic.api.orb.IBloodOrb;
+import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
+import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry.AltarRecipe;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
+import WayofTime.bloodmagic.block.BlockBloodRune;
+import WayofTime.bloodmagic.block.BlockLifeEssence;
+import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.util.Utils;
+import com.google.common.base.Enums;
+import com.google.common.base.Strings;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,38 +31,26 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
-
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.altar.AltarComponent;
-import WayofTime.bloodmagic.api.altar.AltarUpgrade;
-import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.api.altar.EnumAltarTier;
-import WayofTime.bloodmagic.api.altar.IAltarComponent;
-import WayofTime.bloodmagic.api.event.AltarCraftedEvent;
-import WayofTime.bloodmagic.api.orb.IBloodOrb;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry.AltarRecipe;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.block.BlockBloodRune;
-import WayofTime.bloodmagic.block.BlockLifeEssence;
-import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.util.Utils;
+import java.util.List;
 
-import com.google.common.base.Enums;
-import com.google.common.base.Strings;
-
-public class BloodAltar implements IFluidHandler
-{
-    private TileAltar tileAltar;
-    private int internalCounter = 0;
+public class BloodAltar implements IFluidHandler {
+    static {
+        EnumAltarTier.ONE.buildComponents();
+        EnumAltarTier.TWO.buildComponents();
+        EnumAltarTier.THREE.buildComponents();
+        EnumAltarTier.FOUR.buildComponents();
+        EnumAltarTier.FIVE.buildComponents();
+        EnumAltarTier.SIX.buildComponents();
+    }
 
     public boolean isActive;
     protected FluidStack fluidOutput = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);
     protected FluidStack fluidInput = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);
+    private TileAltar tileAltar;
+    private int internalCounter = 0;
     private EnumAltarTier altarTier = EnumAltarTier.ONE;
     private AltarUpgrade upgrade;
     private int capacity = Fluid.BUCKET_VOLUME * 10;
@@ -73,181 +73,21 @@ public class BloodAltar implements IFluidHandler
     private int progress;
     private int lockdownDuration;
     private int demonBloodDuration;
-
     private int totalCharge = 0; //TODO save
     private int chargingRate = 0;
     private int chargingFrequency = 0;
     private int maxCharge = 0;
-
     private int cooldownAfterCrafting = 60;
-
     private AltarRecipe recipe;
     private ItemStack result = ItemStack.EMPTY;
-
     private EnumAltarTier currentTierDisplayed = EnumAltarTier.ONE;
 
-    public BloodAltar(TileAltar tileAltar)
-    {
+    public BloodAltar(TileAltar tileAltar) {
         this.tileAltar = tileAltar;
     }
 
-    static
-    {
-        EnumAltarTier.ONE.buildComponents();
-        EnumAltarTier.TWO.buildComponents();
-        EnumAltarTier.THREE.buildComponents();
-        EnumAltarTier.FOUR.buildComponents();
-        EnumAltarTier.FIVE.buildComponents();
-        EnumAltarTier.SIX.buildComponents();
-    }
-
-    public static EnumAltarTier getAltarTier(World world, BlockPos pos)
-    {
-        for (int i = EnumAltarTier.MAXTIERS - 1; i >= 1; i--)
-        {
-            if (checkAltarIsValid(world, pos, i))
-            {
-                return EnumAltarTier.values()[i];
-            }
-        }
-
-        return EnumAltarTier.ONE;
-    }
-
-    public static boolean checkAltarIsValid(World world, BlockPos worldPos, int altarTier)
-    {
-        for (AltarComponent altarComponent : EnumAltarTier.values()[altarTier].getAltarComponents())
-        {
-            BlockPos componentPos = worldPos.add(altarComponent.getOffset());
-            IBlockState state = world.getBlockState(componentPos);
-
-            if (altarComponent.getComponent() == EnumAltarComponent.NOTAIR && world.isAirBlock(componentPos))
-                return false;
-
-            if (state.getBlock() instanceof IAltarComponent) {
-                EnumAltarComponent component = ((IAltarComponent) state.getBlock()).getType(world, state, componentPos);
-                if (component == null || component != altarComponent.getComponent())
-                    return false;
-            }
-
-            EnumAltarComponent component = BloodMagicAPI.INSTANCE.getAltarComponents().get(state);
-            if (component == null || component != altarComponent.getComponent())
-                return false;
-        }
-
-        return true;
-    }
-
-    public static Pair<BlockPos, EnumAltarComponent> getAltarMissingBlock(World world, BlockPos worldPos, int altarTier)
-    {
-        if (altarTier >= EnumAltarTier.MAXTIERS)
-        {
-            return null;
-        }
-
-        for (AltarComponent altarComponent : EnumAltarTier.values()[altarTier].getAltarComponents())
-        {
-            BlockPos componentPos = worldPos.add(altarComponent.getOffset());
-            BlockStack worldBlock = new BlockStack(world.getBlockState(componentPos).getBlock(), world.getBlockState(componentPos).getBlock().getMetaFromState(world.getBlockState(componentPos)));
-
-            if (altarComponent.getComponent() != EnumAltarComponent.NOTAIR)
-            {
-                if (worldBlock.getBlock() instanceof IAltarComponent)
-                {
-                    EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(world, worldBlock.getState(), componentPos);
-                    if (component == null || component != altarComponent.getComponent())
-                    {
-                        return Pair.of(componentPos, altarComponent.getComponent());
-                    }
-                } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent()))
-                {
-                    return new ImmutablePair<BlockPos, EnumAltarComponent>(componentPos, altarComponent.getComponent());
-                }
-            } else
-            {
-                if (world.isAirBlock(componentPos))
-                {
-                    return Pair.of(componentPos, altarComponent.getComponent());
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public static AltarUpgrade getUpgrades(World world, BlockPos pos, EnumAltarTier altarTier)
-    {
-        if (world.isRemote)
-        {
-            return null;
-        }
-
-        AltarUpgrade upgrades = new AltarUpgrade();
-        List<AltarComponent> list = altarTier.getAltarComponents();
-
-        for (AltarComponent altarComponent : list)
-        {
-            BlockPos componentPos = pos.add(altarComponent.getOffset());
-
-            if (altarComponent.isUpgradeSlot())
-            {
-                BlockStack worldBlock = new BlockStack(world.getBlockState(componentPos).getBlock(), world.getBlockState(componentPos).getBlock().getMetaFromState(world.getBlockState(componentPos)));
-
-                if (worldBlock.getBlock() instanceof BlockBloodRune)
-                {
-                    switch (((BlockBloodRune) worldBlock.getBlock()).getRuneEffect(worldBlock.getMeta()))
-                    {
-                    case 1:
-                        upgrades.addSpeed();
-                        break;
-
-                    case 2:
-                        upgrades.addEfficiency();
-                        break;
-
-                    case 3:
-                        upgrades.addSacrifice();
-                        break;
-
-                    case 4:
-                        upgrades.addSelfSacrifice();
-                        break;
-
-                    case 5:
-                        upgrades.addDisplacement();
-                        break;
-
-                    case 6:
-                        upgrades.addCapacity();
-                        break;
-
-                    case 7:
-                        upgrades.addBetterCapacity();
-                        break;
-
-                    case 8:
-                        upgrades.addOrbCapacity();
-                        break;
-
-                    case 9:
-                        upgrades.addAcceleration();
-                        break;
-
-                    case 10:
-                        upgrades.addCharging();
-                        break;
-                    }
-                }
-            }
-        }
-
-        return upgrades;
-    }
-
-    public void readFromNBT(NBTTagCompound tagCompound)
-    {
-        if (!tagCompound.hasKey(Constants.NBT.EMPTY))
-        {
+    public void readFromNBT(NBTTagCompound tagCompound) {
+        if (!tagCompound.hasKey(Constants.NBT.EMPTY)) {
             FluidStack fluid = FluidStack.loadFluidStackFromNBT(tagCompound);
 
             if (fluid != null)
@@ -290,8 +130,7 @@ public class BloodAltar implements IFluidHandler
         currentTierDisplayed = Enums.getIfPresent(EnumAltarTier.class, tagCompound.getString(Constants.NBT.ALTAR_CURRENT_TIER_DISPLAYED)).or(EnumAltarTier.ONE);
     }
 
-    public void writeToNBT(NBTTagCompound tagCompound)
-    {
+    public void writeToNBT(NBTTagCompound tagCompound) {
 
         if (fluid != null)
             fluid.writeToNBT(tagCompound);
@@ -334,8 +173,7 @@ public class BloodAltar implements IFluidHandler
         tagCompound.setString(Constants.NBT.ALTAR_CURRENT_TIER_DISPLAYED, currentTierDisplayed.name());
     }
 
-    public void startCycle()
-    {
+    public void startCycle() {
         if (tileAltar.getWorld() != null)
             tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
 
@@ -349,14 +187,11 @@ public class BloodAltar implements IFluidHandler
 
         ItemStack input = tileAltar.getStackInSlot(0);
 
-        if (!input.isEmpty())
-        {
+        if (!input.isEmpty()) {
             // Do recipes
             AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(input);
-            if (recipe != null)
-            {
-                if (recipe.doesRequiredItemMatch(input, altarTier))
-                {
+            if (recipe != null) {
+                if (recipe.doesRequiredItemMatch(input, altarTier)) {
                     this.isActive = true;
                     this.recipe = recipe;
                     this.result = recipe.getOutput().isEmpty() ? ItemStack.EMPTY : new ItemStack(recipe.getOutput().getItem(), 1, recipe.getOutput().getMetadata());
@@ -372,8 +207,7 @@ public class BloodAltar implements IFluidHandler
         isActive = false;
     }
 
-    public void update()
-    {
+    public void update() {
         World world = tileAltar.getWorld();
         BlockPos pos = tileAltar.getPos();
 
@@ -386,17 +220,14 @@ public class BloodAltar implements IFluidHandler
         if (lockdownDuration > 0)
             lockdownDuration--;
 
-        if (internalCounter % 20 == 0)
-        {
-            for (EnumFacing facing : EnumFacing.VALUES)
-            {
+        if (internalCounter % 20 == 0) {
+            for (EnumFacing facing : EnumFacing.VALUES) {
                 BlockPos newPos = pos.offset(facing);
                 IBlockState block = world.getBlockState(newPos);
                 block.getBlock().onNeighborChange(world, newPos, pos);
             }
         }
-        if (internalCounter % (Math.max(20 - this.accelerationUpgrades, 1)) == 0)
-        {
+        if (internalCounter % (Math.max(20 - this.accelerationUpgrades, 1)) == 0) {
             int syphonMax = (int) (20 * this.dislocationMultiplier);
             int fluidInputted;
             int fluidOutputted;
@@ -411,8 +242,7 @@ public class BloodAltar implements IFluidHandler
             tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
         }
 
-        if (internalCounter % this.getChargingFrequency() == 0 && !this.isActive)
-        {
+        if (internalCounter % this.getChargingFrequency() == 0 && !this.isActive) {
             int chargeInputted = Math.min(chargingRate, this.fluid.amount);
             chargeInputted = Math.min(chargeInputted, maxCharge - totalCharge);
             totalCharge += chargeInputted;
@@ -426,10 +256,8 @@ public class BloodAltar implements IFluidHandler
         updateAltar();
     }
 
-    private void updateAltar()
-    {
-        if (!isActive)
-        {
+    private void updateAltar() {
+        if (!isActive) {
             if (cooldownAfterCrafting > 0)
                 cooldownAfterCrafting--;
             return;
@@ -446,13 +274,11 @@ public class BloodAltar implements IFluidHandler
         if (world.isRemote)
             return;
 
-        if (!canBeFilled)
-        {
+        if (!canBeFilled) {
             boolean hasOperated = false;
             int stackSize = input.getCount();
 
-            if (totalCharge > 0)
-            {
+            if (totalCharge > 0) {
                 int chargeDrained = Math.min(liquidRequired * stackSize - progress, totalCharge);
 
                 totalCharge -= chargeDrained;
@@ -460,8 +286,7 @@ public class BloodAltar implements IFluidHandler
 
                 hasOperated = true;
             }
-            if (fluid != null && fluid.amount >= 1)
-            {
+            if (fluid != null && fluid.amount >= 1) {
                 int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
 
                 if (liquidDrained > (liquidRequired * stackSize - progress))
@@ -472,27 +297,22 @@ public class BloodAltar implements IFluidHandler
 
                 hasOperated = true;
 
-                if (internalCounter % 4 == 0 && world instanceof WorldServer)
-                {
+                if (internalCounter % 4 == 0 && world instanceof WorldServer) {
                     WorldServer server = (WorldServer) world;
                     server.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.2, 0, 0.2, 0);
                 }
 
-            } else if (!hasOperated && progress > 0)
-            {
+            } else if (!hasOperated && progress > 0) {
                 progress -= (int) (efficiencyMultiplier * drainRate);
 
-                if (internalCounter % 2 == 0 && world instanceof WorldServer)
-                {
+                if (internalCounter % 2 == 0 && world instanceof WorldServer) {
                     WorldServer server = (WorldServer) world;
                     server.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.1, 0, 0.1, 0);
                 }
             }
 
-            if (hasOperated)
-            {
-                if (progress >= liquidRequired * stackSize)
-                {
+            if (hasOperated) {
+                if (progress >= liquidRequired * stackSize) {
                     ItemStack result = this.result;
 
                     if (!result.isEmpty())
@@ -502,8 +322,7 @@ public class BloodAltar implements IFluidHandler
                     tileAltar.setInventorySlotContents(0, result);
                     progress = 0;
 
-                    if (world instanceof WorldServer)
-                    {
+                    if (world instanceof WorldServer) {
                         WorldServer server = (WorldServer) world;
                         server.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.3, 0, 0.3, 0);
                     }
@@ -512,8 +331,7 @@ public class BloodAltar implements IFluidHandler
                     this.isActive = false;
                 }
             }
-        } else
-        {
+        } else {
             ItemStack returnedItem = tileAltar.getStackInSlot(0);
 
             if (returnedItem.isEmpty() || !(returnedItem.getItem() instanceof IBloodOrb))
@@ -530,16 +348,14 @@ public class BloodAltar implements IFluidHandler
             if (Strings.isNullOrEmpty(ownerUUID))
                 return;
 
-            if (fluid != null && fluid.amount >= 1)
-            {
+            if (fluid != null && fluid.amount >= 1) {
                 int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
 
                 BloodOrb orb = item.getOrb(returnedItem);
                 int drain = orb == null ? 0 : NetworkHelper.getSoulNetwork(ownerUUID).add(liquidDrained, (int) (orb.getCapacity() * this.orbCapacityMultiplier));
                 fluid.amount = fluid.amount - drain;
 
-                if (drain > 0 && internalCounter % 4 == 0 && world instanceof WorldServer)
-                {
+                if (drain > 0 && internalCounter % 4 == 0 && world instanceof WorldServer) {
                     WorldServer server = (WorldServer) world;
                     server.spawnParticle(EnumParticleTypes.SPELL_WITCH, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0, 0, 0, 0.001);
                 }
@@ -549,8 +365,7 @@ public class BloodAltar implements IFluidHandler
         tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
     }
 
-    public void checkTier()
-    {
+    public void checkTier() {
         EnumAltarTier tier = BloodAltar.getAltarTier(tileAltar.getWorld(), tileAltar.getPos());
         this.altarTier = tier;
 
@@ -559,8 +374,7 @@ public class BloodAltar implements IFluidHandler
         if (tier.equals(currentTierDisplayed))
             currentTierDisplayed = EnumAltarTier.ONE;
 
-        if (tier.equals(EnumAltarTier.ONE))
-        {
+        if (tier.equals(EnumAltarTier.ONE)) {
             upgrade = null;
             isUpgraded = false;
             this.consumptionMultiplier = 0;
@@ -576,8 +390,7 @@ public class BloodAltar implements IFluidHandler
             this.maxCharge = 0;
             this.totalCharge = 0;
             return;
-        } else if (!tier.equals(EnumAltarTier.ONE) && upgrade != null)
-        {
+        } else if (!tier.equals(EnumAltarTier.ONE) && upgrade != null) {
             this.isUpgraded = true;
             this.accelerationUpgrades = upgrade.getAccelerationCount();
             this.consumptionMultiplier = (float) (0.20 * upgrade.getSpeedCount());
@@ -607,128 +420,103 @@ public class BloodAltar implements IFluidHandler
         tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
     }
 
-    public int fillMainTank(int amount)
-    {
+    public int fillMainTank(int amount) {
         int filledAmount = Math.min(capacity - fluid.amount, amount);
         fluid.amount += filledAmount;
 
         return filledAmount;
     }
 
-    public void sacrificialDaggerCall(int amount, boolean isSacrifice)
-    {
-        if (this.lockdownDuration > 0)
-        {
+    public void sacrificialDaggerCall(int amount, boolean isSacrifice) {
+        if (this.lockdownDuration > 0) {
             int amt = (int) Math.min(bufferCapacity - fluidInput.amount, (isSacrifice ? 1 + sacrificeEfficiencyMultiplier : 1 + selfSacrificeEfficiencyMultiplier) * amount);
             fluidInput.amount += amt;
-        } else
-        {
+        } else {
             fluid.amount += Math.min(capacity - fluid.amount, (isSacrifice ? 1 + sacrificeEfficiencyMultiplier : 1 + selfSacrificeEfficiencyMultiplier) * amount);
         }
     }
 
-    public void setMainFluid(FluidStack fluid)
-    {
+    public void setMainFluid(FluidStack fluid) {
         this.fluid = fluid;
     }
 
-    public void setOutputFluid(FluidStack fluid)
-    {
+    public void setOutputFluid(FluidStack fluid) {
         this.fluidOutput = fluid;
     }
 
-    public void setInputFluid(FluidStack fluid)
-    {
+    public void setInputFluid(FluidStack fluid) {
         this.fluidInput = fluid;
     }
 
-    public AltarUpgrade getUpgrade()
-    {
+    public AltarUpgrade getUpgrade() {
         return upgrade;
     }
 
-    public void setUpgrade(AltarUpgrade upgrade)
-    {
+    public void setUpgrade(AltarUpgrade upgrade) {
         this.upgrade = upgrade;
     }
 
-    public int getCapacity()
-    {
+    public int getCapacity() {
         return capacity;
     }
 
-    public FluidStack getFluid()
-    {
+    public FluidStack getFluid() {
         return fluid;
     }
 
-    public int getFluidAmount()
-    {
+    public int getFluidAmount() {
         return fluid.amount;
     }
 
-    public int getCurrentBlood()
-    {
+    public int getCurrentBlood() {
         return getFluidAmount();
     }
 
-    public EnumAltarTier getTier()
-    {
+    public EnumAltarTier getTier() {
         return altarTier;
     }
 
-    public void setTier(EnumAltarTier tier)
-    {
+    public void setTier(EnumAltarTier tier) {
         this.altarTier = tier;
     }
 
-    public int getProgress()
-    {
+    public int getProgress() {
         return progress;
     }
 
-    public float getSacrificeMultiplier()
-    {
+    public float getSacrificeMultiplier() {
         return sacrificeEfficiencyMultiplier;
     }
 
-    public float getSelfSacrificeMultiplier()
-    {
+    public float getSelfSacrificeMultiplier() {
         return selfSacrificeEfficiencyMultiplier;
     }
 
-    public float getOrbMultiplier()
-    {
+    public float getOrbMultiplier() {
         return orbCapacityMultiplier;
     }
 
-    public float getDislocationMultiplier()
-    {
+    public float getDislocationMultiplier() {
         return dislocationMultiplier;
     }
 
-    public float getConsumptionMultiplier()
-    {
+    public float getConsumptionMultiplier() {
         return consumptionMultiplier;
     }
 
-    public float getConsumptionRate()
-    {
+    public float getConsumptionRate() {
         return consumptionRate;
     }
 
-    public int getLiquidRequired()
-    {
+    public int getLiquidRequired() {
         return liquidRequired;
     }
 
-    public int getBufferCapacity()
-    {
+    public int getBufferCapacity() {
         return bufferCapacity;
     }
 
-    public boolean setCurrentTierDisplayed(EnumAltarTier altarTier)
-    {
+    public boolean setCurrentTierDisplayed(EnumAltarTier altarTier) {
         if (currentTierDisplayed == altarTier)
             return false;
         else
@@ -736,99 +524,79 @@ public class BloodAltar implements IFluidHandler
         return true;
     }
 
-    public void addToDemonBloodDuration(int dur)
-    {
+    public void addToDemonBloodDuration(int dur) {
         this.demonBloodDuration += dur;
     }
 
-    public boolean hasDemonBlood()
-    {
+    public boolean hasDemonBlood() {
         return this.demonBloodDuration > 0;
     }
 
-    public void decrementDemonBlood()
-    {
+    public void decrementDemonBlood() {
         this.demonBloodDuration = Math.max(0, this.demonBloodDuration - 1);
     }
 
-    public void setActive()
-    {
-        if (tileAltar.getStackInSlot(0).isEmpty())
-        {
+    public void setActive() {
+        if (tileAltar.getStackInSlot(0).isEmpty()) {
             isActive = false;
         }
     }
 
-    public boolean isActive()
-    {
+    public boolean isActive() {
         return isActive;
     }
 
-    public void requestPauseAfterCrafting(int amount)
-    {
-        if (this.isActive)
-        {
+    public void requestPauseAfterCrafting(int amount) {
+        if (this.isActive) {
             this.cooldownAfterCrafting = amount;
         }
     }
 
-    public int getChargingRate()
-    {
+    public int getChargingRate() {
         return chargingRate;
     }
 
-    public int getTotalCharge()
-    {
+    public int getTotalCharge() {
         return totalCharge;
     }
 
-    public int getChargingFrequency()
-    {
+    public int getChargingFrequency() {
         return chargingFrequency == 0 ? 1 : chargingFrequency;
     }
 
     @Override
-    public int fill(FluidStack resource, boolean doFill)
-    {
-        if (resource == null || resource.getFluid() != BlockLifeEssence.getLifeEssence())
-        {
+    public int fill(FluidStack resource, boolean doFill) {
+        if (resource == null || resource.getFluid() != BlockLifeEssence.getLifeEssence()) {
             return 0;
         }
 
-        if (!doFill)
-        {
-            if (fluidInput == null)
-            {
+        if (!doFill) {
+            if (fluidInput == null) {
                 return Math.min(bufferCapacity, resource.amount);
             }
 
-            if (!fluidInput.isFluidEqual(resource))
-            {
+            if (!fluidInput.isFluidEqual(resource)) {
                 return 0;
             }
 
             return Math.min(bufferCapacity - fluidInput.amount, resource.amount);
         }
 
-        if (fluidInput == null)
-        {
+        if (fluidInput == null) {
             fluidInput = new FluidStack(resource, Math.min(bufferCapacity, resource.amount));
 
             return fluidInput.amount;
         }
 
-        if (!fluidInput.isFluidEqual(resource))
-        {
+        if (!fluidInput.isFluidEqual(resource)) {
             return 0;
         }
         int filled = bufferCapacity - fluidInput.amount;
 
-        if (resource.amount < filled)
-        {
+        if (resource.amount < filled) {
             fluidInput.amount += resource.amount;
             filled = resource.amount;
-        } else
-        {
+        } else {
             fluidInput.amount = bufferCapacity;
         }
 
@@ -836,44 +604,160 @@ public class BloodAltar implements IFluidHandler
     }
 
     @Override
-    public FluidStack drain(FluidStack resource, boolean doDrain)
-    {
-        if (resource == null || !resource.isFluidEqual(fluidOutput))
-        {
+    public FluidStack drain(FluidStack resource, boolean doDrain) {
+        if (resource == null || !resource.isFluidEqual(fluidOutput)) {
             return null;
         }
         return drain(resource.amount, doDrain);
     }
 
     @Override
-    public FluidStack drain(int maxDrain, boolean doDrain)
-    {
-        if (fluidOutput == null)
-        {
+    public FluidStack drain(int maxDrain, boolean doDrain) {
+        if (fluidOutput == null) {
             return null;
         }
 
         int drained = maxDrain;
-        if (fluidOutput.amount < drained)
-        {
+        if (fluidOutput.amount < drained) {
             drained = fluidOutput.amount;
         }
 
         FluidStack stack = new FluidStack(fluidOutput, drained);
-        if (doDrain)
-        {
+        if (doDrain) {
             fluidOutput.amount -= drained;
         }
         return stack;
     }
 
     @Override
-    public IFluidTankProperties[] getTankProperties()
-    {
-        return new IFluidTankProperties[] { new FluidTankPropertiesWrapper(new FluidTank(fluid, capacity)) };
+    public IFluidTankProperties[] getTankProperties() {
+        return new IFluidTankProperties[]{new FluidTankPropertiesWrapper(new FluidTank(fluid, capacity))};
     }
 
     public EnumAltarTier getCurrentTierDisplayed() {
         return currentTierDisplayed;
+    }
+
+    public static EnumAltarTier getAltarTier(World world, BlockPos pos) {
+        for (int i = EnumAltarTier.MAXTIERS - 1; i >= 1; i--) {
+            if (checkAltarIsValid(world, pos, i)) {
+                return EnumAltarTier.values()[i];
+            }
+        }
+
+        return EnumAltarTier.ONE;
+    }
+
+    public static boolean checkAltarIsValid(World world, BlockPos worldPos, int altarTier) {
+        for (AltarComponent altarComponent : EnumAltarTier.values()[altarTier].getAltarComponents()) {
+            BlockPos componentPos = worldPos.add(altarComponent.getOffset());
+            IBlockState state = world.getBlockState(componentPos);
+
+            if (altarComponent.getComponent() == EnumAltarComponent.NOTAIR && world.isAirBlock(componentPos))
+                return false;
+
+            if (state.getBlock() instanceof IAltarComponent) {
+                EnumAltarComponent component = ((IAltarComponent) state.getBlock()).getType(world, state, componentPos);
+                if (component == null || component != altarComponent.getComponent())
+                    return false;
+            }
+
+            EnumAltarComponent component = BloodMagicAPI.INSTANCE.getAltarComponents().get(state);
+            if (component == null || component != altarComponent.getComponent())
+                return false;
+        }
+
+        return true;
+    }
+
+    public static Pair<BlockPos, EnumAltarComponent> getAltarMissingBlock(World world, BlockPos worldPos, int altarTier) {
+        if (altarTier >= EnumAltarTier.MAXTIERS) {
+            return null;
+        }
+
+        for (AltarComponent altarComponent : EnumAltarTier.values()[altarTier].getAltarComponents()) {
+            BlockPos componentPos = worldPos.add(altarComponent.getOffset());
+            BlockStack worldBlock = new BlockStack(world.getBlockState(componentPos).getBlock(), world.getBlockState(componentPos).getBlock().getMetaFromState(world.getBlockState(componentPos)));
+
+            if (altarComponent.getComponent() != EnumAltarComponent.NOTAIR) {
+                if (worldBlock.getBlock() instanceof IAltarComponent) {
+                    EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(world, worldBlock.getState(), componentPos);
+                    if (component == null || component != altarComponent.getComponent()) {
+                        return Pair.of(componentPos, altarComponent.getComponent());
+                    }
+                } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent())) {
+                    return new ImmutablePair<BlockPos, EnumAltarComponent>(componentPos, altarComponent.getComponent());
+                }
+            } else {
+                if (world.isAirBlock(componentPos)) {
+                    return Pair.of(componentPos, altarComponent.getComponent());
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public static AltarUpgrade getUpgrades(World world, BlockPos pos, EnumAltarTier altarTier) {
+        if (world.isRemote) {
+            return null;
+        }
+
+        AltarUpgrade upgrades = new AltarUpgrade();
+        List<AltarComponent> list = altarTier.getAltarComponents();
+
+        for (AltarComponent altarComponent : list) {
+            BlockPos componentPos = pos.add(altarComponent.getOffset());
+
+            if (altarComponent.isUpgradeSlot()) {
+                BlockStack worldBlock = new BlockStack(world.getBlockState(componentPos).getBlock(), world.getBlockState(componentPos).getBlock().getMetaFromState(world.getBlockState(componentPos)));
+
+                if (worldBlock.getBlock() instanceof BlockBloodRune) {
+                    switch (((BlockBloodRune) worldBlock.getBlock()).getRuneEffect(worldBlock.getMeta())) {
+                        case 1:
+                            upgrades.addSpeed();
+                            break;
+
+                        case 2:
+                            upgrades.addEfficiency();
+                            break;
+
+                        case 3:
+                            upgrades.addSacrifice();
+                            break;
+
+                        case 4:
+                            upgrades.addSelfSacrifice();
+                            break;
+
+                        case 5:
+                            upgrades.addDisplacement();
+                            break;
+
+                        case 6:
+                            upgrades.addCapacity();
+                            break;
+
+                        case 7:
+                            upgrades.addBetterCapacity();
+                            break;
+
+                        case 8:
+                            upgrades.addOrbCapacity();
+                            break;
+
+                        case 9:
+                            upgrades.addAcceleration();
+                            break;
+
+                        case 10:
+                            upgrades.addCharging();
+                            break;
+                    }
+                }
+            }
+        }
+
+        return upgrades;
     }
 }

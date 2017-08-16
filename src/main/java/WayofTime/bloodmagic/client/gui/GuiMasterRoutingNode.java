@@ -12,12 +12,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiMasterRoutingNode extends GuiContainer
-{
+public class GuiMasterRoutingNode extends GuiContainer {
     private TileEntity inventory;
 
-    public GuiMasterRoutingNode(InventoryPlayer playerInventory, IInventory tileRoutingNode)
-    {
+    public GuiMasterRoutingNode(InventoryPlayer playerInventory, IInventory tileRoutingNode) {
         super(new ContainerMasterRoutingNode(playerInventory, tileRoutingNode));
         this.xSize = 216;
         this.ySize = 216;
@@ -25,15 +23,13 @@ public class GuiMasterRoutingNode extends GuiContainer
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
-    {
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 //        this.fontRendererObj.drawString(TextHelper.localize("tile.bloodmagic.soulForge.name"), 8, 5, 4210752);
 //        this.fontRendererObj.drawString(TextHelper.localize("container.inventory"), 8, 111, 4210752);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
-    {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         ResourceLocation soulForgeGuiTextures = new ResourceLocation(BloodMagic.MODID + ":textures/gui/masterRoutingNode.png");
         this.mc.getTextureManager().bindTexture(soulForgeGuiTextures);

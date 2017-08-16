@@ -1,15 +1,14 @@
 package WayofTime.bloodmagic.api.alchemyCrafting;
 
+import WayofTime.bloodmagic.api.iface.IAlchemyArray;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.iface.IAlchemyArray;
 
-public abstract class AlchemyArrayEffect
-{
+public abstract class AlchemyArrayEffect {
     public final String key;
 
     public AlchemyArrayEffect(String key) {
@@ -24,8 +23,7 @@ public abstract class AlchemyArrayEffect
 
     public abstract AlchemyArrayEffect getNewCopy();
 
-    public void onEntityCollidedWithBlock(IAlchemyArray array, World world, BlockPos pos, IBlockState state, Entity entity)
-    {
+    public void onEntityCollidedWithBlock(IAlchemyArray array, World world, BlockPos pos, IBlockState state, Entity entity) {
 
     }
 

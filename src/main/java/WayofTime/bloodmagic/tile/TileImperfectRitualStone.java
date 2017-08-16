@@ -11,20 +11,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileImperfectRitualStone extends TileBase implements IImperfectRitualStone
-{
+public class TileImperfectRitualStone extends TileBase implements IImperfectRitualStone {
     // IImperfectRitualStone
 
     @Override
-    public boolean performRitual(World world, BlockPos pos, ImperfectRitual imperfectRitual, EntityPlayer player)
-    {
-        if (imperfectRitual != null && ImperfectRitualRegistry.ritualEnabled(imperfectRitual))
-        {
-            if (!PlayerHelper.isFakePlayer(player) && !world.isRemote)
-            {
+    public boolean performRitual(World world, BlockPos pos, ImperfectRitual imperfectRitual, EntityPlayer player) {
+        if (imperfectRitual != null && ImperfectRitualRegistry.ritualEnabled(imperfectRitual)) {
+            if (!PlayerHelper.isFakePlayer(player) && !world.isRemote) {
                 NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, imperfectRitual.getActivationCost());
-                if (imperfectRitual.onActivate(this, player))
-                {
+                if (imperfectRitual.onActivate(this, player)) {
                     if (imperfectRitual.isLightshow())
                         getWorld().addWeatherEffect(new EntityLightningBolt(getWorld(), getPos().getX(), getPos().getY() + 2, getPos().getZ(), true));
                     return true;
@@ -38,14 +33,12 @@ public class TileImperfectRitualStone extends TileBase implements IImperfectRitu
     }
 
     @Override
-    public World getRitualWorld()
-    {
+    public World getRitualWorld() {
         return getWorld();
     }
 
     @Override
-    public BlockPos getRitualPos()
-    {
+    public BlockPos getRitualPos() {
         return getPos();
     }
 }

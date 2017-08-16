@@ -1,11 +1,16 @@
 package WayofTime.bloodmagic.item.soul;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import javax.annotation.Nullable;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IMultiWillTool;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.IDemonWill;
+import WayofTime.bloodmagic.api.soul.IDemonWillGem;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionWillGem;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -18,24 +23,16 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.iface.IMultiWillTool;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.IDemonWill;
-import WayofTime.bloodmagic.api.soul.IDemonWillGem;
-import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionWillGem;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, IMultiWillTool
-{
-    public static String[] names = { "petty", "lesser", "common", "greater", "grand" };
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
-    public ItemSoulGem()
-    {
+public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, IMultiWillTool {
+    public static String[] names = {"petty", "lesser", "common", "greater", "grand"};
+
+    public ItemSoulGem() {
         super();
 
         setUnlocalizedName(BloodMagic.MODID + ".soulGem.");
@@ -45,14 +42,12 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+    public String getUnlocalizedName(ItemStack stack) {
         return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         EnumDemonWillType type = this.getCurrentType(stack);
         double drain = Math.min(this.getWill(type, stack), this.getMaxWill(type, stack) / 10);
@@ -65,24 +60,20 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
 
     @Override
     @SideOnly(Side.CLIENT)
-    public ItemMeshDefinition getMeshDefinition()
-    {
+    public ItemMeshDefinition getMeshDefinition() {
         return new CustomMeshDefinitionWillGem("ItemSoulGem");
     }
 
     @Nullable
     @Override
-    public ResourceLocation getCustomLocation()
-    {
+    public ResourceLocation getCustomLocation() {
         return null;
     }
 
     @Override
-    public List<String> getVariants()
-    {
+    public List<String> getVariants() {
         List<String> ret = new ArrayList<String>();
-        for (EnumDemonWillType type : EnumDemonWillType.values())
-        {
+        for (EnumDemonWillType type : EnumDemonWillType.values()) {
             ret.add("type=petty_" + type.getName().toLowerCase());
             ret.add("type=lesser_" + type.getName().toLowerCase());
             ret.add("type=common_" + type.getName().toLowerCase());
@@ -94,21 +85,17 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     }
 
     @Override
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
-    {
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
-        for (int i = 0; i < names.length; i++)
-        {
+        for (int i = 0; i < names.length; i++) {
             ItemStack emptyStack = new ItemStack(this, 1, i);
 
             list.add(emptyStack);
         }
-        for (EnumDemonWillType type : EnumDemonWillType.values())
-        {
-            for (int i = 0; i < names.length; i++)
-            {
+        for (EnumDemonWillType type : EnumDemonWillType.values()) {
+            for (int i = 0; i < names.length; i++) {
                 ItemStack fullStack = new ItemStack(this, 1, i);
                 setWill(type, fullStack, getMaxWill(EnumDemonWillType.DEFAULT, fullStack));
                 list.add(fullStack);
@@ -118,8 +105,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         if (!stack.hasTagCompound())
             return;
 
@@ -132,57 +118,47 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     }
 
     @Override
-    public boolean showDurabilityBar(ItemStack stack)
-    {
+    public boolean showDurabilityBar(ItemStack stack) {
         return true;
     }
 
     @Override
-    public double getDurabilityForDisplay(ItemStack stack)
-    {
+    public double getDurabilityForDisplay(ItemStack stack) {
         EnumDemonWillType type = this.getCurrentType(stack);
         double maxWill = getMaxWill(type, stack);
-        if (maxWill <= 0)
-        {
+        if (maxWill <= 0) {
             return 1;
         }
         return 1.0 - (getWill(type, stack) / maxWill);
     }
 
     @Override
-    public int getRGBDurabilityForDisplay(ItemStack stack)
-    {
+    public int getRGBDurabilityForDisplay(ItemStack stack) {
         EnumDemonWillType type = this.getCurrentType(stack);
         double maxWill = getMaxWill(type, stack);
-        if (maxWill <= 0)
-        {
+        if (maxWill <= 0) {
             return 1;
         }
 
-        return MathHelper.hsvToRGB(Math.max(0.0F, (float)(getWill(type, stack)) / (float) maxWill) / 3.0F, 1.0F, 1.0F);
+        return MathHelper.hsvToRGB(Math.max(0.0F, (float) (getWill(type, stack)) / (float) maxWill) / 3.0F, 1.0F, 1.0F);
     }
 
     @Override
-    public ItemStack fillDemonWillGem(ItemStack soulGemStack, ItemStack soulStack)
-    {
-        if (soulStack != null && soulStack.getItem() instanceof IDemonWill)
-        {
+    public ItemStack fillDemonWillGem(ItemStack soulGemStack, ItemStack soulStack) {
+        if (soulStack != null && soulStack.getItem() instanceof IDemonWill) {
             EnumDemonWillType thisType = this.getCurrentType(soulGemStack);
-            if (thisType != ((IDemonWill) soulStack.getItem()).getType(soulStack))
-            {
+            if (thisType != ((IDemonWill) soulStack.getItem()).getType(soulStack)) {
                 return soulStack;
             }
             IDemonWill soul = (IDemonWill) soulStack.getItem();
             double soulsLeft = getWill(thisType, soulGemStack);
 
-            if (soulsLeft < getMaxWill(thisType, soulGemStack))
-            {
+            if (soulsLeft < getMaxWill(thisType, soulGemStack)) {
                 double newSoulsLeft = Math.min(soulsLeft + soul.getWill(thisType, soulStack), getMaxWill(thisType, soulGemStack));
                 soul.drainWill(thisType, soulStack, newSoulsLeft - soulsLeft);
 
                 setWill(thisType, soulGemStack, newSoulsLeft);
-                if (soul.getWill(thisType, soulStack) <= 0)
-                {
+                if (soul.getWill(thisType, soulStack) <= 0) {
                     return ItemStack.EMPTY;
                 }
             }
@@ -192,10 +168,8 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     }
 
     @Override
-    public double getWill(EnumDemonWillType type, ItemStack soulGemStack)
-    {
-        if (!type.equals(getCurrentType(soulGemStack)))
-        {
+    public double getWill(EnumDemonWillType type, ItemStack soulGemStack) {
+        if (!type.equals(getCurrentType(soulGemStack))) {
             return 0;
         }
 
@@ -205,8 +179,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     }
 
     @Override
-    public void setWill(EnumDemonWillType type, ItemStack soulGemStack, double souls)
-    {
+    public void setWill(EnumDemonWillType type, ItemStack soulGemStack, double souls) {
         setCurrentType(type, soulGemStack);
 
         NBTTagCompound tag = soulGemStack.getTagCompound();
@@ -215,19 +188,16 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     }
 
     @Override
-    public double drainWill(EnumDemonWillType type, ItemStack soulGemStack, double drainAmount, boolean doDrain)
-    {
+    public double drainWill(EnumDemonWillType type, ItemStack soulGemStack, double drainAmount, boolean doDrain) {
         EnumDemonWillType currentType = this.getCurrentType(soulGemStack);
-        if (currentType != type)
-        {
+        if (currentType != type) {
             return 0;
         }
         double souls = getWill(type, soulGemStack);
 
         double soulsDrained = Math.min(drainAmount, souls);
 
-        if (doDrain)
-        {
+        if (doDrain) {
             setWill(type, soulGemStack, souls - soulsDrained);
         }
 
@@ -235,55 +205,47 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     }
 
     @Override
-    public int getMaxWill(EnumDemonWillType type, ItemStack soulGemStack)
-    {
+    public int getMaxWill(EnumDemonWillType type, ItemStack soulGemStack) {
         EnumDemonWillType currentType = getCurrentType(soulGemStack);
-        if (!type.equals(currentType) && currentType != EnumDemonWillType.DEFAULT)
-        {
+        if (!type.equals(currentType) && currentType != EnumDemonWillType.DEFAULT) {
             return 0;
         }
 
-        switch (soulGemStack.getMetadata())
-        {
-        case 0:
-            return 64;
-        case 1:
-            return 256;
-        case 2:
-            return 1024;
-        case 3:
-            return 4096;
-        case 4:
-            return 16384;
+        switch (soulGemStack.getMetadata()) {
+            case 0:
+                return 64;
+            case 1:
+                return 256;
+            case 2:
+                return 1024;
+            case 3:
+                return 4096;
+            case 4:
+                return 16384;
         }
         return 64;
     }
 
     @Override
-    public EnumDemonWillType getCurrentType(ItemStack soulGemStack)
-    {
+    public EnumDemonWillType getCurrentType(ItemStack soulGemStack) {
         NBTHelper.checkNBT(soulGemStack);
 
         NBTTagCompound tag = soulGemStack.getTagCompound();
 
-        if (!tag.hasKey(Constants.NBT.WILL_TYPE))
-        {
+        if (!tag.hasKey(Constants.NBT.WILL_TYPE)) {
             return EnumDemonWillType.DEFAULT;
         }
 
         return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
     }
 
-    public void setCurrentType(EnumDemonWillType type, ItemStack soulGemStack)
-    {
+    public void setCurrentType(EnumDemonWillType type, ItemStack soulGemStack) {
         NBTHelper.checkNBT(soulGemStack);
 
         NBTTagCompound tag = soulGemStack.getTagCompound();
 
-        if (type == EnumDemonWillType.DEFAULT)
-        {
-            if (tag.hasKey(Constants.NBT.WILL_TYPE))
-            {
+        if (type == EnumDemonWillType.DEFAULT) {
+            if (tag.hasKey(Constants.NBT.WILL_TYPE)) {
                 tag.removeTag(Constants.NBT.WILL_TYPE);
             }
 
@@ -294,10 +256,8 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     }
 
     @Override
-    public double fillWill(EnumDemonWillType type, ItemStack stack, double fillAmount, boolean doFill)
-    {
-        if (!type.equals(getCurrentType(stack)) && this.getWill(getCurrentType(stack), stack) > 0)
-        {
+    public double fillWill(EnumDemonWillType type, ItemStack stack, double fillAmount, boolean doFill) {
+        if (!type.equals(getCurrentType(stack)) && this.getWill(getCurrentType(stack), stack) > 0) {
             return 0;
         }
 
@@ -306,8 +266,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
 
         double filled = Math.min(fillAmount, maxWill - current);
 
-        if (doFill)
-        {
+        if (doFill) {
             this.setWill(type, stack, filled + current);
         }
 

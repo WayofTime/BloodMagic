@@ -11,19 +11,15 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.UUID;
 
-public class BindableHelper
-{
+public class BindableHelper {
     /**
      * Sets the Owner Name of the item without checking if it is already bound.
      * Also bypasses {@link ItemBindEvent}.
-     * 
-     * @param stack
-     *        - The ItemStack to bind
-     * @param ownerName
-     *        - The username to bind the ItemStack to
+     *
+     * @param stack     - The ItemStack to bind
+     * @param ownerName - The username to bind the ItemStack to
      */
-    public static void setItemOwnerName(ItemStack stack, String ownerName)
-    {
+    public static void setItemOwnerName(ItemStack stack, String ownerName) {
         stack = NBTHelper.checkNBT(stack);
 
         stack.getTagCompound().setString(Constants.NBT.OWNER_NAME, ownerName);
@@ -32,14 +28,11 @@ public class BindableHelper
     /**
      * Sets the Owner UUID of the item without checking if it is already bound.
      * Also bypasses {@link ItemBindEvent}.
-     * 
-     * @param stack
-     *        - The ItemStack to bind
-     * @param ownerUUID
-     *        - The UUID to bind the ItemStack to
+     *
+     * @param stack     - The ItemStack to bind
+     * @param ownerUUID - The UUID to bind the ItemStack to
      */
-    public static void setItemOwnerUUID(ItemStack stack, String ownerUUID)
-    {
+    public static void setItemOwnerUUID(ItemStack stack, String ownerUUID) {
         stack = NBTHelper.checkNBT(stack);
 
         stack.getTagCompound().setString(Constants.NBT.OWNER_UUID, ownerUUID);
@@ -49,17 +42,14 @@ public class BindableHelper
 
     /**
      * Deprecated.
-     * 
+     * <p>
      * Built into {@link IBindable} now.
-     * 
-     * @param stack
-     *        - The ItemStack to check the owner of
-     * 
+     *
+     * @param stack - The ItemStack to check the owner of
      * @return - The username of the ItemStack's owner
      */
     @Deprecated
-    public static String getOwnerName(ItemStack stack)
-    {
+    public static String getOwnerName(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
 
         return PlayerHelper.getUsernameFromStack(stack);
@@ -67,17 +57,14 @@ public class BindableHelper
 
     /**
      * Deprecated.
-     * 
+     * <p>
      * Built into {@link IBindable} now.
-     * 
-     * @param stack
-     *        - The ItemStack to check the owner of
-     * 
+     *
+     * @param stack - The ItemStack to check the owner of
      * @return - The UUID of the ItemStack's owner
      */
     @Deprecated
-    public static String getOwnerUUID(ItemStack stack)
-    {
+    public static String getOwnerUUID(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
 
         return stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
@@ -85,41 +72,32 @@ public class BindableHelper
 
     /**
      * Deprecated.
-     * 
+     * <p>
      * Now handled automatically with
      * {@link GenericHandler#onInteract(PlayerInteractEvent.RightClickItem)}
-     * 
-     * @param stack
-     *        - The ItemStack to bind
-     * @param player
-     *        - The Player to bind the ItemStack to
-     * 
+     *
+     * @param stack  - The ItemStack to bind
+     * @param player - The Player to bind the ItemStack to
      * @return - Whether binding was successful
      */
     @Deprecated
-    public static boolean checkAndSetItemOwner(ItemStack stack, EntityPlayer player)
-    {
+    public static boolean checkAndSetItemOwner(ItemStack stack, EntityPlayer player) {
         return !PlayerHelper.isFakePlayer(player) && checkAndSetItemOwner(stack, PlayerHelper.getUUIDFromPlayer(player), player.getName());
     }
 
     /**
      * Deprecated.
-     * 
+     * <p>
      * Now handled automatically with
      * {@link GenericHandler#onInteract(PlayerInteractEvent.RightClickItem)}
-     * 
-     * @param stack
-     *        - The ItemStack to bind
-     * @param uuid
-     *        - The username to bind the ItemStack to
-     * @param currentUsername
-     *        - The current name of the player.
-     * 
+     *
+     * @param stack           - The ItemStack to bind
+     * @param uuid            - The username to bind the ItemStack to
+     * @param currentUsername - The current name of the player.
      * @return - Whether the binding was successful
      */
     @Deprecated
-    public static boolean checkAndSetItemOwner(ItemStack stack, String uuid, String currentUsername)
-    {
+    public static boolean checkAndSetItemOwner(ItemStack stack, String uuid, String currentUsername) {
         stack = NBTHelper.checkNBT(stack);
 
         if (!(stack.getItem() instanceof IBindable))
@@ -144,36 +122,28 @@ public class BindableHelper
 
     /**
      * Deprecated.
-     * 
+     * <p>
      * Now handled automatically with
      * {@link GenericHandler#onInteract(PlayerInteractEvent.RightClickItem)}
-     * 
-     * @param stack
-     *        - ItemStack to check
-     * @param uuid
-     *        - UUID of the Player
-     * @param currentUsername
-     *        - The current name of the player.
+     *
+     * @param stack           - ItemStack to check
+     * @param uuid            - UUID of the Player
+     * @param currentUsername - The current name of the player.
      */
     @Deprecated
-    public static boolean checkAndSetItemOwner(ItemStack stack, UUID uuid, String currentUsername)
-    {
+    public static boolean checkAndSetItemOwner(ItemStack stack, UUID uuid, String currentUsername) {
         return checkAndSetItemOwner(stack, uuid.toString(), currentUsername);
     }
 
     /**
      * Deprecated.
-     * 
+     *
+     * @param stack     - The ItemStack to bind
+     * @param ownerName - The username to bind the ItemStack to
      * @see #setItemOwnerName(ItemStack, String)
-     * 
-     * @param stack
-     *        - The ItemStack to bind
-     * @param ownerName
-     *        - The username to bind the ItemStack to
      */
     @Deprecated
-    public static void setItemOwner(ItemStack stack, String ownerName)
-    {
+    public static void setItemOwner(ItemStack stack, String ownerName) {
         setItemOwnerName(stack, ownerName);
     }
 }

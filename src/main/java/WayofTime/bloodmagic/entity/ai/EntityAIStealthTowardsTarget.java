@@ -1,52 +1,43 @@
 package WayofTime.bloodmagic.entity.ai;
 
+import WayofTime.bloodmagic.entity.mob.EntityCorruptedChicken;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.math.Vec3d;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedChicken;
 
-public class EntityAIStealthTowardsTarget extends EntityAIBase
-{
+public class EntityAIStealthTowardsTarget extends EntityAIBase {
     private final EntityCorruptedChicken entity;
+    private final double speed;
     private double xPosition;
     private double yPosition;
     private double zPosition;
-    private final double speed;
-
     private int ticksLeft = 0;
 
-    public EntityAIStealthTowardsTarget(EntityCorruptedChicken creatureIn, double speedIn)
-    {
+    public EntityAIStealthTowardsTarget(EntityCorruptedChicken creatureIn, double speedIn) {
         this.entity = creatureIn;
         this.speed = speedIn;
         this.setMutexBits(1);
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        if (this.entity.attackStateMachine != 0 || this.entity.getAttackTarget() == null)
-        {
+    public boolean shouldExecute() {
+        if (this.entity.attackStateMachine != 0 || this.entity.getAttackTarget() == null) {
             return false;
         }
 
         EntityLivingBase target = this.entity.getAttackTarget();
         Vec3d vec3d = null;
-        if (target instanceof EntityCreature)
-        {
+        if (target instanceof EntityCreature) {
             vec3d = RandomPositionGenerator.findRandomTarget((EntityCreature) target, 10, 7);
-        } else
-        {
+        } else {
             vec3d = RandomPositionGenerator.findRandomTarget(this.entity, 10, 7);
         }
 
-        if (vec3d == null)
-        {
+        if (vec3d == null) {
             return false;
-        } else
-        {
+        } else {
             ticksLeft = this.entity.getEntityWorld().rand.nextInt(200) + 100;
             this.xPosition = vec3d.x;
             this.yPosition = vec3d.y;
@@ -56,36 +47,29 @@ public class EntityAIStealthTowardsTarget extends EntityAIBase
     }
 
     @Override
-    public void resetTask()
-    {
+    public void resetTask() {
         ticksLeft = 0;
     }
 
     @Override
-    public boolean shouldContinueExecuting()
-    {
+    public boolean shouldContinueExecuting() {
         ticksLeft--;
-        if (ticksLeft <= 0)
-        {
+        if (ticksLeft <= 0) {
             this.entity.attackStateMachine = 1;
         }
 
         this.entity.cloak();
 
-        if (this.entity.getNavigator().noPath())
-        {
+        if (this.entity.getNavigator().noPath()) {
             EntityLivingBase target = this.entity.getAttackTarget();
             Vec3d vec3d;
-            if (target instanceof EntityCreature)
-            {
+            if (target instanceof EntityCreature) {
                 vec3d = RandomPositionGenerator.findRandomTarget((EntityCreature) target, 10, 7);
-            } else
-            {
+            } else {
                 vec3d = RandomPositionGenerator.findRandomTarget(this.entity, 10, 7);
             }
 
-            if (vec3d != null)
-            {
+            if (vec3d != null) {
                 this.xPosition = vec3d.x;
                 this.yPosition = vec3d.y;
                 this.zPosition = vec3d.z;
@@ -97,8 +81,7 @@ public class EntityAIStealthTowardsTarget extends EntityAIBase
     }
 
     @Override
-    public void startExecuting()
-    {
+    public void startExecuting() {
         this.entity.getNavigator().tryMoveToXYZ(this.xPosition, this.yPosition, this.zPosition, this.speed);
     }
 }

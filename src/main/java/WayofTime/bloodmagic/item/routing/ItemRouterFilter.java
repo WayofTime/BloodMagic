@@ -1,11 +1,13 @@
 package WayofTime.bloodmagic.item.routing;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.item.inventory.ItemInventory;
+import WayofTime.bloodmagic.routing.*;
+import WayofTime.bloodmagic.util.GhostItemHelper;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -14,28 +16,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
-
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.item.inventory.ItemInventory;
-import WayofTime.bloodmagic.routing.DefaultItemFilter;
-import WayofTime.bloodmagic.routing.IItemFilter;
-import WayofTime.bloodmagic.routing.IgnoreNBTItemFilter;
-import WayofTime.bloodmagic.routing.ModIdItemFilter;
-import WayofTime.bloodmagic.routing.OreDictItemFilter;
-import WayofTime.bloodmagic.routing.TestItemFilter;
-import WayofTime.bloodmagic.util.GhostItemHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ItemRouterFilter extends Item implements IItemFilterProvider, IVariantProvider
-{
-    public static String[] names = { "exact", "ignoreNBT", "modItems", "oreDict" };
+public class ItemRouterFilter extends Item implements IItemFilterProvider, IVariantProvider {
+    public static String[] names = {"exact", "ignoreNBT", "modItems", "oreDict"};
 
-    public ItemRouterFilter()
-    {
+    public ItemRouterFilter() {
         super();
 
         setUnlocalizedName(BloodMagic.MODID + ".itemFilter.");
@@ -44,15 +34,13 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+    public String getUnlocalizedName(ItemStack stack) {
         return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
-    {
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
@@ -62,44 +50,39 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         tooltip.add(TextHelper.localize("tooltip.bloodmagic.itemFilter." + names[stack.getItemDamage()]));
 
         super.addInformation(stack, world, tooltip, flag);
     }
 
     @Override
-    public IItemFilter getInputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
-    {
+    public IItemFilter getInputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler) {
         IItemFilter testFilter = new TestItemFilter();
 
-        switch (filterStack.getMetadata())
-        {
-        case 0:
-            testFilter = new TestItemFilter();
-            break;
-        case 1:
-            testFilter = new IgnoreNBTItemFilter();
-            break;
-        case 2:
-            testFilter = new ModIdItemFilter();
-            break;
-        case 3:
-            testFilter = new OreDictItemFilter();
-            break;
+        switch (filterStack.getMetadata()) {
+            case 0:
+                testFilter = new TestItemFilter();
+                break;
+            case 1:
+                testFilter = new IgnoreNBTItemFilter();
+                break;
+            case 2:
+                testFilter = new ModIdItemFilter();
+                break;
+            case 3:
+                testFilter = new OreDictItemFilter();
+                break;
 
-        default:
-            testFilter = new DefaultItemFilter();
+            default:
+                testFilter = new DefaultItemFilter();
         }
 
         List<ItemStack> filteredList = new ArrayList<ItemStack>();
         ItemInventory inv = new ItemInventory(filterStack, 9, "");
-        for (int i = 0; i < inv.getSizeInventory(); i++)
-        {
+        for (int i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
-            if (stack == null)
-            {
+            if (stack == null) {
                 continue;
             }
 
@@ -113,42 +96,37 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     }
 
     @Override
-    public IItemFilter getOutputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
-    {
+    public IItemFilter getOutputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler) {
         IItemFilter testFilter;
 
-        switch (filterStack.getMetadata())
-        {
-        case 0:
-            testFilter = new TestItemFilter();
-            break;
-        case 1:
-            testFilter = new IgnoreNBTItemFilter();
-            break;
-        case 2:
-            testFilter = new ModIdItemFilter();
-            break;
-        case 3:
-            testFilter = new OreDictItemFilter();
-            break;
+        switch (filterStack.getMetadata()) {
+            case 0:
+                testFilter = new TestItemFilter();
+                break;
+            case 1:
+                testFilter = new IgnoreNBTItemFilter();
+                break;
+            case 2:
+                testFilter = new ModIdItemFilter();
+                break;
+            case 3:
+                testFilter = new OreDictItemFilter();
+                break;
 
-        default:
-            testFilter = new DefaultItemFilter();
+            default:
+                testFilter = new DefaultItemFilter();
         }
 
         List<ItemStack> filteredList = new ArrayList<ItemStack>();
         ItemInventory inv = new ItemInventory(filterStack, 9, ""); //TODO: Change to grab the filter from the Item later.
-        for (int i = 0; i < inv.getSizeInventory(); i++)
-        {
+        for (int i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
-            if (stack == null)
-            {
+            if (stack == null) {
                 continue;
             }
 
             ItemStack ghostStack = GhostItemHelper.getStackFromGhost(stack);
-            if (ghostStack.isEmpty())
-            {
+            if (ghostStack.isEmpty()) {
                 ghostStack.setCount(Integer.MAX_VALUE);
             }
 
@@ -160,8 +138,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "type=exact"));
         ret.add(new ImmutablePair<Integer, String>(1, "type=ignorenbt"));
@@ -171,8 +148,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     }
 
     @Override
-    public ItemStack getContainedStackForItem(ItemStack filterStack, ItemStack keyStack)
-    {
+    public ItemStack getContainedStackForItem(ItemStack filterStack, ItemStack keyStack) {
         ItemStack copyStack = keyStack.copy();
         GhostItemHelper.setItemGhostAmount(copyStack, 0);
         copyStack.setCount(1);

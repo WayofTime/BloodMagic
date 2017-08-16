@@ -4,8 +4,7 @@ import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;
 
-public interface IBloodOrb
-{
+public interface IBloodOrb {
     @Nullable
     BloodOrb getOrb(ItemStack stack);
 }

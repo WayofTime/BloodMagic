@@ -33,33 +33,27 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.Collections;
 import java.util.List;
 
-public class ItemSanguineBook extends Item implements IVariantProvider, IAltarManipulator
-{
+public class ItemSanguineBook extends Item implements IVariantProvider, IAltarManipulator {
     private EnumAltarTier currentDisplayedTier = EnumAltarTier.ONE;
 
-    public ItemSanguineBook()
-    {
+    public ItemSanguineBook() {
         setUnlocalizedName(BloodMagic.MODID + ".sanguineBook");
         setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-    {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (world.isRemote)
             return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
 
         IBlockState hitState = world.getBlockState(pos);
-        if (player.isSneaking())
-        {
-            if (hitState.getBlock() instanceof IDocumentedBlock)
-            {
+        if (player.isSneaking()) {
+            if (hitState.getBlock() instanceof IDocumentedBlock) {
                 trySetDisplayedTier(world, pos);
                 IDocumentedBlock documentedBlock = (IDocumentedBlock) hitState.getBlock();
                 List<ITextComponent> docs = documentedBlock.getDocumentation(player, world, pos, hitState);
-                if (!docs.isEmpty())
-                {
+                if (!docs.isEmpty()) {
                     ChatUtil.sendNoSpam(player, docs.toArray(new ITextComponent[docs.size()]));
                     return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
                 }
@@ -70,8 +64,7 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote)
             return super.onItemRightClick(world, player, hand);
@@ -79,8 +72,7 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
         stack = NBTHelper.checkNBT(stack);
 
         RayTraceResult rayTrace = rayTrace(world, player, false);
-        if (rayTrace == null || rayTrace.typeOfHit == RayTraceResult.Type.MISS || rayTrace.typeOfHit == RayTraceResult.Type.ENTITY)
-        {
+        if (rayTrace == null || rayTrace.typeOfHit == RayTraceResult.Type.MISS || rayTrace.typeOfHit == RayTraceResult.Type.ENTITY) {
             if (stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) >= EnumAltarTier.MAXTIERS - 1)
                 stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, 0);
             else
@@ -95,11 +87,9 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
         return super.onItemRightClick(world, player, hand);
     }
 
-    public boolean trySetDisplayedTier(World world, BlockPos pos)
-    {
+    public boolean trySetDisplayedTier(World world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof TileAltar)
-        {
+        if (tile instanceof TileAltar) {
             return !((TileAltar) tile).setCurrentTierDisplayed(currentDisplayedTier);
         }
 
@@ -108,8 +98,7 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         if (!stack.hasTagCompound())
             return;
         tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.book.shifting"));
@@ -120,8 +109,7 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
     // IVariantProvider
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         return Collections.singletonList(Pair.of(0, "type=normal"));
     }
 }

@@ -1,22 +1,21 @@
 package WayofTime.bloodmagic.api.ritual;
 
-import java.util.List;
-
 import WayofTime.bloodmagic.api.saving.SoulNetwork;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+
+import java.util.List;
 
 /**
  * This interface is for internal implementation only.
- * 
+ * <p>
  * It is provided via the API for easy obtaining of basic data.
  */
-public interface IMasterRitualStone
-{
+public interface IMasterRitualStone {
     String getOwner();
 
     SoulNetwork getOwnerNetwork();

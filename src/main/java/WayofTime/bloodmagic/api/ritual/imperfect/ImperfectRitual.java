@@ -9,8 +9,7 @@ import net.minecraft.world.World;
  * registered with
  * {@link WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry#registerRitual(ImperfectRitual)}
  */
-public abstract class ImperfectRitual
-{
+public abstract class ImperfectRitual {
 
     private final String name;
     private final BlockStack requiredBlock;
@@ -27,26 +26,20 @@ public abstract class ImperfectRitual
     }
 
     /**
-     * @param name
-     *        - The name of the ritual
-     * @param requiredBlock
-     *        - The block required above the ImperfectRitualStone
-     * @param activationCost
-     *        - Base LP cost for activating the ritual
+     * @param name           - The name of the ritual
+     * @param requiredBlock  - The block required above the ImperfectRitualStone
+     * @param activationCost - Base LP cost for activating the ritual
      */
-    public ImperfectRitual(String name, BlockStack requiredBlock, int activationCost, String unlocalizedName)
-    {
+    public ImperfectRitual(String name, BlockStack requiredBlock, int activationCost, String unlocalizedName) {
         this(name, requiredBlock, activationCost, false, unlocalizedName);
     }
 
     /**
      * Called when the player activates the ritual
      * {@link WayofTime.bloodmagic.tile.TileImperfectRitualStone#performRitual(World, net.minecraft.util.math.BlockPos, ImperfectRitual, EntityPlayer)}
-     * 
-     * @param imperfectRitualStone
-     *        - The {@link IImperfectRitualStone} that the ritual is bound to
-     * @param player
-     *        - The player activating the ritual
+     *
+     * @param imperfectRitualStone - The {@link IImperfectRitualStone} that the ritual is bound to
+     * @param player               - The player activating the ritual
      * @return - Whether activation was successful
      */
     public abstract boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player);
@@ -72,8 +65,7 @@ public abstract class ImperfectRitual
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return getName() + ":" + getRequiredBlock().toString() + "@" + getActivationCost();
     }
 

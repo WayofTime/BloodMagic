@@ -1,25 +1,23 @@
 package WayofTime.bloodmagic.client.hud;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.proxy.ClientProxy;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.proxy.ClientProxy;
-import WayofTime.bloodmagic.util.Utils;
 
-public class HUDElementDemonWillAura extends HUDElement
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class HUDElementDemonWillAura extends HUDElement {
     protected List<EnumDemonWillType> barOrder = new ArrayList<EnumDemonWillType>();
 
-    public HUDElementDemonWillAura()
-    {
+    public HUDElementDemonWillAura() {
         super(5, 5, RenderGameOverlayEvent.ElementType.HOTBAR);
 
         barOrder.add(EnumDemonWillType.DEFAULT);
@@ -30,12 +28,10 @@ public class HUDElementDemonWillAura extends HUDElement
     }
 
     @Override
-    public void render(Minecraft minecraft, ScaledResolution resolution, float partialTicks)
-    {
+    public void render(Minecraft minecraft, ScaledResolution resolution, float partialTicks) {
         EntityPlayer player = minecraft.player;
 
-        if (!Utils.canPlayerSeeDemonWill(player))
-        {
+        if (!Utils.canPlayerSeeDemonWill(player)) {
             return;
         }
 
@@ -46,8 +42,7 @@ public class HUDElementDemonWillAura extends HUDElement
         double maxAmount = Utils.getDemonWillResolution(player);
 
         int i = 0;
-        for (EnumDemonWillType type : barOrder)
-        {
+        for (EnumDemonWillType type : barOrder) {
             i++;
             GlStateManager.color(1.0F, 1.0F, 1.0F);
             minecraft.getTextureManager().bindTexture(new ResourceLocation(BloodMagic.MODID, "textures/hud/bars.png"));
@@ -67,8 +62,7 @@ public class HUDElementDemonWillAura extends HUDElement
 
             this.drawTexturedModalRect(x, y, textureX, textureY, width, height);
 
-            if (player.isSneaking())
-            {
+            if (player.isSneaking()) {
                 GlStateManager.pushMatrix();
                 String value = "" + (int) amount;
                 GlStateManager.translate(x - 2 * textureXOffset - value.length() * 0 + 70, (y - 1), 0);
@@ -80,8 +74,7 @@ public class HUDElementDemonWillAura extends HUDElement
     }
 
     @Override
-    public boolean shouldRender(Minecraft minecraft)
-    {
+    public boolean shouldRender(Minecraft minecraft) {
         return true;
     }
 }

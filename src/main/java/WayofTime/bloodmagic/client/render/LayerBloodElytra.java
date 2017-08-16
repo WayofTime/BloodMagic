@@ -13,26 +13,21 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class LayerBloodElytra implements LayerRenderer<AbstractClientPlayer>
-{
+public class LayerBloodElytra implements LayerRenderer<AbstractClientPlayer> {
 
     private static final ResourceLocation TEXTURE_BLOOD_ELYTRA = new ResourceLocation("bloodmagic", "textures/entities/bloodElytra.png");
     private final RenderPlayer renderPlayer;
     private final ModelElytra modelElytra = new ModelElytra();
 
-    public LayerBloodElytra(RenderPlayer renderPlayer)
-    {
+    public LayerBloodElytra(RenderPlayer renderPlayer) {
         this.renderPlayer = renderPlayer;
     }
 
     @Override
-    public void doRenderLayer(AbstractClientPlayer clientPlayer, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
-    {
-        if (LivingArmour.hasFullSet(clientPlayer))
-        {
+    public void doRenderLayer(AbstractClientPlayer clientPlayer, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        if (LivingArmour.hasFullSet(clientPlayer)) {
             ItemStack chestStack = clientPlayer.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-            if (ItemLivingArmour.hasUpgrade(BloodMagic.MODID + ".upgrade.elytra", chestStack))
-            {
+            if (ItemLivingArmour.hasUpgrade(BloodMagic.MODID + ".upgrade.elytra", chestStack)) {
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 GlStateManager.enableBlend();
 
@@ -52,8 +47,7 @@ public class LayerBloodElytra implements LayerRenderer<AbstractClientPlayer>
     }
 
     @Override
-    public boolean shouldCombineTextures()
-    {
+    public boolean shouldCombineTextures() {
         return false;
     }
 }

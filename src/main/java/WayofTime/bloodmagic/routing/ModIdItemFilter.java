@@ -5,13 +5,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-public class ModIdItemFilter extends TestItemFilter
-{
+public class ModIdItemFilter extends TestItemFilter {
     @Override
-    public boolean doStacksMatch(ItemStack filterStack, ItemStack testStack)
-    {
-        if (ItemStack.areItemsEqualIgnoreDurability(filterStack, testStack))
-        {
+    public boolean doStacksMatch(ItemStack filterStack, ItemStack testStack) {
+        if (ItemStack.areItemsEqualIgnoreDurability(filterStack, testStack)) {
             String keyId = getModID(filterStack.getItem());
             String checkedId = getModID(testStack.getItem());
             return keyId.equals(checkedId);
@@ -20,8 +17,7 @@ public class ModIdItemFilter extends TestItemFilter
         return false;
     }
 
-    public String getModID(Item item)
-    {
+    public String getModID(Item item) {
         ResourceLocation resource = ForgeRegistries.ITEMS.getKey(item);
         return resource.getResourceDomain();
     }

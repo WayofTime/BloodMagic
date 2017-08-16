@@ -1,32 +1,30 @@
 package WayofTime.bloodmagic.recipe.alchemyTable;
 
-import java.util.*;
-
+import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
-import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 
-public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
-{
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+public class AlchemyTablePotionRecipe extends AlchemyTableRecipe {
     public static final ItemStack basePotionFlaskStack = new ItemStack(RegistrarBloodMagicItems.POTION_FLASK, 1, OreDictionary.WILDCARD_VALUE);
-    protected PotionEffect baseEffect;
-
     public static final int temporaryMaximumEffectsOnThePotionFlaskYesThisIsALongFieldItIsJustSoIRemember = 3;
-
+    protected PotionEffect baseEffect;
     protected double baseAddedImpurity = 5;
 
-    public AlchemyTablePotionRecipe(int lpDrained, int ticksRequired, int tierRequired, List<ItemStack> inputItems, PotionEffect baseEffect)
-    {
+    public AlchemyTablePotionRecipe(int lpDrained, int ticksRequired, int tierRequired, List<ItemStack> inputItems, PotionEffect baseEffect) {
         super(basePotionFlaskStack, lpDrained, ticksRequired, tierRequired);
 
         ArrayList<Object> recipe = new ArrayList<Object>();
-        for (ItemStack stack : inputItems)
-        {
+        for (ItemStack stack : inputItems) {
             recipe.add(stack);
         }
         recipe.add(basePotionFlaskStack);
@@ -35,32 +33,26 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
         this.baseEffect = baseEffect;
     }
 
-    public AlchemyTablePotionRecipe(int lpDrained, int ticksRequired, int tierRequired, ItemStack inputItem, PotionEffect baseEffect)
-    {
+    public AlchemyTablePotionRecipe(int lpDrained, int ticksRequired, int tierRequired, ItemStack inputItem, PotionEffect baseEffect) {
         this(lpDrained, ticksRequired, tierRequired, Collections.singletonList(inputItem), baseEffect);
     }
 
     @Override
-    public ItemStack getRecipeOutput(List<ItemStack> inputList)
-    {
+    public ItemStack getRecipeOutput(List<ItemStack> inputList) {
         int flaskLocation = -1;
-        for (int x = 0; x < inputList.size(); x++)
-        {
+        for (int x = 0; x < inputList.size(); x++) {
             ItemStack slot = inputList.get(x);
 
-            if (slot != null)
-            {
+            if (slot != null) {
                 boolean match = slot.getItem() == RegistrarBloodMagicItems.POTION_FLASK;
 
-                if (match)
-                {
+                if (match) {
                     flaskLocation = x;
                 }
             }
         }
 
-        if (flaskLocation != -1)
-        {
+        if (flaskLocation != -1) {
             return getModifiedFlaskForInput(inputList.get(flaskLocation));
         }
 
@@ -68,8 +60,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
     }
 
     @Override
-    public boolean matches(List<ItemStack> checkedList, World world, BlockPos pos)
-    {
+    public boolean matches(List<ItemStack> checkedList, World world, BlockPos pos) {
         ArrayList<Object> required = new ArrayList<Object>(input);
 
         for (ItemStack slot : checkedList) {
@@ -112,18 +103,14 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
         return required.isEmpty();
     }
 
-    public boolean isPotionFlaskValidInput(ItemStack stack)
-    {
+    public boolean isPotionFlaskValidInput(ItemStack stack) {
         List<PotionEffect> effectList = PotionUtils.getEffectsFromStack(stack);
-        if (effectList.size() >= temporaryMaximumEffectsOnThePotionFlaskYesThisIsALongFieldItIsJustSoIRemember)
-        {
+        if (effectList.size() >= temporaryMaximumEffectsOnThePotionFlaskYesThisIsALongFieldItIsJustSoIRemember) {
             return false;
         }
 
-        for (PotionEffect eff : effectList)
-        {
-            if (eff.getPotion() == baseEffect.getPotion())
-            {
+        for (PotionEffect eff : effectList) {
+            if (eff.getPotion() == baseEffect.getPotion()) {
                 return false;
             }
         }
@@ -131,10 +118,8 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe
         return true;
     }
 
-    public ItemStack getModifiedFlaskForInput(ItemStack inputStack)
-    {
-        if (inputStack.isEmpty())
-        {
+    public ItemStack getModifiedFlaskForInput(ItemStack inputStack) {
+        if (inputStack.isEmpty()) {
             ItemStack outputStack = new ItemStack(RegistrarBloodMagicItems.POTION_FLASK);
 
             List<PotionEffect> effectList = new ArrayList<PotionEffect>();

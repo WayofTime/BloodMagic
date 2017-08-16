@@ -7,47 +7,39 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class SigilHoldingPacketProcessor implements IMessage, IMessageHandler<SigilHoldingPacketProcessor, IMessage>
-{
+public class SigilHoldingPacketProcessor implements IMessage, IMessageHandler<SigilHoldingPacketProcessor, IMessage> {
     private int slot;
     private int mode;
 
-    public SigilHoldingPacketProcessor()
-    {
+    public SigilHoldingPacketProcessor() {
     }
 
-    public SigilHoldingPacketProcessor(int slot, int mode)
-    {
+    public SigilHoldingPacketProcessor(int slot, int mode) {
         this.slot = slot;
         this.mode = mode;
     }
 
     @Override
-    public void toBytes(ByteBuf buffer)
-    {
+    public void toBytes(ByteBuf buffer) {
         buffer.writeInt(slot);
         buffer.writeInt(mode);
     }
 
     @Override
-    public void fromBytes(ByteBuf buffer)
-    {
+    public void fromBytes(ByteBuf buffer) {
         slot = buffer.readInt();
         mode = buffer.readInt();
     }
 
     @Override
-    public IMessage onMessage(SigilHoldingPacketProcessor message, MessageContext ctx)
-    {
+    public IMessage onMessage(SigilHoldingPacketProcessor message, MessageContext ctx) {
         ItemStack itemStack = ItemStack.EMPTY;
 
-        if (message.slot > -1 && message.slot < 9)
-        {
+        if (message.slot > -1 && message.slot < 9) {
             itemStack = ctx.getServerHandler().player.inventory.getStackInSlot(message.slot);
         }
 
-        if (!itemStack.isEmpty())
-        {
+        if (!itemStack.isEmpty()) {
             ItemSigilHolding.cycleToNextSigil(itemStack, message.mode);
         }
 

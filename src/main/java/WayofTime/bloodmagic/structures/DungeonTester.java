@@ -1,19 +1,16 @@
 package WayofTime.bloodmagic.structures;
 
-import java.util.Random;
-
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 
-public class DungeonTester
-{
-    public static void testDungeonGeneration(WorldServer world, BlockPos pos)
-    {
+import java.util.Random;
+
+public class DungeonTester {
+    public static void testDungeonGeneration(WorldServer world, BlockPos pos) {
 
     }
 
-    public static void testDungeonElementWithOutput(WorldServer world, BlockPos pos)
-    {
+    public static void testDungeonElementWithOutput(WorldServer world, BlockPos pos) {
         Dungeon.placeStructureAtPosition(new Random(), world, pos);
 //        ResourceLocation resource = new ResourceLocation(Constants.Mod.MODID, "Corridor1");
 //

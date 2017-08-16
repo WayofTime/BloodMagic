@@ -1,9 +1,5 @@
 package WayofTime.bloodmagic.ritual.harvest;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
-
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.iface.IHarvestHandler;
@@ -21,6 +17,9 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -29,10 +28,8 @@ import java.util.List;
  * Register a new crop for this handler with
  * {@link HarvestRegistry#registerStandardCrop(Block, int)}
  */
-public class HarvestHandlerPlantable implements IHarvestHandler
-{
-    public HarvestHandlerPlantable()
-    {
+public class HarvestHandlerPlantable implements IHarvestHandler {
+    public HarvestHandlerPlantable() {
         HarvestRegistry.registerStandardCrop(Blocks.CARROTS, 7);
         HarvestRegistry.registerStandardCrop(Blocks.WHEAT, 7);
         HarvestRegistry.registerStandardCrop(Blocks.POTATOES, 7);
@@ -57,8 +54,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
     }
 
     @Override
-    public boolean harvestAndPlant(World world, BlockPos pos, BlockStack blockStack)
-    {
+    public boolean harvestAndPlant(World world, BlockPos pos, BlockStack blockStack) {
         if (!HarvestRegistry.getStandardCrops().containsKey(blockStack.getBlock()))
             return false;
 
@@ -70,30 +66,25 @@ public class HarvestHandlerPlantable implements IHarvestHandler
         List<ItemStack> drops = blockStack.getBlock().getDrops(world, pos, blockStack.getState(), 0);
         boolean foundSeed = false;
 
-        for (ItemStack stack : drops)
-        {
+        for (ItemStack stack : drops) {
             if (stack.isEmpty())
                 continue;
 
-            if (stack.getItem() instanceof IPlantable)
-            {
+            if (stack.getItem() instanceof IPlantable) {
                 stack.shrink(1);
                 foundSeed = true;
                 break;
             }
         }
 
-        if (foundSeed)
-        {
+        if (foundSeed) {
             world.setBlockState(pos, blockStack.getBlock().getDefaultState());
             world.playEvent(2001, pos, Block.getStateId(blockStack.getState()));
-            for (ItemStack stack : drops)
-            {
+            for (ItemStack stack : drops) {
                 if (stack.isEmpty())
                     continue;
 
-                if (!world.isRemote)
-                {
+                if (!world.isRemote) {
                     EntityItem toDrop = new EntityItem(world, pos.getX(), pos.getY() + 0.5, pos.getZ(), stack);
                     world.spawnEntity(toDrop);
                 }
@@ -105,8 +96,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
         return false;
     }
 
-    private static void addThirdPartyCrop(String modid, String regName, int matureMeta)
-    {
+    private static void addThirdPartyCrop(String modid, String regName, int matureMeta) {
         if (!Loader.isModLoaded(modid))
             return;
 
@@ -115,8 +105,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
             HarvestRegistry.registerStandardCrop(block, matureMeta);
     }
 
-    private static void addPamCrops()
-    {
+    private static void addPamCrops() {
         if (!Loader.isModLoaded("harvestcraft"))
             return;
 
@@ -126,7 +115,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
             Class<?> registry = ReflectionHelper.getClass(loader, className);
             Field names = ReflectionHelper.findField(registry, "cropNames");
             Method getCrop = registry.getMethod("getCrop", String.class);
-            for (String name : (String[])names.get(null)) {
+            for (String name : (String[]) names.get(null)) {
                 BlockCrops crop = (BlockCrops) getCrop.invoke(null, name);
                 HarvestRegistry.registerStandardCrop(crop, crop.getMaxAge());
             }

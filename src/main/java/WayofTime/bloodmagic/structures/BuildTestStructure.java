@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.structures;
 
-import java.util.Random;
-
 import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Mirror;
@@ -13,10 +11,10 @@ import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 
-public class BuildTestStructure
-{
-    public boolean placeStructureAtPosition(Random rand, Rotation baseRotation, WorldServer world, BlockPos pos, int iteration)
-    {
+import java.util.Random;
+
+public class BuildTestStructure {
+    public boolean placeStructureAtPosition(Random rand, Rotation baseRotation, WorldServer world, BlockPos pos, int iteration) {
         if (pos == null)
             return false;
 
@@ -26,8 +24,7 @@ public class BuildTestStructure
         ResourceLocation resource = new ResourceLocation(BloodMagic.MODID, "Corridor1");
         Template template = templatemanager.getTemplate(minecraftserver, resource);
 
-        if (template == null)
-        {
+        if (template == null) {
             System.out.println("Invalid template for location: " + resource);
             return false;
         }

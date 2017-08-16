@@ -6,21 +6,17 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 
-public class LivingArmourUpgradePhysicalProtect extends LivingArmourUpgrade
-{
-    public static final int[] costs = new int[] { 5, 10, 18, 35, 65, 100, 140, 190, 250, 300 };
-    public static final double[] protectionLevel = new double[] { 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.77, 0.80, 0.83 };
+public class LivingArmourUpgradePhysicalProtect extends LivingArmourUpgrade {
+    public static final int[] costs = new int[]{5, 10, 18, 35, 65, 100, 140, 190, 250, 300};
+    public static final double[] protectionLevel = new double[]{0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.77, 0.80, 0.83};
 
-    public LivingArmourUpgradePhysicalProtect(int level)
-    {
+    public LivingArmourUpgradePhysicalProtect(int level) {
         super(level);
     }
 
     @Override
-    public double getArmourProtection(EntityLivingBase wearer, DamageSource source)
-    {
-        if (source.getTrueSource() != null && !source.isMagicDamage() && !source.isProjectile())
-        {
+    public double getArmourProtection(EntityLivingBase wearer, DamageSource source) {
+        if (source.getTrueSource() != null && !source.isMagicDamage() && !source.isProjectile()) {
             return protectionLevel[this.level];
         }
 
@@ -28,38 +24,32 @@ public class LivingArmourUpgradePhysicalProtect extends LivingArmourUpgrade
     }
 
     @Override
-    public String getUniqueIdentifier()
-    {
+    public String getUniqueIdentifier() {
         return BloodMagic.MODID + ".upgrade.physicalProtect";
     }
 
     @Override
-    public int getMaxTier()
-    {
+    public int getMaxTier() {
         return 10; // Set to here until I can add more upgrades to it.
     }
 
     @Override
-    public int getCostOfUpgrade()
-    {
+    public int getCostOfUpgrade() {
         return costs[this.level];
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
         // EMPTY
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
         // EMPTY
     }
 
     @Override
-    public String getUnlocalizedName()
-    {
+    public String getUnlocalizedName() {
         return tooltipBase + "physicalProtect";
     }
 }

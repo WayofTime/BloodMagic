@@ -8,27 +8,41 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ModelMimic extends ModelBase
-{
-    /** Spider's first leg */
+public class ModelMimic extends ModelBase {
+    /**
+     * Spider's first leg
+     */
     public ModelRenderer mimicLeg1;
-    /** Spider's second leg */
+    /**
+     * Spider's second leg
+     */
     public ModelRenderer mimicLeg2;
-    /** Spider's third leg */
+    /**
+     * Spider's third leg
+     */
     public ModelRenderer mimicLeg3;
-    /** Spider's fourth leg */
+    /**
+     * Spider's fourth leg
+     */
     public ModelRenderer mimicLeg4;
-    /** Spider's fifth leg */
+    /**
+     * Spider's fifth leg
+     */
     public ModelRenderer mimicLeg5;
-    /** Spider's sixth leg */
+    /**
+     * Spider's sixth leg
+     */
     public ModelRenderer mimicLeg6;
-    /** Spider's seventh leg */
+    /**
+     * Spider's seventh leg
+     */
     public ModelRenderer mimicLeg7;
-    /** Spider's eight leg */
+    /**
+     * Spider's eight leg
+     */
     public ModelRenderer mimicLeg8;
 
-    public ModelMimic()
-    {
+    public ModelMimic() {
         this.mimicLeg1 = new ModelRenderer(this, 18, 0);
         this.mimicLeg1.addBox(-15.0F, -1.0F, -1.0F, 16, 2, 2, 0.0F);
         this.mimicLeg1.setRotationPoint(-4.0F, 15.0F, 2.0F);
@@ -58,8 +72,7 @@ public class ModelMimic extends ModelBase
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
-    {
+    public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
         this.mimicLeg1.render(scale);
         this.mimicLeg2.render(scale);
@@ -77,8 +90,7 @@ public class ModelMimic extends ModelBase
      * the time(so that arms and legs swing back and forth) and par2 represents
      * how "far" arms and legs can swing at most.
      */
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
-    {
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
         this.mimicLeg1.rotateAngleZ = -((float) Math.PI / 4F);
         this.mimicLeg2.rotateAngleZ = ((float) Math.PI / 4F);
         this.mimicLeg3.rotateAngleZ = -0.58119464F;

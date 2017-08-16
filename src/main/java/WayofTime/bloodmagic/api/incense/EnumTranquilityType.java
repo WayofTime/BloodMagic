@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.api.incense;
 
-public enum EnumTranquilityType
-{
+public enum EnumTranquilityType {
     PLANT(),
     CROP(),
     TREE(),

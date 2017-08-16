@@ -1,7 +1,10 @@
 package WayofTime.bloodmagic.compat.guideapi;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.compat.guideapi.book.*;
+import WayofTime.bloodmagic.compat.guideapi.book.CategoryAlchemy;
+import WayofTime.bloodmagic.compat.guideapi.book.CategoryArchitect;
+import WayofTime.bloodmagic.compat.guideapi.book.CategoryDemon;
+import WayofTime.bloodmagic.compat.guideapi.book.CategoryRitual;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import amerifrance.guideapi.api.GuideAPI;

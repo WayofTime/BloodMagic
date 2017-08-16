@@ -6,39 +6,32 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
-public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect
-{
+public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect {
     public final ItemStack outputStack;
     public int tickLimit;
 
-    public AlchemyArrayEffectCrafting(ItemStack outputStack)
-    {
+    public AlchemyArrayEffectCrafting(ItemStack outputStack) {
         this(outputStack, 200);
     }
 
-    public AlchemyArrayEffectCrafting(ItemStack outputStack, int tickLimit)
-    {
+    public AlchemyArrayEffectCrafting(ItemStack outputStack, int tickLimit) {
         this(outputStack.toString() + tickLimit, outputStack, tickLimit);
     }
 
-    public AlchemyArrayEffectCrafting(String key, ItemStack outputStack, int tickLimit)
-    {
+    public AlchemyArrayEffectCrafting(String key, ItemStack outputStack, int tickLimit) {
         super(key);
         this.outputStack = outputStack;
         this.tickLimit = tickLimit;
     }
 
     @Override
-    public boolean update(TileEntity tile, int ticksActive)
-    {
+    public boolean update(TileEntity tile, int ticksActive) {
         // TODO: Add recipe rechecking to verify nothing screwy is going on.
-        if (tile.getWorld().isRemote)
-        {
+        if (tile.getWorld().isRemote) {
             return false;
         }
 
-        if (ticksActive >= tickLimit)
-        {
+        if (ticksActive >= tickLimit) {
             BlockPos pos = tile.getPos();
 
             ItemStack output = outputStack.copy();
@@ -54,20 +47,17 @@ public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
 
     }
 
     @Override
-    public AlchemyArrayEffect getNewCopy()
-    {
+    public AlchemyArrayEffect getNewCopy() {
         return new AlchemyArrayEffectCrafting(key, outputStack, tickLimit);
     }
 }

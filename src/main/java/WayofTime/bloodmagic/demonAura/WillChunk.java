@@ -5,20 +5,17 @@ import net.minecraft.world.chunk.Chunk;
 
 import java.lang.ref.WeakReference;
 
-public class WillChunk
-{
+public class WillChunk {
     PosXY loc;
     private short base;
     private DemonWillHolder currentWill = new DemonWillHolder();
     private WeakReference<Chunk> chunkRef;
 
-    public WillChunk(PosXY loc)
-    {
+    public WillChunk(PosXY loc) {
         this.loc = loc;
     }
 
-    public WillChunk(Chunk chunk, short base, DemonWillHolder currentWill)
-    {
+    public WillChunk(Chunk chunk, short base, DemonWillHolder currentWill) {
         this.loc = new PosXY(chunk.x, chunk.z);
         this.chunkRef = new WeakReference(chunk);
         this.base = base;

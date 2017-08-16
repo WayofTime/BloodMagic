@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.client.render.entity.layer;
 
+import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -9,25 +10,20 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
 
 @SideOnly(Side.CLIENT)
-public class LayerAlchemyCircle<T extends EntityCorruptedSheep> implements LayerRenderer<T>
-{
+public class LayerAlchemyCircle<T extends EntityCorruptedSheep> implements LayerRenderer<T> {
     private static final ResourceLocation ARRAY_TEXTURE = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/FastMinerSigil.png");
 
     float rotationspeed = 10;
 
-    public LayerAlchemyCircle()
-    {
+    public LayerAlchemyCircle() {
 
     }
 
     @Override
-    public void doRenderLayer(EntityCorruptedSheep demon, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
-    {
-        if (demon.getCastTimer() <= 0)
-        {
+    public void doRenderLayer(EntityCorruptedSheep demon, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        if (demon.getCastTimer() <= 0) {
             return;
         }
 
@@ -80,8 +76,7 @@ public class LayerAlchemyCircle<T extends EntityCorruptedSheep> implements Layer
     }
 
     @Override
-    public boolean shouldCombineTextures()
-    {
+    public boolean shouldCombineTextures() {
         return false;
     }
 }

@@ -6,11 +6,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.MathHelper;
 
-public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends ItemBlock
-{
+public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends ItemBlock {
 
-    public ItemBlockEnum(BlockEnum<E> block)
-    {
+    public ItemBlockEnum(BlockEnum<E> block) {
         super(block);
 
         if (block.getTypes().length > 1)
@@ -19,20 +17,17 @@ public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends Item
 
     @SuppressWarnings("unchecked")
     @Override
-    public BlockEnum<E> getBlock()
-    {
+    public BlockEnum<E> getBlock() {
         return (BlockEnum<E>) super.getBlock();
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+    public String getUnlocalizedName(ItemStack stack) {
         return getBlock().getUnlocalizedName() + getBlock().getTypes()[MathHelper.clamp(stack.getItemDamage(), 0, 15)].getName();
     }
 
     @Override
-    public int getMetadata(int damage)
-    {
+    public int getMetadata(int damage) {
         return damage;
     }
 }

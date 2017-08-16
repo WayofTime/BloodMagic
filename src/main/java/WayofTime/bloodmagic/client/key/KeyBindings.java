@@ -18,43 +18,35 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.Locale;
 
-public enum KeyBindings
-{
+public enum KeyBindings {
     // @formatter:off
-    OPEN_HOLDING(KeyConflictContext.IN_GAME, KeyModifier.NONE, Keyboard.KEY_H)
-    {
+    OPEN_HOLDING(KeyConflictContext.IN_GAME, KeyModifier.NONE, Keyboard.KEY_H) {
         @SideOnly(Side.CLIENT)
         @Override
-        public void handleKeybind()
-        {
+        public void handleKeybind() {
             ItemStack itemStack = ClientHandler.minecraft.player.getHeldItemMainhand();
             if (itemStack.getItem() instanceof IKeybindable)
                 BloodMagicPacketHandler.INSTANCE.sendToServer(new KeyProcessor(this, false));
         }
     },
-    CYCLE_HOLDING_POS(KeyConflictContext.IN_GAME, KeyModifier.SHIFT, Keyboard.KEY_EQUALS)
-    {
+    CYCLE_HOLDING_POS(KeyConflictContext.IN_GAME, KeyModifier.SHIFT, Keyboard.KEY_EQUALS) {
         @SideOnly(Side.CLIENT)
         @Override
-        public void handleKeybind()
-        {
+        public void handleKeybind() {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
             if (player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
                 ClientHandler.cycleSigil(player.getHeldItemMainhand(), player, -1);
         }
     },
-    CYCLE_HOLDING_NEG(KeyConflictContext.IN_GAME, KeyModifier.SHIFT, Keyboard.KEY_MINUS)
-    {
+    CYCLE_HOLDING_NEG(KeyConflictContext.IN_GAME, KeyModifier.SHIFT, Keyboard.KEY_MINUS) {
         @SideOnly(Side.CLIENT)
         @Override
-        public void handleKeybind()
-        {
+        public void handleKeybind() {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
             if (player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
                 ClientHandler.cycleSigil(player.getHeldItemMainhand(), player, 1);
         }
-    },
-    ;
+    },;
     // @formatter:on
 
     private final IKeyConflictContext keyConflictContext;
@@ -64,8 +56,7 @@ public enum KeyBindings
     @SideOnly(Side.CLIENT)
     private KeyBinding key;
 
-    KeyBindings(IKeyConflictContext keyConflictContext, KeyModifier keyModifier, int keyCode)
-    {
+    KeyBindings(IKeyConflictContext keyConflictContext, KeyModifier keyModifier, int keyCode) {
         this.keyConflictContext = keyConflictContext;
         this.keyModifier = keyModifier;
         this.keyCode = keyCode;
@@ -74,24 +65,20 @@ public enum KeyBindings
     @SideOnly(Side.CLIENT)
     public abstract void handleKeybind();
 
-    public IKeyConflictContext getKeyConflictContext()
-    {
+    public IKeyConflictContext getKeyConflictContext() {
         return keyConflictContext;
     }
 
-    public KeyModifier getKeyModifier()
-    {
+    public KeyModifier getKeyModifier() {
         return keyModifier;
     }
 
-    public int getKeyCode()
-    {
+    public int getKeyCode() {
         return keyCode;
     }
 
     @SideOnly(Side.CLIENT)
-    public KeyBinding getKey()
-    {
+    public KeyBinding getKey() {
         if (key == null)
             key = new KeyBindingBloodMagic(this);
 
@@ -99,13 +86,11 @@ public enum KeyBindings
     }
 
     @SideOnly(Side.CLIENT)
-    public void setKey(KeyBinding key)
-    {
+    public void setKey(KeyBinding key) {
         this.key = key;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return BloodMagic.MODID + ".keybind." + name().toLowerCase(Locale.ENGLISH);
     }
 }

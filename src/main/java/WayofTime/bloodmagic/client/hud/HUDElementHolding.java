@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.client.hud;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -15,17 +15,14 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 import java.util.List;
 
-public class HUDElementHolding extends HUDElement
-{
+public class HUDElementHolding extends HUDElement {
 
-    public HUDElementHolding()
-    {
+    public HUDElementHolding() {
         super(0, 0, RenderGameOverlayEvent.ElementType.HOTBAR);
     }
 
     @Override
-    public void render(Minecraft minecraft, ScaledResolution resolution, float partialTicks)
-    {
+    public void render(Minecraft minecraft, ScaledResolution resolution, float partialTicks) {
         ItemStack sigilHolding = minecraft.player.getHeldItemMainhand();
         // Check mainhand for Sigil of Holding
         if (!(sigilHolding.getItem() == RegistrarBloodMagicItems.SIGIL_HOLDING))
@@ -45,8 +42,7 @@ public class HUDElementHolding extends HUDElement
         RenderHelper.enableGUIStandardItemLighting();
         List<ItemStack> holdingInv = ItemSigilHolding.getInternalInventory(sigilHolding);
         int xOffset = 0;
-        for (ItemStack sigil : holdingInv)
-        {
+        for (ItemStack sigil : holdingInv) {
             renderHotbarItem(resolution.getScaledWidth() / 2 + 103 + xOffset + getXOffset(), resolution.getScaledHeight() - 18 + getYOffset(), partialTicks, minecraft.player, sigil);
             xOffset += 20;
         }
@@ -55,19 +51,15 @@ public class HUDElementHolding extends HUDElement
     }
 
     @Override
-    public boolean shouldRender(Minecraft minecraft)
-    {
+    public boolean shouldRender(Minecraft minecraft) {
         return true;
     }
 
-    protected void renderHotbarItem(int x, int y, float partialTicks, EntityPlayer player, ItemStack stack)
-    {
-        if (!stack.isEmpty())
-        {
+    protected void renderHotbarItem(int x, int y, float partialTicks, EntityPlayer player, ItemStack stack) {
+        if (!stack.isEmpty()) {
             float animation = (float) stack.getAnimationsToGo() - partialTicks;
 
-            if (animation > 0.0F)
-            {
+            if (animation > 0.0F) {
                 GlStateManager.pushMatrix();
                 float f1 = 1.0F + animation / 5.0F;
                 GlStateManager.translate((float) (x + 8), (float) (y + 12), 0.0F);

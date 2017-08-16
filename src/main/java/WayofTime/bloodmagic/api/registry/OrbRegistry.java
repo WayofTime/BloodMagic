@@ -17,24 +17,20 @@ import java.util.List;
  * custom handling, you will need your own item class.
  */
 @Deprecated
-public class OrbRegistry
-{
-    private static List<BloodOrb> orbs = new ArrayList<BloodOrb>();
-    public static ArrayListMultimap<Integer, ItemStack> tierMap = ArrayListMultimap.create();
-
+public class OrbRegistry {
     @GameRegistry.ObjectHolder("bloodmagic:blood_orb")
     private static final Item ORB_ITEM = null;
+    public static ArrayListMultimap<Integer, ItemStack> tierMap = ArrayListMultimap.create();
+    private static List<BloodOrb> orbs = new ArrayList<BloodOrb>();
 
-    public static List<ItemStack> getOrbsForTier(int tier)
-    {
+    public static List<ItemStack> getOrbsForTier(int tier) {
         if (getTierMap().containsKey(tier))
             return getTierMap().get(tier);
 
         return Collections.emptyList();
     }
 
-    public static List<ItemStack> getOrbsUpToTier(int tier)
-    {
+    public static List<ItemStack> getOrbsUpToTier(int tier) {
         List<ItemStack> ret = new ArrayList<ItemStack>();
 
         for (int i = 1; i <= tier; i++)
@@ -43,8 +39,7 @@ public class OrbRegistry
         return ret;
     }
 
-    public static List<ItemStack> getOrbsDownToTier(int tier)
-    {
+    public static List<ItemStack> getOrbsDownToTier(int tier) {
         List<ItemStack> ret = new ArrayList<ItemStack>();
 
         for (int i = EnumAltarTier.MAXTIERS; i >= tier; i--)
@@ -53,8 +48,7 @@ public class OrbRegistry
         return ret;
     }
 
-    public static ItemStack getOrbStack(BloodOrb orb)
-    {
+    public static ItemStack getOrbStack(BloodOrb orb) {
         ItemStack ret = new ItemStack(ORB_ITEM);
         NBTTagCompound tag = new NBTTagCompound();
         tag.setString("orb", orb.getRegistryName().toString());
@@ -62,8 +56,7 @@ public class OrbRegistry
         return ret;
     }
 
-    public static ArrayListMultimap<Integer, ItemStack> getTierMap()
-    {
+    public static ArrayListMultimap<Integer, ItemStack> getTierMap() {
         return ArrayListMultimap.create(tierMap);
     }
 }

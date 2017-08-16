@@ -7,8 +7,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -17,8 +17,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class RitualFelling extends Ritual
-{
+public class RitualFelling extends Ritual {
     public static final String FELLING_RANGE = "fellingRange";
     public static final String CHEST_RANGE = "chest";
 
@@ -28,8 +27,7 @@ public class RitualFelling extends Ritual
     private boolean cached = false;
     private BlockPos currentPos;
 
-    public RitualFelling()
-    {
+    public RitualFelling() {
         super("ritualFelling", 0, 20000, "ritual." + BloodMagic.MODID + ".fellingRitual");
         addBlockRange(FELLING_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -3, -10), new BlockPos(11, 27, 11)));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
@@ -41,8 +39,7 @@ public class RitualFelling extends Ritual
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
@@ -50,19 +47,15 @@ public class RitualFelling extends Ritual
         AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
         TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
 
-        if (!cached || treePartsCache.isEmpty())
-        {
-            for (BlockPos blockPos : getBlockRange(FELLING_RANGE).getContainedPositions(masterRitualStone.getBlockPos()))
-            {
+        if (!cached || treePartsCache.isEmpty()) {
+            for (BlockPos blockPos : getBlockRange(FELLING_RANGE).getContainedPositions(masterRitualStone.getBlockPos())) {
                 if (!treePartsCache.contains(blockPos))
-                    if (!world.isAirBlock(blockPos) && (world.getBlockState(blockPos).getBlock().isWood(world, blockPos) || world.getBlockState(blockPos).getBlock().isLeaves(world.getBlockState(blockPos), world, blockPos)))
-                    {
+                    if (!world.isAirBlock(blockPos) && (world.getBlockState(blockPos).getBlock().isWood(world, blockPos) || world.getBlockState(blockPos).getBlock().isLeaves(world.getBlockState(blockPos), world, blockPos))) {
                         treePartsCache.add(blockPos);
                     }
             }
@@ -71,8 +64,7 @@ public class RitualFelling extends Ritual
             blockPosIterator = treePartsCache.iterator();
         }
 
-        if (blockPosIterator.hasNext() && tileInventory != null)
-        {
+        if (blockPosIterator.hasNext() && tileInventory != null) {
             masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
             currentPos = blockPosIterator.next();
             IItemHandler inventory = Utils.getInventory(tileInventory, EnumFacing.DOWN);
@@ -83,20 +75,17 @@ public class RitualFelling extends Ritual
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 10;
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 1;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         addCornerRunes(components, 1, 0, EnumRuneType.EARTH);
@@ -106,18 +95,15 @@ public class RitualFelling extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualFelling();
     }
 
-    private void placeInInventory(IBlockState choppedState, World world, BlockPos choppedPos, @Nullable IItemHandler inventory)
-    {
+    private void placeInInventory(IBlockState choppedState, World world, BlockPos choppedPos, @Nullable IItemHandler inventory) {
         if (inventory == null)
             return;
 
-        for (ItemStack stack : choppedState.getBlock().getDrops(world, choppedPos, world.getBlockState(choppedPos), 0))
-        {
+        for (ItemStack stack : choppedState.getBlock().getDrops(world, choppedPos, world.getBlockState(choppedPos), 0)) {
             ItemStack remainder = ItemHandlerHelper.insertItem(inventory, stack, false);
             if (!remainder.isEmpty())
                 world.spawnEntity(new EntityItem(world, choppedPos.getX() + 0.4, choppedPos.getY() + 2, choppedPos.getZ() + 0.4, remainder));

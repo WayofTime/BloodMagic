@@ -8,11 +8,10 @@ import javax.annotation.Nullable;
 
 /**
  * Base object for all Blood Orbs. Makes Orb creation quite a bit easier.
- * 
+ * <p>
  * Just create a new BloodOrb instance then register it in {@link net.minecraftforge.event.RegistryEvent.Register<BloodOrb>}
  */
-public class BloodOrb extends IForgeRegistryEntry.Impl<BloodOrb>
-{
+public class BloodOrb extends IForgeRegistryEntry.Impl<BloodOrb> {
     private final String name;
     private final int tier;
     private final int capacity;
@@ -22,33 +21,26 @@ public class BloodOrb extends IForgeRegistryEntry.Impl<BloodOrb>
     /**
      * A base object for BloodOrbs. A bit cleaner than the old way through
      * EnergyItems.
-     * 
-     * @param name
-     *        - A name for the Orb. Gets put into an unlocalized name.
-     * @param tier
-     *        - The tier of the Orb.
-     * @param capacity
-     *        - The max amount of LP the Orb can store.
+     *
+     * @param name     - A name for the Orb. Gets put into an unlocalized name.
+     * @param tier     - The tier of the Orb.
+     * @param capacity - The max amount of LP the Orb can store.
      */
-    public BloodOrb(String name, int tier, int capacity)
-    {
+    public BloodOrb(String name, int tier, int capacity) {
         this.name = name;
         this.tier = tier;
         this.capacity = capacity;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public int getTier()
-    {
+    public int getTier() {
         return tier;
     }
 
-    public int getCapacity()
-    {
+    public int getCapacity() {
         return capacity;
     }
 
@@ -63,8 +55,7 @@ public class BloodOrb extends IForgeRegistryEntry.Impl<BloodOrb>
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "BloodOrb{" + "name='" + name + '\'' + ", tier=" + tier + ", capacity=" + capacity + ", owner=" + getRegistryName() + '}';
     }
 }

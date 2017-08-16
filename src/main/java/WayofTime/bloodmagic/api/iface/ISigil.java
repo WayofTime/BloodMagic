@@ -11,14 +11,12 @@ import javax.annotation.Nonnull;
  * Used for all {@link WayofTime.bloodmagic.api.impl.ItemSigil} <b>EXCEPT</b>
  * Sigils of Holdings.
  */
-public interface ISigil
-{
+public interface ISigil {
     boolean performArrayEffect(World world, BlockPos pos);
 
     boolean hasArrayEffect();
 
-    interface Holding
-    {
+    interface Holding {
         @Nonnull
         ItemStack getHeldItem(ItemStack holdingStack, EntityPlayer player);
     }

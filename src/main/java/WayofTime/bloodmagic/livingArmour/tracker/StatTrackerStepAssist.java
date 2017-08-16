@@ -1,21 +1,20 @@
 package WayofTime.bloodmagic.livingArmour.tracker;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.api.livingArmour.StatTracker;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeStepAssist;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import WayofTime.bloodmagic.BloodMagic;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.livingArmour.StatTracker;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeStepAssist;
-
-public class StatTrackerStepAssist extends StatTracker
-{
+public class StatTrackerStepAssist extends StatTracker {
     public static Map<EntityPlayer, Double> lastPosX = new HashMap<EntityPlayer, Double>();
     public static Map<EntityPlayer, Double> lastPosZ = new HashMap<EntityPlayer, Double>();
 
@@ -24,49 +23,41 @@ public class StatTrackerStepAssist extends StatTracker
     public double totalMovement = 0;
 
     @Override
-    public String getUniqueIdentifier()
-    {
+    public String getUniqueIdentifier() {
         return BloodMagic.MODID + ".tracker.stepAssist";
     }
 
     @Override
-    public void resetTracker()
-    {
+    public void resetTracker() {
         this.totalMovement = 0;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
         totalMovement = tag.getDouble(BloodMagic.MODID + ".tracker.stepAssist");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
         tag.setDouble(BloodMagic.MODID + ".tracker.stepAssist", totalMovement);
 
     }
 
     @Override
-    public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour)
-    {
-        if (!lastPosX.containsKey(player))
-        {
+    public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+        if (!lastPosX.containsKey(player)) {
             lastPosX.put(player, player.posX);
             lastPosZ.put(player, player.posZ);
             return false;
         }
 
-        if (!player.onGround || player.stepHeight < 1)
-        {
+        if (!player.onGround || player.stepHeight < 1) {
             return false;
         }
 
         double distanceTravelled = Math.sqrt(Math.pow(lastPosX.get(player) - player.posX, 2) + Math.pow(lastPosZ.get(player) - player.posZ, 2));
 
-        if (distanceTravelled > 0.0001 && distanceTravelled < 2)
-        {
+        if (distanceTravelled > 0.0001 && distanceTravelled < 2) {
             double previousMovement = totalMovement;
             totalMovement += distanceTravelled;
 
@@ -85,18 +76,15 @@ public class StatTrackerStepAssist extends StatTracker
     }
 
     @Override
-    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour)
-    {
+    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour) {
 
     }
 
     @Override
-    public List<LivingArmourUpgrade> getUpgrades()
-    {
+    public List<LivingArmourUpgrade> getUpgrades() {
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
 
-        if (totalMovement >= blocksRequired)
-        {
+        if (totalMovement >= blocksRequired) {
             upgradeList.add(new LivingArmourUpgradeStepAssist(0));
         }
 
@@ -104,8 +92,7 @@ public class StatTrackerStepAssist extends StatTracker
     }
 
     @Override
-    public double getProgress(LivingArmour livingArmour, int currentLevel)
-    {
+    public double getProgress(LivingArmour livingArmour, int currentLevel) {
         if (currentLevel == 1)
             return 1.0D;
 
@@ -113,16 +100,13 @@ public class StatTrackerStepAssist extends StatTracker
     }
 
     @Override
-    public boolean providesUpgrade(String key)
-    {
+    public boolean providesUpgrade(String key) {
         return key.equals(BloodMagic.MODID + ".upgrade.stepAssist");
     }
 
     @Override
-    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
-    {
-        if (upgrade instanceof LivingArmourUpgradeStepAssist)
-        {
+    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade) {
+        if (upgrade instanceof LivingArmourUpgradeStepAssist) {
             totalMovement = Math.max(totalMovement, blocksRequired);
             this.markDirty();
         }

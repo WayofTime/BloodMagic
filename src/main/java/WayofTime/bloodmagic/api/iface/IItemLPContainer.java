@@ -5,8 +5,7 @@ import net.minecraft.item.ItemStack;
 /**
  * Interface used for any item that can store LP in itself
  */
-public interface IItemLPContainer
-{
+public interface IItemLPContainer {
     int getCapacity();
 
     void setStoredLP(ItemStack stack, int lp);

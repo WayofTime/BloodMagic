@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.block;
 
-import java.awt.Color;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
@@ -12,15 +12,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class BlockLifeEssence extends BlockFluidClassic
-{
+import java.awt.Color;
+
+public class BlockLifeEssence extends BlockFluidClassic {
     private static final Fluid LIFE_ESSENCE = new FluidLifeEssence();
 
-    public BlockLifeEssence()
-    {
+    public BlockLifeEssence() {
         super(LIFE_ESSENCE, Material.WATER);
 
         setUnlocalizedName(BloodMagic.MODID + ".fluid.lifeEssence");
@@ -28,32 +26,27 @@ public class BlockLifeEssence extends BlockFluidClassic
     }
 
     @Override
-    public boolean canDisplace(IBlockAccess world, BlockPos blockPos)
-    {
+    public boolean canDisplace(IBlockAccess world, BlockPos blockPos) {
         return !world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isLiquid() && super.canDisplace(world, blockPos);
     }
 
     @Override
-    public boolean displaceIfPossible(World world, BlockPos blockPos)
-    {
+    public boolean displaceIfPossible(World world, BlockPos blockPos) {
         return !world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isLiquid() && super.displaceIfPossible(world, blockPos);
+    }
+
+    @Override
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.SOLID;
     }
 
     public static Fluid getLifeEssence() {
         return LIFE_ESSENCE;
     }
 
-    @Override
-    public BlockRenderLayer getBlockLayer()
-    {
-        return BlockRenderLayer.SOLID;
-    }
+    public static class FluidLifeEssence extends Fluid {
 
-    public static class FluidLifeEssence extends Fluid
-    {
-
-        public FluidLifeEssence()
-        {
+        public FluidLifeEssence() {
             super("lifeEssence", new ResourceLocation(Constants.Mod.DOMAIN + "blocks/lifeEssenceStill"), new ResourceLocation(Constants.Mod.DOMAIN + "blocks/lifeEssenceFlowing"));
 
             setDensity(2000);
@@ -61,14 +54,12 @@ public class BlockLifeEssence extends BlockFluidClassic
         }
 
         @Override
-        public int getColor()
-        {
+        public int getColor() {
             return Color.RED.getRGB();
         }
 
         @Override
-        public String getLocalizedName(FluidStack fluidStack)
-        {
+        public String getLocalizedName(FluidStack fluidStack) {
             return TextHelper.localize("tile.bloodmagic.fluid.lifeEssence.name");
         }
     }

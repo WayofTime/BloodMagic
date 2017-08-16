@@ -9,17 +9,15 @@ import javax.annotation.Nullable;
 
 /**
  * Base event class for Soul Network related events.
- * 
+ * <p>
  * {@link #ownerUUID} contains the owner's UUID {@link #syphon} contains the
  * amount of LP to be drained
  */
-public class SoulNetworkEvent extends Event
-{
+public class SoulNetworkEvent extends Event {
     public final String ownerUUID;
     public int syphon;
 
-    public SoulNetworkEvent(String ownerUUID, int syphon)
-    {
+    public SoulNetworkEvent(String ownerUUID, int syphon) {
         this.ownerUUID = ownerUUID;
         this.syphon = syphon;
     }
@@ -28,16 +26,14 @@ public class SoulNetworkEvent extends Event
      * This event is called when an
      * {@link WayofTime.bloodmagic.api.impl.ItemBindable} is being drained
      * inside of a {@link net.minecraft.tileentity.TileEntity}.
-     * 
+     * <p>
      * If canceled, the drain will not be executed.
      */
     @Cancelable
-    public static class ItemDrainInContainerEvent extends SoulNetworkEvent
-    {
+    public static class ItemDrainInContainerEvent extends SoulNetworkEvent {
         public ItemStack stack;
 
-        public ItemDrainInContainerEvent(ItemStack stack, String ownerName, int syphon)
-        {
+        public ItemDrainInContainerEvent(ItemStack stack, String ownerName, int syphon) {
             super(ownerName, syphon);
             this.stack = stack;
         }
@@ -45,18 +41,16 @@ public class SoulNetworkEvent extends Event
 
     /**
      * This event is called when a {@link EntityPlayer} drains the Soul Network
-     * 
+     * <p>
      * If canceled, the drain will not be executed.
      */
     @Cancelable
-    public static class PlayerDrainNetworkEvent extends SoulNetworkEvent
-    {
+    public static class PlayerDrainNetworkEvent extends SoulNetworkEvent {
         public final EntityPlayer player;
         // If true, will damage regardless of if the network had enough inside it
         public boolean shouldDamage;
 
-        public PlayerDrainNetworkEvent(EntityPlayer player, String ownerNetwork, int drainAmount)
-        {
+        public PlayerDrainNetworkEvent(EntityPlayer player, String ownerNetwork, int drainAmount) {
             super(ownerNetwork, drainAmount);
             this.shouldDamage = false;
             this.player = player;
@@ -64,8 +58,7 @@ public class SoulNetworkEvent extends Event
     }
 
     @Cancelable
-    public static class ItemDrainNetworkEvent extends PlayerDrainNetworkEvent
-    {
+    public static class ItemDrainNetworkEvent extends PlayerDrainNetworkEvent {
         @Nullable
         public final ItemStack itemStack;
         /**
@@ -77,18 +70,13 @@ public class SoulNetworkEvent extends Event
         /**
          * Set result to deny the action i.e. damage/drain anyways. Cancelling
          * event prevents action without penalties
-         * 
-         * @param player
-         *        Player using the item
-         * @param ownerNetwork
-         *        Network that the item is tied to
-         * @param itemStack
-         *        Item used
-         * @param drainAmount
-         *        Original drain amount - change to alter cost
+         *
+         * @param player       Player using the item
+         * @param ownerNetwork Network that the item is tied to
+         * @param itemStack    Item used
+         * @param drainAmount  Original drain amount - change to alter cost
          */
-        public ItemDrainNetworkEvent(EntityPlayer player, String ownerNetwork, @Nullable ItemStack itemStack, int drainAmount)
-        {
+        public ItemDrainNetworkEvent(EntityPlayer player, String ownerNetwork, @Nullable ItemStack itemStack, int drainAmount) {
             super(player, ownerNetwork, drainAmount);
             this.itemStack = itemStack;
             this.damageAmount = (float) (drainAmount) / 100.0f;

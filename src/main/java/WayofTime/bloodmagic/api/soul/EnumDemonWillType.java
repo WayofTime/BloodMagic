@@ -1,11 +1,10 @@
 package WayofTime.bloodmagic.api.soul;
 
-import java.util.Locale;
-
 import net.minecraft.util.IStringSerializable;
 
-public enum EnumDemonWillType implements IStringSerializable
-{
+import java.util.Locale;
+
+public enum EnumDemonWillType implements IStringSerializable {
     DEFAULT("default"),
     CORROSIVE("corrosive"),
     DESTRUCTIVE("destructive"),
@@ -14,20 +13,17 @@ public enum EnumDemonWillType implements IStringSerializable
 
     public final String name;
 
-    EnumDemonWillType(String name)
-    {
+    EnumDemonWillType(String name) {
         this.name = name;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return name().toLowerCase(Locale.ENGLISH);
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return this.toString();
     }
 }

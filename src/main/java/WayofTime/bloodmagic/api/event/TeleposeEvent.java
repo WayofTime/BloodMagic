@@ -14,8 +14,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  * transposition.
  */
 @Cancelable
-public class TeleposeEvent extends Event
-{
+public class TeleposeEvent extends Event {
     public final World initalWorld;
     public final BlockPos initialBlockPos;
     public final IBlockState initialState;
@@ -24,8 +23,7 @@ public class TeleposeEvent extends Event
     public final BlockPos finalBlockPos;
     public final IBlockState finalState;
 
-    public TeleposeEvent(World initialWorld, BlockPos initialBlockPos, World finalWorld, BlockPos finalBlockPos)
-    {
+    public TeleposeEvent(World initialWorld, BlockPos initialBlockPos, World finalWorld, BlockPos finalBlockPos) {
         this.initalWorld = initialWorld;
         this.initialBlockPos = initialBlockPos;
         this.initialState = initialWorld.getBlockState(initialBlockPos);
@@ -35,13 +33,11 @@ public class TeleposeEvent extends Event
         this.finalState = finalWorld.getBlockState(finalBlockPos);
     }
 
-    public TileEntity getInitialTile()
-    {
+    public TileEntity getInitialTile() {
         return initalWorld.getTileEntity(initialBlockPos);
     }
 
-    public TileEntity getFinalTile()
-    {
+    public TileEntity getFinalTile() {
         return finalWorld.getTileEntity(finalBlockPos);
     }
 
@@ -50,37 +46,31 @@ public class TeleposeEvent extends Event
      * be cancelled to stop transposition.
      */
     @Cancelable
-    public static class Ent extends TeleposeEvent
-    {
+    public static class Ent extends TeleposeEvent {
         public final Entity entity;
 
-        public Ent(Entity entity, World initialWorld, BlockPos initialBlockPos, World finalWorld, BlockPos finalBlockPos)
-        {
+        public Ent(Entity entity, World initialWorld, BlockPos initialBlockPos, World finalWorld, BlockPos finalBlockPos) {
             super(initialWorld, initialBlockPos, finalWorld, finalBlockPos);
 
             this.entity = entity;
         }
 
         @Override
-        public TileEntity getInitialTile() throws IllegalArgumentException
-        {
+        public TileEntity getInitialTile() throws IllegalArgumentException {
             throw new IllegalArgumentException("Attempted to get a TileEntity from an Entity Telepose Event.");
         }
 
         @Override
-        public TileEntity getFinalTile() throws IllegalArgumentException
-        {
+        public TileEntity getFinalTile() throws IllegalArgumentException {
             throw new IllegalArgumentException("Attempted to get a TileEntity from an Entity Telepose Event.");
         }
 
         /**
          * Called after the entity has been transposed.
          */
-        public static class Post extends Ent
-        {
+        public static class Post extends Ent {
 
-            public Post(Entity entity, World initialWorld, BlockPos initialBlockPos, World finalWorld, BlockPos finalBlockPos)
-            {
+            public Post(Entity entity, World initialWorld, BlockPos initialBlockPos, World finalWorld, BlockPos finalBlockPos) {
                 super(entity, initialWorld, initialBlockPos, finalWorld, finalBlockPos);
             }
         }

@@ -6,32 +6,22 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockStack
-{
+public class BlockStack {
     private final Block block;
     private final int meta;
     private final IBlockState state;
 
-    public BlockStack(Block block, int meta)
-    {
+    public BlockStack(Block block, int meta) {
         this.block = block;
         this.meta = meta;
         this.state = block.getStateFromMeta(meta);
     }
 
-    public BlockStack(Block block)
-    {
+    public BlockStack(Block block) {
         this(block, 0);
     }
 
-    public static BlockStack getStackFromPos(World world, BlockPos pos)
-    {
-        IBlockState state = world.getBlockState(pos);
-        return new BlockStack(state.getBlock(), state.getBlock().getMetaFromState(state));
-    }
-
-    public ItemStack getItemStack()
-    {
+    public ItemStack getItemStack() {
         return new ItemStack(block, 1, meta);
     }
 
@@ -66,8 +56,12 @@ public class BlockStack
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return getBlock().getRegistryName() + ":" + getMeta();
+    }
+
+    public static BlockStack getStackFromPos(World world, BlockPos pos) {
+        IBlockState state = world.getBlockState(pos);
+        return new BlockStack(state.getBlock(), state.getBlock().getMetaFromState(state));
     }
 }

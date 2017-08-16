@@ -1,21 +1,10 @@
 package WayofTime.bloodmagic.util.handler;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class IMCHandler
-{
+public class IMCHandler {
 
-    public static void handleIMC(FMLInterModComms.IMCEvent event)
-    {
+    public static void handleIMC(FMLInterModComms.IMCEvent event) {
         // TODO
 //        for (FMLInterModComms.IMCMessage message : event.getMessages())
 //        {

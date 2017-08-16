@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.client.render.entity.layer;
 
+import WayofTime.bloodmagic.entity.mob.EntityDemonBase;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -7,28 +8,23 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.entity.mob.EntityDemonBase;
 
 @SideOnly(Side.CLIENT)
-public class LayerWill<T extends EntityDemonBase> implements LayerRenderer<T>
-{
+public class LayerWill<T extends EntityDemonBase> implements LayerRenderer<T> {
     private static final ResourceLocation RAW_TEXTURE = new ResourceLocation("bloodmagic", "textures/entities/overlay/overlay_raw.png");
     private final RenderLiving<T> renderer;
     private final ModelBase model;
 
-    public LayerWill(RenderLiving<T> rendererIn, ModelBase model)
-    {
+    public LayerWill(RenderLiving<T> rendererIn, ModelBase model) {
         this.renderer = rendererIn;
         this.model = model;
     }
 
     @Override
-    public void doRenderLayer(EntityDemonBase demon, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
-    {
+    public void doRenderLayer(EntityDemonBase demon, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 //        if (demon.getPowered())
 
-        if (demon.isInvisible())
-        {
+        if (demon.isInvisible()) {
             return; //TODO: Make this also check if the demon wants the Will layer
         }
 
@@ -56,8 +52,7 @@ public class LayerWill<T extends EntityDemonBase> implements LayerRenderer<T>
     }
 
     @Override
-    public boolean shouldCombineTextures()
-    {
+    public boolean shouldCombineTextures() {
         return false;
     }
 }

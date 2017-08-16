@@ -12,27 +12,23 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class RitualCobblestone extends Ritual
-{
+public class RitualCobblestone extends Ritual {
 
     public static final String COBBLESTONE_RANGE = "cobblestoneRange";
 
-    public RitualCobblestone()
-    {
+    public RitualCobblestone() {
         super("ritualCobblestone", 0, 500, "ritual." + BloodMagic.MODID + ".cobblestoneRitual");
         addBlockRange(COBBLESTONE_RANGE, new AreaDescriptor.Cross(new BlockPos(0, 1, 0), 1));
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
         TileEntity tileEntity = world.getTileEntity(masterRitualStone.getBlockPos().up());
         Block block = Blocks.COBBLESTONE;
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -42,44 +38,38 @@ public class RitualCobblestone extends Ritual
 
         AreaDescriptor cobblestoneRange = getBlockRange(COBBLESTONE_RANGE);
 
-        if (tileEntity != null && tileEntity instanceof TileAlchemyArray)
-        {
+        if (tileEntity != null && tileEntity instanceof TileAlchemyArray) {
             TileAlchemyArray alchemyArray = (TileAlchemyArray) tileEntity;
-            if (!alchemyArray.getStackInSlot(0).isEmpty() && alchemyArray.getStackInSlot(0).getItem() instanceof ItemComponent)
-            {
-                switch (alchemyArray.getStackInSlot(0).getItemDamage())
-                {
-                case 0:
-                    block = Blocks.OBSIDIAN;
-                    alchemyArray.decrStackSize(0, 1);
-                    world.setBlockToAir(alchemyArray.getPos());
-                    break;
-                case 1:
-                    block = Blocks.NETHERRACK;
-                    alchemyArray.decrStackSize(0, 1);
-                    world.setBlockToAir(alchemyArray.getPos());
-                    break;
+            if (!alchemyArray.getStackInSlot(0).isEmpty() && alchemyArray.getStackInSlot(0).getItem() instanceof ItemComponent) {
+                switch (alchemyArray.getStackInSlot(0).getItemDamage()) {
+                    case 0:
+                        block = Blocks.OBSIDIAN;
+                        alchemyArray.decrStackSize(0, 1);
+                        world.setBlockToAir(alchemyArray.getPos());
+                        break;
+                    case 1:
+                        block = Blocks.NETHERRACK;
+                        alchemyArray.decrStackSize(0, 1);
+                        world.setBlockToAir(alchemyArray.getPos());
+                        break;
                 /*
                  * case 4: block = Blocks.end_stone;
                  * alchemyArray.decrStackSize(0, 1);
                  * world.setBlockToAir(alchemyArray.getPos()); break;
                  */
-                default:
-                    break;
+                    default:
+                        break;
                 }
             }
         }
 
-        for (BlockPos blockPos : cobblestoneRange.getContainedPositions(masterRitualStone.getBlockPos()))
-        {
-            if (world.isAirBlock(blockPos))
-            {
+        for (BlockPos blockPos : cobblestoneRange.getContainedPositions(masterRitualStone.getBlockPos())) {
+            if (world.isAirBlock(blockPos)) {
                 world.setBlockState(blockPos, block.getDefaultState());
                 totalEffects++;
             }
 
-            if (totalEffects >= maxEffects)
-            {
+            if (totalEffects >= maxEffects) {
                 break;
             }
         }
@@ -88,14 +78,12 @@ public class RitualCobblestone extends Ritual
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 25;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         this.addCornerRunes(components, 1, 1, EnumRuneType.FIRE);
@@ -105,8 +93,7 @@ public class RitualCobblestone extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualCobblestone();
     }
 }

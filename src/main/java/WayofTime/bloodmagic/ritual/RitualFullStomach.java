@@ -8,20 +8,18 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.FoodStats;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RitualFullStomach extends Ritual
-{
+public class RitualFullStomach extends Ritual {
     public static final String FILL_RANGE = "fillRange";
     public static final String CHEST_RANGE = "chest";
 
-    public RitualFullStomach()
-    {
+    public RitualFullStomach() {
         super("ritualFullStomach", 0, 100000, "ritual." + BloodMagic.MODID + ".fullStomachRitual");
         addBlockRange(FILL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-25, -25, -25), 51));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
@@ -31,8 +29,7 @@ public class RitualFullStomach extends Ritual
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
@@ -43,8 +40,7 @@ public class RitualFullStomach extends Ritual
 
         AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
         TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
-        if (!(tile instanceof IInventory))
-        {
+        if (!(tile instanceof IInventory)) {
             return;
         }
 
@@ -56,23 +52,19 @@ public class RitualFullStomach extends Ritual
 
         List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, fillingRange.getAABB(pos));
 
-        for (EntityPlayer player : playerList)
-        {
+        for (EntityPlayer player : playerList) {
             FoodStats foodStats = player.getFoodStats();
             float satLevel = foodStats.getSaturationLevel();
 
-            for (int i = lastSlot; i < inventory.getSizeInventory(); i++)
-            {
+            for (int i = lastSlot; i < inventory.getSizeInventory(); i++) {
                 ItemStack stack = inventory.getStackInSlot(i);
-                if (!stack.isEmpty() && stack.getItem() instanceof ItemFood)
-                {
+                if (!stack.isEmpty() && stack.getItem() instanceof ItemFood) {
                     ItemFood foodItem = (ItemFood) stack.getItem();
 
                     int healAmount = foodItem.getHealAmount(stack);
                     float saturationAmount = foodItem.getSaturationModifier(stack) * healAmount * 2.0f;
 
-                    if (saturationAmount + satLevel <= 20)
-                    {
+                    if (saturationAmount + satLevel <= 20) {
                         NBTTagCompound nbt = new NBTTagCompound();
                         foodStats.writeNBT(nbt);
                         nbt.setFloat("foodSaturationLevel", saturationAmount + satLevel);
@@ -86,8 +78,7 @@ public class RitualFullStomach extends Ritual
                 }
             }
 
-            if (totalEffects >= maxEffects)
-            {
+            if (totalEffects >= maxEffects) {
                 masterRitualStone.getOwnerNetwork().causeNausea();
                 break;
             }
@@ -97,20 +88,17 @@ public class RitualFullStomach extends Ritual
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 20;
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 100;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         this.addParallelRunes(components, 3, 0, EnumRuneType.FIRE);
@@ -123,8 +111,7 @@ public class RitualFullStomach extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualFullStomach();
     }
 }

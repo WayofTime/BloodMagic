@@ -1,12 +1,11 @@
 package WayofTime.bloodmagic.block.enums;
 
-import java.util.Locale;
-
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import net.minecraft.util.IStringSerializable;
 
-public enum EnumSubWillType implements IStringSerializable
-{
+import java.util.Locale;
+
+public enum EnumSubWillType implements IStringSerializable {
     RAW,
     CORROSIVE,
     DESTRUCTIVE,
@@ -14,14 +13,12 @@ public enum EnumSubWillType implements IStringSerializable
     STEADFAST;
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return name().toLowerCase(Locale.ENGLISH);
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return this.toString();
     }
 

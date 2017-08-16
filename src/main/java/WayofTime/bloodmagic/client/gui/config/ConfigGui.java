@@ -10,17 +10,14 @@ import net.minecraftforge.fml.client.config.IConfigElement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigGui extends GuiConfig
-{
+public class ConfigGui extends GuiConfig {
 
-    public ConfigGui(GuiScreen parentScreen)
-    {
+    public ConfigGui(GuiScreen parentScreen) {
         super(parentScreen, getConfigElements(parentScreen), BloodMagic.MODID, false, false, "BloodMagic Configuration");
     }
 
     @SuppressWarnings("rawtypes")
-    private static List<IConfigElement> getConfigElements(GuiScreen parent)
-    {
+    private static List<IConfigElement> getConfigElements(GuiScreen parent) {
         List<IConfigElement> list = new ArrayList<IConfigElement>();
 
         // adds sections declared in ConfigHandler. toLowerCase() is used

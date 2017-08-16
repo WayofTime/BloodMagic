@@ -1,11 +1,14 @@
 package WayofTime.bloodmagic.livingArmour;
 
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-
+import WayofTime.bloodmagic.api.iface.IUpgradeTrainer;
+import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.api.livingArmour.StatTracker;
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.util.helper.TextHelper;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,19 +18,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.iface.IUpgradeTrainer;
-import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.livingArmour.StatTracker;
-import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
 
-public class LivingArmour implements ILivingArmour
-{
+public class LivingArmour implements ILivingArmour {
     public static String chatBase = "chat.bloodmagic.livingArmour.";
     public HashMap<String, StatTracker> trackerMap = new HashMap<String, StatTracker>();
     public HashMap<String, LivingArmourUpgrade> upgradeMap = new HashMap<String, LivingArmourUpgrade>();
@@ -35,52 +33,42 @@ public class LivingArmour implements ILivingArmour
     public int maxUpgradePoints = 100;
     public int totalUpgradePoints = 0;
 
-    public StatTracker getTracker(String key)
-    {
+    public StatTracker getTracker(String key) {
         return trackerMap.get(key);
     }
 
-    public double getAdditionalDamageOnHit(double damage, EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon)
-    {
+    public double getAdditionalDamageOnHit(double damage, EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon) {
         double total = 0;
-        for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())
-        {
+        for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet()) {
             total += entry.getValue().getAdditionalDamageOnHit(damage, wearer, hitEntity, weapon);
         }
 
         return total;
     }
 
-    public double getKnockbackOnHit(EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon)
-    {
+    public double getKnockbackOnHit(EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon) {
         double total = 0;
-        for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())
-        {
+        for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet()) {
             total += entry.getValue().getKnockbackOnHit(wearer, hitEntity, weapon);
         }
 
         return total;
     }
 
-    public void recalculateUpgradePoints()
-    {
+    public void recalculateUpgradePoints() {
         totalUpgradePoints = 0;
-        for (LivingArmourUpgrade upgrade : upgradeMap.values())
-        {
+        for (LivingArmourUpgrade upgrade : upgradeMap.values()) {
             totalUpgradePoints += upgrade.getCostOfUpgrade();
         }
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers()
-    {
+    public Multimap<String, AttributeModifier> getAttributeModifiers() {
         HashMultimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
 
-        for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())
-        {
+        for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet()) {
             LivingArmourUpgrade upgrade = entry.getValue();
-            if (upgrade == null)
-            {
+            if (upgrade == null) {
                 continue;
             }
             modifierMap.putAll(upgrade.getAttributeModifiers());
@@ -90,41 +78,33 @@ public class LivingArmour implements ILivingArmour
     }
 
     @Override
-    public boolean upgradeArmour(EntityPlayer user, LivingArmourUpgrade upgrade)
-    {
+    public boolean upgradeArmour(EntityPlayer user, LivingArmourUpgrade upgrade) {
         String key = upgrade.getUniqueIdentifier();
-        if (upgradeMap.containsKey(key))
-        {
+        if (upgradeMap.containsKey(key)) {
             //Check if this is a higher level than the previous upgrade
             int nextLevel = upgrade.getUpgradeLevel();
             int currentLevel = upgradeMap.get(key).getUpgradeLevel();
 
-            if (nextLevel > currentLevel)
-            {
+            if (nextLevel > currentLevel) {
                 int upgradePointDifference = upgrade.getCostOfUpgrade() - upgradeMap.get(key).getCostOfUpgrade();
-                if (totalUpgradePoints + upgradePointDifference <= maxUpgradePoints)
-                {
+                if (totalUpgradePoints + upgradePointDifference <= maxUpgradePoints) {
                     upgradeMap.put(key, upgrade);
                     totalUpgradePoints += upgradePointDifference;
                     notifyPlayerOfUpgrade(user, upgrade);
-                    for (StatTracker tracker : trackerMap.values())
-                    {
+                    for (StatTracker tracker : trackerMap.values()) {
                         tracker.onArmourUpgradeAdded(upgrade);
                     }
 
                     return true;
                 }
             }
-        } else
-        {
+        } else {
             int upgradePoints = upgrade.getCostOfUpgrade();
-            if (totalUpgradePoints + upgradePoints <= maxUpgradePoints)
-            {
+            if (totalUpgradePoints + upgradePoints <= maxUpgradePoints) {
                 upgradeMap.put(key, upgrade);
                 totalUpgradePoints += upgradePoints;
                 notifyPlayerOfUpgrade(user, upgrade);
-                for (StatTracker tracker : trackerMap.values())
-                {
+                for (StatTracker tracker : trackerMap.values()) {
                     tracker.onArmourUpgradeAdded(upgrade);
                 }
 
@@ -136,28 +116,22 @@ public class LivingArmour implements ILivingArmour
     }
 
     @Override
-    public boolean canApplyUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade)
-    {
+    public boolean canApplyUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade) {
         String key = upgrade.getUniqueIdentifier();
-        if (upgradeMap.containsKey(key))
-        {
+        if (upgradeMap.containsKey(key)) {
             //Check if this is a higher level than the previous upgrade
             int nextLevel = upgrade.getUpgradeLevel();
             int currentLevel = upgradeMap.get(key).getUpgradeLevel();
 
-            if (nextLevel > currentLevel)
-            {
+            if (nextLevel > currentLevel) {
                 int upgradePointDifference = upgrade.getCostOfUpgrade() - upgradeMap.get(key).getCostOfUpgrade();
-                if (totalUpgradePoints + upgradePointDifference <= maxUpgradePoints)
-                {
+                if (totalUpgradePoints + upgradePointDifference <= maxUpgradePoints) {
                     return true;
                 }
             }
-        } else
-        {
+        } else {
             int upgradePoints = upgrade.getCostOfUpgrade();
-            if (totalUpgradePoints + upgradePoints <= maxUpgradePoints)
-            {
+            if (totalUpgradePoints + upgradePoints <= maxUpgradePoints) {
                 return true;
             }
         }
@@ -166,85 +140,69 @@ public class LivingArmour implements ILivingArmour
     }
 
     @Override
-    public void notifyPlayerOfUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade)
-    {
+    public void notifyPlayerOfUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade) {
         user.sendStatusMessage(new TextComponentString(TextHelper.localizeEffect(chatBase + "newUpgrade")), true);
     }
 
     /**
      * Ticks the upgrades and stat trackers, passing in the world and player as
      * well as the LivingArmour
-     * 
+     *
      * @param world
      * @param player
      */
     @Override
-    public void onTick(World world, EntityPlayer player)
-    {
-        for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())
-        {
+    public void onTick(World world, EntityPlayer player) {
+        for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet()) {
             LivingArmourUpgrade upgrade = entry.getValue();
 
-            if (upgrade == null)
-            {
+            if (upgrade == null) {
                 continue;
             }
 
-            if (!world.isRemote || upgrade.runOnClient())
-            {
+            if (!world.isRemote || upgrade.runOnClient()) {
                 upgrade.onTick(world, player, this);
             }
         }
 
-        if (world.isRemote)
-        {
+        if (world.isRemote) {
             return;
         }
 
         List<String> allowedUpgradesList = new ArrayList<String>();
-        for (ItemStack stack : player.inventory.mainInventory)
-        {
-            if (stack != null && stack.getItem() instanceof IUpgradeTrainer)
-            {
+        for (ItemStack stack : player.inventory.mainInventory) {
+            if (stack != null && stack.getItem() instanceof IUpgradeTrainer) {
                 List<String> keyList = ((IUpgradeTrainer) stack.getItem()).getTrainedUpgrades(stack);
-                if (!keyList.isEmpty())
-                {
+                if (!keyList.isEmpty()) {
                     allowedUpgradesList.addAll(keyList);
                 }
             }
         }
 
-        for (Entry<String, StatTracker> entry : trackerMap.entrySet())
-        {
+        for (Entry<String, StatTracker> entry : trackerMap.entrySet()) {
             StatTracker tracker = entry.getValue();
 
-            if (tracker == null)
-            {
+            if (tracker == null) {
                 continue;
             }
 
-            if (!allowedUpgradesList.isEmpty())
-            {
+            if (!allowedUpgradesList.isEmpty()) {
                 boolean allowed = false;
 
-                for (String key : allowedUpgradesList)
-                {
-                    if (tracker.providesUpgrade(key))
-                    {
+                for (String key : allowedUpgradesList) {
+                    if (tracker.providesUpgrade(key)) {
                         allowed = true;
                         break;
                     }
                 }
 
-                if (!allowed)
-                {
+                if (!allowed) {
                     tracker.onDeactivatedTick(world, player, this);
                     continue;
                 }
             }
 
-            if (tracker.onTick(world, player, this))
-            {
+            if (tracker.onTick(world, player, this)) {
                 List<LivingArmourUpgrade> upgradeList = tracker.getUpgrades();
 
                 for (LivingArmourUpgrade upgrade : upgradeList) //TODO: make a getNextUpgrade?
@@ -257,62 +215,51 @@ public class LivingArmour implements ILivingArmour
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
         maxUpgradePoints = Math.max(100, tag.getInteger("maxUpgradePoints"));
 
         NBTTagList upgradeTags = tag.getTagList("upgrades", 10);
-        if (upgradeTags != null)
-        {
-            for (int i = 0; i < upgradeTags.tagCount(); i++)
-            {
+        if (upgradeTags != null) {
+            for (int i = 0; i < upgradeTags.tagCount(); i++) {
                 NBTTagCompound upgradeTag = upgradeTags.getCompoundTagAt(i);
                 String key = upgradeTag.getString("key");
                 int level = upgradeTag.getInteger("level");
                 NBTTagCompound nbtTag = upgradeTag.getCompoundTag("upgrade");
                 LivingArmourUpgrade upgrade = LivingArmourHandler.generateUpgradeFromKey(key, level, nbtTag);
-                if (upgrade != null)
-                {
+                if (upgrade != null) {
                     upgradeMap.put(key, upgrade);
                     totalUpgradePoints += upgrade.getCostOfUpgrade();
                 }
             }
         }
 
-        for (Class<? extends StatTracker> clazz : LivingArmourHandler.trackers)
-        {
-            try
-            {
+        for (Class<? extends StatTracker> clazz : LivingArmourHandler.trackers) {
+            try {
                 Constructor<?> ctor = clazz.getConstructor();
                 Object obj = ctor.newInstance();
-                if (!(obj instanceof StatTracker))
-                {
+                if (!(obj instanceof StatTracker)) {
                     // ?????
                 }
                 StatTracker tracker = (StatTracker) obj;
                 String key = tracker.getUniqueIdentifier();
                 NBTTagCompound trackerTag = tag.getCompoundTag(key);
-                if (!trackerTag.hasNoTags())
-                {
+                if (!trackerTag.hasNoTags()) {
                     tracker.readFromNBT(trackerTag);
                 }
                 trackerMap.put(key, tracker);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag, boolean forceWrite)
-    {
+    public void writeToNBT(NBTTagCompound tag, boolean forceWrite) {
         tag.setInteger("maxUpgradePoints", maxUpgradePoints);
 
         NBTTagList tags = new NBTTagList();
 
-        for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())
-        {
+        for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet()) {
             NBTTagCompound upgradeTag = new NBTTagCompound();
 
             LivingArmourUpgrade upgrade = entry.getValue();
@@ -328,19 +275,16 @@ public class LivingArmour implements ILivingArmour
 
         tag.setTag("upgrades", tags);
 
-        for (Entry<String, StatTracker> entry : trackerMap.entrySet())
-        {
+        for (Entry<String, StatTracker> entry : trackerMap.entrySet()) {
             StatTracker tracker = entry.getValue();
 
-            if (tracker == null)
-            {
+            if (tracker == null) {
                 continue;
             }
 
             String key = tracker.getUniqueIdentifier();
 
-            if (forceWrite || tracker.isDirty())
-            {
+            if (forceWrite || tracker.isDirty()) {
                 NBTTagCompound trackerTag = new NBTTagCompound();
                 tracker.writeToNBT(trackerTag);
 
@@ -354,27 +298,34 @@ public class LivingArmour implements ILivingArmour
     /**
      * Writes the LivingArmour to the NBTTag. This will only write the trackers
      * that are dirty.
-     * 
+     *
      * @param tag
      */
     @Override
-    public void writeDirtyToNBT(NBTTagCompound tag)
-    {
+    public void writeDirtyToNBT(NBTTagCompound tag) {
         writeToNBT(tag, false);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
         writeToNBT(tag, true);
     }
 
-    public static boolean hasFullSet(EntityPlayer player)
-    {
-        for (EntityEquipmentSlot slot : EntityEquipmentSlot.values())
-        {
-            if (slot.getSlotType() != EntityEquipmentSlot.Type.ARMOR)
-            {
+    @Override
+    public boolean removeUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade) {
+        String key = upgrade.getUniqueIdentifier();
+        if (upgradeMap.containsKey(key)) {
+            upgradeMap.remove(key);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean hasFullSet(EntityPlayer player) {
+        for (EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
+            if (slot.getSlotType() != EntityEquipmentSlot.Type.ARMOR) {
                 continue;
             }
             ItemStack slotStack = player.getItemStackFromSlot(slot);
@@ -383,19 +334,5 @@ public class LivingArmour implements ILivingArmour
         }
 
         return true;
-    }
-
-    @Override
-    public boolean removeUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade)
-    {
-        String key = upgrade.getUniqueIdentifier();
-        if (upgradeMap.containsKey(key))
-        {
-            upgradeMap.remove(key);
-
-            return true;
-        }
-
-        return false;
     }
 }

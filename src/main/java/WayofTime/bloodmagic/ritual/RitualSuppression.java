@@ -1,38 +1,30 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.tile.TileSpectralBlock;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.tile.TileSpectralBlock;
-import WayofTime.bloodmagic.util.Utils;
 
-public class RitualSuppression extends Ritual
-{
+import java.util.ArrayList;
+
+public class RitualSuppression extends Ritual {
     public static final String SUPPRESSION_RANGE = "suppressionRange";
 
-    public RitualSuppression()
-    {
+    public RitualSuppression() {
         super("ritualSuppression", 0, 10000, "ritual." + BloodMagic.MODID + ".suppressionRitual");
         addBlockRange(SUPPRESSION_RANGE, new AreaDescriptor.HemiSphere(new BlockPos(0, 0, 0), 10));
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -40,14 +32,12 @@ public class RitualSuppression extends Ritual
         final int refresh = 100;
         AreaDescriptor suppressionRange = getBlockRange(SUPPRESSION_RANGE);
 
-        for (BlockPos blockPos : suppressionRange.getContainedPositions(masterRitualStone.getBlockPos()))
-        {
+        for (BlockPos blockPos : suppressionRange.getContainedPositions(masterRitualStone.getBlockPos())) {
             IBlockState state = world.getBlockState(blockPos);
 
             if (Utils.isBlockLiquid(state) && world.getTileEntity(blockPos) == null)
                 TileSpectralBlock.createSpectralBlock(world, blockPos, refresh);
-            else
-            {
+            else {
                 TileEntity tile = world.getTileEntity(blockPos);
                 if (tile instanceof TileSpectralBlock)
                     ((TileSpectralBlock) tile).resetDuration(refresh);
@@ -56,20 +46,17 @@ public class RitualSuppression extends Ritual
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 1;
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 2;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         this.addCornerRunes(components, 2, 0, EnumRuneType.WATER);
@@ -86,8 +73,7 @@ public class RitualSuppression extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualSuppression();
     }
 }

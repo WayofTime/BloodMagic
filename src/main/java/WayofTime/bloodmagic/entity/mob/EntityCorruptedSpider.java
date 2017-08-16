@@ -1,16 +1,11 @@
 package WayofTime.bloodmagic.entity.mob;
 
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.entity.ai.EntityAIPickUpAlly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILeapAtTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
@@ -23,28 +18,22 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.entity.ai.EntityAIPickUpAlly;
 
-public class EntityCorruptedSpider extends EntityAspectedDemonBase
-{
+public class EntityCorruptedSpider extends EntityAspectedDemonBase {
     private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(EntityCorruptedSpider.class, DataSerializers.BYTE);
 
-    public EntityCorruptedSpider(World world)
-    {
+    public EntityCorruptedSpider(World world) {
         this(world, EnumDemonWillType.DEFAULT);
     }
 
-    public EntityCorruptedSpider(World world, EnumDemonWillType type)
-    {
+    public EntityCorruptedSpider(World world, EnumDemonWillType type) {
         super(world);
         this.setSize(1.4F, 0.9F);
 
         this.setType(type);
     }
 
-    protected void initEntityAI()
-    {
+    protected void initEntityAI() {
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
         this.tasks.addTask(3, new EntityAIPickUpAlly(this, 1, true));
@@ -59,132 +48,109 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase
     }
 
     @Override
-    public double getBaseHP(EnumDemonWillType type)
-    {
+    public double getBaseHP(EnumDemonWillType type) {
         return super.getBaseHP(type);
     }
 
     @Override
-    public double getBaseMeleeDamage(EnumDemonWillType type)
-    {
+    public double getBaseMeleeDamage(EnumDemonWillType type) {
         return super.getBaseMeleeDamage(type);
     }
 
     @Override
-    public double getBaseSpeed(EnumDemonWillType type)
-    {
+    public double getBaseSpeed(EnumDemonWillType type) {
         return super.getBaseSpeed(type);
     }
 
     @Override
-    public double getBaseSprintModifier(EnumDemonWillType type)
-    {
+    public double getBaseSprintModifier(EnumDemonWillType type) {
         return super.getBaseSprintModifier(type);
     }
 
     @Override
-    public double getBaseKnockbackResist(EnumDemonWillType type)
-    {
+    public double getBaseKnockbackResist(EnumDemonWillType type) {
         return super.getBaseKnockbackResist(type);
     }
 
     @Override
-    public double getMountedYOffset()
-    {
+    public double getMountedYOffset() {
         return (double) (this.height * 0.5F);
     }
 
     @Override
-    protected PathNavigate createNavigator(World worldIn)
-    {
+    protected PathNavigate createNavigator(World worldIn) {
         return new PathNavigateClimber(this, worldIn);
     }
 
     @Override
-    protected void entityInit()
-    {
+    protected void entityInit() {
         super.entityInit();
         this.dataManager.register(CLIMBING, (byte) 0);
     }
 
     @Override
-    public void onUpdate()
-    {
+    public void onUpdate() {
         super.onUpdate();
 
-        if (!this.getEntityWorld().isRemote)
-        {
+        if (!this.getEntityWorld().isRemote) {
             this.setBesideClimbableBlock(this.isCollidedHorizontally);
         }
     }
 
     @Override
-    protected SoundEvent getAmbientSound()
-    {
+    protected SoundEvent getAmbientSound() {
         return SoundEvents.ENTITY_SPIDER_AMBIENT;
     }
 
     @Override
-    protected SoundEvent getHurtSound()
-    {
+    protected SoundEvent getHurtSound() {
         return SoundEvents.ENTITY_SPIDER_HURT;
     }
 
     @Override
-    protected SoundEvent getDeathSound()
-    {
+    protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_SPIDER_DEATH;
     }
 
     @Override
-    protected float getSoundPitch()
-    {
+    protected float getSoundPitch() {
         return super.getSoundPitch() * 0.5f;
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, Block blockIn)
-    {
+    protected void playStepSound(BlockPos pos, Block blockIn) {
         this.playSound(SoundEvents.ENTITY_SPIDER_STEP, 0.15F, 1.0F);
     }
 
     @Override
-    public boolean isOnLadder()
-    {
+    public boolean isOnLadder() {
         return this.isBesideClimbableBlock();
     }
 
     @Override
-    public void setInWeb()
-    {
+    public void setInWeb() {
     }
 
     @Override
-    public EnumCreatureAttribute getCreatureAttribute()
-    {
+    public EnumCreatureAttribute getCreatureAttribute() {
         return EnumCreatureAttribute.ARTHROPOD;
     }
 
     @Override
-    public boolean isPotionApplicable(PotionEffect potioneffectIn)
-    {
+    public boolean isPotionApplicable(PotionEffect potioneffectIn) {
         return potioneffectIn.getPotion() != MobEffects.POISON && super.isPotionApplicable(potioneffectIn);
     }
 
-    public boolean isBesideClimbableBlock()
-    {
+    public boolean isBesideClimbableBlock() {
         return (this.dataManager.get(CLIMBING) & 1) != 0;
     }
 
-    public void setBesideClimbableBlock(boolean climbing)
-    {
+    public void setBesideClimbableBlock(boolean climbing) {
         byte b0 = this.dataManager.get(CLIMBING);
 
-        if (climbing)
-        {
+        if (climbing) {
             b0 = (byte) (b0 | 1);
-        } else
-        {
+        } else {
             b0 = (byte) (b0 & -2);
         }
 
@@ -192,53 +158,43 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase
     }
 
     @Override
-    public float getEyeHeight()
-    {
+    public float getEyeHeight() {
         return 0.65F;
     }
 
-    static class AISpiderAttack extends EntityAIAttackMelee
-    {
-        public AISpiderAttack(EntityCorruptedSpider spider)
-        {
+    static class AISpiderAttack extends EntityAIAttackMelee {
+        public AISpiderAttack(EntityCorruptedSpider spider) {
             super(spider, 1.0D, true);
         }
 
         /**
          * Returns whether an in-progress EntityAIBase should continue executing
          */
-        public boolean shouldContinueExecuting()
-        {
+        public boolean shouldContinueExecuting() {
             float f = this.attacker.getBrightness();
 
-            if (f >= 0.5F && this.attacker.getRNG().nextInt(100) == 0)
-            {
+            if (f >= 0.5F && this.attacker.getRNG().nextInt(100) == 0) {
                 this.attacker.setAttackTarget(null);
                 return false;
-            } else
-            {
+            } else {
                 return super.shouldContinueExecuting();
             }
         }
 
-        protected double getAttackReachSqr(EntityLivingBase attackTarget)
-        {
+        protected double getAttackReachSqr(EntityLivingBase attackTarget) {
             return (double) (4.0F + attackTarget.width);
         }
     }
 
-    static class AISpiderTarget<T extends EntityLivingBase> extends EntityAINearestAttackableTarget<T>
-    {
-        public AISpiderTarget(EntityCorruptedSpider spider, Class<T> classTarget)
-        {
+    static class AISpiderTarget<T extends EntityLivingBase> extends EntityAINearestAttackableTarget<T> {
+        public AISpiderTarget(EntityCorruptedSpider spider, Class<T> classTarget) {
             super(spider, classTarget, true);
         }
 
         /**
          * Returns whether the EntityAIBase should begin execution.
          */
-        public boolean shouldExecute()
-        {
+        public boolean shouldExecute() {
             float f = this.taskOwner.getBrightness();
             return !(f >= 0.5F) && super.shouldExecute();
         }

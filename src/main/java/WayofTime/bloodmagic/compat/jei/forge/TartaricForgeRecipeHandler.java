@@ -6,31 +6,26 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 
 import javax.annotation.Nonnull;
 
-public class TartaricForgeRecipeHandler implements IRecipeHandler<TartaricForgeRecipeJEI>
-{
+public class TartaricForgeRecipeHandler implements IRecipeHandler<TartaricForgeRecipeJEI> {
     @Nonnull
     @Override
-    public Class<TartaricForgeRecipeJEI> getRecipeClass()
-    {
+    public Class<TartaricForgeRecipeJEI> getRecipeClass() {
         return TartaricForgeRecipeJEI.class;
     }
 
     @Override
-    public String getRecipeCategoryUid(@Nonnull TartaricForgeRecipeJEI recipe)
-    {
+    public String getRecipeCategoryUid(@Nonnull TartaricForgeRecipeJEI recipe) {
         return Constants.Compat.JEI_CATEGORY_SOULFORGE;
     }
 
     @Nonnull
     @Override
-    public IRecipeWrapper getRecipeWrapper(@Nonnull TartaricForgeRecipeJEI recipe)
-    {
+    public IRecipeWrapper getRecipeWrapper(@Nonnull TartaricForgeRecipeJEI recipe) {
         return recipe;
     }
 
     @Override
-    public boolean isRecipeValid(@Nonnull TartaricForgeRecipeJEI recipe)
-    {
+    public boolean isRecipeValid(@Nonnull TartaricForgeRecipeJEI recipe) {
         return true;
     }
 }

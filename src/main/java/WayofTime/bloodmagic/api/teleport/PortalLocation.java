@@ -6,38 +6,24 @@ import net.minecraft.util.math.BlockPos;
 
 import java.io.Serializable;
 
-public class PortalLocation implements Serializable
-{
+public class PortalLocation implements Serializable {
     private int x;
     private int y;
     private int z;
     private int dimension;
 
-    public PortalLocation(int x, int y, int z, int dimension)
-    {
+    public PortalLocation(int x, int y, int z, int dimension) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.dimension = dimension;
     }
 
-    public PortalLocation(BlockPos blockPos, int dimension)
-    {
+    public PortalLocation(BlockPos blockPos, int dimension) {
         this(blockPos.getX(), blockPos.getY(), blockPos.getZ(), dimension);
     }
 
-    public static PortalLocation readFromNBT(NBTTagCompound tag)
-    {
-        if (tag.hasKey(Constants.NBT.PORTAL_LOCATION))
-        {
-            NBTTagCompound locationTag = tag.getCompoundTag(Constants.NBT.PORTAL_LOCATION);
-            return new PortalLocation(locationTag.getInteger(Constants.NBT.X_COORD), locationTag.getInteger(Constants.NBT.Y_COORD), locationTag.getInteger(Constants.NBT.Z_COORD), locationTag.getInteger(Constants.NBT.DIMENSION_ID));
-        }
-        return null;
-    }
-
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
-    {
+    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         NBTTagCompound locationTag = new NBTTagCompound();
 
         locationTag.setInteger(Constants.NBT.X_COORD, x);
@@ -49,14 +35,12 @@ public class PortalLocation implements Serializable
         return tag;
     }
 
-    public BlockPos getBlockPos()
-    {
+    public BlockPos getBlockPos() {
         return new BlockPos(x, y, z);
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o)
             return true;
         if (o == null || getClass() != o.getClass())
@@ -73,8 +57,7 @@ public class PortalLocation implements Serializable
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int result = x;
         result = 31 * result + y;
         result = 31 * result + z;
@@ -95,5 +78,13 @@ public class PortalLocation implements Serializable
 
     public int getDimension() {
         return dimension;
+    }
+
+    public static PortalLocation readFromNBT(NBTTagCompound tag) {
+        if (tag.hasKey(Constants.NBT.PORTAL_LOCATION)) {
+            NBTTagCompound locationTag = tag.getCompoundTag(Constants.NBT.PORTAL_LOCATION);
+            return new PortalLocation(locationTag.getInteger(Constants.NBT.X_COORD), locationTag.getInteger(Constants.NBT.Y_COORD), locationTag.getInteger(Constants.NBT.Z_COORD), locationTag.getInteger(Constants.NBT.DIMENSION_ID));
+        }
+        return null;
     }
 }

@@ -5,17 +5,15 @@ import net.minecraft.world.World;
 
 /**
  * This interface is for internal implementation only.
- * 
+ * <p>
  * It is provided via the API for easy obtaining of basic data.
  */
-public interface IRitualStone
-{
+public interface IRitualStone {
     boolean isRuneType(World world, BlockPos pos, EnumRuneType runeType);
 
     void setRuneType(World world, BlockPos pos, EnumRuneType runeType);
 
-    interface Tile
-    {
+    interface Tile {
         boolean isRuneType(EnumRuneType runeType);
 
         EnumRuneType getRuneType();

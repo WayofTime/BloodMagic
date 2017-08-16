@@ -1,28 +1,25 @@
 package WayofTime.bloodmagic.client.render.entity;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.client.render.model.ModelMeteor;
+import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
-import WayofTime.bloodmagic.client.render.model.ModelMeteor;
-import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 
-public class RenderEntityMeteor extends Render<EntityMeteor>
-{
+public class RenderEntityMeteor extends Render<EntityMeteor> {
+    private static final ResourceLocation resource = new ResourceLocation(BloodMagic.MODID, "textures/models/Meteor.png");
     public ModelBase model = new ModelMeteor();
     private float scale = 1;
-    private static final ResourceLocation resource = new ResourceLocation(BloodMagic.MODID, "textures/models/Meteor.png");
 
-    public RenderEntityMeteor(RenderManager renderManagerIn)
-    {
+    public RenderEntityMeteor(RenderManager renderManagerIn) {
         super(renderManagerIn);
     }
 
     @Override
-    public void doRender(EntityMeteor entity, double x, double y, double z, float entityYaw, float partialTicks)
-    {
+    public void doRender(EntityMeteor entity, double x, double y, double z, float entityYaw, float partialTicks) {
 //        GlStateManager.pushMatrix();
 //        GlStateManager.translate((float) x, (float) y, (float) z);
 //        GlStateManager.enableRescaleNormal();
@@ -49,8 +46,7 @@ public class RenderEntityMeteor extends Render<EntityMeteor>
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(EntityMeteor entity)
-    {
+    protected ResourceLocation getEntityTexture(EntityMeteor entity) {
         return resource;
     }
 }

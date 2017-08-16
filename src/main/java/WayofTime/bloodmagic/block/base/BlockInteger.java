@@ -6,25 +6,20 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Creates a block that has multiple meta-based states.
- * 
+ * <p>
  * These states will be numbered 0 through {@code maxMeta}.
  */
-public class BlockInteger extends Block
-{
+public class BlockInteger extends Block {
     private final int maxMeta;
     private final PropertyInteger property;
     private final BlockStateContainer realStateContainer;
 
-    public BlockInteger(Material material, int maxMeta, String propName)
-    {
+    public BlockInteger(Material material, int maxMeta, String propName) {
         super(material);
 
         this.maxMeta = maxMeta;
@@ -33,8 +28,7 @@ public class BlockInteger extends Block
         setDefaultState(getBlockState().getBaseState());
     }
 
-    public BlockInteger(Material material, int maxMeta)
-    {
+    public BlockInteger(Material material, int maxMeta) {
         this(material, maxMeta, "meta");
     }
 

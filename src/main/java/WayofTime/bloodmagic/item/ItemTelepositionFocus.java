@@ -8,7 +8,6 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
@@ -27,12 +26,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemTelepositionFocus extends ItemBindableBase implements IVariantProvider
-{
-    public static String[] names = { "weak", "enhanced", "reinforced", "demonic" };
+public class ItemTelepositionFocus extends ItemBindableBase implements IVariantProvider {
+    public static String[] names = {"weak", "enhanced", "reinforced", "demonic"};
 
-    public ItemTelepositionFocus()
-    {
+    public ItemTelepositionFocus() {
         super();
 
         setUnlocalizedName(BloodMagic.MODID + ".focus.");
@@ -42,15 +39,13 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+    public String getUnlocalizedName(ItemStack stack) {
         return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
-    {
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
@@ -59,14 +54,11 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
-        if (player.isSneaking())
-        {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        if (player.isSneaking()) {
             RayTraceResult mop = rayTrace(world, player, false);
 
-            if (mop != null && mop.typeOfHit == RayTraceResult.Type.BLOCK)
-            {
+            if (mop != null && mop.typeOfHit == RayTraceResult.Type.BLOCK) {
                 setBlockPos(player.getHeldItem(hand), world, mop.getBlockPos());
             }
         }
@@ -76,8 +68,7 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localize("tooltip.bloodmagic.telepositionFocus." + names[stack.getItemDamage()]))));
 
         super.addInformation(stack, world, tooltip, flag);
@@ -89,16 +80,14 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
         NBTTagCompound tag = stack.getTagCompound();
         BlockPos coords = getBlockPos(stack);
 
-        if (coords != null && tag != null)
-        {
+        if (coords != null && tag != null) {
             tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.coords", coords.getX(), coords.getY(), coords.getZ()));
             tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.dimension", tag.getInteger(Constants.NBT.DIMENSION_ID)));
         }
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "type=weak"));
         ret.add(new ImmutablePair<Integer, String>(1, "type=enhanced"));
@@ -107,20 +96,17 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
         return ret;
     }
 
-    public World getWorld(ItemStack stack)
-    {
+    public World getWorld(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
         return DimensionManager.getWorld(stack.getTagCompound().getInteger(Constants.NBT.DIMENSION_ID));
     }
 
-    public BlockPos getBlockPos(ItemStack stack)
-    {
+    public BlockPos getBlockPos(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
         return new BlockPos(stack.getTagCompound().getInteger(Constants.NBT.X_COORD), stack.getTagCompound().getInteger(Constants.NBT.Y_COORD), stack.getTagCompound().getInteger(Constants.NBT.Z_COORD));
     }
 
-    public ItemStack setBlockPos(ItemStack stack, World world, BlockPos pos)
-    {
+    public ItemStack setBlockPos(ItemStack stack, World world, BlockPos pos) {
         stack = NBTHelper.checkNBT(stack);
         NBTTagCompound itemTag = stack.getTagCompound();
         itemTag.setInteger(Constants.NBT.X_COORD, pos.getX());

@@ -1,63 +1,49 @@
 package WayofTime.bloodmagic.livingArmour.tracker;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import WayofTime.bloodmagic.BloodMagic;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSolarPowered;
 import WayofTime.bloodmagic.util.Utils;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 
-public class StatTrackerSolarPowered extends StatTracker
-{
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class StatTrackerSolarPowered extends StatTracker {
+    public static HashMap<LivingArmour, Double> changeMap = new HashMap<LivingArmour, Double>();
+    public static int[] healthedRequired = new int[]{70, 150, 300, 500, 700, 1400, 2400, 4000, 7000, 9000};
     public double totalHealthGenned = 0;
 
-    public static HashMap<LivingArmour, Double> changeMap = new HashMap<LivingArmour, Double>();
-    public static int[] healthedRequired = new int[] { 70, 150, 300, 500, 700, 1400, 2400, 4000, 7000, 9000 };
-
-    public static void incrementCounter(LivingArmour armour, double health)
-    {
-        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + health : health);
-    }
-
     @Override
-    public String getUniqueIdentifier()
-    {
+    public String getUniqueIdentifier() {
         return BloodMagic.MODID + ".tracker.solarPowered";
     }
 
     @Override
-    public void resetTracker()
-    {
+    public void resetTracker() {
         this.totalHealthGenned = 0;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
         totalHealthGenned = tag.getDouble(BloodMagic.MODID + ".tracker.solarPowered");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
         tag.setDouble(BloodMagic.MODID + ".tracker.solarPowered", totalHealthGenned);
     }
 
     @Override
-    public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour)
-    {
-        if (changeMap.containsKey(livingArmour))
-        {
+    public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+        if (changeMap.containsKey(livingArmour)) {
             double change = Math.abs(changeMap.get(livingArmour));
-            if (change > 0)
-            {
+            if (change > 0) {
                 totalHealthGenned += Math.abs(changeMap.get(livingArmour));
 
                 changeMap.put(livingArmour, 0d);
@@ -72,23 +58,18 @@ public class StatTrackerSolarPowered extends StatTracker
     }
 
     @Override
-    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour)
-    {
-        if (changeMap.containsKey(livingArmour))
-        {
+    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+        if (changeMap.containsKey(livingArmour)) {
             changeMap.remove(livingArmour);
         }
     }
 
     @Override
-    public List<LivingArmourUpgrade> getUpgrades()
-    {
+    public List<LivingArmourUpgrade> getUpgrades() {
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
 
-        for (int i = 0; i < 10; i++)
-        {
-            if (totalHealthGenned >= healthedRequired[i])
-            {
+        for (int i = 0; i < 10; i++) {
+            if (totalHealthGenned >= healthedRequired[i]) {
                 upgradeList.add(new LivingArmourUpgradeSolarPowered(i));
             }
         }
@@ -97,28 +78,27 @@ public class StatTrackerSolarPowered extends StatTracker
     }
 
     @Override
-    public double getProgress(LivingArmour livingArmour, int currentLevel)
-    {
+    public double getProgress(LivingArmour livingArmour, int currentLevel) {
         return Utils.calculateStandardProgress(totalHealthGenned, healthedRequired, currentLevel);
     }
 
     @Override
-    public boolean providesUpgrade(String key)
-    {
+    public boolean providesUpgrade(String key) {
         return key.equals(BloodMagic.MODID + ".upgrade.solarPowered");
     }
 
     @Override
-    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade)
-    {
-        if (upgrade instanceof LivingArmourUpgradeSolarPowered)
-        {
+    public void onArmourUpgradeAdded(LivingArmourUpgrade upgrade) {
+        if (upgrade instanceof LivingArmourUpgradeSolarPowered) {
             int level = upgrade.getUpgradeLevel();
-            if (level < healthedRequired.length)
-            {
+            if (level < healthedRequired.length) {
                 totalHealthGenned = Math.max(totalHealthGenned, healthedRequired[level]);
                 this.markDirty();
             }
         }
+    }
+
+    public static void incrementCounter(LivingArmour armour, double health) {
+        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + health : health);
     }
 }

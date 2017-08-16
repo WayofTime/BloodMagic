@@ -1,36 +1,31 @@
 package WayofTime.bloodmagic.compat.jei.binding;
 
-import javax.annotation.Nonnull;
-
+import WayofTime.bloodmagic.api.Constants;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import WayofTime.bloodmagic.api.Constants;
 
-public class BindingRecipeHandler implements IRecipeHandler<BindingRecipeJEI>
-{
+import javax.annotation.Nonnull;
+
+public class BindingRecipeHandler implements IRecipeHandler<BindingRecipeJEI> {
     @Nonnull
     @Override
-    public Class<BindingRecipeJEI> getRecipeClass()
-    {
+    public Class<BindingRecipeJEI> getRecipeClass() {
         return BindingRecipeJEI.class;
     }
 
     @Override
-    public String getRecipeCategoryUid(@Nonnull BindingRecipeJEI recipe)
-    {
+    public String getRecipeCategoryUid(@Nonnull BindingRecipeJEI recipe) {
         return Constants.Compat.JEI_CATEGORY_BINDING;
     }
 
     @Nonnull
     @Override
-    public IRecipeWrapper getRecipeWrapper(@Nonnull BindingRecipeJEI recipe)
-    {
+    public IRecipeWrapper getRecipeWrapper(@Nonnull BindingRecipeJEI recipe) {
         return recipe;
     }
 
     @Override
-    public boolean isRecipeValid(@Nonnull BindingRecipeJEI recipe)
-    {
+    public boolean isRecipeValid(@Nonnull BindingRecipeJEI recipe) {
         return true;
     }
 }

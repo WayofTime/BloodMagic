@@ -6,8 +6,7 @@ import net.minecraftforge.fml.client.IModGuiFactory;
 
 import java.util.Set;
 
-public class ConfigGuiFactory implements IModGuiFactory
-{
+public class ConfigGuiFactory implements IModGuiFactory {
     @Override
     public void initialize(Minecraft minecraftInstance) {
 

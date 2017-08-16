@@ -7,16 +7,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class ItemSigilElementalAffinity extends ItemSigilToggleableBase
-{
-    public ItemSigilElementalAffinity()
-    {
+public class ItemSigilElementalAffinity extends ItemSigilToggleableBase {
+    public ItemSigilElementalAffinity() {
         super("elementalAffinity", 200);
     }
 
     @Override
-    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
-    {
+    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected) {
         if (PlayerHelper.isFakePlayer(player))
             return;
 

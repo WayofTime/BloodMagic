@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.client.render.entity;
 
-import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
@@ -12,17 +12,14 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderEntitySoulSnare extends Render<EntitySoulSnare>
-{
+public class RenderEntitySoulSnare extends Render<EntitySoulSnare> {
     private final RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
 
-    public RenderEntitySoulSnare(RenderManager renderManagerIn)
-    {
+    public RenderEntitySoulSnare(RenderManager renderManagerIn) {
         super(renderManagerIn);
     }
 
-    public void doRender(EntitySoulSnare entity, double x, double y, double z, float entityYaw, float partialTicks)
-    {
+    public void doRender(EntitySoulSnare entity, double x, double y, double z, float entityYaw, float partialTicks) {
         GlStateManager.pushMatrix();
         GlStateManager.translate((float) x, (float) y, (float) z);
         GlStateManager.enableRescaleNormal();
@@ -36,8 +33,7 @@ public class RenderEntitySoulSnare extends Render<EntitySoulSnare>
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 
-    protected ResourceLocation getEntityTexture(EntitySoulSnare entity)
-    {
+    protected ResourceLocation getEntityTexture(EntitySoulSnare entity) {
         return TextureMap.LOCATION_BLOCKS_TEXTURE;
     }
 }

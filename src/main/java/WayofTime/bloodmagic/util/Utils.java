@@ -1,13 +1,16 @@
 package WayofTime.bloodmagic.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.api.iface.IDemonWillViewer;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.network.PlayerVelocityPacketProcessor;
+import WayofTime.bloodmagic.tile.TileInventory;
+import com.google.common.collect.Iterables;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockPortal;
@@ -50,33 +53,20 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.api.iface.IDemonWillViewer;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
-import WayofTime.bloodmagic.network.PlayerVelocityPacketProcessor;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
-import WayofTime.bloodmagic.tile.TileInventory;
 
-import com.google.common.collect.Iterables;
+import javax.annotation.Nullable;
+import java.util.*;
 
-public class Utils
-{
-    public static float addAbsorptionToMaximum(EntityLivingBase entity, float added, int maximum, int duration)
-    {
+public class Utils {
+    public static float addAbsorptionToMaximum(EntityLivingBase entity, float added, int maximum, int duration) {
         float currentAmount = entity.getAbsorptionAmount();
         added = Math.min(maximum - currentAmount, added);
 
-        if (added <= 0)
-        {
+        if (added <= 0) {
             return 0;
         }
 
-        if (duration > 0)
-        {
+        if (duration > 0) {
             int potionLevel = (int) ((currentAmount + added) / 4);
             entity.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, duration, potionLevel, true, false));
         }
@@ -86,27 +76,22 @@ public class Utils
         return added;
     }
 
-    public static boolean isImmuneToFireDamage(EntityLivingBase entity)
-    {
+    public static boolean isImmuneToFireDamage(EntityLivingBase entity) {
         return entity.isImmuneToFire() || entity.isPotionActive(MobEffects.FIRE_RESISTANCE);
     }
 
-    public static boolean isPlayerBesideSolidBlockFace(EntityPlayer player)
-    {
+    public static boolean isPlayerBesideSolidBlockFace(EntityPlayer player) {
         World world = player.getEntityWorld();
         double minimumDistanceFromAxis = 0.7;
         BlockPos centralPos = player.getPosition();
-        for (EnumFacing facing : EnumFacing.HORIZONTALS)
-        {
+        for (EnumFacing facing : EnumFacing.HORIZONTALS) {
             BlockPos offsetPos = centralPos.offset(facing);
             double distance = Math.min(offsetPos.getX() + 0.5 - player.posX, offsetPos.getZ() + 0.5 - player.posZ);
-            if (distance > minimumDistanceFromAxis)
-            {
+            if (distance > minimumDistanceFromAxis) {
                 continue;
             }
             IBlockState state = world.getBlockState(offsetPos);
-            if (state.isSideSolid(world, offsetPos, facing.getOpposite()))
-            {
+            if (state.isSideSolid(world, offsetPos, facing.getOpposite())) {
                 return true;
             }
         }
@@ -114,20 +99,16 @@ public class Utils
         return false;
     }
 
-    public static boolean canPlayerSeeDemonWill(EntityPlayer player)
-    {
+    public static boolean canPlayerSeeDemonWill(EntityPlayer player) {
         IItemHandler inventory = new PlayerMainInvWrapper(player.inventory);
 
-        for (int i = 0; i < inventory.getSlots(); i++)
-        {
+        for (int i = 0; i < inventory.getSlots(); i++) {
             ItemStack stack = inventory.getStackInSlot(i);
-            if (stack.isEmpty())
-            {
+            if (stack.isEmpty()) {
                 continue;
             }
 
-            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), stack, player))
-            {
+            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), stack, player)) {
                 return true;
             }
         }
@@ -135,71 +116,56 @@ public class Utils
         return false;
     }
 
-    public static boolean canEntitySeeBlock(World world, Entity entity, BlockPos pos)
-    {
+    public static boolean canEntitySeeBlock(World world, Entity entity, BlockPos pos) {
         Vec3d relativePosition = new Vec3d(entity.posX - pos.getX() - 0.5, entity.posY + (double) entity.getEyeHeight() - pos.getY() - 0.5, entity.posZ - pos.getZ() - 0.5);
         EnumFacing dir = EnumFacing.getFacingFromVector((float) relativePosition.x, (float) relativePosition.y, (float) relativePosition.z);
         RayTraceResult result = world.rayTraceBlocks(new Vec3d(entity.posX, entity.posY + (double) entity.getEyeHeight(), entity.posZ), new Vec3d(pos.getX() + 0.5 + dir.getFrontOffsetX() * 0.4, pos.getY() + 0.5 + dir.getFrontOffsetY() * 0.4, pos.getZ() + 0.5 + dir.getFrontOffsetZ() * 0.4), false, true, true);
         return result == null || pos.equals(result.getBlockPos());
     }
 
-    public static int plantSeedsInArea(World world, AxisAlignedBB aabb, int horizontalRadius, int verticalRadius)
-    {
+    public static int plantSeedsInArea(World world, AxisAlignedBB aabb, int horizontalRadius, int verticalRadius) {
         int placedBlocks = 0;
         List<EntityItem> itemEntities = world.getEntitiesWithinAABB(EntityItem.class, aabb);
 
-        for (EntityItem itemEntity : itemEntities)
-        {
+        for (EntityItem itemEntity : itemEntities) {
             placedBlocks += plantEntityItem(itemEntity, horizontalRadius, verticalRadius);
         }
 
         return placedBlocks;
     }
 
-    public static int plantItemStack(World world, BlockPos centralPos, ItemStack stack, int horizontalRadius, int verticalRadius)
-    {
-        if (stack.isEmpty())
-        {
+    public static int plantItemStack(World world, BlockPos centralPos, ItemStack stack, int horizontalRadius, int verticalRadius) {
+        if (stack.isEmpty()) {
             return 0;
         }
 
         Item item = stack.getItem();
-        if (!(item instanceof IPlantable))
-        {
+        if (!(item instanceof IPlantable)) {
             return 0;
         }
 
         int planted = 0;
 
-        for (int hR = 0; hR <= horizontalRadius; hR++)
-        {
-            for (int vR = 0; vR <= verticalRadius; vR++)
-            {
-                for (int i = -hR; i <= hR; i++)
-                {
-                    for (int k = -hR; k <= hR; k++)
-                    {
-                        for (int j = -vR; j <= vR; j += 2 * vR + (vR > 0 ? 0 : 1))
-                        {
-                            if (!(Math.abs(i) == hR || Math.abs(k) == hR))
-                            {
+        for (int hR = 0; hR <= horizontalRadius; hR++) {
+            for (int vR = 0; vR <= verticalRadius; vR++) {
+                for (int i = -hR; i <= hR; i++) {
+                    for (int k = -hR; k <= hR; k++) {
+                        for (int j = -vR; j <= vR; j += 2 * vR + (vR > 0 ? 0 : 1)) {
+                            if (!(Math.abs(i) == hR || Math.abs(k) == hR)) {
                                 continue;
                             }
 
                             BlockPos newPos = centralPos.add(i, j, k);
-                            if (world.isAirBlock(newPos))
-                            {
+                            if (world.isAirBlock(newPos)) {
                                 BlockPos offsetPos = newPos.offset(EnumFacing.DOWN);
                                 IBlockState state = world.getBlockState(offsetPos);
-                                if (state.getBlock().canSustainPlant(state, world, offsetPos, EnumFacing.UP, (IPlantable) item))
-                                {
+                                if (state.getBlock().canSustainPlant(state, world, offsetPos, EnumFacing.UP, (IPlantable) item)) {
                                     IBlockState plantState = ((IPlantable) item).getPlant(world, newPos);
                                     world.setBlockState(newPos, plantState, 3);
                                     world.playEvent(2001, newPos, Block.getIdFromBlock(plantState.getBlock()) + (plantState.getBlock().getMetaFromState(plantState) << 12));
                                     stack.shrink(1);
                                     planted++;
-                                    if (stack.isEmpty() || stack.getCount() <= 0)
-                                    {
+                                    if (stack.isEmpty() || stack.getCount() <= 0) {
                                         return planted;
                                     }
                                 }
@@ -213,10 +179,8 @@ public class Utils
         return planted;
     }
 
-    public static int plantEntityItem(EntityItem itemEntity, int horizontalRadius, int verticalRadius)
-    {
-        if (itemEntity == null || itemEntity.isDead)
-        {
+    public static int plantEntityItem(EntityItem itemEntity, int horizontalRadius, int verticalRadius) {
+        if (itemEntity == null || itemEntity.isDead) {
             return 0;
         }
 
@@ -226,28 +190,23 @@ public class Utils
 
         int planted = plantItemStack(world, pos, stack, horizontalRadius, verticalRadius);
 
-        if (stack.isEmpty())
-        {
+        if (stack.isEmpty()) {
             itemEntity.setDead();
         }
 
         return planted;
     }
 
-    public static int getDemonWillResolution(EntityPlayer player)
-    {
+    public static int getDemonWillResolution(EntityPlayer player) {
         IItemHandler inventory = new PlayerMainInvWrapper(player.inventory);
 
-        for (int i = 0; i < inventory.getSlots(); i++)
-        {
+        for (int i = 0; i < inventory.getSlots(); i++) {
             ItemStack stack = inventory.getStackInSlot(i);
-            if (stack.isEmpty())
-            {
+            if (stack.isEmpty()) {
                 continue;
             }
 
-            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), stack, player))
-            {
+            if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), stack, player)) {
                 return ((IDemonWillViewer) stack.getItem()).getDemonWillAuraResolution(player.getEntityWorld(), stack, player);
             }
         }
@@ -255,8 +214,7 @@ public class Utils
         return 1;
     }
 
-    public static NBTTagCompound getPersistentDataTag(EntityPlayer player)
-    {
+    public static NBTTagCompound getPersistentDataTag(EntityPlayer player) {
         NBTTagCompound forgeData = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
         NBTTagCompound beaconData = forgeData.getCompoundTag("BloodMagic");
 
@@ -269,51 +227,40 @@ public class Utils
         return beaconData;
     }
 
-    public static void setPlayerSpeedFromServer(EntityPlayer player, double motionX, double motionY, double motionZ)
-    {
-        if (!player.getEntityWorld().isRemote && player instanceof EntityPlayerMP)
-        {
+    public static void setPlayerSpeedFromServer(EntityPlayer player, double motionX, double motionY, double motionZ) {
+        if (!player.getEntityWorld().isRemote && player instanceof EntityPlayerMP) {
             BloodMagicPacketHandler.sendTo(new PlayerVelocityPacketProcessor(motionX, motionY, motionZ), (EntityPlayerMP) player);
         }
     }
 
-    public static boolean isInteger(String integer)
-    {
-        try
-        {
+    public static boolean isInteger(String integer) {
+        try {
             Integer.parseInt(integer);
-        } catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             return false;
-        } catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             return false;
         }
         // only got here if we didn't return false
         return true;
     }
 
-    public static String toFancyCasing(String input)
-    {
+    public static String toFancyCasing(String input) {
         return String.valueOf(input.charAt(0)).toUpperCase(Locale.ENGLISH) + input.substring(1);
     }
 
-    public static String prettifyBlockPosString(BlockPos pos)
-    {
+    public static String prettifyBlockPosString(BlockPos pos) {
         return "[" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + "]";
     }
 
     /**
-     * @param tile
-     *        - The {@link TileInventory} to input the item to
-     * @param player
-     *        - The player to take the item from.
+     * @param tile   - The {@link TileInventory} to input the item to
+     * @param player - The player to take the item from.
      * @return {@code true} if the ItemStack is inserted, {@code false}
-     *         otherwise
+     * otherwise
      * @see #insertItemToTile(TileInventory, EntityPlayer, int)
      */
-    public static boolean insertItemToTile(TileInventory tile, EntityPlayer player)
-    {
+    public static boolean insertItemToTile(TileInventory tile, EntityPlayer player) {
         return insertItemToTile(tile, player, 0);
     }
 
@@ -322,29 +269,22 @@ public class Utils
      * inventory at slot 0
      * <p/>
      * EG: Block Altar
-     * 
-     * @param tile
-     *        - The {@link TileInventory} to input the item to
-     * @param player
-     *        - The player to take the item from.
-     * @param slot
-     *        - The slot to attempt to insert to
+     *
+     * @param tile   - The {@link TileInventory} to input the item to
+     * @param player - The player to take the item from.
+     * @param slot   - The slot to attempt to insert to
      * @return {@code true} if the ItemStack is inserted, {@code false}
-     *         otherwise
+     * otherwise
      */
-    public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot)
-    {
-        if (tile.getStackInSlot(slot).isEmpty() && !player.getHeldItemMainhand().isEmpty())
-        {
+    public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot) {
+        if (tile.getStackInSlot(slot).isEmpty() && !player.getHeldItemMainhand().isEmpty()) {
             ItemStack input = player.getHeldItemMainhand().copy();
             input.setCount(1);
             player.getHeldItemMainhand().shrink(1);
             tile.setInventorySlotContents(slot, input);
             return true;
-        } else if (!tile.getStackInSlot(slot).isEmpty() && player.getHeldItemMainhand().isEmpty())
-        {
-            if (!tile.getWorld().isRemote)
-            {
+        } else if (!tile.getStackInSlot(slot).isEmpty() && player.getHeldItemMainhand().isEmpty()) {
+            if (!tile.getWorld().isRemote) {
                 EntityItem invItem = new EntityItem(tile.getWorld(), player.posX, player.posY + 0.25, player.posZ, tile.getStackInSlot(slot));
                 tile.getWorld().spawnEntity(invItem);
             }
@@ -355,8 +295,7 @@ public class Utils
         return false;
     }
 
-    public static double calculateStandardProgress(Number currentValue, int[] requiredValues, int currentLevel)
-    {
+    public static double calculateStandardProgress(Number currentValue, int[] requiredValues, int currentLevel) {
         int nextLevel = currentLevel + 1;
         if (nextLevel >= requiredValues.length)
             return 1.0D;
@@ -366,8 +305,7 @@ public class Utils
     }
 
     @Nullable
-    public static IItemHandler getInventory(TileEntity tile, @Nullable EnumFacing facing)
-    {
+    public static IItemHandler getInventory(TileEntity tile, @Nullable EnumFacing facing) {
         if (facing == null)
             facing = EnumFacing.DOWN;
 
@@ -383,8 +321,7 @@ public class Utils
         return itemHandler;
     }
 
-    public static ItemStack setUnbreakable(ItemStack stack)
-    {
+    public static ItemStack setUnbreakable(ItemStack stack) {
         NBTHelper.checkNBT(stack);
         stack.getTagCompound().setBoolean("Unbreakable", true);
         return stack;
@@ -392,36 +329,31 @@ public class Utils
 
     /**
      * Gets a default block for each type of {@link EnumAltarComponent}
-     * 
-     * @param component
-     *        - The Component to provide a block for.
+     *
+     * @param component - The Component to provide a block for.
      * @return The default Block for the EnumAltarComponent
      */
-    public static Block getBlockForComponent(EnumAltarComponent component)
-    {
-        switch (component)
-        {
-        case GLOWSTONE:
-            return Blocks.GLOWSTONE;
-        case BLOODSTONE:
-            return RegistrarBloodMagicBlocks.DECORATIVE_BRICK;
-        case BEACON:
-            return Blocks.BEACON;
-        case BLOODRUNE:
-            return RegistrarBloodMagicBlocks.BLOOD_RUNE;
-        case CRYSTAL:
-            return RegistrarBloodMagicBlocks.BLOOD_RUNE;
-        case NOTAIR:
-            return Blocks.STONEBRICK;
-        default:
-            return Blocks.AIR;
+    public static Block getBlockForComponent(EnumAltarComponent component) {
+        switch (component) {
+            case GLOWSTONE:
+                return Blocks.GLOWSTONE;
+            case BLOODSTONE:
+                return RegistrarBloodMagicBlocks.DECORATIVE_BRICK;
+            case BEACON:
+                return Blocks.BEACON;
+            case BLOODRUNE:
+                return RegistrarBloodMagicBlocks.BLOOD_RUNE;
+            case CRYSTAL:
+                return RegistrarBloodMagicBlocks.BLOOD_RUNE;
+            case NOTAIR:
+                return Blocks.STONEBRICK;
+            default:
+                return Blocks.AIR;
         }
     }
 
-    public static float getModifiedDamage(EntityLivingBase attackedEntity, DamageSource source, float amount)
-    {
-        if (!attackedEntity.isEntityInvulnerable(source))
-        {
+    public static float getModifiedDamage(EntityLivingBase attackedEntity, DamageSource source, float amount) {
+        if (!attackedEntity.isEntityInvulnerable(source)) {
             if (amount <= 0)
                 return 0;
 
@@ -436,42 +368,33 @@ public class Utils
         return 0;
     }
 
-    public static float applyArmor(EntityLivingBase entity, ItemStack[] inventory, DamageSource source, double damage)
-    {
+    public static float applyArmor(EntityLivingBase entity, ItemStack[] inventory, DamageSource source, double damage) {
         damage *= 25;
         ArrayList<ArmorProperties> dmgVals = new ArrayList<ArmorProperties>();
-        for (int x = 0; x < inventory.length; x++)
-        {
+        for (int x = 0; x < inventory.length; x++) {
             ItemStack stack = inventory[x];
-            if (stack.isEmpty())
-            {
+            if (stack.isEmpty()) {
                 continue;
             }
             ArmorProperties prop = null;
-            if (stack.getItem() instanceof ISpecialArmor)
-            {
+            if (stack.getItem() instanceof ISpecialArmor) {
                 ISpecialArmor armor = (ISpecialArmor) stack.getItem();
                 prop = armor.getProperties(entity, stack, source, damage / 25D, x).copy();
-            } else if (stack.getItem() instanceof ItemArmor && !source.isUnblockable())
-            {
+            } else if (stack.getItem() instanceof ItemArmor && !source.isUnblockable()) {
                 ItemArmor armor = (ItemArmor) stack.getItem();
                 prop = new ArmorProperties(0, armor.damageReduceAmount / 25D, Integer.MAX_VALUE);
             }
-            if (prop != null)
-            {
+            if (prop != null) {
                 prop.Slot = x;
                 dmgVals.add(prop);
             }
         }
-        if (dmgVals.size() > 0)
-        {
+        if (dmgVals.size() > 0) {
             ArmorProperties[] props = dmgVals.toArray(new ArmorProperties[dmgVals.size()]);
             int level = props[0].Priority;
             double ratio = 0;
-            for (ArmorProperties prop : props)
-            {
-                if (level != prop.Priority)
-                {
+            for (ArmorProperties prop : props) {
+                if (level != prop.Priority) {
                     damage -= (damage * ratio);
                     ratio = 0;
                     level = prop.Priority;
@@ -485,37 +408,29 @@ public class Utils
         return (float) (damage / 25.0F);
     }
 
-    public static float applyPotionDamageCalculations(EntityLivingBase attackedEntity, DamageSource source, float damage)
-    {
+    public static float applyPotionDamageCalculations(EntityLivingBase attackedEntity, DamageSource source, float damage) {
         Potion resistance = MobEffects.RESISTANCE;
 
-        if (source.isDamageAbsolute())
-        {
+        if (source.isDamageAbsolute()) {
             return damage;
-        } else
-        {
-            if (attackedEntity.isPotionActive(resistance) && source != DamageSource.OUT_OF_WORLD)
-            {
+        } else {
+            if (attackedEntity.isPotionActive(resistance) && source != DamageSource.OUT_OF_WORLD) {
                 int i = (attackedEntity.getActivePotionEffect(resistance).getAmplifier() + 1) * 5;
                 int j = 25 - i;
                 float f = damage * (float) j;
                 damage = f / 25.0F;
             }
 
-            if (damage <= 0.0F)
-            {
+            if (damage <= 0.0F) {
                 return 0.0F;
-            } else
-            {
+            } else {
                 int k = EnchantmentHelper.getEnchantmentModifierDamage(attackedEntity.getArmorInventoryList(), source);
 
-                if (k > 20)
-                {
+                if (k > 20) {
                     k = 20;
                 }
 
-                if (k > 0 && k <= 20)
-                {
+                if (k > 0 && k <= 20) {
                     int l = 25 - k;
                     float f1 = damage * (float) l;
                     damage = f1 / 25.0F;
@@ -529,42 +444,32 @@ public class Utils
     /**
      * Used to determine if stack1 can be placed into stack2. If stack2 is is empty
      * and stack1 isn't empty, returns true. Ignores stack size
-     * 
-     * @param stack1
-     *        Stack that is placed into a slot
-     * @param stack2
-     *        Slot content that stack1 is placed into
+     *
+     * @param stack1 Stack that is placed into a slot
+     * @param stack2 Slot content that stack1 is placed into
      * @return True if they can be combined
      * @deprecated use {@link ItemHandlerHelper#canItemStacksStack(ItemStack, ItemStack)}
      */
     @Deprecated
-    public static boolean canCombine(ItemStack stack1, ItemStack stack2)
-    {
+    public static boolean canCombine(ItemStack stack1, ItemStack stack2) {
         return stack1.isEmpty() && !stack2.isEmpty() || ItemHandlerHelper.canItemStacksStack(stack1, stack2);
     }
 
     /**
-     * @param stack1
-     *        Stack that is placed into a slot
-     * @param stack2
-     *        Slot content that stack1 is placed into
+     * @param stack1 Stack that is placed into a slot
+     * @param stack2 Slot content that stack1 is placed into
      * @return Stacks after stacking
      */
-    public static ItemStack[] combineStacks(ItemStack stack1, ItemStack stack2, int transferMax)
-    {
+    public static ItemStack[] combineStacks(ItemStack stack1, ItemStack stack2, int transferMax) {
         ItemStack[] returned = new ItemStack[2];
 
-        if (ItemHandlerHelper.canItemStacksStack(stack1, stack2))
-        {
+        if (ItemHandlerHelper.canItemStacksStack(stack1, stack2)) {
             int transferedAmount = Math.min(transferMax, stack2.isEmpty() ? stack1.getCount() : Math.min(stack2.getMaxStackSize() - stack2.getCount(), stack1.getCount()));
-            if (transferedAmount > 0)
-            {
+            if (transferedAmount > 0) {
                 ItemStack copyStack = stack1.splitStack(transferedAmount);
-                if (stack2.isEmpty())
-                {
+                if (stack2.isEmpty()) {
                     stack2 = copyStack;
-                } else
-                {
+                } else {
                     stack2.grow(transferedAmount);
                 }
             }
@@ -577,27 +482,20 @@ public class Utils
     }
 
     /**
-     * @param stack1
-     *        Stack that is placed into a slot
-     * @param stack2
-     *        Slot content that stack1 is placed into
+     * @param stack1 Stack that is placed into a slot
+     * @param stack2 Slot content that stack1 is placed into
      * @return Stacks after stacking
      */
-    public static ItemStack[] combineStacks(ItemStack stack1, ItemStack stack2)
-    {
+    public static ItemStack[] combineStacks(ItemStack stack1, ItemStack stack2) {
         ItemStack[] returned = new ItemStack[2];
 
-        if (ItemHandlerHelper.canItemStacksStack(stack1, stack2))
-        {
+        if (ItemHandlerHelper.canItemStacksStack(stack1, stack2)) {
             int transferedAmount = stack2.isEmpty() ? stack1.getCount() : Math.min(stack2.getMaxStackSize() - stack2.getCount(), stack1.getCount());
-            if (transferedAmount > 0)
-            {
+            if (transferedAmount > 0) {
                 ItemStack copyStack = stack1.splitStack(transferedAmount);
-                if (stack2.isEmpty())
-                {
+                if (stack2.isEmpty()) {
                     stack2 = copyStack;
-                } else
-                {
+                } else {
                     stack2.grow(transferedAmount);
                 }
             }
@@ -609,42 +507,32 @@ public class Utils
         return returned;
     }
 
-    public static ItemStack insertStackIntoTile(ItemStack stack, TileEntity tile, EnumFacing dir)
-    {
-        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir))
-        {
+    public static ItemStack insertStackIntoTile(ItemStack stack, TileEntity tile, EnumFacing dir) {
+        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir)) {
             IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
 
             return insertStackIntoTile(stack, handler);
-        } else if (tile instanceof IInventory)
-        {
+        } else if (tile instanceof IInventory) {
             return insertStackIntoInventory(stack, (IInventory) tile, dir);
         }
 
         return stack;
     }
 
-    public static int getNumberOfFreeSlots(TileEntity tile, EnumFacing dir)
-    {
+    public static int getNumberOfFreeSlots(TileEntity tile, EnumFacing dir) {
         int slots = 0;
 
-        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir))
-        {
+        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir)) {
             IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
 
-            for (int i = 0; i < handler.getSlots(); i++)
-            {
-                if (handler.getStackInSlot(i).isEmpty())
-                {
+            for (int i = 0; i < handler.getSlots(); i++) {
+                if (handler.getStackInSlot(i).isEmpty()) {
                     slots++;
                 }
             }
-        } else if (tile instanceof IInventory)
-        {
-            for (int i = 0; i < ((IInventory) tile).getSizeInventory(); i++)
-            {
-                if (((IInventory) tile).getStackInSlot(i).isEmpty())
-                {
+        } else if (tile instanceof IInventory) {
+            for (int i = 0; i < ((IInventory) tile).getSizeInventory(); i++) {
+                if (((IInventory) tile).getStackInSlot(i).isEmpty()) {
                     slots++;
                 }
             }
@@ -653,17 +541,14 @@ public class Utils
         return slots;
     }
 
-    public static ItemStack insertStackIntoTile(ItemStack stack, IItemHandler handler)
-    {
+    public static ItemStack insertStackIntoTile(ItemStack stack, IItemHandler handler) {
         int numberOfSlots = handler.getSlots();
 
         ItemStack copyStack = stack.copy();
 
-        for (int slot = 0; slot < numberOfSlots; slot++)
-        {
+        for (int slot = 0; slot < numberOfSlots; slot++) {
             copyStack = handler.insertItem(slot, copyStack, false);
-            if (copyStack.isEmpty())
-            {
+            if (copyStack.isEmpty()) {
                 return ItemStack.EMPTY;
             }
         }
@@ -674,17 +559,15 @@ public class Utils
     /**
      * Inserts the desired stack into the tile up to a limit for the tile.
      * Respects capabilities.
-     * 
+     *
      * @param stack
      * @param tile
      * @param dir
      * @param limit
      * @return
      */
-    public static ItemStack insertStackIntoTile(ItemStack stack, TileEntity tile, EnumFacing dir, int limit)
-    {
-        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir))
-        {
+    public static ItemStack insertStackIntoTile(ItemStack stack, TileEntity tile, EnumFacing dir, int limit) {
+        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir)) {
             IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
             int numberOfSlots = handler.getSlots();
 
@@ -692,39 +575,33 @@ public class Utils
 
             int numberMatching = 0;
 
-            for (int slot = 0; slot < numberOfSlots; slot++)
-            {
+            for (int slot = 0; slot < numberOfSlots; slot++) {
                 ItemStack invStack = handler.getStackInSlot(slot);
 
-                if (!invStack.isEmpty() && ItemHandlerHelper.canItemStacksStack(stack, invStack))
-                {
+                if (!invStack.isEmpty() && ItemHandlerHelper.canItemStacksStack(stack, invStack)) {
                     numberMatching += invStack.getCount();
                 }
             }
 
-            if (numberMatching >= limit)
-            {
+            if (numberMatching >= limit) {
                 return stack;
             }
 
             int newLimit = limit - numberMatching;
 
-            for (int slot = 0; slot < numberOfSlots; slot++)
-            {
+            for (int slot = 0; slot < numberOfSlots; slot++) {
                 ItemStack newCopyStack = copyStack.copy();
                 newCopyStack.setCount(Math.min(copyStack.getCount(), newLimit));
 
                 newCopyStack = handler.insertItem(slot, newCopyStack, false);
 
-                if (newCopyStack.isEmpty())
-                {
+                if (newCopyStack.isEmpty()) {
                     return ItemStack.EMPTY;
                 }
 
                 newLimit -= (copyStack.getCount() - newCopyStack.getCount());
 
-                if (newLimit <= 0)
-                {
+                if (newLimit <= 0) {
                     return ItemStack.EMPTY; //TODO
                 }
 
@@ -732,42 +609,33 @@ public class Utils
             }
 
             return copyStack;
-        } else if (tile instanceof IInventory)
-        {
+        } else if (tile instanceof IInventory) {
             return insertStackIntoInventory(stack, (IInventory) tile, dir, limit);
         }
 
         return stack;
     }
 
-    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir)
-    {
-        if (stack.isEmpty())
-        {
+    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir) {
+        if (stack.isEmpty()) {
             return ItemStack.EMPTY;
         }
 
         boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
 
-        if (inventory instanceof ISidedInventory)
-        {
+        if (inventory instanceof ISidedInventory) {
             int[] array = ((ISidedInventory) inventory).getSlotsForFace(dir);
-            for (int in : array)
-            {
+            for (int in : array) {
                 canBeInserted[in] = inventory.isItemValidForSlot(in, stack) && ((ISidedInventory) inventory).canInsertItem(in, stack, dir);
             }
-        } else
-        {
-            for (int i = 0; i < canBeInserted.length; i++)
-            {
+        } else {
+            for (int i = 0; i < canBeInserted.length; i++) {
                 canBeInserted[i] = inventory.isItemValidForSlot(i, stack);
             }
         }
 
-        for (int i = 0; i < inventory.getSizeInventory(); i++)
-        {
-            if (!canBeInserted[i])
-            {
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            if (!canBeInserted[i]) {
                 continue;
             }
 
@@ -775,8 +643,7 @@ public class Utils
             stack = combinedStacks[0];
             inventory.setInventorySlotContents(i, combinedStacks[1]);
 
-            if (stack.isEmpty())
-            {
+            if (stack.isEmpty()) {
                 return ItemStack.EMPTY;
             }
         }
@@ -784,15 +651,12 @@ public class Utils
         return stack;
     }
 
-    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir)
-    {
+    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir) {
         return canInsertStackFullyIntoInventory(stack, inventory, dir, false, 0);
     }
 
-    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir, boolean fillToLimit, int limit)
-    {
-        if (stack.isEmpty())
-        {
+    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir, boolean fillToLimit, int limit) {
+        if (stack.isEmpty()) {
             return true;
         }
 
@@ -800,68 +664,53 @@ public class Utils
 
         boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
 
-        if (inventory instanceof ISidedInventory)
-        {
+        if (inventory instanceof ISidedInventory) {
             int[] array = ((ISidedInventory) inventory).getSlotsForFace(dir);
-            for (int in : array)
-            {
+            for (int in : array) {
                 canBeInserted[in] = inventory.isItemValidForSlot(in, stack) && ((ISidedInventory) inventory).canInsertItem(in, stack, dir);
             }
-        } else
-        {
-            for (int i = 0; i < canBeInserted.length; i++)
-            {
+        } else {
+            for (int i = 0; i < canBeInserted.length; i++) {
                 canBeInserted[i] = inventory.isItemValidForSlot(i, stack);
             }
         }
 
         int numberMatching = 0;
 
-        if (fillToLimit)
-        {
-            for (int i = 0; i < inventory.getSizeInventory(); i++)
-            {
-                if (!canBeInserted[i])
-                {
+        if (fillToLimit) {
+            for (int i = 0; i < inventory.getSizeInventory(); i++) {
+                if (!canBeInserted[i]) {
                     continue;
                 }
 
                 ItemStack invStack = inventory.getStackInSlot(i);
 
-                if (!invStack.isEmpty() && ItemHandlerHelper.canItemStacksStack(stack, invStack))
-                {
+                if (!invStack.isEmpty() && ItemHandlerHelper.canItemStacksStack(stack, invStack)) {
                     numberMatching += invStack.getCount();
                 }
             }
         }
 
-        if (fillToLimit && limit < stack.getCount() + numberMatching)
-        {
+        if (fillToLimit && limit < stack.getCount() + numberMatching) {
             return false;
         }
 
-        for (int i = 0; i < inventory.getSizeInventory(); i++)
-        {
-            if (!canBeInserted[i])
-            {
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            if (!canBeInserted[i]) {
                 continue;
             }
 
             ItemStack invStack = inventory.getStackInSlot(i);
             boolean canCombine = canCombine(stack, invStack);
-            if (canCombine)
-            {
-                if (invStack.isEmpty())
-                {
+            if (canCombine) {
+                if (invStack.isEmpty()) {
                     itemsLeft = 0;
-                } else
-                {
+                } else {
                     itemsLeft -= (invStack.getMaxStackSize() - invStack.getCount());
                 }
             }
 
-            if (itemsLeft <= 0)
-            {
+            if (itemsLeft <= 0) {
                 return true;
             }
         }
@@ -872,65 +721,53 @@ public class Utils
     /**
      * Inserts the desired stack into the inventory up to a limit for the
      * inventory.
-     * 
+     *
      * @param stack
      * @param inventory
      * @param dir
      * @param limit
      * @return
      */
-    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir, int limit)
-    {
-        if (stack.isEmpty())
-        {
+    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir, int limit) {
+        if (stack.isEmpty()) {
             return ItemStack.EMPTY;
         }
 
         boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
 
-        if (inventory instanceof ISidedInventory)
-        {
+        if (inventory instanceof ISidedInventory) {
             int[] array = ((ISidedInventory) inventory).getSlotsForFace(dir);
-            for (int in : array)
-            {
+            for (int in : array) {
                 canBeInserted[in] = ((ISidedInventory) inventory).canInsertItem(in, stack, dir);
             }
-        } else
-        {
-            for (int i = 0; i < canBeInserted.length; i++)
-            {
+        } else {
+            for (int i = 0; i < canBeInserted.length; i++) {
                 canBeInserted[i] = true;
             }
         }
 
         int numberMatching = 0;
 
-        for (int i = 0; i < inventory.getSizeInventory(); i++)
-        {
-            if (!canBeInserted[i])
-            {
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            if (!canBeInserted[i]) {
                 continue;
             }
 
             ItemStack invStack = inventory.getStackInSlot(i);
 
-            if (!invStack.isEmpty() && canCombine(stack, invStack))
-            {
+            if (!invStack.isEmpty() && canCombine(stack, invStack)) {
                 numberMatching += invStack.getCount();
             }
         }
 
-        if (numberMatching >= limit)
-        {
+        if (numberMatching >= limit) {
             return stack;
         }
 
         int newLimit = limit - numberMatching;
 
-        for (int i = 0; i < inventory.getSizeInventory(); i++)
-        {
-            if (!canBeInserted[i])
-            {
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            if (!canBeInserted[i]) {
                 continue;
             }
 
@@ -942,8 +779,7 @@ public class Utils
 
             newLimit -= (prevStackSize - stack.getCount());
 
-            if (newLimit <= 0 || stack.isEmpty())
-            {
+            if (newLimit <= 0 || stack.isEmpty()) {
                 return stack;
             }
         }
@@ -951,64 +787,53 @@ public class Utils
         return stack;
     }
 
-    public static boolean isBlockLiquid(IBlockState state)
-    {
+    public static boolean isBlockLiquid(IBlockState state) {
         return (state instanceof IFluidBlock || state.getMaterial().isLiquid());
     }
 
-    public static boolean isFlowingLiquid(World world, BlockPos pos, IBlockState state)
-    {
+    public static boolean isFlowingLiquid(World world, BlockPos pos, IBlockState state) {
         Block block = state.getBlock();
         return ((block instanceof IFluidBlock && Math.abs(((IFluidBlock) block).getFilledPercentage(world, pos)) == 1) || (block instanceof BlockLiquid && block.getMetaFromState(state) != 0));
     }
 
-    public static boolean spawnStackAtBlock(World world, BlockPos pos, @Nullable EnumFacing pushDirection, ItemStack stack)
-    {
+    public static boolean spawnStackAtBlock(World world, BlockPos pos, @Nullable EnumFacing pushDirection, ItemStack stack) {
         EntityItem entityItem = new EntityItem(world);
         BlockPos spawnPos = new BlockPos(pos);
         double velocity = 0.15D;
-        if (pushDirection != null)
-        {
+        if (pushDirection != null) {
             spawnPos.offset(pushDirection);
 
-            switch (pushDirection)
-            {
-            case DOWN:
-            {
-                entityItem.motionY = -velocity;
-                entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() - 1.0D, spawnPos.getZ() + 0.5D);
-                break;
-            }
-            case UP:
-            {
-                entityItem.motionY = velocity;
-                entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 1.0D, spawnPos.getZ() + 0.5D);
-                break;
-            }
-            case NORTH:
-            {
-                entityItem.motionZ = -velocity;
-                entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 0.5D, spawnPos.getZ() - 1.0D);
-                break;
-            }
-            case SOUTH:
-            {
-                entityItem.motionZ = velocity;
-                entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 1.0D);
-                break;
-            }
-            case WEST:
-            {
-                entityItem.motionX = -velocity;
-                entityItem.setPosition(spawnPos.getX() - 1.0D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 0.5D);
-                break;
-            }
-            case EAST:
-            {
-                entityItem.motionX = velocity;
-                entityItem.setPosition(spawnPos.getX() + 1.0D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 0.5D);
-                break;
-            }
+            switch (pushDirection) {
+                case DOWN: {
+                    entityItem.motionY = -velocity;
+                    entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() - 1.0D, spawnPos.getZ() + 0.5D);
+                    break;
+                }
+                case UP: {
+                    entityItem.motionY = velocity;
+                    entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 1.0D, spawnPos.getZ() + 0.5D);
+                    break;
+                }
+                case NORTH: {
+                    entityItem.motionZ = -velocity;
+                    entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 0.5D, spawnPos.getZ() - 1.0D);
+                    break;
+                }
+                case SOUTH: {
+                    entityItem.motionZ = velocity;
+                    entityItem.setPosition(spawnPos.getX() + 0.5D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 1.0D);
+                    break;
+                }
+                case WEST: {
+                    entityItem.motionX = -velocity;
+                    entityItem.setPosition(spawnPos.getX() - 1.0D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 0.5D);
+                    break;
+                }
+                case EAST: {
+                    entityItem.motionX = velocity;
+                    entityItem.setPosition(spawnPos.getX() + 1.0D, spawnPos.getY() + 0.5D, spawnPos.getZ() + 0.5D);
+                    break;
+                }
             }
         }
 
@@ -1016,13 +841,11 @@ public class Utils
         return world.spawnEntity(entityItem);
     }
 
-    public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos)
-    {
+    public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos) {
         return swapLocations(initialWorld, initialPos, finalWorld, finalPos, true);
     }
 
-    public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos, boolean playSound)
-    {
+    public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos, boolean playSound) {
         TileEntity initialTile = initialWorld.getTileEntity(initialPos);
         TileEntity finalTile = finalWorld.getTileEntity(finalPos);
         NBTTagCompound initialTag = new NBTTagCompound();
@@ -1038,8 +861,7 @@ public class Utils
         if ((initialStack.getBlock().equals(Blocks.AIR) && finalStack.getBlock().equals(Blocks.AIR)) || initialStack.getBlock() instanceof BlockPortal || finalStack.getBlock() instanceof BlockPortal)
             return false;
 
-        if (playSound)
-        {
+        if (playSound) {
             initialWorld.playSound(initialPos.getX(), initialPos.getY(), initialPos.getZ(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
             finalWorld.playSound(finalPos.getX(), finalPos.getY(), finalPos.getZ(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
         }
@@ -1055,8 +877,7 @@ public class Utils
         IBlockState finalBlockState = finalWorld.getBlockState(finalPos);
         finalWorld.setBlockState(finalPos, initialBlockState, 3);
 
-        if (initialTile != null)
-        {
+        if (initialTile != null) {
             TileEntity newTileInitial = TileEntity.create(finalWorld, initialTag);
 
 
@@ -1067,8 +888,7 @@ public class Utils
 
         initialWorld.setBlockState(initialPos, finalBlockState, 3);
 
-        if (finalTile != null)
-        {
+        if (finalTile != null) {
             TileEntity newTileFinal = TileEntity.create(initialWorld, finalTag);
 
             initialWorld.setTileEntity(initialPos, newTileFinal);
@@ -1083,23 +903,18 @@ public class Utils
     }
 
     //Shamelessly ripped off of CoFH Lib
-    public static ItemStack consumeItem(ItemStack stack)
-    {
+    public static ItemStack consumeItem(ItemStack stack) {
         Item item = stack.getItem();
         boolean largerStack = stack.getCount() > 1;
-        if (largerStack)
-        {
+        if (largerStack) {
             stack.shrink(1);
         }
-        if (item.hasContainerItem(stack))
-        {
+        if (item.hasContainerItem(stack)) {
             ItemStack ret = item.getContainerItem(stack);
-            if (ret.isEmpty())
-            {
+            if (ret.isEmpty()) {
                 return ItemStack.EMPTY;
             }
-            if (ret.isItemStackDamageable() && ret.getItemDamage() > ret.getMaxDamage())
-            {
+            if (ret.isItemStackDamageable() && ret.getItemDamage() > ret.getMaxDamage()) {
                 ret = ItemStack.EMPTY;
             }
             return ret;
@@ -1107,44 +922,35 @@ public class Utils
         return largerStack ? stack : ItemStack.EMPTY;
     }
 
-    public static void registerHandlers(Set<ASMDataTable.ASMData> eventHandlers)
-    {
-        for (ASMDataTable.ASMData data : eventHandlers)
-        {
-            try
-            {
+    public static void registerHandlers(Set<ASMDataTable.ASMData> eventHandlers) {
+        for (ASMDataTable.ASMData data : eventHandlers) {
+            try {
                 Class<?> handlerClass = Class.forName(data.getClassName());
                 Object handlerImpl = handlerClass.newInstance();
                 MinecraftForge.EVENT_BUS.register(handlerImpl);
                 BloodMagic.instance.logger.debug("Registering event handler for class {}", data.getClassName());
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 // No-op
             }
         }
     }
 
-    public static boolean hasUUID(ItemStack stack)
-    {
+    public static boolean hasUUID(ItemStack stack) {
         return stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.MOST_SIG) && stack.getTagCompound().hasKey(Constants.NBT.LEAST_SIG);
     }
 
-    public static UUID getUUID(ItemStack stack)
-    {
-        if (!hasUUID(stack))
-        {
+    public static UUID getUUID(ItemStack stack) {
+        if (!hasUUID(stack)) {
             return null;
         }
 
         return new UUID(stack.getTagCompound().getLong(Constants.NBT.MOST_SIG), stack.getTagCompound().getLong(Constants.NBT.LEAST_SIG));
     }
 
-    public static void setUUID(ItemStack stack)
-    {
+    public static void setUUID(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
 
-        if (!stack.getTagCompound().hasKey(Constants.NBT.MOST_SIG) && !stack.getTagCompound().hasKey(Constants.NBT.LEAST_SIG))
-        {
+        if (!stack.getTagCompound().hasKey(Constants.NBT.MOST_SIG) && !stack.getTagCompound().hasKey(Constants.NBT.LEAST_SIG)) {
             UUID itemUUID = UUID.randomUUID();
             stack.getTagCompound().setLong(Constants.NBT.MOST_SIG, itemUUID.getMostSignificantBits());
             stack.getTagCompound().setLong(Constants.NBT.LEAST_SIG, itemUUID.getLeastSignificantBits());

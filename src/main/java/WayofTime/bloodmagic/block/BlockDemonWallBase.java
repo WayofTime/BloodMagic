@@ -1,23 +1,17 @@
 package WayofTime.bloodmagic.block;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.block.base.BlockEnumWall;
 import com.google.common.collect.Lists;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.IStringSerializable;
-
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.block.base.BlockEnumWall;
-import WayofTime.bloodmagic.client.IVariantProvider;
+import java.util.List;
 
-public class BlockDemonWallBase<E extends Enum<E> & IStringSerializable> extends BlockEnumWall<E>
-{
-    public BlockDemonWallBase(String baseName, Material materialIn, Class<E> enumClass)
-    {
+public class BlockDemonWallBase<E extends Enum<E> & IStringSerializable> extends BlockEnumWall<E> {
+    public BlockDemonWallBase(String baseName, Material materialIn, Class<E> enumClass) {
         super(materialIn, enumClass);
 
         setUnlocalizedName(BloodMagic.MODID + "." + baseName + ".");
@@ -29,8 +23,7 @@ public class BlockDemonWallBase<E extends Enum<E> & IStringSerializable> extends
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = Lists.newArrayList();
 
         for (int i = 0; i < this.getTypes().length; i++)

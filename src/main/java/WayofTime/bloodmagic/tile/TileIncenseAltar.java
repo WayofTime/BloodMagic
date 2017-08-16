@@ -23,50 +23,41 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class TileIncenseAltar extends TileInventory implements ITickable
-{
-    public AreaDescriptor incenseArea = new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11);
+public class TileIncenseAltar extends TileInventory implements ITickable {
     public static int maxCheckRange = 5;
+    public AreaDescriptor incenseArea = new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11);
     public Map<EnumTranquilityType, Double> tranquilityMap = new HashMap<EnumTranquilityType, Double>();
 
     public double incenseAddition = 0; //Self-sacrifice is multiplied by 1 plus this value.
     public double tranquility = 0;
     public int roadDistance = 0; //Number of road blocks laid down
 
-    public TileIncenseAltar()
-    {
+    public TileIncenseAltar() {
         super(1, "incenseAltar");
     }
 
     @Override
-    public void update()
-    {
+    public void update() {
         AxisAlignedBB aabb = incenseArea.getAABB(getPos());
         List<EntityPlayer> playerList = getWorld().getEntitiesWithinAABB(EntityPlayer.class, aabb);
-        if (playerList.isEmpty())
-        {
+        if (playerList.isEmpty()) {
             return;
         }
 
-        if (getWorld().getTotalWorldTime() % 100 == 0)
-        {
+        if (getWorld().getTotalWorldTime() % 100 == 0) {
             recheckConstruction();
         }
 
         boolean hasPerformed = false;
 
-        for (EntityPlayer player : playerList)
-        {
-            if (PlayerSacrificeHelper.incrementIncense(player, 0, incenseAddition, incenseAddition / 100))
-            {
+        for (EntityPlayer player : playerList) {
+            if (PlayerSacrificeHelper.incrementIncense(player, 0, incenseAddition, incenseAddition / 100)) {
                 hasPerformed = true;
             }
         }
 
-        if (hasPerformed)
-        {
-            if (getWorld().rand.nextInt(4) == 0 && getWorld() instanceof WorldServer)
-            {
+        if (hasPerformed) {
+            if (getWorld().rand.nextInt(4) == 0 && getWorld() instanceof WorldServer) {
                 WorldServer server = (WorldServer) getWorld();
                 server.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 1, 0.02, 0.03, 0.02, 0, new int[0]);
             }
@@ -74,94 +65,77 @@ public class TileIncenseAltar extends TileInventory implements ITickable
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag)
-    {
+    public void deserialize(NBTTagCompound tag) {
         super.deserialize(tag);
         tranquility = tag.getDouble("tranquility");
         incenseAddition = tag.getDouble("incenseAddition");
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag)
-    {
+    public NBTTagCompound serialize(NBTTagCompound tag) {
         super.serialize(tag);
         tag.setDouble("tranquility", tranquility);
         tag.setDouble("incenseAddition", incenseAddition);
         return tag;
     }
 
-    public void recheckConstruction()
-    {
+    public void recheckConstruction() {
         //TODO: Check the physical construction of the incense altar to determine the maximum length.
         int maxLength = 11; //Max length of the path. The path starts two blocks away from the center block.
         int yOffset = 0;
 
         Map<EnumTranquilityType, Double> tranquilityMap = new HashMap<EnumTranquilityType, Double>();
 
-        for (int currentDistance = 2; currentDistance < currentDistance + maxLength; currentDistance++)
-        {
+        for (int currentDistance = 2; currentDistance < currentDistance + maxLength; currentDistance++) {
             boolean canFormRoad = false;
 
-            for (int i = -maxCheckRange + yOffset; i <= maxCheckRange + yOffset; i++)
-            {
+            for (int i = -maxCheckRange + yOffset; i <= maxCheckRange + yOffset; i++) {
                 BlockPos verticalPos = pos.add(0, i, 0);
 
                 canFormRoad = true;
-                level: for (EnumFacing horizontalFacing : EnumFacing.HORIZONTALS)
-                {
+                level:
+                for (EnumFacing horizontalFacing : EnumFacing.HORIZONTALS) {
                     BlockPos facingOffsetPos = verticalPos.offset(horizontalFacing, currentDistance);
-                    for (int j = -1; j <= 1; j++)
-                    {
+                    for (int j = -1; j <= 1; j++) {
                         BlockPos offsetPos = facingOffsetPos.offset(horizontalFacing.rotateY(), j);
                         IBlockState state = getWorld().getBlockState(offsetPos);
                         Block block = state.getBlock();
-                        if (!(block instanceof IIncensePath && ((IIncensePath) block).getLevelOfPath(getWorld(), offsetPos, state) >= currentDistance - 2))
-                        {
+                        if (!(block instanceof IIncensePath && ((IIncensePath) block).getLevelOfPath(getWorld(), offsetPos, state) >= currentDistance - 2)) {
                             canFormRoad = false;
                             break level;
                         }
                     }
                 }
 
-                if (canFormRoad)
-                {
+                if (canFormRoad) {
                     yOffset = i;
                     break;
                 }
             }
 
-            if (canFormRoad)
-            {
-                for (int i = -currentDistance; i <= currentDistance; i++)
-                {
-                    for (int j = -currentDistance; j <= currentDistance; j++)
-                    {
-                        if (Math.abs(i) != currentDistance && Math.abs(j) != currentDistance)
-                        {
+            if (canFormRoad) {
+                for (int i = -currentDistance; i <= currentDistance; i++) {
+                    for (int j = -currentDistance; j <= currentDistance; j++) {
+                        if (Math.abs(i) != currentDistance && Math.abs(j) != currentDistance) {
                             continue; //TODO: Can make this just set j to currentDistance to speed it up.
                         }
 
-                        for (int y = 0 + yOffset; y <= 2 + yOffset; y++)
-                        {
+                        for (int y = 0 + yOffset; y <= 2 + yOffset; y++) {
                             BlockPos offsetPos = pos.add(i, y, j);
                             IBlockState state = getWorld().getBlockState(offsetPos);
                             Block block = state.getBlock();
                             TranquilityStack stack = IncenseTranquilityRegistry.getTranquilityOfBlock(getWorld(), offsetPos, block, state);
-                            if (stack != null)
-                            {
-                                if (!tranquilityMap.containsKey(stack.type))
-                                {
+                            if (stack != null) {
+                                if (!tranquilityMap.containsKey(stack.type)) {
                                     tranquilityMap.put(stack.type, stack.value);
-                                } else
-                                {
+                                } else {
                                     tranquilityMap.put(stack.type, tranquilityMap.get(stack.type) + stack.value);
                                 }
                             }
                         }
                     }
                 }
-            } else
-            {
+            } else {
                 roadDistance = currentDistance - 2;
                 break;
             }
@@ -170,19 +144,16 @@ public class TileIncenseAltar extends TileInventory implements ITickable
         this.tranquilityMap = tranquilityMap;
 
         double totalTranquility = 0;
-        for (Entry<EnumTranquilityType, Double> entry : tranquilityMap.entrySet())
-        {
+        for (Entry<EnumTranquilityType, Double> entry : tranquilityMap.entrySet()) {
             totalTranquility += entry.getValue();
         }
 
-        if (totalTranquility < 0)
-        {
+        if (totalTranquility < 0) {
             return;
         }
 
         double appliedTranquility = 0;
-        for (Entry<EnumTranquilityType, Double> entry : tranquilityMap.entrySet())
-        {
+        for (Entry<EnumTranquilityType, Double> entry : tranquilityMap.entrySet()) {
             appliedTranquility += Math.sqrt(entry.getValue());
         }
 

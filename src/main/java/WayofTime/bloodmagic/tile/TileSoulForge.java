@@ -15,8 +15,7 @@ import net.minecraft.util.ITickable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileSoulForge extends TileInventory implements ITickable, IDemonWillConduit
-{
+public class TileSoulForge extends TileInventory implements ITickable, IDemonWillConduit {
     public static final int ticksRequired = 100;
     public static final double worldWillTransferRate = 1;
 
@@ -27,22 +26,19 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
 
     public int burnTime = 0;
 
-    public TileSoulForge()
-    {
+    public TileSoulForge() {
         super(6, "soulForge");
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag)
-    {
+    public void deserialize(NBTTagCompound tag) {
         super.deserialize(tag);
 
         burnTime = tag.getInteger(Constants.NBT.SOUL_FORGE_BURN);
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag)
-    {
+    public NBTTagCompound serialize(NBTTagCompound tag) {
         super.serialize(tag);
 
         tag.setInteger(Constants.NBT.SOUL_FORGE_BURN, burnTime);
@@ -50,22 +46,17 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
     }
 
     @Override
-    public void update()
-    {
-        if (!getWorld().isRemote)
-        {
-            for (EnumDemonWillType type : EnumDemonWillType.values())
-            {
+    public void update() {
+        if (!getWorld().isRemote) {
+            for (EnumDemonWillType type : EnumDemonWillType.values()) {
                 double willInWorld = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
                 double filled = Math.min(willInWorld, worldWillTransferRate);
 
-                if (filled > 0)
-                {
+                if (filled > 0) {
                     filled = this.fillDemonWill(type, filled, false);
                     filled = WorldDemonWillHandler.drainWill(getWorld(), pos, type, filled, false);
 
-                    if (filled > 0)
-                    {
+                    if (filled > 0) {
                         this.fillDemonWill(type, filled, true);
                         WorldDemonWillHandler.drainWill(getWorld(), pos, type, filled, true);
                     }
@@ -73,8 +64,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
             }
         }
 
-        if (!hasSoulGemOrSoul())
-        {
+        if (!hasSoulGemOrSoul()) {
             burnTime = 0;
             return;
         }
@@ -83,30 +73,22 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
 
         List<ItemStack> inputList = new ArrayList<ItemStack>();
 
-        for (int i = 0; i < 4; i++)
-        {
-            if (!getStackInSlot(i).isEmpty())
-            {
+        for (int i = 0; i < 4; i++) {
+            if (!getStackInSlot(i).isEmpty()) {
                 inputList.add(getStackInSlot(i));
             }
         }
 
         TartaricForgeRecipe recipe = TartaricForgeRecipeRegistry.getMatchingRecipe(inputList, getWorld(), getPos());
-        if (recipe != null && (soulsInGem >= recipe.getMinimumSouls() || burnTime > 0))
-        {
-            if (canCraft(recipe))
-            {
+        if (recipe != null && (soulsInGem >= recipe.getMinimumSouls() || burnTime > 0)) {
+            if (canCraft(recipe)) {
                 burnTime++;
 
-                if (burnTime == ticksRequired)
-                {
-                    if (!getWorld().isRemote)
-                    {
+                if (burnTime == ticksRequired) {
+                    if (!getWorld().isRemote) {
                         double requiredSouls = recipe.getSoulsDrained();
-                        if (requiredSouls > 0)
-                        {
-                            if (!getWorld().isRemote && soulsInGem >= recipe.getMinimumSouls())
-                            {
+                        if (requiredSouls > 0) {
+                            if (!getWorld().isRemote && soulsInGem >= recipe.getMinimumSouls()) {
                                 consumeSouls(EnumDemonWillType.DEFAULT, requiredSouls);
                             }
                         }
@@ -116,29 +98,23 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
                     }
 
                     burnTime = 0;
-                } else if (burnTime > ticksRequired + 10)
-                {
+                } else if (burnTime > ticksRequired + 10) {
                     burnTime = 0;
                 }
-            } else
-            {
+            } else {
                 burnTime = 0;
             }
-        } else
-        {
+        } else {
             burnTime = 0;
         }
     }
 
-    public double getProgressForGui()
-    {
+    public double getProgressForGui() {
         return ((double) burnTime) / ticksRequired;
     }
 
-    private boolean canCraft(TartaricForgeRecipe recipe)
-    {
-        if (recipe == null)
-        {
+    private boolean canCraft(TartaricForgeRecipe recipe) {
+        if (recipe == null) {
             return false;
         }
 
@@ -155,18 +131,14 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
 
     }
 
-    public void craftItem(TartaricForgeRecipe recipe)
-    {
-        if (this.canCraft(recipe))
-        {
+    public void craftItem(TartaricForgeRecipe recipe) {
+        if (this.canCraft(recipe)) {
             ItemStack outputStack = recipe.getRecipeOutput();
             ItemStack currentOutputStack = getStackInSlot(outputSlot);
 
-            if (currentOutputStack.isEmpty())
-            {
+            if (currentOutputStack.isEmpty()) {
                 setInventorySlotContents(outputSlot, outputStack);
-            } else if (currentOutputStack.getItem() == currentOutputStack.getItem())
-            {
+            } else if (currentOutputStack.getItem() == currentOutputStack.getItem()) {
                 currentOutputStack.grow(outputStack.getCount());
             }
 
@@ -174,14 +146,11 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
         }
     }
 
-    public boolean hasSoulGemOrSoul()
-    {
+    public boolean hasSoulGemOrSoul() {
         ItemStack soulStack = getStackInSlot(soulSlot);
 
-        if (!soulStack.isEmpty())
-        {
-            if (soulStack.getItem() instanceof IDemonWill || soulStack.getItem() instanceof IDemonWillGem)
-            {
+        if (!soulStack.isEmpty()) {
+            if (soulStack.getItem() instanceof IDemonWill || soulStack.getItem() instanceof IDemonWillGem) {
                 return true;
             }
         }
@@ -189,20 +158,16 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
         return false;
     }
 
-    public double getWill(EnumDemonWillType type)
-    {
+    public double getWill(EnumDemonWillType type) {
         ItemStack soulStack = getStackInSlot(soulSlot);
 
-        if (soulStack != null)
-        {
-            if (soulStack.getItem() instanceof IDemonWill && ((IDemonWill) soulStack.getItem()).getType(soulStack) == type)
-            {
+        if (soulStack != null) {
+            if (soulStack.getItem() instanceof IDemonWill && ((IDemonWill) soulStack.getItem()).getType(soulStack) == type) {
                 IDemonWill soul = (IDemonWill) soulStack.getItem();
                 return soul.getWill(type, soulStack);
             }
 
-            if (soulStack.getItem() instanceof IDemonWillGem)
-            {
+            if (soulStack.getItem() instanceof IDemonWillGem) {
                 IDemonWillGem soul = (IDemonWillGem) soulStack.getItem();
                 return soul.getWill(type, soulStack);
             }
@@ -211,25 +176,20 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
         return 0;
     }
 
-    public double consumeSouls(EnumDemonWillType type, double requested)
-    {
+    public double consumeSouls(EnumDemonWillType type, double requested) {
         ItemStack soulStack = getStackInSlot(soulSlot);
 
-        if (soulStack != null)
-        {
-            if (soulStack.getItem() instanceof IDemonWill && ((IDemonWill) soulStack.getItem()).getType(soulStack) == type)
-            {
+        if (soulStack != null) {
+            if (soulStack.getItem() instanceof IDemonWill && ((IDemonWill) soulStack.getItem()).getType(soulStack) == type) {
                 IDemonWill soul = (IDemonWill) soulStack.getItem();
                 double souls = soul.drainWill(type, soulStack, requested);
-                if (soul.getWill(type, soulStack) <= 0)
-                {
+                if (soul.getWill(type, soulStack) <= 0) {
                     setInventorySlotContents(soulSlot, ItemStack.EMPTY);
                 }
                 return souls;
             }
 
-            if (soulStack.getItem() instanceof IDemonWillGem)
-            {
+            if (soulStack.getItem() instanceof IDemonWillGem) {
                 IDemonWillGem soul = (IDemonWillGem) soulStack.getItem();
                 return soul.drainWill(type, soulStack, requested, true);
             }
@@ -238,22 +198,17 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
         return 0;
     }
 
-    public void consumeInventory()
-    {
-        for (int i = 0; i < 4; i++)
-        {
+    public void consumeInventory() {
+        for (int i = 0; i < 4; i++) {
             ItemStack inputStack = getStackInSlot(i);
-            if (!inputStack.isEmpty())
-            {
-                if (inputStack.getItem().hasContainerItem(inputStack))
-                {
+            if (!inputStack.isEmpty()) {
+                if (inputStack.getItem().hasContainerItem(inputStack)) {
                     setInventorySlotContents(i, inputStack.getItem().getContainerItem(inputStack));
                     continue;
                 }
 
                 inputStack.shrink(1);
-                if (inputStack.isEmpty())
-                {
+                if (inputStack.isEmpty()) {
                     setInventorySlotContents(i, ItemStack.EMPTY);
                 }
             }
@@ -261,27 +216,22 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
     }
 
     @Override
-    public int getWeight()
-    {
+    public int getWeight() {
         return 50;
     }
 
     @Override
-    public double fillDemonWill(EnumDemonWillType type, double amount, boolean doFill)
-    {
-        if (amount <= 0)
-        {
+    public double fillDemonWill(EnumDemonWillType type, double amount, boolean doFill) {
+        if (amount <= 0) {
             return 0;
         }
 
-        if (!canFill(type))
-        {
+        if (!canFill(type)) {
             return 0;
         }
 
         ItemStack stack = this.getStackInSlot(soulSlot);
-        if (stack.isEmpty() || !(stack.getItem() instanceof IDemonWillGem))
-        {
+        if (stack.isEmpty() || !(stack.getItem() instanceof IDemonWillGem)) {
             return 0;
         }
 
@@ -290,11 +240,9 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
     }
 
     @Override
-    public double drainDemonWill(EnumDemonWillType type, double amount, boolean doDrain)
-    {
+    public double drainDemonWill(EnumDemonWillType type, double amount, boolean doDrain) {
         ItemStack stack = this.getStackInSlot(soulSlot);
-        if (stack.isEmpty() || !(stack.getItem() instanceof IDemonWillGem))
-        {
+        if (stack.isEmpty() || !(stack.getItem() instanceof IDemonWillGem)) {
             return 0;
         }
 
@@ -302,13 +250,11 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
 
         double drained = amount;
         double current = willGem.getWill(type, stack);
-        if (current < drained)
-        {
+        if (current < drained) {
             drained = current;
         }
 
-        if (doDrain)
-        {
+        if (doDrain) {
             drained = willGem.drainWill(type, stack, drained, true);
         }
 
@@ -316,20 +262,17 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
     }
 
     @Override
-    public boolean canFill(EnumDemonWillType type)
-    {
+    public boolean canFill(EnumDemonWillType type) {
         return true;
     }
 
     @Override
-    public boolean canDrain(EnumDemonWillType type)
-    {
+    public boolean canDrain(EnumDemonWillType type) {
         return true;
     }
 
     @Override
-    public double getCurrentWill(EnumDemonWillType type)
-    {
+    public double getCurrentWill(EnumDemonWillType type) {
         return 0;
     }
 }

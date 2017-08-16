@@ -6,8 +6,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public interface IAltarComponent
-{
+public interface IAltarComponent {
     @Nullable
     EnumAltarComponent getType(World world, IBlockState state, BlockPos pos);
 }

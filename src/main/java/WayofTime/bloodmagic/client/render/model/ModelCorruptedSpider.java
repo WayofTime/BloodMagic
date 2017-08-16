@@ -8,33 +8,53 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ModelCorruptedSpider extends ModelBase
-{
-    /** The spider's head box */
+public class ModelCorruptedSpider extends ModelBase {
+    /**
+     * The spider's head box
+     */
     public ModelRenderer spiderHead;
-    /** The spider's neck box */
+    /**
+     * The spider's neck box
+     */
     public ModelRenderer spiderNeck;
-    /** The spider's body box */
+    /**
+     * The spider's body box
+     */
     public ModelRenderer spiderBody;
-    /** Spider's first leg */
+    /**
+     * Spider's first leg
+     */
     public ModelRenderer spiderLeg1;
-    /** Spider's second leg */
+    /**
+     * Spider's second leg
+     */
     public ModelRenderer spiderLeg2;
-    /** Spider's third leg */
+    /**
+     * Spider's third leg
+     */
     public ModelRenderer spiderLeg3;
-    /** Spider's fourth leg */
+    /**
+     * Spider's fourth leg
+     */
     public ModelRenderer spiderLeg4;
-    /** Spider's fifth leg */
+    /**
+     * Spider's fifth leg
+     */
     public ModelRenderer spiderLeg5;
-    /** Spider's sixth leg */
+    /**
+     * Spider's sixth leg
+     */
     public ModelRenderer spiderLeg6;
-    /** Spider's seventh leg */
+    /**
+     * Spider's seventh leg
+     */
     public ModelRenderer spiderLeg7;
-    /** Spider's eight leg */
+    /**
+     * Spider's eight leg
+     */
     public ModelRenderer spiderLeg8;
 
-    public ModelCorruptedSpider(float scale)
-    {
+    public ModelCorruptedSpider(float scale) {
         float f = 0.0F;
         int i = 15;
         this.spiderHead = new ModelRenderer(this, 32, 4);
@@ -75,8 +95,7 @@ public class ModelCorruptedSpider extends ModelBase
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
-    {
+    public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
         this.spiderHead.render(scale);
         this.spiderNeck.render(scale);
@@ -97,8 +116,7 @@ public class ModelCorruptedSpider extends ModelBase
      * the time(so that arms and legs swing back and forth) and par2 represents
      * how "far" arms and legs can swing at most.
      */
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
-    {
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
         this.spiderHead.rotateAngleY = netHeadYaw * 0.017453292F;
         this.spiderHead.rotateAngleX = headPitch * 0.017453292F;
         float f = ((float) Math.PI / 4F);

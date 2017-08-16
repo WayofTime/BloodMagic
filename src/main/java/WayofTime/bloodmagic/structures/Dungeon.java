@@ -1,30 +1,19 @@
 package WayofTime.bloodmagic.structures;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
-
-import net.minecraft.block.Block;
+import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
-
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
+import java.util.*;
+import java.util.Map.Entry;
 
-public class Dungeon
-{
-    public static boolean placeStructureAtPosition(Random rand, WorldServer world, BlockPos pos)
-    {
+public class Dungeon {
+    public static boolean placeStructureAtPosition(Random rand, WorldServer world, BlockPos pos) {
         long startTime = System.nanoTime();
 
         Map<EnumFacing, List<BlockPos>> availableDoorMap = new HashMap<EnumFacing, List<BlockPos>>(); //Map of doors. The EnumFacing indicates what way this door faces.
@@ -47,27 +36,21 @@ public class Dungeon
         DungeonRoom room = getRandomRoom(rand);
         roomMap.put(pos, Pair.of(room, settings.copy()));
         descriptorList.addAll(room.getAreaDescriptors(settings, pos));
-        for (EnumFacing facing : EnumFacing.VALUES)
-        {
-            if (availableDoorMap.containsKey(facing))
-            {
+        for (EnumFacing facing : EnumFacing.VALUES) {
+            if (availableDoorMap.containsKey(facing)) {
                 List<BlockPos> doorList = availableDoorMap.get(facing);
                 doorList.addAll(room.getDoorOffsetsForFacing(settings, facing, pos));
-            } else
-            {
+            } else {
                 List<BlockPos> doorList = room.getDoorOffsetsForFacing(settings, facing, pos);
                 availableDoorMap.put(facing, doorList);
             }
         }
 
         //Initial AreaDescriptors and door positions are initialized. Time for fun!
-        for (int i = 0; i < 100; i++)
-        {
+        for (int i = 0; i < 100; i++) {
             List<EnumFacing> facingList = new ArrayList<EnumFacing>();
-            for (Entry<EnumFacing, List<BlockPos>> entry : availableDoorMap.entrySet())
-            {
-                if (entry.getValue() != null && !entry.getValue().isEmpty())
-                {
+            for (Entry<EnumFacing, List<BlockPos>> entry : availableDoorMap.entrySet()) {
+                if (entry.getValue() != null && !entry.getValue().isEmpty()) {
                     facingList.add(entry.getKey());
                 }
             }
@@ -78,8 +61,8 @@ public class Dungeon
             Pair<EnumFacing, BlockPos> removedDoor2 = null;
             BlockPos roomLocation = null;
 
-            roomPlacement: for (EnumFacing doorFacing : facingList)
-            {
+            roomPlacement:
+            for (EnumFacing doorFacing : facingList) {
                 EnumFacing oppositeDoorFacing = doorFacing.getOpposite();
                 List<BlockPos> availableDoorList = availableDoorMap.get(doorFacing); //May need to copy here
                 Collections.shuffle(availableDoorList);
@@ -88,23 +71,19 @@ public class Dungeon
                 DungeonRoom testingRoom = getRandomRoom(rand);
 
                 List<BlockPos> otherDoorList = testingRoom.getDoorOffsetsForFacing(settings, oppositeDoorFacing, BlockPos.ORIGIN);
-                if (otherDoorList != null && !otherDoorList.isEmpty())
-                {
+                if (otherDoorList != null && !otherDoorList.isEmpty()) {
                     //See if one of these doors works. 
                     Collections.shuffle(otherDoorList);
                     BlockPos testDoor = otherDoorList.get(0);
-                    testDoor: for (BlockPos availableDoor : availableDoorList)
-                    {
+                    testDoor:
+                    for (BlockPos availableDoor : availableDoorList) {
                         //TODO: Test if it fits, then add the doors to the list.
                         roomLocation = availableDoor.subtract(testDoor).add(doorFacing.getDirectionVec());
 
                         List<AreaDescriptor> descriptors = testingRoom.getAreaDescriptors(settings, roomLocation);
-                        for (AreaDescriptor testDesc : descriptors)
-                        {
-                            for (AreaDescriptor currentDesc : descriptorList)
-                            {
-                                if (testDesc.intersects(currentDesc))
-                                {
+                        for (AreaDescriptor testDesc : descriptors) {
+                            for (AreaDescriptor currentDesc : descriptorList) {
+                                if (testDesc.intersects(currentDesc)) {
                                     break testDoor;
                                 }
                             }
@@ -124,33 +103,26 @@ public class Dungeon
 //                Collections.shuffle(otherDoorList);
             }
 
-            if (removedDoor1 != null)
-            {
-                for (EnumFacing facing : EnumFacing.VALUES)
-                {
-                    if (availableDoorMap.containsKey(facing))
-                    {
+            if (removedDoor1 != null) {
+                for (EnumFacing facing : EnumFacing.VALUES) {
+                    if (availableDoorMap.containsKey(facing)) {
                         List<BlockPos> doorList = availableDoorMap.get(facing);
                         doorList.addAll(room.getDoorOffsetsForFacing(settings, facing, roomLocation));
-                    } else
-                    {
+                    } else {
                         List<BlockPos> doorList = room.getDoorOffsetsForFacing(settings, facing, roomLocation);
                         availableDoorMap.put(facing, doorList);
                     }
                 }
 
                 EnumFacing face = removedDoor1.getKey();
-                if (availableDoorMap.containsKey(face))
-                {
+                if (availableDoorMap.containsKey(face)) {
                     availableDoorMap.get(face).remove(removedDoor1.getRight());
                 }
             }
 
-            if (removedDoor2 != null)
-            {
+            if (removedDoor2 != null) {
                 EnumFacing face = removedDoor2.getKey();
-                if (availableDoorMap.containsKey(face))
-                {
+                if (availableDoorMap.containsKey(face)) {
                     availableDoorMap.get(face).remove(removedDoor2.getRight());
                 }
             }
@@ -162,8 +134,7 @@ public class Dungeon
         System.out.println("Duration: " + duration + "(ns), " + duration / 1000000 + "(ms)");
 
         //Building what I've got
-        for (Entry<BlockPos, Pair<DungeonRoom, PlacementSettings>> entry : roomMap.entrySet())
-        {
+        for (Entry<BlockPos, Pair<DungeonRoom, PlacementSettings>> entry : roomMap.entrySet()) {
             BlockPos placementPos = entry.getKey();
             DungeonRoom placedRoom = entry.getValue().getKey();
             PlacementSettings placementSettings = entry.getValue().getValue();
@@ -174,8 +145,7 @@ public class Dungeon
         return false;
     }
 
-    public static DungeonRoom getRandomRoom(Random rand)
-    {
+    public static DungeonRoom getRandomRoom(Random rand) {
         return DungeonRoomRegistry.getRandomDungeonRoom(rand);
     }
 }

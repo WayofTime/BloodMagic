@@ -1,5 +1,8 @@
 package WayofTime.bloodmagic.block;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -14,23 +17,17 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
-import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 
-public class BlockRoutingNode extends Block implements IBMBlock
-{
-    protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.378F, 0.378F, 0.378F, 0.625F, 0.625F, 0.625F);
-
+public class BlockRoutingNode extends Block implements IBMBlock {
     public static final PropertyBool UP = PropertyBool.create("up");
     public static final PropertyBool DOWN = PropertyBool.create("down");
     public static final PropertyBool NORTH = PropertyBool.create("north");
     public static final PropertyBool EAST = PropertyBool.create("east");
     public static final PropertyBool SOUTH = PropertyBool.create("south");
     public static final PropertyBool WEST = PropertyBool.create("west");
+    protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.378F, 0.378F, 0.378F, 0.625F, 0.625F, 0.625F);
 
-    public BlockRoutingNode()
-    {
+    public BlockRoutingNode() {
         super(Material.ROCK);
 
         setCreativeTab(BloodMagic.TAB_BM);
@@ -42,56 +39,47 @@ public class BlockRoutingNode extends Block implements IBMBlock
     }
 
     @Override
-    public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
-    {
+    public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return true;
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return AABB;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
-    {
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state)
-    {
+    public boolean causesSuffocation(IBlockState state) {
         return false;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
+    public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
     }
 
     @Override
-    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer)
-    {
+    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
         return layer == BlockRenderLayer.CUTOUT_MIPPED || layer == BlockRenderLayer.TRANSLUCENT;
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState();
     }
 
@@ -99,41 +87,33 @@ public class BlockRoutingNode extends Block implements IBMBlock
      * Convert the BlockState into the correct metadata value
      */
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         return 0;
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
-    {
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         return state.withProperty(UP, this.shouldConnect(state, worldIn, pos.up(), EnumFacing.DOWN)).withProperty(DOWN, this.shouldConnect(state, worldIn, pos.down(), EnumFacing.UP)).withProperty(NORTH, this.shouldConnect(state, worldIn, pos.north(), EnumFacing.SOUTH)).withProperty(EAST, this.shouldConnect(state, worldIn, pos.east(), EnumFacing.WEST)).withProperty(SOUTH, this.shouldConnect(state, worldIn, pos.south(), EnumFacing.NORTH)).withProperty(WEST, this.shouldConnect(state, worldIn, pos.west(), EnumFacing.EAST));
     }
 
     @Override
-    protected BlockStateContainer createBlockState()
-    {
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, UP, DOWN, NORTH, EAST, WEST, SOUTH);
     }
 
-    public boolean shouldConnect(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing attachedSide)
-    {
+    public boolean shouldConnect(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing attachedSide) {
         IBlockState blockState = world.getBlockState(pos);
         Block block = blockState.getBlock();
         return block.getMaterial(blockState).isOpaque() && blockState.isFullCube();
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState blockState)
-    {
-        if (!world.isRemote)
-        {
+    public void breakBlock(World world, BlockPos pos, IBlockState blockState) {
+        if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(pos);
-            if (tile instanceof TileRoutingNode)
-            {
+            if (tile instanceof TileRoutingNode) {
                 ((TileRoutingNode) tile).removeAllConnections();
-            } else if (tile instanceof TileMasterRoutingNode)
-            {
+            } else if (tile instanceof TileMasterRoutingNode) {
                 ((TileMasterRoutingNode) tile).removeAllConnections();
             }
         }

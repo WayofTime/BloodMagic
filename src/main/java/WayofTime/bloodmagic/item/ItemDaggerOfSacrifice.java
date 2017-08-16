@@ -1,9 +1,10 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
+import WayofTime.bloodmagic.api.util.helper.PurificationHelper;
 import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
+import WayofTime.bloodmagic.client.IVariantProvider;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
@@ -14,23 +15,15 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
-
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
-import WayofTime.bloodmagic.api.util.helper.PurificationHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
+import java.util.List;
 
-public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
-{
-    public ItemDaggerOfSacrifice()
-    {
+public class ItemDaggerOfSacrifice extends Item implements IVariantProvider {
+    public ItemDaggerOfSacrifice() {
         super();
         setUnlocalizedName(BloodMagic.MODID + ".daggerOfSacrifice");
         setCreativeTab(BloodMagic.TAB_BM);
@@ -39,8 +32,7 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
-    {
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
         if (attacker instanceof FakePlayer)
             return false;
 
@@ -66,18 +58,15 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
             return false;
 
         int lifeEssence = (int) (lifeEssenceRatio * target.getHealth());
-        if (target instanceof EntityAnimal)
-        {
+        if (target instanceof EntityAnimal) {
             lifeEssence = (int) (lifeEssence * (1 + PurificationHelper.getCurrentPurity((EntityAnimal) target)));
         }
 
-        if (target.isChild())
-        {
+        if (target.isChild()) {
             lifeEssence *= 0.5F;
         }
 
-        if (PlayerSacrificeHelper.findAndFillAltar(attacker.getEntityWorld(), target, lifeEssence, true))
-        {
+        if (PlayerSacrificeHelper.findAndFillAltar(attacker.getEntityWorld(), target, lifeEssence, true)) {
             target.getEntityWorld().playSound(null, target.posX, target.posY, target.posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (target.getEntityWorld().rand.nextFloat() - target.getEntityWorld().rand.nextFloat()) * 0.8F);
             target.setHealth(-1);
             target.onDeath(WayofTime.bloodmagic.api.BloodMagicAPI.damageSource);
@@ -87,8 +76,7 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = Lists.newArrayList();
         ret.add(Pair.of(0, "type=normal"));
         return ret;

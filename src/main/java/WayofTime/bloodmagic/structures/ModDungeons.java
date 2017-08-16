@@ -1,9 +1,7 @@
 package WayofTime.bloodmagic.structures;
 
-public class ModDungeons
-{
-    public static void init()
-    {
+public class ModDungeons {
+    public static void init() {
 //        ResourceLocation resource = new ResourceLocation(Constants.Mod.MODID, "HallChest1");
 //
 //        Map<String, BlockPos> structureMap = new HashMap<String, BlockPos>();

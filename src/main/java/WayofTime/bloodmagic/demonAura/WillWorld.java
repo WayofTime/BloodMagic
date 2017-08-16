@@ -2,25 +2,21 @@ package WayofTime.bloodmagic.demonAura;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class WillWorld
-{
+public class WillWorld {
     int dim;
     ConcurrentHashMap<PosXY, WillChunk> willChunks = new ConcurrentHashMap<PosXY, WillChunk>();
 
 //    private static ConcurrentHashMap<PosXY, AspectList> nodeTickets = new ConcurrentHashMap();
 
-    public WillWorld(int dim)
-    {
+    public WillWorld(int dim) {
         this.dim = dim;
     }
 
-    public WillChunk getWillChunkAt(int x, int y)
-    {
+    public WillChunk getWillChunkAt(int x, int y) {
         return getWillChunkAt(new PosXY(x, y));
     }
 
-    public WillChunk getWillChunkAt(PosXY loc)
-    {
+    public WillChunk getWillChunkAt(PosXY loc) {
         return this.willChunks.get(loc);
     }
 

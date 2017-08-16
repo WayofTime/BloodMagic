@@ -8,22 +8,17 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IncenseTranquilityRegistry
-{
+public class IncenseTranquilityRegistry {
     public static List<ITranquilityHandler> handlerList = new ArrayList<ITranquilityHandler>();
 
-    public static void registerTranquilityHandler(ITranquilityHandler handler)
-    {
+    public static void registerTranquilityHandler(ITranquilityHandler handler) {
         handlerList.add(handler);
     }
 
-    public static TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state)
-    {
-        for (ITranquilityHandler handler : handlerList)
-        {
+    public static TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state) {
+        for (ITranquilityHandler handler : handlerList) {
             TranquilityStack tranq = handler.getTranquilityOfBlock(world, pos, block, state);
-            if (tranq != null)
-            {
+            if (tranq != null) {
                 return tranq;
             }
         }

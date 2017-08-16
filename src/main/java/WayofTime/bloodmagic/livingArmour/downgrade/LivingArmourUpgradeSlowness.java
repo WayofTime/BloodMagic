@@ -1,33 +1,29 @@
 package WayofTime.bloodmagic.livingArmour.downgrade;
 
-import java.util.UUID;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import org.apache.commons.codec.binary.StringUtils;
 
-public class LivingArmourUpgradeSlowness extends LivingArmourUpgrade
-{
-    public static final int[] costs = new int[] { -10, -17, -23, -35, -48, -60, -80, -110, -160, -200 };
-    public static final double[] speedModifier = new double[] { -0.1, -0.2, -0.3, -0.4, -0.45, -0.5, -0.55, -0.6, -0.65, -0.7 };
+import java.util.UUID;
 
-    public LivingArmourUpgradeSlowness(int level)
-    {
+public class LivingArmourUpgradeSlowness extends LivingArmourUpgrade {
+    public static final int[] costs = new int[]{-10, -17, -23, -35, -48, -60, -80, -110, -160, -200};
+    public static final double[] speedModifier = new double[]{-0.1, -0.2, -0.3, -0.4, -0.45, -0.5, -0.55, -0.6, -0.65, -0.7};
+
+    public LivingArmourUpgradeSlowness(int level) {
         super(level);
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers()
-    {
+    public Multimap<String, AttributeModifier> getAttributeModifiers() {
         Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
 
         String name = getUniqueIdentifier() + "-SpeedModifier1";
@@ -37,48 +33,40 @@ public class LivingArmourUpgradeSlowness extends LivingArmourUpgrade
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
-    {
+    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
 
     }
 
     @Override
-    public String getUniqueIdentifier()
-    {
+    public String getUniqueIdentifier() {
         return BloodMagic.MODID + ".upgrade.slowness";
     }
 
     @Override
-    public int getMaxTier()
-    {
+    public int getMaxTier() {
         return 10;
     }
 
     @Override
-    public int getCostOfUpgrade()
-    {
+    public int getCostOfUpgrade() {
         return costs[this.level];
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
     }
 
     @Override
-    public String getUnlocalizedName()
-    {
+    public String getUnlocalizedName() {
         return tooltipBase + "slowness";
     }
 
     @Override
-    public boolean isDowngrade()
-    {
+    public boolean isDowngrade() {
         return true;
     }
 }

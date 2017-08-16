@@ -1,24 +1,17 @@
 package WayofTime.bloodmagic.block;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.block.base.BlockEnumStairs;
 import com.google.common.collect.Lists;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.IStringSerializable;
-
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.block.base.BlockEnumStairs;
-import WayofTime.bloodmagic.client.IVariantProvider;
+import java.util.List;
 
-public class BlockDemonStairsBase<E extends Enum<E> & IStringSerializable> extends BlockEnumStairs<E>
-{
-    public BlockDemonStairsBase(String baseName, Material materialIn, Class<E> enumClass)
-    {
+public class BlockDemonStairsBase<E extends Enum<E> & IStringSerializable> extends BlockEnumStairs<E> {
+    public BlockDemonStairsBase(String baseName, Material materialIn, Class<E> enumClass) {
         super(materialIn, enumClass);
 
         setUnlocalizedName(BloodMagic.MODID + "." + baseName + ".");
@@ -30,8 +23,7 @@ public class BlockDemonStairsBase<E extends Enum<E> & IStringSerializable> exten
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = Lists.newArrayList();
 
         for (int i = 0; i < this.getTypes().length; i++)

@@ -12,34 +12,30 @@ import java.util.ArrayList;
 
 /**
  * This ritual uses registered {@link IHarvestHandler}'s to harvest blocks.
- * 
+ * <p>
  * To register a new Handler for this ritual use
  * {@link HarvestRegistry#registerHandler(IHarvestHandler)}
- * 
+ * <p>
  * This ritual includes a way to change the range based on what block is above
  * the MasterRitualStone. You can use
  * {@link HarvestRegistry#registerRangeAmplifier(BlockStack, int)} to register a
  * new amplifier.
  */
-public class RitualHarvest extends Ritual
-{
+public class RitualHarvest extends Ritual {
     public static final String HARVEST_RANGE = "harvestRange";
 
-    public RitualHarvest()
-    {
+    public RitualHarvest() {
         super("ritualHarvest", 0, 20000, "ritual." + BloodMagic.MODID + ".harvestRitual");
         addBlockRange(HARVEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-4, 1, -4), 9, 5, 9));
         setMaximumVolumeAndDistanceOfRange(HARVEST_RANGE, 0, 15, 15);
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         BlockPos pos = masterRitualStone.getBlockPos();
 
-        if (masterRitualStone.getOwnerNetwork().getCurrentEssence() < getRefreshCost())
-        {
+        if (masterRitualStone.getOwnerNetwork().getCurrentEssence() < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -49,11 +45,9 @@ public class RitualHarvest extends Ritual
         AreaDescriptor harvestArea = getBlockRange(HARVEST_RANGE);
 
         harvestArea.resetIterator();
-        while (harvestArea.hasNext())
-        {
+        while (harvestArea.hasNext()) {
             BlockPos nextPos = harvestArea.next().add(pos);
-            if (harvestBlock(world, nextPos))
-            {
+            if (harvestBlock(world, nextPos)) {
                 harvested++;
             }
         }
@@ -62,20 +56,17 @@ public class RitualHarvest extends Ritual
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 20;
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 5;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         components.add(new RitualComponent(new BlockPos(1, 0, 1), EnumRuneType.DUSK));
@@ -107,13 +98,11 @@ public class RitualHarvest extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualHarvest();
     }
 
-    public static boolean harvestBlock(World world, BlockPos pos)
-    {
+    public static boolean harvestBlock(World world, BlockPos pos) {
         BlockStack harvestStack = BlockStack.getStackFromPos(world, pos);
 
         for (IHarvestHandler handler : HarvestRegistry.getHandlerList())

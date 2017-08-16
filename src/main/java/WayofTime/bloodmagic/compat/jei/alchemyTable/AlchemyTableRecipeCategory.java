@@ -1,9 +1,10 @@
 package WayofTime.bloodmagic.compat.jei.alchemyTable;
 
-import javax.annotation.Nonnull;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
+import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -12,12 +13,10 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class AlchemyTableRecipeCategory extends BlankRecipeCategory<AlchemyTableRecipeJEI>
-{
+import javax.annotation.Nonnull;
+
+public class AlchemyTableRecipeCategory extends BlankRecipeCategory<AlchemyTableRecipeJEI> {
     private static final int OUTPUT_SLOT = 0;
     private static final int ORB_SLOT = 1;
     private static final int INPUT_SLOT = 2;
@@ -29,44 +28,37 @@ public class AlchemyTableRecipeCategory extends BlankRecipeCategory<AlchemyTable
     @Nonnull
     private final ICraftingGridHelper craftingGridHelper;
 
-    public AlchemyTableRecipeCategory()
-    {
+    public AlchemyTableRecipeCategory() {
         craftingGridHelper = BloodMagicPlugin.jeiHelper.getGuiHelper().createCraftingGridHelper(INPUT_SLOT, OUTPUT_SLOT);
     }
 
     @Nonnull
     @Override
-    public String getUid()
-    {
+    public String getUid() {
         return Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE;
     }
 
     @Nonnull
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return localizedName;
     }
 
     @Nonnull
     @Override
-    public IDrawable getBackground()
-    {
+    public IDrawable getBackground() {
         return background;
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, AlchemyTableRecipeJEI recipeWrapper, IIngredients ingredients)
-    {
+    public void setRecipe(IRecipeLayout recipeLayout, AlchemyTableRecipeJEI recipeWrapper, IIngredients ingredients) {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
         guiItemStacks.init(OUTPUT_SLOT, false, 91, 13);
         guiItemStacks.init(ORB_SLOT, true, 60, 0);
 
-        for (int y = 0; y < 3; ++y)
-        {
-            for (int x = 0; x < 3; ++x)
-            {
+        for (int y = 0; y < 3; ++y) {
+            for (int x = 0; x < 3; ++x) {
                 int index = INPUT_SLOT + x + (y * 3);
                 guiItemStacks.init(index, true, x * 18, y * 18 - 18);
             }

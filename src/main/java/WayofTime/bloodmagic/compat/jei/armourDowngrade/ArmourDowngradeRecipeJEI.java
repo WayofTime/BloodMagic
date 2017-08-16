@@ -1,22 +1,20 @@
 package WayofTime.bloodmagic.compat.jei.armourDowngrade;
 
+import WayofTime.bloodmagic.api.recipe.LivingArmourDowngradeRecipe;
+import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
-import WayofTime.bloodmagic.api.recipe.LivingArmourDowngradeRecipe;
-import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 
 import java.util.List;
 
-public class ArmourDowngradeRecipeJEI extends BlankRecipeWrapper
-{
+public class ArmourDowngradeRecipeJEI extends BlankRecipeWrapper {
     private LivingArmourDowngradeRecipe recipe;
 
-    public ArmourDowngradeRecipeJEI(LivingArmourDowngradeRecipe recipe)
-    {
+    public ArmourDowngradeRecipeJEI(LivingArmourDowngradeRecipe recipe) {
         this.recipe = recipe;
     }
 

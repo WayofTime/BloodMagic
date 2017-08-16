@@ -1,20 +1,13 @@
 package WayofTime.bloodmagic.entity.mob;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.entity.ai.EntityAIEatAndCorruptBlock;
+import WayofTime.bloodmagic.entity.ai.EntityAIProtectAlly;
+import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
@@ -35,53 +28,61 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.entity.ai.EntityAIEatAndCorruptBlock;
-import WayofTime.bloodmagic.entity.ai.EntityAIProtectAlly;
 
-import com.google.common.collect.Maps;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
-public class EntityCorruptedSheep extends EntityAspectedDemonBase implements IShearable
-{
+public class EntityCorruptedSheep extends EntityAspectedDemonBase implements IShearable {
     private static final DataParameter<Byte> DYE_COLOR = EntityDataManager.<Byte>createKey(EntityCorruptedSheep.class, DataSerializers.BYTE);
 
     private static final Map<EnumDyeColor, float[]> DYE_TO_RGB = Maps.newEnumMap(EnumDyeColor.class);
+    public static int maxProtectionCooldown = 90 * 20; //90 second cooldown
+
+    static {
+        DYE_TO_RGB.put(EnumDyeColor.WHITE, new float[]{1.0F, 1.0F, 1.0F});
+        DYE_TO_RGB.put(EnumDyeColor.ORANGE, new float[]{0.85F, 0.5F, 0.2F});
+        DYE_TO_RGB.put(EnumDyeColor.MAGENTA, new float[]{0.7F, 0.3F, 0.85F});
+        DYE_TO_RGB.put(EnumDyeColor.LIGHT_BLUE, new float[]{0.4F, 0.6F, 0.85F});
+        DYE_TO_RGB.put(EnumDyeColor.YELLOW, new float[]{0.9F, 0.9F, 0.2F});
+        DYE_TO_RGB.put(EnumDyeColor.LIME, new float[]{0.5F, 0.8F, 0.1F});
+        DYE_TO_RGB.put(EnumDyeColor.PINK, new float[]{0.95F, 0.5F, 0.65F});
+        DYE_TO_RGB.put(EnumDyeColor.GRAY, new float[]{0.3F, 0.3F, 0.3F});
+        DYE_TO_RGB.put(EnumDyeColor.SILVER, new float[]{0.6F, 0.6F, 0.6F});
+        DYE_TO_RGB.put(EnumDyeColor.CYAN, new float[]{0.3F, 0.5F, 0.6F});
+        DYE_TO_RGB.put(EnumDyeColor.PURPLE, new float[]{0.5F, 0.25F, 0.7F});
+        DYE_TO_RGB.put(EnumDyeColor.BLUE, new float[]{0.2F, 0.3F, 0.7F});
+        DYE_TO_RGB.put(EnumDyeColor.BROWN, new float[]{0.4F, 0.3F, 0.2F});
+        DYE_TO_RGB.put(EnumDyeColor.GREEN, new float[]{0.4F, 0.5F, 0.2F});
+        DYE_TO_RGB.put(EnumDyeColor.RED, new float[]{0.6F, 0.2F, 0.2F});
+        DYE_TO_RGB.put(EnumDyeColor.BLACK, new float[]{0.1F, 0.1F, 0.1F});
+    }
+
+    private final int attackPriority = 3;
+    public int protectionCooldown = 0;
     /**
      * Used to control movement as well as wool regrowth. Set to 40 on
      * handleHealthUpdate and counts down with each tick.
      */
     private int sheepTimer;
-
     private int castTimer = 0;
     private EntityAIEatAndCorruptBlock entityAIEatGrass;
     private EntityAIProtectAlly entityAIProtectAlly;
     private EntityAIAttackMelee aiAttackOnCollide;
 
-    private final int attackPriority = 3;
-
-    public int protectionCooldown = 0;
-    public static int maxProtectionCooldown = 90 * 20; //90 second cooldown
-
-    public static float[] getDyeRgb(EnumDyeColor dyeColor)
-    {
-        return DYE_TO_RGB.get(dyeColor);
-    }
-
-    public EntityCorruptedSheep(World world)
-    {
+    public EntityCorruptedSheep(World world) {
         this(world, EnumDemonWillType.DEFAULT);
     }
 
-    public EntityCorruptedSheep(World world, EnumDemonWillType type)
-    {
+    public EntityCorruptedSheep(World world, EnumDemonWillType type) {
         super(world);
         this.setSize(0.9F, 1.3F);
 
         this.setType(type);
     }
 
-    protected void initEntityAI()
-    {
+    protected void initEntityAI() {
         this.entityAIEatGrass = new EntityAIEatAndCorruptBlock(this);
         this.entityAIProtectAlly = new EntityAIProtectAlly(this);
 
@@ -97,10 +98,8 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
     }
 
     @Override
-    public void setCombatTask()
-    {
-        if (aiAttackOnCollide != null)
-        {
+    public void setCombatTask() {
+        if (aiAttackOnCollide != null) {
             this.tasks.removeTask(aiAttackOnCollide);
         }
 
@@ -109,22 +108,18 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
     }
 
     @Override
-    protected void updateAITasks()
-    {
+    protected void updateAITasks() {
         this.sheepTimer = this.entityAIEatGrass.getEatingGrassTimer();
         this.castTimer = this.entityAIProtectAlly.getCastTimer();
         super.updateAITasks();
     }
 
     @Override
-    public void onLivingUpdate()
-    {
-        if (this.getEntityWorld().isRemote)
-        {
+    public void onLivingUpdate() {
+        if (this.getEntityWorld().isRemote) {
             this.sheepTimer = Math.max(0, this.sheepTimer - 1);
             this.castTimer = Math.max(0, castTimer - 1);
-            if (this.castTimer == 70)
-            {
+            if (this.castTimer == 70) {
                 this.playSound(this.getHurtSound(), this.getSoundVolume() * 2, this.getSoundPitch());
             }
         }
@@ -134,15 +129,12 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
         super.onLivingUpdate();
     }
 
-    public boolean canProtectAlly(EntityLivingBase entity)
-    {
+    public boolean canProtectAlly(EntityLivingBase entity) {
         return this.protectionCooldown <= 0 && entity.getHealth() < entity.getMaxHealth() && !entity.isPotionActive(MobEffects.RESISTANCE);
     }
 
-    public boolean applyProtectionToAlly(EntityLivingBase entity)
-    {
-        if (canProtectAlly(entity))
-        {
+    public boolean applyProtectionToAlly(EntityLivingBase entity) {
+        if (canProtectAlly(entity)) {
             entity.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 20 * 20, 3));
             this.protectionCooldown = maxProtectionCooldown;
         }
@@ -151,92 +143,75 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
     }
 
     @Override
-    public double getBaseHP(EnumDemonWillType type)
-    {
+    public double getBaseHP(EnumDemonWillType type) {
         return super.getBaseHP(type) * 0.75;
     }
 
     @Override
-    public double getBaseMeleeDamage(EnumDemonWillType type)
-    {
+    public double getBaseMeleeDamage(EnumDemonWillType type) {
         return super.getBaseMeleeDamage(type) * 0.75;
     }
 
     @Override
-    public double getBaseSpeed(EnumDemonWillType type)
-    {
+    public double getBaseSpeed(EnumDemonWillType type) {
         return super.getBaseSpeed(type);
     }
 
     @Override
-    public double getBaseSprintModifier(EnumDemonWillType type)
-    {
+    public double getBaseSprintModifier(EnumDemonWillType type) {
         return super.getBaseSprintModifier(type);
     }
 
     @Override
-    public double getBaseKnockbackResist(EnumDemonWillType type)
-    {
+    public double getBaseKnockbackResist(EnumDemonWillType type) {
         return super.getBaseKnockbackResist(type) + 0.2;
     }
 
     @Override
-    public double getMeleeResist()
-    {
+    public double getMeleeResist() {
         return 0.2;
     }
 
     @Override
-    public double getProjectileResist()
-    {
+    public double getProjectileResist() {
         return 0.6;
     }
 
     @Override
-    protected void entityInit()
-    {
+    protected void entityInit() {
         super.entityInit();
         this.dataManager.register(DYE_COLOR, Byte.valueOf((byte) 0));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleStatusUpdate(byte id)
-    {
-        if (id == 10)
-        {
+    public void handleStatusUpdate(byte id) {
+        if (id == 10) {
             this.sheepTimer = 40;
-        } else if (id == 53)
-        {
+        } else if (id == 53) {
             this.castTimer = 100;
-        } else
-        {
+        } else {
             super.handleStatusUpdate(id);
         }
     }
 
     @SideOnly(Side.CLIENT)
-    public float getHeadRotationPointY(float partialTick)
-    {
+    public float getHeadRotationPointY(float partialTick) {
         return this.sheepTimer <= 0 ? 0.0F : (this.sheepTimer >= 4 && this.sheepTimer <= 36 ? 1.0F : (this.sheepTimer < 4 ? ((float) this.sheepTimer - partialTick) / 4.0F : -((float) (this.sheepTimer - 40) - partialTick) / 4.0F));
     }
 
     @SideOnly(Side.CLIENT)
-    public float getHeadRotationAngleX(float partialTick)
-    {
-        if (this.sheepTimer > 4 && this.sheepTimer <= 36)
-        {
+    public float getHeadRotationAngleX(float partialTick) {
+        if (this.sheepTimer > 4 && this.sheepTimer <= 36) {
             float f = ((float) (this.sheepTimer - 4) - partialTick) / 32.0F;
             return ((float) Math.PI / 5F) + ((float) Math.PI * 7F / 100F) * MathHelper.sin(f * 28.7F);
-        } else
-        {
+        } else {
             return this.sheepTimer > 0 ? ((float) Math.PI / 5F) : this.rotationPitch * 0.017453292F;
         }
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound tag)
-    {
+    public void writeEntityToNBT(NBTTagCompound tag) {
         super.writeEntityToNBT(tag);
         tag.setBoolean("Sheared", this.getSheared());
         tag.setByte("Color", (byte) this.getFleeceColor().getMetadata());
@@ -244,8 +219,7 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound tag)
-    {
+    public void readEntityFromNBT(NBTTagCompound tag) {
         super.readEntityFromNBT(tag);
         this.setSheared(tag.getBoolean("Sheared"));
         this.setFleeceColor(EnumDyeColor.byMetadata(tag.getByte("Color")));
@@ -253,48 +227,41 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
     }
 
     @Override
-    protected SoundEvent getAmbientSound()
-    {
+    protected SoundEvent getAmbientSound() {
         return SoundEvents.ENTITY_SHEEP_AMBIENT;
     }
 
     @Override
-    protected SoundEvent getHurtSound()
-    {
+    protected SoundEvent getHurtSound() {
         return SoundEvents.ENTITY_SHEEP_HURT;
     }
 
     @Override
-    protected SoundEvent getDeathSound()
-    {
+    protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_SHEEP_DEATH;
     }
 
     @Override
-    protected float getSoundPitch()
-    {
+    protected float getSoundPitch() {
         return super.getSoundPitch() * 0.5f;
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, Block blockIn)
-    {
+    protected void playStepSound(BlockPos pos, Block blockIn) {
         this.playSound(SoundEvents.ENTITY_SHEEP_STEP, 0.15F, 1.0F);
     }
 
     /**
      * Gets the wool color of this sheep.
      */
-    public EnumDyeColor getFleeceColor()
-    {
+    public EnumDyeColor getFleeceColor() {
         return EnumDyeColor.byMetadata(this.dataManager.get(DYE_COLOR).byteValue() & 15);
     }
 
     /**
      * Sets the wool color of this sheep
      */
-    public void setFleeceColor(EnumDyeColor color)
-    {
+    public void setFleeceColor(EnumDyeColor color) {
         byte b0 = this.dataManager.get(DYE_COLOR).byteValue();
         this.dataManager.set(DYE_COLOR, Byte.valueOf((byte) (b0 & 240 | color.getMetadata() & 15)));
     }
@@ -302,34 +269,21 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
     /**
      * returns true if a sheeps wool has been sheared
      */
-    public boolean getSheared()
-    {
+    public boolean getSheared() {
         return (this.dataManager.get(DYE_COLOR).byteValue() & 16) != 0;
     }
 
     /**
      * make a sheep sheared if set to true
      */
-    public void setSheared(boolean sheared)
-    {
+    public void setSheared(boolean sheared) {
         byte b0 = this.dataManager.get(DYE_COLOR).byteValue();
 
-        if (sheared)
-        {
+        if (sheared) {
             this.dataManager.set(DYE_COLOR, Byte.valueOf((byte) (b0 | 16)));
-        } else
-        {
+        } else {
             this.dataManager.set(DYE_COLOR, Byte.valueOf((byte) (b0 & -17)));
         }
-    }
-
-    /**
-     * Chooses a "vanilla" sheep color based on the provided random.
-     */
-    public static EnumDyeColor getRandomSheepColor(Random random)
-    {
-        int i = random.nextInt(100);
-        return i < 5 ? EnumDyeColor.BLACK : (i < 10 ? EnumDyeColor.GRAY : (i < 15 ? EnumDyeColor.SILVER : (i < 18 ? EnumDyeColor.BROWN : (random.nextInt(500) == 0 ? EnumDyeColor.PINK : EnumDyeColor.WHITE))));
     }
 
     /**
@@ -338,12 +292,10 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
      * AIEatGrass)
      */
     @Override
-    public void eatGrassBonus()
-    {
+    public void eatGrassBonus() {
         this.setSheared(false);
 
-        if (this.isChild())
-        {
+        if (this.isChild()) {
             this.heal(3);
         }
     }
@@ -354,48 +306,24 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
      * from nbt. Mainly used for initializing attributes and inventory
      */
     @Override
-    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata)
-    {
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
         livingdata = super.onInitialSpawn(difficulty, livingdata);
         this.setFleeceColor(getRandomSheepColor(this.getEntityWorld().rand));
         return livingdata;
     }
 
     @Override
-    public float getEyeHeight()
-    {
+    public float getEyeHeight() {
         return 0.95F * this.height;
     }
 
-    static
-    {
-        DYE_TO_RGB.put(EnumDyeColor.WHITE, new float[] { 1.0F, 1.0F, 1.0F });
-        DYE_TO_RGB.put(EnumDyeColor.ORANGE, new float[] { 0.85F, 0.5F, 0.2F });
-        DYE_TO_RGB.put(EnumDyeColor.MAGENTA, new float[] { 0.7F, 0.3F, 0.85F });
-        DYE_TO_RGB.put(EnumDyeColor.LIGHT_BLUE, new float[] { 0.4F, 0.6F, 0.85F });
-        DYE_TO_RGB.put(EnumDyeColor.YELLOW, new float[] { 0.9F, 0.9F, 0.2F });
-        DYE_TO_RGB.put(EnumDyeColor.LIME, new float[] { 0.5F, 0.8F, 0.1F });
-        DYE_TO_RGB.put(EnumDyeColor.PINK, new float[] { 0.95F, 0.5F, 0.65F });
-        DYE_TO_RGB.put(EnumDyeColor.GRAY, new float[] { 0.3F, 0.3F, 0.3F });
-        DYE_TO_RGB.put(EnumDyeColor.SILVER, new float[] { 0.6F, 0.6F, 0.6F });
-        DYE_TO_RGB.put(EnumDyeColor.CYAN, new float[] { 0.3F, 0.5F, 0.6F });
-        DYE_TO_RGB.put(EnumDyeColor.PURPLE, new float[] { 0.5F, 0.25F, 0.7F });
-        DYE_TO_RGB.put(EnumDyeColor.BLUE, new float[] { 0.2F, 0.3F, 0.7F });
-        DYE_TO_RGB.put(EnumDyeColor.BROWN, new float[] { 0.4F, 0.3F, 0.2F });
-        DYE_TO_RGB.put(EnumDyeColor.GREEN, new float[] { 0.4F, 0.5F, 0.2F });
-        DYE_TO_RGB.put(EnumDyeColor.RED, new float[] { 0.6F, 0.2F, 0.2F });
-        DYE_TO_RGB.put(EnumDyeColor.BLACK, new float[] { 0.1F, 0.1F, 0.1F });
-    }
-
     @Override
-    public boolean isShearable(ItemStack item, net.minecraft.world.IBlockAccess world, BlockPos pos)
-    {
+    public boolean isShearable(ItemStack item, net.minecraft.world.IBlockAccess world, BlockPos pos) {
         return !this.getSheared() && !this.isChild();
     }
 
     @Override
-    public List<ItemStack> onSheared(ItemStack item, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune)
-    {
+    public List<ItemStack> onSheared(ItemStack item, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune) {
         this.setSheared(true);
         int i = 1 + this.rand.nextInt(3);
 
@@ -409,5 +337,17 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
 
     public int getCastTimer() {
         return castTimer;
+    }
+
+    public static float[] getDyeRgb(EnumDyeColor dyeColor) {
+        return DYE_TO_RGB.get(dyeColor);
+    }
+
+    /**
+     * Chooses a "vanilla" sheep color based on the provided random.
+     */
+    public static EnumDyeColor getRandomSheepColor(Random random) {
+        int i = random.nextInt(100);
+        return i < 5 ? EnumDyeColor.BLACK : (i < 10 ? EnumDyeColor.GRAY : (i < 15 ? EnumDyeColor.SILVER : (i < 18 ? EnumDyeColor.BROWN : (random.nextInt(500) == 0 ? EnumDyeColor.PINK : EnumDyeColor.WHITE))));
     }
 }

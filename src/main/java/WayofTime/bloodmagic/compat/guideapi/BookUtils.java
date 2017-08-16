@@ -1,37 +1,32 @@
 package WayofTime.bloodmagic.compat.guideapi;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.client.render.alchemyArray.DualAlchemyCircleRenderer;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAlchemyArray;
 import amerifrance.guideapi.page.PageIRecipe;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 
-public class BookUtils
-{
+import java.util.ArrayList;
+import java.util.List;
 
-    public static PageAlchemyArray getAlchemyPage(String key)
-    {
+public class BookUtils {
+
+    public static PageAlchemyArray getAlchemyPage(String key) {
         ItemStack[] recipe = AlchemyArrayRecipeRegistry.getRecipeForArrayEffect(key);
-        if (recipe[0] != null)
-        {
+        if (recipe[0] != null) {
             ItemStack inputStack = recipe[0];
             ItemStack catalystStack = recipe[1];
 
             AlchemyCircleRenderer renderer = AlchemyArrayRecipeRegistry.getAlchemyCircleRenderer(inputStack, catalystStack);
-            if (renderer instanceof DualAlchemyCircleRenderer)
-            {
+            if (renderer instanceof DualAlchemyCircleRenderer) {
                 List<ResourceLocation> resources = new ArrayList<ResourceLocation>();
                 resources.add(((DualAlchemyCircleRenderer) renderer).arrayResource);
                 resources.add(((DualAlchemyCircleRenderer) renderer).secondaryArrayResource);
                 return new PageAlchemyArray(resources, inputStack, catalystStack);
-            } else
-            {
+            } else {
                 return new PageAlchemyArray(renderer.arrayResource, inputStack, catalystStack);
             }
         }
@@ -39,25 +34,20 @@ public class BookUtils
         return null;
     }
 
-    public static PageAlchemyArray getAlchemyPage(ItemStack outputStack)
-    {
+    public static PageAlchemyArray getAlchemyPage(ItemStack outputStack) {
         ItemStack[] recipe = AlchemyArrayRecipeRegistry.getRecipeForOutputStack(outputStack);
-        if (recipe[0] != null)
-        {
+        if (recipe[0] != null) {
             ItemStack inputStack = recipe[0];
             ItemStack catalystStack = recipe[1];
 
             AlchemyCircleRenderer renderer = AlchemyArrayRecipeRegistry.getAlchemyCircleRenderer(inputStack, catalystStack);
-            if (renderer != null)
-            {
-                if (renderer instanceof DualAlchemyCircleRenderer)
-                {
+            if (renderer != null) {
+                if (renderer instanceof DualAlchemyCircleRenderer) {
                     List<ResourceLocation> resources = new ArrayList<ResourceLocation>();
                     resources.add(((DualAlchemyCircleRenderer) renderer).arrayResource);
                     resources.add(((DualAlchemyCircleRenderer) renderer).secondaryArrayResource);
                     return new PageAlchemyArray(resources, inputStack, catalystStack, outputStack);
-                } else
-                {
+                } else {
                     return new PageAlchemyArray(renderer.arrayResource, inputStack, catalystStack, outputStack);
                 }
             }
@@ -66,8 +56,7 @@ public class BookUtils
         return null;
     }
 
-    public static PageIRecipe getPageForRecipe(IRecipe recipe)
-    {
+    public static PageIRecipe getPageForRecipe(IRecipe recipe) {
         return new PageIRecipe(recipe);
     }
 }

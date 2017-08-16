@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.api.livingArmour;
 
 import com.google.common.collect.Multimap;
-
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,12 +8,10 @@ import net.minecraft.world.World;
 
 /**
  * An interface this is used purely for internal implementation.
- * 
+ *
  * @author WayofTime
- * 
  */
-public interface ILivingArmour
-{
+public interface ILivingArmour {
     Multimap<String, AttributeModifier> getAttributeModifiers();
 
     boolean canApplyUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade);
@@ -28,11 +25,9 @@ public interface ILivingArmour
     /**
      * Ticks the upgrades and stat trackers, passing in the world and player as
      * well as the LivingArmour
-     * 
-     * @param world
-     *        - The World
-     * @param player
-     *        - The player wearing the Armour
+     *
+     * @param world  - The World
+     * @param player - The player wearing the Armour
      */
     void onTick(World world, EntityPlayer player);
 
@@ -43,9 +38,8 @@ public interface ILivingArmour
     /**
      * Writes the LivingArmour to the NBTTag. This will only write the trackers
      * that are dirty.
-     * 
-     * @param tag
-     *        - The NBT tag to write to
+     *
+     * @param tag - The NBT tag to write to
      */
     void writeDirtyToNBT(NBTTagCompound tag);
 

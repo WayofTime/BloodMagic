@@ -20,33 +20,25 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public class Teleports
-{
+public class Teleports {
 
-    public static class TeleportSameDim extends Teleport
-    {
+    public static class TeleportSameDim extends Teleport {
         private final boolean teleposer;
 
-        public TeleportSameDim(int x, int y, int z, Entity entity, String networkToDrain, boolean teleposer)
-        {
+        public TeleportSameDim(int x, int y, int z, Entity entity, String networkToDrain, boolean teleposer) {
             this(new BlockPos(x, y, z), entity, networkToDrain, teleposer);
         }
 
-        public TeleportSameDim(BlockPos blockPos, Entity entity, String networkToDrain, boolean teleposer)
-        {
+        public TeleportSameDim(BlockPos blockPos, Entity entity, String networkToDrain, boolean teleposer) {
             super(blockPos, entity, networkToDrain);
             this.teleposer = teleposer;
         }
 
         @Override
-        public void teleport()
-        {
-            if (entity != null)
-            {
-                if (entity.timeUntilPortal <= 0)
-                {
-                    if (entity instanceof EntityPlayer)
-                    {
+        public void teleport() {
+            if (entity != null) {
+                if (entity.timeUntilPortal <= 0) {
+                    if (entity instanceof EntityPlayer) {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
                         if (network.getCurrentEssence() < getTeleportCost())
                             return;
@@ -67,8 +59,7 @@ public class Teleports
                         player.getEntityWorld().playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                         if (teleposer)
                             MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), new BlockPos(x, y, z)));
-                    } else
-                    {
+                    } else {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
                         if (network.getCurrentEssence() < (getTeleportCost() / 10))
                             return;
@@ -94,25 +85,21 @@ public class Teleports
         }
 
         @Override
-        public int getTeleportCost()
-        {
+        public int getTeleportCost() {
             return 1000;
         }
     }
 
-    public static class TeleportToDim extends Teleport
-    {
+    public static class TeleportToDim extends Teleport {
         private World oldWorld;
         private int newWorldID;
         private boolean teleposer;
 
-        public TeleportToDim(int x, int y, int z, Entity entity, String networkToDrain, World oldWorld, int newWorld, boolean teleposer)
-        {
+        public TeleportToDim(int x, int y, int z, Entity entity, String networkToDrain, World oldWorld, int newWorld, boolean teleposer) {
             this(new BlockPos(x, y, z), entity, networkToDrain, oldWorld, newWorld, teleposer);
         }
 
-        public TeleportToDim(BlockPos blockPos, Entity entity, String networkToDrain, World oldWorld, int newWorldID, boolean teleposer)
-        {
+        public TeleportToDim(BlockPos blockPos, Entity entity, String networkToDrain, World oldWorld, int newWorldID, boolean teleposer) {
             super(blockPos, entity, networkToDrain);
             this.oldWorld = oldWorld;
             this.newWorldID = newWorldID;
@@ -120,22 +107,17 @@ public class Teleports
         }
 
         @Override
-        public void teleport()
-        {
-            if (entity != null)
-            {
-                if (entity.timeUntilPortal <= 0)
-                {
+        public void teleport() {
+            if (entity != null) {
+                if (entity.timeUntilPortal <= 0) {
                     MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
                     WorldServer oldWorldServer = server.getWorld(entity.dimension);
                     WorldServer newWorldServer = server.getWorld(newWorldID);
 
-                    if (entity instanceof EntityPlayer)
-                    {
+                    if (entity instanceof EntityPlayer) {
                         EntityPlayerMP player = (EntityPlayerMP) entity;
 
-                        if (!player.getEntityWorld().isRemote)
-                        {
+                        if (!player.getEntityWorld().isRemote) {
                             SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
                             if (network.getCurrentEssence() < getTeleportCost())
                                 return;
@@ -155,8 +137,7 @@ public class Teleports
                                 MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
                         }
 
-                    } else if (!entity.getEntityWorld().isRemote)
-                    {
+                    } else if (!entity.getEntityWorld().isRemote) {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
                         if (network.getCurrentEssence() < (getTeleportCost() / 10))
                             return;
@@ -174,8 +155,7 @@ public class Teleports
                         oldWorld.playSound(entity.posX, entity.posY, entity.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
 
                         Entity teleportedEntity = EntityList.createEntityFromNBT(tag, newWorldServer);
-                        if (teleportedEntity != null)
-                        {
+                        if (teleportedEntity != null) {
                             teleportedEntity.setLocationAndAngles(x + 0.5, y + 0.5, z + 0.5, entity.rotationYaw, entity.rotationPitch);
                             teleportedEntity.forceSpawn = true;
                             newWorldServer.spawnEntity(teleportedEntity);
@@ -195,8 +175,7 @@ public class Teleports
         }
 
         @Override
-        public int getTeleportCost()
-        {
+        public int getTeleportCost() {
             return 10000;
         }
 

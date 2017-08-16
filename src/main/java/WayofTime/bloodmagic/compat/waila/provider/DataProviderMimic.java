@@ -13,12 +13,10 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class DataProviderMimic implements IWailaDataProvider
-{
+public class DataProviderMimic implements IWailaDataProvider {
 
     @Override
-    public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config)
-    {
+    public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
         if (accessor.getNBTData().getBoolean("hasItem"))
             return new ItemStack(accessor.getNBTData());
 
@@ -26,28 +24,23 @@ public class DataProviderMimic implements IWailaDataProvider
     }
 
     @Override
-    public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
-    {
+    public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         return null;
     }
 
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
-    {
+    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         return null;
     }
 
     @Override
-    public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
-    {
+    public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         return null;
     }
 
     @Override
-    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos)
-    {
-        if (te instanceof TileMimic && ((TileMimic) te).getStackInSlot(0) != null)
-        {
+    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
+        if (te instanceof TileMimic && ((TileMimic) te).getStackInSlot(0) != null) {
             tag.setBoolean("hasItem", true);
             ((TileMimic) te).getStackInSlot(0).writeToNBT(tag);
         }

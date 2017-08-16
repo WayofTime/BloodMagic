@@ -1,10 +1,9 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
+import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,18 +13,13 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-public class RitualForsakenSoul extends Ritual
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class RitualForsakenSoul extends Ritual {
     public static final String CRYSTAL_RANGE = "crystal";
     public static final String DAMAGE_RANGE = "damage";
     public static final int MAX_UNIQUENESS = 10;
@@ -37,8 +31,7 @@ public class RitualForsakenSoul extends Ritual
 
     public List<Integer> keyList = new ArrayList<Integer>();
 
-    public RitualForsakenSoul()
-    {
+    public RitualForsakenSoul() {
         super("ritualForsakenSoul", 0, 40000, "ritual." + BloodMagic.MODID + ".forsakenSoulRitual");
         addBlockRange(CRYSTAL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-3, 2, -3), 7, 5, 7));
         addBlockRange(DAMAGE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -10, -10), 21));
@@ -48,48 +41,41 @@ public class RitualForsakenSoul extends Ritual
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
 
         willBuffer = tag.getDouble("willBuffer");
         crystalBuffer = tag.getDouble("crystalBuffer");
 
         keyList.clear();
-        for (int i = 0; i < MAX_UNIQUENESS; i++)
-        {
+        for (int i = 0; i < MAX_UNIQUENESS; i++) {
             String key = "uniq" + i;
-            if (tag.hasKey(key))
-            {
+            if (tag.hasKey(key)) {
                 keyList.add(tag.getInteger(key));
             }
         }
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
 
         tag.setDouble("willBuffer", willBuffer);
         tag.setDouble("crystalBuffer", crystalBuffer);
 
-        for (int i = 0; i < Math.min(MAX_UNIQUENESS, keyList.size()); i++)
-        {
+        for (int i = 0; i < Math.min(MAX_UNIQUENESS, keyList.size()); i++) {
             String key = "uniq" + i;
             tag.setInteger(key, keyList.get(i));
         }
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
         BlockPos pos = masterRitualStone.getBlockPos();
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -102,12 +88,10 @@ public class RitualForsakenSoul extends Ritual
         AreaDescriptor crystalRange = getBlockRange(CRYSTAL_RANGE);
 
         crystalRange.resetIterator();
-        while (crystalRange.hasNext())
-        {
+        while (crystalRange.hasNext()) {
             BlockPos nextPos = crystalRange.next().add(pos);
             TileEntity tile = world.getTileEntity(nextPos);
-            if (tile instanceof TileDemonCrystal)
-            {
+            if (tile instanceof TileDemonCrystal) {
                 crystalList.add((TileDemonCrystal) tile);
             }
         }
@@ -117,23 +101,18 @@ public class RitualForsakenSoul extends Ritual
 
         List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
 
-        for (EntityLivingBase entity : entities)
-        {
+        for (EntityLivingBase entity : entities) {
             EntityEntry entityEntry = EntityRegistry.getEntry(entity.getClass());
 
             if (BloodMagicAPI.INSTANCE.getBlacklist().getSacrifice().contains(entityEntry.getRegistryName()))
                 continue;
 
-            if (entity.isEntityAlive() && !(entity instanceof EntityPlayer))
-            {
-                if (entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, 1))
-                {
-                    if (!entity.isEntityAlive())
-                    {
+            if (entity.isEntityAlive() && !(entity instanceof EntityPlayer)) {
+                if (entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, 1)) {
+                    if (!entity.isEntityAlive()) {
                         int uniqueness = calculateUniqueness(entity);
                         double modifier = 1;
-                        if (entity instanceof EntityAnimal && !entity.isCollided)
-                        {
+                        if (entity instanceof EntityAnimal && !entity.isCollided) {
                             modifier = 4;
                         }
 
@@ -141,8 +120,7 @@ public class RitualForsakenSoul extends Ritual
                         crystalBuffer += modifier * entity.getMaxHealth() / HEALTH_THRESHOLD;
 
                         totalEffects++;
-                        if (totalEffects >= maxEffects)
-                        {
+                        if (totalEffects >= maxEffects) {
                             break;
                         }
                     }
@@ -150,14 +128,12 @@ public class RitualForsakenSoul extends Ritual
             }
         }
 
-        if (crystalList.size() > 0 && crystalBuffer > 0)
-        {
+        if (crystalList.size() > 0 && crystalBuffer > 0) {
             double growth = Math.min(crystalBuffer, 1);
             double willSyphonAmount = growth * willBuffer / crystalBuffer;
             TileDemonCrystal chosenCrystal = crystalList.get(world.rand.nextInt(crystalList.size()));
             double percentageGrowth = chosenCrystal.growCrystalWithWillAmount(growth * willBuffer / crystalBuffer, growth);
-            if (percentageGrowth > 0)
-            {
+            if (percentageGrowth > 0) {
                 crystalBuffer -= percentageGrowth;
                 willBuffer -= percentageGrowth * willSyphonAmount;
             }
@@ -167,24 +143,19 @@ public class RitualForsakenSoul extends Ritual
     }
 
     /**
-     * 
      * @param mob
      * @return The amount of uniqueness to the last 10 mobs killed
      */
-    public int calculateUniqueness(EntityLivingBase mob)
-    {
+    public int calculateUniqueness(EntityLivingBase mob) {
         int key = mob.getClass().hashCode();
         keyList.add(key);
-        if (keyList.size() > MAX_UNIQUENESS)
-        {
+        if (keyList.size() > MAX_UNIQUENESS) {
             keyList.remove(0);
         }
 
         List<Integer> uniquenessList = new ArrayList<Integer>();
-        for (int value : keyList)
-        {
-            if (!uniquenessList.contains(value))
-            {
+        for (int value : keyList) {
+            if (!uniquenessList.contains(value)) {
                 uniquenessList.add(value);
             }
         }
@@ -192,26 +163,22 @@ public class RitualForsakenSoul extends Ritual
         return Math.min(uniquenessList.size(), MAX_UNIQUENESS);
     }
 
-    public double getWillForUniqueness(int uniqueness)
-    {
+    public double getWillForUniqueness(int uniqueness) {
         return Math.max(50 - 15 * Math.sqrt(uniqueness), 0);
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 25;
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 2;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         this.addCornerRunes(components, 1, 0, EnumRuneType.AIR);
@@ -228,8 +195,7 @@ public class RitualForsakenSoul extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualForsakenSoul();
     }
 }

@@ -23,32 +23,26 @@ import java.util.List;
  * Register a new crop for this handler with
  * {@link HarvestRegistry#registerStemCrop(BlockStack, BlockStack)}
  */
-public class HarvestHandlerStem implements IHarvestHandler
-{
-    public HarvestHandlerStem()
-    {
+public class HarvestHandlerStem implements IHarvestHandler {
+    public HarvestHandlerStem() {
         HarvestRegistry.registerStemCrop(new BlockStack(Blocks.PUMPKIN, OreDictionary.WILDCARD_VALUE), new BlockStack(Blocks.PUMPKIN_STEM, 7));
         HarvestRegistry.registerStemCrop(new BlockStack(Blocks.MELON_BLOCK), new BlockStack(Blocks.MELON_STEM, 7));
     }
 
     @Override
-    public boolean harvestAndPlant(World world, BlockPos pos, BlockStack blockStack)
-    {
+    public boolean harvestAndPlant(World world, BlockPos pos, BlockStack blockStack) {
         boolean retFlag = false;
         List<ItemStack> drops = new ArrayList<ItemStack>();
         BlockPos cropPos = pos;
-        if (HarvestRegistry.getStemCrops().containsKey(blockStack))
-        {
+        if (HarvestRegistry.getStemCrops().containsKey(blockStack)) {
             EnumFacing cropDir = blockStack.getBlock().getActualState(blockStack.getState(), world, pos).getValue(BlockStem.FACING);
 
-            if (cropDir != EnumFacing.UP)
-            {
+            if (cropDir != EnumFacing.UP) {
                 cropPos = pos.offset(cropDir);
                 BlockStack probableCrop = BlockStack.getStackFromPos(world, cropPos);
                 BlockStack regCrop = HarvestRegistry.getStemCrops().get(blockStack);
 
-                if ((regCrop.getMeta() == OreDictionary.WILDCARD_VALUE && regCrop.getBlock() == probableCrop.getBlock()) || regCrop.equals(probableCrop))
-                {
+                if ((regCrop.getMeta() == OreDictionary.WILDCARD_VALUE && regCrop.getBlock() == probableCrop.getBlock()) || regCrop.equals(probableCrop)) {
                     drops = probableCrop.getBlock().getDrops(world, cropPos, probableCrop.getState(), 0);
                     world.destroyBlock(cropPos, false);
                     retFlag = true;
@@ -56,10 +50,8 @@ public class HarvestHandlerStem implements IHarvestHandler
             }
         }
 
-        if (!world.isRemote)
-        {
-            for (ItemStack drop : drops)
-            {
+        if (!world.isRemote) {
+            for (ItemStack drop : drops) {
                 EntityItem item = new EntityItem(world, cropPos.getX(), cropPos.getY() + 0.5, cropPos.getZ(), drop);
                 world.spawnEntity(item);
             }

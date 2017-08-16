@@ -1,11 +1,26 @@
 package WayofTime.bloodmagic.proxy;
 
-import java.awt.Color;
-import java.util.Map;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.DemonWillHolder;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.client.helper.ShaderHelper;
+import WayofTime.bloodmagic.client.hud.HUDElementDemonWillAura;
+import WayofTime.bloodmagic.client.hud.HUDElementHolding;
 import WayofTime.bloodmagic.client.key.KeyBindings;
+import WayofTime.bloodmagic.client.render.LayerBloodElytra;
 import WayofTime.bloodmagic.client.render.block.*;
+import WayofTime.bloodmagic.client.render.entity.*;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.entity.mob.*;
+import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
+import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
+import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
+import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import WayofTime.bloodmagic.tile.*;
+import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -24,59 +39,23 @@ import net.minecraftforge.common.model.animation.IAnimationStateMachine;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.DemonWillHolder;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.client.helper.ShaderHelper;
-import WayofTime.bloodmagic.client.hud.HUDElementDemonWillAura;
-import WayofTime.bloodmagic.client.hud.HUDElementHolding;
-import WayofTime.bloodmagic.client.render.LayerBloodElytra;
-import WayofTime.bloodmagic.client.render.entity.BloodLightRenderFactory;
-import WayofTime.bloodmagic.client.render.entity.CorruptedChickenRenderFactory;
-import WayofTime.bloodmagic.client.render.entity.CorruptedSheepRenderFactory;
-import WayofTime.bloodmagic.client.render.entity.CorruptedSpiderRenderFactory;
-import WayofTime.bloodmagic.client.render.entity.CorruptedZombieRenderFactory;
-import WayofTime.bloodmagic.client.render.entity.MeteorRenderFactory;
-import WayofTime.bloodmagic.client.render.entity.MimicRenderFactory;
-import WayofTime.bloodmagic.client.render.entity.SentientArrowRenderFactory;
-import WayofTime.bloodmagic.client.render.entity.SentientSpecterRenderFactory;
-import WayofTime.bloodmagic.client.render.entity.SoulSnareRenderFactory;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedChicken;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedSpider;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedZombie;
-import WayofTime.bloodmagic.entity.mob.EntityMimic;
-import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
-import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
-import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
-import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
-import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
+import java.awt.Color;
+import java.util.Map;
 
-import com.google.common.collect.ImmutableMap;
-
-public class ClientProxy extends CommonProxy
-{
+public class ClientProxy extends CommonProxy {
     public static DemonWillHolder currentAura = new DemonWillHolder();
 
     @Override
-    public void preInit()
-    {
+    public void preInit() {
         super.preInit();
 
         OBJLoader.INSTANCE.addDomain(BloodMagic.MODID);
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileInversionPillar.class, new AnimationTESR<TileInversionPillar>()
-        {
+        ClientRegistry.bindTileEntitySpecialRenderer(TileInversionPillar.class, new AnimationTESR<TileInversionPillar>() {
             @Override
-            public void handleEvents(TileInversionPillar chest, float time, Iterable<Event> pastEvents)
-            {
+            public void handleEvents(TileInversionPillar chest, float time, Iterable<Event> pastEvents) {
                 chest.handleEvents(time, pastEvents);
             }
         });
@@ -94,8 +73,7 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void registerRenderers()
-    {
+    public void registerRenderers() {
         RenderingRegistry.registerEntityRenderingHandler(EntitySoulSnare.class, new SoulSnareRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntitySentientArrow.class, new SentientArrowRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityBloodLight.class, new BloodLightRenderFactory());
@@ -111,17 +89,14 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void init()
-    {
+    public void init() {
         super.init();
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) -> {
-            try
-            {
+            try {
                 if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.COLOR))
                     if (tintIndex == 1)
                         return Color.decode(stack.getTagCompound().getString(Constants.NBT.COLOR)).getRGB();
-            } catch (NumberFormatException e)
-            {
+            } catch (NumberFormatException e) {
                 return -1;
             }
             return -1;
@@ -140,17 +115,14 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void postInit()
-    {
+    public void postInit() {
         new HUDElementHolding();
         new HUDElementDemonWillAura();
     }
 
     @Override
-    public void tryHandleBlockModel(Block block, String name)
-    {
-        if (block instanceof IVariantProvider)
-        {
+    public void tryHandleBlockModel(Block block, String name) {
+        if (block instanceof IVariantProvider) {
             IVariantProvider variantProvider = (IVariantProvider) block;
             for (Pair<Integer, String> variant : variantProvider.getVariants())
                 ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, name), variant.getRight()));
@@ -158,10 +130,8 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void tryHandleItemModel(Item item, String name)
-    {
-        if (item instanceof IMeshProvider)
-        {
+    public void tryHandleItemModel(Item item, String name) {
+        if (item instanceof IMeshProvider) {
             IMeshProvider meshProvider = (IMeshProvider) item;
             ModelLoader.setCustomMeshDefinition(item, meshProvider.getMeshDefinition());
             ResourceLocation resourceLocation = meshProvider.getCustomLocation();
@@ -169,33 +139,28 @@ public class ClientProxy extends CommonProxy
                 resourceLocation = new ResourceLocation(BloodMagic.MODID, "item/" + name);
             for (String variant : meshProvider.getVariants())
                 ModelLoader.registerItemVariants(item, new ModelResourceLocation(resourceLocation, variant));
-        } else if (item instanceof IVariantProvider)
-        {
+        } else if (item instanceof IVariantProvider) {
             IVariantProvider variantProvider = (IVariantProvider) item;
             for (Pair<Integer, String> variant : variantProvider.getVariants())
                 ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/" + name), variant.getRight()));
         }
     }
 
-    private void addElytraLayer()
-    {
+    private void addElytraLayer() {
         RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
-        try
-        {
+        try {
             Map<String, RenderPlayer> skinMap = ObfuscationReflectionHelper.getPrivateValue(RenderManager.class, renderManager, "skinMap", "field_178636_l");
             skinMap.get("default").addLayer(new LayerBloodElytra(skinMap.get("default")));
             skinMap.get("slim").addLayer(new LayerBloodElytra(skinMap.get("slim")));
             BloodMagic.instance.logger.info("Elytra layer added");
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             BloodMagic.instance.logger.error("Failed to set custom Elytra Layer for Elytra Living Armour Upgrade.");
             BloodMagic.instance.logger.error(e.getLocalizedMessage());
         }
     }
 
     @Override
-    public IAnimationStateMachine load(ResourceLocation location, ImmutableMap<String, ITimeValue> parameters)
-    {
+    public IAnimationStateMachine load(ResourceLocation location, ImmutableMap<String, ITimeValue> parameters) {
         return ModelLoaderRegistry.loadASM(location, parameters);
     }
 }

@@ -14,25 +14,21 @@ import org.apache.commons.codec.binary.StringUtils;
 
 import java.util.UUID;
 
-public class LivingArmourUpgradeMeleeDamage extends LivingArmourUpgrade
-{
-    public static final int[] costs = new int[] { 5, 12, 20, 35, 49, 78, 110, 160, 215, 320 };
-    public static final double[] meleeDamage = new double[] { 0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 7 };
+public class LivingArmourUpgradeMeleeDamage extends LivingArmourUpgrade {
+    public static final int[] costs = new int[]{5, 12, 20, 35, 49, 78, 110, 160, 215, 320};
+    public static final double[] meleeDamage = new double[]{0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 7};
 
-    public LivingArmourUpgradeMeleeDamage(int level)
-    {
+    public LivingArmourUpgradeMeleeDamage(int level) {
         super(level);
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
-    {
+    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
 
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers()
-    {
+    public Multimap<String, AttributeModifier> getAttributeModifiers() {
         Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
 
         String name = getUniqueIdentifier() + "-DamageModifier1";
@@ -42,38 +38,32 @@ public class LivingArmourUpgradeMeleeDamage extends LivingArmourUpgrade
     }
 
     @Override
-    public String getUniqueIdentifier()
-    {
+    public String getUniqueIdentifier() {
         return BloodMagic.MODID + ".upgrade.meleeDamage";
     }
 
     @Override
-    public int getMaxTier()
-    {
+    public int getMaxTier() {
         return 10;
     }
 
     @Override
-    public int getCostOfUpgrade()
-    {
+    public int getCostOfUpgrade() {
         return costs[this.level];
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
         // EMPTY
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
         // EMPTY
     }
 
     @Override
-    public String getUnlocalizedName()
-    {
+    public String getUnlocalizedName() {
         return tooltipBase + "meleeDamage";
     }
 }

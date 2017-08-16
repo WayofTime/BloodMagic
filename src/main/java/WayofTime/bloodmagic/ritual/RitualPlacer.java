@@ -7,21 +7,19 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 
-public class RitualPlacer extends Ritual
-{
+public class RitualPlacer extends Ritual {
     public static final String PLACER_RANGE = "placerRange";
     public static final String CHEST_RANGE = "chest";
 
-    public RitualPlacer()
-    {
+    public RitualPlacer() {
         super("ritualPlacer", 0, 5000, "ritual." + BloodMagic.MODID + ".placerRitual");
         addBlockRange(PLACER_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 0, -2), 5, 1, 5));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
@@ -31,8 +29,7 @@ public class RitualPlacer extends Ritual
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         BlockPos masterPos = masterRitualStone.getBlockPos();
         AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
@@ -40,33 +37,27 @@ public class RitualPlacer extends Ritual
 
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
 
         AreaDescriptor areaDescriptor = getBlockRange(PLACER_RANGE);
 
-        if (tileEntity != null)
-        {
-            if (tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN))
-            {
+        if (tileEntity != null) {
+            if (tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
                 IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
 
-                if (itemHandler.getSlots() <= 0)
-                {
+                if (itemHandler.getSlots() <= 0) {
                     return;
                 }
 
                 posLoop:
-                for (BlockPos blockPos : areaDescriptor.getContainedPositions(masterRitualStone.getBlockPos()))
-                {
+                for (BlockPos blockPos : areaDescriptor.getContainedPositions(masterRitualStone.getBlockPos())) {
                     if (!world.getBlockState(blockPos).getBlock().isReplaceable(world, blockPos))
                         continue;
 
-                    for (int invSlot = 0; invSlot < itemHandler.getSlots(); invSlot++)
-                    {
+                    for (int invSlot = 0; invSlot < itemHandler.getSlots(); invSlot++) {
                         ItemStack stack = itemHandler.extractItem(invSlot, 1, true);
                         if (stack.isEmpty() || !(stack.getItem() instanceof ItemBlock))
                             continue;
@@ -84,14 +75,12 @@ public class RitualPlacer extends Ritual
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 50;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         addRune(components, 3, 0, 3, EnumRuneType.EARTH);
@@ -112,8 +101,7 @@ public class RitualPlacer extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualPlacer();
     }
 }

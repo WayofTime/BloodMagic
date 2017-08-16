@@ -1,26 +1,22 @@
 package WayofTime.bloodmagic.alchemyArray;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
 import WayofTime.bloodmagic.api.iface.ISigil;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 
-public class AlchemyArrayEffectSigil extends AlchemyArrayEffect
-{
+public class AlchemyArrayEffectSigil extends AlchemyArrayEffect {
     private final ISigil sigil;
 
-    public AlchemyArrayEffectSigil(String key, ISigil sigil)
-    {
+    public AlchemyArrayEffectSigil(String key, ISigil sigil) {
         super(key);
         this.sigil = sigil;
     }
 
     @Override
-    public boolean update(TileEntity tile, int ticksActive)
-    {
+    public boolean update(TileEntity tile, int ticksActive) {
         //TODO: Need particles.
-        if (sigil.hasArrayEffect())
-        {
+        if (sigil.hasArrayEffect()) {
             sigil.performArrayEffect(tile.getWorld(), tile.getPos());
         }
 
@@ -28,20 +24,17 @@ public class AlchemyArrayEffectSigil extends AlchemyArrayEffect
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
 
     }
 
     @Override
-    public AlchemyArrayEffect getNewCopy()
-    {
+    public AlchemyArrayEffect getNewCopy() {
         return new AlchemyArrayEffectSigil(key, sigil);
     }
 }

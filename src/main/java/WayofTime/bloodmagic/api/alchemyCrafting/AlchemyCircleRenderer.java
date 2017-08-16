@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.api.alchemyCrafting;
 
+import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -8,73 +9,57 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import WayofTime.bloodmagic.tile.TileAlchemyArray;
 
-public class AlchemyCircleRenderer
-{
-    public float offsetFromFace = -0.9f;
+public class AlchemyCircleRenderer {
     public final ResourceLocation arrayResource;
+    public float offsetFromFace = -0.9f;
 
-    public AlchemyCircleRenderer()
-    {
+    public AlchemyCircleRenderer() {
         this(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SightSigil.png"));
     }
 
-    public AlchemyCircleRenderer(ResourceLocation arrayResource)
-    {
+    public AlchemyCircleRenderer(ResourceLocation arrayResource) {
         this.arrayResource = arrayResource;
     }
 
-    public float getRotation(float craftTime)
-    {
+    public float getRotation(float craftTime) {
         float offset = 2;
-        if (craftTime >= offset)
-        {
+        if (craftTime >= offset) {
             float modifier = (float) Math.pow(craftTime - offset, 1.5);
             return modifier * 1f;
         }
         return 0;
     }
 
-    public float getSecondaryRotation(float craftTime)
-    {
+    public float getSecondaryRotation(float craftTime) {
         float offset = 50;
-        if (craftTime >= offset)
-        {
+        if (craftTime >= offset) {
             float modifier = (float) Math.pow(craftTime - offset, 1.7);
             return modifier * 0.5f;
         }
         return 0;
     }
 
-    public float getSizeModifier(float craftTime)
-    {
-        if (craftTime >= 150 && craftTime <= 250)
-        {
+    public float getSizeModifier(float craftTime) {
+        if (craftTime >= 150 && craftTime <= 250) {
             return (200 - craftTime) / 50f;
         }
         return 1.0f;
     }
 
-    public float getVerticalOffset(float craftTime)
-    {
-        if (craftTime >= 5)
-        {
-            if (craftTime <= 40)
-            {
+    public float getVerticalOffset(float craftTime) {
+        if (craftTime >= 5) {
+            if (craftTime <= 40) {
                 return (float) ((-0.4) * Math.pow((craftTime - 5) / 35f, 3));
-            } else
-            {
+            } else {
                 return -0.4f;
             }
         }
         return 0;
     }
 
-    public void renderAt(TileEntity tile, double x, double y, double z, float craftTime)
-    {
-        if (!(tile instanceof TileAlchemyArray))
-        {
+    public void renderAt(TileEntity tile, double x, double y, double z, float craftTime) {
+        if (!(tile instanceof TileAlchemyArray)) {
             return;
         }
 
@@ -106,30 +91,29 @@ public class AlchemyCircleRenderer
 
         GlStateManager.translate(sideHit.getFrontOffsetX() * offsetFromFace, sideHit.getFrontOffsetY() * offsetFromFace, sideHit.getFrontOffsetZ() * offsetFromFace);
 
-        switch (sideHit)
-        {
-        case DOWN:
-            GlStateManager.translate(0, 0, 1);
-            GlStateManager.rotate(-90.0f, 1, 0, 0);
-            break;
-        case EAST:
-            GlStateManager.rotate(-90.0f, 0, 1, 0);
-            GlStateManager.translate(0, 0, -1);
-            break;
-        case NORTH:
-            break;
-        case SOUTH:
-            GlStateManager.rotate(180.0f, 0, 1, 0);
-            GlStateManager.translate(-1, 0, -1);
-            break;
-        case UP:
-            GlStateManager.translate(0, 1, 0);
-            GlStateManager.rotate(90.0f, 1, 0, 0);
-            break;
-        case WEST:
-            GlStateManager.translate(0, 0, 1);
-            GlStateManager.rotate(90.0f, 0, 1, 0);
-            break;
+        switch (sideHit) {
+            case DOWN:
+                GlStateManager.translate(0, 0, 1);
+                GlStateManager.rotate(-90.0f, 1, 0, 0);
+                break;
+            case EAST:
+                GlStateManager.rotate(-90.0f, 0, 1, 0);
+                GlStateManager.translate(0, 0, -1);
+                break;
+            case NORTH:
+                break;
+            case SOUTH:
+                GlStateManager.rotate(180.0f, 0, 1, 0);
+                GlStateManager.translate(-1, 0, -1);
+                break;
+            case UP:
+                GlStateManager.translate(0, 1, 0);
+                GlStateManager.rotate(90.0f, 1, 0, 0);
+                break;
+            case WEST:
+                GlStateManager.translate(0, 0, 1);
+                GlStateManager.rotate(90.0f, 0, 1, 0);
+                break;
         }
 
         GlStateManager.pushMatrix();

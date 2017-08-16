@@ -6,21 +6,17 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 
-public class LivingArmourUpgradeFallProtect extends LivingArmourUpgrade
-{
-    public static final int[] costs = new int[] { 2, 5, 9, 15, 25 };
-    public static final double[] protectionLevel = new double[] { 0.2, 0.4, 0.6, 0.8, 1 };
+public class LivingArmourUpgradeFallProtect extends LivingArmourUpgrade {
+    public static final int[] costs = new int[]{2, 5, 9, 15, 25};
+    public static final double[] protectionLevel = new double[]{0.2, 0.4, 0.6, 0.8, 1};
 
-    public LivingArmourUpgradeFallProtect(int level)
-    {
+    public LivingArmourUpgradeFallProtect(int level) {
         super(level);
     }
 
     @Override
-    public double getArmourProtection(EntityLivingBase wearer, DamageSource source)
-    {
-        if (source.equals(DamageSource.FALL))
-        {
+    public double getArmourProtection(EntityLivingBase wearer, DamageSource source) {
+        if (source.equals(DamageSource.FALL)) {
             return protectionLevel[this.level];
         }
 
@@ -28,38 +24,32 @@ public class LivingArmourUpgradeFallProtect extends LivingArmourUpgrade
     }
 
     @Override
-    public String getUniqueIdentifier()
-    {
+    public String getUniqueIdentifier() {
         return BloodMagic.MODID + ".upgrade.fallProtect";
     }
 
     @Override
-    public int getMaxTier()
-    {
+    public int getMaxTier() {
         return 5; // Set to here until I can add more upgrades to it.
     }
 
     @Override
-    public int getCostOfUpgrade()
-    {
+    public int getCostOfUpgrade() {
         return costs[this.level];
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
         // EMPTY
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
         // EMPTY
     }
 
     @Override
-    public String getUnlocalizedName()
-    {
+    public String getUnlocalizedName() {
         return tooltipBase + "fallProtect";
     }
 }

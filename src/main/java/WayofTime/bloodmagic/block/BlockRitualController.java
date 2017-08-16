@@ -1,10 +1,20 @@
 package WayofTime.bloodmagic.block;
 
-import javax.annotation.Nullable;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.iface.IBindable;
-import com.google.common.base.Strings;
+import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.api.registry.RitualRegistry;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.block.base.BlockEnum;
+import WayofTime.bloodmagic.block.enums.EnumRitualController;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
+import WayofTime.bloodmagic.tile.TileMasterRitualStone;
+import amerifrance.guideapi.api.IGuideLinked;
+import com.google.common.base.Strings;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -19,23 +29,10 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
-import WayofTime.bloodmagic.api.registry.RitualRegistry;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
-import WayofTime.bloodmagic.api.util.helper.RitualHelper;
-import WayofTime.bloodmagic.block.enums.EnumRitualController;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
-import WayofTime.bloodmagic.tile.TileMasterRitualStone;
-import amerifrance.guideapi.api.IGuideLinked;
+import javax.annotation.Nullable;
 
-public class BlockRitualController extends BlockEnum<EnumRitualController> implements IGuideLinked
-{
-    public BlockRitualController()
-    {
+public class BlockRitualController extends BlockEnum<EnumRitualController> implements IGuideLinked {
+    public BlockRitualController() {
         super(Material.ROCK, EnumRitualController.class);
 
         setUnlocalizedName(BloodMagic.MODID + ".stone.ritual.");
@@ -47,15 +44,12 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = player.getHeldItem(hand);
         TileEntity tile = world.getTileEntity(pos);
 
-        if (state.getValue(getProperty()) != EnumRitualController.IMPERFECT && tile instanceof TileMasterRitualStone)
-        {
-            if (heldItem.getItem() == RegistrarBloodMagicItems.ACTIVATION_CRYSTAL)
-            {
+        if (state.getValue(getProperty()) != EnumRitualController.IMPERFECT && tile instanceof TileMasterRitualStone) {
+            if (heldItem.getItem() == RegistrarBloodMagicItems.ACTIVATION_CRYSTAL) {
                 IBindable bindable = (IBindable) heldItem.getItem();
                 if (Strings.isNullOrEmpty(bindable.getOwnerName(heldItem)))
                     return false;
@@ -63,21 +57,17 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
                 String key = RitualHelper.getValidRitual(world, pos);
                 EnumFacing direction = RitualHelper.getDirectionOfRitual(world, pos, key);
                 // TODO: Give a message stating that this ritual is not a valid ritual.
-                if (!key.isEmpty() && direction != null && RitualHelper.checkValidRitual(world, pos, key, direction))
-                {
-                    if (((TileMasterRitualStone) tile).activateRitual(heldItem, player, RitualRegistry.getRitualForId(key)))
-                    {
+                if (!key.isEmpty() && direction != null && RitualHelper.checkValidRitual(world, pos, key, direction)) {
+                    if (((TileMasterRitualStone) tile).activateRitual(heldItem, player, RitualRegistry.getRitualForId(key))) {
                         ((TileMasterRitualStone) tile).setDirection(direction);
                         if (state.getValue(getProperty()) == EnumRitualController.INVERTED)
                             ((TileMasterRitualStone) tile).setInverted(true);
                     }
-                } else
-                {
+                } else {
                     player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.notValid"), true);
                 }
             }
-        } else if (state.getValue(getProperty()) == EnumRitualController.IMPERFECT && tile instanceof TileImperfectRitualStone)
-        {
+        } else if (state.getValue(getProperty()) == EnumRitualController.IMPERFECT && tile instanceof TileImperfectRitualStone) {
 
             IBlockState determinerState = world.getBlockState(pos.up());
             BlockStack determiner = new BlockStack(determinerState.getBlock(), determinerState.getBlock().getMetaFromState(determinerState));
@@ -89,8 +79,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
     }
 
     @Override
-    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player)
-    {
+    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
         TileEntity tile = world.getTileEntity(pos);
 
         if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone)
@@ -98,8 +87,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
     }
 
     @Override
-    public void onBlockDestroyedByExplosion(World world, BlockPos pos, Explosion explosion)
-    {
+    public void onBlockDestroyedByExplosion(World world, BlockPos pos, Explosion explosion) {
         TileEntity tile = world.getTileEntity(pos);
 
         if (tile instanceof TileMasterRitualStone)
@@ -107,14 +95,12 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state)
-    {
+    public boolean hasTileEntity(IBlockState state) {
         return true;
     }
 
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state)
-    {
+    public TileEntity createTileEntity(World world, IBlockState state) {
         return state.getValue(getProperty()) != EnumRitualController.IMPERFECT ? new TileMasterRitualStone() : new TileImperfectRitualStone();
     }
 
@@ -122,18 +108,15 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
 
     @Override
     @Nullable
-    public ResourceLocation getLinkedEntry(World world, BlockPos pos, EntityPlayer player, ItemStack stack)
-    {
+    public ResourceLocation getLinkedEntry(World world, BlockPos pos, EntityPlayer player, ItemStack stack) {
         IBlockState state = world.getBlockState(pos);
-        if (state.getValue(getProperty()).equals(EnumRitualController.MASTER))
-        {
+        if (state.getValue(getProperty()).equals(EnumRitualController.MASTER)) {
             TileMasterRitualStone mrs = (TileMasterRitualStone) world.getTileEntity(pos);
             if (mrs == null || mrs.getCurrentRitual() == null)
                 return null;
             else
                 return new ResourceLocation("bloodmagic", "ritual_" + mrs.getCurrentRitual().getName());
-        } else if (state.getValue(getProperty()).equals(EnumRitualController.IMPERFECT))
-        {
+        } else if (state.getValue(getProperty()).equals(EnumRitualController.IMPERFECT)) {
             ImperfectRitual imperfectRitual = ImperfectRitualRegistry.getRitualForBlock(BlockStack.getStackFromPos(world, pos.up()));
             if (imperfectRitual != null)
                 return new ResourceLocation("bloodmagic", "ritual_" + imperfectRitual.getName());

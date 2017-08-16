@@ -1,22 +1,20 @@
 package WayofTime.bloodmagic.compat.jei.alchemyTable;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
-import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class AlchemyTableRecipeJEI extends BlankRecipeWrapper
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class AlchemyTableRecipeJEI extends BlankRecipeWrapper {
     private AlchemyTableRecipe recipe;
 
-    public AlchemyTableRecipeJEI(AlchemyTableRecipe recipe)
-    {
+    public AlchemyTableRecipeJEI(AlchemyTableRecipe recipe) {
         this.recipe = recipe;
     }
 
@@ -28,11 +26,9 @@ public class AlchemyTableRecipeJEI extends BlankRecipeWrapper
     }
 
     @Override
-    public List<String> getTooltipStrings(int mouseX, int mouseY)
-    {
+    public List<String> getTooltipStrings(int mouseX, int mouseY) {
         ArrayList<String> ret = new ArrayList<String>();
-        if (mouseX >= 58 && mouseX <= 78 && mouseY >= 21 && mouseY <= 34)
-        {
+        if (mouseX >= 58 && mouseX <= 78 && mouseY >= 21 && mouseY <= 34) {
             ret.add(TextHelper.localize("tooltip.bloodmagic.tier", recipe.getTierRequired()));
             ret.add(TextHelper.localize("jei.bloodmagic.recipe.lpDrained", recipe.getLpDrained()));
             ret.add(TextHelper.localize("jei.bloodmagic.recipe.ticksRequired", recipe.getTicksRequired()));

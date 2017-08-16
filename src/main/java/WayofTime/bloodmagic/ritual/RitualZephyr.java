@@ -1,29 +1,23 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.util.Utils;
 
-public class RitualZephyr extends Ritual
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class RitualZephyr extends Ritual {
     public static final String ZEPHYR_RANGE = "zephyrRange";
     public static final String CHEST_RANGE = "chest";
 
-    public RitualZephyr()
-    {
+    public RitualZephyr() {
         super("ritualZephyr", 0, 1000, "ritual." + BloodMagic.MODID + ".zephyrRitual");
         addBlockRange(ZEPHYR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
@@ -33,17 +27,14 @@ public class RitualZephyr extends Ritual
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
         BlockPos masterPos = masterRitualStone.getBlockPos();
         AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
         TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
-        if (!masterRitualStone.getWorldObj().isRemote && tileInventory != null)
-        {
-            if (currentEssence < getRefreshCost())
-            {
+        if (!masterRitualStone.getWorldObj().isRemote && tileInventory != null) {
+            if (currentEssence < getRefreshCost()) {
                 masterRitualStone.getOwnerNetwork().causeNausea();
                 return;
             }
@@ -53,10 +44,8 @@ public class RitualZephyr extends Ritual
             List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, zephyrRange.getAABB(masterRitualStone.getBlockPos()));
             int count = 0;
 
-            for (EntityItem entityItem : itemList)
-            {
-                if (entityItem.isDead)
-                {
+            for (EntityItem entityItem : itemList) {
+                if (entityItem.isDead) {
                     continue;
                 }
 
@@ -64,8 +53,7 @@ public class RitualZephyr extends Ritual
                 int originalAmount = copyStack.getCount();
                 ItemStack newStack = Utils.insertStackIntoTile(copyStack, tileInventory, EnumFacing.DOWN);
 
-                if (!newStack.isEmpty() && newStack.getCount() < originalAmount)
-                {
+                if (!newStack.isEmpty() && newStack.getCount() < originalAmount) {
                     count++;
                     if (newStack.isEmpty())
                         entityItem.setDead();
@@ -73,8 +61,7 @@ public class RitualZephyr extends Ritual
                     entityItem.getItem().setCount(newStack.getCount());
                 }
 
-                if (newStack.isEmpty())
-                {
+                if (newStack.isEmpty()) {
                     entityItem.setDead();
                 }
             }
@@ -84,20 +71,17 @@ public class RitualZephyr extends Ritual
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 1;
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 1;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         this.addParallelRunes(components, 2, 0, EnumRuneType.AIR);
@@ -108,8 +92,7 @@ public class RitualZephyr extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualZephyr();
     }
 }

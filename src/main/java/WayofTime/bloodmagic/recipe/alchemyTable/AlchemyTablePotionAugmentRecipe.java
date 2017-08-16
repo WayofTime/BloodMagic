@@ -1,27 +1,26 @@
 package WayofTime.bloodmagic.recipe.alchemyTable;
 
-import java.util.*;
-
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.potion.BMPotionUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
-import WayofTime.bloodmagic.potion.BMPotionUtils;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 
-public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe
-{
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe {
     protected double lengthAugment = 0;
     protected int powerAugment = 0;
     protected Potion wantedPotion;
 
-    public AlchemyTablePotionAugmentRecipe(int lpDrained, int ticksRequired, int tierRequired, List<ItemStack> inputItems, PotionEffect baseEffect, double lengthAugment, int powerAugment)
-    {
+    public AlchemyTablePotionAugmentRecipe(int lpDrained, int ticksRequired, int tierRequired, List<ItemStack> inputItems, PotionEffect baseEffect, double lengthAugment, int powerAugment) {
         super(lpDrained, ticksRequired, tierRequired, inputItems, baseEffect);
 
         ArrayList<Object> recipe = new ArrayList<Object>();
-        for (ItemStack stack : inputItems)
-        {
+        for (ItemStack stack : inputItems) {
             recipe.add(stack);
         }
         recipe.add(getAugmentedPotionFlask(baseEffect));
@@ -33,19 +32,15 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe
         this.powerAugment = powerAugment;
     }
 
-    public AlchemyTablePotionAugmentRecipe(int lpDrained, int ticksRequired, int tierRequired, ItemStack inputItem, PotionEffect baseEffect, double lengthAugment, int powerAugment)
-    {
+    public AlchemyTablePotionAugmentRecipe(int lpDrained, int ticksRequired, int tierRequired, ItemStack inputItem, PotionEffect baseEffect, double lengthAugment, int powerAugment) {
         this(lpDrained, ticksRequired, tierRequired, Collections.singletonList(inputItem), baseEffect, lengthAugment, powerAugment);
     }
 
     @Override
-    public boolean isPotionFlaskValidInput(ItemStack stack)
-    {
+    public boolean isPotionFlaskValidInput(ItemStack stack) {
         List<PotionEffect> effectList = PotionUtils.getEffectsFromStack(stack);
-        for (PotionEffect eff : effectList)
-        {
-            if (eff.getPotion() == wantedPotion)
-            {
+        for (PotionEffect eff : effectList) {
+            if (eff.getPotion() == wantedPotion) {
                 double currentAugment = BMPotionUtils.getLengthAugment(stack, wantedPotion);
 
                 return currentAugment < lengthAugment || eff.getAmplifier() < powerAugment;
@@ -56,10 +51,8 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe
     }
 
     @Override
-    public ItemStack getModifiedFlaskForInput(ItemStack inputStack)
-    {
-        if (inputStack == null)
-        {
+    public ItemStack getModifiedFlaskForInput(ItemStack inputStack) {
+        if (inputStack == null) {
             ItemStack outputStack = new ItemStack(RegistrarBloodMagicItems.POTION_FLASK);
 
             List<PotionEffect> effectList = new ArrayList<PotionEffect>();
@@ -93,8 +86,7 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe
         return outputStack;
     }
 
-    public static ItemStack getAugmentedPotionFlask(PotionEffect baseEffect)
-    {
+    public static ItemStack getAugmentedPotionFlask(PotionEffect baseEffect) {
         ItemStack outputStack = new ItemStack(RegistrarBloodMagicItems.POTION_FLASK);
 
         List<PotionEffect> effectList = new ArrayList<PotionEffect>();

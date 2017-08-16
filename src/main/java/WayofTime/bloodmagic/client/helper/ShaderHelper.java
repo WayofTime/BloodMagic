@@ -2,10 +2,10 @@
  * This class was created by <Vazkii>. It's distributed as
  * part of the Botania Mod. Get the Source Code in github:
  * https://github.com/Vazkii/Botania
- * 
+ * <p>
  * Botania is Open Source and distributed under the
  * Botania License: http://botaniamod.net/license.php
- * 
+ * <p>
  * File Created @ [Apr 9, 2014, 11:20:26 PM (GMT)]
  */
 package WayofTime.bloodmagic.client.helper;
@@ -22,8 +22,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public final class ShaderHelper
-{
+public final class ShaderHelper {
     private static final int VERT_ST = ARBVertexShader.GL_VERTEX_SHADER_ARB;
     private static final int FRAG_ST = ARBFragmentShader.GL_FRAGMENT_SHADER_ARB;
 
@@ -35,40 +34,34 @@ public final class ShaderHelper
 
     public static int psiBar;
 
-    public static void init()
-    {
+    public static void init() {
         if (!useShaders())
             return;
 
         psiBar = createProgram("/assets/bloodmagic/shaders/beam", FRAG);
     }
 
-    public static void useShader(int shader, int ticks)
-    {
+    public static void useShader(int shader, int ticks) {
         if (!useShaders())
             return;
 
         ARBShaderObjects.glUseProgramObjectARB(shader);
 
-        if (shader != 0)
-        {
+        if (shader != 0) {
             int time = ARBShaderObjects.glGetUniformLocationARB(shader, "time");
             ARBShaderObjects.glUniform1iARB(time, ticks);
         }
     }
 
-    public static void releaseShader()
-    {
+    public static void releaseShader() {
         useShader(0, 0);
     }
 
-    public static boolean useShaders()
-    {
+    public static boolean useShaders() {
         return OpenGlHelper.shadersSupported;
     }
 
-    private static int createProgram(String s, int sides)
-    {
+    private static int createProgram(String s, int sides) {
         boolean vert = (sides & VERT) != 0;
         boolean frag = (sides & FRAG) != 0;
 
@@ -78,8 +71,7 @@ public final class ShaderHelper
     // Most of the code taken from the LWJGL wiki
     // http://lwjgl.org/wiki/index.php?title=GLSL_Shaders_with_LWJGL
 
-    private static int createProgram(String vert, String frag)
-    {
+    private static int createProgram(String vert, String frag) {
         int vertId = 0, fragId = 0, program = 0;
         if (vert != null)
             vertId = createShader(vert, VERT_ST);
@@ -96,15 +88,13 @@ public final class ShaderHelper
             ARBShaderObjects.glAttachObjectARB(program, fragId);
 
         ARBShaderObjects.glLinkProgramARB(program);
-        if (ARBShaderObjects.glGetObjectParameteriARB(program, ARBShaderObjects.GL_OBJECT_LINK_STATUS_ARB) == GL11.GL_FALSE)
-        {
+        if (ARBShaderObjects.glGetObjectParameteriARB(program, ARBShaderObjects.GL_OBJECT_LINK_STATUS_ARB) == GL11.GL_FALSE) {
             FMLLog.log(Level.ERROR, getLogInfo(program));
             return 0;
         }
 
         ARBShaderObjects.glValidateProgramARB(program);
-        if (ARBShaderObjects.glGetObjectParameteriARB(program, ARBShaderObjects.GL_OBJECT_VALIDATE_STATUS_ARB) == GL11.GL_FALSE)
-        {
+        if (ARBShaderObjects.glGetObjectParameteriARB(program, ARBShaderObjects.GL_OBJECT_VALIDATE_STATUS_ARB) == GL11.GL_FALSE) {
             FMLLog.log(Level.ERROR, getLogInfo(program));
             return 0;
         }
@@ -112,11 +102,9 @@ public final class ShaderHelper
         return program;
     }
 
-    private static int createShader(String filename, int shaderType)
-    {
+    private static int createShader(String filename, int shaderType) {
         int shader = 0;
-        try
-        {
+        try {
             shader = ARBShaderObjects.glCreateShaderObjectARB(shaderType);
 
             if (shader == 0)
@@ -129,21 +117,18 @@ public final class ShaderHelper
                 throw new RuntimeException("Error creating shader: " + getLogInfo(shader));
 
             return shader;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             ARBShaderObjects.glDeleteObjectARB(shader);
             e.printStackTrace();
             return -1;
         }
     }
 
-    private static String getLogInfo(int obj)
-    {
+    private static String getLogInfo(int obj) {
         return ARBShaderObjects.glGetInfoLogARB(obj, ARBShaderObjects.glGetObjectParameteriARB(obj, ARBShaderObjects.GL_OBJECT_INFO_LOG_LENGTH_ARB));
     }
 
-    private static String readFileAsString(String filename) throws Exception
-    {
+    private static String readFileAsString(String filename) throws Exception {
         StringBuilder source = new StringBuilder();
         InputStream in = ShaderHelper.class.getResourceAsStream(filename);
         Exception exception = null;
@@ -152,26 +137,20 @@ public final class ShaderHelper
         if (in == null)
             return "";
 
-        try
-        {
+        try {
             reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 
             Exception innerExc = null;
-            try
-            {
+            try {
                 String line;
                 while ((line = reader.readLine()) != null)
                     source.append(line).append('\n');
-            } catch (Exception exc)
-            {
+            } catch (Exception exc) {
                 exception = exc;
-            } finally
-            {
-                try
-                {
+            } finally {
+                try {
                     reader.close();
-                } catch (Exception exc)
-                {
+                } catch (Exception exc) {
                     if (innerExc == null)
                         innerExc = exc;
                     else
@@ -181,16 +160,12 @@ public final class ShaderHelper
 
             if (innerExc != null)
                 throw innerExc;
-        } catch (Exception exc)
-        {
+        } catch (Exception exc) {
             exception = exc;
-        } finally
-        {
-            try
-            {
+        } finally {
+            try {
                 in.close();
-            } catch (Exception exc)
-            {
+            } catch (Exception exc) {
                 if (exception == null)
                     exception = exc;
                 else

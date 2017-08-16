@@ -1,8 +1,11 @@
 package WayofTime.bloodmagic.block;
 
-import java.util.Random;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
+import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -11,7 +14,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -22,24 +24,16 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.item.ItemDemonCrystal;
-import WayofTime.bloodmagic.tile.TileDemonCrystal;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
-public class BlockDemonCrystal extends Block implements IBMBlock
-{
+public class BlockDemonCrystal extends Block implements IBMBlock {
     public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 6);
     public static final PropertyEnum<EnumDemonWillType> TYPE = PropertyEnum.<EnumDemonWillType>create("type", EnumDemonWillType.class);
     public static final PropertyEnum<EnumFacing> ATTACHED = PropertyEnum.<EnumFacing>create("attached", EnumFacing.class);
 
-    public BlockDemonCrystal()
-    {
+    public BlockDemonCrystal() {
         super(Material.ROCK);
         this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, EnumDemonWillType.DEFAULT).withProperty(ATTACHED, EnumFacing.UP));
 
@@ -51,8 +45,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock
     }
 
     @Override
-    public boolean canPlaceBlockOnSide(World world, BlockPos pos, EnumFacing side)
-    {
+    public boolean canPlaceBlockOnSide(World world, BlockPos pos, EnumFacing side) {
         BlockPos offsetPos = pos.offset(side.getOpposite());
         IBlockState offsetState = world.getBlockState(offsetPos);
         Block offsetBlock = offsetState.getBlock();
@@ -61,25 +54,21 @@ public class BlockDemonCrystal extends Block implements IBMBlock
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos)
-    {
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
         TileDemonCrystal tile = (TileDemonCrystal) world.getTileEntity(pos);
         EnumFacing placement = tile.getPlacement();
         BlockPos offsetPos = pos.offset(placement.getOpposite());
         IBlockState offsetState = world.getBlockState(offsetPos);
         Block offsetBlock = offsetState.getBlock();
 
-        if (!offsetBlock.isSideSolid(offsetState, world, offsetPos, placement))
-        {
+        if (!offsetBlock.isSideSolid(offsetState, world, offsetPos, placement)) {
             world.setBlockToAir(pos);
         }
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos)
-    {
-        if (world.getTileEntity(pos) == null)
-        {
+    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+        if (world.getTileEntity(pos) == null) {
             return state;
         }
         TileDemonCrystal tile = (TileDemonCrystal) world.getTileEntity(pos);
@@ -87,39 +76,33 @@ public class BlockDemonCrystal extends Block implements IBMBlock
     }
 
     @Override
-    public void getSubBlocks(CreativeTabs creativeTabs, NonNullList<ItemStack> list)
-    {
+    public void getSubBlocks(CreativeTabs creativeTabs, NonNullList<ItemStack> list) {
         for (int i = 0; i < EnumDemonWillType.values().length; i++)
             list.add(new ItemStack(this, 1, i));
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
-    {
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state)
-    {
+    public boolean causesSuffocation(IBlockState state) {
         return false;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
+    public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
     }
 
@@ -132,8 +115,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock
      * Convert the given metadata into a BlockState for this Block
      */
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(TYPE, EnumDemonWillType.values()[meta]);
     }
 
@@ -141,20 +123,17 @@ public class BlockDemonCrystal extends Block implements IBMBlock
      * Convert the BlockState into the correct metadata value
      */
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(TYPE).ordinal();
     }
 
     @Override
-    protected BlockStateContainer createBlockState()
-    {
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, TYPE, AGE, ATTACHED);
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state)
-    {
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileDemonCrystal) {
             EnumDemonWillType type = state.getValue(TYPE);
@@ -167,50 +146,20 @@ public class BlockDemonCrystal extends Block implements IBMBlock
         super.breakBlock(world, pos, state);
     }
 
-    public static ItemStack getItemStackDropped(EnumDemonWillType type, int crystalNumber)
-    {
-        ItemStack stack = null;
-        switch (type)
-        {
-        case CORROSIVE:
-            stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_CORROSIVE);
-            break;
-        case DEFAULT:
-            stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT);
-            break;
-        case DESTRUCTIVE:
-            stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DESTRUCTIVE);
-            break;
-        case STEADFAST:
-            stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_STEADFAST);
-            break;
-        case VENGEFUL:
-            stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_VENGEFUL);
-            break;
-        }
-
-        stack.setCount(crystalNumber);
-        return stack;
-    }
-
     @Override
-    public int quantityDropped(Random random)
-    {
+    public int quantityDropped(Random random) {
         return 0;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        if (world.isRemote)
-        {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (world.isRemote) {
             return true;
         }
 
         TileDemonCrystal crystal = (TileDemonCrystal) world.getTileEntity(pos);
 
-        if (PlayerDemonWillHandler.getTotalDemonWill(EnumDemonWillType.DEFAULT, player) > 1024)
-        {
+        if (PlayerDemonWillHandler.getTotalDemonWill(EnumDemonWillType.DEFAULT, player) > 1024) {
             crystal.dropSingleCrystal();
 
             world.notifyBlockUpdate(pos, state, state, 3);
@@ -233,6 +182,30 @@ public class BlockDemonCrystal extends Block implements IBMBlock
     @Override
     public ItemBlock getItem() {
         return new ItemBlockDemonCrystal(this);
+    }
+
+    public static ItemStack getItemStackDropped(EnumDemonWillType type, int crystalNumber) {
+        ItemStack stack = null;
+        switch (type) {
+            case CORROSIVE:
+                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_CORROSIVE);
+                break;
+            case DEFAULT:
+                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT);
+                break;
+            case DESTRUCTIVE:
+                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DESTRUCTIVE);
+                break;
+            case STEADFAST:
+                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_STEADFAST);
+                break;
+            case VENGEFUL:
+                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_VENGEFUL);
+                break;
+        }
+
+        stack.setCount(crystalNumber);
+        return stack;
     }
 
     //    @Override

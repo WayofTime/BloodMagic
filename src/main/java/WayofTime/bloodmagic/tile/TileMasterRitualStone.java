@@ -1,18 +1,5 @@
 package WayofTime.bloodmagic.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import WayofTime.bloodmagic.tile.base.TileTicking;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.RitualEvent;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
@@ -24,16 +11,26 @@ import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.api.util.helper.RitualHelper;
-import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.item.ItemActivationCrystal;
+import WayofTime.bloodmagic.tile.base.TileTicking;
 import WayofTime.bloodmagic.util.ChatUtil;
-
 import com.google.common.base.Strings;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone
-{
+public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone {
     private String owner;
     private SoulNetwork cachedNetwork;
     private boolean active;
@@ -46,21 +43,18 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     private List<EnumDemonWillType> currentActiveWillConfig = new ArrayList<EnumDemonWillType>();
 
     @Override
-    public void onUpdate()
-    {
+    public void onUpdate() {
         if (getWorld().isRemote)
             return;
 
-        if (isPowered() && isActive())
-        {
+        if (isPowered() && isActive()) {
             active = false;
             redstoned = true;
             stopRitual(Ritual.BreakType.REDSTONE);
             return;
         }
 
-        if (!isActive() && !isPowered() && isRedstoned() && getCurrentRitual() != null)
-        {
+        if (!isActive() && !isPowered() && isRedstoned() && getCurrentRitual() != null) {
             active = true;
             ItemStack crystalStack = NBTHelper.checkNBT(new ItemStack(RegistrarBloodMagicItems.ACTIVATION_CRYSTAL, 1, getCurrentRitual().getCrystalLevel()));
             crystalStack.getTagCompound().setString(Constants.NBT.OWNER_UUID, getOwner());
@@ -68,8 +62,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
             redstoned = false;
         }
 
-        if (getCurrentRitual() != null && isActive())
-        {
+        if (getCurrentRitual() != null && isActive()) {
             if (activeTime % getCurrentRitual().getRefreshTime() == 0)
                 performRitual(getWorld(), getPos());
 
@@ -78,17 +71,14 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag)
-    {
+    public void deserialize(NBTTagCompound tag) {
         owner = tag.getString(Constants.NBT.OWNER_UUID);
         if (!Strings.isNullOrEmpty(owner))
             cachedNetwork = NetworkHelper.getSoulNetwork(owner);
         currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
-        if (currentRitual != null)
-        {
+        if (currentRitual != null) {
             NBTTagCompound ritualTag = tag.getCompoundTag(Constants.NBT.CURRENT_RITUAL_TAG);
-            if (!ritualTag.hasNoTags())
-            {
+            if (!ritualTag.hasNoTags()) {
                 currentRitual.readFromNBT(ritualTag);
             }
         }
@@ -97,23 +87,19 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
         redstoned = tag.getBoolean(Constants.NBT.IS_REDSTONED);
 
-        for (EnumDemonWillType type : EnumDemonWillType.values())
-        {
-            if (tag.getBoolean("EnumWill" + type))
-            {
+        for (EnumDemonWillType type : EnumDemonWillType.values()) {
+            if (tag.getBoolean("EnumWill" + type)) {
                 currentActiveWillConfig.add(type);
             }
         }
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag)
-    {
+    public NBTTagCompound serialize(NBTTagCompound tag) {
         String ritualId = RitualRegistry.getIdForRitual(getCurrentRitual());
         tag.setString(Constants.NBT.OWNER_UUID, Strings.isNullOrEmpty(getOwner()) ? "" : getOwner());
         tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
-        if (currentRitual != null)
-        {
+        if (currentRitual != null) {
             NBTTagCompound ritualTag = new NBTTagCompound();
             currentRitual.writeToNBT(ritualTag);
             tag.setTag(Constants.NBT.CURRENT_RITUAL_TAG, ritualTag);
@@ -123,8 +109,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
         tag.setBoolean(Constants.NBT.IS_REDSTONED, redstoned);
 
-        for (EnumDemonWillType type : currentActiveWillConfig)
-        {
+        for (EnumDemonWillType type : currentActiveWillConfig) {
             tag.setBoolean("EnumWill" + type, true);
         }
 
@@ -132,27 +117,21 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public boolean activateRitual(ItemStack activationCrystal, @Nullable EntityPlayer activator, Ritual ritual)
-    {
+    public boolean activateRitual(ItemStack activationCrystal, @Nullable EntityPlayer activator, Ritual ritual) {
         if (PlayerHelper.isFakePlayer(activator))
             return false;
 
         activationCrystal = NBTHelper.checkNBT(activationCrystal);
         String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 
-        if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null)
-        {
-            if (activationCrystal.getItem() instanceof ItemActivationCrystal)
-            {
+        if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null) {
+            if (activationCrystal.getItem() instanceof ItemActivationCrystal) {
                 int crystalLevel = ((ItemActivationCrystal) activationCrystal.getItem()).getCrystalLevel(activationCrystal);
-                if (RitualHelper.canCrystalActivate(ritual, crystalLevel))
-                {
-                    if (!getWorld().isRemote)
-                    {
+                if (RitualHelper.canCrystalActivate(ritual, crystalLevel)) {
+                    if (!getWorld().isRemote) {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(crystalOwner);
 
-                        if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost() && (activator != null && !activator.capabilities.isCreativeMode))
-                        {
+                        if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost() && (activator != null && !activator.capabilities.isCreativeMode)) {
                             activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.weak"), true);
                             return false;
                         }
@@ -162,15 +141,13 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
                         RitualEvent.RitualActivatedEvent event = new RitualEvent.RitualActivatedEvent(this, crystalOwner, ritual, activator, activationCrystal, crystalLevel);
 
-                        if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
-                        {
+                        if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) {
                             if (activator != null)
                                 activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.prevent"), true);
                             return false;
                         }
 
-                        if (ritual.activateRitual(this, activator, crystalOwner))
-                        {
+                        if (ritual.activateRitual(this, activator, crystalOwner)) {
                             if (!isRedstoned() && (activator != null && !activator.capabilities.isCreativeMode))
                                 network.syphon(ritual.getActivationCost());
 
@@ -191,8 +168,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
                     return true;
                 }
             }
-        } else
-        {
+        } else {
             if (activator != null)
                 activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.notValid"), true);
         }
@@ -201,38 +177,31 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public void performRitual(World world, BlockPos pos)
-    {
-        if (!world.isRemote && getCurrentRitual() != null && RitualRegistry.ritualEnabled(getCurrentRitual()))
-        {
-            if (RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), getDirection()))
-            {
+    public void performRitual(World world, BlockPos pos) {
+        if (!world.isRemote && getCurrentRitual() != null && RitualRegistry.ritualEnabled(getCurrentRitual())) {
+            if (RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), getDirection())) {
                 RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
 
                 if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                     return;
 
                 getCurrentRitual().performRitual(this);
-            } else
-            {
+            } else {
                 stopRitual(Ritual.BreakType.BREAK_STONE);
             }
         }
     }
 
     @Override
-    public void stopRitual(Ritual.BreakType breakType)
-    {
-        if (!getWorld().isRemote && getCurrentRitual() != null)
-        {
+    public void stopRitual(Ritual.BreakType breakType) {
+        if (!getWorld().isRemote && getCurrentRitual() != null) {
             RitualEvent.RitualStopEvent event = new RitualEvent.RitualStopEvent(this, getOwner(), getCurrentRitual(), breakType);
 
             if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                 return;
 
             getCurrentRitual().stopRitual(this, breakType);
-            if (breakType != Ritual.BreakType.REDSTONE)
-            {
+            if (breakType != Ritual.BreakType.REDSTONE) {
                 this.currentRitual = null;
                 this.active = false;
                 this.activeTime = 0;
@@ -242,82 +211,71 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public int getCooldown()
-    {
+    public int getCooldown() {
         return cooldown;
     }
 
     @Override
-    public void setCooldown(int cooldown)
-    {
+    public void setCooldown(int cooldown) {
         this.cooldown = cooldown;
     }
 
     @Override
-    public void setActive(boolean active)
-    {
-        this.active = active;
-    }
-
-    @Override
-    public EnumFacing getDirection()
-    {
+    public EnumFacing getDirection() {
         return direction;
     }
 
+    public void setDirection(EnumFacing direction) {
+        this.direction = direction;
+    }
+
     @Override
-    public boolean areTanksEmpty()
-    {
+    public boolean areTanksEmpty() {
         return false;
     }
 
     @Override
-    public int getRunningTime()
-    {
+    public int getRunningTime() {
         return activeTime;
     }
 
     @Override
-    public String getOwner()
-    {
+    public String getOwner() {
         return owner;
     }
 
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
     @Override
-    public SoulNetwork getOwnerNetwork()
-    {
+    public SoulNetwork getOwnerNetwork() {
         return cachedNetwork;
     }
 
     @Override
-    public World getWorld()
-    {
+    public World getWorld() {
         return super.getWorld();
     }
 
     @Override
-    public BlockPos getPos()
-    {
+    public BlockPos getPos() {
         return super.getPos();
     }
 
     @Override
-    public World getWorldObj()
-    {
+    public World getWorldObj() {
         return getWorld();
     }
 
     @Override
-    public BlockPos getBlockPos()
-    {
+    public BlockPos getBlockPos() {
         return getPos();
     }
 
     @Override
-    public String getNextBlockRange(String range)
-    {
-        if (this.currentRitual != null)
-        {
+    public String getNextBlockRange(String range) {
+        if (this.currentRitual != null) {
             return this.currentRitual.getNextBlockRange(range);
         }
 
@@ -325,48 +283,38 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public void provideInformationOfRitualToPlayer(EntityPlayer player)
-    {
-        if (this.currentRitual != null)
-        {
+    public void provideInformationOfRitualToPlayer(EntityPlayer player) {
+        if (this.currentRitual != null) {
             ChatUtil.sendNoSpam(player, this.currentRitual.provideInformationOfRitualToPlayer(player));
         }
     }
 
     @Override
-    public void provideInformationOfRangeToPlayer(EntityPlayer player, String range)
-    {
-        if (this.currentRitual != null && this.currentRitual.getListOfRanges().contains(range))
-        {
+    public void provideInformationOfRangeToPlayer(EntityPlayer player, String range) {
+        if (this.currentRitual != null && this.currentRitual.getListOfRanges().contains(range)) {
             ChatUtil.sendNoSpam(player, this.currentRitual.provideInformationOfRangeToPlayer(player, range));
         }
     }
 
     @Override
-    public void setActiveWillConfig(EntityPlayer player, List<EnumDemonWillType> typeList)
-    {
+    public void setActiveWillConfig(EntityPlayer player, List<EnumDemonWillType> typeList) {
         this.currentActiveWillConfig = typeList;
     }
 
     @Override
-    public boolean setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2)
-    {
-        if (this.currentRitual != null)
-        {
+    public boolean setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2) {
+        if (this.currentRitual != null) {
             boolean allowed = this.currentRitual.setBlockRangeByBounds(range, this, offset1, offset2);
-            if (player != null && !allowed)
-            {
+            if (player != null && !allowed) {
                 ChatUtil.sendNoSpam(player, this.currentRitual.getErrorForBlockRangeOnFail(player, range, this, offset1, offset2));
-            } else
-            {
+            } else {
                 ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.blockRange.success"));
             }
 
             return allowed;
         }
 
-        if (player != null)
-        {
+        if (player != null) {
             ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.blockRange.inactive"));
         }
 
@@ -374,47 +322,36 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public List<EnumDemonWillType> getActiveWillConfig()
-    {
+    public List<EnumDemonWillType> getActiveWillConfig() {
         return new ArrayList<EnumDemonWillType>(currentActiveWillConfig);
     }
 
     @Override
-    public void provideInformationOfWillConfigToPlayer(EntityPlayer player, List<EnumDemonWillType> typeList)
-    {
+    public void provideInformationOfWillConfigToPlayer(EntityPlayer player, List<EnumDemonWillType> typeList) {
         //There is probably an easier way to make expanded chat messages
-        if (typeList.size() >= 1)
-        {
+        if (typeList.size() >= 1) {
             Object[] translations = new TextComponentTranslation[typeList.size()];
             String constructedString = "%s";
 
-            for (int i = 1; i < typeList.size(); i++)
-            {
+            for (int i = 1; i < typeList.size(); i++) {
                 constructedString = constructedString + ", %s";
             }
 
-            for (int i = 0; i < typeList.size(); i++)
-            {
+            for (int i = 0; i < typeList.size(); i++) {
                 translations[i] = new TextComponentTranslation("tooltip.bloodmagic.currentBaseType." + typeList.get(i).name.toLowerCase());
             }
 
             ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.willConfig.set", new TextComponentTranslation(constructedString, translations)));
-        } else
-        {
+        } else {
             ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.willConfig.void"));
         }
     }
 
-    public boolean isPowered()
-    {
+    public boolean isPowered() {
         if (inverted)
             return !getWorld().isBlockPowered(getPos());
 
         return getWorld().isBlockPowered(getPos());
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 
     public SoulNetwork getCachedNetwork() {
@@ -427,6 +364,11 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
     public boolean isActive() {
         return active;
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public boolean isRedstoned() {
@@ -451,10 +393,6 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
     public void setCurrentRitual(Ritual currentRitual) {
         this.currentRitual = currentRitual;
-    }
-
-    public void setDirection(EnumFacing direction) {
-        this.direction = direction;
     }
 
     public boolean isInverted() {

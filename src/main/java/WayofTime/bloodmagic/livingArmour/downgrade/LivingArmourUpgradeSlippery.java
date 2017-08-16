@@ -1,36 +1,31 @@
 package WayofTime.bloodmagic.livingArmour.downgrade;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
-public class LivingArmourUpgradeSlippery extends LivingArmourUpgrade
-{
-    public static final int[] costs = new int[] { -50 };
-    public static final int[] slipperyDuration = new int[] { 30 * 20 };
+public class LivingArmourUpgradeSlippery extends LivingArmourUpgrade {
+    public static final int[] costs = new int[]{-50};
+    public static final int[] slipperyDuration = new int[]{30 * 20};
 
-    public LivingArmourUpgradeSlippery(int level)
-    {
+    public LivingArmourUpgradeSlippery(int level) {
         super(level);
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
-    {
-        if (world.isRemote && player.onGround)
-        {
+    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
+        if (world.isRemote && player.onGround) {
 //            if (player.moveForward == 0)
             {
 
                 float f6 = 0.91F;
                 BlockPos.PooledMutableBlockPos blockpos$pooledmutableblockpos = BlockPos.PooledMutableBlockPos.retain(player.posX, player.getEntityBoundingBox().minY - 1.0D, player.posZ);
 
-                if (player.onGround)
-                {
+                if (player.onGround) {
                     f6 = world.getBlockState(blockpos$pooledmutableblockpos).getBlock().slipperiness * 0.91F;
                 }
 
@@ -40,11 +35,9 @@ public class LivingArmourUpgradeSlippery extends LivingArmourUpgrade
                 float f7 = 0.16277136F / (f6 * f6 * f6);
                 float f8;
 
-                if (player.onGround)
-                {
+                if (player.onGround) {
                     f8 = player.getAIMoveSpeed() * f7;
-                } else
-                {
+                } else {
                     f8 = player.jumpMovementFactor;
                 }
 
@@ -59,48 +52,40 @@ public class LivingArmourUpgradeSlippery extends LivingArmourUpgrade
     }
 
     @Override
-    public boolean runOnClient()
-    {
+    public boolean runOnClient() {
         return true;
     }
 
     @Override
-    public String getUniqueIdentifier()
-    {
+    public String getUniqueIdentifier() {
         return BloodMagic.MODID + ".upgrade.slippery";
     }
 
     @Override
-    public int getMaxTier()
-    {
+    public int getMaxTier() {
         return 1;
     }
 
     @Override
-    public int getCostOfUpgrade()
-    {
+    public int getCostOfUpgrade() {
         return costs[this.level];
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
     }
 
     @Override
-    public String getUnlocalizedName()
-    {
+    public String getUnlocalizedName() {
         return tooltipBase + "slippery";
     }
 
     @Override
-    public boolean isDowngrade()
-    {
+    public boolean isDowngrade() {
         return true;
     }
 }

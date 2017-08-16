@@ -8,45 +8,37 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.server.command.CommandTreeBase;
 
-public class CommandBloodMagic extends CommandTreeBase
-{
-    public CommandBloodMagic()
-    {
+public class CommandBloodMagic extends CommandTreeBase {
+    public CommandBloodMagic() {
         addSubcommand(new SubCommandBind());
         addSubcommand(new SubCommandNetwork());
         addSubcommand(new SubCommandOrb());
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "bloodmagic";
     }
 
     @Override
-    public String getUsage(ICommandSender sender)
-    {
+    public String getUsage(ICommandSender sender) {
         return "/bloodmagic help";
     }
 
     @Override
-    public int getRequiredPermissionLevel()
-    {
+    public int getRequiredPermissionLevel() {
         return 2;
     }
 
-    public static void displayHelpString(ICommandSender commandSender, String display, Object... info)
-    {
+    public static void displayHelpString(ICommandSender commandSender, String display, Object... info) {
         commandSender.sendMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
     }
 
-    public static void displayErrorString(ICommandSender commandSender, String display, Object... info)
-    {
+    public static void displayErrorString(ICommandSender commandSender, String display, Object... info) {
         commandSender.sendMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
     }
 
-    public static void displaySuccessString(ICommandSender commandSender, String display, Object... info)
-    {
+    public static void displaySuccessString(ICommandSender commandSender, String display, Object... info) {
         commandSender.sendMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
     }
 }

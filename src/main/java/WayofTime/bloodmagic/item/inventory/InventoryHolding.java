@@ -1,47 +1,38 @@
 package WayofTime.bloodmagic.item.inventory;
 
-import java.util.UUID;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import WayofTime.bloodmagic.util.Utils;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
-public class InventoryHolding extends ItemInventory
-{
+import java.util.UUID;
+
+public class InventoryHolding extends ItemInventory {
     protected ItemStack[] inventory;
 
-    public InventoryHolding(ItemStack itemStack)
-    {
+    public InventoryHolding(ItemStack itemStack) {
         super(itemStack, ItemSigilHolding.inventorySize, "SigilOfHolding");
     }
 
-    public void onGuiSaved(EntityPlayer entityPlayer)
-    {
+    public void onGuiSaved(EntityPlayer entityPlayer) {
         masterStack = findParentStack(entityPlayer);
 
-        if (!masterStack.isEmpty())
-        {
+        if (!masterStack.isEmpty()) {
             save();
         }
     }
 
-    public ItemStack findParentStack(EntityPlayer entityPlayer)
-    {
-        if (Utils.hasUUID(masterStack))
-        {
+    public ItemStack findParentStack(EntityPlayer entityPlayer) {
+        if (Utils.hasUUID(masterStack)) {
             UUID parentStackUUID = new UUID(masterStack.getTagCompound().getLong(Constants.NBT.MOST_SIG), masterStack.getTagCompound().getLong(Constants.NBT.LEAST_SIG));
-            for (int i = 0; i < entityPlayer.inventory.getSizeInventory(); i++)
-            {
+            for (int i = 0; i < entityPlayer.inventory.getSizeInventory(); i++) {
                 ItemStack itemStack = entityPlayer.inventory.getStackInSlot(i);
 
-                if (!itemStack.isEmpty() && Utils.hasUUID(itemStack))
-                {
-                    if (itemStack.getTagCompound().getLong(Constants.NBT.MOST_SIG) == parentStackUUID.getMostSignificantBits() && itemStack.getTagCompound().getLong(Constants.NBT.LEAST_SIG) == parentStackUUID.getLeastSignificantBits())
-                    {
+                if (!itemStack.isEmpty() && Utils.hasUUID(itemStack)) {
+                    if (itemStack.getTagCompound().getLong(Constants.NBT.MOST_SIG) == parentStackUUID.getMostSignificantBits() && itemStack.getTagCompound().getLong(Constants.NBT.LEAST_SIG) == parentStackUUID.getLeastSignificantBits()) {
                         return itemStack;
                     }
                 }
@@ -51,12 +42,10 @@ public class InventoryHolding extends ItemInventory
         return ItemStack.EMPTY;
     }
 
-    public void save()
-    {
+    public void save() {
         NBTTagCompound nbtTagCompound = masterStack.getTagCompound();
 
-        if (nbtTagCompound == null)
-        {
+        if (nbtTagCompound == null) {
             nbtTagCompound = new NBTTagCompound();
 
             UUID uuid = UUID.randomUUID();
@@ -69,14 +58,12 @@ public class InventoryHolding extends ItemInventory
     }
 
     @Override
-    public boolean isItemValidForSlot(int slotIndex, ItemStack itemStack)
-    {
+    public boolean isItemValidForSlot(int slotIndex, ItemStack itemStack) {
         return itemStack.getItem() instanceof ISigil && !(itemStack.getItem() instanceof ItemSigilHolding);
     }
 
     @Override
-    public int getInventoryStackLimit()
-    {
+    public int getInventoryStackLimit() {
         return 1;
     }
 }

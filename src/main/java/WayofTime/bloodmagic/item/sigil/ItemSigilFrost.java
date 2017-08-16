@@ -6,16 +6,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemSigilFrost extends ItemSigilToggleableBase
-{
-    public ItemSigilFrost()
-    {
+public class ItemSigilFrost extends ItemSigilToggleableBase {
+    public ItemSigilFrost() {
         super("frost", 100);
     }
 
     @Override
-    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
-    {
+    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected) {
         if (PlayerHelper.isFakePlayer(player))
             return;
 

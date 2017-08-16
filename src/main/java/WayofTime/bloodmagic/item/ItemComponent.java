@@ -1,26 +1,21 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ItemComponent extends Item implements IVariantProvider
-{
-    private static ArrayList<String> names = new ArrayList<String>();
-
+public class ItemComponent extends Item implements IVariantProvider {
     public static final String REAGENT_WATER = "reagentWater";
     public static final String REAGENT_LAVA = "reagentLava";
     public static final String REAGENT_AIR = "reagentAir";
@@ -54,9 +49,9 @@ public class ItemComponent extends Item implements IVariantProvider
     public static final String REAGENT_CLAW = "reagentClaw";
     public static final String REAGENT_BOUNCE = "reagentBounce";
     public static final String REAGENT_FROST = "reagentFrost";
+    private static ArrayList<String> names = new ArrayList<String>();
 
-    public ItemComponent()
-    {
+    public ItemComponent() {
         super();
 
         setUnlocalizedName(BloodMagic.MODID + ".baseComponent.");
@@ -66,8 +61,7 @@ public class ItemComponent extends Item implements IVariantProvider
         buildItemList();
     }
 
-    private void buildItemList()
-    {
+    private void buildItemList() {
         names.add(0, REAGENT_WATER);
         names.add(1, REAGENT_LAVA);
         names.add(2, REAGENT_AIR);
@@ -104,15 +98,13 @@ public class ItemComponent extends Item implements IVariantProvider
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+    public String getUnlocalizedName(ItemStack stack) {
         return super.getUnlocalizedName(stack) + names.get(stack.getItemDamage());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
-    {
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
@@ -120,22 +112,19 @@ public class ItemComponent extends Item implements IVariantProvider
             list.add(new ItemStack(this, 1, i));
     }
 
-    public static ItemStack getStack(String name)
-    {
-        return new ItemStack(RegistrarBloodMagicItems.COMPONENT, 1, names.indexOf(name));
-    }
-
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         for (String name : names)
             ret.add(new ImmutablePair<Integer, String>(names.indexOf(name), "type=" + name));
         return ret;
     }
 
-    public static ItemStack getStack(String key, int stackSize)
-    {
+    public static ItemStack getStack(String name) {
+        return new ItemStack(RegistrarBloodMagicItems.COMPONENT, 1, names.indexOf(name));
+    }
+
+    public static ItemStack getStack(String key, int stackSize) {
         ItemStack stack = getStack(key);
         stack.setCount(stackSize);
 

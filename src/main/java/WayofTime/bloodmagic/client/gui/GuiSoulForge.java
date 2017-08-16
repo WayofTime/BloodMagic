@@ -13,12 +13,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiSoulForge extends GuiContainer
-{
+public class GuiSoulForge extends GuiContainer {
     public IInventory tileSoulForge;
 
-    public GuiSoulForge(InventoryPlayer playerInventory, IInventory tileSoulForge)
-    {
+    public GuiSoulForge(InventoryPlayer playerInventory, IInventory tileSoulForge) {
         super(new ContainerSoulForge(playerInventory, tileSoulForge));
         this.tileSoulForge = tileSoulForge;
         this.xSize = 176;
@@ -26,15 +24,13 @@ public class GuiSoulForge extends GuiContainer
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
-    {
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         this.fontRenderer.drawString(TextHelper.localize("tile.bloodmagic.soulForge.name"), 8, 5, 4210752);
         this.fontRenderer.drawString(TextHelper.localize("container.inventory"), 8, 111, 4210752);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
-    {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         ResourceLocation soulForgeGuiTextures = new ResourceLocation(BloodMagic.MODID + ":textures/gui/soulForge.png");
         this.mc.getTextureManager().bindTexture(soulForgeGuiTextures);
@@ -46,8 +42,7 @@ public class GuiSoulForge extends GuiContainer
         this.drawTexturedModalRect(i + 115, j + 14 + 90 - l, 176, 90 - l, 18, l);
     }
 
-    public int getCookProgressScaled(int scale)
-    {
+    public int getCookProgressScaled(int scale) {
         double progress = ((TileSoulForge) tileSoulForge).getProgressForGui();
         return (int) (progress * scale);
     }

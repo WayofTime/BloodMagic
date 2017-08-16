@@ -26,12 +26,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, IItemLPContainer, IVariantProvider
-{
+public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, IItemLPContainer, IVariantProvider {
     public final int CAPACITY = 10000; // Max LP storage
 
-    public ItemPackSacrifice()
-    {
+    public ItemPackSacrifice() {
         super(ArmorMaterial.CHAIN, 0, EntityEquipmentSlot.CHEST);
 
         setUnlocalizedName(BloodMagic.MODID + ".pack.sacrifice");
@@ -39,21 +37,17 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote)
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
         RayTraceResult rayTrace = this.rayTrace(world, player, false);
 
-        if (rayTrace == null)
-        {
+        if (rayTrace == null) {
             return super.onItemRightClick(world, player, EnumHand.MAIN_HAND);
-        } else
-        {
-            if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
-            {
+        } else {
+            if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
                 TileEntity tile = world.getTileEntity(rayTrace.getBlockPos());
 
                 if (!(tile instanceof IBloodAltar))
@@ -67,15 +61,13 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
     }
 
     @Override
-    public void onArmorTick(World world, EntityPlayer player, ItemStack stack)
-    {
+    public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
         if (getStoredLP(stack) > CAPACITY)
             setStoredLP(stack, CAPACITY);
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<String> list, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<String> list, ITooltipFlag flag) {
         if (!stack.hasTagCompound())
             return;
 
@@ -84,8 +76,7 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
         return ret;
@@ -94,22 +85,18 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
     // IFillable
 
     @Override
-    public int getCapacity()
-    {
+    public int getCapacity() {
         return this.CAPACITY;
     }
 
     @Override
-    public int getStoredLP(ItemStack stack)
-    {
+    public int getStoredLP(ItemStack stack) {
         return stack != null ? NBTHelper.checkNBT(stack).getTagCompound().getInteger(Constants.NBT.STORED_LP) : 0;
     }
 
     @Override
-    public void setStoredLP(ItemStack stack, int lp)
-    {
-        if (stack != null)
-        {
+    public void setStoredLP(ItemStack stack, int lp) {
+        if (stack != null) {
             NBTHelper.checkNBT(stack).getTagCompound().setInteger(Constants.NBT.STORED_LP, lp);
         }
     }

@@ -19,14 +19,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.List;
 
 @Mod.EventBusSubscriber
-public class PotionEventHandlers
-{
+public class PotionEventHandlers {
 
     @SubscribeEvent
-    public static void onLivingJumpEvent(LivingEvent.LivingJumpEvent event)
-    {
-        if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.BOOST))
-        {
+    public static void onLivingJumpEvent(LivingEvent.LivingJumpEvent event) {
+        if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.BOOST)) {
             int i = event.getEntityLiving().getActivePotionEffect(RegistrarBloodMagic.BOOST).getAmplifier();
             event.getEntityLiving().motionY += (0.1f) * (2 + i);
         }
@@ -37,8 +34,7 @@ public class PotionEventHandlers
     }
 
     @SubscribeEvent
-    public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
-    {
+    public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
 //        if (event.getEntityLiving().isPotionActive(ModPotions.boost))
 //        {
 //            int i = event.getEntityLiving().getActivePotionEffect(ModPotions.boost).getAmplifier();
@@ -55,14 +51,12 @@ public class PotionEventHandlers
 //            }
 //        }
 
-        if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.WHIRLWIND))
-        {
+        if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.WHIRLWIND)) {
             int d0 = 3;
             AxisAlignedBB axisAlignedBB = new AxisAlignedBB(event.getEntityLiving().posX - 0.5, event.getEntityLiving().posY - 0.5, event.getEntityLiving().posZ - 0.5, event.getEntityLiving().posX + 0.5, event.getEntityLiving().posY + 0.5, event.getEntityLiving().posZ + 0.5).expand(d0, d0, d0);
             List<Entity> entityList = event.getEntityLiving().getEntityWorld().getEntitiesWithinAABB(Entity.class, axisAlignedBB);
 
-            for (Entity projectile : entityList)
-            {
+            for (Entity projectile : entityList) {
                 if (projectile == null)
                     continue;
                 if (!(projectile instanceof IProjectile))
@@ -89,8 +83,7 @@ public class PotionEventHandlers
                 if (angle < 3 * (Math.PI / 4))
                     continue; // angle is < 135 degrees
 
-                if (throwingEntity != null)
-                {
+                if (throwingEntity != null) {
                     delX = -projectile.posX + throwingEntity.posX;
                     delY = -projectile.posY + (throwingEntity.posY + throwingEntity.getEyeHeight());
                     delZ = -projectile.posZ + throwingEntity.posZ;
@@ -110,31 +103,26 @@ public class PotionEventHandlers
     }
 
     @SubscribeEvent
-    public static void onPlayerRespawn(PlayerEvent.Clone event)
-    {
+    public static void onPlayerRespawn(PlayerEvent.Clone event) {
         if (event.isWasDeath())
             event.getEntityPlayer().addPotionEffect(new PotionEffect(RegistrarBloodMagic.SOUL_FRAY, 400));
     }
 
     @SubscribeEvent
-    public static void onSacrificeKnifeUsed(SacrificeKnifeUsedEvent event)
-    {
+    public static void onSacrificeKnifeUsed(SacrificeKnifeUsedEvent event) {
         if (event.player.isPotionActive(RegistrarBloodMagic.SOUL_FRAY))
             event.lpAdded = (int) (event.lpAdded * 0.1D);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onPlayerDamageEvent(LivingAttackEvent event)
-    {
+    public static void onPlayerDamageEvent(LivingAttackEvent event) {
         if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.WHIRLWIND) && event.isCancelable() && event.getSource().isProjectile())
             event.setCanceled(true);
     }
 
     @SubscribeEvent
-    public static void onEndermanTeleportEvent(EnderTeleportEvent event)
-    {
-        if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.PLANAR_BINDING) && event.isCancelable())
-        {
+    public static void onEndermanTeleportEvent(EnderTeleportEvent event) {
+        if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.PLANAR_BINDING) && event.isCancelable()) {
             event.setCanceled(true);
         }
     }

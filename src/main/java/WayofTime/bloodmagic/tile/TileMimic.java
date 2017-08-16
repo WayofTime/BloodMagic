@@ -1,8 +1,11 @@
 package WayofTime.bloodmagic.tile;
 
-import java.lang.reflect.Field;
-import java.util.List;
-
+import WayofTime.bloodmagic.block.BlockMimic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.entity.mob.EntityMimic;
+import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,17 +28,12 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import WayofTime.bloodmagic.block.BlockMimic;
-import WayofTime.bloodmagic.entity.mob.EntityMimic;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.util.ChatUtil;
-import WayofTime.bloodmagic.util.Utils;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
+import java.util.List;
 
-public class TileMimic extends TileInventory implements ITickable
-{
+public class TileMimic extends TileInventory implements ITickable {
     private static Field _blockMetadata = ReflectionHelper.findField(TileEntity.class, "blockMetadata", "field_145847_g");
 
     public boolean dropItemsOnBreak = true;
@@ -49,32 +47,25 @@ public class TileMimic extends TileInventory implements ITickable
 
     private int internalCounter = 0;
 
-    public TileMimic()
-    {
+    public TileMimic() {
         super(2, "mimic");
     }
 
     @Override
-    public void update()
-    {
-        if (getWorld().isRemote)
-        {
+    public void update() {
+        if (getWorld().isRemote) {
             return;
         }
 
         internalCounter++;
-        if (internalCounter % potionSpawnInterval == 0 && this.getBlockMetadata() == BlockMimic.sentientMimicMeta)
-        {
+        if (internalCounter % potionSpawnInterval == 0 && this.getBlockMetadata() == BlockMimic.sentientMimicMeta) {
             ItemStack potionStack = this.getStackInSlot(1);
-            if (!potionStack.isEmpty())
-            {
+            if (!potionStack.isEmpty()) {
                 AxisAlignedBB bb = new AxisAlignedBB(this.getPos()).expand(playerCheckRadius, playerCheckRadius, playerCheckRadius);
                 List<EntityPlayer> playerList = getWorld().getEntitiesWithinAABB(EntityPlayer.class, bb);
 
-                for (EntityPlayer player : playerList)
-                {
-                    if (!player.capabilities.isCreativeMode)
-                    {
+                for (EntityPlayer player : playerList) {
+                    if (!player.capabilities.isCreativeMode) {
                         double posX = this.pos.getX() + 0.5 + (2 * getWorld().rand.nextDouble() - 1) * potionSpawnRadius;
                         double posY = this.pos.getY() + 0.5 + (2 * getWorld().rand.nextDouble() - 1) * potionSpawnRadius;
                         double posZ = this.pos.getZ() + 0.5 + (2 * getWorld().rand.nextDouble() - 1) * potionSpawnRadius;
@@ -91,15 +82,12 @@ public class TileMimic extends TileInventory implements ITickable
             }
         }
 
-        if (this.getBlockMetadata() == BlockMimic.sentientMimicMeta && getWorld().getDifficulty() != EnumDifficulty.PEACEFUL && !(mimicedTile instanceof IInventory))
-        {
+        if (this.getBlockMetadata() == BlockMimic.sentientMimicMeta && getWorld().getDifficulty() != EnumDifficulty.PEACEFUL && !(mimicedTile instanceof IInventory)) {
             AxisAlignedBB bb = new AxisAlignedBB(this.getPos()).expand(playerCheckRadius, playerCheckRadius, playerCheckRadius);
             List<EntityPlayer> playerList = getWorld().getEntitiesWithinAABB(EntityPlayer.class, bb);
 
-            for (EntityPlayer player : playerList)
-            {
-                if (!player.capabilities.isCreativeMode && Utils.canEntitySeeBlock(getWorld(), player, getPos()))
-                {
+            for (EntityPlayer player : playerList) {
+                if (!player.capabilities.isCreativeMode && Utils.canEntitySeeBlock(getWorld(), player, getPos())) {
                     spawnMimicEntity(player);
                     break;
                 }
@@ -108,25 +96,19 @@ public class TileMimic extends TileInventory implements ITickable
 
     }
 
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side)
-    {
-        if (!heldItem.isEmpty() && player.capabilities.isCreativeMode)
-        {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side) {
+        if (!heldItem.isEmpty() && player.capabilities.isCreativeMode) {
             List<PotionEffect> list = PotionUtils.getEffectsFromStack(heldItem);
-            if (!list.isEmpty())
-            {
-                if (!world.isRemote)
-                {
+            if (!list.isEmpty()) {
+                if (!world.isRemote) {
                     setInventorySlotContents(1, heldItem.copy());
                     world.notifyBlockUpdate(pos, state, state, 3);
                     ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionSet"));
                 }
                 return true;
-            } else if (heldItem.getItem() == RegistrarBloodMagicItems.POTION_FLASK)
-            {
+            } else if (heldItem.getItem() == RegistrarBloodMagicItems.POTION_FLASK) {
                 //The potion flask is empty, therefore we have to reset the stored potion.
-                if (!world.isRemote)
-                {
+                if (!world.isRemote) {
                     setInventorySlotContents(1, ItemStack.EMPTY);
                     world.notifyBlockUpdate(pos, state, state, 3);
                     ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionRemove"));
@@ -135,8 +117,7 @@ public class TileMimic extends TileInventory implements ITickable
             }
         }
 
-        if (performSpecialAbility(player, side))
-        {
+        if (performSpecialAbility(player, side)) {
             return true;
         }
 
@@ -155,8 +136,7 @@ public class TileMimic extends TileInventory implements ITickable
         Utils.insertItemToTile(this, player, 0);
         this.refreshTileEntity();
 
-        if (player.capabilities.isCreativeMode)
-        {
+        if (player.capabilities.isCreativeMode) {
             dropItemsOnBreak = getStackInSlot(0).isEmpty();
         }
 
@@ -164,93 +144,76 @@ public class TileMimic extends TileInventory implements ITickable
         return true;
     }
 
-    public boolean performSpecialAbility(EntityPlayer player, EnumFacing sideHit)
-    {
-        switch (this.getBlockMetadata())
-        {
-        case BlockMimic.sentientMimicMeta:
-            if (player.capabilities.isCreativeMode)
-            {
-                if (player.isSneaking())
-                {
-                    playerCheckRadius = Math.max(playerCheckRadius - 1, 0);
-                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.detectRadius.down", playerCheckRadius));
-                } else
-                {
-                    playerCheckRadius++;
-                    ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.detectRadius.up", playerCheckRadius));
-                }
-
-                return false;
-            }
-
-            return spawnMimicEntity(player);
-        default:
-            if (!player.capabilities.isCreativeMode)
-            {
-                return false;
-            }
-
-            if (player.getActiveItemStack().isEmpty() && !getStackInSlot(1).isEmpty())
-            {
-                switch (sideHit)
-                {
-                case EAST: //When the block is clicked on the EAST or WEST side, potionSpawnRadius is edited.
-                case WEST:
-                    if (player.isSneaking())
-                    {
-                        potionSpawnRadius = Math.max(potionSpawnRadius - 1, 0);
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionSpawnRadius.down", potionSpawnRadius));
-                    } else
-                    {
-                        potionSpawnRadius++;
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionSpawnRadius.up", potionSpawnRadius));
-                    }
-                    break;
-                case NORTH: //When the block is clicked on the NORTH or SOUTH side, detectRadius is edited.
-                case SOUTH:
-                    if (player.isSneaking())
-                    {
+    public boolean performSpecialAbility(EntityPlayer player, EnumFacing sideHit) {
+        switch (this.getBlockMetadata()) {
+            case BlockMimic.sentientMimicMeta:
+                if (player.capabilities.isCreativeMode) {
+                    if (player.isSneaking()) {
                         playerCheckRadius = Math.max(playerCheckRadius - 1, 0);
                         ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.detectRadius.down", playerCheckRadius));
-                    } else
-                    {
+                    } else {
                         playerCheckRadius++;
                         ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.detectRadius.up", playerCheckRadius));
                     }
-                    break;
-                case UP: //When the block is clicked on the UP or DOWN side, potionSpawnInterval is edited.
-                case DOWN:
-                    if (player.isSneaking())
-                    {
-                        potionSpawnInterval = Math.max(potionSpawnInterval - 1, 1);
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionInterval.down", potionSpawnInterval));
-                    } else
-                    {
-                        potionSpawnInterval++;
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionInterval.up", potionSpawnInterval));
-                    }
-                    break;
-                default:
-                    break;
 
+                    return false;
                 }
 
-                return true;
-            }
+                return spawnMimicEntity(player);
+            default:
+                if (!player.capabilities.isCreativeMode) {
+                    return false;
+                }
+
+                if (player.getActiveItemStack().isEmpty() && !getStackInSlot(1).isEmpty()) {
+                    switch (sideHit) {
+                        case EAST: //When the block is clicked on the EAST or WEST side, potionSpawnRadius is edited.
+                        case WEST:
+                            if (player.isSneaking()) {
+                                potionSpawnRadius = Math.max(potionSpawnRadius - 1, 0);
+                                ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionSpawnRadius.down", potionSpawnRadius));
+                            } else {
+                                potionSpawnRadius++;
+                                ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionSpawnRadius.up", potionSpawnRadius));
+                            }
+                            break;
+                        case NORTH: //When the block is clicked on the NORTH or SOUTH side, detectRadius is edited.
+                        case SOUTH:
+                            if (player.isSneaking()) {
+                                playerCheckRadius = Math.max(playerCheckRadius - 1, 0);
+                                ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.detectRadius.down", playerCheckRadius));
+                            } else {
+                                playerCheckRadius++;
+                                ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.detectRadius.up", playerCheckRadius));
+                            }
+                            break;
+                        case UP: //When the block is clicked on the UP or DOWN side, potionSpawnInterval is edited.
+                        case DOWN:
+                            if (player.isSneaking()) {
+                                potionSpawnInterval = Math.max(potionSpawnInterval - 1, 1);
+                                ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionInterval.down", potionSpawnInterval));
+                            } else {
+                                potionSpawnInterval++;
+                                ChatUtil.sendNoSpam(player, new TextComponentTranslation("chat.bloodmagic.mimic.potionInterval.up", potionSpawnInterval));
+                            }
+                            break;
+                        default:
+                            break;
+
+                    }
+
+                    return true;
+                }
         }
         return false;
     }
 
-    public boolean spawnMimicEntity(EntityPlayer target)
-    {
-        if (this.getWorld().getDifficulty() == EnumDifficulty.PEACEFUL)
-        {
+    public boolean spawnMimicEntity(EntityPlayer target) {
+        if (this.getWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
         }
 
-        if (this.getStackInSlot(0).isEmpty() || getWorld().isRemote)
-        {
+        if (this.getStackInSlot(0).isEmpty() || getWorld().isRemote) {
             return false;
         }
 
@@ -263,8 +226,7 @@ public class TileMimic extends TileInventory implements ITickable
         this.setInventorySlotContents(0, ItemStack.EMPTY);
 
         getWorld().spawnEntity(mimicEntity);
-        if (target != null)
-        {
+        if (target != null) {
             mimicEntity.setAttackTarget(target);
         }
 
@@ -273,18 +235,15 @@ public class TileMimic extends TileInventory implements ITickable
         return true;
     }
 
-    public void refreshTileEntity()
-    {
-        if (mimicedTile != null)
-        {
+    public void refreshTileEntity() {
+        if (mimicedTile != null) {
             dropMimicedTileInventory();
         }
         mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, metaOfReplacedBlock);
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag)
-    {
+    public void deserialize(NBTTagCompound tag) {
         super.deserialize(tag);
 
         dropItemsOnBreak = tag.getBoolean("dropItemsOnBreak");
@@ -297,8 +256,7 @@ public class TileMimic extends TileInventory implements ITickable
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag)
-    {
+    public NBTTagCompound serialize(NBTTagCompound tag) {
         super.serialize(tag);
 
         tag.setBoolean("dropItemsOnBreak", dropItemsOnBreak);
@@ -311,25 +269,40 @@ public class TileMimic extends TileInventory implements ITickable
         return tag;
     }
 
-    public static void replaceMimicWithBlockActual(TileMimic mimic)
-    {
+    @Override
+    public void dropItems() {
+        if (dropItemsOnBreak) {
+            InventoryHelper.dropInventoryItems(getWorld(), getPos(), this);
+        }
+
+        dropMimicedTileInventory();
+    }
+
+    public void dropMimicedTileInventory() {
+        if (!getWorld().isRemote && mimicedTile instanceof IInventory) {
+            InventoryHelper.dropInventoryItems(getWorld(), getPos(), (IInventory) mimicedTile);
+        }
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
+        return slot == 0 && dropItemsOnBreak;
+    }
+
+    public static void replaceMimicWithBlockActual(TileMimic mimic) {
         World world = mimic.getWorld();
         BlockPos pos = mimic.getPos();
 
         replaceMimicWithBlockActual(world, pos, mimic.getStackInSlot(0), mimic.tileTag, mimic.metaOfReplacedBlock);
     }
 
-    public static boolean replaceMimicWithBlockActual(World world, BlockPos pos, ItemStack stack, NBTTagCompound tileTag, int replacedMeta)
-    {
-        if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock)
-        {
+    public static boolean replaceMimicWithBlockActual(World world, BlockPos pos, ItemStack stack, NBTTagCompound tileTag, int replacedMeta) {
+        if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock) {
             Block block = ((ItemBlock) stack.getItem()).getBlock();
             IBlockState state = block.getStateFromMeta(replacedMeta);
-            if (world.setBlockState(pos, state, 3))
-            {
+            if (world.setBlockState(pos, state, 3)) {
                 TileEntity tile = world.getTileEntity(pos);
-                if (tile != null)
-                {
+                if (tile != null) {
                     tileTag.setInteger("x", pos.getX());
                     tileTag.setInteger("y", pos.getY());
                     tileTag.setInteger("z", pos.getZ());
@@ -344,21 +317,17 @@ public class TileMimic extends TileInventory implements ITickable
     }
 
     @Nullable
-    public static TileEntity getTileFromStackWithTag(World world, BlockPos pos, ItemStack stack, @Nullable NBTTagCompound tag, int replacementMeta)
-    {
-        if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock)
-        {
+    public static TileEntity getTileFromStackWithTag(World world, BlockPos pos, ItemStack stack, @Nullable NBTTagCompound tag, int replacementMeta) {
+        if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock) {
             Block block = ((ItemBlock) stack.getItem()).getBlock();
             IBlockState state = block.getStateFromMeta(stack.getItemDamage());
-            if (block.hasTileEntity(state))
-            {
+            if (block.hasTileEntity(state)) {
                 TileEntity tile = block.createTileEntity(world, state);
 
                 if (tile == null)
                     return null;
 
-                if (tag != null)
-                {
+                if (tag != null) {
                     NBTTagCompound copyTag = tag.copy();
                     copyTag.setInteger("x", pos.getX());
                     copyTag.setInteger("y", pos.getY());
@@ -368,14 +337,11 @@ public class TileMimic extends TileInventory implements ITickable
 
                 tile.setWorld(world);
 
-                try
-                {
+                try {
                     _blockMetadata.setInt(tile, replacementMeta);
-                } catch (IllegalArgumentException e)
-                {
+                } catch (IllegalArgumentException e) {
                     e.printStackTrace();
-                } catch (IllegalAccessException e)
-                {
+                } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
 
@@ -384,30 +350,5 @@ public class TileMimic extends TileInventory implements ITickable
         }
 
         return null;
-    }
-
-    @Override
-    public void dropItems()
-    {
-        if (dropItemsOnBreak)
-        {
-            InventoryHelper.dropInventoryItems(getWorld(), getPos(), this);
-        }
-
-        dropMimicedTileInventory();
-    }
-
-    public void dropMimicedTileInventory()
-    {
-        if (!getWorld().isRemote && mimicedTile instanceof IInventory)
-        {
-            InventoryHelper.dropInventoryItems(getWorld(), getPos(), (IInventory) mimicedTile);
-        }
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int slot, ItemStack itemstack)
-    {
-        return slot == 0 && dropItemsOnBreak;
     }
 }

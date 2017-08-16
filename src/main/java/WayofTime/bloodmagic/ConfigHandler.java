@@ -1,13 +1,11 @@
 package WayofTime.bloodmagic;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import WayofTime.bloodmagic.annot.Handler;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.meteor.MeteorConfigHandler;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
@@ -15,15 +13,12 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
-import WayofTime.bloodmagic.annot.Handler;
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.util.Utils;
+
+import java.io.File;
+import java.util.*;
 
 @Handler
-public class ConfigHandler
-{
+public class ConfigHandler {
     public static Configuration config;
 
     // Teleposer
@@ -152,14 +147,20 @@ public class ConfigHandler
     public static boolean thaumcraftGogglesUpgrade;
     public static boolean ignoreCompressionSpamAddedByCompression;
 
-    public static void init(File file)
-    {
+    @SubscribeEvent
+    public void onConfigChanged(ConfigChangedEvent event) {
+        if (event.getModID().equals(BloodMagic.MODID)) {
+            syncConfig();
+            MeteorConfigHandler.handleMeteors(false);
+        }
+    }
+
+    public static void init(File file) {
         config = new Configuration(file);
         syncConfig();
     }
 
-    public static void syncConfig()
-    {
+    public static void syncConfig() {
         String category;
 
         category = "Item/Block Blacklisting";
@@ -168,22 +169,22 @@ public class ConfigHandler
 
         category = "Teleposer Blacklist";
         config.addCustomCategoryComment(category, "Block blacklisting");
-        teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[] { "minecraft:bedrock", "minecraft:mob_spawner" }, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
+        teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[]{"minecraft:bedrock", "minecraft:mob_spawner"}, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
         buildBlacklist(teleposerBlacklisting, teleposerBlacklist);
-        teleposerBlacklistEntity = Arrays.asList(config.getStringList("teleposerBlacklistEntity", category, new String[] {}, "Entity class names listed here will not be able to be teleposed."));
+        teleposerBlacklistEntity = Arrays.asList(config.getStringList("teleposerBlacklistEntity", category, new String[]{}, "Entity class names listed here will not be able to be teleposed."));
 
         category = "Transposition Sigil Blacklist";
         config.addCustomCategoryComment(category, "Block blacklisting");
-        transpositionBlacklisting = config.getStringList("transpositionBlacklist", category, new String[] { "minecraft:bedrock", "minecraft:mob_spawner" }, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
+        transpositionBlacklisting = config.getStringList("transpositionBlacklist", category, new String[]{"minecraft:bedrock", "minecraft:mob_spawner"}, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
         buildBlacklist(transpositionBlacklisting, transpositionBlacklist);
 
         category = "Well of Suffering Blacklist";
         config.addCustomCategoryComment(category, "Entity blacklisting from WoS");
-        wellOfSufferingBlacklist = Arrays.asList(config.getStringList("wellOfSufferingBlacklist", category, new String[] { "EntityArmorStand", "EntitySentientSpecter" }, "Use the class name of the Entity to blacklist it from usage.\nIE: EntityWolf, EntityWitch, etc"));
+        wellOfSufferingBlacklist = Arrays.asList(config.getStringList("wellOfSufferingBlacklist", category, new String[]{"EntityArmorStand", "EntitySentientSpecter"}, "Use the class name of the Entity to blacklist it from usage.\nIE: EntityWolf, EntityWitch, etc"));
 
         category = "Blood Altar Sacrificial Values";
         config.addCustomCategoryComment(category, "Entity Sacrificial Value Settings");
-        entitySacrificeValuesList = config.getStringList("entitySacrificeLP:HPValues", category, new String[] { "EntityVillager;100", "EntitySlime;15", "EntityEnderman;10", "EntityCow;100", "EntityChicken;100", "EntityHorse;100", "EntitySheep;100", "EntityWolf;100", "EntityOcelot;100", "EntityPig;100", "EntityRabbit;100", "EntityArmorStand;0", "EntitySentientSpecter;0" }, "Used to edit the amount of LP gained per HP sacrificed for the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerHP");
+        entitySacrificeValuesList = config.getStringList("entitySacrificeLP:HPValues", category, new String[]{"EntityVillager;100", "EntitySlime;15", "EntityEnderman;10", "EntityCow;100", "EntityChicken;100", "EntityHorse;100", "EntitySheep;100", "EntityWolf;100", "EntityOcelot;100", "EntityPig;100", "EntityRabbit;100", "EntityArmorStand;0", "EntitySentientSpecter;0"}, "Used to edit the amount of LP gained per HP sacrificed for the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerHP");
         buildEntitySacrificeValues();
 
         category = "Potions";
@@ -310,19 +311,16 @@ public class ConfigHandler
         config.save();
     }
 
-    private static void buildBlacklist(String[] blacklisting, List<BlockStack> blockBlacklist)
-    {
+    private static void buildBlacklist(String[] blacklisting, List<BlockStack> blockBlacklist) {
         blockBlacklist.clear();
 
-        for (String blockSet : blacklisting)
-        {
+        for (String blockSet : blacklisting) {
             String[] blockData = blockSet.split(":");
 
             Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockData[0], blockData[1]));
             int meta = 0;
 
-            if (blockData.length == 3)
-            {
+            if (blockData.length == 3) {
                 // Check if it's an int, if so, parse it. If not, set meta to 0
                 // to avoid crashing.
                 if (Utils.isInteger(blockData[2]))
@@ -337,12 +335,10 @@ public class ConfigHandler
         }
     }
 
-    private static void buildEntitySacrificeValues()
-    {
+    private static void buildEntitySacrificeValues() {
         entitySacrificeValues.clear();
 
-        for (String entityData : entitySacrificeValuesList)
-        {
+        for (String entityData : entitySacrificeValuesList) {
             String[] split = entityData.split(";");
 
             int amount = 500;
@@ -351,16 +347,6 @@ public class ConfigHandler
 
             if (!entitySacrificeValues.containsKey(split[0]))
                 entitySacrificeValues.put(split[0], amount);
-        }
-    }
-
-    @SubscribeEvent
-    public void onConfigChanged(ConfigChangedEvent event)
-    {
-        if (event.getModID().equals(BloodMagic.MODID))
-        {
-            syncConfig();
-            MeteorConfigHandler.handleMeteors(false);
         }
     }
 }

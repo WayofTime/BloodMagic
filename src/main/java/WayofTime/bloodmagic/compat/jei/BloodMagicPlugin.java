@@ -1,12 +1,5 @@
 package WayofTime.bloodmagic.compat.jei;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
-import mezz.jei.api.*;
-import mezz.jei.api.recipe.IRecipeCategoryRegistration;
-import net.minecraft.item.ItemStack;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
@@ -31,15 +24,19 @@ import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeMaker;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import mezz.jei.api.*;
+import mezz.jei.api.recipe.IRecipeCategoryRegistration;
+import net.minecraft.item.ItemStack;
+
+import javax.annotation.Nonnull;
+import java.util.Map;
 
 @JEIPlugin
-public class BloodMagicPlugin extends BlankModPlugin
-{
+public class BloodMagicPlugin extends BlankModPlugin {
     public static IJeiHelpers jeiHelper;
 
     @Override
-    public void register(@Nonnull IModRegistry registry)
-    {
+    public void register(@Nonnull IModRegistry registry) {
         jeiHelper = registry.getJeiHelpers();
 
         registry.addRecipeHandlers(
@@ -61,12 +58,10 @@ public class BloodMagicPlugin extends BlankModPlugin
         registry.addIngredientInfo(new ItemStack(RegistrarBloodMagicItems.ALTAR_MAKER), ItemStack.class, "jei.bloodmagic.desc.altarBuilder");
         registry.addIngredientInfo(new ItemStack(RegistrarBloodMagicItems.MONSTER_SOUL), ItemStack.class, "jei.bloodmagic.desc.demonicWill");
 
-        for (Map.Entry<String, Integer> entry : LivingArmourHandler.upgradeMaxLevelMap.entrySet())
-        {
+        for (Map.Entry<String, Integer> entry : LivingArmourHandler.upgradeMaxLevelMap.entrySet()) {
             String key = entry.getKey();
             int maxLevel = entry.getValue();
-            for (int i = 0; i < maxLevel - 1; i++)
-            {
+            for (int i = 0; i < maxLevel - 1; i++) {
                 ItemStack stack = new ItemStack(RegistrarBloodMagicItems.UPGRADE_TOME);
                 LivingUpgrades.setKey(stack, key);
                 LivingUpgrades.setLevel(stack, i);

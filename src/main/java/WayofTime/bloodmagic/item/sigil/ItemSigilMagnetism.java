@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import java.util.List;
-
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -10,16 +8,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
-public class ItemSigilMagnetism extends ItemSigilToggleableBase
-{
-    public ItemSigilMagnetism()
-    {
+import java.util.List;
+
+public class ItemSigilMagnetism extends ItemSigilToggleableBase {
+    public ItemSigilMagnetism() {
         super("magnetism", 50);
     }
 
     @Override
-    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
-    {
+    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected) {
         if (PlayerHelper.isFakePlayer(player))
             return;
 
@@ -31,18 +28,14 @@ public class ItemSigilMagnetism extends ItemSigilToggleableBase
         List<EntityItem> entities = player.getEntityWorld().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(range, verticalRange, range));
         List<EntityXPOrb> xpOrbs = player.getEntityWorld().getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(range, verticalRange, range));
 
-        for (EntityItem entity : entities)
-        {
-            if (entity != null && !world.isRemote && !entity.isDead)
-            {
+        for (EntityItem entity : entities) {
+            if (entity != null && !world.isRemote && !entity.isDead) {
                 entity.onCollideWithPlayer(player);
             }
         }
 
-        for (EntityXPOrb xpOrb : xpOrbs)
-        {
-            if (xpOrb != null && !world.isRemote)
-            {
+        for (EntityXPOrb xpOrb : xpOrbs) {
+            if (xpOrb != null && !world.isRemote) {
                 xpOrb.onCollideWithPlayer(player);
             }
         }

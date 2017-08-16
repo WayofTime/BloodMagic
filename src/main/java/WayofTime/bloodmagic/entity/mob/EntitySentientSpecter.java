@@ -1,21 +1,22 @@
 package WayofTime.bloodmagic.entity.mob;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.entity.ai.EntityAIAttackRangedBow;
+import WayofTime.bloodmagic.entity.ai.EntityAIFollowOwner;
+import WayofTime.bloodmagic.entity.ai.*;
+import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtByTarget;
+import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtTarget;
+import WayofTime.bloodmagic.item.soul.ItemSentientBow;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,31 +40,19 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.entity.ai.EntityAIAttackRangedBow;
-import WayofTime.bloodmagic.entity.ai.EntityAIFollowOwner;
-import WayofTime.bloodmagic.entity.ai.EntityAIGrabEffectsFromOwner;
-import WayofTime.bloodmagic.entity.ai.EntityAIHurtByTargetIgnoreTamed;
-import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtByTarget;
-import WayofTime.bloodmagic.entity.ai.EntityAIOwnerHurtTarget;
-import WayofTime.bloodmagic.entity.ai.EntityAIRetreatToHeal;
-import WayofTime.bloodmagic.item.soul.ItemSentientBow;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 
-public class EntitySentientSpecter extends EntityDemonBase
-{
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+public class EntitySentientSpecter extends EntityDemonBase {
+    private final EntityAIAttackRangedBow aiArrowAttack = new EntityAIAttackRangedBow(this, 1.0D, 20, 15.0F);
+    private final EntityAIAttackMelee aiAttackOnCollide = new EntityAIAttackMelee(this, 1.0D, false);
+    private final int attackPriority = 3;
     protected EnumDemonWillType type = EnumDemonWillType.DESTRUCTIVE;
     protected boolean wasGivenSentientArmour = false;
 
-    private final EntityAIAttackRangedBow aiArrowAttack = new EntityAIAttackRangedBow(this, 1.0D, 20, 15.0F);
-    private final EntityAIAttackMelee aiAttackOnCollide = new EntityAIAttackMelee(this, 1.0D, false);
-
-    private final int attackPriority = 3;
-
-    public EntitySentientSpecter(World worldIn)
-    {
+    public EntitySentientSpecter(World worldIn) {
         super(worldIn);
         this.setSize(0.6F, 1.95F);
 //        ((PathNavigateGround) getNavigator()).setCanSwim(false);
@@ -87,8 +76,7 @@ public class EntitySentientSpecter extends EntityDemonBase
     }
 
     @Override
-    protected void applyEntityAttributes()
-    {
+    protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
         getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
@@ -96,27 +84,22 @@ public class EntitySentientSpecter extends EntityDemonBase
     }
 
     @Override
-    public void setCombatTask()
-    {
-        if (!this.getEntityWorld().isRemote)
-        {
+    public void setCombatTask() {
+        if (!this.getEntityWorld().isRemote) {
             this.tasks.removeTask(this.aiAttackOnCollide);
             this.tasks.removeTask(this.aiArrowAttack);
             ItemStack itemstack = this.getHeldItemMainhand();
 
-            if (!itemstack.isEmpty() && itemstack.getItem() instanceof ItemBow)
-            {
+            if (!itemstack.isEmpty() && itemstack.getItem() instanceof ItemBow) {
                 int i = 20;
 
-                if (this.getEntityWorld().getDifficulty() != EnumDifficulty.HARD)
-                {
+                if (this.getEntityWorld().getDifficulty() != EnumDifficulty.HARD) {
                     i = 40;
                 }
 
                 this.aiArrowAttack.setAttackCooldown(i);
                 this.tasks.addTask(attackPriority, this.aiArrowAttack);
-            } else
-            {
+            } else {
                 this.tasks.addTask(attackPriority, this.aiAttackOnCollide);
             }
         }
@@ -130,22 +113,17 @@ public class EntitySentientSpecter extends EntityDemonBase
         return !(potion == MobEffects.REGENERATION || potion == MobEffects.INSTANT_HEALTH) && super.isPotionApplicable(effect);
     }
 
-    public boolean canStealEffectFromOwner(EntityLivingBase owner, PotionEffect effect)
-    {
+    public boolean canStealEffectFromOwner(EntityLivingBase owner, PotionEffect effect) {
         return effect.getPotion().isBadEffect() && this.type == EnumDemonWillType.CORROSIVE;
     }
 
-    public boolean canStealEffectFromOwner(EntityLivingBase owner)
-    {
-        if (this.type != EnumDemonWillType.CORROSIVE)
-        {
+    public boolean canStealEffectFromOwner(EntityLivingBase owner) {
+        if (this.type != EnumDemonWillType.CORROSIVE) {
             return false;
         }
 
-        for (PotionEffect eff : owner.getActivePotionEffects())
-        {
-            if (canStealEffectFromOwner(owner, eff))
-            {
+        for (PotionEffect eff : owner.getActivePotionEffects()) {
+            if (canStealEffectFromOwner(owner, eff)) {
                 return true;
             }
         }
@@ -153,10 +131,8 @@ public class EntitySentientSpecter extends EntityDemonBase
         return false;
     }
 
-    public boolean stealEffectsFromOwner(EntityLivingBase owner)
-    {
-        if (this.type != EnumDemonWillType.CORROSIVE)
-        {
+    public boolean stealEffectsFromOwner(EntityLivingBase owner) {
+        if (this.type != EnumDemonWillType.CORROSIVE) {
             return false;
         }
 
@@ -164,17 +140,14 @@ public class EntitySentientSpecter extends EntityDemonBase
 
         List<PotionEffect> removedEffects = new ArrayList<PotionEffect>();
 
-        for (PotionEffect eff : owner.getActivePotionEffects())
-        {
-            if (canStealEffectFromOwner(owner, eff))
-            {
+        for (PotionEffect eff : owner.getActivePotionEffects()) {
+            if (canStealEffectFromOwner(owner, eff)) {
                 removedEffects.add(eff);
                 hasStolenEffect = true;
             }
         }
 
-        for (PotionEffect eff : removedEffects)
-        {
+        for (PotionEffect eff : removedEffects) {
             owner.removePotionEffect(eff.getPotion());
             this.addPotionEffect(eff);
         }
@@ -182,23 +155,17 @@ public class EntitySentientSpecter extends EntityDemonBase
         return hasStolenEffect;
     }
 
-    public boolean applyNegativeEffectsToAttacked(EntityLivingBase attackedEntity, float percentTransmitted)
-    {
+    public boolean applyNegativeEffectsToAttacked(EntityLivingBase attackedEntity, float percentTransmitted) {
         boolean hasProvidedEffect = false;
         List<PotionEffect> removedEffects = new ArrayList<PotionEffect>();
-        for (PotionEffect eff : this.getActivePotionEffects())
-        {
-            if (eff.getPotion().isBadEffect() && attackedEntity.isPotionApplicable(eff))
-            {
-                if (!attackedEntity.isPotionActive(eff.getPotion()))
-                {
+        for (PotionEffect eff : this.getActivePotionEffects()) {
+            if (eff.getPotion().isBadEffect() && attackedEntity.isPotionApplicable(eff)) {
+                if (!attackedEntity.isPotionActive(eff.getPotion())) {
                     removedEffects.add(eff);
                     hasProvidedEffect = true;
-                } else
-                {
+                } else {
                     PotionEffect activeEffect = attackedEntity.getActivePotionEffect(eff.getPotion());
-                    if (activeEffect.getAmplifier() < eff.getAmplifier() || activeEffect.getDuration() < eff.getDuration() * percentTransmitted)
-                    {
+                    if (activeEffect.getAmplifier() < eff.getAmplifier() || activeEffect.getDuration() < eff.getDuration() * percentTransmitted) {
                         removedEffects.add(eff);
                         hasProvidedEffect = true;
                     }
@@ -206,18 +173,15 @@ public class EntitySentientSpecter extends EntityDemonBase
             }
         }
 
-        for (PotionEffect eff : removedEffects)
-        {
-            if (!attackedEntity.isPotionActive(eff.getPotion()))
-            {
+        for (PotionEffect eff : removedEffects) {
+            if (!attackedEntity.isPotionActive(eff.getPotion())) {
                 PotionEffect newEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * percentTransmitted), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
                 attackedEntity.addPotionEffect(newEffect);
 
                 PotionEffect newSentientEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * (1 - percentTransmitted)), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
                 this.removePotionEffect(eff.getPotion());
                 this.addPotionEffect(newSentientEffect);
-            } else
-            {
+            } else {
                 PotionEffect activeEffect = attackedEntity.getActivePotionEffect(eff.getPotion());
 
                 PotionEffect newEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * percentTransmitted), eff.getAmplifier(), activeEffect.getIsAmbient(), activeEffect.doesShowParticles());
@@ -232,26 +196,21 @@ public class EntitySentientSpecter extends EntityDemonBase
         return hasProvidedEffect;
     }
 
-    public List<PotionEffect> getPotionEffectsForArrowRemovingDuration(float percentTransmitted)
-    {
+    public List<PotionEffect> getPotionEffectsForArrowRemovingDuration(float percentTransmitted) {
         List<PotionEffect> arrowEffects = new ArrayList<PotionEffect>();
 
-        if (type != EnumDemonWillType.CORROSIVE)
-        {
+        if (type != EnumDemonWillType.CORROSIVE) {
             return arrowEffects;
         }
 
         List<PotionEffect> removedEffects = new ArrayList<PotionEffect>();
-        for (PotionEffect eff : this.getActivePotionEffects())
-        {
-            if (eff.getPotion().isBadEffect())
-            {
+        for (PotionEffect eff : this.getActivePotionEffects()) {
+            if (eff.getPotion().isBadEffect()) {
                 removedEffects.add(eff);
             }
         }
 
-        for (PotionEffect eff : removedEffects)
-        {
+        for (PotionEffect eff : removedEffects) {
             PotionEffect newEffect = new PotionEffect(eff.getPotion(), (int) (eff.getDuration() * percentTransmitted), eff.getAmplifier(), eff.getIsAmbient(), eff.doesShowParticles());
             arrowEffects.add(newEffect);
 
@@ -264,8 +223,7 @@ public class EntitySentientSpecter extends EntityDemonBase
     }
 
     @Override
-    public boolean attackEntityFrom(DamageSource source, float amount)
-    {
+    public boolean attackEntityFrom(DamageSource source, float amount) {
         return !this.isEntityInvulnerable(source) && super.attackEntityFrom(source, amount);
     }
 
@@ -273,47 +231,38 @@ public class EntitySentientSpecter extends EntityDemonBase
      * Redone from EntityMob to prevent despawning on peaceful.
      */
     @Override
-    public boolean attackEntityAsMob(Entity attackedEntity)
-    {
+    public boolean attackEntityAsMob(Entity attackedEntity) {
         boolean flag = super.attackEntityAsMob(attackedEntity);
 
-        if (flag)
-        {
-            if (this.type == EnumDemonWillType.CORROSIVE && attackedEntity instanceof EntityLivingBase)
-            {
+        if (flag) {
+            if (this.type == EnumDemonWillType.CORROSIVE && attackedEntity instanceof EntityLivingBase) {
 //                ((EntityLivingBase) attackedEntity).addPotionEffect(new PotionEffect(MobEffects.WITHER, 200));
                 applyNegativeEffectsToAttacked((EntityLivingBase) attackedEntity, 1);
             }
 
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
 
     @Override
-    public void onDeath(DamageSource cause)
-    {
+    public void onDeath(DamageSource cause) {
         super.onDeath(cause);
 
-        if (!getEntityWorld().isRemote && !getHeldItemMainhand().isEmpty())
-        {
+        if (!getEntityWorld().isRemote && !getHeldItemMainhand().isEmpty()) {
             this.entityDropItem(getHeldItemMainhand(), 0);
         }
     }
 
     @Override
-    public boolean isStationary()
-    {
+    public boolean isStationary() {
         return false;
     }
 
     @Override
-    public boolean absorbExplosion(Explosion explosion)
-    {
-        if (this.type == EnumDemonWillType.DESTRUCTIVE)
-        {
+    public boolean absorbExplosion(Explosion explosion) {
+        if (this.type == EnumDemonWillType.DESTRUCTIVE) {
             this.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 600, 1));
 
             explosion.doExplosionB(true);
@@ -325,27 +274,21 @@ public class EntitySentientSpecter extends EntityDemonBase
     }
 
     @Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand)
-    {
+    public boolean processInteract(EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (this.isTamed() && player.equals(this.getOwner()) && hand == EnumHand.MAIN_HAND)
-        {
+        if (this.isTamed() && player.equals(this.getOwner()) && hand == EnumHand.MAIN_HAND) {
             if (stack.isEmpty() && player.isSneaking()) //Should return to the entity
             {
-                if (!getEntityWorld().isRemote)
-                {
-                    if (!getHeldItemMainhand().isEmpty())
-                    {
+                if (!getEntityWorld().isRemote) {
+                    if (!getHeldItemMainhand().isEmpty()) {
                         this.entityDropItem(getHeldItemMainhand(), 0);
                     }
 
-                    if (!getHeldItemOffhand().isEmpty())
-                    {
+                    if (!getHeldItemOffhand().isEmpty()) {
                         this.entityDropItem(getHeldItemOffhand(), 0);
                     }
 
-                    if (wasGivenSentientArmour)
-                    {
+                    if (wasGivenSentientArmour) {
                         this.entityDropItem(new ItemStack(RegistrarBloodMagicItems.SENTIENT_ARMOUR_GEM), 0);
                     }
 
@@ -357,46 +300,38 @@ public class EntitySentientSpecter extends EntityDemonBase
         return super.processInteract(player, hand);
     }
 
-    public boolean isEntityInvulnerable(DamageSource source)
-    {
+    public boolean isEntityInvulnerable(DamageSource source) {
         return super.isEntityInvulnerable(source) && (this.type == EnumDemonWillType.DESTRUCTIVE && source.isExplosion());
     }
 
     @Override
-    public void performEmergencyHeal(double toHeal)
-    {
+    public void performEmergencyHeal(double toHeal) {
         this.heal((float) toHeal);
 
-        if (getEntityWorld() instanceof WorldServer)
-        {
+        if (getEntityWorld() instanceof WorldServer) {
             WorldServer server = (WorldServer) getEntityWorld();
             server.spawnParticle(EnumParticleTypes.HEART, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, 7, 0.2, 0.2, 0.2, 0, new int[0]);
         }
     }
 
     /**
-     * 
      * @param toHeal
      * @return Amount of Will consumed from the Aura to heal
      */
-    public double absorbWillFromAuraToHeal(double toHeal)
-    {
-        if (getEntityWorld().isRemote)
-        {
+    public double absorbWillFromAuraToHeal(double toHeal) {
+        if (getEntityWorld().isRemote) {
             return 0;
         }
 
         double healthMissing = this.getMaxHealth() - this.getHealth();
-        if (healthMissing <= 0)
-        {
+        if (healthMissing <= 0) {
             return 0;
         }
 
         double will = WorldDemonWillHandler.getCurrentWill(getEntityWorld(), getPosition(), getType());
 
         toHeal = Math.min(healthMissing, Math.min(toHeal, will / getWillToHealth()));
-        if (toHeal > 0)
-        {
+        if (toHeal > 0) {
             this.heal((float) toHeal);
             return WorldDemonWillHandler.drainWill(getEntityWorld(), getPosition(), getType(), toHeal * getWillToHealth(), true);
         }
@@ -404,21 +339,17 @@ public class EntitySentientSpecter extends EntityDemonBase
         return 0;
     }
 
-    public double getWillToHealth()
-    {
+    public double getWillToHealth() {
         return 2;
     }
 
     @Override
-    protected boolean canDespawn()
-    {
+    protected boolean canDespawn() {
         return !this.isTamed() && super.canDespawn();
     }
 
-    public void onUpdate()
-    {
-        if (!this.getEntityWorld().isRemote && this.ticksExisted % 20 == 0)
-        {
+    public void onUpdate() {
+        if (!this.getEntityWorld().isRemote && this.ticksExisted % 20 == 0) {
             absorbWillFromAuraToHeal(2);
         }
 
@@ -426,8 +357,7 @@ public class EntitySentientSpecter extends EntityDemonBase
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound tag)
-    {
+    public void writeEntityToNBT(NBTTagCompound tag) {
         super.writeEntityToNBT(tag);
 
         tag.setString(Constants.NBT.WILL_TYPE, type.toString());
@@ -436,15 +366,12 @@ public class EntitySentientSpecter extends EntityDemonBase
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound tag)
-    {
+    public void readEntityFromNBT(NBTTagCompound tag) {
         super.readEntityFromNBT(tag);
 
-        if (!tag.hasKey(Constants.NBT.WILL_TYPE))
-        {
+        if (!tag.hasKey(Constants.NBT.WILL_TYPE)) {
             type = EnumDemonWillType.DEFAULT;
-        } else
-        {
+        } else {
             type = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
         }
 
@@ -455,37 +382,29 @@ public class EntitySentientSpecter extends EntityDemonBase
 
     //TODO: Change to fit the given AI
     @Override
-    public boolean shouldAttackEntity(EntityLivingBase attacker, EntityLivingBase owner)
-    {
-        if (!(attacker instanceof EntityCreeper) && !(attacker instanceof EntityGhast))
-        {
+    public boolean shouldAttackEntity(EntityLivingBase attacker, EntityLivingBase owner) {
+        if (!(attacker instanceof EntityCreeper) && !(attacker instanceof EntityGhast)) {
             return super.shouldAttackEntity(attacker, owner);
-        } else
-        {
+        } else {
             return false;
         }
     }
 
     @Override
-    public void attackEntityWithRangedAttack(EntityLivingBase target, float velocity)
-    {
+    public void attackEntityWithRangedAttack(EntityLivingBase target, float velocity) {
         ItemStack heldStack = this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-        if (!heldStack.isEmpty() && heldStack.getItem() == RegistrarBloodMagicItems.SENTIENT_BOW)
-        {
+        if (!heldStack.isEmpty() && heldStack.getItem() == RegistrarBloodMagicItems.SENTIENT_BOW) {
             EntityTippedArrow arrowEntity = ((ItemSentientBow) heldStack.getItem()).getArrowEntity(getEntityWorld(), heldStack, target, this, velocity);
-            if (arrowEntity != null)
-            {
+            if (arrowEntity != null) {
                 List<PotionEffect> effects = getPotionEffectsForArrowRemovingDuration(0.2f);
-                for (PotionEffect eff : effects)
-                {
+                for (PotionEffect eff : effects) {
                     arrowEntity.addEffect(eff);
                 }
 
                 this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
                 this.getEntityWorld().spawnEntity(arrowEntity);
             }
-        } else
-        {
+        } else {
             EntityTippedArrow entitytippedarrow = new EntityTippedArrow(this.getEntityWorld(), this); //TODO: Change to an arrow created by the Sentient Bow
             double d0 = target.posX - this.posX;
             double d1 = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - entitytippedarrow.posY;
@@ -496,21 +415,18 @@ public class EntitySentientSpecter extends EntityDemonBase
             int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this);
             entitytippedarrow.setDamage((double) (velocity * 2.0F) + this.rand.nextGaussian() * 0.25D + (double) ((float) this.getEntityWorld().getDifficulty().getDifficultyId() * 0.11F));
 
-            if (i > 0)
-            {
+            if (i > 0) {
                 entitytippedarrow.setDamage(entitytippedarrow.getDamage() + (double) i * 0.5D + 0.5D);
             }
 
-            if (j > 0)
-            {
+            if (j > 0) {
                 entitytippedarrow.setKnockbackStrength(j);
             }
 
             boolean burning = this.isBurning();
             burning = burning || EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, this) > 0;
 
-            if (burning)
-            {
+            if (burning) {
                 entitytippedarrow.setFire(100);
             }
 
@@ -525,26 +441,22 @@ public class EntitySentientSpecter extends EntityDemonBase
     }
 
     @Override
-    protected SoundEvent getAmbientSound()
-    {
+    protected SoundEvent getAmbientSound() {
         return SoundEvents.ENTITY_COW_AMBIENT;
     }
 
     @Override
-    protected SoundEvent getHurtSound()
-    {
+    protected SoundEvent getHurtSound() {
         return SoundEvents.ENTITY_COW_HURT;
     }
 
     @Override
-    protected SoundEvent getDeathSound()
-    {
+    protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_COW_DEATH;
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, Block block)
-    {
+    protected void playStepSound(BlockPos pos, Block block) {
         this.playSound(SoundEvents.ENTITY_COW_STEP, 0.15F, 1.0F);
     }
 
@@ -552,8 +464,7 @@ public class EntitySentientSpecter extends EntityDemonBase
      * Returns the volume for the sounds this mob makes.
      */
     @Override
-    protected float getSoundVolume()
-    {
+    protected float getSoundVolume() {
         return 0.4F;
     }
 

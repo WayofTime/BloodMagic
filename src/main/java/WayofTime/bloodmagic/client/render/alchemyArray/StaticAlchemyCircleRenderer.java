@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.client.render.alchemyArray;
 
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
+import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -8,33 +10,25 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
-import WayofTime.bloodmagic.tile.TileAlchemyArray;
 
-public class StaticAlchemyCircleRenderer extends AlchemyCircleRenderer
-{
-    public StaticAlchemyCircleRenderer(ResourceLocation location)
-    {
+public class StaticAlchemyCircleRenderer extends AlchemyCircleRenderer {
+    public StaticAlchemyCircleRenderer(ResourceLocation location) {
         super(location);
     }
 
-    public StaticAlchemyCircleRenderer()
-    {
+    public StaticAlchemyCircleRenderer() {
         this(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/MovementArray.png"));
     }
 
     @Override
-    public float getSizeModifier(float craftTime)
-    {
+    public float getSizeModifier(float craftTime) {
         return 1;
     }
 
     @Override
-    public float getRotation(float craftTime)
-    {
+    public float getRotation(float craftTime) {
         float offset = 50;
-        if (craftTime >= offset)
-        {
+        if (craftTime >= offset) {
             float modifier = (craftTime - offset) * 5f;
             return modifier * 1f;
         }
@@ -42,16 +36,13 @@ public class StaticAlchemyCircleRenderer extends AlchemyCircleRenderer
     }
 
     @Override
-    public float getSecondaryRotation(float craftTime)
-    {
+    public float getSecondaryRotation(float craftTime) {
         return 0;
     }
 
     @Override
-    public void renderAt(TileEntity tile, double x, double y, double z, float craftTime)
-    {
-        if (!(tile instanceof TileAlchemyArray))
-        {
+    public void renderAt(TileEntity tile, double x, double y, double z, float craftTime) {
+        if (!(tile instanceof TileAlchemyArray)) {
             return;
         }
 
@@ -81,30 +72,29 @@ public class StaticAlchemyCircleRenderer extends AlchemyCircleRenderer
 
         GlStateManager.translate(sideHit.getFrontOffsetX() * offsetFromFace, sideHit.getFrontOffsetY() * offsetFromFace, sideHit.getFrontOffsetZ() * offsetFromFace);
 
-        switch (sideHit)
-        {
-        case DOWN:
-            GlStateManager.translate(0, 0, 1);
-            GlStateManager.rotate(-90.0f, 1, 0, 0);
-            break;
-        case EAST:
-            GlStateManager.rotate(-90.0f, 0, 1, 0);
-            GlStateManager.translate(0, 0, -1);
-            break;
-        case NORTH:
-            break;
-        case SOUTH:
-            GlStateManager.rotate(180.0f, 0, 1, 0);
-            GlStateManager.translate(-1, 0, -1);
-            break;
-        case UP:
-            GlStateManager.translate(0, 1, 0);
-            GlStateManager.rotate(90.0f, 1, 0, 0);
-            break;
-        case WEST:
-            GlStateManager.translate(0, 0, 1);
-            GlStateManager.rotate(90.0f, 0, 1, 0);
-            break;
+        switch (sideHit) {
+            case DOWN:
+                GlStateManager.translate(0, 0, 1);
+                GlStateManager.rotate(-90.0f, 1, 0, 0);
+                break;
+            case EAST:
+                GlStateManager.rotate(-90.0f, 0, 1, 0);
+                GlStateManager.translate(0, 0, -1);
+                break;
+            case NORTH:
+                break;
+            case SOUTH:
+                GlStateManager.rotate(180.0f, 0, 1, 0);
+                GlStateManager.translate(-1, 0, -1);
+                break;
+            case UP:
+                GlStateManager.translate(0, 1, 0);
+                GlStateManager.rotate(90.0f, 1, 0, 0);
+                break;
+            case WEST:
+                GlStateManager.translate(0, 0, 1);
+                GlStateManager.rotate(90.0f, 0, 1, 0);
+                break;
         }
 
         GlStateManager.pushMatrix();

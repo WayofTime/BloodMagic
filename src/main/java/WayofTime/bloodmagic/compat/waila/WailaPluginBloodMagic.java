@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.compat.waila;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.*;
 import WayofTime.bloodmagic.compat.waila.provider.*;
 import mcp.mobius.waila.api.IWailaPlugin;
 import mcp.mobius.waila.api.IWailaRegistrar;
-import WayofTime.bloodmagic.api.Constants;
 import mcp.mobius.waila.api.WailaPlugin;
 
 @WailaPlugin

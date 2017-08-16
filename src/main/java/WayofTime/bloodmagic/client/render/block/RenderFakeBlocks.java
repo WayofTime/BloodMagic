@@ -8,10 +8,8 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 
-public class RenderFakeBlocks
-{
-    public static void drawFakeBlock(TextureAtlasSprite texture, double minX, double minY, double minZ)
-    {
+public class RenderFakeBlocks {
+    public static void drawFakeBlock(TextureAtlasSprite texture, double minX, double minY, double minZ) {
         if (texture == null)
             return;
 

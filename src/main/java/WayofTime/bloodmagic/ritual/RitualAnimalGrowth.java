@@ -1,10 +1,11 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,17 +17,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.util.Utils;
 
-public class RitualAnimalGrowth extends Ritual
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class RitualAnimalGrowth extends Ritual {
     public static final double rawWillDrain = 0.05;
     public static final double vengefulWillDrain = 0.02;
     public static final double steadfastWillDrain = 0.1;
@@ -34,12 +29,10 @@ public class RitualAnimalGrowth extends Ritual
 
     public static final String GROWTH_RANGE = "growing";
     public static final String CHEST_RANGE = "chest";
-
-    public int refreshTime = 20;
     public static int defaultRefreshTime = 20;
+    public int refreshTime = 20;
 
-    public RitualAnimalGrowth()
-    {
+    public RitualAnimalGrowth() {
         super("ritualAnimalGrowth", 0, 10000, "ritual." + BloodMagic.MODID + ".animalGrowthRitual");
         addBlockRange(GROWTH_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 1, -2), 5, 2, 5));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
@@ -49,13 +42,11 @@ public class RitualAnimalGrowth extends Ritual
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -67,8 +58,7 @@ public class RitualAnimalGrowth extends Ritual
         AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
         TileEntity chest = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
         IItemHandler itemHandler = null;
-        if (chest != null)
-        {
+        if (chest != null) {
             itemHandler = Utils.getInventory(chest, null);
         }
 
@@ -98,58 +88,42 @@ public class RitualAnimalGrowth extends Ritual
 
         boolean performedEffect = false;
 
-        for (EntityAnimal animal : animalList)
-        {
-            if (animal.getGrowingAge() < 0)
-            {
+        for (EntityAnimal animal : animalList) {
+            if (animal.getGrowingAge() < 0) {
                 animal.addGrowth(5);
                 totalGrowths++;
                 performedEffect = true;
-            } else if (animal.getGrowingAge() > 0)
-            {
-                if (decreaseBreedTimer)
-                {
-                    if (vengefulWill >= vengefulWillDrain)
-                    {
+            } else if (animal.getGrowingAge() > 0) {
+                if (decreaseBreedTimer) {
+                    if (vengefulWill >= vengefulWillDrain) {
                         animal.setGrowingAge(Math.max(0, animal.getGrowingAge() - getBreedingDecreaseForWill(vengefulWill)));
                         vengefulDrain += vengefulWillDrain;
                         vengefulWill -= vengefulWillDrain;
                         performedEffect = true;
-                    } else
-                    {
+                    } else {
                         decreaseBreedTimer = false;
                     }
                 }
-            } else
-            {
-                if (kamikaze)
-                {
-                    if (destructiveWill >= destructiveWillDrain)
-                    {
-                        if (!animal.isPotionActive(RegistrarBloodMagic.SACRIFICIAL_LAMB))
-                        {
+            } else {
+                if (kamikaze) {
+                    if (destructiveWill >= destructiveWillDrain) {
+                        if (!animal.isPotionActive(RegistrarBloodMagic.SACRIFICIAL_LAMB)) {
                             animal.addPotionEffect(new PotionEffect(RegistrarBloodMagic.SACRIFICIAL_LAMB, 1200));
                             destructiveDrain += destructiveWillDrain;
                             destructiveWill -= destructiveWillDrain;
                             performedEffect = true;
                         }
-                    } else
-                    {
+                    } else {
                         kamikaze = false;
                     }
                 }
 
-                if (breedAnimals)
-                {
-                    if (steadfastWill >= steadfastWillDrain)
-                    {
-                        if (!animal.isInLove())
-                        {
-                            for (int slot = 0; slot < itemHandler.getSlots(); slot++)
-                            {
+                if (breedAnimals) {
+                    if (steadfastWill >= steadfastWillDrain) {
+                        if (!animal.isInLove()) {
+                            for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
                                 ItemStack foodStack = itemHandler.getStackInSlot(slot);
-                                if (foodStack != null && animal.isBreedingItem(foodStack) && itemHandler.extractItem(slot, 1, true) != null)
-                                {
+                                if (foodStack != null && animal.isBreedingItem(foodStack) && itemHandler.extractItem(slot, 1, true) != null) {
                                     animal.setInLove(null);
                                     itemHandler.extractItem(slot, 1, false);
                                     steadfastDrain += steadfastWillDrain;
@@ -159,36 +133,30 @@ public class RitualAnimalGrowth extends Ritual
                                 }
                             }
                         }
-                    } else
-                    {
+                    } else {
                         breedAnimals = false;
                     }
                 }
             }
 
-            if (totalGrowths >= maxGrowths)
-            {
+            if (totalGrowths >= maxGrowths) {
                 break;
             }
         }
 
-        if (performedEffect && consumeRawWill)
-        {
+        if (performedEffect && consumeRawWill) {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawWillDrain, true);
         }
 
-        if (vengefulDrain > 0)
-        {
+        if (vengefulDrain > 0) {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrain, true);
         }
 
-        if (steadfastDrain > 0)
-        {
+        if (steadfastDrain > 0) {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastDrain, true);
         }
 
-        if (destructiveDrain > 0)
-        {
+        if (destructiveDrain > 0) {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveDrain, true);
         }
 
@@ -196,14 +164,12 @@ public class RitualAnimalGrowth extends Ritual
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 2;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         this.addParallelRunes(components, 2, 0, EnumRuneType.DUSK);
@@ -221,15 +187,13 @@ public class RitualAnimalGrowth extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualAnimalGrowth();
     }
 
     @Override
-    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player)
-    {
-        return new ITextComponent[] {
+    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
+        return new ITextComponent[]{
                 new TextComponentTranslation(this.getUnlocalizedName() + ".info"),
                 new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"),
                 new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"),
@@ -239,15 +203,12 @@ public class RitualAnimalGrowth extends Ritual
         };
     }
 
-    public int getBreedingDecreaseForWill(double vengefulWill)
-    {
+    public int getBreedingDecreaseForWill(double vengefulWill) {
         return (int) (10 + vengefulWill / 5);
     }
 
-    public int getRefreshTimeForRawWill(double rawWill)
-    {
-        if (rawWill >= rawWillDrain)
-        {
+    public int getRefreshTimeForRawWill(double rawWill) {
+        if (rawWill >= rawWillDrain) {
             return (int) Math.max(defaultRefreshTime - rawWill / 10, 1);
         }
 
@@ -255,8 +216,7 @@ public class RitualAnimalGrowth extends Ritual
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return refreshTime;
     }
 }

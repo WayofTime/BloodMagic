@@ -1,12 +1,10 @@
 package WayofTime.bloodmagic.api.incense;
 
-public class TranquilityStack
-{
+public class TranquilityStack {
     public final EnumTranquilityType type;
     public double value;
 
-    public TranquilityStack(EnumTranquilityType type, double value)
-    {
+    public TranquilityStack(EnumTranquilityType type, double value) {
         this.type = type;
         this.value = value;
     }

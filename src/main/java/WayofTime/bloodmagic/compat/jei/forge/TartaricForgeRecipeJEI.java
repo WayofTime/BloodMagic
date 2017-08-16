@@ -1,25 +1,22 @@
 package WayofTime.bloodmagic.compat.jei.forge;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
+import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
-import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
-{
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class TartaricForgeRecipeJEI extends BlankRecipeWrapper {
     private TartaricForgeRecipe recipe;
     private List<ItemStack> validGems = new ArrayList<ItemStack>();
 
-    public TartaricForgeRecipeJEI(TartaricForgeRecipe recipe)
-    {
+    public TartaricForgeRecipeJEI(TartaricForgeRecipe recipe) {
         this.recipe = recipe;
 
         for (DefaultWill will : DefaultWill.values())
@@ -37,11 +34,9 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
 
     @Nullable
     @Override
-    public List<String> getTooltipStrings(int mouseX, int mouseY)
-    {
+    public List<String> getTooltipStrings(int mouseX, int mouseY) {
         ArrayList<String> ret = new ArrayList<String>();
-        if (mouseX >= 40 && mouseX <= 60 && mouseY >= 21 && mouseY <= 34)
-        {
+        if (mouseX >= 40 && mouseX <= 60 && mouseY >= 21 && mouseY <= 34) {
             ret.add(TextHelper.localize("jei.bloodmagic.recipe.minimumSouls", recipe.getMinimumSouls()));
             ret.add(TextHelper.localize("jei.bloodmagic.recipe.soulsDrained", recipe.getSoulsDrained()));
             return ret;
@@ -49,8 +44,15 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
         return null;
     }
 
-    public enum DefaultWill
-    {
+    public TartaricForgeRecipe getRecipe() {
+        return recipe;
+    }
+
+    public List<ItemStack> getValidGems() {
+        return validGems;
+    }
+
+    public enum DefaultWill {
         SOUL(new ItemStack(RegistrarBloodMagicItems.MONSTER_SOUL, 1, 0), 64),
         PETTY(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 0), 64),
         LESSER(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1), 256),
@@ -61,18 +63,9 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
         public final ItemStack willStack;
         public final double minSouls;
 
-        DefaultWill(ItemStack willStack, double minSouls)
-        {
+        DefaultWill(ItemStack willStack, double minSouls) {
             this.willStack = willStack;
             this.minSouls = minSouls;
         }
-    }
-
-    public TartaricForgeRecipe getRecipe() {
-        return recipe;
-    }
-
-    public List<ItemStack> getValidGems() {
-        return validGems;
     }
 }

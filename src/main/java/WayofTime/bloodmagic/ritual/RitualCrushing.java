@@ -1,12 +1,14 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.compress.CompressionRegistry;
+import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
+import WayofTime.bloodmagic.api.registry.AlchemyTableRecipeRegistry;
+import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,24 +19,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.api.compress.CompressionRegistry;
-import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
-import WayofTime.bloodmagic.api.registry.AlchemyTableRecipeRegistry;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
-import WayofTime.bloodmagic.util.Utils;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-public class RitualCrushing extends Ritual
-{
+public class RitualCrushing extends Ritual {
     public static final String CRUSHING_RANGE = "crushingRange";
     public static final String CHEST_RANGE = "chest";
 
@@ -45,12 +38,10 @@ public class RitualCrushing extends Ritual
 
     public static Map<ItemStack, Integer> cuttingFluidLPMap = new HashMap<ItemStack, Integer>();
     public static Map<ItemStack, Double> cuttingFluidWillMap = new HashMap<ItemStack, Double>();
-
-    public int refreshTime = 40;
     public static int defaultRefreshTime = 40;
+    public int refreshTime = 40;
 
-    public RitualCrushing()
-    {
+    public RitualCrushing() {
         super("ritualCrushing", 0, 5000, "ritual." + BloodMagic.MODID + ".crushingRitual");
         addBlockRange(CRUSHING_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, -3, -1), 3));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
@@ -59,20 +50,12 @@ public class RitualCrushing extends Ritual
         setMaximumVolumeAndDistanceOfRange(CHEST_RANGE, 1, 3, 3);
     }
 
-    public static void registerCuttingFluid(ItemStack stack, int lpDrain, double willDrain)
-    {
-        cuttingFluidLPMap.put(stack, lpDrain);
-        cuttingFluidWillMap.put(stack, willDrain);
-    }
-
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -81,8 +64,7 @@ public class RitualCrushing extends Ritual
         AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
         TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
 
-        if (tile != null && Utils.getNumberOfFreeSlots(tile, EnumFacing.DOWN) < 1)
-        {
+        if (tile != null && Utils.getNumberOfFreeSlots(tile, EnumFacing.DOWN) < 1) {
             return;
         }
 
@@ -108,39 +90,32 @@ public class RitualCrushing extends Ritual
 
         double rawDrain = 0;
 
-        for (BlockPos newPos : crushingRange.getContainedPositions(pos))
-        {
-            if (world.isAirBlock(newPos))
-            {
+        for (BlockPos newPos : crushingRange.getContainedPositions(pos)) {
+            if (world.isAirBlock(newPos)) {
                 continue;
             }
 
             IBlockState state = world.getBlockState(newPos);
             Block block = state.getBlock();
-            if (block.equals(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER) || block.equals(RegistrarBloodMagicBlocks.RITUAL_STONE) || block.getBlockHardness(state, world, newPos) == -1.0F || Utils.isBlockLiquid(state))
-            {
+            if (block.equals(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER) || block.equals(RegistrarBloodMagicBlocks.RITUAL_STONE) || block.getBlockHardness(state, world, newPos) == -1.0F || Utils.isBlockLiquid(state)) {
                 continue;
             }
 
             boolean isBlockClaimed = false;
-            if (useCuttingFluid)
-            {
+            if (useCuttingFluid) {
                 ItemStack checkStack = block.getItem(world, newPos, state);
-                if (checkStack.isEmpty())
-                {
+                if (checkStack.isEmpty()) {
                     continue;
                 }
 
                 ItemStack copyStack = checkStack.copy();
 
-                for (Entry<ItemStack, Integer> entry : cuttingFluidLPMap.entrySet())
-                {
+                for (Entry<ItemStack, Integer> entry : cuttingFluidLPMap.entrySet()) {
                     ItemStack cuttingStack = entry.getKey();
                     int lpDrain = entry.getValue();
                     double willDrain = cuttingFluidWillMap.containsKey(cuttingStack) ? cuttingFluidWillMap.get(cuttingStack) : 0;
 
-                    if (corrosiveWill < willDrain || currentEssence < lpDrain + getRefreshCost())
-                    {
+                    if (corrosiveWill < willDrain || currentEssence < lpDrain + getRefreshCost()) {
                         continue;
                     }
 
@@ -150,26 +125,21 @@ public class RitualCrushing extends Ritual
                     input.add(copyStack);
 
                     AlchemyTableRecipe recipe = AlchemyTableRecipeRegistry.getMatchingRecipe(input, world, pos);
-                    if (recipe == null)
-                    {
+                    if (recipe == null) {
                         continue;
                     }
 
                     ItemStack result = recipe.getRecipeOutput(input);
-                    if (result.isEmpty())
-                    {
+                    if (result.isEmpty()) {
                         continue;
                     }
 
-                    if (tile != null)
-                    {
+                    if (tile != null) {
                         result = Utils.insertStackIntoTile(result, tile, EnumFacing.DOWN);
-                        if (!result.isEmpty())
-                        {
+                        if (!result.isEmpty()) {
                             Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, result);
                         }
-                    } else
-                    {
+                    } else {
                         Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, result);
                     }
 
@@ -183,22 +153,18 @@ public class RitualCrushing extends Ritual
                 }
             }
 
-            if (!isBlockClaimed && isSilkTouch && block.canSilkHarvest(world, newPos, state, null))
-            {
+            if (!isBlockClaimed && isSilkTouch && block.canSilkHarvest(world, newPos, state, null)) {
                 ItemStack checkStack = block.getItem(world, newPos, state);
-                if (checkStack.isEmpty())
-                {
+                if (checkStack.isEmpty()) {
                     continue;
                 }
 
                 ItemStack copyStack = checkStack.copy();
 
-                if (steadfastWill >= steadfastWillDrain)
-                {
+                if (steadfastWill >= steadfastWillDrain) {
                     WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastWillDrain, true);
                     steadfastWill -= steadfastWillDrain;
-                } else
-                {
+                } else {
                     continue;
                 }
 
@@ -207,39 +173,31 @@ public class RitualCrushing extends Ritual
                 else
                     Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
 
-                if (!copyStack.isEmpty())
-                {
+                if (!copyStack.isEmpty()) {
                     Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
                 }
-            } else if (!isBlockClaimed)
-            {
-                if (fortune > 0 && destructiveWill < destructiveWillDrain)
-                {
+            } else if (!isBlockClaimed) {
+                if (fortune > 0 && destructiveWill < destructiveWillDrain) {
                     fortune = 0;
                 }
 
                 List<ItemStack> stackList = block.getDrops(world, newPos, state, fortune);
 
-                for (ItemStack item : stackList)
-                {
+                for (ItemStack item : stackList) {
                     ItemStack copyStack = item.copy();
 
-                    if (tile != null)
-                    {
+                    if (tile != null) {
                         copyStack = Utils.insertStackIntoTile(copyStack, tile, EnumFacing.DOWN);
-                    } else
-                    {
+                    } else {
                         Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
                         continue;
                     }
-                    if (!copyStack.isEmpty())
-                    {
+                    if (!copyStack.isEmpty()) {
                         Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, copyStack);
                     }
                 }
 
-                if (fortune > 0)
-                {
+                if (fortune > 0) {
                     WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveWillDrain, true);
                     destructiveWill -= destructiveWillDrain;
                 }
@@ -249,8 +207,7 @@ public class RitualCrushing extends Ritual
             masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
             hasOperated = true;
 
-            if (consumeRawWill)
-            {
+            if (consumeRawWill) {
                 rawDrain += rawWillDrain;
                 rawWill -= rawWillDrain;
             }
@@ -258,14 +215,11 @@ public class RitualCrushing extends Ritual
             break;
         }
 
-        if (hasOperated && tile != null && vengefulWill >= vengefulWillDrain)
-        {
+        if (hasOperated && tile != null && vengefulWill >= vengefulWillDrain) {
             Pair<ItemStack, Boolean> pair = CompressionRegistry.compressInventory(tile, world);
-            if (pair.getRight())
-            {
+            if (pair.getRight()) {
                 ItemStack returned = pair.getLeft();
-                if (returned != null)
-                {
+                if (returned != null) {
                     Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, returned);
                 }
 
@@ -273,16 +227,13 @@ public class RitualCrushing extends Ritual
             }
         }
 
-        if (rawDrain > 0)
-        {
+        if (rawDrain > 0) {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrain, true);
         }
     }
 
-    public int getRefreshTimeForRawWill(double rawWill)
-    {
-        if (rawWill >= rawWillDrain)
-        {
+    public int getRefreshTimeForRawWill(double rawWill) {
+        if (rawWill >= rawWillDrain) {
             return Math.max(1, (int) (40 - rawWill / 5));
         }
 
@@ -290,20 +241,17 @@ public class RitualCrushing extends Ritual
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return refreshTime;
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 7;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         this.addParallelRunes(components, 1, 0, EnumRuneType.EARTH);
@@ -315,9 +263,8 @@ public class RitualCrushing extends Ritual
     }
 
     @Override
-    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player)
-    {
-        return new ITextComponent[] {
+    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
+        return new ITextComponent[]{
                 new TextComponentTranslation(this.getUnlocalizedName() + ".info"),
                 new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"),
                 new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"),
@@ -328,8 +275,12 @@ public class RitualCrushing extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualCrushing();
+    }
+
+    public static void registerCuttingFluid(ItemStack stack, int lpDrain, double willDrain) {
+        cuttingFluidLPMap.put(stack, lpDrain);
+        cuttingFluidWillMap.put(stack, willDrain);
     }
 }

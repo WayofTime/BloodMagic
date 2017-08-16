@@ -5,8 +5,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public interface IRoutingNode
-{
+public interface IRoutingNode {
     void connectMasterToRemainingNode(World world, List<BlockPos> alreadyChecked, IMasterRoutingNode master);
 
     BlockPos getBlockPos();

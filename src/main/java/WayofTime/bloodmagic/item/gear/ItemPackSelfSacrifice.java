@@ -27,8 +27,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulator, IItemLPContainer, IVariantProvider
-{
+public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulator, IItemLPContainer, IVariantProvider {
     /**
      * How much LP per half heart
      */
@@ -46,8 +45,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
      */
     public final float HEALTHREQ = 0.5f;
 
-    public ItemPackSelfSacrifice()
-    {
+    public ItemPackSelfSacrifice() {
         super(ArmorMaterial.CHAIN, 0, EntityEquipmentSlot.CHEST);
 
         setUnlocalizedName(BloodMagic.MODID + ".pack.selfSacrifice");
@@ -55,21 +53,17 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote)
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
         RayTraceResult position = this.rayTrace(world, player, false);
 
-        if (position == null)
-        {
+        if (position == null) {
             return super.onItemRightClick(world, player, EnumHand.MAIN_HAND);
-        } else
-        {
-            if (position.typeOfHit == RayTraceResult.Type.BLOCK)
-            {
+        } else {
+            if (position.typeOfHit == RayTraceResult.Type.BLOCK) {
                 TileEntity tile = world.getTileEntity(position.getBlockPos());
 
                 if (!(tile instanceof IBloodAltar))
@@ -83,15 +77,13 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
     }
 
     @Override
-    public void onArmorTick(World world, EntityPlayer player, ItemStack stack)
-    {
+    public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
         if (world.isRemote || player.capabilities.isCreativeMode)
             return;
 
         boolean shouldSyphon = player.getHealth() / player.getMaxHealth() > HEALTHREQ && getStoredLP(stack) < CAPACITY;
 
-        if (shouldSyphon & world.getTotalWorldTime() % INTERVAL == 0)
-        {
+        if (shouldSyphon & world.getTotalWorldTime() % INTERVAL == 0) {
             NetworkHelper.getSoulNetwork(player).hurtPlayer(player, 1.0F);
             LPContainer.addLPToItem(stack, CONVERSION, CAPACITY);
         }
@@ -101,8 +93,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<String> list, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<String> list, ITooltipFlag flag) {
         if (!stack.hasTagCompound())
             return;
         list.add(TextHelper.localize("tooltip.bloodmagic.pack.selfSacrifice.desc"));
@@ -110,8 +101,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
         return ret;
@@ -120,22 +110,18 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
     // IFillable
 
     @Override
-    public int getCapacity()
-    {
+    public int getCapacity() {
         return this.CAPACITY;
     }
 
     @Override
-    public int getStoredLP(ItemStack stack)
-    {
+    public int getStoredLP(ItemStack stack) {
         return stack != null ? NBTHelper.checkNBT(stack).getTagCompound().getInteger(Constants.NBT.STORED_LP) : 0;
     }
 
     @Override
-    public void setStoredLP(ItemStack stack, int lp)
-    {
-        if (stack != null)
-        {
+    public void setStoredLP(ItemStack stack, int lp) {
+        if (stack != null) {
             NBTHelper.checkNBT(stack).getTagCompound().setInteger(Constants.NBT.STORED_LP, lp);
         }
     }

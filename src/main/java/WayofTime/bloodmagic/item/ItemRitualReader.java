@@ -1,10 +1,15 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ritual.EnumRitualReaderState;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -18,27 +23,18 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.input.Keyboard;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.ritual.EnumRitualReaderState;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.util.ChatUtil;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class ItemRitualReader extends Item implements IVariantProvider
-{
+public class ItemRitualReader extends Item implements IVariantProvider {
     public static final String tooltipBase = "tooltip.bloodmagic.ritualReader.";
 
-    public ItemRitualReader()
-    {
+    public ItemRitualReader() {
         super();
         setUnlocalizedName(BloodMagic.MODID + ".ritualReader");
         setMaxStackSize(1);
@@ -46,8 +42,7 @@ public class ItemRitualReader extends Item implements IVariantProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag tooltipFlag)
-    {
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
         if (!stack.hasTagCompound())
             return;
 
@@ -58,11 +53,9 @@ public class ItemRitualReader extends Item implements IVariantProvider
 
         boolean sneaking = Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
 
-        if (sneaking)
-        {
+        if (sneaking) {
             tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(tooltipBase + "desc." + state.toString().toLowerCase()))));
-        } else
-        {
+        } else {
             tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.extraInfo"));
         }
 
@@ -70,19 +63,15 @@ public class ItemRitualReader extends Item implements IVariantProvider
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         RayTraceResult ray = this.rayTrace(world, player, false);
-        if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
-        {
+        if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK) {
             return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
         }
 
-        if (player.isSneaking())
-        {
-            if (!world.isRemote)
-            {
+        if (player.isSneaking()) {
+            if (!world.isRemote) {
                 cycleReader(stack, player);
             }
 
@@ -93,80 +82,65 @@ public class ItemRitualReader extends Item implements IVariantProvider
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-    {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
-        if (!world.isRemote)
-        {
+        if (!world.isRemote) {
             EnumRitualReaderState state = this.getState(stack);
             TileEntity tile = world.getTileEntity(pos);
-            if (tile instanceof IMasterRitualStone)
-            {
+            if (tile instanceof IMasterRitualStone) {
                 IMasterRitualStone master = (IMasterRitualStone) tile;
                 this.setMasterBlockPos(stack, pos);
                 this.setBlockPos(stack, BlockPos.ORIGIN);
 
-                switch (state)
-                {
-                case INFORMATION:
-                    master.provideInformationOfRitualToPlayer(player);
-                    break;
-                case SET_AREA:
-                    String range = this.getCurrentBlockRange(stack);
-                    if (player.isSneaking())
-                    {
-                        String newRange = master.getNextBlockRange(range);
-                        range = newRange;
-                        this.setCurrentBlockRange(stack, newRange);
-                    }
-
-                    master.provideInformationOfRangeToPlayer(player, range);
-                    break;
-                case SET_WILL_TYPES:
-                    List<EnumDemonWillType> typeList = new ArrayList<EnumDemonWillType>();
-                    NonNullList<ItemStack> inv = player.inventory.mainInventory;
-                    for (int i = 0; i < 9; i++)
-                    {
-                        ItemStack testStack = inv.get(i);
-                        if (testStack.isEmpty())
-                        {
-                            continue;
+                switch (state) {
+                    case INFORMATION:
+                        master.provideInformationOfRitualToPlayer(player);
+                        break;
+                    case SET_AREA:
+                        String range = this.getCurrentBlockRange(stack);
+                        if (player.isSneaking()) {
+                            String newRange = master.getNextBlockRange(range);
+                            range = newRange;
+                            this.setCurrentBlockRange(stack, newRange);
                         }
 
-                        if (testStack.getItem() instanceof IDiscreteDemonWill)
-                        {
-                            EnumDemonWillType type = ((IDiscreteDemonWill) testStack.getItem()).getType(testStack);
-                            if (!typeList.contains(type))
-                            {
-                                typeList.add(type);
+                        master.provideInformationOfRangeToPlayer(player, range);
+                        break;
+                    case SET_WILL_TYPES:
+                        List<EnumDemonWillType> typeList = new ArrayList<EnumDemonWillType>();
+                        NonNullList<ItemStack> inv = player.inventory.mainInventory;
+                        for (int i = 0; i < 9; i++) {
+                            ItemStack testStack = inv.get(i);
+                            if (testStack.isEmpty()) {
+                                continue;
+                            }
+
+                            if (testStack.getItem() instanceof IDiscreteDemonWill) {
+                                EnumDemonWillType type = ((IDiscreteDemonWill) testStack.getItem()).getType(testStack);
+                                if (!typeList.contains(type)) {
+                                    typeList.add(type);
+                                }
                             }
                         }
-                    }
 
-                    master.setActiveWillConfig(player, typeList);
-                    master.provideInformationOfWillConfigToPlayer(player, typeList);
-                    break;
+                        master.setActiveWillConfig(player, typeList);
+                        master.provideInformationOfWillConfigToPlayer(player, typeList);
+                        break;
                 }
 
                 return EnumActionResult.FAIL;
-            } else
-            {
-                if (state == EnumRitualReaderState.SET_AREA)
-                {
+            } else {
+                if (state == EnumRitualReaderState.SET_AREA) {
                     BlockPos masterPos = this.getMasterBlockPos(stack);
-                    if (!masterPos.equals(BlockPos.ORIGIN))
-                    {
+                    if (!masterPos.equals(BlockPos.ORIGIN)) {
                         BlockPos containedPos = getBlockPos(stack);
-                        if (containedPos.equals(BlockPos.ORIGIN))
-                        {
+                        if (containedPos.equals(BlockPos.ORIGIN)) {
                             this.setBlockPos(stack, pos.subtract(masterPos));
                             ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.blockRange.firstBlock"));
                             //TODO: Notify player.
-                        } else
-                        {
+                        } else {
                             tile = world.getTileEntity(masterPos);
-                            if (tile instanceof IMasterRitualStone)
-                            {
+                            if (tile instanceof IMasterRitualStone) {
                                 IMasterRitualStone master = (IMasterRitualStone) tile;
                                 master.setBlockRangeByBounds(player, this.getCurrentBlockRange(stack), containedPos, pos.subtract(masterPos));
                             }
@@ -181,14 +155,12 @@ public class ItemRitualReader extends Item implements IVariantProvider
         return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
-    public BlockPos getBlockPos(ItemStack stack)
-    {
+    public BlockPos getBlockPos(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
         return new BlockPos(stack.getTagCompound().getInteger(Constants.NBT.X_COORD), stack.getTagCompound().getInteger(Constants.NBT.Y_COORD), stack.getTagCompound().getInteger(Constants.NBT.Z_COORD));
     }
 
-    public ItemStack setBlockPos(ItemStack stack, BlockPos pos)
-    {
+    public ItemStack setBlockPos(ItemStack stack, BlockPos pos) {
         stack = NBTHelper.checkNBT(stack);
         NBTTagCompound itemTag = stack.getTagCompound();
         itemTag.setInteger(Constants.NBT.X_COORD, pos.getX());
@@ -197,14 +169,12 @@ public class ItemRitualReader extends Item implements IVariantProvider
         return stack;
     }
 
-    public BlockPos getMasterBlockPos(ItemStack stack)
-    {
+    public BlockPos getMasterBlockPos(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
         return new BlockPos(stack.getTagCompound().getInteger(Constants.NBT.X_COORD + "master"), stack.getTagCompound().getInteger(Constants.NBT.Y_COORD + "master"), stack.getTagCompound().getInteger(Constants.NBT.Z_COORD + "master"));
     }
 
-    public ItemStack setMasterBlockPos(ItemStack stack, BlockPos pos)
-    {
+    public ItemStack setMasterBlockPos(ItemStack stack, BlockPos pos) {
         stack = NBTHelper.checkNBT(stack);
         NBTTagCompound itemTag = stack.getTagCompound();
         itemTag.setInteger(Constants.NBT.X_COORD + "master", pos.getX());
@@ -213,8 +183,7 @@ public class ItemRitualReader extends Item implements IVariantProvider
         return stack;
     }
 
-    public String getCurrentBlockRange(ItemStack stack)
-    {
+    public String getCurrentBlockRange(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
         NBTTagCompound tag = stack.getTagCompound();
@@ -222,8 +191,7 @@ public class ItemRitualReader extends Item implements IVariantProvider
         return tag.getString("range");
     }
 
-    public void setCurrentBlockRange(ItemStack stack, String range)
-    {
+    public void setCurrentBlockRange(ItemStack stack, String range) {
         NBTHelper.checkNBT(stack);
 
         NBTTagCompound tag = stack.getTagCompound();
@@ -231,8 +199,7 @@ public class ItemRitualReader extends Item implements IVariantProvider
         tag.setString("range", range);
     }
 
-    public void cycleReader(ItemStack stack, EntityPlayer player)
-    {
+    public void cycleReader(ItemStack stack, EntityPlayer player) {
         EnumRitualReaderState prevState = getState(stack);
         int val = prevState.ordinal();
         int nextVal = val + 1 >= EnumRitualReaderState.values().length ? 0 : val + 1;
@@ -242,13 +209,11 @@ public class ItemRitualReader extends Item implements IVariantProvider
         notifyPlayerOfStateChange(nextState, player);
     }
 
-    public void notifyPlayerOfStateChange(EnumRitualReaderState state, EntityPlayer player)
-    {
+    public void notifyPlayerOfStateChange(EnumRitualReaderState state, EntityPlayer player) {
         ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentState", new TextComponentTranslation(tooltipBase + state.toString().toLowerCase())));
     }
 
-    public void setState(ItemStack stack, EnumRitualReaderState state)
-    {
+    public void setState(ItemStack stack, EnumRitualReaderState state) {
         NBTHelper.checkNBT(stack);
 
         NBTTagCompound tag = stack.getTagCompound();
@@ -256,10 +221,8 @@ public class ItemRitualReader extends Item implements IVariantProvider
         tag.setInteger(Constants.NBT.RITUAL_READER, state.ordinal());
     }
 
-    public EnumRitualReaderState getState(ItemStack stack)
-    {
-        if (!stack.hasTagCompound())
-        {
+    public EnumRitualReaderState getState(ItemStack stack) {
+        if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
             return EnumRitualReaderState.INFORMATION;
         }
@@ -270,8 +233,7 @@ public class ItemRitualReader extends Item implements IVariantProvider
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
         return ret;

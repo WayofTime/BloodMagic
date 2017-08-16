@@ -16,13 +16,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
-{
+public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank> {
     private static final Minecraft mc = Minecraft.getMinecraft();
 
     @Override
-    public void render(TileBloodTank bloodTank, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
-    {
+    public void render(TileBloodTank bloodTank, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         if (bloodTank == null)
             return;
 
@@ -39,8 +37,7 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank>
         GlStateManager.popMatrix();
     }
 
-    public void renderFluid(float maxHeight, Fluid renderFluid, double x, double y, double z)
-    {
+    public void renderFluid(float maxHeight, Fluid renderFluid, double x, double y, double z) {
         maxHeight = maxHeight * 0.575F;
 
         GlStateManager.translate(x, y, z);

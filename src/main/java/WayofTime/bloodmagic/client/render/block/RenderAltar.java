@@ -22,16 +22,14 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
-public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
-{
+public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
     public static Minecraft mc = Minecraft.getMinecraft();
     public static ResourceLocation resource = new ResourceLocation("bloodmagic", "textures/blocks/lifeEssenceStill.png");
     public static float minHeight = 0.499f;
     public static float maxHeight = 0.745f;
 
     @Override
-    public void render(TileAltar tileAltar, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
-    {
+    public void render(TileAltar tileAltar, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         ItemStack inputStack = tileAltar.getStackInSlot(0);
 
         float level = ((float) tileAltar.getCurrentBlood()) / (float) tileAltar.getCapacity();
@@ -43,14 +41,12 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
         this.renderItem(tileAltar.getWorld(), inputStack);
         GlStateManager.popMatrix();
 
-        if (tileAltar.getCurrentTierDisplayed() != EnumAltarTier.ONE)
-        {
+        if (tileAltar.getCurrentTierDisplayed() != EnumAltarTier.ONE) {
             renderHologram(tileAltar, tileAltar.getCurrentTierDisplayed(), partialTicks);
         }
     }
 
-    private void renderFluid(World world, float fluidLevel)
-    {
+    private void renderFluid(World world, float fluidLevel) {
         GlStateManager.pushMatrix();
 
         Fluid fluid = BlockLifeEssence.getLifeEssence();
@@ -86,20 +82,9 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
         GlStateManager.popMatrix();
     }
 
-    private static void setGLColorFromInt(int color)
-    {
-        float red = (color >> 16 & 0xFF) / 255.0F;
-        float green = (color >> 8 & 0xFF) / 255.0F;
-        float blue = (color & 0xFF) / 255.0F;
-
-        GlStateManager.color(red, green, blue, 1.0F);
-    }
-
-    private void renderItem(World world, ItemStack stack)
-    {
+    private void renderItem(World world, ItemStack stack) {
         RenderItem itemRenderer = mc.getRenderItem();
-        if (!stack.isEmpty())
-        {
+        if (!stack.isEmpty()) {
             GlStateManager.translate(0.5, 1, 0.5);
             EntityItem entityitem = new EntityItem(world, 0.0D, 0.0D, 0.0D, stack);
             entityitem.getItem().setCount(1);
@@ -122,8 +107,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
         }
     }
 
-    private void renderHologram(TileAltar altar, EnumAltarTier tier, float partialTicks)
-    {
+    private void renderHologram(TileAltar altar, EnumAltarTier tier, float partialTicks) {
         EntityPlayerSP player = mc.player;
         World world = player.world;
 
@@ -141,37 +125,34 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
         double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
         double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
 
-        for (AltarComponent altarComponent : tier.getAltarComponents())
-        {
+        for (AltarComponent altarComponent : tier.getAltarComponents()) {
             vX = vec3.add(altarComponent.getOffset());
             double minX = vX.getX() - posX;
             double minY = vX.getY() - posY;
             double minZ = vX.getZ() - posZ;
 
-            if (!world.getBlockState(vX).isOpaqueCube())
-            {
+            if (!world.getBlockState(vX).isOpaqueCube()) {
                 TextureAtlasSprite texture = null;
 
-                switch (altarComponent.getComponent())
-                {
-                case BLOODRUNE:
-                    texture = ClientHandler.blankBloodRune;
-                    break;
-                case NOTAIR:
-                    texture = ClientHandler.stoneBrick;
-                    break;
-                case GLOWSTONE:
-                    texture = ClientHandler.glowstone;
-                    break;
-                case BLOODSTONE:
-                    texture = ClientHandler.bloodStoneBrick;
-                    break;
-                case BEACON:
-                    texture = ClientHandler.beacon;
-                    break;
-                case CRYSTAL:
-                    texture = ClientHandler.crystalCluster;
-                    break;
+                switch (altarComponent.getComponent()) {
+                    case BLOODRUNE:
+                        texture = ClientHandler.blankBloodRune;
+                        break;
+                    case NOTAIR:
+                        texture = ClientHandler.stoneBrick;
+                        break;
+                    case GLOWSTONE:
+                        texture = ClientHandler.glowstone;
+                        break;
+                    case BLOODSTONE:
+                        texture = ClientHandler.bloodStoneBrick;
+                        break;
+                    case BEACON:
+                        texture = ClientHandler.beacon;
+                        break;
+                    case CRYSTAL:
+                        texture = ClientHandler.crystalCluster;
+                        break;
                 }
 
                 RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
@@ -179,5 +160,13 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
         }
 
         GlStateManager.popMatrix();
+    }
+
+    private static void setGLColorFromInt(int color) {
+        float red = (color >> 16 & 0xFF) / 255.0F;
+        float green = (color >> 8 & 0xFF) / 255.0F;
+        float blue = (color & 0xFF) / 255.0F;
+
+        GlStateManager.color(red, green, blue, 1.0F);
     }
 }

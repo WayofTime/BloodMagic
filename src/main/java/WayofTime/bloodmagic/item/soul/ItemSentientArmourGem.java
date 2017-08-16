@@ -1,5 +1,9 @@
 package WayofTime.bloodmagic.item.soul;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -11,15 +15,9 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 
-public class ItemSentientArmourGem extends Item
-{
-    public ItemSentientArmourGem()
-    {
+public class ItemSentientArmourGem extends Item {
+    public ItemSentientArmourGem() {
         super();
 
         setCreativeTab(BloodMagic.TAB_BM);
@@ -27,29 +25,23 @@ public class ItemSentientArmourGem extends Item
         setMaxStackSize(1);
     }
 
-    public EnumDemonWillType getCurrentType(ItemStack stack)
-    {
+    public EnumDemonWillType getCurrentType(ItemStack stack) {
         return EnumDemonWillType.DEFAULT;
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         boolean hasSentientArmour = false;
         NonNullList<ItemStack> armourInventory = player.inventory.armorInventory;
-        for (ItemStack armourStack : armourInventory)
-        {
-            if (armourStack != null && armourStack.getItem() instanceof ItemSentientArmour)
-            {
+        for (ItemStack armourStack : armourInventory) {
+            if (armourStack != null && armourStack.getItem() instanceof ItemSentientArmour) {
                 hasSentientArmour = true;
             }
         }
 
-        if (hasSentientArmour)
-        {
+        if (hasSentientArmour) {
             ItemSentientArmour.revertAllArmour(player);
-        } else
-        {
+        } else {
             EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);
             double will = PlayerDemonWillHandler.getTotalDemonWill(type, player);
 
@@ -61,20 +53,16 @@ public class ItemSentientArmourGem extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining)
-    {
+    public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining) {
         boolean hasSentientArmour = false;
         NonNullList<ItemStack> armourInventory = player.inventory.armorInventory;
-        for (ItemStack armourStack : armourInventory)
-        {
-            if (armourStack != null && armourStack.getItem() instanceof ItemSentientArmour)
-            {
+        for (ItemStack armourStack : armourInventory) {
+            if (armourStack != null && armourStack.getItem() instanceof ItemSentientArmour) {
                 hasSentientArmour = true;
             }
         }
 
-        if (hasSentientArmour)
-        {
+        if (hasSentientArmour) {
             return new ModelResourceLocation("bloodmagic:ItemSentientArmourGem1", "inventory");
         }
 

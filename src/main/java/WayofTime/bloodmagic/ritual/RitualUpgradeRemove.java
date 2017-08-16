@@ -1,48 +1,39 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.api.livingArmour.StatTracker;
+import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import com.google.common.collect.Iterables;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.livingArmour.StatTracker;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
-import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 
-import com.google.common.collect.Iterables;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
 
-public class RitualUpgradeRemove extends Ritual
-{
+public class RitualUpgradeRemove extends Ritual {
     public static final String CHECK_RANGE = "fillRange";
 
-    public RitualUpgradeRemove()
-    {
+    public RitualUpgradeRemove() {
         super("ritualUpgradeRemove", 0, 25000, "ritual." + BloodMagic.MODID + ".upgradeRemoveRitual");
         addBlockRange(CHECK_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1, 2, 1));
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
 
-        if (world.isRemote)
-        {
+        if (world.isRemote) {
             return;
         }
 
@@ -52,21 +43,17 @@ public class RitualUpgradeRemove extends Ritual
 
         List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, checkRange.getAABB(pos));
 
-        for (EntityPlayer player : playerList)
-        {
-            if (LivingArmour.hasFullSet(player))
-            {
+        for (EntityPlayer player : playerList) {
+            if (LivingArmour.hasFullSet(player)) {
                 boolean removedUpgrade = false;
 
                 ItemStack chestStack = Iterables.toArray(player.getArmorInventoryList(), ItemStack.class)[2];
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-                if (armour != null)
-                {
+                if (armour != null) {
                     @SuppressWarnings("unchecked")
                     HashMap<String, LivingArmourUpgrade> upgradeMap = (HashMap<String, LivingArmourUpgrade>) armour.upgradeMap.clone();
 
-                    for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())
-                    {
+                    for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet()) {
                         LivingArmourUpgrade upgrade = entry.getValue();
                         String upgradeKey = entry.getKey();
 
@@ -76,17 +63,13 @@ public class RitualUpgradeRemove extends Ritual
 
                         boolean successful = armour.removeUpgrade(player, upgrade);
 
-                        if (successful)
-                        {
+                        if (successful) {
                             removedUpgrade = true;
                             world.spawnEntity(new EntityItem(world, player.posX, player.posY, player.posZ, upgradeStack));
-                            for (Entry<String, StatTracker> trackerEntry : armour.trackerMap.entrySet())
-                            {
+                            for (Entry<String, StatTracker> trackerEntry : armour.trackerMap.entrySet()) {
                                 StatTracker tracker = trackerEntry.getValue();
-                                if (tracker != null)
-                                {
-                                    if (tracker.providesUpgrade(upgradeKey))
-                                    {
+                                if (tracker != null) {
+                                    if (tracker.providesUpgrade(upgradeKey)) {
                                         tracker.resetTracker(); //Resets the tracker if the upgrade corresponding to it was removed.
                                     }
                                 }
@@ -94,8 +77,7 @@ public class RitualUpgradeRemove extends Ritual
                         }
                     }
 
-                    if (removedUpgrade)
-                    {
+                    if (removedUpgrade) {
                         ((ItemLivingArmour) chestStack.getItem()).setLivingArmour(chestStack, armour, true);
                         ItemLivingArmour.setLivingArmour(chestStack, armour);
                         armour.recalculateUpgradePoints();
@@ -111,20 +93,17 @@ public class RitualUpgradeRemove extends Ritual
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 1;
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 0;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         this.addCornerRunes(components, 1, 0, EnumRuneType.DUSK);
@@ -135,8 +114,7 @@ public class RitualUpgradeRemove extends Ritual
         this.addCornerRunes(components, 1, 3, EnumRuneType.WATER);
         this.addParallelRunes(components, 1, 4, EnumRuneType.AIR);
 
-        for (int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             this.addCornerRunes(components, 3, i, EnumRuneType.EARTH);
         }
 
@@ -144,8 +122,7 @@ public class RitualUpgradeRemove extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualUpgradeRemove();
     }
 }

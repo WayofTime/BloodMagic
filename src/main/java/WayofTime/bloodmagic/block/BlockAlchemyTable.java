@@ -1,6 +1,9 @@
 package WayofTime.bloodmagic.block;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.item.block.ItemBlockAlchemyTable;
+import WayofTime.bloodmagic.tile.TileAlchemyTable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -17,19 +20,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.tile.TileAlchemyTable;
 
 import javax.annotation.Nullable;
 
-public class BlockAlchemyTable extends Block implements IBMBlock
-{
+public class BlockAlchemyTable extends Block implements IBMBlock {
     public static final PropertyBool INVISIBLE = PropertyBool.create("invisible");
     public static final PropertyEnum<EnumFacing> DIRECTION = PropertyEnum.<EnumFacing>create("direction", EnumFacing.class);
 
-    public BlockAlchemyTable()
-    {
+    public BlockAlchemyTable() {
         super(Material.ROCK);
 //        this.setDefaultState(this.blockState.getBaseState().withProperty(DIRECTION, EnumFacing.DOWN).withProperty(INVISIBLE, false));
 
@@ -43,44 +41,37 @@ public class BlockAlchemyTable extends Block implements IBMBlock
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
-    {
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state)
-    {
+    public boolean causesSuffocation(IBlockState state) {
         return false;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
+    public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
     }
 
     @Override
-    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer)
-    {
+    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
         return layer == BlockRenderLayer.CUTOUT_MIPPED || layer == BlockRenderLayer.TRANSLUCENT;
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState();
     }
 
@@ -88,17 +79,14 @@ public class BlockAlchemyTable extends Block implements IBMBlock
      * Convert the BlockState into the correct metadata value
      */
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         return 0;
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos)
-    {
+    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof TileAlchemyTable)
-        {
+        if (tile instanceof TileAlchemyTable) {
             return state.withProperty(INVISIBLE, ((TileAlchemyTable) tile).isInvisible()).withProperty(DIRECTION, ((TileAlchemyTable) tile).getDirection());
         }
 
@@ -106,24 +94,19 @@ public class BlockAlchemyTable extends Block implements IBMBlock
     }
 
     @Override
-    protected BlockStateContainer createBlockState()
-    {
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, DIRECTION, INVISIBLE);
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         BlockPos position = pos;
         TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof TileAlchemyTable)
-        {
-            if (((TileAlchemyTable) tile).isSlave())
-            {
+        if (tile instanceof TileAlchemyTable) {
+            if (((TileAlchemyTable) tile).isSlave()) {
                 position = ((TileAlchemyTable) tile).getConnectedPos();
                 tile = world.getTileEntity(position);
-                if (!(tile instanceof TileAlchemyTable))
-                {
+                if (!(tile instanceof TileAlchemyTable)) {
                     return false;
                 }
             }
@@ -135,11 +118,9 @@ public class BlockAlchemyTable extends Block implements IBMBlock
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState blockState)
-    {
+    public void breakBlock(World world, BlockPos pos, IBlockState blockState) {
         TileAlchemyTable tile = (TileAlchemyTable) world.getTileEntity(pos);
-        if (tile != null && !tile.isSlave())
-        {
+        if (tile != null && !tile.isSlave()) {
             tile.dropItems();
         }
 
@@ -158,15 +139,12 @@ public class BlockAlchemyTable extends Block implements IBMBlock
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos)
-    {
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
         TileAlchemyTable tile = (TileAlchemyTable) world.getTileEntity(pos);
-        if (tile != null)
-        {
+        if (tile != null) {
             BlockPos connectedPos = tile.getConnectedPos();
             TileEntity connectedTile = world.getTileEntity(connectedPos);
-            if (!(connectedTile instanceof TileAlchemyTable && ((TileAlchemyTable) connectedTile).getConnectedPos().equals(pos)))
-            {
+            if (!(connectedTile instanceof TileAlchemyTable && ((TileAlchemyTable) connectedTile).getConnectedPos().equals(pos))) {
                 this.breakBlock(world, pos, state);
                 world.setBlockToAir(pos);
             }

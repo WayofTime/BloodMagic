@@ -10,33 +10,28 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class RitualInterdiction extends Ritual
-{
+public class RitualInterdiction extends Ritual {
     public static final String INTERDICTION_RANGE = "interdictionRange";
 
-    public RitualInterdiction()
-    {
+    public RitualInterdiction() {
         super("ritualInterdiction", 0, 1000, "ritual." + BloodMagic.MODID + ".interdictionRitual");
         addBlockRange(INTERDICTION_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 0, -2), 5));
         setMaximumVolumeAndDistanceOfRange(INTERDICTION_RANGE, 0, 10, 10);
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
 
         AreaDescriptor interdictionRange = getBlockRange(INTERDICTION_RANGE);
 
-        for (EntityLivingBase entity : world.getEntitiesWithinAABB(EntityLivingBase.class, interdictionRange.getAABB(masterRitualStone.getBlockPos())))
-        {
+        for (EntityLivingBase entity : world.getEntitiesWithinAABB(EntityLivingBase.class, interdictionRange.getAABB(masterRitualStone.getBlockPos()))) {
             if (entity instanceof EntityPlayer && (((EntityPlayer) entity).capabilities.isCreativeMode || PlayerHelper.getUUIDFromPlayer((EntityPlayer) entity).toString().equals(masterRitualStone.getOwner())))
                 continue;
 
@@ -49,28 +44,24 @@ public class RitualInterdiction extends Ritual
             entity.motionZ = 0.1 * zDif;
             entity.fallDistance = 0;
 
-            if (entity instanceof EntityPlayer)
-            {
+            if (entity instanceof EntityPlayer) {
                 entity.velocityChanged = true;
             }
         }
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 1;
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 1;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         this.addCornerRunes(components, 1, 0, EnumRuneType.AIR);
@@ -80,8 +71,7 @@ public class RitualInterdiction extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualInterdiction();
     }
 }

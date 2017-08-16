@@ -1,14 +1,13 @@
 package WayofTime.bloodmagic.api.livingArmour;
 
-import java.util.List;
-
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
 
-public abstract class StatTracker
-{
+import java.util.List;
+
+public abstract class StatTracker {
     private boolean isDirty = false;
 
     public abstract String getUniqueIdentifier();
@@ -26,13 +25,10 @@ public abstract class StatTracker
     /**
      * Called each tick to update the tracker's information. Called in
      * LivingArmour
-     * 
-     * @param world
-     *        World the player is in
-     * @param player
-     *        The player that has the armour equipped
-     * @param livingArmour
-     *        The equipped LivingArmour
+     *
+     * @param world        World the player is in
+     * @param player       The player that has the armour equipped
+     * @param livingArmour The equipped LivingArmour
      * @return True if there is a new upgrade unlocked this tick.
      */
     public abstract boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour);
@@ -43,30 +39,25 @@ public abstract class StatTracker
 
     /**
      * Used to obtain the progress from the current level to the next level.
-     * 
+     * <p>
      * 0.0 being 0% - 1.0 being 100%.
-     * 
-     * @param livingArmour
-     *        The equipped LivingArmour
+     *
+     * @param livingArmour The equipped LivingArmour
      * @return the progress from the current level to the next level.
      */
-    public double getProgress(LivingArmour livingArmour, int currentLevel)
-    {
+    public double getProgress(LivingArmour livingArmour, int currentLevel) {
         return 1.0D;
     }
 
-    public final boolean isDirty()
-    {
+    public final boolean isDirty() {
         return isDirty;
     }
 
-    public final void markDirty()
-    {
+    public final void markDirty() {
         this.isDirty = true;
     }
 
-    public final void resetDirty()
-    {
+    public final void resetDirty() {
         this.isDirty = false;
     }
 

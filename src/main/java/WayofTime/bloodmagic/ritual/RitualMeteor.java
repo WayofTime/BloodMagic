@@ -1,38 +1,31 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import WayofTime.bloodmagic.BloodMagic;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 import WayofTime.bloodmagic.meteor.MeteorRegistry;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
-public class RitualMeteor extends Ritual
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class RitualMeteor extends Ritual {
     public static final String ITEM_RANGE = "itemRange";
     public static final double destructiveWillDrain = 50;
 
-    public RitualMeteor()
-    {
+    public RitualMeteor() {
         super("ritualMeteor", 0, 1000000, "ritual." + BloodMagic.MODID + ".meteorRitual");
         addBlockRange(ITEM_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
         setMaximumVolumeAndDistanceOfRange(ITEM_RANGE, 0, 10, 10);
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
@@ -55,22 +48,18 @@ public class RitualMeteor extends Ritual
 
         boolean successful = false;
 
-        for (EntityItem entityItem : itemList)
-        {
+        for (EntityItem entityItem : itemList) {
             ItemStack stack = entityItem.getItem();
-            if (MeteorRegistry.hasMeteorForItem(stack))
-            {
+            if (MeteorRegistry.hasMeteorForItem(stack)) {
                 EntityMeteor meteor = new EntityMeteor(world, pos.getX(), 260, pos.getZ(), 0, -0.1, 0, radiusModifier, explosionModifier, fillerChance);
                 meteor.setMeteorStack(stack.copy());
                 world.spawnEntity(meteor);
 
                 entityItem.setDead();
 
-                if (destructiveWill >= destructiveWillDrain && currentEssence >= 1000000000)
-                {
+                if (destructiveWill >= destructiveWillDrain && currentEssence >= 1000000000) {
                     masterRitualStone.getOwnerNetwork().syphon(1000000);
-                } else
-                {
+                } else {
                     masterRitualStone.setActive(false);
                 }
                 successful = true;
@@ -78,40 +67,33 @@ public class RitualMeteor extends Ritual
             }
         }
 
-        if (successful)
-        {
-            if (rawWill > 0)
-            {
+        if (successful) {
+            if (rawWill > 0) {
                 WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawWill, true);
             }
 
-            if (corrosiveWill > 0)
-            {
+            if (corrosiveWill > 0) {
                 WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveWill, true);
             }
 
-            if (steadfastWill > 0)
-            {
+            if (steadfastWill > 0) {
                 WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastWill, true);
             }
         }
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 1;
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 0;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents()
-    {
+    public ArrayList<RitualComponent> getComponents() {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         this.addParallelRunes(components, 2, 0, EnumRuneType.FIRE);
@@ -120,8 +102,7 @@ public class RitualMeteor extends Ritual
         this.addOffsetRunes(components, 5, 3, 0, EnumRuneType.DUSK);
         this.addCornerRunes(components, 4, 0, EnumRuneType.DUSK);
 
-        for (int i = 4; i <= 6; i++)
-        {
+        for (int i = 4; i <= 6; i++) {
             this.addParallelRunes(components, 4, 0, EnumRuneType.EARTH);
         }
 
@@ -145,23 +126,19 @@ public class RitualMeteor extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualMeteor();
     }
 
-    public double getRadiusModifier(double rawWill)
-    {
+    public double getRadiusModifier(double rawWill) {
         return Math.pow(1 + rawWill / 100, 1 / 3);
     }
 
-    public double getFillerChance(double corrosiveWill)
-    {
+    public double getFillerChance(double corrosiveWill) {
         return corrosiveWill / 200;
     }
 
-    public double getExplosionModifier(double steadfastWill)
-    {
+    public double getExplosionModifier(double steadfastWill) {
         return Math.max(Math.pow(0.4, steadfastWill / 100), 1);
     }
 }

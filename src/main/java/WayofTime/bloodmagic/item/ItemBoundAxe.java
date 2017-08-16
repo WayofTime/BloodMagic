@@ -1,11 +1,13 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nullable;
-
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.ItemStackWrapper;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.material.Material;
@@ -28,40 +30,31 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.ItemStackWrapper;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
-{
+public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider {
     private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.PLANKS, Blocks.BOOKSHELF, Blocks.LOG, Blocks.LOG2, Blocks.CHEST, Blocks.PUMPKIN, Blocks.LIT_PUMPKIN, Blocks.MELON_BLOCK, Blocks.LADDER);
 
-    public ItemBoundAxe()
-    {
+    public ItemBoundAxe() {
         super("axe", 7, EFFECTIVE_ON);
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
-    {
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
         return true;
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState block, BlockPos pos, EntityLivingBase entityLiving)
-    {
+    public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState block, BlockPos pos, EntityLivingBase entityLiving) {
         return true;
     }
 
     @Override
-    protected void onBoundRelease(ItemStack stack, World world, EntityPlayer player, int charge)
-    {
+    protected void onBoundRelease(ItemStack stack, World world, EntityPlayer player, int charge) {
         if (world.isRemote)
             return;
 
@@ -73,12 +66,9 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
 
         BlockPos playerPos = player.getPosition();
 
-        for (int i = -range; i <= range; i++)
-        {
-            for (int j = 0; j <= 2 * range; j++)
-            {
-                for (int k = -range; k <= range; k++)
-                {
+        for (int i = -range; i <= range; i++) {
+            for (int j = 0; j <= 2 * range; j++) {
+                for (int k = -range; k <= range; k++) {
                     BlockPos blockPos = playerPos.add(i, j, k);
                     BlockStack blockStack = BlockStack.getStackFromPos(world, blockPos);
 
@@ -92,16 +82,13 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         continue;
 
-                    if (blockStack.getBlock().getBlockHardness(blockStack.getState(), world, blockPos) != -1.0F)
-                    {
+                    if (blockStack.getBlock().getBlockHardness(blockStack.getState(), world, blockPos) != -1.0F) {
                         float strengthVsBlock = getStrVsBlock(stack, blockStack.getState());
 
-                        if (strengthVsBlock > 1.1F || blockStack.getBlock() instanceof BlockLeaves && world.canMineBlockBody(player, blockPos))
-                        {
+                        if (strengthVsBlock > 1.1F || blockStack.getBlock() instanceof BlockLeaves && world.canMineBlockBody(player, blockPos)) {
                             if (silkTouch && blockStack.getBlock().canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))
                                 drops.add(new ItemStackWrapper(blockStack));
-                            else
-                            {
+                            else {
                                 List<ItemStack> itemDrops = blockStack.getBlock().getDrops(world, blockPos, world.getBlockState(blockPos), fortuneLvl);
 
                                 for (ItemStack stacks : itemDrops)
@@ -121,11 +108,9 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack)
-    {
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack) {
         Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
-        if (equipmentSlot == EntityEquipmentSlot.MAINHAND)
-        {
+        if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getActivated(stack) ? 11 : 2, 0));
             multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", -3.0, 0));
         }
@@ -134,21 +119,18 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public ItemMeshDefinition getMeshDefinition()
-    {
+    public ItemMeshDefinition getMeshDefinition() {
         return new CustomMeshDefinitionActivatable("ItemBoundAxe");
     }
 
     @Nullable
     @Override
-    public ResourceLocation getCustomLocation()
-    {
+    public ResourceLocation getCustomLocation() {
         return null;
     }
 
     @Override
-    public List<String> getVariants()
-    {
+    public List<String> getVariants() {
         List<String> ret = new ArrayList<String>();
         ret.add("active=true");
         ret.add("active=false");

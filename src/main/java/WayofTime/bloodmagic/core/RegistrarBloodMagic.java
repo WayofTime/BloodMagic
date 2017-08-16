@@ -4,7 +4,10 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.entity.mob.*;
-import WayofTime.bloodmagic.entity.projectile.*;
+import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
+import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
+import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
+import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import WayofTime.bloodmagic.potion.PotionBloodMagic;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.MobEffects;
@@ -87,16 +90,16 @@ public class RegistrarBloodMagic {
     @SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
         int entities = 0;
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "blood_light"), EntityBloodLight.class, "BloodLight", ++entities, BloodMagic.instance, 16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "soul_snare"), EntitySoulSnare.class, "SoulSnare", ++entities, BloodMagic.instance, 16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "soul_arrow"), EntitySentientArrow.class, "SoulArrow", ++entities, BloodMagic.instance, 16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "meteor"), EntityMeteor.class, "Meteor", ++entities, BloodMagic.instance, 16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "sentient_specter"), EntitySentientSpecter.class, "SentientSpecter", ++entities, BloodMagic.instance, 16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "mimic"), EntityMimic.class, "Mimic", ++entities, BloodMagic.instance, 16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_zombie"), EntityCorruptedZombie.class, "CorruptedZombie", ++entities, BloodMagic.instance, 16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_sheep"), EntityCorruptedSheep.class, "CorruptedSheep", ++entities, BloodMagic.instance, 16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_chicken"), EntityCorruptedChicken.class, "CorruptedChicken", ++entities, BloodMagic.instance, 16*4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_spider"), EntityCorruptedSpider.class, "CorruptedSpider", ++entities, BloodMagic.instance, 16*4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "blood_light"), EntityBloodLight.class, "BloodLight", ++entities, BloodMagic.instance, 16 * 4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "soul_snare"), EntitySoulSnare.class, "SoulSnare", ++entities, BloodMagic.instance, 16 * 4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "soul_arrow"), EntitySentientArrow.class, "SoulArrow", ++entities, BloodMagic.instance, 16 * 4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "meteor"), EntityMeteor.class, "Meteor", ++entities, BloodMagic.instance, 16 * 4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "sentient_specter"), EntitySentientSpecter.class, "SentientSpecter", ++entities, BloodMagic.instance, 16 * 4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "mimic"), EntityMimic.class, "Mimic", ++entities, BloodMagic.instance, 16 * 4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_zombie"), EntityCorruptedZombie.class, "CorruptedZombie", ++entities, BloodMagic.instance, 16 * 4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_sheep"), EntityCorruptedSheep.class, "CorruptedSheep", ++entities, BloodMagic.instance, 16 * 4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_chicken"), EntityCorruptedChicken.class, "CorruptedChicken", ++entities, BloodMagic.instance, 16 * 4, 3, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_spider"), EntityCorruptedSpider.class, "CorruptedSpider", ++entities, BloodMagic.instance, 16 * 4, 3, true);
     }
 
     @SubscribeEvent

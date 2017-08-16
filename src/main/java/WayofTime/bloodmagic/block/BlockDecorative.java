@@ -1,16 +1,13 @@
 package WayofTime.bloodmagic.block;
 
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumDecorative;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 
-public class BlockDecorative extends BlockEnum<EnumDecorative>
-{
-    public BlockDecorative()
-    {
+public class BlockDecorative extends BlockEnum<EnumDecorative> {
+    public BlockDecorative() {
         super(Material.ROCK, EnumDecorative.class);
 
         setUnlocalizedName(BloodMagic.MODID + ".");

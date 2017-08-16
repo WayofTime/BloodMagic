@@ -18,14 +18,12 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
-public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block implements IBMBlock, IVariantProvider
-{
+public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block implements IBMBlock, IVariantProvider {
     private final E[] types;
     private final PropertyEnum<E> property;
     private final BlockStateContainer realStateContainer;
 
-    public BlockEnum(Material material, Class<E> enumClass, String propName)
-    {
+    public BlockEnum(Material material, Class<E> enumClass, String propName) {
         super(material);
 
         this.types = enumClass.getEnumConstants();
@@ -34,50 +32,42 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
         setDefaultState(getBlockState().getBaseState());
     }
 
-    public BlockEnum(Material material, Class<E> enumClass)
-    {
+    public BlockEnum(Material material, Class<E> enumClass) {
         this(material, enumClass, "type");
     }
 
     @Override
-    protected final BlockStateContainer createBlockState()
-    {
+    protected final BlockStateContainer createBlockState() {
         return new BlockStateContainer.Builder(this).build(); // Blank to avoid crashes
     }
 
     @Override
-    public final BlockStateContainer getBlockState()
-    {
+    public final BlockStateContainer getBlockState() {
         return realStateContainer;
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(property, types[meta]);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(property).ordinal();
     }
 
     @Override
-    public int damageDropped(IBlockState state)
-    {
+    public int damageDropped(IBlockState state) {
         return getMetaFromState(state);
     }
 
     @Override
-    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> subBlocks)
-    {
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> subBlocks) {
         for (E type : types)
             subBlocks.add(new ItemStack(this, 1, type.ordinal()));
     }
 
-    protected BlockStateContainer createStateContainer()
-    {
+    protected BlockStateContainer createStateContainer() {
         return new BlockStateContainer.Builder(this).add(property).build();
     }
 

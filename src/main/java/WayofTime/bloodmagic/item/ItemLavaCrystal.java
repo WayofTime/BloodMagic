@@ -1,31 +1,26 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.List;
-
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.client.IVariantProvider;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
+import java.util.List;
 
-public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvider
-{
-    public ItemLavaCrystal()
-    {
+public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvider {
+    public ItemLavaCrystal() {
         super();
         setUnlocalizedName(BloodMagic.MODID + ".lavaCrystal");
     }
 
     @Override
-    public ItemStack getContainerItem(ItemStack itemStack)
-    {
+    public ItemStack getContainerItem(ItemStack itemStack) {
         NetworkHelper.getSoulNetwork(this.getOwnerUUID(itemStack)).syphon(25);
         ItemStack copiedStack = itemStack.copy();
         copiedStack.setItemDamage(copiedStack.getItemDamage());
@@ -34,8 +29,7 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
     }
 
     @Override
-    public boolean hasContainerItem(ItemStack itemStack)
-    {
+    public boolean hasContainerItem(ItemStack itemStack) {
         return true;
     }
 
@@ -59,8 +53,7 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
+    public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = Lists.newArrayList();
         ret.add(Pair.of(0, "type=normal"));
         return ret;
