@@ -3,21 +3,19 @@ package WayofTime.bloodmagic.item;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.altar.AltarComponent;
-import WayofTime.bloodmagic.api.altar.EnumAltarTier;
-import WayofTime.bloodmagic.api.altar.IAltarManipulator;
-import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import WayofTime.bloodmagic.api.altar.*;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.ChatUtil;
-import WayofTime.bloodmagic.util.Utils;
+
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -111,9 +109,12 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
 
         for (AltarComponent altarComponent : tierToBuild.getAltarComponents()) {
             BlockPos componentPos = pos.add(altarComponent.getOffset());
-            Block blockForComponent = Utils.getBlockForComponent(altarComponent.getComponent());
+            if (altarComponent.getComponent() == EnumAltarComponent.NOTAIR) {
+                world.setBlockState(componentPos, Blocks.STONEBRICK.getDefaultState());
+                continue;
+            }
 
-            world.setBlockState(componentPos, blockForComponent.getDefaultState(), 3);
+            world.setBlockState(componentPos, BloodMagicAPI.INSTANCE.getComponentStates(altarComponent.getComponent()).get(0));
         }
 
         ((IBloodAltar) world.getTileEntity(pos)).checkTier();
@@ -134,10 +135,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
         else {
             for (AltarComponent altarComponent : altarTier.getAltarComponents()) {
                 BlockPos componentPos = pos.add(altarComponent.getOffset());
-                IBlockState componentState = world.getBlockState(pos);
-
                 world.setBlockToAir(componentPos);
-                world.notifyBlockUpdate(componentPos, componentState, componentState, 3);
             }
         }
 

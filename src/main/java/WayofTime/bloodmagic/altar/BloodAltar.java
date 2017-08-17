@@ -653,17 +653,16 @@ public class BloodAltar implements IFluidHandler {
             BlockPos componentPos = worldPos.add(altarComponent.getOffset());
             IBlockState state = world.getBlockState(componentPos);
 
-            if (altarComponent.getComponent() == EnumAltarComponent.NOTAIR && world.isAirBlock(componentPos))
-                return false;
+            if (altarComponent.getComponent() != EnumAltarComponent.NOTAIR) {
+                if (state.getBlock() instanceof IAltarComponent) {
+                    EnumAltarComponent component = ((IAltarComponent) state.getBlock()).getType(world, state, componentPos);
+                    if (component == null || component != altarComponent.getComponent())
+                        return false;
+                }
 
-            if (state.getBlock() instanceof IAltarComponent) {
-                EnumAltarComponent component = ((IAltarComponent) state.getBlock()).getType(world, state, componentPos);
-                if (component == null || component != altarComponent.getComponent())
+                if (!BloodMagicAPI.INSTANCE.getComponentStates(altarComponent.getComponent()).contains(state))
                     return false;
-            }
-
-            EnumAltarComponent component = BloodMagicAPI.INSTANCE.getAltarComponents().get(state);
-            if (component == null || component != altarComponent.getComponent())
+            } else if (world.isAirBlock(componentPos))
                 return false;
         }
 
@@ -671,28 +670,24 @@ public class BloodAltar implements IFluidHandler {
     }
 
     public static Pair<BlockPos, EnumAltarComponent> getAltarMissingBlock(World world, BlockPos worldPos, int altarTier) {
-        if (altarTier >= EnumAltarTier.MAXTIERS) {
+        if (altarTier >= EnumAltarTier.MAXTIERS)
             return null;
-        }
 
         for (AltarComponent altarComponent : EnumAltarTier.values()[altarTier].getAltarComponents()) {
             BlockPos componentPos = worldPos.add(altarComponent.getOffset());
-            BlockStack worldBlock = new BlockStack(world.getBlockState(componentPos).getBlock(), world.getBlockState(componentPos).getBlock().getMetaFromState(world.getBlockState(componentPos)));
+            IBlockState state = world.getBlockState(componentPos);
 
             if (altarComponent.getComponent() != EnumAltarComponent.NOTAIR) {
-                if (worldBlock.getBlock() instanceof IAltarComponent) {
-                    EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(world, worldBlock.getState(), componentPos);
-                    if (component == null || component != altarComponent.getComponent()) {
+                if (state.getBlock() instanceof IAltarComponent) {
+                    EnumAltarComponent component = ((IAltarComponent) state.getBlock()).getType(world, state, componentPos);
+                    if (component == null || component != altarComponent.getComponent())
                         return Pair.of(componentPos, altarComponent.getComponent());
-                    }
-                } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent())) {
-                    return new ImmutablePair<BlockPos, EnumAltarComponent>(componentPos, altarComponent.getComponent());
                 }
-            } else {
-                if (world.isAirBlock(componentPos)) {
+
+                if (!BloodMagicAPI.INSTANCE.getComponentStates(altarComponent.getComponent()).contains(state))
                     return Pair.of(componentPos, altarComponent.getComponent());
-                }
-            }
+            } else if (world.isAirBlock(componentPos))
+                return Pair.of(componentPos, altarComponent.getComponent());
         }
 
         return null;

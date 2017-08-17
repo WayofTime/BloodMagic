@@ -31,6 +31,8 @@ public class PluginUtil {
             }
         }
 
+        // Bring core plugin up to top
+        discoveredAnnotations.sort((o1, o2) -> o1.getLeft().getClass().getCanonicalName().startsWith("WayofTime") ? 1 : 0);
         return discoveredAnnotations;
     }
 }
