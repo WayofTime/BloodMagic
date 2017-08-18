@@ -88,8 +88,6 @@ public class BloodMagic {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         BloodMagicPacketHandler.init();
-        for (Pair<IBloodMagicPlugin, BloodMagicPlugin> plugin : PLUGINS)
-            plugin.getLeft().register(BloodMagicAPI.INSTANCE);
 
         ModRecipes.init();
         ModRituals.initRituals();
@@ -105,6 +103,9 @@ public class BloodMagic {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         ModRecipes.addCompressionHandlers();
+
+        for (Pair<IBloodMagicPlugin, BloodMagicPlugin> plugin : PLUGINS)
+            plugin.getLeft().register(BloodMagicAPI.INSTANCE);
 
         proxy.postInit();
     }

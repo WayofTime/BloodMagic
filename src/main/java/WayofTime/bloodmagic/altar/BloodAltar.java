@@ -6,14 +6,12 @@ import WayofTime.bloodmagic.api.altar.*;
 import WayofTime.bloodmagic.api.event.AltarCraftedEvent;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry.AltarRecipe;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
+import WayofTime.bloodmagic.api_impl.recipe.RecipeBloodAltar;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.util.Utils;
 import com.google.common.base.Enums;
 import com.google.common.base.Strings;
 import net.minecraft.block.state.IBlockState;
@@ -31,7 +29,6 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
@@ -78,7 +75,7 @@ public class BloodAltar implements IFluidHandler {
     private int chargingFrequency = 0;
     private int maxCharge = 0;
     private int cooldownAfterCrafting = 60;
-    private AltarRecipe recipe;
+    private RecipeBloodAltar recipe;
     private ItemStack result = ItemStack.EMPTY;
     private EnumAltarTier currentTierDisplayed = EnumAltarTier.ONE;
 
@@ -189,14 +186,14 @@ public class BloodAltar implements IFluidHandler {
 
         if (!input.isEmpty()) {
             // Do recipes
-            AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(input);
+            RecipeBloodAltar recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getBloodAltar(input);
             if (recipe != null) {
-                if (recipe.doesRequiredItemMatch(input, altarTier)) {
+                if (recipe.getMinimumTier().ordinal() <= altarTier.ordinal()) {
                     this.isActive = true;
                     this.recipe = recipe;
                     this.result = recipe.getOutput().isEmpty() ? ItemStack.EMPTY : new ItemStack(recipe.getOutput().getItem(), 1, recipe.getOutput().getMetadata());
                     this.liquidRequired = recipe.getSyphon();
-                    this.canBeFilled = recipe.isFillable();
+                    this.canBeFilled = false;
                     this.consumptionRate = recipe.getConsumeRate();
                     this.drainRate = recipe.getDrainRate();
                     return;
@@ -318,7 +315,8 @@ public class BloodAltar implements IFluidHandler {
                     if (!result.isEmpty())
                         result.setCount(result.getCount() * stackSize);
 
-                    MinecraftForge.EVENT_BUS.post(new AltarCraftedEvent(recipe, result));
+                    // TODO - Update for new recipe type
+//                    MinecraftForge.EVENT_BUS.post(new AltarCraftedEvent(recipe, result));
                     tileAltar.setInventorySlotContents(0, result);
                     progress = 0;
 

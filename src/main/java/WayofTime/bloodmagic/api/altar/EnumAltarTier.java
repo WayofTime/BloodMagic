@@ -120,6 +120,7 @@ public enum EnumAltarTier {
 //@formatter:on
     };
 
+    public static final EnumAltarTier[] VALUES = values();
     public static final int MAXTIERS = values().length;
 
     ArrayList<AltarComponent> altarComponents = new ArrayList<AltarComponent>();

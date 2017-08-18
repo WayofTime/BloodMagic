@@ -9,6 +9,8 @@ import com.google.common.collect.Multimap;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class BloodMagicAPI implements IBloodMagicAPI {
@@ -16,27 +18,36 @@ public class BloodMagicAPI implements IBloodMagicAPI {
     public static final BloodMagicAPI INSTANCE = new BloodMagicAPI();
 
     private final BloodMagicBlacklist blacklist;
+    private final BloodMagicRecipeRegistrar recipeRegistrar;
     private final Map<ResourceLocation, Integer> sacrificialValues;
     private final Multimap<EnumAltarComponent, IBlockState> altarComponents;
 
     public BloodMagicAPI() {
         this.blacklist = new BloodMagicBlacklist();
+        this.recipeRegistrar = new BloodMagicRecipeRegistrar();
         this.sacrificialValues = Maps.newHashMap();
         this.altarComponents = ArrayListMultimap.create();
     }
 
+    @Nonnull
     @Override
     public BloodMagicBlacklist getBlacklist() {
         return blacklist;
     }
 
+    @Nonnull
     @Override
-    public void setSacrificialValue(ResourceLocation entityId, int value) {
+    public BloodMagicRecipeRegistrar getRecipeRegistrar() {
+        return recipeRegistrar;
+    }
+
+    @Override
+    public void setSacrificialValue(@Nonnull ResourceLocation entityId, @Nonnegative int value) {
         sacrificialValues.put(entityId, value);
     }
 
     @Override
-    public void registerAltarComponent(IBlockState state, String componentType) {
+    public void registerAltarComponent(@Nonnull IBlockState state, @Nonnull String componentType) {
         EnumAltarComponent component = EnumAltarComponent.NOTAIR;
         for (EnumAltarComponent type : EnumAltarComponent.VALUES) {
             if (type.name().equalsIgnoreCase(componentType)) {

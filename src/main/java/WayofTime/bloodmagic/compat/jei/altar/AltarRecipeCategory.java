@@ -8,7 +8,6 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
-import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class AltarRecipeCategory implements IRecipeCategory {
+public class AltarRecipeCategory implements IRecipeCategory<AltarRecipeJEI> {
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
 
@@ -55,14 +54,12 @@ public class AltarRecipeCategory implements IRecipeCategory {
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, AltarRecipeJEI recipeWrapper, IIngredients ingredients) {
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 31, 0);
         recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 125, 30);
 
-        if (recipeWrapper instanceof AltarRecipeJEI) {
-            recipeLayout.getItemStacks().set(INPUT_SLOT, ingredients.getInputs(ItemStack.class).get(0));
-            recipeLayout.getItemStacks().set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
-        }
+        recipeLayout.getItemStacks().set(INPUT_SLOT, ingredients.getInputs(ItemStack.class).get(0));
+        recipeLayout.getItemStacks().set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
     }
 
     @Override

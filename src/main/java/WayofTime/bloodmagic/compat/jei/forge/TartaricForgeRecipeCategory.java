@@ -10,7 +10,6 @@ import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
-import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -19,7 +18,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TartaricForgeRecipeCategory implements IRecipeCategory {
+public class TartaricForgeRecipeCategory implements IRecipeCategory<TartaricForgeRecipeJEI> {
     private static final int OUTPUT_SLOT = 0;
     private static final int GEM_SLOT = 1;
     private static final int INPUT_SLOT = 2;
@@ -65,7 +64,7 @@ public class TartaricForgeRecipeCategory implements IRecipeCategory {
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, TartaricForgeRecipeJEI recipeWrapper, IIngredients ingredients) {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
         guiItemStacks.init(OUTPUT_SLOT, false, 73, 13);
@@ -79,16 +78,12 @@ public class TartaricForgeRecipeCategory implements IRecipeCategory {
         }
 
         List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
-        List<List<ItemStack>> outputs = ingredients.getOutputs(ItemStack.class);
 
-        if (recipeWrapper instanceof TartaricForgeRecipeJEI) {
-            TartaricForgeRecipeJEI recipe = (TartaricForgeRecipeJEI) recipeWrapper;
-            guiItemStacks.set(GEM_SLOT, ingredients.getInputs(ItemStack.class).get(ingredients.getInputs(ItemStack.class).size() - 1));
-            inputs.remove(ingredients.getInputs(ItemStack.class).size() - 1);
-            guiItemStacks.set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
-            guiItemStacks.set(INPUT_SLOT, ingredients.getInputs(ItemStack.class).get(0));
-            craftingGridHelper.setInputs(guiItemStacks, inputs);
-        }
+        guiItemStacks.set(GEM_SLOT, ingredients.getInputs(ItemStack.class).get(ingredients.getInputs(ItemStack.class).size() - 1));
+        inputs.remove(ingredients.getInputs(ItemStack.class).size() - 1);
+        guiItemStacks.set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
+        guiItemStacks.set(INPUT_SLOT, ingredients.getInputs(ItemStack.class).get(0));
+        craftingGridHelper.setInputs(guiItemStacks, inputs);
     }
 
     @Override

@@ -10,13 +10,13 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeCategory;
+import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class AlchemyTableRecipeCategory extends BlankRecipeCategory<AlchemyTableRecipeJEI> {
+public class AlchemyTableRecipeCategory implements IRecipeCategory<AlchemyTableRecipeJEI> {
     private static final int OUTPUT_SLOT = 0;
     private static final int ORB_SLOT = 1;
     private static final int INPUT_SLOT = 2;
@@ -64,7 +64,7 @@ public class AlchemyTableRecipeCategory extends BlankRecipeCategory<AlchemyTable
             }
         }
 
-        guiItemStacks.set(ORB_SLOT, OrbRegistry.getOrbsDownToTier(recipeWrapper.getRecipe().getTierRequired()));
+        guiItemStacks.set(ORB_SLOT, OrbRegistry.getOrbsDownToTier(recipeWrapper.getRecipe().getMinimumTier()));
         guiItemStacks.set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
         craftingGridHelper.setInputs(guiItemStacks, ingredients.getInputs(ItemStack.class), 3, 2);
     }

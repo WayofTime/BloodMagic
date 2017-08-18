@@ -1,20 +1,19 @@
 package WayofTime.bloodmagic.compat.jei.alchemyTable;
 
-import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
+import WayofTime.bloodmagic.api_impl.recipe.RecipeAlchemyTable;
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeWrapper;
+import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class AlchemyTableRecipeJEI extends BlankRecipeWrapper {
-    private AlchemyTableRecipe recipe;
+public class AlchemyTableRecipeJEI implements IRecipeWrapper {
+    private RecipeAlchemyTable recipe;
 
-    public AlchemyTableRecipeJEI(AlchemyTableRecipe recipe) {
+    public AlchemyTableRecipeJEI(RecipeAlchemyTable recipe) {
         this.recipe = recipe;
     }
 
@@ -22,21 +21,21 @@ public class AlchemyTableRecipeJEI extends BlankRecipeWrapper {
     public void getIngredients(IIngredients ingredients) {
         List<List<ItemStack>> expanded = BloodMagicPlugin.jeiHelper.getStackHelper().expandRecipeItemStackInputs(recipe.getInput());
         ingredients.setInputLists(ItemStack.class, expanded);
-        ingredients.setOutput(ItemStack.class, recipe.getRecipeOutput(Lists.<ItemStack>newArrayList()));
+        ingredients.setOutput(ItemStack.class, recipe.getOutput());
     }
 
     @Override
     public List<String> getTooltipStrings(int mouseX, int mouseY) {
-        ArrayList<String> ret = new ArrayList<String>();
+        List<String> tooltip = Lists.newArrayList();
         if (mouseX >= 58 && mouseX <= 78 && mouseY >= 21 && mouseY <= 34) {
-            ret.add(TextHelper.localize("tooltip.bloodmagic.tier", recipe.getTierRequired()));
-            ret.add(TextHelper.localize("jei.bloodmagic.recipe.lpDrained", recipe.getLpDrained()));
-            ret.add(TextHelper.localize("jei.bloodmagic.recipe.ticksRequired", recipe.getTicksRequired()));
+            tooltip.add(TextHelper.localize("tooltip.bloodmagic.tier", recipe.getMinimumTier()));
+            tooltip.add(TextHelper.localize("jei.bloodmagic.recipe.lpDrained", recipe.getSyphon()));
+            tooltip.add(TextHelper.localize("jei.bloodmagic.recipe.ticksRequired", recipe.getTicks()));
         }
-        return ret;
+        return tooltip;
     }
 
-    public AlchemyTableRecipe getRecipe() {
+    public RecipeAlchemyTable getRecipe() {
         return recipe;
     }
 }
