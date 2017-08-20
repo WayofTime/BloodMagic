@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.AltarCraftedEvent;
@@ -51,19 +50,20 @@ public class CraftingHandler {
     // Handles crafting of: Revealing Upgrade Tome, Elytra Upgrade Tome, Combining Upgrade Tomes, Setting Upgrade for Trainer
     @SubscribeEvent
     public void onAnvil(AnvilUpdateEvent event) {
-        if (ConfigHandler.thaumcraftGogglesUpgrade) {
-            if (event.getLeft().getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET && event.getRight().getItem() == Constants.Compat.THAUMCRAFT_GOGGLES && !event.getRight().isItemDamaged()) {
-                ItemStack output = new ItemStack(RegistrarBloodMagicItems.UPGRADE_TOME);
-                output = NBTHelper.checkNBT(output);
-                ItemHelper.LivingUpgrades.setKey(output, BloodMagic.MODID + ".upgrade.revealing");
-                ItemHelper.LivingUpgrades.setLevel(output, 1);
-                event.setCost(1);
-
-                event.setOutput(output);
-
-                return;
-            }
-        }
+        // TODO - Azanor come back :(
+//        if (ConfigHandler.thaumcraftGogglesUpgrade) {
+//            if (event.getLeft().getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET && event.getRight().getItem() == Constants.Compat.THAUMCRAFT_GOGGLES && !event.getRight().isItemDamaged()) {
+//                ItemStack output = new ItemStack(RegistrarBloodMagicItems.UPGRADE_TOME);
+//                output = NBTHelper.checkNBT(output);
+//                ItemHelper.LivingUpgrades.setKey(output, BloodMagic.MODID + ".upgrade.revealing");
+//                ItemHelper.LivingUpgrades.setLevel(output, 1);
+//                event.setCost(1);
+//
+//                event.setOutput(output);
+//
+//                return;
+//            }
+//        }
 
         if (event.getLeft().getItem() == RegistrarBloodMagicItems.SIGIL_HOLDING) {
             if (event.getRight().getItem() == Items.NAME_TAG) {

@@ -152,7 +152,7 @@ public class RitualFeatheredKnife extends Ritual {
 
                     player.setHealth(health - sacrificedHealth);
 
-                    tileAltar.sacrificialDaggerCall((int) (ConfigHandler.sacrificialDaggerConversion * lpModifier * sacrificedHealth), false);
+                    tileAltar.sacrificialDaggerCall((int) (ConfigHandler.values.sacrificialDaggerConversion * lpModifier * sacrificedHealth), false);
 
                     totalEffects++;
 

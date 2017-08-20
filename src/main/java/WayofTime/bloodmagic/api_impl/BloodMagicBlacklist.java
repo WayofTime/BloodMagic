@@ -69,7 +69,7 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
     }
 
     @Override
-    public void addSacrifice(@Nonnull ResourceLocation entityId) {
+    public void addWellOfSuffering(@Nonnull ResourceLocation entityId) {
         if (!sacrifice.contains(entityId))
             sacrifice.add(entityId);
     }

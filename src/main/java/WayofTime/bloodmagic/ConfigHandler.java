@@ -1,352 +1,115 @@
 package WayofTime.bloodmagic;
 
-import WayofTime.bloodmagic.annot.Handler;
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.meteor.MeteorConfigHandler;
-import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.block.Block;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.oredict.OreDictionary;
 
-import java.io.File;
-import java.util.*;
-
-@Handler
+@Config(modid = BloodMagic.MODID, name = BloodMagic.MODID + "/" + BloodMagic.MODID, category = "")
+@Mod.EventBusSubscriber
 public class ConfigHandler {
-    public static Configuration config;
 
-    // Teleposer
-    public static String[] teleposerBlacklisting;
-    public static ArrayList<BlockStack> teleposerBlacklist = new ArrayList<>();
-    public static List<String> teleposerBlacklistEntity;
+    @Config.Comment({ "Blacklist options for various features" })
+    public static ConfigBlacklist blacklist = new ConfigBlacklist();
+    @Config.Comment({ "Value modifiers for various features" })
+    public static ConfigValues values = new ConfigValues();
+    @Config.Comment({ "Toggles for all rituals" })
+    public static ConfigRituals rituals = new ConfigRituals();
+    @Config.Comment({ "Settings that only pertain to the client" })
+    public static ConfigClient client = new ConfigClient();
+    @Config.Comment({ "Compatibility settings" })
+    public static ConfigCompat compat = new ConfigCompat();
 
-    // Transposition Sigil
-    public static String[] transpositionBlacklisting;
-    public static ArrayList<BlockStack> transpositionBlacklist = new ArrayList<>();
+    public static class ConfigBlacklist {
+        @Config.Comment({ "Stops listed blocks and entities from being teleposed.", "Use the registry name of the block or entity. Vanilla objects do not require the modid.", "If a block is specified, you can list the variants to only blacklist a given state." })
+        public String[] teleposer = { "bedrock", "mob_spawner" };
+        @Config.Comment({ "Stops listed blocks from being transposed.", "Use the registry name of the block. Vanilla blocks do not require the modid." })
+        public String[] transposer = { "bedrock", "mob_spawner" };
+        @Config.Comment({ "Stops the listed entities from being used in the Well of Suffering.", "Use the registry name of the entity. Vanilla entities do not require the modid." })
+        public String[] wellOfSuffering = { };
+    }
 
-    // Well of Suffering Blacklist
-    public static List<String> wellOfSufferingBlacklist;
+    public static class ConfigValues {
+        @Config.Comment({ "Declares the amount of LP gained per HP sacrificed for the given entity.", "Setting the value to 0 will blacklist it.", "Use the registry name of the entity followed by a ';' and then the value you want.", "Vanilla entities do not require the modid." })
+        public String[] sacrificialValues = { "villager;100", "slime;15", "enderman;10", "cow;100", "chicken;100", "horse;100", "sheep;100", "wolf;100", "ocelot;100", "pig;100", "rabbit;100" };
+        @Config.Comment({ "Amount of LP the Coat of Arms should provide for each damage dealt." })
+        @Config.RangeInt(min = 0, max = 100)
+        public int coatOfArmsConversion = 20;
+        @Config.Comment({ "Amount of LP the Sacrificial Dagger should provide for each damage dealt." })
+        @Config.RangeInt(min = 0, max = 10000)
+        public int sacrificialDaggerConversion = 100;
+        @Config.Comment({ "Will rewrite any default meteor types with new versions.", "Disable this if you want any of your changes to stay, or do not want default meteor types regenerated." })
+        public boolean shouldResyncMeteors = true;
+    }
 
-    // Blood Altar Sacrificial Values
-    public static String[] entitySacrificeValuesList;
-    public static Map<String, Integer> entitySacrificeValues = new HashMap<>();
+    public static class ConfigRituals {
+        public boolean ritualAnimalGrowth = true;
+        public boolean ritualContainment = true;
+        public boolean ritualCrushing = true;
+        public boolean ritualExpulsion = true;
+        public boolean ritualFeatheredKnife = true;
+        public boolean ritualFullStomach = true;
+        public boolean ritualGreenGrove = true;
+        public boolean ritualHarvest = true;
+        public boolean ritualInterdiction = true;
+        public boolean ritualJumping = true;
+        public boolean ritualLava = true;
+        public boolean ritualMagnetic = true;
+        public boolean ritualRegeneration = true;
+        public boolean ritualSpeed = true;
+        public boolean ritualSuppression = true;
+        public boolean ritualWater = true;
+        public boolean ritualWellOfSuffering = true;
+        public boolean ritualZephyr = true;
+        public boolean ritualUpgradeRemove = true;
+        public boolean ritualArmourEvolve = true;
+        public boolean ritualForsakenSoul = true;
+        public boolean ritualCrystalHarvest = true;
+        public boolean ritualPlacer = true;
+        public boolean ritualFelling = true;
+        public boolean ritualPump = true;
+        public boolean ritualAltarBuilder = true;
+        public boolean ritualPortal = true;
+        public boolean ritualMeteor = true;
+        public boolean ritualDowngrade = true;
+        public ConfigImperfectRituals imperfect = new ConfigImperfectRituals();
+    }
 
-    // Rituals
-    public static boolean ritualAnimalGrowth;
-    public static boolean ritualContainment;
-    public static boolean ritualCrushing;
-    public static boolean ritualExpulsion;
-    public static boolean ritualFeatheredKnife;
-    public static boolean ritualFullStomach;
-    public static boolean ritualGreenGrove;
-    public static boolean ritualHarvest;
-    public static boolean ritualInterdiction;
-    public static boolean ritualJumping;
-    public static boolean ritualLava;
-    public static boolean ritualMagnetic;
-    public static boolean ritualRegeneration;
-    public static boolean ritualSpeed;
-    public static boolean ritualSuppression;
-    public static boolean ritualWater;
-    public static boolean ritualWellOfSuffering;
-    public static boolean ritualZephyr;
-    public static boolean ritualUpgradeRemove;
-    public static boolean ritualArmourEvolve;
-    public static boolean ritualForsakenSoul;
-    public static boolean ritualCrystalHarvest;
+    public static class ConfigImperfectRituals {
+        public boolean imperfectRitualNight = true;
+        public boolean imperfectRitualRain = true;
+        public boolean imperfectRitualResistance = true;
+        public boolean imperfectRitualZombie = true;
+    }
 
-    public static boolean cobblestoneRitual;
-    public static boolean placerRitual;
-    public static boolean fellingRitual;
-    public static boolean pumpRitual;
-    public static boolean altarBuilderRitual;
-    public static boolean portalRitual;
-    public static boolean meteorRitual;
-    public static boolean downgradeRitual;
+    public static class ConfigClient {
+        @Config.Comment({ "Always render the beams between routing nodes.", "If disabled, the beams will only render while the Node Router is held." })
+        public boolean alwaysRenderRoutingLines = false;
+        @Config.Comment({ "Completely hide spectral blocks from view.", "If disabled, a transparent block will be displayed." })
+        public boolean invisibleSpectralBlocks = true;
+        @Config.Comment({ "When cycling through slots, the Sigil of Holding will skip over empty slots and move to the next occupied one.", "If disabled, it will behave identically to the default hotbar." })
+        public boolean sigilHoldingSkipsEmptySlots = false;
+    }
 
-    // Imperfect Rituals
-    public static boolean imperfectRitualNight;
-    public static boolean imperfectRitualRain;
-    public static boolean imperfectRitualResistance;
-    public static boolean imperfectRitualZombie;
+    public static class ConfigCompat {
+        @Config.Comment({ "The display mode to use when looking at a Blood Altar.", "ALWAYS - Always display information.", "SIGIL_HELD - Only display information when a Divination or Seers sigil is held in either hand.", "SIGIL_CONTAINED - Only display information when a Divination or Seers sigil is somewhere in the inventory." })
+        public AltarDisplayMode wailaAltarDisplayMode = AltarDisplayMode.SIGIL_HELD;
 
-    // Potion ID's
-    public static int customPotionDrowningID;
-    public static int customPotionBoostID;
-    public static int customPotionProjProtID;
-    public static int customPotionInhibitID;
-    public static int customPotionFlightID;
-    public static int customPotionReciprocationID;
-    public static int customPotionFlameCloakID;
-    public static int customPotionIceCloakID;
-    public static int customPotionHeavyHeartID;
-    public static int customPotionFireFuseID;
-    public static int customPotionPlanarBindingID;
-    public static int customPotionSoulFrayID;
-    public static int customPotionSoulHardenID;
-    public static int customPotionDeafID;
-    public static int customPotionFeatherFallID;
-    public static int customPotionDemonCloakID;
-    public static int customPotionAmphibianID;
-
-    // Potion toggles
-    public static boolean customPotionDrowningEnabled;
-    public static boolean customPotionBoostEnabled;
-    public static boolean customPotionProjProtEnabled;
-    public static boolean customPotionInhibitEnabled;
-    public static boolean customPotionFlightEnabled;
-    public static boolean customPotionReciprocationEnabled;
-    public static boolean customPotionFlameCloakEnabled;
-    public static boolean customPotionIceCloakEnabled;
-    public static boolean customPotionHeavyHeartEnabled;
-    public static boolean customPotionFireFuseEnabled;
-    public static boolean customPotionPlanarBindingEnabled;
-    public static boolean customPotionSoulFrayEnabled;
-    public static boolean customPotionSoulHardenEnabled;
-    public static boolean customPotionDeafEnabled;
-    public static boolean customPotionFeatherFallEnabled;
-    public static boolean customPotionDemonCloakEnabled;
-    public static boolean customPotionAmphibianEnabled;
-    public static boolean vanillaPotionRegenerationEnabled;
-    public static boolean vanillaPotionNightVisionEnabled;
-    public static boolean vanillaPotionFireResistEnabled;
-    public static boolean vanillaPotionWaterBreathingEnabled;
-    public static boolean vanillaPotionSpeedEnabled;
-    public static boolean vanillaPotionHealthEnabled;
-    public static boolean vanillaPotionPoisonEnabled;
-    public static boolean vanillaPotionBlindnessEnabled;
-    public static boolean vanillaPotionWeaknessEnabled;
-    public static boolean vanillaPotionStrengthEnabled;
-    public static boolean vanillaPotionJumpBoostEnabled;
-    public static boolean vanillaPotionSlownessEnabled;
-    public static boolean vanillaPotionMiningEnabled;
-    public static boolean vanillaPotionInvisibilityEnabled;
-    public static boolean vanillaPotionResistanceEnabled;
-    public static boolean vanillaPotionSaturationEnabled;
-    public static boolean vanillaPotionHealthBoostEnabled;
-    public static boolean vanillaPotionAbsorptionEnabled;
-
-    // General
-    public static int sacrificialPackConversion;
-    public static int sacrificialDaggerDamage;
-    public static int sacrificialDaggerConversion;
-
-    // Client
-    public static boolean alwaysRenderRoutingLines;
-    public static boolean invisibleSpectralBlocks;
-    public static boolean sigilHoldingSkipsEmptySlots;
-
-    // Compat
-    public static int wailaAltarDisplayMode;
-    public static boolean thaumcraftGogglesUpgrade;
-    public static boolean ignoreCompressionSpamAddedByCompression;
+        public enum AltarDisplayMode {
+            ALWAYS,
+            SIGIL_HELD,
+            SIGIL_CONTAINED,
+            ;
+        }
+    }
 
     @SubscribeEvent
-    public void onConfigChanged(ConfigChangedEvent event) {
+    public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
         if (event.getModID().equals(BloodMagic.MODID)) {
-            syncConfig();
-            MeteorConfigHandler.handleMeteors(false);
-        }
-    }
-
-    public static void init(File file) {
-        config = new Configuration(file);
-        syncConfig();
-    }
-
-    public static void syncConfig() {
-        String category;
-
-        category = "Item/Block Blacklisting";
-        config.addCustomCategoryComment(category, "Allows disabling of specific Blocks/Items.\nNote that using this may result in crashes. Use is not supported.");
-        config.setCategoryRequiresMcRestart(category, true);
-
-        category = "Teleposer Blacklist";
-        config.addCustomCategoryComment(category, "Block blacklisting");
-        teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[]{"minecraft:bedrock", "minecraft:mob_spawner"}, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
-        buildBlacklist(teleposerBlacklisting, teleposerBlacklist);
-        teleposerBlacklistEntity = Arrays.asList(config.getStringList("teleposerBlacklistEntity", category, new String[]{}, "Entity class names listed here will not be able to be teleposed."));
-
-        category = "Transposition Sigil Blacklist";
-        config.addCustomCategoryComment(category, "Block blacklisting");
-        transpositionBlacklisting = config.getStringList("transpositionBlacklist", category, new String[]{"minecraft:bedrock", "minecraft:mob_spawner"}, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
-        buildBlacklist(transpositionBlacklisting, transpositionBlacklist);
-
-        category = "Well of Suffering Blacklist";
-        config.addCustomCategoryComment(category, "Entity blacklisting from WoS");
-        wellOfSufferingBlacklist = Arrays.asList(config.getStringList("wellOfSufferingBlacklist", category, new String[]{"EntityArmorStand", "EntitySentientSpecter"}, "Use the class name of the Entity to blacklist it from usage.\nIE: EntityWolf, EntityWitch, etc"));
-
-        category = "Blood Altar Sacrificial Values";
-        config.addCustomCategoryComment(category, "Entity Sacrificial Value Settings");
-        entitySacrificeValuesList = config.getStringList("entitySacrificeLP:HPValues", category, new String[]{"EntityVillager;100", "EntitySlime;15", "EntityEnderman;10", "EntityCow;100", "EntityChicken;100", "EntityHorse;100", "EntitySheep;100", "EntityWolf;100", "EntityOcelot;100", "EntityPig;100", "EntityRabbit;100", "EntityArmorStand;0", "EntitySentientSpecter;0"}, "Used to edit the amount of LP gained per HP sacrificed for the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerHP");
-        buildEntitySacrificeValues();
-
-        category = "Potions";
-        config.addCustomCategoryComment(category, "Potion settings");
-        config.addCustomCategoryComment(category + ".id", "Potion ID settings");
-        customPotionDrowningID = config.getInt("customPotionDrowningID", category + ".id", 100, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Drowning potion");
-        customPotionBoostID = config.getInt("customPotionBoostID", category + ".id", 101, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Boost potion");
-        customPotionProjProtID = config.getInt("customPotionProjProtID", category + ".id", 102, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Projectile Protection potion");
-        customPotionInhibitID = config.getInt("customPotionInhibitID", category + ".id", 103, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Inhibit potion");
-        customPotionFlightID = config.getInt("customPotionFlightID", category + ".id", 104, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Flight potion");
-        customPotionReciprocationID = config.getInt("customPotionReciprocationID", category + ".id", 105, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Reciprocation potion");
-        customPotionFlameCloakID = config.getInt("customPotionFlameCloakID", category + ".id", 106, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Flame Cloak potion");
-        customPotionIceCloakID = config.getInt("customPotionIceCloakID", category + ".id", 107, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Ice Cloak potion");
-        customPotionHeavyHeartID = config.getInt("customPotionHeavyHeartID", category + ".id", 108, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Heavy Heart potion");
-        customPotionFireFuseID = config.getInt("customPotionFireFuseID", category + ".id", 109, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Fire Fuse potion");
-        customPotionPlanarBindingID = config.getInt("customPotionPlanarBindingID", category + ".id", 110, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Planar Binding potion");
-        customPotionSoulFrayID = config.getInt("customPotionSoulFrayID", category + ".id", 111, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Soul Fray potion");
-        customPotionSoulHardenID = config.getInt("customPotionSoulHardenID", category + ".id", 112, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Soul Harden potion");
-        customPotionDeafID = config.getInt("customPotionDeafID", category + ".id", 113, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Deaf potion");
-        customPotionFeatherFallID = config.getInt("customPotionFeatherFallID", category + ".id", 114, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Feather Fall potion");
-        customPotionDemonCloakID = config.getInt("customPotionDemonCloakID", category + ".id", 115, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Demon Cloak potion");
-        customPotionAmphibianID = config.getInt("customPotionAmphibianID", category + ".id", 116, 20, Constants.Misc.POTION_ARRAY_SIZE, "ID of the Amphibian potion");
-
-        config.addCustomCategoryComment(category + ".toggle", "Toggle potions available in Alchemy");
-        customPotionDrowningEnabled = config.getBoolean("customPotionDrowningEnabled", category + ".toggle", true, "Enables the Drowning potion in Alchemy");
-        customPotionBoostEnabled = config.getBoolean("customPotionBoostEnabled", category + ".toggle", true, "Enables the Boost potion in Alchemy");
-        customPotionProjProtEnabled = config.getBoolean("customPotionProjProtEnabled", category + ".toggle", true, "Enables the Projectile Protection potion in Alchemy");
-        customPotionInhibitEnabled = config.getBoolean("customPotionInhibitEnabled", category + ".toggle", true, "Enables the Inhibit potion in Alchemy");
-        customPotionFlightEnabled = config.getBoolean("customPotionFlightEnabled", category + ".toggle", true, "Enables the Flight potion in Alchemy");
-        customPotionReciprocationEnabled = config.getBoolean("customPotionReciprocationEnabled", category + ".toggle", true, "Enables the Reciprocation potion in Alchemy");
-        customPotionFlameCloakEnabled = config.getBoolean("customPotionFlameCloakEnabled", category + ".toggle", true, "Enables the Flame Cloak potion in Alchemy");
-        customPotionIceCloakEnabled = config.getBoolean("customPotionIceCloakEnabled", category + ".toggle", true, "Enables the Ice Cloak potion in Alchemy");
-        customPotionHeavyHeartEnabled = config.getBoolean("customPotionHeavyHeartEnabled", category + ".toggle", true, "Enables the Heavy Heart potion in Alchemy");
-        customPotionFireFuseEnabled = config.getBoolean("customPotionFireFuseEnabled", category + ".toggle", true, "Enables the Fire Fuse potion in Alchemy");
-        customPotionPlanarBindingEnabled = config.getBoolean("customPotionPlanarBindingEnabled", category + ".toggle", true, "Enables the Planar Binding potion in Alchemy");
-        customPotionSoulFrayEnabled = config.getBoolean("customPotionSoulFrayEnabled", category + ".toggle", true, "Enables the Soul Fray potion in Alchemy");
-        customPotionSoulHardenEnabled = config.getBoolean("customPotionSoulHardenEnabled", category + ".toggle", true, "Enables the Soul Harden potion in Alchemy");
-        customPotionDeafEnabled = config.getBoolean("customPotionDeafEnabled", category + ".toggle", true, "Enables the Deaf potion in Alchemy");
-        customPotionFeatherFallEnabled = config.getBoolean("customPotionFeatherFallEnabled", category + ".toggle", true, "Enables the Feather Fall potion in Alchemy");
-        customPotionDemonCloakEnabled = config.getBoolean("customPotionDemonCloakEnabled", category + ".toggle", true, "Enables the Demon Cloak potion in Alchemy");
-        customPotionAmphibianEnabled = config.getBoolean("customPotionAmphibianEnabled", category + ".toggle", true, "Enables the Amphibian potion in Alchemy");
-        vanillaPotionAbsorptionEnabled = config.getBoolean("vanillaPotionAbsorptionEnabled", category + ".toggle", true, "Enables the Absorption potion in Alchemy");
-        vanillaPotionBlindnessEnabled = config.getBoolean("vanillaPotionBlindnessEnabled", category + ".toggle", true, "Enables the Blindness potion in Alchemy");
-        vanillaPotionFireResistEnabled = config.getBoolean("vanillaPotionFireResistEnabled", category + ".toggle", true, "Enables the Fire Resistance potion in Alchemy");
-        vanillaPotionHealthBoostEnabled = config.getBoolean("vanillaPotionHealthBoostEnabled", category + ".toggle", true, "Enables the Health Boost potion in Alchemy");
-        vanillaPotionHealthEnabled = config.getBoolean("vanillaPotionHealthEnabled", category + ".toggle", true, "Enables the Instant Health potion in Alchemy");
-        vanillaPotionInvisibilityEnabled = config.getBoolean("vanillaPotionInvisibilityEnabled", category + ".toggle", true, "Enables the Invisibility potion in Alchemy");
-        vanillaPotionJumpBoostEnabled = config.getBoolean("vanillaPotionJumpBoostEnabled", category + ".toggle", true, "Enables the Jump Boost potion in Alchemy");
-        vanillaPotionMiningEnabled = config.getBoolean("vanillaPotionMiningEnabled", category + ".toggle", true, "Enables the Mining potion in Alchemy");
-        vanillaPotionPoisonEnabled = config.getBoolean("vanillaPotionPoisonEnabled", category + ".toggle", true, "Enables the Poison potion in Alchemy");
-        vanillaPotionRegenerationEnabled = config.getBoolean("vanillaPotionRegenerationEnabled", category + ".toggle", true, "Enables the Regeneration potion in Alchemy");
-        vanillaPotionNightVisionEnabled = config.getBoolean("vanillaPotionNightVisionEnabled", category + ".toggle", true, "Enables the Night Vision potion in Alchemy");
-        vanillaPotionResistanceEnabled = config.getBoolean("vanillaPotionResistanceEnabled", category + ".toggle", true, "Enables the Resistance potion in Alchemy");
-        vanillaPotionSaturationEnabled = config.getBoolean("vanillaPotionSaturationEnabled", category + ".toggle", true, "Enables the Saturation potion in Alchemy");
-        vanillaPotionSlownessEnabled = config.getBoolean("vanillaPotionSlownessEnabled", category + ".toggle", true, "Enables the Slowness potion in Alchemy");
-        vanillaPotionSpeedEnabled = config.getBoolean("vanillaPotionSpeedEnabled", category + ".toggle", true, "Enables the Speed potion in Alchemy");
-        vanillaPotionStrengthEnabled = config.getBoolean("vanillaPotionStrengthEnabled", category + ".toggle", true, "Enables the Strength potion in Alchemy");
-        vanillaPotionWaterBreathingEnabled = config.getBoolean("vanillaPotionWaterBreathingEnabled", category + ".toggle", true, "Enables the Water Breathing potion in Alchemy");
-        vanillaPotionWeaknessEnabled = config.getBoolean("vanillaPotionWeaknessEnabled", category + ".toggle", true, "Enables the Weakness potion in Alchemy");
-
-        category = "Rituals";
-        config.addCustomCategoryComment(category, "Ritual toggling");
-        config.setCategoryRequiresMcRestart(category, true);
-        ritualAnimalGrowth = config.get(category, "ritualAnimalGrowth", true).getBoolean();
-        ritualContainment = config.get(category, "ritualContainment", true).getBoolean();
-        ritualCrushing = config.get(category, "ritualCrushing", true).getBoolean();
-        ritualExpulsion = config.get(category, "ritualExpulsion", true).getBoolean();
-        ritualFeatheredKnife = config.get(category, "ritualFeatheredKnife", true).getBoolean();
-        ritualFullStomach = config.get(category, "ritualFullStomach", true).getBoolean();
-        ritualGreenGrove = config.get(category, "ritualGreenGrove", true).getBoolean();
-        ritualHarvest = config.get(category, "ritualHarvest", true).getBoolean();
-        ritualInterdiction = config.get(category, "ritualInterdiction", true).getBoolean();
-        ritualJumping = config.get(category, "ritualJumping", true).getBoolean();
-        ritualLava = config.get(category, "ritualLava", true).getBoolean();
-        ritualMagnetic = config.get(category, "ritualMagnetic", true).getBoolean();
-        ritualRegeneration = config.get(category, "ritualRegeneration", true).getBoolean();
-        ritualSpeed = config.get(category, "ritualSpeed", true).getBoolean();
-        ritualSuppression = config.get(category, "ritualSuppression", true).getBoolean();
-        ritualWater = config.get(category, "ritualWater", true).getBoolean();
-        ritualWellOfSuffering = config.get(category, "ritualWellOfSuffering", true).getBoolean();
-        ritualZephyr = config.get(category, "ritualZephyr", true).getBoolean();
-        ritualUpgradeRemove = config.get(category, "ritualRemove", true).getBoolean();
-        ritualArmourEvolve = config.get(category, "ritualArmourEvolve", true).getBoolean();
-        ritualForsakenSoul = config.get(category, "ritualForsakenSoul", true).getBoolean();
-        ritualCrystalHarvest = config.get(category, "ritualCrystalHarvest", true).getBoolean();
-
-        cobblestoneRitual = config.get(category, "ritualCobblestone", true).getBoolean();
-        placerRitual = config.get(category, "ritualPlacer", true).getBoolean();
-        fellingRitual = config.get(category, "ritualFelling", true).getBoolean();
-        pumpRitual = config.get(category, "ritualPump", true).getBoolean();
-        altarBuilderRitual = config.get(category, "ritualAltarBuilder", true).getBoolean();
-        portalRitual = config.get(category, "ritualPortal", true).getBoolean();
-        meteorRitual = config.get(category, "ritualMeteor", true).getBoolean();
-        downgradeRitual = config.get(category, "ritualDowngrade", true).getBoolean();
-
-        category = "Rituals.Imperfect";
-        imperfectRitualNight = config.get(category, "imperfectRitualNight", true).getBoolean();
-        imperfectRitualRain = config.get(category, "imperfectRitualRain", true).getBoolean();
-        imperfectRitualResistance = config.get(category, "imperfectRitualResistance", true).getBoolean();
-        imperfectRitualZombie = config.get(category, "imperfectRitualZombie", true).getBoolean();
-
-        category = "General";
-        config.addCustomCategoryComment(category, "General settings");
-        BloodMagicAPI.loggingEnabled = config.getBoolean("enableLogging", category, true, "Allows logging information to the console. Fatal errors will bypass this");
-        sacrificialPackConversion = config.getInt("sacrificialPackConversion", category, 20, 0, 100, "Base multiplier for the Coat of Arms. DamageDealt * sacrificialPackConversion");
-        sacrificialDaggerDamage = config.getInt("sacrificialDaggerDamage", category, 2, 0, 10000, "Damage done from using the Sacrificial Dagger");
-        sacrificialDaggerConversion = config.getInt("sacrificialDaggerConversion", category, 100, 0, 10000, "Amount of LP received per damage point (not heart!)");
-
-        category = "Client";
-        config.addCustomCategoryComment(category, "Client only settings");
-        alwaysRenderRoutingLines = config.getBoolean("alwaysRenderRoutingLines", category, false, "Always renders the beams between routing nodes. If false, only renders while a Node Router is being held.");
-        invisibleSpectralBlocks = config.get(category, "invisibleSpectralBlocks", true, "Spectral Blocks (Used by the Suppression Sigil to store fluids) will not render at all. If false, a see through texture will render. [default: true]").setRequiresMcRestart(true).getBoolean();
-        sigilHoldingSkipsEmptySlots = config.getBoolean("sigilHoldingSkipsEmptySlots", category, false, "The Sigil of Holding will skip empty sigil slots if set to true.");
-
-        category = "Compatibility";
-        config.addCustomCategoryComment(category, "Compatibility settings");
-        wailaAltarDisplayMode = config.getInt("wailaAltarDisplayMode", category + ".waila", 1, 0, 2, "The mode for the Waila display on Blood Altars.\n0 - Always display information\n1 - Only display when Divination/Seer sigil is in hand.\n2 - Only display when Divination/Seer sigil is in inventory");
-        thaumcraftGogglesUpgrade = config.getBoolean("thaumcraftGogglesUpgrade", category + ".thaumcraft", true, "Allows the Living Helmet to be upgraded with Goggles of Revealing in an Anvil.");
-        ignoreCompressionSpamAddedByCompression = config.getBoolean("ignoreCompressionSpamAddedByCompression", category + ".compression", true, "Compression decided to add a storage recipe for every item and block in the game. This will make the Sigil of Compression ignore those recipes so your game will actually load in a decent amount of time.");
-
-        category = "Meteors";
-        config.addCustomCategoryComment(category, "Meteor settings");
-
-        config.save();
-    }
-
-    private static void buildBlacklist(String[] blacklisting, List<BlockStack> blockBlacklist) {
-        blockBlacklist.clear();
-
-        for (String blockSet : blacklisting) {
-            String[] blockData = blockSet.split(":");
-
-            Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockData[0], blockData[1]));
-            int meta = 0;
-
-            if (blockData.length == 3) {
-                // Check if it's an int, if so, parse it. If not, set meta to 0
-                // to avoid crashing.
-                if (Utils.isInteger(blockData[2]))
-                    meta = Integer.parseInt(blockData[2]);
-                else if (blockData[2].equals("*"))
-                    meta = OreDictionary.WILDCARD_VALUE;
-                else
-                    meta = 0;
-            }
-
-            blockBlacklist.add(new BlockStack(block, meta));
-        }
-    }
-
-    private static void buildEntitySacrificeValues() {
-        entitySacrificeValues.clear();
-
-        for (String entityData : entitySacrificeValuesList) {
-            String[] split = entityData.split(";");
-
-            int amount = 500;
-            if (Utils.isInteger(split[1]))
-                amount = Integer.parseInt(split[1]);
-
-            if (!entitySacrificeValues.containsKey(split[0]))
-                entitySacrificeValues.put(split[0], amount);
+            ConfigManager.sync(event.getModID(), Config.Type.INSTANCE); // Sync config values
+            MeteorConfigHandler.handleMeteors(false); // Reload meteors
         }
     }
 }

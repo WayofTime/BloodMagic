@@ -186,7 +186,7 @@ public class GenericHandler {
 
                 boolean shouldSyphon = pack.getStoredLP(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST)) < pack.CAPACITY;
                 float damageDone = event.getEntityLiving().getHealth() < event.getAmount() ? event.getAmount() - event.getEntityLiving().getHealth() : event.getAmount();
-                int totalLP = Math.round(damageDone * ConfigHandler.sacrificialPackConversion);
+                int totalLP = Math.round(damageDone * ConfigHandler.values.coatOfArmsConversion);
 
                 if (shouldSyphon)
                     ItemHelper.LPContainer.addLPToItem(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST), totalLP, pack.CAPACITY);

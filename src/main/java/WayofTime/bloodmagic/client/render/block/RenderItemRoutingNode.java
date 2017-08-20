@@ -24,7 +24,7 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
 
     @Override
     public void render(TileRoutingNode tileNode, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        if (mc.player.getHeldItemMainhand().getItem() instanceof INodeRenderer || ConfigHandler.alwaysRenderRoutingLines) {
+        if (mc.player.getHeldItemMainhand().getItem() instanceof INodeRenderer || ConfigHandler.client.alwaysRenderRoutingLines) {
             List<BlockPos> connectionList = tileNode.getConnected();
             for (BlockPos wantedPos : connectionList) {
                 BlockPos offsetPos = wantedPos.subtract(tileNode.getPos());

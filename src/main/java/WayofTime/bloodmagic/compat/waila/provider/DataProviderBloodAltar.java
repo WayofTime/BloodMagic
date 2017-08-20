@@ -28,16 +28,6 @@ import java.util.List;
  */
 public class DataProviderBloodAltar implements IWailaDataProvider {
     @Override
-    public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
-
-    @Override
-    public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
-
-    @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         if (!config.getConfig(Constants.Compat.WAILA_CONFIG_ALTAR))
             return currenttip;
@@ -45,22 +35,19 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
         boolean hasSigil = false;
         boolean hasSeer = false;
 
-        switch (ConfigHandler.wailaAltarDisplayMode) {
-            case 0: {
+        switch (ConfigHandler.compat.wailaAltarDisplayMode) {
+            case ALWAYS: {
                 hasSigil = hasSeer = true;
                 break;
             }
-            case 1: {
+            case SIGIL_HELD: {
                 hasSeer = holdingSeerSigil(accessor.getPlayer());
                 hasSigil = hasSeer || holdingDivinationSigil(accessor.getPlayer());
                 break;
             }
-            case 2: {
+            case SIGIL_CONTAINED: {
                 hasSeer = hasStack(new ItemStack(RegistrarBloodMagicItems.SIGIL_SEER), accessor.getPlayer());
                 hasSigil = hasSeer || hasStack(new ItemStack(RegistrarBloodMagicItems.SIGIL_DIVINATION), accessor.getPlayer());
-                break;
-            }
-            default: {
                 break;
             }
         }
@@ -94,11 +81,6 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
     }
 
     @Override
-    public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
-
-    @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
         if (te != null)
             te.writeToNBT(tag);
@@ -127,7 +109,7 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
         if (player.getHeldItemMainhand().getItem() instanceof ItemSigilDivination)
             return true;
 
-        if (player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof ItemSigilDivination)
+        if (!player.getHeldItemOffhand().isEmpty() && player.getHeldItemOffhand().getItem() instanceof ItemSigilDivination)
             return true;
 
         return false;

@@ -98,7 +98,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider {
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
 
-        int lpAdded = ConfigHandler.sacrificialDaggerConversion * ConfigHandler.sacrificialDaggerDamage;
+        int lpAdded = ConfigHandler.values.sacrificialDaggerConversion * 2;
 
         RayTraceResult rayTrace = rayTrace(world, player, false);
         if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
@@ -109,14 +109,14 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider {
         }
 
         if (!player.capabilities.isCreativeMode) {
-            SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, ConfigHandler.sacrificialDaggerDamage, lpAdded);
+            SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, 2, lpAdded);
             if (MinecraftForge.EVENT_BUS.post(evt))
                 return super.onItemRightClick(world, player, hand);
 
             if (evt.shouldDrainHealth) {
                 player.hurtResistantTime = 0;
                 player.attackEntityFrom(BloodMagicAPI.damageSource, 0.001F);
-                player.setHealth(Math.max(player.getHealth() - ConfigHandler.sacrificialDaggerDamage, 0.0001f));
+                player.setHealth(Math.max(player.getHealth() - 2, 0.0001f));
                 if (player.getHealth() <= 0.001f) {
                     player.onDeath(BloodMagicAPI.damageSource);
                     player.setHealth(0);

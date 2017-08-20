@@ -61,7 +61,7 @@ public class PlayerSacrificeHelper {
 
             if (health > maxHealth / 10.0) {
                 float sacrificedHealth = health - maxHealth / 10.0f;
-                int lpAdded = (int) (sacrificedHealth * ConfigHandler.sacrificialDaggerConversion * getModifier(amount));
+                int lpAdded = (int) (sacrificedHealth * ConfigHandler.values.sacrificialDaggerConversion * getModifier(amount));
 
                 SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, (int) sacrificedHealth, lpAdded);
                 if (MinecraftForge.EVENT_BUS.post(evt))

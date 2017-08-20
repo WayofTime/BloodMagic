@@ -22,5 +22,5 @@ public interface IBloodMagicBlacklist {
 
     void addGreenGrove(@Nonnull Block block);
 
-    void addSacrifice(@Nonnull ResourceLocation entityId);
+    void addWellOfSuffering(@Nonnull ResourceLocation entityId);
 }
