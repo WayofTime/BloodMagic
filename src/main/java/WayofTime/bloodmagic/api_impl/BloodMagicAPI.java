@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.api_impl;
 
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.apiv2.IBloodMagicAPI;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -43,11 +44,17 @@ public class BloodMagicAPI implements IBloodMagicAPI {
 
     @Override
     public void setSacrificialValue(@Nonnull ResourceLocation entityId, @Nonnegative int value) {
+        Preconditions.checkNotNull(entityId, "entityId cannot be null.");
+        Preconditions.checkArgument(value >= 0, "value cannot be negative.");
+
         sacrificialValues.put(entityId, value);
     }
 
     @Override
     public void registerAltarComponent(@Nonnull IBlockState state, @Nonnull String componentType) {
+        Preconditions.checkNotNull(state, "state cannot be null.");
+        Preconditions.checkNotNull(componentType, "componentType cannot be null.");
+
         EnumAltarComponent component = EnumAltarComponent.NOTAIR;
         for (EnumAltarComponent type : EnumAltarComponent.VALUES) {
             if (type.name().equalsIgnoreCase(componentType)) {

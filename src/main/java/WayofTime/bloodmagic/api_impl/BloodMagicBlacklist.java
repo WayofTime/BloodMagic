@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.api_impl;
 
 import WayofTime.bloodmagic.apiv2.IBloodMagicBlacklist;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
@@ -28,48 +29,64 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
 
     @Override
     public void addTeleposer(@Nonnull IBlockState state) {
+        Preconditions.checkNotNull(state, "state cannot be null.");
+
         if (!teleposer.contains(state))
             teleposer.add(state);
     }
 
     @Override
     public void addTeleposer(@Nonnull Block block) {
+        Preconditions.checkNotNull(block, "block cannot be null.");
+
         for (IBlockState state : block.getBlockState().getValidStates())
             addTeleposer(state);
     }
 
     @Override
     public void addTeleposer(@Nonnull ResourceLocation entityId) {
+        Preconditions.checkNotNull(entityId, "entityId cannot be null.");
+
         if (!teleposerEntities.contains(entityId))
             teleposerEntities.add(entityId);
     }
 
     @Override
     public void addTransposition(@Nonnull IBlockState state) {
+        Preconditions.checkNotNull(state, "state cannot be null.");
+
         if (!transposition.contains(state))
             transposition.add(state);
     }
 
     @Override
     public void addTransposition(@Nonnull Block block) {
+        Preconditions.checkNotNull(block, "block cannot be null.");
+
         for (IBlockState state : block.getBlockState().getValidStates())
             addTransposition(state);
     }
 
     @Override
     public void addGreenGrove(@Nonnull IBlockState state) {
+        Preconditions.checkNotNull(state, "state cannot be null.");
+
         if (!greenGrove.contains(state))
             greenGrove.add(state);
     }
 
     @Override
     public void addGreenGrove(@Nonnull Block block) {
+        Preconditions.checkNotNull(block, "block cannot be null.");
+
         for (IBlockState state : block.getBlockState().getValidStates())
             addGreenGrove(state);
     }
 
     @Override
     public void addWellOfSuffering(@Nonnull ResourceLocation entityId) {
+        Preconditions.checkNotNull(entityId, "entityId cannot be null.");
+
         if (!sacrifice.contains(entityId))
             sacrifice.add(entityId);
     }
