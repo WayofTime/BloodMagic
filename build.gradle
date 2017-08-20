@@ -151,7 +151,7 @@ String getChangelogText() {
 }
 
 def curseRelations = {
-    optionalLibrary 'just-enough-items-jei'
+    optionalLibrary 'jei'
     optionalLibrary 'hwyla'
     requiredLibrary 'guide-api'
 }
