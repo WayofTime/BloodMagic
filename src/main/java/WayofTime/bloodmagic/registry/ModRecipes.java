@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.alchemyArray.*;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.compress.CompressionRegistry;
@@ -47,6 +46,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.tuple.Pair;
@@ -559,7 +559,7 @@ public class ModRecipes {
 
     private static void setupDir() {
         if (RECIPE_DIR == null) {
-            RECIPE_DIR = ConfigHandler.config.getConfigFile().toPath().resolve("../recipes/").toFile();
+            RECIPE_DIR = new File(Loader.instance().getConfigDir(), "bloodmagic/recipes");
         }
 
         if (!RECIPE_DIR.exists()) {

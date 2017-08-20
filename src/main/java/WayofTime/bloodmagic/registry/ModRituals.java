@@ -42,7 +42,6 @@ public class ModRituals {
     public static Ritual forsakenSoulRitual;
     public static Ritual crystalHarvestRitual;
 
-    //    public static Ritual cobblestoneRitual;
     public static Ritual placerRitual;
     public static Ritual fellingRitual;
     public static Ritual pumpRitual;
@@ -60,68 +59,64 @@ public class ModRituals {
 
     public static void initRituals() {
         waterRitual = new RitualWater();
-        RitualRegistry.registerRitual(waterRitual, ConfigHandler.ritualWater);
+        RitualRegistry.registerRitual(waterRitual, ConfigHandler.rituals.ritualWater);
         lavaRitual = new RitualLava();
-        RitualRegistry.registerRitual(lavaRitual, ConfigHandler.ritualLava);
+        RitualRegistry.registerRitual(lavaRitual, ConfigHandler.rituals.ritualLava);
         greenGroveRitual = new RitualGreenGrove();
-        RitualRegistry.registerRitual(greenGroveRitual, ConfigHandler.ritualGreenGrove);
+        RitualRegistry.registerRitual(greenGroveRitual, ConfigHandler.rituals.ritualGreenGrove);
         jumpRitual = new RitualJumping();
-        RitualRegistry.registerRitual(jumpRitual, ConfigHandler.ritualJumping);
+        RitualRegistry.registerRitual(jumpRitual, ConfigHandler.rituals.ritualJumping);
         sufferingRitual = new RitualWellOfSuffering();
-        RitualRegistry.registerRitual(sufferingRitual, ConfigHandler.ritualWellOfSuffering);
+        RitualRegistry.registerRitual(sufferingRitual, ConfigHandler.rituals.ritualWellOfSuffering);
         featheredKnifeRitual = new RitualFeatheredKnife();
-        RitualRegistry.registerRitual(featheredKnifeRitual, ConfigHandler.ritualFeatheredKnife);
+        RitualRegistry.registerRitual(featheredKnifeRitual, ConfigHandler.rituals.ritualFeatheredKnife);
         regenerationRitual = new RitualRegeneration();
-        RitualRegistry.registerRitual(regenerationRitual, ConfigHandler.ritualRegeneration);
+        RitualRegistry.registerRitual(regenerationRitual, ConfigHandler.rituals.ritualRegeneration);
         animalGrowthRitual = new RitualAnimalGrowth();
-        RitualRegistry.registerRitual(animalGrowthRitual, ConfigHandler.ritualAnimalGrowth);
+        RitualRegistry.registerRitual(animalGrowthRitual, ConfigHandler.rituals.ritualAnimalGrowth);
         harvestRitual = new RitualHarvest();
-        RitualRegistry.registerRitual(harvestRitual, ConfigHandler.ritualHarvest);
+        RitualRegistry.registerRitual(harvestRitual, ConfigHandler.rituals.ritualHarvest);
         initHarvestHandlers();
         magneticRitual = new RitualMagnetic();
-        RitualRegistry.registerRitual(magneticRitual, ConfigHandler.ritualMagnetic);
+        RitualRegistry.registerRitual(magneticRitual, ConfigHandler.rituals.ritualMagnetic);
         crushingRitual = new RitualCrushing();
-        RitualRegistry.registerRitual(crushingRitual, ConfigHandler.ritualCrushing);
+        RitualRegistry.registerRitual(crushingRitual, ConfigHandler.rituals.ritualCrushing);
         stomachRitual = new RitualFullStomach();
-        RitualRegistry.registerRitual(stomachRitual, ConfigHandler.ritualFullStomach);
+        RitualRegistry.registerRitual(stomachRitual, ConfigHandler.rituals.ritualFullStomach);
         interdictionRitual = new RitualInterdiction();
-        RitualRegistry.registerRitual(interdictionRitual, ConfigHandler.ritualInterdiction);
+        RitualRegistry.registerRitual(interdictionRitual, ConfigHandler.rituals.ritualInterdiction);
         containmentRitual = new RitualContainment();
-        RitualRegistry.registerRitual(containmentRitual, ConfigHandler.ritualContainment);
+        RitualRegistry.registerRitual(containmentRitual, ConfigHandler.rituals.ritualContainment);
         speedRitual = new RitualSpeed();
-        RitualRegistry.registerRitual(speedRitual, ConfigHandler.ritualSpeed);
+        RitualRegistry.registerRitual(speedRitual, ConfigHandler.rituals.ritualSpeed);
         suppressionRitual = new RitualSuppression();
-        RitualRegistry.registerRitual(suppressionRitual, ConfigHandler.ritualSuppression);
+        RitualRegistry.registerRitual(suppressionRitual, ConfigHandler.rituals.ritualSuppression);
         zephyrRitual = new RitualZephyr();
-        RitualRegistry.registerRitual(zephyrRitual, ConfigHandler.ritualZephyr);
+        RitualRegistry.registerRitual(zephyrRitual, ConfigHandler.rituals.ritualZephyr);
         expulsionRitual = new RitualExpulsion();
-        RitualRegistry.registerRitual(expulsionRitual, ConfigHandler.ritualExpulsion);
+        RitualRegistry.registerRitual(expulsionRitual, ConfigHandler.rituals.ritualExpulsion);
         upgradeRemoveRitual = new RitualUpgradeRemove();
-        RitualRegistry.registerRitual(upgradeRemoveRitual, ConfigHandler.ritualUpgradeRemove);
+        RitualRegistry.registerRitual(upgradeRemoveRitual, ConfigHandler.rituals.ritualUpgradeRemove);
         armourEvolveRitual = new RitualArmourEvolve();
-        RitualRegistry.registerRitual(armourEvolveRitual, ConfigHandler.ritualArmourEvolve);
+        RitualRegistry.registerRitual(armourEvolveRitual, ConfigHandler.rituals.ritualArmourEvolve);
         forsakenSoulRitual = new RitualForsakenSoul();
-        RitualRegistry.registerRitual(forsakenSoulRitual, ConfigHandler.ritualForsakenSoul);
+        RitualRegistry.registerRitual(forsakenSoulRitual, ConfigHandler.rituals.ritualForsakenSoul);
         crystalHarvestRitual = new RitualCrystalHarvest();
-        RitualRegistry.registerRitual(crystalHarvestRitual, ConfigHandler.ritualCrystalHarvest);
-
-//        cobblestoneRitual = new RitualCobblestone();
-//        RitualRegistry.registerRitual(cobblestoneRitual, ConfigHandler.cobblestoneRitual);
+        RitualRegistry.registerRitual(crystalHarvestRitual, ConfigHandler.rituals.ritualCrystalHarvest);
         placerRitual = new RitualPlacer();
-        RitualRegistry.registerRitual(placerRitual, ConfigHandler.placerRitual);
+        RitualRegistry.registerRitual(placerRitual, ConfigHandler.rituals.ritualPlacer);
         fellingRitual = new RitualFelling();
-        RitualRegistry.registerRitual(fellingRitual, ConfigHandler.fellingRitual);
+        RitualRegistry.registerRitual(fellingRitual, ConfigHandler.rituals.ritualFelling);
         pumpRitual = new RitualPump();
-        RitualRegistry.registerRitual(pumpRitual, ConfigHandler.pumpRitual);
+        RitualRegistry.registerRitual(pumpRitual, ConfigHandler.rituals.ritualPump);
         altarBuilderRitual = new RitualAltarBuilder();
-        RitualRegistry.registerRitual(altarBuilderRitual, ConfigHandler.altarBuilderRitual);
+        RitualRegistry.registerRitual(altarBuilderRitual, ConfigHandler.rituals.ritualAltarBuilder);
         portalRitual = new RitualPortal();
-        RitualRegistry.registerRitual(portalRitual, ConfigHandler.portalRitual);
+        RitualRegistry.registerRitual(portalRitual, ConfigHandler.rituals.ritualPortal);
         meteorRitual = new RitualMeteor();
-        RitualRegistry.registerRitual(meteorRitual, ConfigHandler.meteorRitual);
-
+        RitualRegistry.registerRitual(meteorRitual, ConfigHandler.rituals.ritualMeteor);
         downgradeRitual = new RitualLivingArmourDowngrade();
-        RitualRegistry.registerRitual(downgradeRitual, ConfigHandler.downgradeRitual);
+        RitualRegistry.registerRitual(downgradeRitual, ConfigHandler.rituals.ritualDowngrade);
 
         RitualCrushing.registerCuttingFluid(ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC), 250, 0.5);
         RitualCrushing.registerCuttingFluid(ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE), 25, 0.05);
@@ -129,13 +124,13 @@ public class ModRituals {
 
     public static void initImperfectRituals() {
         imperfectNight = new ImperfectRitualNight();
-        ImperfectRitualRegistry.registerRitual(imperfectNight, ConfigHandler.imperfectRitualNight);
+        ImperfectRitualRegistry.registerRitual(imperfectNight, ConfigHandler.rituals.imperfect.imperfectRitualNight);
         imperfectRain = new ImperfectRitualRain();
-        ImperfectRitualRegistry.registerRitual(imperfectRain, ConfigHandler.imperfectRitualRain);
+        ImperfectRitualRegistry.registerRitual(imperfectRain, ConfigHandler.rituals.imperfect.imperfectRitualRain);
         imperfectResistance = new ImperfectRitualResistance();
-        ImperfectRitualRegistry.registerRitual(imperfectResistance, ConfigHandler.imperfectRitualResistance);
+        ImperfectRitualRegistry.registerRitual(imperfectResistance, ConfigHandler.rituals.imperfect.imperfectRitualResistance);
         imperfectZombie = new ImperfectRitualZombie();
-        ImperfectRitualRegistry.registerRitual(imperfectZombie, ConfigHandler.imperfectRitualZombie);
+        ImperfectRitualRegistry.registerRitual(imperfectZombie, ConfigHandler.rituals.imperfect.imperfectRitualZombie);
     }
 
     public static void initHarvestHandlers() {

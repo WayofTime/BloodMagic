@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
 import java.util.Set;
 
 public class BloodMagicBlacklist implements IBloodMagicBlacklist {
@@ -26,49 +27,49 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
     }
 
     @Override
-    public void addTeleposer(IBlockState state) {
+    public void addTeleposer(@Nonnull IBlockState state) {
         if (!teleposer.contains(state))
             teleposer.add(state);
     }
 
     @Override
-    public void addTeleposer(Block block) {
+    public void addTeleposer(@Nonnull Block block) {
         for (IBlockState state : block.getBlockState().getValidStates())
             addTeleposer(state);
     }
 
     @Override
-    public void addTeleposer(ResourceLocation entityId) {
+    public void addTeleposer(@Nonnull ResourceLocation entityId) {
         if (!teleposerEntities.contains(entityId))
             teleposerEntities.add(entityId);
     }
 
     @Override
-    public void addTransposition(IBlockState state) {
+    public void addTransposition(@Nonnull IBlockState state) {
         if (!transposition.contains(state))
             transposition.add(state);
     }
 
     @Override
-    public void addTransposition(Block block) {
+    public void addTransposition(@Nonnull Block block) {
         for (IBlockState state : block.getBlockState().getValidStates())
             addTransposition(state);
     }
 
     @Override
-    public void addGreenGrove(IBlockState state) {
+    public void addGreenGrove(@Nonnull IBlockState state) {
         if (!greenGrove.contains(state))
             greenGrove.add(state);
     }
 
     @Override
-    public void addGreenGrove(Block block) {
+    public void addGreenGrove(@Nonnull Block block) {
         for (IBlockState state : block.getBlockState().getValidStates())
             addGreenGrove(state);
     }
 
     @Override
-    public void addSacrifice(ResourceLocation entityId) {
+    public void addWellOfSuffering(@Nonnull ResourceLocation entityId) {
         if (!sacrifice.contains(entityId))
             sacrifice.add(entityId);
     }

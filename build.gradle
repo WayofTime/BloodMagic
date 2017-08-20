@@ -12,6 +12,7 @@ buildscript {
 plugins {
 	id "net.minecraftforge.gradle.forge" version "2.0.2"
     id 'com.matthewprenger.cursegradle' version '1.0.9'
+	id 'io.franzbecker.gradle-lombok' version '1.6'
     id 'maven-publish'
 }
 
@@ -34,8 +35,8 @@ repositories {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
-    deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}_${mc_version}"
-    deobfCompile "info.amerifrance.guideapi:Guide-API:${mc_version}-${guideapi_version}"
+    deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}"
+    deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
 }
 
 minecraft {

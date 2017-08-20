@@ -48,7 +48,7 @@ public class EntityAIEatAndCorruptBlock extends EntityAIBase {
     public void startExecuting() {
         this.eatingGrassTimer = 40;
         this.world.setEntityState(this.grassEaterEntity, (byte) 10);
-        this.grassEaterEntity.getNavigator().clearPathEntity();
+        this.grassEaterEntity.getNavigator().clearPath();
     }
 
     /**

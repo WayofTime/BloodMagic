@@ -82,8 +82,8 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider {
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         continue;
 
-                    if (blockStack.getBlock().getBlockHardness(blockStack.getState(), world, blockPos) != -1.0F) {
-                        float strengthVsBlock = getStrVsBlock(stack, blockStack.getState());
+                    if (blockStack.getState().getBlockHardness(world, blockPos) != -1.0F) {
+                        float strengthVsBlock = getDestroySpeed(stack, blockStack.getState());
 
                         if (strengthVsBlock > 1.1F || blockStack.getBlock() instanceof BlockLeaves && world.canMineBlockBody(player, blockPos)) {
                             if (silkTouch && blockStack.getBlock().canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))

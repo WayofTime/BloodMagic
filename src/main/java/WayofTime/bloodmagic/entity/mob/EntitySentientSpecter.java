@@ -410,7 +410,7 @@ public class EntitySentientSpecter extends EntityDemonBase {
             double d1 = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - entitytippedarrow.posY;
             double d2 = target.posZ - this.posZ;
             double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
-            entitytippedarrow.setThrowableHeading(d0, d1 + d3 * 0.2, d2, 1.6F, 0); //TODO: Yes, it is an accurate arrow. Don't be hatin'
+            entitytippedarrow.shoot(d0, d1 + d3 * 0.2, d2, 1.6F, 0); //TODO: Yes, it is an accurate arrow. Don't be hatin'
             int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this);
             int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this);
             entitytippedarrow.setDamage((double) (velocity * 2.0F) + this.rand.nextGaussian() * 0.25D + (double) ((float) this.getEntityWorld().getDifficulty().getDifficultyId() * 0.11F));

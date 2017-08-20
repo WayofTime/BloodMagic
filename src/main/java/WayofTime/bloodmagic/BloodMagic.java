@@ -33,7 +33,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.io.File;
 import java.util.List;
 
-@Mod(modid = BloodMagic.MODID, name = BloodMagic.NAME, version = BloodMagic.VERSION, dependencies = BloodMagic.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.config.ConfigGuiFactory")
+@Mod(modid = BloodMagic.MODID, name = BloodMagic.NAME, version = BloodMagic.VERSION, dependencies = BloodMagic.DEPEND)
 public class BloodMagic {
     public static final String MODID = "bloodmagic";
     public static final String NAME = "Blood Magic: Alchemical Wizardry";
@@ -73,8 +73,7 @@ public class BloodMagic {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        configDir = new File(event.getModConfigurationDirectory(), "BloodMagic");
-        ConfigHandler.init(new File(configDir, "BloodMagic.cfg"));
+        configDir = new File(event.getModConfigurationDirectory(), "bloodmagic");
 
         PLUGINS.addAll(PluginUtil.getPlugins(event.getAsmData()));
 

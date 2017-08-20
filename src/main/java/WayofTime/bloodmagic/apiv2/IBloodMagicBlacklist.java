@@ -4,21 +4,23 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
+
 public interface IBloodMagicBlacklist {
 
-    void addTeleposer(IBlockState state);
+    void addTeleposer(@Nonnull IBlockState state);
 
-    void addTeleposer(Block block);
+    void addTeleposer(@Nonnull Block block);
 
-    void addTeleposer(ResourceLocation entityId);
+    void addTeleposer(@Nonnull ResourceLocation entityId);
 
-    void addTransposition(IBlockState state);
+    void addTransposition(@Nonnull IBlockState state);
 
-    void addTransposition(Block block);
+    void addTransposition(@Nonnull Block block);
 
-    void addGreenGrove(IBlockState state);
+    void addGreenGrove(@Nonnull IBlockState state);
 
-    void addGreenGrove(Block block);
+    void addGreenGrove(@Nonnull Block block);
 
-    void addSacrifice(ResourceLocation entityId);
+    void addWellOfSuffering(@Nonnull ResourceLocation entityId);
 }

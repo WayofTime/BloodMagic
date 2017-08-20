@@ -311,7 +311,7 @@ public class ClientHandler {
 
     public static void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel) {
         int mode = dWheel;
-        if (!ConfigHandler.sigilHoldingSkipsEmptySlots) {
+        if (!ConfigHandler.client.sigilHoldingSkipsEmptySlots) {
             mode = ItemSigilHolding.getCurrentItemOrdinal(stack);
             mode = dWheel < 0 ? ItemSigilHolding.next(mode) : ItemSigilHolding.prev(mode);
         }

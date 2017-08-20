@@ -215,7 +215,7 @@ public class EntityMimic extends EntityDemonBase {
         super.onUpdate();
 
         if (!this.getEntityWorld().isRemote) {
-            this.setBesideClimbableBlock(this.isCollidedHorizontally);
+            this.setBesideClimbableBlock(this.collidedHorizontally);
         }
     }
 

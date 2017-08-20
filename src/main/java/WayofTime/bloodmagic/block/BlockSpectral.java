@@ -68,7 +68,7 @@ public class BlockSpectral extends Block implements IVariantProvider {
 
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
-        return ConfigHandler.invisibleSpectralBlocks ? EnumBlockRenderType.INVISIBLE : EnumBlockRenderType.MODEL;
+        return ConfigHandler.client.invisibleSpectralBlocks ? EnumBlockRenderType.INVISIBLE : EnumBlockRenderType.MODEL;
     }
 
     @Override

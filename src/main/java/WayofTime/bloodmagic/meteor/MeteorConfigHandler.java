@@ -63,7 +63,7 @@ public class MeteorConfigHandler {
                 reader.close();
             }
 
-            if (checkNewVersion && ConfigHandler.config.getBoolean("resyncOnVersionChange", "Meteors", true, "Should the default meteors be regenerated if the mod has updated them")) {
+            if (checkNewVersion && ConfigHandler.values.shouldResyncMeteors) {
                 Set<String> discoveredDefaults = Sets.newHashSet();
 
                 // Check existing defaults for new version
@@ -93,8 +93,6 @@ public class MeteorConfigHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        ConfigHandler.config.save();
     }
 
     private static List<Pair<String, Meteor>> getDefaultMeteors() {

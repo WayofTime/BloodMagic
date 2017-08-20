@@ -71,7 +71,7 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase {
 
             if (vec3d == null) {
                 return false; //Nowhere to run, gotta fight!
-            } else if (this.closestLivingEntity.getDistanceSq(vec3d.x, vec3d.y, vec3d.z) < this.closestLivingEntity.getDistanceSqToEntity(this.theEntity)) {
+            } else if (this.closestLivingEntity.getDistanceSq(vec3d.x, vec3d.y, vec3d.z) < this.closestLivingEntity.getDistanceSq(this.theEntity)) {
                 return false; //I'll be headed off if I choose this direction.
             } else {
                 this.entityPathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.x, vec3d.y, vec3d.z);
@@ -112,13 +112,13 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase {
     @Override
     public void updateTask() {
         if (this.closestLivingEntity != null) {
-            if (this.theEntity.getDistanceSqToEntity(this.closestLivingEntity) < 49.0D) {
+            if (this.theEntity.getDistanceSq(this.closestLivingEntity) < 49.0D) {
                 this.theEntity.getNavigator().setSpeed(this.nearSpeed);
             } else {
                 this.theEntity.getNavigator().setSpeed(this.farSpeed);
             }
 
-            if (this.theEntity.ticksExisted % 20 == 0 && this.theEntity.getDistanceSqToEntity(this.closestLivingEntity) >= safeHealDistance * safeHealDistance) {
+            if (this.theEntity.ticksExisted % 20 == 0 && this.theEntity.getDistanceSq(this.closestLivingEntity) >= safeHealDistance * safeHealDistance) {
                 healEntity();
                 return;
             }

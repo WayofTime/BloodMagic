@@ -186,7 +186,7 @@ public class GenericHandler {
 
                 boolean shouldSyphon = pack.getStoredLP(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST)) < pack.CAPACITY;
                 float damageDone = event.getEntityLiving().getHealth() < event.getAmount() ? event.getAmount() - event.getEntityLiving().getHealth() : event.getAmount();
-                int totalLP = Math.round(damageDone * ConfigHandler.sacrificialPackConversion);
+                int totalLP = Math.round(damageDone * ConfigHandler.values.coatOfArmsConversion);
 
                 if (shouldSyphon)
                     ItemHelper.LPContainer.addLPToItem(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST), totalLP, pack.CAPACITY);
@@ -228,7 +228,7 @@ public class GenericHandler {
                         attackTaskMap.put(animal, attackTask);
                     }
 
-                    if (animal.getAttackTarget() != null && animal.getDistanceSqToEntity(animal.getAttackTarget()) < 4) {
+                    if (animal.getAttackTarget() != null && animal.getDistanceSq(animal.getAttackTarget()) < 4) {
                         animal.getEntityWorld().createExplosion(null, animal.posX, animal.posY + (double) (animal.height / 16.0F), animal.posZ, 2 + animal.getActivePotionEffect(RegistrarBloodMagic.SACRIFICIAL_LAMB).getAmplifier() * 1.5f, false);
                         targetTaskMap.remove(animal);
                         attackTaskMap.remove(animal);

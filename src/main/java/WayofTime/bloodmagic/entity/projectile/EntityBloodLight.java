@@ -46,7 +46,7 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
         motionX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
         motionZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
         motionY = -MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI);
-        this.setThrowableHeading(motionX, motionY, motionZ, par3 * 1.5F, 1.0F);
+        this.shoot(motionX, motionY, motionZ, par3 * 1.5F, 1.0F);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
     }
 
     @Override
-    public void setThrowableHeading(double var1, double var3, double var5, float var7, float var8) {
+    public void shoot(double var1, double var3, double var5, float var7, float var8) {
         float var9 = MathHelper.sqrt(var1 * var1 + var3 * var3 + var5 * var5);
         var1 /= var9;
         var3 /= var9;
