@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "bloodmagic:altar"
+  },
+  "pattern": [
+    "a a",
+    "aba",
+    "cdc"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "#STONE"
+    },
+    "b": {
+      "item": "minecraft:furnace"
+    },
+    "c": {
+      "item": "#INGOTGOLD"
+    },
+    "d": {
+      "item": "bloodmagic:monster_soul",
+      "data": 0
+    }
+  }
+}

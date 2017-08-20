@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "bloodmagic:pack_self_sacrifice"
+  },
+  "pattern": [
+    "aba",
+    "cdc",
+    "aea"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "#BLOCKGLASS"
+    },
+    "b": {
+      "item": "minecraft:bucket"
+    },
+    "c": {
+      "item": "minecraft:flint"
+    },
+    "d": {
+      "item": "minecraft:leather_chestplate"
+    },
+    "e": {
+      "item": "bloodmagic:slate",
+      "data": 0
+    }
+  }
+}

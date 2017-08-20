@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "bloodmagic:lava_crystal"
+  },
+  "pattern": [
+    "aba",
+    "bcb",
+    "ded"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "#BLOCKGLASS"
+    },
+    "b": {
+      "item": "minecraft:lava_bucket"
+    },
+    "c": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:weak"
+    },
+    "d": {
+      "item": "minecraft:obsidian"
+    },
+    "e": {
+      "item": "#GEMDIAMOND"
+    }
+  }
+}

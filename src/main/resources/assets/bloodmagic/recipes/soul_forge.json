@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "bloodmagic:soul_forge"
+  },
+  "pattern": [
+    "i i",
+    "sgs",
+    "sos"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "s": {
+      "item": "#STONE"
+    },
+    "g": {
+      "item": "#INGOTGOLD"
+    },
+    "i": {
+      "item": "#INGOTIRON"
+    },
+    "o": {
+      "item": "#BLOCKIRON"
+    }
+  }
+}

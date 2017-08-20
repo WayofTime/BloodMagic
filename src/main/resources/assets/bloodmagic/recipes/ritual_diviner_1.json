@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "bloodmagic:ritual_diviner",
+    "data": 1
+  },
+  "pattern": [
+    " S ",
+    "tdt",
+    " S "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "bloodmagic:slate",
+      "data": 3
+    },
+    "t": {
+      "item": "bloodmagic:inscription_tool",
+      "data": 5
+    },
+    "d": {
+      "item": "bloodmagic:ritual_diviner",
+      "data": 0
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "result": {
+    "item": "bloodmagic:blood_rune",
+    "data": 3
+  },
+  "pattern": [
+    "aba",
+    "cdc",
+    "aea"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "#STONE"
+    },
+    "b": {
+      "item": "bloodmagic:slate",
+      "data": 1
+    },
+    "c": {
+      "item": "#INGOTGOLD"
+    },
+    "d": {
+      "item": "bloodmagic:blood_rune",
+      "data": 0
+    },
+    "e": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:apprentice"
+    }
+  }
+}

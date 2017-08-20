@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "bloodmagic:incense_altar"
+  },
+  "pattern": [
+    "s s",
+    "shs",
+    "coc"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "s": {
+      "item": "#STONE"
+    },
+    "c": {
+      "item": "#COBBLESTONE"
+    },
+    "h": {
+      "item": "minecraft:coal",
+      "data": 1
+    },
+    "o": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:weak"
+    }
+  }
+}

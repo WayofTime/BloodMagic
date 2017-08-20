@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "bloodmagic:activation_crystal",
+    "data": 1
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:archmage"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

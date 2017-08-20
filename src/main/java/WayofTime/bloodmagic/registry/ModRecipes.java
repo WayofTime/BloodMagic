@@ -6,12 +6,9 @@ import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.compress.CompressionRegistry;
 import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.orb.BloodOrb;
-import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.recipe.AlchemyTableCustomRecipe;
 import WayofTime.bloodmagic.api.registry.*;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.block.enums.EnumBloodRune;
 import WayofTime.bloodmagic.client.render.alchemyArray.*;
 import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
 import WayofTime.bloodmagic.compress.BaseCompressionHandler;
@@ -23,22 +20,15 @@ import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
-import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.livingArmour.downgrade.*;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionRecipe;
-import WayofTime.bloodmagic.tile.TileBloodTank;
 import WayofTime.bloodmagic.util.Utils;
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.potion.PotionEffect;
@@ -46,29 +36,21 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.ForgeModContainer;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
 
 public class ModRecipes {
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final Set<String> USED_OD_NAMES = new TreeSet<>();
+
     public static ArrayList<String> addedOreRecipeList = new ArrayList<String>();
     static ItemStack mundaneLengtheningStack = ItemComponent.getStack(ItemComponent.CATALYST_LENGTH_1);
     static ItemStack mundanePowerStack = ItemComponent.getStack(ItemComponent.CATALYST_POWER_1);
-    private static File RECIPE_DIR = null;
 
     public static void init() {
         initOreDict();
         addFurnaceRecipes();
-//        addCraftingRecipes();
         addAltarRecipes();
         addAlchemyArrayRecipes();
         addSoulForgeRecipes();
@@ -87,123 +69,6 @@ public class ModRecipes {
     public static void addFurnaceRecipes() {
         FurnaceRecipes.instance().addSmeltingRecipe(ItemComponent.getStack(ItemComponent.SAND_IRON), new ItemStack(Items.IRON_INGOT), (float) 0.15);
         FurnaceRecipes.instance().addSmeltingRecipe(ItemComponent.getStack(ItemComponent.SAND_GOLD), new ItemStack(Items.GOLD_INGOT), (float) 0.15);
-    }
-
-    public static void addCraftingRecipes() {
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.SOUL_FORGE), "i i", "sgs", "sos", 'i', "ingotIron", 's', "stone", 'g', "ingotGold", 'o', "blockIron");
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicItems.SACRIFICIAL_DAGGER), "aaa", " ba", "c a", 'a', "blockGlass", 'b', "ingotGold", 'c', "ingotIron");
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.ALTAR), "a a", "aba", "cdc", 'a', "stone", 'b', Blocks.FURNACE, 'c', "ingotGold", 'd', new ItemStack(RegistrarBloodMagicItems.MONSTER_SOUL));
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicItems.PACK_SELF_SACRIFICE), "aba", "cdc", "aea", 'a', "blockGlass", 'b', Items.BUCKET, 'c', Items.FLINT, 'd', Items.LEATHER_CHESTPLATE, 'e', RegistrarBloodMagicItems.SLATE);
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicItems.PACK_SACRIFICE), "aba", "cdc", "aea", 'a', "blockGlass", 'b', Items.BUCKET, 'c', "ingotIron", 'd', Items.LEATHER_CHESTPLATE, 'e', RegistrarBloodMagicItems.SLATE);
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicItems.RITUAL_DIVINER), "dfd", "ase", "dwd", 'f', EnumRuneType.FIRE.getScribeStack(), 'a', EnumRuneType.AIR.getScribeStack(), 'w', EnumRuneType.WATER.getScribeStack(), 'e', EnumRuneType.EARTH.getScribeStack(), 'd', "gemDiamond", 's', "stickWood");
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicItems.RITUAL_DIVINER, 1, 1), " S ", "tdt", " S ", 'S', new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3), 't', EnumRuneType.DUSK.getScribeStack(), 'd', new ItemStack(RegistrarBloodMagicItems.RITUAL_DIVINER));
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 4, 1), "aa", "aa", 'a', new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK));
-        addShapelessRecipe(new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 16), "stone", new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD));
-        addShapelessRecipe(new ItemStack(RegistrarBloodMagicItems.ACTIVATION_CRYSTAL, 1, 1), new ItemStack(Items.NETHER_STAR), OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_ARCHMAGE));
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicItems.SOUL_SNARE, 4, 0), "sis", "iri", "sis", 's', "string", 'i', "ingotIron", 'r', "dustRedstone");
-
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_TANK), "RBR", "G G", "RRR", 'R', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), 'B', RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 'G', "blockGlass");
-        for (int i = 1; i < TileBloodTank.CAPACITIES.length; i++)
-            addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_TANK, 1, i), "RBR", "T T", "RRR", 'R', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), 'B', RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 'T', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_TANK, 1, i - 1));
-
-        addShapelessRecipe(new ItemStack(RegistrarBloodMagicItems.TELEPOSITION_FOCUS, 1, 2), new ItemStack(RegistrarBloodMagicItems.TELEPOSITION_FOCUS, 1, 1), new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD));
-        addShapelessRecipe(new ItemStack(RegistrarBloodMagicItems.TELEPOSITION_FOCUS, 1, 3), new ItemStack(RegistrarBloodMagicItems.TELEPOSITION_FOCUS, 1, 2), new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD, 1, 1));
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.TELEPOSER), "ggg", "efe", "ggg", 'g', "ingotGold", 'e', new ItemStack(Items.ENDER_PEARL), 'f', RegistrarBloodMagicItems.TELEPOSITION_FOCUS);
-
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicItems.LAVA_CRYSTAL), "aba", "bcb", "ded", 'a', "blockGlass", 'b', Items.LAVA_BUCKET, 'c', OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK), 'd', Blocks.OBSIDIAN, 'e', "gemDiamond"));
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), "aaa", "bcb", "aaa", 'a', "stone", 'b', RegistrarBloodMagicItems.SLATE, 'c', OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK)));
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 1), "aba", "cdc", "aba", 'a', "stone", 'b', RegistrarBloodMagicItems.SLATE, 'c', Items.SUGAR, 'd', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE)); //Speed
-//        addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.bloodRune, 1, 2), "aba", "cdc", "aba", 'a', "stone", 'b', RegistrarBloodMagicItems.slate, 'c', Items.sugar, 'd', new ItemStack(RegistrarBloodMagicBlocks.bloodRune))); //Efficiency
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 3), "aba", "cdc", "aea", 'a', "stone", 'b', new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1), 'c', "ingotGold", 'd', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), 'e', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_APPRENTICE))); //Sacrifice
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4), "aba", "cdc", "aea", 'a', "stone", 'b', new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1), 'c', "dustGlowstone", 'd', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), 'e', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_APPRENTICE))); //Self-Sacrifice
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 5), "aba", "bcb", "ada", 'a', "stone", 'b', Items.WATER_BUCKET, 'c', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), 'd', new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2)); //Displacement
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 6), "aba", "bcb", "ada", 'a', "stone", 'b', Items.BUCKET, 'c', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), 'd', new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2)); //Capacity
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 7), "aba", "cdc", "aea", 'a', Blocks.OBSIDIAN, 'b', new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3), 'c', Items.BUCKET, 'd', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 6), 'e', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MASTER))); //Augmented Capacity
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 8), "aba", "cdc", "aba", 'a', "stone", 'b', OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK), 'c', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), 'd', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MASTER))); //Orb
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 9), "aba", "cdc", "aea", 'a', Items.BUCKET, 'b', new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3), 'c', "ingotGold", 'd', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 1), 'e', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MASTER))); //Acceleration
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 10), "RsR", "GrG", "ReR", 'G', "glowstone", 's', new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3), 'R', "dustRedstone", 'r', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1), 'e', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MASTER))); //Charging
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_STONE, 4), "aba", "bcb", "aba", 'a', Blocks.OBSIDIAN, 'b', new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1), 'c', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_APPRENTICE)));
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER), "aba", "bcb", "aba", 'a', Blocks.OBSIDIAN, 'b', RegistrarBloodMagicBlocks.RITUAL_STONE, 'c', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MAGICIAN)));
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER, 1, 1), "aba", "bcb", "aba", 'a', Blocks.OBSIDIAN, 'b', "stone", 'c', OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK)));
-        addShapelessRecipe(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER, 1, 2), new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER), new ItemStack(Blocks.REDSTONE_TORCH), new ItemStack(RegistrarBloodMagicItems.SLATE));
-        addShapelessRecipe(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER), new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER, 1, 2));
-
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicItems.BASE_ITEM_FILTER, 1, 0), "sgs", "gfg", "sgs", 'f', ItemComponent.getStack(ItemComponent.COMPONENT_FRAME_PART), 'g', "blockGlass", 's', "stickWood");
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicItems.BASE_ITEM_FILTER, 1, 1), "sgs", "gfg", "sgs", 'f', ItemComponent.getStack(ItemComponent.COMPONENT_FRAME_PART), 'g', "dyeYellow", 's', "stickWood");
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicItems.BASE_ITEM_FILTER, 1, 2), "sgs", "gfg", "sgs", 'f', ItemComponent.getStack(ItemComponent.COMPONENT_FRAME_PART), 'g', "dyeGreen", 's', "stickWood");
-        addShapedRecipe(new ItemStack(RegistrarBloodMagicItems.BASE_ITEM_FILTER, 1, 3), "sgs", "gfg", "sgs", 'f', ItemComponent.getStack(ItemComponent.COMPONENT_FRAME_PART), 'g', "dyePurple", 's', "stickWood");
-
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicItems.UPGRADE_TRAINER), "ngn", "ioi", "ngn", 'o', OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_MASTER), 'i', "ingotIron", 'n', "nuggetGold", 'g', "ingotGold"));
-
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.INCENSE_ALTAR), "s s", "shs", "coc", 'o', OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK), 's', "stone", 'c', "cobblestone", 'h', new ItemStack(Items.COAL, 1, 1)));
-//        GameRegistry.addRecipe(new ShapelessBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.PATH, 4, 0), "plankWood", "plankWood", "plankWood", "plankWood", OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_APPRENTICE)));
-        addShapelessRecipe(new ItemStack(RegistrarBloodMagicBlocks.PATH, 4, 1), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 0), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 0), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 0), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 0));
-//        GameRegistry.addRecipe(new ShapelessBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.PATH, 4, 2), "stone", "stone", "stone", "stone", OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_MAGICIAN)));
-        addShapelessRecipe(new ItemStack(RegistrarBloodMagicBlocks.PATH, 4, 3), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 2), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 2), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 2), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 2));
-//        GameRegistry.addRecipe(new ShapelessBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.PATH, 4, 4), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 2), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 2), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 2), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 2), OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MASTER)));
-        addShapelessRecipe(new ItemStack(RegistrarBloodMagicBlocks.PATH, 4, 5), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 4), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 4), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 4), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 4));
-//        GameRegistry.addRecipe(new ShapelessBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.PATH, 4, 6), Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.OBSIDIAN, OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_ARCHMAGE)));
-        addShapelessRecipe(new ItemStack(RegistrarBloodMagicBlocks.PATH, 4, 7), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 6), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 6), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 6), new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 6));
-
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicItems.EXPERIENCE_TOME), "ses", "lbl", "gog", 'o', OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_MAGICIAN), 'e', Blocks.LAPIS_BLOCK, 'l', new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2), 'b', Items.ENCHANTED_BOOK, 's', "string", 'g', "ingotGold"));
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicItems.RITUAL_READER), "gog", "isi", " s ", 's', new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3), 'g', "blockGlass", 'i', "ingotGold", 'o', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MASTER)));
-//
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.ALCHEMY_TABLE), "sss", "wbw", "gog", 's', "stone", 'w', "plankWood", 'b', Items.BLAZE_ROD, 'g', "ingotGold", 'o', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_WEAK)));
-
-        for (int i = 1; i < EnumBloodRune.values().length; i++)
-            addShapelessRecipe(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, i));
-
-        for (int i = 0; i < ItemSoulGem.names.length; i++) {
-            for (int j = 0; j < ItemDemonCrystal.NAMES.size(); j++) {
-                ItemStack baseGemStack = new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, i);
-                ItemStack newGemStack = new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, i);
-
-                ItemStack crystalStack = new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, 1, j);
-
-                ((ItemSoulGem) RegistrarBloodMagicItems.SOUL_GEM).setCurrentType(((ItemDemonCrystal) RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL).getType(crystalStack), newGemStack);
-                addShapelessRecipe(newGemStack, baseGemStack, crystalStack);
-            }
-        }
-
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.MIMIC, 4, 0), "b b", " r ", "bob", 'b', new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK), 'r', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), 'o', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MAGICIAN)));
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.MIMIC, 4, 1), "bsb", "srs", "bob", 'b', new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK), 'r', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), 's', "stone", 'o', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MAGICIAN)));
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.MIMIC, 4, 2), "bsb", "srs", "bob", 'b', new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK), 'r', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), 's', "blockGlass", 'o', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MAGICIAN)));
-//        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(RegistrarBloodMagicBlocks.MIMIC, 2, 3), "bnb", "trt", "bob", 'b', new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK), 'r', new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE), 'n', "glowstone", 't', "torch", 'o', OrbRegistry.getOrbStack(RegistrarBloodMagicItems.ORB_MAGICIAN)));
-
-        for (int i = 0; i < 5; i++) {
-            ItemStack crystalStack = new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, 1, i);
-            ItemStack baseStoneStack = new ItemStack(RegistrarBloodMagicBlocks.DEMON_EXTRAS, 1, i);
-            ItemStack baseStoneStackCrafted = new ItemStack(RegistrarBloodMagicBlocks.DEMON_EXTRAS, 16, i);
-            ItemStack polishedStoneStack = new ItemStack(RegistrarBloodMagicBlocks.DEMON_EXTRAS, 1, i + 5);
-            ItemStack willBrickStack = new ItemStack(RegistrarBloodMagicBlocks.DEMON_BRICK_1, 1, i);
-            ItemStack willBrickStackCrafted = new ItemStack(RegistrarBloodMagicBlocks.DEMON_BRICK_1, 4, i);
-
-            ItemStack willSmallBrickStack = new ItemStack(RegistrarBloodMagicBlocks.DEMON_BRICK_2, 1, i);
-            ItemStack willSmallBrickStackCrafted = new ItemStack(RegistrarBloodMagicBlocks.DEMON_BRICK_2, 1, i);
-            ItemStack pillarStack = new ItemStack(RegistrarBloodMagicBlocks.DEMON_PILLAR_1, 1, i);
-            ItemStack pillarStackCrafted = new ItemStack(RegistrarBloodMagicBlocks.DEMON_PILLAR_1, 6, i);
-
-            addShapelessRecipe(baseStoneStackCrafted, crystalStack, "stone", "stone", "stone", "stone", "stone", "stone", "stone", "stone");
-            addShapedRecipe(willBrickStackCrafted, "ss", "ss", 's', baseStoneStack);
-            addShapedRecipe(willSmallBrickStackCrafted, "ss", "ss", 's', willBrickStack);
-            addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.DEMON_BRICK_2, 9, i + 5), "scs", "ccc", "scs", 's', baseStoneStack, 'c', willBrickStack);
-            addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.DEMON_BRICK_2, 9, i + 10), "scs", "coc", "scs", 's', baseStoneStack, 'c', willBrickStack, 'o', crystalStack);
-            addShapedRecipe(pillarStackCrafted, "ss", "ss", "ss", 's', polishedStoneStack);
-            addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.DEMON_PILLAR_2, 8, i), "ppp", "pcp", "ppp", 'p', pillarStack, 'c', crystalStack);
-
-            addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.DEMON_WALL_1, 6, i), "sss", "sss", 's', willBrickStack);
-            addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.DEMON_WALL_1, 6, i + 5), "sss", "sss", 's', willSmallBrickStack);
-            addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.DEMON_WALL_1, 6, i + 10), "sss", "sss", 's', polishedStoneStack);
-
-            addShapedRecipe(new ItemStack(i < 2 ? RegistrarBloodMagicBlocks.DEMON_STAIRS_1 : (i < 4 ? RegistrarBloodMagicBlocks.DEMON_STAIRS_2 : RegistrarBloodMagicBlocks.DEMON_STAIRS_3), 8, i % 2), "s  ", "ss ", "sss", 's', polishedStoneStack);
-            addShapedRecipe(new ItemStack(i < 2 ? RegistrarBloodMagicBlocks.DEMON_PILLAR_CAP_1 : (i < 4 ? RegistrarBloodMagicBlocks.DEMON_PILLAR_CAP_2 : RegistrarBloodMagicBlocks.DEMON_PILLAR_CAP_3), 6, i % 2), "sss", "sss", 's', pillarStack);
-
-            addShapedRecipe(new ItemStack(RegistrarBloodMagicBlocks.DEMON_LIGHT, 5, i), "sgs", "ggg", "sgs", 's', polishedStoneStack, 'g', Blocks.GLOWSTONE);
-
-            GameRegistry.addSmelting(baseStoneStack, polishedStoneStack, 0.15f);
-        }
-
-        generateConstants();
     }
 
     public static void addAltarRecipes() {
@@ -554,167 +419,6 @@ public class ModRecipes {
                 break;
             case 9:
                 LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.NETHER_STAR, "gemDiamond", "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 4));
-        }
-    }
-
-    private static void setupDir() {
-        if (RECIPE_DIR == null) {
-            RECIPE_DIR = new File(Loader.instance().getConfigDir(), "bloodmagic/recipes");
-        }
-
-        if (!RECIPE_DIR.exists()) {
-            RECIPE_DIR.mkdir();
-        }
-    }
-
-    private static void addShapedRecipe(ItemStack result, Object... components) {
-        setupDir();
-
-        // GameRegistry.addShapedRecipe(result, components);
-
-        Map<String, Object> json = new HashMap<>();
-
-        List<String> pattern = new ArrayList<>();
-        int i = 0;
-        while (i < components.length && components[i] instanceof String) {
-            pattern.add((String) components[i]);
-            i++;
-        }
-        json.put("pattern", pattern);
-
-        boolean isOreDict = false;
-        Map<String, Map<String, Object>> key = new HashMap<>();
-        Character curKey = null;
-        for (; i < components.length; i++) {
-            Object o = components[i];
-            if (o instanceof Character) {
-                if (curKey != null)
-                    throw new IllegalArgumentException("Provided two char keys in a row");
-                curKey = (Character) o;
-            } else {
-                if (curKey == null)
-                    throw new IllegalArgumentException("Providing object without a char key");
-                if (o instanceof String)
-                    isOreDict = true;
-                key.put(Character.toString(curKey), serializeItem(o));
-                curKey = null;
-            }
-        }
-        json.put("key", key);
-        json.put("type", isOreDict ? "forge:ore_shaped" : "minecraft:crafting_shaped");
-        json.put("result", serializeItem(result));
-
-        // names the json the same name as the output's registry name
-        // repeatedly adds _alt if a file already exists
-        // janky I know but it works
-        String suffix = result.getItem().getHasSubtypes() ? "_" + result.getItemDamage() : "";
-        File f = new File(RECIPE_DIR, result.getItem().getRegistryName().getResourcePath() + suffix + ".json");
-
-        while (f.exists()) {
-            suffix += "_alt";
-            f = new File(RECIPE_DIR, result.getItem().getRegistryName().getResourcePath() + suffix + ".json");
-        }
-
-        try (FileWriter w = new FileWriter(f)) {
-            GSON.toJson(json, w);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void addShapelessRecipe(ItemStack result, Object... components) {
-        setupDir();
-
-        // addShapelessRecipe(result, components);
-
-        Map<String, Object> json = new HashMap<>();
-
-        boolean isOreDict = false;
-        List<Map<String, Object>> ingredients = new ArrayList<>();
-        for (Object o : components) {
-            if (o instanceof String)
-                isOreDict = true;
-            ingredients.add(serializeItem(o));
-        }
-        json.put("ingredients", ingredients);
-        json.put("type", isOreDict ? "forge:ore_shapeless" : "minecraft:crafting_shapeless");
-        json.put("result", serializeItem(result));
-
-        // names the json the same name as the output's registry name
-        // repeatedly adds _alt if a file already exists
-        // janky I know but it works
-        String suffix = result.getItem().getHasSubtypes() ? "_" + result.getItemDamage() : "";
-        File f = new File(RECIPE_DIR, result.getItem().getRegistryName().getResourcePath() + suffix + ".json");
-
-        while (f.exists()) {
-            suffix += "_alt";
-            f = new File(RECIPE_DIR, result.getItem().getRegistryName().getResourcePath() + suffix + ".json");
-        }
-
-
-        try (FileWriter w = new FileWriter(f)) {
-            GSON.toJson(json, w);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static Map<String, Object> serializeItem(Object thing) {
-        if (thing instanceof Item) {
-            return serializeItem(new ItemStack((Item) thing));
-        }
-        if (thing instanceof Block) {
-            return serializeItem(new ItemStack((Block) thing));
-        }
-        if (thing instanceof ItemStack) {
-            ItemStack stack = (ItemStack) thing;
-
-            if (stack.getItem() instanceof IBloodOrb) {
-                Map<String, Object> ret = new HashMap<>();
-                BloodOrb orb = ((IBloodOrb) stack.getItem()).getOrb(stack);
-                ret.put("orb", orb == null ? RegistrarBloodMagic.ORB_WEAK.getRegistryName().toString() : orb.getRegistryName().toString());
-                return ret;
-            }
-
-            Map<String, Object> ret = new HashMap<>();
-            ret.put("item", stack.getItem().getRegistryName().toString());
-            if (stack.getItem().getHasSubtypes() || stack.getItemDamage() != 0) {
-                ret.put("data", stack.getItemDamage());
-            }
-            if (stack.getCount() > 1) {
-                ret.put("count", stack.getCount());
-            }
-
-            if (stack.hasTagCompound()) {
-                throw new IllegalArgumentException("nbt not implemented");
-            }
-
-            return ret;
-        }
-        if (thing instanceof String) {
-            Map<String, Object> ret = new HashMap<>();
-            USED_OD_NAMES.add((String) thing);
-            ret.put("item", "#" + ((String) thing).toUpperCase(Locale.ROOT));
-            return ret;
-        }
-
-        throw new IllegalArgumentException("Not a block, item, stack, or od name");
-    }
-
-    private static void generateConstants() {
-        List<Map<String, Object>> json = new ArrayList<>();
-        for (String s : USED_OD_NAMES) {
-            Map<String, Object> entry = new HashMap<>();
-            entry.put("name", s.toUpperCase(Locale.ROOT));
-            entry.put("ingredient", ImmutableMap.of("type", "forge:ore_dict", "ore", s));
-            json.add(entry);
-        }
-
-        try (FileWriter w = new FileWriter(new File(RECIPE_DIR, "_constants.json"))) {
-            GSON.toJson(json, w);
-        } catch (IOException e) {
-            e.printStackTrace();
-
         }
     }
 }

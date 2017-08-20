@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "bloodmagic:ritual_controller",
+    "data": 1
+  },
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:obsidian"
+    },
+    "b": {
+      "item": "#STONE"
+    },
+    "c": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:weak"
+    }
+  }
+}

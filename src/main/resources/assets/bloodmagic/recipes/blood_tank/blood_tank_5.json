@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "bloodmagic:blood_tank",
+    "data": 5
+  },
+  "pattern": [
+    "RBR",
+    "T T",
+    "RRR"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "bloodmagic:blood_rune",
+      "data": 0
+    },
+    "B": {
+      "item": "bloodmagic:decorative_brick",
+      "data": 0
+    },
+    "T": {
+      "item": "bloodmagic:blood_tank",
+      "data": 4
+    }
+  }
+}

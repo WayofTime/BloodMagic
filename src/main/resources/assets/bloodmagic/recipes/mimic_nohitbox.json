@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "bloodmagic:mimic",
+    "data": 0,
+    "count": 4
+  },
+  "pattern": [
+    "b b",
+    " r ",
+    "bob"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "b": {
+      "item": "bloodmagic:decorative_brick",
+      "data": 0
+    },
+    "r": {
+      "item": "bloodmagic:blood_rune",
+      "data": 0
+    },
+    "o": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:magician"
+    }
+  }
+}

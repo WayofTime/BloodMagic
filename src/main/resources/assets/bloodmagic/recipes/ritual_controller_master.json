@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "bloodmagic:ritual_controller",
+    "data": 0
+  },
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:obsidian"
+    },
+    "b": {
+      "item": "bloodmagic:ritual_stone",
+      "data": 0
+    },
+    "c": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:magician"
+    }
+  }
+}

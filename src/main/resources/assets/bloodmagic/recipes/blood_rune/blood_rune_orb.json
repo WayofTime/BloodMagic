@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "bloodmagic:blood_rune",
+    "data": 8
+  },
+  "pattern": [
+    "aba",
+    "cdc",
+    "aba"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "#STONE"
+    },
+    "b": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:weak"
+    },
+    "c": {
+      "item": "bloodmagic:blood_rune",
+      "data": 0
+    },
+    "d": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:master"
+    }
+  }
+}

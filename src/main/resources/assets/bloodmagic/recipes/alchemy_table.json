@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "bloodmagic:alchemy_table"
+  },
+  "pattern": [
+    "sss",
+    "wbw",
+    "gog"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "b": {
+      "item": "minecraft:blaze_rod"
+    },
+    "s": {
+      "item": "#STONE"
+    },
+    "w": {
+      "item": "#PLANKWOOD"
+    },
+    "g": {
+      "item": "#INGOTGOLD"
+    },
+    "o": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:weak"
+    }
+  }
+}

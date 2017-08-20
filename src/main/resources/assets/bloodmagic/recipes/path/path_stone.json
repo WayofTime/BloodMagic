@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "bloodmagic:path",
+    "data": 2,
+    "count": 4
+  },
+  "ingredients": [
+    {
+      "item": "#STONE"
+    },
+    {
+      "item": "#STONE"
+    },
+    {
+      "item": "#STONE"
+    },
+    {
+      "item": "#STONE"
+    },
+    {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:magician"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

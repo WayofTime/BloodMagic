@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "bloodmagic:ritual_reader"
+  },
+  "pattern": [
+    "gog",
+    "isi",
+    " s "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "s": {
+      "item": "bloodmagic:slate",
+      "data": 3
+    },
+    "g": {
+      "item": "#BLOCKGLASS"
+    },
+    "i": {
+      "item": "#INGOTGOLD"
+    },
+    "o": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:master"
+    }
+  }
+}

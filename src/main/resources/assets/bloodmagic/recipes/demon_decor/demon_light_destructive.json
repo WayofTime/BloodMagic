@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "bloodmagic:demon_light",
+    "data": 2,
+    "count": 5
+  },
+  "pattern": [
+    "sgs",
+    "ggg",
+    "sgs"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "bloodmagic:demon_extras",
+      "data": 7
+    },
+    "g": {
+      "item": "minecraft:glowstone"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "result": {
+    "item": "bloodmagic:mimic",
+    "data": 2,
+    "count": 4
+  },
+  "pattern": [
+    "bsb",
+    "srs",
+    "bob"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "b": {
+      "item": "bloodmagic:decorative_brick",
+      "data": 0
+    },
+    "r": {
+      "item": "bloodmagic:blood_rune",
+      "data": 0
+    },
+    "s": {
+      "item": "#BLOCKGLASS"
+    },
+    "o": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:magician"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "result": {
+    "item": "bloodmagic:experience_tome"
+  },
+  "pattern": [
+    "ses",
+    "lbl",
+    "gog"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "b": {
+      "item": "minecraft:enchanted_book"
+    },
+    "s": {
+      "item": "#STRING"
+    },
+    "e": {
+      "item": "minecraft:lapis_block"
+    },
+    "g": {
+      "item": "#INGOTGOLD"
+    },
+    "l": {
+      "item": "bloodmagic:slate",
+      "data": 2
+    },
+    "o": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:magician"
+    }
+  }
+}

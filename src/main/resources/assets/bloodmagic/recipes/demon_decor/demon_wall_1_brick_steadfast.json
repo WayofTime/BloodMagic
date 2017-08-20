@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "bloodmagic:demon_wall_1",
+    "data": 4,
+    "count": 6
+  },
+  "pattern": [
+    "sss",
+    "sss"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "bloodmagic:demon_brick_1",
+      "data": 4
+    }
+  }
+}

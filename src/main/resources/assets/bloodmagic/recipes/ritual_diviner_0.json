@@ -1,0 +1,36 @@
+{
+  "result": {
+    "item": "bloodmagic:ritual_diviner",
+    "data": 0
+  },
+  "pattern": [
+    "dfd",
+    "ase",
+    "dwd"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "bloodmagic:inscription_tool",
+      "data": 4
+    },
+    "s": {
+      "item": "#STICKWOOD"
+    },
+    "d": {
+      "item": "#GEMDIAMOND"
+    },
+    "e": {
+      "item": "bloodmagic:inscription_tool",
+      "data": 3
+    },
+    "f": {
+      "item": "bloodmagic:inscription_tool",
+      "data": 2
+    },
+    "w": {
+      "item": "bloodmagic:inscription_tool",
+      "data": 1
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "bloodmagic:sacrificial_dagger",
+    "data": 0
+  },
+  "pattern": [
+    "aaa",
+    " ba",
+    "c a"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "#BLOCKGLASS"
+    },
+    "b": {
+      "item": "#INGOTGOLD"
+    },
+    "c": {
+      "item": "#INGOTIRON"
+    }
+  }
+}
