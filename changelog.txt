@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Version 2.2.0
+------------------------------------------------------
+
+- Basic port to 1.12
+    - Does not include the vast majority of rewrites and cleanup I did on the other branch
+    - Completely untested. Done out of spite. Go away.
+    - There, you have it. Screw off now.
+
+------------------------------------------------------
 Version 2.1.11
 ------------------------------------------------------
 
