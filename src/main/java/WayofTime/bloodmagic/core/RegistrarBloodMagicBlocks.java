@@ -124,7 +124,7 @@ public class RegistrarBloodMagicBlocks {
 
         event.getRegistry().registerAll(blocks.toArray(new Block[0]));
 
-        registerTiles();
+        registerTileEntities();
     }
 
     @SubscribeEvent
@@ -137,29 +137,28 @@ public class RegistrarBloodMagicBlocks {
         });
     }
 
-    private static void registerTiles() {
-        GameRegistry.registerTileEntity(TileAltar.class, BloodMagic.MODID + ":" + TileAltar.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileImperfectRitualStone.class, BloodMagic.MODID + ":" + TileImperfectRitualStone.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileMasterRitualStone.class, BloodMagic.MODID + ":" + TileMasterRitualStone.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileAlchemyArray.class, BloodMagic.MODID + ":" + TileAlchemyArray.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileSpectralBlock.class, BloodMagic.MODID + ":" + TileSpectralBlock.class.getSimpleName());
-        GameRegistry.registerTileEntity(TilePhantomBlock.class, BloodMagic.MODID + ":" + TilePhantomBlock.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileTeleposer.class, BloodMagic.MODID + ":" + TileTeleposer.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileSoulForge.class, BloodMagic.MODID + ":" + TileSoulForge.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileMasterRoutingNode.class, BloodMagic.MODID + ":" + TileMasterRoutingNode.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileInputRoutingNode.class, BloodMagic.MODID + ":" + TileInputRoutingNode.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileOutputRoutingNode.class, BloodMagic.MODID + ":" + TileOutputRoutingNode.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileItemRoutingNode.class, BloodMagic.MODID + ":" + TileItemRoutingNode.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileIncenseAltar.class, BloodMagic.MODID + ":" + TileIncenseAltar.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileDemonCrucible.class, BloodMagic.MODID + ":" + TileDemonCrucible.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileDemonPylon.class, BloodMagic.MODID + ":" + TileDemonPylon.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileDemonCrystallizer.class, BloodMagic.MODID + ":" + TileDemonCrystallizer.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileDemonCrystal.class, BloodMagic.MODID + ":" + TileDemonCrystal.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileAlchemyTable.class, BloodMagic.MODID + ":" + TileAlchemyTable.class.getSimpleName());
-
-        GameRegistry.registerTileEntity(TileDimensionalPortal.class, BloodMagic.MODID + ":" + TileDimensionalPortal.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileBloodTank.class, BloodMagic.MODID + ":" + TileBloodTank.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileMimic.class, BloodMagic.MODID + ":" + TileMimic.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileInversionPillar.class, BloodMagic.MODID + ":" + TileInversionPillar.class.getSimpleName());
+    private static void registerTileEntities() {
+        GameRegistry.registerTileEntity(TileAltar.class, BloodMagic.MODID + ":altar");
+        GameRegistry.registerTileEntity(TileImperfectRitualStone.class, BloodMagic.MODID + ":imperfect_ritual_stone");
+        GameRegistry.registerTileEntity(TileMasterRitualStone.class, BloodMagic.MODID + ":master_ritual_stone");
+        GameRegistry.registerTileEntity(TileAlchemyArray.class, BloodMagic.MODID + ":alchemy_array");
+        GameRegistry.registerTileEntity(TileSpectralBlock.class, BloodMagic.MODID + ":spectral_block");
+        GameRegistry.registerTileEntity(TilePhantomBlock.class, BloodMagic.MODID + ":phantom_block");
+        GameRegistry.registerTileEntity(TileTeleposer.class, BloodMagic.MODID + ":teleposer");
+        GameRegistry.registerTileEntity(TileSoulForge.class, BloodMagic.MODID + ":soul_forge");
+        GameRegistry.registerTileEntity(TileMasterRoutingNode.class, BloodMagic.MODID + ":master_routing_node");
+        GameRegistry.registerTileEntity(TileInputRoutingNode.class, BloodMagic.MODID + ":input_routing_node");
+        GameRegistry.registerTileEntity(TileOutputRoutingNode.class, BloodMagic.MODID + ":output_routing_node");
+        GameRegistry.registerTileEntity(TileItemRoutingNode.class, BloodMagic.MODID + ":item_routing_node");
+        GameRegistry.registerTileEntity(TileIncenseAltar.class, BloodMagic.MODID + ":incense_altar");
+        GameRegistry.registerTileEntity(TileDemonCrucible.class, BloodMagic.MODID + ":demon_crucible");
+        GameRegistry.registerTileEntity(TileDemonPylon.class, BloodMagic.MODID + ":demon_pylon");
+        GameRegistry.registerTileEntity(TileDemonCrystallizer.class, BloodMagic.MODID + ":demon_crystallizer");
+        GameRegistry.registerTileEntity(TileDemonCrystal.class, BloodMagic.MODID + ":demon_crystal");
+        GameRegistry.registerTileEntity(TileAlchemyTable.class, BloodMagic.MODID + ":alchemy_table");
+        GameRegistry.registerTileEntity(TileDimensionalPortal.class, BloodMagic.MODID + ":dimensional_portal");
+        GameRegistry.registerTileEntity(TileBloodTank.class, BloodMagic.MODID + ":blood_tank");
+        GameRegistry.registerTileEntity(TileMimic.class, BloodMagic.MODID + ":mimic");
+        GameRegistry.registerTileEntity(TileInversionPillar.class, BloodMagic.MODID + ":inversion_pillar");
     }
 }
