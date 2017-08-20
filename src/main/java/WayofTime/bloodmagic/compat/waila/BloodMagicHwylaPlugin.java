@@ -9,7 +9,7 @@ import mcp.mobius.waila.api.IWailaRegistrar;
 import mcp.mobius.waila.api.WailaPlugin;
 
 @WailaPlugin
-public class WailaPluginBloodMagic implements IWailaPlugin {
+public class BloodMagicHwylaPlugin implements IWailaPlugin {
     @Override
     public void register(IWailaRegistrar registrar) {
         registrar.registerBodyProvider(new DataProviderBloodAltar(), BlockAltar.class);

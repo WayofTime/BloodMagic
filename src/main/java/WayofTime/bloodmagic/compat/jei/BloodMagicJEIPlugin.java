@@ -33,7 +33,7 @@ import javax.annotation.Nonnull;
 import java.util.Map;
 
 @JEIPlugin
-public class BloodMagicPlugin implements IModPlugin {
+public class BloodMagicJEIPlugin implements IModPlugin {
     public static IJeiHelpers jeiHelper;
 
     @Override

@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.compat.jei.alchemyTable;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
-import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
+import WayofTime.bloodmagic.compat.jei.BloodMagicJEIPlugin;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -22,14 +22,14 @@ public class AlchemyTableRecipeCategory implements IRecipeCategory<AlchemyTableR
     private static final int INPUT_SLOT = 2;
 
     @Nonnull
-    private final IDrawable background = BloodMagicPlugin.jeiHelper.getGuiHelper().createDrawable(new ResourceLocation(Constants.Mod.DOMAIN + "gui/jei/alchemyTable.png"), 0, 0, 118, 40);
+    private final IDrawable background = BloodMagicJEIPlugin.jeiHelper.getGuiHelper().createDrawable(new ResourceLocation(Constants.Mod.DOMAIN + "gui/jei/alchemyTable.png"), 0, 0, 118, 40);
     @Nonnull
     private final String localizedName = TextHelper.localize("jei.bloodmagic.recipe.alchemyTable");
     @Nonnull
     private final ICraftingGridHelper craftingGridHelper;
 
     public AlchemyTableRecipeCategory() {
-        craftingGridHelper = BloodMagicPlugin.jeiHelper.getGuiHelper().createCraftingGridHelper(INPUT_SLOT, OUTPUT_SLOT);
+        craftingGridHelper = BloodMagicJEIPlugin.jeiHelper.getGuiHelper().createCraftingGridHelper(INPUT_SLOT, OUTPUT_SLOT);
     }
 
     @Nonnull

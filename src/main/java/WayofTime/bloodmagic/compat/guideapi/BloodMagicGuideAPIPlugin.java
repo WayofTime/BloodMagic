@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import java.awt.Color;
 
 @GuideBook(priority = EventPriority.HIGHEST)
-public class GuideBloodMagic implements IGuideBook {
+public class BloodMagicGuideAPIPlugin implements IGuideBook {
 
     public static final Book GUIDE_BOOK = new Book();
 

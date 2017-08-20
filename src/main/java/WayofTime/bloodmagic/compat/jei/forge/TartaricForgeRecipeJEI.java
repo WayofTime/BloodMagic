@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.compat.jei.forge;
 
 import WayofTime.bloodmagic.api_impl.recipe.RecipeTartaricForge;
-import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
+import WayofTime.bloodmagic.compat.jei.BloodMagicJEIPlugin;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.Lists;
@@ -26,7 +26,7 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper {
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-        List<List<ItemStack>> expandedInputs = BloodMagicPlugin.jeiHelper.getStackHelper().expandRecipeItemStackInputs(recipe.getInput());
+        List<List<ItemStack>> expandedInputs = BloodMagicJEIPlugin.jeiHelper.getStackHelper().expandRecipeItemStackInputs(recipe.getInput());
         expandedInputs.add(validGems);
         ingredients.setInputLists(ItemStack.class, expandedInputs);
         ingredients.setOutput(ItemStack.class, recipe.getOutput());

@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.compat.jei.alchemyTable;
 
 import WayofTime.bloodmagic.api_impl.recipe.RecipeAlchemyTable;
-import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
+import WayofTime.bloodmagic.compat.jei.BloodMagicJEIPlugin;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
@@ -19,7 +19,7 @@ public class AlchemyTableRecipeJEI implements IRecipeWrapper {
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-        List<List<ItemStack>> expanded = BloodMagicPlugin.jeiHelper.getStackHelper().expandRecipeItemStackInputs(recipe.getInput());
+        List<List<ItemStack>> expanded = BloodMagicJEIPlugin.jeiHelper.getStackHelper().expandRecipeItemStackInputs(recipe.getInput());
         ingredients.setInputLists(ItemStack.class, expanded);
         ingredients.setOutput(ItemStack.class, recipe.getOutput());
     }
