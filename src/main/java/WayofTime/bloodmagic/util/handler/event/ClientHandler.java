@@ -210,10 +210,10 @@ public class ClientHandler {
         missingVariants.removeAll(missing);
 
         if (errored.size() > 0)
-            BloodMagic.instance.logger.info("Suppressed {} model errors from Blood Magic.", errored.size());
+            BloodMagic.LOGGER.info("Suppressed {} model errors from Blood Magic.", errored.size());
         if (missing.size() > 0)
-            BloodMagic.instance.logger.info("Suppressed {} variant errors from Blood Magic.", missing.size());
-        BloodMagic.instance.logger.debug("Suppressed discovered model/variant errors in {}", stopwatch.stop());
+            BloodMagic.LOGGER.info("Suppressed {} variant errors from Blood Magic.", missing.size());
+        BloodMagic.LOGGER.debug("Suppressed discovered model/variant errors in {}", stopwatch.stop());
     }
 
     // For some reason, we need some bad textures to be listed in the Crystal and Node models. This will hide that from the end user.
@@ -246,7 +246,7 @@ public class ClientHandler {
             missingTextures.keySet().remove(mc);
             badTextureDomains.remove(mc);
         }
-        BloodMagic.instance.logger.debug("Suppressed required texture errors in {}", stopwatch.stop());
+        BloodMagic.LOGGER.debug("Suppressed required texture errors in {}", stopwatch.stop());
     }
 
     private void renderRitualStones(EntityPlayerSP player, float partialTicks) {

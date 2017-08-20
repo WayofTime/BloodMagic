@@ -20,7 +20,7 @@ public class StorageBlockCraftingManager {
     public void addStorageBlockRecipes() {
 //        this.recipes = new StorageBlockCraftingRecipeAssimilator().getPackingRecipes();
 
-        BloodMagic.instance.logger.info("Total number of compression recipes: " + this.recipes.size());
+        BloodMagic.LOGGER.info("Total number of compression recipes: {}", this.recipes.size());
     }
 
     public ItemStack findMatchingRecipe(InventoryCrafting craftingInventory, World world) {

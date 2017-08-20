@@ -29,6 +29,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.List;
@@ -39,14 +41,15 @@ public class BloodMagic {
     public static final String NAME = "Blood Magic: Alchemical Wizardry";
     public static final String VERSION = "@VERSION@";
     public static final String DEPEND = "required-after:guideapi;";
+    public static final Logger LOGGER = LogManager.getLogger(NAME.substring(0, NAME.indexOf(":")));
+    public static final boolean IS_DEV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+    public static final List<Pair<IBloodMagicPlugin, BloodMagicPlugin>> PLUGINS = Lists.newArrayList();
     public static final CreativeTabs TAB_BM = new CreativeTabs(MODID + ".creativeTab") {
         @Override
         public ItemStack getTabIconItem() {
             return OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK);
         }
     };
-    public static final boolean IS_DEV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
-    public static final List<Pair<IBloodMagicPlugin, BloodMagicPlugin>> PLUGINS = Lists.newArrayList();
     public static CreativeTabs TAB_TOMES = new CreativeTabs(MODID + ".creativeTabTome") {
         @Override
         public ItemStack getTabIconItem() {
@@ -68,7 +71,6 @@ public class BloodMagic {
         FluidRegistry.enableUniversalBucket();
     }
 
-    public LogHelper logger = new LogHelper(MODID);
     private File configDir;
 
     @Mod.EventHandler

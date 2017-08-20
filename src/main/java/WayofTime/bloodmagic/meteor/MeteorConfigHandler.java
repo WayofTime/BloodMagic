@@ -29,7 +29,7 @@ public class MeteorConfigHandler {
 
     public static void handleMeteors(boolean checkNewVersion) {
         if (meteorDir == null) {
-            BloodMagic.instance.logger.error("Attempted to handle meteor config but the folder has not been initialized. Was this run too early?");
+            BloodMagic.LOGGER.error("Attempted to handle meteor config but the folder has not been initialized. Was this run too early?");
             return;
         }
 

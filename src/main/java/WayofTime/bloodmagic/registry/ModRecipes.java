@@ -123,7 +123,7 @@ public class ModRecipes {
         CompressionRegistry.registerItemThreshold(new ItemStack(Blocks.COBBLESTONE), 64);
         stopwatch.stop();
 
-        BloodMagic.instance.logger.info("Added compression recipes in {}", stopwatch);
+        BloodMagic.LOGGER.info("Added compression recipes in {}", stopwatch);
     }
 
     public static void addSoulForgeRecipes() {

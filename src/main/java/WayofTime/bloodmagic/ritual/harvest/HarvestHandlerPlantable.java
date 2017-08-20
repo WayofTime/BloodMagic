@@ -120,11 +120,11 @@ public class HarvestHandlerPlantable implements IHarvestHandler {
                 HarvestRegistry.registerStandardCrop(crop, crop.getMaxAge());
             }
         } catch (NoSuchMethodException e) {
-            BloodMagic.instance.logger.error("HarvestCraft integration cancelled; unable to find crop name mapper");
+            BloodMagic.LOGGER.error("HarvestCraft integration cancelled; unable to find crop name mapper");
         } catch (IllegalAccessException e) {
-            BloodMagic.instance.logger.error("HarvestCraft integration cancelled; crop name lookup broke");
+            BloodMagic.LOGGER.error("HarvestCraft integration cancelled; crop name lookup broke");
         } catch (InvocationTargetException e) {
-            BloodMagic.instance.logger.error("HarvestCraft integration cancelled; crop name lookup broke");
+            BloodMagic.LOGGER.error("HarvestCraft integration cancelled; crop name lookup broke");
         }
     }
 }

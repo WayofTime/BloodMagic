@@ -152,10 +152,9 @@ public class ClientProxy extends CommonProxy {
             Map<String, RenderPlayer> skinMap = ObfuscationReflectionHelper.getPrivateValue(RenderManager.class, renderManager, "skinMap", "field_178636_l");
             skinMap.get("default").addLayer(new LayerBloodElytra(skinMap.get("default")));
             skinMap.get("slim").addLayer(new LayerBloodElytra(skinMap.get("slim")));
-            BloodMagic.instance.logger.info("Elytra layer added");
+            BloodMagic.LOGGER.info("Elytra layer added");
         } catch (Exception e) {
-            BloodMagic.instance.logger.error("Failed to set custom Elytra Layer for Elytra Living Armour Upgrade.");
-            BloodMagic.instance.logger.error(e.getLocalizedMessage());
+            BloodMagic.LOGGER.error("Failed to set custom Elytra Layer for Elytra Living Armour Upgrade.");
         }
     }
 

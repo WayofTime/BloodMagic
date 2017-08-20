@@ -928,7 +928,7 @@ public class Utils {
                 Class<?> handlerClass = Class.forName(data.getClassName());
                 Object handlerImpl = handlerClass.newInstance();
                 MinecraftForge.EVENT_BUS.register(handlerImpl);
-                BloodMagic.instance.logger.debug("Registering event handler for class {}", data.getClassName());
+                BloodMagic.LOGGER.debug("Registering event handler for class {}", data.getClassName());
             } catch (Exception e) {
                 // No-op
             }
