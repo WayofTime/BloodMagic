@@ -136,14 +136,14 @@ public class MeteorConfigHandler {
         Meteor diamondMeteor = new Meteor(new ItemStack(Blocks.DIAMOND_BLOCK), diamondMeteorList, 10, 3);
         diamondMeteor.setVersion(3);
 
-        holders.add(Pair.of("IronMeteor", ironMeteor));
-        DEFAULT_METEORS.put("IronMeteor", ironMeteor);
+        holders.add(Pair.of("iron", ironMeteor));
+        DEFAULT_METEORS.put("iron", ironMeteor);
 
-        holders.add(Pair.of("GoldMeteor", goldMeteor));
-        DEFAULT_METEORS.put("GoldMeteor", goldMeteor);
+        holders.add(Pair.of("gold", goldMeteor));
+        DEFAULT_METEORS.put("gold", goldMeteor);
 
-        holders.add(Pair.of("DiamondMeteor", diamondMeteor));
-        DEFAULT_METEORS.put("DiamondMeteor", diamondMeteor);
+        holders.add(Pair.of("diamond", diamondMeteor));
+        DEFAULT_METEORS.put("diamond", diamondMeteor);
         return holders;
     }
 
