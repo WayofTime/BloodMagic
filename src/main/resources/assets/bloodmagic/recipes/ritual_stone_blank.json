@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "bloodmagic:ritual_stone",
+    "data": 0,
+    "count": 4
+  },
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:obsidian"
+    },
+    "b": {
+      "item": "bloodmagic:slate",
+      "data": 1
+    },
+    "c": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:apprentice"
+    }
+  }
+}

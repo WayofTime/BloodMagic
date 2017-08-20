@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "bloodmagic:teleposition_focus",
+    "data": 2
+  },
+  "ingredients": [
+    {
+      "item": "bloodmagic:teleposition_focus",
+      "data": 1
+    },
+    {
+      "item": "bloodmagic:blood_shard",
+      "data": 0
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

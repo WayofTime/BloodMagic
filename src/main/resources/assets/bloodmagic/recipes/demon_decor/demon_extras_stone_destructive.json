@@ -1,0 +1,38 @@
+{
+  "result": {
+    "item": "bloodmagic:demon_extras",
+    "data": 2,
+    "count": 16
+  },
+  "ingredients": [
+    {
+      "item": "bloodmagic:item_demon_crystal",
+      "data": 2
+    },
+    {
+      "item": "#STONE"
+    },
+    {
+      "item": "#STONE"
+    },
+    {
+      "item": "#STONE"
+    },
+    {
+      "item": "#STONE"
+    },
+    {
+      "item": "#STONE"
+    },
+    {
+      "item": "#STONE"
+    },
+    {
+      "item": "#STONE"
+    },
+    {
+      "item": "#STONE"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

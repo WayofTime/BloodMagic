@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "bloodmagic:blood_tank",
+    "data": 0
+  },
+  "pattern": [
+    "RBR",
+    "G G",
+    "RRR"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "R": {
+      "item": "bloodmagic:blood_rune",
+      "data": 0
+    },
+    "B": {
+      "item": "bloodmagic:decorative_brick",
+      "data": 0
+    },
+    "G": {
+      "item": "#BLOCKGLASS"
+    }
+  }
+}

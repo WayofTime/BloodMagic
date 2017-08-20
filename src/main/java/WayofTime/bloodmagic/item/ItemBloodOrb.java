@@ -94,7 +94,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
 
         BloodOrb orb = getOrb(stack);
         if (flag.isAdvanced() && orb != null)
-            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.orb.owner", orb.getRegistryName()));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.orb.owner", orb.getRegistryName().getResourceDomain()));
 
         super.addInformation(stack, world, tooltip, flag);
     }

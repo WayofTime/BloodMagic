@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "bloodmagic:pack_sacrifice"
+  },
+  "pattern": [
+    "aba",
+    "cdc",
+    "aea"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "#BLOCKGLASS"
+    },
+    "b": {
+      "item": "minecraft:bucket"
+    },
+    "c": {
+      "item": "#INGOTIRON"
+    },
+    "d": {
+      "item": "minecraft:leather_chestplate"
+    },
+    "e": {
+      "item": "bloodmagic:slate",
+      "data": 0
+    }
+  }
+}

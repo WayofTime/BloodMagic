@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "bloodmagic:path",
+    "data": 1,
+    "count": 4
+  },
+  "ingredients": [
+    {
+      "item": "bloodmagic:path",
+      "data": 0
+    },
+    {
+      "item": "bloodmagic:path",
+      "data": 0
+    },
+    {
+      "item": "bloodmagic:path",
+      "data": 0
+    },
+    {
+      "item": "bloodmagic:path",
+      "data": 0
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

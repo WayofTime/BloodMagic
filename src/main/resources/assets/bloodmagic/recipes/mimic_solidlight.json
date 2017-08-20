@@ -1,0 +1,33 @@
+{
+  "result": {
+    "item": "bloodmagic:mimic",
+    "data": 3,
+    "count": 2
+  },
+  "pattern": [
+    "bnb",
+    "trt",
+    "bob"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "b": {
+      "item": "bloodmagic:decorative_brick",
+      "data": 0
+    },
+    "r": {
+      "item": "bloodmagic:blood_rune",
+      "data": 0
+    },
+    "t": {
+      "item": "#TORCH"
+    },
+    "n": {
+      "item": "#GLOWSTONE"
+    },
+    "o": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:magician"
+    }
+  }
+}

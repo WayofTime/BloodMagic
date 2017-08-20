@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "bloodmagic:blood_rune",
+    "data": 1
+  },
+  "pattern": [
+    "aba",
+    "cdc",
+    "aba"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "#STONE"
+    },
+    "b": {
+      "item": "bloodmagic:slate",
+      "data": 0
+    },
+    "c": {
+      "item": "minecraft:sugar"
+    },
+    "d": {
+      "item": "bloodmagic:blood_rune",
+      "data": 0
+    }
+  }
+}

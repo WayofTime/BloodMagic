@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "bloodmagic:decorative_brick",
+    "data": 1,
+    "count": 4
+  },
+  "pattern": [
+    "aa",
+    "aa"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "bloodmagic:decorative_brick",
+      "data": 0
+    }
+  }
+}

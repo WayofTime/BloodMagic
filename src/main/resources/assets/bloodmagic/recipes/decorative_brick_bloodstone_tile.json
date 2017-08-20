@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "bloodmagic:decorative_brick",
+    "data": 0,
+    "count": 16
+  },
+  "ingredients": [
+    {
+      "item": "#STONE"
+    },
+    {
+      "item": "bloodmagic:blood_shard",
+      "data": 0
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

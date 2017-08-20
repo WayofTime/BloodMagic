@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "bloodmagic:demon_stairs_3",
+    "count": 8
+  },
+  "pattern": [
+    "s  ",
+    "ss ",
+    "sss"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "bloodmagic:demon_extras",
+      "data": 9
+    }
+  }
+}

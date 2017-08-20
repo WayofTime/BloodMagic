@@ -1,0 +1,32 @@
+{
+  "result": {
+    "item": "bloodmagic:blood_rune",
+    "data": 9
+  },
+  "pattern": [
+    "aba",
+    "cdc",
+    "aea"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:bucket"
+    },
+    "b": {
+      "item": "bloodmagic:slate",
+      "data": 3
+    },
+    "c": {
+      "item": "#INGOTGOLD"
+    },
+    "d": {
+      "item": "bloodmagic:blood_rune",
+      "data": 1
+    },
+    "e": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:master"
+    }
+  }
+}

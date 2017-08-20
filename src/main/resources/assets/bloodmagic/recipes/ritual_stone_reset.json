@@ -1,0 +1,13 @@
+{
+  "result": {
+    "item": "bloodmagic:ritual_stone",
+    "data": 0
+  },
+  "ingredients": [
+    {
+      "item": "bloodmagic:ritual_stone",
+      "data": 32767
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

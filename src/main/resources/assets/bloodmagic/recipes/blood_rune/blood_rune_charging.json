@@ -1,0 +1,32 @@
+{
+  "result": {
+    "item": "bloodmagic:blood_rune",
+    "data": 10
+  },
+  "pattern": [
+    "RsR",
+    "GrG",
+    "ReR"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "R": {
+      "item": "#DUSTREDSTONE"
+    },
+    "r": {
+      "item": "bloodmagic:blood_rune",
+      "data": 0
+    },
+    "s": {
+      "item": "bloodmagic:slate",
+      "data": 3
+    },
+    "e": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:master"
+    },
+    "G": {
+      "item": "#GLOWSTONE"
+    }
+  }
+}

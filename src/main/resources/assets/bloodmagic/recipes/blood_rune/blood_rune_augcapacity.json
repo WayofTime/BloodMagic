@@ -1,0 +1,32 @@
+{
+  "result": {
+    "item": "bloodmagic:blood_rune",
+    "data": 7
+  },
+  "pattern": [
+    "aba",
+    "cdc",
+    "aea"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:obsidian"
+    },
+    "b": {
+      "item": "bloodmagic:slate",
+      "data": 3
+    },
+    "c": {
+      "item": "minecraft:bucket"
+    },
+    "d": {
+      "item": "bloodmagic:blood_rune",
+      "data": 6
+    },
+    "e": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:master"
+    }
+  }
+}

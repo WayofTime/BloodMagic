@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "bloodmagic:soul_snare",
+    "data": 0,
+    "count": 4
+  },
+  "pattern": [
+    "sis",
+    "iri",
+    "sis"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "r": {
+      "item": "#DUSTREDSTONE"
+    },
+    "s": {
+      "item": "#STRING"
+    },
+    "i": {
+      "item": "#INGOTIRON"
+    }
+  }
+}

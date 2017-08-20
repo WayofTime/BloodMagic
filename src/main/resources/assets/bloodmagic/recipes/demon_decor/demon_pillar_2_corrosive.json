@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "bloodmagic:demon_pillar_2",
+    "data": 1,
+    "count": 8
+  },
+  "pattern": [
+    "ppp",
+    "pcp",
+    "ppp"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "p": {
+      "item": "bloodmagic:demon_pillar_1",
+      "data": 1
+    },
+    "c": {
+      "item": "bloodmagic:item_demon_crystal",
+      "data": 1
+    }
+  }
+}

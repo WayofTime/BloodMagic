@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "bloodmagic:demon_brick_2",
+    "data": 12,
+    "count": 9
+  },
+  "pattern": [
+    "scs",
+    "coc",
+    "scs"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "bloodmagic:demon_extras",
+      "data": 2
+    },
+    "c": {
+      "item": "bloodmagic:demon_brick_1",
+      "data": 2
+    },
+    "o": {
+      "item": "bloodmagic:item_demon_crystal",
+      "data": 2
+    }
+  }
+}

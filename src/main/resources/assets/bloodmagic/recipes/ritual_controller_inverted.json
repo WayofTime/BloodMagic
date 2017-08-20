@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "bloodmagic:ritual_controller",
+    "data": 2
+  },
+  "ingredients": [
+    {
+      "item": "bloodmagic:ritual_controller",
+      "data": 0
+    },
+    {
+      "item": "minecraft:redstone_torch"
+    },
+    {
+      "item": "bloodmagic:slate",
+      "data": 0
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

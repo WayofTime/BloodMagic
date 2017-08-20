@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "bloodmagic:demon_pillar_cap_3",
+    "count": 6
+  },
+  "pattern": [
+    "sss",
+    "sss"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "bloodmagic:demon_pillar_1",
+      "data": 4
+    }
+  }
+}

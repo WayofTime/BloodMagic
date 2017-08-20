@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "bloodmagic:upgrade_trainer",
+    "data": 0
+  },
+  "pattern": [
+    "ngn",
+    "ioi",
+    "ngn"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "g": {
+      "item": "#INGOTGOLD"
+    },
+    "i": {
+      "item": "#INGOTIRON"
+    },
+    "n": {
+      "item": "#NUGGETGOLD"
+    },
+    "o": {
+      "type": "bloodmagic:orb",
+      "orb": "bloodmagic:master"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "bloodmagic:blood_rune",
+    "data": 5
+  },
+  "pattern": [
+    "aba",
+    "bcb",
+    "ada"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "#STONE"
+    },
+    "b": {
+      "item": "minecraft:water_bucket"
+    },
+    "c": {
+      "item": "bloodmagic:blood_rune",
+      "data": 0
+    },
+    "d": {
+      "item": "bloodmagic:slate",
+      "data": 2
+    }
+  }
+}
