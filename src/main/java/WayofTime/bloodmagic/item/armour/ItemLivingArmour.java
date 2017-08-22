@@ -9,7 +9,7 @@ import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.item.ItemComponent;
+import WayofTime.bloodmagic.item.types.ComponentType;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerRepairing;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeElytra;
@@ -97,7 +97,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-        return ItemStack.areItemsEqual(repair, ItemComponent.getStack(ItemComponent.REAGENT_BINDING));
+        return ItemStack.areItemsEqual(repair, ComponentType.REAGENT_BINDING.getStack());
     }
 
     @Override

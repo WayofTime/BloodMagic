@@ -8,14 +8,17 @@ import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
+import WayofTime.bloodmagic.item.types.ComponentType;
 import WayofTime.bloodmagic.potion.PotionBloodMagic;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
@@ -134,5 +137,11 @@ public class RegistrarBloodMagic {
 
             return orb.getModelLocation();
         });
+    }
+
+    @SubscribeEvent
+    public static void handleBurnTime(FurnaceFuelBurnTimeEvent event) {
+        if (ItemStack.areItemsEqual(event.getItemStack(), ComponentType.SAND_COAL.getStack()))
+            event.setBurnTime(1600);
     }
 }

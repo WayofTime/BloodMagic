@@ -16,6 +16,7 @@ import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
 import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
 import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.item.soul.*;
+import WayofTime.bloodmagic.item.types.ComponentType;
 import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
@@ -165,7 +166,7 @@ public class RegistrarBloodMagicItems {
                 new ItemSigilClaw().setRegistryName("sigil_claw"),
                 new ItemSigilBounce().setRegistryName("sigil_bounce"),
                 new ItemSigilFrost().setRegistryName("sigil_frost"),
-                new ItemComponent().setRegistryName("component"),
+                new ItemEnum<>(ComponentType.class, "baseComponent").setRegistryName("component"),
                 new ItemDemonCrystal().setRegistryName("item_demon_crystal"),
                 new ItemTelepositionFocus().setRegistryName("teleposition_focus"),
                 new ItemExperienceBook().setRegistryName("experience_tome"),
