@@ -38,16 +38,17 @@ public class BloodMagicGuideAPIPlugin implements IGuideBook {
         GUIDE_BOOK.setRegistryName(new ResourceLocation(BloodMagic.MODID, "guide"));
         GUIDE_BOOK.setColor(Color.RED);
 
+        CategoryAlchemy.buildCategory(GUIDE_BOOK);
+        CategoryArchitect.buildCategory(GUIDE_BOOK);
+        GUIDE_BOOK.addCategory(new CategoryItemStack(CategoryDemon.buildCategory(), "guide.bloodmagic.category.demon", new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD)));
+        GUIDE_BOOK.addCategory(new CategoryItemStack(CategoryRitual.buildCategory(), "guide.bloodmagic.category.ritual", new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER)));
+//        GUIDE_BOOK.addCategory(new CategoryItemStack(CategorySpell.buildCategory(), "guide.bloodmagic.category.spell", new ItemStack(ModItems.ritualDiviner)));
+
         return GUIDE_BOOK;
     }
 
     @Override
     public void handlePost(ItemStack bookStack) {
-        GUIDE_BOOK.addCategory(new CategoryItemStack(CategoryAlchemy.buildCategory(), "guide.bloodmagic.category.alchemy", new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES)));
-        GUIDE_BOOK.addCategory(new CategoryItemStack(CategoryArchitect.buildCategory(), "guide.bloodmagic.category.architect", new ItemStack(RegistrarBloodMagicItems.SIGIL_DIVINATION)));
-        GUIDE_BOOK.addCategory(new CategoryItemStack(CategoryDemon.buildCategory(), "guide.bloodmagic.category.demon", new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD)));
-        GUIDE_BOOK.addCategory(new CategoryItemStack(CategoryRitual.buildCategory(), "guide.bloodmagic.category.ritual", new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER)));
-//        guideBook.addCategory(new CategoryItemStack(CategorySpell.buildCategory(), "guide.bloodmagic.category.spell", new ItemStack(ModItems.ritualDiviner)));
     }
 
     @Nullable

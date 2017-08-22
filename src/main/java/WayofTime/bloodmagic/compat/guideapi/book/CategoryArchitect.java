@@ -16,222 +16,103 @@ import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.util.helper.RecipeHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.IPage;
-import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
+import amerifrance.guideapi.api.impl.Book;
 import amerifrance.guideapi.api.util.PageHelper;
+import amerifrance.guideapi.category.CategoryItemStack;
+import amerifrance.guideapi.page.PageJsonRecipe;
 import amerifrance.guideapi.page.PageText;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class CategoryArchitect {
-    public static Map<ResourceLocation, EntryAbstract> buildCategory() {
-        Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
-        String keyBase = "guide." + BloodMagic.MODID + ".entry.architect.";
 
-        List<IPage> introPages = new ArrayList<IPage>();
-        introPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro" + ".info"), 370));
-//        introPages.add(new PageImage(new ResourceLocation("bloodmagicguide", "textures/guide/" + ritual.getName() + ".png")));
-        entries.put(new ResourceLocation(keyBase + "intro"), new EntryText(introPages, TextHelper.localize(keyBase + "intro"), true));
+    public static void buildCategory(Book book) {
+        final String keyBase = "guide." + BloodMagic.MODID + ".entry.architect.";
+        CategoryItemStack category = new CategoryItemStack(keyBase + "architect", new ItemStack(RegistrarBloodMagicItems.SIGIL_DIVINATION));
+        category.withKeyBase(BloodMagic.MODID);
 
-        List<IPage> altarPages = new ArrayList<IPage>();
+        category.addEntry("intro", new EntryText(keyBase + "intro", true));
+        category.getEntry("intro").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "intro.info"), 370));
 
-        IRecipe altarRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.ALTAR));
-        if (altarRecipe != null) {
-            altarPages.add(BookUtils.getPageForRecipe(altarRecipe));
-        }
+        category.addEntry("bloodaltar", new EntryText(keyBase + "bloodaltar", true));
+        category.getEntry("bloodaltar").addPage(new PageJsonRecipe(new ResourceLocation(BloodMagic.MODID, "altar")));
+        category.getEntry("bloodaltar").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "bloodaltar.info.1"), 370));
+        category.getEntry("bloodaltar").addPage(new PageJsonRecipe(new ResourceLocation(BloodMagic.MODID, "sacrificial_dagger")));
+        category.getEntry("bloodaltar").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "bloodaltar.info.2"), 370));
 
-        altarPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodaltar" + ".info.1"), 370));
+        category.addEntry("ash", new EntryText(keyBase + "ash", true));
+        category.getEntry("ash").addPage(BookUtils.getForgeRecipe(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES)));
+        category.getEntry("ash").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "ash.info"), 370));
 
-        IRecipe daggerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.SACRIFICIAL_DAGGER));
-        if (daggerRecipe != null) {
-            altarPages.add(BookUtils.getPageForRecipe(daggerRecipe));
-        }
+        category.addEntry("divination", new EntryText(keyBase + "divination", true));
+        category.getEntry("divination").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_DIVINATION)));
+        category.getEntry("divination").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "divination.info")));
 
-        altarPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodaltar" + ".info.2"), 370));
-        entries.put(new ResourceLocation(keyBase + "bloodaltar"), new EntryText(altarPages, TextHelper.localize(keyBase + "bloodaltar"), true));
+        category.addEntry("soulnetwork", new EntryText(keyBase + "soulnetwork", true));
+        category.getEntry("soulnetwork").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "soulnetwork.info")));
 
-        List<IPage> ashPages = new ArrayList<IPage>();
+        category.addEntry("weakorb", new EntryText(keyBase + "weakorb", true));
+        category.getEntry("weakorb").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "weakorb.info1"), 370));
+        category.getEntry("weakorb").addPage(BookUtils.getAltarPage(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK)));
+        category.getEntry("weakorb").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "weakorb.info2"), 370));
 
-        TartaricForgeRecipe ashRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES));
-        if (ashRecipe != null) {
-            ashPages.add(new PageTartaricForgeRecipe(ashRecipe));
-        }
-        ashPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "ash" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "ash"), new EntryText(ashPages, TextHelper.localize(keyBase + "ash"), true));
+        category.addEntry("incense", new EntryText(keyBase + "incense", true));
+        category.getEntry("incense").addPage(new PageJsonRecipe(new ResourceLocation(BloodMagic.MODID, "incense_altar")));
+        category.getEntry("incense").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "incense.info.1"), 370));
+        category.getEntry("incense").addPage(new PageJsonRecipe(new ResourceLocation(BloodMagic.MODID, "path_wood")));
+        category.getEntry("incense").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "incense.info.2"), 370));
 
-        List<IPage> divinationPages = new ArrayList<IPage>();
+        category.addEntry("bloodrune", new EntryText(keyBase + "bloodrune", true));
+        category.getEntry("bloodrune").addPage(new PageJsonRecipe(new ResourceLocation(BloodMagic.MODID, "blood_rune_blank")));
+        category.getEntry("bloodrune").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "bloodrune.info.1"), 370));
 
-        PageAlchemyArray divinationRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_DIVINATION));
-        if (divinationRecipePage != null) {
-            divinationPages.add(divinationRecipePage);
-        }
+        category.addEntry("inspectoris", new EntryText(keyBase + "inspectoris", true));
+        category.getEntry("inspectoris").addPage(BookUtils.getAltarPage(new ItemStack(RegistrarBloodMagicItems.SANGUINE_BOOK)));
+        category.getEntry("inspectoris").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "inspectoris.info.1"), 370));
 
-        divinationPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "divination" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "divination"), new EntryText(divinationPages, TextHelper.localize(keyBase + "divination"), true));
+        category.addEntry("runeSpeed", new EntryText(keyBase + "runeSpeed", true));
+        category.getEntry("runeSpeed").addPage(BookUtils.getAltarPage(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 1)));
+        category.getEntry("runeSpeed").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "runeSpeed.info.1"), 370));
 
-        List<IPage> soulnetworkPages = new ArrayList<IPage>();
+        category.addEntry("water", new EntryText(keyBase + "water", true));
+        category.getEntry("water").addPage(BookUtils.getForgeRecipe(ItemComponent.getStack(ItemComponent.REAGENT_WATER)));
+        category.getEntry("water").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_WATER)));
+        category.getEntry("water").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "water.info.1"), 370));
 
-        soulnetworkPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "soulnetwork" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "soulnetwork"), new EntryText(soulnetworkPages, TextHelper.localize(keyBase + "soulnetwork"), true));
+        category.addEntry("lava", new EntryText(keyBase + "lava", true));
+        category.getEntry("lava").addPage(BookUtils.getForgeRecipe(ItemComponent.getStack(ItemComponent.REAGENT_LAVA)));
+        category.getEntry("lava").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_LAVA)));
+        category.getEntry("lava").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "lava.info.1"), 370));
 
-        List<IPage> weakorbPages = new ArrayList<IPage>();
-        weakorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakorb" + ".info.1"), 370));
+        category.addEntry("lavaCrystal", new EntryText(keyBase + "lavaCrystal", true));
+        category.getEntry("lavaCrystal").addPage(new PageJsonRecipe(new ResourceLocation(BloodMagic.MODID, "lava_crystal")));
+        category.getEntry("lavaCrystal").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "lavaCrystal.info.1"), 370));
 
-        AltarRecipe weakorbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK));
-        if (weakorbRecipe != null) {
-            weakorbPages.add(new PageAltarRecipe(weakorbRecipe));
-        }
+        category.addEntry("apprenticeorb", new EntryText(keyBase + "apprenticeorb", true));
+        category.getEntry("apprenticeorb").addPage(BookUtils.getAltarPage(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_APPRENTICE)));
+        category.getEntry("apprenticeorb").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "apprenticeorb.info.1"), 370));
 
-        weakorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakorb" + ".info.2"), 370));
-        entries.put(new ResourceLocation(keyBase + "weakorb"), new EntryText(weakorbPages, TextHelper.localize(keyBase + "weakorb"), true));
+        category.addEntry("dagger", new EntryText(keyBase + "dagger", true));
+        category.getEntry("dagger").addPage(BookUtils.getAltarPage(new ItemStack(RegistrarBloodMagicItems.DAGGER_OF_SACRIFICE)));
+        category.getEntry("dagger").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "dagger.info.1"), 370));
 
-        List<IPage> incensePages = new ArrayList<IPage>();
+        category.addEntry("runeSacrifice", new EntryText(keyBase + "runeSacrifice", true));
+        category.getEntry("runeSacrifice").addPage(new PageJsonRecipe(new ResourceLocation(BloodMagic.MODID, "blood_rune_sacrifice")));
+        category.getEntry("runeSacrifice").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "runeSacrifice.info.1"), 370));
 
-        IRecipe incenseRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.INCENSE_ALTAR));
-        if (incenseRecipe != null) {
-            incensePages.add(BookUtils.getPageForRecipe(incenseRecipe));
-        }
+        category.addEntry("runeSelfSacrifice", new EntryText(keyBase + "runeSelfSacrifice", true));
+        category.getEntry("runeSelfSacrifice").addPage(new PageJsonRecipe(new ResourceLocation(BloodMagic.MODID, "blood_rune_selfsacrifice")));
+        category.getEntry("runeSelfSacrifice").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "runeSelfSacrifice.info.1"), 370));
 
-        incensePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "incense" + ".info.1"), 370));
-
-        IRecipe woodPathRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.PATH, 1, 0));
-        if (woodPathRecipe != null) {
-            incensePages.add(BookUtils.getPageForRecipe(woodPathRecipe));
-        }
-
-        incensePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "incense" + ".info.2"), 370));
-        entries.put(new ResourceLocation(keyBase + "incense"), new EntryText(incensePages, TextHelper.localize(keyBase + "incense"), true));
-
-        List<IPage> runePages = new ArrayList<IPage>();
-
-        IRecipe runeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 0));
-        if (runeRecipe != null) {
-            runePages.add(BookUtils.getPageForRecipe(runeRecipe));
-        }
-
-        runePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodrune" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "bloodrune"), new EntryText(runePages, TextHelper.localize(keyBase + "bloodrune"), true));
-
-        List<IPage> inspectPages = new ArrayList<IPage>();
-
-        AltarRecipe inspectRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.SANGUINE_BOOK));
-        if (inspectRecipe != null) {
-            inspectPages.add(new PageAltarRecipe(inspectRecipe));
-        }
-
-        inspectPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "inspectoris" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "inspectoris"), new EntryText(inspectPages, TextHelper.localize(keyBase + "inspectoris"), true));
-
-        List<IPage> speedRunePages = new ArrayList<IPage>();
-
-        IRecipe speedRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 1));
-        if (speedRecipe != null) {
-            speedRunePages.add(BookUtils.getPageForRecipe(speedRecipe));
-        }
-
-        speedRunePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeSpeed" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "runeSpeed"), new EntryText(speedRunePages, TextHelper.localize(keyBase + "runeSpeed"), true));
-
-        List<IPage> waterPages = new ArrayList<IPage>();
-
-        TartaricForgeRecipe waterRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_WATER));
-        if (waterRecipe != null) {
-            waterPages.add(new PageTartaricForgeRecipe(waterRecipe));
-        }
-
-        PageAlchemyArray waterRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_WATER));
-        if (waterRecipePage != null) {
-            waterPages.add(waterRecipePage);
-        }
-
-        waterPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "water" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "water"), new EntryText(waterPages, TextHelper.localize(keyBase + "water"), true));
-
-        List<IPage> lavaPages = new ArrayList<IPage>();
-
-        TartaricForgeRecipe lavaRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_LAVA));
-        if (lavaRecipe != null) {
-            lavaPages.add(new PageTartaricForgeRecipe(lavaRecipe));
-        }
-
-        PageAlchemyArray lavaRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_LAVA));
-        if (lavaRecipePage != null) {
-            lavaPages.add(lavaRecipePage);
-        }
-
-        lavaPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lava" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "lava"), new EntryText(lavaPages, TextHelper.localize(keyBase + "lava"), true));
-
-        List<IPage> lavaCrystalPages = new ArrayList<IPage>();
-
-        IRecipe lavaCrystalRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.LAVA_CRYSTAL));
-        if (lavaCrystalRecipe != null) {
-            lavaCrystalPages.add(BookUtils.getPageForRecipe(lavaCrystalRecipe));
-        }
-
-        lavaCrystalPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lavaCrystal" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "lavaCrystal"), new EntryText(lavaCrystalPages, TextHelper.localize(keyBase + "lavaCrystal"), true));
-
-        List<IPage> apprenticeorbPages = new ArrayList<IPage>();
-
-        AltarRecipe apprenticeorbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_APPRENTICE));
-        if (apprenticeorbRecipe != null) {
-            apprenticeorbPages.add(new PageAltarRecipe(apprenticeorbRecipe));
-        }
-
-        apprenticeorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "apprenticeorb" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "apprenticeorb"), new EntryText(apprenticeorbPages, TextHelper.localize(keyBase + "apprenticeorb"), true));
-
-        List<IPage> daggerPages = new ArrayList<IPage>();
-
-        AltarRecipe daggerOfSacrificeRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.DAGGER_OF_SACRIFICE));
-        if (daggerOfSacrificeRecipe != null) {
-            daggerPages.add(new PageAltarRecipe(daggerOfSacrificeRecipe));
-        }
-
-        daggerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "dagger" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "dagger"), new EntryText(daggerPages, TextHelper.localize(keyBase + "dagger"), true));
-
-        List<IPage> runeSacrificePages = new ArrayList<IPage>();
-
-        IRecipe runeSacrificeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 3));
-        if (runeSacrificeRecipe != null) {
-            runeSacrificePages.add(BookUtils.getPageForRecipe(runeSacrificeRecipe));
-        }
-
-        runeSacrificePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeSacrifice" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "runeSacrifice"), new EntryText(runeSacrificePages, TextHelper.localize(keyBase + "runeSacrifice"), true));
-
-        List<IPage> runeSelfSacrificePages = new ArrayList<IPage>();
-
-        IRecipe runeSelfSacrificeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4));
-        if (runeSelfSacrificeRecipe != null) {
-            runeSelfSacrificePages.add(BookUtils.getPageForRecipe(runeSelfSacrificeRecipe));
-        }
-
-        runeSelfSacrificePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeSelfSacrifice" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "runeSelfSacrifice"), new EntryText(runeSelfSacrificePages, TextHelper.localize(keyBase + "runeSelfSacrifice"), true));
-
-        List<IPage> holdingPages = new ArrayList<IPage>();
-
-        TartaricForgeRecipe holdingRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_HOLDING));
-        if (holdingRecipe != null) {
-            holdingPages.add(new PageTartaricForgeRecipe(holdingRecipe));
-        }
-
-        PageAlchemyArray holdingRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_HOLDING));
-        if (holdingRecipePage != null) {
-            holdingPages.add(holdingRecipePage);
-        }
-
-        holdingPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "holding" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "holding"), new EntryText(holdingPages, TextHelper.localize(keyBase + "holding"), true));
+        category.addEntry("holding", new EntryText(keyBase + "holding", true));
+        category.getEntry("holding").addPage(BookUtils.getForgeRecipe(ItemComponent.getStack(ItemComponent.REAGENT_HOLDING)));
+        category.getEntry("holding").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_HOLDING)));
+        category.getEntry("holding").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "holding.info.1"), 370));
 
         List<IPage> airPages = new ArrayList<IPage>();
 
@@ -633,14 +514,8 @@ public class CategoryArchitect {
         mimicPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "mimic" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "mimic"), new EntryText(mimicPages, TextHelper.localize(keyBase + "mimic"), true));
 
-        for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet()) {
-            for (IPage page : entry.getValue().pageList) {
-                if (page instanceof PageText) {
-                    ((PageText) page).setUnicodeFlag(true);
-                }
-            }
-        }
+        category.entries.values().forEach(e -> e.pageList.stream().filter(p -> p instanceof PageText).forEach(p -> ((PageText) p).setUnicodeFlag(true)));
 
-        return entries;
+        book.addCategory(category);
     }
 }

@@ -6,6 +6,7 @@ import amerifrance.guideapi.api.impl.abstraction.CategoryAbstract;
 import amerifrance.guideapi.api.util.GuiHelper;
 import amerifrance.guideapi.entry.EntryResourceLocation;
 import amerifrance.guideapi.gui.GuiBase;
+import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.ResourceLocation;
@@ -17,12 +18,16 @@ import java.util.List;
 
 public class EntryText extends EntryResourceLocation {
 
-    public EntryText(List<IPage> pageList, String unlocEntryName, boolean unicode) {
-        super(pageList, unlocEntryName, new ResourceLocation("bloodmagicguide", "textures/gui/bullet_point.png"), unicode);
+    public EntryText(List<IPage> pageList, String name, boolean unicode) {
+        super(pageList, name, new ResourceLocation("bloodmagicguide", "textures/gui/bullet_point.png"), unicode);
     }
 
-    public EntryText(List<IPage> pageList, String unlocEntryName) {
-        this(pageList, unlocEntryName, false);
+    public EntryText(List<IPage> pageList, String name) {
+        this(pageList, name, false);
+    }
+
+    public EntryText(String name, boolean unicode) {
+        this(Lists.newArrayList(), name, unicode);
     }
 
     @Override

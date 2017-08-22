@@ -1,103 +1,65 @@
 package WayofTime.bloodmagic.compat.guideapi.book;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.compat.guideapi.BookUtils;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
-import WayofTime.bloodmagic.compat.guideapi.page.PageAlchemyArray;
-import WayofTime.bloodmagic.compat.guideapi.page.PageTartaricForgeRecipe;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.util.helper.RecipeHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.IPage;
+import amerifrance.guideapi.api.impl.Book;
 import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
+import amerifrance.guideapi.category.CategoryItemStack;
 import amerifrance.guideapi.page.PageText;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class CategoryAlchemy {
-    public static Map<ResourceLocation, EntryAbstract> buildCategory() {
-        Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
-        String keyBase = "guide." + BloodMagic.MODID + ".entry.alchemy.";
 
-        List<IPage> introPages = new ArrayList<IPage>();
-        introPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "intro"), new EntryText(introPages, TextHelper.localize(keyBase + "intro"), true));
+    public static void buildCategory(Book book) {
+        final String keyBase = "guide." + BloodMagic.MODID + ".entry.alchemy.";
 
-        List<IPage> ashPages = new ArrayList<IPage>();
+        CategoryItemStack category = new CategoryItemStack(keyBase + "alchemy", new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES));
+        category.withKeyBase(BloodMagic.MODID);
 
-        TartaricForgeRecipe ashRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES));
-        if (ashRecipe != null) {
-            ashPages.add(new PageTartaricForgeRecipe(ashRecipe));
-        }
-        ashPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "ash" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "ash"), new EntryText(ashPages, TextHelper.localize(keyBase + "ash"), true));
+        category.addEntry("intro", new EntryText(keyBase + "intro", true));
+        category.getEntry("intro").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "intro.info"), 370));
 
-        List<IPage> speedPages = new ArrayList<IPage>();
+        category.addEntry("ash", new EntryText(keyBase + "ash", true));
+        category.getEntry("ash").addPage(BookUtils.getForgeRecipe(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES)));
+        category.getEntry("ash").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "ash.info"), 370));
 
-        PageAlchemyArray speedRecipePage = BookUtils.getAlchemyPage("movement");
-        if (speedRecipePage != null) {
-            speedPages.add(speedRecipePage);
-        }
-        speedPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "speed" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "speed"), new EntryText(speedPages, TextHelper.localize(keyBase + "speed"), true));
+        category.addEntry("speed", new EntryText(keyBase + "speed", true));
+        category.getEntry("speed").addPage(BookUtils.getAlchemyPage("movement"));
+        category.getEntry("speed").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "speed.info"), 370));
 
-        List<IPage> updraftPages = new ArrayList<IPage>();
+        category.addEntry("updraft", new EntryText(keyBase + "updraft", true));
+        category.getEntry("updraft").addPage(BookUtils.getAlchemyPage("updraft"));
+        category.getEntry("updraft").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "updraft.info"), 370));
 
-        PageAlchemyArray updraftRecipePage = BookUtils.getAlchemyPage("updraft");
-        if (updraftRecipePage != null) {
-            updraftPages.add(updraftRecipePage);
-        }
-        updraftPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "updraft" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "updraft"), new EntryText(updraftPages, TextHelper.localize(keyBase + "updraft"), true));
+        category.addEntry("turret", new EntryText(keyBase + "turret", true));
+        category.getEntry("turret").addPage(BookUtils.getAlchemyPage("skeletonTurret"));
+        category.getEntry("turret").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "turret.info"), 370));
 
-        List<IPage> turretPages = new ArrayList<IPage>();
+        category.addEntry("bounce", new EntryText(keyBase + "bounce", true));
+        category.getEntry("bounce").addPage(BookUtils.getAlchemyPage("bounce"));
+        category.getEntry("bounce").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "bounce.info"), 370));
 
-        PageAlchemyArray turretRecipePage = BookUtils.getAlchemyPage("skeletonTurret");
-        if (turretRecipePage != null) {
-            turretPages.add(turretRecipePage);
-        }
-        turretPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "turret" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "turret"), new EntryText(turretPages, TextHelper.localize(keyBase + "turret"), true));
+        category.addEntry("buff", new EntryText(keyBase + "buff", true));
+        category.getEntry("buff").addPage(BookUtils.getAlchemyPage("buff"));
+        category.getEntry("buff").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "buff.info"), 370));
 
-        List<IPage> bouncePages = new ArrayList<IPage>();
+        category.addEntry("fastMiner", new EntryText(keyBase + "fastMiner", true));
+        category.getEntry("fastMiner").addPage(BookUtils.getAlchemyPage("fastMiner"));
+        category.getEntry("fastMiner").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "fastMiner.info"), 370));
 
-        PageAlchemyArray bounceRecipePage = BookUtils.getAlchemyPage("bounce");
-        if (bounceRecipePage != null) {
-            bouncePages.add(bounceRecipePage);
-        }
-        bouncePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bounce" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "bounce"), new EntryText(bouncePages, TextHelper.localize(keyBase + "bounce"), true));
+        book.addCategory(category);
 
-        List<IPage> buffPages = new ArrayList<IPage>();
-
-        buffPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "buff" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "buff"), new EntryText(buffPages, TextHelper.localize(keyBase + "buff"), true));
-
-        List<IPage> fastMinerPages = new ArrayList<IPage>();
-
-        PageAlchemyArray fastMinerRecipePage = BookUtils.getAlchemyPage("fastMiner");
-        if (fastMinerRecipePage != null) {
-            fastMinerPages.add(fastMinerRecipePage);
-        }
-        fastMinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "fastMiner" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "fastMiner"), new EntryText(fastMinerPages, TextHelper.localize(keyBase + "fastMiner"), true));
-
-        for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet()) {
-            for (IPage page : entry.getValue().pageList) {
+        for (EntryAbstract entry : category.entries.values()) {
+            for (IPage page : entry.pageList) {
                 if (page instanceof PageText) {
                     ((PageText) page).setUnicodeFlag(true);
                 }
             }
         }
-
-        return entries;
     }
 }

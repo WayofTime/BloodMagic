@@ -2,17 +2,39 @@ package WayofTime.bloodmagic.compat.guideapi;
 
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
+import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
+import WayofTime.bloodmagic.api_impl.recipe.RecipeBloodAltar;
+import WayofTime.bloodmagic.api_impl.recipe.RecipeTartaricForge;
 import WayofTime.bloodmagic.client.render.alchemyArray.DualAlchemyCircleRenderer;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAlchemyArray;
-import amerifrance.guideapi.page.PageIRecipe;
+import WayofTime.bloodmagic.compat.guideapi.page.PageAltarRecipe;
+import WayofTime.bloodmagic.compat.guideapi.page.PageTartaricForgeRecipe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookUtils {
+
+    @Nullable
+    public static PageAltarRecipe getAltarPage(ItemStack output) {
+        for (RecipeBloodAltar recipe : BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAltarRecipes().values())
+            if (ItemStack.areItemStacksEqualUsingNBTShareTag(output, recipe.getOutput()))
+                return new PageAltarRecipe(recipe);
+
+        return null;
+    }
+
+    @Nullable
+    public static PageTartaricForgeRecipe getForgeRecipe(ItemStack output) {
+        for (RecipeTartaricForge recipe : BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForgeRecipes().values())
+            if (ItemStack.areItemStacksEqualUsingNBTShareTag(output, recipe.getOutput()))
+                return new PageTartaricForgeRecipe(recipe);
+
+        return null;
+    }
 
     public static PageAlchemyArray getAlchemyPage(String key) {
         ItemStack[] recipe = AlchemyArrayRecipeRegistry.getRecipeForArrayEffect(key);
@@ -54,9 +76,5 @@ public class BookUtils {
         }
 
         return null;
-    }
-
-    public static PageIRecipe getPageForRecipe(IRecipe recipe) {
-        return new PageIRecipe(recipe);
     }
 }
