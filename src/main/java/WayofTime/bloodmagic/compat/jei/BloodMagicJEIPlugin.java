@@ -85,6 +85,7 @@ public class BloodMagicJEIPlugin implements IModPlugin {
     @Override
     public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
         subtypeRegistry.useNbtForSubtypes(RegistrarBloodMagicItems.UPGRADE_TOME);
+        subtypeRegistry.useNbtForSubtypes(RegistrarBloodMagicItems.BLOOD_ORB);
     }
 
     @Override
