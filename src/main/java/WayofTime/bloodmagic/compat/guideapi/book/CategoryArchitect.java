@@ -119,205 +119,75 @@ public class CategoryArchitect {
         category.getEntry("air").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_AIR)));
         category.getEntry("air").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "air.info.1"), 370));
 
-        List<IPage> voidPages = new ArrayList<IPage>();
+        category.addEntry("void", new EntryText(keyBase + "void", true));
+        category.getEntry("void").addPage(BookUtils.getForgeRecipe(ComponentType.REAGENT_VOID.getStack()));
+        category.getEntry("void").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_VOID)));
+        category.getEntry("void").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "void.info.1"), 370));
 
-        TartaricForgeRecipe voidRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentType.REAGENT_VOID.getStack());
-        if (voidRecipe != null) {
-            voidPages.add(new PageTartaricForgeRecipe(voidRecipe));
-        }
+        category.addEntry("greenGrove", new EntryText(keyBase + "greenGrove", true));
+        category.getEntry("greenGrove").addPage(BookUtils.getForgeRecipe(ComponentType.REAGENT_GROWTH.getStack()));
+        category.getEntry("greenGrove").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_GREEN_GROVE)));
+        category.getEntry("greenGrove").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "greenGrove.info.1"), 370));
 
-        PageAlchemyArray voidRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_VOID));
-        if (voidRecipePage != null) {
-            voidPages.add(voidRecipePage);
-        }
+        category.addEntry("fastMiner", new EntryText(keyBase + "fastMiner", true));
+        category.getEntry("fastMiner").addPage(BookUtils.getForgeRecipe(ComponentType.REAGENT_FASTMINER.getStack()));
+        category.getEntry("fastMiner").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_FAST_MINER)));
+        category.getEntry("fastMiner").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "fastMiner.info.1"), 370));
 
-        voidPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "void" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "void"), new EntryText(voidPages, TextHelper.localize(keyBase + "void"), true));
+        category.addEntry("seer", new EntryText(keyBase + "seer", true));
+        category.getEntry("seer").addPage(BookUtils.getForgeRecipe(ComponentType.REAGENT_SIGHT.getStack()));
+        category.getEntry("seer").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_SEER)));
+        category.getEntry("seer").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "seer.info.1"), 370));
 
-        List<IPage> greenGrovePages = new ArrayList<IPage>();
+        category.addEntry("magicianOrb", new EntryText(keyBase + "magicianOrb", true));
+        category.getEntry("magicianOrb").addPage(BookUtils.getAltarPage(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_MAGICIAN)));
+        category.getEntry("magicianOrb").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "magicianOrb.info.1"), 370));
 
-        TartaricForgeRecipe greenGroveRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentType.REAGENT_GROWTH.getStack());
-        if (greenGroveRecipe != null) {
-            greenGrovePages.add(new PageTartaricForgeRecipe(greenGroveRecipe));
-        }
+        category.addEntry("capacity", new EntryText(keyBase + "capacity", true));
+        category.getEntry("capacity").addPage(new PageJsonRecipe(new ResourceLocation(BloodMagic.MODID, "blood_rune_capacity")));
+        category.getEntry("capacity").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "capacity.info.1"), 370));
 
-        PageAlchemyArray greenGroveRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_GREEN_GROVE));
-        if (greenGroveRecipePage != null) {
-            greenGrovePages.add(greenGroveRecipePage);
-        }
+        category.addEntry("displacement", new EntryText(keyBase + "displacement", true));
+        category.getEntry("displacement").addPage(new PageJsonRecipe(new ResourceLocation(BloodMagic.MODID, "blood_rune_displacement")));
+        category.getEntry("displacement").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "displacement.info.1"), 370));
 
-        greenGrovePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "greenGrove" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "greenGrove"), new EntryText(greenGrovePages, TextHelper.localize(keyBase + "greenGrove"), true));
+        category.addEntry("affinity", new EntryText(keyBase + "affinity", true));
+        category.getEntry("affinity").addPage(BookUtils.getForgeRecipe(ComponentType.REAGENT_AFFINITY.getStack()));
+        category.getEntry("affinity").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_ELEMENTAL_AFFINITY)));
+        category.getEntry("affinity").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "affinity.info"), 370));
 
-        List<IPage> fastMinerPages = new ArrayList<IPage>();
+        category.addEntry("lamp", new EntryText(keyBase + "lamp", true));
+        category.getEntry("lamp").addPage(BookUtils.getForgeRecipe(ComponentType.REAGENT_BLOODLIGHT.getStack()));
+        category.getEntry("lamp").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_BLOOD_LIGHT)));
+        category.getEntry("lamp").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "lamp.info.1"), 370));
 
-        TartaricForgeRecipe fastMinerRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentType.REAGENT_FASTMINER.getStack());
-        if (fastMinerRecipe != null) {
-            fastMinerPages.add(new PageTartaricForgeRecipe(fastMinerRecipe));
-        }
+        category.addEntry("magnetism", new EntryText(keyBase + "magnetism", true));
+        category.getEntry("magnetism").addPage(BookUtils.getForgeRecipe(ComponentType.REAGENT_MAGNETISM.getStack()));
+        category.getEntry("magnetism").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_MAGNETISM)));
+        category.getEntry("magnetism").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "magnetism.info.1"), 370));
 
-        PageAlchemyArray fastMinerRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_FAST_MINER));
-        if (fastMinerRecipePage != null) {
-            fastMinerPages.add(fastMinerRecipePage);
-        }
+        category.addEntry("peritia", new EntryText(keyBase + "peritia", true));
+        category.getEntry("peritia").addPage(new PageJsonRecipe(new ResourceLocation(BloodMagic.MODID, "experience_tome")));
+        category.getEntry("peritia").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "peritia.info.1"), 370));
 
-        fastMinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "fastMiner" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "fastMiner"), new EntryText(fastMinerPages, TextHelper.localize(keyBase + "fastMiner"), true));
+        category.addEntry("livingArmour", new EntryText(keyBase + "livingArmour", true));
+        category.getEntry("livingArmour").addPage(BookUtils.getForgeRecipe(ComponentType.REAGENT_BINDING.getStack()));
+        category.getEntry("livingArmour").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST)));
+        category.getEntry("livingArmour").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET)));
+        category.getEntry("livingArmour").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_LEGGINGS)));
+        category.getEntry("livingArmour").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_BOOTS)));
+        category.getEntry("livingArmour").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "livingArmour.info.1"), 370));
 
-        List<IPage> seerPages = new ArrayList<IPage>();
+        category.addEntry("upgradeTome", new EntryText(keyBase + "upgradeTome", true));
+        category.getEntry("upgradeTome").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "upgradeTome.info.1")));
 
-        TartaricForgeRecipe seerRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentType.REAGENT_SIGHT.getStack());
-        if (seerRecipe != null) {
-            seerPages.add(new PageTartaricForgeRecipe(seerRecipe));
-        }
+        category.addEntry("downgrade", new EntryText(keyBase + "downgrade", true));
+        category.getEntry("downgrade").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "downgrade.info.1")));
 
-        PageAlchemyArray seerRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_SEER));
-        if (seerRecipePage != null) {
-            seerPages.add(seerRecipePage);
-        }
-
-        seerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "seer" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "seer"), new EntryText(seerPages, TextHelper.localize(keyBase + "seer"), true));
-
-        List<IPage> magicianOrbPages = new ArrayList<IPage>();
-
-        AltarRecipe magicianOrbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_MAGICIAN));
-        if (magicianOrbRecipe != null) {
-            magicianOrbPages.add(new PageAltarRecipe(magicianOrbRecipe));
-        }
-
-        magicianOrbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "magicianOrb" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "magicianOrb"), new EntryText(magicianOrbPages, TextHelper.localize(keyBase + "magicianOrb"), true));
-
-        List<IPage> capacityPages = new ArrayList<IPage>();
-
-        IRecipe capacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4));
-        if (capacityRecipe != null) {
-            capacityPages.add(BookUtils.getPageForRecipe(capacityRecipe));
-        }
-
-        capacityPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "capacity" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "capacity"), new EntryText(capacityPages, TextHelper.localize(keyBase + "capacity"), true));
-
-        List<IPage> displacementPages = new ArrayList<IPage>();
-
-        IRecipe displacementRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4));
-        if (displacementRecipe != null) {
-            displacementPages.add(BookUtils.getPageForRecipe(displacementRecipe));
-        }
-
-        displacementPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "displacement" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "displacement"), new EntryText(displacementPages, TextHelper.localize(keyBase + "displacement"), true));
-
-        List<IPage> affinityPages = new ArrayList<IPage>();
-
-        TartaricForgeRecipe affinityRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentType.REAGENT_AFFINITY.getStack());
-        if (affinityRecipe != null) {
-            affinityPages.add(new PageTartaricForgeRecipe(affinityRecipe));
-        }
-
-        PageAlchemyArray affinityRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_ELEMENTAL_AFFINITY));
-        if (affinityRecipePage != null) {
-            affinityPages.add(affinityRecipePage);
-        }
-
-        affinityPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "affinity" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "affinity"), new EntryText(affinityPages, TextHelper.localize(keyBase + "affinity"), true));
-
-        List<IPage> lampPages = new ArrayList<IPage>();
-
-        TartaricForgeRecipe lampRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentType.REAGENT_BLOODLIGHT.getStack());
-        if (lampRecipe != null) {
-            lampPages.add(new PageTartaricForgeRecipe(lampRecipe));
-        }
-
-        PageAlchemyArray lampRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_BLOOD_LIGHT));
-        if (lampRecipePage != null) {
-            lampPages.add(lampRecipePage);
-        }
-
-        lampPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lamp" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "lamp"), new EntryText(lampPages, TextHelper.localize(keyBase + "lamp"), true));
-
-        List<IPage> magnetismPages = new ArrayList<IPage>();
-
-        TartaricForgeRecipe magnetismRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentType.REAGENT_MAGNETISM.getStack());
-        if (magnetismRecipe != null) {
-            magnetismPages.add(new PageTartaricForgeRecipe(magnetismRecipe));
-        }
-
-        PageAlchemyArray magnetismRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_MAGNETISM));
-        if (magnetismRecipePage != null) {
-            magnetismPages.add(magnetismRecipePage);
-        }
-
-        magnetismPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "magnetism" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "magnetism"), new EntryText(magnetismPages, TextHelper.localize(keyBase + "magnetism"), true));
-
-        List<IPage> peritiaPages = new ArrayList<IPage>();
-
-        IRecipe peritiaRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.EXPERIENCE_TOME));
-        if (peritiaRecipe != null) {
-            peritiaPages.add(BookUtils.getPageForRecipe(peritiaRecipe));
-        }
-
-        peritiaPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "peritia" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "peritia"), new EntryText(peritiaPages, TextHelper.localize(keyBase + "peritia"), true));
-
-        List<IPage> livingArmourPages = new ArrayList<IPage>();
-
-        TartaricForgeRecipe bindingRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentType.REAGENT_BINDING.getStack());
-        if (bindingRecipe != null) {
-            livingArmourPages.add(new PageTartaricForgeRecipe(bindingRecipe));
-        }
-
-        PageAlchemyArray bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST));
-        if (bindingRecipePage != null) {
-            livingArmourPages.add(bindingRecipePage);
-        }
-
-        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET));
-        if (bindingRecipePage != null) {
-            livingArmourPages.add(bindingRecipePage);
-        }
-
-        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_LEGGINGS));
-        if (bindingRecipePage != null) {
-            livingArmourPages.add(bindingRecipePage);
-        }
-
-        bindingRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_BOOTS));
-        if (bindingRecipePage != null) {
-            livingArmourPages.add(bindingRecipePage);
-        }
-
-        livingArmourPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "livingArmour" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "livingArmour"), new EntryText(livingArmourPages, TextHelper.localize(keyBase + "livingArmour"), true));
-
-        List<IPage> upgradePages = new ArrayList<IPage>();
-
-        upgradePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "upgradeTome" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "upgradeTome"), new EntryText(upgradePages, TextHelper.localize(keyBase + "upgradeTome"), true));
-
-        List<IPage> downgradePages = new ArrayList<IPage>();
-
-        downgradePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "downgrade" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "downgrade"), new EntryText(downgradePages, TextHelper.localize(keyBase + "downgrade"), true));
-
-        List<IPage> teleposerPages = new ArrayList<IPage>();
-
-        AltarRecipe teleposerFocusRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.TELEPOSITION_FOCUS));
-        if (teleposerFocusRecipe != null) {
-            teleposerPages.add(new PageAltarRecipe(teleposerFocusRecipe));
-        }
-
-        IRecipe teleposerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.TELEPOSER));
-        if (teleposerRecipe != null) {
-            teleposerPages.add(BookUtils.getPageForRecipe(teleposerRecipe));
-        }
-
-        teleposerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "teleposer" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "teleposer"), new EntryText(teleposerPages, TextHelper.localize(keyBase + "teleposer"), true));
+        category.addEntry("teleposer", new EntryText(keyBase + "teleposer", true));
+        category.getEntry("teleposer").addPage(BookUtils.getAltarPage(new ItemStack(RegistrarBloodMagicItems.TELEPOSITION_FOCUS)));
+        category.getEntry("teleposer").addPage(new PageJsonRecipe(new ResourceLocation(BloodMagic.MODID, "teleposer")));
+        category.getEntry("teleposer").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "teleposer.info.1"), 370));
 
         List<IPage> boundBladePages = new ArrayList<IPage>();
 
