@@ -15,6 +15,7 @@ import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.proxy.CommonProxy;
 import WayofTime.bloodmagic.registry.*;
 import WayofTime.bloodmagic.structures.ModDungeons;
+import WayofTime.bloodmagic.util.BloodMagicIsntReadyYetStopTryingToUseItAndJustWaitForMeToFinishPleaseAndThankYou;
 import WayofTime.bloodmagic.util.PluginUtil;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.handler.IMCHandler;
@@ -74,6 +75,9 @@ public class BloodMagic {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        if (!IS_DEV)
+            throw new BloodMagicIsntReadyYetStopTryingToUseItAndJustWaitForMeToFinishPleaseAndThankYou();
+
         configDir = new File(event.getModConfigurationDirectory(), "bloodmagic");
 
         PLUGINS.addAll(PluginUtil.getPlugins(event.getAsmData()));

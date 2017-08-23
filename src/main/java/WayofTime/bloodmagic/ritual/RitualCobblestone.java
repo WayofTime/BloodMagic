@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.item.ItemComponent;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -40,7 +40,7 @@ public class RitualCobblestone extends Ritual {
 
         if (tileEntity != null && tileEntity instanceof TileAlchemyArray) {
             TileAlchemyArray alchemyArray = (TileAlchemyArray) tileEntity;
-            if (!alchemyArray.getStackInSlot(0).isEmpty() && alchemyArray.getStackInSlot(0).getItem() instanceof ItemComponent) {
+            if (!alchemyArray.getStackInSlot(0).isEmpty() && alchemyArray.getStackInSlot(0).getItem() == RegistrarBloodMagicItems.COMPONENT) {
                 switch (alchemyArray.getStackInSlot(0).getItemDamage()) {
                     case 0:
                         block = Blocks.OBSIDIAN;
