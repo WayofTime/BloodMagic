@@ -25,7 +25,7 @@ public class CategoryAlchemy {
         category.getEntry("intro").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "intro.info"), 370));
 
         category.addEntry("ash", new EntryText(keyBase + "ash", true));
-        category.getEntry("ash").addPage(BookUtils.getForgeRecipe(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES)));
+        category.getEntry("ash").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES)));
         category.getEntry("ash").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "ash.info"), 370));
 
         category.addEntry("speed", new EntryText(keyBase + "speed", true));
@@ -52,14 +52,7 @@ public class CategoryAlchemy {
         category.getEntry("fastMiner").addPage(BookUtils.getAlchemyPage("fastMiner"));
         category.getEntry("fastMiner").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "fastMiner.info"), 370));
 
+        category.entries.values().forEach(e -> e.pageList.stream().filter(p -> p instanceof PageText).forEach(p -> ((PageText) p).setUnicodeFlag(true)));
         book.addCategory(category);
-
-        for (EntryAbstract entry : category.entries.values()) {
-            for (IPage page : entry.pageList) {
-                if (page instanceof PageText) {
-                    ((PageText) page).setUnicodeFlag(true);
-                }
-            }
-        }
     }
 }

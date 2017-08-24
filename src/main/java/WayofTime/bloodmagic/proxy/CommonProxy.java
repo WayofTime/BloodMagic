@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.proxy;
 import WayofTime.bloodmagic.api.ritual.CapabilityRuneType;
 import WayofTime.bloodmagic.api.ritual.IRitualStone;
 import WayofTime.bloodmagic.api.teleport.TeleportQueue;
-import WayofTime.bloodmagic.fuel.FuelHandler;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -13,12 +12,10 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.animation.ITimeValue;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.model.animation.IAnimationStateMachine;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
     public void preInit() {
         MinecraftForge.EVENT_BUS.register(TeleportQueue.getInstance());
-        GameRegistry.registerFuelHandler(new FuelHandler());
         registerRenderers();
     }
 

@@ -1,127 +1,113 @@
 package WayofTime.bloodmagic.compat.guideapi.book;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry.AltarRecipe;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.compat.guideapi.BookUtils;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
-import WayofTime.bloodmagic.compat.guideapi.page.PageAltarRecipe;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.util.helper.RecipeHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-import amerifrance.guideapi.api.IPage;
-import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
+import amerifrance.guideapi.api.impl.Book;
 import amerifrance.guideapi.api.util.PageHelper;
+import amerifrance.guideapi.category.CategoryItemStack;
 import amerifrance.guideapi.page.PageText;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class CategoryRitual {
-    static String keyBase = "guide." + BloodMagic.MODID + ".entry.ritual.";
+    static final String keyBase = "guide." + BloodMagic.MODID + ".entry.ritual.";
 
-    public static Map<ResourceLocation, EntryAbstract> buildCategory() {
-        Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
+    public static void buildCategory(Book book) {
+        CategoryItemStack category = new CategoryItemStack(keyBase + "ritual", new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER));
+        category.withKeyBase(BloodMagic.MODID);
 
-        addRitualPagesToEntries("intro", entries);
-        addRitualPagesToEntries("basics", entries);
+        category.addEntry("intro", new EntryText(keyBase + "intro", true));
+        category.getEntry("intro").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "intro.info")));
 
-        List<IPage> ritualStonePages = new ArrayList<IPage>();
+        category.addEntry("basics", new EntryText(keyBase + "basics", true));
+        category.getEntry("basics").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "basics.info")));
 
-        IRecipe ritualStoneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_STONE));
-        if (ritualStoneRecipe != null) {
-            ritualStonePages.add(BookUtils.getPageForRecipe(ritualStoneRecipe));
-        }
+        category.addEntry("ritualStone", new EntryText(keyBase + "ritualStone", true));
+        category.getEntry("ritualStone").addPage(BookUtils.getCraftingPage("ritual_stone_blank"));
+        category.getEntry("ritualStone").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "ritualStone.info.1"), 370));
+        for (EnumRuneType type : EnumRuneType.values())
+            category.getEntry("ritualStone").addPage(BookUtils.getAltarPage(type.getScribeStack()));
+        category.getEntry("ritualStone").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "ritualStone.info.2"), 370));
 
-        ritualStonePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "ritualStone" + ".info.1"), 370));
+        category.addEntry("masterRitualStone", new EntryText(keyBase + "masterRitualStone", true));
+        category.getEntry("masterRitualStone").addPage(BookUtils.getCraftingPage("ritual_controller_master"));
+        category.getEntry("masterRitualStone").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "masterRitualStone.info"), 370));
 
-        for (int i = 1; i < 5; i++) {
-            EnumRuneType type = EnumRuneType.values()[i];
-            AltarRecipe scribeRecipe = RecipeHelper.getAltarRecipeForOutput(type.getScribeStack());
-            if (scribeRecipe != null) {
-                ritualStonePages.add(new PageAltarRecipe(scribeRecipe));
-            }
-        }
+        category.addEntry("activationCrystal", new EntryText(keyBase + "activationCrystal", true));
+        category.getEntry("activationCrystal").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "activationCrystal.info.1"), 370));
+        category.getEntry("activationCrystal").addPage(BookUtils.getAltarPage(new ItemStack(RegistrarBloodMagicItems.ACTIVATION_CRYSTAL)));
+        category.getEntry("activationCrystal").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "activationCrystal.info.2"), 370));
 
-        ritualStonePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "ritualStone" + ".info.2"), 370));
-        entries.put(new ResourceLocation(keyBase + "ritualStone"), new EntryText(ritualStonePages, TextHelper.localize(keyBase + "ritualStone"), true));
+        category.addEntry("diviner", new EntryText(keyBase + "diviner", true));
+        category.getEntry("diviner").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "diviner.info.1"), 370));
+        category.getEntry("diviner").addPage(BookUtils.getCraftingPage("ritual_diviner_0"));
+        category.getEntry("diviner").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "diviner.info.2"), 370));
 
-        List<IPage> masterRitualStonePages = new ArrayList<IPage>();
+        category.addEntry("fullSpring", new EntryText(keyBase + "fullSpring", true));
+        category.getEntry("fullSpring").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "fullSpring.info")));
 
-        IRecipe masterRitualStoneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER, 1, 0));
-        if (masterRitualStoneRecipe != null) {
-            masterRitualStonePages.add(BookUtils.getPageForRecipe(masterRitualStoneRecipe));
-        }
+        category.addEntry("lava", new EntryText(keyBase + "lava", true));
+        category.getEntry("lava").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "lava.info")));
 
-        masterRitualStonePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "masterRitualStone" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "masterRitualStone"), new EntryText(masterRitualStonePages, TextHelper.localize(keyBase + "masterRitualStone"), true));
+        category.addEntry("greenGrove", new EntryText(keyBase + "greenGrove", true));
+        category.getEntry("greenGrove").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "greenGrove.info")));
 
-        List<IPage> activationCrystalPages = new ArrayList<IPage>();
+        category.addEntry("magnetism", new EntryText(keyBase + "magnetism", true));
+        category.getEntry("magnetism").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "magnetism.info")));
 
-        activationCrystalPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "activationCrystal" + ".info.1"), 370));
+        category.addEntry("crusher", new EntryText(keyBase + "crusher", true));
+        category.getEntry("crusher").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "crusher.info")));
 
-        AltarRecipe crystalRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.ACTIVATION_CRYSTAL));
-        if (crystalRecipe != null) {
-            activationCrystalPages.add(new PageAltarRecipe(crystalRecipe));
-        }
+        category.addEntry("highJump", new EntryText(keyBase + "highJump", true));
+        category.getEntry("highJump").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "highJump.info")));
 
-        activationCrystalPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "activationCrystal" + ".info.2"), 370));
-        entries.put(new ResourceLocation(keyBase + "activationCrystal"), new EntryText(activationCrystalPages, TextHelper.localize(keyBase + "activationCrystal"), true));
+        category.addEntry("speed", new EntryText(keyBase + "speed", true));
+        category.getEntry("speed").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "speed.info")));
 
-        List<IPage> divinerPages = new ArrayList<IPage>();
+        category.addEntry("wellOfSuffering", new EntryText(keyBase + "wellOfSuffering", true));
+        category.getEntry("wellOfSuffering").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "wellOfSuffering.info")));
 
-        divinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "diviner" + ".info.1"), 370));
+        category.addEntry("featheredKnife", new EntryText(keyBase + "featheredKnife", true));
+        category.getEntry("featheredKnife").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "featheredKnife.info")));
 
-        IRecipe divinerRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.RITUAL_DIVINER));
-        if (divinerRecipe != null) {
-            divinerPages.add(BookUtils.getPageForRecipe(divinerRecipe));
-        }
+        category.addEntry("regen", new EntryText(keyBase + "regen", true));
+        category.getEntry("regen").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "regen.info")));
 
-        divinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "diviner" + ".info.2"), 370));
-        entries.put(new ResourceLocation(keyBase + "diviner"), new EntryText(divinerPages, TextHelper.localize(keyBase + "diviner"), true));
+        category.addEntry("harvest", new EntryText(keyBase + "harvest", true));
+        category.getEntry("harvest").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "harvest.info")));
 
-        addRitualPagesToEntries("fullSpring", entries);
-        addRitualPagesToEntries("lava", entries);
-        addRitualPagesToEntries("greenGrove", entries);
-        addRitualPagesToEntries("magnetism", entries);
-        addRitualPagesToEntries("crusher", entries);
-        addRitualPagesToEntries("highJump", entries);
-        addRitualPagesToEntries("speed", entries);
-        addRitualPagesToEntries("wellOfSuffering", entries);
-        addRitualPagesToEntries("featheredKnife", entries);
-        addRitualPagesToEntries("regen", entries);
-        addRitualPagesToEntries("harvest", entries);
-        addRitualPagesToEntries("interdiction", entries);
-        addRitualPagesToEntries("containment", entries);
-        addRitualPagesToEntries("suppression", entries);
-        addRitualPagesToEntries("expulsion", entries);
-        addRitualPagesToEntries("zephyr", entries);
-        addRitualPagesToEntries("laying", entries);
-        addRitualPagesToEntries("timberman", entries);
-        addRitualPagesToEntries("meteor", entries);
-        addRitualPagesToEntries("downgrade", entries);
+        category.addEntry("interdiction", new EntryText(keyBase + "interdiction", true));
+        category.getEntry("interdiction").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "interdiction.info")));
 
-        for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet()) {
-            for (IPage page : entry.getValue().pageList) {
-                if (page instanceof PageText) {
-                    ((PageText) page).setUnicodeFlag(true);
-                }
-            }
-        }
+        category.addEntry("containment", new EntryText(keyBase + "containment", true));
+        category.getEntry("containment").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "containment.info")));
 
-        return entries;
-    }
+        category.addEntry("suppression", new EntryText(keyBase + "suppression", true));
+        category.getEntry("suppression").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "suppression.info")));
 
-    public static void addRitualPagesToEntries(String name, Map<ResourceLocation, EntryAbstract> entries) {
-        List<IPage> pages = new ArrayList<IPage>();
-        pages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + name + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + name), new EntryText(pages, TextHelper.localize(keyBase + name), true));
+        category.addEntry("expulsion", new EntryText(keyBase + "expulsion", true));
+        category.getEntry("expulsion").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "expulsion.info")));
+
+        category.addEntry("zephyr", new EntryText(keyBase + "zephyr", true));
+        category.getEntry("zephyr").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "zephyr.info")));
+
+        category.addEntry("laying", new EntryText(keyBase + "laying", true));
+        category.getEntry("laying").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "laying.info")));
+
+        category.addEntry("timberman", new EntryText(keyBase + "timberman", true));
+        category.getEntry("timberman").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "timberman.info")));
+
+        category.addEntry("meteor", new EntryText(keyBase + "meteor", true));
+        category.getEntry("meteor").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "meteor.info")));
+
+        category.addEntry("downgrade", new EntryText(keyBase + "downgrade", true));
+        category.getEntry("downgrade").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "downgrade.info")));
+
+        category.entries.values().forEach(e -> e.pageList.stream().filter(p -> p instanceof PageText).forEach(p -> ((PageText) p).setUnicodeFlag(true)));
+        book.addCategory(category);
     }
 }

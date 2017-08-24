@@ -1,191 +1,95 @@
 package WayofTime.bloodmagic.compat.guideapi.book;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.compat.guideapi.BookUtils;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
-import WayofTime.bloodmagic.compat.guideapi.page.PageTartaricForgeRecipe;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.util.helper.RecipeHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-import amerifrance.guideapi.api.IPage;
-import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
+import amerifrance.guideapi.api.impl.Book;
 import amerifrance.guideapi.api.util.PageHelper;
+import amerifrance.guideapi.category.CategoryItemStack;
 import amerifrance.guideapi.page.PageText;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class CategoryDemon {
-    //TODO: Add Forge recipe pages
-    public static Map<ResourceLocation, EntryAbstract> buildCategory() {
-        Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
-        String keyBase = "guide." + BloodMagic.MODID + ".entry.demon.";
 
-        List<IPage> introPages = new ArrayList<IPage>();
-        introPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro" + ".info"), 370));
-//        introPages.add(new PageImage(new ResourceLocation("bloodmagicguide", "textures/guide/" + ritual.getName() + ".png")));
-        entries.put(new ResourceLocation(keyBase + "intro"), new EntryText(introPages, TextHelper.localize(keyBase + "intro"), true));
+    public static void buildCategory(Book book) {
+        final String keyBase = "guide." + BloodMagic.MODID + ".entry.demon.";
 
-        List<IPage> snarePages = new ArrayList<IPage>();
-        snarePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "snare" + ".info.1"), 370));
+        CategoryItemStack category = new CategoryItemStack(keyBase + "demon", new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD));
+        category.withKeyBase(BloodMagic.MODID);
 
-        IRecipe snareRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.SOUL_SNARE));
-        if (snareRecipe != null) {
-            snarePages.add(BookUtils.getPageForRecipe(snareRecipe));
-        }
+        category.addEntry("intro", new EntryText(keyBase + "intro", true));
+        category.getEntry("intro").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "intro.info"), 370));
 
-        snarePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "snare" + ".info.2"), 370));
-        entries.put(new ResourceLocation(keyBase + "snare"), new EntryText(snarePages, TextHelper.localize(keyBase + "snare"), true));
+        category.addEntry("snare", new EntryText(keyBase + "snare", true));
+        category.getEntry("snare").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "snare.info.1"), 370));
+        category.getEntry("snare").addPage(BookUtils.getCraftingPage("soul_snare"));
+        category.getEntry("snare").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "snare.info.2"), 370));
 
-        List<IPage> forgePages = new ArrayList<IPage>();
-        forgePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "forge" + ".info.1"), 370));
+        category.addEntry("forge", new EntryText(keyBase + "forge", true));
+        category.getEntry("forge").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "forge.info.1"), 370));
+        category.getEntry("forge").addPage(BookUtils.getCraftingPage("soul_forge"));
+        category.getEntry("forge").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "forge.info.2"), 370));
 
-        IRecipe forgeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.SOUL_FORGE));
-        if (forgeRecipe != null) {
-            forgePages.add(BookUtils.getPageForRecipe(forgeRecipe));
-        }
+        category.addEntry("petty", new EntryText(keyBase + "petty", true));
+        category.getEntry("petty").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "petty.info.1"), 370));
+        category.getEntry("petty").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM)));
+        category.getEntry("petty").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "petty.info.2"), 370));
 
-        forgePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "forge" + ".info.2"), 370));
-        entries.put(new ResourceLocation(keyBase + "forge"), new EntryText(forgePages, TextHelper.localize(keyBase + "forge"), true));
+        category.addEntry("sword", new EntryText(keyBase + "sword", true));
+        category.getEntry("sword").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "sword.info.1"), 370));
+        category.getEntry("sword").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicItems.SENTIENT_SWORD)));
+        category.getEntry("sword").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "sword.info.2"), 370));
 
-        List<IPage> pettyPages = new ArrayList<IPage>();
-        pettyPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "petty" + ".info.1"), 370));
-        TartaricForgeRecipe pettyRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM));
-        if (pettyRecipe != null) {
-            pettyPages.add(new PageTartaricForgeRecipe(pettyRecipe));
-        }
-        pettyPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "petty" + ".info.2"), 370));
-        entries.put(new ResourceLocation(keyBase + "petty"), new EntryText(pettyPages, TextHelper.localize(keyBase + "petty"), true));
+        category.addEntry("lesser", new EntryText(keyBase + "lesser", true));
+        category.getEntry("lesser").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "lesser.info.1"), 370));
+        category.getEntry("lesser").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1)));
+        category.getEntry("lesser").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "lesser.info.2"), 370));
 
-        List<IPage> swordPages = new ArrayList<IPage>();
-        swordPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "sword" + ".info.1"), 370));
-        TartaricForgeRecipe swordRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.SENTIENT_SWORD));
-        if (swordRecipe != null) {
-            swordPages.add(new PageTartaricForgeRecipe(swordRecipe));
-        }
-        swordPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "sword" + ".info.2"), 370));
-        entries.put(new ResourceLocation(keyBase + "sword"), new EntryText(swordPages, TextHelper.localize(keyBase + "sword"), true));
+        category.addEntry("reactions", new EntryText(keyBase + "reactions", true));
+        category.getEntry("reactions").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "reactions.info"), 370));
 
-        List<IPage> lesserPages = new ArrayList<IPage>();
-        lesserPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lesser" + ".info.1"), 370));
-        TartaricForgeRecipe lesserRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1));
-        if (lesserRecipe != null) {
-            lesserPages.add(new PageTartaricForgeRecipe(lesserRecipe));
-        }
-        lesserPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lesser" + ".info.2"), 370));
-        entries.put(new ResourceLocation(keyBase + "lesser"), new EntryText(lesserPages, TextHelper.localize(keyBase + "lesser"), true));
+        category.addEntry("sentientGem", new EntryText(keyBase + "sentientGem", true));
+        category.getEntry("sentientGem").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "sentientGem.info.1"), 370));
+        category.getEntry("sentientGem").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "sentientGem.info.2"), 370));
 
-        List<IPage> reactionsPages = new ArrayList<IPage>();
-        reactionsPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "reactions" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "reactions"), new EntryText(reactionsPages, TextHelper.localize(keyBase + "reactions"), true));
+        category.addEntry("routing", new EntryText(keyBase + "routing", true));
+        category.getEntry("routing").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicBlocks.ITEM_ROUTING_NODE)));
+        category.getEntry("routing").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicBlocks.INPUT_ROUTING_NODE)));
+        category.getEntry("routing").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicBlocks.OUTPUT_ROUTING_NODE)));
+        category.getEntry("routing").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicBlocks.MASTER_ROUTING_NODE)));
+        category.getEntry("routing").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicItems.NODE_ROUTER)));
+        category.getEntry("routing").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "routing.info"), 370));
 
-        List<IPage> sentientGemPages = new ArrayList<IPage>();
-        sentientGemPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "sentientGem" + ".info.1"), 370));
-        sentientGemPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "sentientGem" + ".info.2"), 370));
-        entries.put(new ResourceLocation(keyBase + "sentientGem"), new EntryText(sentientGemPages, TextHelper.localize(keyBase + "sentientGem"), true));
+        category.addEntry("aura", new EntryText(keyBase + "aura", true));
+        category.getEntry("aura").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "aura.info"), 370));
 
-        List<IPage> routingPages = new ArrayList<IPage>();
-        TartaricForgeRecipe nodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.ITEM_ROUTING_NODE));
-        if (nodeRecipe != null) {
-            routingPages.add(new PageTartaricForgeRecipe(nodeRecipe));
-        }
-        TartaricForgeRecipe inputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.INPUT_ROUTING_NODE));
-        if (inputNodeRecipe != null) {
-            routingPages.add(new PageTartaricForgeRecipe(inputNodeRecipe));
-        }
-        TartaricForgeRecipe outputNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.OUTPUT_ROUTING_NODE));
-        if (outputNodeRecipe != null) {
-            routingPages.add(new PageTartaricForgeRecipe(outputNodeRecipe));
-        }
-        TartaricForgeRecipe masterNodeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.MASTER_ROUTING_NODE));
-        if (masterNodeRecipe != null) {
-            routingPages.add(new PageTartaricForgeRecipe(masterNodeRecipe));
-        }
+        category.addEntry("types", new EntryText(keyBase + "types", true));
+        category.getEntry("types").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "types.info"), 370));
 
-        TartaricForgeRecipe nodeRouterRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.NODE_ROUTER));
-        if (nodeRouterRecipe != null) {
-            routingPages.add(new PageTartaricForgeRecipe(nodeRouterRecipe));
-        }
+        category.addEntry("crucible", new EntryText(keyBase + "crucible", true));
+        category.getEntry("crucible").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRUCIBLE)));
+        category.getEntry("crucible").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "crucible.info"), 370));
 
-        routingPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "routing" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "routing"), new EntryText(routingPages, TextHelper.localize(keyBase + "routing"), true));
+        category.addEntry("crystallizer", new EntryText(keyBase + "crystallizer", true));
+        category.getEntry("crystallizer").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTALLIZER)));
+        category.getEntry("crystallizer").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "crystallizer.info"), 370));
 
-        List<IPage> auraPages = new ArrayList<IPage>();
+        category.addEntry("cluster", new EntryText(keyBase + "cluster", true));
+        category.getEntry("cluster").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTAL)));
+        category.getEntry("cluster").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "cluster.info"), 370));
 
-        auraPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "aura" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "aura"), new EntryText(auraPages, TextHelper.localize(keyBase + "aura"), true));
+        category.addEntry("pylon", new EntryText(keyBase + "pylon", true));
+        category.getEntry("pylon").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicBlocks.DEMON_PYLON)));
+        category.getEntry("pylon").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "pylon.info"), 370));
 
-        List<IPage> typesPages = new ArrayList<IPage>();
+        category.addEntry("gauge", new EntryText(keyBase + "gauge", true));
+        category.getEntry("gauge").addPage(BookUtils.getForgePage(new ItemStack(RegistrarBloodMagicItems.DEMON_WILL_GAUGE)));
+        category.getEntry("gauge").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "gauge.info"), 370));
 
-        typesPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "types" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "types"), new EntryText(typesPages, TextHelper.localize(keyBase + "types"), true));
-
-        List<IPage> cruciblePages = new ArrayList<IPage>();
-
-        TartaricForgeRecipe crucibleRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRUCIBLE));
-        if (crucibleRecipe != null) {
-            cruciblePages.add(new PageTartaricForgeRecipe(crucibleRecipe));
-        }
-
-        cruciblePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "crucible" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "crucible"), new EntryText(cruciblePages, TextHelper.localize(keyBase + "crucible"), true));
-
-        List<IPage> crystallizerPages = new ArrayList<IPage>();
-
-        TartaricForgeRecipe crystallizerRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTALLIZER));
-        if (crystallizerRecipe != null) {
-            crystallizerPages.add(new PageTartaricForgeRecipe(crystallizerRecipe));
-        }
-
-        crystallizerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "crystallizer" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "crystallizer"), new EntryText(crystallizerPages, TextHelper.localize(keyBase + "crystallizer"), true));
-
-        List<IPage> clusterPages = new ArrayList<IPage>();
-
-        TartaricForgeRecipe clusterRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTAL));
-        if (clusterRecipe != null) {
-            clusterPages.add(new PageTartaricForgeRecipe(clusterRecipe));
-        }
-
-        clusterPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "cluster" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "cluster"), new EntryText(clusterPages, TextHelper.localize(keyBase + "cluster"), true));
-
-        List<IPage> pylonPages = new ArrayList<IPage>();
-
-        TartaricForgeRecipe pylonRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.DEMON_PYLON));
-        if (pylonRecipe != null) {
-            pylonPages.add(new PageTartaricForgeRecipe(pylonRecipe));
-        }
-
-        pylonPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "pylon" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "pylon"), new EntryText(pylonPages, TextHelper.localize(keyBase + "pylon"), true));
-
-        List<IPage> gaugePages = new ArrayList<IPage>();
-
-        TartaricForgeRecipe gaugeRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.DEMON_WILL_GAUGE));
-        if (gaugeRecipe != null) {
-            gaugePages.add(new PageTartaricForgeRecipe(gaugeRecipe));
-        }
-
-        gaugePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "gauge" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "gauge"), new EntryText(gaugePages, TextHelper.localize(keyBase + "gauge"), true));
-
-        for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet()) {
-            for (IPage page : entry.getValue().pageList) {
-                if (page instanceof PageText) {
-                    ((PageText) page).setUnicodeFlag(true);
-                }
-            }
-        }
-
-        return entries;
+        category.entries.values().forEach(e -> e.pageList.stream().filter(p -> p instanceof PageText).forEach(p -> ((PageText) p).setUnicodeFlag(true)));
+        book.addCategory(category);
     }
 }

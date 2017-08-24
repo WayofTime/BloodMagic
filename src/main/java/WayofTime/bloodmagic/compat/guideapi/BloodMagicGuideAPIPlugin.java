@@ -40,9 +40,8 @@ public class BloodMagicGuideAPIPlugin implements IGuideBook {
 
         CategoryAlchemy.buildCategory(GUIDE_BOOK);
         CategoryArchitect.buildCategory(GUIDE_BOOK);
-        GUIDE_BOOK.addCategory(new CategoryItemStack(CategoryDemon.buildCategory(), "guide.bloodmagic.category.demon", new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD)));
-        GUIDE_BOOK.addCategory(new CategoryItemStack(CategoryRitual.buildCategory(), "guide.bloodmagic.category.ritual", new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER)));
-//        GUIDE_BOOK.addCategory(new CategoryItemStack(CategorySpell.buildCategory(), "guide.bloodmagic.category.spell", new ItemStack(ModItems.ritualDiviner)));
+        CategoryDemon.buildCategory(GUIDE_BOOK);
+        CategoryRitual.buildCategory(GUIDE_BOOK);
 
         return GUIDE_BOOK;
     }

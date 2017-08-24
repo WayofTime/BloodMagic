@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.compat.guideapi;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
@@ -9,6 +10,7 @@ import WayofTime.bloodmagic.client.render.alchemyArray.DualAlchemyCircleRenderer
 import WayofTime.bloodmagic.compat.guideapi.page.PageAlchemyArray;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAltarRecipe;
 import WayofTime.bloodmagic.compat.guideapi.page.PageTartaricForgeRecipe;
+import amerifrance.guideapi.page.PageJsonRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -28,12 +30,16 @@ public class BookUtils {
     }
 
     @Nullable
-    public static PageTartaricForgeRecipe getForgeRecipe(ItemStack output) {
+    public static PageTartaricForgeRecipe getForgePage(ItemStack output) {
         for (RecipeTartaricForge recipe : BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForgeRecipes().values())
             if (ItemStack.areItemStacksEqualUsingNBTShareTag(output, recipe.getOutput()))
                 return new PageTartaricForgeRecipe(recipe);
 
         return null;
+    }
+
+    public static PageJsonRecipe getCraftingPage(String name) {
+        return new PageJsonRecipe(new ResourceLocation(BloodMagic.MODID, name));
     }
 
     public static PageAlchemyArray getAlchemyPage(String key) {
