@@ -80,8 +80,8 @@ public class RecipeBloodAltar {
         if (minimumTier != that.minimumTier) return false;
         if (syphon != that.syphon) return false;
         if (drainRate != that.drainRate) return false;
-        if (!input.equals(that.input)) return false;
-        return ItemStack.areItemStacksEqual(output, that.output);
+        if (!IngredientTester.compareIngredients(input, that.input)) return false;
+        return ItemStack.areItemStacksEqualUsingNBTShareTag(output, that.output);
     }
 
     @Override

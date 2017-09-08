@@ -60,8 +60,8 @@ public class RecipeTartaricForge {
 
         if (minimumSouls != that.minimumSouls) return false;
         if (soulDrain != that.soulDrain) return false;
-        if (!input.equals(that.input)) return false;
-        return ItemStack.areItemStacksEqual(output, that.output);
+        if (!IngredientTester.compareIngredients(input, that.input)) return false;
+        return ItemStack.areItemStacksEqualUsingNBTShareTag(output, that.output);
     }
 
     @Override

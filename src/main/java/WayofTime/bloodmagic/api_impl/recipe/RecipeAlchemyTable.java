@@ -67,8 +67,8 @@ public class RecipeAlchemyTable {
         if (syphon != that.syphon) return false;
         if (ticks != that.ticks) return false;
         if (minimumTier != that.minimumTier) return false;
-        if (!input.equals(that.input)) return false;
-        return ItemStack.areItemStacksEqual(output, that.output);
+        if (!IngredientTester.compareIngredients(input, that.input)) return false;
+        return ItemStack.areItemStacksEqualUsingNBTShareTag(output, that.output);
     }
 
     @Override

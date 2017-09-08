@@ -86,6 +86,24 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
         addTartaricForge(output, minimumSouls, soulDrain, ingredients.toArray(new Ingredient[0]));
     }
 
+    public boolean removeBloodAltar(@Nonnull RecipeBloodAltar recipe) {
+        Preconditions.checkNotNull(recipe, "recipe cannot be null.");
+
+        return altarRecipes.remove(recipe);
+    }
+
+    public boolean removeAlchemyTable(@Nonnull RecipeAlchemyTable recipe) {
+        Preconditions.checkNotNull(recipe, "recipe cannot be null.");
+
+        return alchemyRecipes.remove(recipe);
+    }
+
+    public boolean removeTartaricForge(@Nonnull RecipeTartaricForge recipe) {
+        Preconditions.checkNotNull(recipe, "recipe cannot be null.");
+
+        return tartaricForgeRecipes.remove(recipe);
+    }
+
     @Nullable
     public RecipeBloodAltar getBloodAltar(@Nonnull ItemStack input) {
         Preconditions.checkNotNull(input, "input cannot be null.");
