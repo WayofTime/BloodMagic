@@ -7,9 +7,7 @@ import WayofTime.bloodmagic.api_impl.recipe.RecipeTartaricForge;
 import WayofTime.bloodmagic.apiv2.IBloodMagicRecipeRegistrar;
 import WayofTime.bloodmagic.core.recipe.IngredientBloodOrb;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.google.common.collect.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
@@ -20,17 +18,18 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
 
-    private final Map<Ingredient, RecipeBloodAltar> altarRecipes;
-    private final Map<List<Ingredient>, RecipeAlchemyTable> alchemyRecipes;
-    private final Map<List<Ingredient>, RecipeTartaricForge> tartaricForgeRecipes;
+    private final Set<RecipeBloodAltar> altarRecipes;
+    private final Set<RecipeAlchemyTable> alchemyRecipes;
+    private final Set<RecipeTartaricForge> tartaricForgeRecipes;
 
     public BloodMagicRecipeRegistrar() {
-        this.altarRecipes = Maps.newHashMap();
-        this.alchemyRecipes = Maps.newHashMap();
-        this.tartaricForgeRecipes = Maps.newHashMap();
+        this.altarRecipes = Sets.newHashSet();
+        this.alchemyRecipes = Sets.newHashSet();
+        this.tartaricForgeRecipes = Sets.newHashSet();
     }
 
     @Override
@@ -42,7 +41,7 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
         Preconditions.checkArgument(consumeRate >= 0, "consumeRate cannot be negative.");
         Preconditions.checkArgument(drainRate >= 0, "drainRate cannot be negative.");
 
-        altarRecipes.put(input, new RecipeBloodAltar(input, output, minimumTier, syphon, consumeRate, drainRate));
+        altarRecipes.add(new RecipeBloodAltar(input, output, minimumTier, syphon, consumeRate, drainRate));
     }
 
     @Override
@@ -54,7 +53,7 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
         Preconditions.checkNotNull(input, "input cannot be null.");
 
         NonNullList<Ingredient> inputs = NonNullList.from(Ingredient.EMPTY, input);
-        alchemyRecipes.put(inputs, new RecipeAlchemyTable(inputs, output, syphon, ticks, minimumTier));
+        alchemyRecipes.add(new RecipeAlchemyTable(inputs, output, syphon, ticks, minimumTier));
     }
 
     @Override
@@ -65,7 +64,7 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
         Preconditions.checkNotNull(input, "input cannot be null.");
 
         NonNullList<Ingredient> inputs = NonNullList.from(Ingredient.EMPTY, input);
-        tartaricForgeRecipes.put(inputs, new RecipeTartaricForge(inputs, output, minimumSouls, soulDrain));
+        tartaricForgeRecipes.add(new RecipeTartaricForge(inputs, output, minimumSouls, soulDrain));
     }
 
     public void addTartaricForge(@Nonnull ItemStack output, @Nonnegative double minimumSouls, @Nonnegative double soulDrain, @Nonnull Object... input) {
@@ -90,10 +89,12 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     @Nullable
     public RecipeBloodAltar getBloodAltar(@Nonnull ItemStack input) {
         Preconditions.checkNotNull(input, "input cannot be null.");
+        if (input.isEmpty())
+            return null;
 
-        for (Map.Entry<Ingredient, RecipeBloodAltar> entry : altarRecipes.entrySet())
-            if (entry.getKey().test(input))
-                return entry.getValue();
+        for (RecipeBloodAltar recipe : altarRecipes)
+            if (recipe.getInput().test(input))
+                return recipe;
 
         return null;
     }
@@ -101,19 +102,21 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     @Nullable
     public RecipeAlchemyTable getAlchemyTable(@Nonnull List<ItemStack> input) {
         Preconditions.checkNotNull(input, "input cannot be null.");
+        if (input.isEmpty())
+            return null;
 
         mainLoop:
-        for (Map.Entry<List<Ingredient>, RecipeAlchemyTable> entry : alchemyRecipes.entrySet()) {
-            if (entry.getKey().size() != input.size())
+        for (RecipeAlchemyTable recipe : alchemyRecipes) {
+            if (recipe.getInput().size() != input.size())
                 continue;
 
-            for (int i = 0; i > input.size(); i++) {
-                Ingredient ingredient = entry.getKey().get(i);
+            for (int i = 0; i < input.size(); i++) {
+                Ingredient ingredient = recipe.getInput().get(i);
                 if (!ingredient.apply(input.get(i)))
                     continue mainLoop;
             }
 
-            return entry.getValue();
+            return recipe;
         }
 
         return null;
@@ -122,33 +125,35 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     @Nullable
     public RecipeTartaricForge getTartaricForge(@Nonnull List<ItemStack> input) {
         Preconditions.checkNotNull(input, "input cannot be null.");
+        if (input.isEmpty())
+            return null;
 
         mainLoop:
-        for (Map.Entry<List<Ingredient>, RecipeTartaricForge> entry : tartaricForgeRecipes.entrySet()) {
-            if (entry.getKey().size() != input.size())
+        for (RecipeTartaricForge recipe : tartaricForgeRecipes) {
+            if (recipe.getInput().size() != input.size())
                 continue;
 
-            for (int i = 0; i > input.size(); i++) {
-                Ingredient ingredient = entry.getKey().get(i);
+            for (int i = 0; i < input.size(); i++) {
+                Ingredient ingredient = recipe.getInput().get(i);
                 if (!ingredient.apply(input.get(i)))
                     continue mainLoop;
             }
 
-            return entry.getValue();
+            return recipe;
         }
 
         return null;
     }
 
-    public Map<Ingredient, RecipeBloodAltar> getAltarRecipes() {
-        return ImmutableMap.copyOf(altarRecipes);
+    public Set<RecipeBloodAltar> getAltarRecipes() {
+        return ImmutableSet.copyOf(altarRecipes);
     }
 
-    public Map<List<Ingredient>, RecipeAlchemyTable> getAlchemyRecipes() {
-        return ImmutableMap.copyOf(alchemyRecipes);
+    public Set<RecipeAlchemyTable> getAlchemyRecipes() {
+        return ImmutableSet.copyOf(alchemyRecipes);
     }
 
-    public Map<List<Ingredient>, RecipeTartaricForge> getTartaricForgeRecipes() {
-        return ImmutableMap.copyOf(tartaricForgeRecipes);
+    public Set<RecipeTartaricForge> getTartaricForgeRecipes() {
+        return ImmutableSet.copyOf(tartaricForgeRecipes);
     }
 }

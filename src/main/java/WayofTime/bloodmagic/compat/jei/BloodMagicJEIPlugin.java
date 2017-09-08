@@ -46,9 +46,9 @@ public class BloodMagicJEIPlugin implements IModPlugin {
                 new ArmourDowngradeRecipeHandler()
         );
 
-        registry.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAltarRecipes().values(), Constants.Compat.JEI_CATEGORY_ALTAR);
-        registry.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyRecipes().values(), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
-        registry.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForgeRecipes().values(), Constants.Compat.JEI_CATEGORY_SOULFORGE);
+        registry.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAltarRecipes(), Constants.Compat.JEI_CATEGORY_ALTAR);
+        registry.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyRecipes(), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
+        registry.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForgeRecipes(), Constants.Compat.JEI_CATEGORY_SOULFORGE);
 
         registry.handleRecipes(RecipeBloodAltar.class, AltarRecipeJEI::new, Constants.Compat.JEI_CATEGORY_ALTAR);
         registry.handleRecipes(RecipeAlchemyTable.class, AlchemyTableRecipeJEI::new, Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);

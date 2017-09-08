@@ -22,7 +22,7 @@ public class BookUtils {
 
     @Nullable
     public static PageAltarRecipe getAltarPage(ItemStack output) {
-        for (RecipeBloodAltar recipe : BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAltarRecipes().values())
+        for (RecipeBloodAltar recipe : BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAltarRecipes())
             if (ItemStack.areItemStacksEqualUsingNBTShareTag(output, recipe.getOutput()))
                 return new PageAltarRecipe(recipe);
 
@@ -31,7 +31,7 @@ public class BookUtils {
 
     @Nullable
     public static PageTartaricForgeRecipe getForgePage(ItemStack output) {
-        for (RecipeTartaricForge recipe : BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForgeRecipes().values())
+        for (RecipeTartaricForge recipe : BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForgeRecipes())
             if (ItemStack.areItemStacksEqualUsingNBTShareTag(output, recipe.getOutput()))
                 return new PageTartaricForgeRecipe(recipe);
 
