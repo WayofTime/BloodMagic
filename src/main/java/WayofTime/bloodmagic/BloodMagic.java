@@ -41,8 +41,8 @@ public class BloodMagic {
     public static final String NAME = "Blood Magic: Alchemical Wizardry";
     public static final String VERSION = "@VERSION@";
     public static final String DEPEND = "required-after:guideapi;";
-    public static final Logger LOGGER = LogManager.getLogger(NAME.substring(0, NAME.indexOf(":")));
     public static final boolean IS_DEV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+    public static final Logger LOGGER = LogManager.getLogger(NAME.substring(0, NAME.indexOf(":")));
     public static final List<Pair<IBloodMagicPlugin, BloodMagicPlugin>> PLUGINS = Lists.newArrayList();
     public static final CreativeTabs TAB_BM = new CreativeTabs(MODID + ".creativeTab") {
         @Override

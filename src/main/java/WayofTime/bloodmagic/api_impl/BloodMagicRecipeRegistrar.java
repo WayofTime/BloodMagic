@@ -17,7 +17,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
@@ -45,6 +44,13 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     }
 
     @Override
+    public boolean removeBloodAltar(@Nonnull ItemStack input) {
+        Preconditions.checkNotNull(input, "input cannot be null.");
+
+        return altarRecipes.remove(getBloodAltar(input));
+    }
+
+    @Override
     public void addAlchemyTable(@Nonnull ItemStack output, @Nonnegative int syphon, @Nonnegative int ticks, @Nonnegative int minimumTier, @Nonnull Ingredient... input) {
         Preconditions.checkNotNull(output, "output cannot be null.");
         Preconditions.checkArgument(syphon >= 0, "syphon cannot be negative.");
@@ -57,6 +63,16 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     }
 
     @Override
+    public boolean removeAlchemyTable(@Nonnull ItemStack... input) {
+        Preconditions.checkNotNull(input, "inputs cannot be null.");
+
+        for (ItemStack stack : input)
+            Preconditions.checkNotNull(stack, "input cannot be null.");
+
+        return alchemyRecipes.remove(getAlchemyTable(Lists.newArrayList(input)));
+    }
+
+    @Override
     public void addTartaricForge(@Nonnull ItemStack output, @Nonnegative double minimumSouls, @Nonnegative double soulDrain, @Nonnull Ingredient... input) {
         Preconditions.checkNotNull(output, "output cannot be null.");
         Preconditions.checkArgument(minimumSouls >= 0, "minimumSouls cannot be negative.");
@@ -65,6 +81,16 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
 
         NonNullList<Ingredient> inputs = NonNullList.from(Ingredient.EMPTY, input);
         tartaricForgeRecipes.add(new RecipeTartaricForge(inputs, output, minimumSouls, soulDrain));
+    }
+
+    @Override
+    public boolean removeTartaricForge(@Nonnull ItemStack... input) {
+        Preconditions.checkNotNull(input, "inputs cannot be null.");
+
+        for (ItemStack stack : input)
+            Preconditions.checkNotNull(stack, "input cannot be null.");
+
+        return tartaricForgeRecipes.remove(getTartaricForge(Lists.newArrayList(input)));
     }
 
     public void addTartaricForge(@Nonnull ItemStack output, @Nonnegative double minimumSouls, @Nonnegative double soulDrain, @Nonnull Object... input) {
@@ -84,24 +110,6 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
         }
 
         addTartaricForge(output, minimumSouls, soulDrain, ingredients.toArray(new Ingredient[0]));
-    }
-
-    public boolean removeBloodAltar(@Nonnull RecipeBloodAltar recipe) {
-        Preconditions.checkNotNull(recipe, "recipe cannot be null.");
-
-        return altarRecipes.remove(recipe);
-    }
-
-    public boolean removeAlchemyTable(@Nonnull RecipeAlchemyTable recipe) {
-        Preconditions.checkNotNull(recipe, "recipe cannot be null.");
-
-        return alchemyRecipes.remove(recipe);
-    }
-
-    public boolean removeTartaricForge(@Nonnull RecipeTartaricForge recipe) {
-        Preconditions.checkNotNull(recipe, "recipe cannot be null.");
-
-        return tartaricForgeRecipes.remove(recipe);
     }
 
     @Nullable

@@ -56,28 +56,4 @@ public class RecipeAlchemyTable {
     public final int getMinimumTier() {
         return minimumTier;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof RecipeAlchemyTable)) return false;
-
-        RecipeAlchemyTable that = (RecipeAlchemyTable) o;
-
-        if (syphon != that.syphon) return false;
-        if (ticks != that.ticks) return false;
-        if (minimumTier != that.minimumTier) return false;
-        if (!IngredientTester.compareIngredients(input, that.input)) return false;
-        return ItemStack.areItemStacksEqualUsingNBTShareTag(output, that.output);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = input.hashCode();
-        result = 31 * result + output.hashCode();
-        result = 31 * result + syphon;
-        result = 31 * result + ticks;
-        result = 31 * result + minimumTier;
-        return result;
-    }
 }

@@ -50,30 +50,4 @@ public class RecipeTartaricForge {
     public final double getSoulDrain() {
         return soulDrain;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof RecipeTartaricForge)) return false;
-
-        RecipeTartaricForge that = (RecipeTartaricForge) o;
-
-        if (minimumSouls != that.minimumSouls) return false;
-        if (soulDrain != that.soulDrain) return false;
-        if (!IngredientTester.compareIngredients(input, that.input)) return false;
-        return ItemStack.areItemStacksEqualUsingNBTShareTag(output, that.output);
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = input.hashCode();
-        result = 31 * result + output.hashCode();
-        temp = Double.doubleToLongBits(minimumSouls);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(soulDrain);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
-    }
 }
