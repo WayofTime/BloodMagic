@@ -6,27 +6,9 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.Locale;
 
-public enum  ComponentType implements IEnumItem {
+public enum  ComponentType implements ISubItem {
 
-    REAGENT_WATER,
-    REAGENT_LAVA,
-    REAGENT_AIR,
-    REAGENT_FASTMINER,
-    REAGENT_VOID,
-    REAGENT_GROWTH,
-    REAGENT_AFFINITY,
-    REAGENT_SIGHT,
-    REAGENT_BINDING,
-    REAGENT_SUPPRESSION,
-    COMPONENT_FRAME_PART,
-    REAGENT_BLOODLIGHT,
-    REAGENT_MAGNETISM,
-    REAGENT_HASTE,
-    REAGENT_COMPRESSION,
-    REAGENT_BRIDGE,
-    REAGENT_SEVERANCE,
-    REAGENT_TELEPOSITION,
-    REAGENT_TRANSPOSITION,
+    FRAME_PART,
     SAND_IRON,
     SAND_GOLD,
     SAND_COAL,
@@ -35,25 +17,14 @@ public enum  ComponentType implements IEnumItem {
     SALTPETER,
     NEURO_TOXIN,
     ANTISEPTIC,
-    REAGENT_HOLDING,
     CATALYST_LENGTH_1,
     CATALYST_POWER_1,
-    REAGENT_CLAW,
-    REAGENT_BOUNCE,
-    REAGENT_FROST,
     ;
-
 
     @Nonnull
     @Override
     public String getInternalName() {
         return name().toLowerCase(Locale.ROOT);
-    }
-
-    @Nonnull
-    @Override
-    public ItemStack getStack() {
-        return getStack(1);
     }
 
     @Nonnull

@@ -4,13 +4,15 @@ import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public interface IEnumItem {
+public interface ISubItem {
 
     @Nonnull
     String getInternalName();
 
     @Nonnull
-    ItemStack getStack();
+    default ItemStack getStack() {
+        return getStack(1);
+    }
 
     @Nonnull
     ItemStack getStack(int count);

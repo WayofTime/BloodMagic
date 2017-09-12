@@ -8,6 +8,7 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.types.ComponentType;
+import WayofTime.bloodmagic.item.types.ReagentType;
 import amerifrance.guideapi.api.impl.Book;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.category.CategoryItemStack;
@@ -68,12 +69,12 @@ public class CategoryArchitect {
         category.getEntry("runeSpeed").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "runeSpeed.info.1"), 370));
 
         category.addEntry("water", new EntryText(keyBase + "water", true));
-        category.getEntry("water").addPage(BookUtils.getForgePage(ComponentType.REAGENT_WATER.getStack()));
+        category.getEntry("water").addPage(BookUtils.getForgePage(ReagentType.REAGENT_WATER.getStack()));
         category.getEntry("water").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_WATER)));
         category.getEntry("water").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "water.info.1"), 370));
 
         category.addEntry("lava", new EntryText(keyBase + "lava", true));
-        category.getEntry("lava").addPage(BookUtils.getForgePage(ComponentType.REAGENT_LAVA.getStack()));
+        category.getEntry("lava").addPage(BookUtils.getForgePage(ReagentType.REAGENT_LAVA.getStack()));
         category.getEntry("lava").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_LAVA)));
         category.getEntry("lava").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "lava.info.1"), 370));
 
@@ -98,32 +99,32 @@ public class CategoryArchitect {
         category.getEntry("runeSelfSacrifice").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "runeSelfSacrifice.info.1"), 370));
 
         category.addEntry("holding", new EntryText(keyBase + "holding", true));
-        category.getEntry("holding").addPage(BookUtils.getForgePage(ComponentType.REAGENT_HOLDING.getStack()));
+        category.getEntry("holding").addPage(BookUtils.getForgePage(ReagentType.REAGENT_HOLDING.getStack()));
         category.getEntry("holding").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_HOLDING)));
         category.getEntry("holding").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "holding.info.1"), 370));
 
         category.addEntry("air", new EntryText(keyBase + "air", true));
-        category.getEntry("air").addPage(BookUtils.getForgePage(ComponentType.REAGENT_AIR.getStack()));
+        category.getEntry("air").addPage(BookUtils.getForgePage(ReagentType.REAGENT_AIR.getStack()));
         category.getEntry("air").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_AIR)));
         category.getEntry("air").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "air.info.1"), 370));
 
         category.addEntry("void", new EntryText(keyBase + "void", true));
-        category.getEntry("void").addPage(BookUtils.getForgePage(ComponentType.REAGENT_VOID.getStack()));
+        category.getEntry("void").addPage(BookUtils.getForgePage(ReagentType.REAGENT_VOID.getStack()));
         category.getEntry("void").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_VOID)));
         category.getEntry("void").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "void.info.1"), 370));
 
         category.addEntry("greenGrove", new EntryText(keyBase + "greenGrove", true));
-        category.getEntry("greenGrove").addPage(BookUtils.getForgePage(ComponentType.REAGENT_GROWTH.getStack()));
+        category.getEntry("greenGrove").addPage(BookUtils.getForgePage(ReagentType.REAGENT_GROWTH.getStack()));
         category.getEntry("greenGrove").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_GREEN_GROVE)));
         category.getEntry("greenGrove").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "greenGrove.info.1"), 370));
 
         category.addEntry("fastMiner", new EntryText(keyBase + "fastMiner", true));
-        category.getEntry("fastMiner").addPage(BookUtils.getForgePage(ComponentType.REAGENT_FASTMINER.getStack()));
+        category.getEntry("fastMiner").addPage(BookUtils.getForgePage(ReagentType.REAGENT_FASTMINER.getStack()));
         category.getEntry("fastMiner").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_FAST_MINER)));
         category.getEntry("fastMiner").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "fastMiner.info.1"), 370));
 
         category.addEntry("seer", new EntryText(keyBase + "seer", true));
-        category.getEntry("seer").addPage(BookUtils.getForgePage(ComponentType.REAGENT_SIGHT.getStack()));
+        category.getEntry("seer").addPage(BookUtils.getForgePage(ReagentType.REAGENT_SIGHT.getStack()));
         category.getEntry("seer").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_SEER)));
         category.getEntry("seer").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "seer.info.1"), 370));
 
@@ -140,17 +141,17 @@ public class CategoryArchitect {
         category.getEntry("displacement").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "displacement.info.1"), 370));
 
         category.addEntry("affinity", new EntryText(keyBase + "affinity", true));
-        category.getEntry("affinity").addPage(BookUtils.getForgePage(ComponentType.REAGENT_AFFINITY.getStack()));
+        category.getEntry("affinity").addPage(BookUtils.getForgePage(ReagentType.REAGENT_AFFINITY.getStack()));
         category.getEntry("affinity").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_ELEMENTAL_AFFINITY)));
         category.getEntry("affinity").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "affinity.info"), 370));
 
         category.addEntry("lamp", new EntryText(keyBase + "lamp", true));
-        category.getEntry("lamp").addPage(BookUtils.getForgePage(ComponentType.REAGENT_BLOODLIGHT.getStack()));
+        category.getEntry("lamp").addPage(BookUtils.getForgePage(ReagentType.REAGENT_BLOODLIGHT.getStack()));
         category.getEntry("lamp").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_BLOOD_LIGHT)));
         category.getEntry("lamp").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "lamp.info.1"), 370));
 
         category.addEntry("magnetism", new EntryText(keyBase + "magnetism", true));
-        category.getEntry("magnetism").addPage(BookUtils.getForgePage(ComponentType.REAGENT_MAGNETISM.getStack()));
+        category.getEntry("magnetism").addPage(BookUtils.getForgePage(ReagentType.REAGENT_MAGNETISM.getStack()));
         category.getEntry("magnetism").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_MAGNETISM)));
         category.getEntry("magnetism").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "magnetism.info.1"), 370));
 
@@ -159,7 +160,7 @@ public class CategoryArchitect {
         category.getEntry("peritia").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "peritia.info.1"), 370));
 
         category.addEntry("livingArmour", new EntryText(keyBase + "livingArmour", true));
-        category.getEntry("livingArmour").addPage(BookUtils.getForgePage(ComponentType.REAGENT_BINDING.getStack()));
+        category.getEntry("livingArmour").addPage(BookUtils.getForgePage(ReagentType.REAGENT_BINDING.getStack()));
         category.getEntry("livingArmour").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST)));
         category.getEntry("livingArmour").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET)));
         category.getEntry("livingArmour").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_LEGGINGS)));
@@ -211,32 +212,32 @@ public class CategoryArchitect {
         category.getEntry("acceleration").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "acceleration.info.1"), 370));
 
         category.addEntry("suppression", new EntryText(keyBase + "suppression", true));
-        category.getEntry("suppression").addPage(BookUtils.getForgePage(ComponentType.REAGENT_SUPPRESSION.getStack()));
+        category.getEntry("suppression").addPage(BookUtils.getForgePage(ReagentType.REAGENT_SUPPRESSION.getStack()));
         category.getEntry("suppression").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_SUPPRESSION)));
         category.getEntry("suppression").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "suppression.info.1"), 370));
 
         category.addEntry("haste", new EntryText(keyBase + "haste", true));
-        category.getEntry("haste").addPage(BookUtils.getForgePage(ComponentType.REAGENT_HASTE.getStack()));
+        category.getEntry("haste").addPage(BookUtils.getForgePage(ReagentType.REAGENT_HASTE.getStack()));
         category.getEntry("haste").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_HASTE)));
         category.getEntry("haste").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "haste.info.1"), 370));
 
         category.addEntry("severance", new EntryText(keyBase + "severance", true));
-        category.getEntry("severance").addPage(BookUtils.getForgePage(ComponentType.REAGENT_SEVERANCE.getStack()));
+        category.getEntry("severance").addPage(BookUtils.getForgePage(ReagentType.REAGENT_SEVERANCE.getStack()));
         category.getEntry("severance").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_ENDER_SEVERANCE)));
         category.getEntry("severance").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "severance.info.1"), 370));
 
         category.addEntry("teleposition", new EntryText(keyBase + "teleposition", true));
-        category.getEntry("teleposition").addPage(BookUtils.getForgePage(ComponentType.REAGENT_TELEPOSITION.getStack()));
+        category.getEntry("teleposition").addPage(BookUtils.getForgePage(ReagentType.REAGENT_TELEPOSITION.getStack()));
         category.getEntry("teleposition").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_TELEPOSITION)));
         category.getEntry("teleposition").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "teleposition.info.1"), 370));
 
         category.addEntry("compression", new EntryText(keyBase + "compression", true));
-        category.getEntry("compression").addPage(BookUtils.getForgePage(ComponentType.REAGENT_COMPRESSION.getStack()));
+        category.getEntry("compression").addPage(BookUtils.getForgePage(ReagentType.REAGENT_COMPRESSION.getStack()));
         category.getEntry("compression").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_COMPRESSION)));
         category.getEntry("compression").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "compression.info.1"), 370));
 
         category.addEntry("bridge", new EntryText(keyBase + "bridge", true));
-        category.getEntry("bridge").addPage(BookUtils.getForgePage(ComponentType.REAGENT_BRIDGE.getStack()));
+        category.getEntry("bridge").addPage(BookUtils.getForgePage(ReagentType.REAGENT_BRIDGE.getStack()));
         category.getEntry("bridge").addPage(BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_PHANTOM_BRIDGE)));
         category.getEntry("bridge").addPageList(PageHelper.pagesForLongText(I18n.format(keyBase + "bridge.info.1"), 370));
 

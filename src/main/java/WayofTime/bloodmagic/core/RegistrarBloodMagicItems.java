@@ -17,6 +17,7 @@ import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
 import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.item.soul.*;
 import WayofTime.bloodmagic.item.types.ComponentType;
+import WayofTime.bloodmagic.item.types.ReagentType;
 import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
@@ -79,6 +80,7 @@ public class RegistrarBloodMagicItems {
     public static final Item SIGIL_BOUNCE = Items.AIR;
     public static final Item SIGIL_FROST = Items.AIR;
     public static final Item COMPONENT = Items.AIR;
+    public static final Item REAGENT = Items.AIR;
     public static final Item ITEM_DEMON_CRYSTAL = Items.AIR;
     public static final Item TELEPOSITION_FOCUS = Items.AIR;
     public static final Item EXPERIENCE_TOME = Items.AIR;
@@ -166,7 +168,8 @@ public class RegistrarBloodMagicItems {
                 new ItemSigilClaw().setRegistryName("sigil_claw"),
                 new ItemSigilBounce().setRegistryName("sigil_bounce"),
                 new ItemSigilFrost().setRegistryName("sigil_frost"),
-                new ItemEnum<>(ComponentType.class, "baseComponent").setRegistryName("component"),
+                new ItemEnum<>(ComponentType.class, "component").setRegistryName("component"),
+                new ItemEnum<>(ReagentType.class, "reagent").setRegistryName("reagent"),
                 new ItemDemonCrystal().setRegistryName("item_demon_crystal"),
                 new ItemTelepositionFocus().setRegistryName("teleposition_focus"),
                 new ItemExperienceBook().setRegistryName("experience_tome"),

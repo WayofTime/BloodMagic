@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.client.render.entity;
 
 import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
 import WayofTime.bloodmagic.item.types.ComponentType;
+import WayofTime.bloodmagic.item.types.ReagentType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
@@ -26,7 +27,7 @@ public class RenderEntityBloodLight extends Render<EntityBloodLight> {
         GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
         this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        this.renderItem.renderItem(ComponentType.REAGENT_BLOODLIGHT.getStack(), ItemCameraTransforms.TransformType.GROUND);
+        this.renderItem.renderItem(ReagentType.REAGENT_BLOODLIGHT.getStack(), ItemCameraTransforms.TransformType.GROUND);
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

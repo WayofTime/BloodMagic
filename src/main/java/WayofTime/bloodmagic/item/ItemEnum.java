@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.item.types.IEnumItem;
+import WayofTime.bloodmagic.item.types.ISubItem;
 import com.google.common.collect.Lists;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -15,7 +15,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
-public class ItemEnum<T extends Enum<T> & IEnumItem> extends Item implements IVariantProvider {
+public class ItemEnum<T extends Enum<T> & ISubItem> extends Item implements IVariantProvider {
 
     protected final T[] types;
 

@@ -1,0 +1,121 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "reagent_water": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentWater"
+        }
+      },
+      "reagent_lava": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentLava"
+        }
+      },
+      "reagent_air": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentAir"
+        }
+      },
+      "reagent_fastminer": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentFastMiner"
+        }
+      },
+      "reagent_void": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentVoid"
+        }
+      },
+      "reagent_growth": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentGrowth"
+        }
+      },
+      "reagent_affinity": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentAffinity"
+        }
+      },
+      "reagent_sight": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentSight"
+        }
+      },
+      "reagent_binding": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentBinding"
+        }
+      },
+      "reagent_suppression": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentSuppression"
+        }
+      },
+      "reagent_bloodlight": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentBloodLight"
+        }
+      },
+      "reagent_magnetism": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentMagnetism"
+        }
+      },
+      "reagent_haste": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentHaste"
+        }
+      },
+      "reagent_compression": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentCompression"
+        }
+      },
+      "reagent_bridge": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentBridge"
+        }
+      },
+      "reagent_severance": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentSeverance"
+        }
+      },
+      "reagent_teleposition": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentTeleposition"
+        }
+      },
+      "reagent_transposition": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentTransposition"
+        }
+      },
+      "reagent_holding": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentHolding"
+        }
+      },
+      "reagent_claw": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentClaw"
+        }
+      },
+      "reagent_bounce": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentBounce"
+        }
+      },
+      "reagent_frost": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentFrost"
+        }
+      }
+    }
+  }
+}
