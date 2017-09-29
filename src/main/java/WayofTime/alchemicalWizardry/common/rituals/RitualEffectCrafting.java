@@ -419,7 +419,7 @@ public class RitualEffectCrafting extends RitualEffect
 //            return false;
 //        }
 
-        return stack1.getItem() == stack2.getItem() && !stack1.getItem().getHasSubtypes() || stack1.getItemDamage() == stack2.getItemDamage();
+        return stack1.getItem() == stack2.getItem() && (!stack1.getItem().getHasSubtypes() || stack1.getItemDamage() == stack2.getItemDamage());
     }
 
     public boolean areItemStacksEqualWithWildcard(ItemStack recipeStack, ItemStack comparedStack)
