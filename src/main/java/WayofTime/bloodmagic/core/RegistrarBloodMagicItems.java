@@ -16,30 +16,26 @@ import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
 import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
 import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.item.sigil.sigil.*;
-import WayofTime.bloodmagic.item.sigil.sigil.ItemSigilDivination;
 import WayofTime.bloodmagic.item.soul.*;
 import WayofTime.bloodmagic.item.types.ComponentType;
 import WayofTime.bloodmagic.item.types.ReagentType;
 import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.Pair;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
 @SuppressWarnings("unchecked")
 public class RegistrarBloodMagicItems {
@@ -122,8 +118,7 @@ public class RegistrarBloodMagicItems {
 
     public static List<Item> items;
 
-    @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event) {
+    public static void registerItems(IForgeRegistry<Item> registry) {
         items = Lists.newArrayList();
 
         RegistrarBloodMagicBlocks.blocks.stream().filter(block -> block instanceof IBMBlock && ((IBMBlock) block).getItem() != null).forEach(block -> {
@@ -207,16 +202,17 @@ public class RegistrarBloodMagicItems {
                 new ItemPotionFlask().setRegistryName("potion_flask")
         ));
 
-        event.getRegistry().registerAll(items.toArray(new Item[0]));
+        registry.registerAll(items.toArray(new Item[0]));
     }
 
     @SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public static void registerRenders(ModelRegistryEvent event) {
+    public static void registerModels() {
         items.stream().filter(i -> i instanceof IVariantProvider).forEach(i -> {
             IVariantProvider variantProvider = (IVariantProvider) i;
-            for (Pair<Integer, String> variant : variantProvider.getVariants())
-                ModelLoader.setCustomModelResourceLocation(i, variant.getLeft(), new ModelResourceLocation(i.getRegistryName(), variant.getRight()));
+            Int2ObjectMap<String> variants = new Int2ObjectOpenHashMap<>();
+            variantProvider.populateVariants(variants);
+            for (Int2ObjectMap.Entry<String> variant : variants.int2ObjectEntrySet())
+                ModelLoader.setCustomModelResourceLocation(i, variant.getIntKey(), new ModelResourceLocation(i.getRegistryName(), variant.getValue()));
         });
 
         items.stream().filter(i -> i instanceof IMeshProvider).forEach(i -> {
@@ -224,7 +220,10 @@ public class RegistrarBloodMagicItems {
             ResourceLocation loc = mesh.getCustomLocation();
             if (loc == null)
                 loc = i.getRegistryName();
-            for (String variant : mesh.getVariants())
+
+            List<String> variants = Lists.newArrayList();
+            mesh.populateVariants(variants);
+            for (String variant : variants)
                 ModelLoader.registerItemVariants(i, new ModelResourceLocation(loc, variant));
 
             ModelLoader.setCustomMeshDefinition(i, mesh.getMeshDefinition());
@@ -232,8 +231,10 @@ public class RegistrarBloodMagicItems {
 
         RegistrarBloodMagicBlocks.blocks.stream().filter(b -> b instanceof IVariantProvider).forEach(b -> {
             IVariantProvider variantProvider = (IVariantProvider) b;
-            for (Pair<Integer, String> variant : variantProvider.getVariants())
-                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(b), variant.getLeft(), new ModelResourceLocation(b.getRegistryName(), variant.getRight()));
+            Int2ObjectMap<String> variants = new Int2ObjectOpenHashMap<>();
+            variantProvider.populateVariants(variants);
+            for (Int2ObjectMap.Entry<String> variant : variants.int2ObjectEntrySet())
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(b), variant.getIntKey(), new ModelResourceLocation(b.getRegistryName(), variant.getValue()));
         });
 
         final ResourceLocation holdingLoc = SIGIL_HOLDING.getRegistryName();

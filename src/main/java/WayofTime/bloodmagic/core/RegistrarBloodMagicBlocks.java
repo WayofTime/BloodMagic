@@ -15,17 +15,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.init.Blocks;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
 @SuppressWarnings("unused")
 public class RegistrarBloodMagicBlocks {
@@ -73,8 +69,7 @@ public class RegistrarBloodMagicBlocks {
 
     static List<Block> blocks;
 
-    @SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+    public static void registerBlocks(IForgeRegistry<Block> registry) {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
         FluidRegistry.addBucketForFluid(BlockLifeEssence.getLifeEssence());
 
@@ -122,13 +117,12 @@ public class RegistrarBloodMagicBlocks {
                 new BlockInversionPillarEnd().setRegistryName("inversion_pillar_end")
         );
 
-        event.getRegistry().registerAll(blocks.toArray(new Block[0]));
+        registry.registerAll(blocks.toArray(new Block[0]));
 
         registerTileEntities();
     }
 
-    @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event) {
+    public static void registerModels() {
         ModelLoader.setCustomStateMapper(LIFE_ESSENCE, new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {

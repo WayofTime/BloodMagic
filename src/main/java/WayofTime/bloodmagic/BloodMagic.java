@@ -133,4 +133,9 @@ public class BloodMagic {
     public void onIMCRecieved(FMLInterModComms.IMCEvent event) {
         IMCHandler.handleIMC(event);
     }
+
+    public static void debug(String message, Object... args) {
+        if (IS_DEV)
+            LOGGER.info("[DEBUG] " + message, args);
+    }
 }

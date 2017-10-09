@@ -10,9 +10,13 @@ import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import WayofTime.bloodmagic.item.types.ComponentType;
 import WayofTime.bloodmagic.potion.PotionBloodMagic;
+import com.google.common.base.Stopwatch;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -62,7 +66,29 @@ public class RegistrarBloodMagic {
     public static IForgeRegistry<BloodOrb> BLOOD_ORBS = null;
 
     @SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        RegistrarBloodMagicItems.registerItems(event.getRegistry());
+        BloodMagic.debug("Item registration completed in {}", stopwatch.stop());
+    }
+
+    @SubscribeEvent
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        RegistrarBloodMagicBlocks.registerBlocks(event.getRegistry());
+        BloodMagic.debug("Block registration completed in {}", stopwatch.stop());
+    }
+
+    @SubscribeEvent
+    public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        RegistrarBloodMagicRecipes.registerCrafting(event.getRegistry());
+        BloodMagic.debug("Recipe registration completed in {}", stopwatch.stop());
+    }
+
+    @SubscribeEvent
     public static void registerBloodOrbs(RegistryEvent.Register<BloodOrb> event) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
         ResourceLocation orb = RegistrarBloodMagicItems.BLOOD_ORB.getRegistryName();
         event.getRegistry().registerAll(
                 new BloodOrb("weak", 1, 5000).withModel(new ModelResourceLocation(orb, "type=weak")).setRegistryName("weak"),
@@ -72,10 +98,12 @@ public class RegistrarBloodMagic {
                 new BloodOrb("archmage", 5, 10000000).withModel(new ModelResourceLocation(orb, "type=archmage")).setRegistryName("archmage"),
                 new BloodOrb("transcendent", 6, 30000000).withModel(new ModelResourceLocation(orb, "type=transcendent")).setRegistryName("transcendent")
         );
+        BloodMagic.debug("Blood Orb registration completed in {}", stopwatch.stop());
     }
 
     @SubscribeEvent
     public static void registerPotions(RegistryEvent.Register<Potion> event) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
         event.getRegistry().registerAll(
                 new PotionBloodMagic("Boost", false, 0xFFFFFF, 0, 1).setRegistryName("boost"),
                 new PotionBloodMagic("Planar Binding", false, 0, 2, 0).setRegistryName("planar_binding"),
@@ -89,10 +117,12 @@ public class RegistrarBloodMagic {
                 new PotionBloodMagic("Cling", false, 0x000000, 2, 1).setRegistryName("cling"),
                 new PotionBloodMagic("S. Lamb", false, 0x000000, 3, 1).setRegistryName("sacrificial_lamb")
         );
+        BloodMagic.debug("Potion registration completed in {}", stopwatch.stop());
     }
 
     @SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
         int entities = 0;
         EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "blood_light"), EntityBloodLight.class, "BloodLight", ++entities, BloodMagic.instance, 16 * 4, 3, true);
         EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "soul_snare"), EntitySoulSnare.class, "SoulSnare", ++entities, BloodMagic.instance, 16 * 4, 3, true);
@@ -104,21 +134,25 @@ public class RegistrarBloodMagic {
         EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_sheep"), EntityCorruptedSheep.class, "CorruptedSheep", ++entities, BloodMagic.instance, 16 * 4, 3, true);
         EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_chicken"), EntityCorruptedChicken.class, "CorruptedChicken", ++entities, BloodMagic.instance, 16 * 4, 3, true);
         EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_spider"), EntityCorruptedSpider.class, "CorruptedSpider", ++entities, BloodMagic.instance, 16 * 4, 3, true);
+        BloodMagic.debug("Entity registration completed in {}", stopwatch.stop());
     }
 
     @SubscribeEvent
     public static void onRegistryCreation(RegistryEvent.NewRegistry event) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
         BLOOD_ORBS = new RegistryBuilder<BloodOrb>()
                 .setName(new ResourceLocation(BloodMagic.MODID, "blood_orb"))
                 .setIDRange(0, Short.MAX_VALUE)
                 .setType(BloodOrb.class)
                 .addCallback((IForgeRegistry.AddCallback<BloodOrb>) (owner, stage, id, obj, oldObj) -> OrbRegistry.tierMap.put(obj.getTier(), OrbRegistry.getOrbStack(obj)))
                 .create();
+        BloodMagic.debug("Registry creation completed in {}", stopwatch.stop());
     }
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
         for (BloodOrb orb : BLOOD_ORBS) {
             ModelResourceLocation modelLocation = orb.getModelLocation();
             if (modelLocation == null)
@@ -137,6 +171,10 @@ public class RegistrarBloodMagic {
 
             return orb.getModelLocation();
         });
+
+        RegistrarBloodMagicItems.registerModels();
+        RegistrarBloodMagicBlocks.registerModels();
+        BloodMagic.debug("Model registration completed in {}", stopwatch.stop());
     }
 
     @SubscribeEvent
