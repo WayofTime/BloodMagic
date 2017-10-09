@@ -12,6 +12,7 @@ import WayofTime.bloodmagic.client.key.KeyBindings;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -167,8 +168,8 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        return Collections.emptyList();
+    public void populateVariants(Int2ObjectMap<String> variants) {
+
     }
 
     public static int next(int mode) {

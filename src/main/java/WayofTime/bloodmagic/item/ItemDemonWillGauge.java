@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.iface.IDemonWillViewer;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -32,10 +33,8 @@ public class ItemDemonWillGauge extends Item implements IVariantProvider, IDemon
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=willgauge"));
-        return ret;
+    public void populateVariants(Int2ObjectMap<String> variants) {
+        variants.put(0, "type=willgauge");
     }
 
     @Override

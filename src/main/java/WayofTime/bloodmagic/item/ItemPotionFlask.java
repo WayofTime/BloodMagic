@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.collect.Lists;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -24,7 +23,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemPotionFlask extends Item implements IMeshProvider {
@@ -131,14 +129,9 @@ public class ItemPotionFlask extends Item implements IMeshProvider {
         };
     }
 
-    @Nullable
     @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
-    }
-
-    @Override
-    public List<String> getVariants() {
-        return Lists.newArrayList("full=true", "full=false");
+    public void populateVariants(List<String> variants) {
+        variants.add("full=true");
+        variants.add("full=false");
     }
 }

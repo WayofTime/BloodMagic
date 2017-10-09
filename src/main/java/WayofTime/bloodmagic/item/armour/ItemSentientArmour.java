@@ -33,7 +33,10 @@ import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.*;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 
 public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMeshProvider, IMultiWillTool {
     public static String[] names = {"helmet", "chest", "legs", "boots"};
@@ -297,18 +300,15 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     }
 
     @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<String>();
+    public void populateVariants(List<String> variants) {
         for (EnumDemonWillType type : EnumDemonWillType.values()) {
             String additional = "_" + type.getName().toLowerCase();
 
-            ret.add("armour=head" + additional);
-            ret.add("armour=body" + additional);
-            ret.add("armour=leg" + additional);
-            ret.add("armour=feet" + additional);
+            variants.add("armour=head" + additional);
+            variants.add("armour=body" + additional);
+            variants.add("armour=leg" + additional);
+            variants.add("armour=feet" + additional);
         }
-
-        return ret;
     }
 
     @Override

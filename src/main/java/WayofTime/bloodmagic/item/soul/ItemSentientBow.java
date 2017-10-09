@@ -12,6 +12,7 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -253,8 +254,8 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        return Lists.newArrayList(Pair.of(0, "inventory"));
+    public void populateVariants(Int2ObjectMap<String> variants) {
+        variants.put(0, "inventory");
     }
 
     public EntityTippedArrow getArrowEntity(World world, ItemStack stack, EntityLivingBase target, EntityLivingBase user, float velocity) {

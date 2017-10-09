@@ -5,20 +5,21 @@ import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
-import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemSigil extends Item implements IBindable, IMeshProvider {
@@ -131,18 +132,11 @@ public class ItemSigil extends Item implements IBindable, IMeshProvider {
     }
 
     @Override
-    public List<String> getVariants() {
+    public void populateVariants(List<String> variants) {
         if (sigil instanceof ISigil.Toggle) {
-            return Lists.newArrayList(
-                    "active=true",
-                    "active=false"
-            );
-        } else return Lists.newArrayList("inventory");
-    }
-
-    @Nullable
-    @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
+            variants.add("active=true");
+            variants.add("active=false");
+        } else
+            variants.add("inventory");
     }
 }

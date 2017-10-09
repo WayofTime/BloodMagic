@@ -11,6 +11,7 @@ import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -109,7 +110,7 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
     // IVariantProvider
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        return Collections.singletonList(Pair.of(0, "type=normal"));
+    public void populateVariants(Int2ObjectMap<String> variants) {
+        variants.put(0, "type=normal");
     }
 }

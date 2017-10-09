@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.item.inventory.ItemInventory;
 import WayofTime.bloodmagic.routing.*;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -138,13 +139,11 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=exact"));
-        ret.add(new ImmutablePair<Integer, String>(1, "type=ignorenbt"));
-        ret.add(new ImmutablePair<Integer, String>(2, "type=moditems"));
-        ret.add(new ImmutablePair<Integer, String>(3, "type=oredict"));
-        return ret;
+    public void populateVariants(Int2ObjectMap<String> variants) {
+        variants.put(0, "type=exact");
+        variants.put(1, "type=ignorenbt");
+        variants.put(2, "type=moditems");
+        variants.put(3, "type=oredict");
     }
 
     @Override

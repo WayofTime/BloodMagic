@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.block;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TilePhantomBlock;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -85,9 +86,7 @@ public class BlockPhantom extends Block implements IVariantProvider {
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "normal"));
-        return ret;
+    public void populateVariants(Int2ObjectMap<String> variants) {
+        variants.put(0, "normal");
     }
 }

@@ -36,13 +36,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class ItemSentientShovel extends ItemSpade implements IDemonWillWeapon, IMeshProvider, IMultiWillTool, ISentientTool {
@@ -300,20 +298,10 @@ public class ItemSentientShovel extends ItemSpade implements IDemonWillWeapon, I
         return new CustomMeshDefinitionMultiWill("sentient_shovel");
     }
 
-    @Nullable
     @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
-    }
-
-    @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<String>();
-        for (EnumDemonWillType type : EnumDemonWillType.values()) {
-            ret.add("type=" + type.getName().toLowerCase());
-        }
-
-        return ret;
+    public void populateVariants(List<String> variants) {
+        for (EnumDemonWillType type : EnumDemonWillType.values())
+            variants.add("type=" + type.getName().toLowerCase());
     }
 
     @Override

@@ -5,12 +5,10 @@
     "transform": "forge:default-item"
   },
   "variants": {
-    "type": {
-      "normal": {
-        "textures": {
-          "layer0": "bloodmagic:items/AirSigil"
-        }
+    "inventory": [{
+      "textures": {
+        "layer0": "bloodmagic:items/AirSigil"
       }
-    }
+    }]
   }
 }

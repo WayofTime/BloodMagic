@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -41,10 +42,8 @@ public class ItemBloodShard extends Item implements IVariantProvider {
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=weak"));
-        ret.add(new ImmutablePair<Integer, String>(1, "type=demonic"));
-        return ret;
+    public void populateVariants(Int2ObjectMap<String> variants) {
+        variants.put(0, "type=weak");
+        variants.put(1, "type=demonic");
     }
 }

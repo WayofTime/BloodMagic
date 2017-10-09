@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -67,11 +68,9 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+    public void populateVariants(Int2ObjectMap<String> variants) {
         for (String name : names)
-            ret.add(new ImmutablePair<Integer, String>(names.indexOf(name), "type=" + name));
-        return ret;
+            variants.put(names.indexOf(name), "type=" + name);
     }
 
     public int getDamageOfFluid(ItemStack stack) {

@@ -7,6 +7,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -82,9 +83,7 @@ public class ItemUpgradeTrainer extends Item implements IUpgradeTrainer, IVarian
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=upgradetrainer"));
-        return ret;
+    public void populateVariants(Int2ObjectMap<String> variants) {
+        variants.put(0, "type=upgradetrainer");
     }
 }

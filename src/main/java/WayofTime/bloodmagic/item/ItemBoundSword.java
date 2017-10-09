@@ -30,14 +30,11 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ItemBoundSword extends ItemSword implements IBindable, IActivatable, IMeshProvider {
@@ -133,18 +130,10 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
         return new CustomMeshDefinitionActivatable("bound_sword");
     }
 
-    @Nullable
     @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
-    }
-
-    @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<String>();
-        ret.add("active=true");
-        ret.add("active=false");
-        return ret;
+    public void populateVariants(List<String> variants) {
+        variants.add("active=true");
+        variants.add("active=false");
     }
 
     // IBindable

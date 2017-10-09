@@ -7,6 +7,7 @@ import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.Iterables;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -118,11 +119,9 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+    public void populateVariants(Int2ObjectMap<String> variants) {
         for (String name : names)
-            ret.add(new ImmutablePair<Integer, String>(names.indexOf(name), "type=" + name));
-        return ret;
+            variants.put(names.indexOf(name), "type=" + name);
     }
 
     public static ItemStack getStack(String name) {

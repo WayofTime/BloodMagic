@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumInversionCap;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -54,10 +55,8 @@ public class BlockInversionPillarEnd extends BlockEnum<EnumInversionCap> impleme
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+    public void populateVariants(Int2ObjectMap<String> variants) {
         for (int i = 0; i < this.getTypes().length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
-        return ret;
+            variants.put(i, "type=" + this.getTypes()[i]);
     }
 }

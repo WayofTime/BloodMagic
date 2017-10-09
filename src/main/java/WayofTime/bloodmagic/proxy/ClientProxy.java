@@ -3,8 +3,6 @@ package WayofTime.bloodmagic.proxy;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.DemonWillHolder;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.client.helper.ShaderHelper;
 import WayofTime.bloodmagic.client.hud.HUDElementDemonWillAura;
 import WayofTime.bloodmagic.client.hud.HUDElementHolding;
@@ -21,15 +19,11 @@ import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import WayofTime.bloodmagic.tile.*;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.animation.AnimationTESR;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -39,7 +33,6 @@ import net.minecraftforge.common.model.animation.IAnimationStateMachine;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.awt.Color;
 import java.util.Map;
@@ -118,32 +111,6 @@ public class ClientProxy extends CommonProxy {
     public void postInit() {
         new HUDElementHolding();
         new HUDElementDemonWillAura();
-    }
-
-    @Override
-    public void tryHandleBlockModel(Block block, String name) {
-        if (block instanceof IVariantProvider) {
-            IVariantProvider variantProvider = (IVariantProvider) block;
-            for (Pair<Integer, String> variant : variantProvider.getVariants())
-                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, name), variant.getRight()));
-        }
-    }
-
-    @Override
-    public void tryHandleItemModel(Item item, String name) {
-        if (item instanceof IMeshProvider) {
-            IMeshProvider meshProvider = (IMeshProvider) item;
-            ModelLoader.setCustomMeshDefinition(item, meshProvider.getMeshDefinition());
-            ResourceLocation resourceLocation = meshProvider.getCustomLocation();
-            if (resourceLocation == null)
-                resourceLocation = new ResourceLocation(BloodMagic.MODID, "item/" + name);
-            for (String variant : meshProvider.getVariants())
-                ModelLoader.registerItemVariants(item, new ModelResourceLocation(resourceLocation, variant));
-        } else if (item instanceof IVariantProvider) {
-            IVariantProvider variantProvider = (IVariantProvider) item;
-            for (Pair<Integer, String> variant : variantProvider.getVariants())
-                ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(new ResourceLocation(BloodMagic.MODID, "item/" + name), variant.getRight()));
-        }
     }
 
     private void addElytraLayer() {

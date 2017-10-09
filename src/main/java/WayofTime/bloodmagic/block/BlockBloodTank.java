@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodTank;
 import WayofTime.bloodmagic.tile.TileBloodTank;
 import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -195,11 +196,8 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
     // IVariantProvider
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = Lists.newArrayList();
+    public void populateVariants(Int2ObjectMap<String> variants) {
         for (int i = 0; i < TileBloodTank.CAPACITIES.length; i++)
-            ret.add(Pair.of(i, "inventory"));
-
-        return ret;
+            variants.put(i, "inventory");
     }
 }

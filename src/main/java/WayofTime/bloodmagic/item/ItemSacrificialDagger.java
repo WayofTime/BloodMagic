@@ -30,8 +30,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -183,17 +181,9 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider {
     }
 
     @Override
-    public List<String> getVariants() {
-        List<String> variants = new ArrayList<String>();
+    public void populateVariants(List<String> variants) {
         variants.add("type=normal");
         variants.add("type=creative");
         variants.add("type=ceremonial");
-        return variants;
-    }
-
-    @Nullable
-    @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
     }
 }

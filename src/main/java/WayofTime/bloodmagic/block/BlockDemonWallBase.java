@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.block;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.block.base.BlockEnumWall;
 import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.IStringSerializable;
@@ -23,12 +24,8 @@ public class BlockDemonWallBase<E extends Enum<E> & IStringSerializable> extends
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = Lists.newArrayList();
-
+    public void populateVariants(Int2ObjectMap<String> variants) {
         for (int i = 0; i < this.getTypes().length; i++)
-            ret.add(Pair.of(i, "east=true,north=false,south=false,type=" + this.getTypes()[i] + ",up=true,west=true"));
-
-        return ret;
+            variants.put(i, "east=true,north=false,south=false,type=" + this.getTypes()[i] + ",up=true,west=true");
     }
 }

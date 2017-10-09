@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -132,7 +133,7 @@ public class BlockRoutingNode extends Block implements IBMBlock, IVariantProvide
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        return Lists.newArrayList(Pair.of(0, "inventory"));
+    public void populateVariants(Int2ObjectMap<String> variants) {
+        variants.put(0, "inventory");
     }
 }

@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.types.ISubItem;
 import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -49,11 +50,8 @@ public class ItemEnum<T extends Enum<T> & ISubItem> extends Item implements IVar
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> variants = Lists.newArrayList();
+    public void populateVariants(Int2ObjectMap<String> variants) {
         for (int i = 0; i < types.length; i++)
-            variants.add(Pair.of(i, "type=" + types[i].getInternalName()));
-
-        return variants;
+            variants.put(i, "type=" + types[i].getInternalName());
     }
 }

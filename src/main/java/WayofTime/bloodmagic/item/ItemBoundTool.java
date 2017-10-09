@@ -9,6 +9,8 @@ import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -19,6 +21,7 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -45,7 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
+public class ItemBoundTool extends ItemTool implements IBindable, IActivatable, IMeshProvider {
     public final int chargeTime = 30;
     protected final String tooltipBase;
     private final String name;
@@ -248,6 +251,20 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
         }
 
         return null;
+    }
+
+    // IMeshProvider
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ItemMeshDefinition getMeshDefinition() {
+        return new CustomMeshDefinitionActivatable("bound_" + name);
+    }
+
+    @Override
+    public void populateVariants(List<String> variants) {
+        variants.add("active=true");
+        variants.add("active=false");
     }
 
     public String getTooltipBase() {

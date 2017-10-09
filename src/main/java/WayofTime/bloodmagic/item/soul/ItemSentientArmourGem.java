@@ -5,19 +5,20 @@ import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
-import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemSentientArmourGem extends Item implements IMeshProvider {
@@ -53,7 +54,7 @@ public class ItemSentientArmourGem extends Item implements IMeshProvider {
             ItemSentientArmour.convertPlayerArmour(type, will, player);
         }
 
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
+        return new ActionResult<>(EnumActionResult.PASS, player.getHeldItem(hand));
     }
 
     @SideOnly(Side.CLIENT)
@@ -62,24 +63,17 @@ public class ItemSentientArmourGem extends Item implements IMeshProvider {
         return stack -> {
             boolean flag = false;
             NonNullList<ItemStack> armourInventory = Minecraft.getMinecraft().player.inventory.armorInventory;
-            for (ItemStack armourStack : armourInventory) {
-                if (armourStack != null && armourStack.getItem() instanceof ItemSentientArmour) {
+            for (ItemStack armourStack : armourInventory)
+                if (!armourStack.isEmpty() && armourStack.getItem() instanceof ItemSentientArmour)
                     flag = true;
-                }
-            }
 
             return new ModelResourceLocation(stack.getItem().getRegistryName(), "type=" + (flag ? "" : "de") + "activated");
         };
     }
 
     @Override
-    public List<String> getVariants() {
-        return Lists.newArrayList("type=activated", "type=deactivated");
-    }
-
-    @Nullable
-    @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
+    public void populateVariants(List<String> variants) {
+        variants.add("type=activated");
+        variants.add("type=deactivated");
     }
 }

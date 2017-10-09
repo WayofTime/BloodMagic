@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -51,13 +52,11 @@ public class ItemSlate extends Item implements IVariantProvider {
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=blank"));
-        ret.add(new ImmutablePair<Integer, String>(1, "type=reinforced"));
-        ret.add(new ImmutablePair<Integer, String>(2, "type=imbued"));
-        ret.add(new ImmutablePair<Integer, String>(3, "type=demonic"));
-        ret.add(new ImmutablePair<Integer, String>(4, "type=ethereal"));
-        return ret;
+    public void populateVariants(Int2ObjectMap<String> variants) {
+        variants.put(0, "type=blank");
+        variants.put(1, "type=reinforced");
+        variants.put(2, "type=imbued");
+        variants.put(3, "type=demonic");
+        variants.put(4, "type=ethereal");
     }
 }

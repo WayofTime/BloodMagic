@@ -22,11 +22,9 @@ public interface IMeshProvider {
     ItemMeshDefinition getMeshDefinition();
 
     /**
-     * Gets all possible variants for this item
-     *
-     * @return - All possible variants for this item
+     * Populates a list of all possible variants for this item
      */
-    List<String> getVariants();
+    void populateVariants(List<String> variants);
 
     /**
      * If a custom ResourceLocation is required, return it here.
@@ -36,5 +34,7 @@ public interface IMeshProvider {
      * @return - The custom ResourceLocation
      */
     @Nullable
-    ResourceLocation getCustomLocation();
+    default ResourceLocation getCustomLocation() {
+        return null;
+    }
 }

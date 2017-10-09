@@ -18,14 +18,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,7 +56,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
         double filled = PlayerDemonWillHandler.addDemonWill(type, player, drain, stack);
         this.drainWill(type, stack, filled, true);
 
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+        return new ActionResult<>(EnumActionResult.PASS, stack);
     }
 
     @Override
@@ -64,24 +65,15 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
         return new CustomMeshDefinitionWillGem("soul_gem");
     }
 
-    @Nullable
     @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
-    }
-
-    @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<String>();
+    public void populateVariants(List<String> variants) {
         for (EnumDemonWillType type : EnumDemonWillType.values()) {
-            ret.add("type=petty_" + type.getName().toLowerCase());
-            ret.add("type=lesser_" + type.getName().toLowerCase());
-            ret.add("type=common_" + type.getName().toLowerCase());
-            ret.add("type=greater_" + type.getName().toLowerCase());
-            ret.add("type=grand_" + type.getName().toLowerCase());
+            variants.add("type=petty_" + type.getName().toLowerCase());
+            variants.add("type=lesser_" + type.getName().toLowerCase());
+            variants.add("type=common_" + type.getName().toLowerCase());
+            variants.add("type=greater_" + type.getName().toLowerCase());
+            variants.add("type=grand_" + type.getName().toLowerCase());
         }
-
-        return ret;
     }
 
     @Override

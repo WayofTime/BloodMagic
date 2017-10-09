@@ -9,7 +9,6 @@ import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.item.types.ComponentType;
 import WayofTime.bloodmagic.item.types.ReagentType;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerRepairing;
@@ -45,8 +44,11 @@ import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshProvider {
     public static final boolean useSpecialArmourCalculation = true;
@@ -367,13 +369,11 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     }
 
     @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<String>();
-        ret.add("armour=head");
-        ret.add("armour=body");
-        ret.add("armour=leg");
-        ret.add("armour=feet");
-        return ret;
+    public void populateVariants(List<String> variants) {
+        variants.add("armour=head");
+        variants.add("armour=body");
+        variants.add("armour=leg");
+        variants.add("armour=feet");
     }
 
     public void setLivingArmour(ItemStack stack, LivingArmour armour, boolean forceWrite) {

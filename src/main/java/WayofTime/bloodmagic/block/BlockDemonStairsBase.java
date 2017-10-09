@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.block;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.block.base.BlockEnumStairs;
 import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.IStringSerializable;
@@ -23,12 +24,8 @@ public class BlockDemonStairsBase<E extends Enum<E> & IStringSerializable> exten
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = Lists.newArrayList();
-
+    public void populateVariants(Int2ObjectMap<String> variants) {
         for (int i = 0; i < this.getTypes().length; i++)
-            ret.add(Pair.of(i, "facing=south,half=bottom,shape=straight,type=" + this.getTypes()[i]));
-
-        return ret;
+            variants.put(i, "facing=south,half=bottom,shape=straight,type=" + this.getTypes()[i]);
     }
 }

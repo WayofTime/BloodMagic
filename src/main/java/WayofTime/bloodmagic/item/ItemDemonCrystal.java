@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -90,11 +91,9 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+    public void populateVariants(Int2ObjectMap<String> variants) {
         for (String name : NAMES)
-            ret.add(new ImmutablePair<Integer, String>(NAMES.indexOf(name), "type=" + name));
-        return ret;
+            variants.put(NAMES.indexOf(name), "type=" + name);
     }
 
     public static ItemStack getStack(String name) {

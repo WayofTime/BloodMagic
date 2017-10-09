@@ -7,6 +7,7 @@ import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -105,13 +106,9 @@ public class ItemMonsterSoul extends Item implements IDemonWill, IVariantProvide
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < names.length; i++) {
-            String name = names[i];
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + name));
-        }
-        return ret;
+    public void populateVariants(Int2ObjectMap<String> variants) {
+        for (int i = 0; i < names.length; i++)
+            variants.put(i, "type=" + names[i]);
     }
 
     @Override

@@ -16,6 +16,7 @@ import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.handler.event.ClientHandler;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -332,12 +333,10 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=basic"));
-        ret.add(new ImmutablePair<Integer, String>(1, "type=dusk"));
-        ret.add(new ImmutablePair<Integer, String>(2, "type=dawn"));
-        return ret;
+    public void populateVariants(Int2ObjectMap<String> variants) {
+        variants.put(0, "type=basic");
+        variants.put(1, "type=dusk");
+        variants.put(2, "type=dawn");
     }
 
     public void cycleDirection(ItemStack stack, EntityPlayer player) {

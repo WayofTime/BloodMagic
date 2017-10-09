@@ -10,14 +10,10 @@ import com.google.common.base.Strings;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.text.WordUtils;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,18 +49,9 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable implements IMes
         return new CustomMeshDefinitionActivatable("sigil_" + name.toLowerCase(Locale.ROOT));
     }
 
-    @Nullable
     @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
-    }
-
-    @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<String>();
-        ret.add("active=false");
-        ret.add("active=true");
-
-        return ret;
+    public void populateVariants(List<String> variants) {
+        variants.add("active=false");
+        variants.add("active=true");
     }
 }
