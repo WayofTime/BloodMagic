@@ -3,6 +3,8 @@ package WayofTime.bloodmagic.api.iface;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nullable;
+
 /**
  * Implement this interface on any Item that can be bound to a player.
  */
@@ -16,7 +18,10 @@ public interface IBindable {
      * @param stack - The owned ItemStack
      * @return - The username of the Item's owner
      */
-    String getOwnerName(ItemStack stack);
+    @Nullable
+    default String getOwnerName(ItemStack stack) {
+        return !stack.isEmpty() && stack.hasTagCompound() ? stack.getTagCompound().getString("name") : null;
+    }
 
     /**
      * Gets the UUID of the Item's owner.
@@ -26,7 +31,10 @@ public interface IBindable {
      * @param stack - The owned ItemStack
      * @return - The UUID of the Item's owner
      */
-    String getOwnerUUID(ItemStack stack);
+    @Nullable
+    default String getOwnerUUID(ItemStack stack) {
+        return !stack.isEmpty() && stack.hasTagCompound() ? stack.getTagCompound().getString("uuid") : null;
+    }
 
     /**
      * Called when the player attempts to bind the item.
@@ -35,5 +43,7 @@ public interface IBindable {
      * @param stack  - The ItemStack to attempt binding
      * @return If binding was successful.
      */
-    boolean onBind(EntityPlayer player, ItemStack stack);
+    default boolean onBind(EntityPlayer player, ItemStack stack) {
+        return true;
+    }
 }

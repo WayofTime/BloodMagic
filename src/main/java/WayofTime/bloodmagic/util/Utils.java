@@ -36,10 +36,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.ISpecialArmor;
@@ -955,5 +952,25 @@ public class Utils {
             stack.getTagCompound().setLong(Constants.NBT.MOST_SIG, itemUUID.getMostSignificantBits());
             stack.getTagCompound().setLong(Constants.NBT.LEAST_SIG, itemUUID.getLeastSignificantBits());
         }
+    }
+
+    public static RayTraceResult rayTrace(EntityPlayer player, boolean useLiquids) {
+        float pitch = player.rotationPitch;
+        float yaw = player.rotationYaw;
+        Vec3d eyePosition = new Vec3d(player.posX, player.posY + (double) player.getEyeHeight(), player.posZ);
+
+        float f2 = MathHelper.cos(-yaw * 0.017453292F - (float) Math.PI);
+        float f3 = MathHelper.sin(-yaw * 0.017453292F - (float) Math.PI);
+        float f4 = -MathHelper.cos(-pitch * 0.017453292F);
+        float f5 = MathHelper.sin(-pitch * 0.017453292F);
+        float f6 = f3 * f4;
+        float f7 = f2 * f4;
+
+        double reachDistance = 5.0D;
+        if (player instanceof EntityPlayerMP)
+            reachDistance = ((EntityPlayerMP)player).interactionManager.getBlockReachDistance();
+
+        Vec3d reachPosition = eyePosition.addVector((double) f6 * reachDistance, (double) f5 * reachDistance, (double) f7 * reachDistance);
+        return player.getEntityWorld().rayTraceBlocks(eyePosition, reachPosition, useLiquids, !useLiquids, false);
     }
 }

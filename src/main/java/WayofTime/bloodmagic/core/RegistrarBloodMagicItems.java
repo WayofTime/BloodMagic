@@ -15,6 +15,8 @@ import WayofTime.bloodmagic.item.routing.ItemFluidRouterFilter;
 import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
 import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
 import WayofTime.bloodmagic.item.sigil.*;
+import WayofTime.bloodmagic.item.sigil.sigil.*;
+import WayofTime.bloodmagic.item.sigil.sigil.ItemSigilDivination;
 import WayofTime.bloodmagic.item.soul.*;
 import WayofTime.bloodmagic.item.types.ComponentType;
 import WayofTime.bloodmagic.item.types.ReagentType;
@@ -146,28 +148,28 @@ public class RegistrarBloodMagicItems {
                 new ItemBoundAxe().setRegistryName("bound_axe"),
                 new ItemBoundShovel().setRegistryName("bound_shovel"),
                 new ItemSigilDivination().setRegistryName("sigil_divination"),
-                new ItemSigilAir().setRegistryName("sigil_air"),
+                new ItemSigil(new SigilAir(), "air").setRegistryName("sigil_air"),
                 new ItemSigilWater().setRegistryName("sigil_water"),
                 new ItemSigilLava().setRegistryName("sigil_lava"),
                 new ItemSigilVoid().setRegistryName("sigil_void"),
                 new ItemSigilGreenGrove().setRegistryName("sigil_green_grove"),
-                new ItemSigilBloodLight().setRegistryName("sigil_blood_light"),
-                new ItemSigilElementalAffinity().setRegistryName("sigil_elemental_affinity"),
+                new ItemSigil(new SigilBloodLight(), "blood_light").setRegistryName("sigil_blood_light"),
+                new ItemSigil(new SigilElementalAffinity(), "elemental_affinity").setRegistryName("sigil_elemental_affinity"),
                 new ItemSigilMagnetism().setRegistryName("sigil_magnetism"),
                 new ItemSigilSuppression().setRegistryName("sigil_suppression"),
                 new ItemSigilHaste().setRegistryName("sigil_haste"),
-                new ItemSigilFastMiner().setRegistryName("sigil_fast_miner"),
+                new ItemSigil(new SigilFastMiner(), "fast_miner").setRegistryName("sigil_fast_miner"),
                 new ItemSigilSeer().setRegistryName("sigil_seer"),
                 new ItemSigilPhantomBridge().setRegistryName("sigil_phantom_bridge"),
                 new ItemSigilWhirlwind().setRegistryName("sigil_whirlwind"),
                 new ItemSigilCompression().setRegistryName("sigil_compression"),
-                new ItemSigilEnderSeverance().setRegistryName("sigil_ender_severance"),
+                new ItemSigil(new SigilEnderSeverance(), "ender_severance").setRegistryName("sigil_ender_severance"),
                 new ItemSigilHolding().setRegistryName("sigil_holding"),
                 new ItemSigilTeleposition().setRegistryName("sigil_teleposition"),
                 new ItemSigilTransposition().setRegistryName("sigil_transposition"),
-                new ItemSigilClaw().setRegistryName("sigil_claw"),
-                new ItemSigilBounce().setRegistryName("sigil_bounce"),
-                new ItemSigilFrost().setRegistryName("sigil_frost"),
+                new ItemSigil(new SigilClaw(), "claw").setRegistryName("sigil_claw"),
+                new ItemSigil(new SigilBounce(), "bounce").setRegistryName("sigil_bounce"),
+                new ItemSigil(new SigilFrost(), "frost").setRegistryName("sigil_frost"),
                 new ItemEnum<>(ComponentType.class, "component").setRegistryName("component"),
                 new ItemEnum<>(ReagentType.class, "reagent").setRegistryName("reagent"),
                 new ItemDemonCrystal().setRegistryName("item_demon_crystal"),

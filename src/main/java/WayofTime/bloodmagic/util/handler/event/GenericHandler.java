@@ -38,6 +38,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -69,6 +70,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
@@ -369,6 +371,13 @@ public class GenericHandler {
             if (orb.getTier() > network.getOrbTier())
                 network.setOrbTier(orb.getTier());
         }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public void onTooltip(ItemTooltipEvent event) {
+        if (event.getItemStack().getItem() instanceof IBindable)
+            if (((IBindable) event.getItemStack().getItem()).getOwnerUUID(event.getItemStack()) != null)
+                event.getToolTip().add(I18n.format("tooltip.bloodmagic.currentOwner", PlayerHelper.getUsernameFromStack(event.getItemStack())));
     }
 
     @SubscribeEvent

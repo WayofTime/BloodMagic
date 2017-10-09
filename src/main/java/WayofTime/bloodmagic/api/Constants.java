@@ -7,10 +7,11 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.Locale;
 
+@Deprecated
 public class Constants {
     public static class NBT {
-        public static final String OWNER_UUID = "ownerUUID";
-        public static final String OWNER_NAME = "ownerNAME";
+        public static final String OWNER_UUID = "uuid";
+        public static final String OWNER_NAME = "name";
         public static final String USES = "uses";
         public static final String ACTIVATED = "activated";
         public static final String UNUSABLE = "unusable";
