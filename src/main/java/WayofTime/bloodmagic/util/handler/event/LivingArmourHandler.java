@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
@@ -35,14 +34,16 @@ import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Handler
+@Mod.EventBusSubscriber
 public class LivingArmourHandler {
+
     @SubscribeEvent
-    public void onEntityHealed(LivingHealEvent event) {
+    public static void onEntityHealed(LivingHealEvent event) {
         if (event.getEntityLiving() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntity();
             if (LivingArmour.hasFullSet(player)) {
@@ -65,7 +66,7 @@ public class LivingArmourHandler {
     }
 
     @SubscribeEvent
-    public void onMiningSpeedCheck(PlayerEvent.BreakSpeed event) {
+    public static void onMiningSpeedCheck(PlayerEvent.BreakSpeed event) {
         EntityPlayer player = event.getEntityPlayer();
         if (LivingArmour.hasFullSet(player)) {
             ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
@@ -85,7 +86,7 @@ public class LivingArmourHandler {
 
     // Applies: Storm Trooper
     @SubscribeEvent
-    public void onEntityJoinedWorld(EntityJoinWorldEvent event) {
+    public static void onEntityJoinedWorld(EntityJoinWorldEvent event) {
         Entity owner = null;
         if (event.getEntity() instanceof EntityArrow) {
             owner = ((EntityArrow) event.getEntity()).shootingEntity;
@@ -115,7 +116,7 @@ public class LivingArmourHandler {
     }
 
     @SubscribeEvent
-    public void onPlayerClick(PlayerInteractEvent event) {
+    public static void onPlayerClick(PlayerInteractEvent event) {
         if (event.isCancelable()) {
             EntityPlayer player = event.getEntityPlayer();
 
@@ -148,7 +149,7 @@ public class LivingArmourHandler {
 
     // Applies: Grim Reaper
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onEntityDeath(LivingDeathEvent event) {
+    public static void onEntityDeath(LivingDeathEvent event) {
         if (event.getEntityLiving() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 
@@ -174,7 +175,7 @@ public class LivingArmourHandler {
 
     // Applies: Jump
     @SubscribeEvent
-    public void onJumpEvent(LivingEvent.LivingJumpEvent event) {
+    public static void onJumpEvent(LivingEvent.LivingJumpEvent event) {
         if (event.getEntityLiving() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 
@@ -198,7 +199,7 @@ public class LivingArmourHandler {
 
     // Applies: Step Assist, Speed Boost
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
+    public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntityLiving() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntityLiving();
             boolean hasAssist = false;
@@ -253,7 +254,7 @@ public class LivingArmourHandler {
     // Applies: Arrow Shot
     // Tracks: Arrow Shot
     @SubscribeEvent
-    public void onArrowFire(ArrowLooseEvent event) {
+    public static void onArrowFire(ArrowLooseEvent event) {
         World world = event.getEntityPlayer().getEntityWorld();
         ItemStack stack = event.getBow();
         EntityPlayer player = event.getEntityPlayer();

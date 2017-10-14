@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.AltarCraftedEvent;
 import WayofTime.bloodmagic.api.iface.IUpgradeTrainer;
@@ -21,17 +20,18 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Handler
+@Mod.EventBusSubscriber
 public class CraftingHandler {
 
     // Sets the uses of crafted Inscription Tools to 10
     @SubscribeEvent
-    public void onAltarCrafted(AltarCraftedEvent event) {
+    public static void onAltarCrafted(AltarCraftedEvent event) {
         if (event.getOutput() == null) {
             return;
         }
@@ -49,7 +49,7 @@ public class CraftingHandler {
 
     // Handles crafting of: Revealing Upgrade Tome, Elytra Upgrade Tome, Combining Upgrade Tomes, Setting Upgrade for Trainer
     @SubscribeEvent
-    public void onAnvil(AnvilUpdateEvent event) {
+    public static void onAnvil(AnvilUpdateEvent event) {
         // TODO - Azanor come back :(
 //        if (ConfigHandler.thaumcraftGogglesUpgrade) {
 //            if (event.getLeft().getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET && event.getRight().getItem() == Constants.Compat.THAUMCRAFT_GOGGLES && !event.getRight().isItemDamaged()) {
