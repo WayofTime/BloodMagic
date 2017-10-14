@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.util;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
@@ -41,9 +40,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -917,19 +914,6 @@ public class Utils {
             return ret;
         }
         return largerStack ? stack : ItemStack.EMPTY;
-    }
-
-    public static void registerHandlers(Set<ASMDataTable.ASMData> eventHandlers) {
-        for (ASMDataTable.ASMData data : eventHandlers) {
-            try {
-                Class<?> handlerClass = Class.forName(data.getClassName());
-                Object handlerImpl = handlerClass.newInstance();
-                MinecraftForge.EVENT_BUS.register(handlerImpl);
-                BloodMagic.LOGGER.debug("Registering event handler for class {}", data.getClassName());
-            } catch (Exception e) {
-                // No-op
-            }
-        }
     }
 
     public static boolean hasUUID(ItemStack stack) {

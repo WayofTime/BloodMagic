@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic;
 
-import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
@@ -17,7 +16,6 @@ import WayofTime.bloodmagic.registry.*;
 import WayofTime.bloodmagic.structures.ModDungeons;
 import WayofTime.bloodmagic.util.BloodMagicIsntReadyYetStopTryingToUseItAndJustWaitForMeToFinishPleaseAndThankYou;
 import WayofTime.bloodmagic.util.PluginUtil;
-import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.handler.IMCHandler;
 import com.google.common.collect.Lists;
 import net.minecraft.creativetab.CreativeTabs;
@@ -85,7 +83,6 @@ public class BloodMagic {
         ModTranquilityHandlers.init();
         ModDungeons.init();
 
-        Utils.registerHandlers(event.getAsmData().getAll(Handler.class.getCanonicalName()));
         proxy.preInit();
     }
 

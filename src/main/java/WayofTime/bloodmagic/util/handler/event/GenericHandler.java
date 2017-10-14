@@ -2,7 +2,6 @@ package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.ItemBindEvent;
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
@@ -75,6 +74,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -87,7 +87,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-@Handler
+@Mod.EventBusSubscriber
 public class GenericHandler {
     public static Map<EntityPlayer, Double> bounceMap = new HashMap<EntityPlayer, Double>();
     public static Map<EntityPlayer, Integer> filledHandMap = new HashMap<EntityPlayer, Integer>();
@@ -95,7 +95,7 @@ public class GenericHandler {
     private static Map<EntityAnimal, EntityAIBase> attackTaskMap = new HashMap<EntityAnimal, EntityAIBase>();
 
     @SubscribeEvent
-    public void onEntityFall(LivingFallEvent event) {
+    public static void onEntityFall(LivingFallEvent event) {
         if (event.getEntityLiving() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntityLiving();
             if (player.isPotionActive(RegistrarBloodMagic.BOUNCE) && !player.isSneaking() && event.getDistance() > 2) {
@@ -114,7 +114,7 @@ public class GenericHandler {
     }
 
     @SubscribeEvent
-    public void playerTickPost(TickEvent.PlayerTickEvent event) {
+    public static void playerTickPost(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END && bounceMap.containsKey(event.player)) {
             event.player.motionY = bounceMap.remove(event.player);
         }
@@ -132,7 +132,7 @@ public class GenericHandler {
     }
 
     @SubscribeEvent
-    public void onPlayerClick(PlayerInteractEvent event) {
+    public static void onPlayerClick(PlayerInteractEvent event) {
         if (event.isCancelable() && event.getEntityPlayer().isPotionActive(RegistrarBloodMagic.CONSTRICT)) {
             EntityPlayer player = event.getEntityPlayer();
             int level = player.getActivePotionEffect(RegistrarBloodMagic.CONSTRICT).getAmplifier();
@@ -143,7 +143,7 @@ public class GenericHandler {
     }
 
     @SubscribeEvent
-    public void onPlayerDropItem(ItemTossEvent event) {
+    public static void onPlayerDropItem(ItemTossEvent event) {
         EntityItem itemEntity = event.getEntityItem();
         if (itemEntity != null) {
             ItemStack stack = itemEntity.getItem();
@@ -157,7 +157,7 @@ public class GenericHandler {
     }
 
     @SubscribeEvent
-    public void onExplosion(ExplosionEvent.Start event) {
+    public static void onExplosion(ExplosionEvent.Start event) {
         World world = event.getWorld();
         Explosion exp = event.getExplosion();
         Vec3d position = exp.getPosition();
@@ -176,7 +176,7 @@ public class GenericHandler {
     }
 
     @SubscribeEvent
-    public void onEntityHurt(LivingHurtEvent event) {
+    public static void onEntityHurt(LivingHurtEvent event) {
         if (event.getEntity().getEntityWorld().isRemote)
             return;
 
@@ -210,7 +210,7 @@ public class GenericHandler {
 
     // Handles sending the client the Demon Will Aura updates
     @SubscribeEvent
-    public void onLivingUpdate(LivingUpdateEvent event) {
+    public static void onLivingUpdate(LivingUpdateEvent event) {
         if (!event.getEntityLiving().getEntityWorld().isRemote) {
             EntityLivingBase entity = event.getEntityLiving();
             if (entity instanceof EntityPlayer && entity.ticksExisted % 50 == 0) //TODO: Change to an incremental counter
@@ -286,7 +286,7 @@ public class GenericHandler {
     }
 
     //    @SideOnly(Side.SERVER)
-    public void sendPlayerDemonWillAura(EntityPlayer player) {
+    public static void sendPlayerDemonWillAura(EntityPlayer player) {
         if (player instanceof EntityPlayerMP) {
             BlockPos pos = player.getPosition();
             DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(player.getEntityWorld().provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);
@@ -300,7 +300,7 @@ public class GenericHandler {
 
     // Handles destroying altar
     @SubscribeEvent
-    public void harvestEvent(PlayerEvent.HarvestCheck event) {
+    public static void harvestEvent(PlayerEvent.HarvestCheck event) {
         IBlockState state = event.getTargetBlock();
         Block block = state.getBlock();
         if (block instanceof BlockAltar && event.getEntityPlayer() != null && event.getEntityPlayer() instanceof EntityPlayerMP && !event.getEntityPlayer().getHeldItemMainhand().isEmpty() && event.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemAltarMaker) {
@@ -311,14 +311,14 @@ public class GenericHandler {
 
     // Handle Teleposer block blacklist
     @SubscribeEvent
-    public void onTelepose(TeleposeEvent event) {
+    public static void onTelepose(TeleposeEvent event) {
         if (BloodMagicAPI.INSTANCE.getBlacklist().getTeleposer().contains(event.initialState) || BloodMagicAPI.INSTANCE.getBlacklist().getTeleposer().contains(event.finalState))
             event.setCanceled(true);
     }
 
     // Handle Teleposer entity blacklist
     @SubscribeEvent
-    public void onTeleposeEntity(TeleposeEvent.Ent event) {
+    public static void onTeleposeEntity(TeleposeEvent.Ent event) {
         EntityEntry entry = EntityRegistry.getEntry(event.entity.getClass());
         if (BloodMagicAPI.INSTANCE.getBlacklist().getTeleposerEntities().contains(entry.getRegistryName()))
             event.setCanceled(true);
@@ -326,13 +326,13 @@ public class GenericHandler {
 
     // Sets teleport cooldown for Teleposed entities to 5 ticks (1/4 second) instead of 150 (7.5 seconds)
     @SubscribeEvent
-    public void onTeleposeEntityPost(TeleposeEvent.Ent.Post event) {
+    public static void onTeleposeEntityPost(TeleposeEvent.Ent.Post event) {
         event.entity.timeUntilPortal = 5;
     }
 
     // Handles binding of IBindable's as well as setting a player's highest orb tier
     @SubscribeEvent
-    public void onInteract(PlayerInteractEvent.RightClickItem event) {
+    public static void onInteract(PlayerInteractEvent.RightClickItem event) {
         if (event.getWorld().isRemote)
             return;
 
@@ -374,14 +374,14 @@ public class GenericHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public void onTooltip(ItemTooltipEvent event) {
+    public static void onTooltip(ItemTooltipEvent event) {
         if (event.getItemStack().getItem() instanceof IBindable)
             if (((IBindable) event.getItemStack().getItem()).getOwnerUUID(event.getItemStack()) != null)
                 event.getToolTip().add(I18n.format("tooltip.bloodmagic.currentOwner", PlayerHelper.getUsernameFromStack(event.getItemStack())));
     }
 
     @SubscribeEvent
-    public void selfSacrificeEvent(SacrificeKnifeUsedEvent event) {
+    public static void selfSacrificeEvent(SacrificeKnifeUsedEvent event) {
         EntityPlayer player = event.player;
 
         if (LivingArmour.hasFullSet(player)) {
@@ -402,7 +402,7 @@ public class GenericHandler {
 
     // Drop Blood Shards
     @SubscribeEvent
-    public void onLivingDrops(LivingDropsEvent event) {
+    public static void onLivingDrops(LivingDropsEvent event) {
         EntityLivingBase attackedEntity = event.getEntityLiving();
         DamageSource source = event.getSource();
         Entity entity = source.getTrueSource();
@@ -420,7 +420,7 @@ public class GenericHandler {
 
     // Experience Tome
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onExperiencePickup(PlayerPickupXpEvent event) {
+    public static void onExperiencePickup(PlayerPickupXpEvent event) {
         EntityPlayer player = event.getEntityPlayer();
         ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, player);
 
@@ -441,11 +441,11 @@ public class GenericHandler {
         }
     }
 
-    private int xpToDurability(int xp) {
+    private static int xpToDurability(int xp) {
         return xp * 2;
     }
 
-    private int durabilityToXp(int durability) {
+    private static int durabilityToXp(int durability) {
         return durability / 2;
     }
 }

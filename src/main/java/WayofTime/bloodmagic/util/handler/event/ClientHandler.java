@@ -2,7 +2,6 @@ package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
@@ -41,6 +40,7 @@ import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -50,7 +50,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.*;
 
-@Handler
+@Mod.EventBusSubscriber
 @SideOnly(Side.CLIENT)
 public class ClientHandler {
     // Quick toggle for error suppression. Set to false if you wish to hide model errors.
@@ -76,7 +76,7 @@ public class ClientHandler {
     private static boolean mrsHoloDisplay;
 
     @SubscribeEvent
-    public void onTooltipEvent(ItemTooltipEvent event) {
+    public static void onTooltipEvent(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
         if (stack.isEmpty()) {
             return;
@@ -93,7 +93,7 @@ public class ClientHandler {
     }
 
     @SubscribeEvent
-    public void onSoundEvent(PlaySoundEvent event) {
+    public static void onSoundEvent(PlaySoundEvent event) {
         EntityPlayer player = Minecraft.getMinecraft().player;
         if (player != null && player.isPotionActive(RegistrarBloodMagic.DEAFNESS)) {
             event.setResultSound(null);
@@ -101,7 +101,7 @@ public class ClientHandler {
     }
 
     @SubscribeEvent
-    public void onTextureStitch(TextureStitchEvent.Pre event) {
+    public static void onTextureStitch(TextureStitchEvent.Pre event) {
         final String BLOCKS = "blocks";
 
         ritualStoneBlank = forName(event.getMap(), "RitualStone", BLOCKS);
@@ -121,7 +121,7 @@ public class ClientHandler {
     }
 
     @SubscribeEvent
-    public void render(RenderWorldLastEvent event) {
+    public static void render(RenderWorldLastEvent event) {
         EntityPlayerSP player = minecraft.player;
         World world = player.getEntityWorld();
 
@@ -146,7 +146,7 @@ public class ClientHandler {
     }
 
     @SubscribeEvent
-    public void onMouseEvent(MouseEvent event) {
+    public static void onMouseEvent(MouseEvent event) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         if (event.getDwheel() != 0 && player != null && player.isSneaking()) {
@@ -164,7 +164,7 @@ public class ClientHandler {
     }
 
     @SubscribeEvent
-    public void onKey(InputEvent event) {
+    public static void onKey(InputEvent event) {
         if (!minecraft.inGameHasFocus)
             return;
 
@@ -174,7 +174,7 @@ public class ClientHandler {
     }
 
     @SubscribeEvent
-    public void onHudRender(RenderGameOverlayEvent.Pre event) {
+    public static void onHudRender(RenderGameOverlayEvent.Pre event) {
         for (HUDElement element : hudElements)
             if (element.getElementType() == event.getType() && element.shouldRender(minecraft))
                 element.render(minecraft, event.getResolution(), event.getPartialTicks());
@@ -182,7 +182,7 @@ public class ClientHandler {
 
     // Stolen from Chisel
     @SubscribeEvent
-    public void onModelBake(ModelBakeEvent event) {
+    public static void onModelBake(ModelBakeEvent event) {
         if (BloodMagic.IS_DEV && SUPPRESS_ASSET_ERRORS)
             return;
 
@@ -218,7 +218,7 @@ public class ClientHandler {
 
     // For some reason, we need some bad textures to be listed in the Crystal and Node models. This will hide that from the end user.
     @SubscribeEvent
-    public void onTextureStitch(TextureStitchEvent.Post event) {
+    public static void onTextureStitch(TextureStitchEvent.Post event) {
         if (BloodMagic.IS_DEV && SUPPRESS_ASSET_ERRORS)
             return;
 
@@ -249,7 +249,7 @@ public class ClientHandler {
         BloodMagic.LOGGER.debug("Suppressed required texture errors in {}", stopwatch.stop());
     }
 
-    private void renderRitualStones(EntityPlayerSP player, float partialTicks) {
+    private static void renderRitualStones(EntityPlayerSP player, float partialTicks) {
         World world = player.getEntityWorld();
         ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getCurrentItem().getItem();
         EnumFacing direction = ritualDiviner.getDirection(player.inventory.getCurrentItem());

@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.util.handler.event;
 
-import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.soul.*;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
@@ -25,6 +24,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -33,14 +33,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-@Handler
+@Mod.EventBusSubscriber
 public class WillHandler {
 
-    private final HashMap<Integer, Integer> serverTicks = new HashMap<Integer, Integer>();
+    private static final HashMap<Integer, Integer> SERVER_TICKS = new HashMap<Integer, Integer>();
 
     // Adds Will to player
     @SubscribeEvent
-    public void onItemPickup(EntityItemPickupEvent event) {
+    public static void onItemPickup(EntityItemPickupEvent event) {
         ItemStack stack = event.getItem().getItem();
         if (stack.getItem() instanceof IDemonWill) {
             EntityPlayer player = event.getEntityPlayer();
@@ -55,7 +55,7 @@ public class WillHandler {
     }
 
     @SubscribeEvent
-    public void onEntityAttacked(LivingDeathEvent event) {
+    public static void onEntityAttacked(LivingDeathEvent event) {
         if (event.getSource() instanceof EntityDamageSourceIndirect) {
             Entity sourceEntity = event.getSource().getImmediateSource();
 
@@ -67,7 +67,7 @@ public class WillHandler {
 
     // Add/Drop Demon Will for Player
     @SubscribeEvent
-    public void onLivingDrops(LivingDropsEvent event) {
+    public static void onLivingDrops(LivingDropsEvent event) {
         EntityLivingBase attackedEntity = event.getEntityLiving();
         DamageSource source = event.getSource();
         Entity entity = source.getTrueSource();
@@ -106,16 +106,16 @@ public class WillHandler {
     }
 
     @SubscribeEvent
-    public void onServerWorldTick(TickEvent.WorldTickEvent event) {
+    public static void onServerWorldTick(TickEvent.WorldTickEvent event) {
         if (event.world.isRemote)
             return;
 
         int dim = event.world.provider.getDimension();
         if (event.phase == TickEvent.Phase.END) {
-            if (!this.serverTicks.containsKey(dim))
-                this.serverTicks.put(dim, 0);
+            if (!SERVER_TICKS.containsKey(dim))
+                SERVER_TICKS.put(dim, 0);
 
-            int ticks = (this.serverTicks.get(dim));
+            int ticks = (SERVER_TICKS.get(dim));
 
             if (ticks % 20 == 0) {
                 CopyOnWriteArrayList<PosXY> dirtyChunks = WorldDemonWillHandler.dirtyChunks.get(dim);
@@ -127,13 +127,13 @@ public class WillHandler {
                 }
             }
 
-            this.serverTicks.put(dim, ticks + 1);
+            SERVER_TICKS.put(dim, ticks + 1);
         }
 
     }
 
     @SubscribeEvent
-    public void chunkSave(ChunkDataEvent.Save event) {
+    public static void chunkSave(ChunkDataEvent.Save event) {
         int dim = event.getWorld().provider.getDimension();
         ChunkPos loc = event.getChunk().getPos();
 
@@ -150,7 +150,7 @@ public class WillHandler {
     }
 
     @SubscribeEvent
-    public void chunkLoad(ChunkDataEvent.Load event) {
+    public static void chunkLoad(ChunkDataEvent.Load event) {
         int dim = event.getWorld().provider.getDimension();
         if (event.getData().getCompoundTag("BloodMagic").hasKey("base")) {
             NBTTagCompound nbt = event.getData().getCompoundTag("BloodMagic");

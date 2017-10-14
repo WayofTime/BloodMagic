@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.annot.Handler;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
@@ -24,17 +23,18 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Handler
+@Mod.EventBusSubscriber
 public class StatTrackerHandler {
 
     private static float lastPlayerSwingStrength = 0;
 
     // Tracks: Digging, DigSlowdown
     @SubscribeEvent
-    public void blockBreakEvent(BlockEvent.BreakEvent event) {
+    public static void blockBreakEvent(BlockEvent.BreakEvent event) {
         EntityPlayer player = event.getPlayer();
         if (player != null) {
             if (LivingArmour.hasFullSet(player)) {
@@ -53,7 +53,7 @@ public class StatTrackerHandler {
 
     // Tracks: Health Boost
     @SubscribeEvent
-    public void onEntityHealed(LivingHealEvent event) {
+    public static void onEntityHealed(LivingHealEvent event) {
         EntityLivingBase healedEntity = event.getEntityLiving();
         if (!(healedEntity instanceof EntityPlayer)) {
             return;
@@ -74,13 +74,13 @@ public class StatTrackerHandler {
     }
 
     @SubscribeEvent
-    public void onLivingAttack(AttackEntityEvent event) {
+    public static void onLivingAttack(AttackEntityEvent event) {
         lastPlayerSwingStrength = event.getEntityPlayer().getCooledAttackStrength(0);
     }
 
     // Tracks: Fall Protect, Arrow Protect, Physical Protect, Grave Digger, Sprint Attack, Critical Strike, Nocturnal Prowess
     @SubscribeEvent
-    public void entityHurt(LivingHurtEvent event) {
+    public static void entityHurt(LivingHurtEvent event) {
         DamageSource source = event.getSource();
         Entity sourceEntity = event.getSource().getTrueSource();
         EntityLivingBase attackedEntity = event.getEntityLiving();
@@ -153,7 +153,7 @@ public class StatTrackerHandler {
 
     // Tracks: Experienced
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onExperiencePickup(PlayerPickupXpEvent event) {
+    public static void onExperiencePickup(PlayerPickupXpEvent event) {
         EntityPlayer player = event.getEntityPlayer();
 
         if (LivingArmour.hasFullSet(player)) {
