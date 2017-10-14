@@ -50,7 +50,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.*;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @SideOnly(Side.CLIENT)
 public class ClientHandler {
     // Quick toggle for error suppression. Set to false if you wish to hide model errors.

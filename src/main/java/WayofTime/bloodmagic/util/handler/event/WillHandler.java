@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.util.handler.event;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.soul.*;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
@@ -33,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class WillHandler {
 
     private static final HashMap<Integer, Integer> SERVER_TICKS = new HashMap<Integer, Integer>();

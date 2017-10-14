@@ -87,7 +87,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class GenericHandler {
     public static Map<EntityPlayer, Double> bounceMap = new HashMap<EntityPlayer, Double>();
     public static Map<EntityPlayer, Integer> filledHandMap = new HashMap<EntityPlayer, Integer>();
