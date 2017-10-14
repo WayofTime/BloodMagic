@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.potion;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.entity.Entity;
@@ -18,7 +19,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class PotionEventHandlers {
 
     @SubscribeEvent

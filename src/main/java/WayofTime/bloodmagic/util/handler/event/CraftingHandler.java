@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class CraftingHandler {
 
     // Sets the uses of crafted Inscription Tools to 10

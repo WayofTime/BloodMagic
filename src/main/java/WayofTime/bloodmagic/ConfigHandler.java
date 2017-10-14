@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Config(modid = BloodMagic.MODID, name = BloodMagic.MODID + "/" + BloodMagic.MODID, category = "")
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class ConfigHandler {
 
     @Config.Comment({ "Blacklist options for various features" })
