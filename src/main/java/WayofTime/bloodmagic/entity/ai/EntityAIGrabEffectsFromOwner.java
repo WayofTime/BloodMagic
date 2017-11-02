@@ -53,7 +53,7 @@ public class EntityAIGrabEffectsFromOwner extends EntityAIBase {
             return false;
         } else if (this.thePet.isStationary()) {
             return false;
-//        } else if (this.thePet.getDistanceSqToEntity(entitylivingbase) < (double) (this.minDist * this.minDist))
+//        } else if (this.thePet.getDistanceSq(entitylivingbase) < (double) (this.minDist * this.minDist))
 //        {
 //            return false;
         } else if (!this.thePet.canStealEffectFromOwner(entitylivingbase)) {
@@ -68,7 +68,7 @@ public class EntityAIGrabEffectsFromOwner extends EntityAIBase {
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     public boolean continueExecuting() {
-        return this.thePet.canStealEffectFromOwner(theOwner);// || !this.petPathfinder.noPath() && this.thePet.getDistanceSqToEntity(this.theOwner) > (double) (this.minDist * this.minDist) && !this.thePet.isStationary();
+        return this.thePet.canStealEffectFromOwner(theOwner);// || !this.petPathfinder.noPath() && this.thePet.getDistanceSq(this.theOwner) > (double) (this.minDist * this.minDist) && !this.thePet.isStationary();
     }
 
     /**
@@ -85,7 +85,7 @@ public class EntityAIGrabEffectsFromOwner extends EntityAIBase {
      */
     public void resetTask() {
         this.theOwner = null;
-        this.petPathfinder.clearPathEntity();
+        this.petPathfinder.clearPath();
         this.thePet.setPathPriority(PathNodeType.WATER, this.oldWaterCost);
     }
 
@@ -101,7 +101,7 @@ public class EntityAIGrabEffectsFromOwner extends EntityAIBase {
     public void updateTask() {
         this.thePet.getLookHelper().setLookPositionWithEntity(this.theOwner, 10.0F, (float) this.thePet.getVerticalFaceSpeed());
 
-        if (this.thePet.getDistanceSqToEntity(theOwner) < this.minDist * this.minDist) {
+        if (this.thePet.getDistanceSq(theOwner) < this.minDist * this.minDist) {
             if (this.thePet.stealEffectsFromOwner(theOwner)) {
                 return;
             }
@@ -113,7 +113,7 @@ public class EntityAIGrabEffectsFromOwner extends EntityAIBase {
 
                 if (!this.petPathfinder.tryMoveToEntityLiving(this.theOwner, this.followSpeed)) {
                     if (!this.thePet.getLeashed()) {
-                        if (this.thePet.getDistanceSqToEntity(this.theOwner) >= 144.0D) {
+                        if (this.thePet.getDistanceSq(this.theOwner) >= 144.0D) {
                             int i = MathHelper.floor(this.theOwner.posX) - 2;
                             int j = MathHelper.floor(this.theOwner.posZ) - 2;
                             int k = MathHelper.floor(this.theOwner.getEntityBoundingBox().minY);
@@ -122,7 +122,7 @@ public class EntityAIGrabEffectsFromOwner extends EntityAIBase {
                                 for (int i1 = 0; i1 <= 4; ++i1) {
                                     if ((l < 1 || i1 < 1 || l > 3 || i1 > 3) && this.theWorld.getBlockState(new BlockPos(i + l, k - 1, j + i1)).isTopSolid() && this.isEmptyBlock(new BlockPos(i + l, k, j + i1)) && this.isEmptyBlock(new BlockPos(i + l, k + 1, j + i1))) {
                                         this.thePet.setLocationAndAngles((double) ((float) (i + l) + 0.5F), (double) k, (double) ((float) (j + i1) + 0.5F), this.thePet.rotationYaw, this.thePet.rotationPitch);
-                                        this.petPathfinder.clearPathEntity();
+                                        this.petPathfinder.clearPath();
                                         return;
                                     }
                                 }

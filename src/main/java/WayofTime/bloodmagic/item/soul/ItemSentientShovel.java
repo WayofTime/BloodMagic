@@ -80,8 +80,8 @@ public class ItemSentientShovel extends ItemSpade implements IDemonWillWeapon, I
     }
 
     @Override
-    public float getStrVsBlock(ItemStack stack, IBlockState state) {
-        float value = super.getStrVsBlock(stack, state);
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
+        float value = super.getDestroySpeed(stack, state);
         if (value > 1) {
             return (float) (value + getDigSpeedOfSword(stack));
         } else {

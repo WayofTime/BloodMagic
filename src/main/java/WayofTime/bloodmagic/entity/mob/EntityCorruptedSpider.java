@@ -93,7 +93,7 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase {
         super.onUpdate();
 
         if (!this.getEntityWorld().isRemote) {
-            this.setBesideClimbableBlock(this.isCollidedHorizontally);
+            this.setBesideClimbableBlock(this.collidedHorizontally);
         }
     }
 

@@ -53,11 +53,11 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
     }
 
     @Override
-    public float getStrVsBlock(ItemStack stack, IBlockState state) {
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
         if (!getActivated(stack))
             return 1.0F;
 
-        return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL && state.getMaterial() != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
+        return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL && state.getMaterial() != Material.ROCK ? super.getDestroySpeed(stack, state) : this.efficiency;
     }
 
     @Override
@@ -90,7 +90,7 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
                         continue;
 
                     if (blockStack.getBlock() != null && blockStack.getBlock().getBlockHardness(blockStack.getState(), world, blockPos) != -1) {
-                        float strengthVsBlock = getStrVsBlock(stack, blockStack.getState());
+                        float strengthVsBlock = getDestroySpeed(stack, blockStack.getState());
 
                         if (strengthVsBlock > 1.1F && world.canMineBlockBody(player, blockPos)) {
                             if (silkTouch && blockStack.getBlock().canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))
