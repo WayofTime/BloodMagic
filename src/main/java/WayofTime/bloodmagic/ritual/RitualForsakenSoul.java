@@ -112,7 +112,7 @@ public class RitualForsakenSoul extends Ritual {
                     if (!entity.isEntityAlive()) {
                         int uniqueness = calculateUniqueness(entity);
                         double modifier = 1;
-                        if (entity instanceof EntityAnimal && !entity.isCollided) {
+                        if (entity instanceof EntityAnimal && !entity.collided) {
                             modifier = 4;
                         }
 

@@ -285,7 +285,7 @@ public class LivingArmourHandler {
                         ItemStack arrowStack = new ItemStack(Items.ARROW);
                         ItemArrow itemarrow = (ItemArrow) ((stack.getItem() instanceof ItemArrow ? arrowStack.getItem() : Items.ARROW));
                         EntityArrow entityarrow = itemarrow.createArrow(world, arrowStack, player);
-                        entityarrow.setAim(player, player.rotationPitch, player.rotationYaw, 0.0F, velocity * 3.0F, 1.0F);
+                        entityarrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, velocity * 3.0F, 1.0F);
 
                         float velocityModifier = 0.6f * velocity;
 

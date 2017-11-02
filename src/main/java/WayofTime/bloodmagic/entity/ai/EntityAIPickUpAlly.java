@@ -91,7 +91,7 @@ public class EntityAIPickUpAlly extends EntityAIBase {
      * Resets the task
      */
     public void resetTask() {
-        this.entity.getNavigator().clearPathEntity();
+        this.entity.getNavigator().clearPath();
         this.pickupTarget = null;
     }
 

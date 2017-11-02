@@ -58,7 +58,7 @@ public class EntityAIProtectAlly extends EntityAIBase {
     public void startExecuting() {
         this.castTimer = 100;
         this.world.setEntityState(this.entity, (byte) 53);
-        this.entity.getNavigator().clearPathEntity();
+        this.entity.getNavigator().clearPath();
     }
 
     /**

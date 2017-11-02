@@ -265,13 +265,13 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
 
         float newArrowVelocity = velocity * getVelocityOfArrow(stack);
         EntitySentientArrow entityArrow = new EntitySentientArrow(world, user, type, amount);
-        entityArrow.setAim(user, user.rotationPitch, user.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
+        entityArrow.shoot(user, user.rotationPitch, user.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
 
         double d0 = target.posX - user.posX;
         double d1 = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - entityArrow.posY;
         double d2 = target.posZ - user.posZ;
         double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
-        entityArrow.setThrowableHeading(d0, d1 + d3 * 0.05, d2, newArrowVelocity, 0);
+        entityArrow.shoot(d0, d1 + d3 * 0.05, d2, newArrowVelocity, 0);
 
         if (newArrowVelocity == 0) {
             world.playSound(null, user.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.NEUTRAL, 0.4F, 1.0F);
@@ -335,7 +335,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
 
                         float newArrowVelocity = arrowVelocity * getVelocityOfArrow(stack);
                         EntitySentientArrow entityArrow = new EntitySentientArrow(world, entityLiving, type, amount);
-                        entityArrow.setAim(player, player.rotationPitch, player.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
+                        entityArrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
 
                         if (newArrowVelocity == 0) {
                             world.playSound(null, player.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.NEUTRAL, 0.4F, 1.0F);

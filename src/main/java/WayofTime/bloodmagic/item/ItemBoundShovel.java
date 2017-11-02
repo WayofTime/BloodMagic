@@ -76,7 +76,7 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider {
                         continue;
 
                     if (blockStack.getBlock() != null && blockStack.getBlock().getBlockHardness(blockStack.getState(), world, blockPos) != -1) {
-                        float strengthVsBlock = getStrVsBlock(stack, blockStack.getState());
+                        float strengthVsBlock = getDestroySpeed(stack, blockStack.getState());
 
                         if (strengthVsBlock > 1.1F && world.canMineBlockBody(player, blockPos)) {
                             if (silkTouch && blockStack.getBlock().canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))

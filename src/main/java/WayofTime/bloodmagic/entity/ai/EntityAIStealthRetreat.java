@@ -47,7 +47,7 @@ public class EntityAIStealthRetreat extends EntityAIBase {
 
             if (vec3d == null) {
                 return false;
-            } else if (attacked.getDistanceSq(vec3d.x, vec3d.y, vec3d.z) < attacked.getDistanceSqToEntity(this.entity)) {
+            } else if (attacked.getDistanceSq(vec3d.x, vec3d.y, vec3d.z) < attacked.getDistanceSq(this.entity)) {
                 return false;
             } else {
                 this.entityPathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.x, vec3d.y, vec3d.z);
@@ -87,7 +87,7 @@ public class EntityAIStealthRetreat extends EntityAIBase {
             return;
         }
 
-        if (this.entity.getDistanceSqToEntity(this.entity.getAttackTarget()) < 49.0D) {
+        if (this.entity.getDistanceSq(this.entity.getAttackTarget()) < 49.0D) {
             this.entity.getNavigator().setSpeed(this.nearSpeed);
         } else {
             this.entity.getNavigator().setSpeed(this.farSpeed);

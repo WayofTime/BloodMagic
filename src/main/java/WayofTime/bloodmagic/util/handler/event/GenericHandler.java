@@ -230,7 +230,7 @@ public class GenericHandler {
                         attackTaskMap.put(animal, attackTask);
                     }
 
-                    if (animal.getAttackTarget() != null && animal.getDistanceSqToEntity(animal.getAttackTarget()) < 4) {
+                    if (animal.getAttackTarget() != null && animal.getDistanceSq(animal.getAttackTarget()) < 4) {
                         animal.getEntityWorld().createExplosion(null, animal.posX, animal.posY + (double) (animal.height / 16.0F), animal.posZ, 2 + animal.getActivePotionEffect(RegistrarBloodMagic.SACRIFICIAL_LAMB).getAmplifier() * 1.5f, false);
                         targetTaskMap.remove(animal);
                         attackTaskMap.remove(animal);

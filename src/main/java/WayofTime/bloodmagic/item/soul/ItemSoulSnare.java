@@ -45,7 +45,7 @@ public class ItemSoulSnare extends Item implements IVariantProvider {
 
         if (!worldIn.isRemote) {
             EntitySoulSnare snare = new EntitySoulSnare(worldIn, playerIn);
-            snare.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+            snare.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
             worldIn.spawnEntity(snare);
         }
 

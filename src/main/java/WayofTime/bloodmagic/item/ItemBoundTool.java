@@ -66,8 +66,8 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable, 
     }
 
     @Override
-    public float getStrVsBlock(ItemStack stack, IBlockState state) {
-        return getActivated(stack) ? toolMaterial.getEfficiencyOnProperMaterial() : 1.0F;
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
+        return getActivated(stack) ? toolMaterial.getEfficiency() : 1.0F;
     }
 
     @Override

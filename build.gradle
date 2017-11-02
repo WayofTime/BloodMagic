@@ -39,7 +39,7 @@ dependencies {
 }
 
 minecraft {
-    version = "${mc_version}-${forge_version}"
+    version = "${mc_version}.2-${forge_version}"
     runDir = "run"
 
     replace "@VERSION@", project.version
