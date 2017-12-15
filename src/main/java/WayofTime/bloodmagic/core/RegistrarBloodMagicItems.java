@@ -16,6 +16,8 @@ import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
 import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
 import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.item.sigil.sigil.*;
+import WayofTime.bloodmagic.item.sigil.sigil.ItemSigilTeleposition;
+import WayofTime.bloodmagic.item.sigil.sigil.ItemSigilTransposition;
 import WayofTime.bloodmagic.item.soul.*;
 import WayofTime.bloodmagic.item.types.ComponentType;
 import WayofTime.bloodmagic.item.types.ReagentType;
@@ -29,6 +31,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -144,15 +147,15 @@ public class RegistrarBloodMagicItems {
                 new ItemBoundShovel().setRegistryName("bound_shovel"),
                 new ItemSigilDivination().setRegistryName("sigil_divination"),
                 new ItemSigil(new SigilAir(), "air").setRegistryName("sigil_air"),
-                new ItemSigilWater().setRegistryName("sigil_water"),
-                new ItemSigilLava().setRegistryName("sigil_lava"),
+                new ItemSigil(new SigilFluid(FluidRegistry.WATER), "water").setRegistryName("sigil_water"),
+                new ItemSigil(new SigilFluid(FluidRegistry.LAVA), "lava").setRegistryName("sigil_lava"),
                 new ItemSigilVoid().setRegistryName("sigil_void"),
-                new ItemSigilGreenGrove().setRegistryName("sigil_green_grove"),
+                new ItemSigil(new SigilGreenGrove(), "green_grove").setRegistryName("sigil_green_grove"),
                 new ItemSigil(new SigilBloodLight(), "blood_light").setRegistryName("sigil_blood_light"),
                 new ItemSigil(new SigilElementalAffinity(), "elemental_affinity").setRegistryName("sigil_elemental_affinity"),
                 new ItemSigilMagnetism().setRegistryName("sigil_magnetism"),
                 new ItemSigilSuppression().setRegistryName("sigil_suppression"),
-                new ItemSigilHaste().setRegistryName("sigil_haste"),
+                new ItemSigil(new SigilHaste(), "haste").setRegistryName("sigil_haste"),
                 new ItemSigil(new SigilFastMiner(), "fast_miner").setRegistryName("sigil_fast_miner"),
                 new ItemSigilSeer().setRegistryName("sigil_seer"),
                 new ItemSigilPhantomBridge().setRegistryName("sigil_phantom_bridge"),

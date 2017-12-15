@@ -55,6 +55,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -342,22 +343,8 @@ public class GenericHandler {
             return;
 
         ItemStack held = event.getItemStack();
-        if (!held.isEmpty() && held.getItem() instanceof IBindable) {
-            held = NBTHelper.checkNBT(held);
-            IBindable bindable = (IBindable) held.getItem();
-            if (Strings.isNullOrEmpty(bindable.getOwnerUUID(held))) {
-                if (bindable.onBind(player, held)) {
-                    String uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
-                    ItemBindEvent toPost = new ItemBindEvent(player, uuid, held);
-                    if (MinecraftForge.EVENT_BUS.post(toPost) || toPost.getResult() == Result.DENY)
-                        return;
-
-                    BindableHelper.setItemOwnerUUID(held, uuid);
-                    BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
-                }
-            } else if (bindable.getOwnerUUID(held).equals(PlayerHelper.getUUIDFromPlayer(player).toString()) && !bindable.getOwnerName(held).equals(player.getDisplayNameString()))
-                BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
-        }
+        if (!held.isEmpty() && held.getItem() instanceof IBindable)
+            bindItem(held, player);
 
         if (!held.isEmpty() && held.getItem() instanceof IBloodOrb) {
             held = NBTHelper.checkNBT(held);
@@ -371,6 +358,38 @@ public class GenericHandler {
             if (orb.getTier() > network.getOrbTier())
                 network.setOrbTier(orb.getTier());
         }
+    }
+
+    // Handles binding of IBindable's
+    @SubscribeEvent
+    public static void onInteractBlock(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getWorld().isRemote)
+            return;
+
+        if (PlayerHelper.isFakePlayer(event.getEntityPlayer()))
+            return;
+
+        if (!event.getItemStack().isEmpty() && event.getItemStack().getItem() instanceof IBindable)
+            bindItem(event.getItemStack(), event.getEntityPlayer());
+    }
+
+    private static void bindItem(ItemStack stack, EntityPlayer player) {
+        IBindable bindable = (IBindable) stack.getItem();
+        if (Strings.isNullOrEmpty(bindable.getOwnerUUID(stack))) {
+            if (!stack.hasTagCompound())
+                stack.setTagCompound(new NBTTagCompound());
+
+            if (bindable.onBind(player, stack)) {
+                String uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
+                ItemBindEvent toPost = new ItemBindEvent(player, uuid, stack);
+                if (MinecraftForge.EVENT_BUS.post(toPost) || toPost.getResult() == Result.DENY)
+                    return;
+
+                BindableHelper.setItemOwnerUUID(stack, uuid);
+                BindableHelper.setItemOwnerName(stack, player.getDisplayNameString());
+            }
+        } else if (bindable.getOwnerUUID(stack).equals(PlayerHelper.getUUIDFromPlayer(player).toString()) && !bindable.getOwnerName(stack).equals(player.getDisplayNameString()))
+            BindableHelper.setItemOwnerName(stack, player.getDisplayNameString());
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
