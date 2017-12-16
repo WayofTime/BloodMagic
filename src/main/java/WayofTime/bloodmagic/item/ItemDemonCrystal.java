@@ -1,65 +1,15 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import com.google.common.collect.Lists;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVariantProvider {
-    public static final ArrayList<String> NAMES = Lists.newArrayList();
-
-    public static final String CRYSTAL_DEFAULT = "crystalDefault";
-    public static final String CRYSTAL_CORROSIVE = "crystalCorrosive";
-    public static final String CRYSTAL_VENGEFUL = "crystalVengeful";
-    public static final String CRYSTAL_DESTRUCTIVE = "crystalDestructive";
-    public static final String CRYSTAL_STEADFAST = "crystalSteadfast";
+public class ItemDemonCrystal extends ItemEnum<EnumDemonWillType> implements IDiscreteDemonWill, IVariantProvider {
 
     public ItemDemonCrystal() {
-        super();
-
-        setUnlocalizedName(BloodMagic.MODID + ".demonCrystal.");
-        setHasSubtypes(true);
-        setCreativeTab(BloodMagic.TAB_BM);
-
-        buildItemList();
-    }
-
-    private void buildItemList() {
-        NAMES.add(0, CRYSTAL_DEFAULT);
-        NAMES.add(1, CRYSTAL_CORROSIVE);
-        NAMES.add(2, CRYSTAL_DESTRUCTIVE);
-        NAMES.add(3, CRYSTAL_VENGEFUL);
-        NAMES.add(4, CRYSTAL_STEADFAST);
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + NAMES.get(stack.getItemDamage());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
-        if (!isInCreativeTab(creativeTab))
-            return;
-
-        for (int i = 0; i < NAMES.size(); i++)
-            list.add(new ItemStack(this, 1, i));
+        super(EnumDemonWillType.class, "demonCrystal");
     }
 
     @Override
@@ -88,15 +38,5 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
     @Override
     public EnumDemonWillType getType(ItemStack willStack) {
         return EnumDemonWillType.values()[MathHelper.clamp(willStack.getMetadata(), 0, EnumDemonWillType.values().length - 1)];
-    }
-
-    @Override
-    public void populateVariants(Int2ObjectMap<String> variants) {
-        for (String name : NAMES)
-            variants.put(NAMES.indexOf(name), "type=" + name);
-    }
-
-    public static ItemStack getStack(String name) {
-        return new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, 1, NAMES.indexOf(name));
     }
 }

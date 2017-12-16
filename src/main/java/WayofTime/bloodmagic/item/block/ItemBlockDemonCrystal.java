@@ -1,7 +1,9 @@
 package WayofTime.bloodmagic.item.block;
 
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +16,7 @@ import net.minecraft.world.World;
 
 import java.util.Locale;
 
-public class ItemBlockDemonCrystal extends ItemBlock {
+public class ItemBlockDemonCrystal extends ItemBlock implements IVariantProvider {
     public ItemBlockDemonCrystal(Block block) {
         super(block);
         setHasSubtypes(true);
@@ -42,5 +44,11 @@ public class ItemBlockDemonCrystal extends ItemBlock {
         }
 
         return false;
+    }
+
+    @Override
+    public void populateVariants(Int2ObjectMap<String> variants) {
+        for (EnumDemonWillType type : EnumDemonWillType.values())
+            variants.put(type.ordinal(), "age=4,attached=up,type=" + type.getName());
     }
 }

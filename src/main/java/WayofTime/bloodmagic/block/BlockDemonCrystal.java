@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
+import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -13,6 +14,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -26,7 +28,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockDemonCrystal extends Block {
+public class BlockDemonCrystal extends Block implements IBMBlock {
     public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 6);
     public static final PropertyEnum<EnumDemonWillType> TYPE = PropertyEnum.<EnumDemonWillType>create("type", EnumDemonWillType.class);
     public static final PropertyEnum<EnumFacing> ATTACHED = PropertyEnum.<EnumFacing>create("attached", EnumFacing.class);
@@ -156,6 +158,8 @@ public class BlockDemonCrystal extends Block {
         }
 
         TileDemonCrystal crystal = (TileDemonCrystal) world.getTileEntity(pos);
+        if (crystal == null)
+            return false;
 
         if (PlayerDemonWillHandler.getTotalDemonWill(EnumDemonWillType.DEFAULT, player) > 1024) {
             crystal.dropSingleCrystal();
@@ -177,49 +181,13 @@ public class BlockDemonCrystal extends Block {
         return new TileDemonCrystal();
     }
 
-    public static ItemStack getItemStackDropped(EnumDemonWillType type, int crystalNumber) {
-        ItemStack stack = null;
-        switch (type) {
-            case CORROSIVE:
-                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_CORROSIVE);
-                break;
-            case DEFAULT:
-                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT);
-                break;
-            case DESTRUCTIVE:
-                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DESTRUCTIVE);
-                break;
-            case STEADFAST:
-                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_STEADFAST);
-                break;
-            case VENGEFUL:
-                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_VENGEFUL);
-                break;
-        }
-
-        stack.setCount(crystalNumber);
-        return stack;
+    @Nullable
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlockDemonCrystal(this);
     }
 
-    //    @Override
-//    public java.util.List<ItemStack> getDrops(net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
-//    {
-//        java.util.List<ItemStack> ret = super.getDrops(world, pos, state, fortune);
-//        int age = ((Integer) state.getValue(AGE)).intValue();
-//        Random rand = world instanceof World ? ((World) world).rand : new Random();
-//
-//        if (age >= 7)
-//        {
-//            int k = 3 + fortune;
-//
-//            for (int i = 0; i < 3 + fortune; ++i)
-//            {
-//                if (rand.nextInt(15) <= age)
-//                {
-//                    ret.add(new ItemStack(this.getSeed(), 1, 0));
-//                }
-//            }
-//        }
-//        return ret;
-//    }
+    public static ItemStack getItemStackDropped(EnumDemonWillType type, int crystalNumber) {
+        return type.getStack(crystalNumber);
+    }
 }
