@@ -41,6 +41,6 @@ public enum ReagentType implements ISubItem {
     @Nonnull
     @Override
     public ItemStack getStack(int count) {
-        return new ItemStack(RegistrarBloodMagicItems.COMPONENT, count, ordinal());
+        return new ItemStack(RegistrarBloodMagicItems.REAGENT, count, ordinal());
     }
 }
