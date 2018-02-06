@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.util;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 

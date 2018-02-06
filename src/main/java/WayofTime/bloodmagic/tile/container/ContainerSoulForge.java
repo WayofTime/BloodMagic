@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.tile.container;
 
-import WayofTime.bloodmagic.api.soul.IDemonWill;
-import WayofTime.bloodmagic.api.soul.IDemonWillGem;
+import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWill;
+import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWillGem;
 import WayofTime.bloodmagic.tile.TileSoulForge;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

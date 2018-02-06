@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.recipe.LivingArmourDowngradeRecipe;
-import WayofTime.bloodmagic.api.registry.LivingArmourDowngradeRecipeRegistry;
-import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.apibutnotreally.recipe.LivingArmourDowngradeRecipe;
+import WayofTime.bloodmagic.apibutnotreally.registry.LivingArmourDowngradeRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.ritual.*;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.util.ChatUtil;

@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.apibutnotreally.ritual.*;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;

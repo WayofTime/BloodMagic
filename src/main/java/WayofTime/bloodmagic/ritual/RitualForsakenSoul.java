@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
+import WayofTime.bloodmagic.apibutnotreally.ritual.*;
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;

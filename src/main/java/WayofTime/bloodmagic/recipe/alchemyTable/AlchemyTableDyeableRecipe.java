@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.recipe.alchemyTable;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.recipe.AlchemyTableRecipe;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBanner;

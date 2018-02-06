@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.tile.routing;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
 import WayofTime.bloodmagic.routing.IItemRoutingNode;
 import WayofTime.bloodmagic.routing.IMasterRoutingNode;
 import WayofTime.bloodmagic.routing.IRoutingNode;

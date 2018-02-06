@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.compat.guideapi;
 
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
-import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyCircleRenderer;
+import WayofTime.bloodmagic.apibutnotreally.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.client.render.alchemyArray.DualAlchemyCircleRenderer;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAlchemyArray;
 import amerifrance.guideapi.page.PageIRecipe;

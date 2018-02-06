@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.alchemyArray;
 
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
+import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyArrayEffect;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import com.google.common.base.Predicate;
 import net.minecraft.entity.EntityLiving;

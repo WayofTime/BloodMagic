@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.util.helper;
 
-import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
-import WayofTime.bloodmagic.api.registry.TartaricForgeRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.recipe.TartaricForgeRecipe;
+import WayofTime.bloodmagic.apibutnotreally.registry.AltarRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.registry.TartaricForgeRecipeRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;

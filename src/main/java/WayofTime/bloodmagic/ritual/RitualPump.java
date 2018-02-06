@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.apibutnotreally.ritual.*;
 import com.google.common.collect.Lists;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;

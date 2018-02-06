@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityEnderman;

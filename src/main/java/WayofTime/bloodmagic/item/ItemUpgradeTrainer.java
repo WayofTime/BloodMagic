@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.iface.IUpgradeTrainer;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
+import WayofTime.bloodmagic.apibutnotreally.iface.IUpgradeTrainer;
+import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourHandler;
+import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.ItemHelper.LivingUpgrades;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;

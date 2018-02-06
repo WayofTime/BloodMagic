@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.item.inventory;
 
-import WayofTime.bloodmagic.api.iface.ISigil;
+import WayofTime.bloodmagic.apibutnotreally.iface.ISigil;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

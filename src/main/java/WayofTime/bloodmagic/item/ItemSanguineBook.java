@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.altar.EnumAltarTier;
-import WayofTime.bloodmagic.api.altar.IAltarManipulator;
-import WayofTime.bloodmagic.api.iface.IDocumentedBlock;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.altar.EnumAltarTier;
+import WayofTime.bloodmagic.apibutnotreally.altar.IAltarManipulator;
+import WayofTime.bloodmagic.apibutnotreally.iface.IDocumentedBlock;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.ChatUtil;

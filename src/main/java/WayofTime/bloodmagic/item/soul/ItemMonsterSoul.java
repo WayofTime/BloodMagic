@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.item.soul;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.IDemonWill;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWill;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;

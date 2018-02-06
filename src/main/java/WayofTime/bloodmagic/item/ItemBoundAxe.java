@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.ItemStackWrapper;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.apibutnotreally.BlockStack;
+import WayofTime.bloodmagic.apibutnotreally.ItemStackWrapper;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import com.google.common.collect.HashMultiset;

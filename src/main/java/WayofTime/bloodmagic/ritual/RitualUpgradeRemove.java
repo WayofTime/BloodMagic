@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.livingArmour.StatTracker;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
+import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.apibutnotreally.livingArmour.StatTracker;
+import WayofTime.bloodmagic.apibutnotreally.ritual.*;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.ItemHelper.LivingUpgrades;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;

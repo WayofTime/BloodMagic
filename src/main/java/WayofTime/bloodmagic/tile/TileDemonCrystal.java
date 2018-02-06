@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.api.soul.DemonWillHolder;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.apibutnotreally.soul.DemonWillHolder;
+import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.block.BlockDemonCrystal;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.tile.base.TileTicking;

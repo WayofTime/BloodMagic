@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.client.render.alchemyArray;
 
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
+import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyCircleRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.compress;
 
-import WayofTime.bloodmagic.api.compress.CompressionHandler;
+import WayofTime.bloodmagic.apibutnotreally.compress.CompressionHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 

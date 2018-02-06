@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.iface.IHarvestHandler;
-import WayofTime.bloodmagic.api.registry.HarvestRegistry;
-import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.apibutnotreally.BlockStack;
+import WayofTime.bloodmagic.apibutnotreally.iface.IHarvestHandler;
+import WayofTime.bloodmagic.apibutnotreally.registry.HarvestRegistry;
+import WayofTime.bloodmagic.apibutnotreally.ritual.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 

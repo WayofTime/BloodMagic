@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.compat.jei.alchemyTable;
 
-import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
+import WayofTime.bloodmagic.apibutnotreally.recipe.AlchemyTableRecipe;
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.Lists;

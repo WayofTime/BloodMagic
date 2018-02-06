@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
+import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.livingArmour.downgrade.*;
 import WayofTime.bloodmagic.livingArmour.tracker.*;
 import WayofTime.bloodmagic.livingArmour.upgrade.*;

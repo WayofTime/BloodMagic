@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

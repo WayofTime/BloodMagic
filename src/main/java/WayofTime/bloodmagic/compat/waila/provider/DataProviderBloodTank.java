@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
 import WayofTime.bloodmagic.block.BlockBloodTank;
 import WayofTime.bloodmagic.tile.TileBloodTank;
 import WayofTime.bloodmagic.util.helper.TextHelper;

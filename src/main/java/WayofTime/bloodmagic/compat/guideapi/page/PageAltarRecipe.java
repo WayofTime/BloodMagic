@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.compat.guideapi.page;
 
-import WayofTime.bloodmagic.api.ItemStackWrapper;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.ItemStackWrapper;
+import WayofTime.bloodmagic.apibutnotreally.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.impl.Book;
 import amerifrance.guideapi.api.impl.Page;

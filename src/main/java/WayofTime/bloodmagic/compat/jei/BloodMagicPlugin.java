@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.compat.jei;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
-import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourHandler;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.ItemHelper.LivingUpgrades;
 import WayofTime.bloodmagic.client.gui.GuiSoulForge;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingCategory;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingRecipeHandler;

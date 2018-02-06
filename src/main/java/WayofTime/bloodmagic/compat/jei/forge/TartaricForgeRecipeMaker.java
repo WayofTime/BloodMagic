@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.compat.jei.forge;
 
-import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
-import WayofTime.bloodmagic.api.registry.TartaricForgeRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.recipe.TartaricForgeRecipe;
+import WayofTime.bloodmagic.apibutnotreally.registry.TartaricForgeRecipeRegistry;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

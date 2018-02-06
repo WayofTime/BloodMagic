@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.compress.CompressionRegistry;
-import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
-import WayofTime.bloodmagic.api.registry.AlchemyTableRecipeRegistry;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.apibutnotreally.compress.CompressionRegistry;
+import WayofTime.bloodmagic.apibutnotreally.recipe.AlchemyTableRecipe;
+import WayofTime.bloodmagic.apibutnotreally.registry.AlchemyTableRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.ritual.*;
+import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.util.Utils;

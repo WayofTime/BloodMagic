@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.client.gui;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
 import WayofTime.bloodmagic.item.inventory.ContainerHolding;
 import WayofTime.bloodmagic.item.inventory.InventoryHolding;
 import WayofTime.bloodmagic.tile.TileAlchemyTable;

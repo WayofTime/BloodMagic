@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.command.sub;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.util.helper.BindableHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.iface.IBindable;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.BindableHelper;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
 import net.minecraft.command.CommandBase;

@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.core;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.orb.BloodOrb;
-import WayofTime.bloodmagic.api.registry.OrbRegistry;
+import WayofTime.bloodmagic.apibutnotreally.orb.BloodOrb;
+import WayofTime.bloodmagic.apibutnotreally.registry.OrbRegistry;
 import WayofTime.bloodmagic.entity.mob.*;
 import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;

@@ -2,12 +2,12 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
+import WayofTime.bloodmagic.apibutnotreally.BloodMagicAPI;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.event.SacrificeKnifeUsedEvent;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.TextHelper;

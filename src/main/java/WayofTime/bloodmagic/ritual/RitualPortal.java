@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.teleport.PortalLocation;
+import WayofTime.bloodmagic.apibutnotreally.ritual.EnumRuneType;
+import WayofTime.bloodmagic.apibutnotreally.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.apibutnotreally.ritual.Ritual;
+import WayofTime.bloodmagic.apibutnotreally.ritual.RitualComponent;
+import WayofTime.bloodmagic.apibutnotreally.teleport.PortalLocation;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.meteor;
 
-import WayofTime.bloodmagic.api.ItemStackWrapper;
+import WayofTime.bloodmagic.apibutnotreally.ItemStackWrapper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;

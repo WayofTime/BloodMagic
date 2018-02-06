@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.altar.BloodAltar;
-import WayofTime.bloodmagic.api.altar.EnumAltarTier;
-import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import WayofTime.bloodmagic.apibutnotreally.altar.EnumAltarTier;
+import WayofTime.bloodmagic.apibutnotreally.altar.IBloodAltar;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;

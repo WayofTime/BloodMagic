@@ -1,7 +1,8 @@
 package WayofTime.bloodmagic.util;
 
-import WayofTime.bloodmagic.apiv2.BloodMagicPlugin;
-import WayofTime.bloodmagic.apiv2.IBloodMagicPlugin;
+import WayofTime.bloodmagic.api.BloodMagicPlugin;
+import WayofTime.bloodmagic.api.IBloodMagicPlugin;
+import WayofTime.bloodmagic.api.impl.BloodMagicCorePlugin;
 import com.google.common.collect.Lists;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import org.apache.commons.lang3.tuple.Pair;
@@ -32,7 +33,7 @@ public class PluginUtil {
         }
 
         // Bring core plugin up to top
-        discoveredAnnotations.sort((o1, o2) -> o1.getLeft().getClass().getCanonicalName().startsWith("WayofTime") ? 1 : 0);
+        discoveredAnnotations.sort((o1, o2) -> o1.getLeft().getClass() == BloodMagicCorePlugin.class ? 1 : 0);
         return discoveredAnnotations;
     }
 }

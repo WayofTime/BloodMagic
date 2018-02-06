@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.entity.projectile;
 
-import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
 import WayofTime.bloodmagic.meteor.MeteorRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.item.gear;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.altar.IAltarManipulator;
-import WayofTime.bloodmagic.api.altar.IBloodAltar;
-import WayofTime.bloodmagic.api.iface.IItemLPContainer;
-import WayofTime.bloodmagic.api.util.helper.ItemHelper.LPContainer;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.altar.IAltarManipulator;
+import WayofTime.bloodmagic.apibutnotreally.altar.IBloodAltar;
+import WayofTime.bloodmagic.apibutnotreally.iface.IItemLPContainer;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.ItemHelper.LPContainer;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;

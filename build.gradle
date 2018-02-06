@@ -93,6 +93,7 @@ task apiJar(type: Jar) {
     from sourceSets.main.allSource
     from sourceSets.main.output
 	include 'WayofTime/bloodmagic/api/**/*'
+    exclude 'WayofTime/bloodmagic/api/impl/**/*'
     classifier = 'api'
 }
 

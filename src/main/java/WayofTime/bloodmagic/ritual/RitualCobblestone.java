@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.apibutnotreally.ritual.*;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import net.minecraft.block.Block;

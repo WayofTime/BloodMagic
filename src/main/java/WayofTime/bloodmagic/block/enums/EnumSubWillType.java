@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.block.enums;
 
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import net.minecraft.util.IStringSerializable;
 
 import java.util.Locale;

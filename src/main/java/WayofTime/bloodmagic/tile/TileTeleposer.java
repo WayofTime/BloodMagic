@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.TeleposeEvent;
-import WayofTime.bloodmagic.api.teleport.TeleportQueue;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.event.TeleposeEvent;
+import WayofTime.bloodmagic.apibutnotreally.teleport.TeleportQueue;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockTeleposer;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.ritual.portal.Teleports;

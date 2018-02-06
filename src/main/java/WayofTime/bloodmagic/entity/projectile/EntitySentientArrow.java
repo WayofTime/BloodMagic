@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.entity.projectile;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.apibutnotreally.soul.PlayerDemonWillHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;

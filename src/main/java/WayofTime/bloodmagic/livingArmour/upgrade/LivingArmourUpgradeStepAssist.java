@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourUpgrade;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class LivingArmourUpgradeStepAssist extends LivingArmourUpgrade {

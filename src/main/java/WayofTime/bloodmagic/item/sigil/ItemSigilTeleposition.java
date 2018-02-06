@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.iface.ISigil;
-import WayofTime.bloodmagic.api.teleport.TeleportQueue;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.iface.ISigil;
+import WayofTime.bloodmagic.apibutnotreally.teleport.TeleportQueue;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.ritual.portal.Teleports;
 import WayofTime.bloodmagic.tile.TileTeleposer;
 import WayofTime.bloodmagic.util.helper.TextHelper;

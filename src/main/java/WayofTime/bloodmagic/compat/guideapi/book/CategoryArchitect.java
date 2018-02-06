@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.compat.guideapi.book;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry.AltarRecipe;
-import WayofTime.bloodmagic.api.registry.OrbRegistry;
+import WayofTime.bloodmagic.apibutnotreally.recipe.TartaricForgeRecipe;
+import WayofTime.bloodmagic.apibutnotreally.registry.AltarRecipeRegistry.AltarRecipe;
+import WayofTime.bloodmagic.apibutnotreally.registry.OrbRegistry;
 import WayofTime.bloodmagic.compat.guideapi.BookUtils;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAlchemyArray;

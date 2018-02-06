@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.network;
 
-import WayofTime.bloodmagic.api.soul.DemonWillHolder;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.apibutnotreally.soul.DemonWillHolder;
+import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.proxy.ClientProxy;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.PacketBuffer;

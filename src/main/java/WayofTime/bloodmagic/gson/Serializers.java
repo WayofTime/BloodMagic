@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.gson;
 
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import com.google.gson.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;

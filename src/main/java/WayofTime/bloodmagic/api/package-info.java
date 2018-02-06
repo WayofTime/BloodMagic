@@ -1,4 +1,4 @@
-@API(owner = BloodMagic.MODID, provides = BloodMagic.MODID + "|API", apiVersion = BloodMagic.VERSION)
+@API(owner = BloodMagic.MODID, provides = BloodMagic.MODID + "|api", apiVersion = "2.0.0")
 package WayofTime.bloodmagic.api;
 
 import WayofTime.bloodmagic.BloodMagic;

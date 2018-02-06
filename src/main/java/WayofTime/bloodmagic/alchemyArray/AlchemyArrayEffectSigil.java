@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.alchemyArray;
 
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
-import WayofTime.bloodmagic.api.iface.ISigil;
+import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyArrayEffect;
+import WayofTime.bloodmagic.apibutnotreally.iface.ISigil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 

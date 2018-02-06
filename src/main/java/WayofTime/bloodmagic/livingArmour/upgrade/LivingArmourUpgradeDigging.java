@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.apibutnotreally.livingArmour.ILivingArmour;
+import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;

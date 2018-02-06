@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.incense;
 
-import WayofTime.bloodmagic.api.incense.EnumTranquilityType;
-import WayofTime.bloodmagic.api.incense.ITranquilityHandler;
-import WayofTime.bloodmagic.api.incense.TranquilityStack;
+import WayofTime.bloodmagic.apibutnotreally.incense.EnumTranquilityType;
+import WayofTime.bloodmagic.apibutnotreally.incense.ITranquilityHandler;
+import WayofTime.bloodmagic.apibutnotreally.incense.TranquilityStack;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;

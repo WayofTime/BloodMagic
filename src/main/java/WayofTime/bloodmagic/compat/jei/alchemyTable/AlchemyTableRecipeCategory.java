@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.compat.jei.alchemyTable;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.registry.OrbRegistry;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.registry.OrbRegistry;
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import mezz.jei.api.gui.ICraftingGridHelper;

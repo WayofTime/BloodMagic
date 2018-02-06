@@ -1,19 +1,18 @@
 package WayofTime.bloodmagic.altar;
 
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.altar.*;
-import WayofTime.bloodmagic.api.event.AltarCraftedEvent;
-import WayofTime.bloodmagic.api.orb.BloodOrb;
-import WayofTime.bloodmagic.api.orb.IBloodOrb;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry.AltarRecipe;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
+import WayofTime.bloodmagic.apibutnotreally.BlockStack;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.altar.*;
+import WayofTime.bloodmagic.apibutnotreally.event.AltarCraftedEvent;
+import WayofTime.bloodmagic.apibutnotreally.orb.BloodOrb;
+import WayofTime.bloodmagic.apibutnotreally.orb.IBloodOrb;
+import WayofTime.bloodmagic.apibutnotreally.registry.AltarRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.registry.AltarRecipeRegistry.AltarRecipe;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.util.Utils;
 import com.google.common.base.Enums;
 import com.google.common.base.Strings;
 import net.minecraft.block.state.IBlockState;
@@ -31,7 +30,6 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;

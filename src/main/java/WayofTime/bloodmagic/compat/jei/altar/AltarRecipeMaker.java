@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.compat.jei.altar;
 
-import WayofTime.bloodmagic.api.ItemStackWrapper;
-import WayofTime.bloodmagic.api.orb.IBloodOrb;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.ItemStackWrapper;
+import WayofTime.bloodmagic.apibutnotreally.orb.IBloodOrb;
+import WayofTime.bloodmagic.apibutnotreally.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeModContainer;

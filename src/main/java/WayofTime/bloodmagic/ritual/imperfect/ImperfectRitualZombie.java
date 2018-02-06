@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.ritual.imperfect;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
-import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.apibutnotreally.BlockStack;
+import WayofTime.bloodmagic.apibutnotreally.ritual.imperfect.IImperfectRitualStone;
+import WayofTime.bloodmagic.apibutnotreally.ritual.imperfect.ImperfectRitual;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

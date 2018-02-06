@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.api.incense.IncenseTranquilityRegistry;
+import WayofTime.bloodmagic.apibutnotreally.incense.IncenseTranquilityRegistry;
 import WayofTime.bloodmagic.incense.TranquilityHandlers;
 
 public class ModTranquilityHandlers {

@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.item.soul;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.iface.IMultiWillTool;
-import WayofTime.bloodmagic.api.iface.ISentientTool;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.iface.IMultiWillTool;
+import WayofTime.bloodmagic.apibutnotreally.iface.ISentientTool;
+import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.apibutnotreally.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;

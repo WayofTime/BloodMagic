@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.compat.jei.armourDowngrade;
 
-import WayofTime.bloodmagic.api.recipe.LivingArmourDowngradeRecipe;
-import WayofTime.bloodmagic.api.registry.LivingArmourDowngradeRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.recipe.LivingArmourDowngradeRecipe;
+import WayofTime.bloodmagic.apibutnotreally.registry.LivingArmourDowngradeRecipeRegistry;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
-import WayofTime.bloodmagic.api.iface.IAlchemyArray;
-import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyArrayEffect;
+import WayofTime.bloodmagic.apibutnotreally.iface.IAlchemyArray;
+import WayofTime.bloodmagic.apibutnotreally.registry.AlchemyArrayRecipeRegistry;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;

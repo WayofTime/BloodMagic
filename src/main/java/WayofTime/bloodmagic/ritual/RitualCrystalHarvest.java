@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.apibutnotreally.ritual.*;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;

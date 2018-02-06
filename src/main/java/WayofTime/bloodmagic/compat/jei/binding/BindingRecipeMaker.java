@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.compat.jei.binding;
 
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBinding;
-import WayofTime.bloodmagic.api.ItemStackWrapper;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
-import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.ItemStackWrapper;
+import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyArrayEffect;
+import WayofTime.bloodmagic.apibutnotreally.registry.AlchemyArrayRecipeRegistry;
 import com.google.common.collect.BiMap;
 import net.minecraft.item.ItemStack;
 

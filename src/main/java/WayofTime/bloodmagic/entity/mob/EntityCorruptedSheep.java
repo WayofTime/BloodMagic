@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.entity.mob;
 
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.entity.ai.EntityAIEatAndCorruptBlock;
 import WayofTime.bloodmagic.entity.ai.EntityAIProtectAlly;
 import com.google.common.collect.Maps;

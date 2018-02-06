@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.core;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import net.minecraft.item.ItemStack;

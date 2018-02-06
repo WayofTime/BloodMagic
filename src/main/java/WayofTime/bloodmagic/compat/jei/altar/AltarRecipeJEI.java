@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
+import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
@@ -12,7 +13,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AltarRecipeJEI extends BlankRecipeWrapper {
+public class AltarRecipeJEI implements IRecipeWrapper {
     @Nonnull
     private final List<ItemStack> input;
     @Nonnull
@@ -32,11 +33,12 @@ public class AltarRecipeJEI extends BlankRecipeWrapper {
     }
 
     @Override
-    public void getIngredients(IIngredients ingredients) {
+    public void getIngredients(@Nonnull IIngredients ingredients) {
         ingredients.setInputs(ItemStack.class, input);
         ingredients.setOutput(ItemStack.class, output);
     }
 
+    @Nonnull
     @Override
     public List<String> getTooltipStrings(int mouseX, int mouseY) {
         ArrayList<String> ret = new ArrayList<String>();

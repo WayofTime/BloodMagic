@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.alchemyArray;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
+import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyArrayEffect;
 import WayofTime.bloodmagic.fakePlayer.FakePlayerBM;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import com.mojang.authlib.GameProfile;

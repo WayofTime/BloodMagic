@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.compat.jei.armourDowngrade;
 
-import WayofTime.bloodmagic.api.recipe.LivingArmourDowngradeRecipe;
-import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
+import WayofTime.bloodmagic.apibutnotreally.recipe.LivingArmourDowngradeRecipe;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.ItemHelper.LivingUpgrades;
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import com.google.common.collect.Lists;

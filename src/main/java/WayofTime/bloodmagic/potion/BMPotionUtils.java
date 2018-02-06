@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.potion;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api_impl.BloodMagicAPI;
+import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionAugmentRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -66,7 +66,7 @@ public class BMPotionUtils {
         }
 
         if (incurredDamage > 0) {
-            entity.attackEntityFrom(WayofTime.bloodmagic.api.BloodMagicAPI.damageSource, (float) incurredDamage);
+            entity.attackEntityFrom(WayofTime.bloodmagic.apibutnotreally.BloodMagicAPI.damageSource, (float) incurredDamage);
         }
 
         return incurredDamage;

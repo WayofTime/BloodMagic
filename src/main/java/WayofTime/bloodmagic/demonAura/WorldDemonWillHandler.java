@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.demonAura;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.soul.DemonWillHolder;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.apibutnotreally.BloodMagicAPI;
+import WayofTime.bloodmagic.apibutnotreally.soul.DemonWillHolder;
+import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;

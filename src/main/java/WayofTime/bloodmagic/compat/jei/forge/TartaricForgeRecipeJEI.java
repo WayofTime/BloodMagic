@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.compat.jei.forge;
 
-import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
+import WayofTime.bloodmagic.apibutnotreally.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;

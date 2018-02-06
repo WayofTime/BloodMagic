@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.ritual.portal;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.teleport.PortalLocation;
+import WayofTime.bloodmagic.apibutnotreally.BloodMagicAPI;
+import WayofTime.bloodmagic.apibutnotreally.teleport.PortalLocation;
 import net.minecraftforge.common.DimensionManager;
 
 import java.io.*;

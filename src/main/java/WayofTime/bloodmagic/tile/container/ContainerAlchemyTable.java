@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.tile.container;
 
-import WayofTime.bloodmagic.api.orb.IBloodOrb;
+import WayofTime.bloodmagic.apibutnotreally.orb.IBloodOrb;
 import WayofTime.bloodmagic.tile.TileAlchemyTable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

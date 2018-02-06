@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
-import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
-import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.apibutnotreally.registry.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.apibutnotreally.ritual.imperfect.IImperfectRitualStone;
+import WayofTime.bloodmagic.apibutnotreally.ritual.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.tile.base.TileBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;

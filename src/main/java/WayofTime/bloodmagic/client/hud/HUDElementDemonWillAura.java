@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.client.hud;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.proxy.ClientProxy;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.client.Minecraft;

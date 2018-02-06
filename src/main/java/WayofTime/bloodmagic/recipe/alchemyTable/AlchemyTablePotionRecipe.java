@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.recipe.alchemyTable;
 
-import WayofTime.bloodmagic.api.recipe.AlchemyTableRecipe;
+import WayofTime.bloodmagic.apibutnotreally.recipe.AlchemyTableRecipe;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;

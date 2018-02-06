@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.api.iface.IPurificationAsh;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.util.helper.PurificationHelper;
+import WayofTime.bloodmagic.apibutnotreally.iface.IPurificationAsh;
+import WayofTime.bloodmagic.apibutnotreally.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.apibutnotreally.util.helper.PurificationHelper;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
