@@ -26,6 +26,13 @@ public class GuiHolding extends GuiContainer {
     }
 
     @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         //the parameters for drawString are: string, x, y, color
         fontRenderer.drawString(TextHelper.localize("item.bloodmagic.sigil.holding.name"), 53, 4, 4210752);

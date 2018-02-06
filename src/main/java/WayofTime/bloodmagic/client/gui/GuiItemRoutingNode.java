@@ -134,7 +134,9 @@ public class GuiItemRoutingNode extends GuiContainer {
      */
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
 
         Minecraft.getMinecraft().fontRenderer.drawString(inventory.getName(), xSize, ySize / 4, 4210752);
     }
