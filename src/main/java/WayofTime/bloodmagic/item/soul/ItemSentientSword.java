@@ -272,7 +272,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
     @Override
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
-        return new CustomMeshDefinitionMultiWill("sentient_shovel");
+        return new CustomMeshDefinitionMultiWill("sentient_sword");
     }
 
     @Nullable
