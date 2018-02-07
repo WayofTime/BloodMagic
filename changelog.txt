@@ -1,4 +1,16 @@
 ------------------------------------------------------
+Version 2.2.1
+------------------------------------------------------
+
+- Fixed crashes when using systems that depended on internal entity names
+- Fixed a crash when attempting to get the owner from unbound bindable items
+- Fixed a server crash on startup
+- Fixed GUIs not displaying the background and tooltips properly
+- Helped the Sentient Sword get over it's identity crisis
+- By the way I'm not actually upset or anything guys.
+    - Please stop overreacting Reddit.
+
+------------------------------------------------------
 Version 2.2.0
 ------------------------------------------------------
 
