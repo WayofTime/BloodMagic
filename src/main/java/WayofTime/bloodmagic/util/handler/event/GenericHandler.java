@@ -318,7 +318,7 @@ public class GenericHandler {
     @SubscribeEvent
     public static void onTeleposeEntity(TeleposeEvent.Ent event) {
         EntityEntry entry = EntityRegistry.getEntry(event.entity.getClass());
-        if (BloodMagicAPI.INSTANCE.getBlacklist().getTeleposerEntities().contains(entry.getRegistryName()))
+        if (entry != null && BloodMagicAPI.INSTANCE.getBlacklist().getTeleposerEntities().contains(entry.getRegistryName()))
             event.setCanceled(true);
     }
 

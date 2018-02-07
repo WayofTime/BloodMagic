@@ -79,7 +79,7 @@ public class RitualWellOfSuffering extends Ritual {
             for (EntityLivingBase entity : entities) {
                 EntityEntry entityEntry = EntityRegistry.getEntry(entity.getClass());
 
-                if (BloodMagicAPI.INSTANCE.getBlacklist().getSacrifice().contains(entityEntry.getRegistryName()))
+                if (entityEntry == null || BloodMagicAPI.INSTANCE.getBlacklist().getSacrifice().contains(entityEntry.getRegistryName()))
                     continue;
 
                 int lifeEssenceRatio = BloodMagicAPI.INSTANCE.getSacrificialValues().getOrDefault(entityEntry.getRegistryName(), SACRIFICE_AMOUNT);

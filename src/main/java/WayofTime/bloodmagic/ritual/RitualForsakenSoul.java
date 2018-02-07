@@ -104,7 +104,7 @@ public class RitualForsakenSoul extends Ritual {
         for (EntityLivingBase entity : entities) {
             EntityEntry entityEntry = EntityRegistry.getEntry(entity.getClass());
 
-            if (BloodMagicAPI.INSTANCE.getBlacklist().getSacrifice().contains(entityEntry.getRegistryName()))
+            if (entityEntry == null || BloodMagicAPI.INSTANCE.getBlacklist().getSacrifice().contains(entityEntry.getRegistryName()))
                 continue;
 
             if (entity.isEntityAlive() && !(entity instanceof EntityPlayer)) {
