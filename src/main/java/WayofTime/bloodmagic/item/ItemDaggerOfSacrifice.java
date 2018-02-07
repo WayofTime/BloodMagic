@@ -54,7 +54,7 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider {
         EntityEntry entityEntry = EntityRegistry.getEntry(target.getClass());
         if (entityEntry == null)
             return false;
-        int lifeEssenceRatio = BloodMagicAPI.INSTANCE.getSacrificialValues().getOrDefault(entityEntry.getRegistryName(), 25);
+        int lifeEssenceRatio = BloodMagicAPI.INSTANCE.getValueManager().getSacrificial().getOrDefault(entityEntry.getRegistryName(), 25);
 
         if (lifeEssenceRatio <= 0)
             return false;
