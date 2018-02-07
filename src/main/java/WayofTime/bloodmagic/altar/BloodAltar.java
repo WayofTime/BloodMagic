@@ -1,13 +1,12 @@
 package WayofTime.bloodmagic.altar;
 
+import WayofTime.bloodmagic.api.event.BloodMagicCraftedEvent;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import WayofTime.bloodmagic.apibutnotreally.BlockStack;
 import WayofTime.bloodmagic.apibutnotreally.Constants;
 import WayofTime.bloodmagic.apibutnotreally.altar.*;
-import WayofTime.bloodmagic.apibutnotreally.event.AltarCraftedEvent;
 import WayofTime.bloodmagic.apibutnotreally.orb.BloodOrb;
 import WayofTime.bloodmagic.apibutnotreally.orb.IBloodOrb;
-import WayofTime.bloodmagic.apibutnotreally.registry.AltarRecipeRegistry;
-import WayofTime.bloodmagic.apibutnotreally.registry.AltarRecipeRegistry.AltarRecipe;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.block.BlockBloodRune;
@@ -76,8 +75,7 @@ public class BloodAltar implements IFluidHandler {
     private int chargingFrequency = 0;
     private int maxCharge = 0;
     private int cooldownAfterCrafting = 60;
-    private AltarRecipe recipe;
-    private ItemStack result = ItemStack.EMPTY;
+    private RecipeBloodAltar recipe;
     private EnumAltarTier currentTierDisplayed = EnumAltarTier.ONE;
 
     public BloodAltar(TileAltar tileAltar) {
@@ -187,18 +185,21 @@ public class BloodAltar implements IFluidHandler {
 
         if (!input.isEmpty()) {
             // Do recipes
-            AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(input);
+            RecipeBloodAltar recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getBloodAltar(input);
             if (recipe != null) {
-                if (recipe.doesRequiredItemMatch(input, altarTier)) {
+                if (recipe.getMinimumTier().ordinal() <= altarTier.ordinal()) {
                     this.isActive = true;
                     this.recipe = recipe;
-                    this.result = recipe.getOutput().isEmpty() ? ItemStack.EMPTY : new ItemStack(recipe.getOutput().getItem(), 1, recipe.getOutput().getMetadata());
                     this.liquidRequired = recipe.getSyphon();
-                    this.canBeFilled = recipe.isFillable();
                     this.consumptionRate = recipe.getConsumeRate();
                     this.drainRate = recipe.getDrainRate();
+                    this.canBeFilled = false;
                     return;
                 }
+            } else if (input.getItem() instanceof IBloodOrb) {
+                this.isActive = true;
+                this.canBeFilled = true;
+                return;
             }
         }
 
@@ -311,13 +312,11 @@ public class BloodAltar implements IFluidHandler {
 
             if (hasOperated) {
                 if (progress >= liquidRequired * stackSize) {
-                    ItemStack result = this.result;
+                    ItemStack result = recipe.getOutput().copy();
 
-                    if (!result.isEmpty())
-                        result.setCount(result.getCount() * stackSize);
-
-                    MinecraftForge.EVENT_BUS.post(new AltarCraftedEvent(recipe, result));
-                    tileAltar.setInventorySlotContents(0, result);
+                    BloodMagicCraftedEvent.Altar event = new BloodMagicCraftedEvent.Altar(recipe, result);
+                    MinecraftForge.EVENT_BUS.post(event);
+                    tileAltar.setInventorySlotContents(0, event.getOutput());
                     progress = 0;
 
                     if (world instanceof WorldServer) {
