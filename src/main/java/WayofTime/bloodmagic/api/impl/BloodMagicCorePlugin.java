@@ -11,6 +11,7 @@ import WayofTime.bloodmagic.block.BlockDecorative;
 import WayofTime.bloodmagic.block.enums.EnumBloodRune;
 import WayofTime.bloodmagic.block.enums.EnumDecorative;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -60,6 +61,10 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin {
         BlockBloodRune bloodRune = (BlockBloodRune) RegistrarBloodMagicBlocks.BLOOD_RUNE;
         for (EnumBloodRune runeType : EnumBloodRune.values())
             api.registerAltarComponent(bloodRune.getDefaultState().withProperty(bloodRune.getProperty(), runeType), EnumAltarComponent.BLOODRUNE.name());
+
+        RegistrarBloodMagicRecipes.registerAltarRecipes(((BloodMagicAPI) api).getRecipeRegistrar());
+        RegistrarBloodMagicRecipes.registerAlchemyTableRecipes(((BloodMagicAPI) api).getRecipeRegistrar());
+        RegistrarBloodMagicRecipes.registerTartaricForgeRecipes(((BloodMagicAPI) api).getRecipeRegistrar());
     }
 
     private static void handleConfigValues(IBloodMagicAPI api) {
