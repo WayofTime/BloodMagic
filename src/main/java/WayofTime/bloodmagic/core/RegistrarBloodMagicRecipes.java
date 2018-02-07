@@ -7,8 +7,10 @@ import WayofTime.bloodmagic.apibutnotreally.registry.OrbRegistry;
 import WayofTime.bloodmagic.apibutnotreally.ritual.EnumRuneType;
 import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
+import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.item.types.ComponentTypes;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -80,5 +82,61 @@ public class RegistrarBloodMagicRecipes {
         // SIX
         registrar.addBloodAltar(Ingredient.fromStacks(new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 1, 2)), OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_TRANSCENDENT), EnumAltarTier.SIX.ordinal(), 200000, 100, 200);
         registrar.addBloodAltar(new OreIngredient("glowstone"), EnumRuneType.DAWN.getScribeStack(), EnumAltarTier.SIX.ordinal(), 200000, 100, 200);
+    }
+
+    public static void registerTartaricForgeRecipes(BloodMagicRecipeRegistrar registrar) {
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM), 1, 1, "dustRedstone", "ingotGold", "blockGlass", "dyeBlue");
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1), 60, 20, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM), "gemDiamond", "blockRedstone", "blockLapis");
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 2), 240, 50, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1), "gemDiamond", "blockGold", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2));
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 3), 1000, 100, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 2), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3), new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD), EnumDemonWillType.DEFAULT.getStack());
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 4), 4000, 500, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 3), Items.NETHER_STAR);
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SENTIENT_SWORD), 0, 0, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM), new ItemStack(Items.IRON_SWORD));
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SENTIENT_AXE), 0, 0, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM), new ItemStack(Items.IRON_AXE));
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SENTIENT_PICKAXE), 0, 0, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM), new ItemStack(Items.IRON_PICKAXE));
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SENTIENT_SHOVEL), 0, 0, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM), new ItemStack(Items.IRON_SHOVEL));
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SENTIENT_BOW), 70, 0, new ItemStack(Items.BOW), new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1), "string", "string");
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES), 0, 0, "dustRedstone", "dyeWhite", "gunpowder", Items.COAL);
+        registrar.addTartaricForge(ComponentTypes.REAGENT_WATER.getStack(), 10, 3, new ItemStack(Items.SUGAR), new ItemStack(Items.WATER_BUCKET), new ItemStack(Items.WATER_BUCKET));
+        registrar.addTartaricForge(ComponentTypes.REAGENT_LAVA.getStack(), 32, 10, Items.LAVA_BUCKET, "dustRedstone", "cobblestone", "blockCoal");
+        registrar.addTartaricForge(ComponentTypes.REAGENT_VOID.getStack(), 64, 10, Items.BUCKET, "string", "string", "gunpowder");
+        registrar.addTartaricForge(ComponentTypes.REAGENT_GROWTH.getStack(), 128, 20, "treeSapling", "treeSapling", "sugarcane", Items.SUGAR);
+        registrar.addTartaricForge(ComponentTypes.REAGENT_AIR.getStack(), 128, 20, Items.GHAST_TEAR, "feather", "feather");
+        registrar.addTartaricForge(ComponentTypes.REAGENT_SIGHT.getStack(), 64, 0, RegistrarBloodMagicItems.SIGIL_DIVINATION, "blockGlass", "blockGlass", "dustGlowstone");
+        registrar.addTartaricForge(ComponentTypes.REAGENT_HOLDING.getStack(), 64, 20, "chestWood", "leather", "string", "string");
+        registrar.addTartaricForge(ComponentTypes.REAGENT_FAST_MINER.getStack(), 128, 10, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_SHOVEL, Items.GUNPOWDER);
+        registrar.addTartaricForge(ComponentTypes.REAGENT_AFFINITY.getStack(), 300, 30, RegistrarBloodMagicItems.SIGIL_WATER, RegistrarBloodMagicItems.SIGIL_AIR, RegistrarBloodMagicItems.SIGIL_LAVA, Blocks.OBSIDIAN);
+        registrar.addTartaricForge(ComponentTypes.REAGENT_SUPPRESSION.getStack(), 500, 50, RegistrarBloodMagicBlocks.TELEPOSER, Items.WATER_BUCKET, Items.LAVA_BUCKET, Items.BLAZE_ROD);
+        registrar.addTartaricForge(ComponentTypes.REAGENT_BINDING.getStack(), 400, 10, "dustGlowstone", "dustRedstone", "nuggetGold", Items.GUNPOWDER);
+        registrar.addTartaricForge(ComponentTypes.REAGENT_BLOOD_LIGHT.getStack(), 300, 10, "glowstone", Blocks.TORCH, "dustRedstone", "dustRedstone");
+        registrar.addTartaricForge(ComponentTypes.REAGENT_MAGNETISM.getStack(), 600, 10, "string", "ingotGold", "blockIron", "ingotGold");
+        registrar.addTartaricForge(ComponentTypes.REAGENT_HASTE.getStack(), 1400, 100, Items.COOKIE, Items.SUGAR, Items.COOKIE, "stone");
+        registrar.addTartaricForge(ComponentTypes.REAGENT_BRIDGE.getStack(), 600, 50, Blocks.SOUL_SAND, Blocks.SOUL_SAND, "stone", Blocks.OBSIDIAN);
+        registrar.addTartaricForge(ComponentTypes.REAGENT_SEVERANCE.getStack(), 800, 70, Items.ENDER_EYE, Items.ENDER_PEARL, "ingotGold", "ingotGold");
+        registrar.addTartaricForge(ComponentTypes.REAGENT_COMPRESSION.getStack(), 2000, 200, "blockIron", "blockGold", Blocks.OBSIDIAN, "cobblestone");
+        registrar.addTartaricForge(ComponentTypes.REAGENT_TELEPOSITION.getStack(), 1500, 200, RegistrarBloodMagicBlocks.TELEPOSER, "glowstone", "blockRedstone", "ingotGold");
+        registrar.addTartaricForge(ComponentTypes.REAGENT_TRANSPOSITION.getStack(), 1500, 200, RegistrarBloodMagicBlocks.TELEPOSER, "gemDiamond", Items.ENDER_PEARL, Blocks.OBSIDIAN);
+        registrar.addTartaricForge(ComponentTypes.REAGENT_CLAW.getStack(), 800, 120, Items.FLINT, Items.FLINT, ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC));
+        registrar.addTartaricForge(ComponentTypes.REAGENT_BOUNCE.getStack(), 200, 20, Blocks.SLIME_BLOCK, Blocks.SLIME_BLOCK, Items.LEATHER, "string");
+        registrar.addTartaricForge(ComponentTypes.REAGENT_FROST.getStack(), 80, 10, Blocks.ICE, Items.SNOWBALL, Items.SNOWBALL, "dustRedstone");
+
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SENTIENT_ARMOUR_GEM), 240, 150, Items.DIAMOND_CHESTPLATE, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1), Blocks.IRON_BLOCK, Blocks.OBSIDIAN);
+
+        registrar.addTartaricForge(ComponentTypes.FRAME_PART.getStack(), 400, 10, "blockGlass", "stone", new ItemStack(RegistrarBloodMagicItems.SLATE));
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.NODE_ROUTER), 400, 5, "stickWood", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1), "gemLapis", "gemLapis");
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.ITEM_ROUTING_NODE), 400, 5, "dustGlowstone", "dustRedstone", "blockGlass", "stone");
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.OUTPUT_ROUTING_NODE), 400, 25, "dustGlowstone", "dustRedstone", "ingotIron", new ItemStack(RegistrarBloodMagicBlocks.ITEM_ROUTING_NODE));
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.INPUT_ROUTING_NODE), 400, 25, "dustGlowstone", "dustRedstone", "ingotGold", new ItemStack(RegistrarBloodMagicBlocks.ITEM_ROUTING_NODE));
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.MASTER_ROUTING_NODE), 400, 200, "blockIron", "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2));
+
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTAL, 1, 0), 1200, 100, EnumDemonWillType.DEFAULT.getStack(), EnumDemonWillType.DEFAULT.getStack(), EnumDemonWillType.DEFAULT.getStack(), EnumDemonWillType.DEFAULT.getStack());
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTAL, 1, 1), 1200, 100, EnumDemonWillType.CORROSIVE.getStack(), EnumDemonWillType.CORROSIVE.getStack(), EnumDemonWillType.CORROSIVE.getStack(), EnumDemonWillType.CORROSIVE.getStack());
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTAL, 1, 2), 1200, 100, EnumDemonWillType.DESTRUCTIVE.getStack(), EnumDemonWillType.DESTRUCTIVE.getStack(), EnumDemonWillType.DESTRUCTIVE.getStack(), EnumDemonWillType.DESTRUCTIVE.getStack());
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTAL, 1, 3), 1200, 100, EnumDemonWillType.VENGEFUL.getStack(), EnumDemonWillType.VENGEFUL.getStack(), EnumDemonWillType.VENGEFUL.getStack(), EnumDemonWillType.VENGEFUL.getStack());
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTAL, 1, 4), 1200, 100, EnumDemonWillType.STEADFAST.getStack(), EnumDemonWillType.STEADFAST.getStack(), EnumDemonWillType.STEADFAST.getStack(), EnumDemonWillType.STEADFAST.getStack());
+
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRUCIBLE), 400, 100, Items.CAULDRON, "stone", "gemLapis", "gemDiamond");
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_PYLON), 400, 50, "blockIron", "stone", "gemLapis", RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL);
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTALLIZER), 500, 100, RegistrarBloodMagicBlocks.SOUL_FORGE, "stone", "gemLapis", "blockGlass");
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.DEMON_WILL_GAUGE), 400, 50, "ingotGold", "dustRedstone", "blockGlass", RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL);
     }
 }

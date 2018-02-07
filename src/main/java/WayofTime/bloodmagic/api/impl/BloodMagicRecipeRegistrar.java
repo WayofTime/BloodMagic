@@ -186,8 +186,12 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
                 continue;
 
             for (int i = 0; i < input.size(); i++) {
+                boolean matched = false;
                 Ingredient ingredient = recipe.getInput().get(i);
-                if (!ingredient.apply(input.get(i)))
+                if (ingredient.apply(input.get(i)))
+                    matched = true;
+
+                if (!matched)
                     continue mainLoop;
             }
 

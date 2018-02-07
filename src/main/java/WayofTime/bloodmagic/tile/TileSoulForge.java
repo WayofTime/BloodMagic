@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
 import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.recipe.TartaricForgeRecipe;
-import WayofTime.bloodmagic.apibutnotreally.registry.TartaricForgeRecipeRegistry;
 import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWill;
 import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWillConduit;
@@ -73,20 +73,18 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
 
         List<ItemStack> inputList = new ArrayList<ItemStack>();
 
-        for (int i = 0; i < 4; i++) {
-            if (!getStackInSlot(i).isEmpty()) {
+        for (int i = 0; i < 4; i++)
+            if (!getStackInSlot(i).isEmpty())
                 inputList.add(getStackInSlot(i));
-            }
-        }
 
-        TartaricForgeRecipe recipe = TartaricForgeRecipeRegistry.getMatchingRecipe(inputList, getWorld(), getPos());
+        RecipeTartaricForge recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForge(inputList);
         if (recipe != null && (soulsInGem >= recipe.getMinimumSouls() || burnTime > 0)) {
             if (canCraft(recipe)) {
                 burnTime++;
 
                 if (burnTime == ticksRequired) {
                     if (!getWorld().isRemote) {
-                        double requiredSouls = recipe.getSoulsDrained();
+                        double requiredSouls = recipe.getSoulDrain();
                         if (requiredSouls > 0) {
                             if (!getWorld().isRemote && soulsInGem >= recipe.getMinimumSouls()) {
                                 consumeSouls(EnumDemonWillType.DEFAULT, requiredSouls);
@@ -113,12 +111,11 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
         return ((double) burnTime) / ticksRequired;
     }
 
-    private boolean canCraft(TartaricForgeRecipe recipe) {
-        if (recipe == null) {
+    private boolean canCraft(RecipeTartaricForge recipe) {
+        if (recipe == null)
             return false;
-        }
 
-        ItemStack outputStack = recipe.getRecipeOutput();
+        ItemStack outputStack = recipe.getOutput();
         ItemStack currentOutputStack = getStackInSlot(outputSlot);
         if (outputStack.isEmpty())
             return false;
@@ -131,9 +128,9 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
 
     }
 
-    public void craftItem(TartaricForgeRecipe recipe) {
+    public void craftItem(RecipeTartaricForge recipe) {
         if (this.canCraft(recipe)) {
-            ItemStack outputStack = recipe.getRecipeOutput();
+            ItemStack outputStack = recipe.getOutput();
             ItemStack currentOutputStack = getStackInSlot(outputSlot);
 
             if (currentOutputStack.isEmpty()) {
