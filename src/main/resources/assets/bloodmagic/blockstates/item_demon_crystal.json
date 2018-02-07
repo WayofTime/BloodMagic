@@ -6,27 +6,27 @@
   },
   "variants": {
     "type": {
-      "crystaldefault": {
+      "default": {
         "textures": {
           "layer0": "bloodmagic:items/DefaultCrystal"
         }
       },
-      "crystalcorrosive": {
+      "corrosive": {
         "textures": {
           "layer0": "bloodmagic:items/CorrosiveCrystal"
         }
       },
-      "crystalvengeful": {
+      "vengeful": {
         "textures": {
           "layer0": "bloodmagic:items/VengefulCrystal"
         }
       },
-      "crystaldestructive": {
+      "destructive": {
         "textures": {
           "layer0": "bloodmagic:items/DestructiveCrystal"
         }
       },
-      "crystalsteadfast": {
+      "steadfast": {
         "textures": {
           "layer0": "bloodmagic:items/SteadfastCrystal"
         }

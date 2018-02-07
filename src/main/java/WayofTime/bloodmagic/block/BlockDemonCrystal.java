@@ -181,19 +181,19 @@ public class BlockDemonCrystal extends Block {
         ItemStack stack = null;
         switch (type) {
             case CORROSIVE:
-                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_CORROSIVE);
+                stack = EnumDemonWillType.CORROSIVE.getStack();
                 break;
             case DEFAULT:
-                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT);
+                stack = EnumDemonWillType.DEFAULT.getStack();
                 break;
             case DESTRUCTIVE:
-                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DESTRUCTIVE);
+                stack = EnumDemonWillType.DESTRUCTIVE.getStack();
                 break;
             case STEADFAST:
-                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_STEADFAST);
+                stack = EnumDemonWillType.STEADFAST.getStack();
                 break;
             case VENGEFUL:
-                stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_VENGEFUL);
+                stack = EnumDemonWillType.VENGEFUL.getStack();
                 break;
         }
 
