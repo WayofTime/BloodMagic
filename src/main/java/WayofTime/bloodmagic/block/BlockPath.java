@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.incense.IIncensePath;
+import WayofTime.bloodmagic.incense.IIncensePath;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumPath;
 import WayofTime.bloodmagic.util.helper.TextHelper;

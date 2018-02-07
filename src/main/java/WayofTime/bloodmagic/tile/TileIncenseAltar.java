@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.apibutnotreally.incense.EnumTranquilityType;
-import WayofTime.bloodmagic.apibutnotreally.incense.IIncensePath;
-import WayofTime.bloodmagic.apibutnotreally.incense.IncenseTranquilityRegistry;
-import WayofTime.bloodmagic.apibutnotreally.incense.TranquilityStack;
+import WayofTime.bloodmagic.incense.EnumTranquilityType;
+import WayofTime.bloodmagic.incense.IIncensePath;
+import WayofTime.bloodmagic.incense.IncenseTranquilityRegistry;
+import WayofTime.bloodmagic.incense.TranquilityStack;
 import WayofTime.bloodmagic.apibutnotreally.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.incense.IncenseAltarHandler;

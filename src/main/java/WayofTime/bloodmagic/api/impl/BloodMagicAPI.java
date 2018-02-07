@@ -18,13 +18,13 @@ public class BloodMagicAPI implements IBloodMagicAPI {
 
     private final BloodMagicBlacklist blacklist;
     private final BloodMagicRecipeRegistrar recipeRegistrar;
-    private final Map<ResourceLocation, Integer> sacrificialValues;
+    private final BloodMagicValueManager valueManager;
     private final Multimap<EnumAltarComponent, IBlockState> altarComponents;
 
     public BloodMagicAPI() {
         this.blacklist = new BloodMagicBlacklist();
         this.recipeRegistrar = new BloodMagicRecipeRegistrar();
-        this.sacrificialValues = Maps.newHashMap();
+        this.valueManager = new BloodMagicValueManager();
         this.altarComponents = ArrayListMultimap.create();
     }
 
@@ -40,9 +40,10 @@ public class BloodMagicAPI implements IBloodMagicAPI {
         return recipeRegistrar;
     }
 
+    @Nonnull
     @Override
-    public void setSacrificialValue(@Nonnull ResourceLocation entityId, int value) {
-        sacrificialValues.put(entityId, value);
+    public BloodMagicValueManager getValueManager() {
+        return valueManager;
     }
 
     @Override
@@ -56,11 +57,6 @@ public class BloodMagicAPI implements IBloodMagicAPI {
         }
 
         altarComponents.put(component, state);
-    }
-
-    @Nonnull
-    public Map<ResourceLocation, Integer> getSacrificialValues() {
-        return ImmutableMap.copyOf(sacrificialValues);
     }
 
     @Nonnull

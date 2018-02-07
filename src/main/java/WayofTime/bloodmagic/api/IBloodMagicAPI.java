@@ -18,7 +18,8 @@ public interface IBloodMagicAPI {
     @Nonnull
     IBloodMagicRecipeRegistrar getRecipeRegistrar();
 
-    void setSacrificialValue(@Nonnull ResourceLocation entityId, int value);
+    @Nonnull
+    IBloodMagicValueManager getValueManager();
 
     void registerAltarComponent(@Nonnull IBlockState state, @Nonnull String componentType);
 }

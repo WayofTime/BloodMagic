@@ -6,6 +6,8 @@ import WayofTime.bloodmagic.apibutnotreally.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.BloodMagicPlugin;
 import WayofTime.bloodmagic.api.IBloodMagicAPI;
 import WayofTime.bloodmagic.api.IBloodMagicPlugin;
+import WayofTime.bloodmagic.incense.EnumTranquilityType;
+import WayofTime.bloodmagic.incense.TranquilityStack;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockDecorative;
 import WayofTime.bloodmagic.block.enums.EnumBloodRune;
@@ -25,7 +27,8 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 public class BloodMagicCorePlugin implements IBloodMagicPlugin {
 
     @Override
-    public void register(IBloodMagicAPI api) {
+    public void register(IBloodMagicAPI apiInterface) {
+        BloodMagicAPI api = (BloodMagicAPI) apiInterface;
         // Add forced blacklistings
         api.getBlacklist().addTeleposer(RegistrarBloodMagicBlocks.INPUT_ROUTING_NODE);
         api.getBlacklist().addTransposition(RegistrarBloodMagicBlocks.INPUT_ROUTING_NODE);
@@ -42,8 +45,22 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin {
         api.getBlacklist().addWellOfSuffering(new ResourceLocation("armor_stand"));
         api.getBlacklist().addWellOfSuffering(new ResourceLocation(BloodMagic.MODID, "sentient_specter"));
 
-        api.setSacrificialValue(new ResourceLocation("armor_stand"), 0);
-        api.setSacrificialValue(new ResourceLocation(BloodMagic.MODID, "sentient_specter"), 0);
+        api.getValueManager().setSacrificialValue(new ResourceLocation("armor_stand"), 0);
+        api.getValueManager().setSacrificialValue(new ResourceLocation(BloodMagic.MODID, "sentient_specter"), 0);
+
+        api.getValueManager().setTranquility(Blocks.LAVA, new TranquilityStack(EnumTranquilityType.LAVA, 1.2D));
+        api.getValueManager().setTranquility(Blocks.FLOWING_LAVA, new TranquilityStack(EnumTranquilityType.LAVA, 1.2D));
+        api.getValueManager().setTranquility(Blocks.WATER, new TranquilityStack(EnumTranquilityType.WATER, 1.0D));
+        api.getValueManager().setTranquility(Blocks.FLOWING_WATER, new TranquilityStack(EnumTranquilityType.WATER, 1.0D));
+        api.getValueManager().setTranquility(RegistrarBloodMagicBlocks.LIFE_ESSENCE, new TranquilityStack(EnumTranquilityType.WATER, 1.5D));
+        api.getValueManager().setTranquility(Blocks.NETHERRACK, new TranquilityStack(EnumTranquilityType.FIRE, 0.5D));
+        api.getValueManager().setTranquility(Blocks.DIRT, new TranquilityStack(EnumTranquilityType.EARTHEN, 0.25D));
+        api.getValueManager().setTranquility(Blocks.FARMLAND, new TranquilityStack(EnumTranquilityType.EARTHEN, 1.0D));
+        api.getValueManager().setTranquility(Blocks.POTATOES, new TranquilityStack(EnumTranquilityType.CROP, 1.0D));
+        api.getValueManager().setTranquility(Blocks.CARROTS, new TranquilityStack(EnumTranquilityType.CROP, 1.0D));
+        api.getValueManager().setTranquility(Blocks.WHEAT, new TranquilityStack(EnumTranquilityType.CROP, 1.0D));
+        api.getValueManager().setTranquility(Blocks.NETHER_WART, new TranquilityStack(EnumTranquilityType.CROP, 1.0D));
+        api.getValueManager().setTranquility(Blocks.BEETROOTS, new TranquilityStack(EnumTranquilityType.CROP, 1.0D));
 
         handleConfigValues(api);
 
@@ -62,9 +79,9 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin {
         for (EnumBloodRune runeType : EnumBloodRune.values())
             api.registerAltarComponent(bloodRune.getDefaultState().withProperty(bloodRune.getProperty(), runeType), EnumAltarComponent.BLOODRUNE.name());
 
-        RegistrarBloodMagicRecipes.registerAltarRecipes(((BloodMagicAPI) api).getRecipeRegistrar());
-        RegistrarBloodMagicRecipes.registerAlchemyTableRecipes(((BloodMagicAPI) api).getRecipeRegistrar());
-        RegistrarBloodMagicRecipes.registerTartaricForgeRecipes(((BloodMagicAPI) api).getRecipeRegistrar());
+        RegistrarBloodMagicRecipes.registerAltarRecipes(api.getRecipeRegistrar());
+        RegistrarBloodMagicRecipes.registerAlchemyTableRecipes(api.getRecipeRegistrar());
+        RegistrarBloodMagicRecipes.registerTartaricForgeRecipes(api.getRecipeRegistrar());
     }
 
     private static void handleConfigValues(IBloodMagicAPI api) {
@@ -73,7 +90,7 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin {
             if (split.length != 2) // Not valid format
                 continue;
 
-            api.setSacrificialValue(new ResourceLocation(split[0]), Integer.parseInt(split[1]));
+            api.getValueManager().setSacrificialValue(new ResourceLocation(split[0]), Integer.parseInt(split[1]));
         }
 
         for (String value : ConfigHandler.blacklist.teleposer) {

@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.apibutnotreally.incense;
+package WayofTime.bloodmagic.incense;
 
 public class TranquilityStack {
     public final EnumTranquilityType type;
