@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.compat.jei.armourDowngrade;
 
 import WayofTime.bloodmagic.apibutnotreally.recipe.LivingArmourDowngradeRecipe;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.ItemHelper.LivingUpgrades;
-import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
+import WayofTime.bloodmagic.compat.jei.BloodMagicJEIPlugin;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
@@ -20,7 +20,7 @@ public class ArmourDowngradeRecipeJEI extends BlankRecipeWrapper {
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-        List<List<ItemStack>> expanded = BloodMagicPlugin.jeiHelper.getStackHelper().expandRecipeItemStackInputs(recipe.getInput());
+        List<List<ItemStack>> expanded = BloodMagicJEIPlugin.jeiHelper.getStackHelper().expandRecipeItemStackInputs(recipe.getInput());
         expanded.add(Lists.newArrayList(recipe.getKey()));
         ingredients.setInputLists(ItemStack.class, expanded);
         ItemStack upgradeStack = new ItemStack(RegistrarBloodMagicItems.UPGRADE_TOME);

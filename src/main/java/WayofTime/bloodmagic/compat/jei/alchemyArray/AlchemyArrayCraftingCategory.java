@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.compat.jei.alchemyArray;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
+import WayofTime.bloodmagic.compat.jei.BloodMagicJEIPlugin;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -22,7 +22,7 @@ public class AlchemyArrayCraftingCategory implements IRecipeCategory {
     private static final int OUTPUT_SLOT = 2;
 
     @Nonnull
-    private final IDrawable background = BloodMagicPlugin.jeiHelper.getGuiHelper().createDrawable(new ResourceLocation(Constants.Mod.DOMAIN + "gui/jei/binding.png"), 0, 0, 100, 30);
+    private final IDrawable background = BloodMagicJEIPlugin.jeiHelper.getGuiHelper().createDrawable(new ResourceLocation(Constants.Mod.DOMAIN + "gui/jei/binding.png"), 0, 0, 100, 30);
     @Nonnull
     private final String localizedName = TextHelper.localize("jei.bloodmagic.recipe.alchemyArrayCrafting");
 

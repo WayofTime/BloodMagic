@@ -1,16 +1,17 @@
 package WayofTime.bloodmagic.compat.jei.altar;
 
+import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AltarRecipeJEI implements IRecipeWrapper {
@@ -23,13 +24,13 @@ public class AltarRecipeJEI implements IRecipeWrapper {
     private final int consumptionRate;
     private final int drainRate;
 
-    public AltarRecipeJEI(@Nonnull List<ItemStack> input, @Nonnull ItemStack output, int tier, int requiredLP, int consumptionRate, int drainRate) {
-        this.input = input;
-        this.output = output;
+    public AltarRecipeJEI(RecipeBloodAltar recipe) {
+        this.input = NonNullList.from(ItemStack.EMPTY, recipe.getInput().getMatchingStacks());
+        this.output = recipe.getOutput();
 
-        this.infoString = new String[]{TextHelper.localize("jei.bloodmagic.recipe.requiredTier", NumeralHelper.toRoman(tier)), TextHelper.localize("jei.bloodmagic.recipe.requiredLP", requiredLP)};
-        this.consumptionRate = consumptionRate;
-        this.drainRate = drainRate;
+        this.infoString = new String[]{TextHelper.localize("jei.bloodmagic.recipe.requiredTier", NumeralHelper.toRoman(recipe.getMinimumTier().toInt())), TextHelper.localize("jei.bloodmagic.recipe.requiredLP", recipe.getSyphon())};
+        this.consumptionRate = recipe.getConsumeRate();
+        this.drainRate = recipe.getDrainRate();
     }
 
     @Override
@@ -41,12 +42,12 @@ public class AltarRecipeJEI implements IRecipeWrapper {
     @Nonnull
     @Override
     public List<String> getTooltipStrings(int mouseX, int mouseY) {
-        ArrayList<String> ret = new ArrayList<String>();
+        List<String> tooltip = Lists.newArrayList();
         if (mouseX >= 13 && mouseX <= 64 && mouseY >= 27 && mouseY <= 58) {
-            ret.add(TextHelper.localize("jei.bloodmagic.recipe.consumptionRate", consumptionRate));
-            ret.add(TextHelper.localize("jei.bloodmagic.recipe.drainRate", drainRate));
+            tooltip.add(TextHelper.localize("jei.bloodmagic.recipe.consumptionRate", consumptionRate));
+            tooltip.add(TextHelper.localize("jei.bloodmagic.recipe.drainRate", drainRate));
         }
-        return ret;
+        return tooltip;
     }
 
     @Override

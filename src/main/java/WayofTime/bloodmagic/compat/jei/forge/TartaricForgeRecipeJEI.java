@@ -1,22 +1,22 @@
 package WayofTime.bloodmagic.compat.jei.forge;
 
-import WayofTime.bloodmagic.apibutnotreally.recipe.TartaricForgeRecipe;
-import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
+import WayofTime.bloodmagic.compat.jei.BloodMagicJEIPlugin;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeWrapper;
+import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import java.util.List;
 
-public class TartaricForgeRecipeJEI extends BlankRecipeWrapper {
-    private TartaricForgeRecipe recipe;
-    private List<ItemStack> validGems = new ArrayList<ItemStack>();
+public class TartaricForgeRecipeJEI implements IRecipeWrapper {
+    private RecipeTartaricForge recipe;
+    private List<ItemStack> validGems = Lists.newArrayList();
 
-    public TartaricForgeRecipeJEI(TartaricForgeRecipe recipe) {
+    public TartaricForgeRecipeJEI(RecipeTartaricForge recipe) {
         this.recipe = recipe;
 
         for (DefaultWill will : DefaultWill.values())
@@ -25,31 +25,26 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper {
     }
 
     @Override
-    public void getIngredients(IIngredients ingredients) {
-        List<List<ItemStack>> expandedInputs = BloodMagicPlugin.jeiHelper.getStackHelper().expandRecipeItemStackInputs(recipe.getInput());
+    public void getIngredients(@Nonnull IIngredients ingredients) {
+        List<List<ItemStack>> expandedInputs = BloodMagicJEIPlugin.jeiHelper.getStackHelper().expandRecipeItemStackInputs(recipe.getInput());
         expandedInputs.add(validGems);
         ingredients.setInputLists(ItemStack.class, expandedInputs);
-        ingredients.setOutput(ItemStack.class, recipe.getRecipeOutput());
+        ingredients.setOutput(ItemStack.class, recipe.getOutput());
     }
 
-    @Nullable
+    @Nonnull
     @Override
     public List<String> getTooltipStrings(int mouseX, int mouseY) {
-        ArrayList<String> ret = new ArrayList<String>();
+        List<String> tooltip = Lists.newArrayList();
         if (mouseX >= 40 && mouseX <= 60 && mouseY >= 21 && mouseY <= 34) {
-            ret.add(TextHelper.localize("jei.bloodmagic.recipe.minimumSouls", recipe.getMinimumSouls()));
-            ret.add(TextHelper.localize("jei.bloodmagic.recipe.soulsDrained", recipe.getSoulsDrained()));
-            return ret;
+            tooltip.add(TextHelper.localize("jei.bloodmagic.recipe.minimumSouls", recipe.getMinimumSouls()));
+            tooltip.add(TextHelper.localize("jei.bloodmagic.recipe.soulsDrained", recipe.getSoulDrain()));
         }
-        return null;
+        return tooltip;
     }
 
-    public TartaricForgeRecipe getRecipe() {
+    public RecipeTartaricForge getRecipe() {
         return recipe;
-    }
-
-    public List<ItemStack> getValidGems() {
-        return validGems;
     }
 
     public enum DefaultWill {
