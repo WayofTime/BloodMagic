@@ -17,8 +17,8 @@ public class ContainerSoulForge extends Container {
         this.tileForge = tileForge;
         this.addSlotToContainer(new Slot(tileForge, 0, 8, 15));
         this.addSlotToContainer(new Slot(tileForge, 1, 80, 15));
-        this.addSlotToContainer(new Slot(tileForge, 2, 80, 87));
-        this.addSlotToContainer(new Slot(tileForge, 3, 8, 87));
+        this.addSlotToContainer(new Slot(tileForge, 2, 8, 87));
+        this.addSlotToContainer(new Slot(tileForge, 3, 80, 87));
         this.addSlotToContainer(new SlotSoul(tileForge, TileSoulForge.soulSlot, 152, 51));
         this.addSlotToContainer(new SlotOutput(tileForge, TileSoulForge.outputSlot, 44, 51));
 

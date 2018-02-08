@@ -11,6 +11,7 @@ import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,28 +116,26 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
         if (recipe == null)
             return false;
 
-        ItemStack outputStack = recipe.getOutput();
         ItemStack currentOutputStack = getStackInSlot(outputSlot);
-        if (outputStack.isEmpty())
+        if (recipe.getOutput().isEmpty())
             return false;
         if (currentOutputStack.isEmpty())
             return true;
-        if (!currentOutputStack.isItemEqual(outputStack))
+        if (!currentOutputStack.isItemEqual(recipe.getOutput()))
             return false;
-        int result = currentOutputStack.getCount() + outputStack.getCount();
+        int result = currentOutputStack.getCount() + recipe.getOutput().getCount();
         return result <= getInventoryStackLimit() && result <= currentOutputStack.getMaxStackSize();
 
     }
 
     public void craftItem(RecipeTartaricForge recipe) {
         if (this.canCraft(recipe)) {
-            ItemStack outputStack = recipe.getOutput();
             ItemStack currentOutputStack = getStackInSlot(outputSlot);
 
             if (currentOutputStack.isEmpty()) {
-                setInventorySlotContents(outputSlot, outputStack);
-            } else if (currentOutputStack.getItem() == currentOutputStack.getItem()) {
-                currentOutputStack.grow(outputStack.getCount());
+                setInventorySlotContents(outputSlot, recipe.getOutput().copy());
+            } else if (ItemHandlerHelper.canItemStacksStack(currentOutputStack, recipe.getOutput())) {
+                currentOutputStack.grow(recipe.getOutput().getCount());
             }
 
             consumeInventory();
