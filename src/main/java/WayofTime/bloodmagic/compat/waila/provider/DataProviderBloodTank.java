@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
 import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.block.BlockBloodTank;
 import WayofTime.bloodmagic.tile.TileBloodTank;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -15,54 +14,38 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class DataProviderBloodTank implements IWailaDataProvider {
-    @Override
-    public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
 
-    @Override
-    public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
+    public static final IWailaDataProvider INSTANCE = new DataProviderBloodTank();
 
+    @Nonnull
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         if (!config.getConfig(Constants.Compat.WAILA_CONFIG_BLOOD_TANK) && !config.getConfig("capability.tankinfo"))
             return currenttip;
 
-        if (accessor.getPlayer().isSneaking() || config.getConfig(Constants.Compat.WAILA_CONFIG_BYPASS_SNEAK)) {
-            if (accessor.getBlock() instanceof BlockBloodTank && accessor.getTileEntity() instanceof TileBloodTank) {
-                TileBloodTank bloodTank = (TileBloodTank) accessor.getTileEntity();
-                NBTTagCompound tag = accessor.getNBTData();
-                int capacity = accessor.getNBTData().getInteger(Constants.NBT.ALTAR_CAPACITY);
-                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.tier", bloodTank.getBlockMetadata() + 1));
-                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.capacity", capacity));
-
-                FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(Constants.NBT.TANK));
-                if (fluidStack != null) {
-                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.type", fluidStack.getLocalizedName()));
-                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.amount", fluidStack.amount, capacity));
-                }
-            }
-        } else {
-            currenttip.add(TextHelper.localizeEffect("waila.bloodmagic.sneak"));
+        currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.tier", accessor.getNBTData().getInteger("tier")));
+        currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.capacity", accessor.getNBTData().getInteger("capacity")));
+        if (accessor.getNBTData().hasKey("fluid")) {
+            FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(accessor.getNBTData().getCompoundTag("fluid"));
+            currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.type", fluidStack.getLocalizedName()));
+            currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.amount", fluidStack.amount, accessor.getNBTData().getInteger("capacity")));
         }
 
         return currenttip;
     }
 
-    @Override
-    public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
-
+    @Nonnull
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
-        if (te != null)
-            te.writeToNBT(tag);
+        TileBloodTank tank = (TileBloodTank) te;
+        tag.setInteger("tier", tank.getBlockMetadata() + 1);
+        tag.setInteger("capacity", tank.capacity);
+        if (tank.getTank().getFluid() != null)
+            tag.setTag("fluid", tank.getTank().getFluid().writeToNBT(new NBTTagCompound()));
         return tag;
     }
 }

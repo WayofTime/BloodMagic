@@ -5,44 +5,53 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class DataProviderMimic implements IWailaDataProvider {
 
+    public static final IWailaDataProvider INSTANCE = new DataProviderMimic();
+
+    @Nonnull
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        if (accessor.getNBTData().getBoolean("hasItem"))
-            return new ItemStack(accessor.getNBTData());
+        if (accessor.getNBTData().hasKey("mimiced")) {
+            NBTTagCompound mimiced = accessor.getNBTData().getCompoundTag("mimiced");
+            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(mimiced.getString("id")));
+            int meta = mimiced.getInteger("data");
+            ItemStack ret = new ItemStack(item, 1, meta);
+            if (mimiced.hasKey("nbt"))
+                ret.setTagCompound(mimiced.getCompoundTag("nbt"));
 
-        return new ItemStack(accessor.getBlock(), 1, accessor.getMetadata());
+            return ret;
+        }
+
+        return ItemStack.EMPTY;
     }
 
-    @Override
-    public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
-
-    @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
-
-    @Override
-    public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
-
+    @Nonnull
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
-        if (te instanceof TileMimic && ((TileMimic) te).getStackInSlot(0) != null) {
-            tag.setBoolean("hasItem", true);
-            ((TileMimic) te).getStackInSlot(0).writeToNBT(tag);
+        TileMimic mimic = (TileMimic) te;
+        ItemStack mimiced = mimic.getStackInSlot(0);
+        if (!mimiced.isEmpty()) {
+            NBTTagCompound item = new NBTTagCompound();
+            item.setString("id", mimiced.getItem().getRegistryName().toString());
+            item.setInteger("data", mimiced.getMetadata());
+            NBTTagCompound shareTag = mimiced.getItem().getNBTShareTag(mimiced);
+            if (shareTag != null)
+                item.setTag("nbt", shareTag);
+
+            tag.setTag("mimiced", item);
         }
         return tag;
     }

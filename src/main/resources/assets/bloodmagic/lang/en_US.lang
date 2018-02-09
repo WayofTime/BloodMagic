@@ -469,6 +469,7 @@ tooltip.bloodmagic.arcaneAshes=Ashes used to draw an alchemy circle
 
 tooltip.bloodmagic.telepositionFocus.coords=Current coordinates: (%d, %d, %d)
 tooltip.bloodmagic.telepositionFocus.dimension=Dimension ID: %d
+tooltip.bloodmagic.telepositionFocus.bound=Bound: %s at %d, %d, %d
 tooltip.bloodmagic.telepositionFocus.weak=Used to move blocks in the world
 tooltip.bloodmagic.telepositionFocus.enhanced=Used to move blocks in the world
 tooltip.bloodmagic.telepositionFocus.reinforced=Used to move blocks in the world

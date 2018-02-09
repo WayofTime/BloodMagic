@@ -19,6 +19,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -27,10 +28,34 @@ import java.util.List;
  * in ImLookingAtBlood by <a href="https://github.com/Pokefenn">Pokefenn</a>.
  */
 public class DataProviderBloodAltar implements IWailaDataProvider {
+
+    public static final IWailaDataProvider INSTANCE = new DataProviderBloodAltar();
+
+    @Nonnull
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         if (!config.getConfig(Constants.Compat.WAILA_CONFIG_ALTAR))
             return currenttip;
+
+        if (accessor.getNBTData().hasKey("altar")) {
+            NBTTagCompound altarData = accessor.getNBTData().getCompoundTag("altar");
+            currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarTier", altarData.getInteger("tier")));
+            currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarCapacity", altarData.getInteger("capacity")));
+            currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentEssence", altarData.getInteger("stored")));
+
+            if (altarData.hasKey("charge")) {
+                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarProgress.percent", altarData.getInteger("progress") + "%"));
+                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentCharge", altarData.getInteger("charge")));
+            }
+        }
+
+        return currenttip;
+    }
+
+    @Nonnull
+    @Override
+    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
+        TileAltar altar = (TileAltar) te;
 
         boolean hasSigil = false;
         boolean hasSeer = false;
@@ -41,49 +66,31 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
                 break;
             }
             case SIGIL_HELD: {
-                hasSeer = holdingSeerSigil(accessor.getPlayer());
-                hasSigil = hasSeer || holdingDivinationSigil(accessor.getPlayer());
+                hasSeer = holdingSeerSigil(player);
+                hasSigil = hasSeer || holdingDivinationSigil(player);
                 break;
             }
             case SIGIL_CONTAINED: {
-                hasSeer = hasStack(new ItemStack(RegistrarBloodMagicItems.SIGIL_SEER), accessor.getPlayer());
-                hasSigil = hasSeer || hasStack(new ItemStack(RegistrarBloodMagicItems.SIGIL_DIVINATION), accessor.getPlayer());
+                hasSeer = hasStack(new ItemStack(RegistrarBloodMagicItems.SIGIL_SEER), player);
+                hasSigil = hasSeer || hasStack(new ItemStack(RegistrarBloodMagicItems.SIGIL_DIVINATION), player);
                 break;
             }
         }
 
         if (!hasSeer && !hasSigil)
-            return currenttip;
+            return tag;
 
-        if (accessor.getPlayer().isSneaking() || config.getConfig(Constants.Compat.WAILA_CONFIG_BYPASS_SNEAK)) {
-            if (accessor.getBlock() instanceof BlockAltar && accessor.getTileEntity() instanceof TileAltar) {
-                TileAltar altar = (TileAltar) accessor.getTileEntity();
-                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarTier", altar.getTier().toInt()));
-                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarCapacity", altar.getCapacity()));
-                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentEssence", altar.getCurrentBlood()));
-
-                if (hasSeer) {
-                    int charge = accessor.getNBTData().getCompoundTag("bloodAltar").getInteger(Constants.NBT.ALTAR_TOTAL_CHARGE);
-                    int progress = accessor.getNBTData().getCompoundTag("bloodAltar").getInteger(Constants.NBT.ALTAR_PROGRESS);
-                    int liquidRequired = accessor.getNBTData().getCompoundTag("bloodAltar").getInteger(Constants.NBT.ALTAR_LIQUID_REQ);
-                    int craftAmount = 1;
-                    if (accessor.getNBTData().getTagList("Items", 10).get(0).getId() == 10)
-                        craftAmount = ((NBTTagCompound) accessor.getNBTData().getTagList("Items", 10).get(0)).getByte("Count");
-                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarProgress.percent", (int) (((double) progress / (double) liquidRequired * 100) / craftAmount) + "%"));
-                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentCharge", charge));
-                }
-            }
-        } else {
-            currenttip.add(TextHelper.localizeEffect("waila.bloodmagic.sneak"));
+        NBTTagCompound altarData = new NBTTagCompound();
+        altarData.setInteger("tier", altar.getTier().toInt());
+        altarData.setInteger("capacity", altar.getCapacity());
+        altarData.setInteger("stored", altar.getCurrentBlood());
+        if (hasSeer) {
+            altarData.setInteger("progress", (int) (((double) altar.getProgress() / (double) altar.getLiquidRequired() * 100) / altar.getStackInSlot(0).getCount()));
+            altarData.setInteger("charge", altar.getTotalCharge());
         }
 
-        return currenttip;
-    }
+        tag.setTag("altar", altarData);
 
-    @Override
-    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
-        if (te != null)
-            te.writeToNBT(tag);
         return tag;
     }
 

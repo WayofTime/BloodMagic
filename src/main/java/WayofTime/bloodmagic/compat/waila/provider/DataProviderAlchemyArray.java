@@ -15,48 +15,41 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class DataProviderAlchemyArray implements IWailaDataProvider {
+
+    public static final IWailaDataProvider INSTANCE = new DataProviderAlchemyArray();
+
+    @Nonnull
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
         return new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES).setStackDisplayName(TextHelper.getFormattedText(RegistrarBloodMagicBlocks.ALCHEMY_ARRAY.getLocalizedName()));
     }
 
-    @Override
-    public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
-
+    @Nonnull
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         if (!config.getConfig(Constants.Compat.WAILA_CONFIG_ARRAY))
             return currenttip;
 
-        if (accessor.getPlayer().isSneaking() || config.getConfig(Constants.Compat.WAILA_CONFIG_BYPASS_SNEAK)) {
-            TileEntity tile = accessor.getTileEntity();
-            if (tile instanceof TileAlchemyArray) {
-                TileAlchemyArray tileArray = (TileAlchemyArray) tile;
-                if (!tileArray.getStackInSlot(0).isEmpty())
-                    currenttip.add(TextHelper.localize("waila.bloodmagic.array.reagent", tileArray.getStackInSlot(0).getDisplayName()));
-
-                if (!tileArray.getStackInSlot(1).isEmpty())
-                    currenttip.add(TextHelper.localize("waila.bloodmagic.array.catalyst", tileArray.getStackInSlot(1).getDisplayName()));
-            }
-        } else {
-            currenttip.add(TextHelper.localizeEffect("waila.bloodmagic.sneak"));
-        }
+        if (accessor.getNBTData().hasKey("reagent"))
+            currenttip.add(TextHelper.localize("waila.bloodmagic.array.reagent", accessor.getNBTData().getString("reagent")));
+        if (accessor.getNBTData().hasKey("catalyst"))
+            currenttip.add(TextHelper.localize("waila.bloodmagic.array.catalyst", accessor.getNBTData().getString("catalyst")));
 
         return currenttip;
     }
 
-    @Override
-    public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
-
+    @Nonnull
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
-        return null;
+        TileAlchemyArray alchemyArray = (TileAlchemyArray) te;
+        if (!alchemyArray.getStackInSlot(0).isEmpty())
+            tag.setString("reagent", alchemyArray.getStackInSlot(0).getDisplayName());
+        if (!alchemyArray.getStackInSlot(1).isEmpty())
+            tag.setString("catalyst", alchemyArray.getStackInSlot(1).getDisplayName());
+        return tag;
     }
 }

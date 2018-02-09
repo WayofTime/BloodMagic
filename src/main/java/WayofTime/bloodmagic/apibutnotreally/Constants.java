@@ -148,7 +148,6 @@ public class Constants {
         public static final String JEI_CATEGORY_ALCHEMYTABLE = BloodMagic.MODID + ":salchemyTable";
         public static final String JEI_CATEGORY_ARMOURDOWNGRADE = BloodMagic.MODID + ":armourDowngrade";
 
-        public static final String WAILA_CONFIG_BYPASS_SNEAK = BloodMagic.MODID + ".bypassSneak";
         public static final String WAILA_CONFIG_ALTAR = BloodMagic.MODID + ".bloodAltar";
         public static final String WAILA_CONFIG_TELEPOSER = BloodMagic.MODID + ".teleposer";
         public static final String WAILA_CONFIG_RITUAL = BloodMagic.MODID + ".ritualController";

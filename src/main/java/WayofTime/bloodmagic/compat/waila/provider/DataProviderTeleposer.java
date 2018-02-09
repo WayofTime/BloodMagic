@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
 import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.block.BlockTeleposer;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.tile.TileTeleposer;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -11,54 +10,49 @@ import mcp.mobius.waila.api.IWailaDataProvider;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
+import org.apache.commons.lang3.text.WordUtils;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class DataProviderTeleposer implements IWailaDataProvider {
-    @Override
-    public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
 
-    @Override
-    public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
+    public static final IWailaDataProvider INSTANCE = new DataProviderTeleposer();
 
+    @Nonnull
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         if (!config.getConfig(Constants.Compat.WAILA_CONFIG_TELEPOSER))
             return currenttip;
 
-        if (accessor.getPlayer().isSneaking() || config.getConfig(Constants.Compat.WAILA_CONFIG_BYPASS_SNEAK)) {
-            if (accessor.getBlock() instanceof BlockTeleposer && accessor.getTileEntity() instanceof TileTeleposer) {
-                TileTeleposer teleposer = (TileTeleposer) accessor.getTileEntity();
-                if (!teleposer.getStackInSlot(0).isEmpty()) {
-                    ItemStack contained = teleposer.getStackInSlot(0);
-                    BlockPos toPos = ((ItemTelepositionFocus) contained.getItem()).getBlockPos(contained);
-                    int dimensionID = contained.getTagCompound().getInteger(Constants.NBT.DIMENSION_ID);
+        if (accessor.getNBTData().hasKey("focus")) {
+            NBTTagCompound focusData = accessor.getNBTData().getCompoundTag("focus");
+            BlockPos boundPos = NBTUtil.getPosFromTag(focusData.getCompoundTag("pos"));
+            int boundDim = focusData.getInteger("dim");
+            String dimName = WordUtils.capitalizeFully(DimensionManager.getProviderType(boundDim).getName().replace("_", " "));
 
-                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.coords", toPos.getX(), toPos.getY(), toPos.getZ()));
-                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.dimension", dimensionID));
-                }
-            }
-        } else {
-            currenttip.add(TextHelper.localizeEffect("waila.bloodmagic.sneak"));
+            currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.bound", dimName, boundPos.getX(), boundPos.getY(), boundPos.getZ()));
         }
 
         return currenttip;
     }
 
     @Override
-    public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return null;
-    }
-
-    @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
-        return null;
+        TileTeleposer teleposer = (TileTeleposer) te;
+        ItemStack contained = teleposer.getStackInSlot(0);
+        if (!contained.isEmpty() && contained.hasTagCompound()) {
+            ItemTelepositionFocus focus = (ItemTelepositionFocus) contained.getItem();
+            NBTTagCompound focusData = new NBTTagCompound();
+            focusData.setTag("pos", NBTUtil.createPosTag(focus.getBlockPos(contained)));
+            focusData.setInteger("dim", contained.getTagCompound().getInteger(Constants.NBT.DIMENSION_ID));
+            tag.setTag("focus", focusData);
+        }
+        return tag;
     }
 }
