@@ -32,7 +32,6 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
             teleposer.add(state);
     }
 
-    @Override
     public void addTeleposer(@Nonnull Block block) {
         for (IBlockState state : block.getBlockState().getValidStates())
             addTeleposer(state);
@@ -50,7 +49,6 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
             transposition.add(state);
     }
 
-    @Override
     public void addTransposition(@Nonnull Block block) {
         for (IBlockState state : block.getBlockState().getValidStates())
             addTransposition(state);
@@ -62,7 +60,6 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
             greenGrove.add(state);
     }
 
-    @Override
     public void addGreenGrove(@Nonnull Block block) {
         for (IBlockState state : block.getBlockState().getValidStates())
             addGreenGrove(state);

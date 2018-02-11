@@ -84,7 +84,7 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin {
         RegistrarBloodMagicRecipes.registerTartaricForgeRecipes(api.getRecipeRegistrar());
     }
 
-    private static void handleConfigValues(IBloodMagicAPI api) {
+    private static void handleConfigValues(BloodMagicAPI api) {
         for (String value : ConfigHandler.values.sacrificialValues) {
             String[] split = value.split(";");
             if (split.length != 2) // Not valid format
