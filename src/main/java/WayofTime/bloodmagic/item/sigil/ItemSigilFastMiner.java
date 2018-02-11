@@ -28,7 +28,7 @@ public class ItemSigilFastMiner extends ItemSigilToggleableBase {
     public boolean performArrayEffect(World world, BlockPos pos) {
         double radius = 10;
         int ticks = 600;
-        int potionPotency = 2;
+        int potionPotency = 1;
 
         AxisAlignedBB bb = new AxisAlignedBB(pos).grow(radius);
         List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, bb);
