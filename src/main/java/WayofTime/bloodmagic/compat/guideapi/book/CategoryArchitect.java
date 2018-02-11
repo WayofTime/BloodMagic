@@ -12,7 +12,7 @@ import WayofTime.bloodmagic.compat.guideapi.page.PageTartaricForgeRecipe;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.item.ItemComponent;
+import WayofTime.bloodmagic.item.types.ComponentTypes;
 import WayofTime.bloodmagic.util.helper.RecipeHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.IPage;
@@ -140,7 +140,7 @@ public class CategoryArchitect {
 
         List<IPage> waterPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe waterRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_WATER));
+        TartaricForgeRecipe waterRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_WATER.getStack());
         if (waterRecipe != null) {
             waterPages.add(new PageTartaricForgeRecipe(waterRecipe));
         }
@@ -155,7 +155,7 @@ public class CategoryArchitect {
 
         List<IPage> lavaPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe lavaRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_LAVA));
+        TartaricForgeRecipe lavaRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_LAVA.getStack());
         if (lavaRecipe != null) {
             lavaPages.add(new PageTartaricForgeRecipe(lavaRecipe));
         }
@@ -220,7 +220,7 @@ public class CategoryArchitect {
 
         List<IPage> holdingPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe holdingRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_HOLDING));
+        TartaricForgeRecipe holdingRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_HOLDING.getStack());
         if (holdingRecipe != null) {
             holdingPages.add(new PageTartaricForgeRecipe(holdingRecipe));
         }
@@ -235,7 +235,7 @@ public class CategoryArchitect {
 
         List<IPage> airPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe airRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_AIR));
+        TartaricForgeRecipe airRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_AIR.getStack());
         if (airRecipe != null) {
             airPages.add(new PageTartaricForgeRecipe(airRecipe));
         }
@@ -250,7 +250,7 @@ public class CategoryArchitect {
 
         List<IPage> voidPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe voidRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_VOID));
+        TartaricForgeRecipe voidRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_VOID.getStack());
         if (voidRecipe != null) {
             voidPages.add(new PageTartaricForgeRecipe(voidRecipe));
         }
@@ -265,7 +265,7 @@ public class CategoryArchitect {
 
         List<IPage> greenGrovePages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe greenGroveRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_GROWTH));
+        TartaricForgeRecipe greenGroveRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_GROWTH.getStack());
         if (greenGroveRecipe != null) {
             greenGrovePages.add(new PageTartaricForgeRecipe(greenGroveRecipe));
         }
@@ -280,7 +280,7 @@ public class CategoryArchitect {
 
         List<IPage> fastMinerPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe fastMinerRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_FASTMINER));
+        TartaricForgeRecipe fastMinerRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_FAST_MINER.getStack());
         if (fastMinerRecipe != null) {
             fastMinerPages.add(new PageTartaricForgeRecipe(fastMinerRecipe));
         }
@@ -295,7 +295,7 @@ public class CategoryArchitect {
 
         List<IPage> seerPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe seerRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_SIGHT));
+        TartaricForgeRecipe seerRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_SIGHT.getStack());
         if (seerRecipe != null) {
             seerPages.add(new PageTartaricForgeRecipe(seerRecipe));
         }
@@ -340,7 +340,7 @@ public class CategoryArchitect {
 
         List<IPage> affinityPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe affinityRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_AFFINITY));
+        TartaricForgeRecipe affinityRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_AFFINITY.getStack());
         if (affinityRecipe != null) {
             affinityPages.add(new PageTartaricForgeRecipe(affinityRecipe));
         }
@@ -355,7 +355,7 @@ public class CategoryArchitect {
 
         List<IPage> lampPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe lampRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_BLOODLIGHT));
+        TartaricForgeRecipe lampRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_BLOOD_LIGHT.getStack());
         if (lampRecipe != null) {
             lampPages.add(new PageTartaricForgeRecipe(lampRecipe));
         }
@@ -370,7 +370,7 @@ public class CategoryArchitect {
 
         List<IPage> magnetismPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe magnetismRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_MAGNETISM));
+        TartaricForgeRecipe magnetismRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_MAGNETISM.getStack());
         if (magnetismRecipe != null) {
             magnetismPages.add(new PageTartaricForgeRecipe(magnetismRecipe));
         }
@@ -395,7 +395,7 @@ public class CategoryArchitect {
 
         List<IPage> livingArmourPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe bindingRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_BINDING));
+        TartaricForgeRecipe bindingRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_BINDING.getStack());
         if (bindingRecipe != null) {
             livingArmourPages.add(new PageTartaricForgeRecipe(bindingRecipe));
         }
@@ -535,7 +535,7 @@ public class CategoryArchitect {
 
         List<IPage> suppressionPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe suppressionRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION));
+        TartaricForgeRecipe suppressionRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_SUPPRESSION.getStack());
         if (suppressionRecipe != null) {
             suppressionPages.add(new PageTartaricForgeRecipe(suppressionRecipe));
         }
@@ -550,7 +550,7 @@ public class CategoryArchitect {
 
         List<IPage> hastePages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe hasteRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_HASTE));
+        TartaricForgeRecipe hasteRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_HASTE.getStack());
         if (hasteRecipe != null) {
             hastePages.add(new PageTartaricForgeRecipe(hasteRecipe));
         }
@@ -565,7 +565,7 @@ public class CategoryArchitect {
 
         List<IPage> severancePages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe severanceRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_SEVERANCE));
+        TartaricForgeRecipe severanceRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_SEVERANCE.getStack());
         if (severanceRecipe != null) {
             severancePages.add(new PageTartaricForgeRecipe(severanceRecipe));
         }
@@ -580,7 +580,7 @@ public class CategoryArchitect {
 
         List<IPage> telepositionPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe telepositionRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_TELEPOSITION));
+        TartaricForgeRecipe telepositionRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_TELEPOSITION.getStack());
         if (telepositionRecipe != null) {
             telepositionPages.add(new PageTartaricForgeRecipe(telepositionRecipe));
         }
@@ -595,7 +595,7 @@ public class CategoryArchitect {
 
         List<IPage> compressionPages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe compressionRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_COMPRESSION));
+        TartaricForgeRecipe compressionRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_COMPRESSION.getStack());
         if (compressionRecipe != null) {
             compressionPages.add(new PageTartaricForgeRecipe(compressionRecipe));
         }
@@ -610,7 +610,7 @@ public class CategoryArchitect {
 
         List<IPage> bridgePages = new ArrayList<IPage>();
 
-        TartaricForgeRecipe bridgeRecipe = RecipeHelper.getForgeRecipeForOutput(ItemComponent.getStack(ItemComponent.REAGENT_BRIDGE));
+        TartaricForgeRecipe bridgeRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_BRIDGE.getStack());
         if (bridgeRecipe != null) {
             bridgePages.add(new PageTartaricForgeRecipe(bridgeRecipe));
         }
