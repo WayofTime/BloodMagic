@@ -19,7 +19,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -91,16 +91,19 @@ public class RegistrarBloodMagic {
     @SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
         int entities = 0;
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "blood_light"), EntityBloodLight.class, "BloodLight", ++entities, BloodMagic.instance, 16 * 4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "soul_snare"), EntitySoulSnare.class, "SoulSnare", ++entities, BloodMagic.instance, 16 * 4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "soul_arrow"), EntitySentientArrow.class, "SoulArrow", ++entities, BloodMagic.instance, 16 * 4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "meteor"), EntityMeteor.class, "Meteor", ++entities, BloodMagic.instance, 16 * 4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "sentient_specter"), EntitySentientSpecter.class, "SentientSpecter", ++entities, BloodMagic.instance, 16 * 4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "mimic"), EntityMimic.class, "Mimic", ++entities, BloodMagic.instance, 16 * 4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_zombie"), EntityCorruptedZombie.class, "CorruptedZombie", ++entities, BloodMagic.instance, 16 * 4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_sheep"), EntityCorruptedSheep.class, "CorruptedSheep", ++entities, BloodMagic.instance, 16 * 4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_chicken"), EntityCorruptedChicken.class, "CorruptedChicken", ++entities, BloodMagic.instance, 16 * 4, 3, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(BloodMagic.MODID, "corrupted_spider"), EntityCorruptedSpider.class, "CorruptedSpider", ++entities, BloodMagic.instance, 16 * 4, 3, true);
+
+        event.getRegistry().registerAll(
+                EntityEntryBuilder.create().id("blood_light", ++entities).entity(EntityBloodLight.class).name("blood_light").tracker(16 * 4, 3, true).build(),
+                EntityEntryBuilder.create().id("soul_snare", ++entities).entity(EntitySoulSnare.class).name("soul_snare").tracker(16 * 4, 3, true).build(),
+                EntityEntryBuilder.create().id("soul_arrow", ++entities).entity(EntitySentientArrow.class).name("sentient_arrow").tracker(16 * 4, 3, true).build(),
+                EntityEntryBuilder.create().id("meteor", ++entities).entity(EntityMeteor.class).name("meteor").tracker(16 * 4, 3, true).build(),
+                EntityEntryBuilder.create().id("sentient_specter", ++entities).entity(EntitySentientSpecter.class).name("sentient_specter").tracker(16 * 4, 3, true).build(),
+                EntityEntryBuilder.create().id("mimic", ++entities).entity(EntityMimic.class).name("mimic").tracker(16 * 4, 3, true).build(),
+                EntityEntryBuilder.create().id("corrupted_zombie", ++entities).entity(EntityCorruptedZombie.class).name("corrupted_zombie").tracker(16 * 4, 3, true).build(),
+                EntityEntryBuilder.create().id("corrupted_sheep", ++entities).entity(EntityCorruptedSheep.class).name("corrupted_sheep").tracker(16 * 4, 3, true).build(),
+                EntityEntryBuilder.create().id("corrupted_chicken", ++entities).entity(EntityCorruptedChicken.class).name("corrupted_chicken").tracker(16 * 4, 3, true).build(),
+                EntityEntryBuilder.create().id("corrupted_spider", ++entities).entity(EntityCorruptedSpider.class).name("corrupted_spider").tracker(16 * 4, 3, true).build()
+        );
     }
 
     @SubscribeEvent
