@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.api.impl;
 
 import WayofTime.bloodmagic.api.IBloodMagicRecipeRegistrar;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
@@ -13,6 +14,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
 import javax.annotation.Nonnegative;
@@ -26,11 +28,13 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     private final Set<RecipeBloodAltar> altarRecipes;
     private final Set<RecipeAlchemyTable> alchemyRecipes;
     private final Set<RecipeTartaricForge> tartaricForgeRecipes;
+    private final Set<RecipeAlchemyArray> alchemyArrayRecipes;
 
     public BloodMagicRecipeRegistrar() {
         this.altarRecipes = Sets.newHashSet();
         this.alchemyRecipes = Sets.newHashSet();
         this.tartaricForgeRecipes = Sets.newHashSet();
+        this.alchemyArrayRecipes = Sets.newHashSet();
     }
 
     @Override
@@ -138,6 +142,31 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
         addTartaricForge(output, minimumSouls, soulDrain, ingredients.toArray(new Ingredient[0]));
     }
 
+    @Override
+    public void addAlchemyArray(@Nonnull Ingredient input, @Nonnull Ingredient catalyst, @Nonnull ItemStack output, @Nullable ResourceLocation circleTexture) {
+        Preconditions.checkNotNull(input, "input cannot be null.");
+        Preconditions.checkNotNull(catalyst, "catalyst cannot be null.");
+        Preconditions.checkNotNull(output, "output cannot be null.");
+
+        alchemyArrayRecipes.add(new RecipeAlchemyArray(input, catalyst, output, circleTexture));
+    }
+
+    @Override
+    public boolean removeAlchemyArray(@Nonnull ItemStack input, @Nonnull ItemStack catalyst) {
+        Preconditions.checkNotNull(input, "input cannot be null.");
+        Preconditions.checkNotNull(catalyst, "catalyst cannot be null.");
+
+        return alchemyArrayRecipes.remove(getAlchemyArray(input, catalyst));
+    }
+
+    public void addAlchemyArray(@Nonnull ItemStack input, @Nonnull ItemStack catalyst, @Nonnull ItemStack output, @Nullable ResourceLocation circleTexture) {
+        Preconditions.checkNotNull(input, "input cannot be null.");
+        Preconditions.checkNotNull(catalyst, "catalyst cannot be null.");
+        Preconditions.checkNotNull(output, "output cannot be null.");
+
+        addAlchemyArray(Ingredient.fromStacks(input), Ingredient.fromStacks(catalyst), output, circleTexture);
+    }
+
     @Nullable
     public RecipeBloodAltar getBloodAltar(@Nonnull ItemStack input) {
         Preconditions.checkNotNull(input, "input cannot be null.");
@@ -201,6 +230,19 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
         return null;
     }
 
+    @Nullable
+    public RecipeAlchemyArray getAlchemyArray(@Nonnull ItemStack input, @Nonnull ItemStack catalyst) {
+        Preconditions.checkNotNull(input, "input cannot be null.");
+        if (input.isEmpty())
+            return null;
+
+        for (RecipeAlchemyArray recipe : alchemyArrayRecipes)
+            if (recipe.getInput().test(input) && recipe.getCatalyst().test(catalyst))
+                return recipe;
+
+        return null;
+    }
+
     public Set<RecipeBloodAltar> getAltarRecipes() {
         return ImmutableSet.copyOf(altarRecipes);
     }
@@ -211,5 +253,9 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
 
     public Set<RecipeTartaricForge> getTartaricForgeRecipes() {
         return ImmutableSet.copyOf(tartaricForgeRecipes);
+    }
+
+    public Set<RecipeAlchemyArray> getAlchemyArrayRecipes() {
+        return ImmutableSet.copyOf(alchemyArrayRecipes);
     }
 }

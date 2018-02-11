@@ -82,6 +82,7 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin {
         RegistrarBloodMagicRecipes.registerAltarRecipes(api.getRecipeRegistrar());
         RegistrarBloodMagicRecipes.registerAlchemyTableRecipes(api.getRecipeRegistrar());
         RegistrarBloodMagicRecipes.registerTartaricForgeRecipes(api.getRecipeRegistrar());
+        RegistrarBloodMagicRecipes.registerAlchemyArrayRecipes(api.getRecipeRegistrar());
     }
 
     private static void handleConfigValues(BloodMagicAPI api) {

@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.client.render.block;
 
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
 import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyCircleRenderer;
 import WayofTime.bloodmagic.apibutnotreally.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
@@ -13,6 +15,11 @@ public class RenderAlchemyArray extends TileEntitySpecialRenderer<TileAlchemyArr
         ItemStack catalystStack = alchemyArray.getStackInSlot(1);
         int craftTime = alchemyArray.activeCounter;
         AlchemyCircleRenderer renderer = AlchemyArrayRecipeRegistry.getAlchemyCircleRenderer(inputStack, catalystStack);
+        if (renderer == AlchemyArrayRecipeRegistry.DEFAULT_RENDERER) {
+            RecipeAlchemyArray recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArray(inputStack, catalystStack);
+            if (recipe != null)
+                renderer = new AlchemyCircleRenderer(recipe.getCircleTexture());
+        }
 
         renderer.renderAt(alchemyArray, x, y, z, (craftTime > 0 ? craftTime + partialTicks : 0));
     }

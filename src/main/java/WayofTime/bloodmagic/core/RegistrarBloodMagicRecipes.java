@@ -7,6 +7,7 @@ import WayofTime.bloodmagic.apibutnotreally.registry.OrbRegistry;
 import WayofTime.bloodmagic.apibutnotreally.ritual.EnumRuneType;
 import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
+import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.item.types.ComponentTypes;
@@ -138,5 +139,32 @@ public class RegistrarBloodMagicRecipes {
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_PYLON), 400, 50, "blockIron", "stone", "gemLapis", RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL);
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTALLIZER), 500, 100, RegistrarBloodMagicBlocks.SOUL_FORGE, "stone", "gemLapis", "blockGlass");
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.DEMON_WILL_GAUGE), 400, 50, "ingotGold", "dustRedstone", "blockGlass", RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL);
+    }
+
+    public static void registerAlchemyArrayRecipes(BloodMagicRecipeRegistrar registrar) {
+        registrar.addAlchemyArray(new ItemStack(Items.REDSTONE), new ItemStack(RegistrarBloodMagicItems.SLATE), new ItemStack(RegistrarBloodMagicItems.SIGIL_DIVINATION), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/DivinationSigil.png"));
+
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_WATER), new ItemStack(RegistrarBloodMagicItems.SLATE), new ItemStack(RegistrarBloodMagicItems.SIGIL_WATER), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WaterSigil.png"));
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_LAVA), new ItemStack(RegistrarBloodMagicItems.SLATE), new ItemStack(RegistrarBloodMagicItems.SIGIL_LAVA), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/LavaSigil.png"));
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_AIR), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1), new ItemStack(RegistrarBloodMagicItems.SIGIL_AIR), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/AirSigil.png"));
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_FASTMINER), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1), new ItemStack(RegistrarBloodMagicItems.SIGIL_FAST_MINER), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/FastMinerSigil.png"));
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_VOID), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1), new ItemStack(RegistrarBloodMagicItems.SIGIL_VOID), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/VoidSigil.png"));
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_GROWTH), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1), new ItemStack(RegistrarBloodMagicItems.SIGIL_GREEN_GROVE), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/GrowthSigil.png"));
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_AFFINITY), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2), new ItemStack(RegistrarBloodMagicItems.SIGIL_ELEMENTAL_AFFINITY), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/ElementalAffinitySigil.png"));
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_SIGHT), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1), new ItemStack(RegistrarBloodMagicItems.SIGIL_SEER), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SightSigil.png"));
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_HOLDING), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2), new ItemStack(RegistrarBloodMagicItems.SIGIL_HOLDING), null);
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_BLOODLIGHT), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2), new ItemStack(RegistrarBloodMagicItems.SIGIL_BLOOD_LIGHT), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/LightSigil.png"));
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_MAGNETISM), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2), new ItemStack(RegistrarBloodMagicItems.SIGIL_MAGNETISM), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/MagnetismSigil.png"));
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3), new ItemStack(RegistrarBloodMagicItems.SIGIL_SUPPRESSION), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SuppressionSigil.png"));
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_HASTE), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3), new ItemStack(RegistrarBloodMagicItems.SIGIL_HASTE), null);
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_BRIDGE), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3), new ItemStack(RegistrarBloodMagicItems.SIGIL_PHANTOM_BRIDGE), null);
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_COMPRESSION), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3), new ItemStack(RegistrarBloodMagicItems.SIGIL_COMPRESSION), null);
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_SEVERANCE), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3), new ItemStack(RegistrarBloodMagicItems.SIGIL_ENDER_SEVERANCE), null);
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_TELEPOSITION), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3), new ItemStack(RegistrarBloodMagicItems.SIGIL_TELEPOSITION), null);
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_TRANSPOSITION), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3), new ItemStack(RegistrarBloodMagicItems.SIGIL_TRANSPOSITION), null);
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_CLAW), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2), new ItemStack(RegistrarBloodMagicItems.SIGIL_CLAW), null);
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_BOUNCE), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1), new ItemStack(RegistrarBloodMagicItems.SIGIL_BOUNCE), null);
+        registrar.addAlchemyArray(ItemComponent.getStack(ItemComponent.REAGENT_FROST), new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1), new ItemStack(RegistrarBloodMagicItems.SIGIL_FROST), null);
+
     }
 }

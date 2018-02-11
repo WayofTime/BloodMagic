@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 public class AlchemyArrayRecipeRegistry {
-    public static final AlchemyCircleRenderer defaultRenderer = new AlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BaseArray.png"));
+    public static final AlchemyCircleRenderer DEFAULT_RENDERER = new AlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BaseArray.png"));
 
     private static BiMap<List<ItemStack>, AlchemyArrayRecipe> recipes = HashBiMap.create();
     private static HashMap<String, AlchemyArrayEffect> effectMap = new HashMap<String, AlchemyArrayEffect>();
@@ -56,7 +56,7 @@ public class AlchemyArrayRecipeRegistry {
             }
         }
 
-        recipes.put(input, new AlchemyArrayRecipe(input, catalystStack, arrayEffect, circleRenderer == null ? defaultRenderer : circleRenderer));
+        recipes.put(input, new AlchemyArrayRecipe(input, catalystStack, arrayEffect, circleRenderer == null ? DEFAULT_RENDERER : circleRenderer));
     }
 
     public static AlchemyArrayEffect getAlchemyArrayEffect(String key) {
@@ -136,7 +136,7 @@ public class AlchemyArrayRecipeRegistry {
     }
 
     public static void registerRecipe(ItemStack inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource) {
-        AlchemyCircleRenderer circleRenderer = arrayResource == null ? defaultRenderer : new AlchemyCircleRenderer(arrayResource);
+        AlchemyCircleRenderer circleRenderer = arrayResource == null ? DEFAULT_RENDERER : new AlchemyCircleRenderer(arrayResource);
         registerRecipe(Collections.singletonList(inputStacks), catalystStack, arrayEffect, circleRenderer);
     }
 
@@ -145,12 +145,12 @@ public class AlchemyArrayRecipeRegistry {
     }
 
     public static void registerRecipe(List<ItemStack> inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource) {
-        AlchemyCircleRenderer circleRenderer = arrayResource == null ? defaultRenderer : new AlchemyCircleRenderer(arrayResource);
+        AlchemyCircleRenderer circleRenderer = arrayResource == null ? DEFAULT_RENDERER : new AlchemyCircleRenderer(arrayResource);
         registerRecipe(inputStacks, catalystStack, arrayEffect, circleRenderer);
     }
 
     public static void registerRecipe(String inputOreDict, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource) {
-        AlchemyCircleRenderer circleRenderer = arrayResource == null ? defaultRenderer : new AlchemyCircleRenderer(arrayResource);
+        AlchemyCircleRenderer circleRenderer = arrayResource == null ? DEFAULT_RENDERER : new AlchemyCircleRenderer(arrayResource);
         registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, arrayEffect, circleRenderer);
     }
 
@@ -185,7 +185,7 @@ public class AlchemyArrayRecipeRegistry {
         for (Entry<List<ItemStack>, AlchemyArrayRecipe> entry : recipes.entrySet()) {
             AlchemyArrayRecipe arrayRecipe = entry.getValue();
             if (input.size() == 1 && arrayRecipe.getInput().size() == 1) {
-                if (ItemStackWrapper.getHolder(arrayRecipe.getInput().get(0)).equals(ItemStackWrapper.getHolder(input.get(0)))) {
+                if (ItemStack.areItemsEqual(input.get(0), arrayRecipe.input.get(0))) {
                     AlchemyArrayEffect effect = arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack);
                     if (effect != null) {
                         return effect.getNewCopy();
@@ -220,7 +220,7 @@ public class AlchemyArrayRecipeRegistry {
             }
         }
 
-        return defaultRenderer;
+        return DEFAULT_RENDERER;
     }
 
     public static AlchemyCircleRenderer getAlchemyCircleRenderer(ItemStack itemStack, @Nullable ItemStack catalystStack) {

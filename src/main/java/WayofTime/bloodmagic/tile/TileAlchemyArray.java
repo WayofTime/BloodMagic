@@ -1,7 +1,10 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
 import WayofTime.bloodmagic.apibutnotreally.Constants;
 import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyArrayEffect;
+import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyArrayEffectCraftingNew;
 import WayofTime.bloodmagic.apibutnotreally.iface.IAlchemyArray;
 import WayofTime.bloodmagic.apibutnotreally.registry.AlchemyArrayRecipeRegistry;
 import net.minecraft.block.state.IBlockState;
@@ -107,7 +110,18 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
                 }
             }
         } else {
-            return false;
+            RecipeAlchemyArray recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArray(getStackInSlot(0), getStackInSlot(1));
+            if (recipe == null)
+                return false;
+
+            AlchemyArrayEffect newEffect = new AlchemyArrayEffectCraftingNew(recipe);
+            if (arrayEffect == null) {
+                arrayEffect = newEffect;
+                key = newEffect.key;
+            } else if (!newEffect.key.equals(key)) {
+                arrayEffect = newEffect;
+                key = newEffect.key;
+            }
         }
 
         if (arrayEffect != null) {

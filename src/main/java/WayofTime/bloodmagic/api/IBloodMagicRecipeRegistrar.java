@@ -2,9 +2,11 @@ package WayofTime.bloodmagic.api;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Allows recipe addition and removal.
@@ -44,7 +46,7 @@ public interface IBloodMagicRecipeRegistrar {
     void addAlchemyTable(@Nonnull ItemStack output, @Nonnegative int syphon, @Nonnegative int ticks, @Nonnegative int minimumTier, @Nonnull Ingredient... input);
 
     /**
-     * Removes an Alchemy Table recipe based on an input {@link Ingredient} array.
+     * Removes an Alchemy Table recipe based on an input {@link ItemStack} array.
      *
      * @param input The input items to remove the recipe of.
      *
@@ -63,11 +65,31 @@ public interface IBloodMagicRecipeRegistrar {
     void addTartaricForge(@Nonnull ItemStack output, @Nonnegative double minimumSouls, @Nonnegative double soulDrain, @Nonnull Ingredient... input);
 
     /**
-     * Removes a Soul/Tartaric Forge recipe based on an input {@link Ingredient} array.
+     * Removes a Soul/Tartaric Forge recipe based on an input {@link ItemStack} array.
      *
      * @param input The input items to remove the recipe of.
      *
      * @return Whether or not a recipe was removed.
      */
     boolean removeTartaricForge(@Nonnull ItemStack... input);
+
+    /**
+     * Adds a new recipe to the Alchemy Array.
+     *
+     * @param input An input {@link Ingredient}. First item put into the Alchemy Array.
+     * @param catalyst A catalyst {@link Ingredient}. Second item put into the Alchemy Array.
+     * @param output An output {@link ItemStack}.
+     * @param circleTexture The texture to render for the Alchemy Array circle.
+     */
+    void addAlchemyArray(@Nonnull Ingredient input, @Nonnull Ingredient catalyst, @Nonnull ItemStack output, @Nullable ResourceLocation circleTexture);
+
+    /**
+     * Removes an Alchemy Array recipe based on an input {@link ItemStack} and it's catalyst {@link ItemStack}.
+     *
+     * @param input The input item to remove the recipe of.
+     * @param catalyst The catalyst item to remove the recipe of.
+     *
+     * @return Whether or not a recipe was removed.
+     */
+    boolean removeAlchemyArray(@Nonnull ItemStack input, @Nonnull ItemStack catalyst);
 }
