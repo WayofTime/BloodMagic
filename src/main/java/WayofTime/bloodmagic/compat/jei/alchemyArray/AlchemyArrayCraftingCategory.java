@@ -63,7 +63,7 @@ public class AlchemyArrayCraftingCategory implements IRecipeCategory {
 
         if (recipeWrapper instanceof AlchemyArrayCraftingRecipeJEI) {
             recipeLayout.getItemStacks().set(INPUT_SLOT, ingredients.getInputs(ItemStack.class).get(0));
-            recipeLayout.getItemStacks().set(CATALYST_SLOT, ingredients.getInputs(ItemStack.class).get(ingredients.getInputs(ItemStack.class).size() - 1));
+            recipeLayout.getItemStacks().set(CATALYST_SLOT, ingredients.getInputs(ItemStack.class).get(1));
             recipeLayout.getItemStacks().set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
         }
     }
