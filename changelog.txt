@@ -1,4 +1,22 @@
 ------------------------------------------------------
+Version 2.2.2
+------------------------------------------------------
+
+- Fixed Alchemy Arrays so they might actually function now. Might.
+    - How did this even function properly before? I have no idea.
+- Soul Snare should now stop giving the thrower ghosty debuffs. Should.
+- Blood Magic is now in the mood to launch on servers. Probably.
+- Soul Forge crafting works again! Potentially!
+- Fixed the altar nuking any and all NBT attached to output items.
+- Fixed the version not being replaced properly
+- Rewrote Hwyla integration.
+    - Should now function a lot nicer.
+- Implemented a new API for recipe registration
+    - Still need to move the alchemy table over, but otherwise this seems to function just fine.
+- Implemented a new API for registering tranquility blocks.
+    - Will allow Chisel to stop crashing
+
+------------------------------------------------------
 Version 2.2.1
 ------------------------------------------------------
 
