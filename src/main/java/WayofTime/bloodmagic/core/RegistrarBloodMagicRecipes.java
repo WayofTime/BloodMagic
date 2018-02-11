@@ -85,6 +85,10 @@ public class RegistrarBloodMagicRecipes {
         registrar.addBloodAltar(new OreIngredient("glowstone"), EnumRuneType.DAWN.getScribeStack(), EnumAltarTier.SIX.ordinal(), 200000, 100, 200);
     }
 
+    public static void registerAlchemyTableRecipes(BloodMagicRecipeRegistrar registrar) {
+
+    }
+
     public static void registerTartaricForgeRecipes(BloodMagicRecipeRegistrar registrar) {
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM), 1, 1, "dustRedstone", "ingotGold", "blockGlass", "dyeBlue");
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1), 60, 20, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM), "gemDiamond", "blockRedstone", "blockLapis");
