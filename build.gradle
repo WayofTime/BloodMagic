@@ -44,7 +44,7 @@ minecraft {
     runDir = "run"
 
     replace "@VERSION@", project.version
-    replaceIn "Constants.java"
+    replaceIn "BloodMagic.java"
 
     clientRunArgs += "--username=${username}"
 
