@@ -1,17 +1,12 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.apibutnotreally.altar.IBloodAltar;
 import WayofTime.bloodmagic.apibutnotreally.iface.IAltarReader;
 import WayofTime.bloodmagic.apibutnotreally.iface.ISigil;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.tile.TileIncenseAltar;
 import WayofTime.bloodmagic.util.ChatUtil;
-import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -48,38 +43,6 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader {
                     toSend.add(new TextComponentTranslation(tooltipBase + "otherNetwork", getOwnerName(stack)));
                 toSend.add(new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence));
                 ChatUtil.sendNoSpam(player, toSend.toArray(new ITextComponent[toSend.size()]));
-            } else {
-                if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
-
-                    TileEntity tile = world.getTileEntity(rayTrace.getBlockPos());
-
-                    if (tile != null && tile instanceof IBloodAltar) {
-                        IBloodAltar altar = (IBloodAltar) tile;
-                        int tier = altar.getTier().ordinal() + 1;
-                        int currentEssence = altar.getCurrentBlood();
-                        int capacity = altar.getCapacity();
-                        int charge = altar.getTotalCharge();
-                        altar.checkTier();
-                        if (tile instanceof IInventory) {
-                            if (!((IInventory) tile).getStackInSlot(0).isEmpty()) {
-                                int progress = altar.getProgress();
-                                int totalLiquidRequired = altar.getLiquidRequired() * ((IInventory) tile).getStackInSlot(0).getCount();
-                                int consumptionRate = (int) (altar.getConsumptionRate() * (altar.getConsumptionMultiplier() + 1));
-                                ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentAltarProgress", progress, totalLiquidRequired), new TextComponentTranslation(tooltipBase + "currentAltarConsumptionRate", consumptionRate), new TextComponentTranslation(tooltipBase + "currentAltarTier", NumeralHelper.toRoman(tier)), new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence), new TextComponentTranslation(tooltipBase + "currentAltarCapacity", capacity), new TextComponentTranslation(tooltipBase + "currentCharge", charge));
-                            } else {
-                                ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentAltarTier", NumeralHelper.toRoman(tier)), new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence), new TextComponentTranslation(tooltipBase + "currentAltarCapacity", capacity), new TextComponentTranslation(tooltipBase + "currentCharge", charge));
-                            }
-                        }
-                    } else if (tile != null && tile instanceof TileIncenseAltar) {
-                        TileIncenseAltar altar = (TileIncenseAltar) tile;
-                        altar.recheckConstruction();
-                        double tranquility = altar.tranquility;
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentTranquility", (int) ((100D * (int) (100 * tranquility)) / 100d)), new TextComponentTranslation(tooltipBase + "currentBonus", (int) (100 * altar.incenseAddition)));
-                    } else {
-                        int currentEssence = NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).getCurrentEssence();
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence));
-                    }
-                }
             }
         }
 
