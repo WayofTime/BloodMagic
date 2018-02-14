@@ -1,7 +1,7 @@
 {
   "result": {
-    "item": "bloodmagic:demon_brick_1",
-    "data": 4,
+    "item": "bloodmagic:demon_extras",
+    "data": 6,
     "count": 4
   },
   "pattern": [
@@ -12,7 +12,7 @@
   "key": {
     "s": {
       "item": "bloodmagic:demon_extras",
-      "data": 9
+      "data": 1
     }
   }
 }
