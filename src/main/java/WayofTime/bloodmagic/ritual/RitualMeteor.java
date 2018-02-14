@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.apibutnotreally.ritual.*;
 import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
+import WayofTime.bloodmagic.meteor.Meteor;
 import WayofTime.bloodmagic.meteor.MeteorRegistry;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -50,10 +51,11 @@ public class RitualMeteor extends Ritual {
 
         for (EntityItem entityItem : itemList) {
             ItemStack stack = entityItem.getItem();
-            if (MeteorRegistry.hasMeteorForItem(stack)) {
-                EntityMeteor meteor = new EntityMeteor(world, pos.getX(), 260, pos.getZ(), 0, -0.1, 0, radiusModifier, explosionModifier, fillerChance);
-                meteor.setMeteorStack(stack.copy());
-                world.spawnEntity(meteor);
+            Meteor meteor = MeteorRegistry.getMeteorForItem(stack);
+            if (meteor != null) {
+                EntityMeteor entityMeteor = new EntityMeteor(world, pos.getX(), 260, pos.getZ(), 0, -0.1, 0, radiusModifier, explosionModifier, fillerChance);
+                entityMeteor.setMeteorStack(stack.copy());
+                world.spawnEntity(entityMeteor);
 
                 entityItem.setDead();
 
