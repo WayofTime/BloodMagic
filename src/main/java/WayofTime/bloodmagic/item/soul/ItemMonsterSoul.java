@@ -1,51 +1,30 @@
 package WayofTime.bloodmagic.item.soul;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.apibutnotreally.Constants;
 import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWill;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.item.ItemEnum;
+import WayofTime.bloodmagic.item.types.ISubItem;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Locale;
 
-public class ItemMonsterSoul extends Item implements IDemonWill, IVariantProvider {
-    public static String[] names = {"base", "corrosive", "destructive", "vengeful", "steadfast"};
+public class ItemMonsterSoul extends ItemEnum.Variant<ItemMonsterSoul.WillType> implements IDemonWill {
 
     public ItemMonsterSoul() {
-        super();
+        super(WillType.class, "monster_soul");
 
-        setUnlocalizedName(BloodMagic.MODID + ".monsterSoul.");
-        setCreativeTab(BloodMagic.TAB_BM);
-        setHasSubtypes(true);
         setMaxStackSize(1);
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
-    }
-
-    @Override
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
-        if (!isInCreativeTab(creativeTab))
-            return;
-
-        for (int i = 0; i < names.length; i++)
-            list.add(new ItemStack(this, 1, i));
     }
 
     @Override
@@ -105,16 +84,6 @@ public class ItemMonsterSoul extends Item implements IDemonWill, IVariantProvide
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < names.length; i++) {
-            String name = names[i];
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + name));
-        }
-        return ret;
-    }
-
-    @Override
     public double getWill(ItemStack willStack) {
         return this.getWill(EnumDemonWillType.DEFAULT, willStack);
     }
@@ -127,5 +96,27 @@ public class ItemMonsterSoul extends Item implements IDemonWill, IVariantProvide
     @Override
     public double drainWill(ItemStack willStack, double drainAmount) {
         return this.drainWill(EnumDemonWillType.DEFAULT, willStack, drainAmount);
+    }
+
+    public enum WillType implements ISubItem {
+
+        RAW,
+        CORROSIVE,
+        DESTRUCTIVE,
+        VENGEFUL,
+        STEADFAST,
+        ;
+
+        @Nonnull
+        @Override
+        public String getInternalName() {
+            return name().toLowerCase(Locale.ROOT);
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack getStack(int count) {
+            return new ItemStack(RegistrarBloodMagicItems.MONSTER_SOUL, count, ordinal());
+        }
     }
 }

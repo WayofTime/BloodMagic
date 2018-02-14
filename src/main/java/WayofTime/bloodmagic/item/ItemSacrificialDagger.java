@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.apibutnotreally.BloodMagicAPI;
 import WayofTime.bloodmagic.apibutnotreally.Constants;
@@ -9,18 +8,18 @@ import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.item.types.ISubItem;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
@@ -30,37 +29,20 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
-public class ItemSacrificialDagger extends Item implements IMeshProvider {
-    public static String[] names = {"normal", "creative"};
+public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.DaggerType> implements IMeshProvider {
 
     public ItemSacrificialDagger() {
-        super();
+        super(DaggerType.class, "sacrificial_dagger");
 
-        setUnlocalizedName(BloodMagic.MODID + ".sacrificialDagger.");
-        setCreativeTab(BloodMagic.TAB_BM);
         setHasSubtypes(true);
         setMaxStackSize(1);
         setFull3D();
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
-        if (!isInCreativeTab(creativeTab))
-            return;
-
-        for (int i = 0; i < names.length; i++)
-            list.add(new ItemStack(this, 1, i));
     }
 
     @Override
@@ -191,9 +173,22 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider {
         return variants;
     }
 
-    @Nullable
-    @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
+    public enum DaggerType implements ISubItem {
+
+        NORMAL,
+        CREATIVE,
+        ;
+
+        @Nonnull
+        @Override
+        public String getInternalName() {
+            return name().toLowerCase(Locale.ROOT);
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack getStack(int count) {
+            return new ItemStack(RegistrarBloodMagicItems.SACRIFICIAL_DAGGER, count, ordinal());
+        }
     }
 }

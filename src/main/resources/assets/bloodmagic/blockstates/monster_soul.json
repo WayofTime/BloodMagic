@@ -6,7 +6,7 @@
   },
   "variants": {
     "type": {
-      "base": {
+      "raw": {
         "textures": {
           "layer0": "bloodmagic:items/BaseMonsterSoul"
         }

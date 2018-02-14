@@ -1,47 +1,23 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.item.types.ISubItem;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
-public class ItemSlate extends Item implements IVariantProvider {
-    public String[] names = {"blank", "reinforced", "imbued", "demonic", "ethereal"};
+public class ItemSlate extends ItemEnum.Variant<ItemSlate.SlateType> {
 
     public ItemSlate() {
-        super();
-
-        setCreativeTab(BloodMagic.TAB_BM);
-        setUnlocalizedName(BloodMagic.MODID + ".slate.");
-        setHasSubtypes(true);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
-        if (!isInCreativeTab(creativeTab))
-            return;
-
-        for (int i = 0; i < names.length; i++)
-            list.add(new ItemStack(this, 1, i));
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
+        super(SlateType.class, "slate");
     }
 
     @Override
@@ -50,14 +26,25 @@ public class ItemSlate extends Item implements IVariantProvider {
         list.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.slate.desc"))));
     }
 
-    @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=blank"));
-        ret.add(new ImmutablePair<Integer, String>(1, "type=reinforced"));
-        ret.add(new ImmutablePair<Integer, String>(2, "type=imbued"));
-        ret.add(new ImmutablePair<Integer, String>(3, "type=demonic"));
-        ret.add(new ImmutablePair<Integer, String>(4, "type=ethereal"));
-        return ret;
+    public enum SlateType implements ISubItem {
+
+        BLANK,
+        REINFORCED,
+        IMBUED,
+        DEMONIC,
+        ETHEREAL,
+        ;
+
+        @Nonnull
+        @Override
+        public String getInternalName() {
+            return name().toLowerCase(Locale.ROOT);
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack getStack(int count) {
+            return new ItemStack(RegistrarBloodMagicItems.SLATE, count, ordinal());
+        }
     }
 }

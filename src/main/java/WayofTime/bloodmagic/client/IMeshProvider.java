@@ -36,5 +36,7 @@ public interface IMeshProvider {
      * @return - The custom ResourceLocation
      */
     @Nullable
-    ResourceLocation getCustomLocation();
+    default ResourceLocation getCustomLocation() {
+        return null;
+    }
 }

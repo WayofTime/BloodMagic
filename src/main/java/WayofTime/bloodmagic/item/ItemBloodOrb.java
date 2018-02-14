@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.iface.IBindable;
 import WayofTime.bloodmagic.apibutnotreally.orb.BloodOrb;
 import WayofTime.bloodmagic.apibutnotreally.orb.IBloodOrb;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
@@ -23,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindable {
+public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb {
     public ItemBloodOrb() {
         setUnlocalizedName(BloodMagic.MODID + ".orb");
         this.setMaxDamage(0);
@@ -106,13 +105,6 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
 
     @Override
     public boolean hasContainerItem(ItemStack stack) {
-        return true;
-    }
-
-    // IBindable
-
-    @Override
-    public boolean onBind(EntityPlayer player, ItemStack stack) {
         return true;
     }
 

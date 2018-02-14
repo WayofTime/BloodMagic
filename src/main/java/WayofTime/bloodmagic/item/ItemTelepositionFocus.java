@@ -1,56 +1,35 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.apibutnotreally.iface.IBindable;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.item.types.ISubItem;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
-public class ItemTelepositionFocus extends ItemBindableBase implements IVariantProvider {
-    public static String[] names = {"weak", "enhanced", "reinforced", "demonic"};
+public class ItemTelepositionFocus extends ItemEnum.Variant<ItemTelepositionFocus.FocusType> implements IBindable {
 
     public ItemTelepositionFocus() {
-        super();
+        super(FocusType.class, "focus");
 
-        setUnlocalizedName(BloodMagic.MODID + ".focus.");
-        setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
-        setHasSubtypes(true);
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
-        if (!isInCreativeTab(creativeTab))
-            return;
-
-        for (int i = 0; i < names.length; i++)
-            list.add(new ItemStack(this, 1, i));
     }
 
     @Override
@@ -69,7 +48,7 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localize("tooltip.bloodmagic.telepositionFocus." + names[stack.getItemDamage()]))));
+        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localize("tooltip.bloodmagic.telepositionFocus." + getItemType(stack).getInternalName()))));
 
         super.addInformation(stack, world, tooltip, flag);
 
@@ -84,16 +63,6 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
             tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.coords", coords.getX(), coords.getY(), coords.getZ()));
             tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.dimension", tag.getInteger(Constants.NBT.DIMENSION_ID)));
         }
-    }
-
-    @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=weak"));
-        ret.add(new ImmutablePair<Integer, String>(1, "type=enhanced"));
-        ret.add(new ImmutablePair<Integer, String>(2, "type=reinforced"));
-        ret.add(new ImmutablePair<Integer, String>(3, "type=demonic"));
-        return ret;
     }
 
     public World getWorld(ItemStack stack) {
@@ -114,5 +83,26 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
         itemTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
         itemTag.setInteger(Constants.NBT.DIMENSION_ID, world.provider.getDimension());
         return stack;
+    }
+
+    public enum FocusType implements ISubItem {
+
+        WEAK,
+        ENHANCED,
+        REINFORCED,
+        DEMONIC,
+        ;
+
+        @Nonnull
+        @Override
+        public String getInternalName() {
+            return name().toLowerCase(Locale.ROOT);
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack getStack(int count) {
+            return new ItemStack(RegistrarBloodMagicItems.TELEPOSITION_FOCUS, count, ordinal());
+        }
     }
 }

@@ -3,23 +3,10 @@ package WayofTime.bloodmagic.item;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.apibutnotreally.soul.IDiscreteDemonWill;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import com.google.common.collect.Lists;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ItemDemonCrystal extends ItemEnum<EnumDemonWillType> implements IDiscreteDemonWill, IVariantProvider {
+public class ItemDemonCrystal extends ItemEnum.Variant<EnumDemonWillType> implements IDiscreteDemonWill {
 
     public ItemDemonCrystal() {
         super(EnumDemonWillType.class, "demonCrystal");

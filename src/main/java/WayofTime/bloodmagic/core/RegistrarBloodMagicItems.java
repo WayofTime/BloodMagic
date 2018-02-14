@@ -17,6 +17,7 @@ import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
 import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.item.soul.*;
 import WayofTime.bloodmagic.item.types.ComponentTypes;
+import WayofTime.bloodmagic.item.types.ShardType;
 import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
@@ -166,11 +167,11 @@ public class RegistrarBloodMagicItems {
                 new ItemSigilClaw().setRegistryName("sigil_claw"),
                 new ItemSigilBounce().setRegistryName("sigil_bounce"),
                 new ItemSigilFrost().setRegistryName("sigil_frost"),
-                new ItemEnum<>(ComponentTypes.class, "baseComponent").setRegistryName("component"),
+                new ItemEnum.Variant<>(ComponentTypes.class, "baseComponent").setRegistryName("component"),
                 new ItemDemonCrystal().setRegistryName("item_demon_crystal"),
                 new ItemTelepositionFocus().setRegistryName("teleposition_focus"),
                 new ItemExperienceBook().setRegistryName("experience_tome"),
-                new ItemBloodShard().setRegistryName("blood_shard"),
+                new ItemEnum.Variant<>(ShardType.class, "blood_shard").setRegistryName("blood_shard"),
                 new ItemLivingArmour(EntityEquipmentSlot.HEAD).setRegistryName("living_armour_helmet"),
                 new ItemLivingArmour(EntityEquipmentSlot.CHEST).setRegistryName("living_armour_chest"),
                 new ItemLivingArmour(EntityEquipmentSlot.LEGS).setRegistryName("living_armour_leggings"),

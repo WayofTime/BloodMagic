@@ -15,7 +15,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
-public class ItemEnum<T extends Enum<T> & ISubItem> extends Item implements IVariantProvider {
+public class ItemEnum<T extends Enum<T> & ISubItem> extends Item {
 
     protected final T[] types;
 
@@ -48,12 +48,19 @@ public class ItemEnum<T extends Enum<T> & ISubItem> extends Item implements IVar
         return types[MathHelper.clamp(stack.getItemDamage(), 0, types.length)];
     }
 
-    @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> variants = Lists.newArrayList();
-        for (int i = 0; i < types.length; i++)
-            variants.add(Pair.of(i, "type=" + types[i].getInternalName()));
+    public static class Variant<T extends Enum<T> & ISubItem> extends ItemEnum<T> implements IVariantProvider {
 
-        return variants;
+        public Variant(Class<T> enumClass, String baseName) {
+            super(enumClass, baseName);
+        }
+
+        @Override
+        public List<Pair<Integer, String>> getVariants() {
+            List<Pair<Integer, String>> variants = Lists.newArrayList();
+            for (int i = 0; i < types.length; i++)
+                variants.add(Pair.of(i, "type=" + types[i].getInternalName()));
+
+            return variants;
+        }
     }
 }
