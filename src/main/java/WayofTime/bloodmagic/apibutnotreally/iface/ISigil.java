@@ -12,9 +12,14 @@ import javax.annotation.Nonnull;
  * Sigils of Holdings.
  */
 public interface ISigil {
-    boolean performArrayEffect(World world, BlockPos pos);
 
-    boolean hasArrayEffect();
+    default boolean performArrayEffect(World world, BlockPos pos) {
+        return false;
+    }
+
+    default boolean hasArrayEffect() {
+        return false;
+    }
 
     interface Holding {
         @Nonnull
