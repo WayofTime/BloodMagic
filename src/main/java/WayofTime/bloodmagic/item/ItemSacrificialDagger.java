@@ -176,8 +176,7 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
     public enum DaggerType implements ISubItem {
 
         NORMAL,
-        CREATIVE,
-        ;
+        CREATIVE,;
 
         @Nonnull
         @Override

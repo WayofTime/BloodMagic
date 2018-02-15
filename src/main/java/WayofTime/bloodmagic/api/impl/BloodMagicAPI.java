@@ -1,16 +1,13 @@
 package WayofTime.bloodmagic.api.impl;
 
-import WayofTime.bloodmagic.apibutnotreally.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.IBloodMagicAPI;
+import WayofTime.bloodmagic.apibutnotreally.altar.EnumAltarComponent;
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.List;
 
 public class BloodMagicAPI implements IBloodMagicAPI {
 

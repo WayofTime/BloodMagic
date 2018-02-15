@@ -9,8 +9,7 @@ import java.util.Locale;
 public enum ShardType implements ISubItem {
 
     WEAK,
-    DEMONIC,
-    ;
+    DEMONIC,;
 
     @Nonnull
     @Override

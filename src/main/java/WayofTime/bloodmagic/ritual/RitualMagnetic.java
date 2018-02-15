@@ -23,7 +23,7 @@ import java.util.Map;
 public class RitualMagnetic extends Ritual {
     public static final String PLACEMENT_RANGE = "placementRange";
     private static final Map<BlockStack, Boolean> oreBlockCache = new HashMap<BlockStack, Boolean>();
-//    public static final String SEARCH_RANGE = "searchRange";
+    //    public static final String SEARCH_RANGE = "searchRange";
     public BlockPos lastPos; // An offset
 
     public RitualMagnetic() {

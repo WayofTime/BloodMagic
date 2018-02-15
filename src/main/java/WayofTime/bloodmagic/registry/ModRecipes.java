@@ -6,7 +6,10 @@ import WayofTime.bloodmagic.apibutnotreally.compress.CompressionRegistry;
 import WayofTime.bloodmagic.apibutnotreally.iface.ISigil;
 import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.apibutnotreally.recipe.AlchemyTableCustomRecipe;
-import WayofTime.bloodmagic.apibutnotreally.registry.*;
+import WayofTime.bloodmagic.apibutnotreally.registry.AlchemyArrayRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.registry.AlchemyTableRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.registry.LivingArmourDowngradeRecipeRegistry;
+import WayofTime.bloodmagic.apibutnotreally.registry.TartaricForgeRecipeRegistry;
 import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.client.render.alchemyArray.*;
 import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
@@ -36,7 +39,10 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class ModRecipes {

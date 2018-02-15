@@ -47,8 +47,7 @@ public class ItemActivationCrystal extends ItemEnum.Variant<ItemActivationCrysta
     public enum CrystalType implements ISubItem {
         WEAK,
         AWAKENED,
-        CREATIVE,
-        ;
+        CREATIVE,;
 
         @Nonnull
         @Override

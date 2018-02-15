@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.apibutnotreally.Constants;
 import WayofTime.bloodmagic.apibutnotreally.event.ItemBindEvent;
 import WayofTime.bloodmagic.apibutnotreally.event.SacrificeKnifeUsedEvent;
@@ -14,7 +15,6 @@ import WayofTime.bloodmagic.apibutnotreally.orb.IBloodOrb;
 import WayofTime.bloodmagic.apibutnotreally.saving.SoulNetwork;
 import WayofTime.bloodmagic.apibutnotreally.soul.DemonWillHolder;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.*;
-import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;

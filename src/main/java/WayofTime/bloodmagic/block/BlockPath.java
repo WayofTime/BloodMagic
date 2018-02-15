@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.incense.IIncensePath;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumPath;
+import WayofTime.bloodmagic.incense.IIncensePath;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

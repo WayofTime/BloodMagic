@@ -49,7 +49,10 @@ import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 public class Utils {
     public static float addAbsorptionToMaximum(EntityLivingBase entity, float added, int maximum, int duration) {
@@ -952,7 +955,7 @@ public class Utils {
 
         double reachDistance = 5.0D;
         if (player instanceof EntityPlayerMP)
-            reachDistance = ((EntityPlayerMP)player).interactionManager.getBlockReachDistance();
+            reachDistance = ((EntityPlayerMP) player).interactionManager.getBlockReachDistance();
 
         Vec3d reachPosition = eyePosition.addVector((double) f6 * reachDistance, (double) f5 * reachDistance, (double) f7 * reachDistance);
         return player.getEntityWorld().rayTraceBlocks(eyePosition, reachPosition, useLiquids, !useLiquids, false);

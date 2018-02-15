@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.altar;
 
 import WayofTime.bloodmagic.api.event.BloodMagicCraftedEvent;
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import WayofTime.bloodmagic.apibutnotreally.BlockStack;
 import WayofTime.bloodmagic.apibutnotreally.Constants;
@@ -8,7 +9,6 @@ import WayofTime.bloodmagic.apibutnotreally.altar.*;
 import WayofTime.bloodmagic.apibutnotreally.orb.BloodOrb;
 import WayofTime.bloodmagic.apibutnotreally.orb.IBloodOrb;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.tile.TileAltar;

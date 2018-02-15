@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.apibutnotreally.BlockStack;
 import WayofTime.bloodmagic.apibutnotreally.Constants;
 import WayofTime.bloodmagic.apibutnotreally.iface.ISigil;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;

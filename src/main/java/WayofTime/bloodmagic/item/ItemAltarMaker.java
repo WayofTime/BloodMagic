@@ -2,14 +2,13 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.altar.BloodAltar;
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.apibutnotreally.Constants;
 import WayofTime.bloodmagic.apibutnotreally.altar.*;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.ChatUtil;
-
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.state.IBlockState;

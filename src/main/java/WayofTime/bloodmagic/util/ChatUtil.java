@@ -185,8 +185,8 @@ public class ChatUtil {
 
     /**
      * @author tterrag1098
-     *         <p>
-     *         Ripped from EnderCore (and slightly altered)
+     * <p>
+     * Ripped from EnderCore (and slightly altered)
      */
     public static class PacketNoSpamChat implements IMessage {
         private ITextComponent[] chatLines;

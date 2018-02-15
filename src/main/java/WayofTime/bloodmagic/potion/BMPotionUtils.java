@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.potion;
 
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.apibutnotreally.Constants;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionAugmentRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;

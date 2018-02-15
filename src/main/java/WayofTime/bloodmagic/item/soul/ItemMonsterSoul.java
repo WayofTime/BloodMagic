@@ -104,8 +104,7 @@ public class ItemMonsterSoul extends ItemEnum.Variant<ItemMonsterSoul.WillType> 
         CORROSIVE,
         DESTRUCTIVE,
         VENGEFUL,
-        STEADFAST,
-        ;
+        STEADFAST,;
 
         @Nonnull
         @Override

@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.block;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.apibutnotreally.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic;
 
+import WayofTime.bloodmagic.api.BloodMagicPlugin;
+import WayofTime.bloodmagic.api.IBloodMagicPlugin;
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.apibutnotreally.registry.OrbRegistry;
 import WayofTime.bloodmagic.apibutnotreally.registry.RitualRegistry;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.LogHelper;
-import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
-import WayofTime.bloodmagic.api.BloodMagicPlugin;
-import WayofTime.bloodmagic.api.IBloodMagicPlugin;
 import WayofTime.bloodmagic.client.gui.GuiHandler;
 import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;

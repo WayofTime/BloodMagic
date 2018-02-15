@@ -35,18 +35,18 @@ public interface IBloodMagicAPI {
 
     /**
      * Registers an {@link IBlockState} as a given component for the Blood Altar.
-     *
+     * <p>
      * Valid component types:
      * <ul>
-     *     <li>GLOWSTONE</li>
-     *     <li>BLOODSTONE</li>
-     *     <li>BEACON</li>
-     *     <li>BLOODRUNE</li>
-     *     <li>CRYSTAL</li>
-     *     <li>NOTAIR</li>
+     * <li>GLOWSTONE</li>
+     * <li>BLOODSTONE</li>
+     * <li>BEACON</li>
+     * <li>BLOODRUNE</li>
+     * <li>CRYSTAL</li>
+     * <li>NOTAIR</li>
      * </ul>
      *
-     * @param state The state to register
+     * @param state         The state to register
      * @param componentType The type of Blood Altar component to register as.
      */
     void registerAltarComponent(@Nonnull IBlockState state, @Nonnull String componentType);

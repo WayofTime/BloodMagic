@@ -42,7 +42,7 @@ public class RegistrarBloodMagicRecipes {
                 ItemStack newGemStack = new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, i);
 
                 ((ItemSoulGem) RegistrarBloodMagicItems.SOUL_GEM).setCurrentType(willType, newGemStack);
-                ShapelessOreRecipe shapeless  = new ShapelessOreRecipe(new ResourceLocation(BloodMagic.MODID, "soul_gem"), newGemStack, baseGemStack, willType.getStack());
+                ShapelessOreRecipe shapeless = new ShapelessOreRecipe(new ResourceLocation(BloodMagic.MODID, "soul_gem"), newGemStack, baseGemStack, willType.getStack());
                 event.getRegistry().register(shapeless.setRegistryName("soul_gem_" + willType.getName()));
             }
         }

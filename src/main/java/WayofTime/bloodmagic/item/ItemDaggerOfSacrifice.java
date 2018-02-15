@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.apibutnotreally.util.helper.PurificationHelper;
-import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.EntityLivingBase;

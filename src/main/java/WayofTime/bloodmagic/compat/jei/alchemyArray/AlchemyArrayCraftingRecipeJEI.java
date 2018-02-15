@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.compat.jei.alchemyArray;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
 import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;

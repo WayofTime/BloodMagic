@@ -17,7 +17,7 @@ public class AlchemyArrayEffectCraftingNew extends AlchemyArrayEffect {
 
     public AlchemyArrayEffectCraftingNew(String key, RecipeAlchemyArray recipeAlchemyArray) {
         super(key);
-        
+
         this.recipe = recipeAlchemyArray;
     }
 

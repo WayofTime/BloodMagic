@@ -15,7 +15,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 public class DataProviderMimic implements IWailaDataProvider {
 
