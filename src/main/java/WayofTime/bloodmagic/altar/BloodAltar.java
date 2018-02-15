@@ -314,7 +314,7 @@ public class BloodAltar implements IFluidHandler {
                 if (progress >= liquidRequired * stackSize) {
                     ItemStack result = recipe.getOutput().copy();
 
-                    BloodMagicCraftedEvent.Altar event = new BloodMagicCraftedEvent.Altar(recipe, result);
+                    BloodMagicCraftedEvent.Altar event = new BloodMagicCraftedEvent.Altar(recipe.getInput(), result);
                     MinecraftForge.EVENT_BUS.post(event);
                     tileAltar.setInventorySlotContents(0, event.getOutput());
                     progress = 0;

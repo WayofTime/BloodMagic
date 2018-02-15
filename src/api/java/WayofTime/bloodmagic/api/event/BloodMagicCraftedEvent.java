@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.api.event;
 
-import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class BloodMagicCraftedEvent extends Event {
@@ -34,16 +34,16 @@ public class BloodMagicCraftedEvent extends Event {
      */
     public static class Altar extends BloodMagicCraftedEvent {
 
-        private final RecipeBloodAltar recipe;
+        private final Ingredient input;
 
-        public Altar(RecipeBloodAltar recipe, ItemStack output) {
+        public Altar(Ingredient input, ItemStack output) {
             super(output, true);
 
-            this.recipe = recipe;
+            this.input = input;
         }
 
-        public RecipeBloodAltar getRecipe() {
-            return recipe;
+        public Ingredient getInput() {
+            return input;
         }
     }
 }

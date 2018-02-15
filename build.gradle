@@ -11,7 +11,7 @@ buildscript {
 
 plugins {
 	id "net.minecraftforge.gradle.forge" version "2.0.2"
-    id 'com.matthewprenger.cursegradle' version '1.0.9'
+    id 'com.matthewprenger.cursegradle' version '1.0.10'
 	id 'io.franzbecker.gradle-lombok' version '1.6'
     id 'maven-publish'
 }
@@ -69,16 +69,16 @@ processResources {
     }
 }
 
-if (JavaVersion.current().isJava8Compatible()) {
-    allprojects {
-        tasks.withType(Javadoc) {
-            options.addStringOption('Xdoclint:none', '-quiet')
-        }
+allprojects {
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
     }
 }
 
 jar {
     classifier = ''
+    from sourceSets.main.output
+    from sourceSets.api.output
     manifest.mainAttributes(
         "Built-By": System.getProperty('user.name'),
         "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
@@ -88,22 +88,28 @@ jar {
     )
 }
 
-// API jar
 task apiJar(type: Jar) {
-    from sourceSets.main.allSource
-    from sourceSets.main.output
-	include 'WayofTime/bloodmagic/api/**/*'
-    exclude 'WayofTime/bloodmagic/api/impl/**/*'
     classifier = 'api'
+    from sourceSets.api.output
+
+    // TODO: when FG bug is fixed, remove allJava from the api jar.
+    // https://github.com/MinecraftForge/ForgeGradle/issues/369
+    // Gradle should be able to pull them from the -sources jar.
+    from sourceSets.api.allJava
 }
 
-// Javadoc jar
 task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
     classifier = 'javadoc'
 }
 
-tasks.build.dependsOn javadoc, javadocJar, apiJar
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allJava
+    from sourceSets.api.allJava
+}
+
+tasks.build.dependsOn javadoc, javadocJar, apiJar, sourcesJar
 
 tasks.withType(JavaCompile) { task ->
     task.options.encoding = 'UTF-8'
@@ -115,7 +121,7 @@ publishing {
         mavenJava(MavenPublication) {
             artifact jar
             artifact javadocJar
-            artifact sourceJar
+            artifact sourcesJar
             artifact apiJar
         }
     }
@@ -169,7 +175,7 @@ curseforge {
         relations curseRelations
 
         addArtifact javadocJar
-        addArtifact sourceJar
+        addArtifact sourcesJar
         addArtifact apiJar
     }
 }
