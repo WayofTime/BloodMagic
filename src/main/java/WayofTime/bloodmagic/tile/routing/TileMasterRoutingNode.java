@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.tile.routing;
 
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.routing.*;
 import WayofTime.bloodmagic.tile.TileInventory;

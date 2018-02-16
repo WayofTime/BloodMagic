@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

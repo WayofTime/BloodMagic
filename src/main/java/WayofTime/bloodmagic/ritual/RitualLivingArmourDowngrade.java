@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.apibutnotreally.recipe.LivingArmourDowngradeRecipe;
-import WayofTime.bloodmagic.apibutnotreally.registry.LivingArmourDowngradeRecipeRegistry;
-import WayofTime.bloodmagic.apibutnotreally.ritual.*;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.recipe.LivingArmourDowngradeRecipe;
+import WayofTime.bloodmagic.core.registry.LivingArmourDowngradeRecipeRegistry;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.ritual.data.*;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.effect.EntityLightningBolt;

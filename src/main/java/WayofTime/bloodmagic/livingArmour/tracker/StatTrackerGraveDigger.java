@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.livingArmour.tracker;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.apibutnotreally.livingArmour.StatTracker;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGraveDigger;
 import WayofTime.bloodmagic.util.Utils;

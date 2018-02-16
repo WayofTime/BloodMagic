@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.compat.jei.binding;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.compat.jei.BloodMagicJEIPlugin;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import mezz.jei.api.gui.IDrawable;

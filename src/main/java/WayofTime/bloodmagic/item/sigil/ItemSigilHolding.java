@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.iface.IAltarReader;
-import WayofTime.bloodmagic.apibutnotreally.iface.IBindable;
-import WayofTime.bloodmagic.apibutnotreally.iface.ISigil;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.iface.IAltarReader;
+import WayofTime.bloodmagic.iface.IBindable;
+import WayofTime.bloodmagic.iface.ISigil;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
+import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.key.IKeybindable;
 import WayofTime.bloodmagic.client.key.KeyBindings;
 import WayofTime.bloodmagic.util.Utils;

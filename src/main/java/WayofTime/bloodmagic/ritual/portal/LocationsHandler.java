@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.ritual.portal;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.BloodMagicAPI;
-import WayofTime.bloodmagic.apibutnotreally.teleport.PortalLocation;
+import WayofTime.bloodmagic.util.PleaseStopUsingMe;
+import WayofTime.bloodmagic.teleport.PortalLocation;
 import net.minecraftforge.common.DimensionManager;
 
 import java.io.*;
@@ -27,12 +27,12 @@ public class LocationsHandler implements Serializable {
             updateFile(fileName, portals);
         }
         if (!portals.get(name).isEmpty() && portals.get(name).size() >= 2) {
-            BloodMagicAPI.logger.info("Location " + name + " already exists.");
+            PleaseStopUsingMe.logger.info("Location " + name + " already exists.");
             updateFile(fileName, portals);
             return false;
         } else {
             portals.get(name).add(location);
-            BloodMagicAPI.logger.info("Adding " + name);
+            PleaseStopUsingMe.logger.info("Adding " + name);
             updateFile(fileName, portals);
             return true;
         }
@@ -42,11 +42,11 @@ public class LocationsHandler implements Serializable {
         if (portals.get(name) != null && !portals.get(name).isEmpty()) {
             if (portals.get(name).contains(location)) {
                 portals.get(name).remove(location);
-                BloodMagicAPI.logger.info("Removing " + name);
+                PleaseStopUsingMe.logger.info("Removing " + name);
                 updateFile(fileName, portals);
                 return true;
             } else {
-                BloodMagicAPI.logger.info("No location matching " + name);
+                PleaseStopUsingMe.logger.info("No location matching " + name);
                 updateFile(fileName, portals);
                 return false;
             }
@@ -75,10 +75,10 @@ public class LocationsHandler implements Serializable {
             if (!file.exists()) {
                 if (file.getParentFile().mkdir()) {
                     if (file.createNewFile()) {
-                        BloodMagicAPI.logger.info("Creating " + fileName + " in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
+                        PleaseStopUsingMe.logger.info("Creating " + fileName + " in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
                     }
                 } else if (file.createNewFile()) {
-                    BloodMagicAPI.logger.info("Creating " + fileName + " in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
+                    PleaseStopUsingMe.logger.info("Creating " + fileName + " in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
                 }
             }
             FileInputStream fileIn = new FileInputStream(file);
@@ -90,7 +90,7 @@ public class LocationsHandler implements Serializable {
         } catch (IOException e) {
             return null;
         } catch (ClassNotFoundException e) {
-            BloodMagicAPI.logger.error(String.valueOf(file) + " was not found in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
+            PleaseStopUsingMe.logger.error(String.valueOf(file) + " was not found in " + String.valueOf(DimensionManager.getCurrentSaveRootDirectory()));
             return null;
         }
     }

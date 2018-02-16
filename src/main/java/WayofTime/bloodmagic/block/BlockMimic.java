@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.apibutnotreally.altar.IAltarComponent;
+import WayofTime.bloodmagic.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.altar.IAltarComponent;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumMimic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
-import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.tile.TileTeleposer;
 import WayofTime.bloodmagic.util.helper.TextHelper;

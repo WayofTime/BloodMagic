@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.tile.TileSpectralBlock;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.state.IBlockState;

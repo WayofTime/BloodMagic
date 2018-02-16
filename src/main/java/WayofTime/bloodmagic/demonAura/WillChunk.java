@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.demonAura;
 
-import WayofTime.bloodmagic.apibutnotreally.soul.DemonWillHolder;
+import WayofTime.bloodmagic.soul.DemonWillHolder;
 import net.minecraft.world.chunk.Chunk;
 
 import java.lang.ref.WeakReference;

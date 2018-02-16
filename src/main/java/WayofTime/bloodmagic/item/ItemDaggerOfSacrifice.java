@@ -2,8 +2,9 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerSacrificeHelper;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.PurificationHelper;
+import WayofTime.bloodmagic.util.PleaseStopUsingMe;
+import WayofTime.bloodmagic.util.helper.PlayerSacrificeHelper;
+import WayofTime.bloodmagic.util.helper.PurificationHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.EntityLivingBase;
@@ -71,7 +72,7 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider {
         if (PlayerSacrificeHelper.findAndFillAltar(attacker.getEntityWorld(), target, lifeEssence, true)) {
             target.getEntityWorld().playSound(null, target.posX, target.posY, target.posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (target.getEntityWorld().rand.nextFloat() - target.getEntityWorld().rand.nextFloat()) * 0.8F);
             target.setHealth(-1);
-            target.onDeath(WayofTime.bloodmagic.apibutnotreally.BloodMagicAPI.damageSource);
+            target.onDeath(PleaseStopUsingMe.damageSource);
         }
 
         return false;

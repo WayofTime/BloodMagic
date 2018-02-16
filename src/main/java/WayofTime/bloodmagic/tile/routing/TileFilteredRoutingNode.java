@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.tile.routing;
 
-import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.item.inventory.ItemInventory;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import net.minecraft.block.state.IBlockState;

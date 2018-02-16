@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.compat.guideapi.book;
 
-import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.util.Constants;
 import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import net.minecraft.util.ResourceLocation;
 

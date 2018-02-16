@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.compat.jei.alchemyTable;
 
-import WayofTime.bloodmagic.apibutnotreally.recipe.AlchemyTableRecipe;
-import WayofTime.bloodmagic.apibutnotreally.registry.AlchemyTableRecipeRegistry;
+import WayofTime.bloodmagic.recipe.AlchemyTableRecipe;
+import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

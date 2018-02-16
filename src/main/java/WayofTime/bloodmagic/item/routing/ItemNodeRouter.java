@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.item.routing;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.iface.INodeRenderer;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.iface.INodeRenderer;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.routing.IMasterRoutingNode;
 import WayofTime.bloodmagic.routing.IRoutingNode;

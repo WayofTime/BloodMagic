@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.client.render.block;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.apibutnotreally.iface.INodeRenderer;
+import WayofTime.bloodmagic.iface.INodeRenderer;
 import WayofTime.bloodmagic.client.helper.ShaderHelper;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import net.minecraft.client.Minecraft;

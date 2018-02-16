@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.registry.RitualRegistry;
-import WayofTime.bloodmagic.apibutnotreally.ritual.EnumRuneType;
-import WayofTime.bloodmagic.apibutnotreally.ritual.Ritual;
-import WayofTime.bloodmagic.apibutnotreally.ritual.RitualComponent;
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.RitualHelper;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.core.registry.RitualRegistry;
+import WayofTime.bloodmagic.ritual.data.EnumRuneType;
+import WayofTime.bloodmagic.ritual.data.Ritual;
+import WayofTime.bloodmagic.ritual.data.RitualComponent;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.util.helper.RitualHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;

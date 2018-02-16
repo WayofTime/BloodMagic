@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.orb.BloodOrb;
-import WayofTime.bloodmagic.apibutnotreally.orb.IBloodOrb;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.orb.BloodOrb;
+import WayofTime.bloodmagic.orb.IBloodOrb;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;

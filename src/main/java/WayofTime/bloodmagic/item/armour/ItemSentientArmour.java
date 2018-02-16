@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.item.armour;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.iface.IMultiWillTool;
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.apibutnotreally.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.iface.IMultiWillTool;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import com.google.common.collect.HashMultimap;

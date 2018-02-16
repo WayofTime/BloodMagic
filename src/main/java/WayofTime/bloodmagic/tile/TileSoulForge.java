@@ -2,11 +2,11 @@ package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWill;
-import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWillConduit;
-import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWillGem;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.soul.IDemonWill;
+import WayofTime.bloodmagic.soul.IDemonWillConduit;
+import WayofTime.bloodmagic.soul.IDemonWillGem;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

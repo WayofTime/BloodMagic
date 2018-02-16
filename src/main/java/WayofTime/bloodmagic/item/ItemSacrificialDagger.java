@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.apibutnotreally.BloodMagicAPI;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.event.SacrificeKnifeUsedEvent;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerSacrificeHelper;
+import WayofTime.bloodmagic.util.PleaseStopUsingMe;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
+import WayofTime.bloodmagic.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.types.ISubItem;
@@ -97,10 +97,10 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
 
             if (evt.shouldDrainHealth) {
                 player.hurtResistantTime = 0;
-                player.attackEntityFrom(BloodMagicAPI.damageSource, 0.001F);
+                player.attackEntityFrom(PleaseStopUsingMe.damageSource, 0.001F);
                 player.setHealth(Math.max(player.getHealth() - 2, 0.0001f));
                 if (player.getHealth() <= 0.001f) {
-                    player.onDeath(BloodMagicAPI.damageSource);
+                    player.onDeath(PleaseStopUsingMe.damageSource);
                     player.setHealth(0);
                 }
 //                player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 2.0F);

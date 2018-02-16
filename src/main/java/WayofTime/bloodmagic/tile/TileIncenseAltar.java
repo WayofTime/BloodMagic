@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.apibutnotreally.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerSacrificeHelper;
+import WayofTime.bloodmagic.ritual.data.AreaDescriptor;
+import WayofTime.bloodmagic.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.incense.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

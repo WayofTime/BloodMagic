@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.livingArmour.downgrade;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.livingArmour.ILivingArmour;
-import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.livingArmour.ILivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;

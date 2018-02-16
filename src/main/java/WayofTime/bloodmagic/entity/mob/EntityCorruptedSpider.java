@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.entity.mob;
 
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.entity.ai.EntityAIPickUpAlly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;

@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
 import WayofTime.bloodmagic.item.sigil.ItemSigilSeer;

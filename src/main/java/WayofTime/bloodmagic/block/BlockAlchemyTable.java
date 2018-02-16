@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.item.block.ItemBlockAlchemyTable;
 import WayofTime.bloodmagic.tile.TileAlchemyTable;
 import net.minecraft.block.Block;

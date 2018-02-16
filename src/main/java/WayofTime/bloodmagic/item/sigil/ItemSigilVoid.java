@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.apibutnotreally.iface.ISigil;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.iface.ISigil;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

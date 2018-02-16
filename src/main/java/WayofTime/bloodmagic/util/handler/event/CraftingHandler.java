@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.event.AltarCraftedEvent;
-import WayofTime.bloodmagic.apibutnotreally.iface.IUpgradeTrainer;
-import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.ItemHelper;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.event.AltarCraftedEvent;
+import WayofTime.bloodmagic.iface.IUpgradeTrainer;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.util.helper.ItemHelper;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.ItemInscriptionTool;

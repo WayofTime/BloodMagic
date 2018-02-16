@@ -1,10 +1,6 @@
 package WayofTime.bloodmagic.livingArmour;
 
-import WayofTime.bloodmagic.apibutnotreally.iface.IUpgradeTrainer;
-import WayofTime.bloodmagic.apibutnotreally.livingArmour.ILivingArmour;
-import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourHandler;
-import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.apibutnotreally.livingArmour.StatTracker;
+import WayofTime.bloodmagic.iface.IUpgradeTrainer;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;

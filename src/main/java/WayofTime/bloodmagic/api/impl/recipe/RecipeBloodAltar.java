@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.api.impl.recipe;
 
-import WayofTime.bloodmagic.apibutnotreally.altar.EnumAltarTier;
+import WayofTime.bloodmagic.altar.EnumAltarTier;
 import com.google.common.base.Preconditions;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;

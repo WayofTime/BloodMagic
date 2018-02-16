@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
-import WayofTime.bloodmagic.apibutnotreally.orb.IBloodOrb;
+import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.core.recipe.IngredientBloodOrb;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;

@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWillGem;
-import WayofTime.bloodmagic.apibutnotreally.soul.IDiscreteDemonWill;
+import WayofTime.bloodmagic.soul.IDemonWillGem;
+import WayofTime.bloodmagic.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
 import WayofTime.bloodmagic.util.Utils;

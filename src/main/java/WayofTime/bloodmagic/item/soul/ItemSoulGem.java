@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.item.soul;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.iface.IMultiWillTool;
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWill;
-import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWillGem;
-import WayofTime.bloodmagic.apibutnotreally.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.iface.IMultiWillTool;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.soul.IDemonWill;
+import WayofTime.bloodmagic.soul.IDemonWillGem;
+import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionWillGem;
 import WayofTime.bloodmagic.util.helper.TextHelper;

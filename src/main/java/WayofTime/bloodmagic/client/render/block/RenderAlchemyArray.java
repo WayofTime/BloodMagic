@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.client.render.block;
 
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
-import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyCircleRenderer;
-import WayofTime.bloodmagic.apibutnotreally.registry.AlchemyArrayRecipeRegistry;
+import WayofTime.bloodmagic.alchemyArray.AlchemyCircleRenderer;
+import WayofTime.bloodmagic.core.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;

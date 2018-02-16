@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.client.mesh;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import net.minecraft.client.renderer.ItemMeshDefinition;

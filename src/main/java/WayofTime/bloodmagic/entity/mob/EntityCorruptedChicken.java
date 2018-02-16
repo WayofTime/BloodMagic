@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.entity.mob;
 
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.entity.ai.EntityAIAttackStealthMelee;
 import WayofTime.bloodmagic.entity.ai.EntityAIStealthRetreat;
 import WayofTime.bloodmagic.entity.ai.EntityAIStealthTowardsTarget;

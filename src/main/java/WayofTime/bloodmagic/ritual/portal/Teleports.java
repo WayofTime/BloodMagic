@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.ritual.portal;
 
-import WayofTime.bloodmagic.apibutnotreally.event.TeleposeEvent;
-import WayofTime.bloodmagic.apibutnotreally.saving.SoulNetwork;
-import WayofTime.bloodmagic.apibutnotreally.teleport.Teleport;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.event.TeleposeEvent;
+import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.teleport.Teleport;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;

@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicPlugin;
 import WayofTime.bloodmagic.api.IBloodMagicAPI;
 import WayofTime.bloodmagic.api.IBloodMagicPlugin;
-import WayofTime.bloodmagic.apibutnotreally.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockDecorative;
 import WayofTime.bloodmagic.block.enums.EnumBloodRune;

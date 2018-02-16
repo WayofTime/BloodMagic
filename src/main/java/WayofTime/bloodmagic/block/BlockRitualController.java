@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.BlockStack;
-import WayofTime.bloodmagic.apibutnotreally.iface.IBindable;
-import WayofTime.bloodmagic.apibutnotreally.registry.ImperfectRitualRegistry;
-import WayofTime.bloodmagic.apibutnotreally.registry.RitualRegistry;
-import WayofTime.bloodmagic.apibutnotreally.ritual.Ritual;
-import WayofTime.bloodmagic.apibutnotreally.ritual.imperfect.ImperfectRitual;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.RitualHelper;
+import WayofTime.bloodmagic.util.BlockStack;
+import WayofTime.bloodmagic.iface.IBindable;
+import WayofTime.bloodmagic.core.registry.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.core.registry.RitualRegistry;
+import WayofTime.bloodmagic.ritual.data.Ritual;
+import WayofTime.bloodmagic.ritual.data.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.util.helper.RitualHelper;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumRitualController;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;

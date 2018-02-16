@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.livingArmour.downgrade;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.livingArmour.ILivingArmour;
-import WayofTime.bloodmagic.apibutnotreally.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.livingArmour.ILivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.entity.SharedMonsterAttributes;

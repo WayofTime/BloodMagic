@@ -1,14 +1,14 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.ItemStackWrapper;
-import WayofTime.bloodmagic.apibutnotreally.event.BoundToolEvent;
-import WayofTime.bloodmagic.apibutnotreally.iface.IActivatable;
-import WayofTime.bloodmagic.apibutnotreally.iface.IBindable;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.util.ItemStackWrapper;
+import WayofTime.bloodmagic.event.BoundToolEvent;
+import WayofTime.bloodmagic.iface.IActivatable;
+import WayofTime.bloodmagic.iface.IBindable;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;

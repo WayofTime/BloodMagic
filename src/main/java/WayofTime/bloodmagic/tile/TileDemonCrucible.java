@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWillConduit;
-import WayofTime.bloodmagic.apibutnotreally.soul.IDemonWillGem;
-import WayofTime.bloodmagic.apibutnotreally.soul.IDiscreteDemonWill;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.soul.IDemonWillConduit;
+import WayofTime.bloodmagic.soul.IDemonWillGem;
+import WayofTime.bloodmagic.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;

@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.ritual.harvest;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.BlockStack;
-import WayofTime.bloodmagic.apibutnotreally.iface.IHarvestHandler;
-import WayofTime.bloodmagic.apibutnotreally.registry.HarvestRegistry;
+import WayofTime.bloodmagic.util.BlockStack;
+import WayofTime.bloodmagic.iface.IHarvestHandler;
+import WayofTime.bloodmagic.core.registry.HarvestRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.entity.item.EntityItem;

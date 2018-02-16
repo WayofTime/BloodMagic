@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.orb.BloodOrb;
-import WayofTime.bloodmagic.apibutnotreally.orb.IBloodOrb;
-import WayofTime.bloodmagic.apibutnotreally.recipe.AlchemyTableRecipe;
-import WayofTime.bloodmagic.apibutnotreally.registry.AlchemyTableRecipeRegistry;
-import WayofTime.bloodmagic.apibutnotreally.saving.SoulNetwork;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.orb.BloodOrb;
+import WayofTime.bloodmagic.orb.IBloodOrb;
+import WayofTime.bloodmagic.recipe.AlchemyTableRecipe;
+import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
+import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import com.google.common.base.Strings;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.ISidedInventory;

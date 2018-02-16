@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.item.soul;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.apibutnotreally.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 import com.google.common.collect.Lists;

@@ -1,10 +1,8 @@
 package WayofTime.bloodmagic.util;
 
-import WayofTime.bloodmagic.apibutnotreally.BlockStack;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.apibutnotreally.iface.IDemonWillViewer;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
+import WayofTime.bloodmagic.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.iface.IDemonWillViewer;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.PlayerVelocityPacketProcessor;

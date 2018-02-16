@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
-import WayofTime.bloodmagic.apibutnotreally.BlockStack;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.registry.ImperfectRitualRegistry;
-import WayofTime.bloodmagic.apibutnotreally.registry.RitualRegistry;
-import WayofTime.bloodmagic.apibutnotreally.ritual.imperfect.ImperfectRitual;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.util.BlockStack;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.core.registry.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.core.registry.RitualRegistry;
+import WayofTime.bloodmagic.ritual.data.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import joptsimple.internal.Strings;

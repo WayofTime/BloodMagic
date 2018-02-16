@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.BloodMagicAPI;
-import WayofTime.bloodmagic.apibutnotreally.ritual.*;
-import WayofTime.bloodmagic.apibutnotreally.soul.DemonWillHolder;
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.util.PleaseStopUsingMe;
+import WayofTime.bloodmagic.soul.DemonWillHolder;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.ritual.data.*;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -198,7 +198,7 @@ public class RitualLava extends Ritual {
                 }
 
                 if (!entity.isDead && entity.hurtTime <= 0 && Utils.isImmuneToFireDamage(entity)) {
-                    if (entity.attackEntityFrom(BloodMagicAPI.damageSource, damage)) {
+                    if (entity.attackEntityFrom(PleaseStopUsingMe.damageSource, damage)) {
                         corrosiveDrained += corrosiveWillDrain;
                         corrosiveWill -= corrosiveWillDrain;
                     }

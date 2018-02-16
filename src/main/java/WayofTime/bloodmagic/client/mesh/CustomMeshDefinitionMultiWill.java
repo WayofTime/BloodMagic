@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.client.mesh;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.iface.IMultiWillTool;
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.iface.IMultiWillTool;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;

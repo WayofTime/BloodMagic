@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.proxy;
 
-import WayofTime.bloodmagic.apibutnotreally.ritual.CapabilityRuneType;
-import WayofTime.bloodmagic.apibutnotreally.ritual.IRitualStone;
-import WayofTime.bloodmagic.apibutnotreally.teleport.TeleportQueue;
+import WayofTime.bloodmagic.ritual.data.CapabilityRuneType;
+import WayofTime.bloodmagic.ritual.data.IRitualStone;
+import WayofTime.bloodmagic.teleport.TeleportQueue;
 import WayofTime.bloodmagic.fuel.FuelHandler;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;

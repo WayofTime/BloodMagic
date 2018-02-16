@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.inversion.CorruptionHandler;
 import net.minecraft.init.Blocks;

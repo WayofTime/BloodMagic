@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.client.render.block;
 
-import WayofTime.bloodmagic.apibutnotreally.altar.AltarComponent;
-import WayofTime.bloodmagic.apibutnotreally.altar.EnumAltarTier;
+import WayofTime.bloodmagic.altar.AltarComponent;
+import WayofTime.bloodmagic.altar.EnumAltarTier;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.handler.event.ClientHandler;

@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.compat.waila;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.apibutnotreally.Constants;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.compat.waila.provider.*;
 import WayofTime.bloodmagic.tile.*;
 import mcp.mobius.waila.api.IWailaPlugin;

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.inversion;
 
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 

@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.core.recipe;
 
-import WayofTime.bloodmagic.apibutnotreally.orb.BloodOrb;
-import WayofTime.bloodmagic.apibutnotreally.orb.IBloodOrb;
-import WayofTime.bloodmagic.apibutnotreally.registry.OrbRegistry;
+import WayofTime.bloodmagic.orb.BloodOrb;
+import WayofTime.bloodmagic.orb.IBloodOrb;
+import WayofTime.bloodmagic.core.registry.OrbRegistry;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntComparators;
 import it.unimi.dsi.fastutil.ints.IntList;

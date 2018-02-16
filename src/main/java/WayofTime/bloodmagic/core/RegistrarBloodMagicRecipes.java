@@ -2,10 +2,10 @@ package WayofTime.bloodmagic.core;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.impl.BloodMagicRecipeRegistrar;
-import WayofTime.bloodmagic.apibutnotreally.altar.EnumAltarTier;
-import WayofTime.bloodmagic.apibutnotreally.registry.OrbRegistry;
-import WayofTime.bloodmagic.apibutnotreally.ritual.EnumRuneType;
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.altar.EnumAltarTier;
+import WayofTime.bloodmagic.core.registry.OrbRegistry;
+import WayofTime.bloodmagic.ritual.data.EnumRuneType;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;

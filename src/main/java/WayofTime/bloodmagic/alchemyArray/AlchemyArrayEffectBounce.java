@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.alchemyArray;
 
-import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyArrayEffect;
-import WayofTime.bloodmagic.apibutnotreally.iface.IAlchemyArray;
+import WayofTime.bloodmagic.iface.IAlchemyArray;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

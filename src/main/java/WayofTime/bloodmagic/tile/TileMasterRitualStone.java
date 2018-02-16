@@ -1,16 +1,16 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.apibutnotreally.Constants;
-import WayofTime.bloodmagic.apibutnotreally.event.RitualEvent;
-import WayofTime.bloodmagic.apibutnotreally.registry.RitualRegistry;
-import WayofTime.bloodmagic.apibutnotreally.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.apibutnotreally.ritual.Ritual;
-import WayofTime.bloodmagic.apibutnotreally.saving.SoulNetwork;
-import WayofTime.bloodmagic.apibutnotreally.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NBTHelper;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.apibutnotreally.util.helper.RitualHelper;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.event.RitualEvent;
+import WayofTime.bloodmagic.core.registry.RitualRegistry;
+import WayofTime.bloodmagic.ritual.data.IMasterRitualStone;
+import WayofTime.bloodmagic.ritual.data.Ritual;
+import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.util.helper.RitualHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.tile.base.TileTicking;

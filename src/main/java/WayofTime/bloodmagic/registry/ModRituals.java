@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.registry;
 
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.apibutnotreally.BlockStack;
-import WayofTime.bloodmagic.apibutnotreally.registry.HarvestRegistry;
-import WayofTime.bloodmagic.apibutnotreally.registry.ImperfectRitualRegistry;
-import WayofTime.bloodmagic.apibutnotreally.registry.RitualRegistry;
-import WayofTime.bloodmagic.apibutnotreally.ritual.Ritual;
-import WayofTime.bloodmagic.apibutnotreally.ritual.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.util.BlockStack;
+import WayofTime.bloodmagic.core.registry.HarvestRegistry;
+import WayofTime.bloodmagic.core.registry.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.core.registry.RitualRegistry;
+import WayofTime.bloodmagic.ritual.data.Ritual;
+import WayofTime.bloodmagic.ritual.data.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerPlantable;

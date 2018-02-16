@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.alchemyArray;
 
-import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyArrayEffect;
-import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyArrayEffectCrafting;
 import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
