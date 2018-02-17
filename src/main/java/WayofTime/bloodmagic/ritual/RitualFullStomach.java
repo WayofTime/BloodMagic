@@ -11,6 +11,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,37 +42,32 @@ public class RitualFullStomach extends Ritual {
 
         AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
         TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
-        if (!(tile instanceof IInventory)) {
+        if (tile == null || !tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null))
             return;
-        }
 
-        IInventory inventory = (IInventory) tile;
-
+        IItemHandler inventory = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         int lastSlot = 0;
-
         AreaDescriptor fillingRange = getBlockRange(FILL_RANGE);
-
         List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, fillingRange.getAABB(pos));
 
         for (EntityPlayer player : playerList) {
             FoodStats foodStats = player.getFoodStats();
             float satLevel = foodStats.getSaturationLevel();
 
-            for (int i = lastSlot; i < inventory.getSizeInventory(); i++) {
-                ItemStack stack = inventory.getStackInSlot(i);
+            for (int i = lastSlot; i < inventory.getSlots(); i++) {
+                ItemStack stack = inventory.extractItem(i, 1, true);
                 if (!stack.isEmpty() && stack.getItem() instanceof ItemFood) {
                     ItemFood foodItem = (ItemFood) stack.getItem();
 
                     int healAmount = foodItem.getHealAmount(stack);
                     float saturationAmount = foodItem.getSaturationModifier(stack) * healAmount * 2.0f;
 
-                    if (saturationAmount + satLevel <= 20) {
-                        NBTTagCompound nbt = new NBTTagCompound();
-                        foodStats.writeNBT(nbt);
-                        nbt.setFloat("foodSaturationLevel", saturationAmount + satLevel);
-                        foodStats.readNBT(nbt);
-
-                        inventory.decrStackSize(i, 1);
+                    // Checks to make sure we're being efficient with the food and not wasting high value foods
+                    // If the food provides more than the max saturation, we just accept it no matter what if the player is low
+                    // Pam please stop being weird. Fix your mod.
+                    if (saturationAmount + satLevel <= 20 || satLevel < 5) {
+                        foodStats.addStats(foodItem, stack);
+                        inventory.extractItem(i, 1, false);
                         totalEffects++;
                         lastSlot = i;
                         break;
