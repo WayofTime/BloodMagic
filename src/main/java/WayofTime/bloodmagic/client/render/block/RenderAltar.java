@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -37,16 +36,15 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
         if (level > 0)
-            this.renderFluid(getWorld(), level);
-        this.renderItem(tileAltar.getWorld(), inputStack);
+            this.renderFluid(level);
+        this.renderItem(inputStack);
         GlStateManager.popMatrix();
 
-        if (tileAltar.getCurrentTierDisplayed() != EnumAltarTier.ONE) {
+        if (tileAltar.getCurrentTierDisplayed() != EnumAltarTier.ONE)
             renderHologram(tileAltar, tileAltar.getCurrentTierDisplayed(), partialTicks);
-        }
     }
 
-    private void renderFluid(World world, float fluidLevel) {
+    private void renderFluid(float fluidLevel) {
         GlStateManager.pushMatrix();
 
         Fluid fluid = BlockLifeEssence.getLifeEssence();
@@ -82,23 +80,20 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
         GlStateManager.popMatrix();
     }
 
-    private void renderItem(World world, ItemStack stack) {
+    private void renderItem(ItemStack stack) {
         RenderItem itemRenderer = mc.getRenderItem();
         if (!stack.isEmpty()) {
             GlStateManager.translate(0.5, 1, 0.5);
-            EntityItem entityitem = new EntityItem(world, 0.0D, 0.0D, 0.0D, stack);
-            entityitem.getItem().setCount(1);
-            entityitem.hoverStart = 0.0F;
             GlStateManager.pushMatrix();
             GlStateManager.disableLighting();
 
             float rotation = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
 
             GlStateManager.rotate(rotation, 0.0F, 1.0F, 0);
-            GlStateManager.scale(0.5F, 0.5F, 0.5F);
+            GlStateManager.scale(0.75F, 0.75F, 0.75F);
             GlStateManager.pushAttrib();
             RenderHelper.enableStandardItemLighting();
-            itemRenderer.renderItem(entityitem.getItem(), ItemCameraTransforms.TransformType.FIXED);
+            itemRenderer.renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
             RenderHelper.disableStandardItemLighting();
             GlStateManager.popAttrib();
 
