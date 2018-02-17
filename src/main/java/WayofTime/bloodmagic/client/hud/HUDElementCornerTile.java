@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -78,6 +79,10 @@ public abstract class HUDElementCornerTile<T extends TileEntity> extends HUDElem
                         flag = true;
                 }
             }
+
+            RayTraceResult trace = Minecraft.getMinecraft().objectMouseOver;
+            if (trace.typeOfHit != RayTraceResult.Type.BLOCK)
+                return false;
 
             TileEntity tile = Minecraft.getMinecraft().world.getTileEntity(Minecraft.getMinecraft().objectMouseOver.getBlockPos());
             if (!(tile instanceof TileAltar))
