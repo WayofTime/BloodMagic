@@ -24,7 +24,7 @@ public class ImperfectRitualRegistry {
     public static void registerRitual(ImperfectRitual imperfectRitual, String id, boolean enabled) {
         if (imperfectRitual != null) {
             if (registry.containsKey(id))
-                BMLog.DEFAULT.error("Duplicate imperfect ritual id: %s", id);
+                BMLog.DEFAULT.error("Duplicate imperfect ritual id: {}", id);
             else {
                 registry.put(id, imperfectRitual);
                 enabledRituals.put(imperfectRitual, enabled);

@@ -35,7 +35,7 @@ public class RitualRegistry {
 
         if (ritual != null) {
             if (registry.containsKey(id))
-                BMLog.DEFAULT.error("Duplicate ritual id: %s", id);
+                BMLog.DEFAULT.error("Duplicate ritual id: {}", id);
             else {
                 registry.put(id, ritual);
                 enabledRituals.put(ritual, enabled);

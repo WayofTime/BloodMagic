@@ -46,13 +46,13 @@ public class WorldDemonWillHandler {
     public static void addWillWorld(int dim) {
         if (!containedWills.containsKey(dim)) {
             containedWills.put(dim, new WillWorld(dim));
-            BMLog.DEBUG.info("Creating demon will cache for world " + dim);
+            BMLog.DEBUG.info("Creating demon will cache for world {}", dim);
         }
     }
 
     public static void removeWillWorld(int dim) {
         containedWills.remove(dim);
-        BMLog.DEBUG.info("Removing demon will cache for world " + dim);
+        BMLog.DEBUG.info("Removing demon will cache for world {}", dim);
     }
 
     public static void addWillChunk(int dim, Chunk chunk, short base, DemonWillHolder currentWill) {
