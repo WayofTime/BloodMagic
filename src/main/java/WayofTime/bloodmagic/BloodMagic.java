@@ -2,7 +2,6 @@ package WayofTime.bloodmagic;
 
 import WayofTime.bloodmagic.api.BloodMagicPlugin;
 import WayofTime.bloodmagic.api.IBloodMagicPlugin;
-import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.core.registry.OrbRegistry;
 import WayofTime.bloodmagic.core.registry.RitualRegistry;
 import WayofTime.bloodmagic.util.helper.LogHelper;
@@ -73,7 +72,7 @@ public class BloodMagic {
     public void preInit(FMLPreInitializationEvent event) {
         configDir = new File(event.getModConfigurationDirectory(), "bloodmagic");
 
-        PLUGINS.addAll(PluginUtil.getPlugins(event.getAsmData()));
+        PLUGINS.addAll(PluginUtil.gatherPlugins(event.getAsmData()));
 
         ModTranquilityHandlers.init();
         ModDungeons.init();
@@ -84,8 +83,8 @@ public class BloodMagic {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         BloodMagicPacketHandler.init();
-        for (Pair<IBloodMagicPlugin, BloodMagicPlugin> plugin : PLUGINS)
-            plugin.getLeft().register(BloodMagicAPI.INSTANCE);
+
+        PluginUtil.registerPlugins(PLUGINS);
 
         ModRecipes.init();
         ModRituals.initRituals();

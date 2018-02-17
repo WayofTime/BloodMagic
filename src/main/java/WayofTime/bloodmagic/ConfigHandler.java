@@ -35,8 +35,10 @@ public class ConfigHandler {
     public static class ConfigGeneral {
         @Config.Comment({"Enables extra information to be printed to the log.", "Warning: May drastically increase log size."})
         public boolean enableDebugLogging = false;
-        @Config.Comment({"Enables extra information to be printed to the log.", "Warning: May drastically increase log size."})
+        @Config.Comment({"Enables extra information to be printed to the log."})
         public boolean enableAPILogging = false;
+        @Config.Comment({"Enables extra information to be printed to the log.", "Warning: May drastically increase log size."})
+        public boolean enableVerboseAPILogging = false;
     }
 
     public static class ConfigBlacklist {

@@ -55,7 +55,7 @@ public class BloodMagicAPI implements IBloodMagicAPI {
         }
 
         if (component != null) {
-            BMLog.API.info("Registered {} as a {} altar component.", state, componentType);
+            BMLog.API_VERBOSE.info("Registered {} as a {} altar component.", state, componentType);
             altarComponents.put(component, state);
         } else BMLog.API.warn("Invalid Altar component type: {}.", componentType);
     }

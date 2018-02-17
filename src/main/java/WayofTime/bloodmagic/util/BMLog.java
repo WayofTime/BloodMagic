@@ -26,6 +26,12 @@ public enum BMLog {
             return ConfigHandler.general.enableAPILogging;
         }
     },
+    API_VERBOSE() {
+        @Override
+        boolean enabled() {
+            return ConfigHandler.general.enableVerboseAPILogging;
+        }
+    },
     ;
 
     private final Logger logger;

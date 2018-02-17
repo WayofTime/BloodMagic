@@ -30,7 +30,7 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
     @Override
     public void addTeleposer(@Nonnull IBlockState state) {
         if (!teleposer.contains(state)) {
-            BMLog.API.info("Blacklist: Added {} to the Teleposer blacklist.", state);
+            BMLog.API_VERBOSE.info("Blacklist: Added {} to the Teleposer blacklist.", state);
             teleposer.add(state);
         }
     }
@@ -43,7 +43,7 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
     @Override
     public void addTeleposer(@Nonnull ResourceLocation entityId) {
         if (!teleposerEntities.contains(entityId)) {
-            BMLog.API.info("Blacklist: Added {} to the Teleposer blacklist.", entityId);
+            BMLog.API_VERBOSE.info("Blacklist: Added {} to the Teleposer blacklist.", entityId);
             teleposerEntities.add(entityId);
         }
     }
@@ -51,7 +51,7 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
     @Override
     public void addTransposition(@Nonnull IBlockState state) {
         if (!transposition.contains(state)) {
-            BMLog.API.info("Blacklist: Added {} to the Transposition blacklist.", state);
+            BMLog.API_VERBOSE.info("Blacklist: Added {} to the Transposition blacklist.", state);
             transposition.add(state);
         }
     }
@@ -64,7 +64,7 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
     @Override
     public void addGreenGrove(@Nonnull IBlockState state) {
         if (!greenGrove.contains(state)) {
-            BMLog.API.info("Blacklist: Added {} to the Green Grove blacklist.", state);
+            BMLog.API_VERBOSE.info("Blacklist: Added {} to the Green Grove blacklist.", state);
             greenGrove.add(state);
         }
     }
@@ -77,7 +77,7 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
     @Override
     public void addWellOfSuffering(@Nonnull ResourceLocation entityId) {
         if (!sacrifice.contains(entityId)) {
-            BMLog.API.info("Blacklist: Added {} to the Well of Suffering blacklist.", entityId);
+            BMLog.API_VERBOSE.info("Blacklist: Added {} to the Well of Suffering blacklist.", entityId);
             sacrifice.add(entityId);
         }
     }
