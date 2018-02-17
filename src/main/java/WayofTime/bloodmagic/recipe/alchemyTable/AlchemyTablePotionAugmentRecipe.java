@@ -52,7 +52,7 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe {
 
     @Override
     public ItemStack getModifiedFlaskForInput(ItemStack inputStack) {
-        if (inputStack == null) {
+        if (inputStack.isEmpty()) {
             ItemStack outputStack = new ItemStack(RegistrarBloodMagicItems.POTION_FLASK);
 
             List<PotionEffect> effectList = new ArrayList<PotionEffect>();
