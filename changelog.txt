@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Version 2.2.4
+------------------------------------------------------
+
+- Make sure we're looking at a block before doing blocky things
+- Slightly altered the altar's renderer
+- Added new spammy logging with config options
+    - Prints out information like mods registering things via the API and stuff
+
+------------------------------------------------------
 Version 2.2.3
 ------------------------------------------------------
 
