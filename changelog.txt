@@ -1,4 +1,20 @@
 ------------------------------------------------------
+Version 2.2.3
+------------------------------------------------------
+
+- Fixed mundane components being really really really thirsty
+    - (everything required water reagents. everything.)
+- Buffed the Fast Miner array with a nerf
+    - Vanilla doesn't like Haste 3 I guess?
+- Moved Divination Sigil altar output to a HUD element
+    - RIP Blood Altar chat spam 2014-2018
+- Mark of the Falling Tower is now re-opened and ready for sacrifices.
+- Polished Demon Stones are no longer lonely uncraftable bois
+- Somewhat more efficient (at least LoC wise) altar upgrade checking
+- Blood Altar is now less stingy about outputs
+- Coerced augmented Potion Flask recipe outputs out of hiding
+
+------------------------------------------------------
 Version 2.2.2
 ------------------------------------------------------
 
