@@ -1,8 +1,9 @@
 package WayofTime.bloodmagic.demonAura;
 
-import WayofTime.bloodmagic.util.PleaseStopUsingMe;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.util.BMLog;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
@@ -45,13 +46,13 @@ public class WorldDemonWillHandler {
     public static void addWillWorld(int dim) {
         if (!containedWills.containsKey(dim)) {
             containedWills.put(dim, new WillWorld(dim));
-            PleaseStopUsingMe.logger.info("Creating demon will cache for world " + dim);
+            BMLog.DEBUG.info("Creating demon will cache for world " + dim);
         }
     }
 
     public static void removeWillWorld(int dim) {
         containedWills.remove(dim);
-        PleaseStopUsingMe.logger.info("Removing demon will cache for world " + dim);
+        BMLog.DEBUG.info("Removing demon will cache for world " + dim);
     }
 
     public static void addWillChunk(int dim, Chunk chunk, short base, DemonWillHolder currentWill) {

@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.api.impl;
 import WayofTime.bloodmagic.api.IBloodMagicValueManager;
 import WayofTime.bloodmagic.incense.EnumTranquilityType;
 import WayofTime.bloodmagic.incense.TranquilityStack;
+import WayofTime.bloodmagic.util.BMLog;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
@@ -24,6 +25,7 @@ public class BloodMagicValueManager implements IBloodMagicValueManager {
 
     @Override
     public void setSacrificialValue(@Nonnull ResourceLocation entityId, int value) {
+        BMLog.API.info("Value Manager: Set sacrificial value of {} to {}.", entityId, value);
         sacrificial.put(entityId, value);
     }
 
@@ -37,13 +39,17 @@ public class BloodMagicValueManager implements IBloodMagicValueManager {
             }
         }
 
-        if (tranquility != null)
+        if (tranquility != null) {
+            BMLog.API.info("Value Manager: Set tranquility value of {} to {} @ {}", state, tranquilityType, value);
             this.tranquility.put(state, new TranquilityStack(tranquility, value));
+        } else BMLog.API.warn("Invalid tranquility type: {}.", tranquilityType);
     }
 
     public void setTranquility(Block block, TranquilityStack tranquilityStack) {
-        for (IBlockState state : block.getBlockState().getValidStates())
+        for (IBlockState state : block.getBlockState().getValidStates()) {
+            BMLog.API.info("Value Manager: Set tranquility value of {} to {} @ {}", state, tranquilityStack.type, tranquilityStack.value);
             tranquility.put(state, tranquilityStack);
+        }
     }
 
     public Map<ResourceLocation, Integer> getSacrificial() {

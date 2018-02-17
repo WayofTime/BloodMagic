@@ -1,7 +1,8 @@
 package WayofTime.bloodmagic.core.registry;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.BlockStack;
-import WayofTime.bloodmagic.util.PleaseStopUsingMe;
 import WayofTime.bloodmagic.ritual.data.imperfect.ImperfectRitual;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -23,7 +24,7 @@ public class ImperfectRitualRegistry {
     public static void registerRitual(ImperfectRitual imperfectRitual, String id, boolean enabled) {
         if (imperfectRitual != null) {
             if (registry.containsKey(id))
-                PleaseStopUsingMe.logger.error("Duplicate imperfect ritual id: %s", id);
+                BMLog.DEFAULT.error("Duplicate imperfect ritual id: %s", id);
             else {
                 registry.put(id, imperfectRitual);
                 enabledRituals.put(imperfectRitual, enabled);
@@ -71,7 +72,7 @@ public class ImperfectRitualRegistry {
         try {
             return enabledRituals.get(imperfectRitual);
         } catch (NullPointerException e) {
-            PleaseStopUsingMe.logger.error("Invalid Imperfect Ritual was called");
+            BMLog.DEFAULT.error("Invalid Imperfect Ritual was called");
             return false;
         }
     }

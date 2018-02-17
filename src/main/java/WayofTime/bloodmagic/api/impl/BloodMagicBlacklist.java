@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.api.impl;
 
 import WayofTime.bloodmagic.api.IBloodMagicBlacklist;
+import WayofTime.bloodmagic.util.BMLog;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
@@ -28,8 +29,10 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
 
     @Override
     public void addTeleposer(@Nonnull IBlockState state) {
-        if (!teleposer.contains(state))
+        if (!teleposer.contains(state)) {
+            BMLog.API.info("Blacklist: Added {} to the Teleposer blacklist.", state);
             teleposer.add(state);
+        }
     }
 
     public void addTeleposer(@Nonnull Block block) {
@@ -39,14 +42,18 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
 
     @Override
     public void addTeleposer(@Nonnull ResourceLocation entityId) {
-        if (!teleposerEntities.contains(entityId))
+        if (!teleposerEntities.contains(entityId)) {
+            BMLog.API.info("Blacklist: Added {} to the Teleposer blacklist.", entityId);
             teleposerEntities.add(entityId);
+        }
     }
 
     @Override
     public void addTransposition(@Nonnull IBlockState state) {
-        if (!transposition.contains(state))
+        if (!transposition.contains(state)) {
+            BMLog.API.info("Blacklist: Added {} to the Transposition blacklist.", state);
             transposition.add(state);
+        }
     }
 
     public void addTransposition(@Nonnull Block block) {
@@ -56,8 +63,10 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
 
     @Override
     public void addGreenGrove(@Nonnull IBlockState state) {
-        if (!greenGrove.contains(state))
+        if (!greenGrove.contains(state)) {
+            BMLog.API.info("Blacklist: Added {} to the Green Grove blacklist.", state);
             greenGrove.add(state);
+        }
     }
 
     public void addGreenGrove(@Nonnull Block block) {
@@ -67,8 +76,10 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
 
     @Override
     public void addWellOfSuffering(@Nonnull ResourceLocation entityId) {
-        if (!sacrifice.contains(entityId))
+        if (!sacrifice.contains(entityId)) {
+            BMLog.API.info("Blacklist: Added {} to the Well of Suffering blacklist.", entityId);
             sacrifice.add(entityId);
+        }
     }
 
     // Internal use getters

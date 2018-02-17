@@ -11,6 +11,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class ConfigHandler {
 
+    @Config.Comment({"General settings"})
+    public static ConfigGeneral general = new ConfigGeneral();
     @Config.Comment({"Blacklist options for various features"})
     public static ConfigBlacklist blacklist = new ConfigBlacklist();
     @Config.Comment({"Value modifiers for various features"})
@@ -28,6 +30,13 @@ public class ConfigHandler {
             ConfigManager.sync(event.getModID(), Config.Type.INSTANCE); // Sync config values
             MeteorConfigHandler.handleMeteors(false); // Reload meteors
         }
+    }
+
+    public static class ConfigGeneral {
+        @Config.Comment({"Enables extra information to be printed to the log.", "Warning: May drastically increase log size."})
+        public boolean enableDebugLogging = false;
+        @Config.Comment({"Enables extra information to be printed to the log.", "Warning: May drastically increase log size."})
+        public boolean enableAPILogging = false;
     }
 
     public static class ConfigBlacklist {

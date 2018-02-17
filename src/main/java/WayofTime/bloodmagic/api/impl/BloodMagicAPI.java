@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.api.impl;
 
 import WayofTime.bloodmagic.api.IBloodMagicAPI;
 import WayofTime.bloodmagic.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.util.BMLog;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.state.IBlockState;
@@ -45,7 +46,7 @@ public class BloodMagicAPI implements IBloodMagicAPI {
 
     @Override
     public void registerAltarComponent(@Nonnull IBlockState state, @Nonnull String componentType) {
-        EnumAltarComponent component = EnumAltarComponent.NOTAIR;
+        EnumAltarComponent component = null;
         for (EnumAltarComponent type : EnumAltarComponent.VALUES) {
             if (type.name().equalsIgnoreCase(componentType)) {
                 component = type;
@@ -53,7 +54,10 @@ public class BloodMagicAPI implements IBloodMagicAPI {
             }
         }
 
-        altarComponents.put(component, state);
+        if (component != null) {
+            BMLog.API.info("Registered {} as a {} altar component.", state, componentType);
+            altarComponents.put(component, state);
+        } else BMLog.API.warn("Invalid Altar component type: {}.", componentType);
     }
 
     @Nonnull

@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.core.registry;
 
-import WayofTime.bloodmagic.util.PleaseStopUsingMe;
 import WayofTime.bloodmagic.ritual.data.Ritual;
+import WayofTime.bloodmagic.util.BMLog;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
@@ -28,14 +28,14 @@ public class RitualRegistry {
      */
     public static void registerRitual(Ritual ritual, String id, boolean enabled) {
         if (locked) {
-            PleaseStopUsingMe.logger.error("This registry has been locked. Please register your ritual earlier.");
-            PleaseStopUsingMe.logger.error("If you reflect this, I will hunt you down. - TehNut");
+            BMLog.DEFAULT.error("This registry has been locked. Please register your ritual earlier.");
+            BMLog.DEFAULT.error("If you reflect this, I will hunt you down. - TehNut");
             return;
         }
 
         if (ritual != null) {
             if (registry.containsKey(id))
-                PleaseStopUsingMe.logger.error("Duplicate ritual id: %s", id);
+                BMLog.DEFAULT.error("Duplicate ritual id: %s", id);
             else {
                 registry.put(id, ritual);
                 enabledRituals.put(ritual, enabled);
@@ -78,7 +78,7 @@ public class RitualRegistry {
         try {
             return enabledRituals.get(ritual);
         } catch (NullPointerException e) {
-            PleaseStopUsingMe.logger.error("Invalid Ritual was called");
+            BMLog.DEFAULT.error("Invalid Ritual was called");
             return false;
         }
     }
@@ -111,13 +111,10 @@ public class RitualRegistry {
         locked = true; // Lock registry so no no rituals can be registered
         lookupList.clear(); // Make sure it's empty
         lookupList.addAll(registry.keySet());
-        Collections.sort(lookupList, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                Ritual ritual1 = registry.get(o1);
-                Ritual ritual2 = registry.get(o2);
-                return ritual1.getComponents().size() > ritual2.getComponents().size() ? -1 : 0; // Put earlier if bigger
-            }
+        Collections.sort(lookupList, (o1, o2) -> {
+            Ritual ritual1 = registry.get(o1);
+            Ritual ritual2 = registry.get(o2);
+            return ritual1.getComponents().size() > ritual2.getComponents().size() ? -1 : 0; // Put earlier if bigger
         });
     }
 }

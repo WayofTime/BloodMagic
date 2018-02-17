@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.core.registry;
 
-import WayofTime.bloodmagic.util.PleaseStopUsingMe;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.altar.EnumAltarTier;
 import com.google.common.collect.BiMap;
@@ -29,7 +30,7 @@ public class AltarRecipeRegistry {
         if (!recipes.containsValue(altarRecipe) && altarRecipe.getInput().size() > 0)
             recipes.put(altarRecipe.getInput(), altarRecipe);
         else
-            PleaseStopUsingMe.logger.error("Error adding altar recipe for input [{}].", altarRecipe.toString());
+            BMLog.DEFAULT.error("Error adding altar recipe for input [{}].", altarRecipe.toString());
     }
 
     public static void registerFillRecipe(ItemStack orbStack, EnumAltarTier tier, int maxForOrb, int consumeRate, int drainRate) {

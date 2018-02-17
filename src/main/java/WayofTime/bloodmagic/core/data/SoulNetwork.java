@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.core.data;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.PleaseStopUsingMe;
 import WayofTime.bloodmagic.event.AddToNetworkEvent;
 import WayofTime.bloodmagic.event.SoulNetworkEvent;
@@ -130,7 +132,7 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
         if (getParent() != null)
             getParent().markDirty();
         else
-            PleaseStopUsingMe.logger.error("A SoulNetwork was created, but a parent was not set to allow saving.");
+            BMLog.DEFAULT.error("A SoulNetwork was created, but a parent was not set to allow saving.");
     }
 
     @Nullable
