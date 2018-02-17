@@ -81,7 +81,7 @@ public abstract class HUDElementCornerTile<T extends TileEntity> extends HUDElem
             }
 
             RayTraceResult trace = Minecraft.getMinecraft().objectMouseOver;
-            if (trace.typeOfHit != RayTraceResult.Type.BLOCK)
+            if (trace == null || trace.typeOfHit != RayTraceResult.Type.BLOCK)
                 return false;
 
             TileEntity tile = Minecraft.getMinecraft().world.getTileEntity(Minecraft.getMinecraft().objectMouseOver.getBlockPos());
