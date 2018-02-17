@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
@@ -21,11 +22,13 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
 
     @Override
     public ItemStack getContainerItem(ItemStack itemStack) {
-        NetworkHelper.getSoulNetwork(this.getOwnerUUID(itemStack)).syphon(25);
-        ItemStack copiedStack = itemStack.copy();
-        copiedStack.setItemDamage(copiedStack.getItemDamage());
-        copiedStack.setCount(1);
-        return copiedStack;
+        String uuid = getOwnerUUID(itemStack);
+        if (uuid != null)
+            NetworkHelper.getSoulNetwork(this.getOwnerUUID(itemStack)).syphon(25);
+
+        ItemStack returnStack = new ItemStack(this);
+        returnStack.setTagCompound(itemStack.getTagCompound());
+        return returnStack;
     }
 
     @Override
@@ -35,9 +38,6 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
 
     @Override
     public int getItemBurnTime(ItemStack stack) {
-        if (!stack.hasTagCompound())
-            return -1;
-
         if (getOwnerUUID(stack) == null)
             return -1;
 
@@ -50,6 +50,16 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
         }
 
         return -1;
+    }
+
+    @Override
+    public String getOwnerName(ItemStack stack) {
+        return stack.hasTagCompound() ? stack.getTagCompound().getString(Constants.NBT.OWNER_NAME) : null;
+    }
+
+    @Override
+    public String getOwnerUUID(ItemStack stack) {
+        return stack.hasTagCompound() ? stack.getTagCompound().getString(Constants.NBT.OWNER_UUID) : null;
     }
 
     @Override
