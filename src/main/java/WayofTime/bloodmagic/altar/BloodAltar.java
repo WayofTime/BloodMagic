@@ -28,6 +28,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
@@ -311,7 +312,7 @@ public class BloodAltar implements IFluidHandler {
 
             if (hasOperated) {
                 if (progress >= liquidRequired * stackSize) {
-                    ItemStack result = recipe.getOutput().copy();
+                    ItemStack result = ItemHandlerHelper.copyStackWithSize(recipe.getOutput(), stackSize);
 
                     BloodMagicCraftedEvent.Altar event = new BloodMagicCraftedEvent.Altar(recipe.getInput(), result);
                     MinecraftForge.EVENT_BUS.post(event);
