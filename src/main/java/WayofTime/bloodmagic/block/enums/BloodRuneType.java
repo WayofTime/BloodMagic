@@ -4,15 +4,15 @@ import net.minecraft.util.IStringSerializable;
 
 import java.util.Locale;
 
-public enum EnumBloodRune implements IStringSerializable {
+public enum BloodRuneType implements IStringSerializable {
     BLANK,
     SPEED,
     EFFICIENCY,
     SACRIFICE,
-    SELFSACRIFICE,
+    SELF_SACRIFICE,
     DISPLACEMENT,
     CAPACITY,
-    AUGCAPACITY,
+    AUGMENTED_CAPACITY,
     ORB,
     ACCELERATION,
     CHARGING;

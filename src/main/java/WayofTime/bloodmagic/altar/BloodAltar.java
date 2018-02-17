@@ -3,12 +3,12 @@ package WayofTime.bloodmagic.altar;
 import WayofTime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
-import WayofTime.bloodmagic.util.BlockStack;
+import WayofTime.bloodmagic.block.enums.BloodRuneType;
+import WayofTime.bloodmagic.iface.IBloodRune;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.tile.TileAltar;
 import com.google.common.base.Enums;
@@ -388,17 +388,17 @@ public class BloodAltar implements IFluidHandler {
             return;
         } else if (!tier.equals(EnumAltarTier.ONE) && upgrade != null) {
             this.isUpgraded = true;
-            this.accelerationUpgrades = upgrade.getAccelerationCount();
-            this.consumptionMultiplier = (float) (0.20 * upgrade.getSpeedCount());
-            this.efficiencyMultiplier = (float) Math.pow(0.85, upgrade.getEfficiencyCount());
-            this.sacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getSacrificeCount());
-            this.selfSacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getSelfSacrificeCount());
-            this.capacityMultiplier = (float) ((1 * Math.pow(1.10, upgrade.getBetterCapacityCount()) + 0.20 * upgrade.getCapacityCount()));
-            this.dislocationMultiplier = (float) (Math.pow(1.2, upgrade.getDisplacementCount()));
-            this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrade.getOrbCapacityCount());
-            this.chargingFrequency = Math.max(20 - upgrade.getAccelerationCount(), 1);
-            this.chargingRate = (int) (10 * upgrade.getChargingCount() * (1 + consumptionMultiplier / 2));
-            this.maxCharge = (int) (Fluid.BUCKET_VOLUME * Math.max(0.5 * capacityMultiplier, 1) * upgrade.getChargingCount());
+            this.accelerationUpgrades = upgrade.getLevel(BloodRuneType.ACCELERATION);
+            this.consumptionMultiplier = (float) (0.20 * upgrade.getLevel(BloodRuneType.SPEED));
+            this.efficiencyMultiplier = (float) Math.pow(0.85, upgrade.getLevel(BloodRuneType.EFFICIENCY));
+            this.sacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getLevel(BloodRuneType.SACRIFICE));
+            this.selfSacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getLevel(BloodRuneType.SELF_SACRIFICE));
+            this.capacityMultiplier = (float) ((1 * Math.pow(1.10, upgrade.getLevel(BloodRuneType.AUGMENTED_CAPACITY))) + 0.20 * upgrade.getLevel(BloodRuneType.CAPACITY));
+            this.dislocationMultiplier = (float) (Math.pow(1.2, upgrade.getLevel(BloodRuneType.DISPLACEMENT)));
+            this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrade.getLevel(BloodRuneType.ORB));
+            this.chargingFrequency = Math.max(20 - accelerationUpgrades, 1);
+            this.chargingRate = (int) (10 * upgrade.getLevel(BloodRuneType.CHARGING) * (1 + consumptionMultiplier / 2));
+            this.maxCharge = (int) (Fluid.BUCKET_VOLUME * Math.max(0.5 * capacityMultiplier, 1) * upgrade.getLevel(BloodRuneType.CHARGING));
         }
 
         this.capacity = (int) (Fluid.BUCKET_VOLUME * 10 * capacityMultiplier);
@@ -701,50 +701,10 @@ public class BloodAltar implements IFluidHandler {
             BlockPos componentPos = pos.add(altarComponent.getOffset());
 
             if (altarComponent.isUpgradeSlot()) {
-                BlockStack worldBlock = new BlockStack(world.getBlockState(componentPos).getBlock(), world.getBlockState(componentPos).getBlock().getMetaFromState(world.getBlockState(componentPos)));
-
-                if (worldBlock.getBlock() instanceof BlockBloodRune) {
-                    switch (((BlockBloodRune) worldBlock.getBlock()).getRuneEffect(worldBlock.getMeta())) {
-                        case 1:
-                            upgrades.addSpeed();
-                            break;
-
-                        case 2:
-                            upgrades.addEfficiency();
-                            break;
-
-                        case 3:
-                            upgrades.addSacrifice();
-                            break;
-
-                        case 4:
-                            upgrades.addSelfSacrifice();
-                            break;
-
-                        case 5:
-                            upgrades.addDisplacement();
-                            break;
-
-                        case 6:
-                            upgrades.addCapacity();
-                            break;
-
-                        case 7:
-                            upgrades.addBetterCapacity();
-                            break;
-
-                        case 8:
-                            upgrades.addOrbCapacity();
-                            break;
-
-                        case 9:
-                            upgrades.addAcceleration();
-                            break;
-
-                        case 10:
-                            upgrades.addCharging();
-                            break;
-                    }
+                IBlockState state = world.getBlockState(componentPos);
+                if (state.getBlock() instanceof IBloodRune) {
+                    BloodRuneType rune = ((IBloodRune) state.getBlock()).getBloodRune(world, componentPos, state);
+                    upgrades.upgrade(rune);
                 }
             }
         }

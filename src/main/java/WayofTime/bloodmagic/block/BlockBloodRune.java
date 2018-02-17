@@ -2,19 +2,25 @@ package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.block.base.BlockEnum;
-import WayofTime.bloodmagic.block.enums.EnumBloodRune;
+import WayofTime.bloodmagic.block.enums.BloodRuneType;
+import WayofTime.bloodmagic.iface.IBloodRune;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public class BlockBloodRune extends BlockEnum<EnumBloodRune> {
+public class BlockBloodRune extends BlockEnum<BloodRuneType> implements IBloodRune {
+
     public BlockBloodRune() {
-        super(Material.ROCK, EnumBloodRune.class);
+        super(Material.ROCK, BloodRuneType.class);
 
         setUnlocalizedName(BloodMagic.MODID + ".rune.");
         setCreativeTab(BloodMagic.TAB_BM);
@@ -24,8 +30,10 @@ public class BlockBloodRune extends BlockEnum<EnumBloodRune> {
         setHarvestLevel("pickaxe", 2);
     }
 
-    public int getRuneEffect(int meta) {
-        return meta;
+    @Nullable
+    @Override
+    public BloodRuneType getBloodRune(IBlockAccess world, BlockPos pos, IBlockState state) {
+        return state.getValue(getProperty());
     }
 
     @Override

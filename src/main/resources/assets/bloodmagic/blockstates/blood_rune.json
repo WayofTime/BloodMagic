@@ -27,7 +27,7 @@
           "all": "bloodmagic:blocks/RuneOfSacrifice"
         }
       },
-      "selfsacrifice": {
+      "self_sacrifice": {
         "textures": {
           "all": "bloodmagic:blocks/RuneOfSelfSacrifice"
         }
@@ -42,7 +42,7 @@
           "all": "bloodmagic:blocks/AltarCapacityRune"
         }
       },
-      "augcapacity": {
+      "augmented_capacity": {
         "textures": {
           "all": "bloodmagic:blocks/BetterCapacityRune"
         }

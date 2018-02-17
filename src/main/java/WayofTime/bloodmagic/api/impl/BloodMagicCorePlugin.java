@@ -8,7 +8,7 @@ import WayofTime.bloodmagic.api.IBloodMagicPlugin;
 import WayofTime.bloodmagic.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockDecorative;
-import WayofTime.bloodmagic.block.enums.EnumBloodRune;
+import WayofTime.bloodmagic.block.enums.BloodRuneType;
 import WayofTime.bloodmagic.block.enums.EnumDecorative;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicRecipes;
@@ -76,7 +76,7 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin {
         api.registerAltarComponent(decorative.getDefaultState().withProperty(decorative.getProperty(), EnumDecorative.CRYSTAL_TILE), EnumAltarComponent.CRYSTAL.name());
 
         BlockBloodRune bloodRune = (BlockBloodRune) RegistrarBloodMagicBlocks.BLOOD_RUNE;
-        for (EnumBloodRune runeType : EnumBloodRune.values())
+        for (BloodRuneType runeType : BloodRuneType.values())
             api.registerAltarComponent(bloodRune.getDefaultState().withProperty(bloodRune.getProperty(), runeType), EnumAltarComponent.BLOODRUNE.name());
 
         RegistrarBloodMagicRecipes.registerAltarRecipes(api.getRecipeRegistrar());
