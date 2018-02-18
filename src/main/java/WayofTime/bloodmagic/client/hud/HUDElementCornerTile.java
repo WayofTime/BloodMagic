@@ -47,11 +47,13 @@ public abstract class HUDElementCornerTile<T extends TileEntity> extends HUDElem
         }
     }
 
-    public static abstract class BloodAltar extends HUDElementCornerTile<TileAltar> {
+    public static abstract class DivinedView<T extends TileEntity> extends HUDElementCornerTile<T> {
 
+        private final Class<T> tileClass;
         private final boolean simple;
 
-        public BloodAltar(boolean simple) {
+        public DivinedView(Class<T> tileClass, boolean simple) {
+            this.tileClass = tileClass;
             this.simple = simple;
         }
 
@@ -85,7 +87,7 @@ public abstract class HUDElementCornerTile<T extends TileEntity> extends HUDElem
                 return false;
 
             TileEntity tile = Minecraft.getMinecraft().world.getTileEntity(Minecraft.getMinecraft().objectMouseOver.getBlockPos());
-            if (!(tile instanceof TileAltar))
+            if (tile == null || !tileClass.isAssignableFrom(tile.getClass()))
                 flag = false;
 
             return flag;
