@@ -1,4 +1,19 @@
 ------------------------------------------------------
+Version 2.2.5
+------------------------------------------------------
+
+- We are now even more sure we're looking at a block before doing blocky things
+- Fix Lava Crystal being consumed by furnaces
+- Augmented Capacity and Self Sacrifice runes remember their names now
+- Satiated Stomach will now let you gorge yourself on overly high saturation foods
+    - I'm looking at you, Pam. Stop being weird and giving your foods 28 saturation.
+- Made Mod ID node filter dumber so it actually, like, works properly
+- "Temporarily" disabled cross-dimensional teleports for entities. Temporarily.
+    - Did I mention this is temporary? As in totally not permanently?
+    - Who am I kidding? I'll probably forget about this.
+- Bounce Arrays are no longer death traps when sneaking.
+
+------------------------------------------------------
 Version 2.2.4
 ------------------------------------------------------
 
