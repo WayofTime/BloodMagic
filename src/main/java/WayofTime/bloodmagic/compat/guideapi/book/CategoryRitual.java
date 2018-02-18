@@ -44,7 +44,7 @@ public class CategoryRitual {
 
         for (int i = 1; i < 5; i++) {
             EnumRuneType type = EnumRuneType.values()[i];
-            AltarRecipe scribeRecipe = RecipeHelper.getAltarRecipeForOutput(type.getScribeStack());
+            AltarRecipe scribeRecipe = RecipeHelper.getAltarRecipeForOutput(type.getStack());
             if (scribeRecipe != null) {
                 ritualStonePages.add(new PageAltarRecipe(scribeRecipe));
             }

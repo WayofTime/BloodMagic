@@ -1,17 +1,19 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.ritual.data.EnumRuneType;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.block.BlockRitualStone;
-import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import com.google.common.base.Strings;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -21,24 +23,16 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemInscriptionTool extends ItemBindableBase implements IVariantProvider {
+public class ItemInscriptionTool extends ItemEnum<EnumRuneType> implements IBindable {
+
     public ItemInscriptionTool() {
-        super();
+        super(EnumRuneType.class, "scribe");
 
-        setUnlocalizedName(BloodMagic.MODID + ".scribe.");
-        setHasSubtypes(true);
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + EnumRuneType.values()[stack.getItemDamage()];
+        setMaxStackSize(1);
     }
 
     @Override
@@ -47,9 +41,11 @@ public class ItemInscriptionTool extends ItemBindableBase implements IVariantPro
         if (!isInCreativeTab(creativeTab))
             return;
 
-        for (int i = 1; i < EnumRuneType.values().length; i++) {
-            ItemStack stack = NBTHelper.checkNBT(new ItemStack(this, 1, i));
-            stack.getTagCompound().setInteger(Constants.NBT.USES, 10);
+        for (EnumRuneType runeType : types) {
+            ItemStack stack = new ItemStack(this, 1, runeType.ordinal());
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setInteger(Constants.NBT.USES, 10);
+            stack.setTagCompound(tag);
             list.add(stack);
         }
     }
@@ -59,11 +55,11 @@ public class ItemInscriptionTool extends ItemBindableBase implements IVariantPro
         ItemStack stack = player.getHeldItem(hand);
         IBlockState state = world.getBlockState(pos);
 
-        if (state.getBlock() instanceof BlockRitualStone && !((BlockRitualStone) state.getBlock()).isRuneType(world, pos, getType(stack))) {
+        if (state.getBlock() instanceof BlockRitualStone && !((BlockRitualStone) state.getBlock()).isRuneType(world, pos, getItemType(stack))) {
             stack = NBTHelper.checkNBT(stack);
             int uses = stack.getTagCompound().getInteger(Constants.NBT.USES);
 
-            world.setBlockState(pos, state.withProperty(((BlockRitualStone) state.getBlock()).getProperty(), getType(stack)));
+            world.setBlockState(pos, state.withProperty(((BlockRitualStone) state.getBlock()).getProperty(), getItemType(stack)));
             if (!player.capabilities.isCreativeMode) {
                 stack.getTagCompound().setInteger(Constants.NBT.USES, --uses);
                 if (uses <= 0)
@@ -96,20 +92,13 @@ public class ItemInscriptionTool extends ItemBindableBase implements IVariantPro
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, World world, List<String> list, ITooltipFlag flag) {
-        list.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.inscriber.desc"))));
-        super.addInformation(stack, world, list, flag);
-    }
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.inscriber.desc"))));
 
-    @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 1; i < EnumRuneType.values().length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + EnumRuneType.values()[i].name()));
-        return ret;
-    }
+        if (!stack.hasTagCompound())
+            return;
 
-    public EnumRuneType getType(ItemStack stack) {
-        return EnumRuneType.values()[stack.getItemDamage()];
+        if (!Strings.isNullOrEmpty(getOwnerUUID(stack)))
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
     }
 }
