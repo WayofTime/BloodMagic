@@ -17,6 +17,8 @@ public class ItemSigil extends Item implements IBindable, ISigil {
         super();
 
         this.lpUsed = lpUsed;
+
+        setMaxStackSize(1);
     }
 
     public boolean isUnusable(ItemStack stack) {
