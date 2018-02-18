@@ -1,24 +1,16 @@
 package WayofTime.bloodmagic.routing;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class ModIdItemFilter extends TestItemFilter {
+
     @Override
     public boolean doStacksMatch(ItemStack filterStack, ItemStack testStack) {
-        if (ItemStack.areItemsEqualIgnoreDurability(filterStack, testStack)) {
-            String keyId = getModID(filterStack.getItem());
-            String checkedId = getModID(testStack.getItem());
-            return keyId.equals(checkedId);
-        }
-
-        return false;
+        return getModID(filterStack).equalsIgnoreCase(getModID(testStack));
     }
 
-    public String getModID(Item item) {
-        ResourceLocation resource = ForgeRegistries.ITEMS.getKey(item);
-        return resource.getResourceDomain();
+    public String getModID(ItemStack stack) {
+        String modid = stack.getItem().getCreatorModId(stack);
+        return modid == null ? "" : modid;
     }
 }
