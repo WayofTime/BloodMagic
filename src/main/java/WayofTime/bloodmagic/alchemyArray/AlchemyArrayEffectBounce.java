@@ -22,7 +22,7 @@ public class AlchemyArrayEffectBounce extends AlchemyArrayEffect {
     @Override
     public void onEntityCollidedWithBlock(IAlchemyArray array, World world, BlockPos pos, IBlockState state, Entity entity) {
         if (entity.isSneaking()) {
-            return;
+            entity.fallDistance = 0;
         } else if (entity.motionY < 0.0D) {
             entity.motionY = -entity.motionY;
 
