@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemInscriptionTool extends ItemEnum<EnumRuneType> implements IBindable {
+public class ItemInscriptionTool extends ItemEnum.Variant<EnumRuneType> implements IBindable {
 
     public ItemInscriptionTool() {
         super(EnumRuneType.class, "scribe");
