@@ -42,6 +42,9 @@ public class ItemInscriptionTool extends ItemEnum.Variant<EnumRuneType> implemen
             return;
 
         for (EnumRuneType runeType : types) {
+            if (runeType == EnumRuneType.BLANK)
+                continue;
+
             ItemStack stack = new ItemStack(this, 1, runeType.ordinal());
             NBTTagCompound tag = new NBTTagCompound();
             tag.setInteger(Constants.NBT.USES, 10);
