@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.client.hud;
 import WayofTime.bloodmagic.client.Sprite;
 import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
 import WayofTime.bloodmagic.item.sigil.ItemSigilSeer;
-import WayofTime.bloodmagic.tile.TileAltar;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -86,7 +85,7 @@ public abstract class HUDElementCornerTile<T extends TileEntity> extends HUDElem
             if (trace == null || trace.typeOfHit != RayTraceResult.Type.BLOCK)
                 return false;
 
-            TileEntity tile = Minecraft.getMinecraft().world.getTileEntity(Minecraft.getMinecraft().objectMouseOver.getBlockPos());
+            TileEntity tile = Minecraft.getMinecraft().world.getTileEntity(trace.getBlockPos());
             if (tile == null || !tileClass.isAssignableFrom(tile.getClass()))
                 flag = false;
 

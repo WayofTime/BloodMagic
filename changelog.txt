@@ -1,4 +1,14 @@
 ------------------------------------------------------
+Version 2.2.6
+------------------------------------------------------
+
+- Fixed a weird thing where slates were weird
+- Added HUD elements for Tranquility and Inversion
+- Fixed Sigils stacking 64 times higher than they should have
+
+As a side note, I've been listening to http://loli.dance/ for the last like 2 hours now.
+
+------------------------------------------------------
 Version 2.2.5
 ------------------------------------------------------
 
