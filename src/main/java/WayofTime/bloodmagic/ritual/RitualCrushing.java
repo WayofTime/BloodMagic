@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.compress.CompressionRegistry;
-import WayofTime.bloodmagic.recipe.AlchemyTableRecipe;
+import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
 import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;

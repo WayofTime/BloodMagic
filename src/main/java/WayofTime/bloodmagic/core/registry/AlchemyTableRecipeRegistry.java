@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.core.registry;
 
-import WayofTime.bloodmagic.recipe.AlchemyTableRecipe;
+import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

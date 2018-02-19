@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.recipe;
+package WayofTime.bloodmagic.recipe.alchemyTable;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;

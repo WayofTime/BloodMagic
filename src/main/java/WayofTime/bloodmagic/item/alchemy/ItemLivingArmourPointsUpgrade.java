@@ -1,65 +1,58 @@
 package WayofTime.bloodmagic.item.alchemy;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.item.ItemEnum;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.item.types.ISubItem;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.Iterables;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
-public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvider {
-    public static final String DRAFT_ANGELUS = "draftAngelus";
-    private static ArrayList<String> names = new ArrayList<String>();
+public class ItemLivingArmourPointsUpgrade extends ItemEnum.Variant<ItemLivingArmourPointsUpgrade.UpgradeType> {
 
     public ItemLivingArmourPointsUpgrade() {
-        super();
-
-        setUnlocalizedName(BloodMagic.MODID + ".livingPointUpgrade.");
-        setHasSubtypes(true);
-        setCreativeTab(BloodMagic.TAB_BM);
-
-        buildItemList();
+        super(UpgradeType.class, "living_point_upgrade");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-        if (!stack.hasTagCompound())
-            return;
-
         tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.livingArmourPointsUpgrade.desc", 200))));
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
-        EntityPlayer player = entityLiving instanceof EntityPlayer ? (EntityPlayer) entityLiving : null;
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+        playerIn.setActiveHand(hand);
+        return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(hand));
+    }
 
-        if (player == null || !player.capabilities.isCreativeMode) {
+    @Override
+    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
+        if (!(entityLiving instanceof EntityPlayer))
+            return super.onItemUseFinish(stack, worldIn, entityLiving);
+
+        EntityPlayer player = (EntityPlayer) entityLiving;
+
+        if (!player.capabilities.isCreativeMode)
             stack.shrink(1);
-        }
 
         if (!worldIn.isRemote) {
             player.addPotionEffect(new PotionEffect(MobEffects.WITHER, 300, 5));
@@ -92,51 +85,21 @@ public class ItemLivingArmourPointsUpgrade extends Item implements IVariantProvi
         return EnumAction.DRINK;
     }
 
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
-        playerIn.setActiveHand(hand);
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(hand));
-    }
+    public enum UpgradeType implements ISubItem {
 
-    private void buildItemList() {
-        names.add(0, DRAFT_ANGELUS);
-    }
+        DRAFT_ANGELUS,
+        ;
 
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + names.get(stack.getItemDamage());
-    }
+        @Nonnull
+        @Override
+        public String getInternalName() {
+            return name().toLowerCase(Locale.ROOT);
+        }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
-        if (!isInCreativeTab(creativeTab))
-            return;
-
-        for (int i = 0; i < names.size(); i++)
-            list.add(new ItemStack(this, 1, i));
-    }
-
-    @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (String name : names)
-            ret.add(new ImmutablePair<Integer, String>(names.indexOf(name), "type=" + name));
-        return ret;
-    }
-
-    public static ItemStack getStack(String name) {
-        return new ItemStack(RegistrarBloodMagicItems.POINTS_UPGRADE, 1, names.indexOf(name));
-    }
-
-    public static ItemStack getStack(String key, int stackSize) {
-        ItemStack stack = getStack(key);
-        stack.setCount(stackSize);
-
-        return stack;
-    }
-
-    public static ArrayList<String> getNames() {
-        return names;
+        @Nonnull
+        @Override
+        public ItemStack getStack(int count) {
+            return new ItemStack(RegistrarBloodMagicItems.POINTS_UPGRADE, count, ordinal());
+        }
     }
 }

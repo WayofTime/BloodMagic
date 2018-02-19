@@ -1,9 +1,11 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
-import WayofTime.bloodmagic.recipe.AlchemyTableRecipe;
+import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
 import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
@@ -193,14 +195,13 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
         int tier = getTierOfOrb();
 
+        // special recipes like dying
         AlchemyTableRecipe recipe = AlchemyTableRecipeRegistry.getMatchingRecipe(inputList, getWorld(), getPos());
         if (recipe != null && (burnTime > 0 || (!getWorld().isRemote && tier >= recipe.getTierRequired() && this.getContainedLp() >= recipe.getLpDrained()))) {
-            if (burnTime == 1) {
-                IBlockState state = getWorld().getBlockState(pos);
-                getWorld().notifyBlockUpdate(getPos(), state, state, 3);
-            }
+            if (burnTime == 1)
+                notifyUpdate();
 
-            if (canCraft(inputList, recipe)) {
+            if (canCraft(recipe.getRecipeOutput(inputList))) {
                 ticksRequired = recipe.getTicksRequired();
                 burnTime++;
 
@@ -228,8 +229,42 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
             } else {
                 burnTime = 0;
             }
-        } else {
-            burnTime = 0;
+        } else { // Simple recipes
+            RecipeAlchemyTable recipeAlchemyTable = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTable(inputList);
+            if (recipeAlchemyTable != null && (burnTime > 0 || (!getWorld().isRemote && tier >= recipeAlchemyTable.getMinimumTier() && getContainedLp() >= recipeAlchemyTable.getSyphon()))) {
+                if (burnTime == 1)
+                    notifyUpdate();
+
+                if (canCraft(recipeAlchemyTable.getOutput())) {
+                    ticksRequired = recipeAlchemyTable.getTicks();
+                    burnTime++;
+                    if (burnTime >= ticksRequired) {
+                        if (!getWorld().isRemote) {
+                            if (recipeAlchemyTable.getSyphon() > 0 && !getWorld().isRemote)
+                                consumeLp(recipeAlchemyTable.getSyphon());
+
+                            ItemStack outputSlotStack = getStackInSlot(outputSlot);
+                            if (outputSlotStack.isEmpty())
+                                setInventorySlotContents(outputSlot, recipeAlchemyTable.getOutput().copy());
+                            else
+                                outputSlotStack.grow(recipeAlchemyTable.getOutput().getCount());
+
+                            for (int i = 0; i < 6; i++) {
+                                ItemStack currentStack = getStackInSlot(i);
+                                if (currentStack.getItem().hasContainerItem(currentStack))
+                                    setInventorySlotContents(i, currentStack.getItem().getContainerItem(currentStack));
+                                else
+                                    currentStack.shrink(1);
+                            }
+
+                            burnTime = 0;
+                            notifyUpdate();
+                        }
+                    }
+                }
+            } else {
+                burnTime = 0;
+            }
         }
     }
 
@@ -237,20 +272,15 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         return ((double) burnTime) / ticksRequired;
     }
 
-    private boolean canCraft(List<ItemStack> inputList, AlchemyTableRecipe recipe) {
-        if (recipe == null) {
-            return false;
-        }
-
-        ItemStack outputStack = recipe.getRecipeOutput(inputList);
+    private boolean canCraft(ItemStack output) {
         ItemStack currentOutputStack = getStackInSlot(outputSlot);
-        if (outputStack.isEmpty())
+        if (output.isEmpty())
             return false;
         if (currentOutputStack.isEmpty())
             return true;
-        if (!ItemHandlerHelper.canItemStacksStack(outputStack, currentOutputStack))
+        if (!ItemHandlerHelper.canItemStacksStack(output, currentOutputStack))
             return false;
-        int result = currentOutputStack.getCount() + outputStack.getCount();
+        int result = currentOutputStack.getCount() + output.getCount();
         return result <= getInventoryStackLimit() && result <= currentOutputStack.getMaxStackSize();
     }
 
@@ -292,7 +322,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     }
 
     public void craftItem(List<ItemStack> inputList, AlchemyTableRecipe recipe) {
-        if (this.canCraft(inputList, recipe)) {
+        if (this.canCraft(recipe.getRecipeOutput(inputList))) {
             ItemStack outputStack = recipe.getRecipeOutput(inputList);
             ItemStack currentOutputStack = getStackInSlot(outputSlot);
 

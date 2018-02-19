@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.recipe;
+package WayofTime.bloodmagic.recipe.alchemyTable;
 
 import WayofTime.bloodmagic.iface.ICustomAlchemyConsumable;
 import net.minecraft.block.Block;

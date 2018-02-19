@@ -94,7 +94,7 @@ public class RegistrarBloodMagicRecipes {
         registrar.addAlchemyTable(new ItemStack(Items.STRING, 4), 0, 100, 0, Blocks.WOOL, Items.FLINT);
         registrar.addAlchemyTable(new ItemStack(Items.FLINT, 2), 0, 20, 0, Blocks.GRAVEL, Items.FLINT);
         registrar.addAlchemyTable(new ItemStack(Items.LEATHER, 4), 100, 200, 1, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.FLINT, Items.WATER_BUCKET);
-        registrar.addAlchemyTable(ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE), 500, 200, 1, "gunpowder", "gunpowder", "dustCoal");
+        registrar.addAlchemyTable(ItemCuttingFluid.FluidType.EXPLOSIVE.getStack(), 500, 200, 1, "gunpowder", "gunpowder", "dustCoal");
         registrar.addAlchemyTable(new ItemStack(Items.BREAD), 100, 200, 1, Items.WHEAT, Items.SUGAR);
         registrar.addAlchemyTable(new ItemStack(Blocks.GRASS), 200, 200, 1, Blocks.DIRT, new ItemStack(Items.DYE, 1, 15), Items.WHEAT_SEEDS);
         registrar.addAlchemyTable(new ItemStack(Items.CLAY_BALL, 4), 50, 100, 2, Items.WATER_BUCKET, "sand");
@@ -102,21 +102,21 @@ public class RegistrarBloodMagicRecipes {
         registrar.addAlchemyTable(new ItemStack(Blocks.OBSIDIAN), 50, 50, 1, Items.WATER_BUCKET, Items.LAVA_BUCKET);
         registrar.addAlchemyTable(ComponentTypes.SULFUR.getStack(8), 0, 100, 0, Items.LAVA_BUCKET);
         registrar.addAlchemyTable(ComponentTypes.SALTPETER.getStack(4), 0, 100, 0, ComponentTypes.PLANT_OIL.getStack(), ComponentTypes.PLANT_OIL.getStack(), "dustCoal");
-        registrar.addAlchemyTable(new ItemStack(Items.GUNPOWDER, 3), 0, 100, 0, ComponentTypes.SALTPETER.getStack(), ComponentTypes.SULFUR.getStack(), new ItemStack(Items.COAL, 1, 1));
+        registrar.addAlchemyTable(new ItemStack(Items.GUNPOWDER, 3), 0, 100, 0, "dustSaltpeter", "dustSulfur", new ItemStack(Items.COAL, 1, 1));
         registrar.addAlchemyTable(ComponentTypes.SAND_COAL.getStack(4), 100, 100, 1, new ItemStack(Items.COAL, 1, 0), new ItemStack(Items.COAL, 1, 0), Items.FLINT);
-        registrar.addAlchemyTable(ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC), 1000, 400, 1, "dustCoal", "gunpowder", Items.REDSTONE, Items.SUGAR, ComponentTypes.PLANT_OIL.getStack(), new ItemStack(Items.POTIONITEM));
-        registrar.addAlchemyTable(ComponentTypes.SAND_IRON.getStack(2), 400, 200, 1, "oreIron", ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC));
-        registrar.addAlchemyTable(ComponentTypes.SAND_GOLD.getStack(2), 400, 200, 1, "oreGold", ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC));
-        registrar.addAlchemyTable(new ItemStack(Items.REDSTONE, 8), 400, 200, 1, "oreRedstone", ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC));
-        registrar.addAlchemyTable(new ItemStack(Blocks.GRAVEL), 50, 50, 1, "cobblestone", ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE));
-        registrar.addAlchemyTable(new ItemStack(Blocks.SAND), 50, 50, 1, Blocks.GRAVEL, ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE));
+        registrar.addAlchemyTable(ItemCuttingFluid.FluidType.BASIC.getStack(), 1000, 400, 1, "dustCoal", "gunpowder", Items.REDSTONE, Items.SUGAR, ComponentTypes.PLANT_OIL.getStack(), new ItemStack(Items.POTIONITEM));
+        registrar.addAlchemyTable(ComponentTypes.SAND_IRON.getStack(2), 400, 200, 1, "oreIron", ItemCuttingFluid.FluidType.BASIC.getStack());
+        registrar.addAlchemyTable(ComponentTypes.SAND_GOLD.getStack(2), 400, 200, 1, "oreGold", ItemCuttingFluid.FluidType.BASIC.getStack());
+        registrar.addAlchemyTable(new ItemStack(Items.REDSTONE, 8), 400, 200, 1, "oreRedstone", ItemCuttingFluid.FluidType.BASIC.getStack());
+        registrar.addAlchemyTable(new ItemStack(Blocks.GRAVEL), 50, 50, 1, "cobblestone", ItemCuttingFluid.FluidType.EXPLOSIVE.getStack());
+        registrar.addAlchemyTable(new ItemStack(Blocks.SAND), 50, 50, 1, Blocks.GRAVEL, ItemCuttingFluid.FluidType.EXPLOSIVE.getStack());
         registrar.addAlchemyTable(ComponentTypes.PLANT_OIL.getStack(), 100, 100, 1, "cropCarrot", "cropCarrot", "cropCarrot", new ItemStack(Items.DYE, 1, 15));
         registrar.addAlchemyTable(ComponentTypes.PLANT_OIL.getStack(), 100, 100, 1, "cropPotato", "cropPotato", new ItemStack(Items.DYE, 1, 15));
         registrar.addAlchemyTable(ComponentTypes.PLANT_OIL.getStack(), 100, 100, 1, "cropWheat", "cropWheat", new ItemStack(Items.DYE, 1, 15));
         registrar.addAlchemyTable(ComponentTypes.PLANT_OIL.getStack(), 100, 100, 1, Items.BEETROOT, Items.BEETROOT, Items.BEETROOT, new ItemStack(Items.DYE, 1, 15));
         registrar.addAlchemyTable(ComponentTypes.NEURO_TOXIN.getStack(), 1000, 100, 2, new ItemStack(Items.FISH, 1, 3));
         registrar.addAlchemyTable(ComponentTypes.ANTISEPTIC.getStack(2), 1000, 200, 2, ComponentTypes.PLANT_OIL.getStack(), "nuggetGold", "cropWheat", Items.SUGAR, Blocks.BROWN_MUSHROOM, Blocks.RED_MUSHROOM);
-        registrar.addAlchemyTable(ItemLivingArmourPointsUpgrade.getStack(ItemLivingArmourPointsUpgrade.DRAFT_ANGELUS), 20000, 400, 3, ComponentTypes.NEURO_TOXIN.getStack(), ComponentTypes.ANTISEPTIC.getStack(), "dustGold", Items.FERMENTED_SPIDER_EYE, new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD, 1, 0), Items.GHAST_TEAR);
+        registrar.addAlchemyTable(ItemLivingArmourPointsUpgrade.UpgradeType.DRAFT_ANGELUS.getStack(), 20000, 400, 3, ComponentTypes.NEURO_TOXIN.getStack(), ComponentTypes.ANTISEPTIC.getStack(), "dustGold", Items.FERMENTED_SPIDER_EYE, new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD, 1, 0), Items.GHAST_TEAR);
         registrar.addAlchemyTable(new ItemStack(RegistrarBloodMagicItems.POTION_FLASK), 1000, 200, 2, new ItemStack(Items.POTIONITEM), "cropNetherWart", "dustRedstone", "dustGlowstone");
         registrar.addAlchemyTable(ComponentTypes.CATALYST_LENGTH_1.getStack(), 1000, 100, 2, "gunpowder", "cropNetherWart", "gemLapis");
         registrar.addAlchemyTable(ComponentTypes.CATALYST_POWER_1.getStack(), 1000, 100, 2, "gunpowder", "cropNetherWart", "dustRedstone");
@@ -132,7 +132,7 @@ public class RegistrarBloodMagicRecipes {
                 if (dustList != null && !dustList.isEmpty() && discoveredOres != null && !discoveredOres.isEmpty()) {
                     ItemStack dustStack = dustList.get(0).copy();
                     dustStack.setCount(2);
-                    registrar.addAlchemyTable(dustStack, 400, 200, 1, ore, ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC));
+                    registrar.addAlchemyTable(dustStack, 400, 200, 1, ore, ItemCuttingFluid.FluidType.BASIC.getStack());
                     addedOreRecipeList.add(ore);
                 }
             }
@@ -170,7 +170,7 @@ public class RegistrarBloodMagicRecipes {
         registrar.addTartaricForge(ComponentTypes.REAGENT_COMPRESSION.getStack(), 2000, 200, "blockIron", "blockGold", Blocks.OBSIDIAN, "cobblestone");
         registrar.addTartaricForge(ComponentTypes.REAGENT_TELEPOSITION.getStack(), 1500, 200, RegistrarBloodMagicBlocks.TELEPOSER, "glowstone", "blockRedstone", "ingotGold");
         registrar.addTartaricForge(ComponentTypes.REAGENT_TRANSPOSITION.getStack(), 1500, 200, RegistrarBloodMagicBlocks.TELEPOSER, "gemDiamond", Items.ENDER_PEARL, Blocks.OBSIDIAN);
-        registrar.addTartaricForge(ComponentTypes.REAGENT_CLAW.getStack(), 800, 120, Items.FLINT, Items.FLINT, ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC));
+        registrar.addTartaricForge(ComponentTypes.REAGENT_CLAW.getStack(), 800, 120, Items.FLINT, Items.FLINT, ItemCuttingFluid.FluidType.BASIC.getStack());
         registrar.addTartaricForge(ComponentTypes.REAGENT_BOUNCE.getStack(), 200, 20, Blocks.SLIME_BLOCK, Blocks.SLIME_BLOCK, Items.LEATHER, "string");
         registrar.addTartaricForge(ComponentTypes.REAGENT_FROST.getStack(), 80, 10, Blocks.ICE, Items.SNOWBALL, Items.SNOWBALL, "dustRedstone");
 

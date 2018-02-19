@@ -76,7 +76,8 @@ public class TileBase extends TileEntity {
     }
 
     public void notifyUpdate() {
-        getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
+        IBlockState state = getWorld().getBlockState(getPos());
+        getWorld().notifyBlockUpdate(getPos(), state, state, 3);
     }
 
     // Data syncing

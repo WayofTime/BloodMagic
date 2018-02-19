@@ -118,8 +118,8 @@ public class ModRituals {
         downgradeRitual = new RitualLivingArmourDowngrade();
         RitualRegistry.registerRitual(downgradeRitual, ConfigHandler.rituals.ritualDowngrade);
 
-        RitualCrushing.registerCuttingFluid(ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC), 250, 0.5);
-        RitualCrushing.registerCuttingFluid(ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE), 25, 0.05);
+        RitualCrushing.registerCuttingFluid(ItemCuttingFluid.FluidType.BASIC.getStack(), 250, 0.5);
+        RitualCrushing.registerCuttingFluid(ItemCuttingFluid.FluidType.EXPLOSIVE.getStack(), 25, 0.05);
     }
 
     public static void initImperfectRituals() {

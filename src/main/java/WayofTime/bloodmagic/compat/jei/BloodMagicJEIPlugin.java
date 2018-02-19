@@ -2,8 +2,12 @@ package WayofTime.bloodmagic.compat.jei;
 
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
+import WayofTime.bloodmagic.compat.jei.alchemyTable.AlchemyTableRecipeJEI;
+import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
+import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.util.helper.ItemHelper.LivingUpgrades;
@@ -11,8 +15,6 @@ import WayofTime.bloodmagic.client.gui.GuiSoulForge;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingCategory;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingRecipeJEI;
 import WayofTime.bloodmagic.compat.jei.alchemyTable.AlchemyTableRecipeCategory;
-import WayofTime.bloodmagic.compat.jei.alchemyTable.AlchemyTableRecipeHandler;
-import WayofTime.bloodmagic.compat.jei.alchemyTable.AlchemyTableRecipeMaker;
 import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeCategory;
 import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeJEI;
 import WayofTime.bloodmagic.compat.jei.armourDowngrade.ArmourDowngradeRecipeCategory;
@@ -42,20 +44,22 @@ public class BloodMagicJEIPlugin implements IModPlugin {
 
         registry.addRecipeHandlers(
                 new BindingRecipeHandler(),
-                new AlchemyTableRecipeHandler(),
                 new ArmourDowngradeRecipeHandler()
         );
 
         registry.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAltarRecipes(), Constants.Compat.JEI_CATEGORY_ALTAR);
         registry.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForgeRecipes(), Constants.Compat.JEI_CATEGORY_SOULFORGE);
         registry.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArrayRecipes(), Constants.Compat.JEI_CATEGORY_ALCHEMYARRAY);
+        registry.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyRecipes(), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
+        registry.addRecipes(AlchemyTableRecipeRegistry.getRecipeList(), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
 
         registry.handleRecipes(RecipeBloodAltar.class, AltarRecipeJEI::new, Constants.Compat.JEI_CATEGORY_ALTAR);
         registry.handleRecipes(RecipeTartaricForge.class, TartaricForgeRecipeJEI::new, Constants.Compat.JEI_CATEGORY_SOULFORGE);
         registry.handleRecipes(RecipeAlchemyArray.class, AlchemyArrayCraftingRecipeJEI::new, Constants.Compat.JEI_CATEGORY_ALCHEMYARRAY);
+        registry.handleRecipes(RecipeAlchemyTable.class, AlchemyTableRecipeJEI::new, Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
+        registry.handleRecipes(AlchemyTableRecipe.class, AlchemyTableRecipeJEI::new, Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
 
         registry.addRecipes(BindingRecipeMaker.getRecipes());
-        registry.addRecipes(AlchemyTableRecipeMaker.getRecipes());
         registry.addRecipes(ArmourDowngradeRecipeMaker.getRecipes());
 
         registry.addIngredientInfo(new ItemStack(RegistrarBloodMagicItems.ALTAR_MAKER), ItemStack.class, "jei.bloodmagic.desc.altarBuilder");

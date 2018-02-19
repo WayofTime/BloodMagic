@@ -5,7 +5,6 @@ import WayofTime.bloodmagic.alchemyArray.*;
 import WayofTime.bloodmagic.compress.CompressionRegistry;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.recipe.AlchemyTableCustomRecipe;
 import WayofTime.bloodmagic.core.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
 import WayofTime.bloodmagic.core.registry.LivingArmourDowngradeRecipeRegistry;
@@ -15,8 +14,6 @@ import WayofTime.bloodmagic.compress.BaseCompressionHandler;
 import WayofTime.bloodmagic.compress.StorageBlockCraftingManager;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
-import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
 import WayofTime.bloodmagic.item.types.ComponentTypes;
 import WayofTime.bloodmagic.livingArmour.downgrade.*;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
@@ -44,7 +41,6 @@ import java.util.Map.Entry;
 
 public class ModRecipes {
 
-    public static ArrayList<String> addedOreRecipeList = new ArrayList<String>();
     static ItemStack mundaneLengtheningStack = ComponentTypes.CATALYST_LENGTH_1.getStack();
     static ItemStack mundanePowerStack = ComponentTypes.CATALYST_POWER_1.getStack();
 
@@ -54,7 +50,6 @@ public class ModRecipes {
         addAltarRecipes();
         addAlchemyArrayRecipes();
         addAlchemyTableRecipes();
-        addOreDoublingAlchemyRecipes();
         addPotionRecipes();
         addLivingArmourDowngradeRecipes();
     }
@@ -111,72 +106,7 @@ public class ModRecipes {
     }
 
     public static void addAlchemyTableRecipes() {
-        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.STRING, 4), 0, 100, 0, Blocks.WOOL, Items.FLINT);
-        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.FLINT, 2), 0, 20, 0, Blocks.GRAVEL, Items.FLINT);
-        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.LEATHER, 4), 100, 200, 1, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.FLINT, Items.WATER_BUCKET);
-
-        AlchemyTableRecipeRegistry.registerRecipe(ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE), 500, 200, 1, "gunpowder", "gunpowder", "dustCoal");
-
-        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.BREAD), 100, 200, 1, Items.WHEAT, Items.SUGAR);
-        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Blocks.GRASS), 200, 200, 1, Blocks.DIRT, new ItemStack(Items.DYE, 1, 15), Items.WHEAT_SEEDS);
-        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.CLAY_BALL, 4), 50, 100, 2, Items.WATER_BUCKET, "sand");
-        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Blocks.CLAY, 5), 200, 200, 1, Items.WATER_BUCKET, Blocks.HARDENED_CLAY, Blocks.HARDENED_CLAY, Blocks.HARDENED_CLAY, Blocks.HARDENED_CLAY, Blocks.HARDENED_CLAY);
-        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Blocks.OBSIDIAN), 50, 50, 1, Items.WATER_BUCKET, Items.LAVA_BUCKET);
-
-        AlchemyTableRecipeRegistry.registerRecipe(ComponentTypes.SULFUR.getStack(8), 0, 100, 0, Items.LAVA_BUCKET);
-        AlchemyTableRecipeRegistry.registerRecipe(ComponentTypes.SALTPETER.getStack(4), 0, 100, 0, ComponentTypes.PLANT_OIL.getStack(), ComponentTypes.PLANT_OIL.getStack(), "dustCoal");
-        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(Items.GUNPOWDER, 3), 0, 100, 0, ComponentTypes.SALTPETER.getStack(), ComponentTypes.SULFUR.getStack(), new ItemStack(Items.COAL, 1, 1));
-
-        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(ComponentTypes.SAND_COAL.getStack(4), 100, 100, 1, new ItemStack(Items.COAL, 1, 0), new ItemStack(Items.COAL, 1, 0), Items.FLINT));
-
-        AlchemyTableRecipeRegistry.registerRecipe(ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC), 1000, 400, 1, "dustCoal", "gunpowder", Items.REDSTONE, Items.SUGAR, ComponentTypes.PLANT_OIL.getStack(), new ItemStack(Items.POTIONITEM));
-
-        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(ComponentTypes.SAND_IRON.getStack(2), 400, 200, 1, "oreIron", ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC)));
-        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(ComponentTypes.SAND_GOLD.getStack(2), 400, 200, 1, "oreGold", ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC)));
-
-        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(new ItemStack(Items.REDSTONE, 8), 400, 200, 1, "oreRedstone", ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC)));
-
-        addedOreRecipeList.add("oreIron");
-        addedOreRecipeList.add("oreGold");
-        addedOreRecipeList.add("oreCoal");
-        addedOreRecipeList.add("oreRedstone");
-
-        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(new ItemStack(Blocks.GRAVEL), 50, 50, 1, "cobblestone", ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE)));
-        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(new ItemStack(Blocks.SAND), 50, 50, 1, Blocks.GRAVEL, ItemCuttingFluid.getStack(ItemCuttingFluid.EXPLOSIVE)));
-
-        AlchemyTableRecipeRegistry.registerRecipe(ComponentTypes.PLANT_OIL.getStack(), 100, 100, 1, "cropCarrot", "cropCarrot", "cropCarrot", new ItemStack(Items.DYE, 1, 15));
-        AlchemyTableRecipeRegistry.registerRecipe(ComponentTypes.PLANT_OIL.getStack(), 100, 100, 1, "cropPotato", "cropPotato", new ItemStack(Items.DYE, 1, 15));
-        AlchemyTableRecipeRegistry.registerRecipe(ComponentTypes.PLANT_OIL.getStack(), 100, 100, 1, "cropWheat", "cropWheat", new ItemStack(Items.DYE, 1, 15));
-        AlchemyTableRecipeRegistry.registerRecipe(ComponentTypes.PLANT_OIL.getStack(), 100, 100, 1, Items.BEETROOT, Items.BEETROOT, Items.BEETROOT, new ItemStack(Items.DYE, 1, 15));
-
-        AlchemyTableRecipeRegistry.registerRecipe(ComponentTypes.NEURO_TOXIN.getStack(), 1000, 100, 2, new ItemStack(Items.FISH, 1, 3));
-        AlchemyTableRecipeRegistry.registerRecipe(ComponentTypes.ANTISEPTIC.getStack(2), 1000, 200, 2, ComponentTypes.PLANT_OIL.getStack(), "nuggetGold", "cropWheat", Items.SUGAR, Blocks.BROWN_MUSHROOM, Blocks.RED_MUSHROOM);
-
-        AlchemyTableRecipeRegistry.registerRecipe(ItemLivingArmourPointsUpgrade.getStack(ItemLivingArmourPointsUpgrade.DRAFT_ANGELUS), 20000, 400, 3, ComponentTypes.NEURO_TOXIN.getStack(), ComponentTypes.ANTISEPTIC.getStack(), "dustGold", Items.FERMENTED_SPIDER_EYE, new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD, 1, 0), Items.GHAST_TEAR);
-
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableDyeableRecipe(0, 100, 0, new ItemStack(RegistrarBloodMagicItems.SIGIL_HOLDING)));
-
-        AlchemyTableRecipeRegistry.registerRecipe(new ItemStack(RegistrarBloodMagicItems.POTION_FLASK), 1000, 200, 2, new ItemStack(Items.POTIONITEM), "cropNetherWart", "dustRedstone", "dustGlowstone");
-        AlchemyTableRecipeRegistry.registerRecipe(ComponentTypes.CATALYST_LENGTH_1.getStack(), 1000, 100, 2, "gunpowder", "cropNetherWart", "gemLapis");
-        AlchemyTableRecipeRegistry.registerRecipe(ComponentTypes.CATALYST_POWER_1.getStack(), 1000, 100, 2, "gunpowder", "cropNetherWart", "dustRedstone");
-    }
-
-    public static void addOreDoublingAlchemyRecipes() {
-        String[] oreList = OreDictionary.getOreNames().clone();
-        for (String ore : oreList) {
-            if (ore.startsWith("ore") && !addedOreRecipeList.contains(ore)) {
-                String dustName = ore.replaceFirst("ore", "dust");
-
-                List<ItemStack> discoveredOres = OreDictionary.getOres(ore);
-                List<ItemStack> dustList = OreDictionary.getOres(dustName);
-                if (dustList != null && !dustList.isEmpty() && discoveredOres != null && !discoveredOres.isEmpty()) {
-                    ItemStack dustStack = dustList.get(0).copy();
-                    dustStack.setCount(2);
-                    AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableCustomRecipe(dustStack, 400, 200, 1, ore, ItemCuttingFluid.getStack(ItemCuttingFluid.BASIC)));
-                    addedOreRecipeList.add(ore);
-                }
-            }
-        }
     }
 
     public static void addPotionRecipes() {
@@ -200,9 +130,6 @@ public class ModRecipes {
         addPotionRecipe(1000, 1, new ItemStack(Items.STRING), new PotionEffect(RegistrarBloodMagic.CLING, 2 * 60 * 20));
 
         addPotionRecipe(1000, 1, new ItemStack(Items.BEETROOT), new PotionEffect(RegistrarBloodMagic.DEAFNESS, 450));
-
-//        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTablePotionRecipe(5000, 100, 4, new ItemStack(Blocks.SLIME_BLOCK), new PotionEffect(ModPotions.bounce, 15 * 60 * 20)));
-//        AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTablePotionRecipe(5000, 100, 4, new ItemStack("string"), new PotionEffect(ModPotions.bounce, 15 * 60 * 20)));
     }
 
     public static void addPotionRecipe(int lpDrained, int tier, ItemStack inputStack, PotionEffect baseEffect) {

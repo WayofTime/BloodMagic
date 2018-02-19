@@ -1,40 +1,28 @@
 package WayofTime.bloodmagic.item.alchemy;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.iface.ICustomAlchemyConsumable;
+import WayofTime.bloodmagic.item.ItemEnum;
+import WayofTime.bloodmagic.item.types.ISubItem;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Locale;
 
-public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomAlchemyConsumable {
-    public static final String BASIC = "basicCuttingFluid";
-    public static final String EXPLOSIVE = "explosive";
-    private static ArrayList<String> names = new ArrayList<String>();
+public class ItemCuttingFluid extends ItemEnum.Variant<ItemCuttingFluid.FluidType> implements ICustomAlchemyConsumable {
 
     public ItemCuttingFluid() {
-        super();
+        super(FluidType.class, "cutting_fluid");
 
-        setUnlocalizedName(BloodMagic.MODID + ".cuttingFluid.");
-        setHasSubtypes(true);
-        setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
-
-        buildItemList();
     }
 
     @Override
@@ -44,34 +32,6 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
             return;
         int max = getMaxUsesForFluid(stack);
         tooltip.add(TextHelper.localize("tooltip.bloodmagic.cuttingFluidRatio", max - getDamageOfFluid(stack), max));
-    }
-
-    private void buildItemList() {
-        names.add(0, BASIC);
-        names.add(1, EXPLOSIVE);
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + names.get(stack.getItemDamage());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
-        if (!isInCreativeTab(creativeTab))
-            return;
-
-        for (int i = 0; i < names.size(); i++)
-            list.add(new ItemStack(this, 1, i));
-    }
-
-    @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (String name : names)
-            ret.add(new ImmutablePair<Integer, String>(names.indexOf(name), "type=" + name));
-        return ret;
     }
 
     public int getDamageOfFluid(ItemStack stack) {
@@ -119,11 +79,21 @@ public class ItemCuttingFluid extends Item implements IVariantProvider, ICustomA
         return stack;
     }
 
-    public static ItemStack getStack(String name) {
-        return new ItemStack(RegistrarBloodMagicItems.CUTTING_FLUID, 1, names.indexOf(name));
-    }
+    public enum FluidType implements ISubItem {
+        BASIC,
+        EXPLOSIVE,
+        ;
 
-    public static ArrayList<String> getNames() {
-        return names;
+        @Nonnull
+        @Override
+        public String getInternalName() {
+            return name().toLowerCase(Locale.ROOT);
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack getStack(int count) {
+            return new ItemStack(RegistrarBloodMagicItems.CUTTING_FLUID, count, ordinal());
+        }
     }
 }
