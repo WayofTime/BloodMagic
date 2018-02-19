@@ -63,6 +63,8 @@ public class ModRecipes {
         OreDictionary.registerOre("dustIron", ComponentTypes.SAND_IRON.getStack());
         OreDictionary.registerOre("dustGold", ComponentTypes.SAND_GOLD.getStack());
         OreDictionary.registerOre("dustCoal", ComponentTypes.SAND_COAL.getStack());
+        OreDictionary.registerOre("dustSulfur", ComponentTypes.SULFUR.getStack());
+        OreDictionary.registerOre("dustSaltpeter", ComponentTypes.SALTPETER.getStack());
     }
 
     public static void addFurnaceRecipes() {
