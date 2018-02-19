@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
-import WayofTime.bloodmagic.item.sigil.ItemSigilSeer;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -102,10 +101,10 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
     }
 
     private static boolean holdingSeerSigil(EntityPlayer player) {
-        if (player.getHeldItemMainhand().getItem() instanceof ItemSigilSeer)
+        if (player.getHeldItemMainhand().getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
             return true;
 
-        if (player.getHeldItemOffhand().getItem() instanceof ItemSigilSeer)
+        if (player.getHeldItemOffhand().getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
             return true;
 
         return false;

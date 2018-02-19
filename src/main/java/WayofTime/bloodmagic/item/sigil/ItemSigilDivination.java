@@ -19,39 +19,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemSigilDivination extends ItemSigilBase implements IAltarReader {
-    public ItemSigilDivination() {
-        super("divination");
+
+    public ItemSigilDivination(boolean simple) {
+        super(simple ? "divination" : "seer");
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-//        if (world instanceof WorldServer)
-//        {
-//            System.out.println("Testing...");
-////            BuildTestStructure s = new BuildTestStructure();
-////            s.placeStructureAtPosition(new Random(), Rotation.CLOCKWISE_180, (WorldServer) world, player.getPosition(), 0);
-//            DungeonTester.testDungeonElementWithOutput((WorldServer) world, player.getPosition());
-//        }
-
-//        if (!world.isRemote)
-//        {
-//            EntityCorruptedSheep fred = new EntityCorruptedSheep(world, EnumDemonWillType.DESTRUCTIVE);
-//            fred.setPosition(player.posX, player.posY, player.posZ);
-//            world.spawnEntityInWorld(fred);
-//        }
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() instanceof ISigil.Holding)
             stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
-
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
         if (!world.isRemote) {
             super.onItemRightClick(world, player, hand);
 
-            RayTraceResult position = rayTrace(world, player, false);
+            RayTraceResult rayTrace = rayTrace(world, player, false);
 
-            if (position == null) {
+            if (rayTrace == null) {
                 int currentEssence = NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).getCurrentEssence();
                 List<ITextComponent> toSend = new ArrayList<ITextComponent>();
                 if (!getOwnerName(stack).equals(PlayerHelper.getUsernameFromPlayer(player)))

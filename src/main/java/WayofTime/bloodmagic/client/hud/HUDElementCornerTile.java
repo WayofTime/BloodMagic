@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.client.hud;
 
 import WayofTime.bloodmagic.client.Sprite;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
-import WayofTime.bloodmagic.item.sigil.ItemSigilSeer;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -71,12 +71,12 @@ public abstract class HUDElementCornerTile<T extends TileEntity> extends HUDElem
                         flag = true;
                 }
             } else {
-                if (sigilStack.getItem() instanceof ItemSigilSeer)
+                if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
                     flag = true;
 
                 if (!flag) {
                     sigilStack = player.getHeldItem(EnumHand.OFF_HAND);
-                    if (sigilStack.getItem() instanceof ItemSigilSeer)
+                    if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
                         flag = true;
                 }
             }
