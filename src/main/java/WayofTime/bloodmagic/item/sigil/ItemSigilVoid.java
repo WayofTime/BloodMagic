@@ -86,7 +86,7 @@ public class ItemSigilVoid extends ItemSigilBase {
         }
 
         TileEntity tile = world.getTileEntity(blockPos);
-        if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) {
+        if (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) {
             IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
             FluidStack amount = handler.drain(1000, false);
 

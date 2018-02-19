@@ -80,7 +80,7 @@ public class ItemSigilLava extends ItemSigilBase {
         }
 
         TileEntity tile = world.getTileEntity(blockPos);
-        if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) {
+        if (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) {
             IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
             FluidStack fluid = new FluidStack(FluidRegistry.LAVA, 1000);
             int amount = handler.fill(fluid, false);
