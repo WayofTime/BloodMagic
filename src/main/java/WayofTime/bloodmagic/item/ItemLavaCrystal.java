@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -23,8 +24,8 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
     @Override
     public ItemStack getContainerItem(ItemStack itemStack) {
         String uuid = getOwnerUUID(itemStack);
-        if (uuid != null)
-            NetworkHelper.getSoulNetwork(this.getOwnerUUID(itemStack)).syphon(25);
+        if (!Strings.isNullOrEmpty(uuid))
+            NetworkHelper.getSoulNetwork(uuid).syphon(25);
 
         ItemStack returnStack = new ItemStack(this);
         returnStack.setTagCompound(itemStack.getTagCompound());
@@ -38,7 +39,7 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
 
     @Override
     public int getItemBurnTime(ItemStack stack) {
-        if (getOwnerUUID(stack) == null)
+        if (Strings.isNullOrEmpty(getOwnerUUID(stack)))
             return -1;
 
         if (NetworkHelper.canSyphonFromContainer(stack, 25))
