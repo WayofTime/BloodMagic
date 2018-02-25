@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.2.7
+------------------------------------------------------
+- Added the Furnace Array (name pending), which takes health from nearby players to power adjacent furnaces. Not covered by standard medical insurance. 
+
+------------------------------------------------------
 Version 2.2.6
 ------------------------------------------------------
 
