@@ -22,8 +22,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class CategoryAlchemy {
-    public static Map<ResourceLocation, EntryAbstract> buildCategory() {
+public class CategoryAlchemy
+{
+    public static Map<ResourceLocation, EntryAbstract> buildCategory()
+    {
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
         String keyBase = "guide." + BloodMagic.MODID + ".entry.alchemy.";
 
@@ -34,16 +36,28 @@ public class CategoryAlchemy {
         List<IPage> ashPages = new ArrayList<IPage>();
 
         TartaricForgeRecipe ashRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES));
-        if (ashRecipe != null) {
+        if (ashRecipe != null)
+        {
             ashPages.add(new PageTartaricForgeRecipe(ashRecipe));
         }
         ashPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "ash" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "ash"), new EntryText(ashPages, TextHelper.localize(keyBase + "ash"), true));
 
+        List<IPage> furnacePages = new ArrayList<IPage>();
+
+        PageAlchemyArray furnaceRecipePage = BookUtils.getAlchemyPage("furnace");
+        if (furnaceRecipePage != null)
+        {
+            furnacePages.add(furnaceRecipePage);
+        }
+        furnacePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "furnace" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "furnace"), new EntryText(furnacePages, TextHelper.localize(keyBase + "furnace"), true));
+
         List<IPage> speedPages = new ArrayList<IPage>();
 
         PageAlchemyArray speedRecipePage = BookUtils.getAlchemyPage("movement");
-        if (speedRecipePage != null) {
+        if (speedRecipePage != null)
+        {
             speedPages.add(speedRecipePage);
         }
         speedPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "speed" + ".info"), 370));
@@ -52,7 +66,8 @@ public class CategoryAlchemy {
         List<IPage> updraftPages = new ArrayList<IPage>();
 
         PageAlchemyArray updraftRecipePage = BookUtils.getAlchemyPage("updraft");
-        if (updraftRecipePage != null) {
+        if (updraftRecipePage != null)
+        {
             updraftPages.add(updraftRecipePage);
         }
         updraftPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "updraft" + ".info"), 370));
@@ -61,7 +76,8 @@ public class CategoryAlchemy {
         List<IPage> turretPages = new ArrayList<IPage>();
 
         PageAlchemyArray turretRecipePage = BookUtils.getAlchemyPage("skeletonTurret");
-        if (turretRecipePage != null) {
+        if (turretRecipePage != null)
+        {
             turretPages.add(turretRecipePage);
         }
         turretPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "turret" + ".info"), 370));
@@ -70,7 +86,8 @@ public class CategoryAlchemy {
         List<IPage> bouncePages = new ArrayList<IPage>();
 
         PageAlchemyArray bounceRecipePage = BookUtils.getAlchemyPage("bounce");
-        if (bounceRecipePage != null) {
+        if (bounceRecipePage != null)
+        {
             bouncePages.add(bounceRecipePage);
         }
         bouncePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bounce" + ".info"), 370));
@@ -84,15 +101,19 @@ public class CategoryAlchemy {
         List<IPage> fastMinerPages = new ArrayList<IPage>();
 
         PageAlchemyArray fastMinerRecipePage = BookUtils.getAlchemyPage("fastMiner");
-        if (fastMinerRecipePage != null) {
+        if (fastMinerRecipePage != null)
+        {
             fastMinerPages.add(fastMinerRecipePage);
         }
         fastMinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "fastMiner" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "fastMiner"), new EntryText(fastMinerPages, TextHelper.localize(keyBase + "fastMiner"), true));
 
-        for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet()) {
-            for (IPage page : entry.getValue().pageList) {
-                if (page instanceof PageText) {
+        for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
+        {
+            for (IPage page : entry.getValue().pageList)
+            {
+                if (page instanceof PageText)
+                {
                     ((PageText) page).setUnicodeFlag(true);
                 }
             }

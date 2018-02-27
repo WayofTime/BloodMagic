@@ -20,7 +20,7 @@ import WayofTime.bloodmagic.util.PleaseStopUsingMe;
 public class AlchemyArrayEffectFurnaceFuel extends AlchemyArrayEffect
 {
     static double radius = 10;
-    static int burnTicksAdded = 201; //Set to +1 more than it needs to be due to a hacky method - basically done so that the array doesn't double dip your health if you only add one item.
+    static int burnTicksAdded = 401; //Set to +1 more than it needs to be due to a hacky method - basically done so that the array doesn't double dip your health if you only add one item.
 
     public AlchemyArrayEffectFurnaceFuel(String key)
     {
