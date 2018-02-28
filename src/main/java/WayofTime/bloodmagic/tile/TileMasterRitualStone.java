@@ -98,7 +98,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     public NBTTagCompound serialize(NBTTagCompound tag) {
         String ritualId = RitualRegistry.getIdForRitual(getCurrentRitual());
         if (owner != null)
-            tag.setUniqueId(Constants.NBT.OWNER_UUID, owner);
+            tag.setUniqueId("owner", owner);
         tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
         if (currentRitual != null) {
             NBTTagCompound ritualTag = new NBTTagCompound();
