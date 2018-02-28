@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.util.handler.event;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.ItemBindEvent;
 import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
@@ -53,6 +54,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -79,10 +81,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class GenericHandler {
@@ -339,25 +338,25 @@ public class GenericHandler {
             return;
 
         ItemStack held = event.getItemStack();
-        if (!held.isEmpty() && held.getItem() instanceof IBindable) {
-            held = NBTHelper.checkNBT(held);
+        if (!held.isEmpty() && held.getItem() instanceof IBindable) { // Make sure it's bindable
             IBindable bindable = (IBindable) held.getItem();
-            if (Strings.isNullOrEmpty(bindable.getOwnerUUID(held))) {
+            Binding binding = bindable.getBinding(held);
+            if (binding == null) { // If the binding is null, let's create one
                 if (bindable.onBind(player, held)) {
-                    String uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
-                    ItemBindEvent toPost = new ItemBindEvent(player, uuid, held);
-                    if (MinecraftForge.EVENT_BUS.post(toPost) || toPost.getResult() == Result.DENY)
+                    ItemBindEvent toPost = new ItemBindEvent(player, held);
+                    if (MinecraftForge.EVENT_BUS.post(toPost)) // Allow cancellation of binding
                         return;
 
-                    BindableHelper.setItemOwnerUUID(held, uuid);
-                    BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
+                    BindableHelper.applyBinding(held, player); // Bind item to the player
                 }
-            } else if (bindable.getOwnerUUID(held).equals(PlayerHelper.getUUIDFromPlayer(player).toString()) && !bindable.getOwnerName(held).equals(player.getDisplayNameString()))
-                BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
+            // If the binding exists, we'll check if the player's name has changed since they last used it and update that if so.
+            } else if (binding.getOwnerId().equals(player.getGameProfile().getId()) && !binding.getOwnerName().equals(player.getGameProfile().getName())) {
+                binding.setOwnerName(player.getGameProfile().getName());
+                BindableHelper.applyBinding(held, binding);
+            }
         }
 
         if (!held.isEmpty() && held.getItem() instanceof IBloodOrb) {
-            held = NBTHelper.checkNBT(held);
             IBloodOrb bloodOrb = (IBloodOrb) held.getItem();
             SoulNetwork network = NetworkHelper.getSoulNetwork(player);
 

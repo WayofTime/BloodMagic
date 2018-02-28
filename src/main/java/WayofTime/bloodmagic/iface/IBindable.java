@@ -1,8 +1,10 @@
 package WayofTime.bloodmagic.iface;
 
-import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.core.data.Binding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+
+import javax.annotation.Nullable;
 
 /**
  * Implement this interface on any Item that can be bound to a player.
@@ -10,28 +12,17 @@ import net.minecraft.item.ItemStack;
 public interface IBindable {
 
     /**
-     * Gets the username of the Item's owner. Usually for display, such as in
-     * the tooltip.
+     * Gets an object that stores who this item is bound to.
      * <p>
      * If the item is not bound, this will be null.
      *
      * @param stack - The owned ItemStack
-     * @return - The username of the Item's owner
+     * @return - The binding object
      */
-    default String getOwnerName(ItemStack stack) {
-        return !stack.isEmpty() && stack.hasTagCompound() ? stack.getTagCompound().getString(Constants.NBT.OWNER_NAME) : null;
-    }
-
-    /**
-     * Gets the UUID of the Item's owner.
-     * <p>
-     * If the item is not bound, this will be null.
-     *
-     * @param stack - The owned ItemStack
-     * @return - The UUID of the Item's owner
-     */
-    default String getOwnerUUID(ItemStack stack) {
-        return !stack.isEmpty() && stack.hasTagCompound() ? stack.getTagCompound().getString(Constants.NBT.OWNER_UUID) : null;
+    @Nullable
+    default Binding getBinding(ItemStack stack) {
+        Binding binding = Binding.fromStack(stack);
+        return !stack.isEmpty() && binding != null ? binding : null;
     }
 
     /**

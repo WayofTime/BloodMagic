@@ -55,7 +55,7 @@ public class ItemSigilTeleposition extends ItemSigilBase {
         if (!world.isRemote && NBTHelper.checkNBT(stack) != null && stack.getTagCompound().hasKey(Constants.NBT.DIMENSION_ID) && stack.getTagCompound().hasKey(Constants.NBT.X_COORD) && stack.getTagCompound().hasKey(Constants.NBT.Y_COORD) && stack.getTagCompound().hasKey(Constants.NBT.Z_COORD)) {
             BlockPos blockPos = new BlockPos(getValue(stack.getTagCompound(), Constants.NBT.X_COORD), getValue(stack.getTagCompound(), Constants.NBT.Y_COORD), getValue(stack.getTagCompound(), Constants.NBT.Z_COORD)).up();
             if (world.provider.getDimension() == getValue(stack.getTagCompound(), Constants.NBT.DIMENSION_ID)) {
-                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(blockPos, player, getOwnerUUID(stack), true));
+                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(blockPos, player, getBinding(stack).getOwnerId(), true));
             }
             // FIXME - Fix cross-dimension teleports causing major desync
 //            } else {

@@ -197,7 +197,7 @@ public class GuiItemRoutingNode extends GuiContainer {
 //    {
 //        if (slotInd == 0)
 //        {
-//            this.nameField.setText(stack == null ? "" : stack.getDisplayName());
+//            this.nameField.setText(stack == null ? "" : stack.getOwnerName());
 //            this.nameField.setEnabled(stack != null);
 //
 //            if (stack != null)

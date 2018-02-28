@@ -7,24 +7,29 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 @Cancelable
 public class ItemBindEvent extends Event {
-    public final EntityPlayer player;
-    public String key;
-    public ItemStack itemStack;
+
+    private final EntityPlayer player;
+    private final ItemStack itemStack;
 
     /**
      * This event is called whenever a player attempts to bind a
      * {@link WayofTime.bloodmagic.iface.IBindable} item.
      *
      * @param player    The player doing the binding
-     * @param key       The UUID of the player doing the binding
      * @param itemStack The {@link ItemStack} that the player is binding
      *                  <p>
      *                  This event is {@link Cancelable}.<br>
      */
-    public ItemBindEvent(EntityPlayer player, String key, ItemStack itemStack) {
-        super();
+    public ItemBindEvent(EntityPlayer player, ItemStack itemStack) {
         this.player = player;
-        this.key = key;
         this.itemStack = itemStack;
+    }
+
+    public EntityPlayer getNewOwner() {
+        return player;
+    }
+
+    public ItemStack getBindingStack() {
+        return itemStack;
     }
 }

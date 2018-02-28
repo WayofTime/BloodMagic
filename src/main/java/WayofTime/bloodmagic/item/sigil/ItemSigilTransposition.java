@@ -99,7 +99,7 @@ public class ItemSigilTransposition extends ItemSigilBase {
                     stack.getTagCompound().setByte(Constants.NBT.CONTAINED_BLOCK_META, metadata);
                     stack.getTagCompound().setTag(Constants.NBT.CONTAINED_TILE_ENTITY, tileNBTTag);
 
-                    NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, cost);
+                    NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, cost);
 
                     world.removeTileEntity(blockPos);
                     world.setBlockToAir(blockPos);

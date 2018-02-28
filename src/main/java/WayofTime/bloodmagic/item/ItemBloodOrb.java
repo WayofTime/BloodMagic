@@ -1,13 +1,14 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.base.Strings;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -68,21 +69,22 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb {
         if (PlayerHelper.isFakePlayer(player))
             return super.onItemRightClick(world, player, hand);
 
-        if (!stack.hasTagCompound()) {
+        if (!stack.hasTagCompound())
             return super.onItemRightClick(world, player, hand);
-        }
 
-        if (Strings.isNullOrEmpty(getOwnerUUID(stack)))
+        Binding binding = getBinding(stack);
+        if (binding == null)
             return super.onItemRightClick(world, player, hand);
 
         if (world.isRemote)
             return super.onItemRightClick(world, player, hand);
 
-        if (getOwnerUUID(stack).equals(PlayerHelper.getUsernameFromPlayer(player)))
-            NetworkHelper.setMaxOrb(NetworkHelper.getSoulNetwork(getOwnerUUID(stack)), orb.getTier());
+        SoulNetwork ownerNetwork = NetworkHelper.getSoulNetwork(binding);
+        if (binding.getOwnerId().equals(player.getGameProfile().getId()))
+            ownerNetwork.setOrbTier(orb.getTier());
 
-        NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).add(200, orb.getCapacity());
-        NetworkHelper.getSoulNetwork(player).hurtPlayer(player, 200);
+        ownerNetwork.add(200, orb.getCapacity()); // Add LP to owner's network
+        ownerNetwork.hurtPlayer(player, 200); // Hurt whoever is using it
         return super.onItemRightClick(world, player, hand);
     }
 

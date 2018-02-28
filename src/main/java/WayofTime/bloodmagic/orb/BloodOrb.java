@@ -15,6 +15,7 @@ public class BloodOrb extends IForgeRegistryEntry.Impl<BloodOrb> {
     private final String name;
     private final int tier;
     private final int capacity;
+    private final int fillRate;
     @Nullable
     private ModelResourceLocation modelLocation;
 
@@ -25,11 +26,13 @@ public class BloodOrb extends IForgeRegistryEntry.Impl<BloodOrb> {
      * @param name     - A name for the Orb. Gets put into an unlocalized name.
      * @param tier     - The tier of the Orb.
      * @param capacity - The max amount of LP the Orb can store.
+     * @param fillRate - The amount of LP per tick the Altar can fill the network with.
      */
-    public BloodOrb(String name, int tier, int capacity) {
+    public BloodOrb(String name, int tier, int capacity, int fillRate) {
         this.name = name;
         this.tier = tier;
         this.capacity = capacity;
+        this.fillRate = fillRate;
     }
 
     public String getName() {
@@ -42,6 +45,10 @@ public class BloodOrb extends IForgeRegistryEntry.Impl<BloodOrb> {
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public int getFillRate() {
+        return fillRate;
     }
 
     @Nullable

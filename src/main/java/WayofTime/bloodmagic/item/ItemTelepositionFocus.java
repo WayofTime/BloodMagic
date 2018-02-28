@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item;
 
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
@@ -51,11 +52,13 @@ public class ItemTelepositionFocus extends ItemEnum.Variant<ItemTelepositionFocu
         tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localize("tooltip.bloodmagic.telepositionFocus." + getItemType(stack).getInternalName()))));
 
         super.addInformation(stack, world, tooltip, flag);
+        Binding binding = getBinding(stack);
+        if (binding != null)
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", binding.getOwnerName()));
 
         if (!stack.hasTagCompound())
             return;
 
-        stack = NBTHelper.checkNBT(stack);
         NBTTagCompound tag = stack.getTagCompound();
         BlockPos coords = getBlockPos(stack);
 

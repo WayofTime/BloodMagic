@@ -11,7 +11,6 @@ import WayofTime.bloodmagic.client.key.IKeybindable;
 import WayofTime.bloodmagic.client.key.KeyBindings;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.base.Strings;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -90,7 +89,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         List<ItemStack> inv = getInternalInventory(stack);
         ItemStack itemUsing = inv.get(currentSlot);
 
-        if (itemUsing.isEmpty() || Strings.isNullOrEmpty(((IBindable) itemUsing.getItem()).getOwnerUUID(itemUsing)))
+        if (itemUsing.isEmpty() || ((IBindable) itemUsing.getItem()).getBinding(stack) == null)
             return EnumActionResult.PASS;
 
         EnumActionResult result = itemUsing.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
@@ -109,7 +108,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         List<ItemStack> inv = getInternalInventory(stack);
         ItemStack itemUsing = inv.get(currentSlot);
 
-        if (itemUsing.isEmpty() || Strings.isNullOrEmpty(((IBindable) itemUsing.getItem()).getOwnerUUID(itemUsing)))
+        if (itemUsing.isEmpty() || ((IBindable) itemUsing.getItem()).getBinding(stack) == null)
             return ActionResult.newResult(EnumActionResult.PASS, stack);
 
         itemUsing.getItem().onItemRightClick(world, player, hand);

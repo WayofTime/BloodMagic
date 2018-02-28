@@ -50,8 +50,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
 
         if (state.getValue(getProperty()) != EnumRitualController.IMPERFECT && tile instanceof TileMasterRitualStone) {
             if (heldItem.getItem() == RegistrarBloodMagicItems.ACTIVATION_CRYSTAL) {
-                IBindable bindable = (IBindable) heldItem.getItem();
-                if (Strings.isNullOrEmpty(bindable.getOwnerName(heldItem)))
+                if (((IBindable) heldItem.getItem()).getBinding(heldItem) == null)
                     return false;
 
                 String key = RitualHelper.getValidRitual(world, pos);

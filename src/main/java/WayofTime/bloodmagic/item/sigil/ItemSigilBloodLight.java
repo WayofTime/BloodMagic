@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
@@ -41,13 +42,14 @@ public class ItemSigilBloodLight extends ItemSigilBase {
         if (getCooldownRemainder(stack) > 0)
             return super.onItemRightClick(world, player, hand);
 
+        SoulNetwork network = NetworkHelper.getSoulNetwork(getBinding(stack));
         if (mop != null && mop.typeOfHit == RayTraceResult.Type.BLOCK) {
             BlockPos blockPos = mop.getBlockPos().offset(mop.sideHit);
 
             if (world.isAirBlock(blockPos)) {
                 world.setBlockState(blockPos, RegistrarBloodMagicBlocks.BLOOD_LIGHT.getDefaultState());
                 if (!world.isRemote)
-                    NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed());
+                    network.syphonAndDamage(player, getLpUsed());
                 resetCooldown(stack);
                 player.swingArm(hand);
                 return super.onItemRightClick(world, player, hand);
@@ -55,7 +57,7 @@ public class ItemSigilBloodLight extends ItemSigilBase {
         } else {
             if (!world.isRemote) {
                 world.spawnEntity(new EntityBloodLight(world, player));
-                NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed());
+                network.syphonAndDamage(player, getLpUsed());
             }
             resetCooldown(stack);
         }

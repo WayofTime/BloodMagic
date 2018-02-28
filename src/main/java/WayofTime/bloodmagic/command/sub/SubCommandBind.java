@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.command.sub;
 
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.helper.BindableHelper;
@@ -38,8 +39,6 @@ public class SubCommandBind extends CommandBase {
 
         try {
             EntityPlayer player = CommandBase.getCommandSenderAsPlayer(commandSender);
-            String playerName = player.getName();
-            String uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
             ItemStack held = player.getHeldItemMainhand();
             boolean bind = true;
 
@@ -53,21 +52,20 @@ public class SubCommandBind extends CommandBase {
                         bind = Boolean.parseBoolean(args[0]);
 
                         if (args.length > 2)
-                            playerName = args[1];
+                            player = CommandBase.getPlayer(server, commandSender, args[1]);
                     } else {
-                        playerName = args[0];
-                        uuid = PlayerHelper.getUUIDFromPlayer(CommandBase.getPlayer(server, commandSender, playerName)).toString();
+                        player = CommandBase.getPlayer(server, commandSender, args[0]);
                     }
                 }
 
                 if (bind) {
-                    BindableHelper.setItemOwnerName(held, playerName);
-                    BindableHelper.setItemOwnerUUID(held, uuid);
+                    Binding binding = new Binding(player.getGameProfile().getId(), player.getGameProfile().getName());
+                    BindableHelper.applyBinding(held, binding);
                     commandSender.sendMessage(new TextComponentTranslation("commands.bind.success"));
                 } else {
-                    if (!Strings.isNullOrEmpty(((IBindable) held.getItem()).getOwnerUUID(held))) {
-                        held.getTagCompound().removeTag(Constants.NBT.OWNER_UUID);
-                        held.getTagCompound().removeTag(Constants.NBT.OWNER_NAME);
+                    Binding binding = ((IBindable) held.getItem()).getBinding(held);
+                    if (binding != null) {
+                        held.getTagCompound().removeTag("binding");
                         commandSender.sendMessage(new TextComponentTranslation("commands.bind.remove.success"));
                     }
                 }

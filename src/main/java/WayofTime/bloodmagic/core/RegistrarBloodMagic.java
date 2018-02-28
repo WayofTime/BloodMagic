@@ -30,18 +30,19 @@ import net.minecraftforge.registries.RegistryBuilder;
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
 public class RegistrarBloodMagic {
 
+    private static final BloodOrb ORB_DEF = new BloodOrb("", 0, 0, 0);
     @GameRegistry.ObjectHolder("weak")
-    public static final BloodOrb ORB_WEAK = new BloodOrb("", 0, 0);
+    public static final BloodOrb ORB_WEAK = ORB_DEF;
     @GameRegistry.ObjectHolder("apprentice")
-    public static final BloodOrb ORB_APPRENTICE = new BloodOrb("", 0, 0);
+    public static final BloodOrb ORB_APPRENTICE = ORB_DEF;
     @GameRegistry.ObjectHolder("magician")
-    public static final BloodOrb ORB_MAGICIAN = new BloodOrb("", 0, 0);
+    public static final BloodOrb ORB_MAGICIAN = ORB_DEF;
     @GameRegistry.ObjectHolder("master")
-    public static final BloodOrb ORB_MASTER = new BloodOrb("", 0, 0);
+    public static final BloodOrb ORB_MASTER = ORB_DEF;
     @GameRegistry.ObjectHolder("archmage")
-    public static final BloodOrb ORB_ARCHMAGE = new BloodOrb("", 0, 0);
+    public static final BloodOrb ORB_ARCHMAGE = ORB_DEF;
     @GameRegistry.ObjectHolder("transcendent")
-    public static final BloodOrb ORB_TRANSCENDENT = new BloodOrb("", 0, 0);
+    public static final BloodOrb ORB_TRANSCENDENT = ORB_DEF;
 
     public static final Potion BOOST = MobEffects.HASTE;
     public static final Potion WHIRLWIND = MobEffects.HASTE;
@@ -62,12 +63,12 @@ public class RegistrarBloodMagic {
     public static void registerBloodOrbs(RegistryEvent.Register<BloodOrb> event) {
         ResourceLocation orb = RegistrarBloodMagicItems.BLOOD_ORB.getRegistryName();
         event.getRegistry().registerAll(
-                new BloodOrb("weak", 1, 5000).withModel(new ModelResourceLocation(orb, "type=weak")).setRegistryName("weak"),
-                new BloodOrb("apprentice", 2, 25000).withModel(new ModelResourceLocation(orb, "type=apprentice")).setRegistryName("apprentice"),
-                new BloodOrb("magician", 3, 150000).withModel(new ModelResourceLocation(orb, "type=magician")).setRegistryName("magician"),
-                new BloodOrb("master", 4, 1000000).withModel(new ModelResourceLocation(orb, "type=master")).setRegistryName("master"),
-                new BloodOrb("archmage", 5, 10000000).withModel(new ModelResourceLocation(orb, "type=archmage")).setRegistryName("archmage"),
-                new BloodOrb("transcendent", 6, 30000000).withModel(new ModelResourceLocation(orb, "type=transcendent")).setRegistryName("transcendent")
+                new BloodOrb("weak", 1, 5000, 2).withModel(new ModelResourceLocation(orb, "type=weak")).setRegistryName("weak"),
+                new BloodOrb("apprentice", 2, 25000, 5).withModel(new ModelResourceLocation(orb, "type=apprentice")).setRegistryName("apprentice"),
+                new BloodOrb("magician", 3, 150000, 15).withModel(new ModelResourceLocation(orb, "type=magician")).setRegistryName("magician"),
+                new BloodOrb("master", 4, 1000000, 25).withModel(new ModelResourceLocation(orb, "type=master")).setRegistryName("master"),
+                new BloodOrb("archmage", 5, 10000000, 50).withModel(new ModelResourceLocation(orb, "type=archmage")).setRegistryName("archmage"),
+                new BloodOrb("transcendent", 6, 30000000, 50).withModel(new ModelResourceLocation(orb, "type=transcendent")).setRegistryName("transcendent")
         );
     }
 
@@ -79,7 +80,7 @@ public class RegistrarBloodMagic {
                 new PotionBloodMagic("Soul Snare", false, 0xFFFFFF, 3, 0).setRegistryName("soul_snare"),
                 new PotionBloodMagic("Soul Fray", true, 0xFFFFFF, 4, 0).setRegistryName("soul_fray"),
                 new PotionBloodMagic("Fire Fuse", true, 0xFF3333, 5, 0).setRegistryName("fire_fuse"),
-                new PotionBloodMagic("Constriction", true, 0x000000, 6, 0).setRegistryName("constriction"),
+                new PotionBloodMagic("Constriction", true, 0x000000, 6, 0).setRegistryName("constrict"),
                 new PotionBloodMagic("Plant Leech", true, 0x000000, 7, 0).setRegistryName("plant_leech"),
                 new PotionBloodMagic("Deaf", true, 0x000000, 0, 1).setRegistryName("deafness"),
                 new PotionBloodMagic("Bounce", false, 0x000000, 1, 1).setRegistryName("bounce"),

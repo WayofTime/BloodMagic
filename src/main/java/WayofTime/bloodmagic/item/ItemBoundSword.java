@@ -1,18 +1,15 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.iface.IActivatable;
 import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.base.Strings;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.state.IBlockState;
@@ -69,13 +66,14 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-        if (Strings.isNullOrEmpty(getOwnerUUID(stack))) {
+        Binding binding = getBinding(stack);
+        if (binding == null) {
             setActivatedState(stack, false);
             return;
         }
 
         if (entity instanceof EntityPlayer && getActivated(stack) && world.getTotalWorldTime() % 80 == 0)
-            NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage((EntityPlayer) entity, 20);
+            NetworkHelper.getSoulNetwork(binding).syphonAndDamage((EntityPlayer) entity, 20);
     }
 
     @Override
@@ -113,8 +111,9 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
 
         tooltip.add(TextHelper.localize("tooltip.bloodmagic." + (getActivated(stack) ? "activated" : "deactivated")));
 
-        if (!Strings.isNullOrEmpty(getOwnerUUID(stack)))
-            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
+        Binding binding = getBinding(stack);
+        if (binding != null)
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", binding.getOwnerName()));
     }
 
     @Override
@@ -145,39 +144,5 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
         ret.add("active=true");
         ret.add("active=false");
         return ret;
-    }
-
-    // IBindable
-
-    @Override
-    public boolean onBind(EntityPlayer player, ItemStack stack) {
-        return true;
-    }
-
-    @Override
-    public String getOwnerName(ItemStack stack) {
-        return stack != null ? NBTHelper.checkNBT(stack).getTagCompound().getString(Constants.NBT.OWNER_NAME) : null;
-    }
-
-    @Override
-    public String getOwnerUUID(ItemStack stack) {
-        return stack != null ? NBTHelper.checkNBT(stack).getTagCompound().getString(Constants.NBT.OWNER_UUID) : null;
-    }
-
-    // IActivatable
-
-    @Override
-    public boolean getActivated(ItemStack stack) {
-        return stack != null && NBTHelper.checkNBT(stack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
-    }
-
-    @Override
-    public ItemStack setActivatedState(ItemStack stack, boolean activated) {
-        if (stack != null) {
-            NBTHelper.checkNBT(stack).getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
-            return stack;
-        }
-
-        return null;
     }
 }

@@ -10,14 +10,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
+import java.util.UUID;
+
 public class RitualEvent extends Event {
     public final IMasterRitualStone mrs;
-    public final String ownerName;
+    public final UUID ownerId;
     public final Ritual ritual;
 
-    private RitualEvent(IMasterRitualStone mrs, String ownerName, Ritual ritual) {
+    private RitualEvent(IMasterRitualStone mrs, UUID ownerId, Ritual ritual) {
         this.mrs = mrs;
-        this.ownerName = ownerName;
+        this.ownerId = ownerId;
         this.ritual = ritual;
     }
 
@@ -33,8 +35,8 @@ public class RitualEvent extends Event {
         public final ItemStack crystalStack;
         public int crystalTier;
 
-        public RitualActivatedEvent(IMasterRitualStone mrs, String owner, Ritual ritual, EntityPlayer player, ItemStack activationCrystal, int crystalTier) {
-            super(mrs, owner, ritual);
+        public RitualActivatedEvent(IMasterRitualStone mrs, UUID ownerId, Ritual ritual, EntityPlayer player, ItemStack activationCrystal, int crystalTier) {
+            super(mrs, ownerId, ritual);
 
             this.player = player;
             this.crystalStack = activationCrystal;
@@ -50,8 +52,8 @@ public class RitualEvent extends Event {
      */
     @Cancelable
     public static class RitualRunEvent extends RitualEvent {
-        public RitualRunEvent(IMasterRitualStone mrs, String owner, Ritual ritual) {
-            super(mrs, owner, ritual);
+        public RitualRunEvent(IMasterRitualStone mrs, UUID ownerId, Ritual ritual) {
+            super(mrs, ownerId, ritual);
         }
     }
 
@@ -65,8 +67,8 @@ public class RitualEvent extends Event {
 
         public final Ritual.BreakType method;
 
-        public RitualStopEvent(IMasterRitualStone mrs, String owner, Ritual ritual, Ritual.BreakType method) {
-            super(mrs, owner, ritual);
+        public RitualStopEvent(IMasterRitualStone mrs, UUID ownerId, Ritual ritual, Ritual.BreakType method) {
+            super(mrs, ownerId, ritual);
 
             this.method = method;
         }
@@ -76,12 +78,12 @@ public class RitualEvent extends Event {
     public static class ImperfectRitualActivatedEvent extends Event {
 
         public final IImperfectRitualStone ims;
-        public final String ownerName;
+        public final UUID ownerId;
         public final ImperfectRitual imperfectRitual;
 
-        public ImperfectRitualActivatedEvent(IImperfectRitualStone ims, String ownerName, ImperfectRitual imperfectRitual) {
+        public ImperfectRitualActivatedEvent(IImperfectRitualStone ims, UUID ownerId, ImperfectRitual imperfectRitual) {
             this.ims = ims;
-            this.ownerName = ownerName;
+            this.ownerId = ownerId;
             this.imperfectRitual = imperfectRitual;
         }
     }
