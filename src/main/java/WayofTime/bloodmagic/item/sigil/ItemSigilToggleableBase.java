@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.item.ItemSigilToggleable;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class ItemSigilToggleableBase extends ItemSigilToggleable implements IMeshProvider {
+
     protected final String tooltipBase;
     private final String name;
 
@@ -40,10 +42,12 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable implements IMes
         super.addInformation(stack, world, tooltip, flag);
         if (!stack.hasTagCompound())
             return;
+
         tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic." + (getActivated(stack) ? "activated" : "deactivated")));
 
-        if (!Strings.isNullOrEmpty(getOwnerName(stack)))
-            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
+        Binding binding = getBinding(stack);
+        if (binding != null)
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", binding.getOwnerName()));
     }
 
     @Override

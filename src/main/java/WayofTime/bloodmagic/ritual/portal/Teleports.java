@@ -20,17 +20,19 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
+import java.util.UUID;
+
 public class Teleports {
 
     public static class TeleportSameDim extends Teleport {
         private final boolean teleposer;
 
-        public TeleportSameDim(int x, int y, int z, Entity entity, String networkToDrain, boolean teleposer) {
-            this(new BlockPos(x, y, z), entity, networkToDrain, teleposer);
+        public TeleportSameDim(int x, int y, int z, Entity entity, UUID networkOwner, boolean teleposer) {
+            this(new BlockPos(x, y, z), entity, networkOwner, teleposer);
         }
 
-        public TeleportSameDim(BlockPos blockPos, Entity entity, String networkToDrain, boolean teleposer) {
-            super(blockPos, entity, networkToDrain);
+        public TeleportSameDim(BlockPos blockPos, Entity entity, UUID networkOwner, boolean teleposer) {
+            super(blockPos, entity, networkOwner);
             this.teleposer = teleposer;
         }
 
@@ -39,7 +41,7 @@ public class Teleports {
             if (entity != null) {
                 if (entity.timeUntilPortal <= 0) {
                     if (entity instanceof EntityPlayer) {
-                        SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
+                        SoulNetwork network = NetworkHelper.getSoulNetwork(networkOwner);
                         if (network.getCurrentEssence() < getTeleportCost())
                             return;
 
@@ -60,7 +62,7 @@ public class Teleports {
                         if (teleposer)
                             MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), new BlockPos(x, y, z)));
                     } else {
-                        SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
+                        SoulNetwork network = NetworkHelper.getSoulNetwork(networkOwner);
                         if (network.getCurrentEssence() < (getTeleportCost() / 10))
                             return;
 
@@ -95,12 +97,12 @@ public class Teleports {
         private int newWorldID;
         private boolean teleposer;
 
-        public TeleportToDim(int x, int y, int z, Entity entity, String networkToDrain, World oldWorld, int newWorld, boolean teleposer) {
-            this(new BlockPos(x, y, z), entity, networkToDrain, oldWorld, newWorld, teleposer);
+        public TeleportToDim(int x, int y, int z, Entity entity, UUID networkOwner, World oldWorld, int newWorld, boolean teleposer) {
+            this(new BlockPos(x, y, z), entity, networkOwner, oldWorld, newWorld, teleposer);
         }
 
-        public TeleportToDim(BlockPos blockPos, Entity entity, String networkToDrain, World oldWorld, int newWorldID, boolean teleposer) {
-            super(blockPos, entity, networkToDrain);
+        public TeleportToDim(BlockPos blockPos, Entity entity, UUID networkOwner, World oldWorld, int newWorldID, boolean teleposer) {
+            super(blockPos, entity, networkOwner);
             this.oldWorld = oldWorld;
             this.newWorldID = newWorldID;
             this.teleposer = teleposer;
@@ -118,7 +120,7 @@ public class Teleports {
                         EntityPlayerMP player = (EntityPlayerMP) entity;
 
                         if (!player.getEntityWorld().isRemote) {
-                            SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
+                            SoulNetwork network = NetworkHelper.getSoulNetwork(networkOwner);
                             if (network.getCurrentEssence() < getTeleportCost())
                                 return;
 
@@ -138,7 +140,7 @@ public class Teleports {
                         }
 
                     } else if (!entity.getEntityWorld().isRemote) {
-                        SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
+                        SoulNetwork network = NetworkHelper.getSoulNetwork(networkOwner);
                         if (network.getCurrentEssence() < (getTeleportCost() / 10))
                             return;
 

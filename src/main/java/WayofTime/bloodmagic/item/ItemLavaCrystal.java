@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
@@ -13,39 +14,42 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvider {
+
     public ItemLavaCrystal() {
         super();
         setUnlocalizedName(BloodMagic.MODID + ".lavaCrystal");
     }
 
     @Override
-    public ItemStack getContainerItem(ItemStack itemStack) {
-        String uuid = getOwnerUUID(itemStack);
-        if (!Strings.isNullOrEmpty(uuid))
-            NetworkHelper.getSoulNetwork(uuid).syphon(25);
+    public ItemStack getContainerItem(ItemStack stack) {
+        Binding binding = getBinding(stack);
+        if (binding != null)
+            NetworkHelper.getSoulNetwork(binding.getOwnerId()).syphon(25);
 
         ItemStack returnStack = new ItemStack(this);
-        returnStack.setTagCompound(itemStack.getTagCompound());
+        returnStack.setTagCompound(stack.getTagCompound());
         return returnStack;
     }
 
     @Override
-    public boolean hasContainerItem(ItemStack itemStack) {
+    public boolean hasContainerItem(ItemStack stack) {
         return true;
     }
 
     @Override
     public int getItemBurnTime(ItemStack stack) {
-        if (Strings.isNullOrEmpty(getOwnerUUID(stack)))
+        Binding binding = getBinding(stack);
+        if (binding == null)
             return -1;
 
         if (NetworkHelper.canSyphonFromContainer(stack, 25))
             return 200;
         else {
-            EntityPlayer player = PlayerHelper.getPlayerFromUUID(getOwnerUUID(stack));
+            EntityPlayer player = PlayerHelper.getPlayerFromUUID(binding.getOwnerId());
             if (player != null)
                 player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 99));
         }
@@ -53,14 +57,10 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
         return -1;
     }
 
+    @Nullable
     @Override
-    public String getOwnerName(ItemStack stack) {
-        return stack.hasTagCompound() ? stack.getTagCompound().getString(Constants.NBT.OWNER_NAME) : null;
-    }
-
-    @Override
-    public String getOwnerUUID(ItemStack stack) {
-        return stack.hasTagCompound() ? stack.getTagCompound().getString(Constants.NBT.OWNER_UUID) : null;
+    public Binding getBinding(ItemStack stack) {
+        return Binding.fromStack(stack);
     }
 
     @Override

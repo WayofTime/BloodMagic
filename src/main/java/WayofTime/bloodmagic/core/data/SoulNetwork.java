@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.core.data;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.PleaseStopUsingMe;
 import WayofTime.bloodmagic.event.AddToNetworkEvent;
@@ -74,7 +73,7 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
                 return false;
 
             if (!Strings.isNullOrEmpty(playerId.toString())) {
-                SoulNetworkEvent.ItemDrainNetworkEvent event = new SoulNetworkEvent.ItemDrainNetworkEvent(user, playerId.toString(), null, toSyphon);
+                SoulNetworkEvent.ItemDrainNetworkEvent event = new SoulNetworkEvent.ItemDrainNetworkEvent(user, playerId, null, toSyphon);
 
                 if (MinecraftForge.EVENT_BUS.post(event))
                     return false;

@@ -63,7 +63,7 @@ public class DataProviderRitualController implements IWailaDataProvider {
             if (mrs.getCurrentRitual() != null) {
                 tag.setString("ritual", mrs.getCurrentRitual().getUnlocalizedName());
                 tag.setBoolean("active", mrs.isActive());
-                if (!Strings.isNullOrEmpty(mrs.getOwner()))
+                if (mrs.getOwner() != null)
                     tag.setString("owner", PlayerHelper.getUsernameFromUUID(mrs.getOwner()));
                 tag.setBoolean("enabled", RitualRegistry.ritualEnabled(mrs.getCurrentRitual()));
             }

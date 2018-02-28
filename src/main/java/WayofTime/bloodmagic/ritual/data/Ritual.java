@@ -14,10 +14,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 /**
@@ -100,7 +97,7 @@ public abstract class Ritual {
      *                          owner of the ritual if being reactivated.
      * @return - Whether activation was successful
      */
-    public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player, String owner) {
+    public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player, UUID owner) {
         return true;
     }
 

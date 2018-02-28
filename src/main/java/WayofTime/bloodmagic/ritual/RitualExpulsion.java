@@ -1,11 +1,12 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.ritual.data.*;
 import WayofTime.bloodmagic.util.Utils;
-import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,6 +24,7 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 public class RitualExpulsion extends Ritual {
     public static final String EXPULSION_RANGE = "expulsionRange";
@@ -48,7 +50,7 @@ public class RitualExpulsion extends Ritual {
 
         AreaDescriptor expulsionRange = getBlockRange(EXPULSION_RANGE);
 
-        List<String> allowedNames = new ArrayList<String>();
+        List<UUID> whitelist = Lists.newArrayList();
         BlockPos masterPos = masterRitualStone.getBlockPos();
         TileEntity tile = world.getTileEntity(masterPos.up());
 
@@ -57,10 +59,10 @@ public class RitualExpulsion extends Ritual {
             if (handler != null) {
                 for (int i = 0; i < handler.getSlots(); i++) {
                     ItemStack itemStack = handler.getStackInSlot(i);
-                    if (itemStack != null && itemStack.getItem() instanceof IBindable) {
-                        IBindable bindable = (IBindable) itemStack.getItem();
-                        if (!Strings.isNullOrEmpty(bindable.getOwnerName(itemStack)) && !allowedNames.contains(bindable.getOwnerName(itemStack)))
-                            allowedNames.add(bindable.getOwnerUUID(itemStack));
+                    if (!itemStack.isEmpty() && itemStack.getItem() instanceof IBindable) {
+                        Binding binding = ((IBindable) itemStack.getItem()).getBinding(itemStack);
+                        if (binding != null && !whitelist.contains(binding.getOwnerId()))
+                            whitelist.add(binding.getOwnerId());
                     }
                 }
             }
@@ -69,14 +71,14 @@ public class RitualExpulsion extends Ritual {
         final int teleportDistance = 100;
 
         for (EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, expulsionRange.getAABB(masterRitualStone.getBlockPos()))) {
-            if (player.capabilities.isCreativeMode || PlayerHelper.getUUIDFromPlayer(player).toString().equals(masterRitualStone.getOwner()) || allowedNames.contains(PlayerHelper.getUUIDFromPlayer(player).toString()))
+            if (player.capabilities.isCreativeMode || PlayerHelper.getUUIDFromPlayer(player).toString().equals(masterRitualStone.getOwner()) || whitelist.contains(player.getGameProfile().getId()))
                 continue;
 
             if (teleportRandomly(player, teleportDistance))
                 masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * 1000);
         }
 
-        allowedNames.clear();
+        whitelist.clear();
     }
 
     public boolean teleportRandomly(EntityLivingBase entityLiving, double distance) {
@@ -162,20 +164,16 @@ public class RitualExpulsion extends Ritual {
     }
 
     public void moveEntityViaTeleport(EntityLivingBase entityLiving, double x, double y, double z) {
-        if (entityLiving != null && entityLiving instanceof EntityPlayer) {
-            if (entityLiving instanceof EntityPlayerMP) {
-                EntityPlayerMP entityplayermp = (EntityPlayerMP) entityLiving;
+        if (entityLiving instanceof EntityPlayerMP) {
+            EntityPlayerMP player = (EntityPlayerMP) entityLiving;
 
-                if (entityplayermp.getEntityWorld() == entityLiving.getEntityWorld()) {
-                    EnderTeleportEvent event = new EnderTeleportEvent(entityplayermp, x, y, z, 5.0F);
+            EnderTeleportEvent event = new EnderTeleportEvent(player, x, y, z, 5.0F);
 
-                    if (!MinecraftForge.EVENT_BUS.post(event)) {
-                        if (entityLiving.isRiding()) {
-                            entityplayermp.mountEntityAndWakeUp();
-                        }
-                        entityLiving.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
-                    }
-                }
+            if (!MinecraftForge.EVENT_BUS.post(event)) {
+                if (entityLiving.isRiding())
+                    player.mountEntityAndWakeUp();
+
+                entityLiving.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
             }
         } else if (entityLiving != null) {
             entityLiving.setPosition(x, y, z);

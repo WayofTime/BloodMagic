@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.item;
 
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.iface.IActivatable;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import com.google.common.base.Strings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -22,6 +22,7 @@ import net.minecraft.world.World;
  * Base class for all toggleable sigils.
  */
 public class ItemSigilToggleable extends ItemSigil implements IActivatable {
+
     public ItemSigilToggleable(int lpUsed) {
         super(lpUsed);
     }
@@ -64,10 +65,12 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() instanceof ISigil.Holding)
             stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
-        if (Strings.isNullOrEmpty(getOwnerUUID(stack)) || player.isSneaking()) // Make sure Sigils are bound before handling. Also ignores while toggling state
+
+        Binding binding = getBinding(stack);
+        if (binding == null || player.isSneaking()) // Make sure Sigils are bound before handling. Also ignores while toggling state
             return EnumActionResult.PASS;
 
-        return (NetworkHelper.getSoulNetwork(getOwnerUUID(player.getHeldItem(hand))).syphonAndDamage(player, getLpUsed()) && onSigilUse(player.getHeldItem(hand), player, world, pos, side, hitX, hitY, hitZ)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+        return (NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, getLpUsed()) && onSigilUse(player.getHeldItem(hand), player, world, pos, side, hitX, hitY, hitZ)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
     }
 
     public boolean onSigilUse(ItemStack itemStack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -78,7 +81,7 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable {
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         if (!worldIn.isRemote && entityIn instanceof EntityPlayerMP && getActivated(stack)) {
             if (entityIn.ticksExisted % 100 == 0) {
-                if (!NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage((EntityPlayer) entityIn, getLpUsed())) {
+                if (!NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage((EntityPlayer) entityIn, getLpUsed())) {
                     setActivatedState(stack, false);
                 }
             }

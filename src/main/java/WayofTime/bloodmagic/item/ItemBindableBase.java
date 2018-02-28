@@ -1,10 +1,9 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.base.Strings;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -28,7 +27,8 @@ public class ItemBindableBase extends Item implements IBindable {
         if (!stack.hasTagCompound())
             return;
 
-        if (!Strings.isNullOrEmpty(getOwnerUUID(stack)))
-            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
+        Binding binding = getBinding(stack);
+        if (binding != null)
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", binding.getOwnerName()));
     }
 }

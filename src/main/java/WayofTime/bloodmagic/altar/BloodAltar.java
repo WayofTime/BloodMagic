@@ -4,6 +4,8 @@ import WayofTime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import WayofTime.bloodmagic.block.enums.BloodRuneType;
+import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.iface.IBloodRune;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.orb.BloodOrb;
@@ -329,27 +331,21 @@ public class BloodAltar implements IFluidHandler {
                 }
             }
         } else {
-            ItemStack returnedItem = tileAltar.getStackInSlot(0);
+            ItemStack contained = tileAltar.getStackInSlot(0);
 
-            if (returnedItem.isEmpty() || !(returnedItem.getItem() instanceof IBloodOrb))
+            if (contained.isEmpty() || !(contained.getItem() instanceof IBloodOrb) || !(contained.getItem() instanceof IBindable))
                 return;
 
-            IBloodOrb item = (IBloodOrb) (returnedItem.getItem());
-            NBTTagCompound itemTag = returnedItem.getTagCompound();
+            BloodOrb orb = ((IBloodOrb) contained.getItem()).getOrb(contained);
+            Binding binding = ((IBindable) contained.getItem()).getBinding(contained);
 
-            if (itemTag == null)
-                return;
-
-            String ownerUUID = itemTag.getString(Constants.NBT.OWNER_UUID);
-
-            if (Strings.isNullOrEmpty(ownerUUID))
+            if (binding == null || orb == null)
                 return;
 
             if (fluid != null && fluid.amount >= 1) {
-                int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
+                int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? orb.getFillRate() * (1 + consumptionMultiplier) : orb.getFillRate()), fluid.amount);
 
-                BloodOrb orb = item.getOrb(returnedItem);
-                int drain = orb == null ? 0 : NetworkHelper.getSoulNetwork(ownerUUID).add(liquidDrained, (int) (orb.getCapacity() * this.orbCapacityMultiplier));
+                int drain = NetworkHelper.getSoulNetwork(binding).add(liquidDrained, (int) (orb.getCapacity() * this.orbCapacityMultiplier));
                 fluid.amount = fluid.amount - drain;
 
                 if (drain > 0 && internalCounter % 4 == 0 && world instanceof WorldServer) {

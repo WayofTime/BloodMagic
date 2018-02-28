@@ -3,23 +3,25 @@ package WayofTime.bloodmagic.teleport;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.UUID;
+
 public abstract class Teleport implements ITeleport {
     protected int x;
     protected int y;
     protected int z;
     protected Entity entity;
-    protected String networkToDrain;
+    protected UUID networkOwner;
 
-    public Teleport(int x, int y, int z, Entity entity, String networkToDrain) {
+    public Teleport(int x, int y, int z, Entity entity, UUID networkOwner) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.entity = entity;
-        this.networkToDrain = networkToDrain;
+        this.networkOwner = networkOwner;
     }
 
-    public Teleport(BlockPos blockPos, Entity entity, String networkToDrain) {
-        this(blockPos.getX(), blockPos.getY(), blockPos.getZ(), entity, networkToDrain);
+    public Teleport(BlockPos blockPos, Entity entity, UUID networkOwner) {
+        this(blockPos.getX(), blockPos.getY(), blockPos.getZ(), entity, networkOwner);
     }
 
     public int getX() {
@@ -38,8 +40,8 @@ public abstract class Teleport implements ITeleport {
         return entity;
     }
 
-    public String getNetworkToDrain() {
-        return networkToDrain;
+    public UUID getNetworkOwner() {
+        return networkOwner;
     }
 
     @Override
@@ -53,7 +55,7 @@ public abstract class Teleport implements ITeleport {
         if (y != teleport.y) return false;
         if (z != teleport.z) return false;
         if (entity != null ? !entity.equals(teleport.entity) : teleport.entity != null) return false;
-        return networkToDrain != null ? networkToDrain.equals(teleport.networkToDrain) : teleport.networkToDrain == null;
+        return networkOwner != null ? networkOwner.equals(teleport.networkOwner) : teleport.networkOwner == null;
     }
 
     @Override
@@ -62,7 +64,7 @@ public abstract class Teleport implements ITeleport {
         result = 31 * result + y;
         result = 31 * result + z;
         result = 31 * result + (entity != null ? entity.hashCode() : 0);
-        result = 31 * result + (networkToDrain != null ? networkToDrain.hashCode() : 0);
+        result = 31 * result + (networkOwner != null ? networkOwner.hashCode() : 0);
         return result;
     }
 }

@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * This interface is for internal implementation only.
@@ -16,7 +17,7 @@ import java.util.List;
  * It is provided via the API for easy obtaining of basic data.
  */
 public interface IMasterRitualStone {
-    String getOwner();
+    UUID getOwner();
 
     SoulNetwork getOwnerNetwork();
 

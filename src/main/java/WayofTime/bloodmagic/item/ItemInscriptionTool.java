@@ -1,13 +1,12 @@
 package WayofTime.bloodmagic.item;
 
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.ritual.data.EnumRuneType;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.block.BlockRitualStone;
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.base.Strings;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -101,7 +100,8 @@ public class ItemInscriptionTool extends ItemEnum.Variant<EnumRuneType> implemen
         if (!stack.hasTagCompound())
             return;
 
-        if (!Strings.isNullOrEmpty(getOwnerUUID(stack)))
-            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
+        Binding binding = getBinding(stack);
+        if (binding != null)
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", binding.getOwnerName()));
     }
 }

@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.util.helper;
 
+import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.SoulNetworkEvent;
 import WayofTime.bloodmagic.orb.BloodOrb;
@@ -57,6 +59,10 @@ public class NetworkHelper {
         return getSoulNetwork(PlayerHelper.getUUIDFromPlayer(player));
     }
 
+    public static SoulNetwork getSoulNetwork(Binding binding) {
+        return getSoulNetwork(binding.getOwnerId());
+    }
+
     /**
      * Gets the current orb tier of the SoulNetwork.
      *
@@ -99,7 +105,7 @@ public class NetworkHelper {
     @Deprecated
     public static boolean syphonAndDamage(SoulNetwork soulNetwork, EntityPlayer user, int toSyphon) {
 
-//        if (soulNetwork.getPlayer() == null)
+//        if (soulNetwork.getNewOwner() == null)
 //        {
 //            soulNetwork.syphon(toSyphon);
 //            return true;
@@ -117,15 +123,16 @@ public class NetworkHelper {
      */
     public static boolean syphonFromContainer(ItemStack stack, int toSyphon) //TODO: Change to a String, int?
     {
-        stack = NBTHelper.checkNBT(stack);
-        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
-
-        if (Strings.isNullOrEmpty(ownerName))
+        if (!(stack.getItem() instanceof IBindable))
             return false;
 
-        SoulNetwork network = getSoulNetwork(ownerName);
+        Binding binding = ((IBindable) stack.getItem()).getBinding(stack);
+        if (binding == null)
+            return false;
 
-        SoulNetworkEvent.ItemDrainInContainerEvent event = new SoulNetworkEvent.ItemDrainInContainerEvent(stack, ownerName, toSyphon);
+        SoulNetwork network = getSoulNetwork(binding);
+
+        SoulNetworkEvent.ItemDrainInContainerEvent event = new SoulNetworkEvent.ItemDrainInContainerEvent(stack, binding.getOwnerId(), toSyphon);
 
         return !(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) && network.syphon(event.syphon) >= toSyphon;
     }
@@ -138,13 +145,14 @@ public class NetworkHelper {
      * @return - If syphoning is possible
      */
     public static boolean canSyphonFromContainer(ItemStack stack, int toSyphon) {
-        stack = NBTHelper.checkNBT(stack);
-        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
-
-        if (Strings.isNullOrEmpty(ownerName))
+        if (!(stack.getItem() instanceof IBindable))
             return false;
 
-        SoulNetwork network = getSoulNetwork(ownerName);
+        Binding binding = ((IBindable) stack.getItem()).getBinding(stack);
+        if (binding == null)
+            return false;
+
+        SoulNetwork network = getSoulNetwork(binding);
         return network.getCurrentEssence() >= toSyphon;
     }
 

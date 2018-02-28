@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.altar.IAltarManipulator;
 import WayofTime.bloodmagic.altar.IBloodAltar;
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.iface.IAltarReader;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.iface.IDocumentedBlock;
@@ -15,7 +16,6 @@ import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.Utils;
-import com.google.common.base.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -68,9 +68,9 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
             if (world.getBlockState(pos.down()).getBlock() instanceof BlockDecorative) {
                 if (orbStack.getItem() instanceof IBloodOrb && orbStack.getItem() instanceof IBindable) {
                     BloodOrb orb = ((IBloodOrb) orbStack.getItem()).getOrb(orbStack);
-                    IBindable bindable = (IBindable) orbStack.getItem();
-                    if (orb != null && !Strings.isNullOrEmpty(bindable.getOwnerUUID(orbStack))) {
-                        SoulNetwork soulNetwork = NetworkHelper.getSoulNetwork(bindable.getOwnerUUID(orbStack));
+                    Binding binding = ((IBindable) orbStack.getItem()).getBinding(orbStack);
+                    if (orb != null && binding != null) {
+                        SoulNetwork soulNetwork = NetworkHelper.getSoulNetwork(binding);
 
                         int maxEssence = orb.getCapacity();
                         int currentEssence = soulNetwork.getCurrentEssence();

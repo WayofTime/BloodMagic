@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
@@ -85,12 +86,13 @@ public class ItemSigilVoid extends ItemSigilBase {
             return EnumActionResult.FAIL;
         }
 
+        SoulNetwork network = NetworkHelper.getSoulNetwork(getBinding(stack));
         TileEntity tile = world.getTileEntity(blockPos);
         if (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) {
             IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
             FluidStack amount = handler.drain(1000, false);
 
-            if (amount != null && amount.amount > 0 && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed())) {
+            if (amount != null && amount.amount > 0 && network.syphonAndDamage(player, getLpUsed())) {
                 handler.drain(1000, true);
                 return EnumActionResult.SUCCESS;
             }
@@ -104,7 +106,7 @@ public class ItemSigilVoid extends ItemSigilBase {
             return EnumActionResult.FAIL;
         }
 
-        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).syphonAndDamage(player, getLpUsed())) {
+        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && network.syphonAndDamage(player, getLpUsed())) {
             world.setBlockToAir(newPos);
             return EnumActionResult.SUCCESS;
         }

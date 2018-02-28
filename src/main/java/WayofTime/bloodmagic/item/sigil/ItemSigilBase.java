@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.item.ItemSigil;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ItemSigilBase extends ItemSigil implements IVariantProvider {
+
     protected final String tooltipBase;
     private final String name;
 
@@ -44,8 +46,9 @@ public class ItemSigilBase extends ItemSigil implements IVariantProvider {
         if (!stack.hasTagCompound())
             return;
 
-        if (!Strings.isNullOrEmpty(getOwnerName(stack)))
-            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
+        Binding binding = getBinding(stack);
+        if (binding != null)
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", binding.getOwnerName()));
 
         super.addInformation(stack, world, tooltip, flag);
     }

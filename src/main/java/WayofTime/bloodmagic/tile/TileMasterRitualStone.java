@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.RitualEvent;
 import WayofTime.bloodmagic.core.registry.RitualRegistry;
@@ -7,10 +9,7 @@ import WayofTime.bloodmagic.ritual.data.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.data.Ritual;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.util.helper.NBTHelper;
-import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.util.helper.RitualHelper;
+import WayofTime.bloodmagic.util.helper.*;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.tile.base.TileTicking;
@@ -29,9 +28,10 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone {
-    private String owner;
+    private UUID owner;
     private SoulNetwork cachedNetwork;
     private boolean active;
     private boolean redstoned;
@@ -57,7 +57,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         if (!isActive() && !isPowered() && isRedstoned() && getCurrentRitual() != null) {
             active = true;
             ItemStack crystalStack = NBTHelper.checkNBT(new ItemStack(RegistrarBloodMagicItems.ACTIVATION_CRYSTAL, 1, getCurrentRitual().getCrystalLevel()));
-            crystalStack.getTagCompound().setString(Constants.NBT.OWNER_UUID, getOwner());
+            BindableHelper.applyBinding(crystalStack, new Binding(owner, PlayerHelper.getUsernameFromUUID(owner)));
             activateRitual(crystalStack, null, getCurrentRitual());
             redstoned = false;
         }
@@ -72,8 +72,8 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
     @Override
     public void deserialize(NBTTagCompound tag) {
-        owner = tag.getString(Constants.NBT.OWNER_UUID);
-        if (!Strings.isNullOrEmpty(owner))
+        owner = tag.hasUniqueId("owner") ? tag.getUniqueId("owner") : null;
+        if (owner != null)
             cachedNetwork = NetworkHelper.getSoulNetwork(owner);
         currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
         if (currentRitual != null) {
@@ -97,7 +97,8 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     @Override
     public NBTTagCompound serialize(NBTTagCompound tag) {
         String ritualId = RitualRegistry.getIdForRitual(getCurrentRitual());
-        tag.setString(Constants.NBT.OWNER_UUID, Strings.isNullOrEmpty(getOwner()) ? "" : getOwner());
+        if (owner != null)
+            tag.setUniqueId(Constants.NBT.OWNER_UUID, owner);
         tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
         if (currentRitual != null) {
             NBTTagCompound ritualTag = new NBTTagCompound();
@@ -121,15 +122,13 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         if (PlayerHelper.isFakePlayer(activator))
             return false;
 
-        activationCrystal = NBTHelper.checkNBT(activationCrystal);
-        String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_UUID);
-
-        if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null) {
+        Binding binding = ((IBindable) activationCrystal.getItem()).getBinding(activationCrystal);
+        if (binding != null && ritual != null) {
             if (activationCrystal.getItem() instanceof ItemActivationCrystal) {
                 int crystalLevel = ((ItemActivationCrystal) activationCrystal.getItem()).getCrystalLevel(activationCrystal);
                 if (RitualHelper.canCrystalActivate(ritual, crystalLevel)) {
                     if (!getWorld().isRemote) {
-                        SoulNetwork network = NetworkHelper.getSoulNetwork(crystalOwner);
+                        SoulNetwork network = NetworkHelper.getSoulNetwork(binding);
 
                         if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost() && (activator != null && !activator.capabilities.isCreativeMode)) {
                             activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.weak"), true);
@@ -139,7 +138,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
                         if (currentRitual != null)
                             currentRitual.stopRitual(this, Ritual.BreakType.ACTIVATE);
 
-                        RitualEvent.RitualActivatedEvent event = new RitualEvent.RitualActivatedEvent(this, crystalOwner, ritual, activator, activationCrystal, crystalLevel);
+                        RitualEvent.RitualActivatedEvent event = new RitualEvent.RitualActivatedEvent(this, binding.getOwnerId(), ritual, activator, activationCrystal, crystalLevel);
 
                         if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) {
                             if (activator != null)
@@ -147,7 +146,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
                             return false;
                         }
 
-                        if (ritual.activateRitual(this, activator, crystalOwner)) {
+                        if (ritual.activateRitual(this, activator, binding.getOwnerId())) {
                             if (!isRedstoned() && (activator != null && !activator.capabilities.isCreativeMode))
                                 network.syphon(ritual.getActivationCost());
 
@@ -155,7 +154,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
                                 activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.activate"), true);
 
                             this.active = true;
-                            this.owner = crystalOwner;
+                            this.owner = binding.getOwnerId();
                             this.cachedNetwork = network;
                             this.currentRitual = ritual;
 
@@ -240,11 +239,11 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public String getOwner() {
+    public UUID getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(UUID owner) {
         this.owner = owner;
     }
 

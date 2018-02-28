@@ -18,6 +18,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class RitualPortal extends Ritual {
 
@@ -31,14 +32,14 @@ public class RitualPortal extends Ritual {
     }
 
     @Override
-    public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player, String owner) {
+    public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player, UUID owner) {
         World world = masterRitualStone.getWorldObj();
         int x = masterRitualStone.getBlockPos().getX();
         int y = masterRitualStone.getBlockPos().getY();
         int z = masterRitualStone.getBlockPos().getZ();
         EnumFacing direction = masterRitualStone.getDirection();
 
-        String name = owner;
+        String name = owner.toString();
         IBlockState blockState;
 
         if (!world.isRemote) {
