@@ -80,7 +80,7 @@ public class RegistrarBloodMagic {
                 new PotionBloodMagic("Soul Snare", false, 0xFFFFFF, 3, 0).setRegistryName("soul_snare"),
                 new PotionBloodMagic("Soul Fray", true, 0xFFFFFF, 4, 0).setRegistryName("soul_fray"),
                 new PotionBloodMagic("Fire Fuse", true, 0xFF3333, 5, 0).setRegistryName("fire_fuse"),
-                new PotionBloodMagic("Constriction", true, 0x000000, 6, 0).setRegistryName("constriction"),
+                new PotionBloodMagic("Constriction", true, 0x000000, 6, 0).setRegistryName("constrict"),
                 new PotionBloodMagic("Plant Leech", true, 0x000000, 7, 0).setRegistryName("plant_leech"),
                 new PotionBloodMagic("Deaf", true, 0x000000, 0, 1).setRegistryName("deafness"),
                 new PotionBloodMagic("Bounce", false, 0x000000, 1, 1).setRegistryName("bounce"),
