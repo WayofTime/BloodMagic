@@ -73,6 +73,7 @@ public class BloodMagic {
         configDir = new File(event.getModConfigurationDirectory(), "bloodmagic");
 
         PLUGINS.addAll(PluginUtil.gatherPlugins(event.getAsmData()));
+        PluginUtil.injectAPIInstances(PluginUtil.gatherInjections(event.getAsmData()));
 
         ModTranquilityHandlers.init();
         ModDungeons.init();
@@ -84,7 +85,7 @@ public class BloodMagic {
     public void init(FMLInitializationEvent event) {
         BloodMagicPacketHandler.init();
 
-        PluginUtil.registerPlugins(PLUGINS);
+        PluginUtil.handlePluginStep(PluginUtil.RegistrationStep.PLUGIN_REGISTER);
 
         ModRecipes.init();
         ModRituals.initRituals();

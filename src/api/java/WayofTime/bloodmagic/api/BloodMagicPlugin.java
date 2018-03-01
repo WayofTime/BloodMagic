@@ -13,4 +13,17 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface BloodMagicPlugin {
 
+    /**
+     * This annotation will inject the active {@link IBloodMagicAPI} into a {@code static} field of the same
+     * type. Fields with invalid types will be ignored and an error will be logged.
+     *
+     * These fields are populated during {@link net.minecraftforge.fml.common.event.FMLPreInitializationEvent}.
+     *
+     * {@code public static @BloodMagicPlugin.Inject IBloodMagicAPI API_INSTANCE = null;}
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.FIELD)
+    @interface Inject {
+
+    }
 }

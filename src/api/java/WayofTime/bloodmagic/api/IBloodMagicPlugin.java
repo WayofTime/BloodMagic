@@ -7,9 +7,20 @@ package WayofTime.bloodmagic.api;
 public interface IBloodMagicPlugin {
 
     /**
-     * Register mod content with the API
+     * Register mod content with the API. Called during {@link net.minecraftforge.fml.common.event.FMLInitializationEvent}.
      *
      * @param api The active instance of the {@link IBloodMagicAPI}
      */
-    void register(IBloodMagicAPI api);
+    default void register(IBloodMagicAPI api) {
+        // No-op
+    }
+
+    /**
+     * Register recipes with the API. Called during {@link net.minecraftforge.event.RegistryEvent.Register<net.minecraft.item.crafting.IRecipe>}.
+     *
+     * @param recipeRegistrar The active instance of the {@link IBloodMagicRecipeRegistrar}
+     */
+    default void registerRecipes(IBloodMagicRecipeRegistrar recipeRegistrar) {
+        // No-op
+    }
 }

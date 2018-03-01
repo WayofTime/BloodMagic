@@ -6,6 +6,10 @@ import javax.annotation.Nonnull;
 
 /**
  * The main interface between a plugin and Blood Magic's internals.
+ *
+ * This API is intended for <i>compatibility</i> between other mods and Blood Magic. More advanced integration is out of the scope of this API and are considered "addons".
+ *
+ * To get an instance of this without actually creating an {@link IBloodMagicPlugin}, use {@link BloodMagicPlugin.Inject}.
  */
 public interface IBloodMagicAPI {
 

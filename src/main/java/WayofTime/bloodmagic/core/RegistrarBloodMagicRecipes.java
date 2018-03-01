@@ -12,6 +12,7 @@ import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.item.types.ComponentTypes;
+import WayofTime.bloodmagic.util.PluginUtil;
 import com.google.common.collect.Sets;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -51,6 +52,8 @@ public class RegistrarBloodMagicRecipes {
         OreDictionary.registerOre("dustIron", ComponentTypes.SAND_IRON.getStack());
         OreDictionary.registerOre("dustGold", ComponentTypes.SAND_GOLD.getStack());
         OreDictionary.registerOre("dustCoal", ComponentTypes.SAND_COAL.getStack());
+
+        PluginUtil.handlePluginStep(PluginUtil.RegistrationStep.RECIPE_REGISTER);
     }
 
     public static void registerAltarRecipes(BloodMagicRecipeRegistrar registrar) {

@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.api.BloodMagicPlugin;
 import WayofTime.bloodmagic.api.IBloodMagicAPI;
 import WayofTime.bloodmagic.api.IBloodMagicPlugin;
 import WayofTime.bloodmagic.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.api.IBloodMagicRecipeRegistrar;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockDecorative;
 import WayofTime.bloodmagic.block.enums.BloodRuneType;
@@ -78,11 +79,14 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin {
         BlockBloodRune bloodRune = (BlockBloodRune) RegistrarBloodMagicBlocks.BLOOD_RUNE;
         for (BloodRuneType runeType : BloodRuneType.values())
             api.registerAltarComponent(bloodRune.getDefaultState().withProperty(bloodRune.getProperty(), runeType), EnumAltarComponent.BLOODRUNE.name());
+    }
 
-        RegistrarBloodMagicRecipes.registerAltarRecipes(api.getRecipeRegistrar());
-        RegistrarBloodMagicRecipes.registerAlchemyTableRecipes(api.getRecipeRegistrar());
-        RegistrarBloodMagicRecipes.registerTartaricForgeRecipes(api.getRecipeRegistrar());
-        RegistrarBloodMagicRecipes.registerAlchemyArrayRecipes(api.getRecipeRegistrar());
+    @Override
+    public void registerRecipes(IBloodMagicRecipeRegistrar recipeRegistrar) {
+        RegistrarBloodMagicRecipes.registerAltarRecipes((BloodMagicRecipeRegistrar) recipeRegistrar);
+        RegistrarBloodMagicRecipes.registerAlchemyTableRecipes((BloodMagicRecipeRegistrar) recipeRegistrar);
+        RegistrarBloodMagicRecipes.registerTartaricForgeRecipes((BloodMagicRecipeRegistrar) recipeRegistrar);
+        RegistrarBloodMagicRecipes.registerAlchemyArrayRecipes((BloodMagicRecipeRegistrar) recipeRegistrar);
     }
 
     private static void handleConfigValues(BloodMagicAPI api) {
