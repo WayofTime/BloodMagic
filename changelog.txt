@@ -1,7 +1,23 @@
 ------------------------------------------------------
 Version 2.2.7
 ------------------------------------------------------
-- Added the Furnace Array (name pending), which takes health from nearby players to power adjacent furnaces. Not covered by standard medical insurance. 
+- Added the Furnace Array:
+    - Name pending.
+    - Takes health from nearby players to power adjacent furnaces.
+    - Not covered by standard medical insurance.
+- Added a new Teleport Array:
+    - Please keep all hands and feet inside the floating circle until you have come to a complete stop.
+    - Note to Scotty: Feed the non-floating circle a Feather followed by an Apple to initiate the Beaming sequence.
+- Seer Sigil should now properly mimic all functions of the Divination Sigil.
+- Fixed some console error spam when using Lava/Water/Void sigils.
+- Registered Sulfur (dustSulfur) and Saltpeter (dustSaltpeter) to the ore dictionary.
+- Rewrote how IBindable stores it's data:
+    - This will probably break existing worlds if you have Rituals running. Stop them before updating.
+    - This will also unbind any of your bound items. Bind them again after updating.
+    - *glances at the big red A next to all 1.12 files*
+- Fixed Haste being *constricted* when above level 2.
+- De-nerf Fast Miner array so it provides Haste 3 again.
+- Prepped API for recipe tweaking mods.
 
 ------------------------------------------------------
 Version 2.2.6
