@@ -18,7 +18,8 @@ import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualResistance;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualZombie;
 import net.minecraft.init.Blocks;
 
-public class ModRituals {
+public class ModRituals
+{
     public static Ritual waterRitual;
     public static Ritual lavaRitual;
     public static Ritual greenGroveRitual;
@@ -48,6 +49,8 @@ public class ModRituals {
     public static Ritual altarBuilderRitual;
     public static Ritual portalRitual;
 
+    public static Ritual ellipsoidRitual;
+
     public static Ritual meteorRitual;
 
     public static Ritual downgradeRitual;
@@ -57,7 +60,8 @@ public class ModRituals {
     public static ImperfectRitual imperfectResistance;
     public static ImperfectRitual imperfectZombie;
 
-    public static void initRituals() {
+    public static void initRituals()
+    {
         waterRitual = new RitualWater();
         RitualRegistry.registerRitual(waterRitual, ConfigHandler.rituals.ritualWater);
         lavaRitual = new RitualLava();
@@ -115,14 +119,19 @@ public class ModRituals {
         RitualRegistry.registerRitual(portalRitual, ConfigHandler.rituals.ritualPortal);
         meteorRitual = new RitualMeteor();
         RitualRegistry.registerRitual(meteorRitual, ConfigHandler.rituals.ritualMeteor);
+
         downgradeRitual = new RitualLivingArmourDowngrade();
         RitualRegistry.registerRitual(downgradeRitual, ConfigHandler.rituals.ritualDowngrade);
+
+        ellipsoidRitual = new RitualEllipsoid();
+        RitualRegistry.registerRitual(ellipsoidRitual, false);
 
         RitualCrushing.registerCuttingFluid(ItemCuttingFluid.FluidType.BASIC.getStack(), 250, 0.5);
         RitualCrushing.registerCuttingFluid(ItemCuttingFluid.FluidType.EXPLOSIVE.getStack(), 25, 0.05);
     }
 
-    public static void initImperfectRituals() {
+    public static void initImperfectRituals()
+    {
         imperfectNight = new ImperfectRitualNight();
         ImperfectRitualRegistry.registerRitual(imperfectNight, ConfigHandler.rituals.imperfect.imperfectRitualNight);
         imperfectRain = new ImperfectRitualRain();
@@ -133,7 +142,8 @@ public class ModRituals {
         ImperfectRitualRegistry.registerRitual(imperfectZombie, ConfigHandler.rituals.imperfect.imperfectRitualZombie);
     }
 
-    public static void initHarvestHandlers() {
+    public static void initHarvestHandlers()
+    {
         HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.DIAMOND_BLOCK), 15);
         HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.GOLD_BLOCK), 10);
         HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.IRON_BLOCK), 6);
