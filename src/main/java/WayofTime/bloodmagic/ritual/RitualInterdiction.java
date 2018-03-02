@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.ritual.data.*;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,7 +31,7 @@ public class RitualInterdiction extends Ritual {
         AreaDescriptor interdictionRange = getBlockRange(INTERDICTION_RANGE);
 
         for (EntityLivingBase entity : world.getEntitiesWithinAABB(EntityLivingBase.class, interdictionRange.getAABB(masterRitualStone.getBlockPos()))) {
-            if (entity instanceof EntityPlayer && (((EntityPlayer) entity).capabilities.isCreativeMode || PlayerHelper.getUUIDFromPlayer((EntityPlayer) entity).toString().equals(masterRitualStone.getOwner())))
+            if (entity instanceof EntityPlayer && (((EntityPlayer) entity).capabilities.isCreativeMode || ((EntityPlayer) entity).getGameProfile().getId().equals(masterRitualStone.getOwner())))
                 continue;
 
             double xDif = entity.posX - (masterRitualStone.getBlockPos().getX() + 0.5);
@@ -62,7 +61,7 @@ public class RitualInterdiction extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addCornerRunes(components, 1, 0, EnumRuneType.AIR);
         this.addParallelRunes(components, 1, 0, EnumRuneType.AIR);

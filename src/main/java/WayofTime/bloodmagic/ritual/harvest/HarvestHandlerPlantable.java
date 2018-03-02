@@ -121,9 +121,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler {
             }
         } catch (NoSuchMethodException e) {
             BloodMagic.instance.logger.error("HarvestCraft integration cancelled; unable to find crop name mapper");
-        } catch (IllegalAccessException e) {
-            BloodMagic.instance.logger.error("HarvestCraft integration cancelled; crop name lookup broke");
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             BloodMagic.instance.logger.error("HarvestCraft integration cancelled; crop name lookup broke");
         }
     }

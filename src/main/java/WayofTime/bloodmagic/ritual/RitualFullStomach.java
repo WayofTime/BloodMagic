@@ -3,10 +3,8 @@ package WayofTime.bloodmagic.ritual;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.data.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.math.BlockPos;
@@ -96,7 +94,7 @@ public class RitualFullStomach extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addParallelRunes(components, 3, 0, EnumRuneType.FIRE);
         this.addCornerRunes(components, 1, 0, EnumRuneType.AIR);

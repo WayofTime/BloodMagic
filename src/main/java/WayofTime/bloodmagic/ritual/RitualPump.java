@@ -92,7 +92,7 @@ public class RitualPump extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         addRune(components, 1, 0, 1, EnumRuneType.WATER);
         addRune(components, 1, 0, -1, EnumRuneType.EARTH);

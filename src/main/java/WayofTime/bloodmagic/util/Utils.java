@@ -231,9 +231,7 @@ public class Utils {
     public static boolean isInteger(String integer) {
         try {
             Integer.parseInt(integer);
-        } catch (NumberFormatException e) {
-            return false;
-        } catch (NullPointerException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return false;
         }
         // only got here if we didn't return false
@@ -365,7 +363,7 @@ public class Utils {
 
     public static float applyArmor(EntityLivingBase entity, ItemStack[] inventory, DamageSource source, double damage) {
         damage *= 25;
-        ArrayList<ArmorProperties> dmgVals = new ArrayList<ArmorProperties>();
+        ArrayList<ArmorProperties> dmgVals = new ArrayList<>();
         for (int x = 0; x < inventory.length; x++) {
             ItemStack stack = inventory[x];
             if (stack.isEmpty()) {

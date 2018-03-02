@@ -154,7 +154,7 @@ public class RitualSpeed extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addRune(components, 0, 0, -2, EnumRuneType.DUSK);
         this.addRune(components, 1, 0, -1, EnumRuneType.AIR);

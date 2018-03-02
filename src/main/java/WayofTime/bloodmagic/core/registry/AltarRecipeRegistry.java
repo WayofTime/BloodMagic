@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.core.registry;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.altar.EnumAltarTier;
@@ -119,11 +118,11 @@ public class AltarRecipeRegistry {
         }
 
         public AltarRecipe(String inputEntry, ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean fillable) {
-            this(OreDictionary.doesOreNameExist(inputEntry) && OreDictionary.getOres(inputEntry).size() > 0 ? OreDictionary.getOres(inputEntry) : Collections.<ItemStack>emptyList(), output, minTier, syphon, consumeRate, drainRate, fillable);
+            this(OreDictionary.doesOreNameExist(inputEntry) && OreDictionary.getOres(inputEntry).size() > 0 ? OreDictionary.getOres(inputEntry) : Collections.emptyList(), output, minTier, syphon, consumeRate, drainRate, fillable);
         }
 
         public AltarRecipe(String inputEntry, ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate) {
-            this(OreDictionary.doesOreNameExist(inputEntry) && OreDictionary.getOres(inputEntry).size() > 0 ? OreDictionary.getOres(inputEntry) : Collections.<ItemStack>emptyList(), output, minTier, syphon, consumeRate, drainRate, false);
+            this(OreDictionary.doesOreNameExist(inputEntry) && OreDictionary.getOres(inputEntry).size() > 0 ? OreDictionary.getOres(inputEntry) : Collections.emptyList(), output, minTier, syphon, consumeRate, drainRate, false);
         }
 
         public boolean doesRequiredItemMatch(ItemStack comparedStack, EnumAltarTier tierCheck) {

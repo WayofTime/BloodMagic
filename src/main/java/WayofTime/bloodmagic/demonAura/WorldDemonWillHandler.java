@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.demonAura;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.util.BMLog;
@@ -13,8 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class WorldDemonWillHandler {
-    public static ConcurrentHashMap<Integer, CopyOnWriteArrayList<PosXY>> dirtyChunks = new ConcurrentHashMap<Integer, CopyOnWriteArrayList<PosXY>>();
-    static ConcurrentHashMap<Integer, WillWorld> containedWills = new ConcurrentHashMap<Integer, WillWorld>();
+    public static ConcurrentHashMap<Integer, CopyOnWriteArrayList<PosXY>> dirtyChunks = new ConcurrentHashMap<>();
+    static ConcurrentHashMap<Integer, WillWorld> containedWills = new ConcurrentHashMap<>();
 
     @Nullable
     public static DemonWillHolder getWillHolder(int dim, int x, int y) {
@@ -165,7 +164,7 @@ public class WorldDemonWillHandler {
         }
         PosXY pos = new PosXY(chunk.loc.x, chunk.loc.y);
         if (!dirtyChunks.containsKey(dim)) {
-            dirtyChunks.put(dim, new CopyOnWriteArrayList<PosXY>());
+            dirtyChunks.put(dim, new CopyOnWriteArrayList<>());
         }
         CopyOnWriteArrayList<PosXY> dc = dirtyChunks.get(dim);
         if (!dc.contains(pos)) {

@@ -17,7 +17,7 @@ import java.util.Map.Entry;
 public class TileDemonCrucible extends TileInventory implements ITickable, IDemonWillConduit, ISidedInventory {
     public final int maxWill = 100;
     public final double gemDrainRate = 10;
-    public HashMap<EnumDemonWillType, Double> willMap = new HashMap<EnumDemonWillType, Double>(); //TODO: Change to DemonWillHolder
+    public HashMap<EnumDemonWillType, Double> willMap = new HashMap<>(); //TODO: Change to DemonWillHolder
     public int internalCounter = 0;
 
     public TileDemonCrucible() {

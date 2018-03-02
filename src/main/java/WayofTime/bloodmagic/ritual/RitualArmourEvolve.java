@@ -66,7 +66,7 @@ public class RitualArmourEvolve extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addCornerRunes(components, 1, 0, EnumRuneType.DUSK);
         this.addCornerRunes(components, 2, 0, EnumRuneType.FIRE);

@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class StatTrackerHealthboost extends StatTracker {
-    public static HashMap<LivingArmour, Double> changeMap = new HashMap<LivingArmour, Double>();
+    public static HashMap<LivingArmour, Double> changeMap = new HashMap<>();
     public static int[] healthedRequired = new int[]{80, 200, 340, 540, 800, 1600, 2800, 5000, 7600, 10000};
     public double totalHealthGenned = 0;
 
@@ -66,7 +66,7 @@ public class StatTrackerHealthboost extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
             if (totalHealthGenned >= healthedRequired[i]) {

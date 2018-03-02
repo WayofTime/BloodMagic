@@ -22,7 +22,7 @@ public class BookUtils {
 
             AlchemyCircleRenderer renderer = AlchemyArrayRecipeRegistry.getAlchemyCircleRenderer(inputStack, catalystStack);
             if (renderer instanceof DualAlchemyCircleRenderer) {
-                List<ResourceLocation> resources = new ArrayList<ResourceLocation>();
+                List<ResourceLocation> resources = new ArrayList<>();
                 resources.add(((DualAlchemyCircleRenderer) renderer).arrayResource);
                 resources.add(((DualAlchemyCircleRenderer) renderer).secondaryArrayResource);
                 return new PageAlchemyArray(resources, inputStack, catalystStack);
@@ -43,7 +43,7 @@ public class BookUtils {
             AlchemyCircleRenderer renderer = AlchemyArrayRecipeRegistry.getAlchemyCircleRenderer(inputStack, catalystStack);
             if (renderer != null) {
                 if (renderer instanceof DualAlchemyCircleRenderer) {
-                    List<ResourceLocation> resources = new ArrayList<ResourceLocation>();
+                    List<ResourceLocation> resources = new ArrayList<>();
                     resources.add(((DualAlchemyCircleRenderer) renderer).arrayResource);
                     resources.add(((DualAlchemyCircleRenderer) renderer).secondaryArrayResource);
                     return new PageAlchemyArray(resources, inputStack, catalystStack, outputStack);

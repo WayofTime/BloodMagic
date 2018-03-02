@@ -96,7 +96,7 @@ public class ItemStackWrapper {
     }
 
     public static List<ItemStackWrapper> toWrapperList(List<ItemStack> itemStackList) {
-        List<ItemStackWrapper> wrapperList = new ArrayList<ItemStackWrapper>();
+        List<ItemStackWrapper> wrapperList = new ArrayList<>();
         for (ItemStack stack : itemStackList)
             wrapperList.add(ItemStackWrapper.getHolder(stack));
 
@@ -104,7 +104,7 @@ public class ItemStackWrapper {
     }
 
     public static List<ItemStack> toStackList(List<ItemStackWrapper> wrapperList) {
-        List<ItemStack> stackList = new ArrayList<ItemStack>();
+        List<ItemStack> stackList = new ArrayList<>();
         for (ItemStackWrapper wrapper : wrapperList)
             stackList.add(wrapper.toStack());
 

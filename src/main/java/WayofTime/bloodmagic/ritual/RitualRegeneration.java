@@ -154,7 +154,7 @@ public class RitualRegeneration extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         components.add(new RitualComponent(new BlockPos(4, 0, 0), EnumRuneType.AIR));
         components.add(new RitualComponent(new BlockPos(5, 0, -1), EnumRuneType.AIR));

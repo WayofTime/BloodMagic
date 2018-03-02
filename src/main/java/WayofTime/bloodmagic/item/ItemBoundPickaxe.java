@@ -144,7 +144,7 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
 
     @Override
     public List<String> getVariants() {
-        List<String> ret = new ArrayList<String>();
+        List<String> ret = new ArrayList<>();
         ret.add("active=true");
         ret.add("active=false");
         return ret;

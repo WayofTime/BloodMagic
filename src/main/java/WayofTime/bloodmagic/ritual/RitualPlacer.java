@@ -81,7 +81,7 @@ public class RitualPlacer extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         addRune(components, 3, 0, 3, EnumRuneType.EARTH);
         addRune(components, 3, 0, -3, EnumRuneType.EARTH);

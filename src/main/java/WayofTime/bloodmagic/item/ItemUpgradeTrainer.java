@@ -61,7 +61,7 @@ public class ItemUpgradeTrainer extends Item implements IUpgradeTrainer, IVarian
 
     @Override
     public List<String> getTrainedUpgrades(ItemStack stack) {
-        List<String> keyList = new ArrayList<String>();
+        List<String> keyList = new ArrayList<>();
         String key = LivingUpgrades.getKey(stack);
 
         if (!key.isEmpty()) {
@@ -83,8 +83,8 @@ public class ItemUpgradeTrainer extends Item implements IUpgradeTrainer, IVarian
 
     @Override
     public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=upgradetrainer"));
+        List<Pair<Integer, String>> ret = new ArrayList<>();
+        ret.add(new ImmutablePair<>(0, "type=upgradetrainer"));
         return ret;
     }
 }

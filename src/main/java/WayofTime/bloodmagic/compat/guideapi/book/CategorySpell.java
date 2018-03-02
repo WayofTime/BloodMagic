@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class CategorySpell {
     public static Map<ResourceLocation, EntryAbstract> buildCategory() {
-        Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
+        Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<>();
         String keyBase = Constants.Mod.DOMAIN + "spell_";
 
         return entries;

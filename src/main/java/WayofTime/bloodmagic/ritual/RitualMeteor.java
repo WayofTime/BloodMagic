@@ -96,7 +96,7 @@ public class RitualMeteor extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addParallelRunes(components, 2, 0, EnumRuneType.FIRE);
         this.addOffsetRunes(components, 3, 1, 0, EnumRuneType.AIR);

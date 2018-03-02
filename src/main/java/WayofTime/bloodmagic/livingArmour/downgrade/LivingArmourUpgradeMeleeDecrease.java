@@ -29,7 +29,7 @@ public class LivingArmourUpgradeMeleeDecrease extends LivingArmourUpgrade {
 
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers() {
-        Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
+        Multimap<String, AttributeModifier> modifierMap = HashMultimap.create();
 
         String name = getUniqueIdentifier() + "-DamageModifier1";
         modifierMap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(UUID.nameUUIDFromBytes(StringUtils.getBytesUtf8(name)), "DamageModifier1", meleeDamage[this.level], 1));

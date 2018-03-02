@@ -70,7 +70,7 @@ public class ItemFluidRouterFilter extends Item implements IFluidFilterProvider,
                 testFilter = new RoutingFluidFilter();
         }
 
-        List<ItemStack> filteredList = new ArrayList<ItemStack>();
+        List<ItemStack> filteredList = new ArrayList<>();
         ItemInventory inv = new ItemInventory(filterStack, 9, "");
         for (int i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
@@ -100,7 +100,7 @@ public class ItemFluidRouterFilter extends Item implements IFluidFilterProvider,
                 testFilter = new RoutingFluidFilter();
         }
 
-        List<ItemStack> filteredList = new ArrayList<ItemStack>();
+        List<ItemStack> filteredList = new ArrayList<>();
         ItemInventory inv = new ItemInventory(filterStack, 9, ""); //TODO: Change to grab the filter from the Item later.
         for (int i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
@@ -122,8 +122,8 @@ public class ItemFluidRouterFilter extends Item implements IFluidFilterProvider,
 
     @Override
     public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=exact"));
+        List<Pair<Integer, String>> ret = new ArrayList<>();
+        ret.add(new ImmutablePair<>(0, "type=exact"));
         return ret;
     }
 

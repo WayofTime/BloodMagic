@@ -72,7 +72,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
 
         double soulsInGem = getWill(EnumDemonWillType.DEFAULT);
 
-        List<ItemStack> inputList = new ArrayList<ItemStack>();
+        List<ItemStack> inputList = new ArrayList<>();
 
         for (int i = 0; i < 4; i++)
             if (!getStackInSlot(i).isEmpty())

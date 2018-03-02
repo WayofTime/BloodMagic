@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IncenseTranquilityRegistry {
-    public static List<ITranquilityHandler> handlerList = new ArrayList<ITranquilityHandler>();
+    public static List<ITranquilityHandler> handlerList = new ArrayList<>();
 
     public static void registerTranquilityHandler(ITranquilityHandler handler) {
         handlerList.add(handler);

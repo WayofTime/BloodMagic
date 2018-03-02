@@ -95,10 +95,10 @@ public class ItemPotionFlask extends Item implements IMeshProvider {
         if (remainingUses <= 0) {
             NBTHelper.checkNBT(stack);
             stack.getTagCompound().setBoolean("empty", true);
-            return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+            return new ActionResult<>(EnumActionResult.PASS, stack);
         }
         player.setActiveHand(hand);
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 
     @Override

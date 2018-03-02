@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class StatTrackerPhysicalProtect extends StatTracker {
-    public static HashMap<LivingArmour, Double> changeMap = new HashMap<LivingArmour, Double>();
+    public static HashMap<LivingArmour, Double> changeMap = new HashMap<>();
     public static int[] damageRequired = new int[]{30, 50, 80, 140, 200, 300, 400, 500, 650, 800};
     public int totalDamage = 0;
 
@@ -66,7 +66,7 @@ public class StatTrackerPhysicalProtect extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
             if (totalDamage >= damageRequired[i]) {

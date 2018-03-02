@@ -164,8 +164,8 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
 
     @Override
     public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "normal"));
+        List<Pair<Integer, String>> ret = new ArrayList<>();
+        ret.add(new ImmutablePair<>(0, "normal"));
         return ret;
     }
 
@@ -173,7 +173,7 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
 
     @Override
     public List<ITextComponent> getDocumentation(EntityPlayer player, World world, BlockPos pos, IBlockState state) {
-        List<ITextComponent> docs = new ArrayList<ITextComponent>();
+        List<ITextComponent> docs = new ArrayList<>();
         IBloodAltar altar = ((IBloodAltar) world.getTileEntity(pos));
         Pair<BlockPos, EnumAltarComponent> missingBlock = BloodAltar.getAltarMissingBlock(world, pos, altar.getTier().toInt());
         if (missingBlock != null)

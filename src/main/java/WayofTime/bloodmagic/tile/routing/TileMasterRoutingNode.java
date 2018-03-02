@@ -20,10 +20,10 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     public static final int tickRate = 20;
     private int currentInput;
     // A list of connections
-    private TreeMap<BlockPos, List<BlockPos>> connectionMap = new TreeMap<BlockPos, List<BlockPos>>();
-    private List<BlockPos> generalNodeList = new LinkedList<BlockPos>();
-    private List<BlockPos> outputNodeList = new LinkedList<BlockPos>();
-    private List<BlockPos> inputNodeList = new LinkedList<BlockPos>();
+    private TreeMap<BlockPos, List<BlockPos>> connectionMap = new TreeMap<>();
+    private List<BlockPos> generalNodeList = new LinkedList<>();
+    private List<BlockPos> outputNodeList = new LinkedList<>();
+    private List<BlockPos> inputNodeList = new LinkedList<>();
 
     public TileMasterRoutingNode() {
         super(0, "masterRoutingNode");
@@ -43,12 +43,12 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
             return;
         }
 
-        Map<Integer, List<IItemFilter>> outputMap = new TreeMap<Integer, List<IItemFilter>>();
-        Map<Integer, List<IFluidFilter>> outputFluidMap = new TreeMap<Integer, List<IFluidFilter>>();
+        Map<Integer, List<IItemFilter>> outputMap = new TreeMap<>();
+        Map<Integer, List<IFluidFilter>> outputFluidMap = new TreeMap<>();
 
         for (BlockPos outputPos : outputNodeList) {
             TileEntity outputTile = getWorld().getTileEntity(outputPos);
-            if (this.isConnected(new LinkedList<BlockPos>(), outputPos)) {
+            if (this.isConnected(new LinkedList<>(), outputPos)) {
                 if (outputTile instanceof IOutputItemRoutingNode) {
                     IOutputItemRoutingNode outputNode = (IOutputItemRoutingNode) outputTile;
 
@@ -63,7 +63,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                             if (outputMap.containsKey(priority)) {
                                 outputMap.get(priority).add(filter);
                             } else {
-                                List<IItemFilter> filterList = new LinkedList<IItemFilter>();
+                                List<IItemFilter> filterList = new LinkedList<>();
                                 filterList.add(filter);
                                 outputMap.put(priority, filterList);
                             }
@@ -85,7 +85,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                             if (outputMap.containsKey(priority)) {
                                 outputFluidMap.get(priority).add(filter);
                             } else {
-                                List<IFluidFilter> filterList = new LinkedList<IFluidFilter>();
+                                List<IFluidFilter> filterList = new LinkedList<>();
                                 filterList.add(filter);
                                 outputFluidMap.put(priority, filterList);
                             }
@@ -95,12 +95,12 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
             }
         }
 
-        Map<Integer, List<IItemFilter>> inputMap = new TreeMap<Integer, List<IItemFilter>>();
-        Map<Integer, List<IFluidFilter>> inputFluidMap = new TreeMap<Integer, List<IFluidFilter>>();
+        Map<Integer, List<IItemFilter>> inputMap = new TreeMap<>();
+        Map<Integer, List<IFluidFilter>> inputFluidMap = new TreeMap<>();
 
         for (BlockPos inputPos : inputNodeList) {
             TileEntity inputTile = getWorld().getTileEntity(inputPos);
-            if (this.isConnected(new LinkedList<BlockPos>(), inputPos)) {
+            if (this.isConnected(new LinkedList<>(), inputPos)) {
                 if (inputTile instanceof IInputItemRoutingNode) {
                     IInputItemRoutingNode inputNode = (IInputItemRoutingNode) inputTile;
 
@@ -115,7 +115,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                             if (inputMap.containsKey(priority)) {
                                 inputMap.get(priority).add(filter);
                             } else {
-                                List<IItemFilter> filterList = new LinkedList<IItemFilter>();
+                                List<IItemFilter> filterList = new LinkedList<>();
                                 filterList.add(filter);
                                 inputMap.put(priority, filterList);
                             }
@@ -137,7 +137,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                             if (inputMap.containsKey(priority)) {
                                 inputFluidMap.get(priority).add(filter);
                             } else {
-                                List<IFluidFilter> filterList = new LinkedList<IFluidFilter>();
+                                List<IFluidFilter> filterList = new LinkedList<>();
                                 filterList.add(filter);
                                 inputFluidMap.put(priority, filterList);
                             }
@@ -315,7 +315,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
         if (connectionMap.containsKey(pos1) && !connectionMap.get(pos1).contains(pos2)) {
             connectionMap.get(pos1).add(pos2);
         } else {
-            List<BlockPos> list = new LinkedList<BlockPos>();
+            List<BlockPos> list = new LinkedList<>();
             list.add(pos2);
             connectionMap.put(pos1, list);
         }
@@ -323,7 +323,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
         if (connectionMap.containsKey(pos2) && !connectionMap.get(pos2).contains(pos1)) {
             connectionMap.get(pos2).add(pos1);
         } else {
-            List<BlockPos> list = new LinkedList<BlockPos>();
+            List<BlockPos> list = new LinkedList<>();
             list.add(pos1);
             connectionMap.put(pos2, list);
         }
@@ -360,7 +360,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
     @Override
     public List<BlockPos> getConnected() {
-        return new LinkedList<BlockPos>();
+        return new LinkedList<>();
     }
 
     @Override

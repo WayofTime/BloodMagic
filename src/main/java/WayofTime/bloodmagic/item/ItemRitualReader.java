@@ -67,7 +67,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
         ItemStack stack = player.getHeldItem(hand);
         RayTraceResult ray = this.rayTrace(world, player, false);
         if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK) {
-            return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+            return new ActionResult<>(EnumActionResult.PASS, stack);
         }
 
         if (player.isSneaking()) {
@@ -75,10 +75,10 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                 cycleReader(stack, player);
             }
 
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+            return new ActionResult<>(EnumActionResult.SUCCESS, stack);
         }
 
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+        return new ActionResult<>(EnumActionResult.PASS, stack);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                         master.provideInformationOfRangeToPlayer(player, range);
                         break;
                     case SET_WILL_TYPES:
-                        List<EnumDemonWillType> typeList = new ArrayList<EnumDemonWillType>();
+                        List<EnumDemonWillType> typeList = new ArrayList<>();
                         NonNullList<ItemStack> inv = player.inventory.mainInventory;
                         for (int i = 0; i < 9; i++) {
                             ItemStack testStack = inv.get(i);
@@ -234,8 +234,8 @@ public class ItemRitualReader extends Item implements IVariantProvider {
 
     @Override
     public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
+        List<Pair<Integer, String>> ret = new ArrayList<>();
+        ret.add(new ImmutablePair<>(0, "type=normal"));
         return ret;
     }
 }

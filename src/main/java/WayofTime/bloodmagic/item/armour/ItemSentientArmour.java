@@ -298,7 +298,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
 
     @Override
     public List<String> getVariants() {
-        List<String> ret = new ArrayList<String>();
+        List<String> ret = new ArrayList<>();
         for (EnumDemonWillType type : EnumDemonWillType.values()) {
             String additional = "_" + type.getName().toLowerCase();
 
@@ -313,7 +313,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
 
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
-        Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
+        Multimap<String, AttributeModifier> multimap = HashMultimap.create();
         if (slot == EntityEquipmentSlot.CHEST) {
             multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(new UUID(0, 318145), "Armor modifier", this.getHealthBonus(stack), 0));
             multimap.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.getName(), new AttributeModifier(new UUID(0, 8145), "Armor modifier", this.getKnockbackResistance(stack), 0));

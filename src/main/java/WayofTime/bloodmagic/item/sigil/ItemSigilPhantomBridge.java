@@ -12,9 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
-    private Map<EntityPlayer, Pair<Double, Double>> prevPositionMap = new HashMap<EntityPlayer, Pair<Double, Double>>();
-    private double expansionFactor = 2;
-    private int range = 3;
+    private static final double EXPANSION_FACTOR = 2;
+    private static final int RANGE = 3;
+
+    private Map<EntityPlayer, Pair<Double, Double>> prevPositionMap = new HashMap<>();
 
     public ItemSigilPhantomBridge() {
         super("phantom_bridge", 100);
@@ -57,12 +58,12 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
         int posY = playerPos.getY();
         int posZ = playerPos.getZ();
 
-        double offsetPosX = posX + expansionFactor * playerVelX;
-        double offsetPosZ = posZ + expansionFactor * playerVelZ;
+        double offsetPosX = posX + EXPANSION_FACTOR * playerVelX;
+        double offsetPosZ = posZ + EXPANSION_FACTOR * playerVelZ;
         double avgX = (posX + offsetPosX) / 2;
         double avgZ = (posZ + offsetPosZ) / 2;
 
-        double C = 2 * (range + expansionFactor * totalVel) + 1;
+        double C = 2 * (RANGE + EXPANSION_FACTOR * totalVel) + 1;
         int truncC = (int) C;
 
         //TODO: Make this for-loop better.

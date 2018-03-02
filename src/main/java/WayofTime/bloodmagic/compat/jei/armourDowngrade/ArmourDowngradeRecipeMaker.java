@@ -11,7 +11,7 @@ public class ArmourDowngradeRecipeMaker {
     @Nonnull
     public static List<ArmourDowngradeRecipeJEI> getRecipes() {
         List<LivingArmourDowngradeRecipe> recipeList = LivingArmourDowngradeRecipeRegistry.getRecipeList();
-        ArrayList<ArmourDowngradeRecipeJEI> recipes = new ArrayList<ArmourDowngradeRecipeJEI>();
+        ArrayList<ArmourDowngradeRecipeJEI> recipes = new ArrayList<>();
 
         for (LivingArmourDowngradeRecipe recipe : recipeList)
             recipes.add(new ArmourDowngradeRecipeJEI(recipe));

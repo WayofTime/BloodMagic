@@ -17,7 +17,7 @@ public class LivingArmourUpgradeDigging extends LivingArmourUpgrade {
     public static final int[] digSpeedTime = new int[]{0, 50, 60, 100, 100, 100, 100, 150, 150, 150};
     public static final int[] digSpeedLevel = new int[]{0, 0, 0, 1, 1, 1, 1, 1, 2, 2};
     public static final double[] digSpeedModifier = new double[]{1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.8, 2, 2.2, 2.5};
-    public static HashMap<ILivingArmour, Boolean> changeMap = new HashMap<ILivingArmour, Boolean>();
+    public static HashMap<ILivingArmour, Boolean> changeMap = new HashMap<>();
 
     public LivingArmourUpgradeDigging(int level) {
         super(level);

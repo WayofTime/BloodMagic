@@ -51,7 +51,7 @@ public class RitualLivingArmourDowngrade extends Ritual {
 
         boolean isActivatorPresent = false;
         for (EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, downgradeRange.getAABB(masterRitualStone.getBlockPos()))) {
-            if (player.getUniqueID().toString().equals(masterRitualStone.getOwner())) {
+            if (player.getGameProfile().getId().equals(masterRitualStone.getOwner())) {
                 ItemStack keyStack = getStackFromItemFrame(world, masterPos, masterRitualStone.getDirection());
                 if (keyStack.isEmpty()) {
                     return;
@@ -77,7 +77,7 @@ public class RitualLivingArmourDowngrade extends Ritual {
                     }
                     IItemHandler inv = Utils.getInventory(tile, null);
                     if (inv != null) {
-                        List<ItemStack> recipeList = new ArrayList<ItemStack>();
+                        List<ItemStack> recipeList = new ArrayList<>();
                         for (int i = 0; i < inv.getSlots(); i++) {
                             ItemStack invStack = inv.getStackInSlot(i);
                             if (!invStack.isEmpty()) {
@@ -163,7 +163,7 @@ public class RitualLivingArmourDowngrade extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addRune(components, 0, 0, -1, EnumRuneType.AIR);
         this.addRune(components, 0, 0, -2, EnumRuneType.DUSK);
@@ -180,25 +180,25 @@ public class RitualLivingArmourDowngrade extends Ritual {
             this.addRune(components, sgn * 2, 0, 2, EnumRuneType.AIR);
             this.addRune(components, sgn * 3, 0, 2, EnumRuneType.AIR);
             this.addRune(components, sgn * 3, 0, 3, EnumRuneType.AIR);
-            this.addRune(components, sgn * 1, 0, 0, EnumRuneType.EARTH);
-            this.addRune(components, sgn * 1, 0, 1, EnumRuneType.EARTH);
+            this.addRune(components, sgn, 0, 0, EnumRuneType.EARTH);
+            this.addRune(components, sgn, 0, 1, EnumRuneType.EARTH);
             this.addRune(components, sgn * 2, 0, -1, EnumRuneType.FIRE);
             this.addRune(components, sgn * 2, 0, -2, EnumRuneType.FIRE);
             this.addRune(components, sgn * 3, 0, -2, EnumRuneType.FIRE);
             this.addRune(components, sgn * 3, 0, -3, EnumRuneType.FIRE);
             this.addRune(components, sgn * 3, 0, -4, EnumRuneType.FIRE);
-            this.addRune(components, sgn * 1, 1, -1, EnumRuneType.AIR);
-            this.addRune(components, sgn * 1, 1, -2, EnumRuneType.AIR);
-            this.addRune(components, sgn * 1, 1, -4, EnumRuneType.FIRE);
+            this.addRune(components, sgn, 1, -1, EnumRuneType.AIR);
+            this.addRune(components, sgn, 1, -2, EnumRuneType.AIR);
+            this.addRune(components, sgn, 1, -4, EnumRuneType.FIRE);
             this.addRune(components, sgn * 2, 1, -4, EnumRuneType.FIRE);
-            this.addRune(components, sgn * 1, 0, -3, EnumRuneType.EARTH);
-            this.addRune(components, sgn * 1, 0, -4, EnumRuneType.EARTH);
-            this.addRune(components, sgn * 1, 0, -5, EnumRuneType.EARTH);
-            this.addRune(components, sgn * 1, 1, -5, EnumRuneType.EARTH);
-            this.addRune(components, sgn * 1, 2, -5, EnumRuneType.EARTH);
-            this.addRune(components, sgn * 1, 3, -5, EnumRuneType.EARTH);
+            this.addRune(components, sgn, 0, -3, EnumRuneType.EARTH);
+            this.addRune(components, sgn, 0, -4, EnumRuneType.EARTH);
+            this.addRune(components, sgn, 0, -5, EnumRuneType.EARTH);
+            this.addRune(components, sgn, 1, -5, EnumRuneType.EARTH);
+            this.addRune(components, sgn, 2, -5, EnumRuneType.EARTH);
+            this.addRune(components, sgn, 3, -5, EnumRuneType.EARTH);
 
-            this.addRune(components, sgn * 1, 3, -4, EnumRuneType.EARTH);
+            this.addRune(components, sgn, 3, -4, EnumRuneType.EARTH);
         }
 
         return components;

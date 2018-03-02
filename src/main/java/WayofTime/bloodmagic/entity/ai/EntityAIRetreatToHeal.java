@@ -36,7 +36,7 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase {
     private Predicate<? super T> avoidTargetSelector;
 
     public EntityAIRetreatToHeal(EntityDemonBase theEntityIn, Class<T> classToAvoidIn, float avoidDistanceIn, double farSpeedIn, double nearSpeedIn) {
-        this(theEntityIn, classToAvoidIn, Predicates.<T>alwaysTrue(), avoidDistanceIn, farSpeedIn, nearSpeedIn);
+        this(theEntityIn, classToAvoidIn, Predicates.alwaysTrue(), avoidDistanceIn, farSpeedIn, nearSpeedIn);
     }
 
     public EntityAIRetreatToHeal(EntityDemonBase theEntityIn, Class<T> classToAvoidIn, Predicate<? super T> avoidTargetSelectorIn, float avoidDistanceIn, double farSpeedIn, double nearSpeedIn) {

@@ -36,8 +36,8 @@ public class RitualCrushing extends Ritual {
     public static double destructiveWillDrain = 0.2;
     public static double vengefulWillDrain = 0.2;
 
-    public static Map<ItemStack, Integer> cuttingFluidLPMap = new HashMap<ItemStack, Integer>();
-    public static Map<ItemStack, Double> cuttingFluidWillMap = new HashMap<ItemStack, Double>();
+    public static Map<ItemStack, Integer> cuttingFluidLPMap = new HashMap<>();
+    public static Map<ItemStack, Double> cuttingFluidWillMap = new HashMap<>();
     public static int defaultRefreshTime = 40;
     public int refreshTime = 40;
 
@@ -120,7 +120,7 @@ public class RitualCrushing extends Ritual {
                     }
 
                     cuttingStack = cuttingStack.copy();
-                    List<ItemStack> input = new ArrayList<ItemStack>();
+                    List<ItemStack> input = new ArrayList<>();
                     input.add(cuttingStack);
                     input.add(copyStack);
 
@@ -252,7 +252,7 @@ public class RitualCrushing extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addParallelRunes(components, 1, 0, EnumRuneType.EARTH);
         this.addParallelRunes(components, 2, 0, EnumRuneType.FIRE);

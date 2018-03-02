@@ -77,7 +77,7 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
 
         if (this.canUseForSacrifice(stack)) {
             player.setActiveHand(hand);
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+            return new ActionResult<>(EnumActionResult.SUCCESS, stack);
         }
 
         int lpAdded = ConfigHandler.values.sacrificialDaggerConversion * 2;
@@ -166,7 +166,7 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
 
     @Override
     public List<String> getVariants() {
-        List<String> variants = new ArrayList<String>();
+        List<String> variants = new ArrayList<>();
         variants.add("type=normal");
         variants.add("type=creative");
         variants.add("type=ceremonial");

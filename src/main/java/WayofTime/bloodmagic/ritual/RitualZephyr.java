@@ -82,7 +82,7 @@ public class RitualZephyr extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addParallelRunes(components, 2, 0, EnumRuneType.AIR);
         this.addCornerRunes(components, 1, 1, EnumRuneType.AIR);

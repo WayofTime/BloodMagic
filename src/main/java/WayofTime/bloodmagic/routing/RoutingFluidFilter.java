@@ -25,7 +25,7 @@ public class RoutingFluidFilter implements IFluidFilter {
         this.fluidHandler = fluidHandler;
         if (isFilterOutput) {
             //The requestList contains a list of how much can be extracted.
-            requestList = new ArrayList<FluidStack>();
+            requestList = new ArrayList<>();
             for (ItemStack filterStack : filteredList) {
                 FluidStack fluidFilterStack = getFluidStackFromItemStack(filterStack);
                 if (fluidFilterStack != null) {
@@ -46,7 +46,7 @@ public class RoutingFluidFilter implements IFluidFilter {
                 }
             }
         } else {
-            requestList = new ArrayList<FluidStack>();
+            requestList = new ArrayList<>();
             for (ItemStack filterStack : filteredList) {
                 FluidStack fluidFilterStack = getFluidStackFromItemStack(filterStack);
                 if (fluidFilterStack != null) {

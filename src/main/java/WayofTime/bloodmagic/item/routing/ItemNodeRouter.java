@@ -84,7 +84,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                     if (!node.isMaster(master)) {
                         if (node.getMasterPos().equals(BlockPos.ORIGIN)) //If the node is not the master and it is receptive
                         {
-                            node.connectMasterToRemainingNode(world, new LinkedList<BlockPos>(), master);
+                            node.connectMasterToRemainingNode(world, new LinkedList<>(), master);
                             master.addConnection(pos, containedPos);
                             master.addNodeToList(node);
                             node.addConnection(containedPos);
@@ -106,7 +106,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                     if (!pastNode.isMaster(master)) {
                         if (pastNode.getMasterPos().equals(BlockPos.ORIGIN)) //TODO: This is where the issue is
                         {
-                            pastNode.connectMasterToRemainingNode(world, new LinkedList<BlockPos>(), master);
+                            pastNode.connectMasterToRemainingNode(world, new LinkedList<>(), master);
                             master.addConnection(pos, containedPos);
                             pastNode.addConnection(pos);
                             master.addNodeToList(pastNode);
@@ -143,7 +143,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                             IMasterRoutingNode master = (IMasterRoutingNode) tile;
                             master.addConnection(pos, containedPos);
                             master.addNodeToList(pastNode);
-                            pastNode.connectMasterToRemainingNode(world, new LinkedList<BlockPos>(), master);
+                            pastNode.connectMasterToRemainingNode(world, new LinkedList<>(), master);
                         }
                         pastNode.addConnection(pos);
                         node.addConnection(containedPos);
@@ -157,7 +157,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                             IMasterRoutingNode master = (IMasterRoutingNode) tile;
                             master.addConnection(pos, containedPos);
                             master.addNodeToList(node);
-                            node.connectMasterToRemainingNode(world, new LinkedList<BlockPos>(), master);
+                            node.connectMasterToRemainingNode(world, new LinkedList<>(), master);
                         }
                         pastNode.addConnection(pos);
                         node.addConnection(containedPos);
@@ -177,8 +177,8 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
 
     @Override
     public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
+        List<Pair<Integer, String>> ret = new ArrayList<>();
+        ret.add(new ImmutablePair<>(0, "type=normal"));
         return ret;
     }
 

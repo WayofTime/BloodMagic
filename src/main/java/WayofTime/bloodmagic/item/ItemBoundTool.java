@@ -46,8 +46,8 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
     public final int chargeTime = 30;
     protected final String tooltipBase;
     private final String name;
-    public Map<ItemStack, Boolean> heldDownMap = new HashMap<ItemStack, Boolean>();
-    public Map<ItemStack, Integer> heldDownCountMap = new HashMap<ItemStack, Integer>();
+    public Map<ItemStack, Boolean> heldDownMap = new HashMap<>();
+    public Map<ItemStack, Integer> heldDownCountMap = new HashMap<>();
 
     public ItemBoundTool(String name, float damage, Set<Block> effectiveBlocks) {
         super(damage, 1, RegistrarBloodMagicItems.BOUND_TOOL_MATERIAL, effectiveBlocks);

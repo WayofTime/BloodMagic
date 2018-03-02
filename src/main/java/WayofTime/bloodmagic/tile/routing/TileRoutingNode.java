@@ -21,7 +21,7 @@ import java.util.List;
 public class TileRoutingNode extends TileInventory implements IRoutingNode, IItemRoutingNode, ITickable {
     private int currentInput;
     private BlockPos masterPos = BlockPos.ORIGIN;
-    private List<BlockPos> connectionList = new LinkedList<BlockPos>();
+    private List<BlockPos> connectionList = new LinkedList<>();
 
     public TileRoutingNode(int size, String name) {
         super(size, name);

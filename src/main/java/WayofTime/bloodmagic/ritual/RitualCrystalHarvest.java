@@ -68,7 +68,7 @@ public class RitualCrystalHarvest extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addCornerRunes(components, 1, 0, EnumRuneType.AIR);
         this.addParallelRunes(components, 1, 1, EnumRuneType.DUSK);

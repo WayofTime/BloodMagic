@@ -34,7 +34,6 @@ import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.*;
-import com.google.common.base.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -54,7 +53,6 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -74,7 +72,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -85,10 +82,10 @@ import java.util.*;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class GenericHandler {
-    public static Map<EntityPlayer, Double> bounceMap = new HashMap<EntityPlayer, Double>();
-    public static Map<EntityPlayer, Integer> filledHandMap = new HashMap<EntityPlayer, Integer>();
-    private static Map<EntityAnimal, EntityAITarget> targetTaskMap = new HashMap<EntityAnimal, EntityAITarget>();
-    private static Map<EntityAnimal, EntityAIBase> attackTaskMap = new HashMap<EntityAnimal, EntityAIBase>();
+    public static Map<EntityPlayer, Double> bounceMap = new HashMap<>();
+    public static Map<EntityPlayer, Integer> filledHandMap = new HashMap<>();
+    private static Map<EntityAnimal, EntityAITarget> targetTaskMap = new HashMap<>();
+    private static Map<EntityAnimal, EntityAIBase> attackTaskMap = new HashMap<>();
 
     @SubscribeEvent
     public static void onEntityFall(LivingFallEvent event) {
@@ -218,7 +215,7 @@ public class GenericHandler {
                 EntityAnimal animal = (EntityAnimal) event.getEntityLiving();
                 if (animal.isPotionActive(RegistrarBloodMagic.SACRIFICIAL_LAMB)) {
                     if (!targetTaskMap.containsKey(animal)) {
-                        EntityAITarget task = new EntityAINearestAttackableTarget<EntityMob>(animal, EntityMob.class, false);
+                        EntityAITarget task = new EntityAINearestAttackableTarget<>(animal, EntityMob.class, false);
                         EntityAIBase attackTask = new EntityAIAttackMelee(animal, 1.0D, false);
                         animal.targetTasks.addTask(1, task);
                         animal.tasks.addTask(1, attackTask);

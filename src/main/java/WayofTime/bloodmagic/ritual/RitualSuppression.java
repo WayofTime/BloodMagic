@@ -57,7 +57,7 @@ public class RitualSuppression extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addCornerRunes(components, 2, 0, EnumRuneType.WATER);
         this.addRune(components, -2, 0, -1, EnumRuneType.AIR);

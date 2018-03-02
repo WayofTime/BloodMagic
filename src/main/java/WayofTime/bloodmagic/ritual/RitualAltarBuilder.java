@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class RitualAltarBuilder extends Ritual {
-    private Iterator<AltarComponent> altarComponentsIterator = new ArrayList<AltarComponent>(EnumAltarTier.SIX.getAltarComponents()).iterator();
+    private Iterator<AltarComponent> altarComponentsIterator = new ArrayList<>(EnumAltarTier.SIX.getAltarComponents()).iterator();
     private boolean cycleDone = false;
 
     private AltarComponent currentComponent;
@@ -53,7 +53,7 @@ public class RitualAltarBuilder extends Ritual {
         }
 
         if (cycleDone) {
-            altarComponentsIterator = new ArrayList<AltarComponent>(EnumAltarTier.SIX.getAltarComponents()).iterator();
+            altarComponentsIterator = new ArrayList<>(EnumAltarTier.SIX.getAltarComponents()).iterator();
         }
 
         if (world.getBlockState(altarPos).getBlock().isReplaceable(world, altarPos) && hasItem(tileEntity, Item.getItemFromBlock(RegistrarBloodMagicBlocks.ALTAR), 0, true)) {
@@ -114,7 +114,7 @@ public class RitualAltarBuilder extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         for (int i = -12; i <= -8; i++) {
             addRune(components, i, -6, 13, EnumRuneType.AIR);

@@ -22,7 +22,7 @@ public class LivingArmourUpgradeKnockbackResist extends LivingArmourUpgrade {
 
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers() {
-        Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
+        Multimap<String, AttributeModifier> modifierMap = HashMultimap.create();
 
         String name = getUniqueIdentifier() + "-KnockbackModifier1";
         modifierMap.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.getName(), new AttributeModifier(UUID.nameUUIDFromBytes(StringUtils.getBytesUtf8(name)), "KnockbackModifier1", kbModifier[this.level], 0));

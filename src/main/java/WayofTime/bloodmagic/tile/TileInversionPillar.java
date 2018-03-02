@@ -19,7 +19,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.animation.Event;
-import net.minecraftforge.common.animation.ITimeValue;
 import net.minecraftforge.common.animation.TimeValues.VariableValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.model.animation.CapabilityAnimation;
@@ -64,7 +63,7 @@ public class TileInversionPillar extends TileTicking {
 
     public TileInversionPillar(EnumDemonWillType type) {
         this.type = type;
-        asm = BloodMagic.proxy.load(new ResourceLocation(BloodMagic.MODID.toLowerCase(), "asms/block/inversion_pillar.json"), ImmutableMap.<String, ITimeValue>of("offset", animationOffset, "cycle_length", cycleLength));
+        asm = BloodMagic.proxy.load(new ResourceLocation(BloodMagic.MODID.toLowerCase(), "asms/block/inversion_pillar.json"), ImmutableMap.of("offset", animationOffset, "cycle_length", cycleLength));
         animationOffsetValue = -1;
     }
 

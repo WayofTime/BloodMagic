@@ -55,7 +55,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
         double filled = PlayerDemonWillHandler.addDemonWill(type, player, drain, stack);
         this.drainWill(type, stack, filled, true);
 
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+        return new ActionResult<>(EnumActionResult.PASS, stack);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
 
     @Override
     public List<String> getVariants() {
-        List<String> ret = new ArrayList<String>();
+        List<String> ret = new ArrayList<>();
         for (EnumDemonWillType type : EnumDemonWillType.values()) {
             ret.add("type=petty_" + type.getName().toLowerCase());
             ret.add("type=lesser_" + type.getName().toLowerCase());

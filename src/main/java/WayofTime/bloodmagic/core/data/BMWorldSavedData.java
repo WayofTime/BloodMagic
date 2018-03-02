@@ -13,7 +13,7 @@ import java.util.UUID;
 public class BMWorldSavedData extends WorldSavedData {
     public static final String ID = "BloodMagic-SoulNetworks";
 
-    private Map<UUID, SoulNetwork> soulNetworks = new HashMap<UUID, SoulNetwork>();
+    private Map<UUID, SoulNetwork> soulNetworks = new HashMap<>();
 
     public BMWorldSavedData(String id) {
         super(id);

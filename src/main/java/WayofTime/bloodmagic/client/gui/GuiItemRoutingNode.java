@@ -25,15 +25,6 @@ import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
 public class GuiItemRoutingNode extends GuiContainer {
-    private GuiButton downButton;
-    private GuiButton upButton;
-    private GuiButton northButton;
-    private GuiButton southButton;
-    private GuiButton westButton;
-    private GuiButton eastButton;
-    private GuiButton incrementButton;
-    private GuiButton decrementButton;
-
     private GuiTextField textBox;
 
     private TileFilteredRoutingNode inventory;
@@ -65,14 +56,14 @@ public class GuiItemRoutingNode extends GuiContainer {
         top = (this.height - this.ySize) / 2;
 
         this.buttonList.clear();
-        this.buttonList.add(this.downButton = new GuiButton(0, left + 176, top + 14, 18, 18, "D"));
-        this.buttonList.add(this.upButton = new GuiButton(1, left + 176, top + 32, 18, 18, "U"));
-        this.buttonList.add(this.northButton = new GuiButton(2, left + 176, top + 50, 18, 18, "N"));
-        this.buttonList.add(this.southButton = new GuiButton(3, left + 176, top + 68, 18, 18, "S"));
-        this.buttonList.add(this.westButton = new GuiButton(4, left + 176, top + 86, 18, 18, "W"));
-        this.buttonList.add(this.eastButton = new GuiButton(5, left + 176, top + 104, 18, 18, "E"));
-        this.buttonList.add(this.incrementButton = new GuiButton(6, left + 160, top + 50, 10, 18, ">"));
-        this.buttonList.add(this.decrementButton = new GuiButton(7, left + 132, top + 50, 10, 18, "<"));
+        this.buttonList.add(new GuiButton(0, left + 176, top + 14, 18, 18, "D"));
+        this.buttonList.add(new GuiButton(1, left + 176, top + 32, 18, 18, "U"));
+        this.buttonList.add(new GuiButton(2, left + 176, top + 50, 18, 18, "N"));
+        this.buttonList.add(new GuiButton(3, left + 176, top + 68, 18, 18, "S"));
+        this.buttonList.add(new GuiButton(4, left + 176, top + 86, 18, 18, "W"));
+        this.buttonList.add(new GuiButton(5, left + 176, top + 104, 18, 18, "E"));
+        this.buttonList.add(new GuiButton(6, left + 160, top + 50, 10, 18, ">"));
+        this.buttonList.add(new GuiButton(7, left + 132, top + 50, 10, 18, "<"));
         disableDirectionalButton(inventory.currentActiveSlot);
 
         this.textBox = new GuiTextField(0, this.fontRenderer, left + 94, top + 37, 70, 12);
@@ -92,7 +83,7 @@ public class GuiItemRoutingNode extends GuiContainer {
                     try {
                         Integer testVal = Integer.decode(str);
                         if (testVal != null) {
-                            amount = testVal.intValue();
+                            amount = testVal;
                         }
                     } catch (NumberFormatException d) {
                     }
@@ -120,7 +111,7 @@ public class GuiItemRoutingNode extends GuiContainer {
         if (container.lastGhostSlotClicked != -1) {
             Slot slot = container.getSlot(container.lastGhostSlotClicked + 1);
             ItemStack stack = slot.getStack();
-            if (stack != null) {
+            if (!stack.isEmpty()) {
                 int amount = GhostItemHelper.getItemGhostAmount(stack);
                 this.textBox.setText("" + amount);
             } else {
@@ -173,7 +164,7 @@ public class GuiItemRoutingNode extends GuiContainer {
         String s = "";
         if (container.lastGhostSlotClicked != -1) {
             ItemStack clickedStack = inventorySlots.getSlot(1 + container.lastGhostSlotClicked).getStack();
-            if (clickedStack != null) {
+            if (!clickedStack.isEmpty()) {
                 s = clickedStack.getDisplayName();
             }
         }

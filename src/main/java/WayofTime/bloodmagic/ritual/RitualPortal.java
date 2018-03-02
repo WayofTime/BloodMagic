@@ -184,7 +184,7 @@ public class RitualPortal extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         addRune(components, 1, 0, 0, EnumRuneType.AIR);
         addRune(components, 2, 0, 0, EnumRuneType.WATER);

@@ -86,13 +86,7 @@ public class TestItemFilter implements IItemFilter {
             }
         }
 
-        Iterator<ItemStack> iterator = requestList.iterator();
-        while (iterator.hasNext()) {
-            ItemStack filterStack = iterator.next();
-            if (filterStack.isEmpty()) {
-                iterator.remove();
-            }
-        }
+        requestList.removeIf(ItemStack::isEmpty);
     }
 
     /**

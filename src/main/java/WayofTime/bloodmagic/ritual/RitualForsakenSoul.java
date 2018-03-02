@@ -29,7 +29,7 @@ public class RitualForsakenSoul extends Ritual {
     public double willBuffer = 0;
     public double crystalBuffer = 0;
 
-    public List<Integer> keyList = new ArrayList<Integer>();
+    public List<Integer> keyList = new ArrayList<>();
 
     public RitualForsakenSoul() {
         super("ritualForsakenSoul", 0, 40000, "ritual." + BloodMagic.MODID + ".forsakenSoulRitual");
@@ -83,7 +83,7 @@ public class RitualForsakenSoul extends Ritual {
         int maxEffects = 100;
         int totalEffects = 0;
 
-        List<TileDemonCrystal> crystalList = new ArrayList<TileDemonCrystal>();
+        List<TileDemonCrystal> crystalList = new ArrayList<>();
 
         AreaDescriptor crystalRange = getBlockRange(CRYSTAL_RANGE);
 
@@ -153,7 +153,7 @@ public class RitualForsakenSoul extends Ritual {
             keyList.remove(0);
         }
 
-        List<Integer> uniquenessList = new ArrayList<Integer>();
+        List<Integer> uniquenessList = new ArrayList<>();
         for (int value : keyList) {
             if (!uniquenessList.contains(value)) {
                 uniquenessList.add(value);
@@ -179,7 +179,7 @@ public class RitualForsakenSoul extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addCornerRunes(components, 1, 0, EnumRuneType.AIR);
         this.addParallelRunes(components, 1, -1, EnumRuneType.DUSK);

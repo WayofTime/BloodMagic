@@ -55,7 +55,7 @@ import java.util.*;
 public class ClientHandler {
     // Quick toggle for error suppression. Set to false if you wish to hide model errors.
     public static final boolean SUPPRESS_ASSET_ERRORS = true;
-    public static final List<HUDElement> hudElements = new ArrayList<HUDElement>();
+    public static final List<HUDElement> hudElements = new ArrayList<>();
     public static TextureAtlasSprite ritualStoneBlank;
     public static TextureAtlasSprite ritualStoneWater;
     public static TextureAtlasSprite ritualStoneFire;
@@ -191,13 +191,13 @@ public class ClientHandler {
         Set<ModelResourceLocation> missingVariants = ReflectionHelper.getPrivateValue(ModelLoader.class, event.getModelLoader(), "missingVariants");
 
         // Collect all Blood Magic model errors
-        List<ResourceLocation> errored = new ArrayList<ResourceLocation>();
+        List<ResourceLocation> errored = new ArrayList<>();
         for (ResourceLocation modelError : modelErrors.keySet())
             if (modelError.getResourceDomain().equalsIgnoreCase(BloodMagic.MODID))
                 errored.add(modelError);
 
         // Collect all Blood Magic variant errors
-        List<ModelResourceLocation> missing = new ArrayList<ModelResourceLocation>();
+        List<ModelResourceLocation> missing = new ArrayList<>();
         for (ModelResourceLocation missingVariant : missingVariants)
             if (missingVariant.getResourceDomain().equalsIgnoreCase(BloodMagic.MODID))
                 missing.add(missingVariant);
@@ -228,7 +228,7 @@ public class ClientHandler {
 
         String mc = "minecraft";
         String format = "textures/%s.png";
-        Set<ResourceLocation> toRemove = new HashSet<ResourceLocation>();
+        Set<ResourceLocation> toRemove = new HashSet<>();
 
         // Find our missing textures and mark them for removal. Cannot directly remove as it would cause a CME
         if (missingTextures.containsKey(mc)) {

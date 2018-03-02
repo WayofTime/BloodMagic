@@ -35,7 +35,7 @@ public class RitualFelling extends Ritual {
         setMaximumVolumeAndDistanceOfRange(FELLING_RANGE, 14000, 15, 30);
         setMaximumVolumeAndDistanceOfRange(CHEST_RANGE, 1, 3, 3);
 
-        treePartsCache = new ArrayList<BlockPos>();
+        treePartsCache = new ArrayList<>();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class RitualFelling extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         addCornerRunes(components, 1, 0, EnumRuneType.EARTH);
         addCornerRunes(components, 1, 1, EnumRuneType.EARTH);

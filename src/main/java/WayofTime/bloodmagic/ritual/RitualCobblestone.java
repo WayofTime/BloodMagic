@@ -84,7 +84,7 @@ public class RitualCobblestone extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addCornerRunes(components, 1, 1, EnumRuneType.FIRE);
         this.addParallelRunes(components, 1, 0, EnumRuneType.WATER);

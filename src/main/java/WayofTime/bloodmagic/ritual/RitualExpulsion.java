@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.ritual;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.ritual.data.*;
 import WayofTime.bloodmagic.util.Utils;
 import com.google.common.collect.Lists;
@@ -71,7 +70,7 @@ public class RitualExpulsion extends Ritual {
         final int teleportDistance = 100;
 
         for (EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, expulsionRange.getAABB(masterRitualStone.getBlockPos()))) {
-            if (player.capabilities.isCreativeMode || PlayerHelper.getUUIDFromPlayer(player).toString().equals(masterRitualStone.getOwner()) || whitelist.contains(player.getGameProfile().getId()))
+            if (player.capabilities.isCreativeMode || player.getGameProfile().getId().equals(masterRitualStone.getOwner()) || whitelist.contains(player.getGameProfile().getId()))
                 continue;
 
             if (teleportRandomly(player, teleportDistance))
@@ -192,7 +191,7 @@ public class RitualExpulsion extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addCornerRunes(components, 2, 0, EnumRuneType.EARTH);
         this.addRune(components, 2, 0, 1, EnumRuneType.EARTH);

@@ -17,7 +17,6 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     public boolean isActive = false;
     public int activeCounter = 0;
     public EnumFacing rotation = EnumFacing.HORIZONTALS[0];
-    ;
 
     private String key = "empty";
     private AlchemyArrayEffect arrayEffect;

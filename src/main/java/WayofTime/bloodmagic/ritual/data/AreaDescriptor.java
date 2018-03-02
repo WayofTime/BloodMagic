@@ -14,7 +14,7 @@ import java.util.List;
 
 public abstract class AreaDescriptor implements Iterator<BlockPos> {
     public List<BlockPos> getContainedPositions(BlockPos pos) {
-        return new ArrayList<BlockPos>();
+        return new ArrayList<>();
     }
 
     public AxisAlignedBB getAABB(BlockPos pos) {
@@ -92,7 +92,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
         @Override
         public List<BlockPos> getContainedPositions(BlockPos pos) {
             if (!cache || !pos.equals(cachedPosition) || blockPosCache.isEmpty()) {
-                ArrayList<BlockPos> posList = new ArrayList<BlockPos>();
+                ArrayList<BlockPos> posList = new ArrayList<>();
 
                 for (int j = minimumOffset.getY(); j < maximumOffset.getY(); j++) {
                     for (int i = minimumOffset.getX(); i < maximumOffset.getX(); i++) {
@@ -125,12 +125,12 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
         public void setOffsets(BlockPos offset1, BlockPos offset2) {
             this.minimumOffset = new BlockPos(Math.min(offset1.getX(), offset2.getX()), Math.min(offset1.getY(), offset2.getY()), Math.min(offset1.getZ(), offset2.getZ()));
             this.maximumOffset = new BlockPos(Math.max(offset1.getX(), offset2.getX()), Math.max(offset1.getY(), offset2.getY()), Math.max(offset1.getZ(), offset2.getZ()));
-            blockPosCache = new ArrayList<BlockPos>();
+            blockPosCache = new ArrayList<>();
         }
 
         @Override
         public void resetCache() {
-            this.blockPosCache = new ArrayList<BlockPos>();
+            this.blockPosCache = new ArrayList<>();
         }
 
         @Override
@@ -267,13 +267,13 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
         public void setRadius(BlockPos minimumOffset, int radius) {
             this.minimumOffset = new BlockPos(Math.min(minimumOffset.getX(), minimumOffset.getX()), Math.min(minimumOffset.getY(), minimumOffset.getY()), Math.min(minimumOffset.getZ(), minimumOffset.getZ()));
             this.radius = radius;
-            blockPosCache = new ArrayList<BlockPos>();
+            blockPosCache = new ArrayList<>();
         }
 
         @Override
         public List<BlockPos> getContainedPositions(BlockPos pos) {
             if (!cache || !pos.equals(cachedPosition) || blockPosCache.isEmpty()) {
-                ArrayList<BlockPos> posList = new ArrayList<BlockPos>();
+                ArrayList<BlockPos> posList = new ArrayList<>();
 
                 int i = -radius;
                 int j = minimumOffset.getY();
@@ -318,7 +318,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
 
         @Override
         public void resetCache() {
-            this.blockPosCache = new ArrayList<BlockPos>();
+            this.blockPosCache = new ArrayList<>();
         }
 
         @Override
@@ -400,7 +400,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
         public Cross(BlockPos center, int size) {
             this.centerPos = center;
             this.size = size;
-            this.blockPosCache = new ArrayList<BlockPos>();
+            this.blockPosCache = new ArrayList<>();
         }
 
         @Override
@@ -424,7 +424,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
 
         @Override
         public void resetCache() {
-            blockPosCache = new ArrayList<BlockPos>();
+            blockPosCache = new ArrayList<>();
         }
 
         @Override

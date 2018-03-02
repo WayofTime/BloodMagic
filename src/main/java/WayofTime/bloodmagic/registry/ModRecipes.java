@@ -148,12 +148,12 @@ public class ModRecipes
     {
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTablePotionRecipe(lpDrained, 100, tier, inputStack, baseEffect));
 
-        List<ItemStack> lengtheningList = new ArrayList<ItemStack>();
+        List<ItemStack> lengtheningList = new ArrayList<>();
         lengtheningList.add(inputStack);
         lengtheningList.add(mundaneLengtheningStack);
         AlchemyTableRecipeRegistry.registerRecipe(BMPotionUtils.getLengthAugmentRecipe(lpDrained, 100, tier, lengtheningList, baseEffect, 1));
 
-        List<ItemStack> powerList = new ArrayList<ItemStack>();
+        List<ItemStack> powerList = new ArrayList<>();
         powerList.add(inputStack);
         powerList.add(mundanePowerStack);
         AlchemyTableRecipeRegistry.registerRecipe(BMPotionUtils.getPowerAugmentRecipe(lpDrained, 100, tier, powerList, baseEffect, 1));
@@ -173,7 +173,7 @@ public class ModRecipes
         ItemStack minecartStack = new ItemStack(Items.MINECART);
         ItemStack stringStack = new ItemStack(Items.STRING);
 
-        Map<ItemStack, Pair<String, int[]>> dialogueMap = new HashMap<ItemStack, Pair<String, int[]>>();
+        Map<ItemStack, Pair<String, int[]>> dialogueMap = new HashMap<>();
         dialogueMap.put(bowStack, Pair.of("bow", new int[] { 1, 100, 300, 500 }));
         dialogueMap.put(bottleStack, Pair.of("quenched", new int[] { 1, 100, 300, 500 }));
         dialogueMap.put(swordStack, Pair.of("dulledBlade", new int[] { 1, 100, 300, 500, 700 }));
@@ -183,10 +183,10 @@ public class ModRecipes
         {
             ItemStack keyStack = entry.getKey();
             String str = entry.getValue().getKey();
-            Map<Integer, List<ITextComponent>> textMap = new HashMap<Integer, List<ITextComponent>>();
+            Map<Integer, List<ITextComponent>> textMap = new HashMap<>();
             for (int tick : entry.getValue().getValue())
             {
-                List<ITextComponent> textList = new ArrayList<ITextComponent>();
+                List<ITextComponent> textList = new ArrayList<>();
                 textList.add(new TextComponentTranslation("\u00A74%s", new TextComponentTranslation(messageBase + str + "." + tick)));
                 textMap.put(tick, textList);
             }

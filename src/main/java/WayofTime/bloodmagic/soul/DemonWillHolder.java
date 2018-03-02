@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class DemonWillHolder {
-    public HashMap<EnumDemonWillType, Double> willMap = new HashMap<EnumDemonWillType, Double>();
+    public HashMap<EnumDemonWillType, Double> willMap = new HashMap<>();
 
     public double addWill(EnumDemonWillType type, double amount, double max) {
         double current = 0;

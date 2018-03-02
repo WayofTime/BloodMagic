@@ -170,7 +170,7 @@ public class RitualAnimalGrowth extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addParallelRunes(components, 2, 0, EnumRuneType.DUSK);
         this.addParallelRunes(components, 1, 0, EnumRuneType.WATER);

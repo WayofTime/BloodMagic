@@ -3,11 +3,9 @@ package WayofTime.bloodmagic.item.sigil;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.item.ItemSigilToggleable;
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.base.Strings;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -64,7 +62,7 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable implements IMes
 
     @Override
     public List<String> getVariants() {
-        List<String> ret = new ArrayList<String>();
+        List<String> ret = new ArrayList<>();
         ret.add("active=false");
         ret.add("active=true");
 

@@ -17,13 +17,13 @@ public class LocationsHandler implements Serializable {
     private static LocationsHandler locationsHandler;
 
     private LocationsHandler() {
-        portals = new HashMap<String, ArrayList<PortalLocation>>();
+        portals = new HashMap<>();
     }
 
     public boolean addLocation(String name, PortalLocation location) {
         ArrayList<PortalLocation> portalLocations = portals.get(name);
         if (portalLocations == null) {
-            portals.put(name, new ArrayList<PortalLocation>());
+            portals.put(name, new ArrayList<>());
             updateFile(fileName, portals);
         }
         if (!portals.get(name).isEmpty() && portals.get(name).size() >= 2) {

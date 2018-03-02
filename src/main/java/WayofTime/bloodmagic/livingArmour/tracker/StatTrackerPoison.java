@@ -56,7 +56,7 @@ public class StatTrackerPoison extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
             if (totalPoisonTicks >= poisonTicksRequired[i]) {

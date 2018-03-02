@@ -22,11 +22,11 @@ import java.util.Map.Entry;
  * {@link RitualRegistry#registerRitual(Ritual, String)}
  */
 public abstract class Ritual {
-    public final ArrayList<RitualComponent> ritualComponents = new ArrayList<RitualComponent>();
-    protected final Map<String, AreaDescriptor> modableRangeMap = new HashMap<String, AreaDescriptor>();
-    protected final Map<String, Integer> volumeRangeMap = new HashMap<String, Integer>();
-    protected final Map<String, Integer> horizontalRangeMap = new HashMap<String, Integer>();
-    protected final Map<String, Integer> verticalRangeMap = new HashMap<String, Integer>();
+    public final ArrayList<RitualComponent> ritualComponents = new ArrayList<>();
+    protected final Map<String, AreaDescriptor> modableRangeMap = new HashMap<>();
+    protected final Map<String, Integer> volumeRangeMap = new HashMap<>();
+    protected final Map<String, Integer> horizontalRangeMap = new HashMap<>();
+    protected final Map<String, Integer> verticalRangeMap = new HashMap<>();
     private final String name;
     private final int crystalLevel;
     private final int activationCost;
@@ -159,7 +159,7 @@ public abstract class Ritual {
     }
 
     public List<String> getListOfRanges() {
-        return new ArrayList<String>(modableRangeMap.keySet());
+        return new ArrayList<>(modableRangeMap.keySet());
     }
 
     public String getNextBlockRange(String range) {

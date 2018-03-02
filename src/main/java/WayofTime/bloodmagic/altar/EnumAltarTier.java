@@ -122,7 +122,7 @@ public enum EnumAltarTier {
 
     public static final int MAXTIERS = values().length;
 
-    ArrayList<AltarComponent> altarComponents = new ArrayList<AltarComponent>();
+    ArrayList<AltarComponent> altarComponents = new ArrayList<>();
 
     public void buildComponents() {
 

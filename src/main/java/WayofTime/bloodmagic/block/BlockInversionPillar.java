@@ -74,7 +74,7 @@ public class BlockInversionPillar extends BlockEnum<EnumSubWillType> {
 
     @Override
     public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        List<Pair<Integer, String>> ret = new ArrayList<>();
         for (int i = 0; i < this.getTypes().length; i++)
             ret.add(Pair.of(i, "static=false,type=" + this.getTypes()[i]));
         return ret;

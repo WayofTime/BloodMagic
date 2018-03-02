@@ -8,11 +8,11 @@ import net.minecraft.block.BlockStem;
 import java.util.*;
 
 public class HarvestRegistry {
-    private static List<IHarvestHandler> handlerList = new ArrayList<IHarvestHandler>();
-    private static Map<Block, Integer> standardCrops = new HashMap<Block, Integer>();
-    private static Set<BlockStack> tallCrops = new HashSet<BlockStack>();
-    private static Map<BlockStack, BlockStack> stemCrops = new HashMap<BlockStack, BlockStack>();
-    private static Map<BlockStack, Integer> amplifierMap = new HashMap<BlockStack, Integer>();
+    private static List<IHarvestHandler> handlerList = new ArrayList<>();
+    private static Map<Block, Integer> standardCrops = new HashMap<>();
+    private static Set<BlockStack> tallCrops = new HashSet<>();
+    private static Map<BlockStack, BlockStack> stemCrops = new HashMap<>();
+    private static Map<BlockStack, Integer> amplifierMap = new HashMap<>();
 
     /**
      * Registers a handler for the Harvest Ritual to call.
@@ -81,22 +81,22 @@ public class HarvestRegistry {
     }
 
     public static List<IHarvestHandler> getHandlerList() {
-        return new ArrayList<IHarvestHandler>(handlerList);
+        return new ArrayList<>(handlerList);
     }
 
     public static Map<Block, Integer> getStandardCrops() {
-        return new HashMap<Block, Integer>(standardCrops);
+        return new HashMap<>(standardCrops);
     }
 
     public static Set<BlockStack> getTallCrops() {
-        return new HashSet<BlockStack>(tallCrops);
+        return new HashSet<>(tallCrops);
     }
 
     public static Map<BlockStack, BlockStack> getStemCrops() {
-        return new HashMap<BlockStack, BlockStack>(stemCrops);
+        return new HashMap<>(stemCrops);
     }
 
     public static Map<BlockStack, Integer> getAmplifierMap() {
-        return new HashMap<BlockStack, Integer>(amplifierMap);
+        return new HashMap<>(amplifierMap);
     }
 }

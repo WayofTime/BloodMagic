@@ -168,7 +168,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     }
 
     public List<Integer> getAccessibleInputSlots(EnumFacing direction) {
-        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> list = new ArrayList<>();
 
         for (int i = 0; i < 6; i++) {
             if (isInputSlotAccessible(i)) {
@@ -185,7 +185,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
             return;
         }
 
-        List<ItemStack> inputList = new ArrayList<ItemStack>();
+        List<ItemStack> inputList = new ArrayList<>();
 
         for (int i = 0; i < 6; i++) {
             if (!getStackInSlot(i).isEmpty()) {

@@ -17,9 +17,9 @@ public class Dungeon {
     public static boolean placeStructureAtPosition(Random rand, WorldServer world, BlockPos pos) {
         long startTime = System.nanoTime();
 
-        Map<EnumFacing, List<BlockPos>> availableDoorMap = new HashMap<EnumFacing, List<BlockPos>>(); //Map of doors. The EnumFacing indicates what way this door faces.
-        List<AreaDescriptor> descriptorList = new ArrayList<AreaDescriptor>();
-        Map<BlockPos, Pair<DungeonRoom, PlacementSettings>> roomMap = new HashMap<BlockPos, Pair<DungeonRoom, PlacementSettings>>(); // Placement positions in terms of actual positions
+        Map<EnumFacing, List<BlockPos>> availableDoorMap = new HashMap<>(); //Map of doors. The EnumFacing indicates what way this door faces.
+        List<AreaDescriptor> descriptorList = new ArrayList<>();
+        Map<BlockPos, Pair<DungeonRoom, PlacementSettings>> roomMap = new HashMap<>(); // Placement positions in terms of actual positions
 
         PlacementSettings settings = new PlacementSettings();
         Mirror mir = Mirror.NONE;
@@ -49,7 +49,7 @@ public class Dungeon {
 
         //Initial AreaDescriptors and door positions are initialized. Time for fun!
         for (int i = 0; i < 100; i++) {
-            List<EnumFacing> facingList = new ArrayList<EnumFacing>();
+            List<EnumFacing> facingList = new ArrayList<>();
             for (Entry<EnumFacing, List<BlockPos>> entry : availableDoorMap.entrySet()) {
                 if (entry.getValue() != null && !entry.getValue().isEmpty()) {
                     facingList.add(entry.getKey());
@@ -62,7 +62,6 @@ public class Dungeon {
             Pair<EnumFacing, BlockPos> removedDoor2 = null;
             BlockPos roomLocation = null;
 
-            roomPlacement:
             for (EnumFacing doorFacing : facingList) {
                 EnumFacing oppositeDoorFacing = doorFacing.getOpposite();
                 List<BlockPos> availableDoorList = availableDoorMap.get(doorFacing); //May need to copy here
@@ -97,8 +96,9 @@ public class Dungeon {
 
                         room = testingRoom;
 
-                        break roomPlacement;
                     }
+
+                    break;
                 }
 
 //                Collections.shuffle(otherDoorList);

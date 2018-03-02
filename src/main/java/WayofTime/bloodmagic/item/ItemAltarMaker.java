@@ -89,8 +89,8 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
 
     @Override
     public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=altarmaker"));
+        List<Pair<Integer, String>> ret = new ArrayList<>();
+        ret.add(new ImmutablePair<>(0, "type=altarmaker"));
         return ret;
     }
 

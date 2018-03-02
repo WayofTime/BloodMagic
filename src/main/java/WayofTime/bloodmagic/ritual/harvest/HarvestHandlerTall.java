@@ -27,7 +27,7 @@ public class HarvestHandlerTall implements IHarvestHandler {
     public boolean harvestAndPlant(World world, BlockPos pos, BlockStack blockStack) {
         boolean retFlag = false;
 
-        List<ItemStack> drops = new ArrayList<ItemStack>();
+        List<ItemStack> drops = new ArrayList<>();
         if (HarvestRegistry.getTallCrops().contains(blockStack)) {
             BlockStack up = BlockStack.getStackFromPos(world, pos.up());
             if (up.equals(blockStack)) {

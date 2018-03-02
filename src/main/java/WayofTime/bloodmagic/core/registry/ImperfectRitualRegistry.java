@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.core.registry;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.ritual.data.imperfect.ImperfectRitual;
@@ -12,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ImperfectRitualRegistry {
-    public static final Map<ImperfectRitual, Boolean> enabledRituals = new HashMap<ImperfectRitual, Boolean>();
+    public static final Map<ImperfectRitual, Boolean> enabledRituals = new HashMap<>();
     private static final BiMap<String, ImperfectRitual> registry = HashBiMap.create();
 
     /**
@@ -90,10 +89,10 @@ public class ImperfectRitualRegistry {
     }
 
     public static ArrayList<String> getIds() {
-        return new ArrayList<String>(registry.keySet());
+        return new ArrayList<>(registry.keySet());
     }
 
     public static ArrayList<ImperfectRitual> getRituals() {
-        return new ArrayList<ImperfectRitual>(registry.values());
+        return new ArrayList<>(registry.values());
     }
 }

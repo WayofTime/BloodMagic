@@ -19,9 +19,9 @@ public class RenderCorruptedSheep extends RenderLiving<EntityCorruptedSheep> {
     public RenderCorruptedSheep(RenderManager renderManagerIn) {
         super(renderManagerIn, new ModelCorruptedSheep2(0), 0.7F);
         this.addLayer(new LayerCorruptedSheepWool(this));
-        this.addLayer(new LayerWill<EntityCorruptedSheep>(this, new ModelCorruptedSheep(1.1f)));
-        this.addLayer(new LayerWill<EntityCorruptedSheep>(this, new ModelCorruptedSheep2(1.1f)));
-        this.addLayer(new LayerAlchemyCircle<EntityCorruptedSheep>());
+        this.addLayer(new LayerWill<>(this, new ModelCorruptedSheep(1.1f)));
+        this.addLayer(new LayerWill<>(this, new ModelCorruptedSheep2(1.1f)));
+        this.addLayer(new LayerAlchemyCircle<>());
     }
 
     @Override

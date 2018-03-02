@@ -20,7 +20,7 @@ public class AlchemyArrayRecipeRegistry {
     public static final AlchemyCircleRenderer DEFAULT_RENDERER = new AlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BaseArray.png"));
 
     private static BiMap<List<ItemStack>, AlchemyArrayRecipe> recipes = HashBiMap.create();
-    private static HashMap<String, AlchemyArrayEffect> effectMap = new HashMap<String, AlchemyArrayEffect>();
+    private static HashMap<String, AlchemyArrayEffect> effectMap = new HashMap<>();
 
     /**
      * General case for creating an AlchemyArrayEffect for a given input.
@@ -120,7 +120,7 @@ public class AlchemyArrayRecipeRegistry {
     }
 
     public static void registerCraftingRecipe(String inputOreDict, ItemStack catalystStack, ItemStack outputStack, ResourceLocation arrayResource) {
-        registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, new AlchemyArrayEffectCrafting(outputStack), arrayResource);
+        registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.emptyList(), catalystStack, new AlchemyArrayEffectCrafting(outputStack), arrayResource);
     }
 
     public static void registerCraftingRecipe(ItemStack input, ItemStack catalystStack, ItemStack outputStack) {
@@ -132,7 +132,7 @@ public class AlchemyArrayRecipeRegistry {
     }
 
     public static void registerCraftingRecipe(String inputOreDict, ItemStack catalystStack, ItemStack outputStack) {
-        registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, new AlchemyArrayEffectCrafting(outputStack));
+        registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.emptyList(), catalystStack, new AlchemyArrayEffectCrafting(outputStack));
     }
 
     public static void registerRecipe(ItemStack inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource) {
@@ -151,7 +151,7 @@ public class AlchemyArrayRecipeRegistry {
 
     public static void registerRecipe(String inputOreDict, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource) {
         AlchemyCircleRenderer circleRenderer = arrayResource == null ? DEFAULT_RENDERER : new AlchemyCircleRenderer(arrayResource);
-        registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, arrayEffect, circleRenderer);
+        registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.emptyList(), catalystStack, arrayEffect, circleRenderer);
     }
 
     public static void registerRecipe(ItemStack input, ItemStack catalystStack, AlchemyArrayEffect arrayEffect) {
@@ -163,7 +163,7 @@ public class AlchemyArrayRecipeRegistry {
     }
 
     public static void registerRecipe(String inputOreDict, ItemStack catalystStack, AlchemyArrayEffect arrayEffect) {
-        registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, arrayEffect, (AlchemyCircleRenderer) null);
+        registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.emptyList(), catalystStack, arrayEffect, (AlchemyCircleRenderer) null);
     }
 
     public static void replaceAlchemyCircle(List<ItemStack> input, AlchemyCircleRenderer circleRenderer) {
@@ -250,7 +250,7 @@ public class AlchemyArrayRecipeRegistry {
         }
 
         public AlchemyArrayRecipe(String inputOreDict, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer) {
-            this(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, arrayEffect, circleRenderer, false);
+            this(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.emptyList(), catalystStack, arrayEffect, circleRenderer, false);
         }
 
         public AlchemyArrayRecipe(List<ItemStack> inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer) {

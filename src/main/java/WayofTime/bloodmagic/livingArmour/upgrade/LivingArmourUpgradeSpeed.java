@@ -47,7 +47,7 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade {
 
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers() {
-        Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
+        Multimap<String, AttributeModifier> modifierMap = HashMultimap.create();
 
 //        modifierMap.put(SharedMonsterAttributes.movementSpeed.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(895132, 1), "Speed modifier" + 1, speedModifier[this.level], 1));
 

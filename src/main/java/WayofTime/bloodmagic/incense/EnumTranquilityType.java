@@ -7,5 +7,6 @@ public enum EnumTranquilityType {
     EARTHEN(),
     WATER(),
     FIRE(),
-    LAVA();
+    LAVA(),
+    ;
 }

@@ -33,8 +33,8 @@ public class ItemDemonWillGauge extends Item implements IVariantProvider, IDemon
 
     @Override
     public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=willgauge"));
+        List<Pair<Integer, String>> ret = new ArrayList<>();
+        ret.add(new ImmutablePair<>(0, "type=willgauge"));
         return ret;
     }
 

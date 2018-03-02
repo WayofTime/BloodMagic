@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class StatTrackerSelfSacrifice extends StatTracker {
-    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
+    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<>();
     public static int[] sacrificesRequired = new int[]{30, 200, 400, 700, 1100, 1500, 2000, 2800, 3600, 5000}; //testing
 
     public int totalSacrifices = 0;
@@ -68,7 +68,7 @@ public class StatTrackerSelfSacrifice extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
             if (totalSacrifices >= sacrificesRequired[i]) {

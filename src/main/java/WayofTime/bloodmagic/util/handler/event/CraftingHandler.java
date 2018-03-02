@@ -127,7 +127,7 @@ public class CraftingHandler {
             if (rightUpgrade != null) {
                 String key = ItemHelper.LivingUpgrades.getKey(event.getRight());
                 ItemStack outputStack = event.getLeft().copy();
-                List<String> keyList = new ArrayList<String>();
+                List<String> keyList = new ArrayList<>();
                 keyList.add(key);
                 if (((IUpgradeTrainer) event.getLeft().getItem()).setTrainedUpgrades(outputStack, keyList)) {
                     event.setCost(1);

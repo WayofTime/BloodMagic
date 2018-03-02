@@ -3,10 +3,8 @@ package WayofTime.bloodmagic.item.sigil;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.item.ItemSigil;
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.base.Strings;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -55,7 +53,7 @@ public class ItemSigilBase extends ItemSigil implements IVariantProvider {
 
     @Override
     public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        List<Pair<Integer, String>> ret = new ArrayList<>();
         ret.add(Pair.of(0, "type=normal"));
         return ret;
     }

@@ -51,7 +51,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     public static final boolean useSpecialArmourCalculation = true;
     public static String[] names = {"helmet", "chest", "legs", "boots"};
     //TODO: Save/delete cache periodically.
-    public static Map<UUID, LivingArmour> armourMap = new HashMap<UUID, LivingArmour>();
+    public static Map<UUID, LivingArmour> armourMap = new HashMap<>();
     private static Field _FLAGS = ReflectionHelper.findField(Entity.class, "FLAGS", "field_184240_ax");
     private static DataParameter<Byte> FLAGS = null;
 
@@ -283,9 +283,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                 if (FLAGS == null) {
                     try {
                         FLAGS = (DataParameter<Byte>) _FLAGS.get(null);
-                    } catch (IllegalArgumentException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
+                    } catch (IllegalArgumentException | IllegalAccessException e) {
                         e.printStackTrace();
                     }
                 }
@@ -337,7 +335,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             return armour.getAttributeModifiers();
         }
 
-        return HashMultimap.<String, AttributeModifier>create();
+        return HashMultimap.create();
     }
 
     @Override
@@ -367,7 +365,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 
     @Override
     public List<String> getVariants() {
-        List<String> ret = new ArrayList<String>();
+        List<String> ret = new ArrayList<>();
         ret.add("armour=head");
         ret.add("armour=body");
         ret.add("armour=leg");

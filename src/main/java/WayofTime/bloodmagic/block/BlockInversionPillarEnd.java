@@ -55,9 +55,9 @@ public class BlockInversionPillarEnd extends BlockEnum<EnumInversionCap> impleme
 
     @Override
     public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        List<Pair<Integer, String>> ret = new ArrayList<>();
         for (int i = 0; i < this.getTypes().length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
+            ret.add(new ImmutablePair<>(i, "type=" + this.getTypes()[i]));
         return ret;
     }
 }

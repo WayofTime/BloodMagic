@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class StatTrackerGrimReaperSprint extends StatTracker {
-    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
+    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<>();
     public static int[] deathsRequired = new int[]{6, 10, 15, 25, 50, 70, 90, 120, 150, 200}; //TODO: Modify
     public int totalDeaths = 0;
 
@@ -67,7 +67,7 @@ public class StatTrackerGrimReaperSprint extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
             if (totalDeaths >= deathsRequired[i]) {

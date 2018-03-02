@@ -37,7 +37,7 @@ public class RenderEntitySentientArrow extends Render<EntitySentientArrow> {
         int i = 0;
         float f = 0.0F;
         float f1 = 0.5F;
-        float f2 = (float) (0 + i * 10) / 32.0F;
+        float f2 = (float) (i * 10) / 32.0F;
         float f3 = (float) (5 + i * 10) / 32.0F;
         float f4 = 0.0F;
         float f5 = 0.15625F;

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class TartaricForgeRecipe {
     protected ItemStack output = null;
-    protected List<Object> input = new ArrayList<Object>();
+    protected List<Object> input = new ArrayList<>();
     protected double minimumSouls;
     protected double soulsDrained;
 
@@ -40,12 +40,12 @@ public class TartaricForgeRecipe {
             } else if (in instanceof String) {
                 input.add(OreDictionary.getOres((String) in));
             } else {
-                String ret = "Invalid soul forge recipe: ";
+                StringBuilder ret = new StringBuilder("Invalid soul forge recipe: ");
                 for (Object tmp : recipe) {
-                    ret += tmp + ", ";
+                    ret.append(tmp).append(", ");
                 }
-                ret += output;
-                throw new RuntimeException(ret);
+                ret.append(output);
+                throw new RuntimeException(ret.toString());
             }
         }
     }
@@ -67,24 +67,19 @@ public class TartaricForgeRecipe {
      */
     @SuppressWarnings("unchecked")
     public boolean matches(List<ItemStack> checkedList, World world, BlockPos pos) {
-        ArrayList<Object> required = new ArrayList<Object>(input);
+        ArrayList<Object> required = new ArrayList<>(input);
 
-        for (int x = 0; x < checkedList.size(); x++) {
-            ItemStack slot = checkedList.get(x);
-
+        for (ItemStack slot : checkedList) {
             if (slot != null) {
                 boolean inRecipe = false;
-                Iterator<Object> req = required.iterator();
 
-                while (req.hasNext()) {
+                for (Object aRequired : required) {
                     boolean match = false;
 
-                    Object next = req.next();
-
-                    if (next instanceof ItemStack) {
-                        match = OreDictionary.itemMatches((ItemStack) next, slot, false);
-                    } else if (next instanceof List) {
-                        Iterator<ItemStack> itr = ((List<ItemStack>) next).iterator();
+                    if (aRequired instanceof ItemStack) {
+                        match = OreDictionary.itemMatches((ItemStack) aRequired, slot, false);
+                    } else if (aRequired instanceof List) {
+                        Iterator<ItemStack> itr = ((List<ItemStack>) aRequired).iterator();
                         while (itr.hasNext() && !match) {
                             match = OreDictionary.itemMatches(itr.next(), slot, false);
                         }
@@ -92,7 +87,7 @@ public class TartaricForgeRecipe {
 
                     if (match) {
                         inRecipe = true;
-                        required.remove(next);
+                        required.remove(aRequired);
                         break;
                     }
                 }

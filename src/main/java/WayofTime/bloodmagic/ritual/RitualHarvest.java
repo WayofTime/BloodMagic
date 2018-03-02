@@ -67,7 +67,7 @@ public class RitualHarvest extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         components.add(new RitualComponent(new BlockPos(1, 0, 1), EnumRuneType.DUSK));
         components.add(new RitualComponent(new BlockPos(1, 0, -1), EnumRuneType.DUSK));

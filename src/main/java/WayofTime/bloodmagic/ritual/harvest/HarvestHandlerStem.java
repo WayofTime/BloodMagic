@@ -32,7 +32,7 @@ public class HarvestHandlerStem implements IHarvestHandler {
     @Override
     public boolean harvestAndPlant(World world, BlockPos pos, BlockStack blockStack) {
         boolean retFlag = false;
-        List<ItemStack> drops = new ArrayList<ItemStack>();
+        List<ItemStack> drops = new ArrayList<>();
         BlockPos cropPos = pos;
         if (HarvestRegistry.getStemCrops().containsKey(blockStack)) {
             EnumFacing cropDir = blockStack.getBlock().getActualState(blockStack.getState(), world, pos).getValue(BlockStem.FACING);

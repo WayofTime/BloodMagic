@@ -78,7 +78,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
                 testFilter = new DefaultItemFilter();
         }
 
-        List<ItemStack> filteredList = new ArrayList<ItemStack>();
+        List<ItemStack> filteredList = new ArrayList<>();
         ItemInventory inv = new ItemInventory(filterStack, 9, "");
         for (int i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
@@ -117,7 +117,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
                 testFilter = new DefaultItemFilter();
         }
 
-        List<ItemStack> filteredList = new ArrayList<ItemStack>();
+        List<ItemStack> filteredList = new ArrayList<>();
         ItemInventory inv = new ItemInventory(filterStack, 9, ""); //TODO: Change to grab the filter from the Item later.
         for (int i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
@@ -139,11 +139,11 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
 
     @Override
     public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=exact"));
-        ret.add(new ImmutablePair<Integer, String>(1, "type=ignorenbt"));
-        ret.add(new ImmutablePair<Integer, String>(2, "type=moditems"));
-        ret.add(new ImmutablePair<Integer, String>(3, "type=oredict"));
+        List<Pair<Integer, String>> ret = new ArrayList<>();
+        ret.add(new ImmutablePair<>(0, "type=exact"));
+        ret.add(new ImmutablePair<>(1, "type=ignorenbt"));
+        ret.add(new ImmutablePair<>(2, "type=moditems"));
+        ret.add(new ImmutablePair<>(3, "type=oredict"));
         return ret;
     }
 

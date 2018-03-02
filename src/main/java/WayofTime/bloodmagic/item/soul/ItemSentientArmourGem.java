@@ -53,7 +53,7 @@ public class ItemSentientArmourGem extends Item implements IMeshProvider {
             ItemSentientArmour.convertPlayerArmour(type, will, player);
         }
 
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
+        return new ActionResult<>(EnumActionResult.PASS, player.getHeldItem(hand));
     }
 
     @SideOnly(Side.CLIENT)

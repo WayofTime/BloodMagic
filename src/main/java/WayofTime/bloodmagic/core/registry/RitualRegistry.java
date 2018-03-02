@@ -9,14 +9,14 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class RitualRegistry {
-    public static final Map<Ritual, Boolean> enabledRituals = new HashMap<Ritual, Boolean>();
+    public static final Map<Ritual, Boolean> enabledRituals = new HashMap<>();
     private static final BiMap<String, Ritual> registry = HashBiMap.create();
-    private static final List<String> lookupList = new ArrayList<String>();
+    private static final List<String> lookupList = new ArrayList<>();
     /**
      * Ordered list for actions that depend on the order that the rituals were
      * registered in
      */
-    private static final ArrayList<String> orderedIdList = new ArrayList<String>();
+    private static final ArrayList<String> orderedIdList = new ArrayList<>();
 
     private static boolean locked;
 
@@ -92,11 +92,11 @@ public class RitualRegistry {
     }
 
     public static Map<Ritual, Boolean> getEnabledMap() {
-        return new HashMap<Ritual, Boolean>(enabledRituals);
+        return new HashMap<>(enabledRituals);
     }
 
     public static ArrayList<String> getIds() {
-        return new ArrayList<String>(lookupList);
+        return new ArrayList<>(lookupList);
     }
 
     public static ArrayList<String> getOrderedIds() {
@@ -104,14 +104,14 @@ public class RitualRegistry {
     }
 
     public static ArrayList<Ritual> getRituals() {
-        return new ArrayList<Ritual>(registry.values());
+        return new ArrayList<>(registry.values());
     }
 
     public static void orderLookupList() {
         locked = true; // Lock registry so no no rituals can be registered
         lookupList.clear(); // Make sure it's empty
         lookupList.addAll(registry.keySet());
-        Collections.sort(lookupList, (o1, o2) -> {
+        lookupList.sort((o1, o2) -> {
             Ritual ritual1 = registry.get(o1);
             Ritual ritual2 = registry.get(o2);
             return ritual1.getComponents().size() > ritual2.getComponents().size() ? -1 : 0; // Put earlier if bigger

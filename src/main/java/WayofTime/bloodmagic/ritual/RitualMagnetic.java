@@ -73,7 +73,7 @@ public class RitualMagnetic extends Ritual {
                 k = Math.min(radius, Math.max(-radius, lastPos.getZ()));
             }
 
-            while (j + pos.getY() >= 0) {
+            if (j + pos.getY() >= 0) {
                 while (i <= radius) {
                     while (k <= radius) {
                         BlockPos newPos = pos.add(i, j, k);
@@ -136,7 +136,7 @@ public class RitualMagnetic extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addCornerRunes(components, 1, 0, EnumRuneType.EARTH);
         this.addParallelRunes(components, 2, 1, EnumRuneType.EARTH);
@@ -162,12 +162,7 @@ public class RitualMagnetic extends Ritual {
             return false;
 
         BlockStack type = new BlockStack(block, meta);
-        Boolean result = oreBlockCache.get(type);
-        if (result == null) {
-            result = computeIsItemOre(type);
-            oreBlockCache.put(type, result);
-        }
-        return result;
+        return oreBlockCache.computeIfAbsent(type, RitualMagnetic::computeIsItemOre);
     }
 
     private static boolean computeIsItemOre(BlockStack type) {

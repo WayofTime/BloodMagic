@@ -109,7 +109,7 @@ public class RitualFeatheredKnife extends Ritual {
             for (EntityPlayer player : entities) {
                 float healthThreshold = steadfastWill >= steadfastWillThreshold ? 0.7f : 0.3f;
 
-                if (vengefulWill >= vengefulWillThreshold && !player.getUniqueID().toString().equals(masterRitualStone.getOwner())) {
+                if (vengefulWill >= vengefulWillThreshold && !player.getGameProfile().getId().equals(masterRitualStone.getOwner())) {
                     healthThreshold = 0.1f;
                 }
 
@@ -186,7 +186,7 @@ public class RitualFeatheredKnife extends Ritual {
 
     @Override
     public ArrayList<RitualComponent> getComponents() {
-        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> components = new ArrayList<>();
 
         this.addParallelRunes(components, 1, 0, EnumRuneType.DUSK);
         this.addParallelRunes(components, 2, -1, EnumRuneType.WATER);

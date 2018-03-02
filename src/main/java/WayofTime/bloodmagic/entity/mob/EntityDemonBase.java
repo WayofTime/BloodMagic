@@ -45,7 +45,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
     protected void entityInit() {
         super.entityInit();
         this.dataManager.register(TAMED, (byte) 0);
-        this.dataManager.register(OWNER_UNIQUE_ID, Optional.<UUID>absent());
+        this.dataManager.register(OWNER_UNIQUE_ID, Optional.absent());
     }
 
     @Override

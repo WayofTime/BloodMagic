@@ -23,8 +23,8 @@ import java.util.Map.Entry;
 
 public class LivingArmour implements ILivingArmour {
     public static String chatBase = "chat.bloodmagic.livingArmour.";
-    public HashMap<String, StatTracker> trackerMap = new HashMap<String, StatTracker>();
-    public HashMap<String, LivingArmourUpgrade> upgradeMap = new HashMap<String, LivingArmourUpgrade>();
+    public HashMap<String, StatTracker> trackerMap = new HashMap<>();
+    public HashMap<String, LivingArmourUpgrade> upgradeMap = new HashMap<>();
 
     public int maxUpgradePoints = 100;
     public int totalUpgradePoints = 0;
@@ -60,7 +60,7 @@ public class LivingArmour implements ILivingArmour {
 
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers() {
-        HashMultimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
+        HashMultimap<String, AttributeModifier> modifierMap = HashMultimap.create();
 
         for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet()) {
             LivingArmourUpgrade upgrade = entry.getValue();
@@ -165,7 +165,7 @@ public class LivingArmour implements ILivingArmour {
             return;
         }
 
-        List<String> allowedUpgradesList = new ArrayList<String>();
+        List<String> allowedUpgradesList = new ArrayList<>();
         for (ItemStack stack : player.inventory.mainInventory) {
             if (stack != null && stack.getItem() instanceof IUpgradeTrainer) {
                 List<String> keyList = ((IUpgradeTrainer) stack.getItem()).getTrainedUpgrades(stack);

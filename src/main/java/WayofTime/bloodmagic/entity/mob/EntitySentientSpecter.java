@@ -57,7 +57,7 @@ public class EntitySentientSpecter extends EntityDemonBase {
         this.setSize(0.6F, 1.95F);
 //        ((PathNavigateGround) getNavigator()).setCanSwim(false);
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(2, new EntityAIRetreatToHeal<EntityCreature>(this, EntityCreature.class, 6.0F, 1.0D, 1.2D));
+        this.tasks.addTask(2, new EntityAIRetreatToHeal<>(this, EntityCreature.class, 6.0F, 1.0D, 1.2D));
         this.tasks.addTask(attackPriority, aiAttackOnCollide);
         this.tasks.addTask(4, new EntityAIGrabEffectsFromOwner(this, 2.0D, 1.0F));
         this.tasks.addTask(5, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
@@ -67,9 +67,9 @@ public class EntitySentientSpecter extends EntityDemonBase {
 
         this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
         this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
 
-        this.targetTasks.addTask(4, new EntityAIHurtByTargetIgnoreTamed(this, false, new Class[0]));
+        this.targetTasks.addTask(4, new EntityAIHurtByTargetIgnoreTamed(this, false));
 
         this.setCombatTask();
 //        this.targetTasks.addTask(8, new EntityAINearestAttackableTarget<EntityMob>(this, EntityMob.class, 10, true, false, new TargetPredicate(this)));
@@ -138,7 +138,7 @@ public class EntitySentientSpecter extends EntityDemonBase {
 
         boolean hasStolenEffect = false;
 
-        List<PotionEffect> removedEffects = new ArrayList<PotionEffect>();
+        List<PotionEffect> removedEffects = new ArrayList<>();
 
         for (PotionEffect eff : owner.getActivePotionEffects()) {
             if (canStealEffectFromOwner(owner, eff)) {
@@ -157,7 +157,7 @@ public class EntitySentientSpecter extends EntityDemonBase {
 
     public boolean applyNegativeEffectsToAttacked(EntityLivingBase attackedEntity, float percentTransmitted) {
         boolean hasProvidedEffect = false;
-        List<PotionEffect> removedEffects = new ArrayList<PotionEffect>();
+        List<PotionEffect> removedEffects = new ArrayList<>();
         for (PotionEffect eff : this.getActivePotionEffects()) {
             if (eff.getPotion().isBadEffect() && attackedEntity.isPotionApplicable(eff)) {
                 if (!attackedEntity.isPotionActive(eff.getPotion())) {
@@ -197,13 +197,13 @@ public class EntitySentientSpecter extends EntityDemonBase {
     }
 
     public List<PotionEffect> getPotionEffectsForArrowRemovingDuration(float percentTransmitted) {
-        List<PotionEffect> arrowEffects = new ArrayList<PotionEffect>();
+        List<PotionEffect> arrowEffects = new ArrayList<>();
 
         if (type != EnumDemonWillType.CORROSIVE) {
             return arrowEffects;
         }
 
-        List<PotionEffect> removedEffects = new ArrayList<PotionEffect>();
+        List<PotionEffect> removedEffects = new ArrayList<>();
         for (PotionEffect eff : this.getActivePotionEffects()) {
             if (eff.getPotion().isBadEffect()) {
                 removedEffects.add(eff);
@@ -310,7 +310,7 @@ public class EntitySentientSpecter extends EntityDemonBase {
 
         if (getEntityWorld() instanceof WorldServer) {
             WorldServer server = (WorldServer) getEntityWorld();
-            server.spawnParticle(EnumParticleTypes.HEART, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, 7, 0.2, 0.2, 0.2, 0, new int[0]);
+            server.spawnParticle(EnumParticleTypes.HEART, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, 7, 0.2, 0.2, 0.2, 0);
         }
     }
 

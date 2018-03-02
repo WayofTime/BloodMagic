@@ -308,7 +308,7 @@ public class ItemSentientShovel extends ItemSpade implements IDemonWillWeapon, I
 
     @Override
     public List<String> getVariants() {
-        List<String> ret = new ArrayList<String>();
+        List<String> ret = new ArrayList<>();
         for (EnumDemonWillType type : EnumDemonWillType.values()) {
             ret.add("type=" + type.getName().toLowerCase());
         }
@@ -318,7 +318,7 @@ public class ItemSentientShovel extends ItemSpade implements IDemonWillWeapon, I
 
     @Override
     public List<ItemStack> getRandomDemonWillDrop(EntityLivingBase killedEntity, EntityLivingBase attackingEntity, ItemStack stack, int looting) {
-        List<ItemStack> soulList = new ArrayList<ItemStack>();
+        List<ItemStack> soulList = new ArrayList<>();
 
         if (killedEntity.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && !(killedEntity instanceof IMob)) {
             return soulList;
@@ -343,7 +343,7 @@ public class ItemSentientShovel extends ItemSpade implements IDemonWillWeapon, I
     //TODO: Change attack speed.
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
-        Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
+        Multimap<String, AttributeModifier> multimap = HashMultimap.create();
         if (slot == EntityEquipmentSlot.MAINHAND) {
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getDamageOfActivatedSword(stack), 0));
             multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", this.getAttackSpeedOfSword(stack), 0));

@@ -6,11 +6,7 @@ import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.client.Sprite;
 import WayofTime.bloodmagic.client.helper.ShaderHelper;
-import WayofTime.bloodmagic.client.hud.HUDElementCornerTile;
-import WayofTime.bloodmagic.client.hud.HUDElementDemonWillAura;
-import WayofTime.bloodmagic.client.hud.HUDElementHolding;
 import WayofTime.bloodmagic.client.key.KeyBindings;
 import WayofTime.bloodmagic.client.render.LayerBloodElytra;
 import WayofTime.bloodmagic.client.render.block.*;
@@ -23,7 +19,6 @@ import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import WayofTime.bloodmagic.tile.*;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
-import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -46,9 +41,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.awt.Color;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 public class ClientProxy extends CommonProxy {
     public static DemonWillHolder currentAura = new DemonWillHolder();

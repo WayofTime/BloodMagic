@@ -40,7 +40,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     private Ritual currentRitual;
     private EnumFacing direction = EnumFacing.NORTH;
     private boolean inverted;
-    private List<EnumDemonWillType> currentActiveWillConfig = new ArrayList<EnumDemonWillType>();
+    private List<EnumDemonWillType> currentActiveWillConfig = new ArrayList<>();
 
     @Override
     public void onUpdate() {
@@ -322,7 +322,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
     @Override
     public List<EnumDemonWillType> getActiveWillConfig() {
-        return new ArrayList<EnumDemonWillType>(currentActiveWillConfig);
+        return new ArrayList<>(currentActiveWillConfig);
     }
 
     @Override
@@ -330,17 +330,17 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         //There is probably an easier way to make expanded chat messages
         if (typeList.size() >= 1) {
             Object[] translations = new TextComponentTranslation[typeList.size()];
-            String constructedString = "%s";
+            StringBuilder constructedString = new StringBuilder("%s");
 
             for (int i = 1; i < typeList.size(); i++) {
-                constructedString = constructedString + ", %s";
+                constructedString.append(", %s");
             }
 
             for (int i = 0; i < typeList.size(); i++) {
                 translations[i] = new TextComponentTranslation("tooltip.bloodmagic.currentBaseType." + typeList.get(i).name.toLowerCase());
             }
 
-            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.willConfig.set", new TextComponentTranslation(constructedString, translations)));
+            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.willConfig.set", new TextComponentTranslation(constructedString.toString(), translations)));
         } else {
             ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.willConfig.void"));
         }

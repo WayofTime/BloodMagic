@@ -62,8 +62,8 @@ public class ItemArcaneAshes extends Item implements IVariantProvider {
 
     @Override
     public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=arcaneashes"));
+        List<Pair<Integer, String>> ret = new ArrayList<>();
+        ret.add(new ImmutablePair<>(0, "type=arcaneashes"));
         return ret;
     }
 }

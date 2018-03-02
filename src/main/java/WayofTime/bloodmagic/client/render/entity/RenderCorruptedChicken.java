@@ -16,7 +16,7 @@ public class RenderCorruptedChicken extends RenderLiving<EntityCorruptedChicken>
 
     public RenderCorruptedChicken(RenderManager renderManagerIn) {
         super(renderManagerIn, new ModelCorruptedChicken(0), 0.3f);
-        this.addLayer(new LayerWill<EntityCorruptedChicken>(this, new ModelCorruptedChicken(1.1f)));
+        this.addLayer(new LayerWill<>(this, new ModelCorruptedChicken(1.1f)));
     }
 
     @Override

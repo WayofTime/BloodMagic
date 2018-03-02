@@ -27,8 +27,8 @@ import java.util.Random;
 
 public class BlockDemonCrystal extends Block {
     public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 6);
-    public static final PropertyEnum<EnumDemonWillType> TYPE = PropertyEnum.<EnumDemonWillType>create("type", EnumDemonWillType.class);
-    public static final PropertyEnum<EnumFacing> ATTACHED = PropertyEnum.<EnumFacing>create("attached", EnumFacing.class);
+    public static final PropertyEnum<EnumDemonWillType> TYPE = PropertyEnum.create("type", EnumDemonWillType.class);
+    public static final PropertyEnum<EnumFacing> ATTACHED = PropertyEnum.create("attached", EnumFacing.class);
 
     public BlockDemonCrystal() {
         super(Material.ROCK);
