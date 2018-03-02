@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 2.2.8
+------------------------------------------------------
+- Fixed a client side null-pointer exception with the Blood Lamp
+	- It's a bright idea to fix this as soon as I can.
+
+------------------------------------------------------
 Version 2.2.7
 ------------------------------------------------------
 - Added the Furnace Array:
