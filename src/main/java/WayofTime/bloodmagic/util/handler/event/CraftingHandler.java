@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.item.types.ComponentTypes;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.AltarCraftedEvent;
 import WayofTime.bloodmagic.iface.IUpgradeTrainer;
@@ -15,8 +16,10 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBanner;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -136,5 +139,11 @@ public class CraftingHandler {
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void handleFuelLevel(FurnaceFuelBurnTimeEvent event) {
+        if (event.getItemStack().getItem() == RegistrarBloodMagicItems.COMPONENT && event.getItemStack().getMetadata() == ComponentTypes.SAND_COAL.ordinal())
+            event.setBurnTime(TileEntityFurnace.getItemBurnTime(new ItemStack(Items.COAL)));
     }
 }
