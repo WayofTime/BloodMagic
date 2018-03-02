@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
+import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -102,7 +103,7 @@ public class StatTrackerGrimReaperSprint extends StatTracker {
         StatTracker tracker = armour.getTracker(BloodMagic.MODID + ".tracker.grimReaper");
         if (tracker instanceof StatTrackerGrimReaperSprint) {
             ((StatTrackerGrimReaperSprint) tracker).totalDeaths++;
-            System.out.println(((StatTrackerGrimReaperSprint) tracker).totalDeaths);
+            BMLog.DEBUG.info(String.valueOf(((StatTrackerGrimReaperSprint) tracker).totalDeaths));
             tracker.markDirty();
         }
 //        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + 1 : 1);

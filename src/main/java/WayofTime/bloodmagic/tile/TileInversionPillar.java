@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
@@ -118,13 +119,13 @@ public class TileInversionPillar extends TileTicking {
                 currentInfectionRadius++;
                 consecutiveFailedChecks = 0;
                 currentInversion -= inversionToIncreaseRadius;
-                System.out.println("Increasing radius!");
+                BMLog.DEBUG.info("Increasing radius!");
             } else if (consecutiveFailedAirChecks > 25 * currentInfectionRadius) //Change this to require a number of "creations" with the orbs in the air.
             {
                 currentInfectionRadius++;
                 consecutiveFailedChecks = 0;
                 currentInversion -= inversionToIncreaseRadius;
-                System.out.println("Increasing radius due to being in the air!");
+                BMLog.DEBUG.info("Increasing radius due to being in the air!");
             }
 
             if (currentInfectionRadius >= 8 && currentInversion >= inversionToAddPillar) {
@@ -304,7 +305,7 @@ public class TileInversionPillar extends TileTicking {
 
     public void handleEvents(float time, Iterable<Event> pastEvents) {
         for (Event event : pastEvents) {
-            System.out.println("Event: " + event.event() + " " + event.offset() + " " + getPos() + " " + time);
+            BMLog.DEBUG.info("Event: " + event.event() + " " + event.offset() + " " + getPos() + " " + time);
         }
     }
 

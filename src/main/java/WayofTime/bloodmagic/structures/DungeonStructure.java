@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.structures;
 
+import WayofTime.bloodmagic.util.BMLog;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -27,7 +28,7 @@ public class DungeonStructure {
         Template template = templatemanager.getTemplate(minecraftserver, resource);
 
         if (template == null) {
-            System.out.println("Invalid template for location: " + resource);
+            BMLog.DEBUG.warn("Invalid template for location: " + resource);
             return false;
         }
 

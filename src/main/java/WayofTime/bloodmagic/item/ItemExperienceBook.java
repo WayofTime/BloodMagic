@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -76,7 +77,7 @@ public class ItemExperienceBook extends Item implements IVariantProvider {
         int neededExp = (int) Math.ceil((1 - progress) * expToNext);
         float containedExp = (float) getStoredExperience(stack);
 
-        System.out.println("Needed: " + neededExp + ", contained: " + containedExp + ", exp to next: " + expToNext);
+        BMLog.DEBUG.info("Needed: " + neededExp + ", contained: " + containedExp + ", exp to next: " + expToNext);
 
         if (containedExp >= neededExp) {
             setStoredExperience(stack, containedExp - neededExp);

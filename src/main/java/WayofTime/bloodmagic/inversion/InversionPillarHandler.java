@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.inversion;
 
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.util.BMLog;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -63,7 +64,7 @@ public class InversionPillarHandler {
 
     //Assume that it has been added already.
     private static void onPillarAdded(World world, EnumDemonWillType type, BlockPos pos) {
-        System.out.println("Adding...");
+        BMLog.DEBUG.info("Adding...");
         List<BlockPos> closePosList = new ArrayList<BlockPos>();
 
         int dim = world.provider.getDimension();
@@ -114,7 +115,7 @@ public class InversionPillarHandler {
     }
 
     private static void onPillarRemoved(World world, EnumDemonWillType type, BlockPos pos) {
-        System.out.println("Removing...");
+        BMLog.DEBUG.info("Removing...");
         int dim = world.provider.getDimension();
         if (nearPillarMap.containsKey(dim)) {
             Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>> willMap = nearPillarMap.get(dim);

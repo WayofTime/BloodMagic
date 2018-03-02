@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.structures;
 
 import WayofTime.bloodmagic.ritual.data.AreaDescriptor;
+import WayofTime.bloodmagic.util.BMLog;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -131,7 +132,7 @@ public class Dungeon {
         long endTime = System.nanoTime();
 
         long duration = (endTime - startTime); //divide by 1000000 to get milliseconds.
-        System.out.println("Duration: " + duration + "(ns), " + duration / 1000000 + "(ms)");
+        BMLog.DEBUG.info("Duration: " + duration + "(ns), " + duration / 1000000 + "(ms)");
 
         //Building what I've got
         for (Entry<BlockPos, Pair<DungeonRoom, PlacementSettings>> entry : roomMap.entrySet()) {
