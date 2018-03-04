@@ -143,7 +143,7 @@ public class CraftingHandler {
 
     @SubscribeEvent
     public static void handleFuelLevel(FurnaceFuelBurnTimeEvent event) {
-        if (event.getItemStack().getItem() == RegistrarBloodMagicItems.COMPONENT && event.getItemStack().getMetadata() == ComponentTypes.SAND_COAL.ordinal())
+        if (ItemStack.areItemsEqual(event.getItemStack(), ComponentTypes.SAND_COAL.getStack()))
             event.setBurnTime(TileEntityFurnace.getItemBurnTime(new ItemStack(Items.COAL)));
     }
 }
