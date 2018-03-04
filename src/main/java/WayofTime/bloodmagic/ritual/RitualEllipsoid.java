@@ -1,29 +1,30 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ritual.data.*;
-import WayofTime.bloodmagic.util.Utils;
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-
-import javax.annotation.Nullable;
-
-import java.util.ArrayList;
-import java.util.Iterator;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.ritual.data.AreaDescriptor;
+import WayofTime.bloodmagic.ritual.data.EnumRuneType;
+import WayofTime.bloodmagic.ritual.data.IMasterRitualStone;
+import WayofTime.bloodmagic.ritual.data.Ritual;
+import WayofTime.bloodmagic.ritual.data.RitualComponent;
+import WayofTime.bloodmagic.util.Utils;
 
 public class RitualEllipsoid extends Ritual
 {
-//    public static final String FELLING_RANGE = "fellingRange";
+    public static final String SPHEROID_RANGE = "spheroidRange";
     public static final String CHEST_RANGE = "chest";
 
     private boolean cached = false;
@@ -32,10 +33,10 @@ public class RitualEllipsoid extends Ritual
     public RitualEllipsoid()
     {
         super("ritualEllipsoid", 0, 20000, "ritual." + BloodMagic.MODID + ".ellipseRitual");
-//        addBlockRange(FELLING_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -3, -10), new BlockPos(11, 27, 11)));
+        addBlockRange(SPHEROID_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -10, -10), new BlockPos(11, 11, 11)));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
 
-//        setMaximumVolumeAndDistanceOfRange(FELLING_RANGE, 14000, 15, 30);
+        setMaximumVolumeAndDistanceOfRange(SPHEROID_RANGE, 0, 32, 32);
         setMaximumVolumeAndDistanceOfRange(CHEST_RANGE, 1, 3, 3);
     }
 
@@ -55,75 +56,107 @@ public class RitualEllipsoid extends Ritual
             return;
         }
 
+        AreaDescriptor sphereRange = getBlockRange(SPHEROID_RANGE);
+        AxisAlignedBB sphereBB = sphereRange.getAABB(masterPos);
+        int minX = (int) (masterPos.getX() - sphereBB.minX);
+        int maxX = (int) (sphereBB.maxX - masterPos.getX()) - 1;
+        int minY = (int) (masterPos.getY() - sphereBB.minY);
+        int maxY = (int) (sphereBB.maxY - masterPos.getY()) - 1;
+        int minZ = (int) (masterPos.getZ() - sphereBB.minZ);
+        int maxZ = (int) (sphereBB.maxZ - masterPos.getZ()) - 1;
+
         if (tileInventory != null)
         {
-            IItemHandler inventory = Utils.getInventory(tileInventory, EnumFacing.DOWN);
-            int numSlots = inventory.getSlots();
-            if (numSlots >= 3)
+            if (tileInventory.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN))
             {
-                ItemStack xStack = inventory.getStackInSlot(0);
-                ItemStack yStack = inventory.getStackInSlot(1);
-                ItemStack zStack = inventory.getStackInSlot(2);
+                IItemHandler itemHandler = tileInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
 
-                if (xStack.isEmpty() || yStack.isEmpty() || zStack.isEmpty())
+                if (itemHandler.getSlots() <= 0)
                 {
                     return;
                 }
 
-                int xR = xStack.getCount();
-                int yR = yStack.getCount();
-                int zR = zStack.getCount();
+                int blockSlot = -1;
+                for (int invSlot = 0; invSlot < itemHandler.getSlots(); invSlot++)
+                {
+                    ItemStack stack = itemHandler.extractItem(invSlot, 1, true);
+                    if (stack.isEmpty() || !(stack.getItem() instanceof ItemBlock))
+                        continue;
 
-                int j = -yR;
-                int i = -xR;
-                int k = -zR;
+                    blockSlot = invSlot;
+                    break;
+                }
+
+                if (blockSlot == -1)
+                {
+                    return;
+                }
+
+                int xR = Math.max(maxX, minX);
+                int yR = Math.max(maxY, minY);
+                int zR = Math.max(maxZ, minZ);
+
+                int j = -minX;
+                int i = -minY;
+                int k = -minZ;
 
                 if (currentPos != null)
                 {
                     j = currentPos.getY();
-                    i = Math.min(xR, Math.max(-xR, currentPos.getX()));
-                    k = Math.min(zR, Math.max(-zR, currentPos.getZ()));
+                    i = Math.min(xR, Math.max(-minX, currentPos.getX()));
+                    k = Math.min(zR, Math.max(-minZ, currentPos.getZ()));
                 }
+                int checks = 0;
+                int maxChecks = 100;
 
-                while (j <= yR)
+                while (j <= maxY)
                 {
-                    while (i <= xR)
+                    while (i <= maxX)
                     {
-                        while (k <= zR)
+                        while (k <= maxZ)
                         {
+                            checks++;
+                            if (checks >= maxChecks)
+                            {
+                                this.currentPos = new BlockPos(i, j, k);
+                                return;
+                            }
+
                             if (checkIfEllipsoidShell(xR, yR, zR, i, j, k))
                             {
                                 BlockPos newPos = masterPos.add(i, j, k);
-
-                                if (world.isAirBlock(newPos))
+//
+                                if (!world.getBlockState(newPos).getBlock().isReplaceable(world, newPos))
                                 {
-                                    if (j > 0)
-                                    {
-                                        world.setBlockState(newPos, Blocks.GLASS.getDefaultState());
-                                    } else
-                                    {
-                                        world.setBlockState(newPos, Blocks.STONE.getDefaultState());
-                                    }
                                     k++;
-                                    this.currentPos = new BlockPos(i, j, k);
-                                    return;
+                                    continue;
                                 }
+
+                                IBlockState placeState = Block.getBlockFromItem(itemHandler.getStackInSlot(blockSlot).getItem()).getStateFromMeta(itemHandler.getStackInSlot(blockSlot).getItemDamage());
+                                world.setBlockState(newPos, placeState);
+
+                                itemHandler.extractItem(blockSlot, 1, false);
+                                tileInventory.markDirty();
+                                //TODO: 
+                                masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
+                                k++;
+                                this.currentPos = new BlockPos(i, j, k);
+                                return;
                             }
                             k++;
                         }
                         i++;
-                        k = -zR;
+                        k = -minZ;
                     }
                     j++;
-                    i = -xR;
+                    i = -minX;
                     this.currentPos = new BlockPos(i, j, k);
                     return;
                 }
 
-                j = -yR;
+                j = -minY;
                 this.currentPos = new BlockPos(i, j, k);
                 return;
-
             }
         }
     }
