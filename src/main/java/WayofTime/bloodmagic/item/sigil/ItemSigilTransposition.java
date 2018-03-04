@@ -1,32 +1,30 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
-import WayofTime.bloodmagic.util.BlockStack;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.iface.ISigil;
-import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemSigilTransposition extends ItemSigilBase {
+
     public ItemSigilTransposition() {
         super("transposition", 1000);
     }
@@ -40,26 +38,22 @@ public class ItemSigilTransposition extends ItemSigilBase {
             return;
         NBTTagCompound tag = stack.getTagCompound();
 
-        if (tag.hasKey(Constants.NBT.CONTAINED_BLOCK_NAME) && tag.hasKey(Constants.NBT.CONTAINED_BLOCK_META)) {
+        if (tag.hasKey("stored")) {
             tooltip.add(" ");
-            BlockStack blockStack = new BlockStack(Block.getBlockFromName(tag.getString(Constants.NBT.CONTAINED_BLOCK_NAME)), tag.getByte(Constants.NBT.CONTAINED_BLOCK_META));
-            tooltip.add(blockStack.getItemStack().getDisplayName());
+            tooltip.add(tag.getCompoundTag("stored").getString("display"));
         }
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        stack = NBTHelper.checkNBT(stack);
+        if (!stack.hasTagCompound())
+            return super.getItemStackDisplayName(stack);
+
         NBTTagCompound tag = stack.getTagCompound();
+        if (tag.hasKey("stored"))
+            return super.getItemStackDisplayName(stack) + " (" + tag.getCompoundTag("stored").getString("display") + ")";
 
-        if (tag.hasKey(Constants.NBT.CONTAINED_BLOCK_NAME) && tag.hasKey(Constants.NBT.CONTAINED_BLOCK_META)) {
-            BlockStack blockStack = new BlockStack(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(tag.getString(Constants.NBT.CONTAINED_BLOCK_NAME))), tag.getByte(Constants.NBT.CONTAINED_BLOCK_META));
-            if (blockStack.getItemStack() != null && blockStack.getItemStack().getItem() != null) //TODO: Figure out why it's a null item. This is a patchwork solution.
-            {
-                return super.getItemStackDisplayName(stack) + " (" + blockStack.getItemStack().getDisplayName() + ")";
-            }
-
-        }
         return super.getItemStackDisplayName(stack);
     }
 
@@ -71,73 +65,79 @@ public class ItemSigilTransposition extends ItemSigilBase {
         if (PlayerHelper.isFakePlayer(player))
             return EnumActionResult.FAIL;
 
-        stack = NBTHelper.checkNBT(stack);
-
         IBlockState state = world.getBlockState(blockPos);
         if (!world.isRemote) {
             if (BloodMagicAPI.INSTANCE.getBlacklist().getTransposition().contains(state))
                 return EnumActionResult.FAIL;
 
-            if (player.isSneaking() && (!stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_NAME) || !stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_META))) {
+            if (player.isSneaking() && stack.hasTagCompound() && !stack.getTagCompound().hasKey("stored")) {
                 if (state.getPlayerRelativeBlockHardness(player, world, blockPos) >= 0 && state.getBlockHardness(world, blockPos) >= 0) {
                     int cost = getLpUsed();
 
-                    NBTTagCompound tileNBTTag = new NBTTagCompound();
-                    String blockName = state.getBlock().getRegistryName().toString();
-                    byte metadata = (byte) state.getBlock().getMetaFromState(state);
+                    NBTTagCompound stored = new NBTTagCompound();
+                    stored.setTag("state", NBTUtil.writeBlockState(new NBTTagCompound(), state));
+                    stored.setString("display", state.getBlock().getPickBlock(state, null, world, blockPos, player).getDisplayName());
+                    if (state.getBlock().hasTileEntity(state)) {
+                        TileEntity tile = world.getTileEntity(blockPos);
+                        if (tile != null) {
+                            cost *= 5;
+                            stored.setTag("tileData", tile.writeToNBT(new NBTTagCompound()));
 
-                    if (world.getTileEntity(blockPos) != null) {
-                        cost *= 5;
-                        world.getTileEntity(blockPos).writeToNBT(tileNBTTag);
-
-                        if (world.getTileEntity(blockPos) instanceof TileEntityMobSpawner) {
-                            cost *= 6;
+                            if (world.getTileEntity(blockPos) instanceof TileEntityMobSpawner)
+                                cost *= 6;
                         }
                     }
 
-                    stack.getTagCompound().setString(Constants.NBT.CONTAINED_BLOCK_NAME, blockName);
-                    stack.getTagCompound().setByte(Constants.NBT.CONTAINED_BLOCK_META, metadata);
-                    stack.getTagCompound().setTag(Constants.NBT.CONTAINED_TILE_ENTITY, tileNBTTag);
-
+                    stack.getTagCompound().setTag("stored", stored);
                     NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, cost);
-
                     world.removeTileEntity(blockPos);
                     world.setBlockToAir(blockPos);
-
                     return EnumActionResult.SUCCESS;
                 }
-            } else if (stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_NAME) && stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_META)) {
-                IBlockState iblockstate = world.getBlockState(blockPos);
-                Block block = iblockstate.getBlock();
-                BlockStack blockToPlace = new BlockStack(Block.getBlockFromName(stack.getTagCompound().getString(Constants.NBT.CONTAINED_BLOCK_NAME)), stack.getTagCompound().getByte(Constants.NBT.CONTAINED_BLOCK_META));
+            } else if (stack.hasTagCompound() && stack.getTagCompound().hasKey("stored")) {
+                IBlockState worldState = world.getBlockState(blockPos);
+                NBTTagCompound storedTag = stack.getTagCompound().getCompoundTag("stored");
+                IBlockState storedState = NBTUtil.readBlockState(storedTag.getCompoundTag("state"));
+                NBTTagCompound tileData = storedTag.hasKey("tileData") ? storedTag.getCompoundTag("tileData") : null;
 
-                if (!block.isReplaceable(world, blockPos)) {
+                if (!worldState.getBlock().isReplaceable(world, blockPos))
                     blockPos = blockPos.offset(side);
-                }
 
-                if (!stack.isEmpty() && player.canPlayerEdit(blockPos, side, stack) && world.mayPlace(blockToPlace.getBlock(), blockPos, false, side, player)) {
-                    if (world.setBlockState(blockPos, blockToPlace.getState(), 3)) {
-                        blockToPlace.getBlock().onBlockPlacedBy(world, blockPos, blockToPlace.getState(), player, blockToPlace.getItemStack());
-//                        world.playSound((double) ((float) blockPos.getX() + 0.5F), (double) ((float) blockPos.getY() + 0.5F), (double) ((float) blockPos.getZ() + 0.5F), blockToPlace.getBlock().getStepSound().getPlaceSound(), (blockToPlace.getBlock().getStepSound().getVolume() + 1.0F) / 2.0F, blockToPlace.getBlock().getStepSound().getPitch() * 0.8F);
+                if (!stack.isEmpty() && player.canPlayerEdit(blockPos, side, stack) && world.mayPlace(storedState.getBlock(), blockPos, false, side, player)) {
+                    if (world.setBlockState(blockPos, storedState, 3)) {
+                        storedState.getBlock().onBlockPlacedBy(world, blockPos, storedState, player, ItemStack.EMPTY);
 
-                        if (stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_TILE_ENTITY) && blockToPlace.getBlock().hasTileEntity(blockToPlace.getState())) {
-                            NBTTagCompound tag = stack.getTagCompound().getCompoundTag(Constants.NBT.CONTAINED_TILE_ENTITY);
-                            tag.setInteger("x", blockPos.getX());
-                            tag.setInteger("y", blockPos.getY());
-                            tag.setInteger("z", blockPos.getZ());
-                            world.getTileEntity(blockPos).readFromNBT(tag);
+                        if (tileData != null) {
+                            tileData.setInteger("x", blockPos.getX());
+                            tileData.setInteger("y", blockPos.getY());
+                            tileData.setInteger("z", blockPos.getZ());
+                            TileEntity worldTile = world.getTileEntity(blockPos);
+                            if (worldTile != null)
+                                worldTile.readFromNBT(tileData);
                         }
+
                         world.notifyBlockUpdate(blockPos, state, state, 3);
-
-                        stack.getTagCompound().removeTag(Constants.NBT.CONTAINED_BLOCK_NAME);
-                        stack.getTagCompound().removeTag(Constants.NBT.CONTAINED_BLOCK_META);
-                        stack.getTagCompound().removeTag(Constants.NBT.CONTAINED_TILE_ENTITY);
-
+                        stack.getTagCompound().removeTag("stored");
                         return EnumActionResult.SUCCESS;
                     }
                 }
             }
         }
         return EnumActionResult.FAIL;
+    }
+
+    // We only want to send the display name to the client rather than the bloated tag with tile data and such
+    @Nullable
+    @Override
+    public NBTTagCompound getNBTShareTag(ItemStack stack) {
+        if (!stack.hasTagCompound() || !stack.getTagCompound().hasKey("stored"))
+            return super.getNBTShareTag(stack);
+
+        NBTTagCompound shareTag = stack.getTagCompound().copy();
+        NBTTagCompound storedTag = shareTag.getCompoundTag("stored");
+        storedTag.removeTag("state");
+        storedTag.removeTag("stored");
+
+        return shareTag;
     }
 }
