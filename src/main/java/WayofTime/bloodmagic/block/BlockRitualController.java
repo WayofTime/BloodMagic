@@ -1,12 +1,11 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.core.registry.ImperfectRitualRegistry;
-import WayofTime.bloodmagic.core.registry.RitualRegistry;
-import WayofTime.bloodmagic.ritual.data.Ritual;
-import WayofTime.bloodmagic.ritual.data.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.ritual.RitualRegistry;
+import WayofTime.bloodmagic.ritual.Ritual;
+import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.util.helper.RitualHelper;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumRitualController;
@@ -31,6 +30,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class BlockRitualController extends BlockEnum<EnumRitualController> implements IGuideLinked {
+
     public BlockRitualController() {
         super(Material.ROCK, EnumRitualController.class);
 
@@ -67,10 +67,8 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
             }
         } else if (state.getValue(getProperty()) == EnumRitualController.IMPERFECT && tile instanceof TileImperfectRitualStone) {
 
-            IBlockState determinerState = world.getBlockState(pos.up());
-            BlockStack determiner = new BlockStack(determinerState.getBlock(), determinerState.getBlock().getMetaFromState(determinerState));
-
-            return ((TileImperfectRitualStone) tile).performRitual(world, pos, ImperfectRitualRegistry.getRitualForBlock(determiner), player);
+            IBlockState ritualBlock = world.getBlockState(pos.up());
+            return ((TileImperfectRitualStone) tile).performRitual(world, pos, ImperfectRitualRegistry.getRitualForBlock(ritualBlock), player);
         }
 
         return false;
@@ -115,7 +113,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
             else
                 return new ResourceLocation("bloodmagic", "ritual_" + mrs.getCurrentRitual().getName());
         } else if (state.getValue(getProperty()).equals(EnumRitualController.IMPERFECT)) {
-            ImperfectRitual imperfectRitual = ImperfectRitualRegistry.getRitualForBlock(BlockStack.getStackFromPos(world, pos.up()));
+            ImperfectRitual imperfectRitual = ImperfectRitualRegistry.getRitualForBlock(world.getBlockState(pos.up()));
             if (imperfectRitual != null)
                 return new ResourceLocation("bloodmagic", "ritual_" + imperfectRitual.getName());
         }

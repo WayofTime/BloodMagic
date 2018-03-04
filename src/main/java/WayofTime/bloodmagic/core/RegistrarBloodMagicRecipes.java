@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.api.impl.BloodMagicRecipeRegistrar;
 import WayofTime.bloodmagic.altar.EnumAltarTier;
 import WayofTime.bloodmagic.core.registry.OrbRegistry;
 import WayofTime.bloodmagic.item.ItemSlate;
-import WayofTime.bloodmagic.ritual.data.EnumRuneType;
+import WayofTime.bloodmagic.ritual.EnumRuneType;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;

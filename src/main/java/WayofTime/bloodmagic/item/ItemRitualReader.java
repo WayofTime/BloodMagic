@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.ritual.data.EnumRitualReaderState;
-import WayofTime.bloodmagic.ritual.data.IMasterRitualStone;
+import WayofTime.bloodmagic.ritual.EnumRitualReaderState;
+import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.util.helper.NBTHelper;

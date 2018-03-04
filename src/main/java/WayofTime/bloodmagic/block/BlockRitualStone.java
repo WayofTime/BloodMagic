@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ritual.data.EnumRuneType;
-import WayofTime.bloodmagic.ritual.data.IRitualStone;
+import WayofTime.bloodmagic.ritual.EnumRuneType;
+import WayofTime.bloodmagic.ritual.IRitualStone;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.util.helper.TextHelper;

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.structures;
 
-import WayofTime.bloodmagic.ritual.data.AreaDescriptor;
+import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.util.BMLog;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;

@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.iface.IPurificationAsh;
-import WayofTime.bloodmagic.ritual.data.AreaDescriptor;
+import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.util.helper.PurificationHelper;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;

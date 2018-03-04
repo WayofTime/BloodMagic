@@ -2,10 +2,10 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.core.registry.RitualRegistry;
-import WayofTime.bloodmagic.ritual.data.EnumRuneType;
-import WayofTime.bloodmagic.ritual.data.Ritual;
-import WayofTime.bloodmagic.ritual.data.RitualComponent;
+import WayofTime.bloodmagic.ritual.RitualRegistry;
+import WayofTime.bloodmagic.ritual.EnumRuneType;
+import WayofTime.bloodmagic.ritual.Ritual;
+import WayofTime.bloodmagic.ritual.RitualComponent;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.util.helper.RitualHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
@@ -16,6 +16,7 @@ import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.handler.event.ClientHandler;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -117,7 +118,9 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
             Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(stack));
             if (ritual != null) {
                 EnumFacing direction = getDirection(stack);
-                for (RitualComponent component : ritual.getComponents()) {
+                List<RitualComponent> components = Lists.newArrayList();
+                ritual.gatherComponents(components);
+                for (RitualComponent component : components) {
                     if (!canPlaceRitualStone(component.getRuneType(), stack)) {
                         return false;
                     }
@@ -223,7 +226,8 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
             } else if (sneaking) {
                 tooltip.add(TextHelper.localize(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).getName())));
                 tooltip.add("");
-                ArrayList<RitualComponent> componentList = ritual.getComponents();
+                List<RitualComponent> components = Lists.newArrayList();
+                ritual.gatherComponents(components);
 
                 int blankRunes = 0;
                 int airRunes = 0;
@@ -232,9 +236,9 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
                 int earthRunes = 0;
                 int duskRunes = 0;
                 int dawnRunes = 0;
-                int totalRunes = componentList.size();
+                int totalRunes = components.size();
 
-                for (RitualComponent component : componentList) {
+                for (RitualComponent component : components) {
                     switch (component.getRuneType()) {
                         case BLANK:
                             blankRunes++;
@@ -486,7 +490,8 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
             return false;
         }
 
-        ArrayList<RitualComponent> components = ritual.getComponents();
+        List<RitualComponent> components = Lists.newArrayList();
+        ritual.gatherComponents(components);
         for (RitualComponent component : components) {
             if (!canPlaceRitualStone(component.getRuneType(), stack)) {
                 return false;

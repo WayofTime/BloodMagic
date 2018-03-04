@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.event;
 
-import WayofTime.bloodmagic.ritual.data.IMasterRitualStone;
-import WayofTime.bloodmagic.ritual.data.Ritual;
-import WayofTime.bloodmagic.ritual.data.imperfect.IImperfectRitualStone;
-import WayofTime.bloodmagic.ritual.data.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.ritual.Ritual;
+import WayofTime.bloodmagic.ritual.imperfect.IImperfectRitualStone;
+import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitual;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

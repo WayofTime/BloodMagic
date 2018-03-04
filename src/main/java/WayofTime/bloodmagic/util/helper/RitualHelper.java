@@ -1,10 +1,11 @@
 package WayofTime.bloodmagic.util.helper;
 
-import WayofTime.bloodmagic.core.registry.RitualRegistry;
-import WayofTime.bloodmagic.ritual.data.EnumRuneType;
-import WayofTime.bloodmagic.ritual.data.IRitualStone;
-import WayofTime.bloodmagic.ritual.data.Ritual;
-import WayofTime.bloodmagic.ritual.data.RitualComponent;
+import WayofTime.bloodmagic.ritual.RitualRegistry;
+import WayofTime.bloodmagic.ritual.EnumRuneType;
+import WayofTime.bloodmagic.ritual.IRitualStone;
+import WayofTime.bloodmagic.ritual.Ritual;
+import WayofTime.bloodmagic.ritual.RitualComponent;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -15,6 +16,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RitualHelper {
     @CapabilityInject(IRitualStone.Tile.class)
@@ -76,10 +78,8 @@ public class RitualHelper {
             return false;
         }
 
-        ArrayList<RitualComponent> components = ritual.getComponents();
-
-        if (components == null)
-            return false;
+        List<RitualComponent> components = Lists.newArrayList();
+        ritual.gatherComponents(components);
 
         for (RitualComponent component : components) {
             BlockPos newPos = pos.add(component.getOffset(direction));

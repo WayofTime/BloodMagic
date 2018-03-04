@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ritual.data.IMasterRitualStone;
+import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.teleport.PortalLocation;
 import WayofTime.bloodmagic.teleport.TeleportQueue;
 import WayofTime.bloodmagic.block.base.BlockInteger;

@@ -3,9 +3,9 @@ package WayofTime.bloodmagic.util.handler.event;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.core.registry.RitualRegistry;
-import WayofTime.bloodmagic.ritual.data.Ritual;
-import WayofTime.bloodmagic.ritual.data.RitualComponent;
+import WayofTime.bloodmagic.ritual.RitualRegistry;
+import WayofTime.bloodmagic.ritual.Ritual;
+import WayofTime.bloodmagic.ritual.RitualComponent;
 import WayofTime.bloodmagic.client.hud.HUDElement;
 import WayofTime.bloodmagic.client.key.KeyBindings;
 import WayofTime.bloodmagic.client.render.block.RenderFakeBlocks;
@@ -18,6 +18,7 @@ import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.Lists;
 import com.google.common.collect.SetMultimap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -269,7 +270,9 @@ public class ClientHandler {
         double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
         double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
 
-        for (RitualComponent ritualComponent : ritual.getComponents()) {
+        List<RitualComponent> components = Lists.newArrayList();
+        ritual.gatherComponents(components);
+        for (RitualComponent ritualComponent : components) {
             vX = vec3.add(ritualComponent.getOffset(direction));
             double minX = vX.getX() - posX;
             double minY = vX.getY() - posY;
@@ -346,7 +349,9 @@ public class ClientHandler {
         double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
         double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
 
-        for (RitualComponent ritualComponent : ritual.getComponents()) {
+        List<RitualComponent> components = Lists.newArrayList();
+        ritual.gatherComponents(components);
+        for (RitualComponent ritualComponent : components) {
             vX = vec3.add(ritualComponent.getOffset(direction));
             double minX = vX.getX() - posX;
             double minY = vX.getY() - posY;

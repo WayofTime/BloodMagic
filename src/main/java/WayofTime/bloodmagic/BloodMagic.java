@@ -3,7 +3,7 @@ package WayofTime.bloodmagic;
 import WayofTime.bloodmagic.api.BloodMagicPlugin;
 import WayofTime.bloodmagic.api.IBloodMagicPlugin;
 import WayofTime.bloodmagic.core.registry.OrbRegistry;
-import WayofTime.bloodmagic.core.registry.RitualRegistry;
+import WayofTime.bloodmagic.ritual.RitualRegistry;
 import WayofTime.bloodmagic.util.helper.LogHelper;
 import WayofTime.bloodmagic.client.gui.GuiHandler;
 import WayofTime.bloodmagic.command.CommandBloodMagic;

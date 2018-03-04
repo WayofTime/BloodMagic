@@ -1,21 +1,20 @@
 package WayofTime.bloodmagic.registry;
 
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.ritual.harvest.HarvestRegistry;
-import WayofTime.bloodmagic.core.registry.ImperfectRitualRegistry;
-import WayofTime.bloodmagic.core.registry.RitualRegistry;
-import WayofTime.bloodmagic.ritual.data.Ritual;
-import WayofTime.bloodmagic.ritual.data.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.ritual.RitualRegistry;
+import WayofTime.bloodmagic.ritual.Ritual;
+import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
-import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerPlantable;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerStem;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerTall;
-import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualNight;
-import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRain;
-import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualResistance;
-import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualZombie;
+import WayofTime.bloodmagic.ritual.types.imperfect.ImperfectRitualNight;
+import WayofTime.bloodmagic.ritual.types.imperfect.ImperfectRitualRain;
+import WayofTime.bloodmagic.ritual.types.imperfect.ImperfectRitualResistance;
+import WayofTime.bloodmagic.ritual.types.imperfect.ImperfectRitualZombie;
+import WayofTime.bloodmagic.ritual.types.*;
 import net.minecraft.init.Blocks;
 
 public class ModRituals
