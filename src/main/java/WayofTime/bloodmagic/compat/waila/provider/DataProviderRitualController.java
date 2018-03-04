@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
-import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.ritual.RitualRegistry;

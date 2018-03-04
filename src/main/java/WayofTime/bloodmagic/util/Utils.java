@@ -848,10 +848,10 @@ public class Utils {
         if (finalTile != null)
             finalTile.writeToNBT(finalTag);
 
-        BlockStack initialStack = BlockStack.getStackFromPos(initialWorld, initialPos);
-        BlockStack finalStack = BlockStack.getStackFromPos(finalWorld, finalPos);
+        IBlockState initialState = initialWorld.getBlockState(initialPos);
+        IBlockState finalState = finalWorld.getBlockState(finalPos);
 
-        if ((initialStack.getBlock().equals(Blocks.AIR) && finalStack.getBlock().equals(Blocks.AIR)) || initialStack.getBlock() instanceof BlockPortal || finalStack.getBlock() instanceof BlockPortal)
+        if ((initialState.getBlock().equals(Blocks.AIR) && finalState.getBlock().equals(Blocks.AIR)) || initialState.getBlock() instanceof BlockPortal || finalState.getBlock() instanceof BlockPortal)
             return false;
 
         if (playSound) {
@@ -860,9 +860,9 @@ public class Utils {
         }
 
         //Finally, we get to do something! (CLEARING TILES)
-        if (finalStack.getBlock() != null)
+        if (finalState.getBlock().hasTileEntity(finalState))
             finalWorld.removeTileEntity(finalPos);
-        if (initialStack.getBlock() != null)
+        if (initialState.getBlock().hasTileEntity(initialState))
             initialWorld.removeTileEntity(initialPos);
 
         //TILES CLEARED
@@ -889,8 +889,8 @@ public class Utils {
             newTileFinal.setWorld(initialWorld);
         }
 
-        initialWorld.notifyNeighborsOfStateChange(initialPos, finalStack.getBlock(), true);
-        finalWorld.notifyNeighborsOfStateChange(finalPos, initialStack.getBlock(), true);
+        initialWorld.notifyNeighborsOfStateChange(initialPos, finalState.getBlock(), true);
+        finalWorld.notifyNeighborsOfStateChange(finalPos, initialState.getBlock(), true);
 
         return true;
     }

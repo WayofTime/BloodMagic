@@ -2,27 +2,19 @@ package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockOre;
-import net.minecraft.block.BlockRedstoneOre;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RitualMagnetic extends Ritual {
     public static final String PLACEMENT_RANGE = "placementRange";
-    private static final Map<BlockStack, Boolean> oreBlockCache = new HashMap<BlockStack, Boolean>();
     //    public static final String SEARCH_RANGE = "searchRange";
     public BlockPos lastPos; // An offset
 
@@ -58,9 +50,7 @@ public class RitualMagnetic extends Ritual {
         }
 
         IBlockState downState = world.getBlockState(pos.down());
-        Block downBlock = downState.getBlock();
-
-        int radius = getRadius(downBlock);
+        int radius = getRadius(downState.getBlock());
 
         if (replace) {
             int j = -1;
@@ -78,10 +68,7 @@ public class RitualMagnetic extends Ritual {
                     while (k <= radius) {
                         BlockPos newPos = pos.add(i, j, k);
                         IBlockState state = world.getBlockState(newPos);
-                        Block block = state.getBlock();
-                        ItemStack checkStack = block.getItem(world, newPos, state);
-//                        int meta = block.getMetaFromState(state);
-
+                        ItemStack checkStack = state.getBlock().getPickBlock(state, null, world, newPos, null);
                         if (isBlockOre(checkStack)) {
                             Utils.swapLocations(world, newPos, world, replacement);
                             masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
@@ -103,7 +90,6 @@ public class RitualMagnetic extends Ritual {
 
             j = -1;
             this.lastPos = new BlockPos(i, j, k);
-            return;
         }
 
     }
@@ -147,35 +133,16 @@ public class RitualMagnetic extends Ritual {
         return new RitualMagnetic();
     }
 
-    public static boolean isBlockOre(Block block, int meta) {
-        if (block == null)
-            return false;
-
-        if (block instanceof BlockOre || block instanceof BlockRedstoneOre)
-            return true;
-
-        if (Item.getItemFromBlock(block) == Items.AIR)
-            return false;
-
-        BlockStack type = new BlockStack(block, meta);
-        return oreBlockCache.computeIfAbsent(type, RitualMagnetic::computeIsItemOre);
-    }
-
-    private static boolean computeIsItemOre(BlockStack type) {
-        ItemStack stack = new ItemStack(type.getBlock(), type.getMeta());
-        return isBlockOre(stack);
-    }
-
     public static boolean isBlockOre(ItemStack stack) {
-        if (stack.isEmpty()) {
+        if (stack.isEmpty())
             return false;
-        }
 
         for (int id : OreDictionary.getOreIDs(stack)) {
             String oreName = OreDictionary.getOreName(id);
             if (oreName.contains("ore"))
                 return true;
         }
+
         return false;
     }
 }
