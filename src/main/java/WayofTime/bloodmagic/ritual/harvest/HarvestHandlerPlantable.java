@@ -1,21 +1,18 @@
 package WayofTime.bloodmagic.ritual.harvest;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.BlockStack;
-import WayofTime.bloodmagic.iface.IHarvestHandler;
-import WayofTime.bloodmagic.core.registry.HarvestRegistry;
+import WayofTime.bloodmagic.util.BMLog;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -25,10 +22,10 @@ import java.util.List;
 /**
  * Harvest handler for standard plantable crops such as Wheat, Potatoes, and
  * Netherwart. <br>
- * Register a new crop for this handler with
- * {@link HarvestRegistry#registerStandardCrop(Block, int)}
+ * Register a new crop for this handler with {@link HarvestRegistry#registerStandardCrop(Block, int)}
  */
 public class HarvestHandlerPlantable implements IHarvestHandler {
+
     public HarvestHandlerPlantable() {
         HarvestRegistry.registerStandardCrop(Blocks.CARROTS, 7);
         HarvestRegistry.registerStandardCrop(Blocks.WHEAT, 7);
@@ -54,19 +51,12 @@ public class HarvestHandlerPlantable implements IHarvestHandler {
     }
 
     @Override
-    public boolean harvestAndPlant(World world, BlockPos pos, BlockStack blockStack) {
-        if (!HarvestRegistry.getStandardCrops().containsKey(blockStack.getBlock()))
-            return false;
-
-        int matureMeta = HarvestRegistry.getStandardCrops().get(blockStack.getBlock());
-
-        if (blockStack.getMeta() < matureMeta)
-            return false;
-
-        List<ItemStack> drops = blockStack.getBlock().getDrops(world, pos, blockStack.getState(), 0);
+    public boolean harvest(World world, BlockPos pos, IBlockState state, List<ItemStack> drops) {
+        NonNullList<ItemStack> blockDrops = NonNullList.create();
+        state.getBlock().getDrops(blockDrops, world, pos, state, 0);
         boolean foundSeed = false;
 
-        for (ItemStack stack : drops) {
+        for (ItemStack stack : blockDrops) {
             if (stack.isEmpty())
                 continue;
 
@@ -78,22 +68,24 @@ public class HarvestHandlerPlantable implements IHarvestHandler {
         }
 
         if (foundSeed) {
-            world.setBlockState(pos, blockStack.getBlock().getDefaultState());
-            world.playEvent(2001, pos, Block.getStateId(blockStack.getState()));
-            for (ItemStack stack : drops) {
+            world.setBlockState(pos, state.getBlock().getDefaultState());
+            world.playEvent(2001, pos, Block.getStateId(state));
+            for (ItemStack stack : blockDrops) {
                 if (stack.isEmpty())
                     continue;
 
-                if (!world.isRemote) {
-                    EntityItem toDrop = new EntityItem(world, pos.getX(), pos.getY() + 0.5, pos.getZ(), stack);
-                    world.spawnEntity(toDrop);
-                }
+                drops.add(stack);
             }
 
             return true;
         }
 
         return false;
+    }
+
+    @Override
+    public boolean test(World world, BlockPos pos, IBlockState state) {
+        return HarvestRegistry.getStandardCrops().containsKey(state.getBlock()) && state.getBlock().getMetaFromState(state) == HarvestRegistry.getStandardCrops().get(state.getBlock());
     }
 
     private static void addThirdPartyCrop(String modid, String regName, int matureMeta) {
@@ -110,19 +102,19 @@ public class HarvestHandlerPlantable implements IHarvestHandler {
             return;
 
         try {
-            ClassLoader loader = HarvestHandlerPlantable.class.getClassLoader();
-            String className = "com.pam.harvestcraft.blocks.CropRegistry";
-            Class<?> registry = ReflectionHelper.getClass(loader, className);
-            Field names = ReflectionHelper.findField(registry, "cropNames");
-            Method getCrop = registry.getMethod("getCrop", String.class);
+            Class<?> pamRegistry = Class.forName("com.pam.harvestcraft.blocks.CropRegistry");
+            Field names = pamRegistry.getDeclaredField("cropNames");
+            Method getCrop = pamRegistry.getMethod("getCrop", String.class);
             for (String name : (String[]) names.get(null)) {
                 BlockCrops crop = (BlockCrops) getCrop.invoke(null, name);
                 HarvestRegistry.registerStandardCrop(crop, crop.getMaxAge());
             }
-        } catch (NoSuchMethodException e) {
-            BloodMagic.instance.logger.error("HarvestCraft integration cancelled; unable to find crop name mapper");
+        } catch (ClassNotFoundException e) {
+            BMLog.DEFAULT.error("HarvestCraft integration cancelled; unable to find registry class");
+        } catch (NoSuchMethodException | NoSuchFieldException e) {
+            BMLog.DEFAULT.error("HarvestCraft integration cancelled; unable to find crop name mapper");
         } catch (IllegalAccessException | InvocationTargetException e) {
-            BloodMagic.instance.logger.error("HarvestCraft integration cancelled; crop name lookup broke");
+            BMLog.DEFAULT.error("HarvestCraft integration cancelled; crop name lookup broke");
         }
     }
 }

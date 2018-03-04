@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.registry;
 
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.util.BlockStack;
-import WayofTime.bloodmagic.core.registry.HarvestRegistry;
+import WayofTime.bloodmagic.ritual.harvest.HarvestRegistry;
 import WayofTime.bloodmagic.core.registry.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.core.registry.RitualRegistry;
 import WayofTime.bloodmagic.ritual.data.Ritual;
@@ -144,9 +144,9 @@ public class ModRituals
 
     public static void initHarvestHandlers()
     {
-        HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.DIAMOND_BLOCK), 15);
-        HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.GOLD_BLOCK), 10);
-        HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.IRON_BLOCK), 6);
+        HarvestRegistry.registerRangeAmplifier(Blocks.DIAMOND_BLOCK.getDefaultState(), 15);
+        HarvestRegistry.registerRangeAmplifier(Blocks.GOLD_BLOCK.getDefaultState(), 10);
+        HarvestRegistry.registerRangeAmplifier(Blocks.IRON_BLOCK.getDefaultState(), 6);
 
         HarvestRegistry.registerHandler(new HarvestHandlerPlantable());
         HarvestRegistry.registerHandler(new HarvestHandlerTall());

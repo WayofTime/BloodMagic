@@ -1,62 +1,55 @@
 package WayofTime.bloodmagic.ritual.harvest;
 
-import WayofTime.bloodmagic.util.BlockStack;
-import WayofTime.bloodmagic.iface.IHarvestHandler;
-import WayofTime.bloodmagic.core.registry.HarvestRegistry;
+import net.minecraft.block.BlockPumpkin;
 import net.minecraft.block.BlockStem;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Harvest handler for crops with stems such as Pumpkins and Melons.
- * {@link OreDictionary#WILDCARD_VALUE} is used as a wildcard to allow the crop
- * to be harvested at any metadata. Rotation based crop blocks are a good reason
+ * Harvest handler for crops with stems such as Pumpkins and Melons. Rotation based crop blocks are a good reason
  * to use this (see pumpkins). <br>
  * Register a new crop for this handler with
- * {@link HarvestRegistry#registerStemCrop(BlockStack, BlockStack)}
+ * {@link HarvestRegistry#registerStemCrop(IBlockState, IBlockState)}
  */
 public class HarvestHandlerStem implements IHarvestHandler {
+
     public HarvestHandlerStem() {
-        HarvestRegistry.registerStemCrop(new BlockStack(Blocks.PUMPKIN, OreDictionary.WILDCARD_VALUE), new BlockStack(Blocks.PUMPKIN_STEM, 7));
-        HarvestRegistry.registerStemCrop(new BlockStack(Blocks.MELON_BLOCK), new BlockStack(Blocks.MELON_STEM, 7));
+        for (EnumFacing facing : EnumFacing.HORIZONTALS)
+            HarvestRegistry.registerStemCrop(Blocks.PUMPKIN.getDefaultState().withProperty(BlockPumpkin.FACING, facing), Blocks.PUMPKIN_STEM.getDefaultState().withProperty(BlockStem.AGE, 7));
+
+        HarvestRegistry.registerStemCrop(Blocks.MELON_BLOCK.getDefaultState(), Blocks.MELON_STEM.getDefaultState().withProperty(BlockStem.AGE, 7));
     }
 
     @Override
-    public boolean harvestAndPlant(World world, BlockPos pos, BlockStack blockStack) {
-        boolean retFlag = false;
-        List<ItemStack> drops = new ArrayList<>();
-        BlockPos cropPos = pos;
-        if (HarvestRegistry.getStemCrops().containsKey(blockStack)) {
-            EnumFacing cropDir = blockStack.getBlock().getActualState(blockStack.getState(), world, pos).getValue(BlockStem.FACING);
+    public boolean harvest(World world, BlockPos pos, IBlockState state, List<ItemStack> drops) {
+        EnumFacing cropDir = state.getBlock().getActualState(state, world, pos).getValue(BlockStem.FACING);
 
-            if (cropDir != EnumFacing.UP) {
-                cropPos = pos.offset(cropDir);
-                BlockStack probableCrop = BlockStack.getStackFromPos(world, cropPos);
-                BlockStack regCrop = HarvestRegistry.getStemCrops().get(blockStack);
+        if (cropDir != EnumFacing.UP) {
+            BlockPos cropPos = pos.offset(cropDir);
+            IBlockState probableCrop = world.getBlockState(cropPos);
+            IBlockState registeredCrop = HarvestRegistry.getStemCrops().get(state);
 
-                if ((regCrop.getMeta() == OreDictionary.WILDCARD_VALUE && regCrop.getBlock() == probableCrop.getBlock()) || regCrop.equals(probableCrop)) {
-                    drops = probableCrop.getBlock().getDrops(world, cropPos, probableCrop.getState(), 0);
-                    world.destroyBlock(cropPos, false);
-                    retFlag = true;
-                }
+            if (registeredCrop == probableCrop) {
+                NonNullList<ItemStack> blockDrops = NonNullList.create();
+                probableCrop.getBlock().getDrops(blockDrops, world, cropPos, probableCrop, 0);
+                drops.addAll(blockDrops);
+                world.destroyBlock(cropPos, false);
+                return true;
             }
         }
 
-        if (!world.isRemote) {
-            for (ItemStack drop : drops) {
-                EntityItem item = new EntityItem(world, cropPos.getX(), cropPos.getY() + 0.5, cropPos.getZ(), drop);
-                world.spawnEntity(item);
-            }
-        }
+        return false;
+    }
 
-        return retFlag;
+    @Override
+    public boolean test(World world, BlockPos pos, IBlockState state) {
+        return HarvestRegistry.getStemCrops().containsKey(state);
     }
 }
