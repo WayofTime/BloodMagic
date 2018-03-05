@@ -115,9 +115,9 @@ public class RitualRegistry {
             Ritual ritual1 = registry.get(o1);
             Ritual ritual2 = registry.get(o2);
             List<RitualComponent> first = Lists.newArrayList();
-            ritual1.gatherComponents(first);
+            ritual1.gatherComponents(first::add);
             List<RitualComponent> second = Lists.newArrayList();
-            ritual2.gatherComponents(second);
+            ritual2.gatherComponents(second::add);
             return first.size() > second.size() ? -1 : 0; // Put earlier if bigger
         });
     }

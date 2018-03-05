@@ -27,7 +27,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualAltarBuilder extends Ritual {
     private Iterator<AltarComponent> altarComponentsIterator = new ArrayList<>(EnumAltarTier.SIX.getAltarComponents()).iterator();
@@ -114,7 +114,7 @@ public class RitualAltarBuilder extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         for (int i = -12; i <= -8; i++) {
             addRune(components, i, -6, 13, EnumRuneType.AIR);
             addRune(components, i, -6, -13, EnumRuneType.FIRE);

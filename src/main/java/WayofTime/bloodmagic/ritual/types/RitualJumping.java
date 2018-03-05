@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualJumping extends Ritual {
     public static final String JUMP_RANGE = "jumpRange";
@@ -68,7 +69,7 @@ public class RitualJumping extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         for (int i = -1; i <= 1; i++)
             addCornerRunes(components, 1, i, EnumRuneType.AIR);
     }

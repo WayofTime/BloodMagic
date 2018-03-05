@@ -13,6 +13,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualFullStomach extends Ritual {
     public static final String FILL_RANGE = "fillRange";
@@ -92,7 +93,7 @@ public class RitualFullStomach extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addParallelRunes(components, 3, 0, EnumRuneType.FIRE);
         addCornerRunes(components, 1, 0, EnumRuneType.AIR);
         addOffsetRunes(components, 1, 2, 0, EnumRuneType.AIR);

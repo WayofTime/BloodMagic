@@ -26,6 +26,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualLava extends Ritual {
     public static final String LAVA_RANGE = "lavaRange";
@@ -232,7 +233,7 @@ public class RitualLava extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addParallelRunes(components, 1, 0, EnumRuneType.FIRE);
     }
 

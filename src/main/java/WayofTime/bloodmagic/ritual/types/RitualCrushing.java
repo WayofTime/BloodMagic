@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 
 public class RitualCrushing extends Ritual {
     public static final String CRUSHING_RANGE = "crushingRange";
@@ -251,7 +252,7 @@ public class RitualCrushing extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addParallelRunes(components, 1, 0, EnumRuneType.EARTH);
         addParallelRunes(components, 2, 0, EnumRuneType.FIRE);
         addCornerRunes(components, 2, 0, EnumRuneType.DUSK);

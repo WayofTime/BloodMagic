@@ -119,7 +119,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
             if (ritual != null) {
                 EnumFacing direction = getDirection(stack);
                 List<RitualComponent> components = Lists.newArrayList();
-                ritual.gatherComponents(components);
+                ritual.gatherComponents(components::add);
                 for (RitualComponent component : components) {
                     if (!canPlaceRitualStone(component.getRuneType(), stack)) {
                         return false;
@@ -227,7 +227,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
                 tooltip.add(TextHelper.localize(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).getName())));
                 tooltip.add("");
                 List<RitualComponent> components = Lists.newArrayList();
-                ritual.gatherComponents(components);
+                ritual.gatherComponents(components::add);
 
                 int blankRunes = 0;
                 int airRunes = 0;
@@ -491,7 +491,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
         }
 
         List<RitualComponent> components = Lists.newArrayList();
-        ritual.gatherComponents(components);
+        ritual.gatherComponents(components::add);
         for (RitualComponent component : components) {
             if (!canPlaceRitualStone(component.getRuneType(), stack)) {
                 return false;

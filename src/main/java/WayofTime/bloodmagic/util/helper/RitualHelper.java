@@ -15,7 +15,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RitualHelper {
@@ -79,7 +78,7 @@ public class RitualHelper {
         }
 
         List<RitualComponent> components = Lists.newArrayList();
-        ritual.gatherComponents(components);
+        ritual.gatherComponents(components::add);
 
         for (RitualComponent component : components) {
             BlockPos newPos = pos.add(component.getOffset(direction));

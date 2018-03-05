@@ -24,6 +24,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualFeatheredKnife extends Ritual {
     public static final String ALTAR_RANGE = "altar";
@@ -184,7 +185,7 @@ public class RitualFeatheredKnife extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addParallelRunes(components, 1, 0, EnumRuneType.DUSK);
         addParallelRunes(components, 2, -1, EnumRuneType.WATER);
         addCornerRunes(components, 1, -1, EnumRuneType.AIR);

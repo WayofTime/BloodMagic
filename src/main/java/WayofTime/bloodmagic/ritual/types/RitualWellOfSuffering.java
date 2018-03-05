@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualWellOfSuffering extends Ritual {
     public static final String ALTAR_RANGE = "altar";
@@ -117,7 +118,7 @@ public class RitualWellOfSuffering extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addCornerRunes(components, 1, 0, EnumRuneType.FIRE);
         addCornerRunes(components, 2, -1, EnumRuneType.FIRE);
         addParallelRunes(components, 2, -1, EnumRuneType.EARTH);

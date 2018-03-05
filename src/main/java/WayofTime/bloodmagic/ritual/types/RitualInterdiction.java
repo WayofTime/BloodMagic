@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualInterdiction extends Ritual {
     public static final String INTERDICTION_RANGE = "interdictionRange";
@@ -60,7 +60,7 @@ public class RitualInterdiction extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addCornerRunes(components, 1, 0, EnumRuneType.AIR);
         addParallelRunes(components, 1, 0, EnumRuneType.AIR);
     }

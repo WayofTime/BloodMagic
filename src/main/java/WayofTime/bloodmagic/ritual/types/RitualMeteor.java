@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualMeteor extends Ritual {
     public static final String ITEM_RANGE = "itemRange";
@@ -94,7 +95,7 @@ public class RitualMeteor extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addParallelRunes(components, 2, 0, EnumRuneType.FIRE);
         addOffsetRunes(components, 3, 1, 0, EnumRuneType.AIR);
         addOffsetRunes(components, 4, 2, 0, EnumRuneType.AIR);

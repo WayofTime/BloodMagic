@@ -17,8 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class RitualPortal extends Ritual {
 
@@ -183,7 +183,7 @@ public class RitualPortal extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addRune(components, 1, 0, 0, EnumRuneType.AIR);
         addRune(components, 2, 0, 0, EnumRuneType.WATER);
         addRune(components, -1, 0, 0, EnumRuneType.FIRE);

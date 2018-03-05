@@ -15,6 +15,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 
 /**
  * Abstract class for creating new rituals. Rituals need be registered with
@@ -261,13 +262,13 @@ public abstract class Ritual {
         }
     }
 
-    public abstract void gatherComponents(List<RitualComponent> components);
+    public abstract void gatherComponents(Consumer<RitualComponent> components);
 
-    protected final void addRune(List<RitualComponent> components, int offset1, int y, int offset2, EnumRuneType rune) {
-        components.add(new RitualComponent(new BlockPos(offset1, y, offset2), rune));
+    protected final void addRune(Consumer<RitualComponent> components, int offset1, int y, int offset2, EnumRuneType rune) {
+        components.accept(new RitualComponent(new BlockPos(offset1, y, offset2), rune));
     }
 
-    protected final void addOffsetRunes(List<RitualComponent> components, int offset1, int offset2, int y, EnumRuneType rune) {
+    protected final void addOffsetRunes(Consumer<RitualComponent> components, int offset1, int offset2, int y, EnumRuneType rune) {
         addRune(components, offset1, y, offset2, rune);
         addRune(components, offset2, y, offset1, rune);
         addRune(components, offset1, y, -offset2, rune);
@@ -278,14 +279,14 @@ public abstract class Ritual {
         addRune(components, -offset2, y, -offset1, rune);
     }
 
-    protected final void addCornerRunes(List<RitualComponent> components, int offset, int y, EnumRuneType rune) {
+    protected final void addCornerRunes(Consumer<RitualComponent> components, int offset, int y, EnumRuneType rune) {
         addRune(components, offset, y, offset, rune);
         addRune(components, offset, y, -offset, rune);
         addRune(components, -offset, y, -offset, rune);
         addRune(components, -offset, y, offset, rune);
     }
 
-    protected final void addParallelRunes(List<RitualComponent> components, int offset, int y, EnumRuneType rune) {
+    protected final void addParallelRunes(Consumer<RitualComponent> components, int offset, int y, EnumRuneType rune) {
         addRune(components, offset, y, 0, rune);
         addRune(components, -offset, y, 0, rune);
         addRune(components, 0, y, -offset, rune);

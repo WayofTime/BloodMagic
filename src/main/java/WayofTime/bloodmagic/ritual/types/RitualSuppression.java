@@ -9,7 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualSuppression extends Ritual {
     public static final String SUPPRESSION_RANGE = "suppressionRange";
@@ -56,7 +56,7 @@ public class RitualSuppression extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addCornerRunes(components, 2, 0, EnumRuneType.WATER);
         addRune(components, -2, 0, -1, EnumRuneType.AIR);
         addRune(components, -1, 0, -2, EnumRuneType.AIR);

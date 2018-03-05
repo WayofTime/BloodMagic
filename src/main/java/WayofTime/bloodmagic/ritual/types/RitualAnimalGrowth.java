@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualAnimalGrowth extends Ritual {
     public static final double rawWillDrain = 0.05;
@@ -168,18 +169,18 @@ public class RitualAnimalGrowth extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
 
         addParallelRunes(components, 2, 0, EnumRuneType.DUSK);
         addParallelRunes(components, 1, 0, EnumRuneType.WATER);
-        components.add(new RitualComponent(new BlockPos(1, 0, 2), EnumRuneType.EARTH));
-        components.add(new RitualComponent(new BlockPos(1, 0, -2), EnumRuneType.EARTH));
-        components.add(new RitualComponent(new BlockPos(-1, 0, 2), EnumRuneType.EARTH));
-        components.add(new RitualComponent(new BlockPos(-1, 0, -2), EnumRuneType.EARTH));
-        components.add(new RitualComponent(new BlockPos(2, 0, 1), EnumRuneType.AIR));
-        components.add(new RitualComponent(new BlockPos(2, 0, -1), EnumRuneType.AIR));
-        components.add(new RitualComponent(new BlockPos(-2, 0, 1), EnumRuneType.AIR));
-        components.add(new RitualComponent(new BlockPos(-2, 0, -1), EnumRuneType.AIR));
+        components.accept(new RitualComponent(new BlockPos(1, 0, 2), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(1, 0, -2), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(-1, 0, 2), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(-1, 0, -2), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(2, 0, 1), EnumRuneType.AIR));
+        components.accept(new RitualComponent(new BlockPos(2, 0, -1), EnumRuneType.AIR));
+        components.accept(new RitualComponent(new BlockPos(-2, 0, 1), EnumRuneType.AIR));
+        components.accept(new RitualComponent(new BlockPos(-2, 0, -1), EnumRuneType.AIR));
     }
 
     @Override

@@ -271,7 +271,7 @@ public class ClientHandler {
         double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
 
         List<RitualComponent> components = Lists.newArrayList();
-        ritual.gatherComponents(components);
+        ritual.gatherComponents(components::add);
         for (RitualComponent ritualComponent : components) {
             vX = vec3.add(ritualComponent.getOffset(direction));
             double minX = vX.getX() - posX;
@@ -350,7 +350,7 @@ public class ClientHandler {
         double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
 
         List<RitualComponent> components = Lists.newArrayList();
-        ritual.gatherComponents(components);
+        ritual.gatherComponents(components::add);
         for (RitualComponent ritualComponent : components) {
             vX = vec3.add(ritualComponent.getOffset(direction));
             double minX = vX.getX() - posX;

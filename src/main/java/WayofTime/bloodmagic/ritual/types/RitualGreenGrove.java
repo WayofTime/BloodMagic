@@ -24,6 +24,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 public class RitualGreenGrove extends Ritual {
     public static final String GROW_RANGE = "growing";
@@ -258,7 +259,7 @@ public class RitualGreenGrove extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addCornerRunes(components, 1, 0, EnumRuneType.EARTH);
         addParallelRunes(components, 1, 0, EnumRuneType.WATER);
     }

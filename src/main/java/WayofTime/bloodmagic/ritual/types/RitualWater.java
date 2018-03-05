@@ -6,7 +6,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualWater extends Ritual {
     public static final String WATER_RANGE = "waterRange";
@@ -57,7 +57,7 @@ public class RitualWater extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addCornerRunes(components, 1, 0, EnumRuneType.WATER);
     }
 

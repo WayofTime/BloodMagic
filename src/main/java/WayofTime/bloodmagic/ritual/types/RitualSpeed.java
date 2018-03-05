@@ -14,6 +14,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualSpeed extends Ritual {
     public static final String SPEED_RANGE = "sanicRange";
@@ -152,7 +153,7 @@ public class RitualSpeed extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addRune(components, 0, 0, -2, EnumRuneType.DUSK);
         addRune(components, 1, 0, -1, EnumRuneType.AIR);
         addRune(components, -1, 0, -1, EnumRuneType.AIR);

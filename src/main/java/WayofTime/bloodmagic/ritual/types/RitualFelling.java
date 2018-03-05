@@ -16,7 +16,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualFelling extends Ritual {
     public static final String FELLING_RANGE = "fellingRange";
@@ -86,7 +86,7 @@ public class RitualFelling extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addCornerRunes(components, 1, 0, EnumRuneType.EARTH);
         addCornerRunes(components, 1, 1, EnumRuneType.EARTH);
     }

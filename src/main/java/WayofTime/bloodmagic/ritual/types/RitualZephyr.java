@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualZephyr extends Ritual {
     public static final String ZEPHYR_RANGE = "zephyrRange";
@@ -80,7 +81,7 @@ public class RitualZephyr extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addParallelRunes(components, 2, 0, EnumRuneType.AIR);
         addCornerRunes(components, 1, 1, EnumRuneType.AIR);
         addParallelRunes(components, 1, -1, EnumRuneType.AIR);

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.ritual.types;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -215,7 +215,7 @@ public class RitualEllipsoid extends Ritual
 //    }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addCornerRunes(components, 1, 0, EnumRuneType.WATER);
         addCornerRunes(components, 1, 1, EnumRuneType.WATER);
     }

@@ -25,6 +25,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualLivingArmourDowngrade extends Ritual {
     public static final String DOWNGRADE_RANGE = "containmentRange";
@@ -162,7 +163,7 @@ public class RitualLivingArmourDowngrade extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addRune(components, 0, 0, -1, EnumRuneType.AIR);
         addRune(components, 0, 0, -2, EnumRuneType.DUSK);
         addRune(components, 0, 1, -3, EnumRuneType.DUSK);

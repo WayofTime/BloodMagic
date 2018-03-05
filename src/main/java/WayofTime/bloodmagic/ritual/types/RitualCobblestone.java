@@ -10,7 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualCobblestone extends Ritual {
 
@@ -83,8 +83,7 @@ public class RitualCobblestone extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
-
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addCornerRunes(components, 1, 1, EnumRuneType.FIRE);
         addParallelRunes(components, 1, 0, EnumRuneType.WATER);
     }

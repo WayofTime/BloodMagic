@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualPlacer extends Ritual {
     public static final String PLACER_RANGE = "placerRange";
@@ -80,7 +80,7 @@ public class RitualPlacer extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addRune(components, 3, 0, 3, EnumRuneType.EARTH);
         addRune(components, 3, 0, -3, EnumRuneType.EARTH);
         addRune(components, -3, 0, 3, EnumRuneType.EARTH);

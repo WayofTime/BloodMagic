@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualContainment extends Ritual {
     public static final String CONTAINMENT_RANGE = "containmentRange";
@@ -56,7 +56,7 @@ public class RitualContainment extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addParallelRunes(components, 1, 0, EnumRuneType.EARTH);
         addCornerRunes(components, 2, 0, EnumRuneType.EARTH);
         addParallelRunes(components, 1, 5, EnumRuneType.EARTH);

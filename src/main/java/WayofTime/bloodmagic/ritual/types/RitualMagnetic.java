@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualMagnetic extends Ritual {
     public static final String PLACEMENT_RANGE = "placementRange";
@@ -121,7 +121,7 @@ public class RitualMagnetic extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addCornerRunes(components, 1, 0, EnumRuneType.EARTH);
         addParallelRunes(components, 2, 1, EnumRuneType.EARTH);
         addCornerRunes(components, 2, 1, EnumRuneType.AIR);

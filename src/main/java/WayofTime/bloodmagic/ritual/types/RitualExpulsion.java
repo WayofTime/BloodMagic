@@ -23,6 +23,7 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class RitualExpulsion extends Ritual {
     public static final String EXPULSION_RANGE = "expulsionRange";
@@ -189,7 +190,7 @@ public class RitualExpulsion extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addCornerRunes(components, 2, 0, EnumRuneType.EARTH);
         addRune(components, 2, 0, 1, EnumRuneType.EARTH);
         addRune(components, 1, 0, 2, EnumRuneType.EARTH);

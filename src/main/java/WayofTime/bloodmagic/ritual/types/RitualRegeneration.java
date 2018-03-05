@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualRegeneration extends Ritual {
     public static final String HEAL_RANGE = "heal";
@@ -152,19 +153,19 @@ public class RitualRegeneration extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
-        components.add(new RitualComponent(new BlockPos(4, 0, 0), EnumRuneType.AIR));
-        components.add(new RitualComponent(new BlockPos(5, 0, -1), EnumRuneType.AIR));
-        components.add(new RitualComponent(new BlockPos(5, 0, 1), EnumRuneType.AIR));
-        components.add(new RitualComponent(new BlockPos(-4, 0, 0), EnumRuneType.AIR));
-        components.add(new RitualComponent(new BlockPos(-5, 0, -1), EnumRuneType.AIR));
-        components.add(new RitualComponent(new BlockPos(-5, 0, 1), EnumRuneType.AIR));
-        components.add(new RitualComponent(new BlockPos(0, 0, 4), EnumRuneType.FIRE));
-        components.add(new RitualComponent(new BlockPos(1, 0, 5), EnumRuneType.FIRE));
-        components.add(new RitualComponent(new BlockPos(-1, 0, 5), EnumRuneType.FIRE));
-        components.add(new RitualComponent(new BlockPos(0, 0, -4), EnumRuneType.FIRE));
-        components.add(new RitualComponent(new BlockPos(1, 0, -5), EnumRuneType.FIRE));
-        components.add(new RitualComponent(new BlockPos(-1, 0, -5), EnumRuneType.FIRE));
+    public void gatherComponents(Consumer<RitualComponent> components) {
+        components.accept(new RitualComponent(new BlockPos(4, 0, 0), EnumRuneType.AIR));
+        components.accept(new RitualComponent(new BlockPos(5, 0, -1), EnumRuneType.AIR));
+        components.accept(new RitualComponent(new BlockPos(5, 0, 1), EnumRuneType.AIR));
+        components.accept(new RitualComponent(new BlockPos(-4, 0, 0), EnumRuneType.AIR));
+        components.accept(new RitualComponent(new BlockPos(-5, 0, -1), EnumRuneType.AIR));
+        components.accept(new RitualComponent(new BlockPos(-5, 0, 1), EnumRuneType.AIR));
+        components.accept(new RitualComponent(new BlockPos(0, 0, 4), EnumRuneType.FIRE));
+        components.accept(new RitualComponent(new BlockPos(1, 0, 5), EnumRuneType.FIRE));
+        components.accept(new RitualComponent(new BlockPos(-1, 0, 5), EnumRuneType.FIRE));
+        components.accept(new RitualComponent(new BlockPos(0, 0, -4), EnumRuneType.FIRE));
+        components.accept(new RitualComponent(new BlockPos(1, 0, -5), EnumRuneType.FIRE));
+        components.accept(new RitualComponent(new BlockPos(-1, 0, -5), EnumRuneType.FIRE));
         addOffsetRunes(components, 3, 5, 0, EnumRuneType.WATER);
         addCornerRunes(components, 3, 0, EnumRuneType.DUSK);
         addOffsetRunes(components, 4, 5, 0, EnumRuneType.EARTH);

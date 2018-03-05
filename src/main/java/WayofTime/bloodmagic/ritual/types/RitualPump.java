@@ -20,6 +20,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualPump extends Ritual {
     public static final String PUMP_RANGE = "pumpRange";
@@ -90,7 +91,7 @@ public class RitualPump extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addRune(components, 1, 0, 1, EnumRuneType.WATER);
         addRune(components, 1, 0, -1, EnumRuneType.EARTH);
         addRune(components, -1, 0, -1, EnumRuneType.AIR);

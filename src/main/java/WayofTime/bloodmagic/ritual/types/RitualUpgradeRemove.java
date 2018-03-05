@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 
 public class RitualUpgradeRemove extends Ritual {
     public static final String CHECK_RANGE = "fillRange";
@@ -102,7 +103,7 @@ public class RitualUpgradeRemove extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addCornerRunes(components, 1, 0, EnumRuneType.DUSK);
         addCornerRunes(components, 2, 0, EnumRuneType.FIRE);
         addOffsetRunes(components, 1, 2, 0, EnumRuneType.FIRE);

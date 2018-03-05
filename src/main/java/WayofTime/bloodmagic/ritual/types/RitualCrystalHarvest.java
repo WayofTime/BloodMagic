@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class RitualCrystalHarvest extends Ritual {
     public static final String CRYSTAL_RANGE = "crystal";
@@ -67,7 +67,7 @@ public class RitualCrystalHarvest extends Ritual {
     }
 
     @Override
-    public void gatherComponents(List<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addCornerRunes(components, 1, 0, EnumRuneType.AIR);
         addParallelRunes(components, 1, 1, EnumRuneType.DUSK);
         addParallelRunes(components, 1, -1, EnumRuneType.FIRE);
