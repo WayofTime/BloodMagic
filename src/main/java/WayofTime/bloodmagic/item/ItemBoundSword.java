@@ -1,14 +1,14 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.iface.IActivatable;
-import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.iface.IActivatable;
+import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -27,15 +27,13 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ItemBoundSword extends ItemSword implements IBindable, IActivatable, IMeshProvider {
     public ItemBoundSword() {
@@ -132,17 +130,9 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
         return new CustomMeshDefinitionActivatable("bound_sword");
     }
 
-    @Nullable
     @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
-    }
-
-    @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<>();
-        ret.add("active=true");
-        ret.add("active=false");
-        return ret;
+    public void gatherVariants(Consumer<String> variants) {
+        variants.accept("active=true");
+        variants.accept("active=false");
     }
 }

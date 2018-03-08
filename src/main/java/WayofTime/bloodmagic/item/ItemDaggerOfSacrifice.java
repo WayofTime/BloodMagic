@@ -2,11 +2,11 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.PleaseStopUsingMe;
 import WayofTime.bloodmagic.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.util.helper.PurificationHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -19,9 +19,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.List;
+import javax.annotation.Nonnull;
 
 public class ItemDaggerOfSacrifice extends Item implements IVariantProvider {
     public ItemDaggerOfSacrifice() {
@@ -79,9 +78,7 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider {
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = Lists.newArrayList();
-        ret.add(Pair.of(0, "type=normal"));
-        return ret;
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
+        variants.put(0, "type=normal");
     }
 }

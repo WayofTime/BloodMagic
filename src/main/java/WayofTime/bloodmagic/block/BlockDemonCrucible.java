@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.soul.IDemonWillGem;
 import WayofTime.bloodmagic.soul.IDiscreteDemonWill;
-import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
@@ -19,12 +19,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlockDemonCrucible extends Block implements IVariantProvider, IBMBlock {
     public BlockDemonCrucible() {
@@ -97,13 +93,6 @@ public class BlockDemonCrucible extends Block implements IVariantProvider, IBMBl
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileDemonCrucible();
-    }
-
-    @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<>();
-        ret.add(new ImmutablePair<>(0, "normal"));
-        return ret;
     }
 
     @Override

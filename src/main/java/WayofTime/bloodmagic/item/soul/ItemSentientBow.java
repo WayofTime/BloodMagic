@@ -1,17 +1,17 @@
 package WayofTime.bloodmagic.item.soul;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.iface.IMultiWillTool;
-import WayofTime.bloodmagic.iface.ISentientTool;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
-import com.google.common.collect.Lists;
+import WayofTime.bloodmagic.iface.IMultiWillTool;
+import WayofTime.bloodmagic.iface.ISentientTool;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,9 +34,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.List;
+import javax.annotation.Nonnull;
 import java.util.Locale;
 
 public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentientTool, IVariantProvider//, IMeshProvider
@@ -253,8 +252,8 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        return Lists.newArrayList(Pair.of(0, "inventory"));
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
+        variants.put(0, "inventory");
     }
 
     public EntityTippedArrow getArrowEntity(World world, ItemStack stack, EntityLivingBase target, EntityLivingBase user, float velocity) {

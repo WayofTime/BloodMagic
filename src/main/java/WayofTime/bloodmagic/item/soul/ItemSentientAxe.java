@@ -1,7 +1,10 @@
 package WayofTime.bloodmagic.item.soul;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionMultiWill;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.iface.IMultiWillTool;
 import WayofTime.bloodmagic.iface.ISentientSwordEffectProvider;
 import WayofTime.bloodmagic.iface.ISentientTool;
@@ -9,11 +12,8 @@ import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.IDemonWill;
 import WayofTime.bloodmagic.soul.IDemonWillWeapon;
 import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionMultiWill;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -36,14 +36,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class ItemSentientAxe extends ItemAxe implements IDemonWillWeapon, IMeshProvider, IMultiWillTool, ISentientTool {
     public static int[] soulBracket = new int[]{16, 60, 200, 400, 1000};
@@ -300,20 +299,10 @@ public class ItemSentientAxe extends ItemAxe implements IDemonWillWeapon, IMeshP
         return new CustomMeshDefinitionMultiWill("sentient_axe");
     }
 
-    @Nullable
     @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
-    }
-
-    @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<>();
-        for (EnumDemonWillType type : EnumDemonWillType.values()) {
-            ret.add("type=" + type.getName().toLowerCase());
-        }
-
-        return ret;
+    public void gatherVariants(Consumer<String> variants) {
+        for (EnumDemonWillType type : EnumDemonWillType.values())
+            variants.accept("type=" + type.getName().toLowerCase());
     }
 
     @Override

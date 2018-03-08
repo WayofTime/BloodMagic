@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.item.block;
 
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileAlchemyTable;
-import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,9 +12,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.List;
 
 public class ItemBlockAlchemyTable extends ItemBlock implements IVariantProvider {
     public ItemBlockAlchemyTable(Block block) {
@@ -64,7 +61,7 @@ public class ItemBlockAlchemyTable extends ItemBlock implements IVariantProvider
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        return Lists.newArrayList(Pair.of(0, "inventory"));
+    public void gatherVariants(Int2ObjectMap<String> variants) {
+        variants.put(0, "inventory");
     }
 }

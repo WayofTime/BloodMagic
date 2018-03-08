@@ -1,14 +1,15 @@
 package WayofTime.bloodmagic.item.gear;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.altar.IAltarManipulator;
 import WayofTime.bloodmagic.altar.IBloodAltar;
+import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.iface.IItemLPContainer;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.ItemHelper.LPContainer;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -20,10 +21,8 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, IItemLPContainer, IVariantProvider {
@@ -76,10 +75,8 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<>();
-        ret.add(new ImmutablePair<>(0, "type=normal"));
-        return ret;
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
+        variants.put(0, "type=normal");
     }
 
     // IFillable
