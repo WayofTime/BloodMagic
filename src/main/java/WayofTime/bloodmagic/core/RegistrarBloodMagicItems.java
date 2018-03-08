@@ -240,14 +240,5 @@ public class RegistrarBloodMagicItems {
             for (Int2ObjectMap.Entry<String> variant : variants.int2ObjectEntrySet())
                 ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(b), variant.getIntKey(), new ModelResourceLocation(b.getRegistryName(), variant.getValue()));
         });
-
-        final ResourceLocation holdingLoc = SIGIL_HOLDING.getRegistryName();
-        ModelLoader.setCustomMeshDefinition(SIGIL_HOLDING, stack -> {
-            if (stack.hasTagCompound() && stack.getTagCompound().hasKey("color"))
-                return new ModelResourceLocation(holdingLoc, "type=color");
-            return new ModelResourceLocation(holdingLoc, "type=normal");
-        });
-        ModelLoader.registerItemVariants(SIGIL_HOLDING, new ModelResourceLocation(holdingLoc, "type=normal"));
-        ModelLoader.registerItemVariants(SIGIL_HOLDING, new ModelResourceLocation(holdingLoc, "type=color"));
     }
 }
