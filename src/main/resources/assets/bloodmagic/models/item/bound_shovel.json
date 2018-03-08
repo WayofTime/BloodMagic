@@ -1,0 +1,52 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bloodmagic:items/BoundShovel_activated"
+  },
+  "variants": {
+    "active": {
+      "true": {
+        "textures": {
+          "layer0": "bloodmagic:items/BoundShovel_activated"
+        }
+      },
+      "false": {
+        "textures": {
+          "layer0": "bloodmagic:items/Item_deactivated"
+        }
+      }
+    }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "bloodmagic:charge": 0.2
+      },
+      "model": "bloodmagic:item/boundtools/boundshovel_activated_0"
+    },
+    {
+      "predicate": {
+        "bloodmagic:charge": 0.4
+      },
+      "model": "bloodmagic:item/boundtools/boundshovel_activated_1"
+    },
+    {
+      "predicate": {
+        "bloodmagic:charge": 0.6
+      },
+      "model": "bloodmagic:item/boundtools/boundshovel_activated_2"
+    },
+    {
+      "predicate": {
+        "bloodmagic:charge": 0.8
+      },
+      "model": "bloodmagic:item/boundtools/boundshovel_activated_3"
+    },
+    {
+      "predicate": {
+        "bloodmagic:charge": 1
+      },
+      "model": "bloodmagic:item/boundtools/boundshovel_activated_4"
+    }
+  ]
+}

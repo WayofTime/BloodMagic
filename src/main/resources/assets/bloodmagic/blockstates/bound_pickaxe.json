@@ -5,6 +5,9 @@
     "transform": "forge:default-tool"
   },
   "variants": {
+    "default": {
+      "model": "bloodmagic:item/boundpickaxe"
+    },
     "active": {
       "true": {
         "textures": {

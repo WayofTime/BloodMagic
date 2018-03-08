@@ -45,15 +45,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
         setCreativeTab(BloodMagic.TAB_BM);
         setHarvestLevel(name, 4);
 
-        addPropertyOverride(new ResourceLocation("damaged"), new IItemPropertyGetter()
-        {
-            @SideOnly(Side.CLIENT)
-            public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
-            {
-                return entityIn != null && getActivated(stack) && entityIn.isHandActive() && entityIn.getActiveItemStack() == stack ? 1.0F : 0.0F;
-            }
-        });
-        addPropertyOverride(new ResourceLocation("damage"), new IItemPropertyGetter()
+        addPropertyOverride(new ResourceLocation("bloodmagic","charge"), new IItemPropertyGetter()
         {
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
@@ -195,13 +187,9 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
     }
 
     @Override
-    public boolean showDurabilityBar(ItemStack stack) {
-        return getActivated(stack) && heldDown(stack);
-    }
-
-    @Override
-    public double getDurabilityForDisplay(ItemStack stack) {
-        return 1 - ((float) Math.min(getCharge(stack), MAX_CHARGE_TIME) / (float) MAX_CHARGE_TIME);
+    public int getRGBDurabilityForDisplay(ItemStack stack)
+    {
+        return MathHelper.hsvToRGB(0x00BFFF, 1.0F, 1.0F);
     }
 
     public String getTooltipBase() {
