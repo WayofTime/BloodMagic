@@ -1,19 +1,15 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.event.BoundToolEvent;
 import WayofTime.bloodmagic.iface.IActivatable;
 import WayofTime.bloodmagic.iface.IBindable;
+import WayofTime.bloodmagic.util.*;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multiset;
+import com.google.common.collect.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -24,36 +20,47 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.item.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.HashMap;
+import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
-    public final int chargeTime = 30;
+    public final int MAX_CHARGE_TIME = 30;
     protected final String tooltipBase;
     private final String name;
-    public Map<ItemStack, Boolean> heldDownMap = new HashMap<>();
-    public Map<ItemStack, Integer> heldDownCountMap = new HashMap<>();
 
     public ItemBoundTool(String name, float damage, Set<Block> effectiveBlocks) {
         super(damage, 1, RegistrarBloodMagicItems.BOUND_TOOL_MATERIAL, effectiveBlocks);
         setUnlocalizedName(BloodMagic.MODID + ".bound." + name);
         setCreativeTab(BloodMagic.TAB_BM);
         setHarvestLevel(name, 4);
+
+        addPropertyOverride(new ResourceLocation("damaged"), new IItemPropertyGetter()
+        {
+            @SideOnly(Side.CLIENT)
+            public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
+            {
+                return entityIn != null && getActivated(stack) && entityIn.isHandActive() && entityIn.getActiveItemStack() == stack ? 1.0F : 0.0F;
+            }
+        });
+        addPropertyOverride(new ResourceLocation("damage"), new IItemPropertyGetter()
+        {
+            @SideOnly(Side.CLIENT)
+            public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
+            {
+                return entityIn != null && getActivated(stack) && entityIn.isHandActive() && entityIn.getActiveItemStack() == stack ? MathHelper.clamp((float)Math.min(getCharge(stack), MAX_CHARGE_TIME) / (float)MAX_CHARGE_TIME, 0.0F, 1.0F) : 0;
+            }
+        });
 
         this.name = name;
         this.tooltipBase = "tooltip.bloodmagic.bound." + name + ".";
@@ -85,37 +92,14 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
             return;
         }
 
-        if (entity instanceof EntityPlayer && getActivated(stack) && isSelected && getBeingHeldDown(stack) && stack == ((EntityPlayer) entity).getActiveItemStack()) {
+        if (entity instanceof EntityPlayer && getActivated(stack) && isSelected && stack == ((EntityPlayer) entity).getActiveItemStack()) {
             EntityPlayer player = (EntityPlayer) entity;
-            setHeldDownCount(stack, Math.min(player.getItemInUseCount(), chargeTime));
-        } else if (!isSelected) {
-            setBeingHeldDown(stack, false);
+            if (world.isRemote)
+                setCharge(stack, Math.min(72000 - player.getItemInUseCount(), MAX_CHARGE_TIME));
         }
 
         if (entity instanceof EntityPlayer && getActivated(stack) && world.getTotalWorldTime() % 80 == 0)
             NetworkHelper.getSoulNetwork(binding).syphonAndDamage((EntityPlayer) entity, 20);
-    }
-
-    protected int getHeldDownCount(ItemStack stack) {
-        if (!heldDownCountMap.containsKey(stack))
-            return 0;
-
-        return heldDownCountMap.get(stack);
-    }
-
-    protected void setHeldDownCount(ItemStack stack, int count) {
-        heldDownCountMap.put(stack, count);
-    }
-
-    protected boolean getBeingHeldDown(ItemStack stack) {
-        if (!heldDownMap.containsKey(stack))
-            return false;
-
-        return heldDownMap.get(stack);
-    }
-
-    protected void setBeingHeldDown(ItemStack stack, boolean heldDown) {
-        heldDownMap.put(stack, heldDown);
     }
 
     @Override
@@ -130,6 +114,8 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
                 return new ActionResult<>(EnumActionResult.FAIL, event.result);
 
             player.setActiveHand(hand);
+            if (world.isRemote)
+                setHeldDown(stack, true);
             return new ActionResult<>(EnumActionResult.SUCCESS, stack);
         }
 
@@ -148,8 +134,11 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
 
                 i = event.charge;
 
-                onBoundRelease(stack, worldIn, player, Math.min(i, chargeTime));
-                setBeingHeldDown(stack, false);
+                onBoundRelease(stack, worldIn, player, Math.min(i, MAX_CHARGE_TIME));
+                if (worldIn.isRemote) {
+                    setHeldDown(stack, false);
+                    setCharge(stack, 0);
+                }
             }
         }
     }
@@ -207,12 +196,12 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
 
     @Override
     public boolean showDurabilityBar(ItemStack stack) {
-        return getActivated(stack) && getBeingHeldDown(stack);
+        return getActivated(stack) && heldDown(stack);
     }
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
-        return ((double) -Math.min(getHeldDownCount(stack), chargeTime) / chargeTime) + 1;
+        return 1 - ((float) Math.min(getCharge(stack), MAX_CHARGE_TIME) / (float) MAX_CHARGE_TIME);
     }
 
     public String getTooltipBase() {
@@ -221,18 +210,6 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
 
     public String getName() {
         return name;
-    }
-
-    public Map<ItemStack, Boolean> getHeldDownMap() {
-        return heldDownMap;
-    }
-
-    public Map<ItemStack, Integer> getHeldDownCountMap() {
-        return heldDownCountMap;
-    }
-
-    public int getChargeTime() {
-        return chargeTime;
     }
 
     protected static void dropStacks(Multiset<ItemStackWrapper> drops, World world, BlockPos posToDrop) {
@@ -248,6 +225,32 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
 
             if (count > 0)
                 world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(count)));
+        }
+    }
+
+    protected boolean heldDown(ItemStack stack) {
+        return !stack.isEmpty() && stack.hasTagCompound() && stack.getTagCompound().getBoolean(Constants.NBT.HELD_DOWN);
+    }
+
+    protected void setHeldDown(ItemStack stack, boolean heldDown) {
+        if (!stack.isEmpty()) {
+            if (!stack.hasTagCompound())
+                stack.setTagCompound(new NBTTagCompound());
+
+            stack.getTagCompound().setBoolean(Constants.NBT.HELD_DOWN, heldDown);
+        }
+    }
+
+    protected int getCharge(ItemStack stack) {
+        return !stack.isEmpty() && stack.hasTagCompound() ? stack.getTagCompound().getInteger(Constants.NBT.CHARGE) : 0;
+    }
+
+    protected void setCharge(ItemStack stack, int chargeTime) {
+        if (!stack.isEmpty()) {
+            if (!stack.hasTagCompound())
+                stack.setTagCompound(new NBTTagCompound());
+
+            stack.getTagCompound().setInteger(Constants.NBT.CHARGE, chargeTime);
         }
     }
 }
