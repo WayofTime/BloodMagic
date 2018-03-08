@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.block.base;
 import WayofTime.bloodmagic.block.IBMBlock;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.block.base.ItemBlockEnum;
-import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -14,9 +14,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.List;
+import javax.annotation.Nonnull;
 
 public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block implements IBMBlock, IVariantProvider {
     private final E[] types;
@@ -77,15 +76,12 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> variants = Lists.newArrayList();
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
         if (getItem() == null)
-            return variants;
+            return;
 
         for (int i = 0; i < types.length; i++)
-            variants.add(Pair.of(i, getProperty().getName() + "=" + types[i].name()));
-
-        return variants;
+            variants.put(i, getProperty().getName() + "=" + types[i].name());
     }
 
     public E[] getTypes() {

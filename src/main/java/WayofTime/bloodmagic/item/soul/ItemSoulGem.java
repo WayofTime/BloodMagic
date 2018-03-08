@@ -1,15 +1,15 @@
 package WayofTime.bloodmagic.item.soul;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionWillGem;
 import WayofTime.bloodmagic.iface.IMultiWillTool;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.IDemonWill;
 import WayofTime.bloodmagic.soul.IDemonWillGem;
 import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionWillGem;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.util.ITooltipFlag;
@@ -18,16 +18,18 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Consumer;
 
 public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, IMultiWillTool {
     public static String[] names = {"petty", "lesser", "common", "greater", "grand"};
@@ -64,24 +66,15 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
         return new CustomMeshDefinitionWillGem("soul_gem");
     }
 
-    @Nullable
     @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
-    }
-
-    @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<>();
+    public void gatherVariants(Consumer<String> variants) {
         for (EnumDemonWillType type : EnumDemonWillType.values()) {
-            ret.add("type=petty_" + type.getName().toLowerCase());
-            ret.add("type=lesser_" + type.getName().toLowerCase());
-            ret.add("type=common_" + type.getName().toLowerCase());
-            ret.add("type=greater_" + type.getName().toLowerCase());
-            ret.add("type=grand_" + type.getName().toLowerCase());
+            variants.accept("type=petty_" + type.getName().toLowerCase());
+            variants.accept("type=lesser_" + type.getName().toLowerCase());
+            variants.accept("type=common_" + type.getName().toLowerCase());
+            variants.accept("type=greater_" + type.getName().toLowerCase());
+            variants.accept("type=grand_" + type.getName().toLowerCase());
         }
-
-        return ret;
     }
 
     @Override

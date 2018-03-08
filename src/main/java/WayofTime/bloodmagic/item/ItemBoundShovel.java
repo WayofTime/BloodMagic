@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.item;
 
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
@@ -21,7 +21,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,10 +29,9 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider {
     private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND);
@@ -122,17 +120,9 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider {
         return new CustomMeshDefinitionActivatable("bound_shovel");
     }
 
-    @Nullable
     @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
-    }
-
-    @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<>();
-        ret.add("active=true");
-        ret.add("active=false");
-        return ret;
+    public void gatherVariants(Consumer<String> variants) {
+        variants.accept("active=true");
+        variants.accept("active=false");
     }
 }

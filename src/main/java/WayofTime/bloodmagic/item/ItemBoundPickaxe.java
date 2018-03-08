@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.item;
 
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
@@ -21,7 +21,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,10 +29,9 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
     private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB);
@@ -136,17 +134,9 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
         return new CustomMeshDefinitionActivatable("bound_pickaxe");
     }
 
-    @Nullable
     @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
-    }
-
-    @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<>();
-        ret.add("active=true");
-        ret.add("active=false");
-        return ret;
+    public void gatherVariants(Consumer<String> variants) {
+        variants.accept("active=true");
+        variants.accept("active=false");
     }
 }

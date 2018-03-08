@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumSubWillType;
 import WayofTime.bloodmagic.tile.TileInversionPillar;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
@@ -14,10 +15,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.Properties;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlockInversionPillar extends BlockEnum<EnumSubWillType> {
     public BlockInversionPillar() {
@@ -73,11 +70,9 @@ public class BlockInversionPillar extends BlockEnum<EnumSubWillType> {
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<>();
+    public void gatherVariants(Int2ObjectMap<String> variants) {
         for (int i = 0; i < this.getTypes().length; i++)
-            ret.add(Pair.of(i, "static=false,type=" + this.getTypes()[i]));
-        return ret;
+            variants.put(i, "static=false,type=" + this.getTypes()[i]);
     }
 
     @Override

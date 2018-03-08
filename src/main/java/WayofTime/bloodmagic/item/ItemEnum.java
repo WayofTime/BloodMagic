@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.item;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.types.ISubItem;
-import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,9 +11,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.List;
 
 public class ItemEnum<T extends Enum<T> & ISubItem> extends Item {
 
@@ -55,12 +52,9 @@ public class ItemEnum<T extends Enum<T> & ISubItem> extends Item {
         }
 
         @Override
-        public List<Pair<Integer, String>> getVariants() {
-            List<Pair<Integer, String>> variants = Lists.newArrayList();
+        public void gatherVariants(Int2ObjectMap<String> variants) {
             for (int i = 0; i < types.length; i++)
-                variants.add(Pair.of(i, "type=" + types[i].getInternalName()));
-
-            return variants;
+                variants.put(i, "type=" + types[i].getInternalName());
         }
     }
 }

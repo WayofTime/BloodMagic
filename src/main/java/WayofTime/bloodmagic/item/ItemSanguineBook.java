@@ -1,16 +1,17 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.altar.EnumAltarTier;
 import WayofTime.bloodmagic.altar.IAltarManipulator;
-import WayofTime.bloodmagic.iface.IDocumentedBlock;
-import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.iface.IDocumentedBlock;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,9 +29,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Collections;
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemSanguineBook extends Item implements IVariantProvider, IAltarManipulator {
@@ -109,7 +109,7 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
     // IVariantProvider
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        return Collections.singletonList(Pair.of(0, "type=normal"));
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
+        variants.put(0, "type=normal");
     }
 }

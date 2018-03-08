@@ -1,24 +1,25 @@
 package WayofTime.bloodmagic.item.soul;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
-import com.google.common.collect.Lists;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.List;
+import java.util.function.Consumer;
 
 public class ItemSentientArmourGem extends Item implements IMeshProvider {
     public ItemSentientArmourGem() {
@@ -73,13 +74,8 @@ public class ItemSentientArmourGem extends Item implements IMeshProvider {
     }
 
     @Override
-    public List<String> getVariants() {
-        return Lists.newArrayList("type=activated", "type=deactivated");
-    }
-
-    @Nullable
-    @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
+    public void gatherVariants(Consumer<String> variants) {
+        variants.accept("type=activated");
+        variants.accept("type=deactivated");
     }
 }

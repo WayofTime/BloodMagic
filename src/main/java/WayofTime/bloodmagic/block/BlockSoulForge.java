@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileSoulForge;
+import WayofTime.bloodmagic.util.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -18,12 +18,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlockSoulForge extends Block implements IVariantProvider, IBMBlock {
     protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.06F, 0.0F, 0.06F, 0.94F, 0.75F, 0.94F);
@@ -95,13 +91,6 @@ public class BlockSoulForge extends Block implements IVariantProvider, IBMBlock 
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileSoulForge();
-    }
-
-    @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<>();
-        ret.add(new ImmutablePair<>(0, "normal"));
-        return ret;
     }
 
     @Override

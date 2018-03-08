@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.block;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileDemonCrystallizer;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,11 +14,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.Nonnull;
 
 public class BlockDemonCrystallizer extends BlockContainer implements IVariantProvider, IBMBlock {
     public BlockDemonCrystallizer() {
@@ -68,10 +66,8 @@ public class BlockDemonCrystallizer extends BlockContainer implements IVariantPr
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<>();
-        ret.add(new ImmutablePair<>(0, "normal"));
-        return ret;
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
+        variants.put(0, "normal");
     }
 
     @Override

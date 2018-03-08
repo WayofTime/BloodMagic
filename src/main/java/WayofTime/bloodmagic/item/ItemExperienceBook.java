@@ -1,10 +1,11 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -17,10 +18,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemExperienceBook extends Item implements IVariantProvider {
@@ -64,10 +63,8 @@ public class ItemExperienceBook extends Item implements IVariantProvider {
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<>();
-        ret.add(new ImmutablePair<>(0, "type=experiencetome"));
-        return ret;
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
+        variants.put(0, "type=experiencetome");
     }
 
     public void giveOneLevelExpToPlayer(ItemStack stack, EntityPlayer player) {

@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.item.armour;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.iface.IMultiWillTool;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -33,7 +33,10 @@ import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.*;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
+import java.util.function.Consumer;
 
 public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMeshProvider, IMultiWillTool {
     public static String[] names = {"helmet", "chest", "legs", "boots"};
@@ -297,18 +300,15 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     }
 
     @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<>();
+    public void gatherVariants(Consumer<String> variants) {
         for (EnumDemonWillType type : EnumDemonWillType.values()) {
             String additional = "_" + type.getName().toLowerCase();
 
-            ret.add("armour=head" + additional);
-            ret.add("armour=body" + additional);
-            ret.add("armour=leg" + additional);
-            ret.add("armour=feet" + additional);
+            variants.accept("armour=head" + additional);
+            variants.accept("armour=body" + additional);
+            variants.accept("armour=leg" + additional);
+            variants.accept("armour=feet" + additional);
         }
-
-        return ret;
     }
 
     @Override

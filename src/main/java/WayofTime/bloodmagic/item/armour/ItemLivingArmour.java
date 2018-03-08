@@ -1,21 +1,21 @@
 package WayofTime.bloodmagic.item.armour;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.livingArmour.StatTracker;
-import WayofTime.bloodmagic.core.data.SoulNetwork;
-import WayofTime.bloodmagic.util.helper.NBTHelper;
-import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.item.types.ComponentTypes;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerRepairing;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeElytra;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.PlayerFallDistancePacketProcessor;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -44,8 +44,12 @@ import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
+import java.util.function.Consumer;
 
 public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshProvider {
     public static final boolean useSpecialArmourCalculation = true;
@@ -364,13 +368,11 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     }
 
     @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<>();
-        ret.add("armour=head");
-        ret.add("armour=body");
-        ret.add("armour=leg");
-        ret.add("armour=feet");
-        return ret;
+    public void gatherVariants(Consumer<String> variants) {
+        variants.accept("armour=head");
+        variants.accept("armour=body");
+        variants.accept("armour=leg");
+        variants.accept("armour=feet");
     }
 
     public void setLivingArmour(ItemStack stack, LivingArmour armour, boolean forceWrite) {
