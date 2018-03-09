@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "bloodmagic:items/boundtools/boundaxe_activated_0"
-  }
-}
