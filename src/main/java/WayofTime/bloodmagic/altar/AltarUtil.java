@@ -25,7 +25,13 @@ public class AltarUtil {
         AltarTier lastCheck = AltarTier.ONE;
         for (AltarTier tier : AltarTier.values()) {
             for (AltarComponent component : tier.getAltarComponents()) {
-                IBlockState worldState = world.getBlockState(pos.add(component.getOffset()));
+                BlockPos componentPos = pos.add(component.getOffset());
+                IBlockState worldState = world.getBlockState(componentPos);
+
+                if (worldState.getBlock() instanceof IAltarComponent)
+                    if (((IAltarComponent) worldState.getBlock()).getType(world, worldState, componentPos) == component.getComponent())
+                        continue;
+
                 if (component.getComponent() == ComponentType.NOTAIR && worldState.getMaterial() != Material.AIR && !worldState.getMaterial().isLiquid())
                     continue;
 

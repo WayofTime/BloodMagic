@@ -31,14 +31,6 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BloodAltar implements IFluidHandler {
-    static {
-        AltarTier.ONE.buildComponents();
-        AltarTier.TWO.buildComponents();
-        AltarTier.THREE.buildComponents();
-        AltarTier.FOUR.buildComponents();
-        AltarTier.FIVE.buildComponents();
-        AltarTier.SIX.buildComponents();
-    }
 
     public boolean isActive;
     protected FluidStack fluidOutput = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);

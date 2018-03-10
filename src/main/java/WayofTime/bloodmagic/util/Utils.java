@@ -270,17 +270,15 @@ public class Utils {
      * otherwise
      */
     public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot) {
-        if (tile.getStackInSlot(slot).isEmpty() && !player.getHeldItemMainhand().isEmpty()) {
+        ItemStack slotStack = tile.getStackInSlot(slot);
+        if (slotStack.isEmpty() && !player.getHeldItemMainhand().isEmpty()) {
             ItemStack input = player.getHeldItemMainhand().copy();
             input.setCount(1);
             player.getHeldItemMainhand().shrink(1);
             tile.setInventorySlotContents(slot, input);
             return true;
-        } else if (!tile.getStackInSlot(slot).isEmpty() && player.getHeldItemMainhand().isEmpty()) {
-            if (!tile.getWorld().isRemote) {
-                EntityItem invItem = new EntityItem(tile.getWorld(), player.posX, player.posY + 0.25, player.posZ, tile.getStackInSlot(slot));
-                tile.getWorld().spawnEntity(invItem);
-            }
+        } else if (!slotStack.isEmpty() && player.getHeldItemMainhand().isEmpty()) {
+            ItemHandlerHelper.giveItemToPlayer(player, slotStack);
             tile.clear();
             return false;
         }
