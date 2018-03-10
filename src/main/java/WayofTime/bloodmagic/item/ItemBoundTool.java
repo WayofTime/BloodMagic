@@ -106,8 +106,6 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
                 return new ActionResult<>(EnumActionResult.FAIL, event.result);
 
             player.setActiveHand(hand);
-            if (world.isRemote)
-                setHeldDown(stack, true);
             return new ActionResult<>(EnumActionResult.SUCCESS, stack);
         }
 
@@ -127,10 +125,8 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
                 i = event.charge;
 
                 onBoundRelease(stack, worldIn, player, Math.min(i, MAX_CHARGE_TIME));
-                if (worldIn.isRemote) {
-                    setHeldDown(stack, false);
+                if (worldIn.isRemote)
                     setCharge(stack, 0);
-                }
             }
         }
     }
@@ -186,12 +182,6 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
         return ArrayListMultimap.create(); // No-op
     }
 
-    @Override
-    public int getRGBDurabilityForDisplay(ItemStack stack)
-    {
-        return MathHelper.hsvToRGB(0x00BFFF, 1.0F, 1.0F);
-    }
-
     public String getTooltipBase() {
         return tooltipBase;
     }
@@ -200,32 +190,24 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
         return name;
     }
 
-    protected static void dropStacks(Multiset<ItemStackWrapper> drops, World world, BlockPos posToDrop) {
-        for (Multiset.Entry<ItemStackWrapper> entry : drops.entrySet()) {
+    protected static void dropStacks(Multiset<ItemStack> drops, World world, BlockPos posToDrop) {
+        for (Multiset.Entry<ItemStack> entry : drops.entrySet()) {
             int count = entry.getCount();
-            ItemStackWrapper stack = entry.getElement();
-            int maxStackSize = stack.item.getItemStackLimit(stack.toStack(1));
+            ItemStack stack = entry.getElement();
+            int maxStackSize = stack.getItem().getItemStackLimit(stack);
 
             while (count >= maxStackSize) {
-                world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(maxStackSize)));
+                ItemStack s = stack.copy();
+                s.setCount(maxStackSize);
+                world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), s));
                 count -= maxStackSize;
             }
 
-            if (count > 0)
-                world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(count)));
-        }
-    }
-
-    protected boolean heldDown(ItemStack stack) {
-        return !stack.isEmpty() && stack.hasTagCompound() && stack.getTagCompound().getBoolean(Constants.NBT.HELD_DOWN);
-    }
-
-    protected void setHeldDown(ItemStack stack, boolean heldDown) {
-        if (!stack.isEmpty()) {
-            if (!stack.hasTagCompound())
-                stack.setTagCompound(new NBTTagCompound());
-
-            stack.getTagCompound().setBoolean(Constants.NBT.HELD_DOWN, heldDown);
+            if (count > 0) {
+                ItemStack s = stack.copy();
+                s.setCount(count);
+                world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), s));
+            }
         }
     }
 
