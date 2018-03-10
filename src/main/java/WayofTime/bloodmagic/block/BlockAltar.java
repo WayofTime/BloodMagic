@@ -1,10 +1,7 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.altar.BloodAltar;
-import WayofTime.bloodmagic.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.altar.IAltarManipulator;
-import WayofTime.bloodmagic.altar.IBloodAltar;
+import WayofTime.bloodmagic.altar.*;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
@@ -165,7 +162,7 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
     public List<ITextComponent> getDocumentation(EntityPlayer player, World world, BlockPos pos, IBlockState state) {
         List<ITextComponent> docs = new ArrayList<>();
         IBloodAltar altar = ((IBloodAltar) world.getTileEntity(pos));
-        Pair<BlockPos, EnumAltarComponent> missingBlock = BloodAltar.getAltarMissingBlock(world, pos, altar.getTier().toInt());
+        Pair<BlockPos, ComponentType> missingBlock = AltarUtil.getFirstMissingComponent(world, pos, altar.getTier().toInt());
         if (missingBlock != null)
             docs.add(new TextComponentTranslation("chat.bloodmagic.altar.nextTier", new TextComponentTranslation(missingBlock.getRight().getKey()), Utils.prettifyBlockPosString(missingBlock.getLeft())));
 

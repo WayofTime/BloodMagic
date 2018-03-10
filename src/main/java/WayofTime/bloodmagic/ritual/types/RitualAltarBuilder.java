@@ -3,8 +3,8 @@ package WayofTime.bloodmagic.ritual.types;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.altar.AltarComponent;
-import WayofTime.bloodmagic.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.altar.EnumAltarTier;
+import WayofTime.bloodmagic.altar.ComponentType;
+import WayofTime.bloodmagic.altar.AltarTier;
 import WayofTime.bloodmagic.ritual.EnumRuneType;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.Ritual;
@@ -30,7 +30,7 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 
 public class RitualAltarBuilder extends Ritual {
-    private Iterator<AltarComponent> altarComponentsIterator = new ArrayList<>(EnumAltarTier.SIX.getAltarComponents()).iterator();
+    private Iterator<AltarComponent> altarComponentsIterator = new ArrayList<>(AltarTier.SIX.getAltarComponents()).iterator();
     private boolean cycleDone = false;
 
     private AltarComponent currentComponent;
@@ -54,7 +54,7 @@ public class RitualAltarBuilder extends Ritual {
         }
 
         if (cycleDone) {
-            altarComponentsIterator = new ArrayList<>(EnumAltarTier.SIX.getAltarComponents()).iterator();
+            altarComponentsIterator = new ArrayList<>(AltarTier.SIX.getAltarComponents()).iterator();
         }
 
         if (world.getBlockState(altarPos).getBlock().isReplaceable(world, altarPos) && hasItem(tileEntity, Item.getItemFromBlock(RegistrarBloodMagicBlocks.ALTAR), 0, true)) {
@@ -206,7 +206,7 @@ public class RitualAltarBuilder extends Ritual {
 
                 for (int i = 0; i < itemHandler.getSlots(); i++) {
                     if (!itemHandler.getStackInSlot(i).isEmpty() && itemHandler.getStackInSlot(i).getItem() instanceof ItemBlock && Block.getBlockFromItem(itemHandler.getStackInSlot(i).getItem()) instanceof BlockBloodRune && itemHandler.extractItem(i, 1, true) != null) {
-                        BlockStack blockStack = new BlockStack(Utils.getBlockForComponent(EnumAltarComponent.BLOODRUNE), itemHandler.getStackInSlot(i).getItemDamage());
+                        BlockStack blockStack = new BlockStack(Utils.getBlockForComponent(ComponentType.BLOODRUNE), itemHandler.getStackInSlot(i).getItemDamage());
                         itemHandler.extractItem(i, 1, false);
                         return blockStack;
                     }
@@ -215,7 +215,7 @@ public class RitualAltarBuilder extends Ritual {
                 IInventory inv = (IInventory) tileEntity;
                 for (int i = 0; i < inv.getSizeInventory(); i++) {
                     if (!inv.getStackInSlot(i).isEmpty() && inv.getStackInSlot(i).getItem() instanceof ItemBlock && Block.getBlockFromItem(inv.getStackInSlot(i).getItem()) instanceof BlockBloodRune) {
-                        BlockStack blockStack = new BlockStack(Utils.getBlockForComponent(EnumAltarComponent.BLOODRUNE), inv.getStackInSlot(i).getItemDamage());
+                        BlockStack blockStack = new BlockStack(Utils.getBlockForComponent(ComponentType.BLOODRUNE), inv.getStackInSlot(i).getItemDamage());
                         inv.decrStackSize(i, 1);
                         return blockStack;
                     }

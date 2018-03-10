@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.client.render.block;
 
 import WayofTime.bloodmagic.altar.AltarComponent;
-import WayofTime.bloodmagic.altar.EnumAltarTier;
+import WayofTime.bloodmagic.altar.AltarTier;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.handler.event.ClientHandler;
@@ -40,7 +40,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
         this.renderItem(inputStack);
         GlStateManager.popMatrix();
 
-        if (tileAltar.getCurrentTierDisplayed() != EnumAltarTier.ONE)
+        if (tileAltar.getCurrentTierDisplayed() != AltarTier.ONE)
             renderHologram(tileAltar, tileAltar.getCurrentTierDisplayed(), partialTicks);
     }
 
@@ -102,11 +102,11 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
         }
     }
 
-    private void renderHologram(TileAltar altar, EnumAltarTier tier, float partialTicks) {
+    private void renderHologram(TileAltar altar, AltarTier tier, float partialTicks) {
         EntityPlayerSP player = mc.player;
         World world = player.world;
 
-        if (tier == EnumAltarTier.ONE)
+        if (tier == AltarTier.ONE)
             return;
 
         GlStateManager.pushMatrix();

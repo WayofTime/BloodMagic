@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.util;
 
-import WayofTime.bloodmagic.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.altar.ComponentType;
 import WayofTime.bloodmagic.iface.IDemonWillViewer;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
@@ -321,12 +321,12 @@ public class Utils {
     }
 
     /**
-     * Gets a default block for each type of {@link EnumAltarComponent}
+     * Gets a default block for each type of {@link ComponentType}
      *
      * @param component - The Component to provide a block for.
      * @return The default Block for the EnumAltarComponent
      */
-    public static Block getBlockForComponent(EnumAltarComponent component) {
+    public static Block getBlockForComponent(ComponentType component) {
         switch (component) {
             case GLOWSTONE:
                 return Blocks.GLOWSTONE;

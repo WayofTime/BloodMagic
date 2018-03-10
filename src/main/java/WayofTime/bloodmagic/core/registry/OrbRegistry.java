@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.core.registry;
 
-import WayofTime.bloodmagic.altar.EnumAltarTier;
+import WayofTime.bloodmagic.altar.AltarTier;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import com.google.common.collect.ArrayListMultimap;
 import net.minecraft.item.Item;
@@ -42,7 +42,7 @@ public class OrbRegistry {
     public static List<ItemStack> getOrbsDownToTier(int tier) {
         List<ItemStack> ret = new ArrayList<>();
 
-        for (int i = EnumAltarTier.MAXTIERS; i >= tier; i--)
+        for (int i = AltarTier.MAXTIERS; i >= tier; i--)
             ret.addAll(getOrbsForTier(i));
 
         return ret;
