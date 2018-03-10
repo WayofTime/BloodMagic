@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.altar.ComponentType;
 import WayofTime.bloodmagic.altar.IAltarComponent;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumMimic;
@@ -200,7 +200,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
 
     @Nullable
     @Override
-    public EnumAltarComponent getType(World world, IBlockState state, BlockPos pos) {
+    public ComponentType getType(World world, IBlockState state, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileMimic) {
             TileMimic mimic = (TileMimic) tile;
@@ -210,7 +210,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
                 if (block instanceof IAltarComponent) {
                     return ((IAltarComponent) block).getType(world, block.getStateFromMeta(mimic.metaOfReplacedBlock), pos);
                 } else {
-                    for (EnumAltarComponent altarComponent : EnumAltarComponent.values())
+                    for (ComponentType altarComponent : ComponentType.values())
                         if (block == Utils.getBlockForComponent(altarComponent))
                             return altarComponent;
                 }

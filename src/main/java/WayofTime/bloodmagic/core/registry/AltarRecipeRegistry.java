@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.core.registry;
 
 import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.ItemStackWrapper;
-import WayofTime.bloodmagic.altar.EnumAltarTier;
+import WayofTime.bloodmagic.altar.AltarTier;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.item.ItemStack;
@@ -32,7 +32,7 @@ public class AltarRecipeRegistry {
             BMLog.DEFAULT.error("Error adding altar recipe for input [{}].", altarRecipe.toString());
     }
 
-    public static void registerFillRecipe(ItemStack orbStack, EnumAltarTier tier, int maxForOrb, int consumeRate, int drainRate) {
+    public static void registerFillRecipe(ItemStack orbStack, AltarTier tier, int maxForOrb, int consumeRate, int drainRate) {
         registerRecipe(new AltarRecipe(orbStack, orbStack, tier, maxForOrb, consumeRate, drainRate, true));
     }
 
@@ -76,7 +76,7 @@ public class AltarRecipeRegistry {
     public static class AltarRecipe {
         private final List<ItemStackWrapper> input;
         private final ItemStack output;
-        private final EnumAltarTier minTier;
+        private final AltarTier minTier;
         private final int syphon, consumeRate, drainRate;
         private final boolean fillable;
 
@@ -95,7 +95,7 @@ public class AltarRecipeRegistry {
          * @param drainRate   - The rate at which LP is drained during crafting
          * @param fillable    - Whether the input item can be filled with LP. IE: Orbs
          */
-        public AltarRecipe(List<ItemStack> input, ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean fillable) {
+        public AltarRecipe(List<ItemStack> input, ItemStack output, AltarTier minTier, int syphon, int consumeRate, int drainRate, boolean fillable) {
             this.input = ItemStackWrapper.toWrapperList(input);
             this.output = output;
             this.minTier = minTier;
@@ -105,27 +105,27 @@ public class AltarRecipeRegistry {
             this.fillable = fillable;
         }
 
-        public AltarRecipe(List<ItemStack> input, ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate) {
+        public AltarRecipe(List<ItemStack> input, ItemStack output, AltarTier minTier, int syphon, int consumeRate, int drainRate) {
             this(input, output, minTier, syphon, consumeRate, drainRate, false);
         }
 
-        public AltarRecipe(ItemStack input, ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean fillable) {
+        public AltarRecipe(ItemStack input, ItemStack output, AltarTier minTier, int syphon, int consumeRate, int drainRate, boolean fillable) {
             this(Collections.singletonList(input), output, minTier, syphon, consumeRate, drainRate, fillable);
         }
 
-        public AltarRecipe(ItemStack input, ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate) {
+        public AltarRecipe(ItemStack input, ItemStack output, AltarTier minTier, int syphon, int consumeRate, int drainRate) {
             this(Collections.singletonList(input), output, minTier, syphon, consumeRate, drainRate, false);
         }
 
-        public AltarRecipe(String inputEntry, ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean fillable) {
+        public AltarRecipe(String inputEntry, ItemStack output, AltarTier minTier, int syphon, int consumeRate, int drainRate, boolean fillable) {
             this(OreDictionary.doesOreNameExist(inputEntry) && OreDictionary.getOres(inputEntry).size() > 0 ? OreDictionary.getOres(inputEntry) : Collections.emptyList(), output, minTier, syphon, consumeRate, drainRate, fillable);
         }
 
-        public AltarRecipe(String inputEntry, ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate) {
+        public AltarRecipe(String inputEntry, ItemStack output, AltarTier minTier, int syphon, int consumeRate, int drainRate) {
             this(OreDictionary.doesOreNameExist(inputEntry) && OreDictionary.getOres(inputEntry).size() > 0 ? OreDictionary.getOres(inputEntry) : Collections.emptyList(), output, minTier, syphon, consumeRate, drainRate, false);
         }
 
-        public boolean doesRequiredItemMatch(ItemStack comparedStack, EnumAltarTier tierCheck) {
+        public boolean doesRequiredItemMatch(ItemStack comparedStack, AltarTier tierCheck) {
             if (comparedStack == null || this.input == null)
                 return false;
 
@@ -151,7 +151,7 @@ public class AltarRecipeRegistry {
             return output;
         }
 
-        public EnumAltarTier getMinTier() {
+        public AltarTier getMinTier() {
             return minTier;
         }
 

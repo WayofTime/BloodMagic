@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.api.impl;
 
 import WayofTime.bloodmagic.api.IBloodMagicAPI;
-import WayofTime.bloodmagic.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.altar.ComponentType;
 import WayofTime.bloodmagic.util.BMLog;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -17,7 +17,7 @@ public class BloodMagicAPI implements IBloodMagicAPI {
     private final BloodMagicBlacklist blacklist;
     private final BloodMagicRecipeRegistrar recipeRegistrar;
     private final BloodMagicValueManager valueManager;
-    private final Multimap<EnumAltarComponent, IBlockState> altarComponents;
+    private final Multimap<ComponentType, IBlockState> altarComponents;
 
     public BloodMagicAPI() {
         this.blacklist = new BloodMagicBlacklist();
@@ -46,8 +46,8 @@ public class BloodMagicAPI implements IBloodMagicAPI {
 
     @Override
     public void registerAltarComponent(@Nonnull IBlockState state, @Nonnull String componentType) {
-        EnumAltarComponent component = null;
-        for (EnumAltarComponent type : EnumAltarComponent.VALUES) {
+        ComponentType component = null;
+        for (ComponentType type : ComponentType.VALUES) {
             if (type.name().equalsIgnoreCase(componentType)) {
                 component = type;
                 break;
@@ -61,7 +61,7 @@ public class BloodMagicAPI implements IBloodMagicAPI {
     }
 
     @Nonnull
-    public List<IBlockState> getComponentStates(EnumAltarComponent component) {
+    public List<IBlockState> getComponentStates(ComponentType component) {
         return (List<IBlockState>) altarComponents.get(component);
     }
 }
