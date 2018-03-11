@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.altar.BloodAltar;
-import WayofTime.bloodmagic.altar.AltarTier;
+import WayofTime.bloodmagic.altar.EnumAltarTier;
 import WayofTime.bloodmagic.altar.IBloodAltar;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -67,7 +67,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable {
     }
 
     @Override
-    public AltarTier getTier() {
+    public EnumAltarTier getTier() {
         return bloodAltar.getTier();
     }
 
@@ -161,11 +161,11 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable {
         return bloodAltar.getChargingFrequency();
     }
 
-    public AltarTier getCurrentTierDisplayed() {
+    public EnumAltarTier getCurrentTierDisplayed() {
         return bloodAltar.getCurrentTierDisplayed();
     }
 
-    public boolean setCurrentTierDisplayed(AltarTier altarTier) {
+    public boolean setCurrentTierDisplayed(EnumAltarTier altarTier) {
         return bloodAltar.setCurrentTierDisplayed(altarTier);
     }
 

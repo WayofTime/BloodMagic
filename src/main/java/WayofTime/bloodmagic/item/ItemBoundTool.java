@@ -45,7 +45,16 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
         setCreativeTab(BloodMagic.TAB_BM);
         setHarvestLevel(name, 4);
 
-        addPropertyOverride(new ResourceLocation("bloodmagic","charge"), new IItemPropertyGetter()
+        addPropertyOverride(new ResourceLocation("bloodmagic", "activated"), new IItemPropertyGetter()
+        {
+            @SideOnly(Side.CLIENT)
+            public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
+            {
+                return getActivated(stack) ? 1F : 0F;
+            }
+        });
+
+        addPropertyOverride(new ResourceLocation("bloodmagic", "charge"), new IItemPropertyGetter()
         {
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)

@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.client.render.block;
 
 import WayofTime.bloodmagic.altar.AltarComponent;
-import WayofTime.bloodmagic.altar.AltarTier;
+import WayofTime.bloodmagic.altar.EnumAltarTier;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.handler.event.ClientHandler;
@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
@@ -21,8 +22,10 @@ import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
 public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
-    private static final float MIN_HEIGHT = 0.499f;
-    private static final float MAX_HEIGHT = 0.745f;
+    public static Minecraft mc = Minecraft.getMinecraft();
+    public static ResourceLocation resource = new ResourceLocation("bloodmagic", "textures/blocks/lifeEssenceStill.png");
+    public static float minHeight = 0.499f;
+    public static float maxHeight = 0.745f;
 
     @Override
     public void render(TileAltar tileAltar, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
@@ -37,7 +40,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
         this.renderItem(inputStack);
         GlStateManager.popMatrix();
 
-        if (tileAltar.getCurrentTierDisplayed() != AltarTier.ONE)
+        if (tileAltar.getCurrentTierDisplayed() != EnumAltarTier.ONE)
             renderHologram(tileAltar, tileAltar.getCurrentTierDisplayed(), partialTicks);
     }
 
@@ -47,7 +50,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
         Fluid fluid = BlockLifeEssence.getLifeEssence();
         FluidStack fluidStack = new FluidStack(fluid, 1000);
 
-        GlStateManager.translate(0.5, MIN_HEIGHT + (fluidLevel) * (MAX_HEIGHT - MIN_HEIGHT), 0.5);
+        GlStateManager.translate(0.5, minHeight + (fluidLevel) * (maxHeight - minHeight), 0.5);
 
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder wr = tessellator.getBuffer();
@@ -78,7 +81,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
     }
 
     private void renderItem(ItemStack stack) {
-        RenderItem itemRenderer = Minecraft.getMinecraft().getRenderItem();
+        RenderItem itemRenderer = mc.getRenderItem();
         if (!stack.isEmpty()) {
             GlStateManager.translate(0.5, 1, 0.5);
             GlStateManager.pushMatrix();
@@ -99,11 +102,11 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
         }
     }
 
-    private void renderHologram(TileAltar altar, AltarTier tier, float partialTicks) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+    private void renderHologram(TileAltar altar, EnumAltarTier tier, float partialTicks) {
+        EntityPlayerSP player = mc.player;
         World world = player.world;
 
-        if (tier == AltarTier.ONE)
+        if (tier == EnumAltarTier.ONE)
             return;
 
         GlStateManager.pushMatrix();

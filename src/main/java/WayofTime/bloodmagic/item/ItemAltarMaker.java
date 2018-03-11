@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantProvider {
-    private AltarTier tierToBuild = AltarTier.ONE;
+    private EnumAltarTier tierToBuild = EnumAltarTier.ONE;
 
     public ItemAltarMaker() {
         super();
@@ -61,12 +61,12 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
         stack = NBTHelper.checkNBT(stack);
 
         if (player.isSneaking()) {
-            if (stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) >= AltarTier.MAXTIERS - 1)
+            if (stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) >= EnumAltarTier.MAXTIERS - 1)
                 stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, 0);
             else
                 stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1);
 
-            setTierToBuild(AltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)]);
+            setTierToBuild(EnumAltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)]);
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.bloodmagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)));
             return super.onItemRightClick(world, player, hand);
         }
@@ -91,7 +91,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
         variants.put(0, "type=altarmaker"); // FIXME
     }
 
-    public void setTierToBuild(AltarTier tierToBuild) {
+    public void setTierToBuild(EnumAltarTier tierToBuild) {
         this.tierToBuild = tierToBuild;
     }
 
@@ -99,12 +99,12 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
         if (world.isRemote)
             return;
 
-        if (tierToBuild == AltarTier.ONE)
+        if (tierToBuild == EnumAltarTier.ONE)
             return;
 
         for (AltarComponent altarComponent : tierToBuild.getAltarComponents()) {
             BlockPos componentPos = pos.add(altarComponent.getOffset());
-            if (altarComponent.getComponent() == ComponentType.NOTAIR) {
+            if (altarComponent.getComponent() == EnumAltarComponent.NOTAIR) {
                 world.setBlockState(componentPos, Blocks.STONEBRICK.getDefaultState());
                 continue;
             }
@@ -123,9 +123,9 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
         RayTraceResult rayTrace = rayTrace(world, player, false);
         BlockPos pos = rayTrace.getBlockPos();
         IBlockState state = world.getBlockState(pos);
-        AltarTier altarTier = AltarUtil.getTier(world, pos);
+        EnumAltarTier altarTier = BloodAltar.getAltarTier(world, pos);
 
-        if (altarTier.equals(AltarTier.ONE))
+        if (altarTier.equals(EnumAltarTier.ONE))
             return "" + altarTier.toInt();
         else {
             for (AltarComponent altarComponent : altarTier.getAltarComponents()) {

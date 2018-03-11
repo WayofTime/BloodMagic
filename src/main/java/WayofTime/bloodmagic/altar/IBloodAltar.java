@@ -5,7 +5,7 @@ public interface IBloodAltar {
 
     int getCurrentBlood();
 
-    AltarTier getTier();
+    EnumAltarTier getTier();
 
     int getProgress();
 

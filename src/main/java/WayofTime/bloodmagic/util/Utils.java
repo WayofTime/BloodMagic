@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.util;
 
-import WayofTime.bloodmagic.altar.ComponentType;
+import WayofTime.bloodmagic.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.iface.IDemonWillViewer;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
@@ -270,15 +270,17 @@ public class Utils {
      * otherwise
      */
     public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot) {
-        ItemStack slotStack = tile.getStackInSlot(slot);
-        if (slotStack.isEmpty() && !player.getHeldItemMainhand().isEmpty()) {
+        if (tile.getStackInSlot(slot).isEmpty() && !player.getHeldItemMainhand().isEmpty()) {
             ItemStack input = player.getHeldItemMainhand().copy();
             input.setCount(1);
             player.getHeldItemMainhand().shrink(1);
             tile.setInventorySlotContents(slot, input);
             return true;
-        } else if (!slotStack.isEmpty() && player.getHeldItemMainhand().isEmpty()) {
-            ItemHandlerHelper.giveItemToPlayer(player, slotStack);
+        } else if (!tile.getStackInSlot(slot).isEmpty() && player.getHeldItemMainhand().isEmpty()) {
+            if (!tile.getWorld().isRemote) {
+                EntityItem invItem = new EntityItem(tile.getWorld(), player.posX, player.posY + 0.25, player.posZ, tile.getStackInSlot(slot));
+                tile.getWorld().spawnEntity(invItem);
+            }
             tile.clear();
             return false;
         }
@@ -319,12 +321,12 @@ public class Utils {
     }
 
     /**
-     * Gets a default block for each type of {@link ComponentType}
+     * Gets a default block for each type of {@link EnumAltarComponent}
      *
      * @param component - The Component to provide a block for.
      * @return The default Block for the EnumAltarComponent
      */
-    public static Block getBlockForComponent(ComponentType component) {
+    public static Block getBlockForComponent(EnumAltarComponent component) {
         switch (component) {
             case GLOWSTONE:
                 return Blocks.GLOWSTONE;

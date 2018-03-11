@@ -1,52 +1,50 @@
 {
-  "parent": "item/generated",
+  "parent": "item/handheld",
   "textures": {
     "layer0": "bloodmagic:items/BoundShovel_activated"
-  },
-  "variants": {
-    "active": {
-      "true": {
-        "textures": {
-          "layer0": "bloodmagic:items/BoundShovel_activated"
-        }
-      },
-      "false": {
-        "textures": {
-          "layer0": "bloodmagic:items/Item_deactivated"
-        }
-      }
-    }
   },
   "overrides": [
     {
       "predicate": {
+        "bloodmagic:activated": 0
+      },
+      "model": "bloodmagic:item/bound_tools/item_deactivated"
+    },
+    {
+      "predicate": {
+        "bloodmagic:activated": 1
+      },
+      "model": "bloodmagic:item/bound_tools/bound_shovel_activated"
+    },
+    {
+      "predicate": {
         "bloodmagic:charge": 0.2
       },
-      "model": "bloodmagic:item/bound_tools/boundshovel_activated_0"
+      "model": "bloodmagic:item/bound_tools/bound_shovel_activated_0"
     },
     {
       "predicate": {
         "bloodmagic:charge": 0.4
       },
-      "model": "bloodmagic:item/bound_tools/boundshovel_activated_1"
+      "model": "bloodmagic:item/bound_tools/bound_shovel_activated_1"
     },
     {
       "predicate": {
         "bloodmagic:charge": 0.6
       },
-      "model": "bloodmagic:item/bound_tools/boundshovel_activated_2"
+      "model": "bloodmagic:item/bound_tools/bound_shovel_activated_2"
     },
     {
       "predicate": {
         "bloodmagic:charge": 0.8
       },
-      "model": "bloodmagic:item/bound_tools/boundshovel_activated_3"
+      "model": "bloodmagic:item/bound_tools/bound_shovel_activated_3"
     },
     {
       "predicate": {
         "bloodmagic:charge": 1
       },
-      "model": "bloodmagic:item/bound_tools/boundshovel_activated_4"
+      "model": "bloodmagic:item/bound_tools/bound_shovel_activated_4"
     }
   ]
 }

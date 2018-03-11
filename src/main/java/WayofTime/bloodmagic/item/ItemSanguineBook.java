@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.altar.AltarTier;
+import WayofTime.bloodmagic.altar.EnumAltarTier;
 import WayofTime.bloodmagic.altar.IAltarManipulator;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.iface.IDocumentedBlock;
@@ -34,7 +34,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemSanguineBook extends Item implements IVariantProvider, IAltarManipulator {
-    private AltarTier currentDisplayedTier = AltarTier.ONE;
+    private EnumAltarTier currentDisplayedTier = EnumAltarTier.ONE;
 
     public ItemSanguineBook() {
         setUnlocalizedName(BloodMagic.MODID + ".sanguineBook");
@@ -73,12 +73,12 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
 
         RayTraceResult rayTrace = rayTrace(world, player, false);
         if (rayTrace == null || rayTrace.typeOfHit == RayTraceResult.Type.MISS || rayTrace.typeOfHit == RayTraceResult.Type.ENTITY) {
-            if (stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) >= AltarTier.MAXTIERS - 1)
+            if (stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) >= EnumAltarTier.MAXTIERS - 1)
                 stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, 0);
             else
                 stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1);
 
-            currentDisplayedTier = AltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)];
+            currentDisplayedTier = EnumAltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)];
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.bloodmagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)));
 
             return super.onItemRightClick(world, player, hand);
