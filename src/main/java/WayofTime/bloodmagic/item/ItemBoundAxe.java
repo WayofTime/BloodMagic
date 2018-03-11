@@ -2,12 +2,8 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
-import WayofTime.bloodmagic.util.BlockStack;
-import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.material.Material;
@@ -22,6 +18,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,7 +27,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -60,7 +56,7 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider {
         int fortuneLvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);
         int range = charge / 6; //Charge is a max of 30 - want 5 to be the max
 
-        HashMultiset<ItemStackWrapper> drops = HashMultiset.create();
+        HashMultiset<ItemStack> drops = HashMultiset.create();
 
         BlockPos playerPos = player.getPosition();
 
@@ -68,29 +64,29 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider {
             for (int j = 0; j <= 2 * range; j++) {
                 for (int k = -range; k <= range; k++) {
                     BlockPos blockPos = playerPos.add(i, j, k);
-                    BlockStack blockStack = BlockStack.getStackFromPos(world, blockPos);
+                    IBlockState blockState = world.getBlockState(blockPos);
 
-                    if (blockStack.getBlock().isAir(blockStack.getState(), world, blockPos))
+                    if (blockState.getBlock().isAir(blockState, world, blockPos))
                         continue;
 
-                    if (blockStack.getState().getMaterial() != Material.WOOD && !EFFECTIVE_ON.contains(blockStack.getBlock()))
+                    if (blockState.getMaterial() != Material.WOOD && !EFFECTIVE_ON.contains(blockState.getBlock()))
                         continue;
 
-                    BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockStack.getState(), player);
+                    BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockState, player);
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         continue;
 
-                    if (blockStack.getState().getBlockHardness(world, blockPos) != -1.0F) {
-                        float strengthVsBlock = getDestroySpeed(stack, blockStack.getState());
+                    if (blockState.getBlockHardness(world, blockPos) != -1.0F) {
+                        float strengthVsBlock = getDestroySpeed(stack, blockState);
 
-                        if (strengthVsBlock > 1.1F || blockStack.getBlock() instanceof BlockLeaves && world.canMineBlockBody(player, blockPos)) {
-                            if (silkTouch && blockStack.getBlock().canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))
-                                drops.add(new ItemStackWrapper(blockStack));
+                        if (strengthVsBlock > 1.1F || blockState.getBlock() instanceof BlockLeaves && world.canMineBlockBody(player, blockPos)) {
+                            if (silkTouch && blockState.getBlock().canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))
+                                drops.add(new ItemStack(blockState.getBlock(), 1, blockState.getBlock().getMetaFromState(blockState)));
                             else {
-                                List<ItemStack> itemDrops = blockStack.getBlock().getDrops(world, blockPos, world.getBlockState(blockPos), fortuneLvl);
+                                NonNullList<ItemStack> itemDrops = NonNullList.create();
+                                blockState.getBlock().getDrops(itemDrops, world, blockPos, blockState, fortuneLvl);
 
-                                for (ItemStack stacks : itemDrops)
-                                    drops.add(ItemStackWrapper.getHolder(stacks));
+                                drops.addAll(itemDrops);
                             }
 
                             world.setBlockToAir(blockPos);

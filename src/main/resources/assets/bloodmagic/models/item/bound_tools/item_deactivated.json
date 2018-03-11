@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "bloodmagic:items/Item_deactivated"
+  }
+}
