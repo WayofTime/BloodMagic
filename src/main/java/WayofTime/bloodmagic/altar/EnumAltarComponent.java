@@ -5,7 +5,7 @@ import java.util.Locale;
 /**
  * List of different components used to construct different tiers of altars.
  */
-public enum ComponentType {
+public enum EnumAltarComponent {
     GLOWSTONE,
     BLOODSTONE,
     BEACON,
@@ -13,11 +13,11 @@ public enum ComponentType {
     CRYSTAL,
     NOTAIR;
 
-    public static final ComponentType[] VALUES = values();
+    public static final EnumAltarComponent[] VALUES = values();
     private static final String BASE = "chat.bloodmagic.altar.comp.";
     private String key;
 
-    ComponentType() {
+    EnumAltarComponent() {
         this.key = BASE + name().toLowerCase(Locale.ENGLISH);
     }
 

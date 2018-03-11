@@ -1,0 +1,7 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "bloodmagic:items/BoundShovel_activated",
+    "layer1": "bloodmagic:items/boundshovel_activated_4"
+  }
+}

@@ -6,6 +6,9 @@
   },
   "variants": {
     "active": {
+      "default": {
+        "model": "bloodmagic:item/boundshovel"
+      },
       "true": {
         "textures": {
           "layer0": "bloodmagic:items/BoundShovel_activated"
