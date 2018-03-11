@@ -1,10 +1,16 @@
 package WayofTime.bloodmagic.tile;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffect;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectCraftingNew;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
@@ -20,7 +26,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     public EnumFacing rotation = EnumFacing.HORIZONTALS[0];
 
     private String key = "empty";
-    private AlchemyArrayEffect arrayEffect;
+    public AlchemyArrayEffect arrayEffect;
     private boolean doDropIngredients = true;
 
     public TileAlchemyArray()
@@ -191,5 +197,12 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     public void setRotation(EnumFacing rotation)
     {
         this.rotation = rotation;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox()
+    {
+        return Block.FULL_BLOCK_AABB.offset(getPos());
     }
 }
