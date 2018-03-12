@@ -84,7 +84,7 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider {
                                 drops.add(new ItemStack(blockState.getBlock(), 1, blockState.getBlock().getMetaFromState(blockState)));
                             else {
                                 NonNullList<ItemStack> itemDrops = NonNullList.create();
-                                blockState.getBlock().getDrops(itemDrops, world, blockPos, world.getBlockState(blockPos), fortuneLvl);
+                                blockState.getBlock().getDrops(itemDrops, world, blockPos, blockState, fortuneLvl);
                                 drops.addAll(itemDrops);
                             }
 

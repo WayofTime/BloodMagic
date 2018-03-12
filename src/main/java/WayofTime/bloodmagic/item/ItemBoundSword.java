@@ -38,7 +38,7 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
         setUnlocalizedName(BloodMagic.MODID + ".bound.sword");
         setCreativeTab(BloodMagic.TAB_BM);
 
-        addPropertyOverride(new ResourceLocation("bloodmagic", "activated"), new IItemPropertyGetter()
+        addPropertyOverride(new ResourceLocation(BloodMagic.MODID, "activated"), new IItemPropertyGetter()
         {
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)

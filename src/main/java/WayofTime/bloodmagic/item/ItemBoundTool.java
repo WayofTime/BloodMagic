@@ -30,13 +30,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
 
 public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
-    public final int MAX_CHARGE_TIME = 30;
+    public static final int MAX_CHARGE_TIME = 30;
     protected final String tooltipBase;
     private final String name;
 
@@ -46,7 +47,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
         setCreativeTab(BloodMagic.TAB_BM);
         setHarvestLevel(name, 4);
 
-        addPropertyOverride(new ResourceLocation("bloodmagic", "activated"), new IItemPropertyGetter()
+        addPropertyOverride(new ResourceLocation(BloodMagic.MODID, "activated"), new IItemPropertyGetter()
         {
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
@@ -55,7 +56,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
             }
         });
 
-        addPropertyOverride(new ResourceLocation("bloodmagic", "charge"), new IItemPropertyGetter()
+        addPropertyOverride(new ResourceLocation(BloodMagic.MODID, "charge"), new IItemPropertyGetter()
         {
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
@@ -207,15 +208,13 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
             int maxStackSize = stack.getItem().getItemStackLimit(stack);
 
             while (count >= maxStackSize) {
-                ItemStack s = stack.copy();
-                s.setCount(maxStackSize);
+                ItemStack s = ItemHandlerHelper.copyStackWithSize(stack, maxStackSize);
                 world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), s));
                 count -= maxStackSize;
             }
 
             if (count > 0) {
-                ItemStack s = stack.copy();
-                s.setCount(count);
+                ItemStack s = ItemHandlerHelper.copyStackWithSize(stack, count);
                 world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), s));
             }
         }
