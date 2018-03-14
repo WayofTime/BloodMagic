@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.AltarCraftedEvent;
 import WayofTime.bloodmagic.iface.IUpgradeTrainer;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.ItemHelper;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
@@ -86,7 +87,7 @@ public class CraftingHandler {
                 ItemStack output = event.getLeft().copy();
                 if (!output.hasTagCompound())
                     output.setTagCompound(new NBTTagCompound());
-                output.getTagCompound().setString(Constants.NBT.COLOR, String.valueOf(dyeColor.getColorValue()));
+                output.getTagCompound().setString(Constants.NBT.COLOR, String.valueOf(Utils.DYE_COLOR_VALUES.getOrDefault(dyeColor, 0)));
                 event.setCost(1);
 
                 event.setOutput(output);

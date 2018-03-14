@@ -8,6 +8,7 @@ import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.PlayerVelocityPacketProcessor;
 import WayofTime.bloodmagic.tile.TileInventory;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockPortal;
@@ -23,6 +24,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -39,6 +41,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -47,12 +50,25 @@ import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.lang.reflect.Field;
+import java.util.*;
 
 public class Utils {
+
+    public static final EnumMap<EnumDyeColor, Integer> DYE_COLOR_VALUES = Maps.newEnumMap(EnumDyeColor.class);
+
+    static {
+        try {
+            Field colorValue = ReflectionHelper.findField(EnumDyeColor.class, "field_193351_w", "colorValue");
+            colorValue.setAccessible(true);
+            for (EnumDyeColor color : EnumDyeColor.values()) {
+                DYE_COLOR_VALUES.put(color, (int) colorValue.get(color));
+            }
+        } catch (IllegalAccessException e) {
+            BMLog.DEFAULT.error("Error grabbing color values: {}", e.getMessage());
+        }
+    }
+
     public static float addAbsorptionToMaximum(EntityLivingBase entity, float added, int maximum, int duration) {
         float currentAmount = entity.getAbsorptionAmount();
         added = Math.min(maximum - currentAmount, added);
