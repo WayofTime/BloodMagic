@@ -11,7 +11,7 @@ public class TeleportQueue {
     private static List<ITeleport> queue;
 
     private TeleportQueue() {
-        queue = new ArrayList<ITeleport>();
+        queue = new ArrayList<>();
     }
 
     public void addITeleport(ITeleport iTeleport) {

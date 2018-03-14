@@ -1,12 +1,9 @@
 package WayofTime.bloodmagic.command.sub;
 
 import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.helper.BindableHelper;
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.base.Strings;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;

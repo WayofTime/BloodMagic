@@ -1,14 +1,12 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
-import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.core.registry.ImperfectRitualRegistry;
-import WayofTime.bloodmagic.core.registry.RitualRegistry;
-import WayofTime.bloodmagic.ritual.data.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.ritual.RitualRegistry;
+import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import joptsimple.internal.Strings;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -70,7 +68,7 @@ public class DataProviderRitualController implements IWailaDataProvider {
         } else {
             tag.setBoolean("master", false);
 
-            ImperfectRitual ritual = ImperfectRitualRegistry.getRitualForBlock(BlockStack.getStackFromPos(world, pos.up()));
+            ImperfectRitual ritual = ImperfectRitualRegistry.getRitualForBlock(world.getBlockState(pos.up()));
             if (ritual != null) {
                 tag.setString("ritual", ritual.getUnlocalizedName());
                 tag.setBoolean("enabled", ImperfectRitualRegistry.ritualEnabled(ritual));

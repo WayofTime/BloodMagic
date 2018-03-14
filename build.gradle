@@ -5,14 +5,14 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 
 plugins {
-	id "net.minecraftforge.gradle.forge" version "2.0.2"
+    id "net.minecraftforge.gradle.forge" version "2.0.2"
     id 'com.matthewprenger.cursegradle' version '1.0.10'
-	id 'io.franzbecker.gradle-lombok' version '1.6'
+    id 'io.franzbecker.gradle-lombok' version '1.6'
     id 'maven-publish'
 }
 
@@ -30,7 +30,7 @@ version = "${mc_version}-${mod_version}-${build_number}"
 
 repositories {
     maven { url "http://dvs1.progwml6.com/files/maven" }
-    maven {	url "http://tehnut.info/maven" }
+    maven { url "http://tehnut.info/maven" }
 }
 
 dependencies {
@@ -80,11 +80,11 @@ jar {
     from sourceSets.main.output
     from sourceSets.api.output
     manifest.mainAttributes(
-        "Built-By": System.getProperty('user.name'),
-        "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
-        "Implementation-Title": project.name,
-        "Implementation-Version": project.version,
-        "Built-On": "${mc_version}-${forge_version}"
+            "Built-By": System.getProperty('user.name'),
+            "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
+            "Implementation-Title": project.name,
+            "Implementation-Version": project.version,
+            "Built-On": "${mc_version}-${forge_version}"
     )
 }
 
@@ -146,7 +146,9 @@ String getChangelogText() {
         }
         if (lineCount < 3) {
             lineCount++
-            if (it.startsWith(separator)) {return}
+            if (it.startsWith(separator)) {
+                return
+            }
         }
         if (!it.startsWith(separator)) {
             str += "$it" + (lineCount < 3 ? ':\n\n' : '\n')

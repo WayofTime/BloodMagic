@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TartaricForgeRecipeRegistry {
-    private static List<TartaricForgeRecipe> recipeList = new ArrayList<TartaricForgeRecipe>();
+    private static List<TartaricForgeRecipe> recipeList = new ArrayList<>();
 
     public static void registerRecipe(TartaricForgeRecipe recipe) {
         recipeList.add(recipe);
@@ -34,6 +34,6 @@ public class TartaricForgeRecipeRegistry {
     }
 
     public static List<TartaricForgeRecipe> getRecipeList() {
-        return new ArrayList<TartaricForgeRecipe>(recipeList);
+        return new ArrayList<>(recipeList);
     }
 }

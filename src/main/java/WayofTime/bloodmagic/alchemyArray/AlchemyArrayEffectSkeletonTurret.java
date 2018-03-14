@@ -25,12 +25,7 @@ import java.util.List;
  * Credits for the initial code go to Crazy Pants of EIO.
  */
 public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect {
-    public static Predicate<EntityMob> checkSkeleton = new Predicate<EntityMob>() {
-        @Override
-        public boolean apply(EntityMob input) {
-            return !(input instanceof EntitySkeleton);
-        }
-    };
+    public static Predicate<EntityMob> checkSkeleton = input -> !(input instanceof EntitySkeleton);
     private EntitySkeleton turret;
 
     public AlchemyArrayEffectSkeletonTurret(String key) {
@@ -105,7 +100,7 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect {
     private void cancelCurrentTargetTasks(EntityLiving entity) {
         Iterator<EntityAITaskEntry> iterator = entity.targetTasks.taskEntries.iterator();
 
-        List<EntityAITasks.EntityAITaskEntry> currentTasks = new ArrayList<EntityAITasks.EntityAITaskEntry>();
+        List<EntityAITasks.EntityAITaskEntry> currentTasks = new ArrayList<>();
         while (iterator.hasNext()) {
             EntityAITaskEntry entityaitaskentry = iterator.next();
             if (entityaitaskentry != null)// && entityaitaskentry.action instanceof EntityAITarget)

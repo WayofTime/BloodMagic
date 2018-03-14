@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.ritual.RitualPortal;
+import WayofTime.bloodmagic.ritual.types.RitualPortal;
 import WayofTime.bloodmagic.tile.base.TileBase;
 import com.google.common.base.Strings;
 import net.minecraft.nbt.NBTTagCompound;

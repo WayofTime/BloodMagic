@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class LivingArmourUpgradeDigSlowdown extends LivingArmourUpgrade {
     public static final int[] costs = new int[]{-10, -17, -28, -42, -60, -80, -100, -125, -160, -200};
     public static final double[] digSpeedModifier = new double[]{0.9, 0.8, 0.7, 0.6, 0.55, 0.5, 0.4, 0.35, 0.3, 0.2};
-    public static HashMap<ILivingArmour, Boolean> changeMap = new HashMap<ILivingArmour, Boolean>();
+    public static HashMap<ILivingArmour, Boolean> changeMap = new HashMap<>();
 
     public LivingArmourUpgradeDigSlowdown(int level) {
         super(level);

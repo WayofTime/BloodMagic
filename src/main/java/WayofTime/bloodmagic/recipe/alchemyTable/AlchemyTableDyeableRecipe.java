@@ -18,11 +18,11 @@ public class AlchemyTableDyeableRecipe extends AlchemyTableRecipe {
     public AlchemyTableDyeableRecipe(int lpDrained, int ticksRequired, int tierRequired, ItemStack inputItem) {
         super(inputItem, lpDrained, ticksRequired, tierRequired);
 
-        ArrayList<ItemStack> validDyes = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> validDyes = new ArrayList<>();
         validDyes.add(new ItemStack(Items.NAME_TAG));
         validDyes.add(new ItemStack(Items.DYE, 1, OreDictionary.WILDCARD_VALUE));
 
-        ArrayList<Object> recipe = new ArrayList<Object>();
+        ArrayList<Object> recipe = new ArrayList<>();
         recipe.add(inputItem);
         recipe.add(validDyes);
 

@@ -15,8 +15,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class LivingArmourDowngradeRecipeRegistry {
-    private static List<LivingArmourDowngradeRecipe> recipeList = new ArrayList<LivingArmourDowngradeRecipe>();
-    private static Map<ItemStack, Map<Integer, List<ITextComponent>>> dialogueMap = new HashMap<ItemStack, Map<Integer, List<ITextComponent>>>();
+    private static List<LivingArmourDowngradeRecipe> recipeList = new ArrayList<>();
+    private static Map<ItemStack, Map<Integer, List<ITextComponent>>> dialogueMap = new HashMap<>();
 
     public static void registerRecipe(LivingArmourDowngradeRecipe recipe) {
         recipeList.add(recipe);
@@ -55,6 +55,6 @@ public class LivingArmourDowngradeRecipeRegistry {
     }
 
     public static List<LivingArmourDowngradeRecipe> getRecipeList() {
-        return new ArrayList<LivingArmourDowngradeRecipe>(recipeList);
+        return new ArrayList<>(recipeList);
     }
 }

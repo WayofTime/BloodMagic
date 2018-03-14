@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.item.types.ComponentTypes;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.AltarCraftedEvent;
 import WayofTime.bloodmagic.iface.IUpgradeTrainer;
@@ -14,8 +15,10 @@ import WayofTime.bloodmagic.item.ItemInscriptionTool;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -126,7 +129,7 @@ public class CraftingHandler {
             if (rightUpgrade != null) {
                 String key = ItemHelper.LivingUpgrades.getKey(event.getRight());
                 ItemStack outputStack = event.getLeft().copy();
-                List<String> keyList = new ArrayList<String>();
+                List<String> keyList = new ArrayList<>();
                 keyList.add(key);
                 if (((IUpgradeTrainer) event.getLeft().getItem()).setTrainedUpgrades(outputStack, keyList)) {
                     event.setCost(1);
@@ -135,5 +138,11 @@ public class CraftingHandler {
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void handleFuelLevel(FurnaceFuelBurnTimeEvent event) {
+        if (ItemStack.areItemsEqual(event.getItemStack(), ComponentTypes.SAND_COAL.getStack()))
+            event.setBurnTime(TileEntityFurnace.getItemBurnTime(new ItemStack(Items.COAL)));
     }
 }

@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class StatTrackerDigging extends StatTracker {
-    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
+    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<>();
     public static int[] blocksRequired = new int[]{128, 512, 1024, 2048, 8192, 16000, 32000, 50000, 80000, 150000};
     public int totalBlocksDug = 0;
 
@@ -66,7 +66,7 @@ public class StatTrackerDigging extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
             if (totalBlocksDug >= blocksRequired[i]) {

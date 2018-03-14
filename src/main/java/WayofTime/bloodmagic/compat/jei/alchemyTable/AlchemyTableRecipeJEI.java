@@ -45,7 +45,7 @@ public class AlchemyTableRecipeJEI implements IRecipeWrapper {
 
     @Override
     public List<String> getTooltipStrings(int mouseX, int mouseY) {
-        ArrayList<String> ret = new ArrayList<String>();
+        ArrayList<String> ret = new ArrayList<>();
         if (mouseX >= 58 && mouseX <= 78 && mouseY >= 21 && mouseY <= 34) {
             ret.add(TextHelper.localize("tooltip.bloodmagic.tier", tier));
             ret.add(TextHelper.localize("jei.bloodmagic.recipe.lpDrained", syphon));

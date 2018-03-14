@@ -339,9 +339,7 @@ public class TileMimic extends TileInventory implements ITickable {
 
                 try {
                     _blockMetadata.setInt(tile, replacementMeta);
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
+                } catch (IllegalArgumentException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
 

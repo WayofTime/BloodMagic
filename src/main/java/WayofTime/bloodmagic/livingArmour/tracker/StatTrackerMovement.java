@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 public class StatTrackerMovement extends StatTracker {
-    public static Map<EntityPlayer, Double> lastPosX = new HashMap<EntityPlayer, Double>();
-    public static Map<EntityPlayer, Double> lastPosZ = new HashMap<EntityPlayer, Double>();
+    public static Map<EntityPlayer, Double> lastPosX = new HashMap<>();
+    public static Map<EntityPlayer, Double> lastPosZ = new HashMap<>();
 
     public static int[] blocksRequired = new int[]{200, 1000, 2000, 4000, 7000, 15000, 25000, 35000, 50000, 70000};
 
@@ -82,7 +82,7 @@ public class StatTrackerMovement extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
             if (totalMovement >= blocksRequired[i]) {

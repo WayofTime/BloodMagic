@@ -3,9 +3,9 @@ package WayofTime.bloodmagic.util.handler.event;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.core.registry.RitualRegistry;
-import WayofTime.bloodmagic.ritual.data.Ritual;
-import WayofTime.bloodmagic.ritual.data.RitualComponent;
+import WayofTime.bloodmagic.ritual.RitualRegistry;
+import WayofTime.bloodmagic.ritual.Ritual;
+import WayofTime.bloodmagic.ritual.RitualComponent;
 import WayofTime.bloodmagic.client.hud.HUDElement;
 import WayofTime.bloodmagic.client.key.KeyBindings;
 import WayofTime.bloodmagic.client.render.block.RenderFakeBlocks;
@@ -18,6 +18,7 @@ import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.Lists;
 import com.google.common.collect.SetMultimap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -55,7 +56,7 @@ import java.util.*;
 public class ClientHandler {
     // Quick toggle for error suppression. Set to false if you wish to hide model errors.
     public static final boolean SUPPRESS_ASSET_ERRORS = true;
-    public static final List<HUDElement> hudElements = new ArrayList<HUDElement>();
+    public static final List<HUDElement> hudElements = new ArrayList<>();
     public static TextureAtlasSprite ritualStoneBlank;
     public static TextureAtlasSprite ritualStoneWater;
     public static TextureAtlasSprite ritualStoneFire;
@@ -191,13 +192,13 @@ public class ClientHandler {
         Set<ModelResourceLocation> missingVariants = ReflectionHelper.getPrivateValue(ModelLoader.class, event.getModelLoader(), "missingVariants");
 
         // Collect all Blood Magic model errors
-        List<ResourceLocation> errored = new ArrayList<ResourceLocation>();
+        List<ResourceLocation> errored = new ArrayList<>();
         for (ResourceLocation modelError : modelErrors.keySet())
             if (modelError.getResourceDomain().equalsIgnoreCase(BloodMagic.MODID))
                 errored.add(modelError);
 
         // Collect all Blood Magic variant errors
-        List<ModelResourceLocation> missing = new ArrayList<ModelResourceLocation>();
+        List<ModelResourceLocation> missing = new ArrayList<>();
         for (ModelResourceLocation missingVariant : missingVariants)
             if (missingVariant.getResourceDomain().equalsIgnoreCase(BloodMagic.MODID))
                 missing.add(missingVariant);
@@ -228,7 +229,7 @@ public class ClientHandler {
 
         String mc = "minecraft";
         String format = "textures/%s.png";
-        Set<ResourceLocation> toRemove = new HashSet<ResourceLocation>();
+        Set<ResourceLocation> toRemove = new HashSet<>();
 
         // Find our missing textures and mark them for removal. Cannot directly remove as it would cause a CME
         if (missingTextures.containsKey(mc)) {
@@ -269,7 +270,9 @@ public class ClientHandler {
         double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
         double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
 
-        for (RitualComponent ritualComponent : ritual.getComponents()) {
+        List<RitualComponent> components = Lists.newArrayList();
+        ritual.gatherComponents(components::add);
+        for (RitualComponent ritualComponent : components) {
             vX = vec3.add(ritualComponent.getOffset(direction));
             double minX = vX.getX() - posX;
             double minY = vX.getY() - posY;
@@ -346,7 +349,9 @@ public class ClientHandler {
         double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
         double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
 
-        for (RitualComponent ritualComponent : ritual.getComponents()) {
+        List<RitualComponent> components = Lists.newArrayList();
+        ritual.gatherComponents(components::add);
+        for (RitualComponent ritualComponent : components) {
             vX = vec3.add(ritualComponent.getOffset(direction));
             double minX = vX.getX() - posX;
             double minY = vX.getY() - posY;

@@ -18,7 +18,7 @@ public class RenderCorruptedSpider extends RenderLiving<EntityCorruptedSpider> {
     public RenderCorruptedSpider(RenderManager renderManagerIn) {
         super(renderManagerIn, new ModelSpider(), 1.0F);
         this.addLayer(new LayerCorruptedSpiderEyes(this));
-        this.addLayer(new LayerWill<EntityCorruptedSpider>(this, new ModelCorruptedSpider(1.1f)));
+        this.addLayer(new LayerWill<>(this, new ModelCorruptedSpider(1.1f)));
     }
 
     protected float getDeathMaxRotation(EntityCorruptedSpider entityLivingBaseIn) {

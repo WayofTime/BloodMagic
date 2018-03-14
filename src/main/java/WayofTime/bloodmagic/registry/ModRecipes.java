@@ -1,26 +1,11 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.alchemyArray.*;
-import WayofTime.bloodmagic.compress.CompressionRegistry;
-import WayofTime.bloodmagic.iface.ISigil;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.core.registry.AlchemyArrayRecipeRegistry;
-import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
-import WayofTime.bloodmagic.core.registry.LivingArmourDowngradeRecipeRegistry;
-import WayofTime.bloodmagic.client.render.alchemyArray.*;
-import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
-import WayofTime.bloodmagic.compress.BaseCompressionHandler;
-import WayofTime.bloodmagic.compress.StorageBlockCraftingManager;
-import WayofTime.bloodmagic.core.RegistrarBloodMagic;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.item.types.ComponentTypes;
-import WayofTime.bloodmagic.livingArmour.downgrade.*;
-import WayofTime.bloodmagic.potion.BMPotionUtils;
-import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
-import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionRecipe;
-import WayofTime.bloodmagic.util.Utils;
-import com.google.common.base.Stopwatch;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -31,13 +16,54 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.oredict.OreDictionary;
+
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectArrowTurret;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectAttractor;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBinding;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBounce;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectFurnaceFuel;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectMovement;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectSigil;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectSkeletonTurret;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectTeleport;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectUpdraft;
+import WayofTime.bloodmagic.client.render.alchemyArray.AttractorAlchemyCircleRenderer;
+import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
+import WayofTime.bloodmagic.client.render.alchemyArray.DualAlchemyCircleRenderer;
+import WayofTime.bloodmagic.client.render.alchemyArray.LowAlchemyCircleRenderer;
+import WayofTime.bloodmagic.client.render.alchemyArray.SingleAlchemyCircleRenderer;
+import WayofTime.bloodmagic.client.render.alchemyArray.StaticAlchemyCircleRenderer;
+import WayofTime.bloodmagic.client.render.alchemyArray.TurretAlchemyCircleRenderer;
+import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
+import WayofTime.bloodmagic.compress.BaseCompressionHandler;
+import WayofTime.bloodmagic.compress.CompressionRegistry;
+import WayofTime.bloodmagic.compress.StorageBlockCraftingManager;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.registry.AlchemyArrayRecipeRegistry;
+import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
+import WayofTime.bloodmagic.core.registry.LivingArmourDowngradeRecipeRegistry;
+import WayofTime.bloodmagic.iface.ISigil;
+import WayofTime.bloodmagic.item.types.ComponentTypes;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeBattleHungry;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeDigSlowdown;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeDisoriented;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeMeleeDecrease;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowHeal;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowness;
+import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeStormTrooper;
+import WayofTime.bloodmagic.potion.BMPotionUtils;
+import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
+import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionRecipe;
+import WayofTime.bloodmagic.util.Utils;
+
+import com.google.common.base.Stopwatch;
 
 public class ModRecipes
 {
@@ -95,7 +121,9 @@ public class ModRecipes
 
         AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.ARROW), new ItemStack(Items.FEATHER), new AlchemyArrayEffectSkeletonTurret("skeletonTurret"), new DualAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SkeletonTurret1.png"), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SkeletonTurret2.png")));
 
-        AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.FEATHER), new ItemStack(Items.APPLE), new AlchemyArrayEffectTeleport("teleport"), new StaticAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/teleportation.png")));
+        AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.REDSTONE), new AlchemyArrayEffectTeleport("teleport"), new StaticAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/teleportation.png")));
+        AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.BOW), new ItemStack(Items.ARROW), new AlchemyArrayEffectArrowTurret("turretTest"), new TurretAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SkeletonTurret1.png")));
+//        AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.APPLE), new ItemStack(Items.REDSTONE), new AlchemyArrayEffectLaputa("laputa"), new AttractorAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/shardoflaputa.png")));
 
         AlchemyArrayRecipeRegistry.registerRecipe(ComponentTypes.REAGENT_FAST_MINER.getStack(), new ItemStack(Items.IRON_PICKAXE), new AlchemyArrayEffectSigil("fastMiner", (ISigil) RegistrarBloodMagicItems.SIGIL_FAST_MINER), new SingleAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/FastMinerSigil.png")));
 
@@ -148,12 +176,12 @@ public class ModRecipes
     {
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTablePotionRecipe(lpDrained, 100, tier, inputStack, baseEffect));
 
-        List<ItemStack> lengtheningList = new ArrayList<ItemStack>();
+        List<ItemStack> lengtheningList = new ArrayList<>();
         lengtheningList.add(inputStack);
         lengtheningList.add(mundaneLengtheningStack);
         AlchemyTableRecipeRegistry.registerRecipe(BMPotionUtils.getLengthAugmentRecipe(lpDrained, 100, tier, lengtheningList, baseEffect, 1));
 
-        List<ItemStack> powerList = new ArrayList<ItemStack>();
+        List<ItemStack> powerList = new ArrayList<>();
         powerList.add(inputStack);
         powerList.add(mundanePowerStack);
         AlchemyTableRecipeRegistry.registerRecipe(BMPotionUtils.getPowerAugmentRecipe(lpDrained, 100, tier, powerList, baseEffect, 1));
@@ -173,7 +201,7 @@ public class ModRecipes
         ItemStack minecartStack = new ItemStack(Items.MINECART);
         ItemStack stringStack = new ItemStack(Items.STRING);
 
-        Map<ItemStack, Pair<String, int[]>> dialogueMap = new HashMap<ItemStack, Pair<String, int[]>>();
+        Map<ItemStack, Pair<String, int[]>> dialogueMap = new HashMap<>();
         dialogueMap.put(bowStack, Pair.of("bow", new int[] { 1, 100, 300, 500 }));
         dialogueMap.put(bottleStack, Pair.of("quenched", new int[] { 1, 100, 300, 500 }));
         dialogueMap.put(swordStack, Pair.of("dulledBlade", new int[] { 1, 100, 300, 500, 700 }));
@@ -183,10 +211,10 @@ public class ModRecipes
         {
             ItemStack keyStack = entry.getKey();
             String str = entry.getValue().getKey();
-            Map<Integer, List<ITextComponent>> textMap = new HashMap<Integer, List<ITextComponent>>();
+            Map<Integer, List<ITextComponent>> textMap = new HashMap<>();
             for (int tick : entry.getValue().getValue())
             {
-                List<ITextComponent> textList = new ArrayList<ITextComponent>();
+                List<ITextComponent> textList = new ArrayList<>();
                 textList.add(new TextComponentTranslation("\u00A74%s", new TextComponentTranslation(messageBase + str + "." + tick)));
                 textMap.put(tick, textList);
             }

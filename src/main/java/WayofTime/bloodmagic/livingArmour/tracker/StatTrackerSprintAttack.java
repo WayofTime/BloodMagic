@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class StatTrackerSprintAttack extends StatTracker {
-    public static HashMap<LivingArmour, Double> changeMap = new HashMap<LivingArmour, Double>();
+    public static HashMap<LivingArmour, Double> changeMap = new HashMap<>();
     public static int[] damageRequired = new int[]{200, 800, 1300, 2500, 3800};
     public double totalDamageDealt = 0;
 
@@ -66,7 +66,7 @@ public class StatTrackerSprintAttack extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
             if (totalDamageDealt >= damageRequired[i]) {

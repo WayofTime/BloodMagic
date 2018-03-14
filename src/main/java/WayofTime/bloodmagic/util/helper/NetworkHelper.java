@@ -2,14 +2,12 @@ package WayofTime.bloodmagic.util.helper;
 
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.SoulNetworkEvent;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.core.registry.OrbRegistry;
 import WayofTime.bloodmagic.core.data.BMWorldSavedData;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
-import com.google.common.base.Strings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

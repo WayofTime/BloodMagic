@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.structures;
 
-import WayofTime.bloodmagic.ritual.data.AreaDescriptor;
+import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -13,10 +13,10 @@ import java.util.Map.Entry;
 
 public class DungeonRoom {
     public int dungeonWeight = 1;
-    public Map<String, BlockPos> structureMap = new HashMap<String, BlockPos>();
+    public Map<String, BlockPos> structureMap = new HashMap<>();
 
-    public Map<EnumFacing, List<BlockPos>> doorMap = new HashMap<EnumFacing, List<BlockPos>>(); //Map of doors. The EnumFacing indicates what way this door faces.
-    public List<AreaDescriptor.Rectangle> descriptorList = new ArrayList<AreaDescriptor.Rectangle>();
+    public Map<EnumFacing, List<BlockPos>> doorMap = new HashMap<>(); //Map of doors. The EnumFacing indicates what way this door faces.
+    public List<AreaDescriptor.Rectangle> descriptorList = new ArrayList<>();
 
     public DungeonRoom(Map<String, BlockPos> structureMap, Map<EnumFacing, List<BlockPos>> doorMap, List<AreaDescriptor.Rectangle> descriptorList) {
         this.structureMap = structureMap;
@@ -25,7 +25,7 @@ public class DungeonRoom {
     }
 
     public List<AreaDescriptor> getAreaDescriptors(PlacementSettings settings, BlockPos offset) {
-        List<AreaDescriptor> newList = new ArrayList<AreaDescriptor>();
+        List<AreaDescriptor> newList = new ArrayList<>();
 
         for (AreaDescriptor desc : descriptorList) {
             newList.add(desc.rotateDescriptor(settings).offset(offset));
@@ -35,7 +35,7 @@ public class DungeonRoom {
     }
 
     public List<BlockPos> getDoorOffsetsForFacing(PlacementSettings settings, EnumFacing facing, BlockPos offset) {
-        List<BlockPos> offsetList = new ArrayList<BlockPos>();
+        List<BlockPos> offsetList = new ArrayList<>();
 
         EnumFacing originalFacing = DungeonUtil.reverseRotate(settings.getMirror(), settings.getRotation(), facing);
         if (doorMap.containsKey(originalFacing)) {

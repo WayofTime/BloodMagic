@@ -19,10 +19,8 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe {
     public AlchemyTablePotionAugmentRecipe(int lpDrained, int ticksRequired, int tierRequired, List<ItemStack> inputItems, PotionEffect baseEffect, double lengthAugment, int powerAugment) {
         super(lpDrained, ticksRequired, tierRequired, inputItems, baseEffect);
 
-        ArrayList<Object> recipe = new ArrayList<Object>();
-        for (ItemStack stack : inputItems) {
-            recipe.add(stack);
-        }
+        ArrayList<Object> recipe = new ArrayList<>();
+        recipe.addAll(inputItems);
         recipe.add(getAugmentedPotionFlask(baseEffect));
 
         this.input = recipe;
@@ -55,7 +53,7 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe {
         if (inputStack.isEmpty()) {
             ItemStack outputStack = new ItemStack(RegistrarBloodMagicItems.POTION_FLASK);
 
-            List<PotionEffect> effectList = new ArrayList<PotionEffect>();
+            List<PotionEffect> effectList = new ArrayList<>();
             int potionLength = wantedPotion.isInstant() ? 1 : BMPotionUtils.getAugmentedLength(baseEffect.getDuration(), lengthAugment, powerAugment - baseEffect.getAmplifier());
             effectList.add(new PotionEffect(wantedPotion, potionLength, powerAugment - baseEffect.getAmplifier()));
 
@@ -67,7 +65,7 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe {
         ItemStack outputStack = inputStack.copy();
 
         List<PotionEffect> effectList = PotionUtils.getEffectsFromStack(outputStack);
-        List<PotionEffect> newEffectList = new ArrayList<PotionEffect>();
+        List<PotionEffect> newEffectList = new ArrayList<>();
 
         for (PotionEffect effect : effectList) {
             if (effect.getPotion() == wantedPotion) {
@@ -89,7 +87,7 @@ public class AlchemyTablePotionAugmentRecipe extends AlchemyTablePotionRecipe {
     public static ItemStack getAugmentedPotionFlask(PotionEffect baseEffect) {
         ItemStack outputStack = new ItemStack(RegistrarBloodMagicItems.POTION_FLASK);
 
-        List<PotionEffect> effectList = new ArrayList<PotionEffect>();
+        List<PotionEffect> effectList = new ArrayList<>();
         effectList.add(baseEffect);
 
         BMPotionUtils.setEffects(outputStack, effectList);

@@ -17,7 +17,7 @@ public class TeleporterBloodMagic extends Teleporter {
 
     @Override
     public void removeStalePortalLocations(long worldTime) {
-        ;
+
     }
 
     @Override

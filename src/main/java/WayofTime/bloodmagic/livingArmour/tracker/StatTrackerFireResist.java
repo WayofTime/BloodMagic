@@ -55,7 +55,7 @@ public class StatTrackerFireResist extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
             if (totalFireTicks >= fireTicksRequired[i]) {

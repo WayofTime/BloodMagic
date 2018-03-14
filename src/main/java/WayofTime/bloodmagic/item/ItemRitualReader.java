@@ -1,15 +1,16 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.ritual.data.EnumRitualReaderState;
-import WayofTime.bloodmagic.ritual.data.IMasterRitualStone;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.ritual.EnumRitualReaderState;
+import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.IDiscreteDemonWill;
-import WayofTime.bloodmagic.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -23,10 +24,9 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.input.Keyboard;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,7 +67,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
         ItemStack stack = player.getHeldItem(hand);
         RayTraceResult ray = this.rayTrace(world, player, false);
         if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK) {
-            return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+            return new ActionResult<>(EnumActionResult.PASS, stack);
         }
 
         if (player.isSneaking()) {
@@ -75,10 +75,10 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                 cycleReader(stack, player);
             }
 
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+            return new ActionResult<>(EnumActionResult.SUCCESS, stack);
         }
 
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+        return new ActionResult<>(EnumActionResult.PASS, stack);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                         master.provideInformationOfRangeToPlayer(player, range);
                         break;
                     case SET_WILL_TYPES:
-                        List<EnumDemonWillType> typeList = new ArrayList<EnumDemonWillType>();
+                        List<EnumDemonWillType> typeList = new ArrayList<>();
                         NonNullList<ItemStack> inv = player.inventory.mainInventory;
                         for (int i = 0; i < 9; i++) {
                             ItemStack testStack = inv.get(i);
@@ -233,9 +233,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
-        return ret;
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
+        variants.put(0, "type=normal");
     }
 }

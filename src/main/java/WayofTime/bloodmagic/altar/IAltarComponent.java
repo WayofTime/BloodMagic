@@ -8,5 +8,5 @@ import javax.annotation.Nullable;
 
 public interface IAltarComponent {
     @Nullable
-    EnumAltarComponent getType(World world, IBlockState state, BlockPos pos);
+    ComponentType getType(World world, IBlockState state, BlockPos pos);
 }

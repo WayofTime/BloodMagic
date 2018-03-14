@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlchemyTableRecipeRegistry {
-    private static List<AlchemyTableRecipe> recipeList = new ArrayList<AlchemyTableRecipe>();
+    private static List<AlchemyTableRecipe> recipeList = new ArrayList<>();
 
     public static void registerRecipe(AlchemyTableRecipe recipe) {
         recipeList.add(recipe);
@@ -34,6 +34,6 @@ public class AlchemyTableRecipeRegistry {
     }
 
     public static List<AlchemyTableRecipe> getRecipeList() {
-        return new ArrayList<AlchemyTableRecipe>(recipeList);
+        return new ArrayList<>(recipeList);
     }
 }

@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
@@ -18,7 +19,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.animation.Event;
-import net.minecraftforge.common.animation.ITimeValue;
 import net.minecraftforge.common.animation.TimeValues.VariableValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.model.animation.CapabilityAnimation;
@@ -63,7 +63,7 @@ public class TileInversionPillar extends TileTicking {
 
     public TileInversionPillar(EnumDemonWillType type) {
         this.type = type;
-        asm = BloodMagic.proxy.load(new ResourceLocation(BloodMagic.MODID.toLowerCase(), "asms/block/inversion_pillar.json"), ImmutableMap.<String, ITimeValue>of("offset", animationOffset, "cycle_length", cycleLength));
+        asm = BloodMagic.proxy.load(new ResourceLocation(BloodMagic.MODID.toLowerCase(), "asms/block/inversion_pillar.json"), ImmutableMap.of("offset", animationOffset, "cycle_length", cycleLength));
         animationOffsetValue = -1;
     }
 
@@ -118,13 +118,13 @@ public class TileInversionPillar extends TileTicking {
                 currentInfectionRadius++;
                 consecutiveFailedChecks = 0;
                 currentInversion -= inversionToIncreaseRadius;
-                System.out.println("Increasing radius!");
+                BMLog.DEBUG.info("Increasing radius!");
             } else if (consecutiveFailedAirChecks > 25 * currentInfectionRadius) //Change this to require a number of "creations" with the orbs in the air.
             {
                 currentInfectionRadius++;
                 consecutiveFailedChecks = 0;
                 currentInversion -= inversionToIncreaseRadius;
-                System.out.println("Increasing radius due to being in the air!");
+                BMLog.DEBUG.info("Increasing radius due to being in the air!");
             }
 
             if (currentInfectionRadius >= 8 && currentInversion >= inversionToAddPillar) {
@@ -304,7 +304,7 @@ public class TileInversionPillar extends TileTicking {
 
     public void handleEvents(float time, Iterable<Event> pastEvents) {
         for (Event event : pastEvents) {
-            System.out.println("Event: " + event.event() + " " + event.offset() + " " + getPos() + " " + time);
+            BMLog.DEBUG.info("Event: " + event.event() + " " + event.offset() + " " + getPos() + " " + time);
         }
     }
 

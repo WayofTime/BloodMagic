@@ -38,7 +38,7 @@ public class DungeonUtil {
         if (doorMap.containsKey(facing)) {
             doorMap.get(facing).add(offsetPos);
         } else {
-            List<BlockPos> doorList = new ArrayList<BlockPos>();
+            List<BlockPos> doorList = new ArrayList<>();
             doorList.add(offsetPos);
             doorMap.put(facing, doorList);
         }

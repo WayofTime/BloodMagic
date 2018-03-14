@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 
 public class BlockAlchemyTable extends Block implements IBMBlock {
     public static final PropertyBool INVISIBLE = PropertyBool.create("invisible");
-    public static final PropertyEnum<EnumFacing> DIRECTION = PropertyEnum.<EnumFacing>create("direction", EnumFacing.class);
+    public static final PropertyEnum<EnumFacing> DIRECTION = PropertyEnum.create("direction", EnumFacing.class);
 
     public BlockAlchemyTable() {
         super(Material.ROCK);

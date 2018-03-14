@@ -1,13 +1,3 @@
-/**
- * This class was created by <Vazkii>. It's distributed as
- * part of the Botania Mod. Get the Source Code in github:
- * https://github.com/Vazkii/Botania
- * <p>
- * Botania is Open Source and distributed under the
- * Botania License: http://botaniamod.net/license.php
- * <p>
- * File Created @ [Apr 9, 2014, 11:20:26 PM (GMT)]
- */
 package WayofTime.bloodmagic.client.helper;
 
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -22,6 +12,16 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * This class was created by <Vazkii>. It's distributed as
+ * part of the Botania Mod. Get the Source Code in github:
+ * https://github.com/Vazkii/Botania
+ * <p>
+ * Botania is Open Source and distributed under the
+ * Botania License: http://botaniamod.net/license.php
+ * <p>
+ * File Created @ [Apr 9, 2014, 11:20:26 PM (GMT)]
+ */
 public final class ShaderHelper {
     private static final int VERT_ST = ARBVertexShader.GL_VERTEX_SHADER_ARB;
     private static final int FRAG_ST = ARBFragmentShader.GL_FRAGMENT_SHADER_ARB;

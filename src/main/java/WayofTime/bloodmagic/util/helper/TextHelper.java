@@ -36,7 +36,7 @@ public class TextHelper {
     }
 
     public static ArrayList<String> localizeAll(List<String> input) {
-        ArrayList<String> ret = new ArrayList<String>(input.size());
+        ArrayList<String> ret = new ArrayList<>(input.size());
         for (int i = 0; i < input.size(); i++)
             ret.add(i, localize(input.get(i)));
 
@@ -44,7 +44,7 @@ public class TextHelper {
     }
 
     public static ArrayList<String> localizeAllEffect(List<String> input) {
-        ArrayList<String> ret = new ArrayList<String>(input.size());
+        ArrayList<String> ret = new ArrayList<>(input.size());
         for (int i = 0; i < input.size(); i++)
             ret.add(i, localizeEffect(input.get(i)));
 

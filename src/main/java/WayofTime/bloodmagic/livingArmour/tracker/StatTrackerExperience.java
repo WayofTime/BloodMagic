@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class StatTrackerExperience extends StatTracker {
-    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
+    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<>();
     public static int[] experienceRequired = new int[]{100, 400, 1000, 1600, 3200, 5000, 7000, 9200, 11500, 140000};
     public double totalExperienceGained = 0;
 
@@ -66,7 +66,7 @@ public class StatTrackerExperience extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
             if (totalExperienceGained >= experienceRequired[i]) {

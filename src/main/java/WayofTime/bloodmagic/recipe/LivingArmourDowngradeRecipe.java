@@ -17,7 +17,7 @@ import java.util.List;
 public class LivingArmourDowngradeRecipe {
     protected LivingArmourUpgrade upgrade = null;
     protected ItemStack keyStack = ItemStack.EMPTY;
-    protected List<Object> input = new ArrayList<Object>();
+    protected List<Object> input = new ArrayList<>();
 
     public LivingArmourDowngradeRecipe(LivingArmourUpgrade upgrade, ItemStack keyStack, Object... recipe) {
         this.upgrade = upgrade;
@@ -32,12 +32,12 @@ public class LivingArmourDowngradeRecipe {
             } else if (in instanceof String) {
                 input.add(OreDictionary.getOres((String) in));
             } else {
-                String ret = "Invalid living armour downgrade recipe: ";
+                StringBuilder ret = new StringBuilder("Invalid living armour downgrade recipe: ");
                 for (Object tmp : recipe) {
-                    ret += tmp + ", ";
+                    ret.append(tmp).append(", ");
                 }
-                ret += upgrade.toString();
-                throw new RuntimeException(ret);
+                ret.append(upgrade.toString());
+                throw new RuntimeException(ret.toString());
             }
         }
     }
@@ -63,7 +63,7 @@ public class LivingArmourDowngradeRecipe {
             return false;
         }
 
-        ArrayList<Object> required = new ArrayList<Object>(input);
+        ArrayList<Object> required = new ArrayList<>(input);
 
         for (ItemStack slot : checkedList) {
             if (slot != null) {

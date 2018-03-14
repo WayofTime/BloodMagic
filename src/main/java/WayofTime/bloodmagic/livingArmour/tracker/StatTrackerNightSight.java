@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class StatTrackerNightSight extends StatTracker {
-    public static HashMap<LivingArmour, Double> changeMap = new HashMap<LivingArmour, Double>();
+    public static HashMap<LivingArmour, Double> changeMap = new HashMap<>();
     public static int[] damageRequired = new int[]{0, 200, 800, 1300, 2500, 3800, 5000, 7000, 9200, 11500};
     public static int neededNightVision = 3 * 60 * 20;
     public double totalDamageDealt = 0;
@@ -81,7 +81,7 @@ public class StatTrackerNightSight extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         if (totalNightVision < neededNightVision) {
             return upgradeList;

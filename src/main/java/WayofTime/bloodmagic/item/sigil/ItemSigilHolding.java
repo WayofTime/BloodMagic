@@ -1,16 +1,20 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.key.IKeybindable;
+import WayofTime.bloodmagic.client.key.KeyBindings;
 import WayofTime.bloodmagic.iface.IAltarReader;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.iface.ISigil;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.client.key.IKeybindable;
-import WayofTime.bloodmagic.client.key.KeyBindings;
-import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,13 +27,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
-import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
-public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAltarReader, ISigil.Holding {
+public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAltarReader, ISigil.Holding, IMeshProvider {
     public static final int inventorySize = 5;
 
     public ItemSigilHolding() {
@@ -166,8 +169,23 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        return Collections.emptyList();
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
+        // No-op - Just here to stop the super from running since we're using a mesh provider
+    }
+
+    @Override
+    public ItemMeshDefinition getMeshDefinition() {
+        return stack -> {
+            if (stack.hasTagCompound() && stack.getTagCompound().hasKey("color"))
+                return new ModelResourceLocation(getRegistryName(), "type=color");
+            return new ModelResourceLocation(getRegistryName(), "type=normal");
+        };
+    }
+
+    @Override
+    public void gatherVariants(Consumer<String> variants) {
+        variants.accept("type=normal");
+        variants.accept("type=color");
     }
 
     public static int next(int mode) {

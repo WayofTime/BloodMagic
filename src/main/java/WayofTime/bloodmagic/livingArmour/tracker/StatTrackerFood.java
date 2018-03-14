@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class StatTrackerFood extends StatTracker {
-    public static Map<EntityPlayer, Integer> lastFoodEatenMap = new HashMap<EntityPlayer, Integer>();
+    public static Map<EntityPlayer, Integer> lastFoodEatenMap = new HashMap<>();
 
     public static int[] foodRequired = new int[]{100, 200, 300, 500, 1000};
 
@@ -74,7 +74,7 @@ public class StatTrackerFood extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         for (int i = 0; i < foodRequired.length; i++) {
             if (foodEaten >= foodRequired[i]) {

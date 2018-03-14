@@ -6,7 +6,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Provides a custom {@link ItemMeshDefinition} for automatic registration of
@@ -22,11 +22,9 @@ public interface IMeshProvider {
     ItemMeshDefinition getMeshDefinition();
 
     /**
-     * Gets all possible variants for this item
-     *
-     * @return - All possible variants for this item
+     * Gathers all possible variants for this item
      */
-    List<String> getVariants();
+    void gatherVariants(Consumer<String> variants);
 
     /**
      * If a custom ResourceLocation is required, return it here.

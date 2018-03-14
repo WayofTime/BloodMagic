@@ -17,7 +17,7 @@ public class BindingRecipeMaker {
     public static List<BindingRecipeJEI> getRecipes() {
         Map<List<ItemStack>, AlchemyArrayRecipeRegistry.AlchemyArrayRecipe> alchemyArrayRecipeMap = AlchemyArrayRecipeRegistry.getRecipes();
 
-        ArrayList<BindingRecipeJEI> recipes = new ArrayList<BindingRecipeJEI>();
+        ArrayList<BindingRecipeJEI> recipes = new ArrayList<>();
 
         for (Map.Entry<List<ItemStack>, AlchemyArrayRecipeRegistry.AlchemyArrayRecipe> itemStackAlchemyArrayRecipeEntry : alchemyArrayRecipeMap.entrySet()) {
             List<ItemStack> input = itemStackAlchemyArrayRecipeEntry.getValue().getInput();

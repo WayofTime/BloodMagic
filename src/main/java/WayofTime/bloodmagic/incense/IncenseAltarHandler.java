@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class IncenseAltarHandler {
-    public static Map<Integer, List<IncenseAltarComponent>> incenseComponentMap = new TreeMap<Integer, List<IncenseAltarComponent>>();
+    public static Map<Integer, List<IncenseAltarComponent>> incenseComponentMap = new TreeMap<>();
     //Incense bonus maximum applied for the tier of blocks.
     public static double[] incenseBonuses = new double[]{0.2, 0.6, 1.2, 2, 3, 4.5};
     public static double[] tranquilityRequired = new double[]{0, 6, 14.14, 28, 44.09, 83.14};
@@ -22,7 +22,7 @@ public class IncenseAltarHandler {
         if (incenseComponentMap.containsKey(altarLevel)) {
             incenseComponentMap.get(altarLevel).add(component);
         } else {
-            List<IncenseAltarComponent> list = new ArrayList<IncenseAltarComponent>();
+            List<IncenseAltarComponent> list = new ArrayList<>();
             list.add(component);
             incenseComponentMap.put(altarLevel, list);
         }

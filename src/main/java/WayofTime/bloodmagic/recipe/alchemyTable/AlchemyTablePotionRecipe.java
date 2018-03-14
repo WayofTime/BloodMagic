@@ -22,10 +22,8 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe {
     public AlchemyTablePotionRecipe(int lpDrained, int ticksRequired, int tierRequired, List<ItemStack> inputItems, PotionEffect baseEffect) {
         super(basePotionFlaskStack, lpDrained, ticksRequired, tierRequired);
 
-        ArrayList<Object> recipe = new ArrayList<Object>();
-        for (ItemStack stack : inputItems) {
-            recipe.add(stack);
-        }
+        ArrayList<Object> recipe = new ArrayList<>();
+        recipe.addAll(inputItems);
         recipe.add(basePotionFlaskStack);
 
         this.input = recipe;
@@ -60,7 +58,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe {
 
     @Override
     public boolean matches(List<ItemStack> checkedList, World world, BlockPos pos) {
-        ArrayList<Object> required = new ArrayList<Object>(input);
+        ArrayList<Object> required = new ArrayList<>(input);
 
         for (ItemStack slot : checkedList) {
             if (slot != null) {
@@ -121,7 +119,7 @@ public class AlchemyTablePotionRecipe extends AlchemyTableRecipe {
         if (inputStack.isEmpty()) {
             ItemStack outputStack = new ItemStack(RegistrarBloodMagicItems.POTION_FLASK);
 
-            List<PotionEffect> effectList = new ArrayList<PotionEffect>();
+            List<PotionEffect> effectList = new ArrayList<>();
             effectList.add(baseEffect);
 
             PotionUtils.appendEffects(outputStack, effectList);

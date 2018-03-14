@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.item.inventory.ItemInventory;
 import WayofTime.bloodmagic.routing.*;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -16,9 +17,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +78,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
                 testFilter = new DefaultItemFilter();
         }
 
-        List<ItemStack> filteredList = new ArrayList<ItemStack>();
+        List<ItemStack> filteredList = new ArrayList<>();
         ItemInventory inv = new ItemInventory(filterStack, 9, "");
         for (int i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
@@ -117,7 +117,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
                 testFilter = new DefaultItemFilter();
         }
 
-        List<ItemStack> filteredList = new ArrayList<ItemStack>();
+        List<ItemStack> filteredList = new ArrayList<>();
         ItemInventory inv = new ItemInventory(filterStack, 9, ""); //TODO: Change to grab the filter from the Item later.
         for (int i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
@@ -138,13 +138,11 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=exact"));
-        ret.add(new ImmutablePair<Integer, String>(1, "type=ignorenbt"));
-        ret.add(new ImmutablePair<Integer, String>(2, "type=moditems"));
-        ret.add(new ImmutablePair<Integer, String>(3, "type=oredict"));
-        return ret;
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
+        variants.put(0, "type=exact");
+        variants.put(1, "type=ignorenbt");
+        variants.put(2, "type=moditems");
+        variants.put(3, "type=oredict");
     }
 
     @Override

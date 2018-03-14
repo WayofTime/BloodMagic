@@ -2,14 +2,13 @@ package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.block.base.BlockEnumPillarCap;
-import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.List;
+import javax.annotation.Nonnull;
 
 public class BlockDemonPillarCapBase<E extends Enum<E> & IStringSerializable> extends BlockEnumPillarCap<E> {
     public BlockDemonPillarCapBase(String baseName, Material materialIn, Class<E> enumClass) {
@@ -24,15 +23,9 @@ public class BlockDemonPillarCapBase<E extends Enum<E> & IStringSerializable> ex
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = Lists.newArrayList();
-
-        //This is done to make the ItemBlocks have the proper model
-
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
         for (int i = 0; i < EnumFacing.values().length; i++)
             for (int j = 0; j < this.getTypes().length; j++)
-                ret.add(Pair.of(i * 2 + j, "facing=" + EnumFacing.values()[i] + ",type=" + this.getTypes()[j]));
-
-        return ret;
+                variants.put(i * 2 + j, "facing=" + EnumFacing.values()[i] + ",type=" + this.getTypes()[j]);
     }
 }

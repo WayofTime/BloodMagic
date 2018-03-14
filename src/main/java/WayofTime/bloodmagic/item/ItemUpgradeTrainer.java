@@ -1,12 +1,13 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.iface.IUpgradeTrainer;
 import WayofTime.bloodmagic.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.util.helper.ItemHelper.LivingUpgrades;
-import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -15,9 +16,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -61,7 +61,7 @@ public class ItemUpgradeTrainer extends Item implements IUpgradeTrainer, IVarian
 
     @Override
     public List<String> getTrainedUpgrades(ItemStack stack) {
-        List<String> keyList = new ArrayList<String>();
+        List<String> keyList = new ArrayList<>();
         String key = LivingUpgrades.getKey(stack);
 
         if (!key.isEmpty()) {
@@ -82,9 +82,7 @@ public class ItemUpgradeTrainer extends Item implements IUpgradeTrainer, IVarian
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=upgradetrainer"));
-        return ret;
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
+        variants.put(0, "type=upgradetrainer");
     }
 }

@@ -37,7 +37,7 @@ public class BMPotionUtils {
 
         double incurredDamage = 0;
 
-        List<BlockPos> growList = new ArrayList<BlockPos>();
+        List<BlockPos> growList = new ArrayList<>();
 
         for (int i = 0; i < maxPlantsGrown; i++) {
             BlockPos blockPos = entity.getPosition().add(rand.nextInt(horizontalRadius * 2 + 1) - horizontalRadius, rand.nextInt(verticalRadius * 2 + 1) - verticalRadius, rand.nextInt(horizontalRadius * 2 + 1) - horizontalRadius);

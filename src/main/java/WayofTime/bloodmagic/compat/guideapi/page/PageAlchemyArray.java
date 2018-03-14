@@ -24,7 +24,7 @@ public class PageAlchemyArray extends Page {
     public final ItemStack inputStack;
     public final ItemStack catalystStack;
     public final ItemStack outputStack;
-    public List<ResourceLocation> arrayResources = new ArrayList<ResourceLocation>();
+    public List<ResourceLocation> arrayResources = new ArrayList<>();
 
     public PageAlchemyArray(List<ResourceLocation> arrayResources, ItemStack inputStack, ItemStack catalystStack, ItemStack outputStack) {
         this.arrayResources = arrayResources;

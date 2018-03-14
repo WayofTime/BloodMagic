@@ -31,15 +31,15 @@ import java.util.Map.Entry;
 
 public class CategoryArchitect {
     public static Map<ResourceLocation, EntryAbstract> buildCategory() {
-        Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
+        Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<>();
         String keyBase = "guide." + BloodMagic.MODID + ".entry.architect.";
 
-        List<IPage> introPages = new ArrayList<IPage>();
+        List<IPage> introPages = new ArrayList<>();
         introPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro" + ".info"), 370));
 //        introPages.add(new PageImage(new ResourceLocation("bloodmagicguide", "textures/guide/" + ritual.getName() + ".png")));
         entries.put(new ResourceLocation(keyBase + "intro"), new EntryText(introPages, TextHelper.localize(keyBase + "intro"), true));
 
-        List<IPage> altarPages = new ArrayList<IPage>();
+        List<IPage> altarPages = new ArrayList<>();
 
         IRecipe altarRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.ALTAR));
         if (altarRecipe != null) {
@@ -56,7 +56,7 @@ public class CategoryArchitect {
         altarPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodaltar" + ".info.2"), 370));
         entries.put(new ResourceLocation(keyBase + "bloodaltar"), new EntryText(altarPages, TextHelper.localize(keyBase + "bloodaltar"), true));
 
-        List<IPage> ashPages = new ArrayList<IPage>();
+        List<IPage> ashPages = new ArrayList<>();
 
         TartaricForgeRecipe ashRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES));
         if (ashRecipe != null) {
@@ -65,7 +65,7 @@ public class CategoryArchitect {
         ashPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "ash" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "ash"), new EntryText(ashPages, TextHelper.localize(keyBase + "ash"), true));
 
-        List<IPage> divinationPages = new ArrayList<IPage>();
+        List<IPage> divinationPages = new ArrayList<>();
 
         PageAlchemyArray divinationRecipePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.SIGIL_DIVINATION));
         if (divinationRecipePage != null) {
@@ -75,12 +75,12 @@ public class CategoryArchitect {
         divinationPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "divination" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "divination"), new EntryText(divinationPages, TextHelper.localize(keyBase + "divination"), true));
 
-        List<IPage> soulnetworkPages = new ArrayList<IPage>();
+        List<IPage> soulnetworkPages = new ArrayList<>();
 
         soulnetworkPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "soulnetwork" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "soulnetwork"), new EntryText(soulnetworkPages, TextHelper.localize(keyBase + "soulnetwork"), true));
 
-        List<IPage> weakorbPages = new ArrayList<IPage>();
+        List<IPage> weakorbPages = new ArrayList<>();
         weakorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakorb" + ".info.1"), 370));
 
         AltarRecipe weakorbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK));
@@ -91,7 +91,7 @@ public class CategoryArchitect {
         weakorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakorb" + ".info.2"), 370));
         entries.put(new ResourceLocation(keyBase + "weakorb"), new EntryText(weakorbPages, TextHelper.localize(keyBase + "weakorb"), true));
 
-        List<IPage> incensePages = new ArrayList<IPage>();
+        List<IPage> incensePages = new ArrayList<>();
 
         IRecipe incenseRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.INCENSE_ALTAR));
         if (incenseRecipe != null) {
@@ -108,7 +108,7 @@ public class CategoryArchitect {
         incensePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "incense" + ".info.2"), 370));
         entries.put(new ResourceLocation(keyBase + "incense"), new EntryText(incensePages, TextHelper.localize(keyBase + "incense"), true));
 
-        List<IPage> runePages = new ArrayList<IPage>();
+        List<IPage> runePages = new ArrayList<>();
 
         IRecipe runeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 0));
         if (runeRecipe != null) {
@@ -118,7 +118,7 @@ public class CategoryArchitect {
         runePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodrune" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "bloodrune"), new EntryText(runePages, TextHelper.localize(keyBase + "bloodrune"), true));
 
-        List<IPage> inspectPages = new ArrayList<IPage>();
+        List<IPage> inspectPages = new ArrayList<>();
 
         AltarRecipe inspectRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.SANGUINE_BOOK));
         if (inspectRecipe != null) {
@@ -128,7 +128,7 @@ public class CategoryArchitect {
         inspectPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "inspectoris" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "inspectoris"), new EntryText(inspectPages, TextHelper.localize(keyBase + "inspectoris"), true));
 
-        List<IPage> speedRunePages = new ArrayList<IPage>();
+        List<IPage> speedRunePages = new ArrayList<>();
 
         IRecipe speedRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 1));
         if (speedRecipe != null) {
@@ -138,7 +138,7 @@ public class CategoryArchitect {
         speedRunePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeSpeed" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "runeSpeed"), new EntryText(speedRunePages, TextHelper.localize(keyBase + "runeSpeed"), true));
 
-        List<IPage> waterPages = new ArrayList<IPage>();
+        List<IPage> waterPages = new ArrayList<>();
 
         TartaricForgeRecipe waterRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_WATER.getStack());
         if (waterRecipe != null) {
@@ -153,7 +153,7 @@ public class CategoryArchitect {
         waterPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "water" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "water"), new EntryText(waterPages, TextHelper.localize(keyBase + "water"), true));
 
-        List<IPage> lavaPages = new ArrayList<IPage>();
+        List<IPage> lavaPages = new ArrayList<>();
 
         TartaricForgeRecipe lavaRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_LAVA.getStack());
         if (lavaRecipe != null) {
@@ -168,7 +168,7 @@ public class CategoryArchitect {
         lavaPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lava" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "lava"), new EntryText(lavaPages, TextHelper.localize(keyBase + "lava"), true));
 
-        List<IPage> lavaCrystalPages = new ArrayList<IPage>();
+        List<IPage> lavaCrystalPages = new ArrayList<>();
 
         IRecipe lavaCrystalRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.LAVA_CRYSTAL));
         if (lavaCrystalRecipe != null) {
@@ -178,7 +178,7 @@ public class CategoryArchitect {
         lavaCrystalPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lavaCrystal" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "lavaCrystal"), new EntryText(lavaCrystalPages, TextHelper.localize(keyBase + "lavaCrystal"), true));
 
-        List<IPage> apprenticeorbPages = new ArrayList<IPage>();
+        List<IPage> apprenticeorbPages = new ArrayList<>();
 
         AltarRecipe apprenticeorbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_APPRENTICE));
         if (apprenticeorbRecipe != null) {
@@ -188,7 +188,7 @@ public class CategoryArchitect {
         apprenticeorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "apprenticeorb" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "apprenticeorb"), new EntryText(apprenticeorbPages, TextHelper.localize(keyBase + "apprenticeorb"), true));
 
-        List<IPage> daggerPages = new ArrayList<IPage>();
+        List<IPage> daggerPages = new ArrayList<>();
 
         AltarRecipe daggerOfSacrificeRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.DAGGER_OF_SACRIFICE));
         if (daggerOfSacrificeRecipe != null) {
@@ -198,7 +198,7 @@ public class CategoryArchitect {
         daggerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "dagger" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "dagger"), new EntryText(daggerPages, TextHelper.localize(keyBase + "dagger"), true));
 
-        List<IPage> runeSacrificePages = new ArrayList<IPage>();
+        List<IPage> runeSacrificePages = new ArrayList<>();
 
         IRecipe runeSacrificeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 3));
         if (runeSacrificeRecipe != null) {
@@ -208,7 +208,7 @@ public class CategoryArchitect {
         runeSacrificePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeSacrifice" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "runeSacrifice"), new EntryText(runeSacrificePages, TextHelper.localize(keyBase + "runeSacrifice"), true));
 
-        List<IPage> runeSelfSacrificePages = new ArrayList<IPage>();
+        List<IPage> runeSelfSacrificePages = new ArrayList<>();
 
         IRecipe runeSelfSacrificeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4));
         if (runeSelfSacrificeRecipe != null) {
@@ -218,7 +218,7 @@ public class CategoryArchitect {
         runeSelfSacrificePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeSelfSacrifice" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "runeSelfSacrifice"), new EntryText(runeSelfSacrificePages, TextHelper.localize(keyBase + "runeSelfSacrifice"), true));
 
-        List<IPage> holdingPages = new ArrayList<IPage>();
+        List<IPage> holdingPages = new ArrayList<>();
 
         TartaricForgeRecipe holdingRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_HOLDING.getStack());
         if (holdingRecipe != null) {
@@ -233,7 +233,7 @@ public class CategoryArchitect {
         holdingPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "holding" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "holding"), new EntryText(holdingPages, TextHelper.localize(keyBase + "holding"), true));
 
-        List<IPage> airPages = new ArrayList<IPage>();
+        List<IPage> airPages = new ArrayList<>();
 
         TartaricForgeRecipe airRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_AIR.getStack());
         if (airRecipe != null) {
@@ -248,7 +248,7 @@ public class CategoryArchitect {
         airPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "air" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "air"), new EntryText(airPages, TextHelper.localize(keyBase + "air"), true));
 
-        List<IPage> voidPages = new ArrayList<IPage>();
+        List<IPage> voidPages = new ArrayList<>();
 
         TartaricForgeRecipe voidRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_VOID.getStack());
         if (voidRecipe != null) {
@@ -263,7 +263,7 @@ public class CategoryArchitect {
         voidPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "void" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "void"), new EntryText(voidPages, TextHelper.localize(keyBase + "void"), true));
 
-        List<IPage> greenGrovePages = new ArrayList<IPage>();
+        List<IPage> greenGrovePages = new ArrayList<>();
 
         TartaricForgeRecipe greenGroveRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_GROWTH.getStack());
         if (greenGroveRecipe != null) {
@@ -278,7 +278,7 @@ public class CategoryArchitect {
         greenGrovePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "greenGrove" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "greenGrove"), new EntryText(greenGrovePages, TextHelper.localize(keyBase + "greenGrove"), true));
 
-        List<IPage> fastMinerPages = new ArrayList<IPage>();
+        List<IPage> fastMinerPages = new ArrayList<>();
 
         TartaricForgeRecipe fastMinerRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_FAST_MINER.getStack());
         if (fastMinerRecipe != null) {
@@ -293,7 +293,7 @@ public class CategoryArchitect {
         fastMinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "fastMiner" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "fastMiner"), new EntryText(fastMinerPages, TextHelper.localize(keyBase + "fastMiner"), true));
 
-        List<IPage> seerPages = new ArrayList<IPage>();
+        List<IPage> seerPages = new ArrayList<>();
 
         TartaricForgeRecipe seerRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_SIGHT.getStack());
         if (seerRecipe != null) {
@@ -308,7 +308,7 @@ public class CategoryArchitect {
         seerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "seer" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "seer"), new EntryText(seerPages, TextHelper.localize(keyBase + "seer"), true));
 
-        List<IPage> magicianOrbPages = new ArrayList<IPage>();
+        List<IPage> magicianOrbPages = new ArrayList<>();
 
         AltarRecipe magicianOrbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_MAGICIAN));
         if (magicianOrbRecipe != null) {
@@ -318,7 +318,7 @@ public class CategoryArchitect {
         magicianOrbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "magicianOrb" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "magicianOrb"), new EntryText(magicianOrbPages, TextHelper.localize(keyBase + "magicianOrb"), true));
 
-        List<IPage> capacityPages = new ArrayList<IPage>();
+        List<IPage> capacityPages = new ArrayList<>();
 
         IRecipe capacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4));
         if (capacityRecipe != null) {
@@ -328,7 +328,7 @@ public class CategoryArchitect {
         capacityPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "capacity" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "capacity"), new EntryText(capacityPages, TextHelper.localize(keyBase + "capacity"), true));
 
-        List<IPage> displacementPages = new ArrayList<IPage>();
+        List<IPage> displacementPages = new ArrayList<>();
 
         IRecipe displacementRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4));
         if (displacementRecipe != null) {
@@ -338,7 +338,7 @@ public class CategoryArchitect {
         displacementPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "displacement" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "displacement"), new EntryText(displacementPages, TextHelper.localize(keyBase + "displacement"), true));
 
-        List<IPage> affinityPages = new ArrayList<IPage>();
+        List<IPage> affinityPages = new ArrayList<>();
 
         TartaricForgeRecipe affinityRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_AFFINITY.getStack());
         if (affinityRecipe != null) {
@@ -353,7 +353,7 @@ public class CategoryArchitect {
         affinityPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "affinity" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "affinity"), new EntryText(affinityPages, TextHelper.localize(keyBase + "affinity"), true));
 
-        List<IPage> lampPages = new ArrayList<IPage>();
+        List<IPage> lampPages = new ArrayList<>();
 
         TartaricForgeRecipe lampRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_BLOOD_LIGHT.getStack());
         if (lampRecipe != null) {
@@ -368,7 +368,7 @@ public class CategoryArchitect {
         lampPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "lamp" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "lamp"), new EntryText(lampPages, TextHelper.localize(keyBase + "lamp"), true));
 
-        List<IPage> magnetismPages = new ArrayList<IPage>();
+        List<IPage> magnetismPages = new ArrayList<>();
 
         TartaricForgeRecipe magnetismRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_MAGNETISM.getStack());
         if (magnetismRecipe != null) {
@@ -383,7 +383,7 @@ public class CategoryArchitect {
         magnetismPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "magnetism" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "magnetism"), new EntryText(magnetismPages, TextHelper.localize(keyBase + "magnetism"), true));
 
-        List<IPage> peritiaPages = new ArrayList<IPage>();
+        List<IPage> peritiaPages = new ArrayList<>();
 
         IRecipe peritiaRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.EXPERIENCE_TOME));
         if (peritiaRecipe != null) {
@@ -393,7 +393,7 @@ public class CategoryArchitect {
         peritiaPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "peritia" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "peritia"), new EntryText(peritiaPages, TextHelper.localize(keyBase + "peritia"), true));
 
-        List<IPage> livingArmourPages = new ArrayList<IPage>();
+        List<IPage> livingArmourPages = new ArrayList<>();
 
         TartaricForgeRecipe bindingRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_BINDING.getStack());
         if (bindingRecipe != null) {
@@ -423,17 +423,17 @@ public class CategoryArchitect {
         livingArmourPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "livingArmour" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "livingArmour"), new EntryText(livingArmourPages, TextHelper.localize(keyBase + "livingArmour"), true));
 
-        List<IPage> upgradePages = new ArrayList<IPage>();
+        List<IPage> upgradePages = new ArrayList<>();
 
         upgradePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "upgradeTome" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "upgradeTome"), new EntryText(upgradePages, TextHelper.localize(keyBase + "upgradeTome"), true));
 
-        List<IPage> downgradePages = new ArrayList<IPage>();
+        List<IPage> downgradePages = new ArrayList<>();
 
         downgradePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "downgrade" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "downgrade"), new EntryText(downgradePages, TextHelper.localize(keyBase + "downgrade"), true));
 
-        List<IPage> teleposerPages = new ArrayList<IPage>();
+        List<IPage> teleposerPages = new ArrayList<>();
 
         AltarRecipe teleposerFocusRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.TELEPOSITION_FOCUS));
         if (teleposerFocusRecipe != null) {
@@ -448,7 +448,7 @@ public class CategoryArchitect {
         teleposerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "teleposer" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "teleposer"), new EntryText(teleposerPages, TextHelper.localize(keyBase + "teleposer"), true));
 
-        List<IPage> boundBladePages = new ArrayList<IPage>();
+        List<IPage> boundBladePages = new ArrayList<>();
 
         PageAlchemyArray boundBladePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_SWORD));
         if (boundBladePage != null) {
@@ -458,7 +458,7 @@ public class CategoryArchitect {
         boundBladePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "boundBlade" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "boundBlade"), new EntryText(boundBladePages, TextHelper.localize(keyBase + "boundBlade"), true));
 
-        List<IPage> boundToolPages = new ArrayList<IPage>();
+        List<IPage> boundToolPages = new ArrayList<>();
 
         PageAlchemyArray boundToolPage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_PICKAXE));
         if (boundToolPage != null) {
@@ -478,12 +478,12 @@ public class CategoryArchitect {
         boundToolPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "boundTool" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "boundTool"), new EntryText(boundToolPages, TextHelper.localize(keyBase + "boundTool"), true));
 
-        List<IPage> weakShardPages = new ArrayList<IPage>();
+        List<IPage> weakShardPages = new ArrayList<>();
 
         weakShardPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakShard" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "weakShard"), new EntryText(weakShardPages, TextHelper.localize(keyBase + "weakShard"), true));
 
-        List<IPage> masterOrbPages = new ArrayList<IPage>();
+        List<IPage> masterOrbPages = new ArrayList<>();
 
         AltarRecipe masterOrbRecipe = RecipeHelper.getAltarRecipeForOutput(OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_MASTER));
         if (magicianOrbRecipe != null) {
@@ -493,7 +493,7 @@ public class CategoryArchitect {
         masterOrbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "masterOrb" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "masterOrb"), new EntryText(masterOrbPages, TextHelper.localize(keyBase + "masterOrb"), true));
 
-        List<IPage> orbRunePages = new ArrayList<IPage>();
+        List<IPage> orbRunePages = new ArrayList<>();
 
         IRecipe orbRuneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 8));
         if (orbRuneRecipe != null) {
@@ -503,7 +503,7 @@ public class CategoryArchitect {
         orbRunePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "runeOrb" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "runeOrb"), new EntryText(orbRunePages, TextHelper.localize(keyBase + "runeOrb"), true));
 
-        List<IPage> augmentedCapacityPages = new ArrayList<IPage>();
+        List<IPage> augmentedCapacityPages = new ArrayList<>();
 
         IRecipe augmentedCapacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 7));
         if (orbRuneRecipe != null) {
@@ -513,7 +513,7 @@ public class CategoryArchitect {
         augmentedCapacityPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "augmentedCapacity" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "augmentedCapacity"), new EntryText(augmentedCapacityPages, TextHelper.localize(keyBase + "augmentedCapacity"), true));
 
-        List<IPage> chargingPages = new ArrayList<IPage>();
+        List<IPage> chargingPages = new ArrayList<>();
 
         IRecipe chargingRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 10));
         if (orbRuneRecipe != null) {
@@ -523,7 +523,7 @@ public class CategoryArchitect {
         chargingPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "charging" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "charging"), new EntryText(chargingPages, TextHelper.localize(keyBase + "charging"), true));
 
-        List<IPage> accelerationPages = new ArrayList<IPage>();
+        List<IPage> accelerationPages = new ArrayList<>();
 
         IRecipe accelerationRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 9));
         if (orbRuneRecipe != null) {
@@ -533,7 +533,7 @@ public class CategoryArchitect {
         accelerationPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "acceleration" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "acceleration"), new EntryText(accelerationPages, TextHelper.localize(keyBase + "acceleration"), true));
 
-        List<IPage> suppressionPages = new ArrayList<IPage>();
+        List<IPage> suppressionPages = new ArrayList<>();
 
         TartaricForgeRecipe suppressionRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_SUPPRESSION.getStack());
         if (suppressionRecipe != null) {
@@ -548,7 +548,7 @@ public class CategoryArchitect {
         suppressionPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "suppression" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "suppression"), new EntryText(suppressionPages, TextHelper.localize(keyBase + "suppression"), true));
 
-        List<IPage> hastePages = new ArrayList<IPage>();
+        List<IPage> hastePages = new ArrayList<>();
 
         TartaricForgeRecipe hasteRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_HASTE.getStack());
         if (hasteRecipe != null) {
@@ -563,7 +563,7 @@ public class CategoryArchitect {
         hastePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "haste" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "haste"), new EntryText(hastePages, TextHelper.localize(keyBase + "haste"), true));
 
-        List<IPage> severancePages = new ArrayList<IPage>();
+        List<IPage> severancePages = new ArrayList<>();
 
         TartaricForgeRecipe severanceRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_SEVERANCE.getStack());
         if (severanceRecipe != null) {
@@ -578,7 +578,7 @@ public class CategoryArchitect {
         severancePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "severance" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "severance"), new EntryText(severancePages, TextHelper.localize(keyBase + "severance"), true));
 
-        List<IPage> telepositionPages = new ArrayList<IPage>();
+        List<IPage> telepositionPages = new ArrayList<>();
 
         TartaricForgeRecipe telepositionRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_TELEPOSITION.getStack());
         if (telepositionRecipe != null) {
@@ -593,7 +593,7 @@ public class CategoryArchitect {
         telepositionPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "teleposition" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "teleposition"), new EntryText(telepositionPages, TextHelper.localize(keyBase + "teleposition"), true));
 
-        List<IPage> compressionPages = new ArrayList<IPage>();
+        List<IPage> compressionPages = new ArrayList<>();
 
         TartaricForgeRecipe compressionRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_COMPRESSION.getStack());
         if (compressionRecipe != null) {
@@ -608,7 +608,7 @@ public class CategoryArchitect {
         compressionPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "compression" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "compression"), new EntryText(compressionPages, TextHelper.localize(keyBase + "compression"), true));
 
-        List<IPage> bridgePages = new ArrayList<IPage>();
+        List<IPage> bridgePages = new ArrayList<>();
 
         TartaricForgeRecipe bridgeRecipe = RecipeHelper.getForgeRecipeForOutput(ComponentTypes.REAGENT_BRIDGE.getStack());
         if (bridgeRecipe != null) {
@@ -623,7 +623,7 @@ public class CategoryArchitect {
         bridgePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bridge" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "bridge"), new EntryText(bridgePages, TextHelper.localize(keyBase + "bridge"), true));
 
-        List<IPage> mimicPages = new ArrayList<IPage>();
+        List<IPage> mimicPages = new ArrayList<>();
 
         IRecipe mimicRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.MIMIC, 1, 1));
         if (mimicRecipe != null) {

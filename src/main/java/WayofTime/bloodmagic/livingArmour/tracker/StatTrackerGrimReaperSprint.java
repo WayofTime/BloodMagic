@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
+import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class StatTrackerGrimReaperSprint extends StatTracker {
-    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
+    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<>();
     public static int[] deathsRequired = new int[]{6, 10, 15, 25, 50, 70, 90, 120, 150, 200}; //TODO: Modify
     public int totalDeaths = 0;
 
@@ -66,7 +67,7 @@ public class StatTrackerGrimReaperSprint extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
             if (totalDeaths >= deathsRequired[i]) {
@@ -102,7 +103,7 @@ public class StatTrackerGrimReaperSprint extends StatTracker {
         StatTracker tracker = armour.getTracker(BloodMagic.MODID + ".tracker.grimReaper");
         if (tracker instanceof StatTrackerGrimReaperSprint) {
             ((StatTrackerGrimReaperSprint) tracker).totalDeaths++;
-            System.out.println(((StatTrackerGrimReaperSprint) tracker).totalDeaths);
+            BMLog.DEBUG.info(String.valueOf(((StatTrackerGrimReaperSprint) tracker).totalDeaths));
             tracker.markDirty();
         }
 //        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + 1 : 1);

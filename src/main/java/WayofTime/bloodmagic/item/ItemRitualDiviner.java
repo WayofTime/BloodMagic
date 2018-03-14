@@ -1,21 +1,23 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.core.registry.RitualRegistry;
-import WayofTime.bloodmagic.ritual.data.EnumRuneType;
-import WayofTime.bloodmagic.ritual.data.Ritual;
-import WayofTime.bloodmagic.ritual.data.RitualComponent;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.util.helper.RitualHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.ritual.EnumRuneType;
+import WayofTime.bloodmagic.ritual.Ritual;
+import WayofTime.bloodmagic.ritual.RitualComponent;
+import WayofTime.bloodmagic.ritual.RitualRegistry;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.handler.event.ClientHandler;
+import WayofTime.bloodmagic.util.helper.RitualHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -34,11 +36,9 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.input.Keyboard;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.List;
 
@@ -117,7 +117,9 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
             Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(stack));
             if (ritual != null) {
                 EnumFacing direction = getDirection(stack);
-                for (RitualComponent component : ritual.getComponents()) {
+                List<RitualComponent> components = Lists.newArrayList();
+                ritual.gatherComponents(components::add);
+                for (RitualComponent component : components) {
                     if (!canPlaceRitualStone(component.getRuneType(), stack)) {
                         return false;
                     }
@@ -223,7 +225,8 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
             } else if (sneaking) {
                 tooltip.add(TextHelper.localize(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).getName())));
                 tooltip.add("");
-                ArrayList<RitualComponent> componentList = ritual.getComponents();
+                List<RitualComponent> components = Lists.newArrayList();
+                ritual.gatherComponents(components::add);
 
                 int blankRunes = 0;
                 int airRunes = 0;
@@ -232,9 +235,9 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
                 int earthRunes = 0;
                 int duskRunes = 0;
                 int dawnRunes = 0;
-                int totalRunes = componentList.size();
+                int totalRunes = components.size();
 
-                for (RitualComponent component : componentList) {
+                for (RitualComponent component : components) {
                     switch (component.getRuneType()) {
                         case BLANK:
                             blankRunes++;
@@ -295,7 +298,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
         ItemStack stack = player.getHeldItem(hand);
         RayTraceResult ray = this.rayTrace(world, player, false);
         if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK) {
-            return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+            return new ActionResult<>(EnumActionResult.PASS, stack);
         }
 
         if (player.isSneaking()) {
@@ -303,10 +306,10 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
                 cycleRitual(stack, player);
             }
 
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+            return new ActionResult<>(EnumActionResult.SUCCESS, stack);
         }
 
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+        return new ActionResult<>(EnumActionResult.PASS, stack);
     }
 
     @Override
@@ -332,12 +335,10 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=basic"));
-        ret.add(new ImmutablePair<Integer, String>(1, "type=dusk"));
-        ret.add(new ImmutablePair<Integer, String>(2, "type=dawn"));
-        return ret;
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
+        variants.put(0, "type=basic");
+        variants.put(1, "type=dusk");
+        variants.put(2, "type=dawn");
     }
 
     public void cycleDirection(ItemStack stack, EntityPlayer player) {
@@ -486,7 +487,8 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
             return false;
         }
 
-        ArrayList<RitualComponent> components = ritual.getComponents();
+        List<RitualComponent> components = Lists.newArrayList();
+        ritual.gatherComponents(components::add);
         for (RitualComponent component : components) {
             if (!canPlaceRitualStone(component.getRuneType(), stack)) {
                 return false;
@@ -549,14 +551,14 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
                 double d0 = itemRand.nextGaussian() * 0.02D;
                 double d1 = itemRand.nextGaussian() * 0.02D;
                 double d2 = itemRand.nextGaussian() * 0.02D;
-                worldIn.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) pos.getX() + itemRand.nextFloat()), (double) pos.getY() + (double) itemRand.nextFloat(), (double) ((float) pos.getZ() + itemRand.nextFloat()), d0, d1, d2, new int[0]);
+                worldIn.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) pos.getX() + itemRand.nextFloat()), (double) pos.getY() + (double) itemRand.nextFloat(), (double) ((float) pos.getZ() + itemRand.nextFloat()), d0, d1, d2);
             }
         } else {
             for (int i1 = 0; i1 < amount; ++i1) {
                 double d0 = itemRand.nextGaussian() * 0.02D;
                 double d1 = itemRand.nextGaussian() * 0.02D;
                 double d2 = itemRand.nextGaussian() * 0.02D;
-                worldIn.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) pos.getX() + itemRand.nextFloat()), (double) pos.getY() + (double) itemRand.nextFloat() * 1.0f, (double) ((float) pos.getZ() + itemRand.nextFloat()), d0, d1, d2, new int[0]);
+                worldIn.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) pos.getX() + itemRand.nextFloat()), (double) pos.getY() + (double) itemRand.nextFloat() * 1.0f, (double) ((float) pos.getZ() + itemRand.nextFloat()), d0, d1, d2);
             }
         }
     }

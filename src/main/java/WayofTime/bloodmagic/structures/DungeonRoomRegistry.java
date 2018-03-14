@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 public class DungeonRoomRegistry {
-    public static Map<DungeonRoom, Integer> dungeonWeightMap = new HashMap<DungeonRoom, Integer>();
+    public static Map<DungeonRoom, Integer> dungeonWeightMap = new HashMap<>();
     private static int totalWeight = 0;
 
     public static void registerDungeonRoom(DungeonRoom room, int weight) {

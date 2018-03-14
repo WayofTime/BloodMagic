@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.ritual.data.AreaDescriptor;
+import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.incense.*;
 import net.minecraft.block.Block;
@@ -22,7 +22,7 @@ import java.util.Map.Entry;
 public class TileIncenseAltar extends TileInventory implements ITickable {
     public static int maxCheckRange = 5;
     public AreaDescriptor incenseArea = new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11);
-    public Map<EnumTranquilityType, Double> tranquilityMap = new HashMap<EnumTranquilityType, Double>();
+    public Map<EnumTranquilityType, Double> tranquilityMap = new HashMap<>();
 
     public double incenseAddition = 0; //Self-sacrifice is multiplied by 1 plus this value.
     public double tranquility = 0;
@@ -55,7 +55,7 @@ public class TileIncenseAltar extends TileInventory implements ITickable {
         if (hasPerformed) {
             if (getWorld().rand.nextInt(4) == 0 && getWorld() instanceof WorldServer) {
                 WorldServer server = (WorldServer) getWorld();
-                server.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 1, 0.02, 0.03, 0.02, 0, new int[0]);
+                server.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 1, 0.02, 0.03, 0.02, 0);
             }
         }
     }
@@ -80,7 +80,7 @@ public class TileIncenseAltar extends TileInventory implements ITickable {
         int maxLength = 11; //Max length of the path. The path starts two blocks away from the center block.
         int yOffset = 0;
 
-        Map<EnumTranquilityType, Double> tranquilityMap = new HashMap<EnumTranquilityType, Double>();
+        Map<EnumTranquilityType, Double> tranquilityMap = new HashMap<>();
 
         for (int currentDistance = 2; currentDistance < currentDistance + maxLength; currentDistance++) {
             boolean canFormRoad = false;
@@ -116,7 +116,7 @@ public class TileIncenseAltar extends TileInventory implements ITickable {
                             continue; //TODO: Can make this just set j to currentDistance to speed it up.
                         }
 
-                        for (int y = 0 + yOffset; y <= 2 + yOffset; y++) {
+                        for (int y = yOffset; y <= 2 + yOffset; y++) {
                             BlockPos offsetPos = pos.add(i, y, j);
                             IBlockState state = getWorld().getBlockState(offsetPos);
                             Block block = state.getBlock();

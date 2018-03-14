@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.iface.IPurificationAsh;
-import WayofTime.bloodmagic.ritual.data.AreaDescriptor;
+import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.util.helper.PurificationHelper;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
@@ -57,7 +57,7 @@ public class TilePurificationAltar extends TileInventory implements ITickable {
         if (hasPerformed) {
             if (getWorld().rand.nextInt(4) == 0 && getWorld() instanceof WorldServer) {
                 WorldServer server = (WorldServer) getWorld();
-                server.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 1, 0.02, 0.03, 0.02, 0, new int[0]);
+                server.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 1, 0.02, 0.03, 0.02, 0);
             }
         }
     }

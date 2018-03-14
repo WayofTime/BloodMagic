@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.api.impl.recipe;
 
-import WayofTime.bloodmagic.altar.EnumAltarTier;
+import WayofTime.bloodmagic.altar.AltarTier;
 import com.google.common.base.Preconditions;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -15,7 +15,7 @@ public class RecipeBloodAltar {
     @Nonnull
     private final ItemStack output;
     @Nonnull
-    private final EnumAltarTier minimumTier;
+    private final AltarTier minimumTier;
     @Nonnegative
     private final int syphon;
     @Nonnegative
@@ -27,14 +27,14 @@ public class RecipeBloodAltar {
         Preconditions.checkNotNull(input, "input cannot be null.");
         Preconditions.checkNotNull(output, "output cannot be null.");
         Preconditions.checkArgument(minimumTier >= 0, "minimumTier cannot be negative.");
-        Preconditions.checkArgument(minimumTier <= EnumAltarTier.MAXTIERS, "minimumTier cannot be higher than max tier");
+        Preconditions.checkArgument(minimumTier <= AltarTier.MAXTIERS, "minimumTier cannot be higher than max tier");
         Preconditions.checkArgument(syphon >= 0, "syphon cannot be negative.");
         Preconditions.checkArgument(consumeRate >= 0, "consumeRate cannot be negative.");
         Preconditions.checkArgument(drainRate >= 0, "drain cannot be negative.");
 
         this.input = input;
         this.output = output;
-        this.minimumTier = EnumAltarTier.values()[minimumTier];
+        this.minimumTier = AltarTier.values()[minimumTier];
         this.syphon = syphon;
         this.consumeRate = consumeRate;
         this.drainRate = drainRate;
@@ -51,7 +51,7 @@ public class RecipeBloodAltar {
     }
 
     @Nonnull
-    public EnumAltarTier getMinimumTier() {
+    public AltarTier getMinimumTier() {
         return minimumTier;
     }
 

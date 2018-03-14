@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class StatTrackerArrowShot extends StatTracker {
-    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
+    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<>();
     public static int[] shotsRequired = new int[]{50, 200, 700, 1500, 3000};
     public int totalShots = 0;
 
@@ -66,7 +66,7 @@ public class StatTrackerArrowShot extends StatTracker {
 
     @Override
     public List<LivingArmourUpgrade> getUpgrades() {
-        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
             if (totalShots >= shotsRequired[i]) {

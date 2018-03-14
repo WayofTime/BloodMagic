@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.util;
 
-import WayofTime.bloodmagic.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.altar.ComponentType;
 import WayofTime.bloodmagic.iface.IDemonWillViewer;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
@@ -231,9 +231,7 @@ public class Utils {
     public static boolean isInteger(String integer) {
         try {
             Integer.parseInt(integer);
-        } catch (NumberFormatException e) {
-            return false;
-        } catch (NullPointerException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return false;
         }
         // only got here if we didn't return false
@@ -272,17 +270,15 @@ public class Utils {
      * otherwise
      */
     public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot) {
-        if (tile.getStackInSlot(slot).isEmpty() && !player.getHeldItemMainhand().isEmpty()) {
+        ItemStack slotStack = tile.getStackInSlot(slot);
+        if (slotStack.isEmpty() && !player.getHeldItemMainhand().isEmpty()) {
             ItemStack input = player.getHeldItemMainhand().copy();
             input.setCount(1);
             player.getHeldItemMainhand().shrink(1);
             tile.setInventorySlotContents(slot, input);
             return true;
-        } else if (!tile.getStackInSlot(slot).isEmpty() && player.getHeldItemMainhand().isEmpty()) {
-            if (!tile.getWorld().isRemote) {
-                EntityItem invItem = new EntityItem(tile.getWorld(), player.posX, player.posY + 0.25, player.posZ, tile.getStackInSlot(slot));
-                tile.getWorld().spawnEntity(invItem);
-            }
+        } else if (!slotStack.isEmpty() && player.getHeldItemMainhand().isEmpty()) {
+            ItemHandlerHelper.giveItemToPlayer(player, slotStack);
             tile.clear();
             return false;
         }
@@ -323,12 +319,12 @@ public class Utils {
     }
 
     /**
-     * Gets a default block for each type of {@link EnumAltarComponent}
+     * Gets a default block for each type of {@link ComponentType}
      *
      * @param component - The Component to provide a block for.
      * @return The default Block for the EnumAltarComponent
      */
-    public static Block getBlockForComponent(EnumAltarComponent component) {
+    public static Block getBlockForComponent(ComponentType component) {
         switch (component) {
             case GLOWSTONE:
                 return Blocks.GLOWSTONE;
@@ -365,7 +361,7 @@ public class Utils {
 
     public static float applyArmor(EntityLivingBase entity, ItemStack[] inventory, DamageSource source, double damage) {
         damage *= 25;
-        ArrayList<ArmorProperties> dmgVals = new ArrayList<ArmorProperties>();
+        ArrayList<ArmorProperties> dmgVals = new ArrayList<>();
         for (int x = 0; x < inventory.length; x++) {
             ItemStack stack = inventory[x];
             if (stack.isEmpty()) {
@@ -850,10 +846,10 @@ public class Utils {
         if (finalTile != null)
             finalTile.writeToNBT(finalTag);
 
-        BlockStack initialStack = BlockStack.getStackFromPos(initialWorld, initialPos);
-        BlockStack finalStack = BlockStack.getStackFromPos(finalWorld, finalPos);
+        IBlockState initialState = initialWorld.getBlockState(initialPos);
+        IBlockState finalState = finalWorld.getBlockState(finalPos);
 
-        if ((initialStack.getBlock().equals(Blocks.AIR) && finalStack.getBlock().equals(Blocks.AIR)) || initialStack.getBlock() instanceof BlockPortal || finalStack.getBlock() instanceof BlockPortal)
+        if ((initialState.getBlock().equals(Blocks.AIR) && finalState.getBlock().equals(Blocks.AIR)) || initialState.getBlock() instanceof BlockPortal || finalState.getBlock() instanceof BlockPortal)
             return false;
 
         if (playSound) {
@@ -862,9 +858,9 @@ public class Utils {
         }
 
         //Finally, we get to do something! (CLEARING TILES)
-        if (finalStack.getBlock() != null)
+        if (finalState.getBlock().hasTileEntity(finalState))
             finalWorld.removeTileEntity(finalPos);
-        if (initialStack.getBlock() != null)
+        if (initialState.getBlock().hasTileEntity(initialState))
             initialWorld.removeTileEntity(initialPos);
 
         //TILES CLEARED
@@ -891,8 +887,8 @@ public class Utils {
             newTileFinal.setWorld(initialWorld);
         }
 
-        initialWorld.notifyNeighborsOfStateChange(initialPos, finalStack.getBlock(), true);
-        finalWorld.notifyNeighborsOfStateChange(finalPos, initialStack.getBlock(), true);
+        initialWorld.notifyNeighborsOfStateChange(initialPos, finalState.getBlock(), true);
+        finalWorld.notifyNeighborsOfStateChange(finalPos, initialState.getBlock(), true);
 
         return true;
     }

@@ -37,7 +37,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class WillHandler {
 
-    private static final HashMap<Integer, Integer> SERVER_TICKS = new HashMap<Integer, Integer>();
+    private static final HashMap<Integer, Integer> SERVER_TICKS = new HashMap<>();
 
     // Adds Will to player
     @SubscribeEvent

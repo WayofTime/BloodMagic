@@ -38,7 +38,7 @@ public class RenderCorruptedZombie extends RenderBiped<EntityCorruptedZombie> {
         }
 
         this.layerRenderers.remove(layerbipedarmor);
-        this.addLayer(new LayerWill<EntityCorruptedZombie>(this, new ModelZombie(1.2f, false)));
+        this.addLayer(new LayerWill<>(this, new ModelZombie(1.2f, false)));
     }
 
     /**

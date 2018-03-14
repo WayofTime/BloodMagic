@@ -1,7 +1,10 @@
 package WayofTime.bloodmagic.item.soul;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionMultiWill;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.iface.IMultiWillTool;
 import WayofTime.bloodmagic.iface.ISentientSwordEffectProvider;
 import WayofTime.bloodmagic.iface.ISentientTool;
@@ -9,11 +12,8 @@ import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.IDemonWill;
 import WayofTime.bloodmagic.soul.IDemonWillWeapon;
 import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionMultiWill;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -34,14 +34,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IMeshProvider, IMultiWillTool, ISentientTool {
     public static int[] soulBracket = new int[]{16, 60, 200, 400, 1000, 2000, 4000};
@@ -275,25 +274,15 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         return new CustomMeshDefinitionMultiWill("sentient_sword");
     }
 
-    @Nullable
     @Override
-    public ResourceLocation getCustomLocation() {
-        return null;
-    }
-
-    @Override
-    public List<String> getVariants() {
-        List<String> ret = new ArrayList<String>();
-        for (EnumDemonWillType type : EnumDemonWillType.values()) {
-            ret.add("type=" + type.getName().toLowerCase());
-        }
-
-        return ret;
+    public void gatherVariants(Consumer<String> variants) {
+        for (EnumDemonWillType type : EnumDemonWillType.values())
+            variants.accept("type=" + type.getName().toLowerCase());
     }
 
     @Override
     public List<ItemStack> getRandomDemonWillDrop(EntityLivingBase killedEntity, EntityLivingBase attackingEntity, ItemStack stack, int looting) {
-        List<ItemStack> soulList = new ArrayList<ItemStack>();
+        List<ItemStack> soulList = new ArrayList<>();
 
         if (killedEntity.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && !(killedEntity instanceof IMob)) {
             return soulList;
@@ -318,7 +307,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
     //TODO: Change attack speed.
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
-        Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
+        Multimap<String, AttributeModifier> multimap = HashMultimap.create();
         if (slot == EntityEquipmentSlot.MAINHAND) {
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getDamageOfActivatedSword(stack), 0));
             multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", this.getAttackSpeedOfSword(stack), 0));

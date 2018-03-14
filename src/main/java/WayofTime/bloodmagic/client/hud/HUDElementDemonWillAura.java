@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HUDElementDemonWillAura extends HUDElement {
-    protected List<EnumDemonWillType> barOrder = new ArrayList<EnumDemonWillType>();
+    protected List<EnumDemonWillType> barOrder = new ArrayList<>();
 
     public HUDElementDemonWillAura() {
         super(5, 5, RenderGameOverlayEvent.ElementType.HOTBAR);

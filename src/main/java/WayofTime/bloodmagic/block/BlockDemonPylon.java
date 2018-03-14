@@ -11,11 +11,6 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlockDemonPylon extends BlockContainer implements IVariantProvider {
     public BlockDemonPylon() {
@@ -58,12 +53,5 @@ public class BlockDemonPylon extends BlockContainer implements IVariantProvider 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
         return new TileDemonPylon();
-    }
-
-    @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "normal"));
-        return ret;
     }
 }

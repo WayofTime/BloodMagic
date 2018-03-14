@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.item;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.ritual.data.EnumRuneType;
+import WayofTime.bloodmagic.ritual.EnumRuneType;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.block.BlockRitualStone;
 import WayofTime.bloodmagic.util.helper.TextHelper;

@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.compat.guideapi.book;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.registry.AltarRecipeRegistry.AltarRecipe;
-import WayofTime.bloodmagic.ritual.data.EnumRuneType;
+import WayofTime.bloodmagic.ritual.EnumRuneType;
 import WayofTime.bloodmagic.compat.guideapi.BookUtils;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAltarRecipe;
@@ -28,12 +28,12 @@ public class CategoryRitual {
     static String keyBase = "guide." + BloodMagic.MODID + ".entry.ritual.";
 
     public static Map<ResourceLocation, EntryAbstract> buildCategory() {
-        Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
+        Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<>();
 
         addRitualPagesToEntries("intro", entries);
         addRitualPagesToEntries("basics", entries);
 
-        List<IPage> ritualStonePages = new ArrayList<IPage>();
+        List<IPage> ritualStonePages = new ArrayList<>();
 
         IRecipe ritualStoneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_STONE));
         if (ritualStoneRecipe != null) {
@@ -53,7 +53,7 @@ public class CategoryRitual {
         ritualStonePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "ritualStone" + ".info.2"), 370));
         entries.put(new ResourceLocation(keyBase + "ritualStone"), new EntryText(ritualStonePages, TextHelper.localize(keyBase + "ritualStone"), true));
 
-        List<IPage> masterRitualStonePages = new ArrayList<IPage>();
+        List<IPage> masterRitualStonePages = new ArrayList<>();
 
         IRecipe masterRitualStoneRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER, 1, 0));
         if (masterRitualStoneRecipe != null) {
@@ -63,7 +63,7 @@ public class CategoryRitual {
         masterRitualStonePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "masterRitualStone" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "masterRitualStone"), new EntryText(masterRitualStonePages, TextHelper.localize(keyBase + "masterRitualStone"), true));
 
-        List<IPage> activationCrystalPages = new ArrayList<IPage>();
+        List<IPage> activationCrystalPages = new ArrayList<>();
 
         activationCrystalPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "activationCrystal" + ".info.1"), 370));
 
@@ -75,7 +75,7 @@ public class CategoryRitual {
         activationCrystalPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "activationCrystal" + ".info.2"), 370));
         entries.put(new ResourceLocation(keyBase + "activationCrystal"), new EntryText(activationCrystalPages, TextHelper.localize(keyBase + "activationCrystal"), true));
 
-        List<IPage> divinerPages = new ArrayList<IPage>();
+        List<IPage> divinerPages = new ArrayList<>();
 
         divinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "diviner" + ".info.1"), 370));
 
@@ -120,7 +120,7 @@ public class CategoryRitual {
     }
 
     public static void addRitualPagesToEntries(String name, Map<ResourceLocation, EntryAbstract> entries) {
-        List<IPage> pages = new ArrayList<IPage>();
+        List<IPage> pages = new ArrayList<>();
         pages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + name + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + name), new EntryText(pages, TextHelper.localize(keyBase + name), true));
     }

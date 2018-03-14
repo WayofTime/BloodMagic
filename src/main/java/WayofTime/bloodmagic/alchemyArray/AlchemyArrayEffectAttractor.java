@@ -28,7 +28,7 @@ import java.util.*;
  */
 public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
     private FakePlayer target;
-    private Set<EntityLiving> tracking = new HashSet<EntityLiving>();
+    private Set<EntityLiving> tracking = new HashSet<>();
 
     private int counter = 0;
     private int maxMobsAttracted = 10000;
@@ -48,9 +48,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
         BlockPos pos = tile.getPos();
         counter++;
         if (counter < 10) {
-            Iterator<EntityLiving> itr = tracking.iterator();
-            while (itr.hasNext()) {
-                EntityLiving ent = itr.next();
+            for (EntityLiving ent : tracking) {
                 onEntityTick(pos, ent);
             }
 
@@ -61,7 +59,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
 
         World world = tile.getWorld();
 
-        Set<EntityLiving> trackingThisTick = new HashSet<EntityLiving>();
+        Set<EntityLiving> trackingThisTick = new HashSet<>();
         List<EntityLiving> entsInBounds = world.getEntitiesWithinAABB(EntityLiving.class, getBounds(pos));
 
         for (EntityLiving ent : entsInBounds) {
@@ -268,7 +266,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
     private void cancelCurrentTasks(EntityLiving ent) {
         Iterator<EntityAITaskEntry> iterator = ent.tasks.taskEntries.iterator();
 
-        List<EntityAITasks.EntityAITaskEntry> currentTasks = new ArrayList<EntityAITasks.EntityAITaskEntry>();
+        List<EntityAITasks.EntityAITaskEntry> currentTasks = new ArrayList<>();
         while (iterator.hasNext()) {
             EntityAITaskEntry entityaitaskentry = iterator.next();
             if (entityaitaskentry != null) {

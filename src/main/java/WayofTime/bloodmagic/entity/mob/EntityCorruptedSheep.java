@@ -30,12 +30,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 public class EntityCorruptedSheep extends EntityAspectedDemonBase implements IShearable {
-    private static final DataParameter<Byte> DYE_COLOR = EntityDataManager.<Byte>createKey(EntityCorruptedSheep.class, DataSerializers.BYTE);
+    private static final DataParameter<Byte> DYE_COLOR = EntityDataManager.createKey(EntityCorruptedSheep.class, DataSerializers.BYTE);
 
     private static final Map<EnumDyeColor, float[]> DYE_TO_RGB = Maps.newEnumMap(EnumDyeColor.class);
     public static int maxProtectionCooldown = 90 * 20; //90 second cooldown
@@ -93,8 +94,8 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
 
-        this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityLivingBase>(this, EntityLivingBase.class, 10, true, false, new EntityAspectedDemonBase.TeamAttackPredicate(this)));
+        this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 10, true, false, new EntityAspectedDemonBase.TeamAttackPredicate(this)));
     }
 
     @Override
@@ -180,7 +181,7 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
     @Override
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(DYE_COLOR, Byte.valueOf((byte) 0));
+        this.dataManager.register(DYE_COLOR, (byte) 0);
     }
 
     @Override
@@ -255,34 +256,34 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
      * Gets the wool color of this sheep.
      */
     public EnumDyeColor getFleeceColor() {
-        return EnumDyeColor.byMetadata(this.dataManager.get(DYE_COLOR).byteValue() & 15);
+        return EnumDyeColor.byMetadata(this.dataManager.get(DYE_COLOR) & 15);
     }
 
     /**
      * Sets the wool color of this sheep
      */
     public void setFleeceColor(EnumDyeColor color) {
-        byte b0 = this.dataManager.get(DYE_COLOR).byteValue();
-        this.dataManager.set(DYE_COLOR, Byte.valueOf((byte) (b0 & 240 | color.getMetadata() & 15)));
+        byte b0 = this.dataManager.get(DYE_COLOR);
+        this.dataManager.set(DYE_COLOR, (byte) (b0 & 240 | color.getMetadata() & 15));
     }
 
     /**
      * returns true if a sheeps wool has been sheared
      */
     public boolean getSheared() {
-        return (this.dataManager.get(DYE_COLOR).byteValue() & 16) != 0;
+        return (this.dataManager.get(DYE_COLOR) & 16) != 0;
     }
 
     /**
      * make a sheep sheared if set to true
      */
     public void setSheared(boolean sheared) {
-        byte b0 = this.dataManager.get(DYE_COLOR).byteValue();
+        byte b0 = this.dataManager.get(DYE_COLOR);
 
         if (sheared) {
-            this.dataManager.set(DYE_COLOR, Byte.valueOf((byte) (b0 | 16)));
+            this.dataManager.set(DYE_COLOR, (byte) (b0 | 16));
         } else {
-            this.dataManager.set(DYE_COLOR, Byte.valueOf((byte) (b0 & -17)));
+            this.dataManager.set(DYE_COLOR, (byte) (b0 & -17));
         }
     }
 
@@ -327,7 +328,7 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
         this.setSheared(true);
         int i = 1 + this.rand.nextInt(3);
 
-        java.util.List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
+        List<ItemStack> ret = new ArrayList<>();
         for (int j = 0; j < i; ++j)
             ret.add(new ItemStack(Item.getItemFromBlock(Blocks.WOOL), 1, this.getFleeceColor().getMetadata()));
 

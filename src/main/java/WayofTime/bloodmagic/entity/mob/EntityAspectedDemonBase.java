@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import java.util.Locale;
 
 public abstract class EntityAspectedDemonBase extends EntityDemonBase {
-    protected static final DataParameter<EnumDemonWillType> TYPE = EntityDataManager.<EnumDemonWillType>createKey(EntityAspectedDemonBase.class, Serializers.WILL_TYPE_SERIALIZER);
+    protected static final DataParameter<EnumDemonWillType> TYPE = EntityDataManager.createKey(EntityAspectedDemonBase.class, Serializers.WILL_TYPE_SERIALIZER);
 
     public EntityAspectedDemonBase(World worldIn) {
         super(worldIn);

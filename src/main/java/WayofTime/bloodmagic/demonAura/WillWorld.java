@@ -4,7 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class WillWorld {
     int dim;
-    ConcurrentHashMap<PosXY, WillChunk> willChunks = new ConcurrentHashMap<PosXY, WillChunk>();
+    ConcurrentHashMap<PosXY, WillChunk> willChunks = new ConcurrentHashMap<>();
 
 //    private static ConcurrentHashMap<PosXY, AspectList> nodeTickets = new ConcurrentHashMap();
 

@@ -15,7 +15,7 @@ import java.util.List;
 
 public class AlchemyTableRecipe {
     protected ItemStack output = ItemStack.EMPTY;
-    protected ArrayList<Object> input = new ArrayList<Object>();
+    protected ArrayList<Object> input = new ArrayList<>();
     protected int lpDrained;
     protected int ticksRequired;
     protected int tierRequired;
@@ -43,12 +43,12 @@ public class AlchemyTableRecipe {
             } else if (in instanceof String) {
                 input.add(OreDictionary.getOres((String) in));
             } else {
-                String ret = "Invalid alchemy recipe: ";
+                StringBuilder ret = new StringBuilder("Invalid alchemy recipe: ");
                 for (Object tmp : recipe) {
-                    ret += tmp + ", ";
+                    ret.append(tmp).append(", ");
                 }
-                ret += output;
-                throw new RuntimeException(ret);
+                ret.append(output);
+                throw new RuntimeException(ret.toString());
             }
         }
     }
@@ -78,7 +78,7 @@ public class AlchemyTableRecipe {
      */
     @SuppressWarnings("unchecked")
     public boolean matches(List<ItemStack> checkedList, World world, BlockPos pos) {
-        ArrayList<Object> required = new ArrayList<Object>(input);
+        ArrayList<Object> required = new ArrayList<>(input);
 
         for (ItemStack slot : checkedList) {
             if (!slot.isEmpty()) {

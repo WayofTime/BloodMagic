@@ -3,7 +3,7 @@ package WayofTime.bloodmagic;
 import WayofTime.bloodmagic.api.BloodMagicPlugin;
 import WayofTime.bloodmagic.api.IBloodMagicPlugin;
 import WayofTime.bloodmagic.core.registry.OrbRegistry;
-import WayofTime.bloodmagic.core.registry.RitualRegistry;
+import WayofTime.bloodmagic.ritual.RitualRegistry;
 import WayofTime.bloodmagic.util.helper.LogHelper;
 import WayofTime.bloodmagic.client.gui.GuiHandler;
 import WayofTime.bloodmagic.command.CommandBloodMagic;
@@ -36,14 +36,14 @@ public class BloodMagic {
     public static final String NAME = "Blood Magic: Alchemical Wizardry";
     public static final String VERSION = "@VERSION@";
     public static final String DEPEND = "required-after:guideapi;";
+    public static final boolean IS_DEV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+    public static final List<Pair<IBloodMagicPlugin, BloodMagicPlugin>> PLUGINS = Lists.newArrayList();
     public static final CreativeTabs TAB_BM = new CreativeTabs(MODID + ".creativeTab") {
         @Override
         public ItemStack getTabIconItem() {
             return OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK);
         }
     };
-    public static final boolean IS_DEV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
-    public static final List<Pair<IBloodMagicPlugin, BloodMagicPlugin>> PLUGINS = Lists.newArrayList();
     public static CreativeTabs TAB_TOMES = new CreativeTabs(MODID + ".creativeTabTome") {
         @Override
         public ItemStack getTabIconItem() {

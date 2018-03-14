@@ -29,7 +29,7 @@ public class LivingArmourUpgradeHealthboost extends LivingArmourUpgrade {
 
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers() {
-        Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
+        Multimap<String, AttributeModifier> modifierMap = HashMultimap.create();
 
         String name = getUniqueIdentifier() + "-HealthModifier1";
         modifierMap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(UUID.nameUUIDFromBytes(StringUtils.getBytesUtf8(name)), "HealthModifier1", healthModifier[this.level], 0));

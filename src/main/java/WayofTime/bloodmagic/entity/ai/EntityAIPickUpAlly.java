@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.entity.ai;
 
 import WayofTime.bloodmagic.entity.mob.EntityAspectedDemonBase;
+import WayofTime.bloodmagic.util.BMLog;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.pathfinding.Path;
@@ -142,7 +143,7 @@ public class EntityAIPickUpAlly extends EntityAIBase {
         double d0 = this.getAttackReachSqr(potentialPickup);
 
         if (distance <= d0 && this.attackTick <= 0 && !potentialPickup.isRiding()) {
-            System.out.println("Hai!");
+            BMLog.DEBUG.info("Hai!");
             potentialPickup.startRiding(this.entity, true);
         }
     }

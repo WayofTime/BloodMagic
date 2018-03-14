@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CorruptionHandler {
-    public static Map<Pair<Block, Integer>, Map<EnumDemonWillType, IBlockState>> corruptBlockMap = new HashMap<Pair<Block, Integer>, Map<EnumDemonWillType, IBlockState>>();
+    public static Map<Pair<Block, Integer>, Map<EnumDemonWillType, IBlockState>> corruptBlockMap = new HashMap<>();
 
     public static void registerBlockCorruption(EnumDemonWillType type, Block block, int meta, IBlockState corruptedState) {
         Pair<Block, Integer> pair = Pair.of(block, meta);
@@ -19,7 +19,7 @@ public class CorruptionHandler {
             Map<EnumDemonWillType, IBlockState> stateMap = corruptBlockMap.get(pair);
             stateMap.put(type, corruptedState);
         } else {
-            Map<EnumDemonWillType, IBlockState> stateMap = new HashMap<EnumDemonWillType, IBlockState>();
+            Map<EnumDemonWillType, IBlockState> stateMap = new HashMap<>();
             stateMap.put(type, corruptedState);
             corruptBlockMap.put(pair, stateMap);
         }

@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.livingArmour;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.util.BMLog;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -10,10 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class LivingArmourHandler {
-    public static List<Class<? extends StatTracker>> trackers = new ArrayList<Class<? extends StatTracker>>();
-    public static HashMap<String, Class<? extends LivingArmourUpgrade>> upgradeMap = new HashMap<String, Class<? extends LivingArmourUpgrade>>();
-    public static HashMap<String, Constructor<? extends LivingArmourUpgrade>> upgradeConstructorMap = new HashMap<String, Constructor<? extends LivingArmourUpgrade>>();
-    public static HashMap<String, Integer> upgradeMaxLevelMap = new HashMap<String, Integer>();
+    public static List<Class<? extends StatTracker>> trackers = new ArrayList<>();
+    public static HashMap<String, Class<? extends LivingArmourUpgrade>> upgradeMap = new HashMap<>();
+    public static HashMap<String, Constructor<? extends LivingArmourUpgrade>> upgradeConstructorMap = new HashMap<>();
+    public static HashMap<String, Integer> upgradeMaxLevelMap = new HashMap<>();
 
     public static void registerStatTracker(Class<? extends StatTracker> tracker) {
         trackers.add(tracker);

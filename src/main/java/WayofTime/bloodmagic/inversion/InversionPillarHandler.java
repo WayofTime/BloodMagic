@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.inversion;
 
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.util.BMLog;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -8,8 +9,8 @@ import java.util.*;
 
 public class InversionPillarHandler {
     public static final double farthestDistanceSquared = 16 * 16;
-    public static Map<Integer, Map<EnumDemonWillType, List<BlockPos>>> pillarMap = new HashMap<Integer, Map<EnumDemonWillType, List<BlockPos>>>();
-    public static Map<Integer, Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>>> nearPillarMap = new HashMap<Integer, Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>>>();
+    public static Map<Integer, Map<EnumDemonWillType, List<BlockPos>>> pillarMap = new HashMap<>();
+    public static Map<Integer, Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>>> nearPillarMap = new HashMap<>();
 
     public static boolean addPillarToMap(World world, EnumDemonWillType type, BlockPos pos) {
         int dim = world.provider.getDimension();
@@ -24,15 +25,15 @@ public class InversionPillarHandler {
                     return false;
                 }
             } else {
-                List<BlockPos> posList = new ArrayList<BlockPos>();
+                List<BlockPos> posList = new ArrayList<>();
                 posList.add(pos);
                 willMap.put(type, posList);
                 onPillarAdded(world, type, pos);
                 return true;
             }
         } else {
-            Map<EnumDemonWillType, List<BlockPos>> willMap = new HashMap<EnumDemonWillType, List<BlockPos>>();
-            List<BlockPos> posList = new ArrayList<BlockPos>();
+            Map<EnumDemonWillType, List<BlockPos>> willMap = new HashMap<>();
+            List<BlockPos> posList = new ArrayList<>();
             posList.add(pos);
 
             willMap.put(type, posList);
@@ -63,8 +64,8 @@ public class InversionPillarHandler {
 
     //Assume that it has been added already.
     private static void onPillarAdded(World world, EnumDemonWillType type, BlockPos pos) {
-        System.out.println("Adding...");
-        List<BlockPos> closePosList = new ArrayList<BlockPos>();
+        BMLog.DEBUG.info("Adding...");
+        List<BlockPos> closePosList = new ArrayList<>();
 
         int dim = world.provider.getDimension();
         if (pillarMap.containsKey(dim)) {
@@ -90,7 +91,7 @@ public class InversionPillarHandler {
                     if (posList != null && !posList.contains(pos)) {
                         posList.add(pos);
                     } else {
-                        posList = new ArrayList<BlockPos>();
+                        posList = new ArrayList<>();
                         posList.add(pos);
                         posMap.put(closePos, posList);
                     }
@@ -98,14 +99,14 @@ public class InversionPillarHandler {
 
                 posMap.put(pos, closePosList);
             } else {
-                Map<BlockPos, List<BlockPos>> posMap = new HashMap<BlockPos, List<BlockPos>>();
+                Map<BlockPos, List<BlockPos>> posMap = new HashMap<>();
 
                 posMap.put(pos, closePosList);
                 willMap.put(type, posMap);
             }
         } else {
-            Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>> willMap = new HashMap<EnumDemonWillType, Map<BlockPos, List<BlockPos>>>();
-            Map<BlockPos, List<BlockPos>> posMap = new HashMap<BlockPos, List<BlockPos>>();
+            Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>> willMap = new HashMap<>();
+            Map<BlockPos, List<BlockPos>> posMap = new HashMap<>();
 
             posMap.put(pos, closePosList);
             willMap.put(type, posMap);
@@ -114,7 +115,7 @@ public class InversionPillarHandler {
     }
 
     private static void onPillarRemoved(World world, EnumDemonWillType type, BlockPos pos) {
-        System.out.println("Removing...");
+        BMLog.DEBUG.info("Removing...");
         int dim = world.provider.getDimension();
         if (nearPillarMap.containsKey(dim)) {
             Map<EnumDemonWillType, Map<BlockPos, List<BlockPos>>> willMap = nearPillarMap.get(dim);
@@ -122,9 +123,7 @@ public class InversionPillarHandler {
                 Map<BlockPos, List<BlockPos>> posMap = willMap.get(type);
                 List<BlockPos> posList = posMap.get(pos);
                 if (posList != null) {
-                    Iterator<BlockPos> itr = posList.iterator();
-                    while (itr.hasNext()) {
-                        BlockPos checkPos = itr.next();
+                    for (BlockPos checkPos : posList) {
                         List<BlockPos> checkPosList = posMap.get(checkPos);
                         if (checkPosList != null) {
                             checkPosList.remove(pos);
@@ -151,12 +150,12 @@ public class InversionPillarHandler {
             }
         }
 
-        return new ArrayList<BlockPos>();
+        return new ArrayList<>();
     }
 
     public static List<BlockPos> getAllConnectedPillars(World world, EnumDemonWillType type, BlockPos pos) {
-        List<BlockPos> checkedPosList = new ArrayList<BlockPos>();
-        List<BlockPos> uncheckedPosList = new ArrayList<BlockPos>(); //Positions where we did not check their connections.
+        List<BlockPos> checkedPosList = new ArrayList<>();
+        List<BlockPos> uncheckedPosList = new ArrayList<>(); //Positions where we did not check their connections.
 
         uncheckedPosList.add(pos);
 
@@ -169,7 +168,7 @@ public class InversionPillarHandler {
 
                 while (!uncheckedPosList.isEmpty()) {
                     //Positions that are new this iteration and need to be dumped into uncheckedPosList next iteration.
-                    List<BlockPos> newPosList = new ArrayList<BlockPos>();
+                    List<BlockPos> newPosList = new ArrayList<>();
 
                     for (BlockPos checkPos : uncheckedPosList) {
                         List<BlockPos> posList = posMap.get(checkPos);

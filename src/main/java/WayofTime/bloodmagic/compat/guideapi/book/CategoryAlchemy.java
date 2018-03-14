@@ -26,14 +26,14 @@ public class CategoryAlchemy
 {
     public static Map<ResourceLocation, EntryAbstract> buildCategory()
     {
-        Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<ResourceLocation, EntryAbstract>();
+        Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<>();
         String keyBase = "guide." + BloodMagic.MODID + ".entry.alchemy.";
 
-        List<IPage> introPages = new ArrayList<IPage>();
+        List<IPage> introPages = new ArrayList<>();
         introPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "intro"), new EntryText(introPages, TextHelper.localize(keyBase + "intro"), true));
 
-        List<IPage> ashPages = new ArrayList<IPage>();
+        List<IPage> ashPages = new ArrayList<>();
 
         TartaricForgeRecipe ashRecipe = RecipeHelper.getForgeRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES));
         if (ashRecipe != null)
@@ -43,7 +43,7 @@ public class CategoryAlchemy
         ashPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "ash" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "ash"), new EntryText(ashPages, TextHelper.localize(keyBase + "ash"), true));
 
-        List<IPage> furnacePages = new ArrayList<IPage>();
+        List<IPage> furnacePages = new ArrayList<>();
 
         PageAlchemyArray furnaceRecipePage = BookUtils.getAlchemyPage("furnace");
         if (furnaceRecipePage != null)
@@ -53,7 +53,7 @@ public class CategoryAlchemy
         furnacePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "furnace" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "furnace"), new EntryText(furnacePages, TextHelper.localize(keyBase + "furnace"), true));
 
-        List<IPage> speedPages = new ArrayList<IPage>();
+        List<IPage> speedPages = new ArrayList<>();
 
         PageAlchemyArray speedRecipePage = BookUtils.getAlchemyPage("movement");
         if (speedRecipePage != null)
@@ -63,7 +63,7 @@ public class CategoryAlchemy
         speedPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "speed" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "speed"), new EntryText(speedPages, TextHelper.localize(keyBase + "speed"), true));
 
-        List<IPage> updraftPages = new ArrayList<IPage>();
+        List<IPage> updraftPages = new ArrayList<>();
 
         PageAlchemyArray updraftRecipePage = BookUtils.getAlchemyPage("updraft");
         if (updraftRecipePage != null)
@@ -73,7 +73,7 @@ public class CategoryAlchemy
         updraftPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "updraft" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "updraft"), new EntryText(updraftPages, TextHelper.localize(keyBase + "updraft"), true));
 
-        List<IPage> turretPages = new ArrayList<IPage>();
+        List<IPage> turretPages = new ArrayList<>();
 
         PageAlchemyArray turretRecipePage = BookUtils.getAlchemyPage("skeletonTurret");
         if (turretRecipePage != null)
@@ -83,7 +83,7 @@ public class CategoryAlchemy
         turretPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "turret" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "turret"), new EntryText(turretPages, TextHelper.localize(keyBase + "turret"), true));
 
-        List<IPage> bouncePages = new ArrayList<IPage>();
+        List<IPage> bouncePages = new ArrayList<>();
 
         PageAlchemyArray bounceRecipePage = BookUtils.getAlchemyPage("bounce");
         if (bounceRecipePage != null)
@@ -93,12 +93,12 @@ public class CategoryAlchemy
         bouncePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bounce" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "bounce"), new EntryText(bouncePages, TextHelper.localize(keyBase + "bounce"), true));
 
-        List<IPage> buffPages = new ArrayList<IPage>();
+        List<IPage> buffPages = new ArrayList<>();
 
         buffPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "buff" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "buff"), new EntryText(buffPages, TextHelper.localize(keyBase + "buff"), true));
 
-        List<IPage> fastMinerPages = new ArrayList<IPage>();
+        List<IPage> fastMinerPages = new ArrayList<>();
 
         PageAlchemyArray fastMinerRecipePage = BookUtils.getAlchemyPage("fastMiner");
         if (fastMinerRecipePage != null)
