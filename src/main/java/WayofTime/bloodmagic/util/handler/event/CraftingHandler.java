@@ -5,14 +5,13 @@ import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.AltarCraftedEvent;
 import WayofTime.bloodmagic.iface.IUpgradeTrainer;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.util.EnumServerDyeColor;
 import WayofTime.bloodmagic.util.helper.ItemHelper;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.ItemInscriptionTool;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemBanner;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeModContainer;
@@ -79,7 +78,7 @@ public class CraftingHandler {
             }
 
             if (event.getRight().getItem() == Items.DYE) {
-                EnumDyeColor dyeColor = ItemBanner.getBaseColor(event.getRight());
+                EnumServerDyeColor dyeColor = EnumServerDyeColor.byBaseColor(event.getRight());
                 ItemStack output = event.getLeft().copy();
                 if (!output.hasTagCompound())
                     output.setTagCompound(new NBTTagCompound());
