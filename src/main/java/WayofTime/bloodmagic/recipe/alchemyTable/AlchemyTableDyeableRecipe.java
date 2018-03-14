@@ -1,9 +1,8 @@
 package WayofTime.bloodmagic.recipe.alchemyTable;
 
 import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.util.EnumServerDyeColor;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemBanner;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -71,7 +70,7 @@ public class AlchemyTableDyeableRecipe extends AlchemyTableRecipe {
 
                 return outputStack;
             } else {
-                EnumDyeColor dyeColor = ItemBanner.getBaseColor(tagOrDyeStack);
+                EnumServerDyeColor dyeColor = EnumServerDyeColor.byBaseColor(tagOrDyeStack);
                 if (!outputStack.hasTagCompound()) {
                     outputStack.setTagCompound(new NBTTagCompound());
                 }
