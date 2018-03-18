@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.util.PleaseStopUsingMe;
+import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -37,7 +37,7 @@ public class ItemSigilFastMiner extends ItemSigilToggleableBase {
                 player.addPotionEffect(new PotionEffect(MobEffects.HASTE, ticks, potionPotency));
                 if (!player.capabilities.isCreativeMode) {
                     player.hurtResistantTime = 0;
-                    player.attackEntityFrom(PleaseStopUsingMe.damageSource, 1.0F);
+                    player.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 1.0F);
                 }
             }
         }

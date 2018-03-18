@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.util.PleaseStopUsingMe;
+import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.util.Utils;
@@ -92,7 +92,7 @@ public class RitualRegeneration extends Ritual {
 
                         float currentHealth = damagedEntity.getHealth();
 
-                        damagedEntity.attackEntityFrom(PleaseStopUsingMe.damageSource, Math.min(player.getMaxHealth() - player.getHealth(), syphonedHealthAmount));
+                        damagedEntity.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, Math.min(player.getMaxHealth() - player.getHealth(), syphonedHealthAmount));
 
                         float healthDifference = currentHealth - damagedEntity.getHealth();
                         if (healthDifference > 0) {

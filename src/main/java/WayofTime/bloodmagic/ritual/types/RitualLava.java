@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.util.PleaseStopUsingMe;
+import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
@@ -198,7 +198,7 @@ public class RitualLava extends Ritual {
                 }
 
                 if (!entity.isDead && entity.hurtTime <= 0 && Utils.isImmuneToFireDamage(entity)) {
-                    if (entity.attackEntityFrom(PleaseStopUsingMe.damageSource, damage)) {
+                    if (entity.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, damage)) {
                         corrosiveDrained += corrosiveWillDrain;
                         corrosiveWill -= corrosiveWillDrain;
                     }

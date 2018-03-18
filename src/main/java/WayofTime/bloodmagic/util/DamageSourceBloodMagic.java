@@ -7,6 +7,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
 public class DamageSourceBloodMagic extends DamageSource {
+
+    public static final DamageSourceBloodMagic INSTANCE = new DamageSourceBloodMagic();
+
     public DamageSourceBloodMagic() {
         super("bloodMagic");
 

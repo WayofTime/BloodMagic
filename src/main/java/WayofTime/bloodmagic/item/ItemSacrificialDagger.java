@@ -7,7 +7,7 @@ import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.item.types.ISubItem;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.util.PleaseStopUsingMe;
+import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.helper.PlayerSacrificeHelper;
@@ -97,10 +97,10 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
 
             if (evt.shouldDrainHealth) {
                 player.hurtResistantTime = 0;
-                player.attackEntityFrom(PleaseStopUsingMe.damageSource, 0.001F);
+                player.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 0.001F);
                 player.setHealth(Math.max(player.getHealth() - 2, 0.0001f));
                 if (player.getHealth() <= 0.001f) {
-                    player.onDeath(PleaseStopUsingMe.damageSource);
+                    player.onDeath(DamageSourceBloodMagic.INSTANCE);
                     player.setHealth(0);
                 }
 //                player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 2.0F);

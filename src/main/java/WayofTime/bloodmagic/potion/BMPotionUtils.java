@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.potion;
 
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.util.PleaseStopUsingMe;
+import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionAugmentRecipe;
 import net.minecraft.block.Block;
@@ -67,7 +67,7 @@ public class BMPotionUtils {
         }
 
         if (incurredDamage > 0) {
-            entity.attackEntityFrom(PleaseStopUsingMe.damageSource, (float) incurredDamage);
+            entity.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, (float) incurredDamage);
         }
 
         return incurredDamage;

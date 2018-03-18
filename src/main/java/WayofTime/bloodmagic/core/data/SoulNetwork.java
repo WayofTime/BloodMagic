@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.core.data;
 
 import WayofTime.bloodmagic.util.BMLog;
-import WayofTime.bloodmagic.util.PleaseStopUsingMe;
+import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.event.AddToNetworkEvent;
 import WayofTime.bloodmagic.event.SoulNetworkEvent;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
@@ -113,14 +113,14 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
             if (syphon < 100 && syphon > 0) {
                 if (!user.capabilities.isCreativeMode) {
                     user.hurtResistantTime = 0;
-                    user.attackEntityFrom(PleaseStopUsingMe.damageSource, 1.0F);
+                    user.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 1.0F);
                 }
 
             } else if (syphon >= 100) {
                 if (!user.capabilities.isCreativeMode) {
                     for (int i = 0; i < ((syphon + 99) / 100); i++) {
                         user.hurtResistantTime = 0;
-                        user.attackEntityFrom(PleaseStopUsingMe.damageSource, 1.0F);
+                        user.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 1.0F);
                     }
                 }
             }
