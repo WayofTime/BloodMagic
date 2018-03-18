@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import WayofTime.bloodmagic.util.BMLog;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -19,7 +20,6 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectArrowTurret;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectAttractor;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBinding;
@@ -140,7 +140,7 @@ public class ModRecipes
         CompressionRegistry.registerItemThreshold(new ItemStack(Blocks.COBBLESTONE), 64);
         stopwatch.stop();
 
-        BloodMagic.instance.logger.info("Added compression recipes in {}", stopwatch);
+        BMLog.DEBUG.info("Added compression recipes in {}", stopwatch);
     }
 
     public static void addAlchemyTableRecipes()

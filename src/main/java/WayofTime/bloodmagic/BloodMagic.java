@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.api.BloodMagicPlugin;
 import WayofTime.bloodmagic.api.IBloodMagicPlugin;
 import WayofTime.bloodmagic.core.registry.OrbRegistry;
 import WayofTime.bloodmagic.ritual.RitualRegistry;
-import WayofTime.bloodmagic.util.helper.LogHelper;
 import WayofTime.bloodmagic.client.gui.GuiHandler;
 import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
@@ -65,7 +64,6 @@ public class BloodMagic {
         FluidRegistry.enableUniversalBucket();
     }
 
-    public LogHelper logger = new LogHelper(MODID);
     private File configDir;
 
     @Mod.EventHandler

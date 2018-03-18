@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.util;
 
-import WayofTime.bloodmagic.util.helper.LogHelper;
 import net.minecraft.util.DamageSource;
 
 /**
@@ -12,8 +11,6 @@ import net.minecraft.util.DamageSource;
 @Deprecated
 public class PleaseStopUsingMe {
     public static boolean loggingEnabled;
-
-    public static LogHelper logger = new LogHelper("BloodMagic|API");
 
     public static DamageSource damageSource = new DamageSourceBloodMagic();
 }

@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.meteor;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.gson.Serializers;
+import WayofTime.bloodmagic.util.BMLog;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -29,7 +29,7 @@ public class MeteorConfigHandler {
 
     public static void handleMeteors(boolean checkNewVersion) {
         if (meteorDir == null) {
-            BloodMagic.instance.logger.error("Attempted to handle meteor config but the folder has not been initialized. Was this run too early?");
+            BMLog.DEFAULT.error("Attempted to handle meteor config but the folder has not been initialized. Was this run too early?");
             return;
         }
 

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.compress;
 
-import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.util.BMLog;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
@@ -19,7 +19,7 @@ public class StorageBlockCraftingManager {
     public void addStorageBlockRecipes() {
 //        this.recipes = new StorageBlockCraftingRecipeAssimilator().getPackingRecipes();
 
-        BloodMagic.instance.logger.info("Total number of compression recipes: " + this.recipes.size());
+        BMLog.DEBUG.info("Total number of compression recipes: " + this.recipes.size());
     }
 
     public ItemStack findMatchingRecipe(InventoryCrafting craftingInventory, World world) {

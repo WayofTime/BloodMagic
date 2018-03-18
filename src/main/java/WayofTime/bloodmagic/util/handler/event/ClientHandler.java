@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.ritual.RitualRegistry;
 import WayofTime.bloodmagic.ritual.Ritual;
@@ -211,10 +212,10 @@ public class ClientHandler {
         missingVariants.removeAll(missing);
 
         if (errored.size() > 0)
-            BloodMagic.instance.logger.info("Suppressed {} model errors from Blood Magic.", errored.size());
+            BMLog.DEBUG.info("Suppressed {} model errors from Blood Magic.", errored.size());
         if (missing.size() > 0)
-            BloodMagic.instance.logger.info("Suppressed {} variant errors from Blood Magic.", missing.size());
-        BloodMagic.instance.logger.debug("Suppressed discovered model/variant errors in {}", stopwatch.stop());
+            BMLog.DEBUG.info("Suppressed {} variant errors from Blood Magic.", missing.size());
+        BMLog.DEBUG.info("Suppressed discovered model/variant errors in {}", stopwatch.stop());
     }
 
     // For some reason, we need some bad textures to be listed in the Crystal and Node models. This will hide that from the end user.
@@ -247,7 +248,7 @@ public class ClientHandler {
             missingTextures.keySet().remove(mc);
             badTextureDomains.remove(mc);
         }
-        BloodMagic.instance.logger.debug("Suppressed required texture errors in {}", stopwatch.stop());
+        BMLog.DEBUG.info("Suppressed required texture errors in {}", stopwatch.stop());
     }
 
     private static void renderRitualStones(EntityPlayerSP player, float partialTicks) {

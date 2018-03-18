@@ -16,6 +16,7 @@ import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.tile.*;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
+import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.Constants;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.Minecraft;
@@ -117,10 +118,9 @@ public class ClientProxy extends CommonProxy {
             Map<String, RenderPlayer> skinMap = ObfuscationReflectionHelper.getPrivateValue(RenderManager.class, renderManager, "skinMap", "field_178636_l");
             skinMap.get("default").addLayer(new LayerBloodElytra(skinMap.get("default")));
             skinMap.get("slim").addLayer(new LayerBloodElytra(skinMap.get("slim")));
-            BloodMagic.instance.logger.info("Elytra layer added");
+            BMLog.DEBUG.info("Elytra layer added");
         } catch (Exception e) {
-            BloodMagic.instance.logger.error("Failed to set custom Elytra Layer for Elytra Living Armour Upgrade.");
-            BloodMagic.instance.logger.error(e.getLocalizedMessage());
+            BMLog.DEBUG.error("Failed to set custom Elytra Layer for Elytra Living Armour Upgrade: {}", e.getMessage());
         }
     }
 
