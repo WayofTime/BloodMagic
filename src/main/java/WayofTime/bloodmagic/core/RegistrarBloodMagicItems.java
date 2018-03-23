@@ -16,7 +16,6 @@ import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
 import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
 import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.item.soul.*;
-import WayofTime.bloodmagic.item.types.AlchemicTypes;
 import WayofTime.bloodmagic.item.types.ComponentTypes;
 import WayofTime.bloodmagic.item.types.ShardType;
 

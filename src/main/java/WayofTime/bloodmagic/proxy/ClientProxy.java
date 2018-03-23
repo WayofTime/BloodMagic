@@ -13,7 +13,7 @@ import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
-import WayofTime.bloodmagic.item.types.AlchemicTypes;
+import WayofTime.bloodmagic.item.types.AlchemicVialType;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.tile.*;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
@@ -123,7 +123,7 @@ public class ClientProxy extends CommonProxy
 
             int variant = stack.getMetadata();
 
-            return AlchemicTypes.getColourForLayer(variant, tintIndex);
+            return AlchemicVialType.getColourForLayer(variant, tintIndex);
         }, RegistrarBloodMagicItems.ALCHEMIC_VIAL);
 
         addElytraLayer();

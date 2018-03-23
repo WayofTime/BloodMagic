@@ -6,13 +6,13 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.Locale;
 
-public enum AlchemicTypes implements ISubItem
+public enum AlchemicVialType implements ISubItem
 {
     BASE(0x2e35ff);
 
     final int potionColour;
 
-    AlchemicTypes(int colour1)
+    AlchemicVialType(int colour1)
     {
         potionColour = colour1;
     }
@@ -22,13 +22,6 @@ public enum AlchemicTypes implements ISubItem
     public String getInternalName()
     {
         return name().toLowerCase(Locale.ROOT);
-    }
-
-    @Nonnull
-    @Override
-    public ItemStack getStack()
-    {
-        return getStack(1);
     }
 
     @Nonnull
@@ -49,11 +42,11 @@ public enum AlchemicTypes implements ISubItem
 
     public static int getColourForLayer(int variant, int layer)
     {
-        if (variant >= AlchemicTypes.values().length)
+        if (variant >= AlchemicVialType.values().length)
         {
             return -1;
         }
 
-        return AlchemicTypes.values()[variant].getColourForLayer(layer);
+        return AlchemicVialType.values()[variant].getColourForLayer(layer);
     }
 }
