@@ -1,7 +1,9 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.event.RitualEvent;
 import WayofTime.bloodmagic.iface.IBindable;
+import WayofTime.bloodmagic.ritual.imperfect.IImperfectRitualStone;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.ritual.RitualRegistry;
 import WayofTime.bloodmagic.ritual.Ritual;
@@ -26,6 +28,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nullable;
 
@@ -66,9 +69,13 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
                 }
             }
         } else if (state.getValue(getProperty()) == EnumRitualController.IMPERFECT && tile instanceof TileImperfectRitualStone) {
-
             IBlockState ritualBlock = world.getBlockState(pos.up());
-            return ((TileImperfectRitualStone) tile).performRitual(world, pos, ImperfectRitualRegistry.getRitualForBlock(ritualBlock), player);
+            ImperfectRitual ritual = ImperfectRitualRegistry.getRitualForBlock(ritualBlock);
+            if (ritual == null)
+                return false;
+
+            RitualEvent.ImperfectRitualActivatedEvent event = new RitualEvent.ImperfectRitualActivatedEvent((IImperfectRitualStone) tile, player, ritual);
+            return !MinecraftForge.EVENT_BUS.post(event) && ((TileImperfectRitualStone) tile).performRitual(world, pos, ritual, player);
         }
 
         return false;

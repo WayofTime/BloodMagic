@@ -13,14 +13,27 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import java.util.UUID;
 
 public class RitualEvent extends Event {
-    public final IMasterRitualStone mrs;
-    public final UUID ownerId;
-    public final Ritual ritual;
+
+    private final IMasterRitualStone mrs;
+    private final UUID ownerId;
+    private final Ritual ritual;
 
     private RitualEvent(IMasterRitualStone mrs, UUID ownerId, Ritual ritual) {
         this.mrs = mrs;
         this.ownerId = ownerId;
         this.ritual = ritual;
+    }
+
+    public IMasterRitualStone getRitualStone() {
+        return mrs;
+    }
+
+    public UUID getOwnerId() {
+        return ownerId;
+    }
+
+    public Ritual getRitual() {
+        return ritual;
     }
 
     /**
@@ -31,9 +44,10 @@ public class RitualEvent extends Event {
      */
     @Cancelable
     public static class RitualActivatedEvent extends RitualEvent {
-        public final EntityPlayer player;
-        public final ItemStack crystalStack;
-        public int crystalTier;
+
+        private final EntityPlayer player;
+        private final ItemStack crystalStack;
+        private final int crystalTier;
 
         public RitualActivatedEvent(IMasterRitualStone mrs, UUID ownerId, Ritual ritual, EntityPlayer player, ItemStack activationCrystal, int crystalTier) {
             super(mrs, ownerId, ritual);
@@ -41,6 +55,18 @@ public class RitualEvent extends Event {
             this.player = player;
             this.crystalStack = activationCrystal;
             this.crystalTier = crystalTier;
+        }
+
+        public EntityPlayer getPlayer() {
+            return player;
+        }
+
+        public ItemStack getCrystalStack() {
+            return crystalStack;
+        }
+
+        public int getCrystalTier() {
+            return crystalTier;
         }
     }
 
@@ -52,6 +78,7 @@ public class RitualEvent extends Event {
      */
     @Cancelable
     public static class RitualRunEvent extends RitualEvent {
+
         public RitualRunEvent(IMasterRitualStone mrs, UUID ownerId, Ritual ritual) {
             super(mrs, ownerId, ritual);
         }
@@ -65,26 +92,42 @@ public class RitualEvent extends Event {
      */
     public static class RitualStopEvent extends RitualEvent {
 
-        public final Ritual.BreakType method;
+        private final Ritual.BreakType method;
 
         public RitualStopEvent(IMasterRitualStone mrs, UUID ownerId, Ritual ritual, Ritual.BreakType method) {
             super(mrs, ownerId, ritual);
 
             this.method = method;
         }
+
+        public Ritual.BreakType getMethod() {
+            return method;
+        }
     }
 
     @Cancelable
     public static class ImperfectRitualActivatedEvent extends Event {
 
-        public final IImperfectRitualStone ims;
-        public final UUID ownerId;
-        public final ImperfectRitual imperfectRitual;
+        private final IImperfectRitualStone ims;
+        private final EntityPlayer activator;
+        private final ImperfectRitual imperfectRitual;
 
-        public ImperfectRitualActivatedEvent(IImperfectRitualStone ims, UUID ownerId, ImperfectRitual imperfectRitual) {
+        public ImperfectRitualActivatedEvent(IImperfectRitualStone ims, EntityPlayer activator, ImperfectRitual imperfectRitual) {
             this.ims = ims;
-            this.ownerId = ownerId;
+            this.activator = activator;
             this.imperfectRitual = imperfectRitual;
+        }
+
+        public IImperfectRitualStone getRitualStone() {
+            return ims;
+        }
+
+        public EntityPlayer getActivator() {
+            return activator;
+        }
+
+        public ImperfectRitual getImperfectRitual() {
+            return imperfectRitual;
         }
     }
 }

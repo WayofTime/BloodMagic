@@ -140,7 +140,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
                         RitualEvent.RitualActivatedEvent event = new RitualEvent.RitualActivatedEvent(this, binding.getOwnerId(), ritual, activator, activationCrystal, crystalLevel);
 
-                        if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) {
+                        if (MinecraftForge.EVENT_BUS.post(event)) {
                             if (activator != null)
                                 activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.prevent"), true);
                             return false;
@@ -181,7 +181,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
             if (RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), getDirection())) {
                 RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
 
-                if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
+                if (MinecraftForge.EVENT_BUS.post(event))
                     return;
 
                 getCurrentRitual().performRitual(this);
@@ -196,7 +196,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         if (!getWorld().isRemote && getCurrentRitual() != null) {
             RitualEvent.RitualStopEvent event = new RitualEvent.RitualStopEvent(this, getOwner(), getCurrentRitual(), breakType);
 
-            if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
+            if (MinecraftForge.EVENT_BUS.post(event))
                 return;
 
             getCurrentRitual().stopRitual(this, breakType);
