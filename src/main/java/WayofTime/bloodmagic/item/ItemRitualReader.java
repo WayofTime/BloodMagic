@@ -136,7 +136,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                         BlockPos containedPos = getBlockPos(stack);
                         if (containedPos.equals(BlockPos.ORIGIN)) {
                             this.setBlockPos(stack, pos.subtract(masterPos));
-                            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.blockRange.firstBlock"));
+                            player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.firstBlock"), true);
                             //TODO: Notify player.
                         } else {
                             tile = world.getTileEntity(masterPos);

@@ -59,6 +59,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -298,7 +299,7 @@ public class GenericHandler {
         Block block = state.getBlock();
         if (block instanceof BlockAltar && event.getEntityPlayer() != null && event.getEntityPlayer() instanceof EntityPlayerMP && !event.getEntityPlayer().getHeldItemMainhand().isEmpty() && event.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemAltarMaker) {
             ItemAltarMaker altarMaker = (ItemAltarMaker) event.getEntityPlayer().getHeldItemMainhand().getItem();
-            ChatUtil.sendNoSpam(event.getEntityPlayer(), TextHelper.localizeEffect("chat.bloodmagic.altarMaker.destroy", altarMaker.destroyAltar(event.getEntityPlayer())));
+            event.getEntityPlayer().sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.altarMaker.destroy", altarMaker.destroyAltar(event.getEntityPlayer())), true);
         }
     }
 

@@ -366,7 +366,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
     }
 
     public void notifyDirectionChange(EnumFacing direction, EntityPlayer player) {
-        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentDirection", Utils.toFancyCasing(direction.getName())));
+        player.sendStatusMessage(new TextComponentTranslation(tooltipBase + "currentDirection", Utils.toFancyCasing(direction.name())), true);
     }
 
     public void setDirection(ItemStack stack, EnumFacing direction) {

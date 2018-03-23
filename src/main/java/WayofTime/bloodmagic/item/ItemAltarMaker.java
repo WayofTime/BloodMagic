@@ -5,7 +5,6 @@ import WayofTime.bloodmagic.altar.*;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
@@ -21,6 +20,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -54,7 +54,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
             return super.onItemRightClick(world, player, hand);
 
         if (!player.capabilities.isCreativeMode) {
-            ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.bloodmagic.altarMaker.creativeOnly"));
+            player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.altarMaker.creativeOnly"), true);
             return super.onItemRightClick(world, player, hand);
         }
 
@@ -67,18 +67,18 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
                 stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1);
 
             setTierToBuild(AltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)]);
-            ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.bloodmagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)));
+            player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)), true);
             return super.onItemRightClick(world, player, hand);
         }
 
         RayTraceResult rayTrace = rayTrace(world, player, false);
-        if (rayTrace == null || rayTrace.typeOfHit == RayTraceResult.Type.MISS || rayTrace.typeOfHit == RayTraceResult.Type.ENTITY)
+        if (rayTrace == null || rayTrace.typeOfHit != RayTraceResult.Type.BLOCK)
             return super.onItemRightClick(world, player, hand);
 
-        if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK && world.getBlockState(rayTrace.getBlockPos()).getBlock() instanceof BlockAltar) {
-            ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.bloodmagic.altarMaker.building", NumeralHelper.toRoman(tierToBuild.toInt())));
+        IBlockState state = world.getBlockState(rayTrace.getBlockPos());
+        if (state.getBlock() instanceof BlockAltar) {
+            player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.altarMaker.building", NumeralHelper.toRoman(tierToBuild.toInt())), true);
             buildAltar(world, rayTrace.getBlockPos());
-            IBlockState state = world.getBlockState(rayTrace.getBlockPos());
 
             world.notifyBlockUpdate(rayTrace.getBlockPos(), state, state, 3);
         }
