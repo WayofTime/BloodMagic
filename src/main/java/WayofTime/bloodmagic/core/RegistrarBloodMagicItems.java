@@ -212,7 +212,7 @@ public class RegistrarBloodMagicItems
                 new ItemLivingArmourPointsUpgrade().setRegistryName("points_upgrade"),
                 new ItemDemonWillGauge().setRegistryName("demon_will_gauge"),
                 new ItemPotionFlask().setRegistryName("potion_flask"),
-                new ItemEnumColour.Variant<>(AlchemicTypes.class, "alchemicVial").setRegistryName("alchemic_vial")
+                new ItemAlchemicVial().setRegistryName("alchemic_vial")
                 ));
 
         event.getRegistry().registerAll(items.toArray(new Item[0]));
