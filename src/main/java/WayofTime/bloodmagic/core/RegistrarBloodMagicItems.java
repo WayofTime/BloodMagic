@@ -16,10 +16,13 @@ import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
 import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
 import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.item.soul.*;
+import WayofTime.bloodmagic.item.types.AlchemicTypes;
 import WayofTime.bloodmagic.item.types.ComponentTypes;
 import WayofTime.bloodmagic.item.types.ShardType;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -43,7 +46,8 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
 @SuppressWarnings("unchecked")
-public class RegistrarBloodMagicItems {
+public class RegistrarBloodMagicItems
+{
 
     public static final Item BLOOD_ORB = Items.AIR;
     public static final Item ACTIVATION_CRYSTAL = Items.AIR;
@@ -117,6 +121,7 @@ public class RegistrarBloodMagicItems {
     public static final Item POINTS_UPGRADE = Items.AIR;
     public static final Item DEMON_WILL_GAUGE = Items.AIR;
     public static final Item POTION_FLASK = Items.AIR;
+    public static final Item ALCHEMIC_VIAL = Items.AIR;
 
     public static Item.ToolMaterial BOUND_TOOL_MATERIAL = EnumHelper.addToolMaterial("bound", 4, 1, 10, 8, 50);
     public static Item.ToolMaterial SOUL_TOOL_MATERIAL = EnumHelper.addToolMaterial("demonic", 4, 520, 7, 8, 50);
@@ -124,10 +129,12 @@ public class RegistrarBloodMagicItems {
     public static List<Item> items;
 
     @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event) {
+    public static void registerItems(RegistryEvent.Register<Item> event)
+    {
         items = Lists.newArrayList();
 
-        RegistrarBloodMagicBlocks.blocks.stream().filter(block -> block instanceof IBMBlock && ((IBMBlock) block).getItem() != null).forEach(block -> {
+        RegistrarBloodMagicBlocks.blocks.stream().filter(block -> block instanceof IBMBlock && ((IBMBlock) block).getItem() != null).forEach(block ->
+        {
             IBMBlock bmBlock = (IBMBlock) block;
             items.add(bmBlock.getItem().setRegistryName(block.getRegistryName()));
         });
@@ -204,23 +211,27 @@ public class RegistrarBloodMagicItems {
                 new ItemSanguineBook().setRegistryName("sanguine_book"),
                 new ItemLivingArmourPointsUpgrade().setRegistryName("points_upgrade"),
                 new ItemDemonWillGauge().setRegistryName("demon_will_gauge"),
-                new ItemPotionFlask().setRegistryName("potion_flask")
-        ));
+                new ItemPotionFlask().setRegistryName("potion_flask"),
+                new ItemEnumColour.Variant<>(AlchemicTypes.class, "alchemicVial").setRegistryName("alchemic_vial")
+                ));
 
         event.getRegistry().registerAll(items.toArray(new Item[0]));
     }
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public static void registerRenders(ModelRegistryEvent event) {
-        items.stream().filter(i -> i instanceof IVariantProvider).forEach(i -> {
+    public static void registerRenders(ModelRegistryEvent event)
+    {
+        items.stream().filter(i -> i instanceof IVariantProvider).forEach(i ->
+        {
             Int2ObjectMap<String> variants = new Int2ObjectOpenHashMap<>();
             ((IVariantProvider) i).gatherVariants(variants);
             for (Int2ObjectMap.Entry<String> variant : variants.int2ObjectEntrySet())
                 ModelLoader.setCustomModelResourceLocation(i, variant.getIntKey(), new ModelResourceLocation(i.getRegistryName(), variant.getValue()));
         });
 
-        items.stream().filter(i -> i instanceof IMeshProvider).forEach(i -> {
+        items.stream().filter(i -> i instanceof IMeshProvider).forEach(i ->
+        {
             IMeshProvider mesh = (IMeshProvider) i;
             ResourceLocation loc = mesh.getCustomLocation();
             if (loc == null)
@@ -234,7 +245,8 @@ public class RegistrarBloodMagicItems {
             ModelLoader.setCustomMeshDefinition(i, mesh.getMeshDefinition());
         });
 
-        RegistrarBloodMagicBlocks.blocks.stream().filter(b -> b instanceof IVariantProvider).forEach(b -> {
+        RegistrarBloodMagicBlocks.blocks.stream().filter(b -> b instanceof IVariantProvider).forEach(b ->
+        {
             Int2ObjectMap<String> variants = new Int2ObjectOpenHashMap<>();
             ((IVariantProvider) b).gatherVariants(variants);
             for (Int2ObjectMap.Entry<String> variant : variants.int2ObjectEntrySet())

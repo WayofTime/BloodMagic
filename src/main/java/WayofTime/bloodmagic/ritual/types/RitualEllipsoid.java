@@ -215,7 +215,8 @@ public class RitualEllipsoid extends Ritual
 //    }
 
     @Override
-    public void gatherComponents(Consumer<RitualComponent> components) {
+    public void gatherComponents(Consumer<RitualComponent> components)
+    {
         addCornerRunes(components, 1, 0, EnumRuneType.WATER);
         addCornerRunes(components, 1, 1, EnumRuneType.WATER);
     }

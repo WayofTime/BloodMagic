@@ -1,0 +1,18 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "normal": {
+        "textures": {
+          "layer0": "bloodmagic:items/Alchemic_Liquid",
+          "layer1": "bloodmagic:items/Alchemic_Vial",
+          "layer2": "bloodmagic:items/Alchemic_Ribbon"
+        }
+      }
+    }
+  }
+}
