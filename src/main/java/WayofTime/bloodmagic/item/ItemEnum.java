@@ -42,7 +42,7 @@ public class ItemEnum<T extends Enum<T> & ISubItem> extends Item {
     }
 
     public T getItemType(ItemStack stack) {
-        return types[MathHelper.clamp(stack.getItemDamage(), 0, types.length)];
+        return types[MathHelper.clamp(stack.getItemDamage(), 0, types.length - 1)];
     }
 
     public static class Variant<T extends Enum<T> & ISubItem> extends ItemEnum<T> implements IVariantProvider {
