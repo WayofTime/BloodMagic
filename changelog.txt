@@ -8,6 +8,7 @@ Version 2.2.8
 - Added a new (slightly WIP?) array, the Turret Array:
 	- Place an array on top of an inventory with arrows and then place a bow and an arrow in the array. The array will target enemies greater than 3 blocks away and less than 32, using any arrows in the inventory.
 - Increased the max number of items transferable by the Master Routing Node in its system to 64 per second. Will revisit this limit if I figure out a less silly upgrade system.
+- Added additional effects to the Sentient Bow when aspected to different Will types.
 
 ------------------------------------------------------
 Version 2.2.7
