@@ -8,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateHealth;
-import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -37,15 +36,9 @@ public class AlchemyArrayEffectTeleport extends AlchemyArrayEffect
     @Override
     public void onEntityCollidedWithBlock(IAlchemyArray array, World world, BlockPos pos, IBlockState state, Entity entity)
     {
+        EnumFacing direction = array.getRotation();
 
-        {
-            double motionY = 0.5;
-            double speed = 3;
-            EnumFacing direction = array.getRotation();
-
-            teleportEntityInDirection(world, pos, entity, direction);
-        }
-
+        teleportEntityInDirection(world, pos, entity, direction);
     }
 
     public void teleportEntityInDirection(World world, BlockPos currentPos, Entity entity, EnumFacing direction)
@@ -66,7 +59,6 @@ public class AlchemyArrayEffectTeleport extends AlchemyArrayEffect
                     entity.timeUntilPortal = TELEPORT_DELAY;
                     if (!world.isRemote)
                     {
-                        Potion d;
                         if (entity instanceof EntityPlayer)
                         {
                             EntityPlayerMP player = (EntityPlayerMP) entity;
