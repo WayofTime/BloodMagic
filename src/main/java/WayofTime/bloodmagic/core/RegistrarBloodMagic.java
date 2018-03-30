@@ -28,7 +28,8 @@ import net.minecraftforge.registries.RegistryBuilder;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
-public class RegistrarBloodMagic {
+public class RegistrarBloodMagic
+{
 
     private static final BloodOrb ORB_DEF = new BloodOrb("", 0, 0, 0);
     @GameRegistry.ObjectHolder("weak")
@@ -60,7 +61,8 @@ public class RegistrarBloodMagic {
     public static IForgeRegistry<BloodOrb> BLOOD_ORBS = null;
 
     @SubscribeEvent
-    public static void registerBloodOrbs(RegistryEvent.Register<BloodOrb> event) {
+    public static void registerBloodOrbs(RegistryEvent.Register<BloodOrb> event)
+    {
         ResourceLocation orb = RegistrarBloodMagicItems.BLOOD_ORB.getRegistryName();
         event.getRegistry().registerAll(
                 new BloodOrb("weak", 1, 5000, 2).withModel(new ModelResourceLocation(orb, "type=weak")).setRegistryName("weak"),
@@ -69,13 +71,14 @@ public class RegistrarBloodMagic {
                 new BloodOrb("master", 4, 1000000, 25).withModel(new ModelResourceLocation(orb, "type=master")).setRegistryName("master"),
                 new BloodOrb("archmage", 5, 10000000, 50).withModel(new ModelResourceLocation(orb, "type=archmage")).setRegistryName("archmage"),
                 new BloodOrb("transcendent", 6, 30000000, 50).withModel(new ModelResourceLocation(orb, "type=transcendent")).setRegistryName("transcendent")
-        );
+                );
     }
 
     @SubscribeEvent
-    public static void registerPotions(RegistryEvent.Register<Potion> event) {
+    public static void registerPotions(RegistryEvent.Register<Potion> event)
+    {
         event.getRegistry().registerAll(
-                new PotionBloodMagic("Boost", false, 0xFFFFFF, 0, 1).setRegistryName("boost"),
+                new PotionBloodMagic("Boost", false, 0xFFFFFF, 0, 0).setRegistryName("boost"),
                 new PotionBloodMagic("Planar Binding", false, 0, 2, 0).setRegistryName("planar_binding"),
                 new PotionBloodMagic("Soul Snare", false, 0xFFFFFF, 3, 0).setRegistryName("soul_snare"),
                 new PotionBloodMagic("Soul Fray", true, 0xFFFFFF, 4, 0).setRegistryName("soul_fray"),
@@ -86,11 +89,12 @@ public class RegistrarBloodMagic {
                 new PotionBloodMagic("Bounce", false, 0x000000, 1, 1).setRegistryName("bounce"),
                 new PotionBloodMagic("Cling", false, 0x000000, 2, 1).setRegistryName("cling"),
                 new PotionBloodMagic("S. Lamb", false, 0x000000, 3, 1).setRegistryName("sacrificial_lamb")
-        );
+                );
     }
 
     @SubscribeEvent
-    public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
+    public static void registerEntities(RegistryEvent.Register<EntityEntry> event)
+    {
         int entities = 0;
 
         event.getRegistry().registerAll(
@@ -104,11 +108,12 @@ public class RegistrarBloodMagic {
                 EntityEntryBuilder.create().id("corrupted_sheep", ++entities).entity(EntityCorruptedSheep.class).name("corrupted_sheep").tracker(16 * 4, 3, true).build(),
                 EntityEntryBuilder.create().id("corrupted_chicken", ++entities).entity(EntityCorruptedChicken.class).name("corrupted_chicken").tracker(16 * 4, 3, true).build(),
                 EntityEntryBuilder.create().id("corrupted_spider", ++entities).entity(EntityCorruptedSpider.class).name("corrupted_spider").tracker(16 * 4, 3, true).build()
-        );
+                );
     }
 
     @SubscribeEvent
-    public static void onRegistryCreation(RegistryEvent.NewRegistry event) {
+    public static void onRegistryCreation(RegistryEvent.NewRegistry event)
+    {
         BLOOD_ORBS = new RegistryBuilder<BloodOrb>()
                 .setName(new ResourceLocation(BloodMagic.MODID, "blood_orb"))
                 .setIDRange(0, Short.MAX_VALUE)
@@ -119,8 +124,10 @@ public class RegistrarBloodMagic {
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event) {
-        for (BloodOrb orb : BLOOD_ORBS) {
+    public static void registerModels(ModelRegistryEvent event)
+    {
+        for (BloodOrb orb : BLOOD_ORBS)
+        {
             ModelResourceLocation modelLocation = orb.getModelLocation();
             if (modelLocation == null)
                 modelLocation = new ModelResourceLocation(orb.getRegistryName(), "inventory");
@@ -128,7 +135,8 @@ public class RegistrarBloodMagic {
             ModelLoader.registerItemVariants(RegistrarBloodMagicItems.BLOOD_ORB, modelLocation);
         }
 
-        ModelLoader.setCustomMeshDefinition(RegistrarBloodMagicItems.BLOOD_ORB, stack -> {
+        ModelLoader.setCustomMeshDefinition(RegistrarBloodMagicItems.BLOOD_ORB, stack ->
+        {
             if (!stack.hasTagCompound())
                 return new ModelResourceLocation(ORB_WEAK.getRegistryName(), "inventory");
 
