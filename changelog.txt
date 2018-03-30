@@ -5,8 +5,11 @@ Version 2.2.8
 	- It's a bright idea to fix this as soon as I can.
 - Changed the recipe of the Teleport Array:
 	- Note from Scotty: Captain, I'll remind ya what happened last time you put an apple in her array! Use an Enderpearl and redstone dust next time!
-- Added a new array, the Turret Array:
-	- Place an array on top of an inventory with arrows and then place a bow and an arrow in the array. The array will target enemies greater than 3 blocks away and less than 32, using any arrows in the inventory.
+- Added new arrays
+	- The Turret Array:
+		> Place an array on top of an inventory with arrows and then place a bow and an arrow in the array. The array will target enemies greater than 3 blocks away and less than 32, using any arrows in the inventory.
+	- Spike Array:
+		> Place a piece of cobblestone and iron ingot in the array. The array deals damage to any living entity that enters
 - Increased the max number of items transferable by the Master Routing Node in its system to 64 per second. Will revisit this limit if I figure out a less silly upgrade system.
 - Added additional effects to the Sentient Bow when aspected to different Will types.
 - Added in book entries for the Teleport Array and the Turret Array.
