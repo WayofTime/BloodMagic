@@ -123,7 +123,7 @@ public class ModRituals
         RitualRegistry.registerRitual(downgradeRitual, ConfigHandler.rituals.ritualDowngrade);
 
         ellipsoidRitual = new RitualEllipsoid();
-        RitualRegistry.registerRitual(ellipsoidRitual, false);
+        RitualRegistry.registerRitual(ellipsoidRitual, ConfigHandler.rituals.ritualEllipsoid);
 
         RitualCrushing.registerCuttingFluid(ItemCuttingFluid.FluidType.BASIC.getStack(), 250, 0.5);
         RitualCrushing.registerCuttingFluid(ItemCuttingFluid.FluidType.EXPLOSIVE.getStack(), 25, 0.05);

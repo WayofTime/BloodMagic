@@ -198,7 +198,7 @@ public class RitualEllipsoid extends Ritual
     @Override
     public int getRefreshCost()
     {
-        return 0;
+        return 5;
     }
 
     @Override
@@ -217,8 +217,43 @@ public class RitualEllipsoid extends Ritual
     @Override
     public void gatherComponents(Consumer<RitualComponent> components)
     {
-        addCornerRunes(components, 1, 0, EnumRuneType.WATER);
-        addCornerRunes(components, 1, 1, EnumRuneType.WATER);
+        addCornerRunes(components, 1, 0, EnumRuneType.DUSK);
+
+        addRune(components, 4, 0, 0, EnumRuneType.FIRE);
+        addRune(components, 5, 0, 0, EnumRuneType.FIRE);
+        addRune(components, 5, 0, -1, EnumRuneType.FIRE);
+        addRune(components, 5, 0, -2, EnumRuneType.FIRE);
+        addRune(components, -4, 0, 0, EnumRuneType.FIRE);
+        addRune(components, -5, 0, 0, EnumRuneType.FIRE);
+        addRune(components, -5, 0, 1, EnumRuneType.FIRE);
+        addRune(components, -5, 0, 2, EnumRuneType.FIRE);
+
+        addRune(components, 0, 0, 4, EnumRuneType.AIR);
+        addRune(components, 0, 0, 5, EnumRuneType.AIR);
+        addRune(components, 1, 0, 5, EnumRuneType.AIR);
+        addRune(components, 2, 0, 5, EnumRuneType.AIR);
+        addRune(components, 0, 0, -4, EnumRuneType.AIR);
+        addRune(components, 0, 0, -5, EnumRuneType.AIR);
+        addRune(components, -1, 0, -5, EnumRuneType.AIR);
+        addRune(components, -2, 0, -5, EnumRuneType.AIR);
+
+        addRune(components, 3, 0, 1, EnumRuneType.EARTH);
+        addRune(components, 3, 0, 2, EnumRuneType.EARTH);
+        addRune(components, 3, 0, 3, EnumRuneType.EARTH);
+        addRune(components, 2, 0, 3, EnumRuneType.EARTH);
+        addRune(components, -3, 0, -1, EnumRuneType.EARTH);
+        addRune(components, -3, 0, -2, EnumRuneType.EARTH);
+        addRune(components, -3, 0, -3, EnumRuneType.EARTH);
+        addRune(components, -2, 0, -3, EnumRuneType.EARTH);
+
+        addRune(components, 1, 0, -3, EnumRuneType.WATER);
+        addRune(components, 2, 0, -3, EnumRuneType.WATER);
+        addRune(components, 3, 0, -3, EnumRuneType.WATER);
+        addRune(components, 3, 0, -2, EnumRuneType.WATER);
+        addRune(components, -1, 0, 3, EnumRuneType.WATER);
+        addRune(components, -2, 0, 3, EnumRuneType.WATER);
+        addRune(components, -3, 0, 3, EnumRuneType.WATER);
+        addRune(components, -3, 0, 2, EnumRuneType.WATER);
     }
 
     @Override

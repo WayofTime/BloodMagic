@@ -15,6 +15,8 @@ Version 2.2.8
 - Added in book entries for the Teleport Array and the Turret Array.
 - Fixed the Haste sigil and "Quick Feet" so that they work with MC's new movement method.
 - Removed added health from "Quick Feet" - seriously, why was this a thing?
+- Readded the ritual "Focus of the Ellipsoid": creates a hollow ellipsoid from blocks provided in the connecting chest.
+	- Note: The dictionary definition for "Ellipsoid" is a three-dimensional figure whose plane sections are ellipses or circles. For those who weren't born in a math class, it means it is a sphere that has different radii in each direction.
 
 ------------------------------------------------------
 Version 2.2.7

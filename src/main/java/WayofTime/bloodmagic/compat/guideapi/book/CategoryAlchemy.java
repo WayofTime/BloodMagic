@@ -113,6 +113,16 @@ public class CategoryAlchemy
         standardTurretPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "standardTurret" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "standardTurret"), new EntryText(standardTurretPages, TextHelper.localize(keyBase + "standardTurret"), true));
 
+        List<IPage> laputaPages = new ArrayList<>();
+
+        PageAlchemyArray laputaRecipePage = BookUtils.getAlchemyPage("laputa");
+        if (laputaRecipePage != null)
+        {
+            laputaPages.add(laputaRecipePage);
+        }
+        laputaPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "laputa" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "laputa"), new EntryText(laputaPages, TextHelper.localize(keyBase + "laputa"), true));
+
         List<IPage> buffPages = new ArrayList<>();
 
         buffPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "buff" + ".info"), 370));
