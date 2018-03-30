@@ -13,6 +13,8 @@ Version 2.2.8
 - Increased the max number of items transferable by the Master Routing Node in its system to 64 per second. Will revisit this limit if I figure out a less silly upgrade system.
 - Added additional effects to the Sentient Bow when aspected to different Will types.
 - Added in book entries for the Teleport Array and the Turret Array.
+- Fixed the Haste sigil and "Quick Feet" so that they work with MC's new movement method.
+- Removed added health from "Quick Feet" - seriously, why was this a thing?
 
 ------------------------------------------------------
 Version 2.2.7
