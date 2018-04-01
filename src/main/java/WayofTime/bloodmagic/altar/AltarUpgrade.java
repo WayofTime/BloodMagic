@@ -14,7 +14,7 @@ public class AltarUpgrade {
     }
 
     public AltarUpgrade upgrade(BloodRuneType rune) {
-        upgradeLevels.compute(rune, (r, l) -> l == null ? 0 : l + 1);
+        upgradeLevels.compute(rune, (r, l) -> l == null ? 1 : l + 1);
         return this;
     }
 
