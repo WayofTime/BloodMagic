@@ -713,6 +713,7 @@ ritual.bloodmagic.forsakenSoulRitual.crystal.info=(Crystal) Demon Crystals in th
 ritual.bloodmagic.forsakenSoulRitual.damage.info=(Damage) Mobs within this range will be slowly damaged, and when killed will grow the crystals.
 ritual.bloodmagic.crystalHarvestRitual.crystal.info=(Crystal) All Demon Will crystal clusters have a single crystal broken off, spawning the crystal into the world. If there is only one crystal on the cluster, it will not break it.
 
+ritual.bloodmagic.ellipseRitual.info=Creates a hollow spheroid around the ritual using the blocks in the attached chest. 
 ritual.bloodmagic.ellipseRitual.spheroidRange.info=(Placement) The range that the ritual will place its blocks in. Spheroid is centered on the ritual - if one side is shorter than the side opposite the spheroid is truncated.
 ritual.bloodmagic.ellipseRitual.chest.info=(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.
 

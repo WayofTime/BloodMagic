@@ -118,7 +118,7 @@ public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect
 
     public int getRandomRadius(Random rand)
     {
-        return rand.nextInt(4) + 4;
+        return rand.nextInt(5) + 4;
     }
 
     public int getRandomHeightOffset(Random rand)

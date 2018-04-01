@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import WayofTime.bloodmagic.util.BMLog;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -25,15 +24,18 @@ import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectAttractor;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBinding;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBounce;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectFurnaceFuel;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectLaputa;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectMovement;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectSigil;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectSkeletonTurret;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectSpike;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectTeleport;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectUpdraft;
 import WayofTime.bloodmagic.client.render.alchemyArray.AttractorAlchemyCircleRenderer;
 import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
 import WayofTime.bloodmagic.client.render.alchemyArray.DualAlchemyCircleRenderer;
 import WayofTime.bloodmagic.client.render.alchemyArray.LowAlchemyCircleRenderer;
+import WayofTime.bloodmagic.client.render.alchemyArray.LowStaticAlchemyCircleRenderer;
 import WayofTime.bloodmagic.client.render.alchemyArray.SingleAlchemyCircleRenderer;
 import WayofTime.bloodmagic.client.render.alchemyArray.StaticAlchemyCircleRenderer;
 import WayofTime.bloodmagic.client.render.alchemyArray.TurretAlchemyCircleRenderer;
@@ -61,6 +63,7 @@ import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeStormTroop
 import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionRecipe;
+import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.Utils;
 
 import com.google.common.base.Stopwatch;
@@ -122,8 +125,9 @@ public class ModRecipes
         AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.ARROW), new ItemStack(Items.FEATHER), new AlchemyArrayEffectSkeletonTurret("skeletonTurret"), new DualAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SkeletonTurret1.png"), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SkeletonTurret2.png")));
 
         AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.REDSTONE), new AlchemyArrayEffectTeleport("teleport"), new StaticAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/teleportation.png")));
-        AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.BOW), new ItemStack(Items.ARROW), new AlchemyArrayEffectArrowTurret("turretTest"), new TurretAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SkeletonTurret1.png")));
-//        AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.APPLE), new ItemStack(Items.REDSTONE), new AlchemyArrayEffectLaputa("laputa"), new AttractorAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/shardoflaputa.png")));
+        AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.BOW), new ItemStack(Items.ARROW), new AlchemyArrayEffectArrowTurret("turret"), new TurretAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SkeletonTurret1.png")));
+        AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.REDSTONE), new ItemStack(Blocks.LAPIS_BLOCK), new AlchemyArrayEffectLaputa("laputa"), new AttractorAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/shardoflaputa.png")));
+        AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Blocks.COBBLESTONE), new ItemStack(Items.IRON_INGOT), new AlchemyArrayEffectSpike("spike"), new LowStaticAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/spikearray.png")));
 
         AlchemyArrayRecipeRegistry.registerRecipe(ComponentTypes.REAGENT_FAST_MINER.getStack(), new ItemStack(Items.IRON_PICKAXE), new AlchemyArrayEffectSigil("fastMiner", (ISigil) RegistrarBloodMagicItems.SIGIL_FAST_MINER), new SingleAlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/FastMinerSigil.png")));
 

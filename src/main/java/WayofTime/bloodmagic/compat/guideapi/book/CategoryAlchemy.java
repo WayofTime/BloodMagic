@@ -93,6 +93,36 @@ public class CategoryAlchemy
         bouncePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bounce" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "bounce"), new EntryText(bouncePages, TextHelper.localize(keyBase + "bounce"), true));
 
+        List<IPage> teleportPages = new ArrayList<>();
+
+        PageAlchemyArray teleportRecipePage = BookUtils.getAlchemyPage("teleport");
+        if (teleportRecipePage != null)
+        {
+            teleportPages.add(teleportRecipePage);
+        }
+        teleportPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "teleport" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "teleport"), new EntryText(teleportPages, TextHelper.localize(keyBase + "teleport"), true));
+
+        List<IPage> standardTurretPages = new ArrayList<>();
+
+        PageAlchemyArray standardTurretRecipePage = BookUtils.getAlchemyPage("turret");
+        if (standardTurretRecipePage != null)
+        {
+            standardTurretPages.add(standardTurretRecipePage);
+        }
+        standardTurretPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "standardTurret" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "standardTurret"), new EntryText(standardTurretPages, TextHelper.localize(keyBase + "standardTurret"), true));
+
+        List<IPage> laputaPages = new ArrayList<>();
+
+        PageAlchemyArray laputaRecipePage = BookUtils.getAlchemyPage("laputa");
+        if (laputaRecipePage != null)
+        {
+            laputaPages.add(laputaRecipePage);
+        }
+        laputaPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "laputa" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "laputa"), new EntryText(laputaPages, TextHelper.localize(keyBase + "laputa"), true));
+
         List<IPage> buffPages = new ArrayList<>();
 
         buffPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "buff" + ".info"), 370));
