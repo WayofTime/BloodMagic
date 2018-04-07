@@ -6,13 +6,14 @@ import WayofTime.bloodmagic.tile.TileDemonPylon;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockDemonPylon extends BlockContainer implements IVariantProvider {
+public class BlockDemonPylon extends BlockContainer implements IBMBlock, IVariantProvider {
     public BlockDemonPylon() {
         super(Material.ROCK);
 
@@ -53,5 +54,10 @@ public class BlockDemonPylon extends BlockContainer implements IVariantProvider 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
         return new TileDemonPylon();
+    }
+
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlock(this);
     }
 }
