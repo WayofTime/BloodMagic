@@ -6,7 +6,7 @@ import WayofTime.bloodmagic.block.BlockDemonCrystal;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.tile.base.TileTicking;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -103,12 +103,11 @@ public class TileDemonCrystal extends TileTicking {
     }
 
     public void checkAndGrowCrystal() {
-        if (progressToNextCrystal >= 1) {
+        if (progressToNextCrystal >= 1 || internalCounter % 100 == 0) {
             progressToNextCrystal--;
             crystalCount++;
-            IBlockState thisState = getWorld().getBlockState(pos);
-            getWorld().notifyBlockUpdate(pos, thisState, thisState, 3);
             markDirty();
+            notifyUpdate();
         }
     }
 
@@ -121,9 +120,10 @@ public class TileDemonCrystal extends TileTicking {
             IBlockState state = getWorld().getBlockState(pos);
             EnumDemonWillType type = state.getValue(BlockDemonCrystal.TYPE);
             ItemStack stack = BlockDemonCrystal.getItemStackDropped(type, 1);
-            if (stack != null) {
+            if (!stack.isEmpty()) {
                 crystalCount--;
-                getWorld().spawnEntity(new EntityItem(getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack));
+                InventoryHelper.spawnItemStack(getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack);
+                notifyUpdate();
                 return true;
             }
         }

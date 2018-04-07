@@ -1,9 +1,12 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -12,6 +15,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -22,10 +26,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockDemonCrystal extends Block {
+public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvider {
     public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 6);
     public static final PropertyEnum<EnumDemonWillType> TYPE = PropertyEnum.create("type", EnumDemonWillType.class);
     public static final PropertyEnum<EnumFacing> ATTACHED = PropertyEnum.create("attached", EnumFacing.class);
@@ -42,40 +47,80 @@ public class BlockDemonCrystal extends Block {
     }
 
     @Override
-    public boolean canPlaceBlockOnSide(World world, BlockPos pos, EnumFacing side) {
-        BlockPos offsetPos = pos.offset(side.getOpposite());
-        IBlockState offsetState = world.getBlockState(offsetPos);
-        Block offsetBlock = offsetState.getBlock();
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (world.isRemote)
+            return true;
 
-        return offsetBlock.isSideSolid(offsetState, world, offsetPos, side) && this.canPlaceBlockAt(world, pos);
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileDemonCrystal) {
+            TileDemonCrystal crystal = (TileDemonCrystal) tile;
+
+            if (PlayerDemonWillHandler.getTotalDemonWill(EnumDemonWillType.DEFAULT, player) > 1024)
+                crystal.dropSingleCrystal();
+        }
+
+        return true;
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
-        TileDemonCrystal tile = (TileDemonCrystal) world.getTileEntity(pos);
-        EnumFacing placement = tile.getPlacement();
-        BlockPos offsetPos = pos.offset(placement.getOpposite());
-        IBlockState offsetState = world.getBlockState(offsetPos);
-        Block offsetBlock = offsetState.getBlock();
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileDemonCrystal) {
+            EnumDemonWillType type = state.getValue(TYPE);
+            int number = ((TileDemonCrystal) tile).getCrystalCount();
 
-        if (!offsetBlock.isSideSolid(offsetState, world, offsetPos, placement)) {
-            world.setBlockToAir(pos);
+            drops.add(getItemStackDropped(type, number));
         }
     }
 
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-        if (world.getTileEntity(pos) == null) {
-            return state;
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileDemonCrystal) {
+            TileDemonCrystal crystal = (TileDemonCrystal) tile;
+            state = state.withProperty(AGE, crystal.getCrystalCountForRender());
+            state = state.withProperty(ATTACHED, crystal.getPlacement());
         }
-        TileDemonCrystal tile = (TileDemonCrystal) world.getTileEntity(pos);
-        return state.withProperty(AGE, tile.getCrystalCountForRender()).withProperty(ATTACHED, tile.getPlacement());
+        return state;
+    }
+
+    @Override
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileDemonCrystal) {
+            TileDemonCrystal crystal = (TileDemonCrystal) tile;
+            EnumFacing placement = crystal.getPlacement();
+            BlockPos offsetPos = pos.offset(placement.getOpposite());
+            IBlockState offsetState = world.getBlockState(offsetPos);
+
+            if (!offsetState.isSideSolid(world, offsetPos, placement))
+                world.destroyBlock(pos, true);
+        }
+    }
+
+    @Override
+    public boolean canPlaceBlockOnSide(World world, BlockPos pos, EnumFacing side) {
+        BlockPos offsetPos = pos.offset(side.getOpposite());
+        IBlockState offsetState = world.getBlockState(offsetPos);
+
+        return offsetState.isSideSolid(world, offsetPos, side) && this.canPlaceBlockAt(world, pos);
     }
 
     @Override
     public void getSubBlocks(CreativeTabs creativeTabs, NonNullList<ItemStack> list) {
-        for (int i = 0; i < EnumDemonWillType.values().length; i++)
-            list.add(new ItemStack(this, 1, i));
+        for (EnumDemonWillType willType : EnumDemonWillType.values())
+            list.add(new ItemStack(this, 1, willType.ordinal()));
+    }
+
+    @Override
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity tile, ItemStack stack) {
+        super.harvestBlock(world, player, pos, state, tile, stack);
+        world.setBlockToAir(pos);
+    }
+
+    @Override
+    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+        return willHarvest || super.removedByPlayer(state, world, pos, player, false);
     }
 
     @Override
@@ -103,22 +148,11 @@ public class BlockDemonCrystal extends Block {
         return EnumBlockRenderType.MODEL;
     }
 
-//    public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
-//    {
-//        return (worldIn.getLight(pos) >= 8 || worldIn.canSeeSky(pos)) && worldIn.getBlockState(pos.down()).getBlock().canSustainPlant(worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
-//    }
-
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(TYPE, EnumDemonWillType.values()[meta]);
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
     @Override
     public int getMetaFromState(IBlockState state) {
         return state.getValue(TYPE).ordinal();
@@ -127,42 +161,6 @@ public class BlockDemonCrystal extends Block {
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, TYPE, AGE, ATTACHED);
-    }
-
-    @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state) {
-        TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof TileDemonCrystal) {
-            EnumDemonWillType type = state.getValue(TYPE);
-            int number = ((TileDemonCrystal) tile).getCrystalCount();
-
-            spawnAsEntity(world, pos, getItemStackDropped(type, number));
-            world.removeTileEntity(pos);
-        }
-
-        super.breakBlock(world, pos, state);
-    }
-
-    @Override
-    public int quantityDropped(Random random) {
-        return 0;
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (world.isRemote) {
-            return true;
-        }
-
-        TileDemonCrystal crystal = (TileDemonCrystal) world.getTileEntity(pos);
-
-        if (PlayerDemonWillHandler.getTotalDemonWill(EnumDemonWillType.DEFAULT, player) > 1024) {
-            crystal.dropSingleCrystal();
-
-            world.notifyBlockUpdate(pos, state, state, 3);
-        }
-
-        return true;
     }
 
     @Override
@@ -177,7 +175,7 @@ public class BlockDemonCrystal extends Block {
     }
 
     public static ItemStack getItemStackDropped(EnumDemonWillType type, int crystalNumber) {
-        ItemStack stack = null;
+        ItemStack stack = ItemStack.EMPTY;
         switch (type) {
             case CORROSIVE:
                 stack = EnumDemonWillType.CORROSIVE.getStack();
@@ -200,25 +198,14 @@ public class BlockDemonCrystal extends Block {
         return stack;
     }
 
-    //    @Override
-//    public java.util.List<ItemStack> getDrops(net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
-//    {
-//        java.util.List<ItemStack> ret = super.getDrops(world, pos, state, fortune);
-//        int age = ((Integer) state.getValue(AGE)).intValue();
-//        Random rand = world instanceof World ? ((World) world).rand : new Random();
-//
-//        if (age >= 7)
-//        {
-//            int k = 3 + fortune;
-//
-//            for (int i = 0; i < 3 + fortune; ++i)
-//            {
-//                if (rand.nextInt(15) <= age)
-//                {
-//                    ret.add(new ItemStack(this.getSeed(), 1, 0));
-//                }
-//            }
-//        }
-//        return ret;
-//    }
+    @Override
+    public ItemBlock getItem() {
+        return new ItemBlockDemonCrystal(this);
+    }
+
+    @Override
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
+        for (EnumDemonWillType willType : EnumDemonWillType.values())
+            variants.put(willType.ordinal(), "age=3,attached=up,type=" + willType.getName());
+    }
 }
