@@ -62,6 +62,11 @@ public class AlchemyArrayEffectFurnaceFuel extends AlchemyArrayEffect
                         }
                     }
 
+                    if (sacrifice == null || sacrifice.isDead)
+                    {
+                        return false;
+                    }
+
                     if (addFuelTime(furnaceTile, world, furnacePos, burnTicksAdded))
                     {
                         if (!sacrifice.capabilities.isCreativeMode)
