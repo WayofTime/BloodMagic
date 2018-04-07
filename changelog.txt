@@ -17,6 +17,15 @@ Version 2.2.8
 - Removed added health from "Quick Feet" - seriously, why was this a thing?
 - Readded the ritual "Focus of the Ellipsoid": creates a hollow ellipsoid from blocks provided in the connecting chest.
 	- Note: The dictionary definition for "Ellipsoid" is a three-dimensional figure whose plane sections are ellipses or circles. For those who weren't born in a math class, it means it is a sphere that has different radii in each direction.
+- Fixed an off by one in altar upgrade management causing the first of any upgrade to not be counted
+- Fixed the LP cost of the Master Blood Orb
+    - This bug has gone unnoticed for 2 years now.
+- Potion Flasks can be crafted now
+- Fixed a server crash when handling dye recipes
+- Moved several text outputs out of the chat and into the action bar
+- Fixed a crash when trying to use unbound toggle-able sigils in the Sigil of Holding
+- Fixed an issue where unbound sigils could be used inside the Sigil of Holding
+- Added missing items for Demon Crystals and Demon Pylons
 
 ------------------------------------------------------
 Version 2.2.7
