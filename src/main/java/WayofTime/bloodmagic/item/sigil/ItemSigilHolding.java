@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.key.IKeybindable;
 import WayofTime.bloodmagic.client.key.KeyBindings;
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.iface.IAltarReader;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.iface.ISigil;
@@ -92,7 +93,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         List<ItemStack> inv = getInternalInventory(stack);
         ItemStack itemUsing = inv.get(currentSlot);
 
-        if (itemUsing.isEmpty() || ((IBindable) itemUsing.getItem()).getBinding(stack) == null)
+        if (itemUsing.isEmpty() || ((IBindable) itemUsing.getItem()).getBinding(itemUsing) == null)
             return EnumActionResult.PASS;
 
         EnumActionResult result = itemUsing.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
@@ -111,7 +112,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         List<ItemStack> inv = getInternalInventory(stack);
         ItemStack itemUsing = inv.get(currentSlot);
 
-        if (itemUsing.isEmpty() || ((IBindable) itemUsing.getItem()).getBinding(stack) == null)
+        if (itemUsing.isEmpty() || ((IBindable) itemUsing.getItem()).getBinding(itemUsing) == null)
             return ActionResult.newResult(EnumActionResult.PASS, stack);
 
         itemUsing.getItem().onItemRightClick(world, player, hand);
@@ -149,20 +150,19 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     }
 
     @Override
-    public void onUpdate(ItemStack itemStack, World world, Entity entity, int itemSlot, boolean isSelected) {
-        if (itemStack.getTagCompound() != null) {
-            this.tickInternalInventory(itemStack, world, entity, itemSlot, isSelected);
-        }
+    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+        if (stack.hasTagCompound())
+            tickInternalInventory(stack, world, entity, itemSlot, isSelected);
     }
 
     public void tickInternalInventory(ItemStack itemStack, World world, Entity entity, int itemSlot, boolean isSelected) {
-        List<ItemStack> inv = getInternalInventory(itemStack);
-
-        for (int i = 0; i < inventorySize; i++) {
-            ItemStack stack = inv.get(i);
-            if (stack.isEmpty()) {
+        for (ItemStack stack : getInternalInventory(itemStack)) {
+            if (stack.isEmpty() || !(stack.getItem() instanceof IBindable) || !(stack.getItem() instanceof ISigil))
                 continue;
-            }
+
+            Binding binding = ((IBindable) stack.getItem()).getBinding(stack);
+            if (binding == null)
+                continue;
 
             stack.getItem().onUpdate(stack, world, entity, itemSlot, isSelected);
         }
