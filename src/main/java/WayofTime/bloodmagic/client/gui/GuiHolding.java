@@ -9,6 +9,8 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -46,7 +48,8 @@ public class GuiHolding extends GuiContainer {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-        if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == RegistrarBloodMagicItems.SIGIL_HOLDING) {
+        ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
+        if (!held.isEmpty() && held.getItem() == RegistrarBloodMagicItems.SIGIL_HOLDING) {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.drawTexturedModalRect(4 + x + 36 * ItemSigilHolding.getCurrentItemOrdinal(player.getHeldItemMainhand()), y + 13, 0, 123, 24, 24);
         }
