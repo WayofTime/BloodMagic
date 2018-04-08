@@ -32,14 +32,15 @@ public class DataProviderRitualController implements IWailaDataProvider {
 
         NBTTagCompound tag = accessor.getNBTData();
         if (tag.getBoolean("master")) {
-            if (tag.hasKey("ritual"))
+            if (tag.hasKey("ritual")) {
                 currenttip.add(TextHelper.localizeEffect(tag.getString("ritual")));
-            if (tag.hasKey("owner"))
-                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", tag.getString("owner")));
-            if (!tag.getBoolean("active"))
-                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.deactivated"));
-            if (!tag.getBoolean("enabled"))
-                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.config.disabled"));
+                if (tag.hasKey("owner"))
+                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", tag.getString("owner")));
+                if (!tag.getBoolean("active"))
+                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.deactivated"));
+                if (!tag.getBoolean("enabled"))
+                    currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.config.disabled"));
+            }
         } else {
             if (tag.hasKey("ritual")) {
                 currenttip.add(TextHelper.localizeEffect(tag.getString("ritual")));
