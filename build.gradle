@@ -12,7 +12,6 @@ buildscript {
 plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
     id 'com.matthewprenger.cursegradle' version '1.0.10'
-    id 'io.franzbecker.gradle-lombok' version '1.6'
     id 'maven-publish'
 }
 
