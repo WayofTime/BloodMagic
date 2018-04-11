@@ -53,6 +53,6 @@ public class GuideBloodMagic implements IGuideBook {
     @Nullable
     @Override
     public IRecipe getRecipe(@Nonnull ItemStack bookStack) {
-        return new ShapelessOreRecipe(new ResourceLocation(BloodMagic.MODID, "guide"), GuideAPI.getStackFromBook(GUIDE_BOOK), new ItemStack(Items.BOOK), "glass", "feather").setRegistryName("guide");
+        return new ShapelessOreRecipe(new ResourceLocation(BloodMagic.MODID, "guide"), GuideAPI.getStackFromBook(GUIDE_BOOK), new ItemStack(Items.BOOK), "blockGlass", "feather").setRegistryName("bloodmagic_guide");
     }
 }
