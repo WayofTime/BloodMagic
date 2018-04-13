@@ -2,6 +2,7 @@
 Version 2.2.9
 ------------------------------------------------------
 - Fixed stupid NPE in the Furnace Array
+- Fixed part of the Alchemy Table - now it works for recipes that require a LP cost.
 
 ------------------------------------------------------
 Version 2.2.8
