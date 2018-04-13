@@ -3,6 +3,7 @@ Version 2.2.9
 ------------------------------------------------------
 - Fixed stupid NPE in the Furnace Array
 - Fixed part of the Alchemy Table - now it works for recipes that require a LP cost.
+- Added an entry to the book that explains you can, in fact, use Sea Lanterns instead of glowstone blocks for your Tier 3 altar.
 
 ------------------------------------------------------
 Version 2.2.8
