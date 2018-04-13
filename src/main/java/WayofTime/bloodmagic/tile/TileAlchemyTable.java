@@ -8,13 +8,13 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
 import WayofTime.bloodmagic.core.data.Binding;
@@ -121,13 +121,13 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
             if (this.isSlave())
             {
                 TileEntity tile = getWorld().getTileEntity(connectedPos);
-                if (tile instanceof TileAlchemyTable)
+                if (tile instanceof TileAlchemyTable && !((TileAlchemyTable) tile).isSlave)
                 {
-                    return (T) new SidedInvWrapper((TileAlchemyTable) tile, facing);
+                    return (T) tile.getCapability(capability, facing);
                 }
             } else
             {
-                return (T) new SidedInvWrapper(this, facing);
+                return super.getCapability(capability, facing);
             }
         }
 
@@ -167,6 +167,14 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
                 return true;
             }
         default:
+            if (this.isSlave)
+            {
+                TileEntity tile = getWorld().getTileEntity(connectedPos);
+                if (tile instanceof TileAlchemyTable && !((TileAlchemyTable) tile).isSlave)
+                {
+                    return ((TileAlchemyTable) tile).canInsertItem(index, stack, direction);
+                }
+            }
             return getAccessibleInputSlots(direction).contains(index);
         }
     }
@@ -190,6 +198,14 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
                 return true;
             }
         default:
+            if (this.isSlave)
+            {
+                TileEntity tile = getWorld().getTileEntity(connectedPos);
+                if (tile instanceof TileAlchemyTable && !((TileAlchemyTable) tile).isSlave)
+                {
+                    return ((TileAlchemyTable) tile).canExtractItem(index, stack, direction);
+                }
+            }
             return getAccessibleInputSlots(direction).contains(index);
         }
     }

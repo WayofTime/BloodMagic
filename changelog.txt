@@ -2,7 +2,9 @@
 Version 2.2.9
 ------------------------------------------------------
 - Fixed stupid NPE in the Furnace Array
-- Fixed part of the Alchemy Table - now it works for recipes that require a LP cost.
+- Fixed various issues with the Alchemy Table:
+	- Now works for recipes that require an LP cost.
+	- Hoppers no longer lose items when items are placed into the "slave" Alchemy Table who has some slots restricted.
 - Added an entry to the book that explains you can, in fact, use Sea Lanterns instead of glowstone blocks for your Tier 3 altar.
 
 ------------------------------------------------------
