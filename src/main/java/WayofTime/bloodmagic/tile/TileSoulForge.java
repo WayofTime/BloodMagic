@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
 import WayofTime.bloodmagic.util.Constants;
@@ -11,6 +12,7 @@ import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.ArrayList;
@@ -132,10 +134,18 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
         if (this.canCraft(recipe)) {
             ItemStack currentOutputStack = getStackInSlot(outputSlot);
 
+            List<ItemStack> inputList = new ArrayList<>();
+            for (int i = 0; i < 4; i++)
+                if (!getStackInSlot(i).isEmpty())
+                    inputList.add(getStackInSlot(i).copy());
+
+            BloodMagicCraftedEvent.SoulForge event = new BloodMagicCraftedEvent.SoulForge(recipe.getOutput().copy(), inputList.toArray(new ItemStack[0]));
+            MinecraftForge.EVENT_BUS.post(event);
+
             if (currentOutputStack.isEmpty()) {
-                setInventorySlotContents(outputSlot, recipe.getOutput().copy());
-            } else if (ItemHandlerHelper.canItemStacksStack(currentOutputStack, recipe.getOutput())) {
-                currentOutputStack.grow(recipe.getOutput().getCount());
+                setInventorySlotContents(outputSlot, event.getOutput());
+            } else if (ItemHandlerHelper.canItemStacksStack(currentOutputStack, event.getOutput())) {
+                currentOutputStack.grow(event.getOutput().getCount());
             }
 
             consumeInventory();

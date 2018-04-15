@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.tile;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -12,6 +13,7 @@ import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -26,6 +28,7 @@ import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class TileAlchemyTable extends TileInventory implements ISidedInventory, ITickable
 {
@@ -315,11 +318,18 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
                                 }
                             }
 
+                            ItemStack[] inputs = new ItemStack[0];
+                            for (ItemStack stack : inputList)
+                                ArrayUtils.add(inputs, stack.copy());
+
+                            BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(recipeAlchemyTable.getOutput().copy(), inputs);
+                            MinecraftForge.EVENT_BUS.post(event);
+
                             ItemStack outputSlotStack = getStackInSlot(outputSlot);
                             if (outputSlotStack.isEmpty())
-                                setInventorySlotContents(outputSlot, recipeAlchemyTable.getOutput().copy());
+                                setInventorySlotContents(outputSlot, event.getOutput());
                             else
-                                outputSlotStack.grow(recipeAlchemyTable.getOutput().getCount());
+                                outputSlotStack.grow(event.getOutput().getCount());
 
                             for (int i = 0; i < 6; i++)
                             {
@@ -399,10 +409,18 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
     public void craftItem(List<ItemStack> inputList, AlchemyTableRecipe recipe)
     {
-        if (this.canCraft(recipe.getRecipeOutput(inputList)))
+        ItemStack outputStack = recipe.getRecipeOutput(inputList);
+        if (this.canCraft(outputStack))
         {
-            ItemStack outputStack = recipe.getRecipeOutput(inputList);
             ItemStack currentOutputStack = getStackInSlot(outputSlot);
+
+            ItemStack[] inputs = new ItemStack[0];
+            for (ItemStack stack : inputList)
+                ArrayUtils.add(inputs, stack.copy());
+
+            BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(outputStack.copy(), inputs);
+            MinecraftForge.EVENT_BUS.post(event);
+            outputStack = event.getOutput();
 
             if (currentOutputStack.isEmpty())
             {

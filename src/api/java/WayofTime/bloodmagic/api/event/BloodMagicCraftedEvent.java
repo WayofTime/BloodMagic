@@ -1,21 +1,26 @@
 package WayofTime.bloodmagic.api.event;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class BloodMagicCraftedEvent extends Event {
 
     private final boolean modifiable;
+    private final ItemStack[] inputs;
     private ItemStack output;
 
-    public BloodMagicCraftedEvent(ItemStack output, boolean modifiable) {
+    public BloodMagicCraftedEvent(ItemStack output, ItemStack[] inputs, boolean modifiable) {
         this.modifiable = modifiable;
+        this.inputs = inputs;
         this.output = output;
     }
 
     public boolean isModifiable() {
         return modifiable;
+    }
+
+    public ItemStack[] getInputs() {
+        return inputs;
     }
 
     public ItemStack getOutput() {
@@ -28,22 +33,39 @@ public class BloodMagicCraftedEvent extends Event {
     }
 
     /**
-     * Fired whenever a craft is completed in a BloodAltar.
-     * <p>
+     * Fired whenever a craft is completed in a Blood Altar.
+     *
      * It is not cancelable, however you can modify the output stack.
      */
     public static class Altar extends BloodMagicCraftedEvent {
 
-        private final Ingredient input;
-
-        public Altar(Ingredient input, ItemStack output) {
-            super(output, true);
-
-            this.input = input;
-        }
-
-        public Ingredient getInput() {
-            return input;
+        public Altar(ItemStack output, ItemStack input) {
+            super(output, new ItemStack[] { input }, true);
         }
     }
+
+    /**
+     * Fired whenever a craft is completed in a Soul Forge.
+     *
+     * It is not cancelable, however you can modify the output stack.
+     */
+    public static class SoulForge extends BloodMagicCraftedEvent {
+
+        public SoulForge(ItemStack output, ItemStack[] inputs) {
+            super(output, inputs, true);
+        }
+    }
+
+    /**
+     * Fired whenever a craft is completed in an Alchemy Table.
+     *
+     * It is not cancelable, however you can modify the output stack.
+     */
+    public static class AlchemyTable extends BloodMagicCraftedEvent {
+
+        public AlchemyTable(ItemStack output, ItemStack[] inputs) {
+            super(output, inputs, true);
+        }
+    }
+
 }
