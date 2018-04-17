@@ -6,6 +6,8 @@ Version 2.2.9
 	- Now works for recipes that require an LP cost.
 	- Hoppers no longer lose items when items are placed into the "slave" Alchemy Table who has some slots restricted.
 - Added an entry to the book that explains you can, in fact, use Sea Lanterns instead of glowstone blocks for your Tier 3 altar.
+- Fixed the Demon Will crystals growing when they shouldn't. Also lowered the time between natural crystal growths in Will-enriched areas.
+	- Side note: who's bright idea was it to have to wait 15 minutes per crystal growth?
 
 ------------------------------------------------------
 Version 2.2.8
