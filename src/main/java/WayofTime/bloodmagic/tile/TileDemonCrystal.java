@@ -12,7 +12,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 
-public class TileDemonCrystal extends TileTicking {
+public class TileDemonCrystal extends TileTicking
+{
     public static final double sameWillConversionRate = 50;
     public static final double defaultWillConversionRate = 100;
     public static final double timeDelayForWrongWill = 0.6;
@@ -24,35 +25,46 @@ public class TileDemonCrystal extends TileTicking {
     public int crystalCount = 1;
     public EnumFacing placement = EnumFacing.UP; //Side that this crystal is placed on.
 
-    public TileDemonCrystal() {
+    public TileDemonCrystal()
+    {
         this.crystalCount = 1;
     }
 
     @Override
-    public void onUpdate() {
-        if (getWorld().isRemote) {
+    public void onUpdate()
+    {
+        if (getWorld().isRemote)
+        {
             return;
         }
 
         internalCounter++;
 
-        if (internalCounter % 20 == 0 && crystalCount < 7) {
+        if (internalCounter % 20 == 0 && crystalCount < 7)
+        {
             EnumDemonWillType type = EnumDemonWillType.values()[this.getBlockMetadata()];
 
             double value = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
-            if (type != EnumDemonWillType.DEFAULT) {
-                if (value >= 100) {
+            if (type != EnumDemonWillType.DEFAULT)
+            {
+                if (value >= 100)
+                {
                     double nextProgress = getCrystalGrowthPerSecond(value);
                     progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), type, nextProgress * sameWillConversionRate, true) / sameWillConversionRate;
-                } else {
+                } else
+                {
                     value = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, EnumDemonWillType.DEFAULT);
-                    if (value > 0.5) {
+                    if (value > 0.5)
+                    {
                         double nextProgress = getCrystalGrowthPerSecond(value) * timeDelayForWrongWill;
                         progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), EnumDemonWillType.DEFAULT, nextProgress * defaultWillConversionRate, true) / defaultWillConversionRate;
                     }
                 }
-            } else {
-                if (value > 0.5) {
+            } else
+            {
+                if (value > 0.5)
+                {
+
                     double nextProgress = getCrystalGrowthPerSecond(value);
                     progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), type, nextProgress * sameWillConversionRate, true) / sameWillConversionRate;
                 }
@@ -72,14 +84,17 @@ public class TileDemonCrystal extends TileTicking {
      * Encourages the crystal to grow by a large percentage by telling it to
      * drain will from the aura.
      *
-     * @param willDrain          The amount of drain that is needed for the crystal to grow
-     *                           successfully for the desired amount. Can be more than the base
-     *                           amount.
+     * @param willDrain
+     *        The amount of drain that is needed for the crystal to grow
+     *        successfully for the desired amount. Can be more than the base
+     *        amount.
      * @param progressPercentage
      * @return percentage actually grown.
      */
-    public double growCrystalWithWillAmount(double willDrain, double progressPercentage) {
-        if (crystalCount >= 7) {
+    public double growCrystalWithWillAmount(double willDrain, double progressPercentage)
+    {
+        if (crystalCount >= 7)
+        {
             return 0;
         }
 
@@ -89,7 +104,8 @@ public class TileDemonCrystal extends TileTicking {
 
         double value = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
         double percentDrain = willDrain <= 0 ? 1 : Math.min(1, value / willDrain);
-        if (percentDrain <= 0) {
+        if (percentDrain <= 0)
+        {
             return 0;
         }
 
@@ -102,8 +118,10 @@ public class TileDemonCrystal extends TileTicking {
         return percentDrain * progressPercentage;
     }
 
-    public void checkAndGrowCrystal() {
-        if (progressToNextCrystal >= 1 || internalCounter % 100 == 0) {
+    public void checkAndGrowCrystal()
+    {
+        if (progressToNextCrystal >= 1 && internalCounter % 100 == 0)
+        {
             progressToNextCrystal--;
             crystalCount++;
             markDirty();
@@ -111,16 +129,20 @@ public class TileDemonCrystal extends TileTicking {
         }
     }
 
-    public double getMaxWillForCrystal() {
+    public double getMaxWillForCrystal()
+    {
         return 50;
     }
 
-    public boolean dropSingleCrystal() {
-        if (!getWorld().isRemote && crystalCount > 1) {
+    public boolean dropSingleCrystal()
+    {
+        if (!getWorld().isRemote && crystalCount > 1)
+        {
             IBlockState state = getWorld().getBlockState(pos);
             EnumDemonWillType type = state.getValue(BlockDemonCrystal.TYPE);
             ItemStack stack = BlockDemonCrystal.getItemStackDropped(type, 1);
-            if (!stack.isEmpty()) {
+            if (!stack.isEmpty())
+            {
                 crystalCount--;
                 InventoryHelper.spawnItemStack(getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack);
                 notifyUpdate();
@@ -131,16 +153,19 @@ public class TileDemonCrystal extends TileTicking {
         return false;
     }
 
-    public double getCrystalGrowthPerSecond(double will) {
-        return 1.0 / 800 * Math.sqrt(will / 200);
+    public double getCrystalGrowthPerSecond(double will)
+    {
+        return 1.0 / 200 * Math.sqrt(will / 200);
     }
 
-    public int getCrystalCountForRender() {
+    public int getCrystalCountForRender()
+    {
         return MathHelper.clamp(crystalCount - 1, 0, 6);
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(NBTTagCompound tag)
+    {
         holder.readFromNBT(tag, "Will");
         crystalCount = tag.getInteger("crystalCount");
         placement = EnumFacing.getFront(tag.getInteger("placement"));
@@ -148,7 +173,8 @@ public class TileDemonCrystal extends TileTicking {
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public NBTTagCompound serialize(NBTTagCompound tag)
+    {
         holder.writeToNBT(tag, "Will");
         tag.setInteger("crystalCount", crystalCount);
         tag.setInteger("placement", placement.getIndex());
@@ -156,19 +182,23 @@ public class TileDemonCrystal extends TileTicking {
         return tag;
     }
 
-    public int getCrystalCount() {
+    public int getCrystalCount()
+    {
         return crystalCount;
     }
 
-    public void setCrystalCount(int crystalCount) {
+    public void setCrystalCount(int crystalCount)
+    {
         this.crystalCount = crystalCount;
     }
 
-    public EnumFacing getPlacement() {
+    public EnumFacing getPlacement()
+    {
         return placement;
     }
 
-    public void setPlacement(EnumFacing placement) {
+    public void setPlacement(EnumFacing placement)
+    {
         this.placement = placement;
     }
 }
