@@ -10,6 +10,7 @@ Version 2.2.9
 	- Side note: who's bright idea was it to have to wait 15 minutes per crystal growth?
 - Added the "Resonance of the Faceted Crystal", which can be used to create your first aspected Will crystal clusters.
 - Made it so the Crystallizer no longer generates a random aspected Will crystal cluster.
+- Fixed rare crash with the Blood Altar, which only has a chance of occuring on restart.
 
 ------------------------------------------------------
 Version 2.2.8
