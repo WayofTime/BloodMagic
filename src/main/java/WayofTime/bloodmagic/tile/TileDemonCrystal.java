@@ -1,16 +1,17 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.soul.DemonWillHolder;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.block.BlockDemonCrystal;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.tile.base.TileTicking;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import WayofTime.bloodmagic.block.BlockDemonCrystal;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.soul.DemonWillHolder;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.tile.base.TileTicking;
 
 public class TileDemonCrystal extends TileTicking
 {
@@ -42,12 +43,12 @@ public class TileDemonCrystal extends TileTicking
 
         if (internalCounter % 20 == 0 && crystalCount < 7)
         {
-            EnumDemonWillType type = EnumDemonWillType.values()[this.getBlockMetadata()];
+            EnumDemonWillType type = getType();
 
             double value = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
             if (type != EnumDemonWillType.DEFAULT)
             {
-                if (value >= 100)
+                if (value >= 0.5)
                 {
                     double nextProgress = getCrystalGrowthPerSecond(value);
                     progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), type, nextProgress * sameWillConversionRate, true) / sameWillConversionRate;
@@ -116,6 +117,11 @@ public class TileDemonCrystal extends TileTicking
         checkAndGrowCrystal();
 
         return percentDrain * progressPercentage;
+    }
+
+    public EnumDemonWillType getType()
+    {
+        return EnumDemonWillType.values()[this.getBlockMetadata()];
     }
 
     public void checkAndGrowCrystal()

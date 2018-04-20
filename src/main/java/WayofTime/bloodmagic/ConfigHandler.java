@@ -101,6 +101,7 @@ public class ConfigHandler
         public boolean ritualMeteor = true;
         public boolean ritualDowngrade = true;
         public boolean ritualEllipsoid = true;
+        public boolean ritualCrystalSplit = true;
         public ConfigImperfectRituals imperfect = new ConfigImperfectRituals();
     }
 

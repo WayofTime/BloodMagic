@@ -49,6 +49,7 @@ public class ModRituals
     public static Ritual portalRitual;
 
     public static Ritual ellipsoidRitual;
+    public static Ritual crystalSplitRitual;
 
     public static Ritual meteorRitual;
 
@@ -124,6 +125,9 @@ public class ModRituals
 
         ellipsoidRitual = new RitualEllipsoid();
         RitualRegistry.registerRitual(ellipsoidRitual, ConfigHandler.rituals.ritualEllipsoid);
+
+        crystalSplitRitual = new RitualCrystalSplit();
+        RitualRegistry.registerRitual(crystalSplitRitual, ConfigHandler.rituals.ritualCrystalSplit);
 
         RitualCrushing.registerCuttingFluid(ItemCuttingFluid.FluidType.BASIC.getStack(), 250, 0.5);
         RitualCrushing.registerCuttingFluid(ItemCuttingFluid.FluidType.EXPLOSIVE.getStack(), 25, 0.05);
