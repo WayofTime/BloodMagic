@@ -535,7 +535,7 @@ tooltip.bloodmagic.itemFilter.ignoreNBT=Ignores the NBT of the filter
 tooltip.bloodmagic.itemFilter.modItems=Matches all items from the same mod
 tooltip.bloodmagic.itemFilter.oreDict=Used to filter through the Ore Dictionary
 
-tooltip.bloodmagic.itemFilter.exact=Filters the fluid input/output
+tooltip.bloodmagic.fluidFilter.exact=Filters the fluid input/output
 
 tooltip.bloodmagic.fluid.type=Fluid Contained: %s
 tooltip.bloodmagic.fluid.amount=Amount: %d / %d mB
