@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "bloodmagic:base_fluid_filter",
+    "data": 0
+  },
+  "pattern": [
+    "sgs",
+    "gfg",
+    "sgs"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "s": {
+      "item": "#STICKWOOD"
+    },
+    "f": {
+      "item": "bloodmagic:component",
+      "data": 10
+    },
+    "g": {
+      "item": "minecraft:bucket"
+    }
+  }
+}
