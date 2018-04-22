@@ -2,6 +2,8 @@ package WayofTime.bloodmagic.alchemyArray;
 
 import java.util.List;
 
+import javax.vecmath.Vector2d;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMob;
@@ -19,8 +21,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 import WayofTime.bloodmagic.util.Utils;
-
-import com.sun.javafx.geom.Vec2d;
 
 public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect
 {
@@ -92,7 +92,7 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect
 
         if (canFireOnMob(world, pos, target))
         {
-            Vec2d pitchYaw = getPitchYaw(pos, target);
+            Vector2d pitchYaw = getPitchYaw(pos, target);
             lastPitch = pitch;
             lastYaw = yaw;
             pitch = pitchYaw.x;
@@ -180,11 +180,11 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect
         }
     }
 
-    public static Vec2d getPitchYaw(BlockPos pos, Entity entityIn)
+    public static Vector2d getPitchYaw(BlockPos pos, Entity entityIn)
     {
         if (entityIn == null)
         {
-            return new Vec2d(0, 0);
+            return new Vector2d(0, 0);
         }
 
         double distanceX = entityIn.posX - (pos.getX() + 0.5);
@@ -194,7 +194,7 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect
         double yaw = Math.atan2(-distanceX, distanceZ) * 180 / Math.PI;
         double pitch = -Math.atan2(distanceY, radialDistance) * 180 / Math.PI;
 
-        return new Vec2d((float) pitch, (float) yaw);
+        return new Vector2d(pitch, yaw);
     }
 
     public boolean canEntityBeSeen(World world, BlockPos pos, Entity entityIn)
