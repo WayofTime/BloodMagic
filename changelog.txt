@@ -2,7 +2,7 @@
 Version 2.2.10
 ------------------------------------------------------
 - Fixed Turret Array crash on servers.
-
+- Fixed the Blood Altar so it can actually fill Blood Orbs (derp).
 
 ------------------------------------------------------
 Version 2.2.9
