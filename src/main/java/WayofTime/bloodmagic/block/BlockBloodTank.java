@@ -5,7 +5,6 @@ import WayofTime.bloodmagic.block.base.BlockInteger;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodTank;
 import WayofTime.bloodmagic.tile.TileBloodTank;
-import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -20,6 +19,7 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -32,7 +32,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class BlockBloodTank extends BlockInteger implements IVariantProvider, IBMBlock {
     public static final AxisAlignedBB BOX = new AxisAlignedBB(0.25, 0, 0.25, 0.75, 0.8, 0.75);
@@ -113,23 +112,22 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
     }
 
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState blockState, int fortune) {
-        List<ItemStack> list = Lists.newArrayList();
-
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState blockState, int fortune) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileBloodTank) {
             TileBloodTank bloodTank = (TileBloodTank) tile;
             ItemStack drop = new ItemStack(this, 1, bloodTank.getBlockMetadata());
-            NBTTagCompound tag = new NBTTagCompound();
+            NBTTagCompound fluidTag = new NBTTagCompound();
 
-            if (bloodTank.getTank().getFluid() != null)
-                bloodTank.getTank().getFluid().writeToNBT(tag);
+            if (bloodTank.getTank().getFluid() != null) {
+                bloodTank.getTank().getFluid().writeToNBT(fluidTag);
+                NBTTagCompound dropTag = new NBTTagCompound();
+                dropTag.setTag("Fluid", fluidTag);
+                drop.setTagCompound(dropTag);
+            }
 
-            drop.setTagCompound(tag);
-            list.add(drop);
+            drops.add(drop);
         }
-
-        return list;
     }
 
     @Override
@@ -138,8 +136,8 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
         if (tile instanceof TileBloodTank) {
             TileBloodTank bloodTank = (TileBloodTank) tile;
             NBTTagCompound tag = stack.getTagCompound();
-            if (tag != null) {
-                FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag);
+            if (stack.hasTagCompound() && stack.getTagCompound().hasKey("Fluid")) {
+                FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("Fluid"));
                 bloodTank.getTank().setFluid(fluidStack);
             }
         }

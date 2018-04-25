@@ -47,9 +47,8 @@ public class ItemBlockBloodTank extends ItemBlock {
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.tier", stack.getItemDamage() + 1));
         tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.capacity", getCapacity(stack)));
-        if (stack.hasTagCompound()) {
-            NBTTagCompound tag = stack.getTagCompound();
-            FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag);
+        if (stack.hasTagCompound() && stack.getTagCompound().hasKey("Fluid")) {
+            FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(stack.getTagCompound().getCompoundTag("Fluid"));
             if (fluidStack != null) {
                 tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.type", fluidStack.getLocalizedName()));
                 tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.fluid.amount", fluidStack.amount, getCapacity(stack)));
