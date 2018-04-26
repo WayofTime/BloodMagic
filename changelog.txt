@@ -1,8 +1,9 @@
 ------------------------------------------------------
-Version 2.2.10-94
+Version 2.2.11
 ------------------------------------------------------
 - Fixed the Alchemy Array from voiding items when broken when it shouldn't have.
 - Fixed Blood Tank NBT transfer between item/tile form.
+- Made sure to not offend TehNut's sensibilities :NutMaid:
 
 ------------------------------------------------------
 Version 2.2.10
