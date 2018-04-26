@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 2.2.10-94
+------------------------------------------------------
+- Fixed the Alchemy Array from voiding items when broken when it shouldn't have.
+- Fixed Blood Tank NBT transfer between item/tile form.
+
+------------------------------------------------------
 Version 2.2.10
 ------------------------------------------------------
 - Fixed Turret Array crash on servers.

@@ -118,13 +118,9 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     @Override
     public void dropItems()
     {
-        if (!doDropIngredients)
+        if (arrayEffect == null || doDropIngredients)
         {
             super.dropItems();
-        }
-        if (arrayEffect != null)
-        {
-
         }
     }
 
