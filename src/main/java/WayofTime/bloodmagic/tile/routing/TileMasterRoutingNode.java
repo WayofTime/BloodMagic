@@ -98,7 +98,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                         if (filter != null)
                         {
                             int priority = outputNode.getPriority(facing);
-                            if (outputMap.containsKey(priority))
+                            if (outputFluidMap.containsKey(priority))
                             {
                                 outputFluidMap.get(priority).add(filter);
                             } else
@@ -164,7 +164,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                         if (filter != null)
                         {
                             int priority = inputNode.getPriority(facing);
-                            if (inputMap.containsKey(priority))
+                            if (inputFluidMap.containsKey(priority))
                             {
                                 inputFluidMap.get(priority).add(filter);
                             } else
