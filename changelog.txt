@@ -3,6 +3,7 @@ Version 2.2.12
 ------------------------------------------------------
 - Fixed Hellfire Forge and Alchemy Table's shape-crafted-ness.
 - Fixed Cutting Fluids so they now work properly.
+- Fixed the Fluid filters so that they now work perfectly in the routing system.
 
 ------------------------------------------------------
 Version 2.2.11

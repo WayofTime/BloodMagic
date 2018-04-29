@@ -1,5 +1,11 @@
 package WayofTime.bloodmagic.routing;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -9,47 +15,54 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-public class RoutingFluidFilter implements IFluidFilter {
+public class RoutingFluidFilter implements IFluidFilter
+{
     protected List<FluidStack> requestList;
     protected TileEntity accessedTile;
     protected IFluidHandler fluidHandler;
 
     @Override
-    public void initializeFilter(List<ItemStack> filteredList, TileEntity tile, IFluidHandler fluidHandler, boolean isFilterOutput) {
+    public void initializeFilter(List<ItemStack> filteredList, TileEntity tile, IFluidHandler fluidHandler, boolean isFilterOutput)
+    {
         this.accessedTile = tile;
         this.fluidHandler = fluidHandler;
-        if (isFilterOutput) {
+        if (isFilterOutput)
+        {
             //The requestList contains a list of how much can be extracted.
             requestList = new ArrayList<>();
-            for (ItemStack filterStack : filteredList) {
+            for (ItemStack filterStack : filteredList)
+            {
                 FluidStack fluidFilterStack = getFluidStackFromItemStack(filterStack);
-                if (fluidFilterStack != null) {
+                if (fluidFilterStack != null)
+                {
                     requestList.add(fluidFilterStack);
                 }
             }
 
             IFluidTankProperties[] properties = fluidHandler.getTankProperties();
 
-            for (IFluidTankProperties property : properties) {
+            for (IFluidTankProperties property : properties)
+            {
                 FluidStack containedStack = property.getContents();
-                if (containedStack != null) {
-                    for (FluidStack fluidFilterStack : requestList) {
-                        if (doStacksMatch(fluidFilterStack, containedStack)) {
+                if (containedStack != null)
+                {
+                    for (FluidStack fluidFilterStack : requestList)
+                    {
+                        if (doStacksMatch(fluidFilterStack, containedStack))
+                        {
                             fluidFilterStack.amount = Math.max(fluidFilterStack.amount - containedStack.amount, 0);
                         }
                     }
                 }
             }
-        } else {
+        } else
+        {
             requestList = new ArrayList<>();
-            for (ItemStack filterStack : filteredList) {
+            for (ItemStack filterStack : filteredList)
+            {
                 FluidStack fluidFilterStack = getFluidStackFromItemStack(filterStack);
-                if (fluidFilterStack != null) {
+                if (fluidFilterStack != null)
+                {
                     fluidFilterStack.amount *= -1;
                     requestList.add(fluidFilterStack);
                 }
@@ -57,11 +70,15 @@ public class RoutingFluidFilter implements IFluidFilter {
 
             IFluidTankProperties[] properties = fluidHandler.getTankProperties();
 
-            for (IFluidTankProperties property : properties) {
+            for (IFluidTankProperties property : properties)
+            {
                 FluidStack containedStack = property.getContents();
-                if (containedStack != null) {
-                    for (FluidStack fluidFilterStack : requestList) {
-                        if (doStacksMatch(fluidFilterStack, containedStack)) {
+                if (containedStack != null)
+                {
+                    for (FluidStack fluidFilterStack : requestList)
+                    {
+                        if (doStacksMatch(fluidFilterStack, containedStack))
+                        {
                             fluidFilterStack.amount += containedStack.amount;
                         }
                     }
@@ -74,16 +91,20 @@ public class RoutingFluidFilter implements IFluidFilter {
      * Gives the remainder~
      */
     @Override
-    public FluidStack transferStackThroughOutputFilter(FluidStack fluidStack) {
+    public FluidStack transferStackThroughOutputFilter(FluidStack fluidStack)
+    {
         int allowedAmount = 0;
-        for (FluidStack filterStack : requestList) {
-            if (doStacksMatch(filterStack, fluidStack)) {
+        for (FluidStack filterStack : requestList)
+        {
+            if (doStacksMatch(filterStack, fluidStack))
+            {
                 allowedAmount = Math.min(filterStack.amount, fluidStack.amount);
                 break;
             }
         }
 
-        if (allowedAmount <= 0) {
+        if (allowedAmount <= 0)
+        {
             return fluidStack;
         }
 
@@ -92,11 +113,14 @@ public class RoutingFluidFilter implements IFluidFilter {
         copyStack.amount = fluidStack.amount - filledAmount;
 
         Iterator<FluidStack> itr = requestList.iterator();
-        while (itr.hasNext()) {
+        while (itr.hasNext())
+        {
             FluidStack filterStack = itr.next();
-            if (doStacksMatch(filterStack, copyStack)) {
+            if (doStacksMatch(filterStack, copyStack))
+            {
                 filterStack.amount -= filledAmount;
-                if (filterStack.amount <= 0) {
+                if (filterStack.amount <= 0)
+                {
                     itr.remove();
                 }
             }
@@ -110,10 +134,13 @@ public class RoutingFluidFilter implements IFluidFilter {
     }
 
     @Override
-    public int transferThroughInputFilter(IFluidFilter outputFilter, int maxTransfer) {
-        for (FluidStack filterFluidStack : requestList) {
+    public int transferThroughInputFilter(IFluidFilter outputFilter, int maxTransfer)
+    {
+        for (FluidStack filterFluidStack : requestList)
+        {
             int allowedAmount = Math.min(filterFluidStack.amount, maxTransfer);
-            if (allowedAmount <= 0) {
+            if (allowedAmount <= 0)
+            {
                 continue;
             }
 
@@ -125,7 +152,8 @@ public class RoutingFluidFilter implements IFluidFilter {
                 FluidStack remainderStack = outputFilter.transferStackThroughOutputFilter(drainStack);
                 int drained = remainderStack == null ? copyStack.amount : (copyStack.amount - remainderStack.amount);
 
-                if (drained > 0) {
+                if (drained > 0)
+                {
                     drainStack.amount = drained;
 
                     fluidHandler.drain(drainStack, true);
@@ -133,11 +161,14 @@ public class RoutingFluidFilter implements IFluidFilter {
                 }
 
                 Iterator<FluidStack> itr = requestList.iterator();
-                while (itr.hasNext()) {
+                while (itr.hasNext())
+                {
                     FluidStack filterStack = itr.next();
-                    if (doStacksMatch(filterStack, copyStack)) {
+                    if (doStacksMatch(filterStack, copyStack))
+                    {
                         filterStack.amount -= drained;
-                        if (filterStack.amount <= 0) {
+                        if (filterStack.amount <= 0)
+                        {
                             itr.remove();
                         }
                     }
@@ -155,9 +186,12 @@ public class RoutingFluidFilter implements IFluidFilter {
     }
 
     @Override
-    public boolean doesStackMatchFilter(FluidStack testStack) {
-        for (FluidStack filterStack : requestList) {
-            if (doStacksMatch(filterStack, testStack)) {
+    public boolean doesStackMatchFilter(FluidStack testStack)
+    {
+        for (FluidStack filterStack : requestList)
+        {
+            if (doStacksMatch(filterStack, testStack))
+            {
                 return true;
             }
         }
@@ -166,17 +200,26 @@ public class RoutingFluidFilter implements IFluidFilter {
     }
 
     @Override
-    public boolean doStacksMatch(FluidStack filterStack, FluidStack testStack) {
+    public boolean doStacksMatch(FluidStack filterStack, FluidStack testStack)
+    {
         return testStack != null && filterStack.getFluid() == testStack.getFluid();
     }
 
     @Nullable
-    public static FluidStack getFluidStackFromItemStack(ItemStack inputStack) {
+    public static FluidStack getFluidStackFromItemStack(ItemStack inputStack)
+    {
+        boolean isEmpty = false;
+        if (inputStack.getCount() == 0)
+        {
+            isEmpty = true;
+            inputStack.setCount(1);
+        }
+
         FluidStack fluidStack = FluidUtil.getFluidContained(inputStack);
         if (fluidStack == null)
             return null;
 
-        fluidStack.amount = inputStack.getCount();
+        fluidStack.amount = isEmpty ? 0 : inputStack.getCount();
         return fluidStack;
     }
 }

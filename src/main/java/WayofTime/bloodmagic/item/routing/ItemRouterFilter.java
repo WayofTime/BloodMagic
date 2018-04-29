@@ -22,10 +22,12 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemRouterFilter extends Item implements IItemFilterProvider, IVariantProvider {
-    public static String[] names = {"exact", "ignoreNBT", "modItems", "oreDict"};
+public class ItemRouterFilter extends Item implements IItemFilterProvider, IVariantProvider
+{
+    public static String[] names = { "exact", "ignoreNBT", "modItems", "oreDict" };
 
-    public ItemRouterFilter() {
+    public ItemRouterFilter()
+    {
         super();
 
         setUnlocalizedName(BloodMagic.MODID + ".itemFilter.");
@@ -34,13 +36,15 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getUnlocalizedName(ItemStack stack)
+    {
         return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
+    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list)
+    {
         if (!isInCreativeTab(creativeTab))
             return;
 
@@ -50,39 +54,44 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag)
+    {
         tooltip.add(TextHelper.localize("tooltip.bloodmagic.itemFilter." + names[stack.getItemDamage()]));
 
         super.addInformation(stack, world, tooltip, flag);
     }
 
     @Override
-    public IItemFilter getInputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler) {
+    public IItemFilter getInputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
+    {
         IItemFilter testFilter = new TestItemFilter();
 
-        switch (filterStack.getMetadata()) {
-            case 0:
-                testFilter = new TestItemFilter();
-                break;
-            case 1:
-                testFilter = new IgnoreNBTItemFilter();
-                break;
-            case 2:
-                testFilter = new ModIdItemFilter();
-                break;
-            case 3:
-                testFilter = new OreDictItemFilter();
-                break;
+        switch (filterStack.getMetadata())
+        {
+        case 0:
+            testFilter = new TestItemFilter();
+            break;
+        case 1:
+            testFilter = new IgnoreNBTItemFilter();
+            break;
+        case 2:
+            testFilter = new ModIdItemFilter();
+            break;
+        case 3:
+            testFilter = new OreDictItemFilter();
+            break;
 
-            default:
-                testFilter = new DefaultItemFilter();
+        default:
+            testFilter = new DefaultItemFilter();
         }
 
         List<ItemStack> filteredList = new ArrayList<>();
         ItemInventory inv = new ItemInventory(filterStack, 9, "");
-        for (int i = 0; i < inv.getSizeInventory(); i++) {
+        for (int i = 0; i < inv.getSizeInventory(); i++)
+        {
             ItemStack stack = inv.getStackInSlot(i);
-            if (stack == null) {
+            if (stack.isEmpty())
+            {
                 continue;
             }
 
@@ -96,37 +105,42 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     }
 
     @Override
-    public IItemFilter getOutputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler) {
+    public IItemFilter getOutputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
+    {
         IItemFilter testFilter;
 
-        switch (filterStack.getMetadata()) {
-            case 0:
-                testFilter = new TestItemFilter();
-                break;
-            case 1:
-                testFilter = new IgnoreNBTItemFilter();
-                break;
-            case 2:
-                testFilter = new ModIdItemFilter();
-                break;
-            case 3:
-                testFilter = new OreDictItemFilter();
-                break;
+        switch (filterStack.getMetadata())
+        {
+        case 0:
+            testFilter = new TestItemFilter();
+            break;
+        case 1:
+            testFilter = new IgnoreNBTItemFilter();
+            break;
+        case 2:
+            testFilter = new ModIdItemFilter();
+            break;
+        case 3:
+            testFilter = new OreDictItemFilter();
+            break;
 
-            default:
-                testFilter = new DefaultItemFilter();
+        default:
+            testFilter = new DefaultItemFilter();
         }
 
         List<ItemStack> filteredList = new ArrayList<>();
         ItemInventory inv = new ItemInventory(filterStack, 9, ""); //TODO: Change to grab the filter from the Item later.
-        for (int i = 0; i < inv.getSizeInventory(); i++) {
+        for (int i = 0; i < inv.getSizeInventory(); i++)
+        {
             ItemStack stack = inv.getStackInSlot(i);
-            if (stack == null) {
+            if (stack.isEmpty())
+            {
                 continue;
             }
 
             ItemStack ghostStack = GhostItemHelper.getStackFromGhost(stack);
-            if (ghostStack.isEmpty()) {
+            if (ghostStack.isEmpty())
+            {
                 ghostStack.setCount(Integer.MAX_VALUE);
             }
 
@@ -138,7 +152,8 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     }
 
     @Override
-    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants) {
+    public void gatherVariants(@Nonnull Int2ObjectMap<String> variants)
+    {
         variants.put(0, "type=exact");
         variants.put(1, "type=ignorenbt");
         variants.put(2, "type=moditems");
@@ -146,7 +161,8 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
     }
 
     @Override
-    public ItemStack getContainedStackForItem(ItemStack filterStack, ItemStack keyStack) {
+    public ItemStack getContainedStackForItem(ItemStack filterStack, ItemStack keyStack)
+    {
         ItemStack copyStack = keyStack.copy();
         GhostItemHelper.setItemGhostAmount(copyStack, 0);
         copyStack.setCount(1);
