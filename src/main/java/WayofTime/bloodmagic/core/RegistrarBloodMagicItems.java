@@ -1,29 +1,11 @@
 package WayofTime.bloodmagic.core;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.block.IBMBlock;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.item.*;
-import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
-import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
-import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
-import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
-import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
-import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
-import WayofTime.bloodmagic.item.routing.ItemFluidRouterFilter;
-import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
-import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
-import WayofTime.bloodmagic.item.sigil.*;
-import WayofTime.bloodmagic.item.soul.*;
-import WayofTime.bloodmagic.item.types.ComponentTypes;
-import WayofTime.bloodmagic.item.types.ShardType;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+
+import java.util.List;
+import java.util.Set;
+
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -38,9 +20,81 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.block.IBMBlock;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.item.ItemActivationCrystal;
+import WayofTime.bloodmagic.item.ItemAlchemicVial;
+import WayofTime.bloodmagic.item.ItemAltarMaker;
+import WayofTime.bloodmagic.item.ItemArcaneAshes;
+import WayofTime.bloodmagic.item.ItemBloodOrb;
+import WayofTime.bloodmagic.item.ItemBoundAxe;
+import WayofTime.bloodmagic.item.ItemBoundPickaxe;
+import WayofTime.bloodmagic.item.ItemBoundShovel;
+import WayofTime.bloodmagic.item.ItemBoundSword;
+import WayofTime.bloodmagic.item.ItemDaggerOfSacrifice;
+import WayofTime.bloodmagic.item.ItemDemonCrystal;
+import WayofTime.bloodmagic.item.ItemDemonWillGauge;
+import WayofTime.bloodmagic.item.ItemEnum;
+import WayofTime.bloodmagic.item.ItemExperienceBook;
+import WayofTime.bloodmagic.item.ItemInscriptionTool;
+import WayofTime.bloodmagic.item.ItemLavaCrystal;
+import WayofTime.bloodmagic.item.ItemPotionFlask;
+import WayofTime.bloodmagic.item.ItemRitualDiviner;
+import WayofTime.bloodmagic.item.ItemRitualReader;
+import WayofTime.bloodmagic.item.ItemSacrificialDagger;
+import WayofTime.bloodmagic.item.ItemSanguineBook;
+import WayofTime.bloodmagic.item.ItemSlate;
+import WayofTime.bloodmagic.item.ItemTelepositionFocus;
+import WayofTime.bloodmagic.item.ItemUpgradeTome;
+import WayofTime.bloodmagic.item.ItemUpgradeTrainer;
+import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
+import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
+import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
+import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
+import WayofTime.bloodmagic.item.routing.ItemFluidRouterFilter;
+import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
+import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
+import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
+import WayofTime.bloodmagic.item.sigil.ItemSigilBloodLight;
+import WayofTime.bloodmagic.item.sigil.ItemSigilBounce;
+import WayofTime.bloodmagic.item.sigil.ItemSigilClaw;
+import WayofTime.bloodmagic.item.sigil.ItemSigilCompression;
+import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
+import WayofTime.bloodmagic.item.sigil.ItemSigilElementalAffinity;
+import WayofTime.bloodmagic.item.sigil.ItemSigilEnderSeverance;
+import WayofTime.bloodmagic.item.sigil.ItemSigilFastMiner;
+import WayofTime.bloodmagic.item.sigil.ItemSigilFrost;
+import WayofTime.bloodmagic.item.sigil.ItemSigilGreenGrove;
+import WayofTime.bloodmagic.item.sigil.ItemSigilHaste;
+import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
+import WayofTime.bloodmagic.item.sigil.ItemSigilLava;
+import WayofTime.bloodmagic.item.sigil.ItemSigilMagnetism;
+import WayofTime.bloodmagic.item.sigil.ItemSigilPhantomBridge;
+import WayofTime.bloodmagic.item.sigil.ItemSigilSuppression;
+import WayofTime.bloodmagic.item.sigil.ItemSigilTeleposition;
+import WayofTime.bloodmagic.item.sigil.ItemSigilTransposition;
+import WayofTime.bloodmagic.item.sigil.ItemSigilVoid;
+import WayofTime.bloodmagic.item.sigil.ItemSigilWater;
+import WayofTime.bloodmagic.item.sigil.ItemSigilWhirlwind;
+import WayofTime.bloodmagic.item.soul.ItemMonsterSoul;
+import WayofTime.bloodmagic.item.soul.ItemSentientArmourGem;
+import WayofTime.bloodmagic.item.soul.ItemSentientAxe;
+import WayofTime.bloodmagic.item.soul.ItemSentientBow;
+import WayofTime.bloodmagic.item.soul.ItemSentientPickaxe;
+import WayofTime.bloodmagic.item.soul.ItemSentientShovel;
+import WayofTime.bloodmagic.item.soul.ItemSentientSword;
+import WayofTime.bloodmagic.item.soul.ItemSoulGem;
+import WayofTime.bloodmagic.item.soul.ItemSoulSnare;
+import WayofTime.bloodmagic.item.soulBreath.ItemFlightScroll;
+import WayofTime.bloodmagic.item.types.ComponentTypes;
+import WayofTime.bloodmagic.item.types.ShardType;
 
-import java.util.List;
-import java.util.Set;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
@@ -121,6 +175,7 @@ public class RegistrarBloodMagicItems
     public static final Item DEMON_WILL_GAUGE = Items.AIR;
     public static final Item POTION_FLASK = Items.AIR;
     public static final Item ALCHEMIC_VIAL = Items.AIR;
+    public static final Item ICARUS_SCROLL = Items.AIR;
 
     public static Item.ToolMaterial BOUND_TOOL_MATERIAL = EnumHelper.addToolMaterial("bound", 4, 1, 10, 8, 50);
     public static Item.ToolMaterial SOUL_TOOL_MATERIAL = EnumHelper.addToolMaterial("demonic", 4, 520, 7, 8, 50);
@@ -211,7 +266,8 @@ public class RegistrarBloodMagicItems
                 new ItemLivingArmourPointsUpgrade().setRegistryName("points_upgrade"),
                 new ItemDemonWillGauge().setRegistryName("demon_will_gauge"),
                 new ItemPotionFlask().setRegistryName("potion_flask"),
-                new ItemAlchemicVial().setRegistryName("alchemic_vial")
+                new ItemAlchemicVial().setRegistryName("alchemic_vial"),
+                new ItemFlightScroll().setRegistryName("icarus_scroll")
                 ));
 
         event.getRegistry().registerAll(items.toArray(new Item[0]));

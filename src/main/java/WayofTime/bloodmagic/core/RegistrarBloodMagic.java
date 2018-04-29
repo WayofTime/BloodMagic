@@ -1,14 +1,5 @@
 package WayofTime.bloodmagic.core;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.orb.BloodOrb;
-import WayofTime.bloodmagic.core.registry.OrbRegistry;
-import WayofTime.bloodmagic.entity.mob.*;
-import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
-import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
-import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
-import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
-import WayofTime.bloodmagic.potion.PotionBloodMagic;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
@@ -25,6 +16,20 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.registry.OrbRegistry;
+import WayofTime.bloodmagic.entity.mob.EntityCorruptedChicken;
+import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
+import WayofTime.bloodmagic.entity.mob.EntityCorruptedSpider;
+import WayofTime.bloodmagic.entity.mob.EntityCorruptedZombie;
+import WayofTime.bloodmagic.entity.mob.EntityMimic;
+import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
+import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
+import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
+import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
+import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
+import WayofTime.bloodmagic.orb.BloodOrb;
+import WayofTime.bloodmagic.potion.PotionBloodMagic;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
@@ -57,6 +62,7 @@ public class RegistrarBloodMagic
     public static final Potion BOUNCE = MobEffects.HASTE;
     public static final Potion CLING = MobEffects.HASTE;
     public static final Potion SACRIFICIAL_LAMB = MobEffects.HASTE;
+    public static final Potion FLIGHT = MobEffects.HASTE;
 
     public static IForgeRegistry<BloodOrb> BLOOD_ORBS = null;
 
@@ -88,7 +94,8 @@ public class RegistrarBloodMagic
                 new PotionBloodMagic("Deaf", true, 0x000000, 0, 1).setRegistryName("deafness"),
                 new PotionBloodMagic("Bounce", false, 0x000000, 1, 1).setRegistryName("bounce"),
                 new PotionBloodMagic("Cling", false, 0x000000, 2, 1).setRegistryName("cling"),
-                new PotionBloodMagic("S. Lamb", false, 0x000000, 3, 1).setRegistryName("sacrificial_lamb")
+                new PotionBloodMagic("S. Lamb", false, 0x000000, 3, 1).setRegistryName("sacrificial_lamb"),
+                new PotionBloodMagic("Flight", false, 0x000000, 4, 0).setRegistryName("flight")
                 );
     }
 
