@@ -3,13 +3,11 @@ package WayofTime.bloodmagic.tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -17,18 +15,22 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import WayofTime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
 import WayofTime.bloodmagic.iface.IBindable;
+import WayofTime.bloodmagic.iface.ICustomAlchemyConsumable;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import org.apache.commons.lang3.ArrayUtils;
 
 public class TileAlchemyTable extends TileInventory implements ISidedInventory, ITickable
 {
@@ -336,6 +338,8 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
                                 ItemStack currentStack = getStackInSlot(i);
                                 if (currentStack.getItem().hasContainerItem(currentStack))
                                     setInventorySlotContents(i, currentStack.getItem().getContainerItem(currentStack));
+                                else if (currentStack.getItem() instanceof ICustomAlchemyConsumable)
+                                    setInventorySlotContents(i, ((ICustomAlchemyConsumable) currentStack.getItem()).drainUseOnAlchemyCraft(currentStack));
                                 else
                                     currentStack.shrink(1);
                             }
