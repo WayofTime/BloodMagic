@@ -7,10 +7,12 @@ import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
 import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.core.recipe.IngredientBloodOrb;
+
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
@@ -20,17 +22,21 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
+public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar
+{
 
     private final Set<RecipeBloodAltar> altarRecipes;
     private final Set<RecipeAlchemyTable> alchemyRecipes;
     private final Set<RecipeTartaricForge> tartaricForgeRecipes;
     private final Set<RecipeAlchemyArray> alchemyArrayRecipes;
 
-    public BloodMagicRecipeRegistrar() {
+    public BloodMagicRecipeRegistrar()
+    {
         this.altarRecipes = Sets.newHashSet();
         this.alchemyRecipes = Sets.newHashSet();
         this.tartaricForgeRecipes = Sets.newHashSet();
@@ -38,7 +44,8 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     }
 
     @Override
-    public void addBloodAltar(@Nonnull Ingredient input, @Nonnull ItemStack output, @Nonnegative int minimumTier, @Nonnegative int syphon, @Nonnegative int consumeRate, @Nonnegative int drainRate) {
+    public void addBloodAltar(@Nonnull Ingredient input, @Nonnull ItemStack output, @Nonnegative int minimumTier, @Nonnegative int syphon, @Nonnegative int consumeRate, @Nonnegative int drainRate)
+    {
         Preconditions.checkNotNull(input, "input cannot be null.");
         Preconditions.checkNotNull(output, "output cannot be null.");
         Preconditions.checkArgument(minimumTier >= 0, "minimumTier cannot be negative.");
@@ -50,14 +57,16 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     }
 
     @Override
-    public boolean removeBloodAltar(@Nonnull ItemStack input) {
+    public boolean removeBloodAltar(@Nonnull ItemStack input)
+    {
         Preconditions.checkNotNull(input, "input cannot be null.");
 
         return altarRecipes.remove(getBloodAltar(input));
     }
 
     @Override
-    public void addAlchemyTable(@Nonnull ItemStack output, @Nonnegative int syphon, @Nonnegative int ticks, @Nonnegative int minimumTier, @Nonnull Ingredient... input) {
+    public void addAlchemyTable(@Nonnull ItemStack output, @Nonnegative int syphon, @Nonnegative int ticks, @Nonnegative int minimumTier, @Nonnull Ingredient... input)
+    {
         Preconditions.checkNotNull(output, "output cannot be null.");
         Preconditions.checkArgument(syphon >= 0, "syphon cannot be negative.");
         Preconditions.checkArgument(ticks >= 0, "ticks cannot be negative.");
@@ -68,7 +77,8 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
         alchemyRecipes.add(new RecipeAlchemyTable(inputs, output, syphon, ticks, minimumTier));
     }
 
-    public void addAlchemyTable(@Nonnull ItemStack output, @Nonnegative int syphon, @Nonnegative int ticks, @Nonnegative int minimumTier, @Nonnull Object... input) {
+    public void addAlchemyTable(@Nonnull ItemStack output, @Nonnegative int syphon, @Nonnegative int ticks, @Nonnegative int minimumTier, @Nonnull Object... input)
+    {
         Preconditions.checkNotNull(output, "output cannot be null.");
         Preconditions.checkArgument(syphon >= 0, "syphon cannot be negative.");
         Preconditions.checkArgument(ticks >= 0, "ticks cannot be negative.");
@@ -76,8 +86,10 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
         Preconditions.checkNotNull(input, "input cannot be null.");
 
         List<Ingredient> ingredients = Lists.newArrayList();
-        for (Object object : input) {
-            if (object instanceof ItemStack && ((ItemStack) object).getItem() instanceof IBloodOrb) {
+        for (Object object : input)
+        {
+            if (object instanceof ItemStack && ((ItemStack) object).getItem() instanceof IBloodOrb)
+            {
                 ingredients.add(new IngredientBloodOrb(((IBloodOrb) ((ItemStack) object).getItem()).getOrb((ItemStack) object)));
                 continue;
             }
@@ -88,12 +100,14 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
         addAlchemyTable(output, syphon, ticks, minimumTier, ingredients.toArray(new Ingredient[0]));
     }
 
-    public void addAlchemyTable(RecipeAlchemyTable recipe) {
+    public void addAlchemyTable(RecipeAlchemyTable recipe)
+    {
         alchemyRecipes.add(recipe);
     }
 
     @Override
-    public boolean removeAlchemyTable(@Nonnull ItemStack... input) {
+    public boolean removeAlchemyTable(@Nonnull ItemStack... input)
+    {
         Preconditions.checkNotNull(input, "inputs cannot be null.");
 
         for (ItemStack stack : input)
@@ -103,7 +117,8 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     }
 
     @Override
-    public void addTartaricForge(@Nonnull ItemStack output, @Nonnegative double minimumSouls, @Nonnegative double soulDrain, @Nonnull Ingredient... input) {
+    public void addTartaricForge(@Nonnull ItemStack output, @Nonnegative double minimumSouls, @Nonnegative double soulDrain, @Nonnull Ingredient... input)
+    {
         Preconditions.checkNotNull(output, "output cannot be null.");
         Preconditions.checkArgument(minimumSouls >= 0, "minimumSouls cannot be negative.");
         Preconditions.checkArgument(soulDrain >= 0, "soulDrain cannot be negative.");
@@ -114,7 +129,8 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     }
 
     @Override
-    public boolean removeTartaricForge(@Nonnull ItemStack... input) {
+    public boolean removeTartaricForge(@Nonnull ItemStack... input)
+    {
         Preconditions.checkNotNull(input, "inputs cannot be null.");
 
         for (ItemStack stack : input)
@@ -123,15 +139,18 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
         return tartaricForgeRecipes.remove(getTartaricForge(Lists.newArrayList(input)));
     }
 
-    public void addTartaricForge(@Nonnull ItemStack output, @Nonnegative double minimumSouls, @Nonnegative double soulDrain, @Nonnull Object... input) {
+    public void addTartaricForge(@Nonnull ItemStack output, @Nonnegative double minimumSouls, @Nonnegative double soulDrain, @Nonnull Object... input)
+    {
         Preconditions.checkNotNull(output, "output cannot be null.");
         Preconditions.checkArgument(minimumSouls >= 0, "minimumSouls cannot be negative.");
         Preconditions.checkArgument(soulDrain >= 0, "soulDrain cannot be negative.");
         Preconditions.checkNotNull(input, "input cannot be null.");
 
         List<Ingredient> ingredients = Lists.newArrayList();
-        for (Object object : input) {
-            if (object instanceof ItemStack && ((ItemStack) object).getItem() instanceof IBloodOrb) {
+        for (Object object : input)
+        {
+            if (object instanceof ItemStack && ((ItemStack) object).getItem() instanceof IBloodOrb)
+            {
                 ingredients.add(new IngredientBloodOrb(((IBloodOrb) ((ItemStack) object).getItem()).getOrb((ItemStack) object)));
                 continue;
             }
@@ -143,7 +162,8 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     }
 
     @Override
-    public void addAlchemyArray(@Nonnull Ingredient input, @Nonnull Ingredient catalyst, @Nonnull ItemStack output, @Nullable ResourceLocation circleTexture) {
+    public void addAlchemyArray(@Nonnull Ingredient input, @Nonnull Ingredient catalyst, @Nonnull ItemStack output, @Nullable ResourceLocation circleTexture)
+    {
         Preconditions.checkNotNull(input, "input cannot be null.");
         Preconditions.checkNotNull(catalyst, "catalyst cannot be null.");
         Preconditions.checkNotNull(output, "output cannot be null.");
@@ -152,14 +172,16 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     }
 
     @Override
-    public boolean removeAlchemyArray(@Nonnull ItemStack input, @Nonnull ItemStack catalyst) {
+    public boolean removeAlchemyArray(@Nonnull ItemStack input, @Nonnull ItemStack catalyst)
+    {
         Preconditions.checkNotNull(input, "input cannot be null.");
         Preconditions.checkNotNull(catalyst, "catalyst cannot be null.");
 
         return alchemyArrayRecipes.remove(getAlchemyArray(input, catalyst));
     }
 
-    public void addAlchemyArray(@Nonnull ItemStack input, @Nonnull ItemStack catalyst, @Nonnull ItemStack output, @Nullable ResourceLocation circleTexture) {
+    public void addAlchemyArray(@Nonnull ItemStack input, @Nonnull ItemStack catalyst, @Nonnull ItemStack output, @Nullable ResourceLocation circleTexture)
+    {
         Preconditions.checkNotNull(input, "input cannot be null.");
         Preconditions.checkNotNull(catalyst, "catalyst cannot be null.");
         Preconditions.checkNotNull(output, "output cannot be null.");
@@ -168,7 +190,8 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     }
 
     @Nullable
-    public RecipeBloodAltar getBloodAltar(@Nonnull ItemStack input) {
+    public RecipeBloodAltar getBloodAltar(@Nonnull ItemStack input)
+    {
         Preconditions.checkNotNull(input, "input cannot be null.");
         if (input.isEmpty())
             return null;
@@ -181,44 +204,32 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     }
 
     @Nullable
-    public RecipeAlchemyTable getAlchemyTable(@Nonnull List<ItemStack> input) {
+    public RecipeAlchemyTable getAlchemyTable(@Nonnull List<ItemStack> input)
+    {
         Preconditions.checkNotNull(input, "input cannot be null.");
         if (input.isEmpty())
             return null;
 
-        mainLoop:
-        for (RecipeAlchemyTable recipe : alchemyRecipes) {
+        mainLoop: for (RecipeAlchemyTable recipe : alchemyRecipes)
+        {
             if (recipe.getInput().size() != input.size())
                 continue;
 
-            for (int i = 0; i < input.size(); i++) {
-                Ingredient ingredient = recipe.getInput().get(i);
-                if (!ingredient.apply(input.get(i)))
-                    continue mainLoop;
-            }
+            List<Ingredient> recipeInput = new ArrayList<>(recipe.getInput());
 
-            return recipe;
-        }
-
-        return null;
-    }
-
-    @Nullable
-    public RecipeTartaricForge getTartaricForge(@Nonnull List<ItemStack> input) {
-        Preconditions.checkNotNull(input, "input cannot be null.");
-        if (input.isEmpty())
-            return null;
-
-        mainLoop:
-        for (RecipeTartaricForge recipe : tartaricForgeRecipes) {
-            if (recipe.getInput().size() != input.size())
-                continue;
-
-            for (int i = 0; i < input.size(); i++) {
+            for (int i = 0; i < input.size(); i++)
+            {
                 boolean matched = false;
-                Ingredient ingredient = recipe.getInput().get(i);
-                if (ingredient.apply(input.get(i)))
-                    matched = true;
+                for (int j = 0; j < recipeInput.size(); j++)
+                {
+                    Ingredient ingredient = recipeInput.get(j);
+                    if (ingredient.apply(input.get(i)))
+                    {
+                        matched = true;
+                        recipeInput.remove(j);
+                        break;
+                    }
+                }
 
                 if (!matched)
                     continue mainLoop;
@@ -231,7 +242,46 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
     }
 
     @Nullable
-    public RecipeAlchemyArray getAlchemyArray(@Nonnull ItemStack input, @Nonnull ItemStack catalyst) {
+    public RecipeTartaricForge getTartaricForge(@Nonnull List<ItemStack> input)
+    {
+        Preconditions.checkNotNull(input, "input cannot be null.");
+        if (input.isEmpty())
+            return null;
+
+        mainLoop: for (RecipeTartaricForge recipe : tartaricForgeRecipes)
+        {
+            if (recipe.getInput().size() != input.size())
+                continue;
+
+            List<Ingredient> recipeInput = new ArrayList<>(recipe.getInput());
+
+            for (int i = 0; i < input.size(); i++)
+            {
+                boolean matched = false;
+                for (int j = 0; j < recipeInput.size(); j++)
+                {
+                    Ingredient ingredient = recipeInput.get(j);
+                    if (ingredient.apply(input.get(i)))
+                    {
+                        matched = true;
+                        recipeInput.remove(j);
+                        break;
+                    }
+                }
+
+                if (!matched)
+                    continue mainLoop;
+            }
+
+            return recipe;
+        }
+
+        return null;
+    }
+
+    @Nullable
+    public RecipeAlchemyArray getAlchemyArray(@Nonnull ItemStack input, @Nonnull ItemStack catalyst)
+    {
         Preconditions.checkNotNull(input, "input cannot be null.");
         if (input.isEmpty())
             return null;
@@ -243,19 +293,23 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar {
         return null;
     }
 
-    public Set<RecipeBloodAltar> getAltarRecipes() {
+    public Set<RecipeBloodAltar> getAltarRecipes()
+    {
         return ImmutableSet.copyOf(altarRecipes);
     }
 
-    public Set<RecipeAlchemyTable> getAlchemyRecipes() {
+    public Set<RecipeAlchemyTable> getAlchemyRecipes()
+    {
         return ImmutableSet.copyOf(alchemyRecipes);
     }
 
-    public Set<RecipeTartaricForge> getTartaricForgeRecipes() {
+    public Set<RecipeTartaricForge> getTartaricForgeRecipes()
+    {
         return ImmutableSet.copyOf(tartaricForgeRecipes);
     }
 
-    public Set<RecipeAlchemyArray> getAlchemyArrayRecipes() {
+    public Set<RecipeAlchemyArray> getAlchemyArrayRecipes()
+    {
         return ImmutableSet.copyOf(alchemyArrayRecipes);
     }
 }

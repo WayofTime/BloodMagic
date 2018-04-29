@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 2.2.12
+------------------------------------------------------
+- Fixed Hellfire Forge and Alchemy Table's shape-crafted-ness.
+
+
+------------------------------------------------------
 Version 2.2.11
 ------------------------------------------------------
 - Fixed the Alchemy Array from voiding items when broken when it shouldn't have.
