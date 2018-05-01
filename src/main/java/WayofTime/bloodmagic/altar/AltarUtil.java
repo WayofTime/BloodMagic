@@ -50,19 +50,14 @@ public class AltarUtil {
     public static AltarUpgrade getUpgrades(World world, BlockPos pos, AltarTier currentTier) {
         AltarUpgrade upgrades = new AltarUpgrade();
 
-        for (AltarTier tier : AltarTier.values()) {
-            if (tier.ordinal() > currentTier.ordinal())
-                return upgrades;
+        for (AltarComponent component : currentTier.getAltarComponents()) {
+            if (!component.isUpgradeSlot() || component.getComponent() != ComponentType.BLOODRUNE)
+                continue;
 
-            for (AltarComponent component : tier.getAltarComponents()) {
-                if (!component.isUpgradeSlot() || component.getComponent() != ComponentType.BLOODRUNE)
-                    continue;
-
-                BlockPos componentPos = pos.add(component.getOffset());
-                IBlockState state = world.getBlockState(componentPos);
-                if (state.getBlock() instanceof BlockBloodRune)
-                    upgrades.upgrade(((BlockBloodRune) state.getBlock()).getBloodRune(world, componentPos, state));
-            }
+            BlockPos componentPos = pos.add(component.getOffset());
+            IBlockState state = world.getBlockState(componentPos);
+            if (state.getBlock() instanceof BlockBloodRune)
+                upgrades.upgrade(((BlockBloodRune) state.getBlock()).getBloodRune(world, componentPos, state));
         }
 
         return upgrades;
