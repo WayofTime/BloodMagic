@@ -1,15 +1,26 @@
 package WayofTime.bloodmagic.item.soulBreath;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
+
+import javax.annotation.Nullable;
+import javax.vecmath.Vector3d;
 
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,6 +34,10 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 
 public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshProvider, IActivatable
 {
+    public static Map<EntityPlayer, Map<EntityLivingBase, Vector3d>> floatMap = new HashMap<EntityPlayer, Map<EntityLivingBase, Vector3d>>();
+    public static Map<EntityPlayer, EntityLivingBase> heldEntityMap = new HashMap<EntityPlayer, EntityLivingBase>();
+    public static Map<EntityPlayer, Double> heldEntityOffsetMap = new HashMap<EntityPlayer, Double>();
+
     //TODO: A lot of this stuff could be moved to a toggle-able variant
     public ItemFlightScroll()
     {
@@ -57,18 +72,62 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
         if (!world.isRemote)
         {
             if (player.isSneaking())
-                setActivatedState(stack, !getActivated(stack));
+            {
+                if (!getActivated(stack))
+                {
+                    double drainNeeded = getBreathCostPerSecond(stack);
+                    if (this.drainBreath(stack, drainNeeded, false) >= drainNeeded)
+                    {
+                        setActivatedState(stack, true);
+                    }
+                } else
+                {
+                    setActivatedState(stack, false);
+                }
+            } else
+            {
+
+            }
         }
 
         return super.onItemRightClick(world, player, hand);
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand)
     {
-        if (!worldIn.isRemote && entityIn instanceof EntityPlayerMP && getActivated(stack))
+        if (entity.world.isRemote)
         {
-            if (entityIn.ticksExisted % 100 == 0)
+            return false;
+        }
+
+        //TODO: Do check to see if the entity is levitating - will only "ensnare" a mob that is levitating.
+
+        if (player.isSneaking())
+        {
+            //TODO: Release entity completely?
+            removeEntity(player, entity);
+        } else
+        {
+            EntityLivingBase heldEntity = getHeldEntity(player);
+            if (heldEntity != null && heldEntity.equals(entity))
+            {
+                heldEntityMap.remove(player);
+            } else
+            {
+                holdEntity(player, entity); //Hold the entity so you can place it around yourself where needed.
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected)
+    {
+        if (!world.isRemote && entity instanceof EntityPlayerMP && getActivated(stack))
+        {
+            if (entity.ticksExisted % 20 == 0)
             {
                 double drainNeeded = getBreathCostPerSecond(stack);
                 if (this.drainBreath(stack, drainNeeded, false) >= drainNeeded)
@@ -80,8 +139,149 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
                 }
             }
 
-            onEffectUpdate(stack, worldIn, (EntityPlayer) entityIn, itemSlot, isSelected);
+            onEffectUpdate(stack, world, (EntityPlayer) entity, itemSlot, isSelected);
         }
+
+        if (!world.isRemote)
+        {
+            if (entity instanceof EntityPlayer)
+            {
+                EntityPlayer player = (EntityPlayer) entity;
+                updateHeldEntityPosition(player);
+                if (floatMap.containsKey(player))
+                {
+                    Map<EntityLivingBase, Vector3d> entityMap = floatMap.get(player);
+                    if (entityMap == null)
+                    {
+                        return;
+                    }
+
+                    List<EntityLivingBase> removalList = new ArrayList<EntityLivingBase>();
+
+                    for (Entry<EntityLivingBase, Vector3d> entry : entityMap.entrySet())
+                    {
+                        EntityLivingBase floatingEntity = entry.getKey();
+                        if (floatingEntity == null || floatingEntity.isDead || floatingEntity.dimension != player.dimension)
+                        {
+                            removalList.add(floatingEntity);
+                        }
+
+                        followOwner(player, floatingEntity, entry.getValue());
+                    }
+
+                    for (EntityLivingBase livingEntity : removalList)
+                    {
+                        entityMap.remove(livingEntity);
+                    }
+
+                    if (entityMap.isEmpty())
+                    {
+                        floatMap.remove(player);
+                    }
+
+                }
+            }
+        }
+    }
+
+    public static boolean updateEntityOffset(EntityPlayer player, EntityLivingBase living, Vector3d updatedOffset)
+    {
+        //TODO: Check if this entity is contained in another player's map to prevent weird things.
+        if (floatMap.containsKey(player))
+        {
+            Map<EntityLivingBase, Vector3d> entityMap = floatMap.get(player);
+            entityMap.put(living, updatedOffset);
+            return true;
+        } else
+        {
+            Map<EntityLivingBase, Vector3d> entityMap = new HashMap<EntityLivingBase, Vector3d>();
+            entityMap.put(living, updatedOffset);
+            floatMap.put(player, entityMap);
+            return true;
+        }
+    }
+
+    @Nullable
+    public static EntityLivingBase getHeldEntity(EntityPlayer player)
+    {
+        if (heldEntityMap.containsKey(player))
+        {
+            return heldEntityMap.get(player);
+        }
+
+        return null;
+    }
+
+    public static double getHeldEntityOffset(EntityPlayer player)
+    {
+        if (heldEntityMap.containsKey(player))
+        {
+            return heldEntityOffsetMap.get(player);
+        }
+
+        return 1;
+    }
+
+    public static void holdEntity(EntityPlayer player, EntityLivingBase entityLiving)
+    {
+        float distance = player.getDistance(entityLiving);
+        Vec3d lookVec = player.getLookVec();
+        heldEntityMap.put(player, entityLiving);
+        heldEntityOffsetMap.put(player, (double) distance);
+        updateEntityOffset(player, entityLiving, new Vector3d(lookVec.x * distance, lookVec.y * distance, lookVec.z * distance));
+    }
+
+    public static void updateHeldEntityPosition(EntityPlayer player)
+    {
+        EntityLivingBase entityLiving = getHeldEntity(player);
+        if (entityLiving != null)
+        {
+            double offset = getHeldEntityOffset(player);
+            Vec3d lookVec = player.getLookVec();
+            updateEntityOffset(player, entityLiving, new Vector3d(lookVec.x * offset, lookVec.y * offset, lookVec.z * offset));
+        }
+    }
+
+    public static void removeEntity(EntityPlayer player, EntityLivingBase living)
+    {
+        if (living == null)
+        {
+            return;
+        }
+
+        if (floatMap.containsKey(player))
+        {
+            Map<EntityLivingBase, Vector3d> entityMap = floatMap.get(player);
+            if (entityMap.containsKey(living))
+            {
+                entityMap.remove(living);
+            }
+
+            if (entityMap.isEmpty())
+            {
+                floatMap.remove(player);
+            }
+        }
+    }
+
+    public void followOwner(EntityPlayer owner, EntityLivingBase livingEntity, Vector3d offset)
+    {
+        double offsetX = offset.x;
+        double offsetY = offset.y;
+        double offsetZ = offset.z;
+        double ownerSpeed = Math.sqrt(owner.motionX * owner.motionX + owner.motionY + owner.motionY + owner.motionZ + owner.motionZ);
+        double maxFollowSpeed = Math.max(ownerSpeed * 1.5, 0.5d);
+
+        livingEntity.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 20, 0, false, true));
+
+        double wantedX = owner.posX + offsetX;
+        double wantedY = owner.posY + offsetY;
+        double wantedZ = owner.posZ + offsetZ;
+
+//        livingEntity.posX = wantedX;
+//        livingEntity.posY = wantedY;
+//        livingEntity.posZ = wantedZ;
+        livingEntity.setPosition(wantedX, wantedY, wantedZ);
     }
 
     public void onEffectUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
