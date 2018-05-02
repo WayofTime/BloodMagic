@@ -86,7 +86,8 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
                 }
             } else
             {
-
+                //TODO: Add an effect where it "draws back" like a bow in order to cast Levitation on a mob.
+                //Only Levitated mobs can be grabbed.
             }
         }
 
@@ -269,8 +270,10 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
         double offsetX = offset.x;
         double offsetY = offset.y;
         double offsetZ = offset.z;
-        double ownerSpeed = Math.sqrt(owner.motionX * owner.motionX + owner.motionY + owner.motionY + owner.motionZ + owner.motionZ);
-        double maxFollowSpeed = Math.max(ownerSpeed * 1.5, 0.5d);
+        double ownerSpeed = Math.sqrt(owner.motionX * owner.motionX + owner.motionY * owner.motionY + owner.motionZ * owner.motionZ);
+//        double ownerSpeed = Math.sqrt((owner.posX - owner.prevPosX) * (owner.posX - owner.prevPosX) + (owner.posY - owner.prevPosY) * (owner.posY - owner.prevPosY) + (owner.posZ - owner.prevPosZ) * (owner.posZ - owner.prevPosZ));
+
+        double speed = Math.max(ownerSpeed * 20, 2); //May just want to call it a day and set this to "2"
 
         livingEntity.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 20, 0, false, true));
 
@@ -278,10 +281,13 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
         double wantedY = owner.posY + offsetY;
         double wantedZ = owner.posZ + offsetZ;
 
-//        livingEntity.posX = wantedX;
-//        livingEntity.posY = wantedY;
-//        livingEntity.posZ = wantedZ;
-        livingEntity.setPosition(wantedX, wantedY, wantedZ);
+        Vector3d vec = new Vector3d(wantedX - livingEntity.posX, wantedY - livingEntity.posY, wantedZ - livingEntity.posZ);
+        double vecDistance = Math.sqrt(vec.dot(vec));
+        speed = Math.min(vecDistance, speed);
+
+        vec.normalize();
+
+        livingEntity.setVelocity(vec.x * speed, vec.y * speed, vec.z * speed);
     }
 
     public void onEffectUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
