@@ -287,6 +287,11 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
 
         vec.normalize();
 
+        if (speed <= 0.00001)
+        {
+            return;
+        }
+
         livingEntity.setVelocity(vec.x * speed, vec.y * speed, vec.z * speed);
     }
 
