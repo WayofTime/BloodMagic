@@ -109,7 +109,7 @@ public class RegistrarBloodMagicRecipes {
         registrar.addAlchemyTable(ComponentTypes.SALTPETER.getStack(4), 0, 100, 0, ComponentTypes.PLANT_OIL.getStack(), ComponentTypes.PLANT_OIL.getStack(), "dustCoal");
         registrar.addAlchemyTable(new ItemStack(Items.GUNPOWDER, 3), 0, 100, 0, "dustSaltpeter", "dustSulfur", new ItemStack(Items.COAL, 1, 1));
         registrar.addAlchemyTable(ComponentTypes.SAND_COAL.getStack(4), 100, 100, 1, new ItemStack(Items.COAL, 1, 0), new ItemStack(Items.COAL, 1, 0), Items.FLINT);
-        registrar.addAlchemyTable(ItemCuttingFluid.FluidType.BASIC.getStack(), 1000, 400, 1, "dustCoal", "gunpowder", Items.REDSTONE, Items.SUGAR, ComponentTypes.PLANT_OIL.getStack(), new ItemStack(Items.POTIONITEM));
+        registrar.addAlchemyTable(ItemCuttingFluid.FluidType.BASIC.getStack(), 1000, 400, 1, "dustCoal", "gunpowder", Items.REDSTONE, Items.SUGAR, ComponentTypes.PLANT_OIL.getStack(), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER);
         registrar.addAlchemyTable(ComponentTypes.SAND_IRON.getStack(2), 400, 200, 1, "oreIron", ItemCuttingFluid.FluidType.BASIC.getStack());
         registrar.addAlchemyTable(ComponentTypes.SAND_GOLD.getStack(2), 400, 200, 1, "oreGold", ItemCuttingFluid.FluidType.BASIC.getStack());
         registrar.addAlchemyTable(new ItemStack(Items.REDSTONE, 8), 400, 200, 1, "oreRedstone", ItemCuttingFluid.FluidType.BASIC.getStack());
