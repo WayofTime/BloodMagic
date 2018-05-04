@@ -29,7 +29,7 @@ public class LivingArmourUpgradeNightSight extends LivingArmourUpgrade {
 
     @Override
     public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
-        if (world.getLight(player.getPosition()) <= 9) {
+        if (world.getLight(player.getPosition(), false) <= 9) {
             isActive = true;
             if (player.isPotionActive(MobEffects.NIGHT_VISION)) {
                 int dur = player.getActivePotionEffect(MobEffects.NIGHT_VISION).getDuration();
