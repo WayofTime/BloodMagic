@@ -237,4 +237,9 @@ public class RegistrarBloodMagicRecipes
         registrar.addAlchemyArray(ComponentTypes.REAGENT_FROST.getStack(), ItemSlate.SlateType.REINFORCED.getStack(), new ItemStack(RegistrarBloodMagicItems.SIGIL_FROST), null);
 
     }
+
+    public static void registerSacrificeCraftRecipes(BloodMagicRecipeRegistrar registrar)
+    {
+        registrar.addSacrificeCraft(new ItemStack(RegistrarBloodMagicBlocks.TELEPOSER), 10, Items.REDSTONE);
+    }
 }

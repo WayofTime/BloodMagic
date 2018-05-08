@@ -1,0 +1,184 @@
+package WayofTime.bloodmagic.alchemyArray;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeSacrificeCraft;
+import WayofTime.bloodmagic.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
+import WayofTime.bloodmagic.util.helper.PurificationHelper;
+
+public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect
+{
+    public static final AreaDescriptor itemDescriptor = new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11);
+    public static final AreaDescriptor mobDescriptor = new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11);
+
+    public AlchemyArrayEffectMobSacrifice(String key)
+    {
+        super(key);
+    }
+
+    @Override
+    public boolean update(TileEntity tile, int ticksActive)
+    {
+        World world = tile.getWorld();
+        if (world.isRemote && ticksActive < 200 && ticksActive > 40)
+        {
+            BlockPos pos = tile.getPos();
+            Random rand = world.rand;
+
+            for (int i = 0; i < 2; i++)
+            {
+                double d0 = (double) pos.getX() + 0.5D + (rand.nextDouble() - 0.5D) * 2.5D;
+                double d1 = (double) pos.getY() + 0.2D + (rand.nextDouble() - 0.5D) * 0.2D;
+                double d2 = (double) pos.getZ() + 0.5D + (rand.nextDouble() - 0.5D) * 2.5D;
+                world.spawnParticle(EnumParticleTypes.SPELL_MOB, d0, d1, d2, 1D, 0.0D, 0.0D);
+            }
+        }
+
+        if (!world.isRemote)
+        {
+            if (ticksActive >= 200)
+            {
+                BlockPos pos = tile.getPos();
+
+                List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, itemDescriptor.getAABB(pos));
+
+                List<ItemStack> inputList = new ArrayList<ItemStack>();
+
+                for (EntityItem entityItem : itemList)
+                {
+                    if (entityItem.isDead || entityItem.getItem().isEmpty())
+                    {
+                        continue;
+                    }
+
+                    inputList.add(entityItem.getItem().copy());
+                }
+
+                if (inputList.isEmpty())
+                {
+                    return false;
+                }
+
+                if (inputList.size() == 1) //TODO: Test if it is a something that can be filled with Soul Breath
+                {
+
+                }
+
+                RecipeSacrificeCraft recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getSacrificeCraft(inputList);
+                if (recipe != null)
+                {
+                    double healthRequired = recipe.getHealthRequired();
+                    double healthAvailable = 0;
+
+                    List<EntityLivingBase> livingEntities = world.getEntitiesWithinAABB(EntityLivingBase.class, mobDescriptor.getAABB(pos));
+                    for (EntityLivingBase living : livingEntities)
+                    {
+                        double health = getEffectiveHealth(living);
+                        if (health > 0)
+                        {
+                            healthAvailable += health;
+                        }
+                    }
+
+                    if (healthAvailable < healthRequired)
+                    {
+                        return false;
+                    }
+
+                    for (EntityLivingBase living : livingEntities)
+                    {
+                        double health = getEffectiveHealth(living);
+                        if (health > 0)
+                        {
+                            healthAvailable -= health;
+                            living.getEntityWorld().playSound(null, living.posX, living.posY, living.posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (living.getEntityWorld().rand.nextFloat() - living.getEntityWorld().rand.nextFloat()) * 0.8F);
+                            living.setHealth(-1);
+                            living.onDeath(DamageSourceBloodMagic.INSTANCE);
+                        }
+
+                        if (healthAvailable <= 0)
+                        {
+                            break;
+                        }
+                    }
+
+                    for (EntityItem itemEntity : itemList)
+                    {
+                        itemEntity.getItem().setCount(itemEntity.getItem().getCount() - 1);
+                        if (itemEntity.getItem().isEmpty()) //TODO: Check container
+                        {
+                            itemEntity.setDead();
+                        }
+                    }
+
+                    world.spawnEntity(new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, recipe.getOutput()));
+                }
+            }
+        }
+
+        return false;
+    }
+
+    //Future-proofing in case I want to make different mobs give different effective health
+    public double getEffectiveHealth(EntityLivingBase living)
+    {
+        if (living == null)
+            return 0;
+
+        if (!living.isNonBoss())
+            return 0;
+
+        if (living instanceof EntityPlayer)
+            return 0;
+
+        if (living.isChild() && !(living instanceof IMob))
+            return 0;
+
+        if (living.isDead || living.getHealth() < 0.5F)
+            return 0;
+
+        EntityEntry entityEntry = EntityRegistry.getEntry(living.getClass());
+        if (entityEntry == null)
+            return 0;
+
+        return living.getHealth();
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound tag)
+    {
+
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag)
+    {
+
+    }
+
+    @Override
+    public AlchemyArrayEffect getNewCopy()
+    {
+        return new AlchemyArrayEffectMobSacrifice(key);
+    }
+}
