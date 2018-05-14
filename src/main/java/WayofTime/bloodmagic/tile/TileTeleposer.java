@@ -82,7 +82,7 @@ public class TileTeleposer extends TileInventory implements ITickable {
                         for (int j = 0; j <= (focusLevel * 2 - 2); j++) {
                             for (int k = -(focusLevel - 1); k <= (focusLevel - 1); k++) {
                                 TeleposeEvent event = new TeleposeEvent(getWorld(), pos.add(i, 1 + j, k), focusWorld, focusPos.add(i, 1 + j, k));
-                                if (Utils.swapLocations(event.initalWorld, event.initialBlockPos, event.finalWorld, event.finalBlockPos) && !MinecraftForge.EVENT_BUS.post(event)) {
+                                if (!MinecraftForge.EVENT_BUS.post(event) && Utils.swapLocations(event.initalWorld, event.initialBlockPos, event.finalWorld, event.finalBlockPos)) {
                                     blocksTransported++;
                                 }
                             }
