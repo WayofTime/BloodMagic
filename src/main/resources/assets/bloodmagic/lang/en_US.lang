@@ -682,7 +682,7 @@ ritual.bloodmagic.portalRitual.info=Creates a portal network based on the activa
 ritual.bloodmagic.meteorRitual.info=Consumes an item inside of its item range to summon a meteor full of resources from the sky, aimed directly at the ritual.
 
 ritual.bloodmagic.waterRitual.waterRange.info=(Water) The area that the ritual will place water source blocks.
-ritual.bloodmagic.waterRitual.waterTank.info=(Raw) Tha tank that the ritual will place water into.
+ritual.bloodmagic.waterRitual.waterTank.info=(Raw) The tank that the ritual will place water into.
 ritual.bloodmagic.lavaRitual.lavaRange.info=(Lava) The area that the ritual will place lava source blocks.
 ritual.bloodmagic.lavaRitual.lavaTank.info=(Raw) The tank that the ritual will place lava into.
 ritual.bloodmagic.lavaRitual.fireFuse.info=(Vengeful) Entities in this range are afflicted by Fire Fuse.
