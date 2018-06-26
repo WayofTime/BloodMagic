@@ -9,6 +9,7 @@ import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.util.Utils;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +20,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -40,6 +44,7 @@ public class RitualCrushing extends Ritual {
     public static Map<ItemStack, Integer> cuttingFluidLPMap = new HashMap<>();
     public static Map<ItemStack, Double> cuttingFluidWillMap = new HashMap<>();
     public static int defaultRefreshTime = 40;
+    private FakePlayer fakePlayer;
     public int refreshTime = 40;
 
     public RitualCrushing() {
@@ -154,7 +159,7 @@ public class RitualCrushing extends Ritual {
                 }
             }
 
-            if (!isBlockClaimed && isSilkTouch && block.canSilkHarvest(world, newPos, state, null)) {
+            if (!isBlockClaimed && isSilkTouch && block.canSilkHarvest(world, newPos, state, getFakePlayer((WorldServer) world))) {
                 ItemStack checkStack = block.getItem(world, newPos, state);
                 if (checkStack.isEmpty()) {
                     continue;
@@ -279,5 +284,9 @@ public class RitualCrushing extends Ritual {
     public static void registerCuttingFluid(ItemStack stack, int lpDrain, double willDrain) {
         cuttingFluidLPMap.put(stack, lpDrain);
         cuttingFluidWillMap.put(stack, willDrain);
+    }
+
+    private FakePlayer getFakePlayer(WorldServer world) {
+        return fakePlayer == null ? fakePlayer = FakePlayerFactory.get(world, new GameProfile(null, BloodMagic.MODID + "_ritual_crushing")) : fakePlayer;
     }
 }
