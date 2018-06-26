@@ -70,6 +70,11 @@ public class ItemPotionFlask extends Item implements IMeshProvider {
     }
 
     @Override
+    public boolean isDamaged(ItemStack stack) {
+        return false;
+    }
+
+    @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         int remainingUses = stack.getMaxDamage() - stack.getItemDamage();
@@ -107,16 +112,6 @@ public class ItemPotionFlask extends Item implements IMeshProvider {
         tooltip.add("");
         tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.potion.uses", stack.getMaxDamage() - stack.getItemDamage()));
     }
-
-//    @Override
-//    @SideOnly(Side.CLIENT)
-//    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
-//    {
-//        for (PotionType potiontype : PotionType.REGISTRY)
-//        {
-//            subItems.add(PotionUtils.addPotionToItemStack(new ItemStack(itemIn), potiontype));
-//        }
-//    }
 
 
     @SideOnly(Side.CLIENT)
