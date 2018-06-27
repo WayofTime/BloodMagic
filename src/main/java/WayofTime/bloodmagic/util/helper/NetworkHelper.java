@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.UUID;
 
@@ -119,7 +118,7 @@ public class NetworkHelper {
      * @param toSyphon - Amount of LP to syphon
      * @return - If the syphon was successful.
      */
-    public static boolean syphonFromContainer(ItemStack stack, int toSyphon) //TODO: Change to a String, int?
+    public static boolean syphonFromContainer(ItemStack stack, int toSyphon)
     {
         if (!(stack.getItem() instanceof IBindable))
             return false;
@@ -129,10 +128,9 @@ public class NetworkHelper {
             return false;
 
         SoulNetwork network = getSoulNetwork(binding);
-
         SoulNetworkEvent.ItemDrainInContainerEvent event = new SoulNetworkEvent.ItemDrainInContainerEvent(stack, binding.getOwnerId(), toSyphon);
 
-        return !(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) && network.syphon(event.syphon) >= toSyphon;
+        return !MinecraftForge.EVENT_BUS.post(event) && network.syphon(event.syphon) >= toSyphon;
     }
 
     /**

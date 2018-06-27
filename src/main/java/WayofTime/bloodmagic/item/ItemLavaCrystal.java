@@ -43,7 +43,7 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
         if (binding == null)
             return -1;
 
-        if (NetworkHelper.canSyphonFromContainer(stack, 25))
+        if (NetworkHelper.syphonFromContainer(stack, 25))
             return 200;
         else {
             EntityPlayer player = PlayerHelper.getPlayerFromUUID(binding.getOwnerId());
