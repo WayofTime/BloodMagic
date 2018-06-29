@@ -6,10 +6,8 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.ritual.EnumRuneType;
 import WayofTime.bloodmagic.ritual.Ritual;
 import WayofTime.bloodmagic.ritual.RitualComponent;
-import WayofTime.bloodmagic.ritual.RitualRegistry;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
-import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.handler.event.ClientHandler;
@@ -40,6 +38,7 @@ import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ItemRitualDiviner extends Item implements IVariantProvider {
@@ -63,7 +62,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
         if (Strings.isNullOrEmpty(getCurrentRitual(stack)))
             return displayName;
 
-        Ritual ritual = RitualRegistry.getRitualForId(getCurrentRitual(stack));
+        Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(getCurrentRitual(stack));
         if (ritual == null)
             return displayName;
 
@@ -114,7 +113,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
         TileEntity tile = world.getTileEntity(pos);
 
         if (tile instanceof TileMasterRitualStone) {
-            Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(stack));
+            Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(this.getCurrentRitual(stack));
             if (ritual != null) {
                 EnumFacing direction = getDirection(stack);
                 List<RitualComponent> components = Lists.newArrayList();
@@ -161,7 +160,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
         TileEntity tile = world.getTileEntity(pos);
 
         if (tile instanceof TileMasterRitualStone) {
-            Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(itemStack));
+            Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(this.getCurrentRitual(itemStack));
             TileMasterRitualStone masterRitualStone = (TileMasterRitualStone) tile;
 
             if (ritual != null) {
@@ -207,9 +206,9 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
         if (!stack.hasTagCompound())
             return;
 
-        Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(stack));
+        Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(this.getCurrentRitual(stack));
         if (ritual != null) {
-            tooltip.add(TextHelper.localize("tooltip.bloodmagic.diviner.currentRitual") + TextHelper.localize(ritual.getUnlocalizedName()));
+            tooltip.add(TextHelper.localize("tooltip.bloodmagic.diviner.currentRitual", TextHelper.localize(ritual.getUnlocalizedName())));
 
             boolean sneaking = Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
             boolean extraInfo = sneaking && Keyboard.isKeyDown(Keyboard.KEY_M);
@@ -303,7 +302,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
 
         if (player.isSneaking()) {
             if (!world.isRemote) {
-                cycleRitual(stack, player);
+                cycleRitual(stack, player, false);
             }
 
             return new ActionResult<>(EnumActionResult.SUCCESS, stack);
@@ -314,7 +313,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
 
     @Override
     public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack) {
-        if (entityLiving instanceof EntityPlayer) {
+        if (!entityLiving.world.isRemote && entityLiving instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entityLiving;
 
             RayTraceResult ray = this.rayTrace(player.getEntityWorld(), player, false);
@@ -324,7 +323,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
 
             if (!player.isSwingInProgress) {
                 if (player.isSneaking()) {
-                    cycleRitualBackwards(stack, player);
+                    cycleRitual(stack, player, true);
                 } else {
                     cycleDirection(stack, player);
                 }
@@ -396,83 +395,36 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
     }
 
     /**
-     * Cycles the selected ritual to the next available ritual that is enabled.
-     *
-     * @param stack  - The ItemStack of the ritual diviner
-     * @param player - The player using the ritual diviner
+     * Cycles the ritual forward or backward
      */
-    public void cycleRitual(ItemStack stack, EntityPlayer player) {
+    public void cycleRitual(ItemStack stack, EntityPlayer player, boolean reverse) {
         String key = getCurrentRitual(stack);
-        List<String> idList = RitualRegistry.getOrderedIds();
+        List<Ritual> rituals = BloodMagic.RITUAL_MANAGER.getSortedRituals();
+        if (reverse)
+            Collections.reverse(rituals = Lists.newArrayList(rituals));
+
         String firstId = "";
         boolean foundId = false;
         boolean foundFirst = false;
 
-        for (String str : idList) {
-            Ritual ritual = RitualRegistry.getRitualForId(str);
+        for (Ritual ritual : rituals) {
+            String id = BloodMagic.RITUAL_MANAGER.getId(ritual);
 
-            if (!RitualRegistry.ritualEnabled(ritual) || !canDivinerPerformRitual(stack, ritual)) {
+            if (!BloodMagic.RITUAL_MANAGER.enabled(id, false) || !canDivinerPerformRitual(stack, ritual)) {
                 continue;
             }
 
             if (!foundFirst) {
-                firstId = str;
+                firstId = id;
                 foundFirst = true;
             }
 
             if (foundId) {
-                setCurrentRitual(stack, str);
-                notifyRitualChange(str, player);
+                setCurrentRitual(stack, id);
+                notifyRitualChange(id, player);
                 return;
-            } else {
-                if (str.equals(key)) {
-                    foundId = true;
-                    continue;
-                }
-            }
-        }
-
-        if (foundFirst) {
-            setCurrentRitual(stack, firstId);
-            notifyRitualChange(firstId, player);
-        }
-    }
-
-    /**
-     * Does the same as cycleRitual but instead cycles backwards.
-     *
-     * @param stack
-     * @param player
-     */
-    public void cycleRitualBackwards(ItemStack stack, EntityPlayer player) {
-        String key = getCurrentRitual(stack);
-        List<String> idList = RitualRegistry.getOrderedIds();
-        String firstId = "";
-        boolean foundId = false;
-        boolean foundFirst = false;
-
-        for (int i = idList.size() - 1; i >= 0; i--) {
-            String str = idList.get(i);
-            Ritual ritual = RitualRegistry.getRitualForId(str);
-
-            if (!RitualRegistry.ritualEnabled(ritual) || !canDivinerPerformRitual(stack, ritual)) {
-                continue;
-            }
-
-            if (!foundFirst) {
-                firstId = str;
-                foundFirst = true;
-            }
-
-            if (foundId) {
-                setCurrentRitual(stack, str);
-                notifyRitualChange(str, player);
-                return;
-            } else {
-                if (str.equals(key)) {
-                    foundId = true;
-                    continue;
-                }
+            } else if (id.equals(key)) {
+                foundId = true;
             }
         }
 
@@ -499,7 +451,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
     }
 
     public void notifyRitualChange(String key, EntityPlayer player) {
-        Ritual ritual = RitualRegistry.getRitualForId(key);
+        Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(key);
         if (ritual != null) {
             player.sendStatusMessage(new TextComponentTranslation(ritual.getUnlocalizedName()), true);
         }
@@ -512,7 +464,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
 
         NBTTagCompound tag = stack.getTagCompound();
 
-        tag.setString(Constants.NBT.CURRENT_RITUAL, key);
+        tag.setString("current_ritual", key);
     }
 
     public String getCurrentRitual(ItemStack stack) {
@@ -521,7 +473,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
         }
 
         NBTTagCompound tag = stack.getTagCompound();
-        return tag.getString(Constants.NBT.CURRENT_RITUAL);
+        return tag.getString("current_ritual");
     }
 
     public boolean canPlaceRitualStone(EnumRuneType rune, ItemStack stack) {

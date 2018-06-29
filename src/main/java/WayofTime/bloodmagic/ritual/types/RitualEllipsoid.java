@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.ritual.types;
 
 import java.util.function.Consumer;
 
+import WayofTime.bloodmagic.ritual.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
@@ -14,12 +15,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.ritual.EnumRuneType;
-import WayofTime.bloodmagic.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.ritual.Ritual;
-import WayofTime.bloodmagic.ritual.RitualComponent;
 
+@RitualRegister("ellipsoid")
 public class RitualEllipsoid extends Ritual
 {
     public static final String SPHEROID_RANGE = "spheroidRange";

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.util.helper;
 
-import WayofTime.bloodmagic.ritual.RitualRegistry;
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.EnumRuneType;
 import WayofTime.bloodmagic.ritual.IRitualStone;
 import WayofTime.bloodmagic.ritual.Ritual;
@@ -22,21 +22,7 @@ public class RitualHelper {
     static Capability<IRitualStone.Tile> RUNE_CAPABILITY = null;
 
     public static boolean canCrystalActivate(Ritual ritual, int crystalLevel) {
-        return ritual.getCrystalLevel() <= crystalLevel && RitualRegistry.ritualEnabled(ritual);
-    }
-
-    public static String getNextRitualKey(String currentKey) {
-        int currentIndex = RitualRegistry.getIds().indexOf(currentKey);
-        int nextIndex = RitualRegistry.getRituals().listIterator(currentIndex).nextIndex();
-
-        return RitualRegistry.getIds().get(nextIndex);
-    }
-
-    public static String getPrevRitualKey(String currentKey) {
-        int currentIndex = RitualRegistry.getIds().indexOf(currentKey);
-        int previousIndex = RitualRegistry.getIds().listIterator(currentIndex).previousIndex();
-
-        return RitualRegistry.getIds().get(previousIndex);
+        return ritual.getCrystalLevel() <= crystalLevel && BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(ritual), false);
     }
 
     /**
@@ -48,31 +34,26 @@ public class RitualHelper {
      * @return The ID of the valid ritual
      */
     public static String getValidRitual(World world, BlockPos pos) {
-        for (String key : RitualRegistry.getIds()) {
+        for (Ritual ritual : BloodMagic.RITUAL_MANAGER.getRituals()) {
             for (EnumFacing direction : EnumFacing.HORIZONTALS) {
-                boolean test = checkValidRitual(world, pos, key, direction);
-                if (test) {
-                    return key;
-                }
+                if (checkValidRitual(world, pos, ritual, direction))
+                    return BloodMagic.RITUAL_MANAGER.getId(ritual);
             }
         }
 
         return "";
     }
 
-    public static EnumFacing getDirectionOfRitual(World world, BlockPos pos, String key) {
+    public static EnumFacing getDirectionOfRitual(World world, BlockPos pos, Ritual ritual) {
         for (EnumFacing direction : EnumFacing.HORIZONTALS) {
-            boolean test = checkValidRitual(world, pos, key, direction);
-            if (test) {
+            if (checkValidRitual(world, pos, ritual, direction))
                 return direction;
-            }
         }
 
         return null;
     }
 
-    public static boolean checkValidRitual(World world, BlockPos pos, String ritualId, EnumFacing direction) {
-        Ritual ritual = RitualRegistry.getRitualForId(ritualId);
+    public static boolean checkValidRitual(World world, BlockPos pos, Ritual ritual, EnumFacing direction) {
         if (ritual == null) {
             return false;
         }
@@ -82,11 +63,8 @@ public class RitualHelper {
 
         for (RitualComponent component : components) {
             BlockPos newPos = pos.add(component.getOffset(direction));
-            if (isRuneType(world, newPos, component.getRuneType())) {
-                continue;
-            } else {
+            if (!isRuneType(world, newPos, component.getRuneType()))
                 return false;
-            }
         }
 
         return true;

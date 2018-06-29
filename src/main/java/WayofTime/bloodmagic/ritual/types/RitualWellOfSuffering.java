@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("well_of_suffering")
 public class RitualWellOfSuffering extends Ritual {
     public static final String ALTAR_RANGE = "altar";
     public static final String DAMAGE_RANGE = "damage";

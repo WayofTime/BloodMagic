@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
+@RitualRegister("felling")
 public class RitualFelling extends Ritual {
     public static final String FELLING_RANGE = "fellingRange";
     public static final String CHEST_RANGE = "chest";

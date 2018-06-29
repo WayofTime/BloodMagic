@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
+@RitualRegister("containment")
 public class RitualContainment extends Ritual {
     public static final String CONTAINMENT_RANGE = "containmentRange";
 

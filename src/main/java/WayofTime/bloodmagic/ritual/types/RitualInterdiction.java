@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
+@RitualRegister("interdiction")
 public class RitualInterdiction extends Ritual {
     public static final String INTERDICTION_RANGE = "interdictionRange";
 

@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.RitualEvent;
-import WayofTime.bloodmagic.ritual.RitualRegistry;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.Ritual;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
@@ -23,7 +23,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -75,7 +74,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         owner = tag.hasUniqueId("owner") ? tag.getUniqueId("owner") : null;
         if (owner != null)
             cachedNetwork = NetworkHelper.getSoulNetwork(owner);
-        currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
+        currentRitual = BloodMagic.RITUAL_MANAGER.getRitual(tag.getString(Constants.NBT.CURRENT_RITUAL));
         if (currentRitual != null) {
             NBTTagCompound ritualTag = tag.getCompoundTag(Constants.NBT.CURRENT_RITUAL_TAG);
             if (!ritualTag.hasNoTags()) {
@@ -96,7 +95,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
     @Override
     public NBTTagCompound serialize(NBTTagCompound tag) {
-        String ritualId = RitualRegistry.getIdForRitual(getCurrentRitual());
+        String ritualId = BloodMagic.RITUAL_MANAGER.getId(getCurrentRitual());
         if (owner != null)
             tag.setUniqueId("owner", owner);
         tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
@@ -177,8 +176,8 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
     @Override
     public void performRitual(World world, BlockPos pos) {
-        if (!world.isRemote && getCurrentRitual() != null && RitualRegistry.ritualEnabled(getCurrentRitual())) {
-            if (RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), getDirection())) {
+        if (!world.isRemote && getCurrentRitual() != null && BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(currentRitual), false)) {
+            if (RitualHelper.checkValidRitual(getWorld(), getPos(), currentRitual, getDirection())) {
                 RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
 
                 if (MinecraftForge.EVENT_BUS.post(event))

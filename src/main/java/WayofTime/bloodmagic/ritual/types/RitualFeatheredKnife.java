@@ -26,6 +26,7 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("feathered_knife")
 public class RitualFeatheredKnife extends Ritual {
     public static final String ALTAR_RANGE = "altar";
     public static final String DAMAGE_RANGE = "damage";

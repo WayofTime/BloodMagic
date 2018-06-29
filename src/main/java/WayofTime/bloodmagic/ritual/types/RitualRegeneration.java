@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("regeneration")
 public class RitualRegeneration extends Ritual {
     public static final String HEAL_RANGE = "heal";
     public static final String VAMPIRE_RANGE = "vampire";

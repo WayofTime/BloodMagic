@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.ritual.RitualRegistry;
 import WayofTime.bloodmagic.ritual.Ritual;
 import WayofTime.bloodmagic.ritual.RitualComponent;
 import WayofTime.bloodmagic.client.key.KeyBindings;
@@ -246,7 +245,7 @@ public class ClientHandler {
         World world = player.getEntityWorld();
         ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getCurrentItem().getItem();
         EnumFacing direction = ritualDiviner.getDirection(player.inventory.getCurrentItem());
-        Ritual ritual = RitualRegistry.getRitualForId(ritualDiviner.getCurrentRitual(player.inventory.getCurrentItem()));
+        Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(ritualDiviner.getCurrentRitual(player.inventory.getCurrentItem()));
 
         if (ritual == null)
             return;

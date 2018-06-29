@@ -449,7 +449,7 @@ tooltip.bloodmagic.activation_crystal.weak=Activates low-level rituals
 tooltip.bloodmagic.activation_crystal.awakened=Activates more powerful rituals
 tooltip.bloodmagic.activation_crystal.creative=Creative Only - Activates any ritual
 
-tooltip.bloodmagic.diviner.currentRitual=Current Ritual: 
+tooltip.bloodmagic.diviner.currentRitual=Current Ritual: %s
 tooltip.bloodmagic.diviner.blankRune=Blank Runes: %d
 tooltip.bloodmagic.diviner.waterRune=Water Runes: %d
 tooltip.bloodmagic.diviner.airRune=Air Runes: %d

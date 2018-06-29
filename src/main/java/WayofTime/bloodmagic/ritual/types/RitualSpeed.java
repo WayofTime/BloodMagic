@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("speed")
 public class RitualSpeed extends Ritual {
     public static final String SPEED_RANGE = "sanicRange";
 

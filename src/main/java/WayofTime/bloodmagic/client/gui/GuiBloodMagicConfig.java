@@ -26,6 +26,7 @@ public class GuiBloodMagicConfig extends GuiConfig {
         List<IConfigElement> elements = Lists.newArrayList();
 
         elements.addAll(ConfigElement.from(ConfigHandler.class).getChildElements());
+        elements.add(new ConfigElement(BloodMagic.RITUAL_MANAGER.getConfig().getCategory("rituals")));
         if (Minecraft.getMinecraft().world != null)
             elements.add(new DummyElementEditHUD(BloodMagic.NAME, "config." + BloodMagic.MODID + ".edit_hud"));
 

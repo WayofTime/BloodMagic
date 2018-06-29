@@ -7,9 +7,7 @@ import net.minecraft.world.World;
 import java.util.function.Predicate;
 
 /**
- * Abstract class for creating new imperfect rituals. ImperfectRituals need be
- * registered with
- * {@link ImperfectRitualRegistry#registerRitual(ImperfectRitual)}
+ * Abstract class for creating new imperfect rituals. To register, annotate your class with {@link WayofTime.bloodmagic.ritual.RitualRegister.Imperfect}
  */
 public abstract class ImperfectRitual {
 

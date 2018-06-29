@@ -3,7 +3,7 @@ package WayofTime.bloodmagic;
 import WayofTime.bloodmagic.api.BloodMagicPlugin;
 import WayofTime.bloodmagic.api.IBloodMagicPlugin;
 import WayofTime.bloodmagic.core.registry.OrbRegistry;
-import WayofTime.bloodmagic.ritual.RitualRegistry;
+import WayofTime.bloodmagic.ritual.RitualManager;
 import WayofTime.bloodmagic.client.gui.GuiHandler;
 import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
@@ -19,7 +19,9 @@ import com.google.common.collect.Lists;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
@@ -37,6 +39,7 @@ public class BloodMagic {
     public static final String DEPEND = "required-after:guideapi;";
     public static final boolean IS_DEV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
     public static final List<Pair<IBloodMagicPlugin, BloodMagicPlugin>> PLUGINS = Lists.newArrayList();
+    public static final RitualManager RITUAL_MANAGER = new RitualManager(new Configuration(new File(Loader.instance().getConfigDir(), MODID + "/" + "rituals.cfg")));
     public static final CreativeTabs TAB_BM = new CreativeTabs(MODID + ".creativeTab") {
         @Override
         public ItemStack getTabIconItem() {
@@ -75,6 +78,7 @@ public class BloodMagic {
 
         ModTranquilityHandlers.init();
         ModDungeons.init();
+        RITUAL_MANAGER.discover(event.getAsmData());
 
         proxy.preInit();
     }
@@ -86,8 +90,7 @@ public class BloodMagic {
         PluginUtil.handlePluginStep(PluginUtil.RegistrationStep.PLUGIN_REGISTER);
 
         ModRecipes.init();
-        ModRituals.initRituals();
-        ModRituals.initImperfectRituals();
+        ModRituals.initHarvestHandlers();
         MeteorConfigHandler.init(new File(configDir, "meteors"));
         ModArmourTrackers.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(BloodMagic.instance, new GuiHandler());
@@ -101,11 +104,6 @@ public class BloodMagic {
         ModRecipes.addCompressionHandlers();
 
         proxy.postInit();
-    }
-
-    @Mod.EventHandler
-    public void loadComplete(FMLLoadCompleteEvent event) {
-        RitualRegistry.orderLookupList();
     }
 
     @Mod.EventHandler

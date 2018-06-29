@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 
+@RitualRegister("crushing")
 public class RitualCrushing extends Ritual {
     public static final String CRUSHING_RANGE = "crushingRange";
     public static final String CHEST_RANGE = "chest";
