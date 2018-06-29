@@ -29,7 +29,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.io.File;
 import java.util.List;
 
-@Mod(modid = BloodMagic.MODID, name = BloodMagic.NAME, version = BloodMagic.VERSION, dependencies = BloodMagic.DEPEND)
+@Mod(modid = BloodMagic.MODID, name = BloodMagic.NAME, version = BloodMagic.VERSION, dependencies = BloodMagic.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.GuiBloodMagicConfig$Factory")
 public class BloodMagic {
     public static final String MODID = "bloodmagic";
     public static final String NAME = "Blood Magic: Alchemical Wizardry";
