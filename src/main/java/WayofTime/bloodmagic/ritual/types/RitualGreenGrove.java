@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 
+@RitualRegister("green_grove")
 public class RitualGreenGrove extends Ritual {
     public static final String GROW_RANGE = "growing";
     public static final String LEECH_RANGE = "leech";

@@ -2,7 +2,9 @@ package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.types.ISubItem;
+import WayofTime.bloodmagic.util.Constants;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.text.TextFormatting;
 
@@ -44,7 +46,11 @@ public enum EnumRuneType implements IStringSerializable, ISubItem {
     @Nonnull
     @Override
     public ItemStack getStack(int count) {
-        return new ItemStack(RegistrarBloodMagicItems.INSCRIPTION_TOOL, count, ordinal());
+        ItemStack ret = new ItemStack(RegistrarBloodMagicItems.INSCRIPTION_TOOL, count, ordinal());
+        NBTTagCompound tag = new NBTTagCompound();
+        tag.setInteger(Constants.NBT.USES, 10);
+        ret.setTagCompound(tag);
+        return ret;
     }
 
     public static EnumRuneType byMetadata(int meta) {

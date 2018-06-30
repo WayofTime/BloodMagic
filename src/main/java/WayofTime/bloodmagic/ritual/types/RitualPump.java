@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("pump")
 public class RitualPump extends Ritual {
     public static final String PUMP_RANGE = "pumpRange";
 

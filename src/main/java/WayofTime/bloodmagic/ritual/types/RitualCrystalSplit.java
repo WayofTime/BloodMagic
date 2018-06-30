@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.ritual.types;
 
 import java.util.function.Consumer;
 
+import WayofTime.bloodmagic.ritual.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -12,13 +13,10 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
-import WayofTime.bloodmagic.ritual.EnumRuneType;
-import WayofTime.bloodmagic.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.ritual.Ritual;
-import WayofTime.bloodmagic.ritual.RitualComponent;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
 
+@RitualRegister("crystal_split")
 public class RitualCrystalSplit extends Ritual
 {
     public RitualCrystalSplit()

@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("armour_evolve")
 public class RitualArmourEvolve extends Ritual {
     public static final String CHECK_RANGE = "fillRange";
 

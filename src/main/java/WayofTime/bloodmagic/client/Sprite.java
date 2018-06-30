@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.client;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -42,6 +43,7 @@ public class Sprite {
     }
 
     public void draw(int x, int y) {
+        Minecraft.getMinecraft().renderEngine.bindTexture(textureLocation);
         float f = 0.00390625F;
         float f1 = 0.00390625F;
         Tessellator tessellator = Tessellator.getInstance();

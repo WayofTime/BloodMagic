@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
+@RitualRegister("suppression")
 public class RitualSuppression extends Ritual {
     public static final String SUPPRESSION_RANGE = "suppressionRange";
 

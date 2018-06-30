@@ -15,6 +15,7 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("full_stomach")
 public class RitualFullStomach extends Ritual {
     public static final String FILL_RANGE = "fillRange";
     public static final String CHEST_RANGE = "chest";

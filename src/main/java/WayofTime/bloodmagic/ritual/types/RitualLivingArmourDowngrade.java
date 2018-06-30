@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("armour_downgrade")
 public class RitualLivingArmourDowngrade extends Ritual {
     public static final String DOWNGRADE_RANGE = "containmentRange";
     private int internalTimer = 0;

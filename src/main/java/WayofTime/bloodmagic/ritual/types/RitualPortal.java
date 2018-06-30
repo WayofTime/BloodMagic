@@ -1,10 +1,7 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ritual.EnumRuneType;
-import WayofTime.bloodmagic.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.ritual.Ritual;
-import WayofTime.bloodmagic.ritual.RitualComponent;
+import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.teleport.PortalLocation;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
@@ -20,6 +17,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+@RitualRegister("portal")
 public class RitualPortal extends Ritual {
 
     public static final String PORTAL_NBT_TAG = "PortalRitualTag";

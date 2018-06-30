@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 
+@RitualRegister("upgrade_remove")
 public class RitualUpgradeRemove extends Ritual {
     public static final String CHECK_RANGE = "fillRange";
 

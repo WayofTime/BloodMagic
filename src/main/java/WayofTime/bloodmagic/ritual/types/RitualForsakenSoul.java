@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("forsaken_soul")
 public class RitualForsakenSoul extends Ritual {
     public static final String CRYSTAL_RANGE = "crystal";
     public static final String DAMAGE_RANGE = "damage";
