@@ -230,7 +230,7 @@ tile.bloodmagic.crystal.brick.name=Kristallklumpenziegel
 tile.bloodmagic.bloodLight.name=Blutlampe
 tile.bloodmagic.spectralBlock.name=Spektralblock
 tile.bloodmagic.phantomBlock.name=Phantomblock
-tile.bloodmagic.incenseAltar.name=Weihrauchaltar
+tile.bloodmagic.incenseAltar.name=Räucheraltar
 
 tile.bloodmagic.teleposer.name=Teleposer
 tile.bloodmagic.soulForge.name=Höllenfeuerschmiede
@@ -650,7 +650,7 @@ ritual.bloodmagic.greenGroveRitual.destructive.info=(Zerstörerisch) Wachstumsre
 ritual.bloodmagic.featheredKnifeRitual.default.info=(Roh) Erhöht die Geschwindigkeit des Rituals basierend auf dem vorhandenen Willen.
 ritual.bloodmagic.featheredKnifeRitual.destructive.info=(Zerstörerisch) Erhöht den Ertrag des Rituals basierend auf dem vorhandenen Willen.
 ritual.bloodmagic.featheredKnifeRitual.vengeful.info=(Rachsüchtig) Setzt die Mindestlebenspunkte für die Opferung auf 10%%. Wird von Standhaft für den Besitzer überschrieben, wenne es aktiv ist.
-ritual.bloodmagic.featheredKnifeRitual.corrosive.info=(Ätzend) Nutzt den Bonus des Weihrauchaltars, um den Ertrag der Opferung zu erhöhen.
+ritual.bloodmagic.featheredKnifeRitual.corrosive.info=(Ätzend) Nutzt den Bonus des Räucheraltars, um den Ertrag der Opferung zu erhöhen.
 ritual.bloodmagic.featheredKnifeRitual.steadfast.info=(Standhaft) Erhöht die Mindestlebenspunkte für die Opferung von 30%% to 70%%.
 ritual.bloodmagic.speedRitual.default.info=(Roh) Erhöht die Geschwindigkeit basierend auf vorhandenen Willen.
 ritual.bloodmagic.speedRitual.vengeful.info=(Rachsüchtig) Verhindert, dass erwachsene Mobs und Spieler transportiert werden. Spieler werden transportiert, wenn es mit Zerstörerisch kombiniert wird.
