@@ -40,12 +40,12 @@ item.bloodmagic.slate.imbued.name=Erfüllte Tafel
 item.bloodmagic.slate.demonic.name=Dämonische Tafel
 item.bloodmagic.slate.ethereal.name=Ätherische Tafel
 
-item.bloodmagic.orb.weak.name=Schwacher Blutorb
-item.bloodmagic.orb.apprentice.name=Blutorb des Lehrlings
-item.bloodmagic.orb.magician.name=Blutorb des Magiers
-item.bloodmagic.orb.master.name=Blutorb des Meisters
-item.bloodmagic.orb.archmage.name=Blutorb des Erzmagiers
-item.bloodmagic.orb.transcendent.name=Transzendenter Blutorb
+item.bloodmagic.orb.weak.name=Schwache Blutkugel
+item.bloodmagic.orb.apprentice.name=Blutkugel des Lehrlings
+item.bloodmagic.orb.magician.name=Blutkugel des Magiers
+item.bloodmagic.orb.master.name=Blutkugel des Meisters
+item.bloodmagic.orb.archmage.name=Blutkugel des Erzmagiers
+item.bloodmagic.orb.transcendent.name=Transzendenter Blutkugel
 
 item.bloodmagic.reagent.incendium.name=Incendium
 item.bloodmagic.reagent.magicales.name=Magicales
@@ -211,7 +211,7 @@ tile.bloodmagic.rune.selfSacrifice.name=Rune der Selbstopferung
 tile.bloodmagic.rune.displacement.name=Rune der Verlagerung
 tile.bloodmagic.rune.capacity.name=Kapazitätsrune
 tile.bloodmagic.rune.augCapacity.name=Rune der erweiterten Kapazität
-tile.bloodmagic.rune.orb.name=Orbrune
+tile.bloodmagic.rune.orb.name=Rune der Blutkugel
 tile.bloodmagic.rune.acceleration.name=Beschleunigungsrune
 tile.bloodmagic.rune.charging.name=Aufladungsrune
 
@@ -600,7 +600,7 @@ ritual.bloodmagic.speedRitual=Ritual der Geschwindigkeit
 ritual.bloodmagic.suppressionRitual=Ritual der Verdrängung
 ritual.bloodmagic.expulsionRitual=Aura der Vertreibung
 ritual.bloodmagic.zephyrRitual=Ruf des Zephyrs
-ritual.bloodmagic.upgradeRemoveRitual=Geräusch der reinigenden Seele
+ritual.bloodmagic.upgradeRemoveRitual=Klang der reinigenden Seele
 ritual.bloodmagic.armourEvolveRitual=Ritual der lebenden Evolution
 ritual.bloodmagic.animalGrowthRitual=Ritual des Hirten
 ritual.bloodmagic.forsakenSoulRitual=Versammlung der verlassenen Seelen
@@ -667,7 +667,7 @@ ritual.bloodmagic.interdictionRitual.info=Stößt alle Mobs im Gebiet weg vom Ha
 ritual.bloodmagic.containmentRitual.info=Zieht alle Mobs im Gebiet zum Haupt-Ritualstein.
 ritual.bloodmagic.speedRitual.info=Stößt Spieler im Gebiet in Richtung des Rituals
 ritual.bloodmagic.suppressionRitual.info=Verdrängt Flüssigkeiten im Ritualbereich - das Deaktivieren des Rituals bringt die Flüssigkeiten wieder zurück.
-ritual.bloodmagic.expulsionRitual.info=Teleportiert Spieler, die weder Besitzer des Rituals sind, noch ein gebundenes Orb in einer verbundenen Truhe haben, weg vom Ritual.
+ritual.bloodmagic.expulsionRitual.info=Teleportiert Spieler, die weder Besitzer des Rituals sind, noch eine gebundene Blutkugel in einer verbundenen Truhe haben, weg vom Ritual.
 ritual.bloodmagic.zephyrRitual.info=Nimmt in der nähe befindliche Gegenstände auf und platziert sie in der verbundenen Truhe.
 ritual.bloodmagic.upgradeRemoveRitual.info=Entfernt alle Eigenschaften von der Lebenden Rüstung und gibt die dazugehörigen Thesen. Diese können benutzt werden, um sie wieder der Lebenden Rüstung hinzuzufügen.
 ritual.bloodmagic.armourEvolveRitual.info=Erhöht das Maximum verfügbarer Upgrade-Punkte der Lebenden Rüstung auf 300.
@@ -708,7 +708,7 @@ ritual.bloodmagic.interdictionRitual.interdictionRange.info=(Stoßen) Das Gebiet
 ritual.bloodmagic.containmentRitual.containmentRange.info=(Eindämmung) Das Gebiet, in dem Mobs herangezogen werden. Alle Mobs werden vom Haupt-Ritualstein weggestoßen, egal wo sich das Gebiet befindet.
 ritual.bloodmagic.speedRitual.sanicRange.info=(Geschwindigkeit) Alle Objekte in diesem Gebiet werden in die Richtung des Pfeils, der vom Ritual geformt wurde, katapultiert.
 ritual.bloodmagic.suppressionRitual.suppressionRange.info=(Verdrängung) Alle Flüssigkeiten im Gebiet werden verdrängt.
-ritual.bloodmagic.expulsionRitual.expulsionRange.info=(Vertreibung) Das Gebiet, in dem Spieler, die nicht Besitzer sind und kein Orb in der Truhe haben, wegteleportiert werden.
+ritual.bloodmagic.expulsionRitual.expulsionRange.info=(Vertreibung) Das Gebiet, in dem Spieler, die nicht Besitzer sind und keine Blutkugel in der Truhe haben, wegteleportiert werden.
 ritual.bloodmagic.zephyrRitual.zephyrRange.info=(Saugen) Gegenstände in diesem Gebiet werden in die verbundene Truhe gesaugt.
 ritual.bloodmagic.zephyrRitual.chest.info=(Truhe) Die Position der Truhe, in die aufgenommene Gegenstände platziert werden.
 ritual.bloodmagic.animalGrowthRitual.growing.info=(Wachstum) Tiere in diesem Gebiet werden wesentlich schneller wachsen.
@@ -817,7 +817,7 @@ commands.network.set.success=Erfolgreich %ss LP-Netzwerk auf %d LP gesetzt.
 commands.network.get.help=Zeigt an, wie viel LP ein Spieler in seinem Netzwerk hat.
 commands.network.fill.help=Füllt das LP-Netzwerk des Spielers auf %d.
 commands.network.fill.success=%ss LP-Netzwerk erfolgreich befüllt.
-commands.network.cap.help=Füllt das LP-Netzwerk des Spielers bis zu dem Maximum, das dessen höchstes Blutorb speichern kann.
+commands.network.cap.help=Füllt das LP-Netzwerk des Spielers bis zu dem Maximum, das dessen höchstes Blutkugel speichern kann.
 commands.network.cap.success=%ss LP-Netzwerk erfolgreich gefüllt.
 
 commands.bind.usage=/bloodmagic bind [true|false] [Spieler]
@@ -826,7 +826,7 @@ commands.bind.success=Erfolgreich gebunden
 commands.bind.remove.success=Bindung erfolgreich entfernt
 
 commands.orb.usage=/bloodmagic orb [set|get] Spieler [tier]
-commands.orb.help=Setzt oder zeigt die Blutorb-Ausbaustufe des Spielers.
+commands.orb.help=Setzt oder zeigt die Blutkugel-Ausbaustufe des Spielers.
 
 commands.bind.usage=/bind <Spieler>
 commands.bind.success=Gegenstand erfolgreich gebunden!
@@ -845,8 +845,8 @@ commands.soulnetwork.get.success=In %ss LP-Netzwerk sind %dLP!
 commands.soulnetwork.noPlayer=Kein Spieler angegeben
 commands.soulnetwork.noCommand=Kein Befehl angegeben
 commands.soulnetwork.notACommand=Das ist kein gültiger Befehl
-commands.soulnetwork.fillMax.success=%ss LP-Netzwerk erfolgreich zu deren Blutorb-Maximum befüllt!
-commands.soulnetwork.create.success=%ss LP-Netzwerk erfolgreich erstellt! (Blutorb-Ausbaustufe: %d)
+commands.soulnetwork.fillMax.success=%ss LP-Netzwerk erfolgreich zu deren Blutkugel-Maximum befüllt!
+commands.soulnetwork.create.success=%ss LP-Netzwerk erfolgreich erstellt! (Blutkugel-Ausbaustufe: %d)
 
 # GUI
 tile.bloodmagic.inputNode.name=Eingangsknoten
