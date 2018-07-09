@@ -34,7 +34,7 @@ item.bloodmagic.focus.enhanced.name=Verbesserter Telepositionsfokus
 item.bloodmagic.focus.reinforced.name=Verstärkter Telepositionsfokus
 item.bloodmagic.focus.demonic.name=Dämonischer Telepositionsfokus
 
-item.bloodmagic.slate.blank.name=Leere Tafel
+item.bloodmagic.slate.blank.name=Leere Schiefertafel
 item.bloodmagic.slate.reinforced.name=Verstärkte Tafel
 item.bloodmagic.slate.imbued.name=Erfüllte Tafel
 item.bloodmagic.slate.demonic.name=Dämonische Tafel
@@ -169,7 +169,7 @@ item.bloodmagic.soulGem.lesser.name=Niederes Juwel des Tartaros
 item.bloodmagic.soulGem.common.name=Gewöhnliches Juwel des Tartaros
 item.bloodmagic.soulGem.greater.name=Größeres Juwel des Tartaros
 item.bloodmagic.soulGem.grand.name=Großartiges Juwel des Tartaros
-item.bloodmagic.soulSnare.base.name=Rudimentäre Falle
+item.bloodmagic.soulSnare.base.name=Rudimentäre Schlinge
 item.bloodmagic.sentientBow.name=Empfindsamer Bogen
 item.bloodmagic.sentientArmourGem.name=Juwel der Empfindsamen Rüstung
 item.bloodmagic.sentientAxe.name=Empfindsame Axt
@@ -256,11 +256,11 @@ tile.bloodmagic.path.obsidiantile.name=Gekachelter Obsidianpfad
 tile.bloodmagic.dimensionalPortal.name=Dimensionsportal
 tile.bloodmagic.bloodTank.name=Bluttank
 
-tile.bloodmagic.demonCrystal.default.name=Ansammlung Kristalle dämonischen Willens
-tile.bloodmagic.demonCrystal.corrosive.name=Ansammlung Kristalle ätzenden dämonischen Willens
-tile.bloodmagic.demonCrystal.destructive.name=Ansammlung Kristalle zerstörerischen dämonischen Willens
-tile.bloodmagic.demonCrystal.vengeful.name=Ansammlung Kristalle rachsüchtigen dämonischen Willens
-tile.bloodmagic.demonCrystal.steadfast.name=Ansammlung Kristalle standhaften dämonischen Willens
+tile.bloodmagic.demonCrystal.default.name=Kristallansammlung dämonischen Willens
+tile.bloodmagic.demonCrystal.corrosive.name=Kristallansammlung ätzenden dämonischen Willens
+tile.bloodmagic.demonCrystal.destructive.name=Kristallansammlung zerstörerischen dämonischen Willens
+tile.bloodmagic.demonCrystal.vengeful.name=Kristallansammlung rachsüchtigen dämonischen Willens
+tile.bloodmagic.demonCrystal.steadfast.name=Kristallansammlung standhaften dämonischen Willens
 
 tile.bloodmagic.mimic.nohitbox.name=Ätherischer opaker Mimikblock
 tile.bloodmagic.mimic.solidopaque.name=Opaker Mimikblock
