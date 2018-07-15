@@ -178,7 +178,7 @@ item.bloodmagic.sentientShovel.name=Empfindsame Schaufel
 
 item.bloodmagic.nodeRouter.name=Knoten-Router
 item.bloodmagic.itemFilter.exact.name=Präziser Gegenstandsfilter
-item.bloodmagic.itemFilter.ignoreNBT.name=NBT Gegenstandsfilter
+item.bloodmagic.itemFilter.ignoreNBT.name=Ignoriere NBT Gegenstandsfilter
 item.bloodmagic.itemFilter.modItems.name=Mod Gegenstandsfilter
 item.bloodmagic.itemFilter.oreDict.name=Ore Dictionary Gegenstandsfilter
 item.bloodmagic.fluidFilter.exact.name=Flüssigeitsfilter
@@ -196,9 +196,9 @@ item.bloodmagic.icarusScroll.name=Ikarusrolle
 # Blocks
 tile.bloodmagic.fluid.lifeEssence.name=Lebensessenz
 
-tile.bloodmagic.stone.ritual.master.name=Haupt-Ritualstein
+tile.bloodmagic.stone.ritual.master.name=Meisterritualstein
 tile.bloodmagic.stone.ritual.imperfect.name=Imperfekter Ritualstein
-tile.bloodmagic.stone.ritual.inverted.name=Umgekehrter Haupt-Ritualstein
+tile.bloodmagic.stone.ritual.inverted.name=Umgekehrter Meisterritualstein
 
 tile.bloodmagic.altar.name=Blutaltar
 tile.bloodmagic.alchemyArray.name=&r&fAlchemische Anordnung
@@ -462,9 +462,9 @@ tooltip.bloodmagic.ritualReader.currentState=Modus: %s
 tooltip.bloodmagic.ritualReader.set_area=Definiere Gebiet
 tooltip.bloodmagic.ritualReader.information=Information
 tooltip.bloodmagic.ritualReader.set_will_types=Setze verbrauchten Willen
-tooltip.bloodmagic.ritualReader.desc.set_area=Rechtsklick auf einen aktiven Haupt-Ritualstein, um auszuwählen, welches Gebiet vom Ritual modifiziert werden soll. Dann klicke auf zwei gegenüberliegende Ecken, um das neue Gebiet zu definieren.
-tooltip.bloodmagic.ritualReader.desc.information=Rechtsklick auf einen aktiven Haupt-Ritualstein, um Informationen über das Ritual anzuzeigen.
-tooltip.bloodmagic.ritualReader.desc.set_will_types=Setze durch einen Rechtsklick auf den HRS mit den jeweiligen Kristallen die Aspekte dämonischen Willens, die das Ritual über die Aura aufnimmt.
+tooltip.bloodmagic.ritualReader.desc.set_area=Rechtsklick auf einen aktiven Meisterritualstein, um auszuwählen, welches Gebiet vom Ritual modifiziert werden soll. Dann klicke auf zwei gegenüberliegende Ecken, um das neue Gebiet zu definieren.
+tooltip.bloodmagic.ritualReader.desc.information=Rechtsklick auf einen aktiven Meisterritualstein, um Informationen über das Ritual anzuzeigen.
+tooltip.bloodmagic.ritualReader.desc.set_will_types=Setze durch einen Rechtsklick auf den MRS mit den jeweiligen Kristallen die Aspekte dämonischen Willens, die das Ritual über die Aura aufnimmt.
 
 tooltip.bloodmagic.arcaneAshes=Asche gebraucht für einen alchemischen Kreis
 
@@ -616,8 +616,8 @@ ritual.bloodmagic.portalRitual=Das Tor der Faltung
 ritual.bloodmagic.downgradeRitual=Sühne der belasteten Seele
 ritual.bloodmagic.crystalSplitRitual=Resonanz des facettierten Kristalls
 
-ritual.bloodmagic.waterRitual.info=Generiert eine Wasserquelle auf dem Haupt-Ritualstein.
-ritual.bloodmagic.lavaRitual.info=Generiert eine Lavaquelle auf dem Haupt-Ritualstein.
+ritual.bloodmagic.waterRitual.info=Generiert eine Wasserquelle auf dem Meisterritualstein.
+ritual.bloodmagic.lavaRitual.info=Generiert eine Lavaquelle auf dem Meisterritualstein.
 ritual.bloodmagic.lavaRitual.default.info=(Roh) Verringert die LP-Kosten der Lava und erlaubt die Platzierung in einem Tank.
 ritual.bloodmagic.lavaRitual.corrosive.info=(Ätzend) Objekte in Reichweite, die immun gegen Feuer sind nehmen hohen Schaden.
 ritual.bloodmagic.lavaRitual.destructive.info=(Zerstörerisch) Lava Platzierungsweite ist basierend auf der Menge an Wille erhöht.
@@ -663,8 +663,8 @@ ritual.bloodmagic.animalGrowthRitual.corrosive.info=(Ätzend) Nicht implementier
 
 ritual.bloodmagic.crystalSplitRitual.info=Spaltet eine ausgewachsene rohe Kristallansammlung in die Aspekte auf.
 ritual.bloodmagic.fullStomachRitual.info=Entfernt Essen aus der verbundenen Truhe, um die Sättigung des Spielers zu füllen.
-ritual.bloodmagic.interdictionRitual.info=Stößt alle Mobs im Gebiet weg vom Haupt-Ritualstein.
-ritual.bloodmagic.containmentRitual.info=Zieht alle Mobs im Gebiet zum Haupt-Ritualstein.
+ritual.bloodmagic.interdictionRitual.info=Stößt alle Mobs im Gebiet weg vom Meisterritualstein.
+ritual.bloodmagic.containmentRitual.info=Zieht alle Mobs im Gebiet zum Meisterritualstein.
 ritual.bloodmagic.speedRitual.info=Stößt Spieler im Gebiet in Richtung des Rituals
 ritual.bloodmagic.suppressionRitual.info=Verdrängt Flüssigkeiten im Ritualbereich - das Deaktivieren des Rituals bringt die Flüssigkeiten wieder zurück.
 ritual.bloodmagic.expulsionRitual.info=Teleportiert Spieler, die weder Besitzer des Rituals sind, noch eine gebundene Blutkugel in einer verbundenen Truhe haben, weg vom Ritual.
@@ -704,8 +704,8 @@ ritual.bloodmagic.crushingRitual.crushingRange.info=(Brecher) Die Blöcke, die v
 ritual.bloodmagic.crushingRitual.chest.info=(Truhe) Die Position der Truhe, in die die zerstörten Blöcke platziert werden.
 ritual.bloodmagic.fullStomachRitual.fillRange.info=(Fütterung) Das Gebiet, in dem das Ritual nach Spielern sucht, die gefüttert werden.
 ritual.bloodmagic.fullStomachRitual.chest.info=(Truhe) Die Position des Inventars, aus dem das Ritual Essen nimmt, um Spieler in Reichweite zu füttern.
-ritual.bloodmagic.interdictionRitual.interdictionRange.info=(Stoßen) Das Gebiet, in dem Mobs weggestoßen werden. Alle Mobs werden vom Haupt-Ritualstein weggestoßen, egal wo sich das Gebiet befindet.
-ritual.bloodmagic.containmentRitual.containmentRange.info=(Eindämmung) Das Gebiet, in dem Mobs herangezogen werden. Alle Mobs werden vom Haupt-Ritualstein weggestoßen, egal wo sich das Gebiet befindet.
+ritual.bloodmagic.interdictionRitual.interdictionRange.info=(Stoßen) Das Gebiet, in dem Mobs weggestoßen werden. Alle Mobs werden vom Meisterritualstein weggestoßen, egal wo sich das Gebiet befindet.
+ritual.bloodmagic.containmentRitual.containmentRange.info=(Eindämmung) Das Gebiet, in dem Mobs herangezogen werden. Alle Mobs werden vom Meisterritualstein weggestoßen, egal wo sich das Gebiet befindet.
 ritual.bloodmagic.speedRitual.sanicRange.info=(Geschwindigkeit) Alle Objekte in diesem Gebiet werden in die Richtung des Pfeils, der vom Ritual geformt wurde, katapultiert.
 ritual.bloodmagic.suppressionRitual.suppressionRange.info=(Verdrängung) Alle Flüssigkeiten im Gebiet werden verdrängt.
 ritual.bloodmagic.expulsionRitual.expulsionRange.info=(Vertreibung) Das Gebiet, in dem Spieler, die nicht Besitzer sind und keine Blutkugel in der Truhe haben, wegteleportiert werden.
