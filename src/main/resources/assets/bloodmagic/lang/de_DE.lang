@@ -256,11 +256,11 @@ tile.bloodmagic.path.obsidiantile.name=Gekachelter Obsidianpfad
 tile.bloodmagic.dimensionalPortal.name=Dimensionsportal
 tile.bloodmagic.bloodTank.name=Bluttank
 
-tile.bloodmagic.demonCrystal.default.name=Kristallansammlung dämonischen Willens
-tile.bloodmagic.demonCrystal.corrosive.name=Kristallansammlung ätzenden dämonischen Willens
-tile.bloodmagic.demonCrystal.destructive.name=Kristallansammlung zerstörerischen dämonischen Willens
-tile.bloodmagic.demonCrystal.vengeful.name=Kristallansammlung rachsüchtigen dämonischen Willens
-tile.bloodmagic.demonCrystal.steadfast.name=Kristallansammlung standhaften dämonischen Willens
+tile.bloodmagic.demonCrystal.default.name=Kristallgruppe dämonischen Willens
+tile.bloodmagic.demonCrystal.corrosive.name=Kristallgruppe ätzenden dämonischen Willens
+tile.bloodmagic.demonCrystal.destructive.name=Kristallgruppe zerstörerischen dämonischen Willens
+tile.bloodmagic.demonCrystal.vengeful.name=Kristallgruppe rachsüchtigen dämonischen Willens
+tile.bloodmagic.demonCrystal.steadfast.name=Kristallgruppe standhaften dämonischen Willens
 
 tile.bloodmagic.mimic.nohitbox.name=Ätherischer opaker Mimikblock
 tile.bloodmagic.mimic.solidopaque.name=Opaker Mimikblock
@@ -661,7 +661,7 @@ ritual.bloodmagic.animalGrowthRitual.default.info=(Roh) Erhöht die Geschwindigk
 ritual.bloodmagic.animalGrowthRitual.destructive.info=(Zerstörerisch) Lässt Erwachsene, die sich länger nicht mehr gedeckt haben, auf Monster zulaufen und explodieren.
 ritual.bloodmagic.animalGrowthRitual.corrosive.info=(Ätzend) Nicht implementiert.
 
-ritual.bloodmagic.crystalSplitRitual.info=Spaltet eine ausgewachsene rohe Kristallansammlung in die Aspekte auf.
+ritual.bloodmagic.crystalSplitRitual.info=Spaltet eine ausgewachsene rohe Kristallgruppe in die Aspekte auf.
 ritual.bloodmagic.fullStomachRitual.info=Entfernt Essen aus der verbundenen Truhe, um die Sättigung des Spielers zu füllen.
 ritual.bloodmagic.interdictionRitual.info=Stößt alle Mobs im Gebiet weg vom Meisterritualstein.
 ritual.bloodmagic.containmentRitual.info=Zieht alle Mobs im Gebiet zum Meisterritualstein.
@@ -715,7 +715,7 @@ ritual.bloodmagic.animalGrowthRitual.growing.info=(Wachstum) Tiere in diesem Geb
 ritual.bloodmagic.animalGrowthRitual.chest.info=(Truhe) Truhe mit Gegenständen, die für das Züchten verwendet werden, falls das Ritual dementsprechend verbessert wurde.
 ritual.bloodmagic.forsakenSoulRitual.crystal.info=(Kristall) Dämonenkristalle in diesem Gebiet wachsen schneller wenn ein Mob vom Ritual getötet wurde.
 ritual.bloodmagic.forsakenSoulRitual.damage.info=(Schaden) Mobs in diesem Gebiet nehmen langsam schaden und lassen einen Kristall wachsen, wenn sie durch das Ritual sterben.
-ritual.bloodmagic.crystalHarvestRitual.crystal.info=(Kristall) Von allen Dämonenkristallansammlungen wird ein Kristall abgebrochen, der Gegenstand wird in der Welt fallengelassen. Sollte in der Ansammlung nur noch ein Kristall sein, wird dieser nicht abgebrochen.
+ritual.bloodmagic.crystalHarvestRitual.crystal.info=(Kristall) Von allen Dämonenkristallgruppen wird ein Kristall abgebrochen, der Gegenstand wird in der Welt fallengelassen. Sollte in der Gruppe nur noch ein Kristall sein, wird dieser nicht abgebrochen.
 
 ritual.bloodmagic.ellipseRitual.info=Erzeugt eine hohle Spähre um das Ritual mit den Blöcken in der verbundenen Truhe.
 ritual.bloodmagic.ellipseRitual.spheroidRange.info=(Platzierung) Das Gebiet, in dem Blöcke platziert werden. Die Sphäre ist auf das Ritual zentriert - falls eine Seite kürzer als die andere ist, wird die Sphäre an der kürzeren Seite abgeschnitten.
