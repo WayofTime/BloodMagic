@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.alchemyArray;
 
 import java.util.Random;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -83,9 +84,10 @@ public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect
                         {
                             BlockPos newPos = pos.add(i, j, k);
                             BlockPos offsetPos = newPos.up(teleportHeightOffset);
+                            IBlockState state = world.getBlockState(newPos);
 
                             TeleposeEvent event = new TeleposeEvent(world, newPos, world, offsetPos);
-                            if (Utils.swapLocations(event.initalWorld, event.initialBlockPos, event.finalWorld, event.finalBlockPos) && !MinecraftForge.EVENT_BUS.post(event))
+                            if (state.getBlockHardness(world, newPos) > 0 && !MinecraftForge.EVENT_BUS.post(event) && Utils.swapLocations(event.initalWorld, event.initialBlockPos, event.finalWorld, event.finalBlockPos))
                             {
                                 k++;
                                 this.currentPos = new BlockPos(i, j, k);
