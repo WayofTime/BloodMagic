@@ -176,7 +176,7 @@ item.bloodmagic.sentientAxe.name=Empfindsame Axt
 item.bloodmagic.sentientPickaxe.name=Empfindsame Spitzhacke
 item.bloodmagic.sentientShovel.name=Empfindsame Schaufel
 
-item.bloodmagic.nodeRouter.name=Knoten-Router
+item.bloodmagic.nodeRouter.name=Netzknoten-Router
 item.bloodmagic.itemFilter.exact.name=Präziser Gegenstandsfilter
 item.bloodmagic.itemFilter.ignoreNBT.name=Ignoriere NBT Gegenstandsfilter
 item.bloodmagic.itemFilter.modItems.name=Mod Gegenstandsfilter
