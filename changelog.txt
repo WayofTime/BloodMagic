@@ -1,4 +1,30 @@
 ------------------------------------------------------
+Version 2.3.0
+------------------------------------------------------
+
+- Fixed Basic Cutting Fluid recipe so it no longer requires an unobtainable potion
+- Fixed Teleposer Blacklist not working
+- Fixed the bounding box on the Blood Tank
+- Fixed crafted Inscription Tools not having their uses tag applied
+- Fixed JEI queries with bound Blood Orbs
+- Fixed Crushing Ritual not passing a valid player
+- Fixed Mending applying to Potion Flasks
+- Fixed Teleposition Sigil not checking for a Teleposer at it's destination
+- Fixed Lava Crystal not syphoning LP
+- Fixed the Laputa array moving unbreakable blocks
+    - ie: Bedrock
+- Fixed the Ritual of the Green Grove not working on Cactus and Reeds
+- Added a Mob Sacrifice array
+- Updated the HUD system
+    - You can now edit the HUD layout via the in-game config editor with a drag'n'drop system.
+    - This screen is only available while in a world.
+- Updated the German translation
+- Updated the Chinese translation
+- [API] Reworked how rituals are registered
+    - This will break any addons that work with rituals
+    - If you report an issue to me regarding broken addons, it will be closed without any comment
+
+------------------------------------------------------
 Version 2.2.12
 ------------------------------------------------------
 - Fixed Hellfire Forge and Alchemy Table's shape-crafted-ness.

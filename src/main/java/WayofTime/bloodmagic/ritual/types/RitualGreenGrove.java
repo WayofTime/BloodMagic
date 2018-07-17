@@ -8,9 +8,7 @@ import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockFarmland;
-import net.minecraft.block.IGrowable;
+import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -93,11 +91,13 @@ public class RitualGreenGrove extends Ritual {
             IBlockState state = world.getBlockState(newPos);
 
             if (!BloodMagicAPI.INSTANCE.getBlacklist().getGreenGrove().contains(state)) {
-                if (state.getBlock() instanceof IGrowable) {
+                boolean flag = state.getBlock() instanceof IGrowable || state.getBlock() instanceof BlockCactus || state.getBlock() instanceof BlockReed;
+                if (flag) {
                     if (world.rand.nextDouble() < growthChance) {
                         state.getBlock().updateTick(world, newPos, state, new Random());
                         IBlockState newState = world.getBlockState(newPos);
                         if (!newState.equals(state)) {
+                            world.playEvent(2005, newPos, 0);
                             totalGrowths++;
                             if (consumeRawWill) {
                                 rawWill -= rawWillDrain;
