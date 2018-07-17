@@ -870,10 +870,10 @@ jei.bloodmagic.recipe.consumptionRate=Verbrauch: %d LP/t
 jei.bloodmagic.recipe.drainRate=Ablauf: %d LP/t
 jei.bloodmagic.recipe.minimumSouls=Minimum: %1$..2f Wille
 jei.bloodmagic.recipe.soulsDrained=Verbraucht: %1$..2f Wille
-jei.bloodmagic.recipe.lpDrained=Drained: %.d LP
-jei.bloodmagic.recipe.ticksRequired=Time: %.d Ticks
+jei.bloodmagic.recipe.lpDrained=Verbraucht: %.d LP
+jei.bloodmagic.recipe.ticksRequired=Zeit: %.d Ticks
 
-jei.bloodmagic.desc.altarBuilder=Ein Item zum Testen. Nur im Kreativmodus erhältlich.\n\nShift+Rechtsklick um die Ausbaustufe zu ändern. Rechtsklicke auf einen Altar, um den Bau zu starten.\n\nZerstöre einen Altar mit ihm in der Hand, um alles abzubauen.
+jei.bloodmagic.desc.altarBuilder=Ein Gegenstand zum Testen. Nur im Kreativmodus erhältlich.\n\nShift+Rechtsklick um die Ausbaustufe zu ändern. Rechtsklicke auf einen Altar, um den Bau zu starten.\n\nZerstöre einen Altar mit ihm in der Hand, um alles abzubauen.
 jei.bloodmagic.desc.demonicWill=Prägung eines dämonischen Wesens gebunden an eine Kreatur.\n\nKann durch das Töten eines Monsters mit einer empfindsamen Waffe, oder das Werfen einer Falle und Umbringen während as weiße Partikel aussendet, gesammelt werden.
 
 # WAILA
