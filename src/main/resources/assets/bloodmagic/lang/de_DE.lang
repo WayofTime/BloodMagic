@@ -104,17 +104,17 @@ item.bloodmagic.baseComponent.catalyst_power_1.name=Einfacher Machtkatalysator
 item.bloodmagic.cutting_fluid.basic.name=Einfache Schneidelösung
 item.bloodmagic.cutting_fluid.explosive.name=Explosives Pulver
 
-item.bloodmagic.demonCrystal.default.name=Kristall dämonischen Willens
-item.bloodmagic.demonCrystal.corrosive.name=Kristall korrosiven dämonischen Willens
-item.bloodmagic.demonCrystal.destructive.name=Kristall zerstörenden dämonischen Willens
-item.bloodmagic.demonCrystal.vengeful.name=Kristall rachsüchtigen dämonischen Willens
-item.bloodmagic.demonCrystal.steadfast.name=Kristall standhaften dämonischen Willens
+item.bloodmagic.demonCrystal.default.name=Kristall dämonischer Willenskraft
+item.bloodmagic.demonCrystal.corrosive.name=Kristall korrosiver dämonischer Willenskraft
+item.bloodmagic.demonCrystal.destructive.name=Kristall zerstörender dämonischer Willenskraft
+item.bloodmagic.demonCrystal.vengeful.name=Kristall rachsüchtiger dämonischer Willenskraft
+item.bloodmagic.demonCrystal.steadfast.name=Kristall standhafter dämonischer Willenskraft
 
-item.bloodmagic.monsterSoul.base.name=Dämonischer Wille
-item.bloodmagic.monster_soul.corrosive.name=Korrosiver dämonischer Wille
-item.bloodmagic.monster_soul.destructive.name=Zerstörerischer dämonischer Wille
-item.bloodmagic.monster_soul.vengeful.name=Rachsüchtiger dämonischer Wille
-item.bloodmagic.monster_soul.steadfast.name=Standhafter dämonischer Wille
+item.bloodmagic.monsterSoul.base.name=Dämonische Willenskraft
+item.bloodmagic.monster_soul.corrosive.name=Korrosive dämonische Willenskraft
+item.bloodmagic.monster_soul.destructive.name=Zerstörerische dämonische Willenskraft
+item.bloodmagic.monster_soul.vengeful.name=Rachsüchtige dämonische Willenskraft
+item.bloodmagic.monster_soul.steadfast.name=Standhafte dämonische Willenskraft
 
 item.bloodmagic.sigil.air.name=Luftsiegel
 item.bloodmagic.sigil.bloodLight.name=Siegel der Blutlampe
