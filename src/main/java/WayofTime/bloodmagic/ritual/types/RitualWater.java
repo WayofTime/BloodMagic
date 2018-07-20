@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
+@RitualRegister("water")
 public class RitualWater extends Ritual {
     public static final String WATER_RANGE = "waterRange";
 

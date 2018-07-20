@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("meteor")
 public class RitualMeteor extends Ritual {
     public static final String ITEM_RANGE = "itemRange";
     public static final double destructiveWillDrain = 50;

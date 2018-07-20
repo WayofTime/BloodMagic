@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
+@RitualRegister("crystal_harvest")
 public class RitualCrystalHarvest extends Ritual {
     public static final String CRYSTAL_RANGE = "crystal";
 

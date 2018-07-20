@@ -15,6 +15,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.function.Consumer;
 
+@RitualRegister("placer")
 public class RitualPlacer extends Ritual {
     public static final String PLACER_RANGE = "placerRange";
     public static final String CHEST_RANGE = "chest";

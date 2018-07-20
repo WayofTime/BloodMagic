@@ -18,8 +18,7 @@ import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 /**
- * Abstract class for creating new rituals. Rituals need be registered with
- * {@link RitualRegistry#registerRitual(Ritual, String)}
+ * Abstract class for creating new rituals. Register your ritual by annotating it with {@link RitualRegister}
  */
 public abstract class Ritual {
 

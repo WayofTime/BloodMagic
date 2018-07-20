@@ -4,8 +4,6 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.event.RitualEvent;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.ritual.imperfect.IImperfectRitualStone;
-import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRegistry;
-import WayofTime.bloodmagic.ritual.RitualRegistry;
 import WayofTime.bloodmagic.ritual.Ritual;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.util.helper.RitualHelper;
@@ -56,13 +54,22 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
                     return false;
 
                 String key = RitualHelper.getValidRitual(world, pos);
-                EnumFacing direction = RitualHelper.getDirectionOfRitual(world, pos, key);
-                // TODO: Give a message stating that this ritual is not a valid ritual.
-                if (!key.isEmpty() && direction != null && RitualHelper.checkValidRitual(world, pos, key, direction)) {
-                    if (((TileMasterRitualStone) tile).activateRitual(heldItem, player, RitualRegistry.getRitualForId(key))) {
-                        ((TileMasterRitualStone) tile).setDirection(direction);
-                        if (state.getValue(getProperty()) == EnumRitualController.INVERTED)
-                            ((TileMasterRitualStone) tile).setInverted(true);
+                if (!key.isEmpty()) {
+                    Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(key);
+                    if (ritual != null) {
+                        EnumFacing direction = RitualHelper.getDirectionOfRitual(world, pos, ritual);
+                        // TODO: Give a message stating that this ritual is not a valid ritual.
+                        if (direction != null && RitualHelper.checkValidRitual(world, pos, ritual, direction)) {
+                            if (((TileMasterRitualStone) tile).activateRitual(heldItem, player, BloodMagic.RITUAL_MANAGER.getRitual(key))) {
+                                ((TileMasterRitualStone) tile).setDirection(direction);
+                                if (state.getValue(getProperty()) == EnumRitualController.INVERTED)
+                                    ((TileMasterRitualStone) tile).setInverted(true);
+                            }
+                        } else {
+                            player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.notValid"), true);
+                        }
+                    } else {
+                        player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.notValid"), true);
                     }
                 } else {
                     player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.notValid"), true);
@@ -70,7 +77,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
             }
         } else if (state.getValue(getProperty()) == EnumRitualController.IMPERFECT && tile instanceof TileImperfectRitualStone) {
             IBlockState ritualBlock = world.getBlockState(pos.up());
-            ImperfectRitual ritual = ImperfectRitualRegistry.getRitualForBlock(ritualBlock);
+            ImperfectRitual ritual = BloodMagic.RITUAL_MANAGER.getImperfectRitual(ritualBlock);
             if (ritual == null)
                 return false;
 
@@ -120,7 +127,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
             else
                 return new ResourceLocation("bloodmagic", "ritual_" + mrs.getCurrentRitual().getName());
         } else if (state.getValue(getProperty()).equals(EnumRitualController.IMPERFECT)) {
-            ImperfectRitual imperfectRitual = ImperfectRitualRegistry.getRitualForBlock(world.getBlockState(pos.up()));
+            ImperfectRitual imperfectRitual = BloodMagic.RITUAL_MANAGER.getImperfectRitual(world.getBlockState(pos.up()));
             if (imperfectRitual != null)
                 return new ResourceLocation("bloodmagic", "ritual_" + imperfectRitual.getName());
         }

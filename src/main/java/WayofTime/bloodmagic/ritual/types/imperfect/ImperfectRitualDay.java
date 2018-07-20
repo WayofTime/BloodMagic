@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitual;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 
+//@RitualRegister.Imperfect("day")
 public class ImperfectRitualDay extends ImperfectRitual {
     public ImperfectRitualDay() {
         super("day", s -> s.getBlock() == Blocks.GOLD_BLOCK, 5000, true, "ritual." + BloodMagic.MODID + ".imperfect.day");

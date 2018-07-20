@@ -28,6 +28,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("lava")
 public class RitualLava extends Ritual {
     public static final String LAVA_RANGE = "lavaRange";
     public static final String FIRE_FUSE_RANGE = "fireFuse";

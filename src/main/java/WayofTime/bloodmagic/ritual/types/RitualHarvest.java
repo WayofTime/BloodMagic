@@ -30,6 +30,7 @@ import java.util.function.Consumer;
  * {@link HarvestRegistry#registerRangeAmplifier(net.minecraft.block.state.IBlockState, int)} to register a
  * new amplifier.
  */
+@RitualRegister("harvest")
 public class RitualHarvest extends Ritual {
     public static final String HARVEST_RANGE = "harvestRange";
 

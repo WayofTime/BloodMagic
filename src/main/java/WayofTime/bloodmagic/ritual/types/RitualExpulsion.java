@@ -25,6 +25,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+@RitualRegister("expulsion")
 public class RitualExpulsion extends Ritual {
     public static final String EXPULSION_RANGE = "expulsionRange";
 

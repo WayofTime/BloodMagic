@@ -1,14 +1,11 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.altar.AltarComponent;
 import WayofTime.bloodmagic.altar.ComponentType;
 import WayofTime.bloodmagic.altar.AltarTier;
-import WayofTime.bloodmagic.ritual.EnumRuneType;
-import WayofTime.bloodmagic.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.ritual.Ritual;
-import WayofTime.bloodmagic.ritual.RitualComponent;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.util.Utils;
@@ -29,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
+@RitualRegister("altar_builder")
 public class RitualAltarBuilder extends Ritual {
     private Iterator<AltarComponent> altarComponentsIterator = new ArrayList<>(AltarTier.SIX.getAltarComponents()).iterator();
     private boolean cycleDone = false;

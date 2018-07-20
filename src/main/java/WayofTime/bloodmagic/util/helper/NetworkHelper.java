@@ -1,8 +1,9 @@
 package WayofTime.bloodmagic.util.helper;
 
 import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.iface.IBindable;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.event.SoulNetworkEvent;
+import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.core.registry.OrbRegistry;
@@ -13,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.UUID;
 
@@ -98,7 +98,7 @@ public class NetworkHelper {
      * @param user        - User of the item.
      * @param toSyphon    - Amount of LP to syphon
      * @return - Whether the action should be performed.
-     * @deprecated Use {@link #getSoulNetwork(EntityPlayer)} and {@link SoulNetwork#syphonAndDamage(EntityPlayer, int)}
+     * @deprecated Use {@link #getSoulNetwork(EntityPlayer)} and {@link SoulNetwork#syphonAndDamage(EntityPlayer, SoulTicket)}
      */
     @Deprecated
     public static boolean syphonAndDamage(SoulNetwork soulNetwork, EntityPlayer user, int toSyphon) {
@@ -119,7 +119,7 @@ public class NetworkHelper {
      * @param toSyphon - Amount of LP to syphon
      * @return - If the syphon was successful.
      */
-    public static boolean syphonFromContainer(ItemStack stack, int toSyphon) //TODO: Change to a String, int?
+    public static boolean syphonFromContainer(ItemStack stack, int toSyphon)
     {
         if (!(stack.getItem() instanceof IBindable))
             return false;
@@ -129,10 +129,9 @@ public class NetworkHelper {
             return false;
 
         SoulNetwork network = getSoulNetwork(binding);
+        SoulNetworkEvent.Syphon.Item event = new SoulNetworkEvent.Syphon.Item(network, new SoulTicket(toSyphon), stack);
 
-        SoulNetworkEvent.ItemDrainInContainerEvent event = new SoulNetworkEvent.ItemDrainInContainerEvent(stack, binding.getOwnerId(), toSyphon);
-
-        return !(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) && network.syphon(event.syphon) >= toSyphon;
+        return !MinecraftForge.EVENT_BUS.post(event) && network.syphon(event.getTicket(), true) >= toSyphon;
     }
 
     /**

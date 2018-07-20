@@ -1,8 +1,7 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRegistry;
-import WayofTime.bloodmagic.ritual.RitualRegistry;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
@@ -64,15 +63,15 @@ public class DataProviderRitualController implements IWailaDataProvider {
                 tag.setBoolean("active", mrs.isActive());
                 if (mrs.getOwner() != null)
                     tag.setString("owner", PlayerHelper.getUsernameFromUUID(mrs.getOwner()));
-                tag.setBoolean("enabled", RitualRegistry.ritualEnabled(mrs.getCurrentRitual()));
+                tag.setBoolean("enabled", BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(mrs.getCurrentRitual()), false));
             }
         } else {
             tag.setBoolean("master", false);
 
-            ImperfectRitual ritual = ImperfectRitualRegistry.getRitualForBlock(world.getBlockState(pos.up()));
+            ImperfectRitual ritual = BloodMagic.RITUAL_MANAGER.getImperfectRitual(world.getBlockState(pos.up()));
             if (ritual != null) {
                 tag.setString("ritual", ritual.getUnlocalizedName());
-                tag.setBoolean("enabled", ImperfectRitualRegistry.ritualEnabled(ritual));
+                tag.setBoolean("enabled", BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(ritual), false));
             }
         }
 
