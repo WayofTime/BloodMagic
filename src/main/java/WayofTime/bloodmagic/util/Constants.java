@@ -84,7 +84,7 @@ public class Constants
 
         public static final String LIVING_ARMOUR = "livingArmour";
 
-        public static final String CHARGE_TIME = "chargeTime";
+        public static final String CHARGE = "charge";
         public static final String HELD_DOWN = "heldDown";
 
         public static final String UPGRADE_POISON_TIMER = "poisonTimer";
