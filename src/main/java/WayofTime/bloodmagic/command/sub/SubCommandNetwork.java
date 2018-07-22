@@ -23,7 +23,7 @@ public class SubCommandNetwork extends CommandBase {
 
     @Override
     public String getUsage(ICommandSender commandSender) {
-        return TextHelper.localizeEffect("commands.network.usage");
+        return TextHelper.localizeEffect("commands.bloodmagic.network.usage");
     }
 
     @Override
@@ -50,12 +50,12 @@ public class SubCommandNetwork extends CommandBase {
                 CommandBloodMagic.displayErrorString(commandSender, e.getLocalizedMessage());
             }
         } else {
-            CommandBloodMagic.displayErrorString(commandSender, "commands.error.arg.missing");
+            CommandBloodMagic.displayErrorString(commandSender, "commands.bloodmagic.error.arg.missing");
         }
     }
 
     private enum ValidCommands {
-        SYPHON("commands.network.syphon.help") {
+        SYPHON("commands.bloodmagic.network.syphon.help") {
             @Override
             public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
                 if (displayHelp) {
@@ -67,16 +67,16 @@ public class SubCommandNetwork extends CommandBase {
                     if (Utils.isInteger(args[2])) {
                         int amount = Integer.parseInt(args[2]);
                         NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, amount);
-                        CommandBloodMagic.displaySuccessString(sender, "commands.network.syphon.success", amount, player.getDisplayName().getFormattedText());
+                        CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.syphon.success", amount, player.getDisplayName().getFormattedText());
                     } else {
-                        CommandBloodMagic.displayErrorString(sender, "commands.error.arg.invalid");
+                        CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
                     }
                 } else {
-                    CommandBloodMagic.displayErrorString(sender, "commands.error.arg.missing");
+                    CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.missing");
                 }
             }
         },
-        ADD("commands.network.add.help") {
+        ADD("commands.bloodmagic.network.add.help") {
             @Override
             public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
                 if (displayHelp) {
@@ -90,16 +90,16 @@ public class SubCommandNetwork extends CommandBase {
                     if (Utils.isInteger(args[2])) {
                         int amount = Integer.parseInt(args[2]);
                         int maxOrb = NetworkHelper.getMaximumForTier(network.getOrbTier());
-                        CommandBloodMagic.displaySuccessString(sender, "commands.network.add.success", network.add(amount, maxOrb), player.getDisplayName().getFormattedText());
+                        CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.add.success", network.add(amount, maxOrb), player.getDisplayName().getFormattedText());
                     } else {
-                        CommandBloodMagic.displayErrorString(sender, "commands.error.arg.invalid");
+                        CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
                     }
                 } else {
-                    CommandBloodMagic.displayErrorString(sender, "commands.error.arg.missing");
+                    CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.missing");
                 }
             }
         },
-        SET("commands.network.set.help") {
+        SET("commands.bloodmagic.network.set.help") {
             @Override
             public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
                 if (displayHelp) {
@@ -113,16 +113,16 @@ public class SubCommandNetwork extends CommandBase {
                     if (Utils.isInteger(args[2])) {
                         int amount = Integer.parseInt(args[2]);
                         network.setCurrentEssence(amount);
-                        CommandBloodMagic.displaySuccessString(sender, "commands.network.set.success", player.getDisplayName().getFormattedText(), amount);
+                        CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.set.success", player.getDisplayName().getFormattedText(), amount);
                     } else {
-                        CommandBloodMagic.displayErrorString(sender, "commands.error.arg.invalid");
+                        CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
                     }
                 } else {
-                    CommandBloodMagic.displayErrorString(sender, "commands.error.arg.missing");
+                    CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.missing");
                 }
             }
         },
-        GET("commands.network.get.help") {
+        GET("commands.bloodmagic.network.get.help") {
             @Override
             public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
                 if (displayHelp) {
@@ -137,7 +137,7 @@ public class SubCommandNetwork extends CommandBase {
 
             }
         },
-        FILL("commands.network.fill.help") {
+        FILL("commands.bloodmagic.network.fill.help") {
             @Override
             public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
                 if (displayHelp) {
@@ -149,11 +149,11 @@ public class SubCommandNetwork extends CommandBase {
 
                 if (args.length > 1) {
                     network.setCurrentEssence(Integer.MAX_VALUE);
-                    CommandBloodMagic.displaySuccessString(sender, "commands.network.fill.success", player.getDisplayName().getFormattedText());
+                    CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.fill.success", player.getDisplayName().getFormattedText());
                 }
             }
         },
-        CAP("commands.network.cap.help") {
+        CAP("commands.bloodmagic.network.cap.help") {
             @Override
             public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
                 if (displayHelp) {
@@ -166,7 +166,7 @@ public class SubCommandNetwork extends CommandBase {
                 if (args.length > 1) {
                     int maxOrb = NetworkHelper.getMaximumForTier(network.getOrbTier());
                     network.setCurrentEssence(maxOrb);
-                    CommandBloodMagic.displaySuccessString(sender, "commands.network.cap.success", player.getDisplayName().getFormattedText());
+                    CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.cap.success", player.getDisplayName().getFormattedText());
                 }
             }
         },;
