@@ -791,62 +791,62 @@ entity.bloodmagic.SentientSpecter.name=Empfindsamer Geist
 entity.bloodmagic.Mimic.name=Mimik
 
 # Commands
-commands.error.arg.invalid=Ungültige Argumente
-commands.error.arg.missing=Nicht genug Argumente
-commands.error.arg.player.missing=Du musst einen Spieler für diese Aktion bestimmen.
-commands.error.404=Befehl nicht gefunden!
-commands.error.unknown=Unbekannter Befehl!
-commands.error.perm=Du hast keine Berechtigung, diesen Befehl zu nutzen!
+commands.bloodmagic.error.arg.invalid=Ungültige Argumente
+commands.bloodmagic.error.arg.missing=Nicht genug Argumente
+commands.bloodmagic.error.arg.player.missing=Du musst einen Spieler für diese Aktion bestimmen.
+commands.bloodmagic.error.404=Befehl nicht gefunden!
+commands.bloodmagic.error.unknown=Unbekannter Befehl!
+commands.bloodmagic.error.perm=Du hast keine Berechtigung, diesen Befehl zu nutzen!
 
-commands.success=Erfolgreich ausgeführt
+commands.bloodmagic.success=Erfolgreich ausgeführt
 
-commands.format.help=%s - %s
-commands.format.error=%s - %s
+commands.bloodmagic.format.help=%s - %s
+commands.bloodmagic.format.error=%s - %s
 
-commands.help.usage=/bloodmagic help
-commands.help.help=Zeigt hilfe für den Befehl "/bloodmagic" an.
+commands.bloodmagic.help.usage=/bloodmagic help
+commands.bloodmagic.help.help=Zeigt hilfe für den Befehl "/bloodmagic" an.
 
-commands.network.usage=/bloodmagic network [syphon|add|get|fill|cap] Spieler [amount]
-commands.network.help=LP Netzwerk Befehle
-commands.network.syphon.help=Zieht den gegebenen Wert an LP vom LP-Netzwerk des gegebenen Spielers ab.
-commands.network.syphon.success=Erfolgreich %d LP von %s abgezogen.
-commands.network.add.help=Fügt den gegebenen Wert an LP dem LP-Netzwerk des gegebenen Spielers zu. Folgt normalen LP Regeln.
-commands.network.add.success=Erfolgreich %d LP zu %ss LP-Netzwerk hinzugefügt.
-commands.network.set.help=Setzt die LP des gegebenen Spielers auf einen bestimmten Wert.
-commands.network.set.success=Erfolgreich %ss LP-Netzwerk auf %d LP gesetzt.
-commands.network.get.help=Zeigt an, wie viel LP ein Spieler in seinem Netzwerk hat.
-commands.network.fill.help=Füllt das LP-Netzwerk des Spielers auf %d.
-commands.network.fill.success=%ss LP-Netzwerk erfolgreich befüllt.
-commands.network.cap.help=Füllt das LP-Netzwerk des Spielers bis zu dem Maximum, das dessen höchstes Blutkugel speichern kann.
-commands.network.cap.success=%ss LP-Netzwerk erfolgreich gefüllt.
+commands.bloodmagic.network.usage=/bloodmagic network [syphon|add|get|fill|cap] Spieler [amount]
+commands.bloodmagic.network.help=LP Netzwerk Befehle
+commands.bloodmagic.network.syphon.help=Zieht den gegebenen Wert an LP vom LP-Netzwerk des gegebenen Spielers ab.
+commands.bloodmagic.network.syphon.success=Erfolgreich %d LP von %s abgezogen.
+commands.bloodmagic.network.add.help=Fügt den gegebenen Wert an LP dem LP-Netzwerk des gegebenen Spielers zu. Folgt normalen LP Regeln.
+commands.bloodmagic.network.add.success=Erfolgreich %d LP zu %ss LP-Netzwerk hinzugefügt.
+commands.bloodmagic.network.set.help=Setzt die LP des gegebenen Spielers auf einen bestimmten Wert.
+commands.bloodmagic.network.set.success=Erfolgreich %ss LP-Netzwerk auf %d LP gesetzt.
+commands.bloodmagic.network.get.help=Zeigt an, wie viel LP ein Spieler in seinem Netzwerk hat.
+commands.bloodmagic.network.fill.help=Füllt das LP-Netzwerk des Spielers auf %d.
+commands.bloodmagic.network.fill.success=%ss LP-Netzwerk erfolgreich befüllt.
+commands.bloodmagic.network.cap.help=Füllt das LP-Netzwerk des Spielers bis zu dem Maximum, das dessen höchstes Blutkugel speichern kann.
+commands.bloodmagic.network.cap.success=%ss LP-Netzwerk erfolgreich gefüllt.
 
-commands.bind.usage=/bloodmagic bind [true|false] [Spieler]
-commands.bind.help=Versucht, den gehaltenen Gegenstand zu binden bzw. die Bindung zu entfernen.
-commands.bind.success=Erfolgreich gebunden
-commands.bind.remove.success=Bindung erfolgreich entfernt
+commands.bloodmagic.bind.usage=/bloodmagic bind [true|false] [Spieler]
+commands.bloodmagic.bind.help=Versucht, den gehaltenen Gegenstand zu binden bzw. die Bindung zu entfernen.
+commands.bloodmagic.bind.success=Erfolgreich gebunden
+commands.bloodmagic.bind.remove.success=Bindung erfolgreich entfernt
 
-commands.orb.usage=/bloodmagic orb [set|get] Spieler [tier]
-commands.orb.help=Setzt oder zeigt die Blutkugel-Ausbaustufe des Spielers.
+commands.bloodmagic.orb.usage=/bloodmagic orb [set|get] Spieler [tier]
+commands.bloodmagic.orb.help=Setzt oder zeigt die Blutkugel-Ausbaustufe des Spielers.
 
-commands.bind.usage=/bind <Spieler>
-commands.bind.success=Gegenstand erfolgreich gebunden!
-commands.bind.failed.noPlayer=Kein Spieler angegeben
-commands.bind.failed.alreadyBound=Gegenstand ist schon gebunden; benutze /unbind um die Bindung zu entfernen
-commands.bind.failed.notBindable=Gegenstand kann nicht gebunden werden
-commands.unbind.usage=/unbind
-commands.unbind.success=Bindung erfolgreich entfernt.
-commands.unbind.failed.notBindable=Bindung kann nicht entfernt werden.
-commands.soulnetwork.usage=/soulnetwork <Spieler> <add|subtract|fill|empty|get> [Menge]
-commands.soulnetwork.add.success=Erfolgreich %dLP zu %ss LP-Netzwerk hinzugefügt!
-commands.soulnetwork.subtract.success=Erfolgreich %dLP von %ss LP-Netzwerk entfernt!
-commands.soulnetwork.fill.success=Erfolgreich %ss LP-Netzwerk gefüllt!
-commands.soulnetwork.empty.success=Erfolgreich %ss LP-Netzwerk geleert!
-commands.soulnetwork.get.success=In %ss LP-Netzwerk sind %dLP!
-commands.soulnetwork.noPlayer=Kein Spieler angegeben
-commands.soulnetwork.noCommand=Kein Befehl angegeben
-commands.soulnetwork.notACommand=Das ist kein gültiger Befehl
-commands.soulnetwork.fillMax.success=%ss LP-Netzwerk erfolgreich zu deren Blutkugel-Maximum befüllt!
-commands.soulnetwork.create.success=%ss LP-Netzwerk erfolgreich erstellt! (Blutkugel-Ausbaustufe: %d)
+commands.bloodmagic.bind.usage=/bind <Spieler>
+commands.bloodmagic.bind.success=Gegenstand erfolgreich gebunden!
+commands.bloodmagic.bind.failed.noPlayer=Kein Spieler angegeben
+commands.bloodmagic.bind.failed.alreadyBound=Gegenstand ist schon gebunden; benutze /unbind um die Bindung zu entfernen
+commands.bloodmagic.bind.failed.notBindable=Gegenstand kann nicht gebunden werden
+commands.bloodmagic.unbind.usage=/unbind
+commands.bloodmagic.unbind.success=Bindung erfolgreich entfernt.
+commands.bloodmagic.unbind.failed.notBindable=Bindung kann nicht entfernt werden.
+commands.bloodmagic.soulnetwork.usage=/soulnetwork <Spieler> <add|subtract|fill|empty|get> [Menge]
+commands.bloodmagic.soulnetwork.add.success=Erfolgreich %dLP zu %ss LP-Netzwerk hinzugefügt!
+commands.bloodmagic.soulnetwork.subtract.success=Erfolgreich %dLP von %ss LP-Netzwerk entfernt!
+commands.bloodmagic.soulnetwork.fill.success=Erfolgreich %ss LP-Netzwerk gefüllt!
+commands.bloodmagic.soulnetwork.empty.success=Erfolgreich %ss LP-Netzwerk geleert!
+commands.bloodmagic.soulnetwork.get.success=In %ss LP-Netzwerk sind %dLP!
+commands.bloodmagic.soulnetwork.noPlayer=Kein Spieler angegeben
+commands.bloodmagic.soulnetwork.noCommand=Kein Befehl angegeben
+commands.bloodmagic.soulnetwork.notACommand=Das ist kein gültiger Befehl
+commands.bloodmagic.soulnetwork.fillMax.success=%ss LP-Netzwerk erfolgreich zu deren Blutkugel-Maximum befüllt!
+commands.bloodmagic.soulnetwork.create.success=%ss LP-Netzwerk erfolgreich erstellt! (Blutkugel-Ausbaustufe: %d)
 
 # GUI
 tile.bloodmagic.inputNode.name=Eingangsknoten
