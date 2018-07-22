@@ -54,7 +54,7 @@ public class ItemSigilVoid extends ItemSigilBase {
                         return super.onItemRightClick(world, player, hand);
                     }
 
-                    if (world.getBlockState(blockpos).getBlock().getMaterial(world.getBlockState(blockpos)).isLiquid() && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed()))) {
+                    if (world.getBlockState(blockpos).getBlock().getMaterial(world.getBlockState(blockpos)).isLiquid() && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
                         world.setBlockToAir(blockpos);
                         return super.onItemRightClick(world, player, hand);
                     }
@@ -64,7 +64,7 @@ public class ItemSigilVoid extends ItemSigilBase {
             }
 
             if (!player.capabilities.isCreativeMode)
-                setUnusable(stack, !NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed())));
+                setUnusable(stack, !NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess());
         }
 
         return super.onItemRightClick(world, player, hand);
@@ -90,7 +90,7 @@ public class ItemSigilVoid extends ItemSigilBase {
             IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
             FluidStack amount = handler.drain(1000, false);
 
-            if (amount != null && amount.amount > 0 && network.syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed()))) {
+            if (amount != null && amount.amount > 0 && network.syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
                 handler.drain(1000, true);
                 return EnumActionResult.SUCCESS;
             }
@@ -104,7 +104,7 @@ public class ItemSigilVoid extends ItemSigilBase {
             return EnumActionResult.FAIL;
         }
 
-        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && network.syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed()))) {
+        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && network.syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
             world.setBlockToAir(newPos);
             return EnumActionResult.SUCCESS;
         }

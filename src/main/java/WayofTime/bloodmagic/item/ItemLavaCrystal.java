@@ -27,7 +27,7 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
     public ItemStack getContainerItem(ItemStack stack) {
         Binding binding = getBinding(stack);
         if (binding != null)
-            NetworkHelper.getSoulNetwork(binding.getOwnerId()).syphon(SoulTicket.ITEM(stack, 25));
+            NetworkHelper.getSoulNetwork(binding.getOwnerId()).syphon(SoulTicket.item(stack, 25));
 
         ItemStack returnStack = new ItemStack(this);
         returnStack.setTagCompound(stack.getTagCompound());
@@ -45,7 +45,7 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
         if (binding == null)
             return -1;
 
-        if (NetworkHelper.syphonFromContainer(stack, SoulTicket.ITEM(stack, 25)))
+        if (NetworkHelper.syphonFromContainer(stack, SoulTicket.item(stack, 25)))
             return 200;
         else {
             EntityPlayer player = PlayerHelper.getPlayerFromUUID(binding.getOwnerId());

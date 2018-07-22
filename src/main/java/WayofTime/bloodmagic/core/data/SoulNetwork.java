@@ -104,14 +104,14 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
         return syphon(new SoulTicket(amount));
     }
 
-    public boolean syphonAndDamage(EntityPlayer user, SoulTicket ticket) {
+    public BooleanResult<Integer> syphonAndDamage(EntityPlayer user, SoulTicket ticket) {
         if (user.getEntityWorld().isRemote)
-            return false;
+            return BooleanResult.newResult(false, 0);
 
         SoulNetworkEvent.Syphon.User event = new SoulNetworkEvent.Syphon.User(this, ticket, user);
 
         if (MinecraftForge.EVENT_BUS.post(event))
-            return false;
+            return BooleanResult.newResult(false, 0);
 
         int drainAmount = syphon(event.getTicket(), true);
 
@@ -123,7 +123,7 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
 
         ticketHistory.add(ticket);
 
-        return BooleanResult.newResult(true, event.getTicket().getAmount()).isSuccess();
+        return BooleanResult.newResult(true, event.getTicket().getAmount());
     }
 
     /**
@@ -131,7 +131,7 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
      */
     @Deprecated
     public boolean syphonAndDamage(EntityPlayer user, int amount) {
-        return syphonAndDamage(user, new SoulTicket(amount));
+        return syphonAndDamage(user, new SoulTicket(amount)).isSuccess();
     }
 
     public void causeNausea() {

@@ -59,6 +59,6 @@ public interface IMasterRitualStone {
     List<EnumDemonWillType> getActiveWillConfig();
 
     default SoulTicket ticket(int amount) {
-        return SoulTicket.BLOCK(getWorldObj(), getBlockPos(), amount);
+        return SoulTicket.block(getWorldObj(), getBlockPos(), amount);
     }
 }

@@ -211,7 +211,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                 if (entity.getEntityWorld().isRemote && entity instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) entity;
                     SoulNetwork network = NetworkHelper.getSoulNetwork(player);
-                    network.syphonAndDamage(player, SoulTicket.ITEM(stack, entity.getEntityWorld(), entity, damage * 100));
+                    network.syphonAndDamage(player, SoulTicket.item(stack, entity.getEntityWorld(), entity, damage * 100));
                 }
 
                 return;

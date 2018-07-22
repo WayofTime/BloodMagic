@@ -443,7 +443,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         {
             if (orbStack.getItem() instanceof IBloodOrb)
             {
-                if (NetworkHelper.syphonFromContainer(orbStack, SoulTicket.ITEM(orbStack, world, pos, requested)))
+                if (NetworkHelper.syphonFromContainer(orbStack, SoulTicket.item(orbStack, world, pos, requested)))
                 {
                     return requested;
                 }

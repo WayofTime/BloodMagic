@@ -88,7 +88,7 @@ public class ItemSigilTransposition extends ItemSigilBase {
                     }
 
                     stack.getTagCompound().setTag("stored", stored);
-                    NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, cost));
+                    NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, cost));
                     world.removeTileEntity(blockPos);
                     world.setBlockToAir(blockPos);
                     return EnumActionResult.SUCCESS;

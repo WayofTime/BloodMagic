@@ -112,7 +112,7 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
             }
         }
 
-        NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, (int) (charge * charge * charge / 2.7)));
+        NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, (int) (charge * charge * charge / 2.7)));
         world.createExplosion(player, playerPos.getX(), playerPos.getY(), playerPos.getZ(), 0.5F, false);
         dropStacks(drops, world, playerPos.add(0, 1, 0));
     }

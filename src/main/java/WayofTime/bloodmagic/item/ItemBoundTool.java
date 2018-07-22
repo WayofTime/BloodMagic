@@ -94,7 +94,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
         }
 
         if (entity instanceof EntityPlayer && getActivated(stack) && world.getTotalWorldTime() % 80 == 0)
-            NetworkHelper.getSoulNetwork(binding).syphonAndDamage((EntityPlayer) entity, SoulTicket.ITEM(stack, world, entity, 20));
+            NetworkHelper.getSoulNetwork(binding).syphonAndDamage((EntityPlayer) entity, SoulTicket.item(stack, world, entity, 20));
     }
 
     protected int getHeldDownCount(ItemStack stack) {

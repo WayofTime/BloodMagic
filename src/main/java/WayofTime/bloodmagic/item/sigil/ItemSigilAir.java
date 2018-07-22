@@ -49,7 +49,7 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
 
         if (!world.isRemote) {
             if (!player.capabilities.isCreativeMode)
-                this.setUnusable(stack, !NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed())));
+                this.setUnusable(stack, !NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess());
 
             if (!unusable)
                 player.fallDistance = 0;
