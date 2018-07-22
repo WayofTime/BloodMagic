@@ -120,7 +120,7 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect
                         for (EntityLivingBase living : livingEntities)
                         {
                             double health = getEffectiveHealth(living);
-                            if (healthAvailable > 0)
+                            if (healthAvailable > 0 && health > 0)
                             {
                                 healthAvailable -= health;
                                 living.getEntityWorld().playSound(null, living.posX, living.posY, living.posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (living.getEntityWorld().rand.nextFloat() - living.getEntityWorld().rand.nextFloat()) * 0.8F);
