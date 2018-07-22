@@ -169,7 +169,7 @@ public class RitualFeatheredKnife extends Ritual {
             }
         }
 
-        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * totalEffects);
+        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost() * totalEffects));
         if (totalEffects > 0 && consumeRawWill) {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawWillDrain, true);
         }

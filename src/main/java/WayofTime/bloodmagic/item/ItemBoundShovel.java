@@ -2,12 +2,11 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -99,7 +98,7 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider {
             }
         }
 
-        NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, (int) (charge * charge * charge / 2.7));
+        NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, (int) (charge * charge * charge / 2.7)));
         world.createExplosion(player, playerPos.getX(), playerPos.getY(), playerPos.getZ(), 0.5F, false);
         dropStacks(drops, world, playerPos.add(0, 1, 0));
     }

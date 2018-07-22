@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
@@ -12,9 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -89,7 +88,7 @@ public class ItemSigilTransposition extends ItemSigilBase {
                     }
 
                     stack.getTagCompound().setTag("stored", stored);
-                    NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, cost);
+                    NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, cost));
                     world.removeTileEntity(blockPos);
                     world.setBlockToAir(blockPos);
                     return EnumActionResult.SUCCESS;

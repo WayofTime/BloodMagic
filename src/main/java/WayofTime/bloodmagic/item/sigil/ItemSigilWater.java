@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
@@ -54,7 +55,7 @@ public class ItemSigilWater extends ItemSigilBase {
                     if (!player.canPlayerEdit(blockpos1, rayTrace.sideHit, stack))
                         return super.onItemRightClick(world, player, hand);
 
-                    if (this.canPlaceWater(world, blockpos1) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, getLpUsed()) && this.tryPlaceWater(world, blockpos1))
+                    if (canPlaceWater(world, blockpos1) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed())) && tryPlaceWater(world, blockpos1))
                         return super.onItemRightClick(world, player, hand);
                 }
             }
@@ -78,7 +79,7 @@ public class ItemSigilWater extends ItemSigilBase {
             FluidStack fluid = new FluidStack(FluidRegistry.WATER, 1000);
             int amount = handler.fill(fluid, false);
 
-            if (amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed())) {
+            if (amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed()))) {
                 handler.fill(fluid, true);
                 return EnumActionResult.SUCCESS;
             }
@@ -86,7 +87,7 @@ public class ItemSigilWater extends ItemSigilBase {
             return EnumActionResult.FAIL;
         }
 
-        if (world.getBlockState(blockPos).getBlock() == Blocks.CAULDRON && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed())) {
+        if (world.getBlockState(blockPos).getBlock() == Blocks.CAULDRON && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed()))) {
             world.setBlockState(blockPos, Blocks.CAULDRON.getDefaultState().withProperty(BlockCauldron.LEVEL, 3));
             return EnumActionResult.SUCCESS;
         }

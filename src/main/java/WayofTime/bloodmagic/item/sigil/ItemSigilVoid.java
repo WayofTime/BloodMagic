@@ -1,16 +1,14 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -56,7 +54,7 @@ public class ItemSigilVoid extends ItemSigilBase {
                         return super.onItemRightClick(world, player, hand);
                     }
 
-                    if (world.getBlockState(blockpos).getBlock().getMaterial(world.getBlockState(blockpos)).isLiquid() && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed())) {
+                    if (world.getBlockState(blockpos).getBlock().getMaterial(world.getBlockState(blockpos)).isLiquid() && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed()))) {
                         world.setBlockToAir(blockpos);
                         return super.onItemRightClick(world, player, hand);
                     }
@@ -66,7 +64,7 @@ public class ItemSigilVoid extends ItemSigilBase {
             }
 
             if (!player.capabilities.isCreativeMode)
-                this.setUnusable(stack, !NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()));
+                setUnusable(stack, !NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed())));
         }
 
         return super.onItemRightClick(world, player, hand);
@@ -92,7 +90,7 @@ public class ItemSigilVoid extends ItemSigilBase {
             IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
             FluidStack amount = handler.drain(1000, false);
 
-            if (amount != null && amount.amount > 0 && network.syphonAndDamage(player, getLpUsed())) {
+            if (amount != null && amount.amount > 0 && network.syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed()))) {
                 handler.drain(1000, true);
                 return EnumActionResult.SUCCESS;
             }
@@ -106,7 +104,7 @@ public class ItemSigilVoid extends ItemSigilBase {
             return EnumActionResult.FAIL;
         }
 
-        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && network.syphonAndDamage(player, getLpUsed())) {
+        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && network.syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed()))) {
             world.setBlockToAir(newPos);
             return EnumActionResult.SUCCESS;
         }

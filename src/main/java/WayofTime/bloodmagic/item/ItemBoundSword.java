@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.IActivatable;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.Utils;
@@ -16,17 +17,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -71,7 +68,7 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
         }
 
         if (entity instanceof EntityPlayer && getActivated(stack) && world.getTotalWorldTime() % 80 == 0)
-            NetworkHelper.getSoulNetwork(binding).syphonAndDamage((EntityPlayer) entity, 20);
+            NetworkHelper.getSoulNetwork(binding).syphonAndDamage((EntityPlayer) entity, SoulTicket.ITEM(stack, world, entity, 20));
     }
 
     @Override

@@ -215,7 +215,7 @@ public class RitualLava extends Ritual {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrained, true);
         }
 
-        masterRitualStone.getOwnerNetwork().syphon(lpDrain);
+        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(lpDrain));
     }
 
     @Override

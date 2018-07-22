@@ -140,7 +140,7 @@ public class RitualRegeneration extends Ritual {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrain, true);
         }
 
-        masterRitualStone.getOwnerNetwork().syphon(totalCost);
+        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(totalCost));
     }
 
     @Override

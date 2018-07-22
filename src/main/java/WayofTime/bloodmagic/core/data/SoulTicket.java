@@ -1,7 +1,12 @@
 package WayofTime.bloodmagic.core.data;
 
+import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.World;
 
 public class SoulTicket {
 
@@ -29,5 +34,46 @@ public class SoulTicket {
 
     public int getAmount() {
         return amount;
+    }
+
+    /**
+     * @return A description in the format block|dimensionID|pos
+     */
+    public static SoulTicket BLOCK(World world, BlockPos pos, int amount) {
+        return new SoulTicket(new TextComponentString("block|" + world.provider.getDimension() + "|" + pos.toLong()), amount);
+    }
+
+    /**
+     * @return A description in the format item|item registry name|dimensionID|entityName|entityPos
+     */
+    public static SoulTicket ITEM(ItemStack itemStack, World world, Entity entity, int amount) {
+        return new SoulTicket(new TextComponentString("item|" + itemStack.getItem().getRegistryName() + "|" + world.provider.getDimension() + "|" + entity.getPersistentID()), amount);
+    }
+
+    /**
+     * @return A description in the format item|item registry name|dimensionID|pos
+     */
+    public static SoulTicket ITEM(ItemStack itemStack, World world, BlockPos pos, int amount) {
+        return new SoulTicket(new TextComponentString("item|" + itemStack.getItem().getRegistryName() + "|" + world.provider.getDimension() + "|" + pos.toLong()), amount);
+    }
+
+    /**
+     * @return A description in the format item|item registry name|dimensionID
+     */
+    public static SoulTicket ITEM(ItemStack itemStack, int amount) {
+        return new SoulTicket(new TextComponentString("item|" + itemStack.getItem().getRegistryName()), amount);
+    }
+
+    public static SoulTicket COMMAND(ICommandSender sender, String command, int amount) {
+        return new SoulTicket(new TextComponentString("command|" + command + "|" + sender.getName()), amount);
+    }
+
+    // TODO maybe make it check the amount??
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof SoulTicket)
+            return ((SoulTicket) o).getDescription().equals(description);
+
+        return false;
     }
 }

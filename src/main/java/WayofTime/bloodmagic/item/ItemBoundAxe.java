@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
@@ -100,7 +101,7 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider {
             }
         }
 
-        NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, (int) (charge * charge * charge / 2.7));
+        NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, (int) (charge * charge * charge / 2.7)));
         world.createExplosion(player, playerPos.getX(), playerPos.getY(), playerPos.getZ(), 0.1F, false);
         dropStacks(drops, world, playerPos.add(0, 1, 0));
     }

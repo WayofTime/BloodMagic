@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.item.types.ComponentTypes;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
@@ -210,7 +211,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                 if (entity.getEntityWorld().isRemote && entity instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) entity;
                     SoulNetwork network = NetworkHelper.getSoulNetwork(player);
-                    network.syphonAndDamage(player, damage * 100);
+                    network.syphonAndDamage(player, SoulTicket.ITEM(stack, entity.getEntityWorld(), entity, damage * 100));
                 }
 
                 return;

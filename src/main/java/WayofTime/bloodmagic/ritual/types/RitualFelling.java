@@ -67,7 +67,7 @@ public class RitualFelling extends Ritual {
         }
 
         if (blockPosIterator.hasNext() && tileInventory != null) {
-            masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
+            masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
             currentPos = blockPosIterator.next();
             IItemHandler inventory = Utils.getInventory(tileInventory, EnumFacing.DOWN);
             placeInInventory(world.getBlockState(currentPos), world, currentPos, inventory);

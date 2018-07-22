@@ -1,8 +1,7 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.core.data.*;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
@@ -83,7 +82,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb {
         if (binding.getOwnerId().equals(player.getGameProfile().getId()))
             ownerNetwork.setOrbTier(orb.getTier());
 
-        ownerNetwork.add(200, orb.getCapacity()); // Add LP to owner's network
+        ownerNetwork.add(SoulTicket.ITEM(stack, world, player,200), orb.getCapacity()); // Add LP to owner's network
         ownerNetwork.hurtPlayer(player, 200); // Hurt whoever is using it
         return super.onItemRightClick(world, player, hand);
     }

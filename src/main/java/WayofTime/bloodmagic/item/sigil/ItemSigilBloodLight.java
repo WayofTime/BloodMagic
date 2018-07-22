@@ -1,19 +1,16 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.core.data.SoulNetwork;
-import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.iface.ISigil;
-import WayofTime.bloodmagic.util.helper.NBTHelper;
-import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
+import WayofTime.bloodmagic.iface.ISigil;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.util.helper.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -56,7 +53,7 @@ public class ItemSigilBloodLight extends ItemSigilBase
                 if (!world.isRemote)
                 {
                     SoulNetwork network = NetworkHelper.getSoulNetwork(getBinding(stack));
-                    network.syphonAndDamage(player, getLpUsed());
+                    network.syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed()));
                 }
                 resetCooldown(stack);
                 player.swingArm(hand);
@@ -68,7 +65,7 @@ public class ItemSigilBloodLight extends ItemSigilBase
             {
                 SoulNetwork network = NetworkHelper.getSoulNetwork(getBinding(stack));
                 world.spawnEntity(new EntityBloodLight(world, player));
-                network.syphonAndDamage(player, getLpUsed());
+                network.syphonAndDamage(player, SoulTicket.ITEM(stack, world, player, getLpUsed()));
             }
             resetCooldown(stack);
         }

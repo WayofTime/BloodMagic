@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -56,4 +57,8 @@ public interface IMasterRitualStone {
     boolean setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2);
 
     List<EnumDemonWillType> getActiveWillConfig();
+
+    default SoulTicket ticket(int amount) {
+        return SoulTicket.BLOCK(getWorldObj(), getBlockPos(), amount);
+    }
 }
