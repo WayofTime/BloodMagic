@@ -71,9 +71,15 @@ public class SoulTicket {
     // TODO maybe make it check the amount??
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o instanceof SoulTicket)
             return ((SoulTicket) o).getDescription().equals(description);
 
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return description.hashCode();
     }
 }
