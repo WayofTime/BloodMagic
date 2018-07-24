@@ -38,7 +38,7 @@ public class CompressionRegistry {
     public static ItemStack compressInventory(ItemStack[] inv, World world) {
         for (CompressionHandler handler : compressionRegistry) {
             ItemStack stack = handler.compressInventory(inv, world);
-            if (!stack.isEmpty()) {
+            if (stack.isEmpty()) {
                 return stack;
             }
         }
@@ -78,7 +78,14 @@ public class CompressionRegistry {
     }
 
     public static int getItemThreshold(ItemStack stack) {
+        /*for (Map.Entry<ItemStack, Integer> entry : thresholdMap.entrySet()) {
+            if (areItemStacksEqual(entry.getKey(), stack)) {
+                return entry.getValue();
+            }
 
+        }
+
+        return 0; */
         return stack.getItem().getItemStackLimit(stack); //this should work according to the guide, leaving behind a full stack of the source item
     }
 
