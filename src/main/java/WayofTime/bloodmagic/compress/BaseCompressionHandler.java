@@ -50,7 +50,7 @@ public class BaseCompressionHandler extends CompressionHandler {
         for (ItemStack invStack : inv) {
             i++;
 
-            if (invStack == null) {
+            if (invStack.isEmpty() || invStack.equals(ItemStack.EMPTY) || invStack == ItemStack.EMPTY) {
                 continue;
             }
 

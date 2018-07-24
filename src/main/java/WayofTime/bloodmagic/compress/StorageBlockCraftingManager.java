@@ -14,10 +14,14 @@ import java.util.List;
 
 public class StorageBlockCraftingManager {
     private static final StorageBlockCraftingManager instance = new StorageBlockCraftingManager();
-    private List recipes = new LinkedList();
+    private List<IRecipe> recipes = new LinkedList<>();
+
+    public void addRecipe(IRecipe recipe){
+        this.recipes.add(recipe);
+    }
 
     public void addStorageBlockRecipes() {
-//        this.recipes = new StorageBlockCraftingRecipeAssimilator().getPackingRecipes();
+        //this.recipes = new StorageBlockCraftingRecipeAssimilator().getPackingRecipes();
 
         BMLog.DEBUG.info("Total number of compression recipes: " + this.recipes.size());
     }
@@ -26,7 +30,7 @@ public class StorageBlockCraftingManager {
         return this.findMatchingRecipe(craftingInventory, world, this.recipes);
     }
 
-    private ItemStack findMatchingRecipe(InventoryCrafting craftingInventory, World world, List list) {
+    private ItemStack findMatchingRecipe(InventoryCrafting craftingInventory, World world, List<IRecipe> list) {
         int i = 0;
         ItemStack itemstack = ItemStack.EMPTY;
         ItemStack itemstack1 = ItemStack.EMPTY;
@@ -62,7 +66,7 @@ public class StorageBlockCraftingManager {
             return new ItemStack(itemstack.getItem(), 1, i1);
         } else {
             for (j = 0; j < list.size(); ++j) {
-                IRecipe irecipe = (IRecipe) list.get(j);
+                IRecipe irecipe = list.get(j);
 
                 if (irecipe.matches(craftingInventory, world)) {
                     return irecipe.getCraftingResult(craftingInventory);
@@ -77,7 +81,7 @@ public class StorageBlockCraftingManager {
         return instance;
     }
 
-    private static boolean isResultStackReversible(ItemStack stack, int gridSize, World world, List list) {
+    private static boolean isResultStackReversible(ItemStack stack, int gridSize, World world, List<IRecipe> list) {
         if (stack.isEmpty()) {
             return false;
         }
@@ -107,7 +111,7 @@ public class StorageBlockCraftingManager {
         return !compressedStack.isEmpty() && CompressionRegistry.areItemStacksEqual(stack, compressedStack);
     }
 
-    private static ItemStack getRecipe(ItemStack stack, World world, int gridSize, List list) {
+    private static ItemStack getRecipe(ItemStack stack, World world, int gridSize, List<IRecipe> list) {
         InventoryCrafting inventory = new InventoryCrafting(new Container() {
             public boolean canInteractWith(EntityPlayer player) {
                 return false;
@@ -120,19 +124,19 @@ public class StorageBlockCraftingManager {
         return StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world, list);
     }
 
-    private static boolean has22Recipe(ItemStack stack, World world, List list) {
+    private static boolean has22Recipe(ItemStack stack, World world, List<IRecipe> list) {
         return !get22Recipe(stack, world, list).isEmpty();
     }
 
-    private static ItemStack get22Recipe(ItemStack stack, World world, List list) {
+    private static ItemStack get22Recipe(ItemStack stack, World world, List<IRecipe> list) {
         return getRecipe(stack, world, 2, list);
     }
 
-    private static boolean has33Recipe(ItemStack stack, World world, List list) {
+    private static boolean has33Recipe(ItemStack stack, World world, List<IRecipe> list) {
         return !get33Recipe(stack, world, list).isEmpty();
     }
 
-    private static ItemStack get33Recipe(ItemStack stack, World world, List list) {
+    private static ItemStack get33Recipe(ItemStack stack, World world, List<IRecipe> list) {
         return getRecipe(stack, world, 3, list);
     }
 }

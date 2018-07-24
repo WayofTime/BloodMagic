@@ -4,28 +4,33 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.World;
 
+
 public class AdvancedCompressionHandler extends CompressionHandler {
+    private static ItemStack reversibleCheck;
     @Override
     public ItemStack compressInventory(ItemStack[] inv, World world) {
         return test(inv, true, world);
+
     }
 
     public ItemStack test(ItemStack[] inv, boolean doDrain, World world) {
         for (ItemStack invStack : inv) {
-            if (invStack.isEmpty()) {
+            if (invStack.isEmpty() || invStack.equals(ItemStack.EMPTY)) {
                 continue;
             }
 
-            for (int i = 2; i <= 3; i++) {
+            for (int i = 3; i >= 2; i--) {
+                reversibleCheck = invStack;
                 ItemStack stack = getRecipe(invStack, world, i);
-                if (!stack.isEmpty()) {
-                    int threshold = CompressionRegistry.getItemThreshold(invStack);
+                if (!stack.isEmpty() && !invStack.equals(ItemStack.EMPTY) && invStack != ItemStack.EMPTY) {
+                    //int threshold = CompressionRegistry.getItemThreshold(invStack); //currently set to a full stack at all times
 
-                    int needed = i * i;
-                    int neededLeft = iterateThroughInventory(invStack, threshold + invStack.getMaxStackSize() - needed, inv, needed, false);
-                    if (neededLeft <= 0) {
+                    int needed = (i == 2 ? 4 : 9);
+                    int remaining = iterateThroughInventory(invStack, /*threshold +*/ invStack.getMaxStackSize() - needed, inv, needed, false);
+                    if (remaining <= 0) {
                         iterateThroughInventory(invStack, 0, inv, needed, true);
                         return stack;
                     }
@@ -42,7 +47,7 @@ public class AdvancedCompressionHandler extends CompressionHandler {
         for (ItemStack invStack : inv) {
             i++;
 
-            if (invStack.isEmpty()) {
+            if (invStack == null || invStack.isEmpty() || invStack.equals(ItemStack.EMPTY)) {
                 continue;
             }
 
@@ -78,6 +83,7 @@ public class AdvancedCompressionHandler extends CompressionHandler {
     }
 
     public static boolean isResultStackReversible(ItemStack stack, int gridSize, World world) {
+        ItemStack returnStack;
         if (stack.isEmpty()) {
             return false;
         }
@@ -88,13 +94,14 @@ public class AdvancedCompressionHandler extends CompressionHandler {
         }, 2, 2);
 
         inventory.setInventorySlotContents(0, stack);
-
-        ItemStack returnStack = StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world);
-        if (returnStack.isEmpty()) {
+        try {
+            returnStack = CraftingManager.findMatchingRecipe(inventory, world).getRecipeOutput();
+        }catch(NullPointerException e){
             return false;
         }
 
-        ItemStack compressedStack = ItemStack.EMPTY;
+
+       /* ItemStack compressedStack = ItemStack.EMPTY;
         switch (gridSize) {
             case 2:
                 compressedStack = get22Recipe(returnStack, world);
@@ -102,12 +109,13 @@ public class AdvancedCompressionHandler extends CompressionHandler {
             case 3:
                 compressedStack = get33Recipe(returnStack, world);
                 break;
-        }
+        }*/
 
-        return !compressedStack.isEmpty() && CompressionRegistry.areItemStacksEqual(stack, compressedStack);
+        return !returnStack.isEmpty() && CompressionRegistry.areItemStacksEqual(reversibleCheck, returnStack);
     }
 
     public static ItemStack getRecipe(ItemStack stack, World world, int gridSize) {
+        ItemStack result;
         InventoryCrafting inventory = new InventoryCrafting(new Container() {
             public boolean canInteractWith(EntityPlayer player) {
                 return false;
@@ -116,8 +124,21 @@ public class AdvancedCompressionHandler extends CompressionHandler {
         for (int i = 0; i < inventory.getSizeInventory(); i++) {
             inventory.setInventorySlotContents(i, stack);
         }
+        if(!StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world).isEmpty()){
+            return StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world);
+        }
 
-        return StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world);
+        try{result = CraftingManager.findMatchingRecipe(inventory, world).getRecipeOutput();
+        }catch(NullPointerException e){
+            return ItemStack.EMPTY;
+        }
+        if(isResultStackReversible(result, gridSize, world)){
+            StorageBlockCraftingManager.getInstance().addRecipe(CraftingManager.findMatchingRecipe(inventory, world));
+            return result; //StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world);
+        }
+        return ItemStack.EMPTY;
+
+
     }
 
     public static boolean has22Recipe(ItemStack stack, World world) {

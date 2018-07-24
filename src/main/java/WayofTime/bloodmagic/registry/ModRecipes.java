@@ -85,6 +85,7 @@ public class ModRecipes
         addAlchemyTableRecipes();
         addPotionRecipes();
         addLivingArmourDowngradeRecipes();
+        addCompressionHandlers();
     }
 
     public static void initOreDict()
@@ -140,11 +141,11 @@ public class ModRecipes
     {
         Stopwatch stopwatch = Stopwatch.createStarted();
         StorageBlockCraftingManager.getInstance().addStorageBlockRecipes();
+
         CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.GLOWSTONE_DUST, 4, 0), new ItemStack(Blocks.GLOWSTONE), 64));
         CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.SNOWBALL, 4, 0), new ItemStack(Blocks.SNOW), 8));
         CompressionRegistry.registerHandler(new AdvancedCompressionHandler());
 
-        CompressionRegistry.registerItemThreshold(new ItemStack(Blocks.COBBLESTONE), 64);
         stopwatch.stop();
 
         BMLog.DEBUG.info("Added compression recipes in {}", stopwatch);
