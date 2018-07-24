@@ -38,7 +38,7 @@ public class CompressionRegistry {
     public static ItemStack compressInventory(ItemStack[] inv, World world) {
         for (CompressionHandler handler : compressionRegistry) {
             ItemStack stack = handler.compressInventory(inv, world);
-            if (stack != null && stack != ItemStack.EMPTY) {
+            if (stack.isEmpty()) {
                 return stack;
             }
         }
