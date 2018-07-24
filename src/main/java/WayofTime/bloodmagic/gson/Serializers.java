@@ -33,7 +33,7 @@ public class Serializers {
 
         @Override
         public EnumDemonWillType copyValue(EnumDemonWillType value) {
-            return EnumDemonWillType.valueOf(value.getName());
+            return EnumDemonWillType.valueOf(value.name());
         }
     };
 
