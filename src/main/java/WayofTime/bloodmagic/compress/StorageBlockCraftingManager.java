@@ -20,9 +20,11 @@ public class StorageBlockCraftingManager {
         this.recipes.add(recipe);
     }
 
+    //recipes are currently added during runtime, this will only return recipes specifically added in init
+    //through BaseCompressionHandler
     public void addStorageBlockRecipes() {
-        //this.recipes = new StorageBlockCraftingRecipeAssimilator().getPackingRecipes();
 
+        //this.recipes = new StorageBlockCraftingRecipeAssimilator().getPackingRecipes();
         BMLog.DEBUG.info("Total number of compression recipes: " + this.recipes.size());
     }
 

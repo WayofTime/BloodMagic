@@ -5,11 +5,77 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 
 public class AdvancedCompressionHandler extends CompressionHandler {
     private static ItemStack reversibleCheck;
+
+    public static boolean isResultStackReversible(ItemStack stack, int gridSize, World world) {
+
+        if (stack.isEmpty()) {
+            return false;
+        }
+        InventoryCrafting inventory = new InventoryCrafting(new Container() {
+            public boolean canInteractWith(EntityPlayer player) {
+                return false;
+            }
+        }, 2, 2);
+
+        inventory.setInventorySlotContents(0, stack);
+        ItemStack returnStack = getNNRecipeOutput(inventory, world);
+
+        return !returnStack.isEmpty() && CompressionRegistry.areItemStacksEqual(reversibleCheck, returnStack);
+    }
+
+    public static ItemStack getRecipe(ItemStack stack, World world, int gridSize) {
+        StorageBlockCraftingManager craftingManagerSB = StorageBlockCraftingManager.getInstance();
+        InventoryCrafting inventory = new InventoryCrafting(new Container() {
+            public boolean canInteractWith(EntityPlayer player) {
+                return false;
+            }
+        }, gridSize, gridSize);
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            inventory.setInventorySlotContents(i, stack);
+        }
+        ItemStack notEmptyRecipe = craftingManagerSB.findMatchingRecipe(inventory, world);
+        if (!notEmptyRecipe.isEmpty()) {
+            return notEmptyRecipe;
+        }
+        ItemStack result = getNNRecipeOutput(inventory, world);
+
+        if (isResultStackReversible(result, gridSize, world)) {
+            craftingManagerSB.addRecipe(CraftingManager.findMatchingRecipe(inventory, world));
+            return result;
+        }
+        return ItemStack.EMPTY;
+    }
+
+    public static ItemStack getNNRecipeOutput(InventoryCrafting inventory, World world) {
+        IRecipe checkForNull = CraftingManager.findMatchingRecipe(inventory, world);
+        if (checkForNull != null) {
+            return checkForNull.getRecipeOutput();
+        }
+        return ItemStack.EMPTY;
+    }
+
+    public static boolean has22Recipe(ItemStack stack, World world) {
+        return !get22Recipe(stack, world).isEmpty();
+    }
+
+    public static ItemStack get22Recipe(ItemStack stack, World world) {
+        return getRecipe(stack, world, 2);
+    }
+
+    public static boolean has33Recipe(ItemStack stack, World world) {
+        return !get33Recipe(stack, world).isEmpty();
+    }
+
+    public static ItemStack get33Recipe(ItemStack stack, World world) {
+        return getRecipe(stack, world, 3);
+    }
+
     @Override
     public ItemStack compressInventory(ItemStack[] inv, World world) {
         return test(inv, true, world);
@@ -26,10 +92,9 @@ public class AdvancedCompressionHandler extends CompressionHandler {
                 reversibleCheck = invStack;
                 ItemStack stack = getRecipe(invStack, world, i);
                 if (!stack.isEmpty()) {
-                    //int threshold = CompressionRegistry.getItemThreshold(invStack); //currently set to a full stack at all times
 
                     int needed = (i == 2 ? 4 : 9);
-                    int remaining = iterateThroughInventory(invStack, /*threshold +*/ invStack.getMaxStackSize() - needed, inv, needed, false);
+                    int remaining = iterateThroughInventory(invStack, invStack.getMaxStackSize() - needed, inv, needed, false);
                     if (remaining <= 0) {
                         iterateThroughInventory(invStack, 0, inv, needed, true);
                         return stack;
@@ -76,81 +141,13 @@ public class AdvancedCompressionHandler extends CompressionHandler {
                 if (needed <= 0) {
                     return 0;
                 }
+
             }
+
         }
 
         return needed;
-    }
-
-    public static boolean isResultStackReversible(ItemStack stack, int gridSize, World world) {
-
-        if (stack.isEmpty()) {
-            return false;
-        }
-        InventoryCrafting inventory = new InventoryCrafting(new Container() {
-            public boolean canInteractWith(EntityPlayer player) {
-                return false;
-            }
-        }, 2, 2);
-
-        inventory.setInventorySlotContents(0, stack);
-
-       /* ItemStack compressedStack = ItemStack.EMPTY;
-        switch (gridSize) {
-            case 2:
-                compressedStack = get22Recipe(returnStack, world);
-                break;
-            case 3:
-                compressedStack = get33Recipe(returnStack, world);
-                break;
-        }*/
-        ItemStack returnStack = ItemStack.EMPTY;
-        if(CraftingManager.findMatchingRecipe(inventory, world) != null) {
-            returnStack = CraftingManager.findMatchingRecipe(inventory, world).getRecipeOutput();
-        }
-
-        return !returnStack.isEmpty() && CompressionRegistry.areItemStacksEqual(reversibleCheck, returnStack);
-    }
-
-    public static ItemStack getRecipe(ItemStack stack, World world, int gridSize) {
-        InventoryCrafting inventory = new InventoryCrafting(new Container() {
-            public boolean canInteractWith(EntityPlayer player) {
-                return false;
-            }
-        }, gridSize, gridSize);
-        for (int i = 0; i < inventory.getSizeInventory(); i++) {
-            inventory.setInventorySlotContents(i, stack);
-        }
-        if(!StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world).isEmpty()){
-            return StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world);
-        }
-        ItemStack result = ItemStack.EMPTY;
-        if(CraftingManager.findMatchingRecipe(inventory, world) != null){
-            result = CraftingManager.findMatchingRecipe(inventory, world).getRecipeOutput();
-        }
-
-        if(isResultStackReversible(result, gridSize, world)){
-            StorageBlockCraftingManager.getInstance().addRecipe(CraftingManager.findMatchingRecipe(inventory, world));
-            return result; //StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world);
-        }
-        return ItemStack.EMPTY;
 
 
-    }
-
-    public static boolean has22Recipe(ItemStack stack, World world) {
-        return !get22Recipe(stack, world).isEmpty();
-    }
-
-    public static ItemStack get22Recipe(ItemStack stack, World world) {
-        return getRecipe(stack, world, 2);
-    }
-
-    public static boolean has33Recipe(ItemStack stack, World world) {
-        return !get33Recipe(stack, world).isEmpty();
-    }
-
-    public static ItemStack get33Recipe(ItemStack stack, World world) {
-        return getRecipe(stack, world, 3);
     }
 }

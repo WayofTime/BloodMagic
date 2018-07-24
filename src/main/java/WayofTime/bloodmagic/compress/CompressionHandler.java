@@ -12,4 +12,5 @@ public abstract class CompressionHandler {
      * @return The result of the compression
      */
     public abstract ItemStack compressInventory(ItemStack[] inv, World world);
+
 }
