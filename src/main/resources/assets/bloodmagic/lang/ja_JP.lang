@@ -785,62 +785,62 @@ entity.bloodmagic.SentientSpecter.name=理力の霊魂
 entity.bloodmagic.Mimic.name=ミミック
 
 # Commands
-commands.bloodmagic.error.arg.invalid=無効な引数です
-commands.bloodmagic.error.arg.missing=引数が足りません
-commands.bloodmagic.error.arg.player.missing=あなたは実行する対象プレイヤーを指定する必要があります。
-commands.bloodmagic.error.404=コマンドが見つかりません！
-commands.bloodmagic.error.unknown=未知のコマンドです！
-commands.bloodmagic.error.perm=このコマンドを実行する権限がありません。
+commands.error.arg.invalid=無効な引数です
+commands.error.arg.missing=引数が足りません
+commands.error.arg.player.missing=あなたは実行する対象プレイヤーを指定する必要があります。
+commands.error.404=コマンドが見つかりません！
+commands.error.unknown=未知のコマンドです！
+commands.error.perm=このコマンドを実行する権限がありません。
 
-commands.bloodmagic.success=正常に実行されました
+commands.success=正常に実行されました
 
-commands.bloodmagic.format.help=%s - %s
-commands.bloodmagic.format.error=%s - %s
+commands.format.help=%s - %s
+commands.format.error=%s - %s
 
-commands.bloodmagic.help.usage=/bloodmagic help
-commands.bloodmagic.help.help="/bloodmagic" コマンドでヘルプ情報が表示されます。
+commands.help.usage=/bloodmagic help
+commands.help.help="/bloodmagic" コマンドでヘルプ情報が表示されます。
 
-commands.bloodmagic.network.usage=/bloodmagic network [syphon|add|get|fill|cap] <プレイヤー> [量]
-commands.bloodmagic.network.help=LP ネットワークユーティリティ
-commands.bloodmagic.network.syphon.help=指定したプレイヤーのLPネットワークからLPを削減します
-commands.bloodmagic.network.syphon.success=%d LPだけ、%sのソウルネットワークを削減することに成功しました。
-commands.bloodmagic.network.add.help=指定されたプレイヤーのLPネットワークのLPを、LP増加ルールの範囲内で増加させます。
-commands.bloodmagic.network.add.success=%d LPだけ、%sのLPネットワークを増加させることに成功しました。
-commands.bloodmagic.network.set.help=指定したプレイヤーのLPを設定します。
-commands.bloodmagic.network.set.success=%sのLPネットワークを%d LPに設定することに成功しました。
-commands.bloodmagic.network.get.help=指定したプレイヤーのLPネットワークのLP量を返します。
-commands.bloodmagic.network.fill.help=指定したプレイヤーのLPネットワークを%d LPまで満たします。
-commands.bloodmagic.network.fill.success=%sのLPネットワークを最大まで付与することに成功しました。
-commands.bloodmagic.network.cap.help=プレイヤーが入手できる最高位のブラッドオーブで貯蔵可能な最大値のLPを付与します。
-commands.bloodmagic.network.cap.success=%sのLPネットワークの限界値までLPを付与することに成功しました。
+commands.network.usage=/bloodmagic network [syphon|add|get|fill|cap] <プレイヤー> [量]
+commands.network.help=LP ネットワークユーティリティ
+commands.network.syphon.help=指定したプレイヤーのLPネットワークからLPを削減します
+commands.network.syphon.success=%d LPだけ、%sのソウルネットワークを削減することに成功しました。
+commands.network.add.help=指定されたプレイヤーのLPネットワークのLPを、LP増加ルールの範囲内で増加させます。
+commands.network.add.success=%d LPだけ、%sのLPネットワークを増加させることに成功しました。
+commands.network.set.help=指定したプレイヤーのLPを設定します。
+commands.network.set.success=%sのLPネットワークを%d LPに設定することに成功しました。
+commands.network.get.help=指定したプレイヤーのLPネットワークのLP量を返します。
+commands.network.fill.help=指定したプレイヤーのLPネットワークを%d LPまで満たします。
+commands.network.fill.success=%sのLPネットワークを最大まで付与することに成功しました。
+commands.network.cap.help=プレイヤーが入手できる最高位のブラッドオーブで貯蔵可能な最大値のLPを付与します。
+commands.network.cap.success=%sのLPネットワークの限界値までLPを付与することに成功しました。
 
-commands.bloodmagic.bind.usage=/bloodmagic bind [true|false] [プレイヤー]
-commands.bloodmagic.bind.help=手に所持したアイテムを結合／分離します。
-commands.bloodmagic.bind.success=結合に成功しました
-commands.bloodmagic.bind.remove.success=分離に成功しました
+commands.bind.usage=/bloodmagic bind [true|false] [プレイヤー]
+commands.bind.help=手に所持したアイテムを結合／分離します。
+commands.bind.success=結合に成功しました
+commands.bind.remove.success=分離に成功しました
 
-commands.bloodmagic.orb.usage=/bloodmagic orb [set|get] <プレイヤー> [グレード]
-commands.bloodmagic.orb.help=対象プレイヤーのブラッドオーブのグレードの最大値を設定、取得するために使います。
+commands.orb.usage=/bloodmagic orb [set|get] <プレイヤー> [グレード]
+commands.orb.help=対象プレイヤーのブラッドオーブのグレードの最大値を設定、取得するために使います。
 
-commands.bloodmagic.bind.usage=/bind <プレイヤー>
-commands.bloodmagic.bind.success=アイテムの登録が成功しました！
-commands.bloodmagic.bind.failed.noPlayer=指定されたプレイヤーは存在しません
-commands.bloodmagic.bind.failed.alreadyBound=アイテムは既に登録済みです； /unbind コマンドで登録解除してください
-commands.bloodmagic.bind.failed.notBindable=アイテムの登録が出来ませんでした
-commands.bloodmagic.unbind.usage=/unbind
-commands.bloodmagic.unbind.success=アイテムの登録解除が成功しました！
-commands.bloodmagic.unbind.failed.notBindable=アイテムの登録解除が出来ませんでした
-commands.bloodmagic.soulnetwork.usage=/soulnetwork <プレイヤー> <add|subtract|fill|empty|get> [量]
-commands.bloodmagic.soulnetwork.add.success=%d LPだけ、%sのソウルネットワークを増加させることに成功しました！
-commands.bloodmagic.soulnetwork.subtract.success=%d LPだけ、%sのソウルネットワークを減少させることに成功しました！
-commands.bloodmagic.soulnetwork.fill.success=正常に%sのソウルネットワークを満たしました！
-commands.bloodmagic.soulnetwork.empty.success=正常に%sのソウルネットワークを空にしました！
-commands.bloodmagic.soulnetwork.get.success=%dだけ%sのソウルネットワークにはLPがあります！
-commands.bloodmagic.soulnetwork.noPlayer=指定されたプレイヤーは存在しません
-commands.bloodmagic.soulnetwork.noCommand=指定されたコマンドはありません
-commands.bloodmagic.soulnetwork.notACommand=有効なコマンドではありません
-commands.bloodmagic.soulnetwork.fillMax.success=正常に%sのソウルネットワークにオーブの最大値までLPを供給しました！
-commands.bloodmagic.soulnetwork.create.success=正常に%sのソウルネットワークを構築しました(オーブのグレード： %d)
+commands.bind.usage=/bind <プレイヤー>
+commands.bind.success=アイテムの登録が成功しました！
+commands.bind.failed.noPlayer=指定されたプレイヤーは存在しません
+commands.bind.failed.alreadyBound=アイテムは既に登録済みです； /unbind コマンドで登録解除してください
+commands.bind.failed.notBindable=アイテムの登録が出来ませんでした
+commands.unbind.usage=/unbind
+commands.unbind.success=アイテムの登録解除が成功しました！
+commands.unbind.failed.notBindable=アイテムの登録解除が出来ませんでした
+commands.soulnetwork.usage=/soulnetwork <プレイヤー> <add|subtract|fill|empty|get> [量]
+commands.soulnetwork.add.success=%d LPだけ、%sのソウルネットワークを増加させることに成功しました！
+commands.soulnetwork.subtract.success=%d LPだけ、%sのソウルネットワークを減少させることに成功しました！
+commands.soulnetwork.fill.success=正常に%sのソウルネットワークを満たしました！
+commands.soulnetwork.empty.success=正常に%sのソウルネットワークを空にしました！
+commands.soulnetwork.get.success=%dだけ%sのソウルネットワークにはLPがあります！
+commands.soulnetwork.noPlayer=指定されたプレイヤーは存在しません
+commands.soulnetwork.noCommand=指定されたコマンドはありません
+commands.soulnetwork.notACommand=有効なコマンドではありません
+commands.soulnetwork.fillMax.success=正常に%sのソウルネットワークにオーブの最大値までLPを供給しました！
+commands.soulnetwork.create.success=正常に%sのソウルネットワークを構築しました(オーブのグレード： %d)
 
 # GUI
 tile.bloodmagic.inputNode.name=入力ノード
