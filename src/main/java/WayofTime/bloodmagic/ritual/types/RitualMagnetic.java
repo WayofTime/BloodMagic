@@ -13,7 +13,6 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.function.Consumer;
 
-@RitualRegister("magnetism")
 public class RitualMagnetic extends Ritual {
     public static final String PLACEMENT_RANGE = "placementRange";
     //    public static final String SEARCH_RANGE = "searchRange";

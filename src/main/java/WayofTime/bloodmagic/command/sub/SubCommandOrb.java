@@ -24,7 +24,7 @@ public class SubCommandOrb extends CommandBase {
 
     @Override
     public String getUsage(ICommandSender commandSender) {
-        return TextHelper.localizeEffect("commands.bloodmagic.orb.usage");
+        return TextHelper.localizeEffect("commands.orb.usage");
     }
 
     @Override
@@ -63,12 +63,12 @@ public class SubCommandOrb extends CommandBase {
                                 if (Utils.isInteger(args[2])) {
                                     int amount = Integer.parseInt(args[2]);
                                     network.setOrbTier(amount);
-                                    CommandBloodMagic.displaySuccessString(commandSender, "commands.bloodmagic.success");
+                                    CommandBloodMagic.displaySuccessString(commandSender, "commands.success");
                                 } else {
-                                    CommandBloodMagic.displayErrorString(commandSender, "commands.bloodmagic.error.arg.invalid");
+                                    CommandBloodMagic.displayErrorString(commandSender, "commands.error.arg.invalid");
                                 }
                             } else {
-                                CommandBloodMagic.displayErrorString(commandSender, "commands.bloodmagic.error.arg.missing");
+                                CommandBloodMagic.displayErrorString(commandSender, "commands.error.arg.missing");
                             }
 
                             break;
@@ -86,17 +86,17 @@ public class SubCommandOrb extends CommandBase {
                         }
                     }
                 } catch (IllegalArgumentException e) {
-                    CommandBloodMagic.displayErrorString(commandSender, "commands.bloodmagic.error.404");
+                    CommandBloodMagic.displayErrorString(commandSender, "commands.error.404");
                 }
             } catch (PlayerNotFoundException e) {
-                CommandBloodMagic.displayErrorString(commandSender, "commands.bloodmagic.error.404");
+                CommandBloodMagic.displayErrorString(commandSender, "commands.error.404");
             }
         }
     }
 
     private enum ValidCommands {
-        SET("commands.bloodmagic.orb.set.help"),
-        GET("commands.bloodmagic.orb.get.help");
+        SET("commands.orb.set.help"),
+        GET("commands.orb.get.help");
 
         public String help;
 
