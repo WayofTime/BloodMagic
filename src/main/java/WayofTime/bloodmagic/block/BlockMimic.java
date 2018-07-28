@@ -8,6 +8,7 @@ import WayofTime.bloodmagic.block.enums.EnumMimic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.item.block.ItemBlockMimic;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -59,7 +60,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
                     if (mimicBlock == Blocks.AIR) {
                         return FULL_BLOCK_AABB;
                     }
-                    IBlockState mimicState = mimicBlock.getStateFromMeta(tileMimic.metaOfReplacedBlock);
+                    IBlockState mimicState = tileMimic.getReplacedState();
                     if (mimicBlock != this) {
                         return mimicState.getCollisionBoundingBox(world, pos);
                     }
@@ -82,7 +83,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
             if (mimicBlock == Blocks.AIR) {
                 return FULL_BLOCK_AABB;
             }
-            IBlockState mimicState = mimicBlock.getStateFromMeta(tileMimic.getStackInSlot(0).getItemDamage());
+            IBlockState mimicState = tileMimic.getReplacedState();
             if (mimicBlock != this) {
                 return mimicState.getSelectedBoundingBox(world, pos);
             }
@@ -136,7 +137,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
             ItemStack stack = mimic.getStackInSlot(0);
             if (stack.getItem() instanceof ItemBlock) {
                 Block block = ((ItemBlock) stack.getItem()).getBlock();
-                IBlockState mimicState = block.getStateFromMeta(stack.getItemDamage());
+                IBlockState mimicState = mimic.getReplacedState();
                 if (block != this) {
                     if (block.getRenderType(mimicState) == EnumBlockRenderType.ENTITYBLOCK_ANIMATED) {
                         return RegistrarBloodMagicBlocks.BLOOD_LIGHT.getDefaultState(); //Small and invisible-ish, basically this is returned in order to not render over the animated block (TESR)
@@ -208,7 +209,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
             if (stack.getItem() instanceof ItemBlock) {
                 Block block = ((ItemBlock) stack.getItem()).getBlock();
                 if (block instanceof IAltarComponent) {
-                    return ((IAltarComponent) block).getType(world, block.getStateFromMeta(mimic.metaOfReplacedBlock), pos);
+                    return ((IAltarComponent) block).getType(world, mimic.getReplacedState(), pos);
                 } else {
                     for (ComponentType altarComponent : ComponentType.values())
                         if (block == Utils.getBlockForComponent(altarComponent))
@@ -218,4 +219,10 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
         }
         return null;
     }
+	
+	@Override
+	public ItemBlock getItem() {
+		return new ItemBlockMimic(this);
+	}
+
 }

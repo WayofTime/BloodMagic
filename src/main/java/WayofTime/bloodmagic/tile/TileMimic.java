@@ -6,10 +6,12 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.entity.mob.EntityMimic;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.util.Serializer;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityPotion;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
@@ -40,7 +42,8 @@ public class TileMimic extends TileInventory implements ITickable {
     public NBTTagCompound tileTag = new NBTTagCompound();
     public TileEntity mimicedTile = null;
     public int metaOfReplacedBlock = 0;
-
+	public IBlockState stateOfReplacedBlock = Blocks.AIR.getDefaultState();
+	
     public int playerCheckRadius = 5;
     public int potionSpawnRadius = 5;
     public int potionSpawnInterval = 40;
@@ -134,6 +137,13 @@ public class TileMimic extends TileInventory implements ITickable {
             return false;
 
         Utils.insertItemToTile(this, player, 0);
+		ItemStack stack = getStackInSlot(0);
+		if(stateOfReplacedBlock == Blocks.AIR.getDefaultState()) {
+			if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock) {
+				Block block = ((ItemBlock) stack.getItem()).getBlock();
+				stateOfReplacedBlock = block.getDefaultState();
+			}
+		}
         this.refreshTileEntity();
 
         if (player.capabilities.isCreativeMode) {
@@ -220,7 +230,7 @@ public class TileMimic extends TileInventory implements ITickable {
         EntityMimic mimicEntity = new EntityMimic(getWorld());
         mimicEntity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 
-        mimicEntity.initializeMimic(getStackInSlot(0), tileTag, dropItemsOnBreak, metaOfReplacedBlock, playerCheckRadius, pos);
+        mimicEntity.initializeMimic(getStackInSlot(0), tileTag, dropItemsOnBreak, stateOfReplacedBlock, playerCheckRadius, pos);
         tileTag = null;
         mimicedTile = null;
         this.setInventorySlotContents(0, ItemStack.EMPTY);
@@ -239,7 +249,7 @@ public class TileMimic extends TileInventory implements ITickable {
         if (mimicedTile != null) {
             dropMimicedTileInventory();
         }
-        mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, metaOfReplacedBlock);
+        mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, stateOfReplacedBlock);
     }
 
     @Override
@@ -248,8 +258,9 @@ public class TileMimic extends TileInventory implements ITickable {
 
         dropItemsOnBreak = tag.getBoolean("dropItemsOnBreak");
         tileTag = tag.getCompoundTag("tileTag");
-        metaOfReplacedBlock = tag.getInteger("metaOfReplacedBlock");
-        mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, metaOfReplacedBlock);
+        //metaOfReplacedBlock = tag.getInteger("metaOfReplacedBlock");
+        stateOfReplacedBlock = Serializer.parseState(tag.getString("stateOfReplacedBlock"));
+		mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, stateOfReplacedBlock);
         playerCheckRadius = tag.getInteger("playerCheckRadius");
         potionSpawnRadius = tag.getInteger("potionSpawnRadius");
         potionSpawnInterval = Math.max(1, tag.getInteger("potionSpawnInterval"));
@@ -261,10 +272,11 @@ public class TileMimic extends TileInventory implements ITickable {
 
         tag.setBoolean("dropItemsOnBreak", dropItemsOnBreak);
         tag.setTag("tileTag", tileTag);
-        tag.setInteger("metaOfReplacedBlock", metaOfReplacedBlock);
+        //tag.setInteger("metaOfReplacedBlock", metaOfReplacedBlock);
         tag.setInteger("playerCheckRadius", playerCheckRadius);
         tag.setInteger("potionSpawnRadius", potionSpawnRadius);
         tag.setInteger("potionSpawnInterval", potionSpawnInterval);
+		tag.setString("stateOfReplacedBlock",stateOfReplacedBlock.toString());
 
         return tag;
     }
@@ -284,6 +296,14 @@ public class TileMimic extends TileInventory implements ITickable {
         }
     }
 
+	public IBlockState getReplacedState() {
+		return stateOfReplacedBlock;
+	}
+	
+	public void setReplacedState(IBlockState state) {
+		stateOfReplacedBlock = state;
+	}
+	
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
         return slot == 0 && dropItemsOnBreak;
@@ -293,9 +313,10 @@ public class TileMimic extends TileInventory implements ITickable {
         World world = mimic.getWorld();
         BlockPos pos = mimic.getPos();
 
-        replaceMimicWithBlockActual(world, pos, mimic.getStackInSlot(0), mimic.tileTag, mimic.metaOfReplacedBlock);
+        replaceMimicWithBlockActual(world, pos, mimic.getStackInSlot(0), mimic.tileTag, mimic.stateOfReplacedBlock);
     }
 
+	@Deprecated
     public static boolean replaceMimicWithBlockActual(World world, BlockPos pos, ItemStack stack, NBTTagCompound tileTag, int replacedMeta) {
         if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock) {
             Block block = ((ItemBlock) stack.getItem()).getBlock();
@@ -315,12 +336,32 @@ public class TileMimic extends TileInventory implements ITickable {
 
         return false;
     }
-
-    @Nullable
-    public static TileEntity getTileFromStackWithTag(World world, BlockPos pos, ItemStack stack, @Nullable NBTTagCompound tag, int replacementMeta) {
+	
+    public static boolean replaceMimicWithBlockActual(World world, BlockPos pos, ItemStack stack, NBTTagCompound tileTag, IBlockState replacementState) {
         if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock) {
             Block block = ((ItemBlock) stack.getItem()).getBlock();
-            IBlockState state = block.getStateFromMeta(stack.getItemDamage());
+            IBlockState state = replacementState;
+            if (world.setBlockState(pos, state, 3)) {
+                TileEntity tile = world.getTileEntity(pos);
+                if (tile != null) {
+                    tileTag.setInteger("x", pos.getX());
+                    tileTag.setInteger("y", pos.getY());
+                    tileTag.setInteger("z", pos.getZ());
+                    tile.readFromNBT(tileTag);
+                }
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Nullable
+    public static TileEntity getTileFromStackWithTag(World world, BlockPos pos, ItemStack stack, @Nullable NBTTagCompound tag, IBlockState replacementState) {
+        if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock) {
+            Block block = ((ItemBlock) stack.getItem()).getBlock();
+            IBlockState state = replacementState;
             if (block.hasTileEntity(state)) {
                 TileEntity tile = block.createTileEntity(world, state);
 
@@ -338,7 +379,7 @@ public class TileMimic extends TileInventory implements ITickable {
                 tile.setWorld(world);
 
                 try {
-                    _blockMetadata.setInt(tile, replacementMeta);
+                    _blockMetadata.setInt(tile, block.getMetaFromState(replacementState));
                 } catch (IllegalArgumentException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
