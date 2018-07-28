@@ -1,14 +1,4 @@
 ------------------------------------------------------
-Version 2.3.1
-------------------------------------------------------
-
-- Fixed Ritual of Magnetism not being registered
-- Fixed Mob Sacrifice Array so it no longer kills bosses and players
-- Fixed Will type serializer using lowercase names
-- Fixed item rendering for the Sigil of Holding HUD
-- Added mod id to command localization keys to prevent potential conflicts
-
-------------------------------------------------------
 Version 2.3.0
 ------------------------------------------------------
 
