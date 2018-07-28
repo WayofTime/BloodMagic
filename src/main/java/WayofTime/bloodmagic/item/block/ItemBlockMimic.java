@@ -49,7 +49,6 @@ public class ItemBlockMimic extends ItemBlockEnum
 			IBlockState replacedBlockstate = world.getBlockState(pos);
 			Block replacedBlock = replacedBlockstate.getBlock();
 			ItemStack replacedStack = replacedBlock.getItem(world, pos, replacedBlockstate);
-			int replacedMeta = replacedBlock.getMetaFromState(replacedBlockstate);
 			
 			//Get the state for the mimic
 			IBlockState mimicBlockstate = this.getBlock().getStateFromMeta(stack.getMetadata());
@@ -95,9 +94,8 @@ public class ItemBlockMimic extends ItemBlockEnum
 			if (tile instanceof TileMimic)
 			{
 				TileMimic mimic = (TileMimic) tile;
-				mimic.metaOfReplacedBlock = replacedMeta;
-				mimic.stateOfReplacedBlock = replacedBlockstate;
 				mimic.tileTag = tileTag;
+				mimic.setReplacedState(replacedBlockstate);
 				mimic.setInventorySlotContents(0, replacedStack);
 				mimic.refreshTileEntity();
 
