@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.iface;
 
-import WayofTime.bloodmagic.item.ItemSigil;
+import WayofTime.bloodmagic.item.sigil.ItemSigil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;

@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.item;
+package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.iface.IBindable;
