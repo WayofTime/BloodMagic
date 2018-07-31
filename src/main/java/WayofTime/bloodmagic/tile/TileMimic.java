@@ -258,7 +258,7 @@ public class TileMimic extends TileInventory implements ITickable {
         dropItemsOnBreak = tag.getBoolean("dropItemsOnBreak");
         tileTag = tag.getCompoundTag("tileTag");
         stateOfReplacedBlock = Serializer.parseState(tag.getString("stateOfReplacedBlock"));
-		mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, stateOfReplacedBlock);
+	mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, stateOfReplacedBlock);
         playerCheckRadius = tag.getInteger("playerCheckRadius");
         potionSpawnRadius = tag.getInteger("potionSpawnRadius");
         potionSpawnInterval = Math.max(1, tag.getInteger("potionSpawnInterval"));
@@ -273,7 +273,7 @@ public class TileMimic extends TileInventory implements ITickable {
         tag.setInteger("playerCheckRadius", playerCheckRadius);
         tag.setInteger("potionSpawnRadius", potionSpawnRadius);
         tag.setInteger("potionSpawnInterval", potionSpawnInterval);
-		tag.setString("stateOfReplacedBlock",stateOfReplacedBlock.toString());
+	tag.setString("stateOfReplacedBlock",stateOfReplacedBlock.toString());
 
         return tag;
     }
