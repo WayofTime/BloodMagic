@@ -38,7 +38,7 @@ public class EntityMimic extends EntityDemonBase {
      */
     private static final DataParameter<Byte> CLIMBING = EntityDataManager.createKey(EntityMimic.class, DataSerializers.BYTE);
 
-    public boolean dropItemsOnBreak = true;
+    public boolean dropItemsOnBreak = true/
     public NBTTagCompound tileTag = new NBTTagCompound();
     public int metaOfReplacedBlock = 0;
 	public IBlockState stateOfReplacedBlock = Blocks.AIR.getDefaultState();
@@ -103,8 +103,7 @@ public class EntityMimic extends EntityDemonBase {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileMimic) {
                 TileMimic mimic = (TileMimic) tile;
-                //mimic.metaOfReplacedBlock = metaOfReplacedBlock;
-				mimic.setReplacedState(this.stateOfReplacedBlock);
+		mimic.setReplacedState(this.stateOfReplacedBlock);
                 mimic.tileTag = tileTag;
                 mimic.setInventorySlotContents(0, getMimicItemStack());
                 mimic.dropItemsOnBreak = dropItemsOnBreak;
@@ -121,8 +120,7 @@ public class EntityMimic extends EntityDemonBase {
         this.setMimicItemStack(heldStack);
         this.tileTag = tileTag;
         this.dropItemsOnBreak = dropItemsOnBreak;
-        //this.metaOfReplacedBlock = metaOfReplacedBlock;
-		this.stateOfReplacedBlock = stateOfReplacedBlock;
+	this.stateOfReplacedBlock = stateOfReplacedBlock;
         this.playerCheckRadius = playerCheckRadius;
         this.setHomePosAndDistance(homePosition, 2); //TODO: Save this.
     }
