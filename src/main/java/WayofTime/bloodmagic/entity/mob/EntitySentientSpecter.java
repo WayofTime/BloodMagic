@@ -19,6 +19,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Enchantments;
@@ -30,7 +31,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -52,18 +52,6 @@ public class EntitySentientSpecter extends EntityDemonBase {
     private final int attackPriority = 3;
     protected EnumDemonWillType type = EnumDemonWillType.DESTRUCTIVE;
     protected boolean wasGivenSentientArmour = false;
-    private boolean pvpStatus = isPVPEnabled();
-
-    public boolean isPVPEnabled(){
-            MinecraftServer server = this.getServer();
-            if (server != null) {
-                return server.isPVPEnabled();
-            }
-        return false;
-    }
-
-
-
 
     public EntitySentientSpecter(World worldIn) {
         super(worldIn);
@@ -80,7 +68,7 @@ public class EntitySentientSpecter extends EntityDemonBase {
 
         this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
         this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityMob.class, true));
 
         this.targetTasks.addTask(4, new EntityAIHurtByTargetIgnoreTamed(this, false));
 
@@ -397,10 +385,8 @@ public class EntitySentientSpecter extends EntityDemonBase {
     @Override
     public boolean shouldAttackEntity(EntityLivingBase attacker, EntityLivingBase owner) {
         if (!(attacker instanceof EntityCreeper) && !(attacker instanceof EntityGhast)) {
-            if(!(attacker instanceof EntityPlayer)|| pvpStatus) {
                 return super.shouldAttackEntity(attacker, owner);
             }
-        }
             return false;
     }
 
