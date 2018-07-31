@@ -30,6 +30,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -51,6 +52,18 @@ public class EntitySentientSpecter extends EntityDemonBase {
     private final int attackPriority = 3;
     protected EnumDemonWillType type = EnumDemonWillType.DESTRUCTIVE;
     protected boolean wasGivenSentientArmour = false;
+    private boolean pvpStatus = isPVPEnabled();
+
+    public boolean isPVPEnabled(){
+            MinecraftServer server = this.getServer();
+            if (server != null) {
+                return server.isPVPEnabled();
+            }
+        return false;
+    }
+
+
+
 
     public EntitySentientSpecter(World worldIn) {
         super(worldIn);
@@ -384,10 +397,11 @@ public class EntitySentientSpecter extends EntityDemonBase {
     @Override
     public boolean shouldAttackEntity(EntityLivingBase attacker, EntityLivingBase owner) {
         if (!(attacker instanceof EntityCreeper) && !(attacker instanceof EntityGhast)) {
-            return super.shouldAttackEntity(attacker, owner);
-        } else {
-            return false;
+            if(!(attacker instanceof EntityPlayer)|| pvpStatus) {
+                return super.shouldAttackEntity(attacker, owner);
+            }
         }
+            return false;
     }
 
     @Override
