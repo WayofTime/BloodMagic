@@ -31,8 +31,7 @@ public class ItemBlockMimic extends ItemBlockEnum
     }
 
     @Override
-    //Old: public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, EnumHand hand, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ)
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) 
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) 
     {
 		ItemStack stack = player.getHeldItem(hand);
 		
