@@ -38,7 +38,7 @@ public class EntityMimic extends EntityDemonBase {
      */
     private static final DataParameter<Byte> CLIMBING = EntityDataManager.createKey(EntityMimic.class, DataSerializers.BYTE);
 
-    public boolean dropItemsOnBreak = true/
+    public boolean dropItemsOnBreak = true;
     public NBTTagCompound tileTag = new NBTTagCompound();
     public int metaOfReplacedBlock = 0;
 	public IBlockState stateOfReplacedBlock = Blocks.AIR.getDefaultState();
