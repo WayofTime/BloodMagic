@@ -6,7 +6,7 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.entity.mob.EntityMimic;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
-import WayofTime.bloodmagic.util.Serializer;
+import WayofTime.bloodmagic.util.StateUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,8 +41,8 @@ public class TileMimic extends TileInventory implements ITickable {
     public boolean dropItemsOnBreak = true;
     public NBTTagCompound tileTag = new NBTTagCompound();
     public TileEntity mimicedTile = null;
-	IBlockState stateOfReplacedBlock = Blocks.AIR.getDefaultState();
-	
+    IBlockState stateOfReplacedBlock = Blocks.AIR.getDefaultState();
+    
     public int playerCheckRadius = 5;
     public int potionSpawnRadius = 5;
     public int potionSpawnInterval = 40;
@@ -136,13 +136,13 @@ public class TileMimic extends TileInventory implements ITickable {
             return false;
 
         Utils.insertItemToTile(this, player, 0);
-		ItemStack stack = getStackInSlot(0);
-		if(stateOfReplacedBlock == Blocks.AIR.getDefaultState()) {
-			if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock) {
-				Block block = ((ItemBlock) stack.getItem()).getBlock();
-				stateOfReplacedBlock = block.getDefaultState();
-			}
-		}
+        ItemStack stack = getStackInSlot(0);
+        if(stateOfReplacedBlock == Blocks.AIR.getDefaultState()) {
+            if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock) {
+                Block block = ((ItemBlock) stack.getItem()).getBlock();
+                stateOfReplacedBlock = block.getDefaultState();
+            }
+        }
         this.refreshTileEntity();
 
         if (player.capabilities.isCreativeMode) {
@@ -257,8 +257,8 @@ public class TileMimic extends TileInventory implements ITickable {
 
         dropItemsOnBreak = tag.getBoolean("dropItemsOnBreak");
         tileTag = tag.getCompoundTag("tileTag");
-        stateOfReplacedBlock = Serializer.parseState(tag.getString("stateOfReplacedBlock"));
-	mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, stateOfReplacedBlock);
+        stateOfReplacedBlock = StateUtil.parseState(tag.getString("stateOfReplacedBlock"));
+    mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, stateOfReplacedBlock);
         playerCheckRadius = tag.getInteger("playerCheckRadius");
         potionSpawnRadius = tag.getInteger("potionSpawnRadius");
         potionSpawnInterval = Math.max(1, tag.getInteger("potionSpawnInterval"));
@@ -273,7 +273,7 @@ public class TileMimic extends TileInventory implements ITickable {
         tag.setInteger("playerCheckRadius", playerCheckRadius);
         tag.setInteger("potionSpawnRadius", potionSpawnRadius);
         tag.setInteger("potionSpawnInterval", potionSpawnInterval);
-	tag.setString("stateOfReplacedBlock",stateOfReplacedBlock.toString());
+    tag.setString("stateOfReplacedBlock",stateOfReplacedBlock.toString());
 
         return tag;
     }
@@ -293,14 +293,14 @@ public class TileMimic extends TileInventory implements ITickable {
         }
     }
 
-	public IBlockState getReplacedState() {
-		return stateOfReplacedBlock;
-	}
-	
-	public void setReplacedState(IBlockState state) {
-		stateOfReplacedBlock = state;
-	}
-	
+    public IBlockState getReplacedState() {
+        return stateOfReplacedBlock;
+    }
+    
+    public void setReplacedState(IBlockState state) {
+        stateOfReplacedBlock = state;
+    }
+    
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
         return slot == 0 && dropItemsOnBreak;
@@ -312,7 +312,7 @@ public class TileMimic extends TileInventory implements ITickable {
 
         replaceMimicWithBlockActual(world, pos, mimic.getStackInSlot(0), mimic.tileTag, mimic.stateOfReplacedBlock);
     }
-	
+    
     public static boolean replaceMimicWithBlockActual(World world, BlockPos pos, ItemStack stack, NBTTagCompound tileTag, IBlockState replacementState) {
         if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock) {
             Block block = ((ItemBlock) stack.getItem()).getBlock();

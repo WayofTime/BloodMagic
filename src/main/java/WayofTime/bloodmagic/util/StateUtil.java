@@ -8,10 +8,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-public class Serializer
+public class StateUtil
 {
-	//This is a great class name because the one and only function right now deserializes stuff.
-	//TehNut made me do it.
     public static IBlockState parseState(String blockInfo)
     {
         String[] split = blockInfo.split("\\[");

@@ -33,42 +33,42 @@ public class ItemBlockMimic extends ItemBlockEnum
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) 
     {
-		ItemStack stack = player.getHeldItem(hand);
-		
-		//If not sneaking, do normal item use
+        ItemStack stack = player.getHeldItem(hand);
+        
+        //If not sneaking, do normal item use
         if (!player.isSneaking())
         {
             return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
         }
-		
-		//IF sneaking and player has permission, replace the targeted block
+        
+        //IF sneaking and player has permission, replace the targeted block
         if (player.canPlayerEdit(pos, facing, stack))
         {
-			//Store information about the block being replaced and its appropriate itemstack
-			IBlockState replacedBlockstate = world.getBlockState(pos);
-			Block replacedBlock = replacedBlockstate.getBlock();
-			ItemStack replacedStack = replacedBlock.getItem(world, pos, replacedBlockstate);
-			
-			//Get the state for the mimic
-			IBlockState mimicBlockstate = this.getBlock().getStateFromMeta(stack.getMetadata());
-			
-			
-			//Check if the block can be replaced
-			
+            //Store information about the block being replaced and its appropriate itemstack
+            IBlockState replacedBlockstate = world.getBlockState(pos);
+            Block replacedBlock = replacedBlockstate.getBlock();
+            ItemStack replacedStack = replacedBlock.getItem(world, pos, replacedBlockstate);
+            
+            //Get the state for the mimic
+            IBlockState mimicBlockstate = this.getBlock().getStateFromMeta(stack.getMetadata());
+            
+            
+            //Check if the block can be replaced
+            
             if (!canReplaceBlock(world, pos, replacedBlockstate))
             {
                 return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
             }
 
-			//Check if the tile entity, if any, can be replaced
-			TileEntity tileReplaced = world.getTileEntity(pos);
+            //Check if the tile entity, if any, can be replaced
+            TileEntity tileReplaced = world.getTileEntity(pos);
             if (!canReplaceTile(tileReplaced))
             {
                 return EnumActionResult.FAIL;
             }
-			
-			//If tile can be replaced, store info about the tile
-			NBTTagCompound tileTag = getTagFromTileEntity(tileReplaced);
+            
+            //If tile can be replaced, store info about the tile
+            NBTTagCompound tileTag = getTagFromTileEntity(tileReplaced);
             if (tileReplaced != null)
             {
                 NBTTagCompound voidTag = new NBTTagCompound();
@@ -77,39 +77,39 @@ public class ItemBlockMimic extends ItemBlockEnum
                 voidTag.setInteger("z", pos.getZ());
                 tileReplaced.readFromNBT(voidTag);
             }
-			
-			//Remove one item from stack
-			stack.shrink(1);
-			
-			
-			//Replace the block
-			world.setBlockState(pos, mimicBlockstate, 3);
-			//Make placing sound
-			SoundType soundtype = this.block.getSoundType();
-				world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
-			
-			//Replace the tile entity
-			TileEntity tile = world.getTileEntity(pos);
-			if (tile instanceof TileMimic)
-			{
-				TileMimic mimic = (TileMimic) tile;
-				mimic.tileTag = tileTag;
-				mimic.setReplacedState(replacedBlockstate);
-				mimic.setInventorySlotContents(0, replacedStack);
-				mimic.refreshTileEntity();
+            
+            //Remove one item from stack
+            stack.shrink(1);
+            
+            
+            //Replace the block
+            world.setBlockState(pos, mimicBlockstate, 3);
+            //Make placing sound
+            SoundType soundtype = this.block.getSoundType();
+                world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+            
+            //Replace the tile entity
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile instanceof TileMimic)
+            {
+                TileMimic mimic = (TileMimic) tile;
+                mimic.tileTag = tileTag;
+                mimic.setReplacedState(replacedBlockstate);
+                mimic.setInventorySlotContents(0, replacedStack);
+                mimic.refreshTileEntity();
 
-				if (player.capabilities.isCreativeMode)
-				{
-					mimic.dropItemsOnBreak = false;
-				}
-			}
-			return EnumActionResult.SUCCESS;
-		} 
+                if (player.capabilities.isCreativeMode)
+                {
+                    mimic.dropItemsOnBreak = false;
+                }
+            }
+            return EnumActionResult.SUCCESS;
+        } 
 
         return EnumActionResult.FAIL;
 
     }
-	
+    
     public boolean canReplaceTile(TileEntity tile)
     {
         if (tile instanceof TileEntityChest)

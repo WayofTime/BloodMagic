@@ -4,7 +4,7 @@ import WayofTime.bloodmagic.block.BlockMimic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.entity.ai.EntityAIMimicReform;
 import WayofTime.bloodmagic.tile.TileMimic;
-import WayofTime.bloodmagic.util.Serializer;
+import WayofTime.bloodmagic.util.StateUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -41,7 +41,7 @@ public class EntityMimic extends EntityDemonBase {
     public boolean dropItemsOnBreak = true;
     public NBTTagCompound tileTag = new NBTTagCompound();
     public int metaOfReplacedBlock = 0;
-	public IBlockState stateOfReplacedBlock = Blocks.AIR.getDefaultState();
+    public IBlockState stateOfReplacedBlock = Blocks.AIR.getDefaultState();
     public int playerCheckRadius = 5;
 
     public EntityMimic(World worldIn) {
@@ -70,7 +70,7 @@ public class EntityMimic extends EntityDemonBase {
         tag.setTag("tileTag", tileTag);
         tag.setInteger("metaOfReplacedBlock", metaOfReplacedBlock);
         tag.setInteger("playerCheckRadius", playerCheckRadius);
-		tag.setString("stateOfReplacedBlock", stateOfReplacedBlock.toString());
+        tag.setString("stateOfReplacedBlock", stateOfReplacedBlock.toString());
     }
 
     @Override
@@ -81,7 +81,7 @@ public class EntityMimic extends EntityDemonBase {
         tileTag = tag.getCompoundTag("tileTag");
         metaOfReplacedBlock = tag.getInteger("metaOfReplacedBlock");
         playerCheckRadius = tag.getInteger("playerCheckRadius");
-		stateOfReplacedBlock = Serializer.parseState(tag.getString("stateOfReplacedBlock"));
+        stateOfReplacedBlock = StateUtil.parseState(tag.getString("stateOfReplacedBlock"));
     }
 
     public ItemStack getMimicItemStack() {
@@ -103,7 +103,7 @@ public class EntityMimic extends EntityDemonBase {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileMimic) {
                 TileMimic mimic = (TileMimic) tile;
-		mimic.setReplacedState(this.stateOfReplacedBlock);
+        mimic.setReplacedState(this.stateOfReplacedBlock);
                 mimic.tileTag = tileTag;
                 mimic.setInventorySlotContents(0, getMimicItemStack());
                 mimic.dropItemsOnBreak = dropItemsOnBreak;
@@ -120,7 +120,7 @@ public class EntityMimic extends EntityDemonBase {
         this.setMimicItemStack(heldStack);
         this.tileTag = tileTag;
         this.dropItemsOnBreak = dropItemsOnBreak;
-	this.stateOfReplacedBlock = stateOfReplacedBlock;
+    this.stateOfReplacedBlock = stateOfReplacedBlock;
         this.playerCheckRadius = playerCheckRadius;
         this.setHomePosAndDistance(homePosition, 2); //TODO: Save this.
     }
