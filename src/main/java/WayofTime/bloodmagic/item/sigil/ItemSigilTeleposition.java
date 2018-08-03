@@ -26,6 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 public class ItemSigilTeleposition extends ItemSigilBase {
 
@@ -62,16 +63,18 @@ public class ItemSigilTeleposition extends ItemSigilBase {
                 TileEntity tile = teleportTo.getTileEntity(location.pos);
                 if (tile instanceof TileTeleposer) {
                     BlockPos blockPos = location.pos.up();
+                    UUID bindingOwnerID = binding.getOwnerId();
                     if (world.provider.getDimension() == location.dim) {
-                        TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(blockPos, player, binding.getOwnerId(), true));
+                        TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(blockPos, player, bindingOwnerID, true));
+
+                        // FIXED. CODE SNIPPET INTERDIMENSIONAL TELEPORT NEEDS USE PERMISSION FROM BRANDON3055
+                    } else {
+                        TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(blockPos, player, bindingOwnerID, world, tile.getWorld().provider.getDimension(), true));
                     }
-                    // FIXME - Fix cross-dimension teleports causing major desync
-//                    } else {
-//                        TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(blockPos, player, getOwnerUUID(stack), world, getValue(stack.getTagCompound(), Constants.NBT.DIMENSION_ID), true));
-//                    }
+                }
                 }
             }
-        }
+
         return super.onItemRightClick(world, player, hand);
     }
 
