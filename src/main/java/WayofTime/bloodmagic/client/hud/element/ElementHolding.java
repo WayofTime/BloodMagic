@@ -44,7 +44,7 @@ public class ElementHolding extends HUDElement {
         List<ItemStack> inventory = ItemSigilHolding.getInternalInventory(sigilHolding);
         int xOffset = 0;
         for (ItemStack stack : inventory) {
-            renderHotbarItem(drawX + 3 + xOffset, drawY - 4, partialTicks, minecraft.player, stack);
+            renderHotbarItem(drawX + 3 + xOffset, drawY + 3, partialTicks, minecraft.player, stack);
             xOffset += 20;
         }
     }
