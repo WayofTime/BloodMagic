@@ -22,8 +22,10 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.util.math.ChunkPos;
 
 import java.util.UUID;
 
@@ -44,14 +46,16 @@ public class Teleports {
         @Override
         public void teleport() {
             if (entity != null) {
+                BlockPos targetTeleposer = new BlockPos(x,y,z);
                 if (entity.timeUntilPortal <= 0) {
                     if (entity instanceof EntityPlayer) {
+
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkOwner);
                         if (network.getCurrentEssence() < getTeleportCost())
                             return;
 
                         if (teleposer)
-                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), new BlockPos(x, y, z))))
+                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), targetTeleposer)))
                                 return;
 
                         network.syphon(getTeleportCost());
@@ -65,14 +69,14 @@ public class Teleports {
 
                         player.getEntityWorld().playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                         if (teleposer)
-                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), new BlockPos(x, y, z)));
+                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), targetTeleposer));
                     } else {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkOwner);
                         if (network.getCurrentEssence() < (getTeleportCost() / 10))
                             return;
 
                         if (teleposer)
-                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), new BlockPos(x, y, z))))
+                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), targetTeleposer)))
                                 return;
 
                         network.syphon(getTeleportCost() / 10);
@@ -85,7 +89,7 @@ public class Teleports {
 
                         entity.getEntityWorld().playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                         if (teleposer)
-                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), new BlockPos(x, y, z)));
+                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), targetTeleposer));
                     }
                 }
             }
@@ -120,20 +124,29 @@ public class Teleports {
                     MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
                     WorldServer oldWorldServer = server.getWorld(entity.dimension);
                     WorldServer newWorldServer = server.getWorld(newWorldID);
+                    BlockPos targetTeleposer = new BlockPos(x,y,z);
+                    ChunkPos teleposerChunk = new ChunkPos(targetTeleposer);
+                    ForgeChunkManager.Ticket chunkTicket = ForgeChunkManager.requestTicket("bloodmagic", newWorldServer, ForgeChunkManager.Type.NORMAL);
+                    ForgeChunkManager.forceChunk(chunkTicket ,teleposerChunk);
 
                     if (entity instanceof EntityPlayer) {
                         EntityPlayerMP player = (EntityPlayerMP) entity;
+
 
                         if (!player.getEntityWorld().isRemote) {
                             SoulNetwork network = NetworkHelper.getSoulNetwork(networkOwner);
                             if (network.getCurrentEssence() < getTeleportCost())
                                 return;
 
-                            if (teleposer)
-                                if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, new BlockPos(x, y, z))))
+                            if (teleposer) {
+                                if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, targetTeleposer))) {
                                     return;
+                                }
+                            }
 
                             network.syphon(getTeleportCost());
+
+
 
                             /* begin brandon3055 "BrandonsCore" intedimensional teleportation code */
 
@@ -171,8 +184,10 @@ public class Teleports {
 
                             /* end brandon3055 teleportation code */
 
+                            ForgeChunkManager.releaseTicket(chunkTicket);
+
                             if (teleposer)
-                                MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
+                                MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, targetTeleposer));
                         }
 
                     } else if (!entity.getEntityWorld().isRemote) {
@@ -181,7 +196,7 @@ public class Teleports {
                             return;
 
                         if (teleposer)
-                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, new BlockPos(x, y, z))))
+                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, targetTeleposer)))
                                 return;
 
                         network.syphon(getTeleportCost() / 10);
@@ -204,7 +219,7 @@ public class Teleports {
                         oldWorldServer.resetUpdateEntityTick();
                         newWorldServer.resetUpdateEntityTick();
                         if (teleposer)
-                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
+                            MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, targetTeleposer));
                     }
                     entity.timeUntilPortal = entity instanceof EntityLiving ? 150 : 20;
                     newWorldServer.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
