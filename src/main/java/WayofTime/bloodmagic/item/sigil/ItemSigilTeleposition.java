@@ -67,7 +67,6 @@ public class ItemSigilTeleposition extends ItemSigilBase {
                     if (world.provider.getDimension() == location.dim) {
                         TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(blockPos, player, bindingOwnerID, true));
 
-                        // FIXED. CODE SNIPPET INTERDIMENSIONAL TELEPORT NEEDS USE PERMISSION FROM BRANDON3055
                     } else {
                         TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(blockPos, player, bindingOwnerID, world, tile.getWorld().provider.getDimension(), true));
                     }
