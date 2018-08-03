@@ -12,13 +12,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -29,7 +27,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -70,8 +67,6 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
         if (world.isRemote)
             return;
 
-        boolean silkTouch = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0;
-        int fortuneLvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);
         int range = (charge / 6); //Charge is a max of 30 - want 5 to be the max
 
         HashMultiset<ItemStackWrapper> drops = HashMultiset.create();
@@ -94,22 +89,7 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         continue;
 
-                    if (blockStack.getBlock() != null && blockStack.getBlock().getBlockHardness(blockStack.getState(), world, blockPos) != -1) {
-                        float strengthVsBlock = getDestroySpeed(stack, blockStack.getState());
-
-                        if (strengthVsBlock > 1.1F && world.canMineBlockBody(player, blockPos)) {
-                            if (silkTouch && blockStack.getBlock().canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))
-                                drops.add(new ItemStackWrapper(blockStack));
-                            else {
-                                List<ItemStack> itemDrops = blockStack.getBlock().getDrops(world, blockPos, world.getBlockState(blockPos), fortuneLvl);
-                                for (ItemStack stacks : itemDrops)
-                                    drops.add(ItemStackWrapper.getHolder(stacks));
-                            }
-
-                            blockStack.getBlock().removedByPlayer(world.getBlockState(blockPos), world, blockPos,player, false);
-
-                        }
-                    }
+                    sharedHarvest(stack, world, player, blockPos, blockStack, drops);
                 }
             }
         }
