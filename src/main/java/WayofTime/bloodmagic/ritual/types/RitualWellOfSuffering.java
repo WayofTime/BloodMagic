@@ -21,6 +21,7 @@ import java.util.function.Consumer;
 public class RitualWellOfSuffering extends Ritual {
     public static final String ALTAR_RANGE = "altar";
     public static final String DAMAGE_RANGE = "damage";
+    public static final DamageSource WELL_OF_SUFFERING = new DamageSource("well_of_suffering").setDamageBypassesArmor().setDamageAllowedInCreativeMode();
 
     public static final int SACRIFICE_AMOUNT = 25;
 
@@ -89,7 +90,7 @@ public class RitualWellOfSuffering extends Ritual {
                     continue;
 
                 if (entity.isEntityAlive() && !(entity instanceof EntityPlayer)) {
-                    if (entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, 1)) {
+                    if (entity.attackEntityFrom(WELL_OF_SUFFERING, 1)) {
                         if (entity.isChild())
                             lifeEssenceRatio *= 0.5F;
 

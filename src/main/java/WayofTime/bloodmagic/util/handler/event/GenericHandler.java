@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.ritual.types.RitualWellOfSuffering;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.ItemBindEvent;
 import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
@@ -31,7 +32,6 @@ import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrific
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.DemonAuraPacketProcessor;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
-import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.*;
 import net.minecraft.block.Block;
@@ -402,6 +402,15 @@ public class GenericHandler {
                 for (int i = 0; i <= EnchantmentHelper.getLootingModifier(player); i++)
                     if (attackedEntity.getEntityWorld().rand.nextDouble() < 0.2)
                         event.getDrops().add(new EntityItem(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD, 1, 0)));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onWellOfSufferingDeath(LivingDropsEvent event){
+        if(!ConfigHandler.values.wellOfSufferingDrops){
+            if(event.getSource().equals(RitualWellOfSuffering.WELL_OF_SUFFERING)) {
+                event.getDrops().clear();
+            }
         }
     }
 
