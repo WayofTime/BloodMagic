@@ -40,6 +40,7 @@ public class Teleports {
         public void teleport() {
             if (entity != null) {
                 if (entity.timeUntilPortal <= 0) {
+                    entity.timeUntilPortal = 10;
                     if (entity instanceof EntityPlayer) {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkOwner);
                         if (network.getCurrentEssence() < getTeleportCost())
@@ -56,7 +57,6 @@ public class Teleports {
                         player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
                         player.getEntityWorld().updateEntityWithOptionalForce(player, false);
                         player.connection.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
-                        player.timeUntilPortal = 150;
 
                         player.getEntityWorld().playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                         if (teleposer)
@@ -75,13 +75,14 @@ public class Teleports {
                         WorldServer world = (WorldServer) entity.getEntityWorld();
 
                         entity.setPosition(x + 0.5, y + 0.5, z + 0.5);
-                        entity.timeUntilPortal = 150;
                         world.resetUpdateEntityTick();
 
                         entity.getEntityWorld().playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                         if (teleposer)
                             MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), new BlockPos(x, y, z)));
                     }
+                }else{
+                    entity.timeUntilPortal = 10;
                 }
             }
         }
@@ -112,6 +113,7 @@ public class Teleports {
         public void teleport() {
             if (entity != null) {
                 if (entity.timeUntilPortal <= 0) {
+                    entity.timeUntilPortal = 10;
                     MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
                     WorldServer oldWorldServer = server.getWorld(entity.dimension);
                     WorldServer newWorldServer = server.getWorld(newWorldID);
@@ -162,7 +164,6 @@ public class Teleports {
                             teleportedEntity.forceSpawn = true;
                             newWorldServer.spawnEntity(teleportedEntity);
                             teleportedEntity.setWorld(newWorldServer);
-                            teleportedEntity.timeUntilPortal = teleportedEntity instanceof EntityPlayer ? 150 : 20;
                         }
 
                         oldWorldServer.resetUpdateEntityTick();
@@ -170,8 +171,9 @@ public class Teleports {
                         if (teleposer)
                             MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, new BlockPos(x, y, z)));
                     }
-                    entity.timeUntilPortal = entity instanceof EntityLiving ? 150 : 20;
                     newWorldServer.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+                }else{
+                    entity.timeUntilPortal = 10;
                 }
             }
         }
