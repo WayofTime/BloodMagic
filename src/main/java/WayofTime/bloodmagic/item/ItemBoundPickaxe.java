@@ -106,7 +106,8 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
                                     drops.add(ItemStackWrapper.getHolder(stacks));
                             }
 
-                            world.setBlockToAir(blockPos);
+                            blockStack.getBlock().removedByPlayer(world.getBlockState(blockPos), world, blockPos,player, false);
+
                         }
                     }
                 }
