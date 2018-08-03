@@ -289,6 +289,9 @@ chat.bloodmagic.ritual.notValid=Du fühlst, dass die Runen nicht richtig eingeri
 chat.bloodmagic.livingArmour.upgrade.poisonRemove=Du fühlst dich schon wieder besser.
 chat.bloodmagic.livingArmour.newUpgrade=Upgrade erworben!
 
+death.attack.ritual_damage=%1$s wurde für ein Ritual geopfert.
+death.attack.ritual_damage.player=%2$s hat %1$s für ein Ritual geopfert.
+
 # JustEnoughItems
 jei.bloodmagic.recipe.altar=Blutaltar
 jei.bloodmagic.recipe.binding=Bindungsritual

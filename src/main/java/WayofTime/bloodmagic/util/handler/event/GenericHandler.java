@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.ritual.types.RitualWellOfSuffering;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.ItemBindEvent;
 import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
@@ -80,6 +79,8 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import java.util.*;
+
+import static WayofTime.bloodmagic.ritual.RitualManager.RITUAL_DAMAGE;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class GenericHandler {
@@ -408,7 +409,7 @@ public class GenericHandler {
     @SubscribeEvent
     public static void onWellOfSufferingDeath(LivingDropsEvent event){
         if(!ConfigHandler.values.wellOfSufferingDrops){
-            if(event.getSource().equals(RitualWellOfSuffering.WELL_OF_SUFFERING)) {
+            if(event.getSource().equals(RITUAL_DAMAGE)) {
                 event.getDrops().clear();
             }
         }

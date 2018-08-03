@@ -7,7 +7,6 @@ import WayofTime.bloodmagic.tile.TileAltar;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -17,11 +16,12 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static WayofTime.bloodmagic.ritual.RitualManager.RITUAL_DAMAGE;
+
 @RitualRegister("well_of_suffering")
 public class RitualWellOfSuffering extends Ritual {
     public static final String ALTAR_RANGE = "altar";
     public static final String DAMAGE_RANGE = "damage";
-    public static final DamageSource WELL_OF_SUFFERING = new DamageSource("well_of_suffering").setDamageBypassesArmor().setDamageAllowedInCreativeMode();
 
     public static final int SACRIFICE_AMOUNT = 25;
 
@@ -90,7 +90,7 @@ public class RitualWellOfSuffering extends Ritual {
                     continue;
 
                 if (entity.isEntityAlive() && !(entity instanceof EntityPlayer)) {
-                    if (entity.attackEntityFrom(WELL_OF_SUFFERING, 1)) {
+                    if (entity.attackEntityFrom(RITUAL_DAMAGE, 1)) {
                         if (entity.isChild())
                             lifeEssenceRatio *= 0.5F;
 
