@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.util.helper;
 
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.altar.IBloodAltar;
-import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
+import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;

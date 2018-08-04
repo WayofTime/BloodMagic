@@ -34,8 +34,6 @@ import java.util.function.Consumer;
 
 public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.DaggerType> implements IMeshProvider {
 
-    private boolean hasMaxIncense;
-
     public ItemSacrificialDagger() {
         super(DaggerType.class, "sacrificial_dagger");
 
@@ -56,7 +54,7 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
         if (entityLiving instanceof EntityPlayer && !entityLiving.getEntityWorld().isRemote)
             if(PlayerSacrificeHelper.sacrificePlayerHealth((EntityPlayer) entityLiving))
-                this.hasMaxIncense = (IncenseHelper.getMaxIncense((EntityPlayer) entityLiving) == IncenseHelper.getCurrentIncense((EntityPlayer) entityLiving));
+                IncenseHelper.setHasMaxIncense(stack, (EntityPlayer) entityLiving, false);
     }
 
     @Override
@@ -134,8 +132,12 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
         if (!world.isRemote && entity instanceof EntityPlayer) {
             boolean prepared = this.isPlayerPreparedForSacrifice(world, (EntityPlayer) entity);
             this.setUseForSacrifice(stack, prepared);
-            if(prepared && !this.hasMaxIncense)
-                this.hasMaxIncense = (IncenseHelper.getMaxIncense((EntityPlayer) entity) == IncenseHelper.getCurrentIncense((EntityPlayer) entity));
+            if(IncenseHelper.getHasMaxIncense(stack) && !prepared)
+                IncenseHelper.setHasMaxIncense(stack, (EntityPlayer) entity, false);
+            if(prepared) {
+                boolean isMax = IncenseHelper.getMaxIncense((EntityPlayer) entity) == IncenseHelper.getCurrentIncense((EntityPlayer) entity);
+                IncenseHelper.setHasMaxIncense(stack, (EntityPlayer) entity, isMax);
+            }
         }
     }
 
@@ -176,10 +178,9 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public boolean hasEffect(ItemStack stack)
     {
-        return this.hasMaxIncense || super.hasEffect(stack);
+        return IncenseHelper.getHasMaxIncense(stack) || super.hasEffect(stack);
     }
 
     public enum DaggerType implements ISubItem {
