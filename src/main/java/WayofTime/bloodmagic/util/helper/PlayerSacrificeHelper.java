@@ -35,6 +35,9 @@ public class PlayerSacrificeHelper {
         amount = amount + Math.min(increment, incenseAddition - amount);
         setPlayerIncense(player, amount);
 
+        if(amount == incenseAddition) {
+            IncenseHelper.setMaxIncense(player, incenseAddition);
+        }
         // System.out.println("Amount of incense: " + amount + ", Increment: " +
         // increment);
 
