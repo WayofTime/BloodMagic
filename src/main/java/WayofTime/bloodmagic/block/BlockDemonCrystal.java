@@ -55,7 +55,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
                 boolean isCreative = player.capabilities.isCreativeMode;
                 boolean holdsCrystal = player.getHeldItem(hand).getItem() instanceof ItemDemonCrystal;
 
-                if (PlayerDemonWillHandler.getTotalDemonWill(EnumDemonWillType.DEFAULT, player) > 1024 && ((!holdsCrystal || !isCreative))) {
+                if (PlayerDemonWillHandler.getTotalDemonWill(EnumDemonWillType.DEFAULT, player) > 1024 && !(holdsCrystal && isCreative)) {
                     crystal.dropSingleCrystal();
 
                 }
