@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
@@ -28,7 +29,6 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvider {
     public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 6);
@@ -48,17 +48,29 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (world.isRemote)
-            return true;
+        if (!world.isRemote) {
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile instanceof TileDemonCrystal) {
+                TileDemonCrystal crystal = (TileDemonCrystal) tile;
+                boolean isCreative = player.capabilities.isCreativeMode;
+                boolean holdsCrystal = player.getHeldItem(hand).getItem() instanceof ItemDemonCrystal;
 
-        TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof TileDemonCrystal) {
-            TileDemonCrystal crystal = (TileDemonCrystal) tile;
+                if (PlayerDemonWillHandler.getTotalDemonWill(EnumDemonWillType.DEFAULT, player) > 1024 && ((!holdsCrystal || !isCreative))) {
+                    crystal.dropSingleCrystal();
 
-            if (PlayerDemonWillHandler.getTotalDemonWill(EnumDemonWillType.DEFAULT, player) > 1024)
-                crystal.dropSingleCrystal();
+                }
+                if (!crystal.getWorld().isRemote && isCreative && holdsCrystal) {
+                    if (crystal.crystalCount < 7) {
+                        crystal.internalCounter = 0;
+                        if(crystal.progressToNextCrystal > 0)
+                            crystal.progressToNextCrystal--;
+                        crystal.crystalCount++;
+                        crystal.markDirty();
+                        crystal.notifyUpdate();
+                    }
+                }
+            }
         }
-
         return true;
     }
 
