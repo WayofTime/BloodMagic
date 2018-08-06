@@ -25,24 +25,28 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
         ItemStack sigilStack = player.getHeldItem(EnumHand.MAIN_HAND);
         boolean flag = false;
         if (simple) {
-            if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION) {
+            if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION)
                 flag = true;
-            }
+
+            if(!flag)
+                flag = isFlagSigilHolding(sigilStack, true);
+
             if (!flag) {
                 sigilStack = player.getHeldItem(EnumHand.OFF_HAND);
                 if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION)
                     flag = true;
             }
-            if(!flag){
-                flag = isFlagSigilHolding(sigilStack, true);
-            }
+
             if(!flag) {
-                sigilStack = player.getHeldItem(EnumHand.MAIN_HAND);
                 flag = isFlagSigilHolding(sigilStack, true);
             }
+
         } else {
             if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
                 flag = true;
+
+            if(!flag)
+                flag = isFlagSigilHolding(sigilStack, false);
 
             if (!flag) {
                 sigilStack = player.getHeldItem(EnumHand.OFF_HAND);
@@ -50,13 +54,9 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
                     flag = true;
             }
 
-            if(!flag){
+            if(!flag)
                 flag = isFlagSigilHolding(sigilStack, false);
-            }
-            if(!flag) {
-                sigilStack = player.getHeldItem(EnumHand.MAIN_HAND);
-                flag = isFlagSigilHolding(sigilStack, false);
-            }
+
         }
         return super.shouldRender(minecraft) && flag;
     }
