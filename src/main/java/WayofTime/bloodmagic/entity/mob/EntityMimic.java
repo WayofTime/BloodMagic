@@ -103,7 +103,7 @@ public class EntityMimic extends EntityDemonBase {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileMimic) {
                 TileMimic mimic = (TileMimic) tile;
-        mimic.setReplacedState(this.stateOfReplacedBlock);
+                mimic.setReplacedState(this.stateOfReplacedBlock);
                 mimic.tileTag = tileTag;
                 mimic.setInventorySlotContents(0, getMimicItemStack());
                 mimic.dropItemsOnBreak = dropItemsOnBreak;
@@ -120,7 +120,7 @@ public class EntityMimic extends EntityDemonBase {
         this.setMimicItemStack(heldStack);
         this.tileTag = tileTag;
         this.dropItemsOnBreak = dropItemsOnBreak;
-    this.stateOfReplacedBlock = stateOfReplacedBlock;
+        this.stateOfReplacedBlock = stateOfReplacedBlock;
         this.playerCheckRadius = playerCheckRadius;
         this.setHomePosAndDistance(homePosition, 2); //TODO: Save this.
     }
