@@ -18,9 +18,11 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.RayTraceResult;
@@ -91,6 +93,36 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
         }
 
         if (!player.capabilities.isCreativeMode) {
+            PotionEffect regeneration = player.getActivePotionEffect(MobEffects.REGENERATION);
+            if(regeneration != null) {
+                int amp = regeneration.getAmplifier();
+                if (amp >= 0) {
+                    if (amp > 6) amp = 6;
+                    switch (amp) {
+                        case 0:
+                            lpAdded = (int) Math.ceil(lpAdded * 0.90);
+                            break;
+                        case 1:
+                            lpAdded = (int) Math.ceil(lpAdded * 0.72);
+                            break;
+                        case 2:
+                            lpAdded = (int) Math.ceil(lpAdded * 0.50);
+                            break;
+                        case 3:
+                            lpAdded = (int) Math.ceil(lpAdded * 0.30);
+                            break;
+                        case 4:
+                            lpAdded = (int) Math.ceil(lpAdded * 0.15);
+                            break;
+                        case 5:
+                            lpAdded = (int) Math.ceil(lpAdded * 0.06);
+                            break;
+                        case 6:
+                            lpAdded = (int) Math.ceil(lpAdded * 0.02);
+                            break;
+                    }
+                }
+            }
             SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, 2, lpAdded);
             if (MinecraftForge.EVENT_BUS.post(evt))
                 return super.onItemRightClick(world, player, hand);
