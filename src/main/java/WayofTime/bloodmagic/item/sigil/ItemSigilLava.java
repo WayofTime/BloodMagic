@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
@@ -8,10 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -59,7 +57,7 @@ public class ItemSigilLava extends ItemSigilBase {
                         return super.onItemRightClick(world, player, hand);
                     }
 
-                    if (this.canPlaceLava(world, blockpos1) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, getLpUsed()) && this.tryPlaceLava(world, blockpos1)) {
+                    if (canPlaceLava(world, blockpos1) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess() && tryPlaceLava(world, blockpos1)) {
                         return super.onItemRightClick(world, player, hand);
                     }
                 }
@@ -85,7 +83,7 @@ public class ItemSigilLava extends ItemSigilBase {
             FluidStack fluid = new FluidStack(FluidRegistry.LAVA, 1000);
             int amount = handler.fill(fluid, false);
 
-            if (amount > 0 && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, getLpUsed())) {
+            if (amount > 0 && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
                 handler.fill(fluid, true);
                 return EnumActionResult.SUCCESS;
             }

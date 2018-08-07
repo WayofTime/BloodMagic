@@ -33,6 +33,10 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
         ticketHistory = EvictingQueue.create(16);
     }
 
+    public void clear() {
+        ticketHistory.clear();
+    }
+
     public int add(SoulTicket ticket, int maximum) {
         SoulNetworkEvent.Fill event = new SoulNetworkEvent.Fill(this, ticket, maximum);
         if (MinecraftForge.EVENT_BUS.post(event))
@@ -46,7 +50,11 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
         int newEss = Math.min(event.getMaximum(), currEss + event.getTicket().getAmount());
         setCurrentEssence(newEss);
 
+        if (ticketHistory.contains(ticket))
+            ticketHistory.remove(ticket); // "Pops" the existing ticket to the top of the queue
+
         ticketHistory.add(ticket);
+
         return newEss - currEss;
     }
 
@@ -78,6 +86,9 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
         int syphon = event.getTicket().getAmount();
         if (getCurrentEssence() >= syphon) {
             setCurrentEssence(getCurrentEssence() - syphon);
+            if (ticketHistory.contains(ticket))
+                ticketHistory.remove(ticket);
+
             ticketHistory.add(ticket);
             return syphon;
         }
@@ -107,7 +118,11 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
         if (drainAmount <= 0 || event.shouldDamage())
             hurtPlayer(user, event.getTicket().getAmount());
 
+        if (ticketHistory.contains(ticket))
+            ticketHistory.remove(ticket);
+
         ticketHistory.add(ticket);
+
         return BooleanResult.newResult(true, event.getTicket().getAmount());
     }
 

@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.TeleposeEvent;
 import WayofTime.bloodmagic.teleport.TeleportQueue;
@@ -75,7 +76,7 @@ public class TileTeleposer extends TileInventory implements ITickable {
                 final int focusLevel = (getStackInSlot(0).getItemDamage() + 1);
                 final int lpToBeDrained = (int) (0.5F * Math.sqrt((pos.getX() - focusPos.getX()) * (pos.getX() - focusPos.getX()) + (pos.getY() - focusPos.getY() + 1) * (pos.getY() - focusPos.getY() + 1) + (pos.getZ() - focusPos.getZ()) * (pos.getZ() - focusPos.getZ())));
 
-                if (NetworkHelper.getSoulNetwork(binding).syphonAndDamage(PlayerHelper.getPlayerFromUUID(binding.getOwnerId()), lpToBeDrained * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1))) {
+                if (NetworkHelper.getSoulNetwork(binding).syphonAndDamage(PlayerHelper.getPlayerFromUUID(binding.getOwnerId()), SoulTicket.block(world, pos, lpToBeDrained * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1))).isSuccess()) {
                     int blocksTransported = 0;
 
                     for (int i = -(focusLevel - 1); i <= (focusLevel - 1); i++) {
@@ -89,7 +90,7 @@ public class TileTeleposer extends TileInventory implements ITickable {
                         }
                     }
 
-                    NetworkHelper.syphonFromContainer(focusStack, lpToBeDrained * blocksTransported);
+                    NetworkHelper.syphonFromContainer(focusStack, SoulTicket.item(focusStack, world, pos, lpToBeDrained * blocksTransported));
 
                     List<Entity> originalWorldEntities;
                     List<Entity> focusWorldEntities;

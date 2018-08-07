@@ -67,7 +67,7 @@ public class RitualZephyr extends Ritual {
                 }
             }
 
-            masterRitualStone.getOwnerNetwork().syphon(this.getRefreshCost() * Math.min(count, 100));
+            masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost() * Math.min(count, 100)));
         }
     }
 

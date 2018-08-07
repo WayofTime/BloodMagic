@@ -61,7 +61,7 @@ public class RitualMeteor extends Ritual {
                 entityItem.setDead();
 
                 if (destructiveWill >= destructiveWillDrain && currentEssence >= 1000000000) {
-                    masterRitualStone.getOwnerNetwork().syphon(1000000);
+                    masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(1000000));
                 } else {
                     masterRitualStone.setActive(false);
                 }

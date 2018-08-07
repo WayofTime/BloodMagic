@@ -147,7 +147,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
                         if (ritual.activateRitual(this, activator, binding.getOwnerId())) {
                             if (!isRedstoned() && (activator != null && !activator.capabilities.isCreativeMode))
-                                network.syphon(ritual.getActivationCost());
+                                network.syphon(ticket(ritual.getActivationCost()));
 
                             if (activator != null)
                                 activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.activate"), true);

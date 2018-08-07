@@ -72,7 +72,7 @@ public class RitualMagnetic extends Ritual {
                         ItemStack checkStack = state.getBlock().getPickBlock(state, null, world, newPos, null);
                         if (isBlockOre(checkStack)) {
                             Utils.swapLocations(world, newPos, world, replacement);
-                            masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
+                            masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
                             k++;
                             this.lastPos = new BlockPos(i, j, k);
                             return;

@@ -1,8 +1,17 @@
 package WayofTime.bloodmagic.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.bloodmagic.api.event.BloodMagicCraftedEvent;
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
+import WayofTime.bloodmagic.core.data.*;
+import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
+import WayofTime.bloodmagic.iface.IBindable;
+import WayofTime.bloodmagic.iface.ICustomAlchemyConsumable;
+import WayofTime.bloodmagic.orb.BloodOrb;
+import WayofTime.bloodmagic.orb.IBloodOrb;
+import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -15,22 +24,10 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-
 import org.apache.commons.lang3.ArrayUtils;
 
-import WayofTime.bloodmagic.api.event.BloodMagicCraftedEvent;
-import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
-import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
-import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.core.data.SoulNetwork;
-import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
-import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.iface.ICustomAlchemyConsumable;
-import WayofTime.bloodmagic.orb.BloodOrb;
-import WayofTime.bloodmagic.orb.IBloodOrb;
-import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
-import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.util.helper.NetworkHelper;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileAlchemyTable extends TileInventory implements ISidedInventory, ITickable
 {
@@ -446,7 +443,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         {
             if (orbStack.getItem() instanceof IBloodOrb)
             {
-                if (NetworkHelper.syphonFromContainer(orbStack, requested))
+                if (NetworkHelper.syphonFromContainer(orbStack, SoulTicket.item(orbStack, world, pos, requested)))
                 {
                     return requested;
                 }

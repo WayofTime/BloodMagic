@@ -58,7 +58,7 @@ public class RitualAltarBuilder extends Ritual {
         if (world.getBlockState(altarPos).getBlock().isReplaceable(world, altarPos) && hasItem(tileEntity, Item.getItemFromBlock(RegistrarBloodMagicBlocks.ALTAR), 0, true)) {
             world.setBlockState(altarPos, RegistrarBloodMagicBlocks.ALTAR.getDefaultState());
             lightning(world, altarPos);
-            masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
+            masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
         }
 
         if (altarComponentsIterator.hasNext()) {
@@ -72,7 +72,7 @@ public class RitualAltarBuilder extends Ritual {
                         if (blockStack != null) {
                             world.setBlockState(currentPos, blockStack.getState(), 3);
                             lightning(world, currentPos);
-                            masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
+                            masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
                         }
                         break;
                     }
@@ -81,7 +81,7 @@ public class RitualAltarBuilder extends Ritual {
                         if (blockStack != null) {
                             world.setBlockState(currentPos, blockStack.getState(), 3);
                             lightning(world, currentPos);
-                            masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
+                            masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
                         }
                         break;
                     }
@@ -90,7 +90,7 @@ public class RitualAltarBuilder extends Ritual {
                         if (hasItem(tileEntity, Item.getItemFromBlock(blockStack.getBlock()), blockStack.getMeta(), true)) {
                             world.setBlockState(currentPos, blockStack.getState(), 3);
                             lightning(world, currentPos);
-                            masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
+                            masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
                         }
                         break;
                     }
