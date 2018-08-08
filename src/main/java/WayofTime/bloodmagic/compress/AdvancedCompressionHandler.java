@@ -10,18 +10,29 @@ import net.minecraft.world.World;
 
 
 public class AdvancedCompressionHandler extends CompressionHandler {
+
+    private static InventoryCrafting[] inventoryCrafting = {
+            new InventoryCrafting(new Container() {
+                public boolean canInteractWith(EntityPlayer player) {
+                    return false;
+                }
+            },
+                    3, 3),
+            new InventoryCrafting(new Container() {
+                public boolean canInteractWith(EntityPlayer player) {
+                    return false;
+                }
+            },
+                    2, 2)
+
+    };
+
     private static ItemStack reversibleCheck;
 
-    public static boolean isResultStackReversible(ItemStack stack, int gridSize, World world) {
-
+    public static boolean isResultStackReversible(ItemStack stack, World world, InventoryCrafting inventory) {
         if (stack.isEmpty()) {
             return false;
         }
-        InventoryCrafting inventory = new InventoryCrafting(new Container() {
-            public boolean canInteractWith(EntityPlayer player) {
-                return false;
-            }
-        }, 2, 2);
 
         inventory.setInventorySlotContents(0, stack);
         ItemStack returnStack = getNNRecipeOutput(inventory, world);
@@ -31,11 +42,7 @@ public class AdvancedCompressionHandler extends CompressionHandler {
 
     public static ItemStack getRecipe(ItemStack stack, World world, int gridSize) {
         StorageBlockCraftingManager craftingManagerSB = StorageBlockCraftingManager.getInstance();
-        InventoryCrafting inventory = new InventoryCrafting(new Container() {
-            public boolean canInteractWith(EntityPlayer player) {
-                return false;
-            }
-        }, gridSize, gridSize);
+        InventoryCrafting inventory = inventoryCrafting[3 - gridSize];
         for (int i = 0; i < inventory.getSizeInventory(); i++) {
             inventory.setInventorySlotContents(i, stack);
         }
@@ -45,7 +52,7 @@ public class AdvancedCompressionHandler extends CompressionHandler {
         }
         ItemStack result = getNNRecipeOutput(inventory, world);
 
-        if (isResultStackReversible(result, gridSize, world)) {
+        if (isResultStackReversible(result, world, inventory)) {
             craftingManagerSB.addRecipe(CraftingManager.findMatchingRecipe(inventory, world));
             return result;
         }
@@ -60,16 +67,8 @@ public class AdvancedCompressionHandler extends CompressionHandler {
         return ItemStack.EMPTY;
     }
 
-    public static boolean has22Recipe(ItemStack stack, World world) {
-        return !get22Recipe(stack, world).isEmpty();
-    }
-
     public static ItemStack get22Recipe(ItemStack stack, World world) {
         return getRecipe(stack, world, 2);
-    }
-
-    public static boolean has33Recipe(ItemStack stack, World world) {
-        return !get33Recipe(stack, world).isEmpty();
     }
 
     public static ItemStack get33Recipe(ItemStack stack, World world) {

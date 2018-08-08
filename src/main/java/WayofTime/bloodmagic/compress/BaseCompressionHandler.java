@@ -90,4 +90,3 @@ public class BaseCompressionHandler extends CompressionHandler {
         return this.leftover;
     }
 }
-
