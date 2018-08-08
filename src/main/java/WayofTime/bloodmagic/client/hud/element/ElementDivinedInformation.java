@@ -27,36 +27,26 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
         if (simple) {
             if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION)
                 flag = true;
-
-            if(!flag)
-                flag = isFlagSigilHolding(sigilStack, true);
+            else flag = isFlagSigilHolding(sigilStack, true);
 
             if (!flag) {
                 sigilStack = player.getHeldItem(EnumHand.OFF_HAND);
                 if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION)
                     flag = true;
-            }
-
-            if(!flag) {
-                flag = isFlagSigilHolding(sigilStack, true);
+                else flag = isFlagSigilHolding(sigilStack, true);
             }
 
         } else {
             if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
                 flag = true;
-
-            if(!flag)
-                flag = isFlagSigilHolding(sigilStack, false);
+            else flag = isFlagSigilHolding(sigilStack, false);
 
             if (!flag) {
                 sigilStack = player.getHeldItem(EnumHand.OFF_HAND);
                 if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
                     flag = true;
+                else flag = isFlagSigilHolding(sigilStack, false);
             }
-
-            if(!flag)
-                flag = isFlagSigilHolding(sigilStack, false);
-
         }
         return super.shouldRender(minecraft) && flag;
     }
