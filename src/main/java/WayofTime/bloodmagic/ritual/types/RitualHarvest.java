@@ -62,7 +62,7 @@ public class RitualHarvest extends Ritual {
             }
         }
 
-        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * harvested);
+        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost() * harvested));
     }
 
     @Override

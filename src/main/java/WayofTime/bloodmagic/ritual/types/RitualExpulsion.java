@@ -75,7 +75,7 @@ public class RitualExpulsion extends Ritual {
                 continue;
 
             if (teleportRandomly(player, teleportDistance))
-                masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * 1000);
+                masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost() * 1000));
         }
 
         whitelist.clear();

@@ -8,10 +8,7 @@ import WayofTime.bloodmagic.item.types.ISubItem;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
-import WayofTime.bloodmagic.util.helper.NBTHelper;
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.util.helper.PlayerSacrificeHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import WayofTime.bloodmagic.util.helper.*;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
@@ -56,7 +53,8 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
         if (entityLiving instanceof EntityPlayer && !entityLiving.getEntityWorld().isRemote)
-            PlayerSacrificeHelper.sacrificePlayerHealth((EntityPlayer) entityLiving);
+            if(PlayerSacrificeHelper.sacrificePlayerHealth((EntityPlayer) entityLiving))
+                IncenseHelper.setHasMaxIncense(stack, (EntityPlayer) entityLiving, false);
     }
 
     @Override
@@ -120,10 +118,10 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
         for (int l = 0; l < 8; ++l)
             world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);
 
-        if (!world.isRemote && PlayerHelper.isFakePlayer(player))
+        if (!world.isRemote && PlayerHelper.isFakePlayer(player) || player.isPotionActive(PlayerSacrificeHelper.soulFrayId))
             return super.onItemRightClick(world, player, hand);
 
-        // TODO - Check if SoulFray is active
+
         PlayerSacrificeHelper.findAndFillAltar(world, player, lpAdded, false);
 
         return super.onItemRightClick(world, player, hand);
@@ -131,8 +129,16 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
-        if (!world.isRemote && entity instanceof EntityPlayer)
-            this.setUseForSacrifice(stack, this.isPlayerPreparedForSacrifice(world, (EntityPlayer) entity));
+        if (!world.isRemote && entity instanceof EntityPlayer) {
+            boolean prepared = this.isPlayerPreparedForSacrifice(world, (EntityPlayer) entity);
+            this.setUseForSacrifice(stack, prepared);
+            if(IncenseHelper.getHasMaxIncense(stack) && !prepared)
+                IncenseHelper.setHasMaxIncense(stack, (EntityPlayer) entity, false);
+            if(prepared) {
+                boolean isMax = IncenseHelper.getMaxIncense((EntityPlayer) entity) == IncenseHelper.getCurrentIncense((EntityPlayer) entity);
+                IncenseHelper.setHasMaxIncense(stack, (EntityPlayer) entity, isMax);
+            }
+        }
     }
 
     public boolean isPlayerPreparedForSacrifice(World world, EntityPlayer player) {
@@ -169,6 +175,12 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
         variants.accept("type=normal");
         variants.accept("type=creative");
         variants.accept("type=ceremonial");
+    }
+
+    @Override
+    public boolean hasEffect(ItemStack stack)
+    {
+        return IncenseHelper.getHasMaxIncense(stack) || super.hasEffect(stack);
     }
 
     public enum DaggerType implements ISubItem {

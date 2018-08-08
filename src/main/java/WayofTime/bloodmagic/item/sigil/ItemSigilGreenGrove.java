@@ -1,6 +1,8 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.core.data.SoulTicket;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +26,7 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase {
         if (PlayerHelper.isFakePlayer(player))
             return false;
 
-        if (applyBonemeal(world, blockPos, player, stack)) {
+        if (NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess() && applyBonemeal(world, blockPos, player, stack)) {
             if (!world.isRemote) {
                 world.playEvent(2005, blockPos, 0);
             }

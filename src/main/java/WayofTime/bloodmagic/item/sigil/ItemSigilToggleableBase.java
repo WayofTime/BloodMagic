@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.item.ItemSigilToggleable;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.util.ITooltipFlag;

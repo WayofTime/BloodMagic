@@ -153,7 +153,7 @@ public class RitualCrushing extends Ritual {
                     WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, willDrain, true);
                     corrosiveWill -= willDrain;
 
-                    masterRitualStone.getOwnerNetwork().syphon(lpDrain);
+                    masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(lpDrain));
                     currentEssence -= lpDrain;
 
                     isBlockClaimed = true;
@@ -211,7 +211,7 @@ public class RitualCrushing extends Ritual {
             }
 
             world.destroyBlock(newPos, false);
-            masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
+            masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
             hasOperated = true;
 
             if (consumeRawWill) {
