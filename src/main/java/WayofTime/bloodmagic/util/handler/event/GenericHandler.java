@@ -3,36 +3,39 @@ package WayofTime.bloodmagic.util.handler.event;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.block.BlockAltar;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.event.ItemBindEvent;
 import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.event.TeleposeEvent;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.iface.ISentientTool;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.orb.BloodOrb;
-import WayofTime.bloodmagic.orb.IBloodOrb;
-import WayofTime.bloodmagic.core.data.SoulNetwork;
-import WayofTime.bloodmagic.soul.DemonWillHolder;
-import WayofTime.bloodmagic.block.BlockAltar;
-import WayofTime.bloodmagic.core.RegistrarBloodMagic;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.ItemExperienceBook;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeBattleHungry;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.DemonAuraPacketProcessor;
+import WayofTime.bloodmagic.orb.BloodOrb;
+import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
+import WayofTime.bloodmagic.soul.DemonWillHolder;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
-import WayofTime.bloodmagic.util.helper.*;
+import WayofTime.bloodmagic.util.helper.BindableHelper;
+import WayofTime.bloodmagic.util.helper.ItemHelper;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -78,9 +81,10 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-import java.util.*;
-
-import static WayofTime.bloodmagic.ritual.RitualManager.RITUAL_DAMAGE;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class GenericHandler {
@@ -407,9 +411,9 @@ public class GenericHandler {
     }
 
     @SubscribeEvent
-    public static void onWellOfSufferingDeath(LivingDropsEvent event){
+    public static void onRitualDeath(LivingDropsEvent event){
         if(!ConfigHandler.values.wellOfSufferingDrops){
-            if(event.getSource().equals(RITUAL_DAMAGE)) {
+            if(event.getSource().equals(WayofTime.bloodmagic.ritual.RitualManager.RITUAL_DAMAGE)) {
                 event.getDrops().clear();
             }
         }

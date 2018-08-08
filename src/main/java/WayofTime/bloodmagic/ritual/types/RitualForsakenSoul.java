@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static WayofTime.bloodmagic.ritual.RitualManager.RITUAL_DAMAGE;
-
 @RitualRegister("forsaken_soul")
 public class RitualForsakenSoul extends Ritual {
     public static final String CRYSTAL_RANGE = "crystal";
@@ -111,7 +109,7 @@ public class RitualForsakenSoul extends Ritual {
                 continue;
 
             if (entity.isEntityAlive() && !(entity instanceof EntityPlayer)) {
-                if (entity.attackEntityFrom(RITUAL_DAMAGE, 1)) {
+                if (entity.attackEntityFrom(RitualManager.RITUAL_DAMAGE, 1)) {
                     if (!entity.isEntityAlive()) {
                         int uniqueness = calculateUniqueness(entity);
                         double modifier = 1;

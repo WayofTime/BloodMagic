@@ -10,9 +10,13 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class RitualManager {
+    public static final DamageSource RITUAL_DAMAGE = new DamageSource("ritual_damage").setDamageBypassesArmor();
 
     private final Map<String, Ritual> rituals;
     private final Map<Ritual, String> ritualsReverse;
@@ -20,7 +24,7 @@ public class RitualManager {
     private final Map<String, ImperfectRitual> imperfectRituals;
     private final Map<ImperfectRitual, String> imperfectRitualsReverse;
     private final Configuration config;
-    public static final DamageSource RITUAL_DAMAGE = new DamageSource("ritual_damage").setDamageBypassesArmor().setDamageAllowedInCreativeMode();
+
 
     public RitualManager(Configuration config) {
         this.rituals = Maps.newTreeMap();

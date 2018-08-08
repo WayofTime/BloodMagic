@@ -16,8 +16,6 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static WayofTime.bloodmagic.ritual.RitualManager.RITUAL_DAMAGE;
-
 @RitualRegister("well_of_suffering")
 public class RitualWellOfSuffering extends Ritual {
     public static final String ALTAR_RANGE = "altar";
@@ -90,7 +88,7 @@ public class RitualWellOfSuffering extends Ritual {
                     continue;
 
                 if (entity.isEntityAlive() && !(entity instanceof EntityPlayer)) {
-                    if (entity.attackEntityFrom(RITUAL_DAMAGE, 1)) {
+                    if (entity.attackEntityFrom(RitualManager.RITUAL_DAMAGE, 1)) {
                         if (entity.isChild())
                             lifeEssenceRatio *= 0.5F;
 
