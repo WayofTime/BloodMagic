@@ -85,7 +85,6 @@ public class BaseCompressionHandler extends CompressionHandler {
         return needed;
     }
 
-
     public int getLeftover() {
         return this.leftover;
     }
