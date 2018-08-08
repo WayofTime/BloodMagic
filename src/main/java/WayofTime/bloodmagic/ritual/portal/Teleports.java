@@ -136,11 +136,8 @@ public class Teleports {
                             if (network.getCurrentEssence() < getTeleportCost())
                                 return;
 
-                            if (teleposer) {
-                                if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, targetTeleposer))) {
+                            if (teleposer && MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, targetTeleposer)))
                                     return;
-                                }
-                            }
 
                             network.syphon(getTeleportCost());
 
@@ -191,9 +188,8 @@ public class Teleports {
                         if (network.getCurrentEssence() < (getTeleportCost() / 10))
                             return;
 
-                        if (teleposer)
-                            if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, targetTeleposer)))
-                                return;
+                        if (teleposer && MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, targetTeleposer)))
+                            return;
 
                         network.syphon(getTeleportCost() / 10);
 
