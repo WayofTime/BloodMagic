@@ -23,19 +23,25 @@ public class AdvancedCompressionHandler extends CompressionHandler {
                     return false;
                 }
             },
-                    2, 2)
+                    2, 2),
+            new InventoryCrafting(new Container() {
+                public boolean canInteractWith(EntityPlayer player) {
+                    return false;
+                }
+            },
+                1,1)
 
-    };
+            };
 
     private static ItemStack reversibleCheck;
 
-    public static boolean isResultStackReversible(ItemStack stack, World world, InventoryCrafting inventory) {
+    public static boolean isResultStackReversible(ItemStack stack, World world) {
         if (stack.isEmpty()) {
             return false;
         }
 
-        inventory.setInventorySlotContents(0, stack);
-        ItemStack returnStack = getNNRecipeOutput(inventory, world);
+        inventoryCrafting[2].setInventorySlotContents(0, stack);
+        ItemStack returnStack = getNNRecipeOutput(inventoryCrafting[2], world);
 
         return !returnStack.isEmpty() && CompressionRegistry.areItemStacksEqual(reversibleCheck, returnStack);
     }
@@ -52,7 +58,7 @@ public class AdvancedCompressionHandler extends CompressionHandler {
         }
         ItemStack result = getNNRecipeOutput(inventory, world);
 
-        if (isResultStackReversible(result, world, inventory)) {
+        if (isResultStackReversible(result, world)) {
             craftingManagerSB.addRecipe(CraftingManager.findMatchingRecipe(inventory, world));
             return result;
         }
