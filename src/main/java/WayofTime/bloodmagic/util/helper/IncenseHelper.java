@@ -36,10 +36,10 @@ public class IncenseHelper {
 
     public static void setHasMaxIncense(ItemStack stack, EntityPlayer player, boolean isMax) {
         stack = NBTHelper.checkNBT(stack);
-        stack.getTagCompound().setBoolean(Constants.NBT.MAXINCENSE, isMax);
+        stack.getTagCompound().setBoolean(Constants.NBT.HAS_MAX_INCENSE, isMax);
     }
     public static boolean getHasMaxIncense(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
-        return stack.getTagCompound().getBoolean(Constants.NBT.MAXINCENSE);
+        return stack.getTagCompound().getBoolean(Constants.NBT.HAS_MAX_INCENSE);
     }
 }

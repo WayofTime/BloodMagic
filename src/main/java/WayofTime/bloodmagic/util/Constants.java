@@ -131,7 +131,6 @@ public class Constants
         public static final String TANK = "tank";
 
         public static final String BREATH = "breath";
-        public static final String MAXINCENSE = "BM:";
     }
 
     public static class Mod
