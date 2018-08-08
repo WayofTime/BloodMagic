@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.ritual.types;
 
-import java.util.function.Consumer;
-
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -14,7 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import WayofTime.bloodmagic.BloodMagic;
+
+import java.util.function.Consumer;
 
 @RitualRegister("ellipsoid")
 public class RitualEllipsoid extends Ritual
@@ -133,7 +133,7 @@ public class RitualEllipsoid extends Ritual
                                 itemHandler.extractItem(blockSlot, 1, false);
                                 tileInventory.markDirty();
                                 //TODO: 
-                                masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
+                                masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
                                 k++;
                                 this.currentPos = new BlockPos(i, j, k);
                                 return;

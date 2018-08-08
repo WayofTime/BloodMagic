@@ -77,7 +77,7 @@ public class RitualPump extends Ritual {
             blockPosIterator = liquidsCache.iterator();
             if (blockPosIterator.hasNext()) {
                 Pair<BlockPos, FluidStack> posInfo = blockPosIterator.next();
-                masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
+                masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
                 fluidHandler.fill(posInfo.getRight(), true);
                 world.setBlockState(posInfo.getLeft(), Blocks.STONE.getDefaultState());
                 world.notifyBlockUpdate(posInfo.getLeft(), tankState, tankState, 3);

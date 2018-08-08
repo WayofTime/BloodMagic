@@ -194,7 +194,7 @@ public class RitualGreenGrove extends Ritual {
             }
         }
 
-        masterRitualStone.getOwnerNetwork().syphon(totalGrowths * getRefreshCost());
+        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(totalGrowths * getRefreshCost()));
     }
 
     public double getPlantGrowthChanceForWill(double will) {

@@ -7,9 +7,14 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
+
 
 import java.util.function.Consumer;
 
@@ -18,6 +23,7 @@ public class RitualMagnetic extends Ritual {
     public static final String PLACEMENT_RANGE = "placementRange";
     //    public static final String SEARCH_RANGE = "searchRange";
     public BlockPos lastPos; // An offset
+    private FakePlayer fakePlayer;
 
     public RitualMagnetic() {
         super("ritualMagnetic", 0, 5000, "ritual." + BloodMagic.MODID + ".magneticRitual");
@@ -28,6 +34,7 @@ public class RitualMagnetic extends Ritual {
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
+        Vec3d MRSpos = new Vec3d(masterRitualStone.getBlockPos());
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
         if (currentEssence < getRefreshCost()) {
@@ -68,11 +75,13 @@ public class RitualMagnetic extends Ritual {
                 while (i <= radius) {
                     while (k <= radius) {
                         BlockPos newPos = pos.add(i, j, k);
+                        Vec3d newPosVector = new Vec3d(newPos);
                         IBlockState state = world.getBlockState(newPos);
-                        ItemStack checkStack = state.getBlock().getPickBlock(state, null, world, newPos, null);
+                        RayTraceResult fakeRayTrace = world.rayTraceBlocks(MRSpos, newPosVector, false);
+                        ItemStack checkStack = state.getBlock().getPickBlock(state, fakeRayTrace, world, newPos, getFakePlayer((WorldServer) world));
                         if (isBlockOre(checkStack)) {
                             Utils.swapLocations(world, newPos, world, replacement);
-                            masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
+                            masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
                             k++;
                             this.lastPos = new BlockPos(i, j, k);
                             return;
@@ -132,6 +141,10 @@ public class RitualMagnetic extends Ritual {
     @Override
     public Ritual getNewCopy() {
         return new RitualMagnetic();
+    }
+
+    private FakePlayer getFakePlayer(WorldServer world) {
+        return fakePlayer == null ? fakePlayer = FakePlayerFactory.get(world, new GameProfile(null, BloodMagic.MODID + "_ritual_magnetic")) : fakePlayer;
     }
 
     public static boolean isBlockOre(ItemStack stack) {

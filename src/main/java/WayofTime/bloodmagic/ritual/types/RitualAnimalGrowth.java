@@ -161,7 +161,7 @@ public class RitualAnimalGrowth extends Ritual {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveDrain, true);
         }
 
-        masterRitualStone.getOwnerNetwork().syphon(totalGrowths * getRefreshCost());
+        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(totalGrowths * getRefreshCost()));
     }
 
     @Override

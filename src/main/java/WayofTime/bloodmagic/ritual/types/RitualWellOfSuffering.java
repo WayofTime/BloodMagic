@@ -105,7 +105,7 @@ public class RitualWellOfSuffering extends Ritual {
             }
         }
 
-        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * totalEffects);
+        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost() * totalEffects));
     }
 
     @Override
