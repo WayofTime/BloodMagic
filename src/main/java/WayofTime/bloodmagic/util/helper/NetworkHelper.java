@@ -98,7 +98,7 @@ public class NetworkHelper {
      * @param user        - User of the item.
      * @param toSyphon    - Amount of LP to syphon
      * @return - Whether the action should be performed.
-     * @deprecated Use {@link #getSoulNetwork(EntityPlayer)} and {@link SoulNetwork#syphonAndDamage(EntityPlayer, SoulTicket)}
+     * @deprecated Use {@link #getSoulNetwork(EntityPlayer)} and {@link SoulNetwork#syphonAndDamage$(EntityPlayer, SoulTicket)}
      */
     @Deprecated
     public static boolean syphonAndDamage(SoulNetwork soulNetwork, EntityPlayer user, int toSyphon) {
@@ -116,10 +116,10 @@ public class NetworkHelper {
      * Syphons a player from within a container.
      *
      * @param stack    - ItemStack in the Container.
-     * @param toSyphon - Amount of LP to syphon
+     * @param ticket   - SoulTicket to syphon
      * @return - If the syphon was successful.
      */
-    public static boolean syphonFromContainer(ItemStack stack, int toSyphon)
+    public static boolean syphonFromContainer(ItemStack stack, SoulTicket ticket)
     {
         if (!(stack.getItem() instanceof IBindable))
             return false;
@@ -129,9 +129,9 @@ public class NetworkHelper {
             return false;
 
         SoulNetwork network = getSoulNetwork(binding);
-        SoulNetworkEvent.Syphon.Item event = new SoulNetworkEvent.Syphon.Item(network, new SoulTicket(toSyphon), stack);
+        SoulNetworkEvent.Syphon.Item event = new SoulNetworkEvent.Syphon.Item(network, ticket, stack);
 
-        return !MinecraftForge.EVENT_BUS.post(event) && network.syphon(event.getTicket(), true) >= toSyphon;
+        return !MinecraftForge.EVENT_BUS.post(event) && network.syphon(event.getTicket(),true) >= ticket.getAmount();
     }
 
     /**

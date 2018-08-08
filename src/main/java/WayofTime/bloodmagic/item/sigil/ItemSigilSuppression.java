@@ -47,5 +47,4 @@ public class ItemSigilSuppression extends ItemSigilToggleableBase {
             }
         }
     }
-
 }

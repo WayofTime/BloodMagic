@@ -1,6 +1,7 @@
-package WayofTime.bloodmagic.item;
+package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.iface.IActivatable;
 import WayofTime.bloodmagic.iface.ISigil;
@@ -53,7 +54,7 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable {
         if (!world.isRemote && !isUnusable(stack)) {
             if (player.isSneaking())
                 setActivatedState(stack, !getActivated(stack));
-            if (getActivated(stack) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
+            if (getActivated(stack))
                 return super.onItemRightClick(world, player, hand);
         }
 
@@ -70,7 +71,7 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable {
         if (binding == null || player.isSneaking()) // Make sure Sigils are bound before handling. Also ignores while toggling state
             return EnumActionResult.PASS;
 
-        return (NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, getLpUsed()) && onSigilUse(player.getHeldItem(hand), player, world, pos, side, hitX, hitY, hitZ)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+        return onSigilUse(player.getHeldItem(hand), player, world, pos, side, hitX, hitY, hitZ) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
     }
 
     public boolean onSigilUse(ItemStack itemStack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -81,7 +82,7 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable {
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         if (!worldIn.isRemote && entityIn instanceof EntityPlayerMP && getActivated(stack)) {
             if (entityIn.ticksExisted % 100 == 0) {
-                if (!NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage((EntityPlayer) entityIn, getLpUsed())) {
+                if (!NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage((EntityPlayer) entityIn, SoulTicket.item(stack, worldIn, entityIn, getLpUsed())).isSuccess()) {
                     setActivatedState(stack, false);
                 }
             }

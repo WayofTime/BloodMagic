@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.ritual.portal;
 
 import WayofTime.bloodmagic.core.data.SoulNetwork;
+
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.event.TeleposeEvent;
 import WayofTime.bloodmagic.teleport.Teleport;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
@@ -21,6 +21,7 @@ import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeChunkManager;
@@ -57,9 +58,9 @@ public class Teleports {
                         if (teleposer && MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), targetTeleposer)))
                             return;
 
-                        network.syphon(getTeleportCost());
-
                         EntityPlayerMP player = (EntityPlayerMP) entity;
+
+                        network.syphon(ticket(entity.world, player, getTeleportCost()));
 
                         player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
                         player.getEntityWorld().updateEntityWithOptionalForce(player, false);
@@ -77,9 +78,9 @@ public class Teleports {
                         if (teleposer && MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), targetTeleposer)))
                             return;
 
-                        network.syphon(getTeleportCost() / 10);
-
                         WorldServer world = (WorldServer) entity.getEntityWorld();
+
+                        network.syphon(ticket(world, entity, getTeleportCost() / 10));
 
                         entity.setPosition(x + 0.5, y + 0.5, z + 0.5);
                         entity.timeUntilPortal = 150;
@@ -142,7 +143,7 @@ public class Teleports {
                                 }
                             }
 
-                            network.syphon(getTeleportCost());
+                            network.syphon(ticket(oldWorld, player, getTeleportCost()));
 
 
 
@@ -195,7 +196,7 @@ public class Teleports {
                             if (MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, targetTeleposer)))
                                 return;
 
-                        network.syphon(getTeleportCost() / 10);
+                        network.syphon(ticket(oldWorld, entity, getTeleportCost() / 10));
 
                         NBTTagCompound tag = new NBTTagCompound();
 
@@ -240,5 +241,9 @@ public class Teleports {
         public boolean isTeleposer() {
             return teleposer;
         }
+    }
+
+    public static SoulTicket ticket(World world, Entity entity, int amount) {
+        return new SoulTicket(new TextComponentString("teleport|" + world.provider.getDimension() + "|" + entity.getName() + "|" + entity.getPosition().toLong()), amount);
     }
 }

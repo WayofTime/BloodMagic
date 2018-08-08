@@ -38,6 +38,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
         super();
         setUnlocalizedName(BloodMagic.MODID + ".ritualReader");
         setMaxStackSize(1);
+        setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override

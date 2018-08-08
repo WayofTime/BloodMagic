@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import WayofTime.bloodmagic.block.enums.BloodRuneType;
 import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.orb.BloodOrb;
@@ -365,7 +366,7 @@ public class BloodAltar implements IFluidHandler
             if (fluid != null && fluid.amount >= 1)
             {
                 int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? orb.getFillRate() * (1 + consumptionMultiplier) : orb.getFillRate()), fluid.amount);
-                int drain = NetworkHelper.getSoulNetwork(binding).add(liquidDrained, (int) (orb.getCapacity() * this.orbCapacityMultiplier));
+                int drain = NetworkHelper.getSoulNetwork(binding).add(SoulTicket.block(world, pos, liquidDrained), (int) (orb.getCapacity() * this.orbCapacityMultiplier));
                 fluid.amount = fluid.amount - drain;
 
                 if (drain > 0 && internalCounter % 4 == 0 && world instanceof WorldServer)

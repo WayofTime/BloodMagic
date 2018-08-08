@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.command.sub;
 
 import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.util.Utils;
@@ -66,7 +67,7 @@ public class SubCommandNetwork extends CommandBase {
                 if (args.length == 3) {
                     if (Utils.isInteger(args[2])) {
                         int amount = Integer.parseInt(args[2]);
-                        NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, amount);
+                        NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.command(sender, "syphon", amount));
                         CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.syphon.success", amount, player.getDisplayName().getFormattedText());
                     } else {
                         CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
@@ -90,7 +91,7 @@ public class SubCommandNetwork extends CommandBase {
                     if (Utils.isInteger(args[2])) {
                         int amount = Integer.parseInt(args[2]);
                         int maxOrb = NetworkHelper.getMaximumForTier(network.getOrbTier());
-                        CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.add.success", network.add(amount, maxOrb), player.getDisplayName().getFormattedText());
+                        CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.add.success", network.add(SoulTicket.command(sender, "add", amount), maxOrb), player.getDisplayName().getFormattedText());
                     } else {
                         CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
                     }
