@@ -1,28 +1,26 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.util.BlockStack;
-import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.event.BoundToolEvent;
 import WayofTime.bloodmagic.iface.IActivatable;
 import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.util.BlockStack;
+import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
@@ -251,9 +249,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
         }
     }
 
-    protected void sharedHarvest(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, BlockStack blockStack, HashMultiset drops){
-        boolean silkTouch = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0;
-        int fortuneLvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);
+    protected void sharedHarvest(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, BlockStack blockStack, HashMultiset drops, boolean silkTouch, int fortuneLvl){
 
         if (blockStack.getBlock() != null && blockStack.getState().getBlockHardness(world, blockPos) != -1.0F) {
             float strengthVsBlock = getDestroySpeed(stack, blockStack.getState());
