@@ -1,9 +1,10 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.iface.IActivatable;
 import WayofTime.bloodmagic.iface.ISigil;
+import WayofTime.bloodmagic.item.sigil.ItemSigilPhantomBridge;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
@@ -47,12 +48,16 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() instanceof ISigil.Holding)
             stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
+
         if (PlayerHelper.isFakePlayer(player))
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
         if (!world.isRemote && !isUnusable(stack)) {
-            if (player.isSneaking())
+            if (player.isSneaking()) {
+                if (stack.getItem() instanceof ItemSigilPhantomBridge)
+                    player.getEntityData().setBoolean(Constants.NBT.SIGIL_PHANTOM, !getActivated(stack));
                 setActivatedState(stack, !getActivated(stack));
+            }
             if (getActivated(stack) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
                 return super.onItemRightClick(world, player, hand);
         }
