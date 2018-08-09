@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -59,77 +59,77 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
         int posZ = playerPos.getZ();
 
         //Standing still, sneaking or walking with framerate drops
-        if(0 <= totalVel && totalVel< 0.08) {
+        if (0 <= totalVel && totalVel < 0.08) {
             circleTemplate9x9(posX, posY, posZ, verticalOffset, world);
-        }else //anything between the first case and being slightly faster than walking
+        } else //anything between the first case and being slightly faster than walking
             //walking fairly quickly on X-axis
-            if(-0.15 < playerVelZ && playerVelZ < 0.15) {
-                if (playerVelX > 0.15) {
+            if (-0.2 < playerVelZ && playerVelZ < 0.2) {
+                if (playerVelX > 0.2) {
                     if (playerVelX > 0.6)
-                        rectangleTemplatePosXLong(posX,posY,posZ,verticalOffset,world);
+                        rectangleTemplatePosXLong(posX, posY, posZ, verticalOffset, world);
                     rectangleTemplatePosX(posX, posY, posZ, verticalOffset, world);
                 }
-                if (playerVelX < -0.15) {
-                    if(playerVelX < -0.6)
-                        rectangleTemplateNegXLong(posX,posY,posZ,verticalOffset,world);
+                if (playerVelX < -0.2) {
+                    if (playerVelX < -0.6)
+                        rectangleTemplateNegXLong(posX, posY, posZ, verticalOffset, world);
                     rectangleTemplateNegX(posX, posY, posZ, verticalOffset, world);
                 }
-            //walking fairly quickly on Z-axis
-            }else if(-0.15 < playerVelX && playerVelX < 0.15){
-                if (playerVelZ > 0.15) {
+                //walking fairly quickly on Z-axis
+            } else if (-0.2 < playerVelX && playerVelX < 0.2) {
+                if (playerVelZ > 0.2) {
                     if (playerVelZ > 0.6)
-                        rectangleTemplatePosZLong(posX,posY,posZ,verticalOffset,world);
+                        rectangleTemplatePosZLong(posX, posY, posZ, verticalOffset, world);
                     rectangleTemplatePosZ(posX, posY, posZ, verticalOffset, world);
                 }
-                if (playerVelZ < -0.15) {
+                if (playerVelZ < -0.2) {
                     if (playerVelZ < -0.6)
-                        rectangleTemplateNegZLong(posX,posY,posZ,verticalOffset,world);
+                        rectangleTemplateNegZLong(posX, posY, posZ, verticalOffset, world);
                     rectangleTemplateNegZ(posX, posY, posZ, verticalOffset, world);
                 }
-            }else //diagonal movement
-            if(playerVelX > 0.15){
-                if(playerVelZ > 0.15)
-                    diagTemplatePoxXPosZ(posX,posY,posZ,verticalOffset,world);
-                else if (playerVelZ < -0.15)
-                    diagTemplatePoxXNegZ(posX,posY,posZ,verticalOffset,world);
-            }else if(playerVelX < -0.15){
-                if(playerVelZ > 0.15)
-                    diagTemplateNegXPosZ(posX,posY,posZ,verticalOffset,world);
-                else if(playerVelZ < -0.15)
-                    diagTemplateNegXNegZ(posX,posY,posZ,verticalOffset,world);
-            } else //everything in between to guarantee a halfway smooth transition
-                circleTemplate7x7(posX, posY, posZ, verticalOffset, world);
+            } else //diagonal movement
+                if (playerVelX > 0.2) {
+                    if (playerVelZ > 0.2)
+                        diagTemplatePoxXPosZ(posX, posY, posZ, verticalOffset, world);
+                    else if (playerVelZ < -0.2)
+                        diagTemplatePoxXNegZ(posX, posY, posZ, verticalOffset, world);
+                } else if (playerVelX < -0.2) {
+                    if (playerVelZ > 0.2)
+                        diagTemplateNegXPosZ(posX, posY, posZ, verticalOffset, world);
+                    else if (playerVelZ < -0.2)
+                        diagTemplateNegXNegZ(posX, posY, posZ, verticalOffset, world);
+                } else //everything in between to guarantee a halfway smooth transition
+                    circleTemplate7x7(posX, posY, posZ, verticalOffset, world);
 
         prevPositionMap.put(player, Pair.of(player.posX, player.posZ));
     }
 
-    public static void circleTemplate9x9(int posX, int posY, int posZ, int verticalOffset, World world){
+    private static void circleTemplate9x9(int posX, int posY, int posZ, int verticalOffset, World world) {
         int counter = 0;
-        for(int radius = -(RANGE+1); radius <= RANGE+1; radius++){
-            for(int radius2 = -(RANGE+1); radius2 <= RANGE+1; radius2++) {
+        for (int radius = -(RANGE + 1); radius <= RANGE + 1; radius++) {
+            for (int radius2 = -(RANGE + 1); radius2 <= RANGE + 1; radius2++) {
                 counter++;
                 //this is a radius*2+1 * radius2*2+1 rectangle, beginning in -x -z
                 //cutting corners
-                switch(counter){
+                switch (counter) {
                     //-x -z corner
                     case 1:
                     case 2:
                     case 3:
                     case 10:
                     case 19:
-                    //-x +z
+                        //-x +z
                     case 7:
                     case 8:
                     case 9:
                     case 18:
                     case 27:
-                    //+x -z
+                        //+x -z
                     case 55:
                     case 64:
                     case 73:
                     case 74:
                     case 75:
-                    //+x +z
+                        //+x +z
                     case 63:
                     case 72:
                     case 79:
@@ -147,14 +147,14 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
         }
     }
 
-    public static void circleTemplate7x7(int posX, int posY, int posZ, int verticalOffset, World world){
+    private static void circleTemplate7x7(int posX, int posY, int posZ, int verticalOffset, World world) {
         int counter = 0;
-        for(int radius = -RANGE; radius <= RANGE; radius++){
-            for(int radius2 = -RANGE; radius2 <= RANGE; radius2++) {
+        for (int radius = -RANGE; radius <= RANGE; radius++) {
+            for (int radius2 = -RANGE; radius2 <= RANGE; radius2++) {
                 counter++;
                 //this is a radius*2+1 * radius2*2+1 rectangle, beginning in -x -z
                 //cutting corners
-                switch(counter){
+                switch (counter) {
                     //-x -z corner
                     case 1:
                     case 2:
@@ -183,215 +183,116 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
         }
     }
 
-    public static void rectangleTemplatePosX(int posX, int posY, int posZ, int verticalOffset, World world){
-        for(int radius = 1; radius <= 2*RANGE; radius++){
-            for(int radius2 = -2; radius2 <= 2; radius2++) {
-                BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
-
-                if (world.isAirBlock(blockPos))
-                    world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
-            }
-        }
+    private static void rectangleTemplatePosX(int posX, int posY, int posZ, int verticalOffset, World world) {
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, 1, 2 * RANGE, -2, 2);
     }
 
-    public static void rectangleTemplatePosXLong(int posX, int posY, int posZ, int verticalOffset, World world){
-        for(int radius = 2; radius <= 3*RANGE; radius++){
-            for(int radius2 = -1; radius2 <= 1; radius2++) {
-                BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
-
-                if (world.isAirBlock(blockPos))
-                    world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
-            }
-        }
+    private static void rectangleTemplatePosXLong(int posX, int posY, int posZ, int verticalOffset, World world) {
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, 2, 3 * RANGE, -1, 1);
     }
 
-    public static void rectangleTemplateNegX(int posX, int posY, int posZ, int verticalOffset, World world){
-        for(int radius = -(2*RANGE); radius <= -1; radius++){
-            for(int radius2 = -2; radius2 <= 2; radius2++) {
-                BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
-
-                if (world.isAirBlock(blockPos))
-                    world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
-            }
-        }
+    private static void rectangleTemplateNegX(int posX, int posY, int posZ, int verticalOffset, World world) {
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -2 * RANGE, -1, -2, -2);
     }
 
-    public static void rectangleTemplateNegXLong(int posX, int posY, int posZ, int verticalOffset, World world){
-        for(int radius = -(2*RANGE); radius <= -2; radius++){
-            for(int radius2 = -1; radius2 <= 1; radius2++) {
-                BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
-
-                if (world.isAirBlock(blockPos))
-                    world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
-            }
-        }
+    private static void rectangleTemplateNegXLong(int posX, int posY, int posZ, int verticalOffset, World world) {
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -2 * RANGE, -2, -1, 1);
     }
 
-    public static void rectangleTemplatePosZ(int posX, int posY, int posZ, int verticalOffset, World world){
-        for(int radius = -2; radius <= 2; radius++){
-            for(int radius2 = 1; radius2 <= 2*RANGE; radius2++) {
-                BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
-
-                if (world.isAirBlock(blockPos))
-                    world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
-            }
-        }
+    private static void rectangleTemplatePosZ(int posX, int posY, int posZ, int verticalOffset, World world) {
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -2, 2, 1, 2 * RANGE);
     }
 
-    public static void rectangleTemplatePosZLong(int posX, int posY, int posZ, int verticalOffset, World world){
-        for(int radius = -1; radius <= 1; radius++){
-            for(int radius2 = 2; radius2 <= 3*RANGE; radius2++) {
-                BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
-
-                if (world.isAirBlock(blockPos))
-                    world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
-            }
-        }
+    private static void rectangleTemplatePosZLong(int posX, int posY, int posZ, int verticalOffset, World world) {
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -1, 1, 2, 3 * RANGE);
     }
 
-    public static void rectangleTemplateNegZ(int posX, int posY, int posZ, int verticalOffset, World world){
-        for(int radius = -2; radius <= 2; radius++){
-            for(int radius2 = -(2*RANGE); radius2 <= -1; radius2++) {
-                BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
-
-                if (world.isAirBlock(blockPos))
-                    world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
-            }
-        }
+    private static void rectangleTemplateNegZ(int posX, int posY, int posZ, int verticalOffset, World world) {
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -2, -2, -2 * RANGE, -1);
     }
 
-    public static void rectangleTemplateNegZLong(int posX, int posY, int posZ, int verticalOffset, World world){
-        for(int radius = -1; radius <= 1; radius++){
-            for(int radius2 = -(3*RANGE); radius2 <= -2; radius2++) {
-                BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
-
-                if (world.isAirBlock(blockPos))
-                    world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
-            }
-        }
+    private static void rectangleTemplateNegZLong(int posX, int posY, int posZ, int verticalOffset, World world) {
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -1, 1, -3 * RANGE, -2);
     }
 
-    public static void diagTemplatePoxXPosZ(int posX, int posY, int posZ, int verticalOffset, World world){
+    private static void diagTemplatePoxXPosZ(int posX, int posY, int posZ, int verticalOffset, World world) {
         int counter = 0;
-        for(int radius = 1; radius <= 2*RANGE; radius++){
-            for(int radius2 = 1; radius2 <= 2*RANGE; radius2++) {
+        for (int radius = 1; radius <= 2 * RANGE; radius++) {
+            diagTemplateHelperPosZ(posX, posY, posZ, verticalOffset, world, counter, radius);
+        }
+    }
+
+    private static void diagTemplatePoxXNegZ(int posX, int posY, int posZ, int verticalOffset, World world) {
+        int counter = 0;
+        for (int radius = 1; radius <= 2 * RANGE; radius++) {
+            for (int radius2 = -1; radius2 >= -2 * RANGE; radius2--) {
                 counter++;
                 //carving a path
-                switch(counter){
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 11:
-                    case 12:
-                    case 18:
-                    case 19:
-                    case 25:
-                    case 26:
-                    case 31:
-                    case 32:
-                    case 33:
-                        continue;
-                    default:
-                        BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
-
-                        if (world.isAirBlock(blockPos))
-                            world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
-                }
+                diagTemplateHelperNegZ(posX, posY, posZ, verticalOffset, world, counter, radius, radius2);
 
             }
         }
     }
 
-    public static void diagTemplatePoxXNegZ(int posX, int posY, int posZ, int verticalOffset, World world){
+    private static void diagTemplateNegXPosZ(int posX, int posY, int posZ, int verticalOffset, World world) {
         int counter = 0;
-        for(int radius = 1; radius <= 2*RANGE; radius++){
-            for(int radius2 = -1; radius2 >= -2*RANGE; radius2--) {
+        for (int radius = -1; radius >= -2 * RANGE; radius++) {
+            diagTemplateHelperPosZ(posX, posY, posZ, verticalOffset, world, counter, radius);
+        }
+    }
+
+    private static void diagTemplateNegXNegZ(int posX, int posY, int posZ, int verticalOffset, World world) {
+        int counter = 0;
+        for (int radius = -1; radius >= -2 * RANGE; radius++) {
+            for (int radius2 = -1; radius2 >= -2 * RANGE; radius2++) {
                 counter++;
                 //carving a path
-                switch(counter){
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 11:
-                    case 12:
-                    case 18:
-                    case 19:
-                    case 25:
-                    case 26:
-                    case 31:
-                    case 32:
-                    case 33:
-                        continue;
-                    default:
-                        BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
-
-                        if (world.isAirBlock(blockPos))
-                            world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
-                }
+                diagTemplateHelperNegZ(posX, posY, posZ, verticalOffset, world, counter, radius, radius2);
 
             }
         }
     }
 
-    public static void diagTemplateNegXPosZ(int posX, int posY, int posZ, int verticalOffset, World world){
-        int counter = 0;
-        for(int radius = -1; radius >= -2*RANGE; radius++){
-            for(int radius2 = 1; radius2 <= 2*RANGE; radius2++) {
-                counter++;
-                //carving a path
-                switch(counter) {
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 11:
-                    case 12:
-                    case 18:
-                    case 19:
-                    case 25:
-                    case 26:
-                    case 31:
-                    case 32:
-                    case 33:
-                        continue;
-                    default:
-                        BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
+    private static void templateCalculationHelper(int posX, int posY, int posZ, int verticalOffset, World world, int i, int i2, int i3, int i4) {
+        for (int radius = i; radius <= i2; radius++) {
+            for (int radius2 = i3; radius2 <= i4; radius2++) {
+                BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
 
-                        if (world.isAirBlock(blockPos))
-                            world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
-                }
-
+                if (world.isAirBlock(blockPos))
+                    world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
             }
         }
     }
 
-    public static void diagTemplateNegXNegZ(int posX, int posY, int posZ, int verticalOffset, World world){
-        int counter = 0;
-        for(int radius = -1; radius >= -2*RANGE; radius++){
-            for(int radius2 = -1; radius2 >= -2*RANGE; radius2++) {
-                counter++;
-                //carving a path
-                switch(counter) {
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 11:
-                    case 12:
-                    case 18:
-                    case 19:
-                    case 25:
-                    case 26:
-                    case 31:
-                    case 32:
-                    case 33:
-                        continue;
-                    default:
-                        BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
+    private static void diagTemplateHelperPosZ(int posX, int posY, int posZ, int verticalOffset, World world, int counter, int radius) {
+        for (int radius2 = 1; radius2 <= 2 * RANGE; radius2++) {
+            counter++;
+            //carving a path
+            diagTemplateHelperNegZ(posX, posY, posZ, verticalOffset, world, counter, radius, radius2);
 
-                        if (world.isAirBlock(blockPos))
-                            world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
-                }
+        }
+    }
 
-            }
+    private static void diagTemplateHelperNegZ(int posX, int posY, int posZ, int verticalOffset, World world, int counter, int radius, int radius2) {
+        switch (counter) {
+            case 4:
+            case 5:
+            case 6:
+            case 11:
+            case 12:
+            case 18:
+            case 19:
+            case 25:
+            case 26:
+            case 31:
+            case 32:
+            case 33:
+                return;
+            default:
+                BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
+
+                if (world.isAirBlock(blockPos))
+                    world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
         }
     }
 

@@ -90,8 +90,6 @@ public class Constants
         public static final String UPGRADE_POISON_TIMER = "poisonTimer";
         public static final String UPGRADE_FIRE_TIMER = "fireTimer";
 
-        public static final String SIGIL_PHANTOM = "phantombridge";
-
         public static final String SOULS = "souls";
         public static final String SOUL_SWORD_DAMAGE = "soulSwordDamage";
         public static final String SOUL_SWORD_ACTIVE_DRAIN = "soulSwordActiveDrain";
