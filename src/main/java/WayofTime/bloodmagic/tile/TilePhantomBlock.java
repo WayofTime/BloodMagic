@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.tile.base.TileTicking;
 import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.tile.base.TileTicking;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TilePhantomBlock extends TileTicking {

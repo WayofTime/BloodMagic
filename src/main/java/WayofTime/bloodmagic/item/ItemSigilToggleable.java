@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.iface.IActivatable;
 import WayofTime.bloodmagic.iface.ISigil;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
