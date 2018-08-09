@@ -59,46 +59,58 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
         int posZ = playerPos.getZ();
 
         //Standing still, sneaking or walking with framerate drops
-        if (0 <= totalVel && totalVel < 0.08) {
-            circleTemplate9x9(posX, posY, posZ, verticalOffset, world);
+        if (0 <= totalVel && totalVel < 0.1) {
+            circleTemplate7x7(posX, posY, posZ, verticalOffset, world);
         } else //anything between the first case and being slightly faster than walking
             //walking fairly quickly on X-axis
-            if (-0.2 < playerVelZ && playerVelZ < 0.2) {
-                if (playerVelX > 0.2) {
-                    if (playerVelX > 0.6)
+            if (-0.4 < playerVelZ && playerVelZ < 0.4) {
+                if (playerVelX > 0.4) {
+                    if (playerVelX > 1) {
+                        System.out.println("Using Long X template!");
                         rectangleTemplatePosXLong(posX, posY, posZ, verticalOffset, world);
+                    }
                     rectangleTemplatePosX(posX, posY, posZ, verticalOffset, world);
                 }
-                if (playerVelX < -0.2) {
-                    if (playerVelX < -0.6)
+                if (playerVelX < -0.4) {
+                    if (playerVelX < -1) {
+                        System.out.println("Using Long -X template!");
                         rectangleTemplateNegXLong(posX, posY, posZ, verticalOffset, world);
+                    }
                     rectangleTemplateNegX(posX, posY, posZ, verticalOffset, world);
                 }
                 //walking fairly quickly on Z-axis
-            } else if (-0.2 < playerVelX && playerVelX < 0.2) {
-                if (playerVelZ > 0.2) {
-                    if (playerVelZ > 0.6)
+            } else if (-0.4 < playerVelX && playerVelX < 0.4) {
+                if (playerVelZ > 0.4) {
+                    if (playerVelZ > 1) {
+                        System.out.println("Using Long Z template!");
                         rectangleTemplatePosZLong(posX, posY, posZ, verticalOffset, world);
+                    }
                     rectangleTemplatePosZ(posX, posY, posZ, verticalOffset, world);
                 }
-                if (playerVelZ < -0.2) {
-                    if (playerVelZ < -0.6)
+                if (playerVelZ < -0.4) {
+                    if (playerVelZ < -1) {
+                        System.out.println("Using Long -Z template!");
                         rectangleTemplateNegZLong(posX, posY, posZ, verticalOffset, world);
+                    }
                     rectangleTemplateNegZ(posX, posY, posZ, verticalOffset, world);
                 }
-            } else //diagonal movement
-                if (playerVelX > 0.2) {
-                    if (playerVelZ > 0.2)
+            } //doesn't work yet, variables for template need to be switched. appox time needed: 30 mins - 1 hour.
+            /* else //diagonal movement
+                if (playerVelX > 0.1) {
+                    if (playerVelZ > 0.1) {
                         diagTemplatePoxXPosZ(posX, posY, posZ, verticalOffset, world);
-                    else if (playerVelZ < -0.2)
+                    }else if (playerVelZ < -0.1) {
                         diagTemplatePoxXNegZ(posX, posY, posZ, verticalOffset, world);
-                } else if (playerVelX < -0.2) {
-                    if (playerVelZ > 0.2)
+                    }
+                } else if (playerVelX < -0.1) {
+                    if (playerVelZ > 0.1) {
                         diagTemplateNegXPosZ(posX, posY, posZ, verticalOffset, world);
-                    else if (playerVelZ < -0.2)
+                    } else if (playerVelZ < -0.1) {
                         diagTemplateNegXNegZ(posX, posY, posZ, verticalOffset, world);
-                } else //everything in between to guarantee a halfway smooth transition
-                    circleTemplate7x7(posX, posY, posZ, verticalOffset, world);
+                    }
+                }*/
+            else
+                circleTemplate9x9(posX,posY,posZ,verticalOffset,world);
 
         prevPositionMap.put(player, Pair.of(player.posX, player.posZ));
     }
@@ -184,35 +196,35 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
     }
 
     private static void rectangleTemplatePosX(int posX, int posY, int posZ, int verticalOffset, World world) {
-        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, 1, 2 * RANGE, -2, 2);
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, RANGE, 2 * RANGE, -2, 2);
     }
 
     private static void rectangleTemplatePosXLong(int posX, int posY, int posZ, int verticalOffset, World world) {
-        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, 2, 3 * RANGE, -1, 1);
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, RANGE, 3 * RANGE, -1, 1);
     }
 
     private static void rectangleTemplateNegX(int posX, int posY, int posZ, int verticalOffset, World world) {
-        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -2 * RANGE, -1, -2, -2);
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -2 * RANGE, -RANGE, -2, 2);
     }
 
     private static void rectangleTemplateNegXLong(int posX, int posY, int posZ, int verticalOffset, World world) {
-        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -2 * RANGE, -2, -1, 1);
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -3 * RANGE, -RANGE, -1, 1);
     }
 
     private static void rectangleTemplatePosZ(int posX, int posY, int posZ, int verticalOffset, World world) {
-        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -2, 2, 1, 2 * RANGE);
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -2, 2, RANGE, 2 * RANGE);
     }
 
     private static void rectangleTemplatePosZLong(int posX, int posY, int posZ, int verticalOffset, World world) {
-        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -1, 1, 2, 3 * RANGE);
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -1, 1, RANGE, 3 * RANGE);
     }
 
     private static void rectangleTemplateNegZ(int posX, int posY, int posZ, int verticalOffset, World world) {
-        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -2, -2, -2 * RANGE, -1);
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -2, 2, -2 * RANGE, -RANGE);
     }
 
     private static void rectangleTemplateNegZLong(int posX, int posY, int posZ, int verticalOffset, World world) {
-        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -1, 1, -3 * RANGE, -2);
+        templateCalculationHelper(posX, posY, posZ, verticalOffset, world, -1, 1, -3 * RANGE, -RANGE);
     }
 
     private static void diagTemplatePoxXPosZ(int posX, int posY, int posZ, int verticalOffset, World world) {
@@ -236,15 +248,15 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
 
     private static void diagTemplateNegXPosZ(int posX, int posY, int posZ, int verticalOffset, World world) {
         int counter = 0;
-        for (int radius = -1; radius >= -2 * RANGE; radius++) {
+        for (int radius = -1; radius >= -2 * RANGE; radius--) {
             diagTemplateHelperPosZ(posX, posY, posZ, verticalOffset, world, counter, radius);
         }
     }
 
     private static void diagTemplateNegXNegZ(int posX, int posY, int posZ, int verticalOffset, World world) {
         int counter = 0;
-        for (int radius = -1; radius >= -2 * RANGE; radius++) {
-            for (int radius2 = -1; radius2 >= -2 * RANGE; radius2++) {
+        for (int radius = -1; radius >= -2 * RANGE; radius--) {
+            for (int radius2 = -1; radius2 >= -2 * RANGE; radius2--) {
                 counter++;
                 //carving a path
                 diagTemplateHelperNegZ(posX, posY, posZ, verticalOffset, world, counter, radius, radius2);
@@ -275,18 +287,16 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
 
     private static void diagTemplateHelperNegZ(int posX, int posY, int posZ, int verticalOffset, World world, int counter, int radius, int radius2) {
         switch (counter) {
+            // want to edit this? draw a rectangle radius*radius2 on a squared sheet of paper. Every Square is a block.
+            // start numbering them from bottom left to right (every new line starts on the left)
+            // the player is to the diagonal bottom left (one down, one left) from the first square.
+            // every case listed is a square that will not be generated.
             case 4:
             case 5:
-            case 6:
-            case 11:
-            case 12:
-            case 18:
-            case 19:
-            case 25:
-            case 26:
-            case 31:
-            case 32:
-            case 33:
+            case 10:
+            case 16:
+            case 21:
+            case 22:
                 return;
             default:
                 BlockPos blockPos = new BlockPos(posX + radius, posY + verticalOffset, posZ + radius2);
