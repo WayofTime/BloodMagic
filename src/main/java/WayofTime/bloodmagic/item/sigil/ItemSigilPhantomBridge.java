@@ -219,8 +219,10 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
     private static void templateReaderDiag(int posX, int posY, int posZ, int verticalOffset, World world, int offsetZ, int offsetX, String[] template, boolean inverted, boolean XnZ) {
         int i = 0;
         for (String a: template) {
-            if(inverted) i--;
-            else i++;
+            if(inverted)
+                i--;
+            else
+                i++;
             int j = 0;
             for (char b: a.toCharArray()) {
                 if(inverted && !XnZ || XnZ && !inverted)
