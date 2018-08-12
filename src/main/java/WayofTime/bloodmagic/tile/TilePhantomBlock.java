@@ -1,7 +1,9 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.item.sigil.ItemSigilPhantomBridge;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.tile.base.TileTicking;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TilePhantomBlock extends TileTicking {
@@ -27,11 +29,18 @@ public class TilePhantomBlock extends TileTicking {
 
     @Override
     public void onUpdate() {
-        ticksRemaining--;
+        if(!world.isRemote) {
+            EntityPlayer player = world.getClosestPlayer(getPos().getX(), getPos().getY(), getPos().getZ(), 10.0D, ItemSigilPhantomBridge.IS_PHANTOM_ACTIVE);
+            if (player != null && !player.isSneaking())
+                return;
+            ticksRemaining--;
+        }
+
 
         if (ticksRemaining <= 0) {
-            getWorld().setBlockToAir(getPos());
-            getWorld().removeTileEntity(getPos());
+            world.setBlockToAir(getPos());
+            world.removeTileEntity(getPos());
         }
+
     }
 }
