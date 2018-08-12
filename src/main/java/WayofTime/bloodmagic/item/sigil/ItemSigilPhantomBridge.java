@@ -97,18 +97,18 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
         int posZ = playerPos.getZ();
 
         //Standing still, sneaking or walking with framerate drops
-        if (totalVel >= 0 && totalVel < 0.2) {
+        if (totalVel >= 0 && totalVel < 0.4) {
             circleTemplate7x7(posX, posY, posZ, verticalOffset, world);
             //anything between the first case and being slightly faster than walking
             //walking fairly quickly on X-axis
         } else if (playerVelZ > -0.3 && playerVelZ < 0.3) {
-                if (playerVelX > 0.3) {
+                if (playerVelX > 0.4) {
                     if (playerVelX > 1) {
                         rectangleBridge(posX, posY, posZ, verticalOffset, world, -1, 1, 7, 9); // long bridge
                     }
                     rectangleBridge(posX, posY, posZ, verticalOffset, world, -2, 2, 2, 6); // short bridge
                 }
-                if (playerVelX < -0.3) {
+                if (playerVelX < -0.4) {
                     if (playerVelX < -1) {
                         rectangleBridge(posX, posY, posZ, verticalOffset, world, 7, 9, -1, 1);
                     }
@@ -116,28 +116,28 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
                 }
                 //walking fairly quickly on Z-axis
             } else if (playerVelX > -0.3 && playerVelX < 0.3) {
-                if (playerVelZ > 0.3) {
+                if (playerVelZ > 0.4) {
                     if (playerVelZ > 1) {
                         rectangleBridge(posX, posY, posZ, verticalOffset, world, 2, 6, -2, 2);
                     }
                     rectangleBridge(posX, posY, posZ, verticalOffset, world, 2, 6, -2, 2);
                 }
-                if (playerVelZ < -0.3) {
+                if (playerVelZ < -0.4) {
                     if (playerVelZ < -1) {
                         rectangleBridge(posX, posY, posZ, verticalOffset, world, -9, -7, -1, 1);
                     }
                     rectangleBridge(posX, posY, posZ, verticalOffset, world, -6, -2, -2, 2);
                 }
-            } else if (playerVelX > 0.2) { // diagonal movement
-                    if (playerVelZ > 0.2) {
+            } else if (playerVelX > 0.25) { // diagonal movement
+                    if (playerVelZ > 0.25) {
                         templateReaderDiag(posX, posY, posZ, verticalOffset, world, 1, 1, DIAG, false, false);
-                    }else if (playerVelZ < -0.2) {
+                    }else if (playerVelZ < -0.25) {
                         templateReaderDiag(posX, posY, posZ, verticalOffset, world, 1, -1, DIAG, false, true);
                     }
-                } else if (playerVelX < -0.2) {
-                    if (playerVelZ > 0.2) {
+                } else if (playerVelX < -0.25) {
+                    if (playerVelZ > 0.25) {
                         templateReaderDiag(posX, posY, posZ, verticalOffset, world, -1, 1, DIAG, true,true);
-                    } else if (playerVelZ < -0.2) {
+                    } else if (playerVelZ < -0.25) {
                         templateReaderDiag(posX, posY, posZ, verticalOffset, world,-1,-1, DIAG, true,false);
                     }
                 } else {
