@@ -104,29 +104,29 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
         } else if (playerVelZ > -0.3 && playerVelZ < 0.3) {
                 if (playerVelX > 0.3) {
                     if (playerVelX > 1) {
-                        rectangleTemplatePosXLong(posX, posY, posZ, verticalOffset, world);
+                        rectangleBridge(posX, posY, posZ, verticalOffset, world, -1, 1, 7, 9); // long bridge
                     }
-                    rectangleTemplatePosX(posX, posY, posZ, verticalOffset, world);
+                    rectangleBridge(posX, posY, posZ, verticalOffset, world, -2, 2, 2, 6); // short bridge
                 }
                 if (playerVelX < -0.3) {
                     if (playerVelX < -1) {
-                        rectangleTemplateNegXLong(posX, posY, posZ, verticalOffset, world);
+                        rectangleBridge(posX, posY, posZ, verticalOffset, world, 7, 9, -1, 1);
                     }
-                    rectangleTemplateNegX(posX, posY, posZ, verticalOffset, world);
+                    rectangleBridge(posX, posY, posZ, verticalOffset, world, -2, 2, -6, -2);
                 }
                 //walking fairly quickly on Z-axis
             } else if (playerVelX > -0.3 && playerVelX < 0.3) {
                 if (playerVelZ > 0.3) {
                     if (playerVelZ > 1) {
-                        rectangleTemplatePosZLong(posX, posY, posZ, verticalOffset, world);
+                        rectangleBridge(posX, posY, posZ, verticalOffset, world, 2, 6, -2, 2);
                     }
-                    rectangleTemplatePosZ(posX, posY, posZ, verticalOffset, world);
+                    rectangleBridge(posX, posY, posZ, verticalOffset, world, 2, 6, -2, 2);
                 }
                 if (playerVelZ < -0.3) {
                     if (playerVelZ < -1) {
-                        rectangleTemplateNegZLong(posX, posY, posZ, verticalOffset, world);
+                        rectangleBridge(posX, posY, posZ, verticalOffset, world, -9, -7, -1, 1);
                     }
-                    rectangleTemplateNegZ(posX, posY, posZ, verticalOffset, world);
+                    rectangleBridge(posX, posY, posZ, verticalOffset, world, -6, -2, -2, 2);
                 }
             } else if (playerVelX > 0.2) { // diagonal movement
                     if (playerVelZ > 0.2) {
@@ -157,38 +157,6 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
         int x = -3;
         int z = -3;
         templateReader(posX, posY, posZ, verticalOffset, world, z, x, CIRCLE7X7);
-    }
-
-    private static void rectangleTemplatePosX(int posX, int posY, int posZ, int verticalOffset, World world) {
-        rectangleBridge(posX, posY, posZ, verticalOffset, world, -2, 2, 2, 6);
-    }
-
-    private static void rectangleTemplatePosXLong(int posX, int posY, int posZ, int verticalOffset, World world) {
-        rectangleBridge(posX, posY, posZ, verticalOffset, world, -1, 1, 7, 9);
-    }
-
-    private static void rectangleTemplateNegX(int posX, int posY, int posZ, int verticalOffset, World world) {
-        rectangleBridge(posX, posY, posZ, verticalOffset, world, -2, 2, -6, -2);
-    }
-
-    private static void rectangleTemplateNegXLong(int posX, int posY, int posZ, int verticalOffset, World world) {
-        rectangleBridge(posX, posY, posZ, verticalOffset, world, -1, 1, -9, -7);
-    }
-
-    private static void rectangleTemplatePosZ(int posX, int posY, int posZ, int verticalOffset, World world) {
-        rectangleBridge(posX, posY, posZ, verticalOffset, world, 2, 6, -2, 2);
-    }
-
-    private static void rectangleTemplatePosZLong(int posX, int posY, int posZ, int verticalOffset, World world) {
-        rectangleBridge(posX, posY, posZ, verticalOffset, world, 7, 9, -1, 1);
-    }
-
-    private static void rectangleTemplateNegZ(int posX, int posY, int posZ, int verticalOffset, World world) {
-        rectangleBridge(posX, posY, posZ, verticalOffset, world, -6, -2, -2, 2);
-    }
-
-    private static void rectangleTemplateNegZLong(int posX, int posY, int posZ, int verticalOffset, World world) {
-        rectangleBridge(posX, posY, posZ, verticalOffset, world, -9, -7, -1, 1);
     }
 
     private static void rectangleBridge(int posX, int posY, int posZ, int verticalOffset, World world, int startZ, int endZ, int startX, int endX) {
