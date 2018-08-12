@@ -223,8 +223,10 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
             else i++;
             int j = 0;
             for (char b: a.toCharArray()) {
-                if(inverted && !XnZ || XnZ && !inverted) j--;
-                else j++;
+                if(inverted && !XnZ || XnZ && !inverted)
+                    j--;
+                else
+                    j++;
                 if(b == 'X') {
                     BlockPos blockPos = new BlockPos(posX + offsetX + i, posY + verticalOffset, posZ + offsetZ + j);
 
