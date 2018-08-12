@@ -42,7 +42,7 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
     };
 
     //imagine you're looking into positive Z
-    public static final String[] DIAG = new String[] {
+    public static final String[] DIAG = new String[]{
             "XXX   ",           // -----------------
             "XXXX  ",           // Template Guide
             "XXXXX ",           // -----------------
@@ -97,72 +97,72 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
         int posZ = playerPos.getZ();
 
         //Standing still, sneaking or walking with framerate drops
-        if (totalVel >= 0 && totalVel < 0.4) {
+        if (totalVel >= 0 && totalVel < 0.3) {
             circleTemplate7x7(posX, posY, posZ, verticalOffset, world);
             //anything between the first case and being slightly faster than walking
             //walking fairly quickly on X-axis
-        } else if (playerVelZ > -0.3 && playerVelZ < 0.3) {
-                if (playerVelX > 0.4) {
-                    if (playerVelX > 1) {
-                        rectangleBridge(posX, posY, posZ, verticalOffset, world, -1, 1, 7, 9); // long bridge
-                    }
-                    rectangleBridge(posX, posY, posZ, verticalOffset, world, -2, 2, 2, 6); // short bridge
+        } else if (playerVelZ > -0.2 && playerVelZ < 0.2) {
+            if (playerVelX > 0.4) {
+                if (playerVelX > 1) {
+                    rectangleBridge(posX, posY, posZ, verticalOffset, world, -1, 1, 7, 9); // long bridge
                 }
-                if (playerVelX < -0.4) {
-                    if (playerVelX < -1) {
-                        rectangleBridge(posX, posY, posZ, verticalOffset, world, 7, 9, -1, 1);
-                    }
-                    rectangleBridge(posX, posY, posZ, verticalOffset, world, -2, 2, -6, -2);
+                rectangleBridge(posX, posY, posZ, verticalOffset, world, -2, 2, 1, 6); // short bridge
+            }
+            if (playerVelX < -0.4) {
+                if (playerVelX < -1) {
+                    rectangleBridge(posX, posY, posZ, verticalOffset, world, 7, 9, -1, 1);
                 }
-                //walking fairly quickly on Z-axis
-            } else if (playerVelX > -0.3 && playerVelX < 0.3) {
-                if (playerVelZ > 0.4) {
-                    if (playerVelZ > 1) {
-                        rectangleBridge(posX, posY, posZ, verticalOffset, world, 2, 6, -2, 2);
-                    }
+                rectangleBridge(posX, posY, posZ, verticalOffset, world, -2, 2, -6, -1);
+            }
+            //walking fairly quickly on Z-axis
+        } else if (playerVelX > -0.2 && playerVelX < 0.2) {
+            if (playerVelZ > 0.4) {
+                if (playerVelZ > 1) {
                     rectangleBridge(posX, posY, posZ, verticalOffset, world, 2, 6, -2, 2);
                 }
-                if (playerVelZ < -0.4) {
-                    if (playerVelZ < -1) {
-                        rectangleBridge(posX, posY, posZ, verticalOffset, world, -9, -7, -1, 1);
-                    }
-                    rectangleBridge(posX, posY, posZ, verticalOffset, world, -6, -2, -2, 2);
+                rectangleBridge(posX, posY, posZ, verticalOffset, world, 1, 6, -2, 2);
+            }
+            if (playerVelZ < -0.4) {
+                if (playerVelZ < -1) {
+                    rectangleBridge(posX, posY, posZ, verticalOffset, world, -9, -7, -1, 1);
                 }
-            } else if (playerVelX > 0.25) { // diagonal movement
-                    if (playerVelZ > 0.25) {
-                        templateReaderDiag(posX, posY, posZ, verticalOffset, world, 1, 1, DIAG, false, false);
-                    }else if (playerVelZ < -0.25) {
-                        templateReaderDiag(posX, posY, posZ, verticalOffset, world, 1, -1, DIAG, false, true);
-                    }
-                } else if (playerVelX < -0.25) {
-                    if (playerVelZ > 0.25) {
-                        templateReaderDiag(posX, posY, posZ, verticalOffset, world, -1, 1, DIAG, true,true);
-                    } else if (playerVelZ < -0.25) {
-                        templateReaderDiag(posX, posY, posZ, verticalOffset, world,-1,-1, DIAG, true,false);
-                    }
-                } else {
-                    circleTemplate9x9(posX, posY, posZ, verticalOffset, world);
-                }
+                rectangleBridge(posX, posY, posZ, verticalOffset, world, -6, -1, -2, 2);
+            }
+        } else if (playerVelX > 0.2) { // diagonal movement
+            if (playerVelZ > 0.2) {
+                templateReaderCustom(posX, posY, posZ, verticalOffset, world, 1, 1, DIAG, false, false);
+            } else if (playerVelZ < -0.2) {
+                templateReaderCustom(posX, posY, posZ, verticalOffset, world, 1, -1, DIAG, false, true);
+            }
+        } else if (playerVelX < -0.2) {
+            if (playerVelZ > 0.2) {
+                templateReaderCustom(posX, posY, posZ, verticalOffset, world, -1, 1, DIAG, true, true);
+            } else if (playerVelZ < -0.2) {
+                templateReaderCustom(posX, posY, posZ, verticalOffset, world, -1, -1, DIAG, true, false);
+            }
+        } else {
+            circleTemplate9x9(posX, posY, posZ, verticalOffset, world);
+        }
 
         prevPositionMap.put(player, Pair.of(player.posX, player.posZ));
     }
 
     private static void circleTemplate9x9(int posX, int posY, int posZ, int verticalOffset, World world) {
-        int x = -4;
-        int z = -4;
+        int x = -5;
+        int z = -5;
         templateReader(posX, posY, posZ, verticalOffset, world, z, x, CIRCLE9X9);
     }
 
     private static void circleTemplate7x7(int posX, int posY, int posZ, int verticalOffset, World world) {
-        int x = -3;
-        int z = -3;
+        int x = -4;
+        int z = -4;
         templateReader(posX, posY, posZ, verticalOffset, world, z, x, CIRCLE7X7);
     }
 
     private static void rectangleBridge(int posX, int posY, int posZ, int verticalOffset, World world, int startZ, int endZ, int startX, int endX) {
-        for (int Z = startZ; Z <= endZ; Z++) {
-            for (int X = startX; X <= endX; X++) {
-                BlockPos blockPos = new BlockPos(posX + X, posY + verticalOffset, posZ + Z);
+        for (int z = startZ; z <= endZ; z++) {
+            for (int x = startX; x <= endX; x++) {
+                BlockPos blockPos = new BlockPos(posX + x, posY + verticalOffset, posZ + z);
 
                 if (world.isAirBlock(blockPos))
                     world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
@@ -171,40 +171,29 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
     }
 
     private static void templateReader(int posX, int posY, int posZ, int verticalOffset, World world, int offsetZ, int offsetX, String[] template) {
-        for (int i = 0; i < template.length; i++) {
-            for (int j = 0; j < template[i].length(); j++) {
-                if(template[i].charAt(j) == 'X') {
-                    BlockPos blockPos = new BlockPos(posX + offsetX + i , posY + verticalOffset, posZ + offsetZ + j);
-
-                    if (world.isAirBlock(blockPos))
-                        world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
-                }
-            }
-
-        }
+        templateReaderCustom(posX, posY, posZ, verticalOffset, world, offsetZ, offsetX, template, false, false);
     }
 
-    private static void templateReaderDiag(int posX, int posY, int posZ, int verticalOffset, World world, int offsetZ, int offsetX, String[] template, boolean inverted, boolean XnZ) {
-        int i = 0;
-        for (String a: template) {
-            if(inverted)
-                i--;
+    private static void templateReaderCustom(int posX, int posY, int posZ, int verticalOffset, World world, int offsetZ, int offsetX, String[] template, boolean inverted, boolean XnZ) {
+        int x = 0;
+        for (String row : template) {
+            if (inverted)
+                x--;
             else
-                i++;
-            int j = 0;
-            for (char b: a.toCharArray()) {
-                if(inverted && !XnZ || XnZ && !inverted)
-                    j--;
+                x++;
+            int z = 0;
+            for (char block : row.toCharArray()) {
+                if (inverted && !XnZ || XnZ && !inverted)
+                    z--;
                 else
-                    j++;
-                if(b == 'X') {
-                    BlockPos blockPos = new BlockPos(posX + offsetX + i, posY + verticalOffset, posZ + offsetZ + j);
+                    z++;
+                if (block == 'X') {
+                    BlockPos blockPos = new BlockPos(posX + offsetX + x, posY + verticalOffset, posZ + offsetZ + z);
 
                     if (world.isAirBlock(blockPos))
                         world.setBlockState(blockPos, RegistrarBloodMagicBlocks.PHANTOM.getDefaultState());
                 }
             }
-
         }
     }
 
@@ -213,10 +202,10 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
             ItemStack stack = entity.inventory.getStackInSlot(i);
             if (stack.getItem() instanceof ItemSigilPhantomBridge)
                 return NBTHelper.checkNBT(stack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
-            if (stack.getItem() instanceof ItemSigilHolding){
+            if (stack.getItem() instanceof ItemSigilHolding) {
                 List<ItemStack> inv = ItemSigilHolding.getInternalInventory(stack);
-                for (int j = 0; i < ItemSigilHolding.inventorySize; i++) {
-                    ItemStack invStack = inv.get(i);
+                for (int j = 0; j < ItemSigilHolding.inventorySize; j++) {
+                    ItemStack invStack = inv.get(j);
                     if (invStack.getItem() instanceof ItemSigilPhantomBridge)
                         return NBTHelper.checkNBT(invStack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
                 }
