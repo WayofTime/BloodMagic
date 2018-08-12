@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
-import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
