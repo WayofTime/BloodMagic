@@ -19,25 +19,7 @@ import java.util.Map;
 public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
     public static final Predicate<Entity> IS_PHANTOM_ACTIVE = (Entity entity) -> entity instanceof EntityPlayer && isPhantomActive((EntityPlayer) entity);
 
-    public static boolean isPhantomActive(EntityPlayer entity) {
-        for (int i = 0; i < entity.inventory.getSizeInventory(); i++) {
-            ItemStack stack = entity.inventory.getStackInSlot(i);
-            if (stack.getItem() instanceof ItemSigilPhantomBridge)
-                return NBTHelper.checkNBT(stack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
-            if (stack.getItem() instanceof ItemSigilHolding){
-                List<ItemStack> inv = ItemSigilHolding.getInternalInventory(stack);
-                for (int j = 0; i < ItemSigilHolding.inventorySize; i++) {
-                    ItemStack invStack = inv.get(i);
-                    if (invStack.getItem() instanceof ItemSigilPhantomBridge)
-                        return NBTHelper.checkNBT(invStack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
-                }
-            }
-
-        }
-        return false;
-    }
-
-    public static final String[] circle7x7 = new String[]{
+    public static final String[] CIRCLE7X7 = new String[]{
             "  XXX  ",
             " XXXXX ",
             "XXXXXXX",
@@ -47,7 +29,7 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
             "  XXX  "
     };
 
-    public static final String[] circle9x9 = new String[]{
+    public static final String[] CIRCLE9X9 = new String[]{
             "  XXXXX  ",
             " XXXXXXX ",
             "XXXXXXXXX",
@@ -60,7 +42,7 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
     };
 
     //imagine you're looking into positive Z
-    public static final String[] diagXZ = new String[] {
+    public static final String[] DIAG = new String[] {
             "XXX   ",           // -----------------
             "XXXX  ",           // Template Guide
             "XXXXX ",           // -----------------
@@ -115,11 +97,11 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
         int posZ = playerPos.getZ();
 
         //Standing still, sneaking or walking with framerate drops
-        if (0 <= totalVel && totalVel < 0.1) {
+        if (totalVel >= 0 && totalVel < 0.2) {
             circleTemplate7x7(posX, posY, posZ, verticalOffset, world);
-        } else //anything between the first case and being slightly faster than walking
+            //anything between the first case and being slightly faster than walking
             //walking fairly quickly on X-axis
-            if (-0.3 < playerVelZ && playerVelZ < 0.3) {
+        } else if (playerVelZ > -0.3 && playerVelZ < 0.3) {
                 if (playerVelX > 0.3) {
                     if (playerVelX > 1) {
                         rectangleTemplatePosXLong(posX, posY, posZ, verticalOffset, world);
@@ -133,7 +115,7 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
                     rectangleTemplateNegX(posX, posY, posZ, verticalOffset, world);
                 }
                 //walking fairly quickly on Z-axis
-            } else if (-0.3 < playerVelX && playerVelX < 0.3) {
+            } else if (playerVelX > -0.3 && playerVelX < 0.3) {
                 if (playerVelZ > 0.3) {
                     if (playerVelZ > 1) {
                         rectangleTemplatePosZLong(posX, posY, posZ, verticalOffset, world);
@@ -146,23 +128,21 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
                     }
                     rectangleTemplateNegZ(posX, posY, posZ, verticalOffset, world);
                 }
-            }
-            else //diagonal movement
-                if (playerVelX > 0.2) {
+            } else if (playerVelX > 0.2) { // diagonal movement
                     if (playerVelZ > 0.2) {
-                        templateReaderDiag(posX, posY, posZ, verticalOffset, world, 1, 1, diagXZ, false, false);
+                        templateReaderDiag(posX, posY, posZ, verticalOffset, world, 1, 1, DIAG, false, false);
                     }else if (playerVelZ < -0.2) {
-                        templateReaderDiag(posX, posY, posZ, verticalOffset, world, 1, -1, diagXZ, false, true);
+                        templateReaderDiag(posX, posY, posZ, verticalOffset, world, 1, -1, DIAG, false, true);
                     }
                 } else if (playerVelX < -0.2) {
                     if (playerVelZ > 0.2) {
-                        templateReaderDiag(posX, posY, posZ, verticalOffset, world, -1, 1, diagXZ, true,true);
+                        templateReaderDiag(posX, posY, posZ, verticalOffset, world, -1, 1, DIAG, true,true);
                     } else if (playerVelZ < -0.2) {
-                        templateReaderDiag(posX, posY, posZ, verticalOffset, world,-1,-1,diagXZ, true,false);
+                        templateReaderDiag(posX, posY, posZ, verticalOffset, world,-1,-1, DIAG, true,false);
                     }
+                } else {
+                    circleTemplate9x9(posX, posY, posZ, verticalOffset, world);
                 }
-            else
-                circleTemplate9x9(posX, posY, posZ, verticalOffset, world);
 
         prevPositionMap.put(player, Pair.of(player.posX, player.posZ));
     }
@@ -170,14 +150,13 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
     private static void circleTemplate9x9(int posX, int posY, int posZ, int verticalOffset, World world) {
         int x = -4;
         int z = -4;
-        templateReader(posX, posY, posZ, verticalOffset, world, z, x, circle9x9);
+        templateReader(posX, posY, posZ, verticalOffset, world, z, x, CIRCLE9X9);
     }
-
 
     private static void circleTemplate7x7(int posX, int posY, int posZ, int verticalOffset, World world) {
         int x = -3;
         int z = -3;
-        templateReader(posX, posY, posZ, verticalOffset, world, z, x, circle7x7);
+        templateReader(posX, posY, posZ, verticalOffset, world, z, x, CIRCLE7X7);
     }
 
     private static void rectangleTemplatePosX(int posX, int posY, int posZ, int verticalOffset, World world) {
@@ -236,6 +215,7 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
 
         }
     }
+
     private static void templateReaderDiag(int posX, int posY, int posZ, int verticalOffset, World world, int offsetZ, int offsetX, String[] template, boolean inverted, boolean XnZ) {
         int i = 0;
         for (String a: template) {
@@ -256,4 +236,21 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
         }
     }
 
+    public static boolean isPhantomActive(EntityPlayer entity) {
+        for (int i = 0; i < entity.inventory.getSizeInventory(); i++) {
+            ItemStack stack = entity.inventory.getStackInSlot(i);
+            if (stack.getItem() instanceof ItemSigilPhantomBridge)
+                return NBTHelper.checkNBT(stack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
+            if (stack.getItem() instanceof ItemSigilHolding){
+                List<ItemStack> inv = ItemSigilHolding.getInternalInventory(stack);
+                for (int j = 0; i < ItemSigilHolding.inventorySize; i++) {
+                    ItemStack invStack = inv.get(i);
+                    if (invStack.getItem() instanceof ItemSigilPhantomBridge)
+                        return NBTHelper.checkNBT(invStack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
+                }
+            }
+
+        }
+        return false;
+    }
 }
