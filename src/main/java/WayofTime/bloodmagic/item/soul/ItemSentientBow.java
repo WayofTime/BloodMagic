@@ -22,6 +22,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -371,15 +372,17 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
                         this.recalculatePowers(stack, world, player);
                         EnumDemonWillType type = this.getCurrentType(stack);
 
-                        //Need to do some stuffs
-//                        ItemArrow itemarrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.arrow));
-//                        EntityArrow entityArrow = itemarrow.createArrow(world, itemstack, player);
-
+                        ItemArrow itemarrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.ARROW));
+                        EntityArrow entityArrow;
                         double amount = (this.getDropOfActivatedBow(stack) * world.rand.nextDouble() + this.getStaticDropOfActivatedBow(stack));
 
                         float newArrowVelocity = arrowVelocity * getVelocityOfArrow(stack);
-                        double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
-                        EntitySentientArrow entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining));
+                        if (itemarrow == Items.ARROW)
+                        {
+                            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+                            entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining));
+                        } else
+                            entityArrow = itemarrow.createArrow(world, itemstack, player);
                         entityArrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
 
                         if (newArrowVelocity == 0)
