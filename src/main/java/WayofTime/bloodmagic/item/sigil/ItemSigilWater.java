@@ -11,16 +11,23 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fluids.capability.FluidTankProperties;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class ItemSigilWater extends ItemSigilBase {
+public class ItemSigilWater extends ItemSigilBase implements IFluidHandlerItem {
     public ItemSigilWater() {
         super("water", 100);
     }
@@ -35,99 +42,69 @@ public class ItemSigilWater extends ItemSigilBase {
 
         if (!world.isRemote && !isUnusable(stack)) {
             RayTraceResult rayTrace = this.rayTrace(world, player, false);
-
-            if (rayTrace != null) {
-                ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, world, stack, rayTrace);
-                if (ret != null)
-                    return ret;
-
-                if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
-                    BlockPos blockpos = rayTrace.getBlockPos();
-
-                    if (!world.isBlockModifiable(player, blockpos))
-                        return super.onItemRightClick(world, player, hand);
-
-                    if (!player.canPlayerEdit(blockpos.offset(rayTrace.sideHit), rayTrace.sideHit, stack))
-                        return super.onItemRightClick(world, player, hand);
-
-                    BlockPos blockpos1 = blockpos.offset(rayTrace.sideHit);
-
-                    if (!player.canPlayerEdit(blockpos1, rayTrace.sideHit, stack))
-                        return super.onItemRightClick(world, player, hand);
-
-                    if (canPlaceWater(world, blockpos1) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess() && tryPlaceWater(world, blockpos1))
-                        return super.onItemRightClick(world, player, hand);
-                }
-            }
+			
+            ActionResult<ItemStack> ret = ForgeEventFactory.onBucketUse(player, world, stack, rayTrace);
+            if (ret != null) return ret;
+			
+			if (rayTrace == null || rayTrace.typeOfHit != RayTraceResult.Type.BLOCK) {
+				return ActionResult.newResult(EnumActionResult.PASS, stack);
+			}
+			
+			BlockPos blockPos = rayTrace.getBlockPos();
+			
+			if(world.isBlockModifiable(player, blockPos) && player.canPlayerEdit(blockPos, rayTrace.sideHit, stack)){
+				/* Case for if block at blockPos is a fluid handler like a tank
+  				 * Put fluid into tank
+				 */
+				IFluidHandler destination = FluidUtil.getFluidHandler(world, blockPos, null);
+				if(destination != null && FluidUtil.tryFluidTransfer(destination, this, getFluid(), false) != null && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
+					//Attempt to put fluid in sidelessly first
+					FluidStack result = FluidUtil.tryFluidTransfer(destination, this, this.getFluid(), true);
+					if (result != null) return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+				}
+				//Do the same as above, but use sidedness to interact with the fluid handler.
+				IFluidHandler destinationSide = FluidUtil.getFluidHandler(world, blockPos, rayTrace.sideHit);
+				if(destinationSide != null && FluidUtil.tryFluidTransfer(destinationSide, this, getFluid(), false) != null && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
+					//Attempt to put fluid in sidelessly first
+					FluidStack result = FluidUtil.tryFluidTransfer(destinationSide, this, this.getFluid(), true);
+					if (result != null) return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+				}
+				//Special vanilla cauldron handling, yay.
+				if(world.getBlockState(blockPos).getBlock() == Blocks.CAULDRON && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
+                    world.setBlockState(blockPos, Blocks.CAULDRON.getDefaultState().withProperty(BlockCauldron.LEVEL, 3));
+					return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+				}
+				
+				//Case for if block at blockPos is not a tank
+				//Place fluid in world
+				if (destination == null && destinationSide == null){
+					BlockPos targetPos = blockPos.offset(rayTrace.sideHit);
+					if (FluidUtil.tryPlaceFluid(player, world, targetPos, this, this.getFluid()) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()){
+						return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+					}
+				}
+			}
         }
 
         return super.onItemRightClick(world, player, hand);
     }
-
-    @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        ItemStack stack = player.getHeldItem(hand);
-        if (world.isRemote || player.isSneaking() || isUnusable(stack))
-            return EnumActionResult.FAIL;
-
-        if (!world.canMineBlockBody(player, blockPos))
-            return EnumActionResult.FAIL;
-
-        TileEntity tile = world.getTileEntity(blockPos);
-        if (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) {
-            IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
-            FluidStack fluid = new FluidStack(FluidRegistry.WATER, 1000);
-            int amount = handler.fill(fluid, false);
-
-            if (amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
-                handler.fill(fluid, true);
-                return EnumActionResult.SUCCESS;
-            }
-
-            return EnumActionResult.FAIL;
-        }
-
-        if (world.getBlockState(blockPos).getBlock() == Blocks.CAULDRON && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
-            world.setBlockState(blockPos, Blocks.CAULDRON.getDefaultState().withProperty(BlockCauldron.LEVEL, 3));
-            return EnumActionResult.SUCCESS;
-        }
-
-        return EnumActionResult.FAIL;
-    }
-
-    public boolean canPlaceWater(World world, BlockPos blockPos) {
-        if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isSolid())
-            return false;
-        else if ((world.getBlockState(blockPos).getBlock() == Blocks.WATER || world.getBlockState(blockPos).getBlock() == Blocks.FLOWING_WATER) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
-            return false;
-        else
-            return true;
-    }
-
-    public boolean tryPlaceWater(World worldIn, BlockPos pos) {
-
-        Material material = worldIn.getBlockState(pos).getBlock().getMaterial(worldIn.getBlockState(pos));
-        boolean notSolid = !material.isSolid();
-
-        if (!worldIn.isAirBlock(pos) && !notSolid) {
-            return false;
-        } else {
-            if (worldIn.provider.doesWaterVaporize()) {
-                int i = pos.getX();
-                int j = pos.getY();
-                int k = pos.getZ();
-                worldIn.playSound(null, i, j, k, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F);
-
-                for (int l = 0; l < 8; ++l)
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D, 0);
-            } else {
-                if (!worldIn.isRemote && notSolid && !material.isLiquid())
-                    worldIn.destroyBlock(pos, true);
-
-                worldIn.setBlockState(pos, Blocks.FLOWING_WATER.getDefaultState(), 3);
-            }
-
-            return true;
-        }
-    }
+	
+	public ItemStack getContainer() {
+		return this.getDefaultInstance();
+	}
+	public FluidStack getFluid() {
+		return new FluidStack(FluidRegistry.WATER, 1000);
+	}
+	public IFluidTankProperties[] getTankProperties() {
+		return new FluidTankProperties[] { new FluidTankProperties(this.getFluid(),1000) };
+	}
+	public int fill(FluidStack resource, boolean doFill) {
+		return 0;
+	}
+	public FluidStack drain(FluidStack resource, boolean doDrain) {
+		return this.getFluid();
+	}
+	public FluidStack drain(int maxDrain, boolean doDrain) {
+		return this.getFluid();
+	}
 }
