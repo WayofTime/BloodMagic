@@ -52,19 +52,16 @@ public class ItemSigilLava extends ItemSigilBase implements IFluidHandlerItem {
 			BlockPos blockPos = rayTrace.getBlockPos();
 			
 			if(world.isBlockModifiable(player, blockPos) && player.canPlayerEdit(blockPos, rayTrace.sideHit, stack)){
-				/* Case for if block at blockPos is a fluid handler like a tank
-  				 * Put fluid into tank
-				 */
+				//Case for if block at blockPos is a fluid handler like a tank
+  				//Try to put fluid into tank
 				IFluidHandler destination = FluidUtil.getFluidHandler(world, blockPos, null);
 				if(destination != null && FluidUtil.tryFluidTransfer(destination, this, getFluid(), false) != null && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
-					//Attempt to put fluid in sidelessly first
 					FluidStack result = FluidUtil.tryFluidTransfer(destination, this, this.getFluid(), true);
 					if (result != null) return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
 				}
 				//Do the same as above, but use sidedness to interact with the fluid handler.
 				IFluidHandler destinationSide = FluidUtil.getFluidHandler(world, blockPos, rayTrace.sideHit);
 				if(destinationSide != null && FluidUtil.tryFluidTransfer(destinationSide, this, getFluid(), false) != null && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
-					//Attempt to put fluid in sidelessly first
 					FluidStack result = FluidUtil.tryFluidTransfer(destinationSide, this, this.getFluid(), true);
 					if (result != null) return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
 				}
@@ -101,9 +98,4 @@ public class ItemSigilLava extends ItemSigilBase implements IFluidHandlerItem {
 	public FluidStack drain(int maxDrain, boolean doDrain) {
 		return this.getFluid();
 	}
-	/*
-	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-        return new FluidSigilHandler(stack, (IFluidHandlerItem) this, false, true);
-	}
-	*/
 }
