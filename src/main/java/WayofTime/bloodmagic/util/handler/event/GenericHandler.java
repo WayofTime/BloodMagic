@@ -29,6 +29,7 @@ import WayofTime.bloodmagic.network.DemonAuraPacketProcessor;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
+import WayofTime.bloodmagic.ritual.RitualManager;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
@@ -413,7 +414,7 @@ public class GenericHandler {
     @SubscribeEvent
     public static void onRitualDeath(LivingDropsEvent event){
         if(!ConfigHandler.values.wellOfSufferingDrops){
-            if(event.getSource().equals(WayofTime.bloodmagic.ritual.RitualManager.RITUAL_DAMAGE)) {
+            if(event.getSource().equals(RitualManager.RITUAL_DAMAGE)) {
                 event.getDrops().clear();
             }
         }
