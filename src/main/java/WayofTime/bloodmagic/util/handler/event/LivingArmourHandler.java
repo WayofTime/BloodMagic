@@ -24,6 +24,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemArrow;
+import net.minecraft.item.ItemSplashPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
@@ -160,13 +161,12 @@ public class LivingArmourHandler
                     if (event.getItemStack().getItemUseAction() == EnumAction.DRINK)
                     {
                         ItemStack drinkStack = event.getItemStack();
+                        if(!(drinkStack.getItem() instanceof ItemSplashPotion)) {
+                            LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.quenched", chestStack);
 
-                        //TODO: See if the item is a splash potion? Those should be usable.
-                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.quenched", chestStack);
-
-                        if (upgrade instanceof LivingArmourUpgradeQuenched)
-                        {
-                            event.setCanceled(true);
+                            if (upgrade instanceof LivingArmourUpgradeQuenched) {
+                                event.setCanceled(true);
+                            }
                         }
                     }
                 }
