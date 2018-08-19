@@ -29,9 +29,9 @@ public class AdvancedCompressionHandler extends CompressionHandler {
                     return false;
                 }
             },
-                1,1)
+                    1, 1)
 
-            };
+    };
 
     private static ItemStack reversibleCheck;
 
@@ -81,13 +81,7 @@ public class AdvancedCompressionHandler extends CompressionHandler {
         return getRecipe(stack, world, 3);
     }
 
-    @Override
     public ItemStack compressInventory(ItemStack[] inv, World world) {
-        return test(inv, true, world);
-
-    }
-
-    public ItemStack test(ItemStack[] inv, boolean doDrain, World world) {
         for (ItemStack invStack : inv) {
             if (invStack.isEmpty()) {
                 continue;
@@ -99,11 +93,9 @@ public class AdvancedCompressionHandler extends CompressionHandler {
                 if (!stack.isEmpty()) {
 
                     int needed = (i == 2 ? 4 : 9);
-                    int remaining = iterateThroughInventory(invStack, invStack.getMaxStackSize() - needed, inv, needed, false);
-                    if (remaining <= 0) {
-                        iterateThroughInventory(invStack, 0, inv, needed, true);
+                    int remaining = iterateThroughInventory(invStack, invStack.getMaxStackSize() - needed, inv, needed, true); // if more than needed gets consumed at any point, the simulate test was needed after all
+                    if (remaining <= 0)
                         return stack;
-                    }
                 }
             }
         }
@@ -111,48 +103,5 @@ public class AdvancedCompressionHandler extends CompressionHandler {
         return ItemStack.EMPTY;
     }
 
-    public int iterateThroughInventory(ItemStack required, int kept, ItemStack[] inv, int needed, boolean doDrain) {
-        int i = -1;
 
-        for (ItemStack invStack : inv) {
-            i++;
-
-            if (invStack.isEmpty()) {
-                continue;
-            }
-
-            if (invStack.isItemEqual(required) && (invStack.getTagCompound() == null ? required.getTagCompound() == null : invStack.getTagCompound().equals(required.getTagCompound()))) {
-                int stackSize = invStack.getCount();
-                int used = 0;
-                if (kept > 0) {
-                    int remainingFromStack = Math.max(stackSize - kept, 0);
-                    used += stackSize - remainingFromStack;
-                }
-
-                kept -= used;
-
-                if (kept <= 0 && needed > 0) {
-                    int remainingFromStack = Math.max(stackSize - used - needed, 0);
-                    if (doDrain) {
-                        invStack.setCount(remainingFromStack + used);
-                        if (invStack.isEmpty()) {
-                            inv[i] = ItemStack.EMPTY;
-                        }
-                    }
-
-                    needed -= (stackSize - used - remainingFromStack);
-                }
-
-                if (needed <= 0) {
-                    return 0;
-                }
-
-            }
-
-        }
-
-        return needed;
-
-
-    }
 }
