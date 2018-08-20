@@ -4,7 +4,7 @@ import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.BlockCauldron;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -16,19 +16,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.FluidActionResult;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraftforge.fluids.capability.FluidTankProperties;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class ItemSigilVoid extends ItemSigilBase implements IFluidHandlerItem {
+public class ItemSigilVoid extends ItemSigilFluidBase {
     public ItemSigilVoid() {
-        super("void", 50);
+        super("void", 50, null);
     }
 
     @Override
@@ -42,9 +36,6 @@ public class ItemSigilVoid extends ItemSigilBase implements IFluidHandlerItem {
         if (!world.isRemote && !isUnusable(stack)) {
             RayTraceResult rayTrace = this.rayTrace(world, player, true);
             
-            ActionResult<ItemStack> ret = ForgeEventFactory.onBucketUse(player, world, stack, rayTrace);
-            if (ret != null) return ret;
-            
             if (rayTrace == null || rayTrace.typeOfHit != RayTraceResult.Type.BLOCK) {
                 return ActionResult.newResult(EnumActionResult.PASS, stack);
             }
@@ -54,39 +45,18 @@ public class ItemSigilVoid extends ItemSigilBase implements IFluidHandlerItem {
             if(world.isBlockModifiable(player, blockPos) && player.canPlayerEdit(blockPos, rayTrace.sideHit, stack)){
                 //Void is simpler than the other fluid sigils, because getFluidHandler grabs fluid blocks just fine
                 //So extract from fluid tanks with a null side; or drain fluid blocks.
-                IFluidHandler destination = FluidUtil.getFluidHandler(world, blockPos, null);
-                if(destination != null && FluidUtil.tryFluidTransfer(this, destination, 1000, false) != null && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
-                    FluidStack result = FluidUtil.tryFluidTransfer(this, destination, 1000, true);
-                    if (result != null) return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+                IFluidHandler destination = getFluidHandler(world, blockPos, null);
+                if(destination != null && tryRemoveFluid(destination, 1000, false) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
+                    if (tryRemoveFluid(destination, 1000, true)) return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
                 }
                 //Do the same as above, but use sidedness to interact with the fluid handler.
-                IFluidHandler destinationSide = FluidUtil.getFluidHandler(world, blockPos, rayTrace.sideHit);
-                if(destinationSide != null && FluidUtil.tryFluidTransfer(this, destinationSide, 1000, false) != null && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
-                    FluidStack result = FluidUtil.tryFluidTransfer(this, destinationSide, 1000, true);
-                    if (result != null) return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+                IFluidHandler destinationSide = getFluidHandler(world, blockPos, rayTrace.sideHit);
+                if(destinationSide != null && tryRemoveFluid(destinationSide, 1000, false) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
+                    if (tryRemoveFluid(destinationSide, 1000, true)) return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
                 }
             }
         }
 
         return super.onItemRightClick(world, player, hand);
-    }
-    
-    public ItemStack getContainer() {
-        return this.getDefaultInstance();
-    }
-    public FluidStack getFluid() {
-        return null;
-    }
-    public IFluidTankProperties[] getTankProperties() {
-        return new FluidTankProperties[] { new FluidTankProperties(null,Integer.MAX_VALUE, true, false) };
-    }
-    public int fill(FluidStack resource, boolean doFill) {
-        return 1000;
-    }
-    public FluidStack drain(FluidStack resource, boolean doDrain) {
-        return null;
-    }
-    public FluidStack drain(int maxDrain, boolean doDrain) {
-        return null;
     }
 }
