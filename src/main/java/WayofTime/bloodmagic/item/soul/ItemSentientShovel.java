@@ -72,7 +72,7 @@ public class ItemSentientShovel extends ItemSpade implements IDemonWillWeapon, I
     public final double baseAttackSpeed = -2.8;
 
     public ItemSentientShovel() {
-        super(Item.ToolMaterial.IRON);
+        super(RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL);
         setMaxDamage(getMaxDamage() * 2);
 //        super(ModItems.soulToolMaterial);
 

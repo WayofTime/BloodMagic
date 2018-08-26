@@ -60,6 +60,8 @@ public class RegistrarBloodMagicRecipes
         OreDictionary.registerOre("dustCoal", ComponentTypes.SAND_COAL.getStack());
 
         PluginUtil.handlePluginStep(PluginUtil.RegistrationStep.RECIPE_REGISTER);
+
+        RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL.setRepairItem(EnumDemonWillType.DEFAULT.getStack());
     }
 
     public static void registerAltarRecipes(BloodMagicRecipeRegistrar registrar)

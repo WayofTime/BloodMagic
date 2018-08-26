@@ -72,7 +72,7 @@ public class ItemSentientAxe extends ItemAxe implements IDemonWillWeapon, IMeshP
     public final double baseAttackSpeed = -3;
 
     public ItemSentientAxe() {
-        super(Item.ToolMaterial.IRON);
+        super(RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL, 8.0F, 3.1F);
         setMaxDamage(getMaxDamage() * 2);
 //        super(ModItems.soulToolMaterial);
 

@@ -72,7 +72,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     public final double baseAttackSpeed = -2.8;
 
     public ItemSentientPickaxe() {
-        super(Item.ToolMaterial.IRON);
+        super(RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL);
         setMaxDamage(getMaxDamage() * 2);
 //        super(ModItems.soulToolMaterial);
 
