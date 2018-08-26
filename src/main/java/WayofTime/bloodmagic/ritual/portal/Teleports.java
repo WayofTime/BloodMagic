@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.ritual.portal;
 
 import WayofTime.bloodmagic.core.data.SoulNetwork;
-
 import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.event.TeleposeEvent;
 import WayofTime.bloodmagic.teleport.Teleport;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
@@ -47,7 +47,7 @@ public class Teleports {
         @Override
         public void teleport() {
             if (entity != null) {
-                BlockPos targetTeleposer = new BlockPos(x,y,z);
+                BlockPos targetTeleposer = new BlockPos(x, y, z);
                 if (entity.timeUntilPortal <= 0) {
                     entity.timeUntilPortal = 10;
                     if (entity instanceof EntityPlayer) {
@@ -89,7 +89,7 @@ public class Teleports {
                         if (teleposer)
                             MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent.Post(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), targetTeleposer));
                     }
-                }else{
+                } else {
                     entity.timeUntilPortal = 10;
                 }
             }
@@ -125,10 +125,10 @@ public class Teleports {
                     MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
                     WorldServer oldWorldServer = server.getWorld(entity.dimension);
                     WorldServer newWorldServer = server.getWorld(newWorldID);
-                    BlockPos targetTeleposer = new BlockPos(x,y,z);
+                    BlockPos targetTeleposer = new BlockPos(x, y, z);
                     ChunkPos teleposerChunk = new ChunkPos(targetTeleposer);
                     ForgeChunkManager.Ticket chunkTicket = ForgeChunkManager.requestTicket("bloodmagic", newWorldServer, ForgeChunkManager.Type.NORMAL);
-                    ForgeChunkManager.forceChunk(chunkTicket ,teleposerChunk);
+                    ForgeChunkManager.forceChunk(chunkTicket, teleposerChunk);
 
                     if (entity instanceof EntityPlayer) {
                         EntityPlayerMP player = (EntityPlayerMP) entity;
@@ -136,15 +136,17 @@ public class Teleports {
 
                         if (!player.getEntityWorld().isRemote) {
                             SoulNetwork network = NetworkHelper.getSoulNetwork(networkOwner);
-                            if (network.getCurrentEssence() < getTeleportCost())
+                            if (network.getCurrentEssence() < getTeleportCost()) {
+                                ForgeChunkManager.releaseTicket(chunkTicket);
                                 return;
+                            }
 
-                            if (teleposer && MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, targetTeleposer)))
-                                    return;
+                            if (teleposer && MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), newWorldServer, targetTeleposer))) {
+                                ForgeChunkManager.releaseTicket(chunkTicket);
+                                return;
+                            }
 
                             network.syphon(ticket(oldWorld, player, getTeleportCost()));
-
-
 
                             /* begin brandon3055 "BrandonsCore" intedimensional teleportation code */
 
@@ -217,9 +219,9 @@ public class Teleports {
                     }
                     newWorldServer.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
 
-                }else{
-                    entity.timeUntilPortal = 10;
                     ForgeChunkManager.releaseTicket(chunkTicket);
+                } else {
+                    entity.timeUntilPortal = 10;
                 }
             }
         }
