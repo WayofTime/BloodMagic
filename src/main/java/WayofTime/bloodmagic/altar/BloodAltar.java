@@ -197,8 +197,8 @@ public class BloodAltar implements IFluidHandler
                 }
             } else if (input.getItem() instanceof IBloodOrb)
             {
-                this.isActive = true;
-                this.canBeFilled = true;
+                BloodOrb orb = ((IBloodOrb) input.getItem()).getOrb(input);
+                this.isActive = canBeFilled = orb != null && altarTier.ordinal() >= orb.getTier();
                 return;
             }
         }
