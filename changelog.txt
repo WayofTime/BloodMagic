@@ -1,4 +1,34 @@
 ------------------------------------------------------
+Version 2.3.2
+------------------------------------------------------
+
+looky bois, we beta now
+
+- Fixed Sentient Sword attacking mobs and players without being provoked
+- Fixed weird Crystal Clusters being weird
+    - They are now less weird
+- Fixed Ritual Reader and Tinkerer not being in the creative tab
+- Fixed an NPE that would happen with some blocks in the Ritual of Magnetism's area of effect
+- Fixed Mimics not being able to replace blocks during placement
+- Fixed issues with inter-dimensional teleportation
+    - Teleposers and Teleposition Sigils are now fully functional
+- Fixed custom arrows not having their effects when fired from the Sentient Bow
+- Fixed Splash Potions being unthrowable while Living Armor had the quenched downgrade
+- Fixed Ritual Stones being considered Iron instead of Rock
+- Fixed the Lava, Water, and Void sigils so they now work properly with tanks
+- Fixed an issue where the Teleposer would attempt to damage an offline player
+- Fixed the Compression Sigil so it now functions
+- Fixed low tier altars being able to fill high tier orbs
+- Fixed Sentient Tools having the wrong material
+- Fixed Sentient Tools not having a repair material
+    - It is now demon crystals
+- Added a config to disable mob drops from mobs killed by the Well of Suffering
+- Added an additional glow to the Dagger of Sacrifice when it has a full incense bonus
+- Reworked the Phantom Bridge
+- Updated german translation
+- Updated chinese translation
+
+------------------------------------------------------
 Version 2.3.1
 ------------------------------------------------------
 
