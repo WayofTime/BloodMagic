@@ -7,7 +7,6 @@ import WayofTime.bloodmagic.tile.TileAltar;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -89,7 +88,7 @@ public class RitualWellOfSuffering extends Ritual {
                     continue;
 
                 if (entity.isEntityAlive() && !(entity instanceof EntityPlayer)) {
-                    if (entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, 1)) {
+                    if (entity.attackEntityFrom(RitualManager.RITUAL_DAMAGE, 1)) {
                         if (entity.isChild())
                             lifeEssenceRatio *= 0.5F;
 

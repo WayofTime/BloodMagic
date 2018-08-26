@@ -9,7 +9,6 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -110,7 +109,7 @@ public class RitualForsakenSoul extends Ritual {
                 continue;
 
             if (entity.isEntityAlive() && !(entity instanceof EntityPlayer)) {
-                if (entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, 1)) {
+                if (entity.attackEntityFrom(RitualManager.RITUAL_DAMAGE, 1)) {
                     if (!entity.isEntityAlive()) {
                         int uniqueness = calculateUniqueness(entity);
                         double modifier = 1;

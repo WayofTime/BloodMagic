@@ -857,6 +857,9 @@ bloodmagic.keybind.open_holding=Öffne Siegel der Aufbewahrung
 bloodmagic.keybind.cycle_holding_pos=Siegelrotation (+)
 bloodmagic.keybind.cycle_holding_neg=Siegelrotation (-)
 
+death.attack.ritual_damage=%1$s wurde für ein Ritual geopfert.
+death.attack.ritual_damage.player=%2$s hat %1$s für ein Ritual geopfert.
+
 # JustEnoughItems
 jei.bloodmagic.recipe.altar=Blutaltar
 jei.bloodmagic.recipe.binding=Alchemische Anordnung (Bindung)

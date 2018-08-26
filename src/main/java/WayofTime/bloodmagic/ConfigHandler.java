@@ -66,6 +66,8 @@ public class ConfigHandler
         public int sacrificialDaggerConversion = 100;
         @Config.Comment({ "Will rewrite any default meteor types with new versions.", "Disable this if you want any of your changes to stay, or do not want default meteor types regenerated." })
         public boolean shouldResyncMeteors = true;
+        @Config.Comment({ "Should mobs that die through the Well of Suffering Ritual drop items?"})
+        public boolean wellOfSufferingDrops = true;
     }
 
     public static class ConfigClient

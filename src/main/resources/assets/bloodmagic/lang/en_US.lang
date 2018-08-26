@@ -789,6 +789,9 @@ chat.bloodmagic.mimic.detectRadius.down=Player detection radius has been decreas
 chat.bloodmagic.mimic.potionSpawnRadius.up=Potion spawning radius has been increased to: %d blocks.
 chat.bloodmagic.mimic.potionSpawnRadius.down=Potion spawning radius has been decreased to: %d blocks.
 
+death.attack.ritual_damage=%1$s has been sacrificed for a ritual.
+death.attack.ritual_damage.player=%2$s has sacrificed %1$s for a ritual.
+
 # entity
 entity.bloodmagic.SentientSpecter.name=Sentient Specter
 entity.bloodmagic.Mimic.name=Mimic
@@ -848,6 +851,8 @@ commands.bloodmagic.soulnetwork.noCommand=There is no command specified
 commands.bloodmagic.soulnetwork.notACommand=That is not a valid command
 commands.bloodmagic.soulnetwork.fillMax.success=Successfully filled %s's Soul Network to their orb max!
 commands.bloodmagic.soulnetwork.create.success=Successfully created %s's Soul Network (Orb tier: %d)
+
+
 
 # GUI
 tile.bloodmagic.inputNode.name=Input Node
