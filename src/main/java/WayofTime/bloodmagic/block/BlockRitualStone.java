@@ -21,7 +21,7 @@ import java.util.List;
 
 public class BlockRitualStone extends BlockEnum<EnumRuneType> implements IRitualStone {
     public BlockRitualStone() {
-        super(Material.IRON, EnumRuneType.class);
+        super(Material.ROCK, EnumRuneType.class);
 
         setUnlocalizedName(BloodMagic.MODID + ".ritualStone.");
         setCreativeTab(BloodMagic.TAB_BM);
