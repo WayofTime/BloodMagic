@@ -1,59 +1,57 @@
 package WayofTime.bloodmagic.entity.projectile;
 
-import java.util.Locale;
-
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.util.Constants;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionType;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.util.Constants;
 
-public class EntitySentientArrow extends EntityTippedArrow
-{
+import java.util.Locale;
+
+public class EntitySentientArrow extends EntityTippedArrow {
     public double reimbursedAmountOnHit = 0;
     public EnumDemonWillType type = EnumDemonWillType.DEFAULT;
     public int currentLevel = 0;
-    public float[] destructiveExplosionRadius = { 0.5f, 1, 1.5f, 2, 2.5f, 3, 3.5f };
-    public int[] poisonDuration = { 50, 100, 150, 80, 120, 160, 200 };
-    public int[] poisonLevel = { 0, 0, 0, 1, 1, 1, 1 };
-    public int[] levitationDuration = { 20, 40, 60, 80, 100, 120, 160 };
-    public int[] levitationLevel = { 0, 0, 0, 1, 1, 1, 2 };
-    public int[] slownessDuration = { 40, 60, 100, 150, 200, 250, 300 };
-    public int[] slownessLevel = { 0, 0, 0, 1, 1, 1, 2 };
+    public PotionType potion;
+    public float[] destructiveExplosionRadius = {0.5f, 1, 1.5f, 2, 2.5f, 3, 3.5f};
+    public int[] poisonDuration = {50, 100, 150, 80, 120, 160, 200};
+    public int[] poisonLevel = {0, 0, 0, 1, 1, 1, 1};
+    public int[] levitationDuration = {20, 40, 60, 80, 100, 120, 160};
+    public int[] levitationLevel = {0, 0, 0, 1, 1, 1, 2};
+    public int[] slownessDuration = {40, 60, 100, 150, 200, 250, 300};
+    public int[] slownessLevel = {0, 0, 0, 1, 1, 1, 2};
 
-    public EntitySentientArrow(World worldIn)
-    {
+    public EntitySentientArrow(World worldIn) {
         super(worldIn);
     }
 
-    public EntitySentientArrow(World worldIn, double x, double y, double z)
-    {
+    public EntitySentientArrow(World worldIn, double x, double y, double z) {
         super(worldIn, x, y, z);
     }
 
-    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reinburseAmount, int currentLevel)
-    {
+    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reinburseAmount, int currentLevel, PotionType potion) {
         super(worldIn, shooter);
         this.reimbursedAmountOnHit = reinburseAmount;
         this.type = type;
         this.currentLevel = currentLevel;
+        this.potion = potion;
     }
 
-    public void reimbursePlayer(EntityLivingBase hitEntity, float damage)
-    {
-        if (this.shootingEntity instanceof EntityPlayer)
-        {
-            if (hitEntity.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && !(hitEntity instanceof IMob))
-            {
+    public void reimbursePlayer(EntityLivingBase hitEntity, float damage) {
+        if (this.shootingEntity instanceof EntityPlayer) {
+            if (hitEntity.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && !(hitEntity instanceof IMob)) {
                 return;
             }
 
@@ -62,68 +60,99 @@ public class EntitySentientArrow extends EntityTippedArrow
     }
 
     @Override
-    protected void arrowHit(EntityLivingBase living)
-    {
-        super.arrowHit(living);
-
-        switch (type)
-        {
-        case CORROSIVE:
-            living.addPotionEffect(new PotionEffect(MobEffects.POISON, currentLevel >= 0 ? poisonDuration[currentLevel] : 0, currentLevel >= 0 ? poisonLevel[currentLevel] : 0));
-            break;
-        case DEFAULT:
-            break;
-        case DESTRUCTIVE:
-            this.world.createExplosion(this, this.posX, this.posY, this.posZ, currentLevel >= 0 ? destructiveExplosionRadius[currentLevel] : 0, false);
-            break;
-        case STEADFAST:
-            living.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, currentLevel >= 0 ? levitationDuration[currentLevel] : 0, currentLevel >= 0 ? levitationLevel[currentLevel] : 0));
-            break;
-        case VENGEFUL:
-            living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, currentLevel >= 0 ? slownessDuration[currentLevel] : 0, currentLevel >= 0 ? slownessLevel[currentLevel] : 0));
-            break;
-        default:
-            break;
-        }
-    }
-
-    @Override
-    public void onUpdate()
-    {
-        super.onUpdate();
-
-        if (!this.world.isRemote && this.inGround && this.timeInGround > 0)
-        {
-            switch (type)
-            {
-            case DESTRUCTIVE:
-                this.world.createExplosion(this, this.posX, this.posY, this.posZ, currentLevel >= 0 ? destructiveExplosionRadius[currentLevel] : 0, false);
-                this.setDead();
-                break;
+    protected void arrowHit(EntityLivingBase living) {
+        int amp = -1;
+        switch (type) {
             case CORROSIVE:
+                if (this.potion != null)
+                    for (PotionEffect i : this.potion.getEffects()) {
+                        if (i.getEffectName().equals("poison")) {
+                            amp = i.getAmplifier();
+                            continue;
+                        }
+                        living.addPotionEffect(new PotionEffect(i.getPotion(), i.getDuration(), i.getAmplifier()));
+                    }
+                living.addPotionEffect(new PotionEffect(MobEffects.POISON, currentLevel >= 0 ? (amp > -1 && poisonLevel[currentLevel] != amp) ? poisonDuration[currentLevel] / 2 : poisonDuration[currentLevel] : 0, currentLevel >= 0 ? (amp > -1) ? Math.max(poisonLevel[currentLevel], amp) + 1 : poisonLevel[currentLevel] : 0));
                 break;
             case DEFAULT:
                 break;
+            case DESTRUCTIVE:
+                this.world.createExplosion(this, this.posX, this.posY, this.posZ, currentLevel >= 0 ? destructiveExplosionRadius[currentLevel] : 0, false);
+                createPotionFromArrow(living);
+                break;
             case STEADFAST:
+                if (this.potion != null)
+                    for (PotionEffect i : this.potion.getEffects()) {
+                        if (i.getEffectName().equals("levitation")) {
+                            amp = i.getAmplifier();
+                            continue;
+                        }
+                        living.addPotionEffect(new PotionEffect(i.getPotion(), i.getDuration(), i.getAmplifier()));
+                    }
+                living.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, currentLevel >= 0 ? (amp > -1 && levitationLevel[currentLevel] != amp) ? levitationDuration[currentLevel] / 2 : levitationDuration[currentLevel] : 0, currentLevel >= 0 ? (amp > -1) ? Math.max(levitationLevel[currentLevel], amp) + 1 : levitationLevel[currentLevel] : 0));
                 break;
             case VENGEFUL:
+                if (this.potion != null)
+                    for (PotionEffect i : this.potion.getEffects()) {
+                        if (i.getEffectName().equals("slowness")) {
+                            amp = i.getAmplifier();
+                            continue;
+                        }
+                        living.addPotionEffect(new PotionEffect(i.getPotion(), i.getDuration(), i.getAmplifier()));
+                    }
+                living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, currentLevel >= 0 ? (amp > -1 && slownessLevel[currentLevel] != amp) ? slownessDuration[currentLevel] / 2 : slownessDuration[currentLevel] : 0, currentLevel >= 0 ? (amp > -1) ? Math.max(slownessLevel[currentLevel], amp) + 1 : slownessLevel[currentLevel] : 0));
                 break;
             default:
                 break;
-            }
         }
-//        else if (this.inGround && this.timeInGround != 0 && !this.customPotionEffects.isEmpty() && this.timeInGround >= 600)
-//        {
-//            this.world.setEntityState(this, (byte)0);
-//            this.potion = PotionTypes.EMPTY;
-//            this.customPotionEffects.clear();
-//            this.dataManager.set(COLOR, Integer.valueOf(-1));
-//        }
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound tag)
-    {
+    public void onUpdate() {
+        super.onUpdate();
+
+        if (!this.world.isRemote && this.inGround && this.timeInGround > 0) {
+            switch (type) {
+                case DESTRUCTIVE:
+                    this.world.createExplosion(this, this.posX, this.posY, this.posZ, currentLevel >= 0 ? destructiveExplosionRadius[currentLevel] : 0, false);
+                    createPotionFromArrow();
+                    this.setDead();
+                    break;
+                case CORROSIVE:
+                    break;
+                case DEFAULT:
+                    break;
+                case STEADFAST:
+                    break;
+                case VENGEFUL:
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    //TODO: Potion particle colors. Using addPotionEffects has colors, but crashes with potion types added directly (like currently with spectral arrows).
+    private void createPotionFromArrow() {
+        if (this.potion != null) {
+            ItemStack explosionPotion = new ItemStack(Items.SPLASH_POTION);
+            PotionUtils.appendEffects(explosionPotion, this.potion.getEffects());
+            EntityPotion potionEntity = new EntityPotion(world, this.posX, this.posY, this.posZ, explosionPotion);
+            world.spawnEntity(potionEntity);
+        }
+    }
+
+    private void createPotionFromArrow(EntityLivingBase living) {
+        if (this.potion != null) {
+            ItemStack explosionPotion = new ItemStack(Items.SPLASH_POTION);
+            PotionUtils.appendEffects(explosionPotion, this.potion.getEffects());
+            EntityPotion potionEntity = new EntityPotion(world, living.posX, living.posY, living.posZ, explosionPotion);
+            world.spawnEntity(potionEntity);
+        }
+    }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound tag) {
         super.writeEntityToNBT(tag);
 
         tag.setDouble("reimbursement", reimbursedAmountOnHit);
@@ -132,8 +161,7 @@ public class EntitySentientArrow extends EntityTippedArrow
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound tag)
-    {
+    public void readEntityFromNBT(NBTTagCompound tag) {
         super.readEntityFromNBT(tag);
 
         reimbursedAmountOnHit = tag.getDouble("reimbursement");
@@ -142,8 +170,7 @@ public class EntitySentientArrow extends EntityTippedArrow
     }
 
     @Override
-    protected ItemStack getArrowStack()
-    {
+    protected ItemStack getArrowStack() {
         return new ItemStack(Items.ARROW);
     }
 }
