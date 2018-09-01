@@ -41,9 +41,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         return 0;
     }
 
-    private void networkCommandExecution(String name, MinecraftServer server, ICommandSender sender, String[] args, String help) throws CommandException {
-        EntityPlayerMP player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
-        SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+    private Integer networkCommandHelper(ICommandSender sender, String[] args) {
         int amount;
         if (args.length == 0)
             amount = 1000;
@@ -54,29 +52,9 @@ public class SubCommandNetwork extends CommandTreeBase {
         else {
             CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
             CommandBloodMagic.displayHelpString(sender, this.getUsage(sender));
-            return;
+            return null;
         }
-        switch (name) {
-            case "syphon":
-                int currE = network.getCurrentEssence();
-                if (amount > currE) {
-                    CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.network.syphon.amountTooHigh");
-                    if (currE == 0)
-                        break;
-                    amount = Math.min(amount, currE);
-                }
-                network.syphonAndDamage(player, SoulTicket.command(sender, name, amount));
-                int newE = network.getCurrentEssence();
-                CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.syphon.success", currE - newE, player.getDisplayName().getFormattedText());
-                break;
-            case "add":
-                CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.add.success", network.add(SoulTicket.command(sender, name, amount), NetworkHelper.getMaximumForTier(network.getOrbTier())), player.getDisplayName().getFormattedText());
-                break;
-            case "set":
-                network.setCurrentEssence(amount);
-                CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.set.success", player.getDisplayName().getFormattedText(), amount);
-                break;
-        }
+        return amount;
     }
 
     abstract class NetworkCommand extends CommandTreeBase {
@@ -85,11 +63,6 @@ public class SubCommandNetwork extends CommandTreeBase {
         @Override
         public String getUsage(ICommandSender sender) {
             return TextHelper.localizeEffect("commands.bloodmagic.network." + getName() + ".usage") + "\n" + help;
-        }
-
-        @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            networkCommandExecution(getName(), server, sender, args, help);
         }
 
         public Object getInfo() {
@@ -102,6 +75,25 @@ public class SubCommandNetwork extends CommandTreeBase {
         public String getName() {
             return "syphon";
         }
+
+        @Override
+        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            EntityPlayerMP player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+            Integer amount = networkCommandHelper(sender, args);
+            if (amount == null)
+                return;
+            int currE = network.getCurrentEssence();
+            if (amount > currE) {
+                CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.network.syphon.amountTooHigh");
+                if (currE == 0)
+                    return;
+                amount = Math.min(amount, currE);
+            }
+            network.syphonAndDamage(player, SoulTicket.command(sender, this.getName(), amount));
+            int newE = network.getCurrentEssence();
+            CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.syphon.success", currE - newE, player.getDisplayName().getFormattedText());
+        }
     }
 
     class Add extends NetworkCommand {
@@ -109,12 +101,33 @@ public class SubCommandNetwork extends CommandTreeBase {
         public String getName() {
             return "add";
         }
+
+        @Override
+        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            EntityPlayerMP player = args.length == 0 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+            Integer amount = networkCommandHelper(sender, args);
+            if (amount == null)
+                return;
+            CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.add.success", network.add(SoulTicket.command(sender, getName(), amount), NetworkHelper.getMaximumForTier(network.getOrbTier())), player.getDisplayName().getFormattedText());
+        }
     }
 
     class Set extends NetworkCommand {
         @Override
         public String getName() {
             return "set";
+        }
+
+        @Override
+        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            EntityPlayerMP player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+            Integer amount = networkCommandHelper(sender, args);
+            if (amount == null)
+                return;
+            network.setCurrentEssence(amount);
+            CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.set.success", player.getDisplayName().getFormattedText(), amount);
         }
     }
 
