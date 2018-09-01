@@ -60,6 +60,9 @@ public class SubCommandNetwork extends CommandTreeBase {
     abstract class NetworkCommand extends CommandTreeBase {
         public String help = TextHelper.localizeEffect("commands.bloodmagic.network." + getName() + ".help", getInfo());
 
+        public EntityPlayerMP player;
+        public SoulNetwork network;
+
         @Override
         public String getUsage(ICommandSender sender) {
             return TextHelper.localizeEffect("commands.bloodmagic.network." + getName() + ".usage") + "\n" + help;
@@ -67,6 +70,12 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         public Object getInfo() {
             return null;
+        }
+
+        @Override
+        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+            network = NetworkHelper.getSoulNetwork(player);
         }
     }
 
@@ -78,8 +87,7 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            EntityPlayerMP player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
-            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+            super.execute(server, sender, args);
             Integer amount = networkCommandHelper(sender, args);
             if (amount == null)
                 return;
@@ -104,8 +112,7 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            EntityPlayerMP player = args.length == 0 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
-            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+            super.execute(server, sender, args);
             Integer amount = networkCommandHelper(sender, args);
             if (amount == null)
                 return;
@@ -121,8 +128,7 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            EntityPlayerMP player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
-            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+            super.execute(server, sender, args);
             Integer amount = networkCommandHelper(sender, args);
             if (amount == null)
                 return;
@@ -140,8 +146,7 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            EntityPlayerMP player = args.length == 0 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
-            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+            super.execute(server, sender, args);
             sender.sendMessage(new TextComponentString((player != sender ? player.getDisplayName().getFormattedText() + " " : "") + TextHelper.localizeEffect("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence())));
         }
     }
@@ -155,8 +160,7 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            EntityPlayerMP player = args.length == 0 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
-            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+            super.execute(server, sender, args);
             network.setCurrentEssence(NetworkHelper.getMaximumForTier(network.getOrbTier()));
             CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.cap.success", player.getDisplayName().getFormattedText());
         }
@@ -176,8 +180,7 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            EntityPlayerMP player = args.length == 0 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
-            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+            super.execute(server, sender, args);
             network.setCurrentEssence(Integer.MAX_VALUE);
             CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.fill.success", player.getDisplayName().getFormattedText());
         }
