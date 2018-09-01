@@ -1,22 +1,31 @@
 package WayofTime.bloodmagic.command.sub;
 
+import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.core.data.SoulTicket;
-import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.command.PlayerNotFoundException;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.server.command.CommandTreeBase;
+import net.minecraftforge.server.command.CommandTreeHelp;
 
-import java.util.Locale;
+public class SubCommandNetwork extends CommandTreeBase {
+    //TODO: Localized strings.
+    public SubCommandNetwork() {
+        addSubcommand(new Syphon());
+        addSubcommand(new Add());
+        addSubcommand(new Set());
+        addSubcommand(new Get());
+        addSubcommand(new Cap());
+        addSubcommand(new Fill());
+        addSubcommand(new CommandTreeHelp(this));
+    }
 
-public class SubCommandNetwork extends CommandBase {
     @Override
     public String getName() {
         return "network";
@@ -29,155 +38,135 @@ public class SubCommandNetwork extends CommandBase {
 
     @Override
     public int getRequiredPermissionLevel() {
-        return 2;
+        return 0;
     }
 
-    @Override
-    public void execute(MinecraftServer server, ICommandSender commandSender, String[] args) throws CommandException {
-        if (args.length > 1) {
-            if (args[0].equalsIgnoreCase("help"))
-                return;
-
-            try {
-                EntityPlayer player = CommandBase.getPlayer(server, commandSender, args[1]);
-
-                try {
-                    ValidCommands command = ValidCommands.valueOf(args[0].toUpperCase(Locale.ENGLISH));
-                    command.run(player, commandSender, args.length > 0 && args.length < 2, args);
-                } catch (IllegalArgumentException e) {
-
+    private void networkCommandExecution(String name, MinecraftServer server, ICommandSender sender, String[] args, String help) throws CommandException {
+        EntityPlayerMP player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+        SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+        int amount;
+        if (args.length == 0)
+            amount = 1000;
+        else if (Utils.isInteger(args[0]))
+            amount = Integer.parseInt(args[0]);
+        else if (args.length > 1 && Utils.isInteger(args[1]))
+            amount = Integer.parseInt(args[1]);
+        else {
+            CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
+            CommandBloodMagic.displayHelpString(sender, this.getUsage(sender));
+            return;
+        }
+        switch (name) {
+            case "syphon":
+                int currE = network.getCurrentEssence();
+                if (amount > currE) {
+                    CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.network.syphon.amountTooHigh");
+                    if (currE == 0)
+                        break;
+                    amount = Math.min(amount, currE);
                 }
-            } catch (PlayerNotFoundException e) {
-                CommandBloodMagic.displayErrorString(commandSender, e.getLocalizedMessage());
-            }
-        } else {
-            CommandBloodMagic.displayErrorString(commandSender, "commands.bloodmagic.error.arg.missing");
+                network.syphonAndDamage(player, SoulTicket.command(sender, name, amount));
+                int newE = network.getCurrentEssence();
+                CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.syphon.success", currE - newE, player.getDisplayName().getFormattedText());
+                break;
+            case "add":
+                CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.add.success", network.add(SoulTicket.command(sender, name, amount), NetworkHelper.getMaximumForTier(network.getOrbTier())), player.getDisplayName().getFormattedText());
+                break;
+            case "set":
+                network.setCurrentEssence(amount);
+                CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.set.success", player.getDisplayName().getFormattedText(), amount);
+                break;
         }
     }
 
-    private enum ValidCommands {
-        SYPHON("commands.bloodmagic.network.syphon.help") {
-            @Override
-            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
-                if (displayHelp) {
-                    CommandBloodMagic.displayHelpString(sender, this.help);
-                    return;
-                }
+    abstract class NetworkCommand extends CommandTreeBase {
+        public String help = TextHelper.localizeEffect("commands.bloodmagic.network." + getName() + ".help", getInfo());
 
-                if (args.length == 3) {
-                    if (Utils.isInteger(args[2])) {
-                        int amount = Integer.parseInt(args[2]);
-                        NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.command(sender, "syphon", amount));
-                        CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.syphon.success", amount, player.getDisplayName().getFormattedText());
-                    } else {
-                        CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
-                    }
-                } else {
-                    CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.missing");
-                }
-            }
-        },
-        ADD("commands.bloodmagic.network.add.help") {
-            @Override
-            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
-                if (displayHelp) {
-                    CommandBloodMagic.displayHelpString(sender, this.help);
-                    return;
-                }
-
-                SoulNetwork network = NetworkHelper.getSoulNetwork(player);
-
-                if (args.length == 3) {
-                    if (Utils.isInteger(args[2])) {
-                        int amount = Integer.parseInt(args[2]);
-                        int maxOrb = NetworkHelper.getMaximumForTier(network.getOrbTier());
-                        CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.add.success", network.add(SoulTicket.command(sender, "add", amount), maxOrb), player.getDisplayName().getFormattedText());
-                    } else {
-                        CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
-                    }
-                } else {
-                    CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.missing");
-                }
-            }
-        },
-        SET("commands.bloodmagic.network.set.help") {
-            @Override
-            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
-                if (displayHelp) {
-                    CommandBloodMagic.displayHelpString(sender, this.help);
-                    return;
-                }
-
-                SoulNetwork network = NetworkHelper.getSoulNetwork(player);
-
-                if (args.length == 3) {
-                    if (Utils.isInteger(args[2])) {
-                        int amount = Integer.parseInt(args[2]);
-                        network.setCurrentEssence(amount);
-                        CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.set.success", player.getDisplayName().getFormattedText(), amount);
-                    } else {
-                        CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
-                    }
-                } else {
-                    CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.missing");
-                }
-            }
-        },
-        GET("commands.bloodmagic.network.get.help") {
-            @Override
-            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
-                if (displayHelp) {
-                    CommandBloodMagic.displayHelpString(sender, this.help);
-                    return;
-                }
-
-                SoulNetwork network = NetworkHelper.getSoulNetwork(player);
-
-                if (args.length > 1)
-                    sender.sendMessage(new TextComponentString(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence())));
-
-            }
-        },
-        FILL("commands.bloodmagic.network.fill.help") {
-            @Override
-            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
-                if (displayHelp) {
-                    CommandBloodMagic.displayHelpString(sender, this.help, Integer.MAX_VALUE);
-                    return;
-                }
-
-                SoulNetwork network = NetworkHelper.getSoulNetwork(player);
-
-                if (args.length > 1) {
-                    network.setCurrentEssence(Integer.MAX_VALUE);
-                    CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.fill.success", player.getDisplayName().getFormattedText());
-                }
-            }
-        },
-        CAP("commands.bloodmagic.network.cap.help") {
-            @Override
-            public void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args) {
-                if (displayHelp) {
-                    CommandBloodMagic.displayHelpString(sender, this.help);
-                    return;
-                }
-
-                SoulNetwork network = NetworkHelper.getSoulNetwork(player);
-
-                if (args.length > 1) {
-                    int maxOrb = NetworkHelper.getMaximumForTier(network.getOrbTier());
-                    network.setCurrentEssence(maxOrb);
-                    CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.cap.success", player.getDisplayName().getFormattedText());
-                }
-            }
-        },;
-
-        public String help;
-
-        ValidCommands(String help) {
-            this.help = help;
+        @Override
+        public String getUsage(ICommandSender sender) {
+            return TextHelper.localizeEffect("commands.bloodmagic.network." + getName() + ".usage") + "\n" + help;
         }
 
-        public abstract void run(EntityPlayer player, ICommandSender sender, boolean displayHelp, String... args);
+        @Override
+        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            networkCommandExecution(getName(), server, sender, args, help);
+        }
+
+        public Object getInfo() {
+            return null;
+        }
+    }
+
+    class Syphon extends NetworkCommand {
+        @Override
+        public String getName() {
+            return "syphon";
+        }
+    }
+
+    class Add extends NetworkCommand {
+        @Override
+        public String getName() {
+            return "add";
+        }
+    }
+
+    class Set extends NetworkCommand {
+        @Override
+        public String getName() {
+            return "set";
+        }
+    }
+
+    class Get extends NetworkCommand {
+
+        @Override
+        public String getName() {
+            return "get";
+        }
+
+        @Override
+        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            EntityPlayerMP player = args.length == 0 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+            sender.sendMessage(new TextComponentString((player != sender ? player.getDisplayName().getFormattedText() + " " : "") + TextHelper.localizeEffect("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence())));
+        }
+    }
+
+    class Cap extends NetworkCommand {
+
+        @Override
+        public String getName() {
+            return "cap";
+        }
+
+        @Override
+        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            EntityPlayerMP player = args.length == 0 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+            network.setCurrentEssence(NetworkHelper.getMaximumForTier(network.getOrbTier()));
+            CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.cap.success", player.getDisplayName().getFormattedText());
+        }
+    }
+
+    class Fill extends NetworkCommand {
+
+        @Override
+        public Integer getInfo() {
+            return Integer.MAX_VALUE;
+        }
+
+        @Override
+        public String getName() {
+            return "fill";
+        }
+
+        @Override
+        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            EntityPlayerMP player = args.length == 0 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+            network.setCurrentEssence(Integer.MAX_VALUE);
+            CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.network.fill.success", player.getDisplayName().getFormattedText());
+        }
     }
 }
