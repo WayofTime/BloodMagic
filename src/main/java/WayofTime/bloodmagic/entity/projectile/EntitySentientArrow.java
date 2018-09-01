@@ -3,28 +3,45 @@ package WayofTime.bloodmagic.entity.projectile;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.util.Constants;
+import com.google.common.collect.Sets;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.PotionTypes;
+import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
+import java.lang.invoke.MethodHandle;
 import java.util.Locale;
+import java.util.Set;
 
 public class EntitySentientArrow extends EntityTippedArrow {
+    public static MethodHandle mh; //TODO: use MethodHandles to realize the arrow effects. I suggest SimplyArrows for the test environment.
+    public static final DataParameter<Integer> COLOR = EntityDataManager.<Integer>createKey(EntitySentientArrow.class, DataSerializers.VARINT);
+    public PotionType potion = PotionTypes.EMPTY;
+    public final Set<PotionEffect> customPotionEffects = Sets.<PotionEffect>newHashSet();
+    public boolean fixedColor;
     public double reimbursedAmountOnHit = 0;
     public EnumDemonWillType type = EnumDemonWillType.DEFAULT;
     public int currentLevel = 0;
-    public PotionType potion;
+    public ItemStack itemStack;
+    public EntityArrow specialArrow;
+    public ItemArrow itemArrow;
     public float[] destructiveExplosionRadius = {0.5f, 1, 1.5f, 2, 2.5f, 3, 3.5f};
     public int[] poisonDuration = {50, 100, 150, 80, 120, 160, 200};
     public int[] poisonLevel = {0, 0, 0, 1, 1, 1, 1};
@@ -41,12 +58,38 @@ public class EntitySentientArrow extends EntityTippedArrow {
         super(worldIn, x, y, z);
     }
 
-    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reinburseAmount, int currentLevel, PotionType potion) {
+    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel) {
         super(worldIn, shooter);
-        this.reimbursedAmountOnHit = reinburseAmount;
+        this.reimbursedAmountOnHit = reimburseAmount;
+        this.type = type;
+        this.currentLevel = currentLevel;
+    }
+
+    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel, PotionType potion) {
+        super(worldIn, shooter);
+        this.reimbursedAmountOnHit = reimburseAmount;
         this.type = type;
         this.currentLevel = currentLevel;
         this.potion = potion;
+        this.setFixedColor(PotionUtils.getPotionColor(this.potion));
+    }
+
+    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel, ItemStack itemStack) {
+        super(worldIn, shooter);
+        this.reimbursedAmountOnHit = reimburseAmount;
+        this.type = type;
+        this.currentLevel = currentLevel;
+        this.potion = PotionUtils.getPotionFromItem(itemStack);
+        this.setFixedColor(getCustomColor(itemStack));
+    }
+
+    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel, ItemArrow itemArrow, ItemStack itemStack) {
+        super(worldIn, shooter);
+        this.reimbursedAmountOnHit = reimburseAmount;
+        this.type = type;
+        this.currentLevel = currentLevel;
+        this.itemStack = itemStack;
+        this.itemArrow = itemArrow;
     }
 
     public void reimbursePlayer(EntityLivingBase hitEntity, float damage) {
@@ -75,6 +118,10 @@ public class EntitySentientArrow extends EntityTippedArrow {
                 living.addPotionEffect(new PotionEffect(MobEffects.POISON, currentLevel >= 0 ? (amp > -1 && poisonLevel[currentLevel] != amp) ? poisonDuration[currentLevel] / 2 : poisonDuration[currentLevel] : 0, currentLevel >= 0 ? (amp > -1) ? Math.max(poisonLevel[currentLevel], amp) + 1 : poisonLevel[currentLevel] : 0));
                 break;
             case DEFAULT:
+                if (this.potion != null)
+                    for (PotionEffect i : this.potion.getEffects()) {
+                        living.addPotionEffect(new PotionEffect(i.getPotion(), i.getDuration(), i.getAmplifier()));
+                    }
                 break;
             case DESTRUCTIVE:
                 this.world.createExplosion(this, this.posX, this.posY, this.posZ, currentLevel >= 0 ? destructiveExplosionRadius[currentLevel] : 0, false);
@@ -105,30 +152,57 @@ public class EntitySentientArrow extends EntityTippedArrow {
             default:
                 break;
         }
+        if (this.specialArrow != null && !this.specialArrow.isDead)
+            living.hurtResistantTime = 0;
     }
 
     @Override
     public void onUpdate() {
         super.onUpdate();
+        if (!this.world.isRemote && this.itemArrow != null && this.itemStack != null && this.shootingEntity instanceof EntityLivingBase) {
+            if (!this.inGround && this.ticksExisted == 1) {
+                this.specialArrow = this.itemArrow.createArrow(this.world, this.itemStack, (EntityLivingBase) this.shootingEntity);
+                this.specialArrow.setVelocity(this.motionX * 0.99, this.motionY < 0 ? this.motionY * 0.95 : this.motionY * 1.05, this.motionZ * 0.99);
+                this.specialArrow.setIsCritical(this.getIsCritical());
+                world.spawnEntity(this.specialArrow);
+                this.setDamage(0);
+            } else if (this.timeInGround == 1 && type != EnumDemonWillType.DESTRUCTIVE)
+                this.setDead();
+        }
 
-        if (!this.world.isRemote && this.inGround && this.timeInGround > 0) {
-            switch (type) {
-                case DESTRUCTIVE:
+
+        switch (type) {
+            case DESTRUCTIVE:
+                if (this.potion != null) {
+                    this.spawnPotionParticles(2);
+                }
+                if (!this.world.isRemote && this.inGround && this.timeInGround > 0) {
                     this.world.createExplosion(this, this.posX, this.posY, this.posZ, currentLevel >= 0 ? destructiveExplosionRadius[currentLevel] : 0, false);
                     createPotionFromArrow();
                     this.setDead();
-                    break;
-                case CORROSIVE:
-                    break;
-                case DEFAULT:
-                    break;
-                case STEADFAST:
-                    break;
-                case VENGEFUL:
-                    break;
-                default:
-                    break;
-            }
+                }
+                break;
+            case CORROSIVE:
+                this.spawnPotionParticles(2);
+
+                break;
+            case DEFAULT:
+                if (this.potion != null) {
+                    this.spawnPotionParticles(2);
+                }
+                break;
+            case STEADFAST:
+                if (this.potion != null) {
+                    this.spawnPotionParticles(2);
+                }
+                break;
+            case VENGEFUL:
+                if (this.potion != null) {
+                    this.spawnPotionParticles(2);
+                }
+                break;
+            default:
+                break;
         }
     }
 
@@ -138,6 +212,8 @@ public class EntitySentientArrow extends EntityTippedArrow {
             ItemStack explosionPotion = new ItemStack(Items.SPLASH_POTION);
             PotionUtils.appendEffects(explosionPotion, this.potion.getEffects());
             EntityPotion potionEntity = new EntityPotion(world, this.posX, this.posY, this.posZ, explosionPotion);
+            this.setFixedColor(getCustomColor(explosionPotion));
+
             world.spawnEntity(potionEntity);
         }
     }
@@ -147,6 +223,8 @@ public class EntitySentientArrow extends EntityTippedArrow {
             ItemStack explosionPotion = new ItemStack(Items.SPLASH_POTION);
             PotionUtils.appendEffects(explosionPotion, this.potion.getEffects());
             EntityPotion potionEntity = new EntityPotion(world, living.posX, living.posY, living.posZ, explosionPotion);
+            this.setFixedColor(getCustomColor(explosionPotion));
+
             world.spawnEntity(potionEntity);
         }
     }
@@ -172,5 +250,24 @@ public class EntitySentientArrow extends EntityTippedArrow {
     @Override
     protected ItemStack getArrowStack() {
         return new ItemStack(Items.ARROW);
+    }
+
+    public void setFixedColor(int color) {
+        this.fixedColor = true;
+        this.dataManager.set(COLOR, Integer.valueOf(color));
+    }
+
+    public void spawnPotionParticles(int particleCount) {
+        int i = this.getColor();
+
+        if (i != -1 && particleCount > 0) {
+            double d0 = (double) (i >> 16 & 255) / 255.0D;
+            double d1 = (double) (i >> 8 & 255) / 255.0D;
+            double d2 = (double) (i >> 0 & 255) / 255.0D;
+
+            for (int j = 0; j < particleCount; ++j) {
+                this.world.spawnParticle(EnumParticleTypes.SPELL_MOB, this.posX + (this.rand.nextDouble() - 0.5D) * (double) this.width, this.posY + this.rand.nextDouble() * (double) this.height, this.posZ + (this.rand.nextDouble() - 0.5D) * (double) this.width, d0, d1, d2);
+            }
+        }
     }
 }
