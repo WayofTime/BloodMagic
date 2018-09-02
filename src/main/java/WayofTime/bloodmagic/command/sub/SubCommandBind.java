@@ -4,16 +4,21 @@ import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.helper.BindableHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.command.PlayerNotFoundException;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.server.command.CommandTreeBase;
 
-public class SubCommandBind extends CommandBase {
+public class SubCommandBind extends CommandTreeBase {
+    public String help = TextHelper.localizeEffect("commands.bloodmagic.bind.help", getInfo());
+
+    //TODO: localized strings
+    public Object getInfo() {
+        return null;
+    }
     @Override
     public String getName() {
         return "bind";
@@ -21,7 +26,7 @@ public class SubCommandBind extends CommandBase {
 
     @Override
     public String getUsage(ICommandSender commandSender) {
-        return TextHelper.localizeEffect("commands.bloodmagic.bind.usage");
+        return TextHelper.localizeEffect("commands.bloodmagic.bind..usage") + "\n" + help;
     }
 
     @Override
@@ -30,46 +35,41 @@ public class SubCommandBind extends CommandBase {
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender commandSender, String[] args) throws CommandException {
-        if (commandSender.getEntityWorld().isRemote)
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+        if (sender.getEntityWorld().isRemote)
             return;
-
-        try {
-            EntityPlayer player = CommandBase.getCommandSenderAsPlayer(commandSender);
-            ItemStack held = player.getHeldItemMainhand();
-            boolean bind = true;
-
-            if (held.getItem() instanceof IBindable) {
-                if (args.length > 0) {
-
-                    if (args[0].equalsIgnoreCase("help"))
-                        return;
-
-                    if (isBoolean(args[0])) {
+        EntityPlayerMP player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+        ItemStack held = player.getHeldItemMainhand();
+        boolean bind = true;
+        if (held.getItem() instanceof IBindable) {
+            Binding binding = ((IBindable) held.getItem()).getBinding(held);
+            if (binding != null)
+                bind = false;
+            if (args.length < 2)
+                if (args.length == 1)
+                    if (isBoolean(args[0]))
                         bind = Boolean.parseBoolean(args[0]);
-
-                        if (args.length > 2)
-                            player = CommandBase.getPlayer(server, commandSender, args[1]);
-                    } else {
-                        player = CommandBase.getPlayer(server, commandSender, args[0]);
-                    }
+                    else
+                        player = getPlayer(server, sender, args[0]);
+            if (bind) {
+                if (binding != null && binding.getOwnerName().equals(player.getName())) {
+                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.error.ownerEqualsTarget"));
+                    return;
                 }
-
-                if (bind) {
-                    Binding binding = new Binding(player.getGameProfile().getId(), player.getGameProfile().getName());
-                    BindableHelper.applyBinding(held, binding);
-                    commandSender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.success"));
-                } else {
-                    Binding binding = ((IBindable) held.getItem()).getBinding(held);
-                    if (binding != null) {
-                        held.getTagCompound().removeTag("binding");
-                        commandSender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.remove.success"));
-                    }
+                binding = new Binding(player.getGameProfile().getId(), player.getGameProfile().getName());
+                BindableHelper.applyBinding(held, binding);
+                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.success"));
+            } else {
+                if (binding == null) {
+                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.error.notBound"));
                 }
+                held.getTagCompound().removeTag("binding");
+                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.remove.success"));
             }
-        } catch (PlayerNotFoundException e) {
-            commandSender.sendMessage(new TextComponentTranslation(TextHelper.localizeEffect("commands.bloodmagic.error.404")));
-        }
+        } else
+            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.error.notBindable"));
+
+
     }
 
     private boolean isBoolean(String string) {
