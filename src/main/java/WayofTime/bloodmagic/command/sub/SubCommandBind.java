@@ -14,15 +14,16 @@ import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
 
 public class SubCommandBind extends CommandTreeBase {
-    public String help = TextHelper.localizeEffect("commands.bloodmagic.bind.help", getInfo());
+    public String help = TextHelper.localizeEffect("commands.bloodmagic.bind.help");
+    public Object info;
 
-    SubCommandBind() {
+    public SubCommandBind() {
         addSubcommand(new CommandTreeHelp(this));
     }
 
     //TODO: localized strings
     public Object getInfo() {
-        return null;
+        return info;
     }
 
     @Override
@@ -32,7 +33,7 @@ public class SubCommandBind extends CommandTreeBase {
 
     @Override
     public String getUsage(ICommandSender commandSender) {
-        return TextHelper.localizeEffect("commands.bloodmagic.bind..usage") + "\n" + help;
+        return TextHelper.localizeEffect("commands.bloodmagic.bind.usage") + "\n" + help;
     }
 
     @Override
@@ -64,7 +65,8 @@ public class SubCommandBind extends CommandTreeBase {
                 }
                 binding = new Binding(player.getGameProfile().getId(), player.getGameProfile().getName());
                 BindableHelper.applyBinding(held, binding);
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.success"));
+                info = player.getName();
+                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.success", getInfo()));
             } else {
                 if (binding == null) {
                     sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.error.notBound"));

@@ -800,9 +800,7 @@ entity.bloodmagic.Mimic.name=Mimic
 commands.bloodmagic.error.arg.invalid=Invalid arguments
 commands.bloodmagic.error.arg.missing=Not enough arguments
 commands.bloodmagic.error.arg.player.missing=You must specify which player you wish to perform this action on.
-commands.bloodmagic.error.404=Command not found!
-commands.bloodmagic.error.unknown=Unknown command!
-commands.bloodmagic.error.perm=You do not have permission to use this command.
+commands.bloodmagic.error.negative=Amount is not allowed to be negative.
 
 commands.bloodmagic.success=Executed successfully
 
@@ -816,42 +814,39 @@ commands.bloodmagic.network.usage=/bloodmagic network [syphon|add|get|fill|cap] 
 commands.bloodmagic.network.help=LP network utilities
 commands.bloodmagic.network.syphon.help=Removes the given amount of LP from the given player's LP network.
 commands.bloodmagic.network.syphon.success=Successfully syphoned %d LP from %s.
+commands.bloodmagic.network.syphon.usage=/bloodmagic network syphon [player] [amount]
+commands.bloodmagic.network.syphon.amountTooHigh=Cannot syphon more LP than available.
 commands.bloodmagic.network.add.help=Adds the given amount of LP to the given player's LP network. Follows standard LP gain rules.
+commands.bloodmagic.network.add.usage=/bloodmagic network add [player] [amount]
 commands.bloodmagic.network.add.success=Successfully added %d LP to %s's LP network.
 commands.bloodmagic.network.set.help=Sets the given player's LP to the given amount.
+commands.bloodmagic.network.set.usage=/bloodmagic network set [player] [amount]
 commands.bloodmagic.network.set.success=Successfully set %s's LP network to %d LP.
 commands.bloodmagic.network.get.help=Returns the amount of LP in the given player's LP network.
+commands.bloodmagic.network.get.usage=/bloodmagic network get [player]
 commands.bloodmagic.network.fill.help=Fills the given player's LP network to %d.
+commands.bloodmagic.network.fill.usage=/bloodmagic network fill [player]
 commands.bloodmagic.network.fill.success=Successfully filled %s's LP network.
 commands.bloodmagic.network.cap.help=Fills the given player's LP network to the max that their highest Blood Orb can store.
+commands.bloodmagic.network.cap.usage=/bloodmagic network cap [player]
 commands.bloodmagic.network.cap.success=Successfully capped off %s's LP network.
+
 
 commands.bloodmagic.bind.usage=/bloodmagic bind [true|false] [player]
 commands.bloodmagic.bind.help=Attempts to (un)bind the currently held item.
-commands.bloodmagic.bind.success=Binding successful
+commands.bloodmagic.bind.success=Successful bound to %d.
 commands.bloodmagic.bind.remove.success=Unbinding successful
+commands.bloodmagic.bind.error.ownerEqualsTarget=Nothing changed: Target and current owner are equal.
+commands.bloodmagic.bind.error.notBound=Cannot unbind: Item not bound.
+commands.bloodmagic.bind.error.notBindable=Cannot bind: Item not bindable.
 
 commands.bloodmagic.orb.usage=/bloodmagic orb [set|get] player [tier]
 commands.bloodmagic.orb.help=Used to set or get the Player's max Blood Orb tier.
-
-commands.bloodmagic.bind.failed.noPlayer=There is no player specified
-commands.bloodmagic.bind.failed.alreadyBound=Item is already bound; use /unbind to unbind it
-commands.bloodmagic.bind.failed.notBindable=Item cannot be bound
-commands.bloodmagic.unbind.usage=/unbind
-commands.bloodmagic.unbind.success=Item successfully unbound!
-commands.bloodmagic.unbind.failed.notBindable=Item cannot be unbound
-commands.bloodmagic.soulnetwork.usage=/soulnetwork <player> <add|subtract|fill|empty|get> [amount]
-commands.bloodmagic.soulnetwork.add.success=Successfully added %dLP to %s's Soul Network!
-commands.bloodmagic.soulnetwork.subtract.success=Successfully subtracted %dLP from %s's Soul Network!
-commands.bloodmagic.soulnetwork.fill.success=Successfully filled %s's Soul Network!
-commands.bloodmagic.soulnetwork.empty.success=Successfully emptied %s's Soul Network!
-commands.bloodmagic.soulnetwork.get.success=There is %dLP in %s's Soul Network!
-commands.bloodmagic.soulnetwork.noPlayer=There is no player specified
-commands.bloodmagic.soulnetwork.noCommand=There is no command specified
-commands.bloodmagic.soulnetwork.notACommand=That is not a valid command
-commands.bloodmagic.soulnetwork.fillMax.success=Successfully filled %s's Soul Network to their orb max!
-commands.bloodmagic.soulnetwork.create.success=Successfully created %s's Soul Network (Orb tier: %d)
-
+commands.bloodmagic.orb.get.help=Used to get the Player's max Blood Orb tier.
+commands.bloodmagic.orb.get.usage=/bloodmagic orb get [player]
+commands.bloodmagic.orb.set.help=Used to set the Player's max Blood Orb tier.
+commands.bloodmagic.orb.set.usage=/bloodmagic orb set [player]
+commands.bloodmagic.orb.currenttier=Current Orb tier is %d.
 
 
 # GUI

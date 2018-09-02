@@ -55,6 +55,10 @@ public class SubCommandNetwork extends CommandTreeBase {
             CommandBloodMagic.displayHelpString(sender, this.getUsage(sender));
             return null;
         }
+        if (amount < 0) {
+            CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.negative");
+            return null;
+        }
         return amount;
     }
 

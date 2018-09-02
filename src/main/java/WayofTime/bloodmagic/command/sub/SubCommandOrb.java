@@ -71,7 +71,7 @@ public class SubCommandOrb extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             super.execute(server, sender, args);
-            sender.sendMessage(new TextComponentString(TextHelper.localizeEffect("message.orb.currenttier", network.getOrbTier())));
+            sender.sendMessage(new TextComponentString(TextHelper.localizeEffect("commands.bloodmagic.orb.currenttier", network.getOrbTier())));
         }
     }
 
@@ -85,15 +85,21 @@ public class SubCommandOrb extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             super.execute(server, sender, args);
+            int amount;
             if (args.length == 1 && Utils.isInteger(args[0]))
-                network.setOrbTier(Integer.parseInt(args[0]));
+                amount = Integer.parseInt(args[0]);
             else if (args.length == 2 && Utils.isInteger(args[1]))
-                network.setOrbTier(Integer.parseInt(args[1]));
+                amount = Integer.parseInt(args[1]);
             else {
                 CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
                 CommandBloodMagic.displayHelpString(sender, this.getUsage(sender));
                 return;
             }
+            if (amount < 0) {
+                CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.negative");
+                return;
+            }
+            network.setOrbTier(amount);
             CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.success");
         }
     }
