@@ -11,14 +11,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.server.command.CommandTreeBase;
+import net.minecraftforge.server.command.CommandTreeHelp;
 
 public class SubCommandBind extends CommandTreeBase {
     public String help = TextHelper.localizeEffect("commands.bloodmagic.bind.help", getInfo());
+
+    SubCommandBind() {
+        addSubcommand(new CommandTreeHelp(this));
+    }
 
     //TODO: localized strings
     public Object getInfo() {
         return null;
     }
+
     @Override
     public String getName() {
         return "bind";
