@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.command.sub;
 
 import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.core.registry.OrbRegistry;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
@@ -42,6 +43,7 @@ public class SubCommandOrb extends CommandTreeBase {
         public EntityPlayerMP player;
         public String uuid;
         public SoulNetwork network;
+        public Object info;
 
         @Override
         public String getUsage(ICommandSender sender) {
@@ -75,6 +77,13 @@ public class SubCommandOrb extends CommandTreeBase {
     }
 
     class Set extends OrbCommand {
+        //TODO: check maxTier check works with custom Blood Orbs
+        int maxTier = OrbRegistry.getTierMap().size();
+
+        @Override
+        public Integer getInfo() {
+            return maxTier;
+        }
 
         @Override
         public String getName() {
@@ -84,21 +93,25 @@ public class SubCommandOrb extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             super.execute(server, sender, args);
-            int amount;
+
+            int targetTier;
             if (args.length == 1 && Utils.isInteger(args[0]))
-                amount = Integer.parseInt(args[0]);
+                targetTier = Integer.parseInt(args[0]);
             else if (args.length == 2 && Utils.isInteger(args[1]))
-                amount = Integer.parseInt(args[1]);
+                targetTier = Integer.parseInt(args[1]);
             else {
                 CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
                 CommandBloodMagic.displayHelpString(sender, this.getUsage(sender));
                 return;
             }
-            if (amount < 0) {
+            if (targetTier < 0) {
                 CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.negative");
                 return;
+            } else if (targetTier > maxTier) {
+                CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.orb.error.tierTooHigh", getInfo());
+                return;
             }
-            network.setOrbTier(amount);
+            network.setOrbTier(targetTier);
             CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.success");
         }
     }

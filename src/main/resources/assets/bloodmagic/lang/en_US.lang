@@ -847,6 +847,7 @@ commands.bloodmagic.orb.get.usage=/bloodmagic orb get [player]
 commands.bloodmagic.orb.set.help=Used to set the Player's max Blood Orb tier.
 commands.bloodmagic.orb.set.usage=/bloodmagic orb set [player]
 commands.bloodmagic.orb.currenttier=Current Orb tier is %d.
+commands.bloodmagic.orb.error.tierTooHigh=Orb tier cannot be higher than %d.
 
 
 # GUI
