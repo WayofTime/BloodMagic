@@ -1,22 +1,27 @@
 package WayofTime.bloodmagic.command.sub;
 
+import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.command.CommandBloodMagic;
-import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.command.PlayerNotFoundException;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.server.command.CommandTreeBase;
+import net.minecraftforge.server.command.CommandTreeHelp;
 
-import java.util.Locale;
+public class SubCommandOrb extends CommandTreeBase {
+    //TODO: localized strings
+    public SubCommandOrb() {
+        addSubcommand(new Get());
+        addSubcommand(new Set());
+        addSubcommand(new CommandTreeHelp(this));
+    }
 
-public class SubCommandOrb extends CommandBase {
     @Override
     public String getName() {
         return "orb";
@@ -32,76 +37,64 @@ public class SubCommandOrb extends CommandBase {
         return 2;
     }
 
-    @Override
-    public void execute(MinecraftServer server, ICommandSender commandSender, String[] args) throws CommandException {
-        if (args.length > 0) {
+    abstract class OrbCommand extends CommandTreeBase {
+        public String help = TextHelper.localizeEffect("commands.bloodmagic.orb." + getName() + ".help", getInfo());
 
-            if (args[0].equalsIgnoreCase("help"))
-                return;
+        public EntityPlayerMP player;
+        public String uuid;
+        public SoulNetwork network;
 
-            try {
-                String givenName = commandSender.getName();
+        @Override
+        public String getUsage(ICommandSender sender) {
+            return TextHelper.localizeEffect("commands.bloodmagic.orb." + getName() + ".usage") + "\n" + help;
+        }
 
-                if (args.length > 1)
-                    givenName = args[1];
+        public Object getInfo() {
+            return null;
+        }
 
-                EntityPlayer player = CommandBase.getPlayer(server, commandSender, givenName);
-                String uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
-                SoulNetwork network = NetworkHelper.getSoulNetwork(uuid);
-
-                boolean displayHelp = args.length > 0 && args.length < 2;
-
-                try {
-                    switch (ValidCommands.valueOf(args[0].toUpperCase(Locale.ENGLISH))) {
-                        case SET: {
-                            if (displayHelp) {
-                                CommandBloodMagic.displayHelpString(commandSender, ValidCommands.SET.help);
-                                break;
-                            }
-
-                            if (args.length == 3) {
-                                if (Utils.isInteger(args[2])) {
-                                    int amount = Integer.parseInt(args[2]);
-                                    network.setOrbTier(amount);
-                                    CommandBloodMagic.displaySuccessString(commandSender, "commands.bloodmagic.success");
-                                } else {
-                                    CommandBloodMagic.displayErrorString(commandSender, "commands.bloodmagic.error.arg.invalid");
-                                }
-                            } else {
-                                CommandBloodMagic.displayErrorString(commandSender, "commands.bloodmagic.error.arg.missing");
-                            }
-
-                            break;
-                        }
-                        case GET: {
-                            if (displayHelp) {
-                                CommandBloodMagic.displayHelpString(commandSender, ValidCommands.GET.help);
-                                break;
-                            }
-
-                            if (args.length > 1)
-                                commandSender.sendMessage(new TextComponentString(TextHelper.localizeEffect("message.orb.currenttier", network.getOrbTier())));
-
-                            break;
-                        }
-                    }
-                } catch (IllegalArgumentException e) {
-                    CommandBloodMagic.displayErrorString(commandSender, "commands.bloodmagic.error.404");
-                }
-            } catch (PlayerNotFoundException e) {
-                CommandBloodMagic.displayErrorString(commandSender, "commands.bloodmagic.error.404");
-            }
+        @Override
+        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+            uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
+            network = NetworkHelper.getSoulNetwork(uuid);
         }
     }
 
-    private enum ValidCommands {
-        SET("commands.bloodmagic.orb.set.help"),
-        GET("commands.bloodmagic.orb.get.help");
+    class Get extends OrbCommand {
 
-        public String help;
+        @Override
+        public String getName() {
+            return "get";
+        }
 
-        ValidCommands(String help) {
-            this.help = help;
+        @Override
+        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            super.execute(server, sender, args);
+            sender.sendMessage(new TextComponentString(TextHelper.localizeEffect("message.orb.currenttier", network.getOrbTier())));
+        }
+    }
+
+    class Set extends OrbCommand {
+
+        @Override
+        public String getName() {
+            return "set";
+        }
+
+        @Override
+        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            super.execute(server, sender, args);
+            if (args.length == 1 && Utils.isInteger(args[0]))
+                network.setOrbTier(Integer.parseInt(args[0]));
+            else if (args.length == 2 && Utils.isInteger(args[1]))
+                network.setOrbTier(Integer.parseInt(args[1]));
+            else {
+                CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
+                CommandBloodMagic.displayHelpString(sender, this.getUsage(sender));
+                return;
+            }
+            CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.success");
         }
     }
 }

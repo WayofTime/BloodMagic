@@ -43,4 +43,6 @@ public class CommandBloodMagic extends CommandTreeBase {
     public static void displaySuccessString(ICommandSender commandSender, String display, Object... info) {
         commandSender.sendMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
     }
+
+
 }
