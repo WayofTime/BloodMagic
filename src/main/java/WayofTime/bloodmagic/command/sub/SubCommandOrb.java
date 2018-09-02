@@ -15,7 +15,6 @@ import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
 
 public class SubCommandOrb extends CommandTreeBase {
-    //TODO: localized strings
     public SubCommandOrb() {
         addSubcommand(new Get());
         addSubcommand(new Set());

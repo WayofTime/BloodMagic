@@ -21,7 +21,6 @@ public class SubCommandBind extends CommandTreeBase {
         addSubcommand(new CommandTreeHelp(this));
     }
 
-    //TODO: localized strings
     public Object getInfo() {
         return info;
     }
