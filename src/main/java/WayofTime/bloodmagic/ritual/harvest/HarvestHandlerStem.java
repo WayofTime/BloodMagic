@@ -10,6 +10,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -29,19 +30,21 @@ public class HarvestHandlerStem implements IHarvestHandler {
 
     @Override
     public boolean harvest(World world, BlockPos pos, IBlockState state, List<ItemStack> drops) {
-        EnumFacing cropDir = state.getBlock().getActualState(state, world, pos).getValue(BlockStem.FACING);
+        EnumFacing cropDir = state.getActualState(world, pos).getValue(BlockStem.FACING);
 
         if (cropDir != EnumFacing.UP) {
             BlockPos cropPos = pos.offset(cropDir);
             IBlockState probableCrop = world.getBlockState(cropPos);
-            IBlockState registeredCrop = HarvestRegistry.getStemCrops().get(state);
+            Collection<IBlockState> registeredCrops = HarvestRegistry.getStemCrops().get(state);
 
-            if (registeredCrop == probableCrop) {
-                NonNullList<ItemStack> blockDrops = NonNullList.create();
-                probableCrop.getBlock().getDrops(blockDrops, world, cropPos, probableCrop, 0);
-                drops.addAll(blockDrops);
-                world.destroyBlock(cropPos, false);
-                return true;
+            for (IBlockState registeredCrop : registeredCrops) {
+                if (registeredCrop == probableCrop) {
+                    NonNullList<ItemStack> blockDrops = NonNullList.create();
+                    probableCrop.getBlock().getDrops(blockDrops, world, cropPos, probableCrop, 0);
+                    drops.addAll(blockDrops);
+                    world.destroyBlock(cropPos, false);
+                    return true;
+                }
             }
         }
 
