@@ -800,7 +800,7 @@ entity.bloodmagic.Mimic.name=Mimic
 commands.bloodmagic.error.arg.invalid=Invalid arguments
 commands.bloodmagic.error.arg.missing=Not enough arguments
 commands.bloodmagic.error.arg.player.missing=You must specify which player you wish to perform this action on.
-commands.bloodmagic.error.negative=Amount is not allowed to be negative.
+commands.bloodmagic.error.negative=Amount must be a positive Integer.
 
 commands.bloodmagic.success=Executed successfully
 

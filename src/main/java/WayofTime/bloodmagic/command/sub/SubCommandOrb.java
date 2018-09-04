@@ -77,8 +77,8 @@ public class SubCommandOrb extends CommandTreeBase {
     }
 
     class Set extends OrbCommand {
-        //TODO: check maxTier check works with custom Blood Orbs
-        int maxTier = OrbRegistry.getTierMap().size();
+        //TODO: check whether maxTier check works with custom Blood Orbs
+        int maxTier = OrbRegistry.getTierMap().size() - 1;
 
         @Override
         public Integer getInfo() {

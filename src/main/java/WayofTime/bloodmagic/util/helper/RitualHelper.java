@@ -1,11 +1,15 @@
 package WayofTime.bloodmagic.util.helper;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.block.BlockRitualStone;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.ritual.EnumRuneType;
 import WayofTime.bloodmagic.ritual.IRitualStone;
 import WayofTime.bloodmagic.ritual.Ritual;
 import WayofTime.bloodmagic.ritual.RitualComponent;
+import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import com.google.common.collect.Lists;
+import javafx.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -96,10 +100,8 @@ public class RitualHelper {
             return true;
         else if (tile instanceof IRitualStone.Tile)
             return true;
-        else if (tile != null && tile.hasCapability(RUNE_CAPABILITY, null))
-            return true;
+        else return tile != null && tile.hasCapability(RUNE_CAPABILITY, null);
 
-        return false;
     }
 
     public static void setRuneType(World world, BlockPos pos, EnumRuneType type) {
@@ -115,6 +117,138 @@ public class RitualHelper {
         else if (tile != null && tile.hasCapability(RUNE_CAPABILITY, null)) {
             tile.getCapability(RUNE_CAPABILITY, null).setRuneType(type);
             world.notifyBlockUpdate(pos, state, state, 3);
+        }
+    }
+
+    public static void removeValidRituals(TileMasterRitualStone tile) {
+        if (tile.isActive())
+            tile.setActive(false);
+        List<Ritual> ritualList = null;
+        EnumFacing direction = null;
+        BlockPos pos = tile.getPos();
+        World world = tile.getWorld();
+
+        for (Ritual ritual1 : BloodMagic.RITUAL_MANAGER.getRituals()) {
+            for (EnumFacing horizontal : EnumFacing.HORIZONTALS) {
+                if (checkValidRitual(world, pos, ritual1, horizontal)) {
+                    ritualList.add(ritual1);
+                    direction = horizontal;
+                    break;
+                }
+            }
+        }
+
+        if (ritualList == null || direction == null)
+            return;
+
+        for (Ritual ritual : ritualList) {
+            List<RitualComponent> components = Lists.newArrayList();
+            ritual.gatherComponents(components::add);
+            removeComponents(direction, pos, world, components);
+        }
+    }
+
+    public static boolean createRitual(World world, BlockPos pos, EnumFacing direction, Ritual ritual, boolean safe) {
+
+        List<RitualComponent> components = Lists.newArrayList();
+        ritual.gatherComponents(components::add);
+
+        //TODO: can be optimized to check only for the first and last component if every ritual has those at the highest and lowest y-level respectivly.
+        if (abortConstruction(world, pos, direction, safe, components)) return false;
+
+        IBlockState mrs = RegistrarBloodMagicBlocks.RITUAL_CONTROLLER.getDefaultState();
+        world.setBlockState(pos, mrs);
+
+        setRitualStones(direction, world, pos, components);
+        return true;
+    }
+
+    private static boolean abortConstruction(World world, BlockPos pos, EnumFacing direction, boolean safe, List<RitualComponent> components) {
+        for (RitualComponent component : components) {
+            BlockPos offset = component.getOffset(direction);
+            BlockPos newPos = pos.add(offset);
+            if (world.isOutsideBuildHeight(newPos) || (safe && !world.isAirBlock(newPos)))
+                return true;
+        }
+        return false;
+    }
+
+    public static void removeRitualFromRuins(TileMasterRitualStone tile) {
+        Pair<Ritual, EnumFacing> pair = getRitualFromRuins(tile);
+        Ritual ritual = pair.getKey();
+        EnumFacing direction = pair.getValue();
+        BlockPos pos = tile.getPos();
+        World world = tile.getWorld();
+        List<RitualComponent> components = Lists.newArrayList();
+        ritual.gatherComponents(components::add);
+        removeComponents(direction, pos, world, components);
+    }
+
+    public static boolean repairRitualFromRuins(TileMasterRitualStone tile, boolean safe) {
+        Pair<Ritual, EnumFacing> pair = getRitualFromRuins(tile);
+        Ritual ritual = pair.getKey();
+        EnumFacing direction = pair.getValue();
+        World world = tile.getWorld();
+        BlockPos pos = tile.getPos();
+
+        List<RitualComponent> components = Lists.newArrayList();
+        ritual.gatherComponents(components::add);
+
+        //TODO: can be optimized to check only for the first and last component if every ritual has those at the highest and lowest y-level respectivly.
+        if (abortConstruction(world, pos, direction, safe, components)) return false;
+
+        setRitualStones(direction, world, pos, components);
+        return true;
+    }
+
+    private static void setRitualStones(EnumFacing direction, World world, BlockPos pos, List<RitualComponent> gatheredComponents) {
+        for (RitualComponent component : gatheredComponents) {
+            BlockPos offset = component.getOffset(direction);
+            BlockPos newPos = pos.add(offset);
+            int meta = component.getRuneType().ordinal();
+            IBlockState newState = RegistrarBloodMagicBlocks.RITUAL_STONE.getStateFromMeta(meta);
+            world.setBlockState(newPos, newState);
+        }
+    }
+
+
+    public static Pair<Ritual, EnumFacing> getRitualFromRuins(TileMasterRitualStone tile) {
+        BlockPos pos = tile.getPos();
+        World world = tile.getWorld();
+        Ritual possibleRitual = null;
+        EnumFacing possibleDirection = null;
+        int highestCount = 0;
+
+        for (Ritual ritual : BloodMagic.RITUAL_MANAGER.getRituals()) {
+            for (EnumFacing direction : EnumFacing.HORIZONTALS) {
+                List<RitualComponent> components = Lists.newArrayList();
+                ritual.gatherComponents(components::add);
+                int currentCount = 0;
+
+                for (RitualComponent component : components) {
+                    BlockPos newPos = pos.add(component.getOffset(direction));
+                    if (isRuneType(world, newPos, component.getRuneType()))
+                        currentCount += 1;
+                }
+                if (currentCount > highestCount) {
+                    highestCount = currentCount;
+                    possibleRitual = ritual;
+                    possibleDirection = direction;
+                }
+
+            }
+
+        }
+        return new Pair<>(possibleRitual, possibleDirection);
+    }
+
+    private static void removeComponents(EnumFacing direction, BlockPos pos, World world, List<RitualComponent> components) {
+        for (RitualComponent component : components) {
+            BlockPos offset = component.getOffset(direction);
+            BlockPos newPos = pos.add(offset);
+            if (world.getBlockState(newPos).getBlock() instanceof BlockRitualStone)
+                world.setBlockToAir(newPos);
+
         }
     }
 }
