@@ -11,6 +11,7 @@ import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
 
 public class CommandBloodMagic extends CommandTreeBase {
+    //TODO: TextComponentHelper for strings, remove the 1-liner identical helper classes
     public CommandBloodMagic() {
         addSubcommand(new SubCommandBind());
         addSubcommand(new SubCommandNetwork());

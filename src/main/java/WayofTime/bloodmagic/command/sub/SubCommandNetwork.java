@@ -16,6 +16,7 @@ import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
 
 public class SubCommandNetwork extends CommandTreeBase {
+    //TODO: Use TextComponentHelper for strings
     public SubCommandNetwork() {
         addSubcommand(new Syphon());
         addSubcommand(new Add());

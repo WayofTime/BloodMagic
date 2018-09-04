@@ -16,6 +16,7 @@ import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
 import net.minecraftforge.server.command.TextComponentHelper;
 
+//TODO: localized Strings
 public class SubCommandRitual extends CommandTreeBase {
     public SubCommandRitual() {
         addSubcommand(new RitualCreate());
