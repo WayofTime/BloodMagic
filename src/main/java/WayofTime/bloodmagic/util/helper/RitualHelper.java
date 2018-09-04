@@ -144,7 +144,7 @@ public class RitualHelper {
         for (Ritual ritual : ritualList) {
             List<RitualComponent> components = Lists.newArrayList();
             ritual.gatherComponents(components::add);
-            removeComponents(direction, pos, world, components);
+            removeRitualStones(direction, pos, world, components);
         }
     }
 
@@ -153,7 +153,6 @@ public class RitualHelper {
         List<RitualComponent> components = Lists.newArrayList();
         ritual.gatherComponents(components::add);
 
-        //TODO: can be optimized to check only for the first and last component if every ritual has those at the highest and lowest y-level respectivly.
         if (abortConstruction(world, pos, direction, safe, components)) return false;
 
         IBlockState mrs = RegistrarBloodMagicBlocks.RITUAL_CONTROLLER.getDefaultState();
@@ -163,7 +162,8 @@ public class RitualHelper {
         return true;
     }
 
-    private static boolean abortConstruction(World world, BlockPos pos, EnumFacing direction, boolean safe, List<RitualComponent> components) {
+    public static boolean abortConstruction(World world, BlockPos pos, EnumFacing direction, boolean safe, List<RitualComponent> components) {
+        //TODO: can be optimized to check only for the first and last component if every ritual has those at the highest and lowest y-level respectivly.
         for (RitualComponent component : components) {
             BlockPos offset = component.getOffset(direction);
             BlockPos newPos = pos.add(offset);
@@ -181,7 +181,7 @@ public class RitualHelper {
         World world = tile.getWorld();
         List<RitualComponent> components = Lists.newArrayList();
         ritual.gatherComponents(components::add);
-        removeComponents(direction, pos, world, components);
+        removeRitualStones(direction, pos, world, components);
     }
 
     public static boolean repairRitualFromRuins(TileMasterRitualStone tile, boolean safe) {
@@ -194,14 +194,13 @@ public class RitualHelper {
         List<RitualComponent> components = Lists.newArrayList();
         ritual.gatherComponents(components::add);
 
-        //TODO: can be optimized to check only for the first and last component if every ritual has those at the highest and lowest y-level respectivly.
         if (abortConstruction(world, pos, direction, safe, components)) return false;
 
         setRitualStones(direction, world, pos, components);
         return true;
     }
 
-    private static void setRitualStones(EnumFacing direction, World world, BlockPos pos, List<RitualComponent> gatheredComponents) {
+    public static void setRitualStones(EnumFacing direction, World world, BlockPos pos, List<RitualComponent> gatheredComponents) {
         for (RitualComponent component : gatheredComponents) {
             BlockPos offset = component.getOffset(direction);
             BlockPos newPos = pos.add(offset);
@@ -242,7 +241,7 @@ public class RitualHelper {
         return new Pair<>(possibleRitual, possibleDirection);
     }
 
-    private static void removeComponents(EnumFacing direction, BlockPos pos, World world, List<RitualComponent> components) {
+    public static void removeRitualStones(EnumFacing direction, BlockPos pos, World world, List<RitualComponent> components) {
         for (RitualComponent component : components) {
             BlockPos offset = component.getOffset(direction);
             BlockPos newPos = pos.add(offset);
