@@ -1,0 +1,19 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {},
+    "model": "bloodmagic:blood_altar.obj",
+    "custom": {
+      "flip-v": true
+    },
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ]
+  }
+}

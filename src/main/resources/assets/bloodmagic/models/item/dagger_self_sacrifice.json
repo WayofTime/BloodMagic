@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "bloodmagic:items/dagger_self_sacrifice"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "bloodmagic:charged": 1.0
+      },
+      "model": "bloodmagic:item/dagger_self_sacrifice_charged"
+    }
+  ]
+}

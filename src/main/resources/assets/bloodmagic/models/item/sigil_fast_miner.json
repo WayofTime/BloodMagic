@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "bloodmagic:items/sigil/fast_miner"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "bloodmagic:toggled": 1
+      },
+      "model": "bloodmagic:item/sigil_fast_miner_toggled"
+    }
+  ]
+}

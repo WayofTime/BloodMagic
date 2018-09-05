@@ -1,0 +1,30 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {},
+    "model": "cube_all",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [
+      {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/demon_brick_1_destructive"
+        }
+      },
+      {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/demon_brick_2_destructive"
+        }
+      },
+      {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/demon_brick_3_destructive"
+        }
+      }
+    ],
+    "inventory": [
+      {}
+    ]
+  }
+}

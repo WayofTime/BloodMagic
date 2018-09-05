@@ -1,0 +1,20 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {},
+    "model": "cube_all",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [
+      {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/demon_brick_tile_raw"
+        }
+      }
+    ],
+    "inventory": [
+      {}
+    ]
+  }
+}

@@ -15,13 +15,18 @@ plugins {
     id 'maven-publish'
 }
 
-def build_number = 'CUSTOM'
-if (System.getenv('BUILD_NUMBER') != null)
-    build_number = System.getenv('BUILD_NUMBER')
+sourceSets {
+    compat {
+        compileClasspath += sourceSets.main.runtimeClasspath + sourceSets.main.output
+    }
 
-def username = "${mod_name}"
-if (project.hasProperty('dev_username'))
-    username = "${dev_username}"
+    main {
+        runtimeClasspath += sourceSets.compat.runtimeClasspath
+    }
+}
+
+def build_number = System.getenv('BUILD_NUMBER') != null ? System.getenv('BUILD_NUMBER') : 'CUSTOM'
+def username = project.hasProperty('dev_username') ? "${dev_username}" : "${mod_name}"
 
 group = package_group
 archivesBaseName = mod_name
@@ -33,16 +38,17 @@ repositories {
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
-    deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}"
-    deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
+    deobfCompile "mcp.mobius.waila:Hwyla:${hwyla_version}:api"
+    runtime "mcp.mobius.waila:Hwyla:${hwyla_version}"
+    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"
+    runtime "mezz.jei:jei_${mc_version}:${jei_version}"
 }
 
 minecraft {
     version = "${mc_version}-${forge_version}"
     runDir = "run"
 
-    replace "@VERSION@", project.version
+    replace '${VERSION}', project.version
     replaceIn "BloodMagic.java"
 
     clientRunArgs += "--username=${username}"
@@ -68,16 +74,11 @@ processResources {
     }
 }
 
-allprojects {
-    tasks.withType(Javadoc) {
-        options.addStringOption('Xdoclint:none', '-quiet')
-    }
-}
-
 jar {
     classifier = ''
     from sourceSets.main.output
     from sourceSets.api.output
+    from sourceSets.compat.output
     manifest.mainAttributes(
             "Built-By": System.getProperty('user.name'),
             "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
@@ -97,18 +98,14 @@ task apiJar(type: Jar) {
     from sourceSets.api.allJava
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    from javadoc.destinationDir
-    classifier = 'javadoc'
-}
-
 task sourcesJar(type: Jar) {
     classifier = 'sources'
     from sourceSets.main.allJava
     from sourceSets.api.allJava
+    from sourceSets.compat.allJava
 }
 
-tasks.build.dependsOn javadoc, javadocJar, apiJar, sourcesJar
+tasks.build.dependsOn apiJar, sourcesJar
 
 tasks.withType(JavaCompile) { task ->
     task.options.encoding = 'UTF-8'
@@ -119,7 +116,6 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             artifact jar
-            artifact javadocJar
             artifact sourcesJar
             artifact apiJar
         }
@@ -175,7 +171,6 @@ curseforge {
 
         relations curseRelations
 
-        addArtifact javadocJar
         addArtifact sourcesJar
         addArtifact apiJar
     }

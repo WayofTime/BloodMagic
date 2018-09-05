@@ -1,16 +1,18 @@
 [
-{
-  "modid": "bloodmagic",
-  "name": "Blood Magic: Alchemical Wizardry",
-  "description": "Rituals, spells, and more!",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "http://www.minecraftforum.net/topic/1899223-bloodmagic",
-  "updateUrl": "",
-  "authorList": [ "WayofTime", "TehNut" ],
-  "credits": "",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
-}
+  {
+    "modid": "bloodmagic",
+    "name": "Blood Magic: Alchemical Wizardry",
+    "description": "Blood 'n shit.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "WayofTime",
+      "TehNut"
+    ],
+    "credits": "CyanideX, Yulife, and BBoldt for the art.",
+    "logoFile": "",
+    "screenshots": []
+  }
 ]

@@ -3,7 +3,9 @@
   "variants": {
     "fluid": {
       "model": "forge:fluid",
-      "custom": { "fluid": "lifeessence" }
+      "custom": {
+        "fluid": "bloodmagic:life_essence"
+      }
     }
   }
 }

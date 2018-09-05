@@ -1,0 +1,19 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [
+      {
+        "textures": {
+          "all": "bloodmagic:blocks/dungeon/demon_brick_small_corrosive"
+        }
+      }
+    ],
+    "inventory": [
+      {}
+    ]
+  }
+}
