@@ -1,0 +1,10 @@
+{
+  "id": "bloodmagic:arrow_shot",
+  "levels": [
+    { "xp": 50, "cost": 20 },
+    { "xp": 200, "cost": 50 },
+    { "xp": 700, "cost": 90 },
+    { "xp": 1500, "cost": 160 },
+    { "xp": 3000, "cost": 290 }
+  ]
+}

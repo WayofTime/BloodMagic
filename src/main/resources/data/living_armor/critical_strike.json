@@ -1,0 +1,19 @@
+{
+  "id": "bloodmagic:critical_strike",
+  "levels": [
+    { "xp": 200, "cost": 5 },
+    { "xp": 800, "cost": 12 },
+    { "xp": 1300, "cost": 22 },
+    { "xp": 2500, "cost": 35 },
+    { "xp": 3000, "cost": 49 }
+  ],
+  "bonuses": {
+    "damage_boost": [
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5
+    ]
+  }
+}

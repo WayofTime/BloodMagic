@@ -17,11 +17,11 @@ public class LivingStatusWatcher {
             return;
 
         EntityPlayer player = (EntityPlayer) event.getEntity();
-        LivingStats stats = LivingUtil.applyNewExperience(player, RegistrarBloodMagicLivingArmor.JUMP, 1);
+        LivingStats stats = LivingUtil.applyNewExperience(player, RegistrarBloodMagicLivingArmor.UPGRADE_JUMP, 1);
         if (stats == null)
             return;
 
-        int level = stats.getLevel(RegistrarBloodMagicLivingArmor.JUMP.getKey());
+        int level = stats.getLevel(RegistrarBloodMagicLivingArmor.UPGRADE_JUMP.getKey());
         player.motionY += 0.05 * level;
 
         if (level >= 3) {

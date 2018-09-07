@@ -1,0 +1,9 @@
+{
+  "id": "bloodmagic:jump",
+  "levels": [
+    { "xp": 10, "cost": 1 },
+    { "xp": 20, "cost": 5 },
+    { "xp": 30, "cost": 25 },
+    { "xp": 40, "cost": 125 }
+  ]
+}
