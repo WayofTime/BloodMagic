@@ -1,17 +1,15 @@
 package WayofTime.bloodmagic.command.sub;
 
-import WayofTime.bloodmagic.command.CommandBloodMagic;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.core.registry.OrbRegistry;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
 
@@ -29,7 +27,7 @@ public class SubCommandOrb extends CommandTreeBase {
 
     @Override
     public String getUsage(ICommandSender commandSender) {
-        return TextHelper.localizeEffect("commands.bloodmagic.orb.usage");
+        return new TextComponentTranslation("commands.bloodmagic.orb.usage").getFormattedText();
     }
 
     @Override
@@ -38,7 +36,7 @@ public class SubCommandOrb extends CommandTreeBase {
     }
 
     abstract class OrbCommand extends CommandTreeBase {
-        public String help = TextHelper.localizeEffect("commands.bloodmagic.orb." + getName() + ".help", getInfo());
+        public String help = new TextComponentTranslation("commands.bloodmagic.orb." + getName() + ".help", getInfo()).getFormattedText();
 
         public EntityPlayerMP player;
         public String uuid;
@@ -47,7 +45,7 @@ public class SubCommandOrb extends CommandTreeBase {
 
         @Override
         public String getUsage(ICommandSender sender) {
-            return TextHelper.localizeEffect("commands.bloodmagic.orb." + getName() + ".usage") + "\n" + help;
+            return new TextComponentTranslation("commands.bloodmagic.orb." + getName() + ".usage").getFormattedText() + "\n" + help;
         }
 
         public Object getInfo() {
@@ -72,7 +70,7 @@ public class SubCommandOrb extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             super.execute(server, sender, args);
-            sender.sendMessage(new TextComponentString(TextHelper.localizeEffect("commands.bloodmagic.orb.currenttier", network.getOrbTier())));
+            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.orb.currenttier", network.getOrbTier()));
         }
     }
 
@@ -100,19 +98,19 @@ public class SubCommandOrb extends CommandTreeBase {
             else if (args.length == 2 && Utils.isInteger(args[1]))
                 targetTier = Integer.parseInt(args[1]);
             else {
-                CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.arg.invalid");
-                CommandBloodMagic.displayHelpString(sender, this.getUsage(sender));
+                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.error.arg.invalid"));
+                sender.sendMessage(new TextComponentTranslation(this.getUsage(sender)));
                 return;
             }
             if (targetTier < 0) {
-                CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.error.negative");
+                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.error.negative"));
                 return;
             } else if (targetTier > maxTier) {
-                CommandBloodMagic.displayErrorString(sender, "commands.bloodmagic.orb.error.tierTooHigh", getInfo());
+                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.orb.error.tierTooHigh", getInfo()));
                 return;
             }
             network.setOrbTier(targetTier);
-            CommandBloodMagic.displaySuccessString(sender, "commands.bloodmagic.success");
+            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success"));
         }
     }
 }

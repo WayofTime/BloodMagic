@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.command.sub;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.helper.BindableHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -14,7 +13,7 @@ import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
 
 public class SubCommandBind extends CommandTreeBase {
-    public String help = TextHelper.localizeEffect("commands.bloodmagic.bind.help");
+    public String help = new TextComponentTranslation("commands.bloodmagic.bind.help").getFormattedText();
     public Object info;
 
     public SubCommandBind() {
@@ -32,7 +31,7 @@ public class SubCommandBind extends CommandTreeBase {
 
     @Override
     public String getUsage(ICommandSender commandSender) {
-        return TextHelper.localizeEffect("commands.bloodmagic.bind.usage") + "\n" + help;
+        return new TextComponentTranslation("commands.bloodmagic.bind.usage").getFormattedText() + "\n" + help;
     }
 
     @Override

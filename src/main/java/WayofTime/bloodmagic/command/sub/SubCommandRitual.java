@@ -11,10 +11,10 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
-import net.minecraftforge.server.command.TextComponentHelper;
 
 //TODO: localized Strings
 public class SubCommandRitual extends CommandTreeBase {
@@ -58,7 +58,7 @@ public class SubCommandRitual extends CommandTreeBase {
 
                     @Override
                     public String getUsage(ICommandSender sender) {
-                        return TextComponentHelper.createComponentTranslation(sender, this.ritual.getUnlocalizedName() + ".info").getFormattedText();
+                        return new TextComponentTranslation(this.ritual.getUnlocalizedName() + ".info").getFormattedText();
                     }
 
                     @Override
@@ -78,9 +78,9 @@ public class SubCommandRitual extends CommandTreeBase {
                         EnumFacing direction = EnumFacing.NORTH;
 
                         if (RitualHelper.createRitual(world, pos, direction, this.ritual, safe))
-                            sender.sendMessage(TextComponentHelper.createComponentTranslation(sender, "commands.bloodmagic.ritual.create.success"));
+                            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.create.success"));
                         else
-                            sender.sendMessage(TextComponentHelper.createComponentTranslation(sender, "commands.bloodmagic.ritual.create.error.outOfWorldBoundaries"));
+                            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.create.error.outOfWorldBoundaries"));
 
                     }
                 });
@@ -95,7 +95,7 @@ public class SubCommandRitual extends CommandTreeBase {
 
         @Override
         public String getUsage(ICommandSender sender) {
-            return TextComponentHelper.createComponentTranslation(sender, "commands.bloodmagic.ritual.create.help").getFormattedText();
+            return new TextComponentTranslation("commands.bloodmagic.ritual.create.help").getFormattedText();
         }
     }
 
@@ -108,7 +108,7 @@ public class SubCommandRitual extends CommandTreeBase {
 
         @Override
         public String getUsage(ICommandSender sender) {
-            return TextComponentHelper.createComponentTranslation(sender, "commands.bloodmagic.ritual.remove.help").getFormattedText();
+            return new TextComponentTranslation("commands.bloodmagic.ritual.remove.help").getFormattedText();
         }
 
         @Override
@@ -118,7 +118,7 @@ public class SubCommandRitual extends CommandTreeBase {
             if (tile != null)
                 RitualHelper.removeRitualFromRuins(tile);
             else
-                sender.sendMessage(TextComponentHelper.createComponentTranslation(sender, "commands.bloodmagic.ritual.error.noMRS"));
+                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.error.noMRS"));
         }
     }
 
@@ -148,11 +148,11 @@ public class SubCommandRitual extends CommandTreeBase {
             }
             if (tile != null)
                 if (RitualHelper.repairRitualFromRuins(tile, safe))
-                    sender.sendMessage(TextComponentHelper.createComponentTranslation(sender, "commands.bloodmagic.ritual.repair.success"));
+                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.repair.success"));
                 else
-                    sender.sendMessage(TextComponentHelper.createComponentTranslation(sender, "commands.bloodmagic.ritual.create.error.outOfWorldBoundaries"));
+                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.create.error.outOfWorldBoundaries"));
             else
-                sender.sendMessage(TextComponentHelper.createComponentTranslation(sender, "commands.bloodmagic.ritual.error.noMRS"));
+                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.error.noMRS"));
         }
 
     }

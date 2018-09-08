@@ -4,9 +4,7 @@ import WayofTime.bloodmagic.command.sub.SubCommandBind;
 import WayofTime.bloodmagic.command.sub.SubCommandNetwork;
 import WayofTime.bloodmagic.command.sub.SubCommandOrb;
 import WayofTime.bloodmagic.command.sub.SubCommandRitual;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
 
@@ -34,18 +32,5 @@ public class CommandBloodMagic extends CommandTreeBase {
     public int getRequiredPermissionLevel() {
         return 2;
     }
-
-    public static void displayHelpString(ICommandSender commandSender, String display, Object... info) {
-        commandSender.sendMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
-    }
-
-    public static void displayErrorString(ICommandSender commandSender, String display, Object... info) {
-        commandSender.sendMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
-    }
-
-    public static void displaySuccessString(ICommandSender commandSender, String display, Object... info) {
-        commandSender.sendMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
-    }
-
 
 }
