@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
  *  - [ ] Grave Digger
  *  - [ ] Grim Reaper Sprint
  *  - [ ] Health boost
- *  - [-] Jump
+ *  - [x] Jump
  *  - [ ] Knockback Resist
  *  - [ ] Melee Damage
  *  - [ ] Night Sight
