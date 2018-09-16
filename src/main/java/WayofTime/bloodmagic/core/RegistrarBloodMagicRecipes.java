@@ -98,8 +98,8 @@ public class RegistrarBloodMagicRecipes
         registrar.addBloodAltar(Ingredient.fromStacks(ItemSlate.SlateType.DEMONIC.getStack()), ItemSlate.SlateType.ETHEREAL.getStack(), AltarTier.FIVE.ordinal(), 30000, 40, 100);
 
         // SIX
-        registrar.addBloodAltar(Ingredient.fromStacks(new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 1, 2)), OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_TRANSCENDENT), AltarTier.SIX.ordinal(), 200000, 100, 200);
-        registrar.addBloodAltar(new OreIngredient("glowstone"), EnumRuneType.DAWN.getStack(), AltarTier.SIX.ordinal(), 200000, 100, 200);
+//        registrar.addBloodAltar(Ingredient.fromStacks(new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 1, 2)), OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_TRANSCENDENT), AltarTier.SIX.ordinal(), 200000, 100, 200);
+//        registrar.addBloodAltar(new OreIngredient("glowstone"), EnumRuneType.DAWN.getStack(), AltarTier.SIX.ordinal(), 200000, 100, 200);
     }
 
     public static void registerAlchemyTableRecipes(BloodMagicRecipeRegistrar registrar)

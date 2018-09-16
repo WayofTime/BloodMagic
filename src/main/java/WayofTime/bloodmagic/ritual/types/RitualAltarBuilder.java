@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 
 @RitualRegister("altar_builder")
 public class RitualAltarBuilder extends Ritual {
-    private Iterator<AltarComponent> altarComponentsIterator = new ArrayList<>(AltarTier.SIX.getAltarComponents()).iterator();
+    private Iterator<AltarComponent> altarComponentsIterator = new ArrayList<>(AltarTier.values()[AltarTier.MAXTIERS - 1].getAltarComponents()).iterator();
     private boolean cycleDone = false;
 
     private AltarComponent currentComponent;
@@ -52,7 +52,7 @@ public class RitualAltarBuilder extends Ritual {
         }
 
         if (cycleDone) {
-            altarComponentsIterator = new ArrayList<>(AltarTier.SIX.getAltarComponents()).iterator();
+            altarComponentsIterator = new ArrayList<>(AltarTier.values()[AltarTier.MAXTIERS - 1].getAltarComponents()).iterator();
         }
 
         if (world.getBlockState(altarPos).getBlock().isReplaceable(world, altarPos) && hasItem(tileEntity, Item.getItemFromBlock(RegistrarBloodMagicBlocks.ALTAR), 0, true)) {
