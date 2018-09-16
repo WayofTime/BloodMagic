@@ -171,8 +171,18 @@ public class LivingUpgrade {
             JsonObject json = element.getAsJsonObject();
             ResourceLocation id = new ResourceLocation(json.getAsJsonPrimitive("id").getAsString());
             List<LivingUpgrade.Level> levels = context.deserialize(json.getAsJsonArray("levels"), new TypeToken<List<Level>>(){}.getType());
+            boolean negative = json.has("negative") && json.getAsJsonPrimitive("negative").getAsBoolean();
 
             LivingUpgrade upgrade = new LivingUpgrade(id, upgradeLevels -> upgradeLevels.addAll(levels));
+            if (negative)
+                upgrade.asDowngrade();
+
+            if (json.has("incompatibilities")) {
+                String[] incompatibilities = context.deserialize(json.getAsJsonArray("incompatibilities"), String[].class);
+                for (String incompat : incompatibilities)
+                    upgrade.addIncompatibility(new ResourceLocation(incompat));
+            }
+
             if (json.has("bonuses")) {
                 Map<String, Number[]> bonuses = context.deserialize(json.getAsJsonObject("bonuses"), new TypeToken<Map<String, Number[]>>(){}.getType());
                 bonuses.forEach((k, v) -> upgrade.withBonusSet(k, numbers -> Collections.addAll(numbers, v)));
