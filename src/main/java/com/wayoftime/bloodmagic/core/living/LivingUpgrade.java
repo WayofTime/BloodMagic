@@ -64,7 +64,11 @@ public class LivingUpgrade {
 
     @Nonnull
     public Number getBonusValue(String id, int level) {
-        return bonuses.getOrDefault(id, Bonus.DEFAULT).modifiers.get(level - 1);
+        List<Number> modifiers = bonuses.getOrDefault(id, Bonus.DEFAULT).modifiers;
+        if (modifiers.isEmpty() || level > modifiers.size())
+            return 0;
+
+        return modifiers.get(level - 1);
     }
 
     public LivingUpgrade withAttributeProvider(IAttributeProvider attributeProvider) {
