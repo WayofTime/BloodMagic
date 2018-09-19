@@ -9,7 +9,6 @@ import WayofTime.bloodmagic.ritual.Ritual;
 import WayofTime.bloodmagic.ritual.RitualComponent;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import com.google.common.collect.Lists;
-import javafx.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -18,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
@@ -238,7 +238,7 @@ public class RitualHelper {
             }
 
         }
-        return new Pair<>(possibleRitual, possibleDirection);
+        return Pair.of(possibleRitual, possibleDirection);
     }
 
     public static void removeRitualStones(EnumFacing direction, BlockPos pos, World world, List<RitualComponent> components) {

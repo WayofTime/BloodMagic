@@ -16,7 +16,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
 
-//TODO: localized Strings
 public class SubCommandRitual extends CommandTreeBase {
     public SubCommandRitual() {
         addSubcommand(new RitualCreate());
@@ -78,7 +77,7 @@ public class SubCommandRitual extends CommandTreeBase {
                         EnumFacing direction = EnumFacing.NORTH;
 
                         if (RitualHelper.createRitual(world, pos, direction, this.ritual, safe))
-                            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.create.success"));
+                            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success"));
                         else
                             sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.create.error.outOfWorldBoundaries"));
 
@@ -148,7 +147,7 @@ public class SubCommandRitual extends CommandTreeBase {
             }
             if (tile != null)
                 if (RitualHelper.repairRitualFromRuins(tile, safe))
-                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.repair.success"));
+                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success"));
                 else
                     sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.create.error.outOfWorldBoundaries"));
             else

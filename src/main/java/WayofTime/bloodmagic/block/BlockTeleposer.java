@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.command.sub.SubCommandTeleposer;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.tile.TileTeleposer;
 import WayofTime.bloodmagic.util.Constants;
@@ -48,8 +49,10 @@ public class BlockTeleposer extends BlockContainer implements IVariantProvider, 
     @Override
     public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
         TileTeleposer tileTeleposer = (TileTeleposer) world.getTileEntity(blockPos);
-        if (tileTeleposer != null)
+        if (tileTeleposer != null) {
             tileTeleposer.dropItems();
+            SubCommandTeleposer.teleposerSet.remove(tileTeleposer);
+        }
 
         super.breakBlock(world, blockPos, blockState);
     }

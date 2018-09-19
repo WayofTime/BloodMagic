@@ -5,7 +5,6 @@ import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -18,7 +17,7 @@ import net.minecraftforge.server.command.CommandTreeHelp;
 import java.util.List;
 
 public class SubCommandNetwork extends CommandTreeBase {
-    //TODO: Use TextComponentHelper for strings
+
     public SubCommandNetwork() {
         addSubcommand(new Syphon());
         addSubcommand(new Add());
@@ -37,7 +36,7 @@ public class SubCommandNetwork extends CommandTreeBase {
 
     @Override
     public String getUsage(ICommandSender commandSender) {
-        return TextHelper.localizeEffect("commands.bloodmagic.network.usage");
+        return new TextComponentTranslation("commands.bloodmagic.network.usage").getFormattedText();
     }
 
     @Override
@@ -46,7 +45,7 @@ public class SubCommandNetwork extends CommandTreeBase {
     }
 
     abstract class NetworkCommand extends CommandTreeBase {
-        public String help = TextHelper.localizeEffect("commands.bloodmagic.network." + getName() + ".help", getInfo());
+        public String help = new TextComponentTranslation("commands.bloodmagic.network." + getName() + ".help", getInfo()).getFormattedText();
 
         public EntityPlayerMP player;
         public SoulNetwork network;
@@ -156,8 +155,8 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            super.execute(server, sender, args);
-            sender.sendMessage(new TextComponentString((player != sender ? player.getDisplayName().getFormattedText() + " " : "") + new TextComponentTranslation("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence())));
+            this.player = args.length < 1 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+            sender.sendMessage(new TextComponentString((player != sender ? player.getDisplayName().getFormattedText() + " " : "" + new TextComponentTranslation("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence()).getFormattedText())));
         }
     }
 
