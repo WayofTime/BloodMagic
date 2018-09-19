@@ -835,7 +835,7 @@ commands.bloodmagic.network.cap.success=Successfully capped off %s's LP network.
 
 commands.bloodmagic.bind.usage=/bloodmagic bind [true|false] [player]
 commands.bloodmagic.bind.help=Attempts to (un)bind the currently held item.
-commands.bloodmagic.bind.success=Successful bound to %d.
+commands.bloodmagic.bind.success=Successfully bound to %d.
 commands.bloodmagic.bind.remove.success=Unbinding successful
 commands.bloodmagic.bind.error.ownerEqualsTarget=Nothing changed: Target and current owner are equal.
 commands.bloodmagic.bind.error.notBound=Cannot unbind: Item not bound.
