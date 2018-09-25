@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
@@ -49,11 +50,13 @@ public class ItemSigilBloodLight extends ItemSigilBase
 
             if (world.isAirBlock(blockPos))
             {
-                world.setBlockState(blockPos, RegistrarBloodMagicBlocks.BLOOD_LIGHT.getDefaultState());
                 if (!world.isRemote)
                 {
-                    SoulNetwork network = NetworkHelper.getSoulNetwork(getBinding(stack));
-                    network.syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed()));
+                    Binding binding = getBinding(stack);
+                    if(binding != null && NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
+                    {
+                        world.setBlockState(blockPos, RegistrarBloodMagicBlocks.BLOOD_LIGHT.getDefaultState());
+                    }
                 }
                 resetCooldown(stack);
                 player.swingArm(hand);
@@ -63,9 +66,11 @@ public class ItemSigilBloodLight extends ItemSigilBase
         {
             if (!world.isRemote)
             {
-                SoulNetwork network = NetworkHelper.getSoulNetwork(getBinding(stack));
-                world.spawnEntity(new EntityBloodLight(world, player));
-                network.syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed()));
+                Binding binding = getBinding(stack);
+                if(binding != null && NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
+                {
+                    world.spawnEntity(new EntityBloodLight(world, player));
+                }
             }
             resetCooldown(stack);
         }
