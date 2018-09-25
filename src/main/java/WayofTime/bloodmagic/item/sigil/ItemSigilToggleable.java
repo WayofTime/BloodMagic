@@ -82,7 +82,8 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable {
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         if (!worldIn.isRemote && entityIn instanceof EntityPlayerMP && getActivated(stack)) {
             if (entityIn.ticksExisted % 100 == 0) {
-                if (!NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage((EntityPlayer) entityIn, SoulTicket.item(stack, worldIn, entityIn, getLpUsed())).isSuccess()) {
+                Binding binding = getBinding(stack);
+                if (binding == null || !NetworkHelper.getSoulNetwork(binding).syphonAndDamage((EntityPlayer) entityIn, SoulTicket.item(stack, worldIn, entityIn, getLpUsed())).isSuccess()) {
                     setActivatedState(stack, false);
                 }
             }

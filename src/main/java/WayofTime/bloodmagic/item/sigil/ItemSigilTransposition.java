@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
@@ -87,11 +88,13 @@ public class ItemSigilTransposition extends ItemSigilBase {
                         }
                     }
 
-                    stack.getTagCompound().setTag("stored", stored);
-                    NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, cost));
-                    world.removeTileEntity(blockPos);
-                    world.setBlockToAir(blockPos);
-                    return EnumActionResult.SUCCESS;
+                    Binding binding = getBinding(stack);
+                    if(binding != null && NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, SoulTicket.item(stack, world, player, cost)).isSuccess()) {
+                        stack.getTagCompound().setTag("stored", stored);
+                        world.removeTileEntity(blockPos);
+                        world.setBlockToAir(blockPos);
+                        return EnumActionResult.SUCCESS;
+                    }
                 }
             } else if (stack.hasTagCompound() && stack.getTagCompound().hasKey("stored")) {
                 IBlockState worldState = world.getBlockState(blockPos);

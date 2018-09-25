@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
@@ -35,18 +36,19 @@ public class ItemSigilVoid extends ItemSigilFluidBase {
             }
 
             BlockPos blockPos = rayTrace.getBlockPos();
+            Binding binding = getBinding(stack);
 
-            if (world.isBlockModifiable(player, blockPos) && player.canPlayerEdit(blockPos, rayTrace.sideHit, stack)) {
+            if (world.isBlockModifiable(player, blockPos) && player.canPlayerEdit(blockPos, rayTrace.sideHit, stack) && binding != null) {
                 //Void is simpler than the other fluid sigils, because getFluidHandler grabs fluid blocks just fine
                 //So extract from fluid tanks with a null side; or drain fluid blocks.
                 IFluidHandler destination = getFluidHandler(world, blockPos, null);
-                if (destination != null && tryRemoveFluid(destination, 1000, false) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
+                if (destination != null && tryRemoveFluid(destination, 1000, false) &&  NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
                     if (tryRemoveFluid(destination, 1000, true))
                         return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
                 }
                 //Do the same as above, but use sidedness to interact with the fluid handler.
                 IFluidHandler destinationSide = getFluidHandler(world, blockPos, rayTrace.sideHit);
-                if (destinationSide != null && tryRemoveFluid(destinationSide, 1000, false) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
+                if (destinationSide != null && tryRemoveFluid(destinationSide, 1000, false) && NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
                     if (tryRemoveFluid(destinationSide, 1000, true))
                         return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
                 }

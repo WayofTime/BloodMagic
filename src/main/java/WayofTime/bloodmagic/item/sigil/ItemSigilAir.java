@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
+import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.ISentientSwordEffectProvider;
 import WayofTime.bloodmagic.iface.ISigil;
@@ -48,9 +49,10 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
         }
 
         if (!world.isRemote) {
-            if (!player.capabilities.isCreativeMode)
-                this.setUnusable(stack, !NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess());
-
+            if (!player.capabilities.isCreativeMode) {
+                Binding binding = getBinding(stack);
+                this.setUnusable(stack, binding == null || !NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess());
+            }
             if (!unusable)
                 player.fallDistance = 0;
         }
