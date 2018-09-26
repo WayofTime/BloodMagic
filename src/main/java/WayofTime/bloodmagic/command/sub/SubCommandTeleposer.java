@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SubCommandTeleposer extends CommandTreeBase {
-    public static Set<TileTeleposer> teleposerSet = new HashSet<>(); //contains "valid" teleposers (teleposers with focus), teleposers check themselves every 100 ticks.
+    public static final Set<TileTeleposer> teleposerSet = new HashSet<>(); //contains "valid" teleposers (teleposers with focus), teleposers check themselves every 100 ticks.
     public static TileTeleposer[] teleposerArray;
 
     public SubCommandTeleposer() {

@@ -63,11 +63,10 @@ public class TileTeleposer extends TileInventory implements ITickable {
             if (ticksExisted % 100 == 0) {
                 ItemStack focusStack = getStackInSlot(0);
                 if (!focusStack.isEmpty()) {
-                    ItemTelepositionFocus focus = (ItemTelepositionFocus) focusStack.getItem();
-                    Binding binding = focus.getBinding(focusStack);
-                    if (binding == null)
-                        return;
-                    SubCommandTeleposer.teleposerSet.add(this);
+                    if (((ItemTelepositionFocus) focusStack.getItem()).getBinding(focusStack) != null)
+                        SubCommandTeleposer.teleposerSet.add(this);
+                    else
+                        SubCommandTeleposer.teleposerSet.remove(this);
                 } else
                     SubCommandTeleposer.teleposerSet.remove(this);
             }
