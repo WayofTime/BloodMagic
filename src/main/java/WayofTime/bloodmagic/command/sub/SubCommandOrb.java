@@ -9,6 +9,7 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
@@ -36,7 +37,6 @@ public class SubCommandOrb extends CommandTreeBase {
     }
 
     abstract class OrbCommand extends CommandTreeBase {
-        public String help = new TextComponentTranslation("commands.bloodmagic.orb." + getName() + ".help", getInfo()).getFormattedText();
 
         public EntityPlayerMP player;
         public String uuid;
@@ -45,11 +45,15 @@ public class SubCommandOrb extends CommandTreeBase {
 
         @Override
         public String getUsage(ICommandSender sender) {
-            return new TextComponentTranslation("commands.bloodmagic.orb." + getName() + ".usage").getFormattedText() + "\n" + help;
+            return "commands.bloodmagic.orb." + getName() + ".usage";
         }
 
-        public Object getInfo() {
-            return null;
+        public String getHelp() {
+            return new TextComponentTranslation("commands.bloodmagic.orb." + getName() + ".help", getInfo()).getFormattedText();
+        }
+
+        public String getInfo() {
+            return "";
         }
 
         @Override
@@ -69,6 +73,10 @@ public class SubCommandOrb extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
+                sender.sendMessage(new TextComponentString(getHelp()));
+                return;
+            }
             super.execute(server, sender, args);
             sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.orb.currenttier", network.getOrbTier()));
         }
@@ -79,8 +87,8 @@ public class SubCommandOrb extends CommandTreeBase {
         int maxTier = OrbRegistry.getTierMap().size() - 1;
 
         @Override
-        public Integer getInfo() {
-            return maxTier;
+        public String getInfo() {
+            return "" + maxTier;
         }
 
         @Override
@@ -90,6 +98,10 @@ public class SubCommandOrb extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
+                sender.sendMessage(new TextComponentString(getHelp()));
+                return;
+            }
             super.execute(server, sender, args);
 
             int targetTier;

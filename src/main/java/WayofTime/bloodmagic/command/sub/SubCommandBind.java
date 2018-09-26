@@ -8,20 +8,20 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
 
 public class SubCommandBind extends CommandTreeBase {
-    public String help = new TextComponentTranslation("commands.bloodmagic.bind.help").getFormattedText();
-    public Object info;
+    public EntityPlayerMP player;
 
     public SubCommandBind() {
         addSubcommand(new CommandTreeHelp(this));
     }
 
-    public Object getInfo() {
-        return info;
+    public String getInfo() {
+        return player.getName();
     }
 
     @Override
@@ -31,7 +31,11 @@ public class SubCommandBind extends CommandTreeBase {
 
     @Override
     public String getUsage(ICommandSender commandSender) {
-        return new TextComponentTranslation("commands.bloodmagic.bind.usage").getFormattedText() + "\n" + help;
+        return "commands.bloodmagic.bind.usage";
+    }
+
+    public String getHelp() {
+        return new TextComponentTranslation("commands.bloodmagic.bind.help").getFormattedText();
     }
 
     @Override
@@ -41,6 +45,10 @@ public class SubCommandBind extends CommandTreeBase {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+        if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
+            sender.sendMessage(new TextComponentString(getHelp()));
+            return;
+        }
         if (sender.getEntityWorld().isRemote)
             return;
         EntityPlayerMP player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
@@ -63,7 +71,7 @@ public class SubCommandBind extends CommandTreeBase {
                 }
                 binding = new Binding(player.getGameProfile().getId(), player.getGameProfile().getName());
                 BindableHelper.applyBinding(held, binding);
-                info = player.getName();
+                this.player = player;
                 sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.success", getInfo()));
             } else {
                 if (binding == null) {

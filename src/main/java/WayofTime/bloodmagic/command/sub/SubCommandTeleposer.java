@@ -53,15 +53,18 @@ public class SubCommandTeleposer extends CommandTreeBase {
 
     abstract class TeleposeHelper extends CommandTreeBase {
         public EntityPlayer player;
-        public String help = new TextComponentTranslation("commands.bloodmagic.teleposer." + getName() + ".help", getInfo()).getFormattedText();
 
         @Override
         public String getUsage(ICommandSender sender) {
-            return new TextComponentTranslation("commands.bloodmagic.teleposer." + getName() + ".usage").getFormattedText() + "\n" + help;
+            return "commands.bloodmagic.teleposer." + getName() + ".usage";
         }
 
-        public Object getInfo() {
-            return null;
+        public String getHelp() {
+            return new TextComponentTranslation("commands.bloodmagic.teleposer." + getName() + ".help", getInfo()).getFormattedText();
+        }
+
+        public String getInfo() {
+            return "";
         }
 
         @Override
@@ -150,6 +153,10 @@ public class SubCommandTeleposer extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             if (args.length == 1)
+                if (args[0].equals("?") || args[0].equals("-h")) {
+                    sender.sendMessage(new TextComponentString(getHelp()));
+                    return;
+                }
                 this.player = getPlayer(server, sender, args[0]);
 
             sendOwnedTeleposerList(sender, player);
@@ -165,6 +172,10 @@ public class SubCommandTeleposer extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
+                sender.sendMessage(new TextComponentString(getHelp()));
+                return;
+            }
             super.execute(server, sender, args);
             Integer teleposerID = getIDFromArgs(sender, args);
             if (teleposerID == null)
@@ -197,6 +208,10 @@ public class SubCommandTeleposer extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
+                sender.sendMessage(new TextComponentString(getHelp()));
+                return;
+            }
             super.execute(server, sender, args);
             Integer teleposerID = getIDFromArgs(sender, args);
             if (teleposerID == null)
@@ -230,6 +245,10 @@ public class SubCommandTeleposer extends CommandTreeBase {
         }
 
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
+                sender.sendMessage(new TextComponentString(getHelp()));
+                return;
+            }
             Integer teleposerID = getIDFromArgs(sender, args);
             if (teleposerID == null)
                 sendOwnedTeleposerList(sender, null);
@@ -258,6 +277,10 @@ public class SubCommandTeleposer extends CommandTreeBase {
         }
 
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
+                sender.sendMessage(new TextComponentString(getHelp()));
+                return;
+            }
             Integer teleposerID = getIDFromArgs(sender, args);
             if (teleposerID == null)
                 sendOwnedTeleposerList(sender, null);
@@ -304,6 +327,10 @@ public class SubCommandTeleposer extends CommandTreeBase {
         }
 
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
+                sender.sendMessage(new TextComponentString(getHelp()));
+                return;
+            }
             this.player = null;
             if (args.length == 1)
                 this.player = getPlayer(server, sender, args[0]);
