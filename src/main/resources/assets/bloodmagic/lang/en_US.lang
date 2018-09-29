@@ -57,6 +57,8 @@ item.bloodmagic:demon_will_crystal_corrosive.name=Corrosive Demon Will Crystal
 item.bloodmagic:demon_will_crystal_destructive.name=Destructive Demon Will Crystal
 item.bloodmagic:demon_will_crystal_vengeful.name=Vengeful Demon Will Crystal
 item.bloodmagic:demon_will_crystal_steadfast.name=Steadfast Demon Will Crystal
+item.bloodmagic:sentient_sword.name=Sentient Sword
+item.bloodmagic:monster_soul.name=Monster Soul
 
 # Death
 
@@ -68,6 +70,9 @@ fluid.bloodmagic:life_essence=Life Essence
 
 # Living Upgrades
 
+upgrade.bloodmagic:arrow_protect.name=Arrow Protect
+upgrade.bloodmagic:arrow_shot.name=Arrow Shot
+upgrade.bloodmagic:critical_strike.name=Critical Strike
 upgrade.bloodmagic:jump.name=Jump Boost
 
 # Chat

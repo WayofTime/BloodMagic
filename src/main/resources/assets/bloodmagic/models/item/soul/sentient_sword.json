@@ -1,0 +1,70 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "bloodmagic:items/soul/sentient_sword_raw"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "bloodmagic:active": 1.0
+      },
+      "model": "bloodmagic:item/soul/sentient_sword_raw_active"
+    },
+    {
+      "predicate": {
+        "bloodmagic:will": 0.1,
+        "bloodmagic:active": 0.0
+      },
+      "model": "bloodmagic:item/soul/sentient_sword_corrosive"
+    },
+    {
+      "predicate": {
+        "bloodmagic:will": 0.1,
+        "bloodmagic:active": 1.0
+      },
+      "model": "bloodmagic:item/soul/sentient_sword_corrosive_active"
+    },
+    {
+      "predicate": {
+        "bloodmagic:will": 0.2,
+        "bloodmagic:active": 0.0
+      },
+      "model": "bloodmagic:item/soul/sentient_sword_destructive"
+    },
+    {
+      "predicate": {
+        "bloodmagic:will": 0.2,
+        "bloodmagic:active": 1.0
+      },
+      "model": "bloodmagic:item/soul/sentient_sword_destructive_active"
+    },
+    {
+      "predicate": {
+        "bloodmagic:will": 0.3,
+        "bloodmagic:active": 0.0
+      },
+      "model": "bloodmagic:item/soul/sentient_sword_vengeful"
+    },
+    {
+      "predicate": {
+        "bloodmagic:will": 0.3,
+        "bloodmagic:active": 1.0
+      },
+      "model": "bloodmagic:item/soul/sentient_sword_vengeful_active"
+    },
+    {
+      "predicate": {
+        "bloodmagic:will": 0.4,
+        "bloodmagic:active": 0.0
+      },
+      "model": "bloodmagic:item/soul/sentient_sword_steadfast"
+    },
+    {
+      "predicate": {
+        "bloodmagic:will": 0.4,
+        "bloodmagic:active": 1.0
+      },
+      "model": "bloodmagic:item/soul/sentient_sword_steadfast_active"
+    }
+  ]
+}

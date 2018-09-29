@@ -3,7 +3,8 @@ package com.wayoftime.bloodmagic.core;
 import com.google.common.collect.Lists;
 import com.wayoftime.bloodmagic.BloodMagic;
 import com.wayoftime.bloodmagic.core.network.BloodOrb;
-import com.wayoftime.bloodmagic.core.type.DemonWillType;
+import com.wayoftime.bloodmagic.core.util.register.IModelLocator;
+import com.wayoftime.bloodmagic.core.will.DemonWill;
 import com.wayoftime.bloodmagic.core.type.SlateType;
 import com.wayoftime.bloodmagic.core.util.register.IItemProvider;
 import com.wayoftime.bloodmagic.core.util.register.IVariantProvider;
@@ -62,6 +63,8 @@ public class RegistrarBloodMagicItems {
     public static final Item LIVING_ARMOR_FEET = Items.AIR;
     public static final Item LIVING_TOME = Items.AIR;
 
+    public static final Item SENTIENT_SWORD = Items.AIR;
+    public static final Item MONSTER_SOUL = Items.AIR;
     public static final Item DEMON_WILL_CRYSTAL_RAW = Items.AIR;
     public static final Item DEMON_WILL_CRYSTAL_CORROSIVE = Items.AIR;
     public static final Item DEMON_WILL_CRYSTAL_DESTRUCTIVE = Items.AIR;
@@ -100,12 +103,15 @@ public class RegistrarBloodMagicItems {
                 new ItemLivingArmor(EntityEquipmentSlot.CHEST),
                 new ItemLivingArmor(EntityEquipmentSlot.LEGS),
                 new ItemLivingArmor(EntityEquipmentSlot.FEET),
-                new ItemLivingTome(),
-                new ItemAltarBuilder()
+                new ItemAltarBuilder(),
+                new ItemSentientSword(),
+                new ItemMonsterSoul()
         ));
 
-        for (DemonWillType type : DemonWillType.VALUES)
+        for (DemonWill type : DemonWill.VALUES)
             items.add(new ItemMundane("demon_will_crystal_" + type.getName()));
+
+        items.add(new ItemLivingTome()); // Last so it's at the bottom of the creative tab
 
         registry.registerAll(items.toArray(new Item[0]));
     }
@@ -116,17 +122,27 @@ public class RegistrarBloodMagicItems {
         for (Item item : items) {
             boolean flag = handleModel(item);
 
-            if (!flag) // If we haven't registered a model by now, we don't need any special handling so we'll just use the default model.
-                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), item instanceof ItemBlock ? "normal" : "inventory"));
+            if (!flag) { // If we haven't registered a model by now, we don't need any special handling so we'll just use the default model.
+                ResourceLocation modelPath = item.getRegistryName();
+                if (item instanceof IModelLocator)
+                    modelPath = ((IModelLocator) item).getModelPath();
+
+                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(modelPath, item instanceof ItemBlock ? "normal" : "inventory"));
+            }
         }
     }
 
     static boolean handleModel(Item item) {
         if (item instanceof IVariantProvider) {
+            ResourceLocation modelPath = item.getRegistryName();
+            if (item instanceof IModelLocator)
+                modelPath = ((IModelLocator) item).getModelPath();
+
             Int2ObjectMap<String> variants = new Int2ObjectOpenHashMap<>();
             ((IVariantProvider) item).collectVariants(variants);
+
             for (Int2ObjectMap.Entry<String> entry : variants.int2ObjectEntrySet())
-                ModelLoader.setCustomModelResourceLocation(item, entry.getIntKey(), new ModelResourceLocation(item.getRegistryName(), entry.getValue()));
+                ModelLoader.setCustomModelResourceLocation(item, entry.getIntKey(), new ModelResourceLocation(modelPath, entry.getValue()));
 
             return true;
         }

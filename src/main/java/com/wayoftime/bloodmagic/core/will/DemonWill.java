@@ -1,10 +1,10 @@
-package com.wayoftime.bloodmagic.core.type;
+package com.wayoftime.bloodmagic.core.will;
 
 import net.minecraft.util.IStringSerializable;
 
 import java.util.Locale;
 
-public enum DemonWillType implements IStringSerializable {
+public enum DemonWill implements IStringSerializable {
 
     RAW,
     CORROSIVE,
@@ -13,7 +13,7 @@ public enum DemonWillType implements IStringSerializable {
     STEADFAST,
     ;
 
-    public static final DemonWillType[] VALUES = values();
+    public static final DemonWill[] VALUES = values();
 
     @Override
     public String getName() {

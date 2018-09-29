@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "bloodmagic:items/soul/monster_soul_corrosive"
+  }
+}
