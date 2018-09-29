@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static com.wayoftime.bloodmagic.core.type.ComponentType.*;
+import static com.wayoftime.bloodmagic.core.altar.ComponentType.*;
 
 public enum AltarTier {
 

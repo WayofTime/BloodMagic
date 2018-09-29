@@ -1,5 +1,7 @@
-package com.wayoftime.bloodmagic.core.living;
+package com.wayoftime.bloodmagic.event;
 
+import com.wayoftime.bloodmagic.core.living.LivingStats;
+import com.wayoftime.bloodmagic.core.living.LivingUpgrade;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;

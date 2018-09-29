@@ -39,18 +39,35 @@ public class LivingStatusWatcher {
         if (!(event.getEntity() instanceof EntityPlayer))
             return;
 
+        handleFallDamage(event);
+        handleProjectileDamage(event);
+    }
+
+    private static void handleFallDamage(LivingHurtEvent event) {
         if (event.getSource() != DamageSource.FALL)
             return;
 
         EntityPlayer player = (EntityPlayer) event.getEntity();
-        LivingStats stats = LivingUtil.applyNewExperience(player, RegistrarBloodMagicLivingArmor.UPGRADE_JUMP, 1);
+        LivingStats stats = LivingStats.fromPlayer(player);
         if (stats == null)
             return;
 
         int level = stats.getLevel(RegistrarBloodMagicLivingArmor.UPGRADE_JUMP.getKey());
         double fallBonus = RegistrarBloodMagicLivingArmor.UPGRADE_JUMP.getBonusValue("fall", level).doubleValue();
-        float oldAmount = event.getAmount();
-        float newAmount = oldAmount * Math.max(1F - (float) fallBonus, 0F);
-        event.setAmount(newAmount);
+        event.setAmount(event.getAmount() * Math.max(1F - (float) fallBonus, 0F));
+    }
+
+    private static void handleProjectileDamage(LivingHurtEvent event) {
+        if (!event.getSource().isProjectile())
+            return;
+
+        EntityPlayer player = (EntityPlayer) event.getEntity();
+        LivingStats stats = LivingUtil.applyNewExperience(player, RegistrarBloodMagicLivingArmor.UPGRADE_ARROW_PROTECT, 1);
+        if (stats == null)
+            return;
+
+        int level = stats.getLevel(RegistrarBloodMagicLivingArmor.UPGRADE_ARROW_PROTECT.getKey());
+        double damageBonus = RegistrarBloodMagicLivingArmor.UPGRADE_ARROW_PROTECT.getBonusValue("arrow_protect", level).doubleValue();
+        event.setAmount(event.getAmount() * Math.max(1F - (float) damageBonus, 0F));
     }
 }

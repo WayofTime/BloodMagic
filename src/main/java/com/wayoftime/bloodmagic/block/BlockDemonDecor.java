@@ -1,7 +1,7 @@
 package com.wayoftime.bloodmagic.block;
 
 import com.wayoftime.bloodmagic.BloodMagic;
-import com.wayoftime.bloodmagic.core.type.DemonWillType;
+import com.wayoftime.bloodmagic.core.will.DemonWill;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -15,9 +15,9 @@ import java.util.List;
 
 public class BlockDemonDecor extends BlockMundane {
 
-    private final DemonWillType type;
+    private final DemonWill type;
 
-    public BlockDemonDecor(Material material, String decorType, DemonWillType type) {
+    public BlockDemonDecor(Material material, String decorType, DemonWill type) {
         super(material, decorType + "_" + type.getName());
 
         setTranslationKey(BloodMagic.MODID + ":" + decorType);

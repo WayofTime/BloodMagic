@@ -1,5 +1,6 @@
 package com.wayoftime.bloodmagic.core.living;
 
+import com.wayoftime.bloodmagic.event.LivingEquipmentEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentTranslation;

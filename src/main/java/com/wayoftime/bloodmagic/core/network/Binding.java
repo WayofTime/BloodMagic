@@ -66,7 +66,7 @@ public class Binding implements INBTSerializable<NBTTagCompound> {
             return null;
 
         NBTBase bindingTag = stack.getTagCompound().getTag("binding");
-        if (bindingTag == null || bindingTag.getId() != 10 || bindingTag.isEmpty()) // Make sure it's both a tag compound and that it has actual data.
+        if (bindingTag.getId() != 10 || bindingTag.isEmpty()) // Make sure it's both a tag compound and that it has actual data.
             return null;
 
         Binding binding = new Binding();

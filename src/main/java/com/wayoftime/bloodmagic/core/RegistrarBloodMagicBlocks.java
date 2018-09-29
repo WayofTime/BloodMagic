@@ -6,7 +6,7 @@ import com.wayoftime.bloodmagic.block.BlockBloodAltar;
 import com.wayoftime.bloodmagic.block.BlockBloodRune;
 import com.wayoftime.bloodmagic.block.BlockMundane;
 import com.wayoftime.bloodmagic.client.render.TESRBloodAltar;
-import com.wayoftime.bloodmagic.core.type.BloodRunes;
+import com.wayoftime.bloodmagic.core.altar.BloodRunes;
 import com.wayoftime.bloodmagic.tile.TileBloodAltar;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

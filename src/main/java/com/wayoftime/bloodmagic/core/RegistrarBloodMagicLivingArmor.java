@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 /*
  * TODO - See checklist
  * - [-] Upgrades (Names pulled from 2.0 class names)
- *  - [-] Arrow Protect
+ *  - [x] Arrow Protect
  *  - [-] Arrow Shot
  *  - [-] Critical Strike
  *  - [ ] Digging

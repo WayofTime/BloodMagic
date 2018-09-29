@@ -1,6 +1,5 @@
 package com.wayoftime.bloodmagic.core.altar;
 
-import com.wayoftime.bloodmagic.core.type.ComponentType;
 import net.minecraft.util.math.BlockPos;
 
 public class AltarComponent {

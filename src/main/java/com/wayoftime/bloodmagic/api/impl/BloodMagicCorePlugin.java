@@ -7,7 +7,7 @@ import com.wayoftime.bloodmagic.api.IBloodMagicPlugin;
 import com.wayoftime.bloodmagic.api.IBloodMagicRecipeRegistrar;
 import com.wayoftime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import com.wayoftime.bloodmagic.core.RegistrarBloodMagicRecipes;
-import com.wayoftime.bloodmagic.core.type.ComponentType;
+import com.wayoftime.bloodmagic.core.altar.ComponentType;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;

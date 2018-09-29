@@ -35,6 +35,7 @@ import java.util.Map;
 public class ItemLivingArmor extends ItemArmor implements ILivingContainer, ISpecialArmor, IBindable {
 
     public static final ArmorMaterial MATERIAL = EnumHelper.addArmorMaterial("living", "living", 100, new int[]{1, 2, 3, 4}, 3, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0F);
+    private static final int MAX_ABSORPTION = 100000;
 
     public ItemLivingArmor(EntityEquipmentSlot slot) {
         super(MATERIAL, 0, slot);
@@ -78,7 +79,6 @@ public class ItemLivingArmor extends ItemArmor implements ILivingContainer, ISpe
         double armorReduction;
         double damageAmount = 0.25;
         double armorPenetrationReduction = 0;
-        int maxAbsorption = 100000;
 
         if (armor.getItem() == RegistrarBloodMagicItems.LIVING_ARMOR_FEET || armor.getItem() == RegistrarBloodMagicItems.LIVING_ARMOR_HEAD)
             damageAmount = 3d / 20d * 0.6;
@@ -91,22 +91,22 @@ public class ItemLivingArmor extends ItemArmor implements ILivingContainer, ISpe
             armorReduction = 0.24 / 0.64; // This values puts it at iron level
 
             if (!LivingUtil.hasFullSet((EntityPlayer) player))
-                return new ArmorProperties(-1, damageAmount * armorReduction, maxAbsorption);
+                return new ArmorProperties(-1, damageAmount * armorReduction, MAX_ABSORPTION);
 
             LivingStats stats = getLivingStats(armor);
             double protection = 1.0D;
             if (stats != null)
                 for (Map.Entry<LivingUpgrade, Integer> entry : stats.getUpgrades().entrySet())
                     if (entry.getKey().getArmorProvider() != null)
-                        protection *= 1 - entry.getKey().getArmorProvider().getProtection((EntityPlayer) player, source, entry.getKey().getLevel(entry.getValue()));
+                        protection *= 1 - entry.getKey().getArmorProvider().getProtection((EntityPlayer) player, stats, source, entry.getKey().getLevel(entry.getValue()));
 
             armorReduction += (1 - protection) * (1 - armorReduction);
             damageAmount *= armorReduction;
-            return new ArmorProperties(-1, source.isUnblockable() ? 1 - protection : damageAmount, maxAbsorption);
+            return new ArmorProperties(-1, source.isUnblockable() ? 1 - protection : damageAmount, MAX_ABSORPTION);
         } else if (source.isUnblockable())
-            return new ArmorProperties(-1, damageAmount * armorPenetrationReduction, maxAbsorption);
+            return new ArmorProperties(-1, damageAmount * armorPenetrationReduction, MAX_ABSORPTION);
 
-        return new ArmorProperties(-1, damageAmount, maxAbsorption);
+        return new ArmorProperties(-1, damageAmount, MAX_ABSORPTION);
     }
 
     @Override

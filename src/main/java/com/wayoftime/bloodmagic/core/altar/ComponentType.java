@@ -1,4 +1,4 @@
-package com.wayoftime.bloodmagic.core.type;
+package com.wayoftime.bloodmagic.core.altar;
 
 public enum ComponentType {
 

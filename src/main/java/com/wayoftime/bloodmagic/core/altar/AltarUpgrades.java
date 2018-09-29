@@ -1,12 +1,11 @@
 package com.wayoftime.bloodmagic.core.altar;
 
 import com.google.common.collect.Maps;
-import com.wayoftime.bloodmagic.core.type.BloodRunes;
 import net.minecraftforge.fluids.Fluid;
 
 import java.util.EnumMap;
 
-import static com.wayoftime.bloodmagic.core.type.BloodRunes.*;
+import static com.wayoftime.bloodmagic.core.altar.BloodRunes.*;
 
 public class AltarUpgrades {
 

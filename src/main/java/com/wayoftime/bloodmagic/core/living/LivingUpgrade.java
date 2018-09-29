@@ -141,7 +141,7 @@ public class LivingUpgrade {
     }
 
     public interface IArmorProvider {
-        double getProtection(EntityPlayer player, DamageSource source, int level);
+        double getProtection(EntityPlayer player, LivingStats stats, DamageSource source, int level);
     }
 
     public static class Level {

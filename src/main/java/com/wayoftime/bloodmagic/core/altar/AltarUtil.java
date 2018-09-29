@@ -5,7 +5,6 @@ import com.wayoftime.bloodmagic.api.impl.BloodMagicAPI;
 import com.wayoftime.bloodmagic.block.BlockBloodRune;
 import com.wayoftime.bloodmagic.core.RegistrarBloodMagic;
 import com.wayoftime.bloodmagic.core.RegistrarBloodMagicBlocks;
-import com.wayoftime.bloodmagic.core.type.ComponentType;
 import com.wayoftime.bloodmagic.core.util.BooleanResult;
 import com.wayoftime.bloodmagic.event.SacrificeEvent;
 import com.wayoftime.bloodmagic.tile.TileBloodAltar;
@@ -18,7 +17,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidStack;
 

@@ -1,6 +1,6 @@
 package com.wayoftime.bloodmagic.block;
 
-import com.wayoftime.bloodmagic.core.type.BloodRunes;
+import com.wayoftime.bloodmagic.core.altar.BloodRunes;
 import net.minecraft.block.material.Material;
 
 public class BlockBloodRune extends BlockMundane {

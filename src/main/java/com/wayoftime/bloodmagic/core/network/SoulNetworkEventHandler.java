@@ -1,10 +1,6 @@
-package com.wayoftime.bloodmagic.core.handler;
+package com.wayoftime.bloodmagic.core.network;
 
 import com.wayoftime.bloodmagic.BloodMagic;
-import com.wayoftime.bloodmagic.core.network.Binding;
-import com.wayoftime.bloodmagic.core.network.BloodOrb;
-import com.wayoftime.bloodmagic.core.network.IBloodOrb;
-import com.wayoftime.bloodmagic.core.network.SoulNetwork;
 import com.wayoftime.bloodmagic.event.BindingEvent;
 import com.wayoftime.bloodmagic.item.IBindable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,7 +12,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
-public class GenericEventHandler {
+public class SoulNetworkEventHandler {
 
     @SubscribeEvent
     public static void onItemUse(PlayerInteractEvent.RightClickItem event) {

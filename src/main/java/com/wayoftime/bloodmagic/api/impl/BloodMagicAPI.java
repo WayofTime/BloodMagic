@@ -3,7 +3,7 @@ package com.wayoftime.bloodmagic.api.impl;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.wayoftime.bloodmagic.api.IBloodMagicAPI;
-import com.wayoftime.bloodmagic.core.type.ComponentType;
+import com.wayoftime.bloodmagic.core.altar.ComponentType;
 import com.wayoftime.bloodmagic.core.util.BMLog;
 import net.minecraft.block.state.IBlockState;
 
