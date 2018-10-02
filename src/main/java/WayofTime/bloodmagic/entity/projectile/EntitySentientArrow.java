@@ -32,9 +32,9 @@ import java.util.Set;
 
 public class EntitySentientArrow extends EntityTippedArrow {
     public static MethodHandle mh; //TODO: use MethodHandles to realize the arrow effects. I suggest SimplyArrows for the test environment.
-    public static final DataParameter<Integer> COLOR = EntityDataManager.<Integer>createKey(EntitySentientArrow.class, DataSerializers.VARINT);
+    public static final DataParameter<Integer> COLOR = EntityDataManager.createKey(EntitySentientArrow.class, DataSerializers.VARINT);
     public PotionType potion = PotionTypes.EMPTY;
-    public final Set<PotionEffect> customPotionEffects = Sets.<PotionEffect>newHashSet();
+    public final Set<PotionEffect> customPotionEffects = Sets.newHashSet();
     public boolean fixedColor;
     public double reimbursedAmountOnHit = 0;
     public EnumDemonWillType type = EnumDemonWillType.DEFAULT;
@@ -81,15 +81,6 @@ public class EntitySentientArrow extends EntityTippedArrow {
         this.currentLevel = currentLevel;
         this.potion = PotionUtils.getPotionFromItem(itemStack);
         this.setFixedColor(getCustomColor(itemStack));
-    }
-
-    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel, ItemArrow itemArrow, ItemStack itemStack) {
-        super(worldIn, shooter);
-        this.reimbursedAmountOnHit = reimburseAmount;
-        this.type = type;
-        this.currentLevel = currentLevel;
-        this.itemStack = itemStack;
-        this.itemArrow = itemArrow;
     }
 
     public void reimbursePlayer(EntityLivingBase hitEntity, float damage) {
@@ -159,18 +150,6 @@ public class EntitySentientArrow extends EntityTippedArrow {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (!this.world.isRemote && this.itemArrow != null && this.itemStack != null && this.shootingEntity instanceof EntityLivingBase) {
-            if (!this.inGround && this.ticksExisted == 1) {
-                this.specialArrow = this.itemArrow.createArrow(this.world, this.itemStack, (EntityLivingBase) this.shootingEntity);
-                this.specialArrow.setVelocity(this.motionX * 0.99, this.motionY < 0 ? this.motionY * 0.95 : this.motionY * 1.05, this.motionZ * 0.99);
-                this.specialArrow.setIsCritical(this.getIsCritical());
-                world.spawnEntity(this.specialArrow);
-                this.setDamage(0);
-            } else if (this.timeInGround == 1 && type != EnumDemonWillType.DESTRUCTIVE)
-                this.setDead();
-        }
-
-
         switch (type) {
             case DESTRUCTIVE:
                 if (this.potion != null) {

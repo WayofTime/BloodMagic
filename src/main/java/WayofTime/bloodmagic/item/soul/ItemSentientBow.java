@@ -29,7 +29,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
@@ -340,7 +339,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
                             entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), (PotionType) null);
                         } else if (itemarrow == Items.TIPPED_ARROW) { //TODO: better crossmod compat? (things that extend TIPPED_ARROW should work)
                             double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
-                            entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), PotionUtils.getPotionFromItem(itemstack));
+                            entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), itemstack);
                         } else if (itemarrow == Items.SPECTRAL_ARROW) {
                             double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
                             entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), new PotionType(new PotionEffect(MobEffects.GLOWING, 200, 0)));
