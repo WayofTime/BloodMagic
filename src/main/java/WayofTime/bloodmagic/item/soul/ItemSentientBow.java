@@ -29,6 +29,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
@@ -267,7 +268,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
 
         float newArrowVelocity = velocity * getVelocityOfArrow(stack);
         double soulsRemaining = user instanceof EntityPlayer ? (PlayerDemonWillHandler.getTotalDemonWill(type, (EntityPlayer) user)) : 0;
-        EntitySentientArrow entityArrow = new EntitySentientArrow(world, user, type, amount, getLevel(soulsRemaining));
+        EntitySentientArrow entityArrow = new EntitySentientArrow(world, user, type, amount, getLevel(soulsRemaining), (PotionType) null);
 
         double d0 = target.posX - user.posX;
         double d1 = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - entityArrow.posY;
@@ -334,16 +335,17 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
                         double amount = (this.getDropOfActivatedBow(stack) * world.rand.nextDouble() + this.getStaticDropOfActivatedBow(stack));
 
                         float newArrowVelocity = arrowVelocity * getVelocityOfArrow(stack);
-                        double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
                         if (itemarrow == Items.ARROW) {
-                            entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining));
-                        } else if (itemarrow == Items.TIPPED_ARROW) {
-                            entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), itemstack);
+                            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+                            entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), (PotionType) null);
+                        } else if (itemarrow == Items.TIPPED_ARROW) { //TODO: better crossmod compat? (things that extend TIPPED_ARROW should work)
+                            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+                            entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), PotionUtils.getPotionFromItem(itemstack));
                         } else if (itemarrow == Items.SPECTRAL_ARROW) {
+                            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
                             entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), new PotionType(new PotionEffect(MobEffects.GLOWING, 200, 0)));
-                        } else {
-                            entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), itemarrow, itemstack);
-                        }
+                        } else
+                            entityArrow = itemarrow.createArrow(world, itemstack, player);
 
                         entityArrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
 
