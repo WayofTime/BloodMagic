@@ -26,7 +26,7 @@ public class LivingArmourUpgradeSolarPowered extends LivingArmourUpgrade {
 
     @Override
     public double getArmourProtection(EntityLivingBase wearer, DamageSource source) {
-        if (wearer.getEntityWorld().canSeeSky(wearer.getPosition()) || wearer.getEntityWorld().provider.isDaytime()) {
+        if (wearer.getEntityWorld().canSeeSky(wearer.getPosition()) && wearer.getEntityWorld().provider.isDaytime()) {
             return protectionLevel[this.level];
         }
 
@@ -36,7 +36,7 @@ public class LivingArmourUpgradeSolarPowered extends LivingArmourUpgrade {
     @Override
     public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
         counter++;
-        if (world.canSeeSky(player.getPosition()) || world.provider.isDaytime()) {
+        if (world.canSeeSky(player.getPosition()) && world.provider.isDaytime()) {
             if (counter % regenCooldown[this.level] == 0 && player.getHealth() < player.getMaxHealth()) {
                 player.heal(1);
             }
