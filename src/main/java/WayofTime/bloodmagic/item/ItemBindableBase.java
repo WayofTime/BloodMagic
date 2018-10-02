@@ -24,11 +24,11 @@ public class ItemBindableBase extends Item implements IBindable {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-        if (stack.hasTagCompound()) {
-            Binding binding = getBinding(stack);
-            if (binding != null) {
-                tooltip.add(new TextComponentTranslation("tooltip.bloodmagic.currentOwner", binding.getOwnerName()).getFormattedText());
-            }
-        }
+        if (!stack.hasTagCompound())
+            return;
+
+        Binding binding = getBinding(stack);
+        if (binding != null)
+            tooltip.add(new TextComponentTranslation("tooltip.bloodmagic.currentOwner", binding.getOwnerName()).getFormattedText());
     }
 }
