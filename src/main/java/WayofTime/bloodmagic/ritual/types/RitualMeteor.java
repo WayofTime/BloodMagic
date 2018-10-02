@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 import WayofTime.bloodmagic.meteor.Meteor;
 import WayofTime.bloodmagic.meteor.MeteorRegistry;
+import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -21,7 +21,7 @@ public class RitualMeteor extends Ritual {
     public static final double destructiveWillDrain = 50;
 
     public RitualMeteor() {
-        super("ritualMeteor", 0, 1000000, "ritual." + BloodMagic.MODID + ".meteorRitual");
+        super("ritualMeteor", 2, 1000000, "ritual." + BloodMagic.MODID + ".meteorRitual");
         addBlockRange(ITEM_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
         setMaximumVolumeAndDistanceOfRange(ITEM_RANGE, 0, 10, 10);
     }
