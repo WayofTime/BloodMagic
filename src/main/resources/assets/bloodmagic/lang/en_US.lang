@@ -385,7 +385,6 @@ tooltip.bloodmagic.currentOwner=Current owner: %s
 tooltip.bloodmagic.currentTier=Current tier: %d
 tooltip.bloodmagic.config.disabled=Currently disabled in the Config
 tooltip.bloodmagic.tier=Tier %d
-tooltip.bloodmagic.unbound=This item is not bound.
 
 tooltip.bloodmagic.activated=Activated
 tooltip.bloodmagic.deactivated=Deactivated
