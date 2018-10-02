@@ -1,16 +1,15 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.iface.ISigil;
+import WayofTime.bloodmagic.item.ItemBindableBase;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
  * Base class for all (static) sigils.
  */
-public class ItemSigil extends Item implements IBindable, ISigil {
+public class ItemSigil extends ItemBindableBase implements ISigil {
     private int lpUsed;
 
     public ItemSigil(int lpUsed) {
