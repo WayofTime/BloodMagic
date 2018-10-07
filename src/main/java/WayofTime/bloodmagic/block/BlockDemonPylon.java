@@ -9,11 +9,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockDemonPylon extends BlockContainer implements IBMBlock, IVariantProvider {
+    protected static final AxisAlignedBB AABB = new AxisAlignedBB(2 / 16F, 0F, 2 / 16F, 14 / 16F, 20 / 16F, 14 / 16F);
     public BlockDemonPylon() {
         super(Material.ROCK);
 
@@ -24,6 +26,11 @@ public class BlockDemonPylon extends BlockContainer implements IBMBlock, IVarian
         setHarvestLevel("pickaxe", 0);
 
 //        setBlockBounds(0.3F, 0F, 0.3F, 0.72F, 1F, 0.72F);
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return AABB;
     }
 
     @Override
