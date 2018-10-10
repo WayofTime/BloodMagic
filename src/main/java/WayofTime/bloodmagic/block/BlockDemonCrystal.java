@@ -34,6 +34,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 
@@ -43,64 +44,63 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
     public static final PropertyEnum<EnumDemonWillType> TYPE = PropertyEnum.create("type", EnumDemonWillType.class);
     public static final PropertyEnum<EnumFacing> ATTACHED = PropertyEnum.create("attached", EnumFacing.class);
     private static final EnumMap<EnumFacing, AxisAlignedBB> bounds = new EnumMap<>(EnumFacing.class);
-    //Bounding / collision / selection boxes
-    private static final AxisAlignedBB AABB_UP0 = new AxisAlignedBB(6 / 16F, 0, 5 / 16F, 10 / 16F, 13 / 16F, 9 / 16F);
-    private static final AxisAlignedBB AABB_DOWN0 = new AxisAlignedBB(6 / 16F, 3 / 16F, 7 / 16F, 10 / 16F, 16 / 16F, 11 / 16F);
-    private static final AxisAlignedBB AABB_NORTH0 = new AxisAlignedBB(6 / 16F, 5 / 16F, 3 / 16F, 10 / 16F, 9 / 16F, 16 / 16F);
-    private static final AxisAlignedBB AABB_SOUTH0 = new AxisAlignedBB(6 / 16F, 7 / 16F, 0 / 16F, 10 / 16F, 11 / 16F, 13 / 16F);
-    private static final AxisAlignedBB AABB_EAST0 = new AxisAlignedBB(0, 6 / 16F, 5 / 16F, 13 / 16F, 10 / 16F, 9 / 16F);
-    private static final AxisAlignedBB AABB_WEST0 = new AxisAlignedBB(3 / 16F, 6 / 16F, 5 / 16F, 16 / 16F, 10 / 16F, 9 / 16F);
-    //Stairs recycled
-    private static final AxisAlignedBB AABB_UP1 = new AxisAlignedBB(7 / 16F, 0, 0, 13 / 16F, 6 / 16F, 5 / 16F);
-    private static final AxisAlignedBB AABB_UP2 = new AxisAlignedBB(9 / 16F, 0, 9 / 16F, 13 / 16F, 5 / 16F, 14 / 16F);
-    private static final AxisAlignedBB AABB_UP3 = new AxisAlignedBB(2 / 16F, 0, 1 / 16F, 7 / 16F, 6 / 16F, 7 / 16F);
-    private static final AxisAlignedBB AABB_UP4 = new AxisAlignedBB(5 / 16F, 0, 9 / 16F, 9 / 16F, 7 / 16F, 15 / 16F);
-    private static final AxisAlignedBB AABB_UP5 = new AxisAlignedBB(0, 0, 7 / 16F, 6 / 16F, 6 / 16F, 10 / 16F);
-    private static final AxisAlignedBB AABB_UP6 = new AxisAlignedBB(10 / 16F, 0, 6 / 16F, 15 / 16F, 6 / 16F, 9 / 16F);
 
-    private static final AxisAlignedBB AABB_DOWN1 = new AxisAlignedBB(7 / 16F, 0, 0, 13 / 16F, 6 / 16F, 5 / 16F);
-    private static final AxisAlignedBB AABB_DOWN2 = new AxisAlignedBB(9 / 16F, 0, 9 / 16F, 13 / 16F, 5 / 16F, 14 / 16F);
-    private static final AxisAlignedBB AABB_DOWN3 = new AxisAlignedBB(2 / 16F, 0, 1 / 16F, 7 / 16F, 6 / 16F, 7 / 16F);
-    private static final AxisAlignedBB AABB_DOWN4 = new AxisAlignedBB(5 / 16F, 0, 9 / 16F, 9 / 16F, 7 / 16F, 15 / 16F);
-    private static final AxisAlignedBB AABB_DOWN5 = new AxisAlignedBB(0.0D, 0.5D, 0.0D, 0.5D, 1.0D, 0.5D);
-    private static final AxisAlignedBB AABB_DOWN6 = new AxisAlignedBB(0.5D, 0.5D, 0.0D, 1.0D, 1.0D, 0.5D);
+    // Bounding / Collision boxes
+    private static final AxisAlignedBB[] UP = {
+            new AxisAlignedBB(6 / 16F, 0, 5 / 16F, 10 / 16F, 13 / 16F, 9 / 16F),
+            new AxisAlignedBB(7 / 16F, 0, 0, 13 / 16F, 6 / 16F, 5 / 16F),
+            new AxisAlignedBB(9 / 16F, 0, 9 / 16F, 13 / 16F, 5 / 16F, 14 / 16F),
+            new AxisAlignedBB(2 / 16F, 0, 1 / 16F, 7 / 16F, 6 / 16F, 7 / 16F),
+            new AxisAlignedBB(5 / 16F, 0, 9 / 16F, 9 / 16F, 7 / 16F, 15 / 16F),
+            new AxisAlignedBB(0, 0, 7 / 16F, 6 / 16F, 6 / 16F, 10 / 16F),
+            new AxisAlignedBB(10 / 16F, 0, 6 / 16F, 15 / 16F, 6 / 16F, 9 / 16F)
+    };
+    private static final AxisAlignedBB[] DOWN = {
+            new AxisAlignedBB(6 / 16F, 3 / 16F, 7 / 16F, 10 / 16F, 16 / 16F, 11 / 16F),
+            new AxisAlignedBB(7 / 16F, 10 / 16F, 11 / 16F, 13 / 16F, 16 / 16F, 16 / 16F),
+            new AxisAlignedBB(9 / 16F, 11 / 16F, 2 / 16F, 13 / 16F, 16 / 16F, 7 / 16F),
+            new AxisAlignedBB(2 / 16F, 9 / 16F, 11 / 16F, 7 / 16F, 16 / 16F, 15 / 16F),
+            new AxisAlignedBB(5 / 16F, 9 / 16F, 1 / 16F, 9 / 16F, 16 / 16F, 7 / 16F),
+            new AxisAlignedBB(0, 10 / 16F, 6 / 16F, 6 / 16F, 16 / 16F, 9 / 16F),
+            new AxisAlignedBB(10 / 16F, 11 / 16F, 7 / 16F, 15 / 16F, 16 / 16F, 10 / 16F)
+    };
+    private static final AxisAlignedBB[] NORTH = {
+            new AxisAlignedBB(6 / 16F, 5 / 16F, 3 / 16F, 10 / 16F, 9 / 16F, 16 / 16F),
+            new AxisAlignedBB(9 / 16F, 0, 6 / 16F, 13 / 16F, 5 / 16F, 16 / 16F),
+            new AxisAlignedBB(8 / 16F, 9 / 16F, 11 / 16F, 13 / 16F, 14 / 16F, 16 / 16F),
+            new AxisAlignedBB(2 / 16F, 1 / 16F, 9 / 16F, 7 / 16F, 7 / 16F, 16 / 16F),
+            new AxisAlignedBB(5 / 16F, 9 / 16F, 9 / 16F, 9 / 16F, 15 / 16F, 16 / 16F),
+            new AxisAlignedBB(0, 7 / 16F, 10 / 16F, 6 / 16F, 10 / 16F, 16 / 16F),
+            new AxisAlignedBB(10 / 16F, 7 / 16F, 10 / 16F, 15 / 16F, 9 / 16F, 15 / 16F),
+    };
+    private static final AxisAlignedBB[] SOUTH = {
+            new AxisAlignedBB(6 / 16F, 7 / 16F, 0 / 16F, 10 / 16F, 11 / 16F, 13 / 16F),
+            new AxisAlignedBB(7 / 16F, 11 / 16F, 0, 13 / 16F, 16 / 16F, 6 / 16F),
+            new AxisAlignedBB(8 / 16F, 2 / 16F, 9 / 16F, 13 / 16F, 7 / 16F, 14 / 16F),
+            new AxisAlignedBB(2 / 16F, 9 / 16F, 1 / 16F, 7 / 16F, 14 / 16F, 7 / 16F),
+            new AxisAlignedBB(5 / 16F, 1 / 16F, 9 / 16F, 9 / 16F, 7 / 16F, 9 / 16F),
+            new AxisAlignedBB(0, 6 / 16F, 1 / 16F, 6 / 16F, 9 / 16F, 7 / 16F),
+            new AxisAlignedBB(10 / 16F, 8 / 16F, 1 / 16F, 15 / 16F, 10 / 16F, 6 / 16F)
+    };
+    private static final AxisAlignedBB[] EAST = {
+            new AxisAlignedBB(0, 6 / 16F, 5 / 16F, 13 / 16F, 10 / 16F, 9 / 16F),
+            new AxisAlignedBB(0, 3 / 16F, 0, 6 / 16F, 9 / 16F, 5 / 16F),
 
-    private static final AxisAlignedBB AABB_NORTH1 = new AxisAlignedBB(7 / 16F, 0, 0, 13 / 16F, 6 / 16F, 5 / 16F);
-    private static final AxisAlignedBB AABB_NORTH2 = new AxisAlignedBB(9 / 16F, 0, 9 / 16F, 13 / 16F, 5 / 16F, 14 / 16F);
-    private static final AxisAlignedBB AABB_NORTH3 = new AxisAlignedBB(2 / 16F, 0, 1 / 16F, 7 / 16F, 6 / 16F, 7 / 16F);
-    private static final AxisAlignedBB AABB_NORTH4 = new AxisAlignedBB(5 / 16F, 0, 9 / 16F, 9 / 16F, 7 / 16F, 15 / 16F);
-    private static final AxisAlignedBB AABB_NORTH5 = new AxisAlignedBB(0.0D, 0.5D, 0.0D, 0.5D, 1.0D, 0.5D);
-    private static final AxisAlignedBB AABB_NORTH6 = new AxisAlignedBB(0.5D, 0.5D, 0.0D, 1.0D, 1.0D, 0.5D);
-
-    private static final AxisAlignedBB AABB_SOUTH1 = new AxisAlignedBB(7 / 16F, 0, 0, 13 / 16F, 6 / 16F, 5 / 16F);
-    private static final AxisAlignedBB AABB_SOUTH2 = new AxisAlignedBB(9 / 16F, 0, 9 / 16F, 13 / 16F, 5 / 16F, 14 / 16F);
-    private static final AxisAlignedBB AABB_SOUTH3 = new AxisAlignedBB(2 / 16F, 0, 1 / 16F, 7 / 16F, 6 / 16F, 7 / 16F);
-    private static final AxisAlignedBB AABB_SOUTH4 = new AxisAlignedBB(5 / 16F, 0, 9 / 16F, 9 / 16F, 7 / 16F, 15 / 16F);
-    private static final AxisAlignedBB AABB_SOUTH5 = new AxisAlignedBB(0.0D, 0.5D, 0.0D, 0.5D, 1.0D, 0.5D);
-    private static final AxisAlignedBB AABB_SOUTH6 = new AxisAlignedBB(0.5D, 0.5D, 0.0D, 1.0D, 1.0D, 0.5D);
-
-    private static final AxisAlignedBB AABB_EAST1 = new AxisAlignedBB(7 / 16F, 0, 0, 13 / 16F, 6 / 16F, 5 / 16F);
-    private static final AxisAlignedBB AABB_EAST2 = new AxisAlignedBB(9 / 16F, 0, 9 / 16F, 13 / 16F, 5 / 16F, 14 / 16F);
-    private static final AxisAlignedBB AABB_EAST3 = new AxisAlignedBB(2 / 16F, 0, 1 / 16F, 7 / 16F, 6 / 16F, 7 / 16F);
-    private static final AxisAlignedBB AABB_EAST4 = new AxisAlignedBB(5 / 16F, 0, 9 / 16F, 9 / 16F, 7 / 16F, 15 / 16F);
-    private static final AxisAlignedBB AABB_EAST5 = new AxisAlignedBB(0.0D, 0.5D, 0.0D, 0.5D, 1.0D, 0.5D);
-    private static final AxisAlignedBB AABB_EAST6 = new AxisAlignedBB(0.5D, 0.5D, 0.0D, 1.0D, 1.0D, 0.5D);
-
-    private static final AxisAlignedBB AABB_WEST1 = new AxisAlignedBB(7 / 16F, 0, 0, 13 / 16F, 6 / 16F, 5 / 16F);
-    private static final AxisAlignedBB AABB_WEST2 = new AxisAlignedBB(9 / 16F, 0, 9 / 16F, 13 / 16F, 5 / 16F, 14 / 16F);
-    private static final AxisAlignedBB AABB_WEST3 = new AxisAlignedBB(2 / 16F, 0, 1 / 16F, 7 / 16F, 6 / 16F, 7 / 16F);
-    private static final AxisAlignedBB AABB_WEST4 = new AxisAlignedBB(5 / 16F, 0, 9 / 16F, 9 / 16F, 7 / 16F, 15 / 16F);
-    private static final AxisAlignedBB AABB_WEST5 = new AxisAlignedBB(0.0D, 0.5D, 0.0D, 0.5D, 1.0D, 0.5D);
-    private static final AxisAlignedBB AABB_WEST6 = new AxisAlignedBB(0.5D, 0.5D, 0.0D, 1.0D, 1.0D, 0.5D);
-
-    static {
-        bounds.put(EnumFacing.UP, AABB_UP0);
-        bounds.put(EnumFacing.DOWN, AABB_DOWN0);
-        bounds.put(EnumFacing.NORTH, AABB_NORTH0);
-        bounds.put(EnumFacing.SOUTH, AABB_SOUTH0);
-        bounds.put(EnumFacing.WEST, AABB_WEST0);
-        bounds.put(EnumFacing.EAST, AABB_EAST0);
-    }
+            new AxisAlignedBB(9 / 16F, 0, 9 / 16F, 13 / 16F, 5 / 16F, 14 / 16F),
+            new AxisAlignedBB(2 / 16F, 0, 1 / 16F, 7 / 16F, 6 / 16F, 7 / 16F),
+            new AxisAlignedBB(5 / 16F, 0, 9 / 16F, 9 / 16F, 7 / 16F, 15 / 16F),
+            new AxisAlignedBB(0.0D, 0.5D, 0.0D, 0.5D, 1.0D, 0.5D),
+            new AxisAlignedBB(0.5D, 0.5D, 0.0D, 1.0D, 1.0D, 0.5D)
+    };
+    private static final AxisAlignedBB[] WEST = {
+            new AxisAlignedBB(3 / 16F, 6 / 16F, 5 / 16F, 16 / 16F, 10 / 16F, 9 / 16F),
+            new AxisAlignedBB(7 / 16F, 0, 0, 13 / 16F, 6 / 16F, 5 / 16F),
+            new AxisAlignedBB(9 / 16F, 0, 9 / 16F, 13 / 16F, 5 / 16F, 14 / 16F),
+            new AxisAlignedBB(2 / 16F, 0, 1 / 16F, 7 / 16F, 6 / 16F, 7 / 16F),
+            new AxisAlignedBB(5 / 16F, 0, 9 / 16F, 9 / 16F, 7 / 16F, 15 / 16F),
+            new AxisAlignedBB(0.0D, 0.5D, 0.0D, 0.5D, 1.0D, 0.5D),
+            new AxisAlignedBB(0.5D, 0.5D, 0.0D, 1.0D, 1.0D, 0.5D)
+    };
 
     public BlockDemonCrystal() {
         super(Material.ROCK);
@@ -137,116 +137,23 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
         return stack;
     }
 
-    private static AxisAlignedBB makeAABB(int fromX, int fromY, int fromZ, int toX, int toY, int toZ) {
-        return new AxisAlignedBB(fromX / 16F, fromY / 16F, fromZ / 16F, toX / 16F, toY / 16F, toZ / 16F);
-    }
-
     private static List<AxisAlignedBB> getCollisionBoxList(IBlockState state) {
-        List<AxisAlignedBB> list = Lists.newArrayList();
-        Integer age = state.getValue(BlockDemonCrystal.AGE);
+        int age = state.getValue(BlockDemonCrystal.AGE) + 1;
         switch (state.getValue(BlockDemonCrystal.ATTACHED)) {
-            case UP:
-                switch (age) {
-                    case 6:
-                        list.add(AABB_UP6);
-                    case 5:
-                        list.add(AABB_UP5);
-                    case 4:
-                        list.add(AABB_UP4);
-                    case 3:
-                        list.add(AABB_UP3);
-                    case 2:
-                        list.add(AABB_UP2);
-                    case 1:
-                        list.add(AABB_UP1);
-                    case 0:
-                    default:
-                        list.add(AABB_UP0);
-                        break;
-                }
-                break;
             case DOWN:
-                switch (age) {
-                    case 6:
-                    case 5:
-                    case 4:
-                    case 3:
-                    case 2:
-                    case 1:
-                    case 0:
-                    default:
-                        list.add(AABB_DOWN0);
-                        break;
-                }
-                break;
+                return Arrays.asList(DOWN).subList(0, age);
             case NORTH:
-                switch (age) {
-                    case 6:
-                    case 5:
-                    case 4:
-                    case 3:
-                    case 2:
-                    case 1:
-                    case 0:
-                    default:
-                        list.add(AABB_NORTH0);
-                        break;
-                }
-                break;
+                return Arrays.asList(NORTH).subList(0, age);
             case SOUTH:
-                switch (age) {
-                    case 6:
-                    case 5:
-                    case 4:
-                    case 3:
-                    case 2:
-                    case 1:
-                    case 0:
-                    default:
-                        list.add(AABB_SOUTH0);
-                        break;
-                }
-                break;
+                return Arrays.asList(SOUTH).subList(0, age);
             case WEST:
-                switch (age) {
-                    case 6:
-                    case 5:
-                    case 4:
-                    case 3:
-                    case 2:
-                    case 1:
-                    case 0:
-                    default:
-                        list.add(AABB_WEST0);
-                        break;
-                }
-                break;
+                return Arrays.asList(WEST).subList(0, age);
             case EAST:
-                switch (age) {
-                    case 6:
-                    case 5:
-                    case 4:
-                    case 3:
-                    case 2:
-                    case 1:
-                    case 0:
-                    default:
-                        list.add(AABB_EAST0);
-                        break;
-                }
-                break;
+                return Arrays.asList(EAST).subList(0, age);
+            case UP:
+            default:
+                return Arrays.asList(UP).subList(0, age);
         }
-
-
-        /* if (stairShape == BlockStairs.EnumShape.STRAIGHT || stairShape == BlockStairs.EnumShape.INNER_LEFT || stairShape == BlockStairs.EnumShape.INNER_RIGHT) {
-            list.add(getCollQuarterBlock(state));
-        }
-
-        if (stairShape != BlockStairs.EnumShape.STRAIGHT) {
-            list.add(getCollEighthBlock(state));
-        }
-*/
-        return list;
     }
 
     @Override
@@ -254,7 +161,21 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
         TileEntity tile = source.getTileEntity(pos);
         if (tile != null)
             state = getActualState(state, tile.getWorld(), pos);
-        return bounds.get(state.getValue(ATTACHED));
+        switch (state.getValue(ATTACHED)) {
+            case DOWN:
+                return DOWN[0];
+            case NORTH:
+                return NORTH[0];
+            case SOUTH:
+                return SOUTH[0];
+            case EAST:
+                return EAST[0];
+            case WEST:
+                return WEST[0];
+            case UP:
+            default:
+                return UP[0];
+        }
     }
 
     @Override
@@ -412,6 +333,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
     @Override
     public RayTraceResult collisionRayTrace(IBlockState blockState, World worldIn, BlockPos pos, Vec3d start, Vec3d end) {
         List<RayTraceResult> list = Lists.newArrayList();
+
 
         for (AxisAlignedBB axisalignedbb : getCollisionBoxList(this.getActualState(blockState, worldIn, pos))) {
             list.add(this.rayTrace(pos, start, end, axisalignedbb));
