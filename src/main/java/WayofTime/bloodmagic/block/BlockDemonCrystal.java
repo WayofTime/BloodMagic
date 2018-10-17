@@ -85,16 +85,16 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
     private static final AxisAlignedBB[] EAST = {
             new AxisAlignedBB(0, 6 / 16F, 5 / 16F, 13 / 16F, 10 / 16F, 9 / 16F),
             new AxisAlignedBB(0, 3 / 16F, 0, 6 / 16F, 9 / 16F, 5 / 16F),
-
-            new AxisAlignedBB(9 / 16F, 0, 9 / 16F, 13 / 16F, 5 / 16F, 14 / 16F),
-            new AxisAlignedBB(2 / 16F, 0, 1 / 16F, 7 / 16F, 6 / 16F, 7 / 16F),
-            new AxisAlignedBB(5 / 16F, 0, 9 / 16F, 9 / 16F, 7 / 16F, 15 / 16F),
-            new AxisAlignedBB(0.0D, 0.5D, 0.0D, 0.5D, 1.0D, 0.5D),
-            new AxisAlignedBB(0.5D, 0.5D, 0.0D, 1.0D, 1.0D, 0.5D)
+            new AxisAlignedBB(0 / 16F, 3 / 16F, 9 / 16F, 5 / 16F, 8 / 16F, 14 / 16F),
+            new AxisAlignedBB(1 / 16F, 9 / 16F, 1 / 16F, 7 / 16F, 13 / 16F, 7 / 16F),
+            new AxisAlignedBB(1 / 16F, 0, 9 / 16F, 7 / 16F, 11 / 16F, 15 / 16F),
+            new AxisAlignedBB(0, 10 / 16F, 7 / 16F, 6 / 16F, 16 / 16F, 10 / 16F),
+            new AxisAlignedBB(0, 1 / 16F, 6 / 16F, 5 / 16F, 6 / 16F, 9 / 16F)
     };
     private static final AxisAlignedBB[] WEST = {
             new AxisAlignedBB(3 / 16F, 6 / 16F, 5 / 16F, 16 / 16F, 10 / 16F, 9 / 16F),
-            new AxisAlignedBB(7 / 16F, 0, 0, 13 / 16F, 6 / 16F, 5 / 16F),
+            new AxisAlignedBB(9 / 16F, 7 / 16F, 0, 16 / 16F, 12 / 16F, 5 / 16F),
+            
             new AxisAlignedBB(9 / 16F, 0, 9 / 16F, 13 / 16F, 5 / 16F, 14 / 16F),
             new AxisAlignedBB(2 / 16F, 0, 1 / 16F, 7 / 16F, 6 / 16F, 7 / 16F),
             new AxisAlignedBB(5 / 16F, 0, 9 / 16F, 9 / 16F, 7 / 16F, 15 / 16F),
