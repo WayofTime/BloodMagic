@@ -136,6 +136,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
         return stack;
     }
 
+    // collects a sublist from 0 to age for the collision boxes
     private static List<AxisAlignedBB> getCollisionBoxList(IBlockState state) {
         int age = state.getValue(BlockDemonCrystal.AGE) + 1;
         switch (state.getValue(BlockDemonCrystal.ATTACHED)) {

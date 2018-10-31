@@ -1,7 +1,10 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.altar.*;
+import WayofTime.bloodmagic.altar.AltarUtil;
+import WayofTime.bloodmagic.altar.ComponentType;
+import WayofTime.bloodmagic.altar.IAltarManipulator;
+import WayofTime.bloodmagic.altar.IBloodAltar;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
@@ -23,6 +26,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -35,6 +39,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockAltar extends Block implements IVariantProvider, IDocumentedBlock, IBMBlock {
+    private static final AxisAlignedBB BODY = new AxisAlignedBB(0, 0, 0, 16 / 16F, 12 / 16F, 16 / 16F);
+
     public BlockAltar() {
         super(Material.ROCK);
 
@@ -43,6 +49,10 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 1);
+    }
+
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return BODY;
     }
 
     @Override
