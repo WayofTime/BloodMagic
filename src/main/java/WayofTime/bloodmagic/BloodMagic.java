@@ -91,6 +91,7 @@ public class BloodMagic {
 
         ModRecipes.init();
         ModRituals.initHarvestHandlers();
+        ModRituals.initCuttingFluids();
         MeteorConfigHandler.init(new File(configDir, "meteors"));
         ModArmourTrackers.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(BloodMagic.instance, new GuiHandler());

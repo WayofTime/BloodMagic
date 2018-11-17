@@ -5,6 +5,8 @@ import WayofTime.bloodmagic.compress.CompressionRegistry;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
 import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
 import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.ritual.crushing.CrushingRegistry;
+import WayofTime.bloodmagic.ritual.crushing.ICrushingHandler;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
@@ -116,6 +118,38 @@ public class RitualCrushing extends Ritual {
                 }
 
                 ItemStack copyStack = checkStack.copy();
+
+                for (ICrushingHandler handler : CrushingRegistry.getCrushingHandlerList()) {
+                   int lpDrain = handler.getLpDrain();
+                   double willDrain = handler.getWillDrain();
+
+                   if (corrosiveWill < willDrain || currentEssence < lpDrain + getRefreshCost()) {
+                       continue;
+                   }
+
+                   ItemStack result = handler.getRecipeOutput(copyStack, world, pos);
+
+                   if (result == null ||  result.isEmpty()) {
+                      continue;
+                   }
+
+                    if (tile != null) {
+                        result = Utils.insertStackIntoTile(result, tile, EnumFacing.DOWN);
+                        if (!result.isEmpty()) {
+                            Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, result);
+                        }
+                    } else {
+                        Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, result);
+                    }
+
+                    WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, willDrain, true);
+                    corrosiveWill -= willDrain;
+
+                    masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(lpDrain));
+                    currentEssence -= lpDrain;
+
+                    isBlockClaimed = true;
+                }
 
                 for (Entry<ItemStack, Integer> entry : cuttingFluidLPMap.entrySet()) {
                     ItemStack cuttingStack = entry.getKey();
