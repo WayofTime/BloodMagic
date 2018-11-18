@@ -2,41 +2,48 @@ package WayofTime.bloodmagic.ritual.crushing;
 
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
-import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrushingHandlerBasicCuttingFluid implements ICrushingHandler {
+public class CrushingHandlerCuttingFluid implements ICrushingHandler {
 
-    private static final Integer LP_DRAIN = 250;
+    private int lpDrain;
 
-    private static final Double WILL_DRAIN = 0.5;
+    private double willDrain;
 
-    private static final ItemStack CUTTING_STACK = ItemCuttingFluid.FluidType.BASIC.getStack();
+    private ItemStack cuttingStack;
+
+    public CrushingHandlerCuttingFluid(ItemStack cuttingStack, int lpDrain, double willDrain) {
+        this.lpDrain = lpDrain;
+        this.willDrain = willDrain;
+        this.cuttingStack = cuttingStack;
+    }
 
     @Override
+    @Nonnull
     public ItemStack getRecipeOutput(ItemStack inputStack, World world, BlockPos pos) {
         List<ItemStack> inputList = new ArrayList<>();
-        inputList.add(CUTTING_STACK);
+        inputList.add(cuttingStack);
         inputList.add(inputStack.copy());
         RecipeAlchemyTable recipeAlchemyTable = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTable(inputList);
 
         if (recipeAlchemyTable != null) {
-            return recipeAlchemyTable.getOutput();
+            return recipeAlchemyTable.getOutput().copy();
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
-    public Double getWillDrain() {
-        return WILL_DRAIN;
+    public double getWillDrain() {
+        return willDrain;
     }
 
-    public Integer getLpDrain() {
-        return LP_DRAIN;
+    public int getLpDrain() {
+        return lpDrain;
     }
 }

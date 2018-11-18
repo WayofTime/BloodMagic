@@ -129,7 +129,7 @@ public class RitualCrushing extends Ritual {
 
                    ItemStack result = handler.getRecipeOutput(copyStack, world, pos);
 
-                   if (result == null ||  result.isEmpty()) {
+                   if (result.isEmpty()) {
                       continue;
                    }
 
@@ -151,47 +151,6 @@ public class RitualCrushing extends Ritual {
                     isBlockClaimed = true;
                 }
 
-                for (Entry<ItemStack, Integer> entry : cuttingFluidLPMap.entrySet()) {
-                    ItemStack cuttingStack = entry.getKey();
-                    int lpDrain = entry.getValue();
-                    double willDrain = cuttingFluidWillMap.containsKey(cuttingStack) ? cuttingFluidWillMap.get(cuttingStack) : 0;
-
-                    if (corrosiveWill < willDrain || currentEssence < lpDrain + getRefreshCost()) {
-                        continue;
-                    }
-
-                    cuttingStack = cuttingStack.copy();
-                    List<ItemStack> input = new ArrayList<>();
-                    input.add(cuttingStack);
-                    input.add(copyStack);
-
-                    AlchemyTableRecipe recipe = AlchemyTableRecipeRegistry.getMatchingRecipe(input, world, pos);
-                    if (recipe == null) {
-                        continue;
-                    }
-
-                    ItemStack result = recipe.getRecipeOutput(input);
-                    if (result.isEmpty()) {
-                        continue;
-                    }
-
-                    if (tile != null) {
-                        result = Utils.insertStackIntoTile(result, tile, EnumFacing.DOWN);
-                        if (!result.isEmpty()) {
-                            Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, result);
-                        }
-                    } else {
-                        Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, result);
-                    }
-
-                    WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, willDrain, true);
-                    corrosiveWill -= willDrain;
-
-                    masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(lpDrain));
-                    currentEssence -= lpDrain;
-
-                    isBlockClaimed = true;
-                }
             }
 
             if (!isBlockClaimed && isSilkTouch && block.canSilkHarvest(world, newPos, state, getFakePlayer((WorldServer) world))) {

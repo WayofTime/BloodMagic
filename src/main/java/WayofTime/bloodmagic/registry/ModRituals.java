@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.ritual.crushing.CrushingHandlerBasicCuttingFluid;
-import WayofTime.bloodmagic.ritual.crushing.CrushingHandlerExplosivePowder;
+import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
+import WayofTime.bloodmagic.ritual.crushing.CrushingHandlerCuttingFluid;
 import WayofTime.bloodmagic.ritual.crushing.CrushingRegistry;
 import WayofTime.bloodmagic.ritual.harvest.HarvestRegistry;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerPlantable;
@@ -25,7 +25,7 @@ public class ModRituals
 
     public static void initCuttingFluids()
     {
-        CrushingRegistry.registerCuttingFluid(new CrushingHandlerBasicCuttingFluid());
-        CrushingRegistry.registerCuttingFluid(new CrushingHandlerExplosivePowder());
+        CrushingRegistry.registerCuttingFluid(new CrushingHandlerCuttingFluid(ItemCuttingFluid.FluidType.BASIC.getStack(), 250, 0.5));
+        CrushingRegistry.registerCuttingFluid(new CrushingHandlerCuttingFluid(ItemCuttingFluid.FluidType.EXPLOSIVE.getStack(), 25, 0.05));
     }
 }
