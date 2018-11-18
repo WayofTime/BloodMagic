@@ -120,10 +120,8 @@ public class RitualCrushing extends Ritual {
                 ItemStack copyStack = checkStack.copy();
 
                 for (ICrushingHandler handler : CrushingRegistry.getCrushingHandlerList()) {
-                   int lpDrain = handler.getLpDrain();
-                   double willDrain = handler.getWillDrain();
 
-                   if (corrosiveWill < willDrain || currentEssence < lpDrain + getRefreshCost()) {
+                   if (!handler.hasResources(corrosiveWill, currentEssence - getRefreshCost())) {
                        continue;
                    }
 
@@ -142,11 +140,7 @@ public class RitualCrushing extends Ritual {
                         Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, result);
                     }
 
-                    WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, willDrain, true);
-                    corrosiveWill -= willDrain;
-
-                    masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(lpDrain));
-                    currentEssence -= lpDrain;
+                    currentEssence = handler.consumeResources(masterRitualStone, EnumDemonWillType.CORROSIVE, world, pos);
 
                     isBlockClaimed = true;
                 }
