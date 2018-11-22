@@ -3,9 +3,9 @@ itemGroup.bloodmagic.creativeTab=Blood Magic
 itemGroup.bloodmagic.creativeTabTome=Blood Magic Upgrade Tomes
 
 #Items
-item.bloodmagic.activationCrystal.weak.name=Слабый кристал активации
-item.bloodmagic.activationCrystal.awakened.name=Пробуждённый кристал активации
-item.bloodmagic.activationCrystal.creative.name=Творческий кристал активации
+item.bloodmagic.activationCrystal.weak.name=Слабый кристалл активации
+item.bloodmagic.activationCrystal.awakened.name=Пробуждённый кристалл активации
+item.bloodmagic.activationCrystal.creative.name=Творческий кристалл активации
 
 item.bloodmagic.sacrificialDagger.normal.name=Жертвенный кинжал
 item.bloodmagic.sacrificialDagger.creative.name=Творческий жертвенный кинжал
@@ -13,7 +13,7 @@ item.bloodmagic.pack.selfSacrifice.name=Blood Letter's Pack
 item.bloodmagic.pack.sacrifice.name=Coat of Arms
 item.bloodmagic.daggerOfSacrifice.name=Кинжал жертвоприношения
 
-item.bloodmagic.lavaCrystal.name=Лавовый кристал
+item.bloodmagic.lavaCrystal.name=Лавовый кристалл
 
 item.bloodmagic.bound.sword.name=Связанный клинок
 item.bloodmagic.bound.pickaxe.name=Связанная кирка
