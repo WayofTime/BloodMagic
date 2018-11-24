@@ -13,7 +13,6 @@ import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
-import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -27,6 +26,8 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.reflect.Method;
 import java.util.Locale;
 import java.util.Set;
 
@@ -40,8 +41,7 @@ public class EntitySentientArrow extends EntityTippedArrow {
     public EnumDemonWillType type = EnumDemonWillType.DEFAULT;
     public int currentLevel = 0;
     public ItemStack itemStack;
-    public EntityArrow specialArrow;
-    public ItemArrow itemArrow;
+    public Class<? extends EntityArrow> specialArrow;
     public float[] destructiveExplosionRadius = {0.5f, 1, 1.5f, 2, 2.5f, 3, 3.5f};
     public int[] poisonDuration = {50, 100, 150, 80, 120, 160, 200};
     public int[] poisonLevel = {0, 0, 0, 1, 1, 1, 1};
@@ -49,6 +49,11 @@ public class EntitySentientArrow extends EntityTippedArrow {
     public int[] levitationLevel = {0, 0, 0, 1, 1, 1, 2};
     public int[] slownessDuration = {40, 60, 100, 150, 200, 250, 300};
     public int[] slownessLevel = {0, 0, 0, 1, 1, 1, 2};
+    public EntityArrow specialEntity;
+    public MethodHandle specialHitMH;
+    public Method specialHit;
+    public MethodHandle specialUpdateMH;
+    public Method specialUpdate;
 
     public EntitySentientArrow(World worldIn) {
         super(worldIn);
@@ -81,6 +86,23 @@ public class EntitySentientArrow extends EntityTippedArrow {
         this.currentLevel = currentLevel;
         this.potion = PotionUtils.getPotionFromItem(itemStack);
         this.setFixedColor(getCustomColor(itemStack));
+    }
+
+    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel, EntityArrow specialArrow) {
+        super(worldIn, shooter);
+        this.reimbursedAmountOnHit = reimburseAmount;
+        this.type = type;
+        this.currentLevel = currentLevel;
+        this.specialEntity = specialArrow;
+        this.specialArrow = specialArrow.getClass();
+        try {
+            this.specialUpdate = this.specialArrow.getMethod("onUpdate");
+            this.specialUpdateMH = MethodHandles.lookup().unreflect(this.specialUpdate).bindTo(this.specialEntity);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 
     public void reimbursePlayer(EntityLivingBase hitEntity, float damage) {
@@ -143,8 +165,23 @@ public class EntitySentientArrow extends EntityTippedArrow {
             default:
                 break;
         }
-        if (this.specialArrow != null && !this.specialArrow.isDead)
-            living.hurtResistantTime = 0;
+        if (this.specialArrow != null) {
+            try {
+                this.specialHit = this.specialArrow.getMethod("arrowHit", EntityLivingBase.class);
+                this.specialHitMH = MethodHandles.lookup().unreflect(this.specialHit).bindTo(this.specialEntity);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (this.specialHitMH != null)
+                        this.specialHitMH.invoke(living);
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
@@ -182,6 +219,13 @@ public class EntitySentientArrow extends EntityTippedArrow {
                 break;
             default:
                 break;
+        }
+        if (this.specialArrow != null) {
+            try {
+                //this.specialUpdateMH.invoke();
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
         }
     }
 

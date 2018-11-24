@@ -343,8 +343,10 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
                         } else if (itemarrow == Items.SPECTRAL_ARROW) {
                             double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
                             entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), new PotionType(new PotionEffect(MobEffects.GLOWING, 200, 0)));
-                        } else
-                            entityArrow = itemarrow.createArrow(world, itemstack, player);
+                        } else {
+                            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+                            entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), itemarrow.createArrow(world, stack, entityLiving));
+                        }
 
                         entityArrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
 
