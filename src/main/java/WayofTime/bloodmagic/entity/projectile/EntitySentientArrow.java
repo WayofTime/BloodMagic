@@ -192,10 +192,12 @@ public class EntitySentientArrow extends EntityTippedArrow {
                 if (this.potion != null) {
                     this.spawnPotionParticles(2);
                 }
-                if (!this.world.isRemote && this.inGround && this.timeInGround > 0) {
+                if (!this.world.isRemote && this.inGround) {
                     this.world.createExplosion(this, this.posX, this.posY, this.posZ, currentLevel >= 0 ? destructiveExplosionRadius[currentLevel] : 0, false);
-                    createPotionFromArrow();
-                    this.setDead();
+                    if (this.potion != null && this.specialArrow == null) {
+                        createPotionFromArrow();
+                        this.setDead();
+                    }
                 }
                 break;
             case CORROSIVE:
@@ -220,16 +222,21 @@ public class EntitySentientArrow extends EntityTippedArrow {
             default:
                 break;
         }
+
         if (this.specialArrow != null) {
-            try {
-                //this.specialUpdateMH.invoke();
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
+            if (!this.world.isRemote)
+                try {
+                    this.specialUpdateMH.invoke();
+                    if (this.inGround)
+                        this.setDead();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
         }
     }
 
     //TODO: Potion particle colors. Using addPotionEffects has colors, but crashes with potion types added directly (like currently with spectral arrows).
+    //TODO: Make the potion go off immediatly instead of spawning a splash potion flask entity?
     private void createPotionFromArrow() {
         if (this.potion != null) {
             ItemStack explosionPotion = new ItemStack(Items.SPLASH_POTION);
@@ -277,7 +284,8 @@ public class EntitySentientArrow extends EntityTippedArrow {
 
     public void setFixedColor(int color) {
         this.fixedColor = true;
-        this.dataManager.set(COLOR, Integer.valueOf(color));
+        if (this.dataManager != null && this.dataManager.get(COLOR) != null)
+            this.dataManager.set(COLOR, color);
     }
 
     public void spawnPotionParticles(int particleCount) {
