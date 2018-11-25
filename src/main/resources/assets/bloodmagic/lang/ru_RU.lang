@@ -3,12 +3,12 @@ itemGroup.bloodmagic.creativeTab=Blood Magic
 itemGroup.bloodmagic.creativeTabTome=Blood Magic Upgrade Tomes
 
 #Items
-item.bloodmagic.activationCrystal.weak.name=Слабый кристалл активации
-item.bloodmagic.activationCrystal.awakened.name=Пробуждённый кристалл активации
-item.bloodmagic.activationCrystal.creative.name=Творческий кристалл активации
+item.bloodmagic.activation_crystal.weak.name=Слабый кристалл активации
+item.bloodmagic.activation_crystal.awakened.name=Пробуждённый кристалл активации
+item.bloodmagic.activation_crystal.creative.name=Творческий кристалл активации
 
-item.bloodmagic.sacrificialDagger.normal.name=Жертвенный кинжал
-item.bloodmagic.sacrificialDagger.creative.name=Творческий жертвенный кинжал
+item.bloodmagic.sacrificial_dagger.normal.name=Жертвенный кинжал
+item.bloodmagic.sacrificial_dagger.creative.name=Творческий жертвенный кинжал
 item.bloodmagic.pack.selfSacrifice.name=Blood Letter's Pack
 item.bloodmagic.pack.sacrifice.name=Coat of Arms
 item.bloodmagic.daggerOfSacrifice.name=Кинжал жертвоприношения
@@ -63,50 +63,79 @@ item.bloodmagic.reagent.virtus.name=Virtus
 item.bloodmagic.reagent.reductus.name=Reductus
 item.bloodmagic.reagent.potentia.name=Potentia
 
-item.bloodmagic.bloodShard.weak.name=Слабый кровавый осколок
-item.bloodmagic.bloodShard.demon.name=Демонический кровавый осколок
+item.bloodmagic.blood_shard.weak.name=Слабый кровавый осколок
+item.bloodmagic.blood_shard.demon.name=Демонический кровавый осколок
 
-item.bloodmagic.baseComponent.reagentWater.name=Реагент воды
-item.bloodmagic.baseComponent.reagentLava.name=Реагент лавы
-item.bloodmagic.baseComponent.reagentAir.name=Реагент воздуха
-item.bloodmagic.baseComponent.reagentFastMiner.name=Реагент добычи
-item.bloodmagic.baseComponent.reagentVoid.name=Реагент пустоты
-item.bloodmagic.baseComponent.reagentGrowth.name=Реагент роста
-item.bloodmagic.baseComponent.reagentAffinity.name=Реагент стихийного родства
-item.bloodmagic.baseComponent.reagentSight.name=Реагент взгляда
-item.bloodmagic.baseComponent.reagentBinding.name=Реагент связи
-item.bloodmagic.baseComponent.reagentSuppression.name=Реагент подавления
-item.bloodmagic.baseComponent.frameParts.name=Части каркаса
-item.bloodmagic.baseComponent.reagentBloodLight.name=Реагент света
-item.bloodmagic.baseComponent.reagentMagnetism.name=Реагент притяжения
-item.bloodmagic.baseComponent.reagentHaste.name=Реагент скорости
-item.bloodmagic.baseComponent.reagentBridge.name=Реагент моста
-item.bloodmagic.baseComponent.reagentCompression.name=Реагент сжатия
-item.bloodmagic.baseComponent.reagentSeverance.name=Реагент разделения
+item.bloodmagic.baseComponent.reagent_water.name=Реагент воды
+item.bloodmagic.baseComponent.reagent_lava.name=Реагент лавы
+item.bloodmagic.baseComponent.reagent_air.name=Реагент воздуха
+item.bloodmagic.baseComponent.reagent_fast_miner.name=Реагент добычи
+item.bloodmagic.baseComponent.reagent_void.name=Реагент пустоты
+item.bloodmagic.baseComponent.reagent_growth.name=Реагент роста
+item.bloodmagic.baseComponent.reagent_affinity.name=Реагент стихийного родства
+item.bloodmagic.baseComponent.reagent_sight.name=Реагент взгляда
+item.bloodmagic.baseComponent.reagent_binding.name=Реагент связи
+item.bloodmagic.baseComponent.reagent_suppression.name=Реагент подавления
+item.bloodmagic.baseComponent.reagent_blood_light.name=Реагент света
+item.bloodmagic.baseComponent.reagent_magnetism.name=Реагент притяжения
+item.bloodmagic.baseComponent.reagent_haste.name=Реагент скорости
+item.bloodmagic.baseComponent.reagent_bridge.name=Реагент моста
+item.bloodmagic.baseComponent.reagent_compression.name=Реагент сжатия
+item.bloodmagic.baseComponent.reagent_severance.name=Реагент разрыва
+item.bloodmagic.baseComponent.reagent_holding.name=Реагент удержания
+item.bloodmagic.baseComponent.reagent_claw.name=Реагент крюка
+item.bloodmagic.baseComponent.reagent_bounce.name=Реагент эластичности
+item.bloodmagic.baseComponent.reagent_frost.name=Реагент заморозки
+item.bloodmagic.baseComponent.reagent_teleposition.name=Реагент телепозиции
+item.bloodmagic.baseComponent.reagent_transposition.name=Реагент транспозиции
 
-item.bloodmagic.baseComponent.reagentTeleposition.name=Реагент телепозиции
-item.bloodmagic.baseComponent.reagentTransposition.name=Реагент транспозиции
+item.bloodmagic.baseComponent.frame_part.name=Части каркаса
+item.bloodmagic.baseComponent.sand_iron.name=Железный песок
+item.bloodmagic.baseComponent.sand_gold.name=Золотой песок
+item.bloodmagic.baseComponent.sand_coal.name=Угольный песок
+item.bloodmagic.baseComponent.plant_oil.name=Растительное масло
+item.bloodmagic.baseComponent.sulfur.name=Сульфур
+item.bloodmagic.baseComponent.saltpeter.name=Селитра
+item.bloodmagic.baseComponent.neuro_toxin.name=Нейротоксин
+item.bloodmagic.baseComponent.antiseptic.name=Антисептик
+
+item.bloodmagic.cutting_fluid.basic.name=Базовая режущая жидкость
+item.bloodmagic.cutting_fluid.explosive.name=Взрывчатый порошок
+
+item.bloodmagic.demonCrystal.default.name=Кристалл демонической энергии
+item.bloodmagic.demonCrystal.corrosive.name=Кристалл коррозионной энергии
+item.bloodmagic.demonCrystal.destructive.name=Кристалл разрушающей энергии
+item.bloodmagic.demonCrystal.vengeful.name=Кристалл мстительной энергии
+item.bloodmagic.demonCrystal.steadfast.name=Кристалл устойчивой энергии
 
 item.bloodmagic.monsterSoul.base.name=Демоническая энергия
+item.bloodmagic.monster_soul.corrosive.name=Коррозионная демоническая энергия
+item.bloodmagic.monster_soul.destructive.name=Разрушительная демоническая энергия
+item.bloodmagic.monster_soul.vengeful.name=Мстительная демоническая энергия
+item.bloodmagic.monster_soul.steadfast.name=Устойчивая демоническая энергия
 
 item.bloodmagic.sigil.air.name=Сигил воздуха
-item.bloodmagic.sigil.bloodLight.name=Сигил кровавого светильника
+item.bloodmagic.sigil.blood_light.name=Сигил кровавого светильника
 item.bloodmagic.sigil.compression.name=Сигил сжатия
 item.bloodmagic.sigil.divination.name=Сигил предсказания
 item.bloodmagic.sigil.water.name=Сигил воды
 item.bloodmagic.sigil.lava.name=Сигил лавы
 item.bloodmagic.sigil.void.name=Сигил пустоты
-item.bloodmagic.sigil.greenGrove.name=Сигил зеленой рощи
-item.bloodmagic.sigil.elementalAffinity.name=Сигил стихийного родства
+item.bloodmagic.sigil.green_grove.name=Сигил зеленой рощи
+item.bloodmagic.sigil.elemental_affinity.name=Сигил стихийного родства
 item.bloodmagic.sigil.haste.name=Сигил скорости
 item.bloodmagic.sigil.suppression.name=Сигил подавления
 item.bloodmagic.sigil.magnetism.name=Сигил притяжения
-item.bloodmagic.sigil.fastMiner.name=Сигил быстрого копателя
+item.bloodmagic.sigil.fast_miner.name=Сигил быстрого копателя
 item.bloodmagic.sigil.seer.name=Сигил зрения
-item.bloodmagic.sigil.phantomBridge.name=Сигил призрачного моста
+item.bloodmagic.sigil.phantom_bridge.name=Сигил призрачного моста
 item.bloodmagic.sigil.whirlwind.name=Сигил вихря
-item.bloodmagic.sigil.enderSeverance.name=Сигил разрыва Края
-
+item.bloodmagic.sigil.ender_severance.name=Сигил разрыва Края
+item.bloodmagic.sigil.holding.name=Сигил удержания
+item.bloodmagic.sigil.holding.display=&r%s: &o&n%s
+item.bloodmagic.sigil.claw.name=Сигил когтя
+item.bloodmagic.sigil.bounce.name=Сигил эластичности
+item.bloodmagic.sigil.frost.name=Сигил зимнего дыхания
 item.bloodmagic.sigil.teleposition.name=Сигил телепозиции
 item.bloodmagic.sigil.transposition.name=Сигил транспозиции
 
@@ -119,11 +148,12 @@ item.bloodmagic.sentientArmour.chest.name=Разумная кираса
 item.bloodmagic.sentientArmour.legs.name=Разумные поножи
 item.bloodmagic.sentientArmour.boots.name=Разумные ботинки
 
-item.bloodmagic.altarMaker.name=Altar Maker
+item.bloodmagic.altarMaker.name=Создатель алтаря
 
 item.bloodmagic.ritualDivinernormal.name=Предсказатель ритуала
 item.bloodmagic.ritualDivinerdusk.name=Предсказатель ритуала [Сумерки]
 item.bloodmagic.ritualDivinerdawn.name=Предсказатель ритуала [Рассвет]
+item.bloodmagic.ritualReader.name=Редактор ритуала
 
 item.bloodmagic.arcaneAshes.name=Волшебный пепел
 item.bloodmagic.upgradeTome.name=Living Armour Upgrade Tome
@@ -138,18 +168,33 @@ item.bloodmagic.soulGem.grand.name=Великий адский камень
 item.bloodmagic.soulSnare.base.name=Простая ловушка
 item.bloodmagic.sentientBow.name=Разумный лук
 item.bloodmagic.sentientArmourGem.name=Разумный камень
+item.bloodmagic.sentientAxe.name=Разумный топор
+item.bloodmagic.sentientPickaxe.name=Разумная кирка
+item.bloodmagic.sentientShovel.name=Разумная лопата
 
 item.bloodmagic.nodeRouter.name=Node Router
 item.bloodmagic.itemFilter.exact.name=Точный фильтр предметов
 item.bloodmagic.itemFilter.ignoreNBT.name=NBT фильтр предметов
 item.bloodmagic.itemFilter.modItems.name=Mod фильтр предметов
 item.bloodmagic.itemFilter.oreDict.name=OreDict фильтр предметов
+item.bloodmagic.fluidFilter.exact.name=Фильтр жидкостей
+
+item.bloodmagic.experienceTome.name=Том исследований
+item.bloodmagic.sanguineBook.name=Inspectoris Scandalum
+
+item.bloodmagic.living_point_upgrade.draft_angelus.name=Призыв Ангела
+
+item.bloodmagic.willGauge.name=Измеритель ауры демонической энергии
+item.bloodmagic.potionFlask.name=Фляжка для зелий
+
+item.bloodmagic.icarusScroll.name=Свиток Икаруса
 
 # Blocks
 tile.bloodmagic.fluid.lifeEssence.name=Жизненная эссенция
 
 tile.bloodmagic.stone.ritual.master.name=Главный ритуальный камень
 tile.bloodmagic.stone.ritual.imperfect.name=Неполноценный ритуальный камень
+tile.bloodmagic.stone.ritual.inverted.name=Инвертированный ритуальный камень
 
 tile.bloodmagic.altar.name=Кровавый алтарь
 tile.bloodmagic.alchemyArray.name=&r&fАлхимическая матрица
@@ -158,14 +203,13 @@ tile.bloodmagic.rune.blank.name=Чистая руна
 tile.bloodmagic.rune.speed.name=Руна скорости
 tile.bloodmagic.rune.efficiency.name=Руна эффективности
 tile.bloodmagic.rune.sacrifice.name=Руна жертвоприношения
-tile.bloodmagic.rune.selfSacrifice.name=Руна самопожертвования
+tile.bloodmagic.rune.self_sacrifice.name=Руна самопожертвования
 tile.bloodmagic.rune.displacement.name=Руна перемещения
 tile.bloodmagic.rune.capacity.name=Руна ёмкости
-tile.bloodmagic.rune.augCapacity.name=Руна дополнительной ёмкости
+tile.bloodmagic.rune.augmented_capacity.name=Руна дополнительной ёмкости
 tile.bloodmagic.rune.orb.name=Руна шара
 tile.bloodmagic.rune.acceleration.name=Руна ускорения
 tile.bloodmagic.rune.charging.name=Руна заряда
-
 
 tile.bloodmagic.ritualStone.blank.name=Ритуальный камень
 tile.bloodmagic.ritualStone.water.name=Ритуальный камень воды
@@ -175,10 +219,10 @@ tile.bloodmagic.ritualStone.air.name=Ритуальный камень возд�
 tile.bloodmagic.ritualStone.dusk.name=Ритуальный камень сумерек
 tile.bloodmagic.ritualStone.dawn.name=Ритуальный камень рассвета
 
-tile.bloodmagic.bloodstonebrick.large.name=Большой кровавый кирпич
-tile.bloodmagic.bloodstonebrick.brick.name=Кровавый кирпич
-tile.bloodmagic.crystal.large.name=Большой кристальный кирпич
-tile.bloodmagic.crystal.brick.name=Кристальный кирпич
+tile.bloodmagic.bloodstone_tile.name=Большой кровавый кирпич
+tile.bloodmagic.bloodstone_brick.brick.name=Кровавый кирпич
+tile.bloodmagic.crystal_tile.name=Большой кристальный кирпич
+tile.bloodmagic.crystal_brick.name=Кристальный кирпич
 tile.bloodmagic.bloodLight.name=Кровавый свет
 tile.bloodmagic.spectralBlock.name=Иллюзорный блок
 tile.bloodmagic.phantom.name=Призрачный блок
@@ -186,7 +230,10 @@ tile.bloodmagic.incenseAltar.name=Жертвенник для курений
 
 tile.bloodmagic.teleposer.name=Телепозер
 tile.bloodmagic.soulForge.name=Адская кузница
+tile.bloodmagic.alchemyTable.name=Стол алхимии
 tile.bloodmagic.demonCrucible.name=Демонический тигель
+tile.bloodmagic.demonPylon.name=Демонический пилон
+tile.bloodmagic.demonCrystallizer.name=Демонический кристаллизатор
 
 tile.bloodmagic.masterRouting.name=Master Routing Node
 tile.bloodmagic.outputRouting.name=Output Routing Node
@@ -205,18 +252,43 @@ tile.bloodmagic.path.obsidianTile.name=Узорная обсидиановая �
 tile.bloodmagic.dimensionalPortal.name=Пространственный портал
 tile.bloodmagic.bloodTank.name=Резервуар крови
 
+tile.bloodmagic.demonCrystal.default.name=Кристальный кластер демонической энергии
+tile.bloodmagic.demonCrystal.corrosive.name=Кристальный кластер коррозионной энергии
+tile.bloodmagic.demonCrystal.destructive.name=Кристальный кластер разрушительной энергии
+tile.bloodmagic.demonCrystal.vengeful.name=Кристальный кластер мстительной энергии
+tile.bloodmagic.demonCrystal.steadfast.name=Кристальный кластер устойчивой энергии
+
+tile.bloodmagic.mimic.nohitbox.name=Эфирный непрозрачный поддельный блок
+tile.bloodmagic.mimic.solidopaque.name=Непрозрачный поддельный блок
+tile.bloodmagic.mimic.solidclear.name=Чистый поддельный блок
+tile.bloodmagic.mimic.solidlight.name=Светящийся поддельный блок
+tile.bloodmagic.mimic.sentient.name=Разумный поддельный блок
+
+tile.bloodmagic.bricks1.brick1_raw.name=Сырые каменные кирпичи
+tile.bloodmagic.bricks1.brick1_corrosive.name=Коррозионные каменные кирпичи
+tile.bloodmagic.bricks1.brick1_destructive.name=Разрушительные каменные кирпичи
+tile.bloodmagic.bricks1.brick1_vengeful.name=Мстительные каменные кирпичи
+tile.bloodmagic.bricks1.brick1_steadfast.name=Устойчивые каменные кирпичи
+
+# Fluids
+fluid.lifeEssence=Жизненная эссенция
+
+# HUD
+hud.bloodmagic.inactive=Неактивный
+
 # Tooltips
 tooltip.bloodmagic.orb.desc=Хранит жизненную эссенцию
 tooltip.bloodmagic.orb.owner=Создан: %s
 tooltip.bloodmagic.currentOwner=Владелец: %s
 tooltip.bloodmagic.currentTier=Уровень: %d
-tooltip.bloodmagic.config.disabled=Запрещено настройками
+tooltip.bloodmagic.config.disabled=Отключено в настройках
+tooltip.bloodmagic.tier=Уровень %d
 
 tooltip.bloodmagic.activated=Активирован
 tooltip.bloodmagic.deactivated=Деактивирован
 
 tooltip.bloodmagic.sigil.air.desc=&oОщущается легкость...
-tooltip.bloodmagic.sigil.bloodLight.desc=&oЯ вижу свет!
+tooltip.bloodmagic.sigil.blood_light.desc=&oЯ вижу свет!
 tooltip.bloodmagic.sigil.compression.desc=&oКучи алмазов
 tooltip.bloodmagic.sigil.divination.desc=&oВзгляд в душу
 tooltip.bloodmagic.sigil.divination.otherNetwork=Заглянем в душу %s
@@ -224,15 +296,16 @@ tooltip.bloodmagic.sigil.divination.currentAltarTier=Уровень: %d
 tooltip.bloodmagic.sigil.divination.currentEssence=Эссенции: %d LP
 tooltip.bloodmagic.sigil.divination.currentAltarCapacity=Ёмкость: %d LP
 tooltip.bloodmagic.sigil.divination.currentTranquility=Спокойствие: %d
+tooltip.bloodmagic.sigil.divination.currentInversion=Инверсия: %d
 tooltip.bloodmagic.sigil.divination.currentBonus=Бонус: +%d%%
 tooltip.bloodmagic.sigil.water.desc=&oНужна вода?
 tooltip.bloodmagic.sigil.lava.desc=&oГОРЯЧЕЕ! НЕ ЕСТЬ!
 tooltip.bloodmagic.sigil.void.desc=&oЛучше чем Swiffer!
-tooltip.bloodmagic.sigil.greenGrove.desc=&oЭкологически чистый
+tooltip.bloodmagic.sigil.green_grove.desc=&oЭкологически чистый
 tooltip.bloodmagic.sigil.magnetism.desc=&oЯ очень притягательная личность!
 tooltip.bloodmagic.sigil.suppression.desc=&oЛучше, чем телекинез...
 tooltip.bloodmagic.sigil.haste.desc=&oПосле 42 чашек кофе...
-tooltip.bloodmagic.sigil.fastMiner.desc=&oВсе глубже и глубже...
+tooltip.bloodmagic.sigil.fast_miner.desc=&oВсе глубже и глубже...
 tooltip.bloodmagic.sigil.elementalAffinity.desc=&oПадающая огненная рыба!
 tooltip.bloodmagic.sigil.seer.desc=&oКогда просто видеть недостаточно
 tooltip.bloodmagic.sigil.seer.currentAltarProgress=Прогресс: %d LP/ %s LP
@@ -245,11 +318,15 @@ tooltip.bloodmagic.sigil.seer.currentCharge=Заряд: %d
 tooltip.bloodmagic.sigil.seer.currentTranquility=Спокойствие: %d
 tooltip.bloodmagic.sigil.seer.currentBonus=Бонус: +%d%%
 tooltip.bloodmagic.sigil.phantomBridge.desc=&oПрогулки в воздухе...
-tooltip.bloodmagic.sigil.whirlwind.desc=&oЛучше не одевать юбку
+tooltip.bloodmagic.sigil.whirlwind.desc=&oЛучше не надевать юбку
 tooltip.bloodmagic.sigil.enderSeverance.desc=&oНеприятности для странников Края!
-
 tooltip.bloodmagic.sigil.teleposition.desc=Я очень близок к возможности перемещения.
-tooltip.bloodmagic.sigil.transposition.desc=Ощути Силу, мой юный ученик.
+tooltip.bloodmagic.sigil.transposition.desc=Ощути силу, мой юный ученик.
+tooltip.bloodmagic.sigil.holding.press=Нажмите &o%s&r&7 для открытия
+tooltip.bloodmagic.sigil.holding.desc=Может хранить сигилы.
+tooltip.bloodmagic.sigil.holding.sigilInSlot=Слот %d: %s
+
+tooltip.bloodmagic.livingArmourPointsUpgrade.desc=Увеличивает максимальное количество очков Живой Брони до %d.
 
 tooltip.bloodmagic.bound.sword.desc=&oОтбраковка слабаков
 tooltip.bloodmagic.bound.pickaxe.desc=&oБезжалостное уничтожение камня
@@ -260,30 +337,32 @@ tooltip.bloodmagic.sacrificialDagger.desc=Небольшой надрез на �
 tooltip.bloodmagic.slate.desc=Камень, наполненный в кровавом алтаре
 tooltip.bloodmagic.inscriber.desc=Надписи на стене...
 
-tooltip.bloodmagic.pack.selfSacrifice.desc=This pack really chafes...
+tooltip.bloodmagic.pack.selfSacrifice.desc=Это реально раздражает...
 tooltip.bloodmagic.pack.sacrifice.desc=Description
 tooltip.bloodmagic.pack.stored=Накоплено: %d LP
 
 tooltip.bloodmagic.activationCrystal.weak=Активирует простые ритуалы
 tooltip.bloodmagic.activationCrystal.awakened=Активирует сложные ритуалы
-tooltip.bloodmagic.activationCrystal.creative=Только в креативе - активирует любые ритуалы
+tooltip.bloodmagic.activationCrystal.creative=Только для творческого режима. Активирует любые ритуалы
 
-tooltip.bloodmagic.diviner.currentRitual=Выбранный ритуал: 
-tooltip.bloodmagic.diviner.blankRune=Ритуальных камней: %d
-tooltip.bloodmagic.diviner.waterRune=Камней воды: %d
-tooltip.bloodmagic.diviner.airRune=Камней воздуха: %d
-tooltip.bloodmagic.diviner.fireRune=Камней огня: %d
-tooltip.bloodmagic.diviner.earthRune=Камней земли: %d
-tooltip.bloodmagic.diviner.duskRune=Камней сумерек: %d
-tooltip.bloodmagic.diviner.dawnRune=Камней рассвета: %d
-tooltip.bloodmagic.diviner.totalRune=Всего ритуальных камней: %d
-tooltip.bloodmagic.diviner.extraInfo=Shift для дополнительной информации
+tooltip.bloodmagic.diviner.currentRitual=Выбранный ритуал: %s
+tooltip.bloodmagic.diviner.blankRune=Чистые руны: %d
+tooltip.bloodmagic.diviner.waterRune=Руны воды: %d
+tooltip.bloodmagic.diviner.airRune=Руны воздуха: %d
+tooltip.bloodmagic.diviner.fireRune=Руны огня: %d
+tooltip.bloodmagic.diviner.earthRune=Руны земли: %d
+tooltip.bloodmagic.diviner.duskRune=Руны сумерек: %d
+tooltip.bloodmagic.diviner.dawnRune=Руны рассвета: %d
+tooltip.bloodmagic.diviner.totalRune=Всего рун: %d
+tooltip.bloodmagic.diviner.extraInfo=&9-Удерживайте Shift для информации о рунах-
+tooltip.bloodmagic.diviner.extraExtraInfo=&9-Удерживайте Shift+M для информации о ритуале-
 tooltip.bloodmagic.diviner.currentDirection=Направление: %s
 
 tooltip.bloodmagic.arcaneAshes=Пепел для начертания алхимических знаков
 
 tooltip.bloodmagic.telepositionFocus.coords=Координаты: (%d, %d, %d)
 tooltip.bloodmagic.telepositionFocus.dimension=ID Измерения: %d
+tooltip.bloodmagic.telepositionFocus.bound=Владелец: %s. Координаты: %d, %d, %d
 tooltip.bloodmagic.telepositionFocus.weak=Может перемещать блоки
 tooltip.bloodmagic.telepositionFocus.enhanced=Может перемещать блоки
 tooltip.bloodmagic.telepositionFocus.reinforced=Может перемещать блоки
@@ -295,7 +374,7 @@ tooltip.bloodmagic.livingArmour.upgrade.poisonResist=Стойкость к яд�
 tooltip.bloodmagic.livingArmour.upgrade.selfSacrifice=Твердые ладони
 tooltip.bloodmagic.livingArmour.upgrade.knockback=Культурист
 tooltip.bloodmagic.livingArmour.upgrade.physicalProtect=Толстая кожа
-tooltip.bloodmagic.livingArmour.upgrade.health=Здровый
+tooltip.bloodmagic.livingArmour.upgrade.health=Здоровый
 tooltip.bloodmagic.livingArmour.upgrade.meleeDamage=Свирепый удар
 tooltip.bloodmagic.livingArmour.upgrade.arrowShot=Меткий стрелок
 tooltip.bloodmagic.livingArmour.upgrade.stepAssist=Высокий шаг
@@ -303,11 +382,38 @@ tooltip.bloodmagic.livingArmour.upgrade.grimReaper=Избежал смерти
 tooltip.bloodmagic.livingArmour.upgrade.solarPowered=Солнечная энергия
 tooltip.bloodmagic.livingArmour.upgrade.thaumRunicShielding=Рунический щит
 tooltip.bloodmagic.livingArmour.upgrade.revealing=Обнаружение
+tooltip.bloodmagic.livingArmour.upgrade.experienced=Опытный
+tooltip.bloodmagic.livingArmour.upgrade.jump=Сильные ноги
+tooltip.bloodmagic.livingArmour.upgrade.fallProtect=Мягкое падение
+tooltip.bloodmagic.livingArmour.upgrade.graveDigger=Копатель могил
+tooltip.bloodmagic.livingArmour.upgrade.sprintAttack=Заряженный удар
+tooltip.bloodmagic.livingArmour.upgrade.criticalStrike=Сильный удар
+tooltip.bloodmagic.livingArmour.upgrade.elytra=Элитра
+tooltip.bloodmagic.livingArmour.upgrade.nightSight=Ночная доблесть
+tooltip.bloodmagic.livingArmour.upgrade.repair=Восстанавливающий
+
+tooltip.bloodmagic.livingArmour.upgrade.slowness=Слабые ноги
+tooltip.bloodmagic.livingArmour.upgrade.crippledArm=Сильная рука
+tooltip.bloodmagic.livingArmour.upgrade.slippery=Свободная тяга
+tooltip.bloodmagic.livingArmour.upgrade.battleHunger=Боевой голод
+tooltip.bloodmagic.livingArmour.upgrade.quenched=Охлаждение
+tooltip.bloodmagic.livingArmour.upgrade.meleeDecrease=Тупой меч
+tooltip.bloodmagic.livingArmour.upgrade.digSlowdown=Слабая кирка
+tooltip.bloodmagic.livingArmour.upgrade.stormTrooper=Штурмовик
+tooltip.bloodmagic.livingArmour.upgrade.slowHeal=Больной
+tooltip.bloodmagic.livingArmour.upgrade.disoriented=Дезориентированный
+
 tooltip.bloodmagic.livingArmour.upgrade.level=%s (Уровень %d)
+tooltip.bloodmagic.livingArmour.upgrade.progress=%s (%d/100)
 tooltip.bloodmagic.livingArmour.upgrade.points=&6Очки улучшения: %s / %s
+
+tooltip.bloodmagic.livingArmour.extraExtraInfo=&9-Удерживайте Shift+M для информации об уровне-
 
 tooltip.bloodmagic.will=Энергии: %1$,.2f
 tooltip.bloodmagic.sentientSword.desc=Использует демоническую энергию для максимальной эффективности.
+tooltip.bloodmagic.sentientAxe.desc=Использует демоническую энергию для максимальной эффективности.
+tooltip.bloodmagic.sentientPickaxe.desc=Использует демоническую энергию для максимальной эффективности.
+tooltip.bloodmagic.sentientShovel.desc=Использует демоническую энергию для максимальной эффективности.
 tooltip.bloodmagic.soulGem.petty=Этот камень может хранить очень мало энергии
 tooltip.bloodmagic.soulGem.lesser=Этот камень может хранить немного энергии
 tooltip.bloodmagic.soulGem.common=Этот камень может хранить среднее количество энергии
@@ -323,6 +429,32 @@ tooltip.bloodmagic.itemFilter.oreDict=Фильтр использующий Ore 
 tooltip.bloodmagic.fluid.type=Жидкость: %s
 tooltip.bloodmagic.fluid.amount=Кол-во: %d / %d мВ
 tooltip.bloodmagic.fluid.capacity=Ёмкость: %d мВ
+
+tooltip.bloodmagic.ghost.everything=Все
+tooltip.bloodmagic.ghost.amount=Количество призрачных предметов: %d
+
+tooltip.bloodmagic.currentType.default=Содержит сырую энергию
+tooltip.bloodmagic.currentType.corrosive=Содержит коррозионную энергию
+tooltip.bloodmagic.currentType.destructive=Содержит разрушающую энергию
+tooltip.bloodmagic.currentType.vengeful=Содержит мстительную энергию
+tooltip.bloodmagic.currentType.steadfast=Содержит устойчивую энергию
+
+tooltip.bloodmagic.currentBaseType.default=Сырая
+tooltip.bloodmagic.currentBaseType.corrosive=Коррозионная
+tooltip.bloodmagic.currentBaseType.destructive=Разрушительная
+tooltip.bloodmagic.currentBaseType.vengeful=Мстительная
+tooltip.bloodmagic.currentBaseType.steadfast=Устойчивая
+
+tooltip.bloodmagic.experienceTome=Книга для сбора опыта
+tooltip.bloodmagic.experienceTome.exp=Опыт: %0.3f
+tooltip.bloodmagic.experienceTome.expLevel=Уровень: %d
+
+tooltip.bloodmagic.decoration.safe=Безопасно для украшения
+tooltip.bloodmagic.decoration.notSafe=Опасно для украшения
+
+tooltip.bloodmagic.cuttingFluidRatio=%d/%d использований осталось
+
+tooltip.bloodmagic.potion.uses=%d использований осталось
 
 # Ritual
 ritual.bloodmagic.testRitual=Тестовый ритуал
@@ -345,7 +477,11 @@ ritual.bloodmagic.expulsionRitual=Аура изгнания
 ritual.bloodmagic.zephyrRitual=Зов Зефира
 ritual.bloodmagic.upgradeRemoveRitual=Звук очищения душ
 ritual.bloodmagic.armourEvolveRitual=Ритуал эволюции
-
+ritual.bloodmagic.animalGrowthRitual=Ритуал Шеперда
+ritual.bloodmagic.forsakenSoulRitual=Сбор покинутых душ 
+ritual.bloodmagic.crystalHarvestRitual=Трещина разрушенного кристалла
+ritual.bloodmagic.meteorRitual=Ритуал падающей башни
+ritual.bloodmagic.ellipseRitual=Фокус эллипсоида
 ritual.bloodmagic.cobblestoneRitual=Le Vulcanos Frigius
 ritual.bloodmagic.placerRitual=Наполнитель
 ritual.bloodmagic.fellingRitual=Дровосек
@@ -353,16 +489,24 @@ ritual.bloodmagic.pumpRitual=Гимн откачки
 ritual.bloodmagic.altarBuilderRitual=Строитель алтаря
 ritual.bloodmagic.portalRitual=Ритуал врат
 
+ritual.bloodmagic.waterRitual.info=Создаёт источник воды на главном ритуальном камне
+ritual.bloodmagic.lavaRitual.info=Создаёт источник лавы на главном ритуальном камне
+ritual.bloodmagic.lavaRitual.default.info=(Сырая) Уменьшает затраты LP на создание лавы и позволяет помещать лаву внутрь привязанного контейнера
+ritual.bloodmagic.lavaRitual.corrosive.info=(Коррозионная) Повреждает сущностей (Находящихся в зоне действия ритуала), которые невосприимчивы к огню.
+ritual.bloodmagic.lavaRitual.destructive.info=(Разрушительная) Радиус создания лавы увеличивается в зависимости от общей энергии.
+ritual.bloodmagic.lavaRitual.vengeful.info=(Мстительная) Защищает сущностей (Находящихся в зоне действия ритуала) от огня.
+ritual.bloodmagic.lavaRitual.steadfast.info=(Устойчивая) Защищает игроков в пределах заданного диапазона от огня.
+
 # Chat
 chat.bloodmagic.altarMaker.setTier=Установить уровень: %d
 chat.bloodmagic.altarMaker.building=Строится алтарь %d уровня
 chat.bloodmagic.altarMaker.destroy=Разобран алтарь %d уровня
 chat.bloodmagic.altarMaker.creativeOnly=Предмет только для креатива.
 
-chat.bloodmagic.damageSource=душа %s слишком ослабла
+chat.bloodmagic.damageSource=Душа %s слишком ослабла
 
-chat.bloodmagic.ritual.weak=Вы чувствуете толчок, но слишком слабый, чтобы выполнить ритуал.
-chat.bloodmagic.ritual.prevent=Ритуал сопротивляется вашему воздействию!
+chat.bloodmagic.ritual.weak=Вы слишком слабы, чтобы активировать ритуал.
+chat.bloodmagic.ritual.prevent=Ритуал сопротивляется Вам!
 chat.bloodmagic.ritual.activate=Потоки энергии текут через ритуал!
 chat.bloodmagic.ritual.notValid=Вы чувствуете, что руны стоят неправильно...
 
@@ -375,6 +519,7 @@ jei.bloodmagic.recipe.altar=Кровавый алтарь
 jei.bloodmagic.recipe.binding=Алхимическая матрица (Связывание)
 jei.bloodmagic.recipe.alchemyArrayCrafting=Алхимическая матрица
 jei.bloodmagic.recipe.soulForge=Адская кузница
+jei.bloodmagic.recipe.alchemyTable=Стол алхимии
 jei.bloodmagic.recipe.requiredLP=LP: %d
 jei.bloodmagic.recipe.requiredTier=Уровень: %d
 jei.bloodmagic.recipe.consumptionRate=Расход: %d LP/t
@@ -382,15 +527,16 @@ jei.bloodmagic.recipe.drainRate=Потери: %d LP/t
 jei.bloodmagic.recipe.minimumSouls=Минимум: %1$,.2f энергии
 jei.bloodmagic.recipe.soulsDrained=Затраты: %1$,.2f энергии
 
-jei.bloodmagic.desc.altarBuilder=A creative-only item for use in debugging and testing.\n\nShift + Right click to change the tier to build. Right click an Altar to initiate the build.\n\nBreak an Altar while holding to dismantle it.
+jei.bloodmagic.desc.altarBuilder=Креативный предмет, который используется для отладки и тестирования.\n\nShift+ПКМ для выбора уровня алтаря. ПКМ по алтарю для постройки.\n\nЛКМ по алтарю чтобы разобрать алтарь.
 jei.bloodmagic.desc.demonicWill=An imprint of a demonic entity attached to a creature.\n\nCan be obtained by killing a mob with a sentient weapon or by throwing a snare at a mob and killing it while it has white particles.
 
 # WAILA
-waila.bloodmagic.sneak=&oSneak for Information
+waila.bloodmagic.sneak=&oShift для отображения полной информации
 waila.bloodmagic.array.reagent=Реагент: %s
 waila.bloodmagic.array.catalyst=Катализатор: %s
-option.bloodmagic.bypassSneak=Bypass Sneak
+option.bloodmagic.bypassSneak=Полная информация без Shift
 option.bloodmagic.bloodAltar=Кровавый алтарь
+option.bloodmagic.bloodTank=Резервуар крови
 option.bloodmagic.ritualController=Ритуальные камни
 option.bloodmagic.teleposer=Телепозер
 option.bloodmagic.array=Алхимическая матрица
@@ -402,3 +548,6 @@ tc.research_category.BLOODMAGIC=Sanguine Arcana
 bloodmagic.research_name.BLOODMAGIC=Blood Magic
 bloodmagic.research_text.BLOODMAGIC=Sanguine Arcana
 bloodmagic.research_page.BLOODMAGIC.1=The realm of the Blood Magics has always appeared to be a more solitary and "individual" art with blood mages being notoriously reclusive and a bit insane at times. However, the powers of self-sacrifice and life essence have uses even beyond a normal blood mage's sight, in fact, it is quite apparent that it may have some uses in thaumaturgy after all!
+
+# Buttons
+button.bloodmagic.tooltip.fill=Заполнить сеть
