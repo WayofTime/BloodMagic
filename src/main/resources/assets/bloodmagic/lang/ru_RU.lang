@@ -64,7 +64,7 @@ item.bloodmagic.reagent.reductus.name=Reductus
 item.bloodmagic.reagent.potentia.name=Potentia
 
 item.bloodmagic.blood_shard.weak.name=Слабый кровавый осколок
-item.bloodmagic.blood_shard.demon.name=Демонический кровавый осколок
+item.bloodmagic.blood_shard.demonic.name=Демонический кровавый осколок
 
 item.bloodmagic.baseComponent.reagent_water.name=Реагент воды
 item.bloodmagic.baseComponent.reagent_lava.name=Реагент лавы
@@ -94,10 +94,12 @@ item.bloodmagic.baseComponent.sand_iron.name=Железный песок
 item.bloodmagic.baseComponent.sand_gold.name=Золотой песок
 item.bloodmagic.baseComponent.sand_coal.name=Угольный песок
 item.bloodmagic.baseComponent.plant_oil.name=Растительное масло
-item.bloodmagic.baseComponent.sulfur.name=Сульфур
+item.bloodmagic.baseComponent.sulfur.name=Сера
 item.bloodmagic.baseComponent.saltpeter.name=Селитра
 item.bloodmagic.baseComponent.neuro_toxin.name=Нейротоксин
 item.bloodmagic.baseComponent.antiseptic.name=Антисептик
+item.bloodmagic.baseComponent.catalyst_length_1.name=Слабый удлиняющий катализатор
+item.bloodmagic.baseComponent.catalyst_power_1.name=Слабый усиливающий катализатор
 
 item.bloodmagic.cutting_fluid.basic.name=Базовая режущая жидкость
 item.bloodmagic.cutting_fluid.explosive.name=Взрывчатый порошок
@@ -108,7 +110,7 @@ item.bloodmagic.demonCrystal.destructive.name=Кристалл разрушаю�
 item.bloodmagic.demonCrystal.vengeful.name=Кристалл мстительной энергии
 item.bloodmagic.demonCrystal.steadfast.name=Кристалл устойчивой энергии
 
-item.bloodmagic.monsterSoul.base.name=Демоническая энергия
+item.bloodmagic.monster_soul.raw.name=Демоническая энергия
 item.bloodmagic.monster_soul.corrosive.name=Коррозионная демоническая энергия
 item.bloodmagic.monster_soul.destructive.name=Разрушительная демоническая энергия
 item.bloodmagic.monster_soul.vengeful.name=Мстительная демоническая энергия
@@ -149,6 +151,7 @@ item.bloodmagic.sentientArmour.legs.name=Разумные поножи
 item.bloodmagic.sentientArmour.boots.name=Разумные ботинки
 
 item.bloodmagic.altarMaker.name=Создатель алтаря
+item.bloodmagic.alchemic_vial.base.name=Алхимическая пробирка
 
 item.bloodmagic.ritualDivinernormal.name=Предсказатель ритуала
 item.bloodmagic.ritualDivinerdusk.name=Предсказатель ритуала [Сумерки]
@@ -160,7 +163,7 @@ item.bloodmagic.upgradeTome.name=Living Armour Upgrade Tome
 item.bloodmagic.upgradeTrainer.name=Living Armour Training Bracelet
 
 item.bloodmagic.sentientSword.name=Разумный меч
-item.bloodmagic.soulGem.petty.name=Мелкий адский камень
+item.bloodmagic.soulGem.petty.name=Маленький адский камень
 item.bloodmagic.soulGem.lesser.name=Небольшой адский камень
 item.bloodmagic.soulGem.common.name=Обычный адский камень
 item.bloodmagic.soulGem.greater.name=Большой адский камень
@@ -180,7 +183,7 @@ item.bloodmagic.itemFilter.oreDict.name=OreDict фильтр предметов
 item.bloodmagic.fluidFilter.exact.name=Фильтр жидкостей
 
 item.bloodmagic.experienceTome.name=Том исследований
-item.bloodmagic.sanguineBook.name=Inspectoris Scandalum
+item.bloodmagic.sanguineBook.name=Инспектор блоков
 
 item.bloodmagic.living_point_upgrade.draft_angelus.name=Призыв Ангела
 
@@ -220,7 +223,7 @@ tile.bloodmagic.ritualStone.dusk.name=Ритуальный камень суме
 tile.bloodmagic.ritualStone.dawn.name=Ритуальный камень рассвета
 
 tile.bloodmagic.bloodstone_tile.name=Большой кровавый кирпич
-tile.bloodmagic.bloodstone_brick.brick.name=Кровавый кирпич
+tile.bloodmagic.bloodstone_brick.name=Кровавый кирпич
 tile.bloodmagic.crystal_tile.name=Большой кристальный кирпич
 tile.bloodmagic.crystal_brick.name=Кристальный кирпич
 tile.bloodmagic.bloodLight.name=Кровавый свет
@@ -241,13 +244,13 @@ tile.bloodmagic.inputRouting.name=Input Routing Node
 tile.bloodmagic.itemRouting.name=Routing Node
 
 tile.bloodmagic.path.wood.name=Деревянная дорожка
-tile.bloodmagic.path.woodTile.name=Узорная деревянная дорожка
+tile.bloodmagic.path.woodtile.name=Узорная деревянная дорожка
 tile.bloodmagic.path.stone.name=Каменная дорожка
-tile.bloodmagic.path.stoneTile.name=Узорная каменная дорожка
+tile.bloodmagic.path.stonetile.name=Узорная каменная дорожка
 tile.bloodmagic.path.wornstone.name=Старая каменная дорожка
-tile.bloodmagic.path.wornstoneTile.name=Узорная старая каменная дорожка
+tile.bloodmagic.path.wornstonetile.name=Узорная старая каменная дорожка
 tile.bloodmagic.path.obsidian.name=Обсидиановая дорожка
-tile.bloodmagic.path.obsidianTile.name=Узорная обсидиановая дорожка
+tile.bloodmagic.path.obsidiantile.name=Узорная обсидиановая дорожка
 
 tile.bloodmagic.dimensionalPortal.name=Пространственный портал
 tile.bloodmagic.bloodTank.name=Резервуар крови
@@ -341,9 +344,9 @@ tooltip.bloodmagic.pack.selfSacrifice.desc=Это реально раздраж�
 tooltip.bloodmagic.pack.sacrifice.desc=Description
 tooltip.bloodmagic.pack.stored=Накоплено: %d LP
 
-tooltip.bloodmagic.activationCrystal.weak=Активирует простые ритуалы
-tooltip.bloodmagic.activationCrystal.awakened=Активирует сложные ритуалы
-tooltip.bloodmagic.activationCrystal.creative=Только для творческого режима. Активирует любые ритуалы
+tooltip.bloodmagic.activation_crystal.weak=Активирует простые ритуалы
+tooltip.bloodmagic.activation_crystal.awakened=Активирует сложные ритуалы
+tooltip.bloodmagic.activation_crystal.creative=Только для творческого режима. Активирует любые ритуалы
 
 tooltip.bloodmagic.diviner.currentRitual=Выбранный ритуал: %s
 tooltip.bloodmagic.diviner.blankRune=Чистые руны: %d
@@ -513,6 +516,22 @@ chat.bloodmagic.ritual.notValid=Вы чувствуете, что руны ст�
 chat.bloodmagic.livingArmour.upgrade.poisonRemove=You are starting to feel better already!
 chat.bloodmagic.livingArmour.upgrade.grimReaper=&6Темные силы спасли вас за секунду до смерти!
 chat.bloodmagic.livingArmour.newUpgrade=&4Получено улучшение!
+
+# Commands
+commands.bloodmagic.error.arg.invalid=Неправильные аргументы
+commands.bloodmagic.error.arg.missing=Мало аргументов
+commands.bloodmagic.error.arg.player.missing=Вы должны указать никнейм игрока
+commands.bloodmagic.error.404=Команда не найдена!
+commands.bloodmagic.error.unknown=Неизвестная команда!
+commands.bloodmagic.error.perm=У Вас недостаточно прав для выполнения данной команды.
+
+commands.bloodmagic.success=Выполнено успешно
+
+commands.bloodmagic.format.help=%s - %s
+commands.bloodmagic.format.error=%s - %s
+
+commands.bloodmagic.help.usage=/bloodmagic help
+commands.bloodmagic.help.help=Отображает информацию о команде "/bloodmagic".
 
 # JustEnoughItems
 jei.bloodmagic.recipe.altar=Кровавый алтарь
