@@ -57,8 +57,11 @@ public class Binding implements INBTSerializable<NBTTagCompound> {
 
     @Nullable
     public static Binding fromStack(ItemStack stack) {
-        if (!stack.hasTagCompound()) // Definitely hasn't been bound yet.
+//        if (!stack.hasTagCompound()) // Definitely hasn't been bound yet.
+//            return null;
+        if (stack.getTagCompound() == null) // hasTagCompound doesn't work on empty stacks with tags
             return null;
+
 
         NBTBase bindingTag = stack.getTagCompound().getTag("binding");
         if (bindingTag == null || bindingTag.getId() != 10 || bindingTag.hasNoTags()) // Make sure it's both a tag compound and that it has actual data.
@@ -67,5 +70,10 @@ public class Binding implements INBTSerializable<NBTTagCompound> {
         Binding binding = new Binding();
         binding.deserializeNBT((NBTTagCompound) bindingTag);
         return binding;
+    }
+
+    @Override
+    public String toString() {
+        return "Binding{" + "uuid=" + uuid + ", name='" + name + '\'' + '}';
     }
 }
