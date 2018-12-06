@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("zephyr")
 public class RitualZephyr extends Ritual {
     public static final String ZEPHYR_RANGE = "zephyrRange";
     public static final String CHEST_RANGE = "chest";
@@ -66,7 +67,7 @@ public class RitualZephyr extends Ritual {
                 }
             }
 
-            masterRitualStone.getOwnerNetwork().syphon(this.getRefreshCost() * Math.min(count, 100));
+            masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost() * Math.min(count, 100)));
         }
     }
 

@@ -77,6 +77,6 @@ public class BlockPhantom extends Block implements IVariantProvider {
     @Nullable
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
-        return new TilePhantomBlock(100);
+        return new TilePhantomBlock(20);
     }
 }

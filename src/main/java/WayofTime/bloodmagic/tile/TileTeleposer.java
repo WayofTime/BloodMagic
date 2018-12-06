@@ -1,15 +1,15 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.event.TeleposeEvent;
-import WayofTime.bloodmagic.teleport.TeleportQueue;
-import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockTeleposer;
+import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.core.data.SoulTicket;
+import WayofTime.bloodmagic.event.TeleposeEvent;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.ritual.portal.Teleports;
+import WayofTime.bloodmagic.teleport.TeleportQueue;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.List;
+import java.util.UUID;
 
 public class TileTeleposer extends TileInventory implements ITickable {
     //TODO FUTURE: Make AreaDescriptor for Teleposer perhaps?
@@ -75,21 +76,21 @@ public class TileTeleposer extends TileInventory implements ITickable {
                 final int focusLevel = (getStackInSlot(0).getItemDamage() + 1);
                 final int lpToBeDrained = (int) (0.5F * Math.sqrt((pos.getX() - focusPos.getX()) * (pos.getX() - focusPos.getX()) + (pos.getY() - focusPos.getY() + 1) * (pos.getY() - focusPos.getY() + 1) + (pos.getZ() - focusPos.getZ()) * (pos.getZ() - focusPos.getZ())));
 
-                if (NetworkHelper.getSoulNetwork(binding).syphonAndDamage(PlayerHelper.getPlayerFromUUID(binding.getOwnerId()), lpToBeDrained * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1))) {
+                if (NetworkHelper.syphonFromContainer(focusStack, SoulTicket.block(world, pos, lpToBeDrained * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1)))) {
                     int blocksTransported = 0;
 
                     for (int i = -(focusLevel - 1); i <= (focusLevel - 1); i++) {
                         for (int j = 0; j <= (focusLevel * 2 - 2); j++) {
                             for (int k = -(focusLevel - 1); k <= (focusLevel - 1); k++) {
                                 TeleposeEvent event = new TeleposeEvent(getWorld(), pos.add(i, 1 + j, k), focusWorld, focusPos.add(i, 1 + j, k));
-                                if (Utils.swapLocations(event.initalWorld, event.initialBlockPos, event.finalWorld, event.finalBlockPos) && !MinecraftForge.EVENT_BUS.post(event)) {
+                                if (!MinecraftForge.EVENT_BUS.post(event) && Utils.swapLocations(event.initalWorld, event.initialBlockPos, event.finalWorld, event.finalBlockPos)) {
                                     blocksTransported++;
                                 }
                             }
                         }
                     }
 
-                    NetworkHelper.syphonFromContainer(focusStack, lpToBeDrained * blocksTransported);
+                    NetworkHelper.syphonFromContainer(focusStack, SoulTicket.item(focusStack, world, pos, lpToBeDrained * blocksTransported));
 
                     List<Entity> originalWorldEntities;
                     List<Entity> focusWorldEntities;
@@ -97,34 +98,33 @@ public class TileTeleposer extends TileInventory implements ITickable {
                     originalWorldEntities = getWorld().getEntitiesWithinAABB(Entity.class, originalArea);
                     AxisAlignedBB focusArea = new AxisAlignedBB(focusPos.getX(), focusPos.getY() + 1, focusPos.getZ(), focusPos.getX() + 1, Math.min(focusWorld.getHeight(), focusPos.getY() + 2 * focusLevel), focusPos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
                     focusWorldEntities = focusWorld.getEntitiesWithinAABB(Entity.class, focusArea);
-
+                    UUID bindingOwnerID = binding.getOwnerId();
                     if (focusWorld.equals(getWorld())) {
                         if (!originalWorldEntities.isEmpty()) {
                             for (Entity entity : originalWorldEntities) {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, binding.getOwnerId(), true));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, bindingOwnerID, true));
                             }
                         }
 
                         if (!focusWorldEntities.isEmpty()) {
                             for (Entity entity : focusWorldEntities) {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, binding.getOwnerId(), true));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, bindingOwnerID, true));
+                            }
+                        }
+
+                    } else {
+                        if (!originalWorldEntities.isEmpty()) {
+                            for (Entity entity : originalWorldEntities) {
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, bindingOwnerID, getWorld(), focusWorld.provider.getDimension(), true));
+                            }
+                        }
+
+                        if (!focusWorldEntities.isEmpty()) {
+                            for (Entity entity : focusWorldEntities) {
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, bindingOwnerID, focusWorld, getWorld().provider.getDimension(), true));
                             }
                         }
                     }
-                    // FIXME - Fix cross-dimension teleports causing major desync
-//                    } else {
-//                        if (!originalWorldEntities.isEmpty()) {
-//                            for (Entity entity : originalWorldEntities) {
-//                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), getWorld(), focusWorld.provider.getDimension(), true));
-//                            }
-//                        }
-//
-//                        if (!focusWorldEntities.isEmpty()) {
-//                            for (Entity entity : focusWorldEntities) {
-//                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), focusWorld, getWorld().provider.getDimension(), true));
-//                            }
-//                        }
-//                    }
                 }
             }
         }

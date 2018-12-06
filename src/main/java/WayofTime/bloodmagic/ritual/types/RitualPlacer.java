@@ -15,6 +15,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.function.Consumer;
 
+@RitualRegister("placer")
 public class RitualPlacer extends Ritual {
     public static final String PLACER_RANGE = "placerRange";
     public static final String CHEST_RANGE = "chest";
@@ -66,7 +67,7 @@ public class RitualPlacer extends Ritual {
                         world.setBlockState(blockPos, placeState);
                         itemHandler.extractItem(invSlot, 1, false);
                         tileEntity.markDirty();
-                        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost());
+                        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
                         break posLoop; // Break instead of return in case we add things later
                     }
                 }

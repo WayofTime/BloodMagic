@@ -4,10 +4,8 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.ritual.RitualRegistry;
 import WayofTime.bloodmagic.ritual.Ritual;
 import WayofTime.bloodmagic.ritual.RitualComponent;
-import WayofTime.bloodmagic.client.hud.HUDElement;
 import WayofTime.bloodmagic.client.key.KeyBindings;
 import WayofTime.bloodmagic.client.render.block.RenderFakeBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
@@ -57,7 +55,6 @@ import java.util.*;
 public class ClientHandler {
     // Quick toggle for error suppression. Set to false if you wish to hide model errors.
     public static final boolean SUPPRESS_ASSET_ERRORS = true;
-    public static final List<HUDElement> hudElements = new ArrayList<>();
     public static TextureAtlasSprite ritualStoneBlank;
     public static TextureAtlasSprite ritualStoneWater;
     public static TextureAtlasSprite ritualStoneFire;
@@ -175,13 +172,6 @@ public class ClientHandler {
                 keyBinding.handleKeybind();
     }
 
-    @SubscribeEvent
-    public static void onHudRender(RenderGameOverlayEvent.Pre event) {
-        for (HUDElement element : hudElements)
-            if (element.getElementType() == event.getType() && element.shouldRender(minecraft))
-                element.render(minecraft, event.getResolution(), event.getPartialTicks());
-    }
-
     // Stolen from Chisel
     @SubscribeEvent
     public static void onModelBake(ModelBakeEvent event) {
@@ -255,7 +245,7 @@ public class ClientHandler {
         World world = player.getEntityWorld();
         ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getCurrentItem().getItem();
         EnumFacing direction = ritualDiviner.getDirection(player.inventory.getCurrentItem());
-        Ritual ritual = RitualRegistry.getRitualForId(ritualDiviner.getCurrentRitual(player.inventory.getCurrentItem()));
+        Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(ritualDiviner.getCurrentRitual(player.inventory.getCurrentItem()));
 
         if (ritual == null)
             return;

@@ -21,6 +21,7 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("animal_growth")
 public class RitualAnimalGrowth extends Ritual {
     public static final double rawWillDrain = 0.05;
     public static final double vengefulWillDrain = 0.02;
@@ -160,7 +161,7 @@ public class RitualAnimalGrowth extends Ritual {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveDrain, true);
         }
 
-        masterRitualStone.getOwnerNetwork().syphon(totalGrowths * getRefreshCost());
+        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(totalGrowths * getRefreshCost()));
     }
 
     @Override

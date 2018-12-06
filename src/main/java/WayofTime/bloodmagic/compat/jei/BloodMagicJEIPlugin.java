@@ -7,6 +7,8 @@ import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
 import WayofTime.bloodmagic.compat.jei.alchemyTable.AlchemyTableRecipeJEI;
 import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
+import WayofTime.bloodmagic.orb.BloodOrb;
+import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.livingArmour.LivingArmourHandler;
@@ -89,8 +91,17 @@ public class BloodMagicJEIPlugin implements IModPlugin {
     @Override
     public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
         subtypeRegistry.useNbtForSubtypes(RegistrarBloodMagicItems.UPGRADE_TOME);
-        subtypeRegistry.useNbtForSubtypes(RegistrarBloodMagicItems.BLOOD_ORB);
         subtypeRegistry.useNbtForSubtypes(RegistrarBloodMagicItems.POTION_FLASK);
+        subtypeRegistry.registerSubtypeInterpreter(RegistrarBloodMagicItems.BLOOD_ORB, stack -> {
+            if (!(stack.getItem() instanceof IBloodOrb))
+                return ISubtypeRegistry.ISubtypeInterpreter.NONE;
+
+            BloodOrb orb = ((IBloodOrb) stack.getItem()).getOrb(stack);
+            if (orb == null)
+                return ISubtypeRegistry.ISubtypeInterpreter.NONE;
+
+            return orb.getRegistryName().toString();
+        });
     }
 
     @Override

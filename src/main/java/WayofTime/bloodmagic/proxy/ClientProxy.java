@@ -132,7 +132,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public void postInit()
     {
-        Elements.createHUDElements();
+        Elements.registerElements();
     }
 
     private void addElytraLayer()

@@ -57,7 +57,7 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
 
         TileEntity tile = world.getTileEntity(pos);
 
-        if (tile != null && tile instanceof TileAltar) {
+        if (tile instanceof TileAltar) {
             TileAltar altar = (TileAltar) tile;
             ItemStack orbStack = altar.getStackInSlot(0);
 

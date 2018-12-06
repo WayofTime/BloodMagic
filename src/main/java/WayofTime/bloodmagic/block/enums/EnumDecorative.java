@@ -7,8 +7,9 @@ import java.util.Locale;
 public enum EnumDecorative implements IStringSerializable {
     BLOODSTONE_TILE,
     BLOODSTONE_BRICK,
-    CRYSTAL_TILE,
-    CRYSTAL_BRICK,;
+//    CRYSTAL_TILE,
+//    CRYSTAL_BRICK,
+    ;
 
     @Override
     public String toString() {

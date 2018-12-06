@@ -21,7 +21,7 @@ public class SubCommandBind extends CommandBase {
 
     @Override
     public String getUsage(ICommandSender commandSender) {
-        return TextHelper.localizeEffect("commands.bind.usage");
+        return TextHelper.localizeEffect("commands.bloodmagic.bind.usage");
     }
 
     @Override
@@ -58,17 +58,17 @@ public class SubCommandBind extends CommandBase {
                 if (bind) {
                     Binding binding = new Binding(player.getGameProfile().getId(), player.getGameProfile().getName());
                     BindableHelper.applyBinding(held, binding);
-                    commandSender.sendMessage(new TextComponentTranslation("commands.bind.success"));
+                    commandSender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.success"));
                 } else {
                     Binding binding = ((IBindable) held.getItem()).getBinding(held);
                     if (binding != null) {
                         held.getTagCompound().removeTag("binding");
-                        commandSender.sendMessage(new TextComponentTranslation("commands.bind.remove.success"));
+                        commandSender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.remove.success"));
                     }
                 }
             }
         } catch (PlayerNotFoundException e) {
-            commandSender.sendMessage(new TextComponentTranslation(TextHelper.localizeEffect("commands.error.404")));
+            commandSender.sendMessage(new TextComponentTranslation(TextHelper.localizeEffect("commands.bloodmagic.error.404")));
         }
     }
 

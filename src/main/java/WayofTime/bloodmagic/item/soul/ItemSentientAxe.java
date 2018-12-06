@@ -29,7 +29,6 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -72,7 +71,7 @@ public class ItemSentientAxe extends ItemAxe implements IDemonWillWeapon, IMeshP
     public final double baseAttackSpeed = -3;
 
     public ItemSentientAxe() {
-        super(Item.ToolMaterial.IRON);
+        super(RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL, 8.0F, 3.1F);
         setMaxDamage(getMaxDamage() * 2);
 //        super(ModItems.soulToolMaterial);
 
@@ -88,11 +87,6 @@ public class ItemSentientAxe extends ItemAxe implements IDemonWillWeapon, IMeshP
         } else {
             return value;
         }
-    }
-
-    @Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-        return RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL == repair.getItem() || super.getIsRepairable(toRepair, repair);
     }
 
     public void recalculatePowers(ItemStack stack, World world, EntityPlayer player) {

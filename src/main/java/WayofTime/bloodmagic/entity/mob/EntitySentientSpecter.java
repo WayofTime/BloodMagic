@@ -19,6 +19,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Enchantments;
@@ -67,7 +68,7 @@ public class EntitySentientSpecter extends EntityDemonBase {
 
         this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
         this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityMob.class, true));
 
         this.targetTasks.addTask(4, new EntityAIHurtByTargetIgnoreTamed(this, false));
 
@@ -384,10 +385,9 @@ public class EntitySentientSpecter extends EntityDemonBase {
     @Override
     public boolean shouldAttackEntity(EntityLivingBase attacker, EntityLivingBase owner) {
         if (!(attacker instanceof EntityCreeper) && !(attacker instanceof EntityGhast)) {
-            return super.shouldAttackEntity(attacker, owner);
-        } else {
+                return super.shouldAttackEntity(attacker, owner);
+            }
             return false;
-        }
     }
 
     @Override

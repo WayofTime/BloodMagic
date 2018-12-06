@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("jumping")
 public class RitualJumping extends Ritual {
     public static final String JUMP_RANGE = "jumpRange";
 
@@ -55,7 +56,7 @@ public class RitualJumping extends Ritual {
             }
         }
 
-        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * totalEffects);
+        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost() * totalEffects));
     }
 
     @Override

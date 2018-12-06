@@ -1,31 +1,31 @@
 package WayofTime.bloodmagic.api.impl;
 
-import WayofTime.bloodmagic.api.IBloodMagicRecipeRegistrar;
-import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
-import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
-import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
-import WayofTime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
-import WayofTime.bloodmagic.orb.IBloodOrb;
-import WayofTime.bloodmagic.core.recipe.IngredientBloodOrb;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import WayofTime.bloodmagic.api.IBloodMagicRecipeRegistrar;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeSacrificeCraft;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
+import WayofTime.bloodmagic.core.recipe.IngredientBloodOrb;
+import WayofTime.bloodmagic.orb.IBloodOrb;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar
 {
@@ -34,6 +34,7 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar
     private final Set<RecipeAlchemyTable> alchemyRecipes;
     private final Set<RecipeTartaricForge> tartaricForgeRecipes;
     private final Set<RecipeAlchemyArray> alchemyArrayRecipes;
+    private final Set<RecipeSacrificeCraft> sacrificeCraftRecipes;
 
     public BloodMagicRecipeRegistrar()
     {
@@ -41,6 +42,7 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar
         this.alchemyRecipes = Sets.newHashSet();
         this.tartaricForgeRecipes = Sets.newHashSet();
         this.alchemyArrayRecipes = Sets.newHashSet();
+        this.sacrificeCraftRecipes = Sets.newHashSet();
     }
 
     @Override
@@ -189,6 +191,49 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar
         addAlchemyArray(Ingredient.fromStacks(input), Ingredient.fromStacks(catalyst), output, circleTexture);
     }
 
+    public void addSacrificeCraft(@Nonnull ItemStack output, @Nonnegative double healthRequired, @Nonnull Object... input)
+    {
+        Preconditions.checkNotNull(output, "output cannot be null.");
+        Preconditions.checkArgument(healthRequired >= 0, "healthRequired cannot be negative.");
+        Preconditions.checkNotNull(input, "input cannot be null.");
+
+        List<Ingredient> ingredients = Lists.newArrayList();
+        for (Object object : input)
+        {
+            if (object instanceof ItemStack && ((ItemStack) object).getItem() instanceof IBloodOrb)
+            {
+                ingredients.add(new IngredientBloodOrb(((IBloodOrb) ((ItemStack) object).getItem()).getOrb((ItemStack) object)));
+                continue;
+            }
+
+            ingredients.add(CraftingHelper.getIngredient(object));
+        }
+
+        addSacrificeCraft(output, healthRequired, ingredients.toArray(new Ingredient[0]));
+    }
+
+    @Override
+    public boolean removeSacrificeCraft(@Nonnull ItemStack... input)
+    {
+        Preconditions.checkNotNull(input, "inputs cannot be null.");
+
+        for (ItemStack stack : input)
+            Preconditions.checkNotNull(stack, "input cannot be null.");
+
+        return sacrificeCraftRecipes.remove(getSacrificeCraft(Lists.newArrayList(input)));
+    }
+
+    @Override
+    public void addSacrificeCraft(@Nonnull ItemStack output, @Nonnegative double healthRequired, @Nonnull Ingredient... input)
+    {
+        Preconditions.checkNotNull(output, "output cannot be null.");
+        Preconditions.checkArgument(healthRequired >= 0, "healthRequired cannot be negative.");
+        Preconditions.checkNotNull(input, "input cannot be null.");
+
+        NonNullList<Ingredient> inputs = NonNullList.from(Ingredient.EMPTY, input);
+        sacrificeCraftRecipes.add(new RecipeSacrificeCraft(inputs, output, healthRequired));
+    }
+
     @Nullable
     public RecipeBloodAltar getBloodAltar(@Nonnull ItemStack input)
     {
@@ -249,6 +294,44 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar
             return null;
 
         mainLoop: for (RecipeTartaricForge recipe : tartaricForgeRecipes)
+        {
+            if (recipe.getInput().size() != input.size())
+                continue;
+
+            List<Ingredient> recipeInput = new ArrayList<>(recipe.getInput());
+
+            for (int i = 0; i < input.size(); i++)
+            {
+                boolean matched = false;
+                for (int j = 0; j < recipeInput.size(); j++)
+                {
+                    Ingredient ingredient = recipeInput.get(j);
+                    if (ingredient.apply(input.get(i)))
+                    {
+                        matched = true;
+                        recipeInput.remove(j);
+                        break;
+                    }
+                }
+
+                if (!matched)
+                    continue mainLoop;
+            }
+
+            return recipe;
+        }
+
+        return null;
+    }
+
+    @Nullable
+    public RecipeSacrificeCraft getSacrificeCraft(@Nonnull List<ItemStack> input)
+    {
+        Preconditions.checkNotNull(input, "input cannot be null.");
+        if (input.isEmpty())
+            return null;
+
+        mainLoop: for (RecipeSacrificeCraft recipe : sacrificeCraftRecipes)
         {
             if (recipe.getInput().size() != input.size())
                 continue;

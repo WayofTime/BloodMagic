@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
+@RitualRegister("cobblestone")
 public class RitualCobblestone extends Ritual {
 
     public static final String COBBLESTONE_RANGE = "cobblestoneRange";
@@ -74,7 +75,7 @@ public class RitualCobblestone extends Ritual {
             }
         }
 
-        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * totalEffects);
+        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost() * totalEffects));
     }
 
     @Override

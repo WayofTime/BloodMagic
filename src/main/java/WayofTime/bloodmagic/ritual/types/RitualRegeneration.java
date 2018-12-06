@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("regeneration")
 public class RitualRegeneration extends Ritual {
     public static final String HEAL_RANGE = "heal";
     public static final String VAMPIRE_RANGE = "vampire";
@@ -139,7 +140,7 @@ public class RitualRegeneration extends Ritual {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrain, true);
         }
 
-        masterRitualStone.getOwnerNetwork().syphon(totalCost);
+        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(totalCost));
     }
 
     @Override

@@ -1,19 +1,19 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.event.BoundToolEvent;
 import WayofTime.bloodmagic.iface.IActivatable;
 import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.util.BlockStack;
+import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multiset;
+import com.google.common.collect.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -93,7 +93,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
         }
 
         if (entity instanceof EntityPlayer && getActivated(stack) && world.getTotalWorldTime() % 80 == 0)
-            NetworkHelper.getSoulNetwork(binding).syphonAndDamage((EntityPlayer) entity, 20);
+            NetworkHelper.getSoulNetwork(binding).syphonAndDamage((EntityPlayer) entity, SoulTicket.item(stack, world, entity, 20));
     }
 
     protected int getHeldDownCount(ItemStack stack) {
@@ -248,6 +248,24 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
 
             if (count > 0)
                 world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(count)));
+        }
+    }
+
+    protected void sharedHarvest(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, BlockStack blockStack, HashMultiset drops, boolean silkTouch, int fortuneLvl){
+
+        if (blockStack.getBlock() != null && blockStack.getState().getBlockHardness(world, blockPos) != -1.0F) {
+            float strengthVsBlock = getDestroySpeed(stack, blockStack.getState());
+
+            if (strengthVsBlock > 1.1F && world.canMineBlockBody(player, blockPos)) {
+                if (silkTouch && blockStack.getBlock().canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))
+                    drops.add(new ItemStackWrapper(blockStack));
+                else {
+                    List<ItemStack> itemDrops = blockStack.getBlock().getDrops(world, blockPos, world.getBlockState(blockPos), fortuneLvl);
+                    for (ItemStack stacks : itemDrops)
+                        drops.add(ItemStackWrapper.getHolder(stacks));
+                }
+                blockStack.getBlock().removedByPlayer(world.getBlockState(blockPos), world, blockPos,player, false);
+            }
         }
     }
 }

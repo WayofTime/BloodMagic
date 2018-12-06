@@ -18,8 +18,6 @@ public class ConfigHandler
     public static ConfigBlacklist blacklist = new ConfigBlacklist();
     @Config.Comment({ "Value modifiers for various features" })
     public static ConfigValues values = new ConfigValues();
-    @Config.Comment({ "Toggles for all rituals" })
-    public static ConfigRituals rituals = new ConfigRituals();
     @Config.Comment({ "Settings that only pertain to the client" })
     public static ConfigClient client = new ConfigClient();
     @Config.Comment({ "Compatibility settings" })
@@ -31,6 +29,7 @@ public class ConfigHandler
         if (event.getModID().equals(BloodMagic.MODID))
         {
             ConfigManager.sync(event.getModID(), Config.Type.INSTANCE); // Sync config values
+            BloodMagic.RITUAL_MANAGER.syncConfig();
             MeteorConfigHandler.handleMeteors(false); // Reload meteors
         }
     }
@@ -67,50 +66,8 @@ public class ConfigHandler
         public int sacrificialDaggerConversion = 100;
         @Config.Comment({ "Will rewrite any default meteor types with new versions.", "Disable this if you want any of your changes to stay, or do not want default meteor types regenerated." })
         public boolean shouldResyncMeteors = true;
-    }
-
-    public static class ConfigRituals
-    {
-        public boolean ritualAnimalGrowth = true;
-        public boolean ritualContainment = true;
-        public boolean ritualCrushing = true;
-        public boolean ritualExpulsion = true;
-        public boolean ritualFeatheredKnife = true;
-        public boolean ritualFullStomach = true;
-        public boolean ritualGreenGrove = true;
-        public boolean ritualHarvest = true;
-        public boolean ritualInterdiction = true;
-        public boolean ritualJumping = true;
-        public boolean ritualLava = true;
-        public boolean ritualMagnetic = true;
-        public boolean ritualRegeneration = true;
-        public boolean ritualSpeed = true;
-        public boolean ritualSuppression = true;
-        public boolean ritualWater = true;
-        public boolean ritualWellOfSuffering = true;
-        public boolean ritualZephyr = true;
-        public boolean ritualUpgradeRemove = true;
-        public boolean ritualArmourEvolve = true;
-        public boolean ritualForsakenSoul = true;
-        public boolean ritualCrystalHarvest = true;
-        public boolean ritualPlacer = true;
-        public boolean ritualFelling = true;
-        public boolean ritualPump = true;
-        public boolean ritualAltarBuilder = true;
-        public boolean ritualPortal = true;
-        public boolean ritualMeteor = true;
-        public boolean ritualDowngrade = true;
-        public boolean ritualEllipsoid = true;
-        public boolean ritualCrystalSplit = true;
-        public ConfigImperfectRituals imperfect = new ConfigImperfectRituals();
-    }
-
-    public static class ConfigImperfectRituals
-    {
-        public boolean imperfectRitualNight = true;
-        public boolean imperfectRitualRain = true;
-        public boolean imperfectRitualResistance = true;
-        public boolean imperfectRitualZombie = true;
+        @Config.Comment({ "Should mobs that die through the Well of Suffering Ritual drop items?"})
+        public boolean wellOfSufferingDrops = true;
     }
 
     public static class ConfigClient

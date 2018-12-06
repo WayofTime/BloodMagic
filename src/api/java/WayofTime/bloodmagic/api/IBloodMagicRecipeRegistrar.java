@@ -11,7 +11,8 @@ import javax.annotation.Nullable;
 /**
  * Allows recipe addition and removal.
  */
-public interface IBloodMagicRecipeRegistrar {
+public interface IBloodMagicRecipeRegistrar
+{
 
     /**
      * Adds a new recipe to the Blood Altar.
@@ -54,7 +55,7 @@ public interface IBloodMagicRecipeRegistrar {
 
     /**
      * Adds a new recipe to the Soul/Tartaric Forge.
-     *
+     * 
      * @param output       An output {@link ItemStack}.
      * @param minimumSouls The minimum number of souls that must be contained in the Soul Gem.
      * @param soulDrain    The number of souls to drain from the Soul Gem.
@@ -65,8 +66,8 @@ public interface IBloodMagicRecipeRegistrar {
     /**
      * Removes a Soul/Tartaric Forge recipe based on an input {@link ItemStack} array.
      *
-     * @param input The input items to remove the recipe of.
-     * @return Whether or not a recipe was removed.
+     * @param input The input items to remove the recipe of. 
+     * @return Whether or not a recipe was removed. 
      */
     boolean removeTartaricForge(@Nonnull ItemStack... input);
 
@@ -88,4 +89,8 @@ public interface IBloodMagicRecipeRegistrar {
      * @return Whether or not a recipe was removed.
      */
     boolean removeAlchemyArray(@Nonnull ItemStack input, @Nonnull ItemStack catalyst);
+
+    void addSacrificeCraft(@Nonnull ItemStack output, @Nonnegative double healthRequired, @Nonnull Ingredient... input);
+
+    boolean removeSacrificeCraft(@Nonnull ItemStack... input);
 }

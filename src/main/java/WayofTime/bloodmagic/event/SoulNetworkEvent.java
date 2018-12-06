@@ -1,86 +1,99 @@
 package WayofTime.bloodmagic.event;
 
+import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-import javax.annotation.Nullable;
-import java.util.UUID;
-
-/**
- * Base event class for Soul Network related events.
- * <p>
- * {@link #ownerUUID} contains the owner's UUID {@link #syphon} contains the
- * amount of LP to be drained
- */
 public class SoulNetworkEvent extends Event {
-    public final UUID ownerUUID;
-    public int syphon;
 
-    public SoulNetworkEvent(UUID ownerUUID, int syphon) {
-        this.ownerUUID = ownerUUID;
-        this.syphon = syphon;
+    private final SoulNetwork network;
+    private SoulTicket ticket;
+
+    public SoulNetworkEvent(SoulNetwork network, SoulTicket ticket) {
+        this.network = network;
+        this.ticket = ticket;
     }
 
-    /**
-     * This event is called when an
-     * {@link WayofTime.bloodmagic.iface.IBindable} is being drained
-     * inside of a {@link net.minecraft.tileentity.TileEntity}.
-     * <p>
-     * If canceled, the drain will not be executed.
-     */
-    @Cancelable
-    public static class ItemDrainInContainerEvent extends SoulNetworkEvent {
-        public ItemStack stack;
+    public SoulNetwork getNetwork() {
+        return network;
+    }
 
-        public ItemDrainInContainerEvent(ItemStack stack, UUID ownerId, int syphon) {
-            super(ownerId, syphon);
-            this.stack = stack;
+    public SoulTicket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(SoulTicket ticket) {
+        this.ticket = ticket;
+    }
+
+    @Cancelable
+    public static class Syphon extends SoulNetworkEvent {
+
+        private boolean shouldDamage;
+
+        public Syphon(SoulNetwork network, SoulTicket ticket) {
+            super(network, ticket);
+        }
+
+        public boolean shouldDamage() {
+            return shouldDamage;
+        }
+
+        public void setShouldDamage(boolean shouldDamage) {
+            this.shouldDamage = shouldDamage;
+        }
+
+        public static class Item extends Syphon {
+
+            private final ItemStack stack;
+
+            public Item(SoulNetwork network, SoulTicket ticket, ItemStack stack) {
+                super(network, ticket);
+
+                this.stack = stack;
+            }
+
+            public ItemStack getStack() {
+                return stack;
+            }
+        }
+
+        public static class User extends Syphon {
+
+            private final EntityPlayer user;
+
+            public User(SoulNetwork network, SoulTicket ticket, EntityPlayer user) {
+                super(network, ticket);
+
+                this.user = user;
+            }
+
+            public EntityPlayer getUser() {
+                return user;
+            }
         }
     }
 
-    /**
-     * This event is called when a {@link EntityPlayer} drains the Soul Network
-     * <p>
-     * If canceled, the drain will not be executed.
-     */
     @Cancelable
-    public static class PlayerDrainNetworkEvent extends SoulNetworkEvent {
-        public final EntityPlayer player;
-        // If true, will damage regardless of if the network had enough inside it
-        public boolean shouldDamage;
+    public static class Fill extends SoulNetworkEvent {
 
-        public PlayerDrainNetworkEvent(EntityPlayer player, UUID ownerId, int drainAmount) {
-            super(ownerId, drainAmount);
-            this.shouldDamage = false;
-            this.player = player;
+        private int maximum;
+
+        public Fill(SoulNetwork network, SoulTicket ticket, int maximum) {
+            super(network, ticket);
+
+            this.maximum = maximum;
         }
-    }
 
-    @Cancelable
-    public static class ItemDrainNetworkEvent extends PlayerDrainNetworkEvent {
-        @Nullable
-        public final ItemStack itemStack;
-        /**
-         * Amount of damage that would incur if the network could not drain
-         * properly
-         */
-        public float damageAmount;
+        public int getMaximum() {
+            return maximum;
+        }
 
-        /**
-         * Set result to deny the action i.e. damage/drain anyways. Cancelling
-         * event prevents action without penalties
-         *
-         * @param player       Player using the item
-         * @param ownerId Network that the item is tied to
-         * @param itemStack    Item used
-         * @param drainAmount  Original drain amount - change to alter cost
-         */
-        public ItemDrainNetworkEvent(EntityPlayer player, UUID ownerId, @Nullable ItemStack itemStack, int drainAmount) {
-            super(player, ownerId, drainAmount);
-            this.itemStack = itemStack;
-            this.damageAmount = (float) (drainAmount) / 100.0f;
+        public void setMaximum(int maximum) {
+            this.maximum = maximum;
         }
     }
 }

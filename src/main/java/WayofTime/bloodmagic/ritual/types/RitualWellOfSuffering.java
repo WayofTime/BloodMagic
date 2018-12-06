@@ -7,7 +7,6 @@ import WayofTime.bloodmagic.tile.TileAltar;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -17,6 +16,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import java.util.List;
 import java.util.function.Consumer;
 
+@RitualRegister("well_of_suffering")
 public class RitualWellOfSuffering extends Ritual {
     public static final String ALTAR_RANGE = "altar";
     public static final String DAMAGE_RANGE = "damage";
@@ -88,7 +88,7 @@ public class RitualWellOfSuffering extends Ritual {
                     continue;
 
                 if (entity.isEntityAlive() && !(entity instanceof EntityPlayer)) {
-                    if (entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, 1)) {
+                    if (entity.attackEntityFrom(RitualManager.RITUAL_DAMAGE, 1)) {
                         if (entity.isChild())
                             lifeEssenceRatio *= 0.5F;
 
@@ -104,7 +104,7 @@ public class RitualWellOfSuffering extends Ritual {
             }
         }
 
-        masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * totalEffects);
+        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost() * totalEffects));
     }
 
     @Override

@@ -1,9 +1,83 @@
 ------------------------------------------------------
+Version 2.3.3
+------------------------------------------------------
+
+- Fixed Altars not filling orbs of their own tier
+
+------------------------------------------------------
+Version 2.3.2
+------------------------------------------------------
+
+looky bois, we beta now
+
+- Fixed Sentient Sword attacking mobs and players without being provoked
+- Fixed weird Crystal Clusters being weird
+    - They are now less weird
+- Fixed Ritual Reader and Tinkerer not being in the creative tab
+- Fixed an NPE that would happen with some blocks in the Ritual of Magnetism's area of effect
+- Fixed Mimics not being able to replace blocks during placement
+- Fixed issues with inter-dimensional teleportation
+    - Teleposers and Teleposition Sigils are now fully functional
+- Fixed custom arrows not having their effects when fired from the Sentient Bow
+- Fixed Splash Potions being unthrowable while Living Armor had the quenched downgrade
+- Fixed Ritual Stones being considered Iron instead of Rock
+- Fixed the Lava, Water, and Void sigils so they now work properly with tanks
+- Fixed an issue where the Teleposer would attempt to damage an offline player
+- Fixed the Compression Sigil so it now functions
+- Fixed low tier altars being able to fill high tier orbs
+- Fixed Sentient Tools having the wrong material
+- Fixed Sentient Tools not having a repair material
+    - It is now demon crystals
+- Added a config to disable mob drops from mobs killed by the Well of Suffering
+- Added an additional glow to the Dagger of Sacrifice when it has a full incense bonus
+- Reworked the Phantom Bridge
+- Updated german translation
+- Updated chinese translation
+
+------------------------------------------------------
+Version 2.3.1
+------------------------------------------------------
+
+- Fixed Ritual of Magnetism not being registered
+- Fixed Mob Sacrifice Array so it no longer kills bosses and players
+- Fixed Will type serializer using lowercase names
+- Fixed item rendering for the Sigil of Holding HUD
+- Added mod id to command localization keys to prevent potential conflicts
+
+------------------------------------------------------
+Version 2.3.0
+------------------------------------------------------
+
+- Fixed Basic Cutting Fluid recipe so it no longer requires an unobtainable potion
+- Fixed Teleposer Blacklist not working
+- Fixed the bounding box on the Blood Tank
+- Fixed crafted Inscription Tools not having their uses tag applied
+- Fixed JEI queries with bound Blood Orbs
+- Fixed Crushing Ritual not passing a valid player
+- Fixed Mending applying to Potion Flasks
+- Fixed Teleposition Sigil not checking for a Teleposer at it's destination
+- Fixed Lava Crystal not syphoning LP
+- Fixed the Laputa array moving unbreakable blocks
+    - ie: Bedrock
+- Fixed the Ritual of the Green Grove not working on Cactus and Reeds
+- Added a Mob Sacrifice array
+- Updated the HUD system
+    - You can now edit the HUD layout via the in-game config editor with a drag'n'drop system.
+    - This screen is only available while in a world.
+- Updated the German translation
+- Updated the Chinese translation
+- [API] Reworked how rituals are registered
+    - This will break any addons that work with rituals
+    - If you report an issue to me regarding broken addons, it will be closed without any comment
+
+------------------------------------------------------
 Version 2.2.12
 ------------------------------------------------------
 - Fixed Hellfire Forge and Alchemy Table's shape-crafted-ness.
 - Fixed Cutting Fluids so they now work properly.
 - Fixed the Fluid filters so that they now work perfectly in the routing system.
+- Fixed the Living Armour Upgrade that provides night vision, so it is no longer as finicky.
+- Proved that Way could update the version number properly without being told by the maid.
 
 ------------------------------------------------------
 Version 2.2.11

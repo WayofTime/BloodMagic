@@ -32,6 +32,8 @@ public class Constants
         public static final String DIRECTION = "direction";
         public static final String REAGENT_TANKS = "reagentTanks";
         public static final String CURRENT_INCENSE = "BM:CurrentIncense";
+        public static final String MAX_INCENSE = "BM:MaxIncenseFromLastAltar";
+        public static final String HAS_MAX_INCENSE = "BM:CurrentIsMaxIncense";
         public static final String CURRENT_PURITY = "BM:CurrentPurity";
         public static final String EMPTY = "Empty";
         public static final String OUTPUT_AMOUNT = "outputAmount";
@@ -168,7 +170,7 @@ public class Constants
     {
         public static final int POTION_ARRAY_SIZE = 256;
         public static final float ALTERED_STEP_HEIGHT = 1.00314159f;
-        public static final int NIGHT_VISION_CONSTANT_BEGIN = 30002;
+        public static final int NIGHT_VISION_CONSTANT_BEGIN = 30020;
         public static final int NIGHT_VISION_CONSTANT_END = 30000;
     }
 }
