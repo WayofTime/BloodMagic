@@ -1,22 +1,17 @@
 package WayofTime.bloodmagic.compat.jei;
 
+import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
-import WayofTime.bloodmagic.compat.jei.alchemyTable.AlchemyTableRecipeJEI;
-import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
-import WayofTime.bloodmagic.orb.BloodOrb;
-import WayofTime.bloodmagic.orb.IBloodOrb;
-import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
-import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.livingArmour.LivingArmourHandler;
-import WayofTime.bloodmagic.util.helper.ItemHelper.LivingUpgrades;
+import WayofTime.bloodmagic.block.enums.EnumDecorative;
 import WayofTime.bloodmagic.client.gui.GuiSoulForge;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingCategory;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingRecipeJEI;
 import WayofTime.bloodmagic.compat.jei.alchemyTable.AlchemyTableRecipeCategory;
+import WayofTime.bloodmagic.compat.jei.alchemyTable.AlchemyTableRecipeJEI;
 import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeCategory;
 import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeJEI;
 import WayofTime.bloodmagic.compat.jei.armourDowngrade.ArmourDowngradeRecipeCategory;
@@ -29,6 +24,14 @@ import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeCategory;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeJEI;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
+import WayofTime.bloodmagic.livingArmour.LivingArmourHandler;
+import WayofTime.bloodmagic.orb.BloodOrb;
+import WayofTime.bloodmagic.orb.IBloodOrb;
+import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
+import WayofTime.bloodmagic.ritual.EnumRuneType;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.util.helper.ItemHelper.LivingUpgrades;
 import mezz.jei.api.*;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
@@ -86,6 +89,17 @@ public class BloodMagicJEIPlugin implements IModPlugin {
         registry.addRecipeCatalyst(new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES), Constants.Compat.JEI_CATEGORY_BINDING);
         registry.addRecipeCatalyst(new ItemStack(RegistrarBloodMagicBlocks.ALCHEMY_TABLE), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
         registry.addRecipeCatalyst(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER), Constants.Compat.JEI_CATEGORY_ARMOURDOWNGRADE);
+
+        if (!ConfigHandler.general.enableTierSixEvenThoughThereIsNoContent) {
+			for (ItemStack stack : new ItemStack[]{
+//			        OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_TRANSCENDENT), //unregistered elsewhere
+					new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 1, EnumDecorative.CRYSTAL_TILE.ordinal()),
+					new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 1, EnumDecorative.CRYSTAL_BRICK.ordinal()),
+					new ItemStack(RegistrarBloodMagicItems.INSCRIPTION_TOOL, 1, EnumRuneType.DAWN.ordinal())
+			}) {
+			    jeiHelper.getIngredientBlacklist().addIngredientToBlacklist(stack);
+			}
+		}
     }
 
     @Override
