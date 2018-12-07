@@ -91,15 +91,10 @@ public class BloodMagicJEIPlugin implements IModPlugin {
         registry.addRecipeCatalyst(new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER), Constants.Compat.JEI_CATEGORY_ARMOURDOWNGRADE);
 
         if (!ConfigHandler.general.enableTierSixEvenThoughThereIsNoContent) {
-			for (ItemStack stack : new ItemStack[]{
-//			        OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_TRANSCENDENT), //unregistered elsewhere
-					new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 1, EnumDecorative.CRYSTAL_TILE.ordinal()),
-					new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 1, EnumDecorative.CRYSTAL_BRICK.ordinal()),
-					new ItemStack(RegistrarBloodMagicItems.INSCRIPTION_TOOL, 1, EnumRuneType.DAWN.ordinal())
-			}) {
-			    jeiHelper.getIngredientBlacklist().addIngredientToBlacklist(stack);
-			}
-		}
+            jeiHelper.getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 1, EnumDecorative.CRYSTAL_TILE.ordinal()));
+            jeiHelper.getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 1, EnumDecorative.CRYSTAL_BRICK.ordinal()));
+            jeiHelper.getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(RegistrarBloodMagicItems.INSCRIPTION_TOOL, 1, EnumRuneType.DAWN.ordinal()));
+        }
     }
 
     @Override
