@@ -68,7 +68,7 @@ public interface IBloodMagicAPI {
      * <li>NOTAIR</li>
      * </ul>
      *
-     * @param state         The state to register
+     * @param state         The state to unregister
      * @param componentType The type of Blood Altar component to unregister from.
      */
     void unregisterAltarComponent(@Nonnull IBlockState state, @Nonnull String componentType);
