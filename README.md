@@ -109,7 +109,7 @@ This mod requires "Minecraft Forge" in order to operate. It is incredibly easy t
 
 **Q**: Way, I've just had an amazing idea! Why not add an in-game book just like the Thaumonomicon?
 
-**A**: This has been suggested several times. It is being worked on, and is proceeding quite well. Some framework needs to be completed, but it isn't a priority - ALL of the information you need is on this post, or online.
+**A**: This has been suggested several times. It I being worked on, and is proceeding quite well. Some framework needs to be completed, but it isn't a priority - ALL of the information you need is on this post, or online.
 
 **Q**: Why do I not have a Sacrificial Orb? It's only showing up as a knife!
 
