@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.entity.projectile;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.util.Constants;
-import com.google.common.collect.Sets;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,9 +13,6 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
@@ -31,14 +27,9 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 public class EntitySentientArrow extends EntityTippedArrow {
-    public static MethodHandle mh;
-    public static final DataParameter<Integer> COLOR = EntityDataManager.createKey(EntitySentientArrow.class, DataSerializers.VARINT);
     public PotionType potion = PotionTypes.EMPTY;
-    public final Set<PotionEffect> customPotionEffects = Sets.newHashSet();
-    public boolean fixedColor;
     public double reimbursedAmountOnHit = 0;
     public EnumDemonWillType type = EnumDemonWillType.DEFAULT;
     public int currentLevel = 0;
@@ -54,8 +45,6 @@ public class EntitySentientArrow extends EntityTippedArrow {
     public EntityArrow specialEntity;
     public MethodHandle specialHitMH;
     public Method specialHit;
-    public MethodHandle specialUpdateMH;
-    public Method specialUpdate;
 
     public EntitySentientArrow(World worldIn) {
         super(worldIn);
@@ -233,7 +222,8 @@ public class EntitySentientArrow extends EntityTippedArrow {
     //TODO: Potion splash (for destructive will fired tipped arrows) currently does not have a visual effect.
     private void createPotionFromArrow(EntityLivingBase living) {
         if (this.potion != null) {
-            AxisAlignedBB axisalignedbb = this.getEntityBoundingBox().grow(4.0D, 2.0D, 4.0D);
+            float radius = currentLevel >= 0 ? destructiveExplosionRadius[currentLevel] : 0;
+            AxisAlignedBB axisalignedbb = this.getEntityBoundingBox().grow(radius * 2, radius, radius * 2);
             List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
 
             if (!list.isEmpty()) {
