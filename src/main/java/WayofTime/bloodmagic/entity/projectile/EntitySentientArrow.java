@@ -8,7 +8,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -18,21 +17,24 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
 public class EntitySentientArrow extends EntityTippedArrow {
-    public static MethodHandle mh; //TODO: use MethodHandles to realize the arrow effects. I suggest SimplyArrows for the test environment.
+    public static MethodHandle mh;
     public static final DataParameter<Integer> COLOR = EntityDataManager.createKey(EntitySentientArrow.class, DataSerializers.VARINT);
     public PotionType potion = PotionTypes.EMPTY;
     public final Set<PotionEffect> customPotionEffects = Sets.newHashSet();
@@ -41,7 +43,7 @@ public class EntitySentientArrow extends EntityTippedArrow {
     public EnumDemonWillType type = EnumDemonWillType.DEFAULT;
     public int currentLevel = 0;
     public ItemStack itemStack;
-    public Class<? extends EntityArrow> specialArrow;
+    public Class<? extends EntityArrow> specialArrowClass;
     public float[] destructiveExplosionRadius = {0.5f, 1, 1.5f, 2, 2.5f, 3, 3.5f};
     public int[] poisonDuration = {50, 100, 150, 80, 120, 160, 200};
     public int[] poisonLevel = {0, 0, 0, 1, 1, 1, 1};
@@ -76,7 +78,6 @@ public class EntitySentientArrow extends EntityTippedArrow {
         this.type = type;
         this.currentLevel = currentLevel;
         this.potion = potion;
-        this.setFixedColor(PotionUtils.getPotionColor(this.potion));
     }
 
     public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel, ItemStack itemStack) {
@@ -85,7 +86,6 @@ public class EntitySentientArrow extends EntityTippedArrow {
         this.type = type;
         this.currentLevel = currentLevel;
         this.potion = PotionUtils.getPotionFromItem(itemStack);
-        this.setFixedColor(getCustomColor(itemStack));
     }
 
     public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel, EntityArrow specialArrow) {
@@ -94,15 +94,7 @@ public class EntitySentientArrow extends EntityTippedArrow {
         this.type = type;
         this.currentLevel = currentLevel;
         this.specialEntity = specialArrow;
-        this.specialArrow = specialArrow.getClass();
-        try {
-            this.specialUpdate = this.specialArrow.getMethod("onUpdate");
-            this.specialUpdateMH = MethodHandles.lookup().unreflect(this.specialUpdate).bindTo(this.specialEntity);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+        this.specialArrowClass = specialArrow.getClass();
     }
 
     public void reimbursePlayer(EntityLivingBase hitEntity, float damage) {
@@ -165,9 +157,9 @@ public class EntitySentientArrow extends EntityTippedArrow {
             default:
                 break;
         }
-        if (this.specialArrow != null) {
+        if (this.specialArrowClass != null) {
             try {
-                this.specialHit = this.specialArrow.getMethod("arrowHit", EntityLivingBase.class);
+                this.specialHit = this.specialArrowClass.getMethod("arrowHit", EntityLivingBase.class);
                 this.specialHitMH = MethodHandles.lookup().unreflect(this.specialHit).bindTo(this.specialEntity);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -194,8 +186,8 @@ public class EntitySentientArrow extends EntityTippedArrow {
                 }
                 if (!this.world.isRemote && this.inGround) {
                     this.world.createExplosion(this, this.posX, this.posY, this.posZ, currentLevel >= 0 ? destructiveExplosionRadius[currentLevel] : 0, false);
-                    if (this.potion != null && this.specialArrow == null) {
-                        createPotionFromArrow();
+                    if (this.potion != null && this.specialArrowClass == null) {
+                        createPotionFromArrow(null);
                         this.setDead();
                     }
                 }
@@ -223,39 +215,56 @@ public class EntitySentientArrow extends EntityTippedArrow {
                 break;
         }
 
-        if (this.specialArrow != null) {
-            if (!this.world.isRemote)
-                try {
-                    this.specialUpdateMH.invoke();
-                    if (this.inGround)
-                        this.setDead();
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
+        if (this.specialArrowClass != null) {
+            if (!this.world.isRemote) {
+                this.specialEntity.posX = this.posX;
+                this.specialEntity.posY = this.posY;
+                this.specialEntity.posZ = this.posZ;
+
+                this.specialEntity.onUpdate();
+                if (this.inGround) {
+                    this.setDead();
+                    this.specialEntity.setDead();
                 }
+            }
         }
     }
 
-    //TODO: Potion particle colors. Using addPotionEffects has colors, but crashes with potion types added directly (like currently with spectral arrows).
-    //TODO: Make the potion go off immediatly instead of spawning a splash potion flask entity?
-    private void createPotionFromArrow() {
-        if (this.potion != null) {
-            ItemStack explosionPotion = new ItemStack(Items.SPLASH_POTION);
-            PotionUtils.appendEffects(explosionPotion, this.potion.getEffects());
-            EntityPotion potionEntity = new EntityPotion(world, this.posX, this.posY, this.posZ, explosionPotion);
-            this.setFixedColor(getCustomColor(explosionPotion));
-
-            world.spawnEntity(potionEntity);
-        }
-    }
-
+    //TODO: Potion splash (for destructive will fired tipped arrows) currently does not have a visual effect.
     private void createPotionFromArrow(EntityLivingBase living) {
         if (this.potion != null) {
-            ItemStack explosionPotion = new ItemStack(Items.SPLASH_POTION);
-            PotionUtils.appendEffects(explosionPotion, this.potion.getEffects());
-            EntityPotion potionEntity = new EntityPotion(world, living.posX, living.posY, living.posZ, explosionPotion);
-            this.setFixedColor(getCustomColor(explosionPotion));
+            AxisAlignedBB axisalignedbb = this.getEntityBoundingBox().grow(4.0D, 2.0D, 4.0D);
+            List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
 
-            world.spawnEntity(potionEntity);
+            if (!list.isEmpty()) {
+                for (EntityLivingBase entitylivingbase : list) {
+                    if (entitylivingbase.canBeHitWithPotion()) {
+                        double d0 = this.getDistanceSq(entitylivingbase);
+
+                        if (d0 < 16.0D) {
+                            double d1 = 1.0D - Math.sqrt(d0) / 4.0D;
+
+                            if (entitylivingbase == living) {
+                                d1 = 1.0D;
+                            }
+
+                            for (PotionEffect potioneffect : this.potion.getEffects()) {
+                                Potion potion = potioneffect.getPotion();
+
+                                if (potion.isInstant()) {
+                                    potion.affectEntity(this, this.shootingEntity, entitylivingbase, potioneffect.getAmplifier(), d1);
+                                } else {
+                                    int i = (int) (d1 * (double) potioneffect.getDuration() + 0.5D);
+
+                                    if (i > 20) {
+                                        entitylivingbase.addPotionEffect(new PotionEffect(potion, i, potioneffect.getAmplifier(), potioneffect.getIsAmbient(), potioneffect.doesShowParticles()));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -280,12 +289,6 @@ public class EntitySentientArrow extends EntityTippedArrow {
     @Override
     protected ItemStack getArrowStack() {
         return new ItemStack(Items.ARROW);
-    }
-
-    public void setFixedColor(int color) {
-        this.fixedColor = true;
-        if (this.dataManager != null && this.dataManager.get(COLOR) != null)
-            this.dataManager.set(COLOR, color);
     }
 
     public void spawnPotionParticles(int particleCount) {

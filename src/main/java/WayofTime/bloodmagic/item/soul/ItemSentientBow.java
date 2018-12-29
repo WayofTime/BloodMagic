@@ -337,7 +337,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
                         if (itemarrow == Items.ARROW) {
                             double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
                             entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), (PotionType) null);
-                        } else if (itemarrow == Items.TIPPED_ARROW) { //TODO: better crossmod compat? (things that extend TIPPED_ARROW should work)
+                        } else if (itemarrow == Items.TIPPED_ARROW) {
                             double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
                             entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), itemstack);
                         } else if (itemarrow == Items.SPECTRAL_ARROW) {
