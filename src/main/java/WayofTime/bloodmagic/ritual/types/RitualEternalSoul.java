@@ -3,14 +3,12 @@ package WayofTime.bloodmagic.ritual.types;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.altar.IBloodAltar;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
-import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -74,7 +72,7 @@ public class RitualEternalSoul extends Ritual {
         if (this.entityOwner.getHealth() > 2.0f && fillAmount != 0)
             this.entityOwner.setHealth(2.0f);
 
-        NetworkHelper.getSoulNetwork(this.owner).syphon(new SoulTicket(new TextComponentTranslation("ritual." + BloodMagic.MODID + ".eternalSoulRitual.soulTicket"), fillAmount * 2));
+        NetworkHelper.getSoulNetwork(this.owner).syphon(masterRitualStone.ticket(fillAmount * 2));
 
     }
 
