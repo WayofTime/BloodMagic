@@ -97,14 +97,7 @@ public class RitualEternalSoul extends Ritual {
 
         addCornerRunes(components, 4, 1, EnumRuneType.EARTH);
 
-        addRune(components, 3, 1, 4, EnumRuneType.EARTH);
-        addRune(components, 4, 1, 3, EnumRuneType.EARTH);
-        addRune(components, -3, 1, 4, EnumRuneType.EARTH);
-        addRune(components, -4, 1, 3, EnumRuneType.EARTH);
-        addRune(components, 3, 1, -4, EnumRuneType.EARTH);
-        addRune(components, 4, 1, -3, EnumRuneType.EARTH);
-        addRune(components, -3, 1, -4, EnumRuneType.EARTH);
-        addRune(components, -4, 1, -3, EnumRuneType.EARTH);
+        addOffsetRunes(components, 3, 4, 1, EnumRuneType.EARTH);
 
 
         for (int i = 0; i < 2; i++) {
@@ -113,14 +106,8 @@ public class RitualEternalSoul extends Ritual {
 
         addCornerRunes(components, 4, 4, EnumRuneType.DUSK);
 
-        addRune(components, 6, 0, 5, EnumRuneType.FIRE);
-        addRune(components, 5, 0, 6, EnumRuneType.FIRE);
-        addRune(components, -6, 0, 5, EnumRuneType.FIRE);
-        addRune(components, -5, 0, 6, EnumRuneType.FIRE);
-        addRune(components, 6, 0, -5, EnumRuneType.FIRE);
-        addRune(components, 5, 0, -6, EnumRuneType.FIRE);
-        addRune(components, -6, 0, -5, EnumRuneType.FIRE);
-        addRune(components, -5, 0, -6, EnumRuneType.FIRE);
+        addOffsetRunes(components, 6, 5, 0, EnumRuneType.FIRE);
+
 
         for (int i = 0; i < 2; i++) {
             addCornerRunes(components, 6, i, EnumRuneType.FIRE);
