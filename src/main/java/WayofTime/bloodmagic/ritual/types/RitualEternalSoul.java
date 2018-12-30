@@ -72,7 +72,7 @@ public class RitualEternalSoul extends Ritual {
         if (this.entityOwner.getHealth() > 2.0f && fillAmount != 0)
             this.entityOwner.setHealth(2.0f);
 
-        NetworkHelper.getSoulNetwork(this.owner).syphon(masterRitualStone.ticket(fillAmount * 2));
+        NetworkHelper.getSoulNetwork(masterRitualStone.getOwner()).syphon(masterRitualStone.ticket(fillAmount * 2));
 
     }
 
