@@ -618,6 +618,7 @@ ritual.bloodmagic.altarBuilderRitual=The Assembly of the High Altar
 ritual.bloodmagic.portalRitual=The Gate of the Fold
 ritual.bloodmagic.downgradeRitual=Penance of the Leadened Soul
 ritual.bloodmagic.crystalSplitRitual=Resonance of the Faceted Crystal
+ritual.bloodmagic.condorRitual=Reverence of the Condor
 
 ritual.bloodmagic.waterRitual.info=Generates a source of water from the master ritual stone.
 ritual.bloodmagic.lavaRitual.info=Generates a source of lava from the master ritual stone.
@@ -747,6 +748,8 @@ ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.1=Beware, mortal, for you ar
 ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.100=Unlike my comrades, I offer one of the most grim deals that you could possibly hope for as a magician that deals in your own health.
 ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.300=Although your wounds may heal, they will do so slowly if you accept my "offering," and the stings of battle will plague you even more.
 ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.500=So think carefully before you rush into something that you may regret, since even though your cup may be empty it will be almost impossible to fill once more...
+
+ritual.bloodmagic.condorRitual.info=Provides flight in an area around the ritual.
 
 # Chat
 chat.bloodmagic.altarMaker.setTier=Set Tier to: %d
