@@ -20,7 +20,6 @@ import java.util.function.Consumer;
 @RitualRegister("eternal_soul")
 public class RitualEternalSoul extends Ritual {
 
-    private UUID owner;
     private int currentEssence;
     private World world;
     private BlockPos pos;
@@ -33,8 +32,8 @@ public class RitualEternalSoul extends Ritual {
 
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone) {
-        this.owner = masterRitualStone.getOwner();
-        this.currentEssence = NetworkHelper.getSoulNetwork(this.owner).getCurrentEssence();
+        UUID owner = masterRitualStone.getOwner();
+        this.currentEssence = NetworkHelper.getSoulNetwork(owner).getCurrentEssence();
         this.world = masterRitualStone.getWorldObj();
         this.pos = masterRitualStone.getBlockPos();
 
@@ -61,7 +60,7 @@ public class RitualEternalSoul extends Ritual {
                         .expand(horizontalRange, verticalRange, horizontalRange));
 
         for (EntityPlayer player : list) {
-            if (PlayerHelper.getUUIDFromPlayer(player) == this.owner)
+            if (PlayerHelper.getUUIDFromPlayer(player) == owner)
                 this.entityOwner = player;
         }
 
@@ -72,7 +71,7 @@ public class RitualEternalSoul extends Ritual {
         if (this.entityOwner.getHealth() > 2.0f && fillAmount != 0)
             this.entityOwner.setHealth(2.0f);
 
-        NetworkHelper.getSoulNetwork(this.owner).syphon(masterRitualStone.ticket(fillAmount * 2));
+        masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(fillAmount * 2));
 
     }
 
