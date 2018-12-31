@@ -42,6 +42,9 @@ public class ConfigHandler
         public boolean enableAPILogging = false;
         @Config.Comment({ "Enables extra information to be printed to the log.", "Warning: May drastically increase log size." })
         public boolean enableVerboseAPILogging = false;
+        @Config.Comment({ "Enables tier 6 related registrations. This is for pack makers."})
+        @Config.RequiresMcRestart
+        public boolean enableTierSixEvenThoughThereIsNoContent = false;
     }
 
     public static class ConfigBlacklist

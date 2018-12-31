@@ -1,11 +1,12 @@
 package WayofTime.bloodmagic.item;
 
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.block.BlockRitualStone;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.ritual.EnumRuneType;
+import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
-import WayofTime.bloodmagic.block.BlockRitualStone;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -41,7 +42,7 @@ public class ItemInscriptionTool extends ItemEnum.Variant<EnumRuneType> implemen
             return;
 
         for (EnumRuneType runeType : types) {
-            if (runeType == EnumRuneType.BLANK)
+            if (runeType == EnumRuneType.BLANK || !ConfigHandler.general.enableTierSixEvenThoughThereIsNoContent && runeType == EnumRuneType.DAWN)
                 continue;
 
             ItemStack stack = new ItemStack(this, 1, runeType.ordinal());
