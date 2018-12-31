@@ -20,11 +20,8 @@ import java.util.function.Consumer;
 @RitualRegister("eternal_soul")
 public class RitualEternalSoul extends Ritual {
 
-    private int currentEssence;
-    private World world;
-    private BlockPos pos;
+
     private IBloodAltar altar = null;
-    private EntityPlayer entityOwner;
 
     public RitualEternalSoul() {
         super("ritualEternalSoul", 2, 2000000, "ritual." + BloodMagic.MODID + ".eternalSoulRitual");
@@ -33,16 +30,16 @@ public class RitualEternalSoul extends Ritual {
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone) {
         UUID owner = masterRitualStone.getOwner();
-        this.currentEssence = NetworkHelper.getSoulNetwork(owner).getCurrentEssence();
-        this.world = masterRitualStone.getWorldObj();
-        this.pos = masterRitualStone.getBlockPos();
+        int currentEssence = NetworkHelper.getSoulNetwork(owner).getCurrentEssence();
+        World world = masterRitualStone.getWorldObj();
+        BlockPos pos = masterRitualStone.getBlockPos();
 
         if (this.altar == null) {
             for (int i = -5; i <= 5; i++) {
                 for (int j = -5; j <= 5; j++) {
                     for (int k = -10; k <= 10; k++) {
-                        if (this.world.getTileEntity(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k)) instanceof IBloodAltar) {
-                            this.altar = (IBloodAltar) this.world.getTileEntity(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k));
+                        if (world.getTileEntity(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k)) instanceof IBloodAltar) {
+                            this.altar = (IBloodAltar) world.getTileEntity(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k));
                         }
                     }
                 }
@@ -54,22 +51,23 @@ public class RitualEternalSoul extends Ritual {
         int horizontalRange = 15;
         int verticalRange = 20;
 
-        List<EntityPlayer> list = this.world.getEntitiesWithinAABB(EntityPlayer.class,
+        List<EntityPlayer> list = world.getEntitiesWithinAABB(EntityPlayer.class,
                 new AxisAlignedBB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f,
                         pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)
                         .expand(horizontalRange, verticalRange, horizontalRange));
 
+        EntityPlayer entityOwner = null;
         for (EntityPlayer player : list) {
             if (PlayerHelper.getUUIDFromPlayer(player) == owner)
-                this.entityOwner = player;
+                entityOwner = player;
         }
 
-        int fillAmount = Math.min(this.currentEssence / 2, ((IFluidHandler) this.altar).fill(new FluidStack(BlockLifeEssence.getLifeEssence(), 10000), false));
+        int fillAmount = Math.min(currentEssence / 2, ((IFluidHandler) this.altar).fill(new FluidStack(BlockLifeEssence.getLifeEssence(), 10000), false));
 
         ((IFluidHandler) this.altar).fill(new FluidStack(BlockLifeEssence.getLifeEssence(), fillAmount), true);
 
-        if (this.entityOwner.getHealth() > 2.0f && fillAmount != 0)
-            this.entityOwner.setHealth(2.0f);
+        if (entityOwner != null && entityOwner.getHealth() > 2.0f && fillAmount != 0)
+            entityOwner.setHealth(2.0f);
 
         masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(fillAmount * 2));
 
