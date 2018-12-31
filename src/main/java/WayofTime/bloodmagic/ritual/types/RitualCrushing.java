@@ -5,6 +5,8 @@ import WayofTime.bloodmagic.compress.CompressionRegistry;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
 import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
 import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.ritual.crushing.CrushingRegistry;
+import WayofTime.bloodmagic.ritual.crushing.ICrushingHandler;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
@@ -117,29 +119,19 @@ public class RitualCrushing extends Ritual {
 
                 ItemStack copyStack = checkStack.copy();
 
-                for (Entry<ItemStack, Integer> entry : cuttingFluidLPMap.entrySet()) {
-                    ItemStack cuttingStack = entry.getKey();
-                    int lpDrain = entry.getValue();
-                    double willDrain = cuttingFluidWillMap.containsKey(cuttingStack) ? cuttingFluidWillMap.get(cuttingStack) : 0;
+                for (ICrushingHandler handler : CrushingRegistry.getCrushingHandlerList()) {
+                   int lpDrain = handler.getLpDrain();
+                   double willDrain = handler.getWillDrain();
 
-                    if (corrosiveWill < willDrain || currentEssence < lpDrain + getRefreshCost()) {
-                        continue;
-                    }
+                   if (corrosiveWill < willDrain || currentEssence < lpDrain + getRefreshCost()) {
+                       continue;
+                   }
 
-                    cuttingStack = cuttingStack.copy();
-                    List<ItemStack> input = new ArrayList<>();
-                    input.add(cuttingStack);
-                    input.add(copyStack);
+                   ItemStack result = handler.getRecipeOutput(copyStack, world, pos);
 
-                    AlchemyTableRecipe recipe = AlchemyTableRecipeRegistry.getMatchingRecipe(input, world, pos);
-                    if (recipe == null) {
-                        continue;
-                    }
-
-                    ItemStack result = recipe.getRecipeOutput(input);
-                    if (result.isEmpty()) {
-                        continue;
-                    }
+                   if (result.isEmpty()) {
+                      continue;
+                   }
 
                     if (tile != null) {
                         result = Utils.insertStackIntoTile(result, tile, EnumFacing.DOWN);
@@ -158,6 +150,7 @@ public class RitualCrushing extends Ritual {
 
                     isBlockClaimed = true;
                 }
+
             }
 
             if (!isBlockClaimed && isSilkTouch && block.canSilkHarvest(world, newPos, state, getFakePlayer((WorldServer) world))) {
