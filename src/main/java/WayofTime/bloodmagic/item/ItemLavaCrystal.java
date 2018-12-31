@@ -10,6 +10,9 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.potion.PotionEffect;
 
 import javax.annotation.Nonnull;
@@ -59,7 +62,15 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
     @Nullable
     @Override
     public Binding getBinding(ItemStack stack) {
-        return Binding.fromStack(stack);
+        if (stack.getTagCompound() == null) // hasTagCompound doesn't work on empty stacks with tags
+            return null;
+
+        NBTBase bindingTag = stack.getTagCompound().getTag("binding");
+        if (bindingTag == null || bindingTag.getId() != 10 || bindingTag.hasNoTags()) // Make sure it's both a tag compound and that it has actual data.
+            return null;
+
+        NBTTagCompound nbt = (NBTTagCompound) bindingTag;
+        return new Binding(NBTUtil.getUUIDFromTag(nbt.getCompoundTag("id")),nbt.getString("name"));
     }
 
     @Override

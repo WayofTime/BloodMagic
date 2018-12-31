@@ -60,6 +60,22 @@ public class BloodMagicAPI implements IBloodMagicAPI {
         } else BMLog.API.warn("Invalid Altar component type: {}.", componentType);
     }
 
+    @Override
+    public void unregisterAltarComponent(@Nonnull IBlockState state, @Nonnull String componentType) {
+        ComponentType component = null;
+        for (ComponentType type : ComponentType.VALUES) {
+            if (type.name().equalsIgnoreCase(componentType)) {
+                component = type;
+                break;
+            }
+        }
+
+        if (component != null) {
+            BMLog.API_VERBOSE.info("Unregistered {} from being a {} altar component.", state, componentType);
+            altarComponents.remove(component, state);
+        } else BMLog.API.warn("Invalid Altar component type: {}.", componentType);
+    }
+
     @Nonnull
     public List<IBlockState> getComponentStates(ComponentType component) {
         return (List<IBlockState>) altarComponents.get(component);

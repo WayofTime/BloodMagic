@@ -1,5 +1,15 @@
 package WayofTime.bloodmagic.core;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.core.registry.OrbRegistry;
+import WayofTime.bloodmagic.entity.mob.*;
+import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
+import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
+import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
+import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
+import WayofTime.bloodmagic.orb.BloodOrb;
+import WayofTime.bloodmagic.potion.PotionBloodMagic;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
@@ -16,20 +26,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.core.registry.OrbRegistry;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedChicken;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedSpider;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedZombie;
-import WayofTime.bloodmagic.entity.mob.EntityMimic;
-import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
-import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
-import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
-import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
-import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
-import WayofTime.bloodmagic.orb.BloodOrb;
-import WayofTime.bloodmagic.potion.PotionBloodMagic;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
@@ -47,8 +43,8 @@ public class RegistrarBloodMagic
     public static final BloodOrb ORB_MASTER = ORB_DEF;
     @GameRegistry.ObjectHolder("archmage")
     public static final BloodOrb ORB_ARCHMAGE = ORB_DEF;
-//    @GameRegistry.ObjectHolder("transcendent")
-//    public static final BloodOrb ORB_TRANSCENDENT = ORB_DEF;
+    @GameRegistry.ObjectHolder("transcendent")
+    public static final BloodOrb ORB_TRANSCENDENT = ORB_DEF;
 
     public static final Potion BOOST = MobEffects.HASTE;
     public static final Potion WHIRLWIND = MobEffects.HASTE;
@@ -76,8 +72,12 @@ public class RegistrarBloodMagic
                 new BloodOrb("magician", 3, 150000, 15).withModel(new ModelResourceLocation(orb, "type=magician")).setRegistryName("magician"),
                 new BloodOrb("master", 4, 1000000, 25).withModel(new ModelResourceLocation(orb, "type=master")).setRegistryName("master"),
                 new BloodOrb("archmage", 5, 10000000, 50).withModel(new ModelResourceLocation(orb, "type=archmage")).setRegistryName("archmage")
-//                new BloodOrb("transcendent", 6, 30000000, 50).withModel(new ModelResourceLocation(orb, "type=transcendent")).setRegistryName("transcendent")
                 );
+        if (ConfigHandler.general.enableTierSixEvenThoughThereIsNoContent) {
+            event.getRegistry().register(
+                new BloodOrb("transcendent", 6, 30000000, 50).withModel(new ModelResourceLocation(orb, "type=transcendent")).setRegistryName("transcendent")
+            );
+        }
     }
 
     @SubscribeEvent
