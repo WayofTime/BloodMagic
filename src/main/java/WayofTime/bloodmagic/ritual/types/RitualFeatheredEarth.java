@@ -17,7 +17,7 @@ public class RitualFeatheredEarth extends Ritual {
     public RitualFeatheredEarth() {
         super("ritualFeatheredEarth", 0, 5000, "ritual." + BloodMagic.MODID + ".featheredEarthRitual");
         addBlockRange(FALL_PROTECTION_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 25, 30, 25));
-        setMaximumVolumeAndDistanceOfRange(FALL_PROTECTION_RANGE, 0, 5, 5);
+        setMaximumVolumeAndDistanceOfRange(FALL_PROTECTION_RANGE, 0, 200, 200);
     }
 
     @Override
