@@ -748,6 +748,9 @@ ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.100=Unlike my comrades, I of
 ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.300=Although your wounds may heal, they will do so slowly if you accept my "offering," and the stings of battle will plague you even more.
 ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.500=So think carefully before you rush into something that you may regret, since even though your cup may be empty it will be almost impossible to fill once more...
 
+ritual.bloodmagic.featheredEarthRitual=Ritual of the Feathered Earth
+ritual.bloodmagic.featheredEarthRitual.info=Prevents falldamage in an area.
+
 # Chat
 chat.bloodmagic.altarMaker.setTier=Set Tier to: %d
 chat.bloodmagic.altarMaker.building=Building a Tier %d Altar
