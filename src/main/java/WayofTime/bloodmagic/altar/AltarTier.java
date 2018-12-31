@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.altar;
 
+import WayofTime.bloodmagic.ConfigHandler;
 import com.google.common.collect.Lists;
 import net.minecraft.util.math.BlockPos;
 
@@ -100,34 +101,33 @@ public enum AltarTier {
             }
         }
     },
-//    SIX() {
-//        @Override
-//        public void buildComponents(Consumer<AltarComponent> components) {
-//            FIVE.getAltarComponents().forEach(components);
-//
-//            for (int i = -4; i <= 2; i++) {
-//                components.accept(new AltarComponent(new BlockPos(11, i, 11)));
-//                components.accept(new AltarComponent(new BlockPos(-11, i, -11)));
-//                components.accept(new AltarComponent(new BlockPos(11, i, -11)));
-//                components.accept(new AltarComponent(new BlockPos(-11, i, 11)));
-//            }
-//
-//            components.accept(new AltarComponent(new BlockPos(11, 3, 11), ComponentType.CRYSTAL));
-//            components.accept(new AltarComponent(new BlockPos(-11, 3, -11), ComponentType.CRYSTAL));
-//            components.accept(new AltarComponent(new BlockPos(11, 3, -11), ComponentType.CRYSTAL));
-//            components.accept(new AltarComponent(new BlockPos(-11, 3, 11), ComponentType.CRYSTAL));
-//
-//            for (int i = -9; i <= 9; i++) {
-//                components.accept(new AltarComponent(new BlockPos(11, -5, i), ComponentType.BLOODRUNE).setUpgradeSlot());
-//                components.accept(new AltarComponent(new BlockPos(-11, -5, i), ComponentType.BLOODRUNE).setUpgradeSlot());
-//                components.accept(new AltarComponent(new BlockPos(i, -5, 11), ComponentType.BLOODRUNE).setUpgradeSlot());
-//                components.accept(new AltarComponent(new BlockPos(i, -5, -11), ComponentType.BLOODRUNE).setUpgradeSlot());
-//            }
-//        }
-//    },
-    ;
+    SIX() {
+        @Override
+        public void buildComponents(Consumer<AltarComponent> components) {
+            FIVE.getAltarComponents().forEach(components);
 
-    public static final int MAXTIERS = values().length;
+            for (int i = -4; i <= 2; i++) {
+                components.accept(new AltarComponent(new BlockPos(11, i, 11)));
+                components.accept(new AltarComponent(new BlockPos(-11, i, -11)));
+                components.accept(new AltarComponent(new BlockPos(11, i, -11)));
+                components.accept(new AltarComponent(new BlockPos(-11, i, 11)));
+            }
+
+            components.accept(new AltarComponent(new BlockPos(11, 3, 11), ComponentType.CRYSTAL));
+            components.accept(new AltarComponent(new BlockPos(-11, 3, -11), ComponentType.CRYSTAL));
+            components.accept(new AltarComponent(new BlockPos(11, 3, -11), ComponentType.CRYSTAL));
+            components.accept(new AltarComponent(new BlockPos(-11, 3, 11), ComponentType.CRYSTAL));
+
+            for (int i = -9; i <= 9; i++) {
+                components.accept(new AltarComponent(new BlockPos(11, -5, i), ComponentType.BLOODRUNE).setUpgradeSlot());
+                components.accept(new AltarComponent(new BlockPos(-11, -5, i), ComponentType.BLOODRUNE).setUpgradeSlot());
+                components.accept(new AltarComponent(new BlockPos(i, -5, 11), ComponentType.BLOODRUNE).setUpgradeSlot());
+                components.accept(new AltarComponent(new BlockPos(i, -5, -11), ComponentType.BLOODRUNE).setUpgradeSlot());
+            }
+        }
+    };
+
+    public static final int MAXTIERS = ConfigHandler.general.enableTierSixEvenThoughThereIsNoContent ? values().length : values().length-1;
 
     private List<AltarComponent> altarComponents;
 
