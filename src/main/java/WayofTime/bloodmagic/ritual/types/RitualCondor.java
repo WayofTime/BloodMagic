@@ -25,7 +25,6 @@ public class RitualCondor extends Ritual {
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone) {
         AxisAlignedBB aabb = getBlockRange(FLIGHT_RANGE).getAABB(masterRitualStone.getBlockPos()).expand(-10, 0, -10);
-        System.out.println(aabb);
         World world = masterRitualStone.getWorldObj();
 
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
