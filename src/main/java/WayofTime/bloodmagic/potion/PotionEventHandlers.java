@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -14,7 +13,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -25,39 +23,24 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class PotionEventHandlers {
-    public static List<EntityPlayer> flightList = new ArrayList<>();
-    public static List<EntityLivingBase> noGravityList = new ArrayList<>();
+    public static List<EntityPlayer> flightList = new ArrayList<EntityPlayer>();
 
     @SubscribeEvent
     public static void onLivingJumpEvent(LivingEvent.LivingJumpEvent event) {
-        EntityLivingBase eventEntityLiving = event.getEntityLiving();
-
-        if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.BOOST)) {
-            int i = eventEntityLiving.getActivePotionEffect(RegistrarBloodMagic.BOOST).getAmplifier();
-            eventEntityLiving.motionY += (0.1f) * (2 + i);
+        if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.BOOST)) {
+            int i = event.getEntityLiving().getActivePotionEffect(RegistrarBloodMagic.BOOST).getAmplifier();
+            event.getEntityLiving().motionY += (0.1f) * (2 + i);
         }
 
-        if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.GROUNDED))
-            eventEntityLiving.motionY = 0;
-    }
-
-    @SubscribeEvent
-    public static void onLivingFall(LivingFallEvent event) {
-        EntityLivingBase eventEntityLiving = event.getEntityLiving();
-
-        if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.HEAVY_HEART)) {
-            int i = eventEntityLiving.getActivePotionEffect(RegistrarBloodMagic.HEAVY_HEART).getAmplifier() + 1;
-            event.setDamageMultiplier(event.getDamageMultiplier() + i);
-            event.setDistance(event.getDistance() + i);
-        }
+        // if (event.getEntityLiving().isPotionActive(ModPotions.heavyHeart)) {
+        // event.getEntityLiving().motionY = 0;
+        // }
     }
 
     @SubscribeEvent
     public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
-        EntityLivingBase eventEntityLiving = event.getEntityLiving();
-
-        if (eventEntityLiving instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) eventEntityLiving;
+        if (event.getEntityLiving() instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) event.getEntityLiving();
             if (!player.world.isRemote) {
                 if (player.isPotionActive(RegistrarBloodMagic.FLIGHT)) {
                     if (!player.isSpectator() && !player.capabilities.allowFlying) {
@@ -75,39 +58,26 @@ public class PotionEventHandlers {
                 }
             }
         }
-//        if (eventEntityLiving.isPotionActive(ModPotions.boost))
+//        if (event.getEntityLiving().isPotionActive(ModPotions.boost))
 //        {
-//            int i = eventEntityLiving.getActivePotionEffect(ModPotions.boost).getAmplifier();
+//            int i = event.getEntityLiving().getActivePotionEffect(ModPotions.boost).getAmplifier();
 //            {
 //                float percentIncrease = (i + 1) * 0.05f;
 //
-//                if (eventEntityLiving instanceof EntityPlayer)
+//                if (event.getEntityLiving() instanceof EntityPlayer)
 //                {
-//                    EntityPlayer entityPlayer = (EntityPlayer) eventEntityLiving;
+//                    EntityPlayer entityPlayer = (EntityPlayer) event.getEntityLiving();
 //
 //                    if ((entityPlayer.onGround || entityPlayer.capabilities.isFlying) && entityPlayer.moveForward > 0F)
 //                        entityPlayer.moveFlying(0F, 1F, entityPlayer.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease);
 //                }
 //            }
 //        }
-        if ((!(eventEntityLiving instanceof EntityPlayer) || !((EntityPlayer) eventEntityLiving).isSpectator()) && eventEntityLiving.isPotionActive(RegistrarBloodMagic.SUSPENDED)) {
-            eventEntityLiving.setNoGravity(true);
-            noGravityList.add(eventEntityLiving);
-        } else {
-            eventEntityLiving.setNoGravity(false);
-            noGravityList.remove(eventEntityLiving);
-        }
 
-        if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.GROUNDED))
-            if (eventEntityLiving instanceof EntityPlayer && ((EntityPlayer) eventEntityLiving).capabilities.isFlying)
-                eventEntityLiving.motionY -= (0.05D * (double) (eventEntityLiving.getActivePotionEffect(RegistrarBloodMagic.GROUNDED).getAmplifier() + 1) - eventEntityLiving.motionY) * 0.2D;
-            else
-                eventEntityLiving.motionY -= (0.1D * (double) (eventEntityLiving.getActivePotionEffect(RegistrarBloodMagic.GROUNDED).getAmplifier() + 1) - eventEntityLiving.motionY) * 0.2D;
-
-        if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.WHIRLWIND)) {
+        if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.WHIRLWIND)) {
             int d0 = 3;
-            AxisAlignedBB axisAlignedBB = new AxisAlignedBB(eventEntityLiving.posX - 0.5, eventEntityLiving.posY - 0.5, eventEntityLiving.posZ - 0.5, eventEntityLiving.posX + 0.5, eventEntityLiving.posY + 0.5, eventEntityLiving.posZ + 0.5).expand(d0, d0, d0);
-            List<Entity> entityList = eventEntityLiving.getEntityWorld().getEntitiesWithinAABB(Entity.class, axisAlignedBB);
+            AxisAlignedBB axisAlignedBB = new AxisAlignedBB(event.getEntityLiving().posX - 0.5, event.getEntityLiving().posY - 0.5, event.getEntityLiving().posZ - 0.5, event.getEntityLiving().posX + 0.5, event.getEntityLiving().posY + 0.5, event.getEntityLiving().posZ + 0.5).expand(d0, d0, d0);
+            List<Entity> entityList = event.getEntityLiving().getEntityWorld().getEntitiesWithinAABB(Entity.class, axisAlignedBB);
 
             for (Entity projectile : entityList) {
                 if (projectile == null)
@@ -122,12 +92,12 @@ public class PotionEventHandlers {
                 else if (projectile instanceof EntityThrowable)
                     throwingEntity = ((EntityThrowable) projectile).getThrower();
 
-                if (throwingEntity != null && throwingEntity.equals(eventEntityLiving))
+                if (throwingEntity != null && throwingEntity.equals(event.getEntityLiving()))
                     continue;
 
-                double delX = projectile.posX - eventEntityLiving.posX;
-                double delY = projectile.posY - eventEntityLiving.posY;
-                double delZ = projectile.posZ - eventEntityLiving.posZ;
+                double delX = projectile.posX - event.getEntityLiving().posX;
+                double delY = projectile.posY - event.getEntityLiving().posY;
+                double delZ = projectile.posZ - event.getEntityLiving().posZ;
 
                 double angle = (delX * projectile.motionX + delY * projectile.motionY + delZ * projectile.motionZ) / (Math.sqrt(delX * delX + delY * delY + delZ * delZ) * Math.sqrt(projectile.motionX * projectile.motionX + projectile.motionY * projectile.motionY + projectile.motionZ * projectile.motionZ));
 

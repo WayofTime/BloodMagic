@@ -77,10 +77,30 @@ public class RitualHarvest extends Ritual {
 
     @Override
     public void gatherComponents(Consumer<RitualComponent> components) {
-        addCornerRunes(components, 1, 0, EnumRuneType.DUSK);
-        addParallelRunes(components, 2, 0, EnumRuneType.EARTH);
-        addOffsetRunes(components, 3, 1, 0, EnumRuneType.EARTH);
-        addOffsetRunes(components, 3, 2, 0, EnumRuneType.WATER);
+        components.accept(new RitualComponent(new BlockPos(1, 0, 1), EnumRuneType.DUSK));
+        components.accept(new RitualComponent(new BlockPos(1, 0, -1), EnumRuneType.DUSK));
+        components.accept(new RitualComponent(new BlockPos(-1, 0, -1), EnumRuneType.DUSK));
+        components.accept(new RitualComponent(new BlockPos(-1, 0, 1), EnumRuneType.DUSK));
+        components.accept(new RitualComponent(new BlockPos(2, 0, 0), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(-2, 0, 0), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(0, 0, 2), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(0, 0, -2), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(3, 0, 1), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(3, 0, -1), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(-3, 0, 1), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(-3, 0, -1), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(1, 0, 3), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(-1, 0, 3), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(1, 0, -3), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(-1, 0, -3), EnumRuneType.EARTH));
+        components.accept(new RitualComponent(new BlockPos(2, 0, 3), EnumRuneType.WATER));
+        components.accept(new RitualComponent(new BlockPos(3, 0, 2), EnumRuneType.WATER));
+        components.accept(new RitualComponent(new BlockPos(2, 0, -3), EnumRuneType.WATER));
+        components.accept(new RitualComponent(new BlockPos(-3, 0, 2), EnumRuneType.WATER));
+        components.accept(new RitualComponent(new BlockPos(-2, 0, 3), EnumRuneType.WATER));
+        components.accept(new RitualComponent(new BlockPos(3, 0, -2), EnumRuneType.WATER));
+        components.accept(new RitualComponent(new BlockPos(-2, 0, -3), EnumRuneType.WATER));
+        components.accept(new RitualComponent(new BlockPos(-3, 0, -2), EnumRuneType.WATER));
     }
 
     @Override
