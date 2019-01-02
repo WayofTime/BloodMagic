@@ -160,7 +160,7 @@ public class RitualGrounding extends Ritual {
         /* Combination of corrosive + vengeful will: Levitation */
         if (corrosiveWill >= willDrain && vengefulWill >= willDrain) {
 
-            entity.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 10, 10));
+            entity.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 20, 10));
             vengefulDrained += willDrain;
             corrosiveDrained += willDrain;
 
