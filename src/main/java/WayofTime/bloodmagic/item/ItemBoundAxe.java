@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.item;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.core.data.SoulTicket;
-import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import com.google.common.collect.HashMultiset;
@@ -68,26 +67,25 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider {
             for (int j = 0; j <= 2 * range; j++) {
                 for (int k = -range; k <= range; k++) {
                     BlockPos blockPos = playerPos.add(i, j, k);
-                    BlockStack blockStack = BlockStack.getStackFromPos(world, blockPos);
+                    IBlockState blockState = world.getBlockState(blockPos);
 
-                    if (blockStack.getBlock().isAir(blockStack.getState(), world, blockPos))
+                    if (world.isAirBlock(blockPos))
                         continue;
 
-                    if (blockStack.getState().getMaterial() != Material.WOOD && !EFFECTIVE_ON.contains(blockStack.getBlock()))
+                    if (blockState.getMaterial() != Material.WOOD && !EFFECTIVE_ON.contains(blockState.getBlock()))
                         continue;
 
-                    BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockStack.getState(), player);
+                    BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockState, player);
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         continue;
 
-                    sharedHarvest(stack, world, player, blockPos, blockStack, drops, silkTouch, fortuneLvl);
+                    sharedHarvest(stack, world, player, blockPos, blockState, silkTouch, fortuneLvl);
                 }
             }
         }
 
         NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, (int) (charge * charge * charge / 2.7)));
         world.createExplosion(player, playerPos.getX(), playerPos.getY(), playerPos.getZ(), 0.1F, false);
-        dropStacks(drops, world, playerPos.add(0, 1, 0));
     }
 
     @Override
