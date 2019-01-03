@@ -8,7 +8,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
@@ -35,7 +34,7 @@ public class SubCommandBind extends CommandTreeBase {
     }
 
     public String getHelp() {
-        return new TextComponentTranslation("commands.bloodmagic.bind.help").getFormattedText();
+        return "commands.bloodmagic.bind.help";
     }
 
     @Override
@@ -45,8 +44,8 @@ public class SubCommandBind extends CommandTreeBase {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-        if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-            sender.sendMessage(new TextComponentString(getHelp()));
+        if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+            sender.sendMessage(new TextComponentTranslation(getHelp()));
             return;
         }
         if (sender.getEntityWorld().isRemote)
@@ -65,7 +64,7 @@ public class SubCommandBind extends CommandTreeBase {
                     else
                         player = getPlayer(server, sender, args[0]);
             if (bind) {
-                if (binding != null && binding.getOwnerName().equals(player.getName())) {
+                if (binding.getOwnerName().equals(player.getName())) {
                     sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.error.ownerEqualsTarget"));
                     return;
                 }

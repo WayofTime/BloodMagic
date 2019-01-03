@@ -76,7 +76,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         }
 
         public String getHelp() {
-            return new TextComponentTranslation("commands.bloodmagic.network." + getName() + ".help", getInfo()).getFormattedText();
+            return "commands.bloodmagic.network." + getName() + ".help";
         }
 
         public String getInfo() {
@@ -99,8 +99,8 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             super.execute(server, sender, args);
@@ -128,8 +128,8 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             super.execute(server, sender, args);
@@ -148,8 +148,8 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             super.execute(server, sender, args);
@@ -170,8 +170,8 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             this.player = args.length < 1 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
@@ -188,8 +188,8 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             super.execute(server, sender, args);
@@ -212,8 +212,8 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             super.execute(server, sender, args);
@@ -231,8 +231,8 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             super.execute(server, sender, args);

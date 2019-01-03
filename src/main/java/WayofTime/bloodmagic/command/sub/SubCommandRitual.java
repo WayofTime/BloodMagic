@@ -70,7 +70,7 @@ public class SubCommandRitual extends CommandTreeBase {
             if (args.length == 0) {
                 sender.sendMessage(new TextComponentTranslation("commands.blooodmagic.ritual.create.noRitual"));
                 return;
-            } else if (args.length == 2 && (args[1].equals("-h") || args[1].equals("?"))) {
+            } else if (args.length == 2 && (args[1].equals("help") || args[1].equals("?"))) {
                 sender.sendMessage(new TextComponentTranslation(BloodMagic.RITUAL_MANAGER.getRitual(args[0]).getUnlocalizedName() + ".info"));
                 return;
             }

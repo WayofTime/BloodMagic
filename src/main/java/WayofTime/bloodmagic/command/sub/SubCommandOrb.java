@@ -9,7 +9,6 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
@@ -49,7 +48,7 @@ public class SubCommandOrb extends CommandTreeBase {
         }
 
         public String getHelp() {
-            return new TextComponentTranslation("commands.bloodmagic.orb." + getName() + ".help", getInfo()).getFormattedText();
+            return "commands.bloodmagic.orb." + getName() + ".help";
         }
 
         public String getInfo() {
@@ -73,8 +72,8 @@ public class SubCommandOrb extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             super.execute(server, sender, args);
@@ -98,8 +97,8 @@ public class SubCommandOrb extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             super.execute(server, sender, args);

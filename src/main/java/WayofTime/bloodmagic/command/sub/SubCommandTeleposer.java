@@ -60,7 +60,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
         }
 
         public String getHelp() {
-            return new TextComponentTranslation("commands.bloodmagic.teleposer." + getName() + ".help", getInfo()).getFormattedText();
+            return "commands.bloodmagic.teleposer." + getName() + ".help";
         }
 
         public String getInfo() {
@@ -153,8 +153,8 @@ public class SubCommandTeleposer extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             if (args.length == 1)
-                if (args[0].equals("?") || args[0].equals("-h")) {
-                    sender.sendMessage(new TextComponentString(getHelp()));
+                if (args[0].equals("?") || args[0].equals("help")) {
+                    sender.sendMessage(new TextComponentTranslation(getHelp()));
                     return;
                 }
                 this.player = getPlayer(server, sender, args[0]);
@@ -172,8 +172,8 @@ public class SubCommandTeleposer extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             super.execute(server, sender, args);
@@ -208,8 +208,8 @@ public class SubCommandTeleposer extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             super.execute(server, sender, args);
@@ -245,8 +245,8 @@ public class SubCommandTeleposer extends CommandTreeBase {
         }
 
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             Integer teleposerID = getIDFromArgs(sender, args);
@@ -277,8 +277,8 @@ public class SubCommandTeleposer extends CommandTreeBase {
         }
 
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             Integer teleposerID = getIDFromArgs(sender, args);
@@ -327,8 +327,8 @@ public class SubCommandTeleposer extends CommandTreeBase {
         }
 
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("-h"))) {
-                sender.sendMessage(new TextComponentString(getHelp()));
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
             this.player = null;
