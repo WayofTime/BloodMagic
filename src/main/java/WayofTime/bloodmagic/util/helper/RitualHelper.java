@@ -174,30 +174,31 @@ public class RitualHelper {
     public static Pair<Ritual, EnumFacing> getRitualFromRuins(TileMasterRitualStone tile) {
         BlockPos pos = tile.getPos();
         World world = tile.getWorld();
-        Ritual possibleRitual = null;
-        EnumFacing possibleDirection = null;
+        Ritual possibleRitual = tile.getCurrentRitual();
+        EnumFacing possibleDirection = tile.getDirection();
         int highestCount = 0;
 
-        for (Ritual ritual : BloodMagic.RITUAL_MANAGER.getRituals()) {
-            for (EnumFacing direction : EnumFacing.HORIZONTALS) {
-                List<RitualComponent> components = Lists.newArrayList();
-                ritual.gatherComponents(components::add);
-                int currentCount = 0;
+        if (possibleRitual == null || possibleDirection == null)
+            for (Ritual ritual : BloodMagic.RITUAL_MANAGER.getRituals()) {
+                for (EnumFacing direction : EnumFacing.HORIZONTALS) {
+                    List<RitualComponent> components = Lists.newArrayList();
+                    ritual.gatherComponents(components::add);
+                    int currentCount = 0;
 
-                for (RitualComponent component : components) {
-                    BlockPos newPos = pos.add(component.getOffset(direction));
-                    if (isRuneType(world, newPos, component.getRuneType()))
-                        currentCount += 1;
-                }
-                if (currentCount > highestCount) {
-                    highestCount = currentCount;
-                    possibleRitual = ritual;
-                    possibleDirection = direction;
+                    for (RitualComponent component : components) {
+                        BlockPos newPos = pos.add(component.getOffset(direction));
+                        if (isRuneType(world, newPos, component.getRuneType()))
+                            currentCount += 1;
+                    }
+                    if (currentCount > highestCount) {
+                        highestCount = currentCount;
+                        possibleRitual = ritual;
+                        possibleDirection = direction;
+                    }
+
                 }
 
             }
-
-        }
         return Pair.of(possibleRitual, possibleDirection);
     }
 }
