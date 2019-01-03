@@ -27,7 +27,7 @@ public class SubCommandOrb extends CommandTreeBase {
 
     @Override
     public String getUsage(ICommandSender commandSender) {
-        return new TextComponentTranslation("commands.bloodmagic.orb.usage").getFormattedText();
+        return "commands.bloodmagic.orb.usage";
     }
 
     @Override

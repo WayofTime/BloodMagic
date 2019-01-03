@@ -29,7 +29,6 @@ public class TileTeleposer extends TileInventory implements ITickable {
     public static final String TELEPOSER_RANGE = "teleposerRange";
 
     private int previousInput;
-    private int ticksExisted;
 
     public TileTeleposer() {
         super(1, "teleposer");
@@ -51,7 +50,6 @@ public class TileTeleposer extends TileInventory implements ITickable {
     @Override
     public void update() {
         if (!getWorld().isRemote) {
-            ticksExisted++;
             int currentInput = getWorld().getStrongPower(pos);
 
             if (previousInput == 0 && currentInput != 0) {
@@ -60,7 +58,7 @@ public class TileTeleposer extends TileInventory implements ITickable {
 
             previousInput = currentInput;
 
-            if (ticksExisted % 100 == 0) {
+            if (world.getTotalWorldTime() % 100 == 0) {
                 ItemStack focusStack = getStackInSlot(0);
                 if (!focusStack.isEmpty()) {
                     if (((ItemTelepositionFocus) focusStack.getItem()).getBinding(focusStack) != null)
