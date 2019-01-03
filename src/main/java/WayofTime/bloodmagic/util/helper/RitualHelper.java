@@ -145,9 +145,16 @@ public class RitualHelper {
     }
 
     public static boolean repairRitualFromRuins(TileMasterRitualStone tile, boolean safe) {
-        Pair<Ritual, EnumFacing> pair = getRitualFromRuins(tile);
-        Ritual ritual = pair.getKey();
-        EnumFacing direction = pair.getValue();
+        Ritual ritual = tile.getCurrentRitual();
+        EnumFacing direction;
+        Pair<Ritual, EnumFacing> pair;
+        if (ritual == null) {
+            pair = getRitualFromRuins(tile);
+            ritual = pair.getKey();
+            direction = pair.getValue();
+        } else
+            direction = tile.getDirection();
+
         World world = tile.getWorld();
         BlockPos pos = tile.getPos();
 
