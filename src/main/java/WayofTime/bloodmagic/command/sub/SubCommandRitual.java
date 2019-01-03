@@ -23,7 +23,6 @@ import java.util.List;
 public class SubCommandRitual extends CommandTreeBase {
     public SubCommandRitual() {
         addSubcommand(new RitualCreate());
-        addSubcommand(new RitualRemove());
         addSubcommand(new RitualRepair());
         addSubcommand(new CommandTreeHelp(this));
     }
@@ -103,29 +102,6 @@ public class SubCommandRitual extends CommandTreeBase {
         @Override
         public String getUsage(ICommandSender sender) {
             return "commands.bloodmagic.ritual.create.help";
-        }
-    }
-
-    class RitualRemove extends CommandTreeBase {
-
-        @Override
-        public String getName() {
-            return "remove";
-        }
-
-        @Override
-        public String getUsage(ICommandSender sender) {
-            return "commands.bloodmagic.ritual.remove.help";
-        }
-
-        @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String... args) throws CommandException {
-            EntityPlayerMP player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
-            TileMasterRitualStone tile = getMRS(player);
-            if (tile != null)
-                RitualHelper.removeRitualFromRuins(tile);
-            else
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.error.noMRS"));
         }
     }
 

@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.util.helper;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.block.BlockRitualStone;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.ritual.EnumRuneType;
 import WayofTime.bloodmagic.ritual.IRitualStone;
@@ -120,34 +119,6 @@ public class RitualHelper {
         }
     }
 
-    public static void removeValidRituals(TileMasterRitualStone tile) {
-        if (tile.isActive())
-            tile.setActive(false);
-        List<Ritual> ritualList = null;
-        EnumFacing direction = null;
-        BlockPos pos = tile.getPos();
-        World world = tile.getWorld();
-
-        for (Ritual ritual1 : BloodMagic.RITUAL_MANAGER.getRituals()) {
-            for (EnumFacing horizontal : EnumFacing.HORIZONTALS) {
-                if (checkValidRitual(world, pos, ritual1, horizontal)) {
-                    ritualList.add(ritual1);
-                    direction = horizontal;
-                    break;
-                }
-            }
-        }
-
-        if (ritualList == null || direction == null)
-            return;
-
-        for (Ritual ritual : ritualList) {
-            List<RitualComponent> components = Lists.newArrayList();
-            ritual.gatherComponents(components::add);
-            removeRitualStones(direction, pos, world, components);
-        }
-    }
-
     public static boolean createRitual(World world, BlockPos pos, EnumFacing direction, Ritual ritual, boolean safe) {
 
         List<RitualComponent> components = Lists.newArrayList();
@@ -171,17 +142,6 @@ public class RitualHelper {
                 return true;
         }
         return false;
-    }
-
-    public static void removeRitualFromRuins(TileMasterRitualStone tile) {
-        Pair<Ritual, EnumFacing> pair = getRitualFromRuins(tile);
-        Ritual ritual = pair.getKey();
-        EnumFacing direction = pair.getValue();
-        BlockPos pos = tile.getPos();
-        World world = tile.getWorld();
-        List<RitualComponent> components = Lists.newArrayList();
-        ritual.gatherComponents(components::add);
-        removeRitualStones(direction, pos, world, components);
     }
 
     public static boolean repairRitualFromRuins(TileMasterRitualStone tile, boolean safe) {
@@ -239,15 +199,5 @@ public class RitualHelper {
 
         }
         return Pair.of(possibleRitual, possibleDirection);
-    }
-
-    public static void removeRitualStones(EnumFacing direction, BlockPos pos, World world, List<RitualComponent> components) {
-        for (RitualComponent component : components) {
-            BlockPos offset = component.getOffset(direction);
-            BlockPos newPos = pos.add(offset);
-            if (world.getBlockState(newPos).getBlock() instanceof BlockRitualStone)
-                world.setBlockToAir(newPos);
-
-        }
     }
 }

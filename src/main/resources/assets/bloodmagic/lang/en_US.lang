@@ -852,7 +852,6 @@ commands.bloodmagic.orb.error.tierTooHigh=Orb tier cannot be higher than %d.
 
 commands.bloodmagic.ritual.create.help=Creates the specified ritual with the MRS at your feet, ignores other blocks by default. (Optional parameters: ([<player> (safe|true|false)] | [safe|true|false]))
 commands.bloodmagic.ritual.repair.help=Repairs the ritual with the closest match to the remaining ritual stones, ignores other blocks by default. (Optional parameters: ([<player> (safe|true|false)] | [safe|true|false]))
-commands.bloodmagic.ritual.remove.help=Removes the ritual with the closest match to the remaining ritual stones, leaving only the MRS behind.
 
 commands.bloodmagic.ritual.create.noRitual=You must select a ritual. (Tab-completions are available!)
 commands.bloodmagic.ritaul.create.error.unsafe=Created or repaired ritual cannot be placed safely.
