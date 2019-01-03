@@ -4,16 +4,15 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.core.data.SoulTicket;
-import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.event.BoundToolEvent;
 import WayofTime.bloodmagic.iface.IActivatable;
 import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.util.BlockStack;
-import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.collect.*;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Multimap;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -21,10 +20,10 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.ActionResult;
@@ -36,6 +35,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -235,36 +235,21 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
         return chargeTime;
     }
 
-    protected static void dropStacks(Multiset<ItemStackWrapper> drops, World world, BlockPos posToDrop) {
-        for (Multiset.Entry<ItemStackWrapper> entry : drops.entrySet()) {
-            int count = entry.getCount();
-            ItemStackWrapper stack = entry.getElement();
-            int maxStackSize = stack.item.getItemStackLimit(stack.toStack(1));
+    protected void sharedHarvest(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, IBlockState blockState, boolean silkTouch, int fortuneLvl) {
 
-            while (count >= maxStackSize) {
-                world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(maxStackSize)));
-                count -= maxStackSize;
-            }
-
-            if (count > 0)
-                world.spawnEntity(new EntityItem(world, posToDrop.getX(), posToDrop.getY(), posToDrop.getZ(), stack.toStack(count)));
-        }
-    }
-
-    protected void sharedHarvest(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, BlockStack blockStack, HashMultiset drops, boolean silkTouch, int fortuneLvl){
-
-        if (blockStack.getBlock() != null && blockStack.getState().getBlockHardness(world, blockPos) != -1.0F) {
-            float strengthVsBlock = getDestroySpeed(stack, blockStack.getState());
+        if (blockState.getBlockHardness(world, blockPos) != -1.0F) {
+            float strengthVsBlock = getDestroySpeed(stack, blockState);
 
             if (strengthVsBlock > 1.1F && world.canMineBlockBody(player, blockPos)) {
-                if (silkTouch && blockStack.getBlock().canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))
-                    drops.add(new ItemStackWrapper(blockStack));
+                if (silkTouch && blockState.getBlock().canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))
+                    ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Item.getItemFromBlock(blockState.getBlock())));
                 else {
-                    List<ItemStack> itemDrops = blockStack.getBlock().getDrops(world, blockPos, world.getBlockState(blockPos), fortuneLvl);
+                    NonNullList<ItemStack> itemDrops = new NonNullList<>();
+                    blockState.getBlock().getDrops(itemDrops, world, blockPos, world.getBlockState(blockPos), fortuneLvl);
                     for (ItemStack stacks : itemDrops)
-                        drops.add(ItemStackWrapper.getHolder(stacks));
+                        ItemHandlerHelper.giveItemToPlayer(player, stacks);
                 }
-                blockStack.getBlock().removedByPlayer(world.getBlockState(blockPos), world, blockPos,player, false);
+                blockState.getBlock().removedByPlayer(world.getBlockState(blockPos), world, blockPos, player, false);
             }
         }
     }
