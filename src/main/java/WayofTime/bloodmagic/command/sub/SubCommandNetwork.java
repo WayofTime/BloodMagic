@@ -85,6 +85,10 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
+                return;
+            }
             this.player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
             this.uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
             this.network = NetworkHelper.getSoulNetwork(uuid);
@@ -99,10 +103,6 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
-                return;
-            }
             super.execute(server, sender, args);
             Integer amount = commandHelperAmount(server, sender, args);
             if (amount == null)
@@ -128,10 +128,6 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
-                return;
-            }
             super.execute(server, sender, args);
             Integer amount = commandHelperAmount(server, sender, args);
             if (amount == null)
@@ -148,10 +144,6 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
-                return;
-            }
             super.execute(server, sender, args);
             Integer amount = commandHelperAmount(server, sender, args);
             if (amount == null)
@@ -188,10 +180,6 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
-                return;
-            }
             super.execute(server, sender, args);
             network.setCurrentEssence(NetworkHelper.getMaximumForTier(network.getOrbTier()));
             sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.cap.success", player.getDisplayName().getFormattedText()));
@@ -212,10 +200,6 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
-                return;
-            }
             super.execute(server, sender, args);
             network.setCurrentEssence(Integer.MAX_VALUE);
             sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.fill.success", player.getDisplayName().getFormattedText()));
@@ -231,14 +215,9 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
-                return;
-            }
             super.execute(server, sender, args);
             List<SoulTicket> tickethistory = network.getTicketHistory();
             if (tickethistory.isEmpty())
-
                 for (SoulTicket i : network.getTicketHistory())
                     sender.sendMessage(i.getDescription());
             sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success", player.getDisplayName().getFormattedText()));
