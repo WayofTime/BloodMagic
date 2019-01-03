@@ -64,7 +64,11 @@ public class SubCommandOrb extends CommandTreeBase {
             player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
             uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
             network = NetworkHelper.getSoulNetwork(uuid);
+
+            subExecute(server, sender, args);
         }
+
+        protected abstract void subExecute(MinecraftServer server, ICommandSender sender, String... args) throws CommandException;
     }
 
     class Get extends OrbCommand {
@@ -75,7 +79,7 @@ public class SubCommandOrb extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             super.execute(server, sender, args);
             sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.orb.currenttier", network.getOrbTier()));
         }
@@ -96,7 +100,7 @@ public class SubCommandOrb extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             super.execute(server, sender, args);
 
             int targetTier;

@@ -84,15 +84,20 @@ public class SubCommandNetwork extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
-                return;
+        public final void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            if (!getName().equals("get")) {
+                if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                    sender.sendMessage(new TextComponentTranslation(getHelp()));
+                    return;
+                }
+                this.player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+                this.uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
+                this.network = NetworkHelper.getSoulNetwork(uuid);
             }
-            this.player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
-            this.uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
-            this.network = NetworkHelper.getSoulNetwork(uuid);
+            subExecute(server, sender, args);
         }
+
+        protected abstract void subExecute(MinecraftServer server, ICommandSender sender, String... args) throws CommandException;
     }
 
     class Syphon extends NetworkCommand {
@@ -102,8 +107,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            super.execute(server, sender, args);
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             Integer amount = commandHelperAmount(server, sender, args);
             if (amount == null)
                 return;
@@ -127,8 +131,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            super.execute(server, sender, args);
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             Integer amount = commandHelperAmount(server, sender, args);
             if (amount == null)
                 return;
@@ -143,8 +146,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            super.execute(server, sender, args);
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             Integer amount = commandHelperAmount(server, sender, args);
             if (amount == null)
                 return;
@@ -161,7 +163,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
                 sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
@@ -179,8 +181,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            super.execute(server, sender, args);
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             network.setCurrentEssence(NetworkHelper.getMaximumForTier(network.getOrbTier()));
             sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.cap.success", player.getDisplayName().getFormattedText()));
         }
@@ -199,8 +200,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            super.execute(server, sender, args);
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             network.setCurrentEssence(Integer.MAX_VALUE);
             sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.fill.success", player.getDisplayName().getFormattedText()));
         }
@@ -214,8 +214,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            super.execute(server, sender, args);
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             List<SoulTicket> tickethistory = network.getTicketHistory();
             if (tickethistory.isEmpty())
                 for (SoulTicket i : network.getTicketHistory())

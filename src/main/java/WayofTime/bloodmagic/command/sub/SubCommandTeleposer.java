@@ -138,13 +138,18 @@ public class SubCommandTeleposer extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+        public final void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             if (args.length == 1 && args[0].equals("?") || args[0].equals("help")) {
                 sender.sendMessage(new TextComponentTranslation(getHelp()));
                 return;
             }
-            this.player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+            if (!(getName().equals("rmrf") || getName().equals("remove"))) {
+                this.player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+            }
+            subExecute(server, sender, args);
         }
+
+        protected abstract void subExecute(MinecraftServer server, ICommandSender sender, String... args) throws CommandException;
     }
 
     class OutputTeleposerList extends TeleposeHelper {
@@ -155,8 +160,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            super.execute(server, sender, args);
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             sendOwnedTeleposerList(sender, player);
         }
     }
@@ -169,8 +173,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            super.execute(server, sender, args);
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             Integer teleposerID = getIDFromArgs(sender, args);
             if (teleposerID == null)
                 sendOwnedTeleposerList(sender, null);
@@ -201,8 +204,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
         }
 
         @Override
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            super.execute(server, sender, args);
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             Integer teleposerID = getIDFromArgs(sender, args);
             if (teleposerID == null)
                 sendOwnedTeleposerList(sender, null);
@@ -234,11 +236,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
             return "remove";
         }
 
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
-                return;
-            }
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             Integer teleposerID = getIDFromArgs(sender, args);
             if (teleposerID == null)
                 sendOwnedTeleposerList(sender, null);
@@ -266,11 +264,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
             return "rmrf";
         }
 
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
-                return;
-            }
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             Integer teleposerID = getIDFromArgs(sender, args);
             if (teleposerID == null)
                 sendOwnedTeleposerList(sender, null);
@@ -316,8 +310,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
             return "removeall";
         }
 
-        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            super.execute(server, sender, args);
+        public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             cleanUpAndCreateArrayFromTeleposerList(player);
 
             if (!sender.getEntityWorld().isRemote) {
