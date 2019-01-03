@@ -52,7 +52,7 @@ public class RitualCondor extends Ritual {
 
     @Override
     public int getRefreshCost() {
-        return getBlockRange(FLIGHT_RANGE).getVolume() / 10000; // cost of 2 LP per second per player with default configuration
+        return Math.max(1, getBlockRange(FLIGHT_RANGE).getVolume() / 10000); // cost of 2 LP per second per player with default configuration
     }
 
     @Override
