@@ -709,7 +709,7 @@ ritual.bloodmagic.fullStomachRitual.fillRange.info=(Feeding) The range that the 
 ritual.bloodmagic.fullStomachRitual.chest.info=(Chest) The location of the inventory that the ritual will grab food from to feed players in range.
 ritual.bloodmagic.interdictionRitual.interdictionRange.info=(Push) The area of the ritual where mobs will be pushed. All mobs are pushed away from the master ritual stone, regardless of where this area is.
 ritual.bloodmagic.containmentRitual.containmentRange.info=(Containment) The area of the ritual where mobs will be pulled. All mobs are pulled towards the master ritual stone, regardless of where this area is.
-ritual.bloodmagic.speedRitual.sanicRange.info=(Speed) All entities within this area are launched in the direction of the arrow formed by the ritual. 
+ritual.bloodmagic.speedRitual.sanicRange.info=(Speed) All entities within this area are launched in the direction of the arrow formed by the ritual.
 ritual.bloodmagic.suppressionRitual.suppressionRange.info=(Suppress) All liquids within the range are suppressed.
 ritual.bloodmagic.expulsionRitual.expulsionRange.info=(Expulsion) The area from which players that are not owner or have an orb in the chest will be teleported away from.
 ritual.bloodmagic.zephyrRitual.zephyrRange.info=(Suction) Items within this range will be sucked into the linked chest.
@@ -720,11 +720,11 @@ ritual.bloodmagic.forsakenSoulRitual.crystal.info=(Crystal) Demon Crystals in th
 ritual.bloodmagic.forsakenSoulRitual.damage.info=(Damage) Mobs within this range will be slowly damaged, and when killed will grow the crystals.
 ritual.bloodmagic.crystalHarvestRitual.crystal.info=(Crystal) All Demon Will crystal clusters have a single crystal broken off, spawning the crystal into the world. If there is only one crystal on the cluster, it will not break it.
 
-ritual.bloodmagic.ellipseRitual.info=Creates a hollow spheroid around the ritual using the blocks in the attached chest. 
+ritual.bloodmagic.ellipseRitual.info=Creates a hollow spheroid around the ritual using the blocks in the attached chest.
 ritual.bloodmagic.ellipseRitual.spheroidRange.info=(Placement) The range that the ritual will place its blocks in. Spheroid is centered on the ritual - if one side is shorter than the side opposite the spheroid is truncated.
 ritual.bloodmagic.ellipseRitual.chest.info=(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.
 
-ritual.bloodmagic.placerRitual.placerRange.info=(Placement) The range that the ritual will place its blocks in. 
+ritual.bloodmagic.placerRitual.placerRange.info=(Placement) The range that the ritual will place its blocks in.
 ritual.bloodmagic.placerRitual.chest.info=(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.
 ritual.bloodmagic.fellingRitual.fellingRange.info=(Cutting) The range that the ritual will search out logs and leaves in order to cut down.
 ritual.bloodmagic.fellingRitual.chest.info=(Chest) The location of the inventory that the ritual will place the results into.
@@ -833,7 +833,7 @@ commands.bloodmagic.network.cap.usage=/bloodmagic network cap [player]
 commands.bloodmagic.network.cap.success=Successfully capped off %s's LP network.
 
 
-commands.bloodmagic.bind.usage=/bloodmagic bind [true|false] [player] ("?" or "-h" for help)
+commands.bloodmagic.bind.usage=/bloodmagic bind [true|false] [player] ("?" or "help" for help)
 commands.bloodmagic.bind.help=Attempts to (un)bind the currently held item.
 commands.bloodmagic.bind.success=Successfully bound to %d.
 commands.bloodmagic.bind.remove.success=Unbinding successful
@@ -841,12 +841,12 @@ commands.bloodmagic.bind.error.ownerEqualsTarget=Nothing changed: Target and cur
 commands.bloodmagic.bind.error.notBound=Cannot unbind: Item not bound.
 commands.bloodmagic.bind.error.notBindable=Cannot bind: Item not bindable.
 
-commands.bloodmagic.orb.usage=/bloodmagic orb [set|get] player [tier] ("?" or "-h" for help)
+commands.bloodmagic.orb.usage=/bloodmagic orb [set|get] player [tier] ("?" or "help" for help)
 commands.bloodmagic.orb.help=Used to set or get the Player's max Blood Orb tier.
 commands.bloodmagic.orb.get.help=Used to get the Player's max Blood Orb tier.
-commands.bloodmagic.orb.get.usage=/bloodmagic orb get [player|?|-h]
+commands.bloodmagic.orb.get.usage=/bloodmagic orb get [player|?|help]
 commands.bloodmagic.orb.set.help=Used to set the Player's max Blood Orb tier.
-commands.bloodmagic.orb.set.usage=/bloodmagic orb set [player|?|-h]
+commands.bloodmagic.orb.set.usage=/bloodmagic orb set [player|?|help]
 commands.bloodmagic.orb.currenttier=Current Orb tier is %d.
 commands.bloodmagic.orb.error.tierTooHigh=Orb tier cannot be higher than %d.
 
@@ -858,19 +858,19 @@ commands.bloodmagic.ritaul.create.error.unsafe=Created or repaired ritual cannot
 commands.bloodmagic.ritual.create.error.outOfWorldBoundaries=Created or repaired ritual would be out of world boundaries.
 commands.bloodmagic.ritual.error.noMRS=You need to stand on a Master Ritual Stone to execute the command!
 
-commands.bloodmagic.teleposer.usage=Teleposer Utilities ("?" or "-h" for help)
+commands.bloodmagic.teleposer.usage=Teleposer Utilities ("?" or "help" for help)
 commands.bloodmagic.teleposer.list.help=Returns a list of all valid teleposers, optionally possessed by [player].
-commands.bloodmagic.teleposer.list.usage=/bloodmagic teleposer list [player|?|-h]
+commands.bloodmagic.teleposer.list.usage=/bloodmagic teleposer list [player|?|help]
 commands.bloodmagic.teleposer.teleport.help=Teleports to the location of the specified teleposer.
-commands.bloodmagic.teleposer.teleport.usage=/bloodmagic teleposer teleport [ID|?|-h]
+commands.bloodmagic.teleposer.teleport.usage=/bloodmagic teleposer teleport [ID|?|help]
 commands.bloodmagic.teleposer.teleportfocus.help=Teleports to the location stored in the specified teleposer's focus.
-commands.bloodmagic.teleposer.teleportfocus.usage=/bloodmagic teleposer teleportfocus [ID|?|-h]
+commands.bloodmagic.teleposer.teleportfocus.usage=/bloodmagic teleposer teleportfocus [ID|?|help]
 commands.bloodmagic.teleposer.rmrf.help=Follows teleposer foci and removes all teleposers along the path, starting with the specified teleposer.
-commands.bloodmagic.teleposer.rmrf.usage=/bloodmagic teleposer rmrf [ID|?|-h]
+commands.bloodmagic.teleposer.rmrf.usage=/bloodmagic teleposer rmrf [ID|?|help]
 commands.bloodmagic.teleposer.remove.help=Removes the specified teleposer.
-commands.bloodmagic.teleposer.remove.usage=/bloodmagic teleposer remove [ID|?|-h]
+commands.bloodmagic.teleposer.remove.usage=/bloodmagic teleposer remove [ID|?|help]
 commands.bloodmagic.teleposer.removeall.help=Removes all teleposers or all teleposers containing a focus bound to [player], if specified.
-commands.bloodmagic.teleposer.removeall.usage=/bloodmagic teleposer removeall [player|?|-h]
+commands.bloodmagic.teleposer.removeall.usage=/bloodmagic teleposer removeall [player|?|help]
 
 #Used by commands.bloodmagic.teleposer.list for the dump sent to the player
 commands.bloodmagic.teleposer.anddimension=: Teleposer: DimID:
