@@ -88,7 +88,7 @@ public class SubCommandRitual extends CommandTreeBase {
 
             BlockPos pos = player.getPosition().down();
             World world = player.getEntityWorld();
-            EnumFacing direction = EnumFacing.NORTH;
+            EnumFacing direction = player.getHorizontalFacing();
 
             if (RitualHelper.createRitual(world, pos, direction, BloodMagic.RITUAL_MANAGER.getRitual(args[0]), safe))
                 sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success"));
