@@ -139,6 +139,10 @@ public class SubCommandTeleposer extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            if (args.length == 1 && args[0].equals("?") || args[0].equals("help")) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
+                return;
+            }
             this.player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
         }
     }
@@ -152,13 +156,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1)
-                if (args[0].equals("?") || args[0].equals("help")) {
-                    sender.sendMessage(new TextComponentTranslation(getHelp()));
-                    return;
-                }
-                this.player = getPlayer(server, sender, args[0]);
-
+            super.execute(server, sender, args);
             sendOwnedTeleposerList(sender, player);
         }
     }
@@ -172,10 +170,6 @@ public class SubCommandTeleposer extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
-                return;
-            }
             super.execute(server, sender, args);
             Integer teleposerID = getIDFromArgs(sender, args);
             if (teleposerID == null)
@@ -208,10 +202,6 @@ public class SubCommandTeleposer extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
-                return;
-            }
             super.execute(server, sender, args);
             Integer teleposerID = getIDFromArgs(sender, args);
             if (teleposerID == null)
@@ -327,14 +317,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
         }
 
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
-                return;
-            }
-            this.player = null;
-            if (args.length == 1)
-                this.player = getPlayer(server, sender, args[0]);
-
+            super.execute(server, sender, args);
             cleanUpAndCreateArrayFromTeleposerList(player);
 
             if (!sender.getEntityWorld().isRemote) {
