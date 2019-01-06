@@ -304,27 +304,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     public void setActiveWillConfig(EntityPlayer player, List<EnumDemonWillType> typeList) {
         this.currentActiveWillConfig = typeList;
     }
-
-   /* @Override
-    public boolean setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2) {
-        if (this.currentRitual != null) {
-            boolean allowed = this.currentRitual.setBlockRangeByBounds(range, this, offset1, offset2);
-            if (player != null && !allowed) {
-                ChatUtil.sendNoSpam(player, this.currentRitual.getErrorForBlockRangeOnFail(player, range, this, offset1, offset2));
-            } else {
-                ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.blockRange.success"));
-            }
-
-            return allowed;
-        }
-
-        if (player != null) {
-            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.blockRange.inactive"));
-        }
-
-        return false;
-    }*/
-
+    
     @Override
     public boolean setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2) {
         AreaDescriptor descriptor = this.getBlockRange(range);
