@@ -15,6 +15,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 /**
@@ -185,20 +186,7 @@ public abstract class Ritual {
         return rangeList.get(0);
     }
 
-    public boolean setBlockRangeByBounds(String range, IMasterRitualStone master, BlockPos offset1, BlockPos offset2) {
-        AreaDescriptor descriptor = this.getBlockRange(range);
-        World world = master.getWorldObj();
-        BlockPos masterPos = master.getBlockPos();
-        DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, masterPos);
-        if (canBlockRangeBeModified(range, descriptor, master, offset1, offset2, holder)) {
-            descriptor.modifyAreaByBlockPositions(offset1, offset2);
-            return true;
-        }
-
-        return false;
-    }
-
-    protected boolean canBlockRangeBeModified(String range, AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2, DemonWillHolder holder) {
+    public boolean canBlockRangeBeModified(String range, AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2, DemonWillHolder holder) {
         List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
         int maxVolume = getMaxVolumeForRange(range, willConfig, holder);
         int maxVertical = getMaxVerticalRadiusForRange(range, willConfig, holder);

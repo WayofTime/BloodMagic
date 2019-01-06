@@ -56,7 +56,7 @@ public class RitualPump extends Ritual {
             if (fluidHandler.getTankProperties()[0].getContents() != null && fluidHandler.getTankProperties()[0].getContents().amount >= maxDrain)
                 return;
 
-            for (BlockPos pos : getBlockRange(PUMP_RANGE).getContainedPositions(masterRitualStone.getBlockPos())) {
+            for (BlockPos pos : masterRitualStone.getBlockRange(PUMP_RANGE).getContainedPositions(masterRitualStone.getBlockPos())) {
                 IBlockState state = world.getBlockState(pos);
                 IFluidHandler blockHandler = null;
                 if (state.getBlock() instanceof BlockLiquid)

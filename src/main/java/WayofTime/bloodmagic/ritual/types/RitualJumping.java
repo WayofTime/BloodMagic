@@ -34,7 +34,7 @@ public class RitualJumping extends Ritual {
         int maxEffects = currentEssence / getRefreshCost();
         int totalEffects = 0;
 
-        AreaDescriptor jumpRange = getBlockRange(JUMP_RANGE);
+        AreaDescriptor jumpRange = masterRitualStone.getBlockRange(JUMP_RANGE);
         List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, jumpRange.getAABB(masterRitualStone.getBlockPos()));
         for (EntityLivingBase entity : entities) {
             if (totalEffects >= maxEffects) {

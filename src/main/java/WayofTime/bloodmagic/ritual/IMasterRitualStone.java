@@ -9,7 +9,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -21,6 +23,8 @@ public interface IMasterRitualStone {
     UUID getOwner();
 
     SoulNetwork getOwnerNetwork();
+
+    Map<String, AreaDescriptor> modableRangeMap = new HashMap<>();
 
     boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator, Ritual ritual);
 
@@ -61,4 +65,16 @@ public interface IMasterRitualStone {
     default SoulTicket ticket(int amount) {
         return SoulTicket.block(getWorldObj(), getBlockPos(), amount);
     }
+
+    /**
+     * Used to grab the range of a ritual for a given effect.
+     *
+     * @param range - Range that needs to be pulled.
+     * @return -
+     */
+    AreaDescriptor getBlockRange(String range);
+    void addBlockRanges(Map<String, AreaDescriptor> blockRanges);
+    void addBlockRange(String range, AreaDescriptor defaultRange);
+
+
 }

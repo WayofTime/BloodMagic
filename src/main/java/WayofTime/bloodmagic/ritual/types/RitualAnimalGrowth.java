@@ -56,7 +56,7 @@ public class RitualAnimalGrowth extends Ritual {
         int totalGrowths = 0;
         BlockPos pos = masterRitualStone.getBlockPos();
 
-        AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
+        AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
         TileEntity chest = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
         IItemHandler itemHandler = null;
         if (chest != null) {
@@ -83,7 +83,7 @@ public class RitualAnimalGrowth extends Ritual {
         boolean breedAnimals = steadfastWill >= steadfastWillDrain && itemHandler != null;
         boolean kamikaze = destructiveWill >= destructiveWillDrain;
 
-        AreaDescriptor growingRange = getBlockRange(GROWTH_RANGE);
+        AreaDescriptor growingRange = masterRitualStone.getBlockRange(GROWTH_RANGE);
         AxisAlignedBB axis = growingRange.getAABB(masterRitualStone.getBlockPos());
         List<EntityAnimal> animalList = world.getEntitiesWithinAABB(EntityAnimal.class, axis);
 
