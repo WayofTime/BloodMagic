@@ -244,7 +244,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable {
                 if (silkTouch && blockState.getBlock().canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))
                     ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Item.getItemFromBlock(blockState.getBlock())));
                 else {
-                    NonNullList<ItemStack> itemDrops = new NonNullList<>();
+                    NonNullList<ItemStack> itemDrops = NonNullList.create();
                     blockState.getBlock().getDrops(itemDrops, world, blockPos, world.getBlockState(blockPos), fortuneLvl);
                     for (ItemStack stacks : itemDrops)
                         ItemHandlerHelper.giveItemToPlayer(player, stacks);
