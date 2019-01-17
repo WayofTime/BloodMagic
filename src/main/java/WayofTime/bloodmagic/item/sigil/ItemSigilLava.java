@@ -15,6 +15,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 
 public class ItemSigilLava extends ItemSigilFluidBase {
@@ -67,5 +71,33 @@ public class ItemSigilLava extends ItemSigilFluidBase {
             }
         }
         return super.onItemRightClick(world, player, hand);
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack getContainer() {
+        return null;
+    }
+
+    @Override
+    public IFluidTankProperties[] getTankProperties() {
+        return new IFluidTankProperties[0];
+    }
+
+    @Override
+    public int fill(FluidStack resource, boolean doFill) {
+        return 0;
+    }
+
+    @Nullable
+    @Override
+    public FluidStack drain(FluidStack resource, boolean doDrain) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public FluidStack drain(int maxDrain, boolean doDrain) {
+        return null;
     }
 }
