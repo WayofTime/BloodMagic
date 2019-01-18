@@ -110,6 +110,7 @@ public class MeteorConfigHandler {
         ironMeteorList.add(new MeteorComponent(100, "oreRedstone"));
         Meteor ironMeteor = new Meteor(new ItemStack(Blocks.IRON_BLOCK), ironMeteorList, 15, 5);
         ironMeteor.setVersion(2);
+        ironMeteor.setCost(1000000);
 
         // Gold
         List<MeteorComponent> goldMeteorList = Lists.newArrayList();
@@ -123,6 +124,7 @@ public class MeteorConfigHandler {
         goldMeteorList.add(new MeteorComponent(20, "oreCoal"));
         Meteor goldMeteor = new Meteor(new ItemStack(Blocks.GOLD_BLOCK), goldMeteorList, 18, 6);
         goldMeteor.setVersion(3);
+        goldMeteor.setCost(2500000);
 
         // Diamond
         List<MeteorComponent> diamondMeteorList = Lists.newArrayList();
@@ -135,6 +137,7 @@ public class MeteorConfigHandler {
         diamondMeteorList.add(new MeteorComponent(400, "oreDiamond"));
         Meteor diamondMeteor = new Meteor(new ItemStack(Blocks.DIAMOND_BLOCK), diamondMeteorList, 10, 3);
         diamondMeteor.setVersion(3);
+        diamondMeteor.setCost(5000000);
 
         holders.add(Pair.of("iron", ironMeteor));
         DEFAULT_METEORS.put("iron", ironMeteor);

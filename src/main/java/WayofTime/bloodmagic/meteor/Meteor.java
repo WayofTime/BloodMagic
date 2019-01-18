@@ -18,6 +18,7 @@ public class Meteor {
     private final int radius;
     private final int maxWeight;
     public int version;
+    public int cost;
 
     public Meteor(ItemStack catalystStack, List<MeteorComponent> components, float explosionStrength, int radius) {
         this.catalystStack = catalystStack;
@@ -29,6 +30,7 @@ public class Meteor {
         for (MeteorComponent component : components)
             weight += component.getWeight();
         this.maxWeight = weight;
+        this.cost = 1000000;
     }
 
     public void generateMeteor(World world, BlockPos pos, IBlockState fillerBlock, double radiusModifier, double explosionModifier, double fillerChance) {
@@ -102,5 +104,13 @@ public class Meteor {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public void setCost(int performCost) {
+        this.cost = performCost;
+    }
+
+    public int getCost() {
+        return cost;
     }
 }
