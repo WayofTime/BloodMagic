@@ -142,7 +142,6 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase implements ISigil
 
     @Override
     public int getCapacity(ItemStack sigil) {
-
         return 0;
     }
 

@@ -76,5 +76,4 @@ public class ItemSigilWater extends ItemSigilFluidBase {
 
         return super.onItemRightClick(world, player, hand);
     }
-
 }

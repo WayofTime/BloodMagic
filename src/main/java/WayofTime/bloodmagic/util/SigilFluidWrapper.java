@@ -22,7 +22,6 @@ public class SigilFluidWrapper implements ICapabilityProvider {
     final boolean canDrain;
 
     public SigilFluidWrapper(ItemStack stackIn, ItemSigilFluidBase fluidSigil) {
-
         stack = stackIn;
         sigil = fluidSigil;
         canFill = true;
@@ -30,7 +29,6 @@ public class SigilFluidWrapper implements ICapabilityProvider {
     }
 
     public SigilFluidWrapper(ItemStack stackIn, ItemSigilFluidBase fluidSigil, boolean canFillIn, boolean canDrainIn) {
-
         stack = stackIn;
         sigil = fluidSigil;
         canFill = canFillIn;
@@ -39,13 +37,11 @@ public class SigilFluidWrapper implements ICapabilityProvider {
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing from) {
-
         return capability == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY;
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, final EnumFacing from) {
-
         if (!hasCapability(capability, from)) {
             return null;
         }
@@ -53,34 +49,29 @@ public class SigilFluidWrapper implements ICapabilityProvider {
 
             @Override
             public IFluidTankProperties[] getTankProperties() {
-
                 return new IFluidTankProperties[]{new FluidTankProperties(sigil.getFluid(stack), sigil.getCapacity(stack), canFill, canDrain)};
             }
 
             @Override
             public int fill(FluidStack resource, boolean doFill) {
-
                 return 0;
             }
 
             @Nullable
             @Override
             public FluidStack drain(FluidStack resource, boolean doDrain) {
-
                 return sigil.drain(stack, resource.amount, doDrain);
             }
 
             @Nullable
             @Override
             public FluidStack drain(int maxDrain, boolean doDrain) {
-
                 return sigil.drain(stack, maxDrain, doDrain);
             }
 
             @Nonnull
             @Override
             public ItemStack getContainer() {
-
                 return stack;
             }
 

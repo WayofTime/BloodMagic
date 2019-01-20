@@ -55,7 +55,6 @@ public class ItemSigilVoid extends ItemSigilFluidBase {
                 }
             }
         }
-
         return super.onItemRightClick(world, player, hand);
     }
 
@@ -66,7 +65,6 @@ public class ItemSigilVoid extends ItemSigilFluidBase {
 
     @Override
     public int getCapacity(ItemStack sigil) {
-
         return 10000;
     }
 
@@ -93,9 +91,7 @@ public class ItemSigilVoid extends ItemSigilFluidBase {
         }
 
         network.syphon(SoulTicket.item(sigil, getLpUsed()));
-
         return Math.min(capacity, resource.amount);
     }
-
 }
 
