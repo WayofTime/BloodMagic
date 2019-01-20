@@ -34,12 +34,9 @@ public class ItemRitualDismantler extends Item implements IVariantProvider {
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        return breakRitualStoneAtMasterStone(player, world, pos, player.getHeldItem(hand));
-    }
-
-    public EnumActionResult breakRitualStoneAtMasterStone(EntityPlayer player, World world, BlockPos pos, ItemStack stack) {
         Block block = world.getBlockState(pos).getBlock();
         TileEntity tileEntity = world.getTileEntity(pos);
+        ItemStack stack = player.getHeldItem(hand);
 
         if (tileEntity instanceof TileMasterRitualStone) {
             TileMasterRitualStone masterRitualStone = (TileMasterRitualStone) tileEntity;
@@ -51,7 +48,7 @@ public class ItemRitualDismantler extends Item implements IVariantProvider {
             if (ritualName.equals("")) {
                 world.setBlockToAir(pos);
                 ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(RegistrarBloodMagicBlocks.RITUAL_CONTROLLER));
-                NetworkHelper.getSoulNetwork(player).syphon(SoulTicket.item(stack, 250));
+                NetworkHelper.getSoulNetwork(player).syphon(SoulTicket.item(stack, 100));
                 return EnumActionResult.SUCCESS;
             }
 
@@ -66,7 +63,7 @@ public class ItemRitualDismantler extends Item implements IVariantProvider {
                 }
             }
 
-            NetworkHelper.getSoulNetwork(player).syphon(SoulTicket.item(stack, 100));
+            NetworkHelper.getSoulNetwork(player).syphon(SoulTicket.item(stack, 200)); // smallest Ritual has 4 stones
             return EnumActionResult.SUCCESS;
 
         } else if (player.isSneaking() && block instanceof BlockRitualStone) {
