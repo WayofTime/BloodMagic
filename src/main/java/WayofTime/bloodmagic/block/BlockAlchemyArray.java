@@ -117,7 +117,7 @@ public class BlockAlchemyArray extends Block {
                     || array.arrayEffect instanceof AlchemyArrayEffectUpdraft && (playerItem.getItem() == Items.FEATHER || playerItem.getItem() == Items.GLOWSTONE_DUST)) {
                 for (int i = 0; i < array.getSizeInventory(); i++) {
                     ItemStack stack = array.getStackInSlot(i);
-                    if (stack.getItem() == playerItem.getItem()) {
+                    if (ItemStack.areItemsEqual(stack, playerItem)) {
                         if (stack.getCount() < 127) {
                             stack.setCount(stack.getCount() + 1);
                             playerItem.shrink(1);

@@ -27,8 +27,10 @@ public class AlchemyArrayEffectUpdraft extends AlchemyArrayEffect {
 
         entity.fallDistance = 0;
         TileAlchemyArray tileArray = (TileAlchemyArray) array;
+        motionY += motionYGlowstoneMod * (tileArray.getStackInSlot(0).getCount() - 1); // Glowstone Dust
+        motionY += motionYFeatherMod * (tileArray.getStackInSlot(1).getCount() - 1); // Feathers
 
-        entity.motionY = motionY + motionYGlowstoneMod * (tileArray.getStackInSlot(0).getCount() - 1) + motionYFeatherMod * (tileArray.getStackInSlot(1).getCount() - 1);
+        entity.motionY = motionY;
     }
 
     @Override
