@@ -80,7 +80,7 @@ public class RitualPump extends Ritual {
                 masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
                 fluidHandler.fill(posInfo.getRight(), true);
                 world.setBlockState(posInfo.getLeft(), Blocks.STONE.getDefaultState());
-                world.notifyBlockUpdate(posInfo.getLeft(), tankState, tankState, 3);
+                world.notifyBlockUpdate(posInfo.getLeft(), Blocks.STONE.getDefaultState(), Blocks.STONE.getDefaultState(), 3);
                 world.notifyBlockUpdate(tileEntity.getPos(), tankState, tankState, 3);
                 blockPosIterator.remove();
             }
