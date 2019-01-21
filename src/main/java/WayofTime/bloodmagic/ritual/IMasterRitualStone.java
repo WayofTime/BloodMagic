@@ -66,15 +66,9 @@ public interface IMasterRitualStone {
         return SoulTicket.block(getWorldObj(), getBlockPos(), amount);
     }
 
-    /**
-     * Used to grab the range of a ritual for a given effect.
-     *
-     * @param range - Range that needs to be pulled.
-     * @return -
-     */
     AreaDescriptor getBlockRange(String range);
+
     void addBlockRanges(Map<String, AreaDescriptor> blockRanges);
+
     void addBlockRange(String range, AreaDescriptor defaultRange);
-
-
 }
