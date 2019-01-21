@@ -53,7 +53,7 @@ public class RitualWellOfSuffering extends Ritual {
 
         TileEntity tile = world.getTileEntity(altarPos);
 
-        AreaDescriptor altarRange = getBlockRange(ALTAR_RANGE);
+        AreaDescriptor altarRange = masterRitualStone.getBlockRange(ALTAR_RANGE);
 
         if (!altarRange.isWithinArea(altarOffsetPos) || !(tile instanceof TileAltar)) {
             for (BlockPos newPos : altarRange.getContainedPositions(pos)) {

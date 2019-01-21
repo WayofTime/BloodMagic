@@ -42,7 +42,7 @@ public class RitualMeteor extends Ritual {
         double steadfastWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.STEADFAST, willConfig);
         double vengefulWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.VENGEFUL, willConfig);
 
-        AreaDescriptor itemDetectionRange = getBlockRange(ITEM_RANGE);
+        AreaDescriptor itemDetectionRange = masterRitualStone.getBlockRange(ITEM_RANGE);
         List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, itemDetectionRange.getAABB(pos));
 
         double radiusModifier = getRadiusModifier(rawWill);

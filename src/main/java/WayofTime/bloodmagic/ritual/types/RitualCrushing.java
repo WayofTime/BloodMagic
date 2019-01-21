@@ -70,7 +70,7 @@ public class RitualCrushing extends Ritual {
         }
 
         BlockPos pos = masterRitualStone.getBlockPos();
-        AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
+        AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
         TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
 
         if (tile != null && Utils.getNumberOfFreeSlots(tile, EnumFacing.DOWN) < 1) {
@@ -94,7 +94,7 @@ public class RitualCrushing extends Ritual {
 
         int fortune = destructiveWill > 0 ? 3 : 0;
 
-        AreaDescriptor crushingRange = getBlockRange(CRUSHING_RANGE);
+        AreaDescriptor crushingRange = masterRitualStone.getBlockRange(CRUSHING_RANGE);
         boolean hasOperated = false;
 
         double rawDrain = 0;

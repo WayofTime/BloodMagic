@@ -24,7 +24,7 @@ public class RitualCondor extends Ritual {
 
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone) {
-        AxisAlignedBB aabb = getBlockRange(FLIGHT_RANGE).getAABB(masterRitualStone.getBlockPos()).expand(-10, 0, -10);
+        AxisAlignedBB aabb = masterRitualStone.getBlockRange(FLIGHT_RANGE).getAABB(masterRitualStone.getBlockPos()).expand(-10, 0, -10);
         World world = masterRitualStone.getWorldObj();
 
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
@@ -52,7 +52,7 @@ public class RitualCondor extends Ritual {
 
     @Override
     public int getRefreshCost() {
-        return getBlockRange(FLIGHT_RANGE).getVolume() / 10000; // cost of 2 LP per second per player with default configuration
+        return 5;
     }
 
     @Override
