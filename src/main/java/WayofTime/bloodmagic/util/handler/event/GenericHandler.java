@@ -29,7 +29,9 @@ import WayofTime.bloodmagic.network.DemonAuraPacketProcessor;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
+import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.RitualManager;
+import WayofTime.bloodmagic.ritual.types.RitualFeatheredEarth;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
@@ -82,10 +84,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class GenericHandler {
@@ -93,6 +92,7 @@ public class GenericHandler {
     public static Map<EntityPlayer, Integer> filledHandMap = new HashMap<>();
     private static Map<EntityAnimal, EntityAITarget> targetTaskMap = new HashMap<>();
     private static Map<EntityAnimal, EntityAIBase> attackTaskMap = new HashMap<>();
+    public static Set<IMasterRitualStone> featherRitualSet;
 
     @SubscribeEvent
     public static void onEntityFall(LivingFallEvent event) {
@@ -205,6 +205,9 @@ public class GenericHandler {
                     }
                 }
             }
+        }
+        for (IMasterRitualStone masterRitualStone : featherRitualSet) {
+            masterRitualStone.getBlockRange(RitualFeatheredEarth.FALL_PROTECTION_RANGE).getAABB(masterRitualStone.getBlockPos());
         }
     }
 

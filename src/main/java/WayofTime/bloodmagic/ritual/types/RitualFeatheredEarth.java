@@ -45,7 +45,7 @@ public class RitualFeatheredEarth extends Ritual {
             masterRitualStone.setCooldown(0);
         }
 
-        AreaDescriptor fallProtRange = getBlockRange(FALL_PROTECTION_RANGE);
+        AreaDescriptor fallProtRange = masterRitualStone.getBlockRange(FALL_PROTECTION_RANGE);
         List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, fallProtRange.getAABB(masterRitualStone.getBlockPos()).expand(-25, 0, -25));
         for (EntityLivingBase entity : entities) {
             if (totalEffects >= maxEffects) {
