@@ -46,7 +46,7 @@ public class RitualFelling extends Ritual {
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
         BlockPos masterPos = masterRitualStone.getBlockPos();
-        AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
+        AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
         TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
 
         if (currentEssence < getRefreshCost()) {
@@ -55,7 +55,7 @@ public class RitualFelling extends Ritual {
         }
 
         if (!cached || treePartsCache.isEmpty()) {
-            for (BlockPos blockPos : getBlockRange(FELLING_RANGE).getContainedPositions(masterRitualStone.getBlockPos())) {
+            for (BlockPos blockPos : masterRitualStone.getBlockRange(FELLING_RANGE).getContainedPositions(masterRitualStone.getBlockPos())) {
                 if (!treePartsCache.contains(blockPos))
                     if (!world.isAirBlock(blockPos) && (world.getBlockState(blockPos).getBlock().isWood(world, blockPos) || world.getBlockState(blockPos).getBlock().isLeaves(world.getBlockState(blockPos), world, blockPos))) {
                         treePartsCache.add(blockPos);

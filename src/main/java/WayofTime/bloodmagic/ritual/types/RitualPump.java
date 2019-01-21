@@ -56,7 +56,7 @@ public class RitualPump extends Ritual {
             if (fluidHandler.getTankProperties()[0].getContents() != null && fluidHandler.getTankProperties()[0].getContents().amount >= maxDrain)
                 return;
 
-            for (BlockPos pos : getBlockRange(PUMP_RANGE).getContainedPositions(masterRitualStone.getBlockPos())) {
+            for (BlockPos pos : masterRitualStone.getBlockRange(PUMP_RANGE).getContainedPositions(masterRitualStone.getBlockPos())) {
                 IBlockState state = world.getBlockState(pos);
                 IFluidHandler blockHandler = null;
                 if (state.getBlock() instanceof BlockLiquid)
@@ -80,7 +80,8 @@ public class RitualPump extends Ritual {
                 masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
                 fluidHandler.fill(posInfo.getRight(), true);
                 world.setBlockState(posInfo.getLeft(), Blocks.STONE.getDefaultState());
-                world.notifyBlockUpdate(posInfo.getLeft(), tankState, tankState, 3);
+                world.notifyBlockUpdate(posInfo.getLeft(), Blocks.STONE.getDefaultState(), Blocks.STONE.getDefaultState(), 3);
+                world.notifyBlockUpdate(tileEntity.getPos(), tankState, tankState, 3);
                 blockPosIterator.remove();
             }
         }

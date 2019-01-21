@@ -37,7 +37,7 @@ public class RitualCobblestone extends Ritual {
         int maxEffects = currentEssence / getRefreshCost();
         int totalEffects = 0;
 
-        AreaDescriptor cobblestoneRange = getBlockRange(COBBLESTONE_RANGE);
+        AreaDescriptor cobblestoneRange = masterRitualStone.getBlockRange(COBBLESTONE_RANGE);
 
         if (tileEntity != null && tileEntity instanceof TileAlchemyArray) {
             TileAlchemyArray alchemyArray = (TileAlchemyArray) tileEntity;

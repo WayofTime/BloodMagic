@@ -2,7 +2,10 @@ package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.iface.IBindable;
+import WayofTime.bloodmagic.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.RitualEvent;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
@@ -25,9 +28,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.awt.geom.Area;
+import java.util.*;
 
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone {
     private UUID owner;
@@ -40,6 +42,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     private EnumFacing direction = EnumFacing.NORTH;
     private boolean inverted;
     private List<EnumDemonWillType> currentActiveWillConfig = new ArrayList<>();
+    protected final Map<String, AreaDescriptor> modableRangeMap = new HashMap<>();
 
     @Override
     public void onUpdate() {
@@ -156,6 +159,9 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
                             this.owner = binding.getOwnerId();
                             this.cachedNetwork = network;
                             this.currentRitual = ritual;
+
+                            if(!checkBlockRanges(ritual.getModableRangeMap()))
+                                addBlockRanges(ritual.getModableRangeMap());
 
                             notifyUpdate();
                             return true;
@@ -298,22 +304,14 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     public void setActiveWillConfig(EntityPlayer player, List<EnumDemonWillType> typeList) {
         this.currentActiveWillConfig = typeList;
     }
-
+    
     @Override
     public boolean setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2) {
-        if (this.currentRitual != null) {
-            boolean allowed = this.currentRitual.setBlockRangeByBounds(range, this, offset1, offset2);
-            if (player != null && !allowed) {
-                ChatUtil.sendNoSpam(player, this.currentRitual.getErrorForBlockRangeOnFail(player, range, this, offset1, offset2));
-            } else {
-                ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.blockRange.success"));
-            }
-
-            return allowed;
-        }
-
-        if (player != null) {
-            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.blockRange.inactive"));
+        AreaDescriptor descriptor = this.getBlockRange(range);
+        DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, getBlockPos());
+        if (this.currentRitual.canBlockRangeBeModified(range, descriptor, this, offset1, offset2, holder)) {
+            descriptor.modifyAreaByBlockPositions(offset1, offset2);
+            return true;
         }
 
         return false;
@@ -407,5 +405,37 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
     public void setCurrentActiveWillConfig(List<EnumDemonWillType> currentActiveWillConfig) {
         this.currentActiveWillConfig = currentActiveWillConfig;
+    }
+
+    /**
+     * Used to grab the range of a ritual for a given effect.
+     *
+     * @param range - Range that needs to be pulled.
+     * @return -
+     */
+    public AreaDescriptor getBlockRange(String range) {
+        if (modableRangeMap.containsKey(range)) {
+            return modableRangeMap.get(range);
+        }
+
+        return null;
+    }
+
+    public void addBlockRange(String range, AreaDescriptor defaultRange) {
+        modableRangeMap.put(range, defaultRange);
+    }
+
+    public void addBlockRanges(Map<String, AreaDescriptor> blockRanges){
+        for (Map.Entry<String, AreaDescriptor> entry : blockRanges.entrySet()) {
+            modableRangeMap.put(entry.getKey(), entry.getValue());
+        }
+    }
+
+    public boolean checkBlockRanges(Map<String, AreaDescriptor> blockRanges){
+        for (Map.Entry<String, AreaDescriptor> entry : blockRanges.entrySet()) {
+            if (modableRangeMap.get(entry.getKey()) == null)
+                return false;
+        }
+        return true;
     }
 }
