@@ -20,6 +20,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -99,7 +100,8 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                         break;
                     case SET_AREA:
                         String range = this.getCurrentBlockRange(stack);
-                        if (player.isSneaking()) {
+                        //TODO: range null check does not actually select MRS because range is always at least BlockPos(0,0,0)
+                        if (range == null || player.isSneaking()) {
                             String newRange = master.getNextBlockRange(range);
                             range = newRange;
                             this.setCurrentBlockRange(stack, newRange);
@@ -136,14 +138,20 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                     if (!masterPos.equals(BlockPos.ORIGIN)) {
                         BlockPos containedPos = getBlockPos(stack);
                         if (containedPos.equals(BlockPos.ORIGIN)) {
-                            this.setBlockPos(stack, pos.subtract(masterPos));
+                            BlockPos pos1 = pos.subtract(masterPos);
+                            this.setBlockPos(stack, pos1);
                             player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.firstBlock"), true);
-                            //TODO: Notify player.
+                            player.sendMessage(new TextComponentString(pos1.toString()));
                         } else {
                             tile = world.getTileEntity(masterPos);
                             if (tile instanceof IMasterRitualStone) {
                                 IMasterRitualStone master = (IMasterRitualStone) tile;
-                                master.setBlockRangeByBounds(player, this.getCurrentBlockRange(stack), containedPos, pos.subtract(masterPos));
+                                BlockPos pos2 = pos.subtract(masterPos);
+                                //TODO better error checking, prevent area setting if fail.
+                                if (master.setBlockRangeByBounds(player, this.getCurrentBlockRange(stack), containedPos, pos2))
+                                    player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.success"), true);
+                                else
+                                    player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.fail"), true);
                             }
 
                             this.setBlockPos(stack, BlockPos.ORIGIN);
