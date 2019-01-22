@@ -7,7 +7,6 @@ import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.Ritual;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.IDiscreteDemonWill;
-import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
@@ -93,6 +92,8 @@ public class ItemRitualReader extends Item implements IVariantProvider {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof IMasterRitualStone) {
                 IMasterRitualStone master = (IMasterRitualStone) tile;
+                if (master.getCurrentRitual() == null)
+                    super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
                 this.setMasterBlockPos(stack, pos);
                 this.setBlockPos(stack, BlockPos.ORIGIN);
 
@@ -150,7 +151,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                                 IMasterRitualStone master = (IMasterRitualStone) tile;
                                 BlockPos pos2 = pos.subtract(masterPos);
                                 String range = this.getCurrentBlockRange(stack);
-                                Ritual ritual = ((TileMasterRitualStone) master).getCurrentRitual();
+                                Ritual ritual = master.getCurrentRitual();
                                 //TODO: Fix AreaDescriptor area handling to be inclusive, then remove the "-1" for range calculation below.
                                 int maxHorizontalRange = ritual.getMaxHorizontalRadiusForRange(range, null, null) - 1;
                                 int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, null, null) - 1;
@@ -171,9 +172,8 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                                         player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.noRange"), false);
                                         break;
                                 }
-
-                                this.setBlockPos(stack, BlockPos.ORIGIN);
                             }
+                            this.setBlockPos(stack, BlockPos.ORIGIN);
                         }
                     }
                 }
