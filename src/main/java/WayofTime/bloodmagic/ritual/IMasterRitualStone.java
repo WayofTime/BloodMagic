@@ -9,7 +9,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -23,8 +22,6 @@ public interface IMasterRitualStone {
     UUID getOwner();
 
     SoulNetwork getOwnerNetwork();
-
-    Map<String, AreaDescriptor> modableRangeMap = new HashMap<>();
 
     boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator, Ritual ritual);
 

@@ -1,9 +1,11 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.ritual.*;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -16,13 +18,14 @@ public class RitualFeatheredEarth extends Ritual {
 
     public RitualFeatheredEarth() {
         super("ritualFeatheredEarth", 0, 5000, "ritual." + BloodMagic.MODID + ".featheredEarthRitual");
-        addBlockRange(FALL_PROTECTION_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 25, 30, 25));
+        addBlockRange(FALL_PROTECTION_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-25, 0, -25), 25, 30, 25));
         setMaximumVolumeAndDistanceOfRange(FALL_PROTECTION_RANGE, 0, 200, 200);
     }
 
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
+
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
         BlockPos pos = masterRitualStone.getBlockPos();
         double x = pos.getX();
@@ -46,13 +49,13 @@ public class RitualFeatheredEarth extends Ritual {
         }
 
         AreaDescriptor fallProtRange = masterRitualStone.getBlockRange(FALL_PROTECTION_RANGE);
-        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, fallProtRange.getAABB(masterRitualStone.getBlockPos()).expand(-25, 0, -25));
+        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, fallProtRange.getAABB(masterRitualStone.getBlockPos()));
+
         for (EntityLivingBase entity : entities) {
             if (totalEffects >= maxEffects) {
                 break;
             }
-
-            entity.fallDistance = 0;
+            entity.addPotionEffect(new PotionEffect(RegistrarBloodMagic.FEATHERED, 40, 0));
             totalEffects++;
         }
 
@@ -61,12 +64,12 @@ public class RitualFeatheredEarth extends Ritual {
 
     @Override
     public int getRefreshTime() {
-        return 1;
+        return 10;
     }
 
     @Override
     public int getRefreshCost() {
-        return 1;
+        return 5;
     }
 
     @Override

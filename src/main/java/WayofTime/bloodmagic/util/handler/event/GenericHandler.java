@@ -31,7 +31,6 @@ import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.RitualManager;
-import WayofTime.bloodmagic.ritual.types.RitualFeatheredEarth;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
@@ -205,9 +204,6 @@ public class GenericHandler {
                     }
                 }
             }
-        }
-        for (IMasterRitualStone masterRitualStone : featherRitualSet) {
-            masterRitualStone.getBlockRange(RitualFeatheredEarth.FALL_PROTECTION_RANGE).getAABB(masterRitualStone.getBlockPos());
         }
     }
 
