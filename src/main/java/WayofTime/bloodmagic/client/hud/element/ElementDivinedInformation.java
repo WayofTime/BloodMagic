@@ -25,13 +25,13 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
         ItemStack sigilStack = player.getHeldItem(EnumHand.MAIN_HAND);
         boolean flag = false;
         if (simple) {
-            if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION)
+            if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION || sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
                 flag = true;
             else flag = isFlagSigilHolding(sigilStack, true);
 
             if (!flag) {
                 sigilStack = player.getHeldItem(EnumHand.OFF_HAND);
-                if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION)
+                if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION || sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
                     flag = true;
                 else flag = isFlagSigilHolding(sigilStack, true);
             }
