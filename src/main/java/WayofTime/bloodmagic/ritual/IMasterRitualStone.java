@@ -55,7 +55,7 @@ public interface IMasterRitualStone {
 
     void setActiveWillConfig(EntityPlayer player, List<EnumDemonWillType> typeList);
 
-    boolean setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2);
+    int setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2);
 
     List<EnumDemonWillType> getActiveWillConfig();
 

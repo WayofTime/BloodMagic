@@ -4,8 +4,10 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.ritual.EnumRitualReaderState;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.ritual.Ritual;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.IDiscreteDemonWill;
+import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
@@ -100,7 +102,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                         break;
                     case SET_AREA:
                         String range = this.getCurrentBlockRange(stack);
-                        //TODO: range null check does not actually select MRS because range is always at least BlockPos(0,0,0)
+
                         if (range == null || player.isSneaking()) {
                             String newRange = master.getNextBlockRange(range);
                             range = newRange;
@@ -147,14 +149,31 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                             if (tile instanceof IMasterRitualStone) {
                                 IMasterRitualStone master = (IMasterRitualStone) tile;
                                 BlockPos pos2 = pos.subtract(masterPos);
-                                //TODO better error checking, prevent area setting if fail.
-                                if (master.setBlockRangeByBounds(player, this.getCurrentBlockRange(stack), containedPos, pos2))
-                                    player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.success"), true);
-                                else
-                                    player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.fail"), true);
-                            }
+                                String range = this.getCurrentBlockRange(stack);
+                                Ritual ritual = ((TileMasterRitualStone) master).getCurrentRitual();
+                                //TODO: Fix AreaDescriptor area handling to be inclusive, then remove the "-1" for range calculation below.
+                                int maxHorizontalRange = ritual.getMaxHorizontalRadiusForRange(range, null, null) - 1;
+                                int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, null, null) - 1;
+                                int maxVolume = ritual.getMaxVolumeForRange(range, null, null);
 
-                            this.setBlockPos(stack, BlockPos.ORIGIN);
+                                switch (master.setBlockRangeByBounds(player, range, containedPos, pos2)) {
+                                    case 1:
+                                        player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.success"), true);
+                                        break;
+                                    case -1:
+                                        player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.tooFar", maxVerticalRange, maxHorizontalRange), false);
+                                        break;
+                                    case -2:
+                                        player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.tooBig", maxVolume), false);
+                                        break;
+                                    case 0:
+                                    default:
+                                        player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.noRange"), false);
+                                        break;
+                                }
+
+                                this.setBlockPos(stack, BlockPos.ORIGIN);
+                            }
                         }
                     }
                 }

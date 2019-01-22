@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.ritual;
 
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,7 +15,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 /**
@@ -186,13 +185,13 @@ public abstract class Ritual {
         return rangeList.get(0);
     }
 
-    public boolean canBlockRangeBeModified(String range, AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2, DemonWillHolder holder) {
+    public int canBlockRangeBeModified(String range, AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2, DemonWillHolder holder) {
         List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
         int maxVolume = getMaxVolumeForRange(range, willConfig, holder);
         int maxVertical = getMaxVerticalRadiusForRange(range, willConfig, holder);
         int maxHorizontal = getMaxHorizontalRadiusForRange(range, willConfig, holder);
 
-        return (maxVolume <= 0 || descriptor.getVolumeForOffsets(offset1, offset2) <= maxVolume) && descriptor.isWithinRange(offset1, offset2, maxVertical, maxHorizontal);
+        return (maxVolume <= 0 || descriptor.getVolumeForOffsets(offset1, offset2) <= maxVolume) ? descriptor.isWithinRange(offset1, offset2, maxVertical, maxHorizontal) ? 1 : -1 : -2;
     }
 
     protected void setMaximumVolumeAndDistanceOfRange(String range, int volume, int horizontalRadius, int verticalRadius) {
