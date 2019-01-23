@@ -28,7 +28,7 @@ public class RitualGrounding extends Ritual {
 
     public RitualGrounding() {
         super("ritualGrounding", 0, 5000, "ritual." + BloodMagic.MODID + ".groundingRitual");
-        addBlockRange(GROUNDING_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 10, 30, 10)); //10 30 10
+        addBlockRange(GROUNDING_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, 0, -10), new BlockPos(10, 30, 10))); //10 30 10
         setMaximumVolumeAndDistanceOfRange(GROUNDING_RANGE, 0, 200, 200);
     }
 
@@ -65,7 +65,7 @@ public class RitualGrounding extends Ritual {
 
         /* Actual ritual stuff begins here */
         AreaDescriptor groundingRange = getBlockRange(GROUNDING_RANGE);
-        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, groundingRange.getAABB(pos).expand(-10, 0, -10));
+        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, groundingRange.getAABB(pos));
         for (EntityLivingBase entity : entities) {
             if (totalEffects >= maxEffects) {
                 break;
