@@ -1,22 +1,22 @@
 package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.soul.DemonWillHolder;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.RitualEvent;
+import WayofTime.bloodmagic.iface.IBindable;
+import WayofTime.bloodmagic.item.ItemActivationCrystal;
+import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.Ritual;
-import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.util.helper.*;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.tile.base.TileTicking;
 import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.util.helper.*;
 import com.google.common.base.Strings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -28,7 +28,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nullable;
-import java.awt.geom.Area;
 import java.util.*;
 
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone {
@@ -184,11 +183,14 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     public void performRitual(World world, BlockPos pos) {
         if (!world.isRemote && getCurrentRitual() != null && BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(currentRitual), false)) {
             if (RitualHelper.checkValidRitual(getWorld(), getPos(), currentRitual, getDirection())) {
-                RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
+                Ritual ritual = getCurrentRitual();
+                RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), ritual);
 
                 if (MinecraftForge.EVENT_BUS.post(event))
                     return;
 
+                if (!checkBlockRanges(ritual.getModableRangeMap()))
+                    addBlockRanges(ritual.getModableRangeMap());
                 getCurrentRitual().performRitual(this);
             } else {
                 stopRitual(Ritual.BreakType.BREAK_STONE);
