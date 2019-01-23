@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.ritual.*;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -18,7 +19,7 @@ public class RitualFeatheredEarth extends Ritual {
 
     public RitualFeatheredEarth() {
         super("ritualFeatheredEarth", 0, 5000, "ritual." + BloodMagic.MODID + ".featheredEarthRitual");
-        addBlockRange(FALL_PROTECTION_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-25, 0, -25), 25, 30, 25));
+        addBlockRange(FALL_PROTECTION_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-25, 0, -25), new BlockPos(25, 30, 25)));
         setMaximumVolumeAndDistanceOfRange(FALL_PROTECTION_RANGE, 0, 200, 200);
     }
 
@@ -49,13 +50,14 @@ public class RitualFeatheredEarth extends Ritual {
         }
 
         AreaDescriptor fallProtRange = masterRitualStone.getBlockRange(FALL_PROTECTION_RANGE);
-        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, fallProtRange.getAABB(masterRitualStone.getBlockPos()));
+        AxisAlignedBB fallProtBB = fallProtRange.getAABB(masterRitualStone.getBlockPos());
+        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, fallProtBB);
 
         for (EntityLivingBase entity : entities) {
             if (totalEffects >= maxEffects) {
                 break;
             }
-            entity.addPotionEffect(new PotionEffect(RegistrarBloodMagic.FEATHERED, 40, 0));
+            entity.addPotionEffect(new PotionEffect(RegistrarBloodMagic.FEATHERED, 20, 0));
             totalEffects++;
         }
 
