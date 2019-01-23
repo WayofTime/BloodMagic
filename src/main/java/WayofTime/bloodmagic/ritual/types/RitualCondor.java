@@ -18,13 +18,13 @@ public class RitualCondor extends Ritual {
 
     public RitualCondor() {
         super("ritualCondor", 0, 1000000, "ritual." + BloodMagic.MODID + ".condorRitual");
-        addBlockRange(FLIGHT_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), new BlockPos(10, 30, 10)));
+        addBlockRange(FLIGHT_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, 0, -10), new BlockPos(10, 30, 10)));
         setMaximumVolumeAndDistanceOfRange(FLIGHT_RANGE, 0, 100, 200);
     }
 
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone) {
-        AxisAlignedBB aabb = masterRitualStone.getBlockRange(FLIGHT_RANGE).getAABB(masterRitualStone.getBlockPos()).expand(-10, 0, -10);
+        AxisAlignedBB aabb = masterRitualStone.getBlockRange(FLIGHT_RANGE).getAABB(masterRitualStone.getBlockPos());
         World world = masterRitualStone.getWorldObj();
 
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
