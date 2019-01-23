@@ -183,13 +183,15 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     public void performRitual(World world, BlockPos pos) {
         if (!world.isRemote && getCurrentRitual() != null && BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(currentRitual), false)) {
             if (RitualHelper.checkValidRitual(getWorld(), getPos(), currentRitual, getDirection())) {
-                RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
+                Ritual ritual = getCurrentRitual();
+                RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), ritual);
 
                 if (MinecraftForge.EVENT_BUS.post(event))
                     return;
-
+              
                 if (!checkBlockRanges(getCurrentRitual().getModableRangeMap()))
                     addBlockRanges(getCurrentRitual().getModableRangeMap());
+              
                 getCurrentRitual().performRitual(this);
             } else {
                 stopRitual(Ritual.BreakType.BREAK_STONE);
