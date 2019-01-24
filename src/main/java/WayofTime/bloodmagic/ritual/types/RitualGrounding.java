@@ -28,7 +28,7 @@ public class RitualGrounding extends Ritual {
 
     public RitualGrounding() {
         super("ritualGrounding", 0, 5000, "ritual." + BloodMagic.MODID + ".groundingRitual");
-        addBlockRange(GROUNDING_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, 0, -10), new BlockPos(10, 30, 10))); //10 30 10
+        addBlockRange(GROUNDING_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, 0, -10), 21, 30, 21));
         setMaximumVolumeAndDistanceOfRange(GROUNDING_RANGE, 0, 200, 200);
     }
 

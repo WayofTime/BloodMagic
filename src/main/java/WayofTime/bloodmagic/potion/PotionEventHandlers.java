@@ -11,6 +11,7 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -20,13 +21,14 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class PotionEventHandlers {
-    public static List<EntityPlayer> flightList = new ArrayList<>();
-    public static List<EntityLivingBase> noGravityList = new ArrayList<>();
+    public static Map<World, List<EntityPlayer>> flightListMap = new HashMap<>();
+    public static Map<World, List<EntityLivingBase>> noGravityListMap = new HashMap<>();
 
     @SubscribeEvent
     public static void onLivingJumpEvent(LivingEvent.LivingJumpEvent event) {
@@ -55,6 +57,7 @@ public class PotionEventHandlers {
     @SubscribeEvent
     public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
         EntityLivingBase eventEntityLiving = event.getEntityLiving();
+        List<EntityPlayer> flightList = flightListMap.get(eventEntityLiving.getEntityWorld());
 
         if (eventEntityLiving instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) eventEntityLiving;
@@ -90,6 +93,7 @@ public class PotionEventHandlers {
 //                }
 //            }
 //        }
+        List<EntityLivingBase> noGravityList = noGravityListMap.get(event.getEntityLiving().getEntityWorld());
         if ((!(eventEntityLiving instanceof EntityPlayer) || !((EntityPlayer) eventEntityLiving).isSpectator()) && eventEntityLiving.isPotionActive(RegistrarBloodMagic.SUSPENDED)) {
             eventEntityLiving.setNoGravity(true);
             noGravityList.add(eventEntityLiving);
