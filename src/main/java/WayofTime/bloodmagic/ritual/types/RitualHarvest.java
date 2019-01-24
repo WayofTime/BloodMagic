@@ -52,7 +52,7 @@ public class RitualHarvest extends Ritual {
 
         int harvested = 0;
 
-        AreaDescriptor harvestArea = getBlockRange(HARVEST_RANGE);
+        AreaDescriptor harvestArea = masterRitualStone.getBlockRange(HARVEST_RANGE);
 
         harvestArea.resetIterator();
         while (harvestArea.hasNext()) {

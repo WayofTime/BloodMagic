@@ -3,10 +3,9 @@ package WayofTime.bloodmagic.item;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.core.data.SoulTicket;
-import WayofTime.bloodmagic.util.BlockStack;
-import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import com.google.common.collect.*;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -73,34 +72,31 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
 
         int range = (charge / 6); //Charge is a max of 30 - want 5 to be the max
 
-        HashMultiset<ItemStackWrapper> drops = HashMultiset.create();
-
         BlockPos playerPos = player.getPosition();
 
         for (int i = -range; i <= range; i++) {
             for (int j = 0; j <= 2 * range; j++) {
                 for (int k = -range; k <= range; k++) {
                     BlockPos blockPos = playerPos.add(i, j, k);
-                    BlockStack blockStack = BlockStack.getStackFromPos(world, blockPos);
+                    IBlockState blockState = world.getBlockState(blockPos);
 
-                    if (blockStack.getBlock().isAir(blockStack.getState(), world, blockPos))
+                    if (world.isAirBlock(blockPos))
                         continue;
 
-                    if (blockStack.getState().getMaterial() != Material.ROCK && !EFFECTIVE_ON.contains(blockStack.getBlock()))
+                    if (blockState.getMaterial() != Material.ROCK && !EFFECTIVE_ON.contains(blockState.getBlock()))
                         continue;
 
-                    BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockStack.getState(), player);
+                    BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockState, player);
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         continue;
 
-                    sharedHarvest(stack, world, player, blockPos, blockStack, drops, silkTouch, fortuneLvl);
+                    sharedHarvest(stack, world, player, blockPos, blockState, silkTouch, fortuneLvl);
                 }
             }
         }
 
         NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, (int) (charge * charge * charge / 2.7)));
         world.createExplosion(player, playerPos.getX(), playerPos.getY(), playerPos.getZ(), 0.5F, false);
-        dropStacks(drops, world, playerPos.add(0, 1, 0));
     }
 
     @Override

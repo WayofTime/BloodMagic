@@ -71,10 +71,10 @@ public class RitualRegeneration extends Ritual {
         float absorptionRate = 1;
         int maxAbsorption = 20;
 
-        AreaDescriptor healArea = getBlockRange(HEAL_RANGE);
+        AreaDescriptor healArea = masterRitualStone.getBlockRange(HEAL_RANGE);
         AxisAlignedBB healRange = healArea.getAABB(pos);
 
-        AreaDescriptor damageArea = getBlockRange(VAMPIRE_RANGE);
+        AreaDescriptor damageArea = masterRitualStone.getBlockRange(VAMPIRE_RANGE);
         AxisAlignedBB damageRange = damageArea.getAABB(pos);
 
         List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, healRange);

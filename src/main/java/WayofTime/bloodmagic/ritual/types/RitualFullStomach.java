@@ -39,14 +39,14 @@ public class RitualFullStomach extends Ritual {
         int maxEffects = currentEssence / getRefreshCost();
         int totalEffects = 0;
 
-        AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
+        AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
         TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
         if (tile == null || !tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null))
             return;
 
         IItemHandler inventory = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         int lastSlot = 0;
-        AreaDescriptor fillingRange = getBlockRange(FILL_RANGE);
+        AreaDescriptor fillingRange = masterRitualStone.getBlockRange(FILL_RANGE);
         List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, fillingRange.getAABB(pos));
 
         for (EntityPlayer player : playerList) {
