@@ -57,7 +57,7 @@ public class LivingArmourUpgradeJump extends LivingArmourUpgrade {
     }
 
     @Override
-    public String getUnlocalizedName() {
+    public String getTranslationKey() {
         return tooltipBase + "jump";
     }
 }

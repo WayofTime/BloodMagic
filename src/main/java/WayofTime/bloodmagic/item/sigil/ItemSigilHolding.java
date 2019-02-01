@@ -248,7 +248,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 
         NBTTagList tagList = tagCompound.getTagList(Constants.NBT.ITEMS, 10);
 
-        if (tagList.hasNoTags()) {
+        if (tagList.isEmpty()) {
             return NonNullList.withSize(inventorySize, ItemStack.EMPTY);
         }
 

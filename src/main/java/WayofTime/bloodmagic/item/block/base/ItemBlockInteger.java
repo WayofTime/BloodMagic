@@ -20,8 +20,8 @@ public class ItemBlockInteger extends ItemBlock {
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return getBlock().getUnlocalizedName() + "." + stack.getItemDamage();
+    public String getTranslationKey(ItemStack stack) {
+        return getBlock().getTranslationKey() + "." + stack.getItemDamage();
     }
 
     @Override

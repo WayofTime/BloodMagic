@@ -55,7 +55,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
     public ItemSentientBow() {
 
         super();
-        setUnlocalizedName(BloodMagic.MODID + ".sentientBow");
+        setTranslationKey(BloodMagic.MODID + ".sentientBow");
         setCreativeTab(BloodMagic.TAB_BM);
         this.addPropertyOverride(new ResourceLocation("pull"), new IItemPropertyGetter() {
             @SideOnly(Side.CLIENT)

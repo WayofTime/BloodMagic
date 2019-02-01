@@ -23,7 +23,7 @@ public class ItemBlockAlchemyTable extends ItemBlock implements IVariantProvider
         float yaw = player.rotationYaw;
         EnumFacing direction = EnumFacing.fromAngle(yaw);
 
-        if (direction.getFrontOffsetY() != 0) {
+        if (direction.getYOffset() != 0) {
             return false;
         }
 

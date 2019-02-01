@@ -45,7 +45,7 @@ public class LivingArmourUpgradeElytra extends LivingArmourUpgrade {
     }
 
     @Override
-    public String getUnlocalizedName() {
+    public String getTranslationKey() {
         return tooltipBase + "elytra";
     }
 }

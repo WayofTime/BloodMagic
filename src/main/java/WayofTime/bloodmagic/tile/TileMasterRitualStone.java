@@ -80,7 +80,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         currentRitual = BloodMagic.RITUAL_MANAGER.getRitual(tag.getString(Constants.NBT.CURRENT_RITUAL));
         if (currentRitual != null) {
             NBTTagCompound ritualTag = tag.getCompoundTag(Constants.NBT.CURRENT_RITUAL_TAG);
-            if (!ritualTag.hasNoTags()) {
+            if (!ritualTag.isEmpty()) {
                 currentRitual.readFromNBT(ritualTag);
             }
         }

@@ -61,7 +61,7 @@ public class LivingArmourUpgradeSlowness extends LivingArmourUpgrade {
     }
 
     @Override
-    public String getUnlocalizedName() {
+    public String getTranslationKey() {
         return tooltipBase + "slowness";
     }
 

@@ -22,7 +22,7 @@ public class BlockIncenseAltar extends Block implements IVariantProvider, IBMBlo
     public BlockIncenseAltar() {
         super(Material.ROCK);
 
-        setUnlocalizedName(BloodMagic.MODID + ".incenseAltar");
+        setTranslationKey(BloodMagic.MODID + ".incenseAltar");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

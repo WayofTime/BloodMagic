@@ -67,7 +67,7 @@ public class LivingArmourUpgradeRepairing extends LivingArmourUpgrade {
     }
 
     @Override
-    public String getUnlocalizedName() {
+    public String getTranslationKey() {
         return tooltipBase + "repair";
     }
 }

@@ -43,7 +43,7 @@ public class LivingArmourUpgradeQuenched extends LivingArmourUpgrade {
     }
 
     @Override
-    public String getUnlocalizedName() {
+    public String getTranslationKey() {
         return tooltipBase + "quenched";
     }
 

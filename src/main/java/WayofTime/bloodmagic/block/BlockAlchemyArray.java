@@ -36,7 +36,7 @@ public class BlockAlchemyArray extends Block {
     public BlockAlchemyArray() {
         super(Material.CLOTH);
 
-        setUnlocalizedName(BloodMagic.MODID + ".alchemyArray");
+        setTranslationKey(BloodMagic.MODID + ".alchemyArray");
         setHardness(0.1f);
     }
 
@@ -46,7 +46,7 @@ public class BlockAlchemyArray extends Block {
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+    public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileAlchemyArray) {
             ((TileAlchemyArray) tile).onEntityCollidedWithBlock(state, entity);
@@ -60,7 +60,7 @@ public class BlockAlchemyArray extends Block {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 

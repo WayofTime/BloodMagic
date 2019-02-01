@@ -62,7 +62,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 
     public ItemLivingArmour(EntityEquipmentSlot armorType) {
         super(ItemArmor.ArmorMaterial.IRON, 0, armorType);
-        setUnlocalizedName(BloodMagic.MODID + ".livingArmour.");
+        setTranslationKey(BloodMagic.MODID + ".livingArmour.");
 //        setMaxDamage(250);
         setMaxDamage((int) (getMaxDamage() * 1.5));
         setCreativeTab(BloodMagic.TAB_BM);
@@ -259,10 +259,10 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 
                         if (tracker != null) {
                             double progress = tracker.getProgress(armour, upgrade.getUpgradeLevel());
-                            tooltip.add(TextHelper.localize("tooltip.bloodmagic.livingArmour.upgrade.progress", TextHelper.localize(upgrade.getUnlocalizedName()), MathHelper.clamp((int) (progress * 100D), 0, 100)));
+                            tooltip.add(TextHelper.localize("tooltip.bloodmagic.livingArmour.upgrade.progress", TextHelper.localize(upgrade.getTranslationKey()), MathHelper.clamp((int) (progress * 100D), 0, 100)));
                         }
                     } else {
-                        tooltip.add(TextHelper.localize("tooltip.bloodmagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getUnlocalizedName()), upgrade.getUpgradeLevel() + 1));
+                        tooltip.add(TextHelper.localize("tooltip.bloodmagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getTranslationKey()), upgrade.getUpgradeLevel() + 1));
                     }
                 }
             }
@@ -344,8 +344,8 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + names[3 - armorType.getIndex()];
+    public String getTranslationKey(ItemStack stack) {
+        return super.getTranslationKey(stack) + names[3 - armorType.getIndex()];
     }
 
     @Override

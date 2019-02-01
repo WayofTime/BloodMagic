@@ -59,7 +59,7 @@ public class DataProviderRitualController implements IWailaDataProvider {
             TileMasterRitualStone mrs = (TileMasterRitualStone) te;
             tag.setBoolean("master", true);
             if (mrs.getCurrentRitual() != null) {
-                tag.setString("ritual", mrs.getCurrentRitual().getUnlocalizedName());
+                tag.setString("ritual", mrs.getCurrentRitual().getTranslationKey());
                 tag.setBoolean("active", mrs.isActive());
                 if (mrs.getOwner() != null)
                     tag.setString("owner", PlayerHelper.getUsernameFromUUID(mrs.getOwner()));
@@ -70,7 +70,7 @@ public class DataProviderRitualController implements IWailaDataProvider {
 
             ImperfectRitual ritual = BloodMagic.RITUAL_MANAGER.getImperfectRitual(world.getBlockState(pos.up()));
             if (ritual != null) {
-                tag.setString("ritual", ritual.getUnlocalizedName());
+                tag.setString("ritual", ritual.getTranslationKey());
                 tag.setBoolean("enabled", BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(ritual), false));
             }
         }

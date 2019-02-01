@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 public class ItemDaggerOfSacrifice extends Item implements IVariantProvider {
     public ItemDaggerOfSacrifice() {
         super();
-        setUnlocalizedName(BloodMagic.MODID + ".daggerOfSacrifice");
+        setTranslationKey(BloodMagic.MODID + ".daggerOfSacrifice");
         setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
         setFull3D();

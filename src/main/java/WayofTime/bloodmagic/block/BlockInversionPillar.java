@@ -20,7 +20,7 @@ public class BlockInversionPillar extends BlockEnum<EnumSubWillType> {
     public BlockInversionPillar() {
         super(Material.ROCK, EnumSubWillType.class);
 
-        setUnlocalizedName(BloodMagic.MODID + ".inversionpillar.");
+        setTranslationKey(BloodMagic.MODID + ".inversionpillar.");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

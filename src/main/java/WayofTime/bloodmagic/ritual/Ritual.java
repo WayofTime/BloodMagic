@@ -51,7 +51,7 @@ public abstract class Ritual {
 
     public void readFromNBT(NBTTagCompound tag) {
         NBTTagList tags = tag.getTagList("areas", 10);
-        if (tags.hasNoTags()) {
+        if (tags.isEmpty()) {
             return;
         }
 
@@ -237,12 +237,12 @@ public abstract class Ritual {
     }
 
     public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
-        return new ITextComponent[]{new TextComponentTranslation(this.getUnlocalizedName() + ".info")};
+        return new ITextComponent[]{new TextComponentTranslation(this.getTranslationKey() + ".info")};
     }
 
     public ITextComponent provideInformationOfRangeToPlayer(EntityPlayer player, String range) {
         if (getListOfRanges().contains(range)) {
-            return new TextComponentTranslation(this.getUnlocalizedName() + "." + range + ".info");
+            return new TextComponentTranslation(this.getTranslationKey() + "." + range + ".info");
         } else {
             return new TextComponentTranslation("ritual.bloodmagic.blockRange.noRange");
         }
@@ -301,7 +301,7 @@ public abstract class Ritual {
         return renderer;
     }
 
-    public String getUnlocalizedName() {
+    public String getTranslationKey() {
         return unlocalizedName;
     }
 

@@ -56,7 +56,7 @@ public class ItemStackWrapper {
 
     @Override
     public String toString() {
-        return stackSize + "x" + item.getUnlocalizedName() + "@" + this.meta;
+        return stackSize + "x" + item.getTranslationKey() + "@" + this.meta;
     }
 
     public ItemStack toStack(int count) {

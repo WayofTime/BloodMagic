@@ -56,7 +56,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
 
     public ItemSentientArmour(EntityEquipmentSlot armorType) {
         super(ItemArmor.ArmorMaterial.IRON, 0, armorType);
-        setUnlocalizedName(BloodMagic.MODID + ".sentientArmour.");
+        setTranslationKey(BloodMagic.MODID + ".sentientArmour.");
         setMaxDamage(250);
         setCreativeTab(BloodMagic.TAB_BM);
     }
@@ -268,8 +268,8 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + names[3 - armorType.getIndex()];
+    public String getTranslationKey(ItemStack stack) {
+        return super.getTranslationKey(stack) + names[3 - armorType.getIndex()];
     }
 
     public void revertArmour(EntityPlayer player, ItemStack itemStack) {

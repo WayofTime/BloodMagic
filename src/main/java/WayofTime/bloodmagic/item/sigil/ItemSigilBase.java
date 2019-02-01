@@ -24,7 +24,7 @@ public class ItemSigilBase extends ItemSigil implements IVariantProvider {
     public ItemSigilBase(String name, int lpUsed) {
         super(lpUsed);
 
-        setUnlocalizedName(BloodMagic.MODID + ".sigil." + name);
+        setTranslationKey(BloodMagic.MODID + ".sigil." + name);
 
         this.name = name;
         this.tooltipBase = "tooltip.bloodmagic.sigil." + name + ".";

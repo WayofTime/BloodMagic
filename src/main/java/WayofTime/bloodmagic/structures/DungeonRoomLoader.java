@@ -54,8 +54,8 @@ public class DungeonRoomLoader {
 
     public static void test() {
         ResourceLocation id = new ResourceLocation(BloodMagic.MODID, "testGson");
-        String s = id.getResourceDomain();
-        String s1 = id.getResourcePath();
+        String s = id.getNamespace();
+        String s1 = id.getPath();
         InputStream inputstream = null;
 
         try {
@@ -70,6 +70,6 @@ public class DungeonRoomLoader {
     }
 
     public static String resLocToResourcePath(ResourceLocation resourceLocation) {
-        return "/assets/" + resourceLocation.getResourceDomain() + "/schematics/" + resourceLocation.getResourcePath() + ".json";
+        return "/assets/" + resourceLocation.getNamespace() + "/schematics/" + resourceLocation.getPath() + ".json";
     }
 }

@@ -105,7 +105,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
         super(Material.ROCK);
         this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, EnumDemonWillType.DEFAULT).withProperty(ATTACHED, EnumFacing.UP));
 
-        setUnlocalizedName(BloodMagic.MODID + ".demonCrystal.");
+        setTranslationKey(BloodMagic.MODID + ".demonCrystal.");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

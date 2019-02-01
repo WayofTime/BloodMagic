@@ -75,7 +75,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
         setMaxDamage(getMaxDamage() * 2);
 //        super(ModItems.soulToolMaterial);
 
-        setUnlocalizedName(BloodMagic.MODID + ".sentientPickaxe");
+        setTranslationKey(BloodMagic.MODID + ".sentientPickaxe");
         setCreativeTab(BloodMagic.TAB_BM);
     }
 

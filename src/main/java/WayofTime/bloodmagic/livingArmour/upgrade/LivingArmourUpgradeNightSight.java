@@ -71,7 +71,7 @@ public class LivingArmourUpgradeNightSight extends LivingArmourUpgrade {
     }
 
     @Override
-    public String getUnlocalizedName() {
+    public String getTranslationKey() {
         return tooltipBase + "nightSight";
     }
 }

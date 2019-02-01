@@ -71,7 +71,7 @@ public class SubCommandRitual extends CommandTreeBase {
                 sender.sendMessage(new TextComponentTranslation("commands.blooodmagic.ritual.create.noRitual"));
                 return;
             } else if (args.length == 2 && (args[1].equals("help") || args[1].equals("?"))) {
-                sender.sendMessage(new TextComponentTranslation(BloodMagic.RITUAL_MANAGER.getRitual(args[0]).getUnlocalizedName() + ".info"));
+                sender.sendMessage(new TextComponentTranslation(BloodMagic.RITUAL_MANAGER.getRitual(args[0]).getTranslationKey() + ".info"));
                 return;
             }
             EntityPlayerMP player = args.length < 3 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[1]);

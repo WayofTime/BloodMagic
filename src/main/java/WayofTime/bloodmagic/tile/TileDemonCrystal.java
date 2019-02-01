@@ -173,7 +173,7 @@ public class TileDemonCrystal extends TileTicking
     {
         holder.readFromNBT(tag, "Will");
         crystalCount = tag.getInteger("crystalCount");
-        placement = EnumFacing.getFront(tag.getInteger("placement"));
+        placement = EnumFacing.byIndex(tag.getInteger("placement"));
         progressToNextCrystal = tag.getDouble("progress");
     }
 

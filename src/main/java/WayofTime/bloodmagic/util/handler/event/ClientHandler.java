@@ -185,13 +185,13 @@ public class ClientHandler {
         // Collect all Blood Magic model errors
         List<ResourceLocation> errored = new ArrayList<>();
         for (ResourceLocation modelError : modelErrors.keySet())
-            if (modelError.getResourceDomain().equalsIgnoreCase(BloodMagic.MODID))
+            if (modelError.getNamespace().equalsIgnoreCase(BloodMagic.MODID))
                 errored.add(modelError);
 
         // Collect all Blood Magic variant errors
         List<ModelResourceLocation> missing = new ArrayList<>();
         for (ModelResourceLocation missingVariant : missingVariants)
-            if (missingVariant.getResourceDomain().equalsIgnoreCase(BloodMagic.MODID))
+            if (missingVariant.getNamespace().equalsIgnoreCase(BloodMagic.MODID))
                 missing.add(missingVariant);
 
         // Remove discovered model errors
@@ -226,7 +226,7 @@ public class ClientHandler {
         if (missingTextures.containsKey(mc)) {
             Set<ResourceLocation> missingMCTextures = missingTextures.get(mc);
             for (ResourceLocation texture : missingMCTextures)
-                if (texture.getResourcePath().equalsIgnoreCase(String.format(format, "node")) || texture.getResourcePath().equalsIgnoreCase(String.format(format, "crystal")))
+                if (texture.getPath().equalsIgnoreCase(String.format(format, "node")) || texture.getPath().equalsIgnoreCase(String.format(format, "crystal")))
                     toRemove.add(texture);
         }
 

@@ -28,7 +28,7 @@ public class BlockBloodLight extends Block {
     public BlockBloodLight() {
         super(Material.CLOTH);
 
-        setUnlocalizedName(BloodMagic.MODID + ".bloodLight");
+        setTranslationKey(BloodMagic.MODID + ".bloodLight");
     }
 
     @Override
@@ -49,7 +49,7 @@ public class BlockBloodLight extends Block {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 

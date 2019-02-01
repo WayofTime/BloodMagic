@@ -239,7 +239,7 @@ public class LivingArmour implements ILivingArmour {
                 StatTracker tracker = (StatTracker) obj;
                 String key = tracker.getUniqueIdentifier();
                 NBTTagCompound trackerTag = tag.getCompoundTag(key);
-                if (!trackerTag.hasNoTags()) {
+                if (!trackerTag.isEmpty()) {
                     tracker.readFromNBT(trackerTag);
                 }
                 trackerMap.put(key, tracker);

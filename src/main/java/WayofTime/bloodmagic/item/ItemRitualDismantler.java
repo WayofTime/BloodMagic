@@ -27,7 +27,7 @@ import java.util.List;
 
 public class ItemRitualDismantler extends Item implements IVariantProvider {
     public ItemRitualDismantler() {
-        setUnlocalizedName(BloodMagic.MODID + ".ritualDismantler");
+        setTranslationKey(BloodMagic.MODID + ".ritualDismantler");
         setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
     }

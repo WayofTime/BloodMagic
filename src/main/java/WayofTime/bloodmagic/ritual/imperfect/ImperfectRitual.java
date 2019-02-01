@@ -60,7 +60,7 @@ public abstract class ImperfectRitual {
         return lightShow;
     }
 
-    public String getUnlocalizedName() {
+    public String getTranslationKey() {
         return unlocalizedName;
     }
 

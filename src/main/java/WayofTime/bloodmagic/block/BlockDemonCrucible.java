@@ -49,7 +49,7 @@ public class BlockDemonCrucible extends Block implements IVariantProvider, IBMBl
     public BlockDemonCrucible() {
         super(Material.ROCK);
 
-        setUnlocalizedName(BloodMagic.MODID + ".demonCrucible");
+        setTranslationKey(BloodMagic.MODID + ".demonCrucible");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

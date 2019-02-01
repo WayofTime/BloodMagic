@@ -23,7 +23,7 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
 
     public ItemLavaCrystal() {
         super();
-        setUnlocalizedName(BloodMagic.MODID + ".lavaCrystal");
+        setTranslationKey(BloodMagic.MODID + ".lavaCrystal");
     }
 
     @Override
@@ -66,7 +66,7 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
             return null;
 
         NBTBase bindingTag = stack.getTagCompound().getTag("binding");
-        if (bindingTag == null || bindingTag.getId() != 10 || bindingTag.hasNoTags()) // Make sure it's both a tag compound and that it has actual data.
+        if (bindingTag == null || bindingTag.getId() != 10 || bindingTag.isEmpty()) // Make sure it's both a tag compound and that it has actual data.
             return null;
 
         NBTTagCompound nbt = (NBTTagCompound) bindingTag;

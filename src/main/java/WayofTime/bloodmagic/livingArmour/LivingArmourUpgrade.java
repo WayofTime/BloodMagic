@@ -55,7 +55,7 @@ public abstract class LivingArmourUpgrade {
 
     public abstract String getUniqueIdentifier();
 
-    public abstract String getUnlocalizedName();
+    public abstract String getTranslationKey();
 
     public abstract int getMaxTier();
 

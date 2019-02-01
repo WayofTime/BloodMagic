@@ -36,7 +36,7 @@ public class BlockDemonPylon extends BlockContainer implements IBMBlock, IVarian
     public BlockDemonPylon() {
         super(Material.ROCK);
 
-        setUnlocalizedName(BloodMagic.MODID + ".demonPylon");
+        setTranslationKey(BloodMagic.MODID + ".demonPylon");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

@@ -92,7 +92,7 @@ public class MobSacrificeAlchemyCircleRenderer extends AlchemyCircleRenderer
         EnumFacing sideHit = EnumFacing.UP;
         EnumFacing rotation = tileArray.getRotation();
 
-        GlStateManager.translate(sideHit.getFrontOffsetX() * offsetFromFace, sideHit.getFrontOffsetY() * offsetFromFace, sideHit.getFrontOffsetZ() * offsetFromFace);
+        GlStateManager.translate(sideHit.getXOffset() * offsetFromFace, sideHit.getYOffset() * offsetFromFace, sideHit.getZOffset() * offsetFromFace);
 
         switch (sideHit)
         {

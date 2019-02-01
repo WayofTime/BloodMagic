@@ -38,7 +38,7 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
     private AltarTier currentDisplayedTier = AltarTier.ONE;
 
     public ItemSanguineBook() {
-        setUnlocalizedName(BloodMagic.MODID + ".sanguineBook");
+        setTranslationKey(BloodMagic.MODID + ".sanguineBook");
         setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
     }

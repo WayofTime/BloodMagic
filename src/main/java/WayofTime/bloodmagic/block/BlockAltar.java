@@ -44,7 +44,7 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
     public BlockAltar() {
         super(Material.ROCK);
 
-        setUnlocalizedName(BloodMagic.MODID + ".altar");
+        setTranslationKey(BloodMagic.MODID + ".altar");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

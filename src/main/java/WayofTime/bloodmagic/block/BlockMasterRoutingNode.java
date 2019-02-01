@@ -12,7 +12,7 @@ public class BlockMasterRoutingNode extends BlockRoutingNode {
     public BlockMasterRoutingNode() {
         super();
 
-        setUnlocalizedName(BloodMagic.MODID + ".masterRouting");
+        setTranslationKey(BloodMagic.MODID + ".masterRouting");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

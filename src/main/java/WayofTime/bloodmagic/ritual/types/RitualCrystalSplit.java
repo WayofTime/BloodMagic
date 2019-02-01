@@ -185,6 +185,6 @@ public class RitualCrystalSplit extends Ritual
     @Override
     public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player)
     {
-        return new ITextComponent[] { new TextComponentTranslation(this.getUnlocalizedName() + ".info") };
+        return new ITextComponent[] { new TextComponentTranslation(this.getTranslationKey() + ".info") };
     }
 }

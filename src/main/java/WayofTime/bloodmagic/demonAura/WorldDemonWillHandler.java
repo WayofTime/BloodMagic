@@ -138,7 +138,7 @@ public class WorldDemonWillHandler {
     public static WillChunk getWillChunk(World world, BlockPos pos) {
         WillChunk willChunk = getWillChunk(world.provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);
         if (willChunk == null) {
-            Chunk chunk = world.getChunkFromBlockCoords(pos);
+            Chunk chunk = world.getChunk(pos);
             generateWill(chunk);
 
             willChunk = getWillChunk(world.provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);

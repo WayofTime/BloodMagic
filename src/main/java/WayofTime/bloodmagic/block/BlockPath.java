@@ -20,7 +20,7 @@ public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath {
     public BlockPath() {
         super(Material.ROCK, EnumPath.class);
 
-        setUnlocalizedName(BloodMagic.MODID + ".path.");
+        setTranslationKey(BloodMagic.MODID + ".path.");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

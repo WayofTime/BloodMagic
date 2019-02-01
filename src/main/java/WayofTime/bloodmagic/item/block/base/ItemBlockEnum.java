@@ -22,8 +22,8 @@ public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends Item
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return getBlock().getUnlocalizedName() + getBlock().getTypes()[MathHelper.clamp(stack.getItemDamage(), 0, getBlock().getTypes().length - 1)].getName();
+    public String getTranslationKey(ItemStack stack) {
+        return getBlock().getTranslationKey() + getBlock().getTypes()[MathHelper.clamp(stack.getItemDamage(), 0, getBlock().getTypes().length - 1)].getName();
     }
 
     @Override

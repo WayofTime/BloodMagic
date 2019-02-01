@@ -69,7 +69,7 @@ public class RenderEntityMimic extends RenderLiving<EntityMimic> {
                         String s = nbttagcompound.getString("SkullOwner");
 
                         if (!StringUtils.isNullOrEmpty(s)) {
-                            gameprofile = TileEntitySkull.updateGameprofile(new GameProfile(null, s));
+                            gameprofile = TileEntitySkull.updateGameProfile(new GameProfile(null, s));
                             nbttagcompound.setTag("SkullOwner", NBTUtil.writeGameProfile(new NBTTagCompound(), gameprofile));
                         }
                     }

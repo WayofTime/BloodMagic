@@ -37,15 +37,15 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     public ItemSoulGem() {
         super();
 
-        setUnlocalizedName(BloodMagic.MODID + ".soulGem.");
+        setTranslationKey(BloodMagic.MODID + ".soulGem.");
         setHasSubtypes(true);
         setMaxStackSize(1);
         setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
+    public String getTranslationKey(ItemStack stack) {
+        return super.getTranslationKey(stack) + names[stack.getItemDamage()];
     }
 
     @Override

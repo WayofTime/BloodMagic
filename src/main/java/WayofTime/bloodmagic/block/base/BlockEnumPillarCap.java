@@ -32,7 +32,7 @@ public class BlockEnumPillarCap<E extends Enum<E> & IStringSerializable> extends
     @Override
     public IBlockState getStateFromMeta(int meta) {
         IBlockState state = getBlockState().getBaseState().withProperty(this.getProperty(), getTypes()[meta % 2]);
-        return state.withProperty(FACING, EnumFacing.getFront(meta / 2));
+        return state.withProperty(FACING, EnumFacing.byIndex(meta / 2));
     }
 
     @Override

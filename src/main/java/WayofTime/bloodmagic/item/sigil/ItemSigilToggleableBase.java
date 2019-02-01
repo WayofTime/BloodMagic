@@ -23,7 +23,7 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable implements IMes
     public ItemSigilToggleableBase(String name, int lpUsed) {
         super(lpUsed);
 
-        setUnlocalizedName(BloodMagic.MODID + ".sigil." + name);
+        setTranslationKey(BloodMagic.MODID + ".sigil." + name);
         setCreativeTab(BloodMagic.TAB_BM);
 
         this.name = name;

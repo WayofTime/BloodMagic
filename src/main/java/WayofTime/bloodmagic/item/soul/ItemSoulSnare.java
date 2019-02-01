@@ -26,7 +26,7 @@ public class ItemSoulSnare extends Item implements IVariantProvider {
     public ItemSoulSnare() {
         super();
 
-        setUnlocalizedName(BloodMagic.MODID + ".soulSnare.");
+        setTranslationKey(BloodMagic.MODID + ".soulSnare.");
         setCreativeTab(BloodMagic.TAB_BM);
         setHasSubtypes(true);
         setMaxStackSize(16);
@@ -51,8 +51,8 @@ public class ItemSoulSnare extends Item implements IVariantProvider {
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
+    public String getTranslationKey(ItemStack stack) {
+        return super.getTranslationKey(stack) + names[stack.getItemDamage()];
     }
 
     @Override

@@ -33,7 +33,7 @@ public class BlockAlchemyTable extends Block implements IBMBlock {
         super(Material.ROCK);
 //        this.setDefaultState(this.blockState.getBaseState().withProperty(DIRECTION, EnumFacing.DOWN).withProperty(INVISIBLE, false));
 
-        setUnlocalizedName(BloodMagic.MODID + ".alchemyTable");
+        setTranslationKey(BloodMagic.MODID + ".alchemyTable");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

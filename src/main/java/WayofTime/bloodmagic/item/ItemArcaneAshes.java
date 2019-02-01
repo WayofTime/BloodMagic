@@ -23,7 +23,7 @@ import java.util.List;
 
 public class ItemArcaneAshes extends Item implements IVariantProvider {
     public ItemArcaneAshes() {
-        setUnlocalizedName(BloodMagic.MODID + ".arcaneAshes");
+        setTranslationKey(BloodMagic.MODID + ".arcaneAshes");
         setMaxStackSize(1);
         setMaxDamage(19); //Allows for 20 uses
         setCreativeTab(BloodMagic.TAB_BM);
