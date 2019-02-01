@@ -621,6 +621,7 @@ ritual.bloodmagic.downgradeRitual=Penance of the Leadened Soul
 ritual.bloodmagic.crystalSplitRitual=Resonance of the Faceted Crystal
 ritual.bloodmagic.condorRitual=Reverence of the Condor
 ritual.bloodmagic.eternalSoulRitual=Cry of the Eternal Soul
+ritual.bloodmagic.groundingRitual=Ritual of Grounding
 ritual.bloodmagic.featheredEarthRitual=Ritual of the Feathered Earth
 
 ritual.bloodmagic.waterRitual.info=Generates a source of water from the master ritual stone.
@@ -667,6 +668,14 @@ ritual.bloodmagic.animalGrowthRitual.steadfast.info=(Steadfast) Automatically br
 ritual.bloodmagic.animalGrowthRitual.default.info=(Raw) Increases the speed of the ritual based on the total Will in the Aura.
 ritual.bloodmagic.animalGrowthRitual.destructive.info=(Destructive) Causes adults that have not bred lately to run at mobs and explode.
 ritual.bloodmagic.animalGrowthRitual.corrosive.info=(Corrosive) Unimplemented.
+ritual.bloodmagic.groundingRitual.info=Forces entities on the ground and prevents jumping.
+ritual.bloodmagic.groundingRitual.default.info=(Raw) Affects players.
+ritual.bloodmagic.groundingRitual.corrosive.info=(Corrosive) Disables gravity (+Vengeful) Applies Levitation.
+ritual.bloodmagic.groundingRitual.destructive.info=(Destructive) Applies Heavy Heart (increases fall damage) (+Vengeful) Stronger effect.
+ritual.bloodmagic.groundingRitual.steadfast.info=(Steadfast) Affects Bosses. Doesn't affect bosses that are immune against motion change or immune against potions (except Wither and Ender Dragon).
+ritual.bloodmagic.groundingRitual.vengeful.info=(Vengeful) Makes effects stronger. (+Corrosive) Applies Levitation. (+Destructive) Higher Heavy Heart amplifier.
+ritual.bloodmagic.condorRitual.info=Provides flight in an area around the ritual.
+ritual.bloodmagic.eternalSoulRitual.info=Capable of transferring Life Essence from a Network back into an Altar at a cost.
 
 ritual.bloodmagic.crystalSplitRitual.info=Splits apart a well-grown Raw crystal cluster into seperal aspected crystal clusters.
 ritual.bloodmagic.fullStomachRitual.info=Takes food from the linked chest and fills the player's saturation with it.
@@ -713,7 +722,7 @@ ritual.bloodmagic.fullStomachRitual.fillRange.info=(Feeding) The range that the 
 ritual.bloodmagic.fullStomachRitual.chest.info=(Chest) The location of the inventory that the ritual will grab food from to feed players in range.
 ritual.bloodmagic.interdictionRitual.interdictionRange.info=(Push) The area of the ritual where mobs will be pushed. All mobs are pushed away from the master ritual stone, regardless of where this area is.
 ritual.bloodmagic.containmentRitual.containmentRange.info=(Containment) The area of the ritual where mobs will be pulled. All mobs are pulled towards the master ritual stone, regardless of where this area is.
-ritual.bloodmagic.speedRitual.sanicRange.info=(Speed) All entities within this area are launched in the direction of the arrow formed by the ritual. 
+ritual.bloodmagic.speedRitual.sanicRange.info=(Speed) All entities within this area are launched in the direction of the arrow formed by the ritual.
 ritual.bloodmagic.suppressionRitual.suppressionRange.info=(Suppress) All liquids within the range are suppressed.
 ritual.bloodmagic.expulsionRitual.expulsionRange.info=(Expulsion) The area from which players that are not owner or have an orb in the chest will be teleported away from.
 ritual.bloodmagic.zephyrRitual.zephyrRange.info=(Suction) Items within this range will be sucked into the linked chest.
@@ -724,11 +733,11 @@ ritual.bloodmagic.forsakenSoulRitual.crystal.info=(Crystal) Demon Crystals in th
 ritual.bloodmagic.forsakenSoulRitual.damage.info=(Damage) Mobs within this range will be slowly damaged, and when killed will grow the crystals.
 ritual.bloodmagic.crystalHarvestRitual.crystal.info=(Crystal) All Demon Will crystal clusters have a single crystal broken off, spawning the crystal into the world. If there is only one crystal on the cluster, it will not break it.
 
-ritual.bloodmagic.ellipseRitual.info=Creates a hollow spheroid around the ritual using the blocks in the attached chest. 
+ritual.bloodmagic.ellipseRitual.info=Creates a hollow spheroid around the ritual using the blocks in the attached chest.
 ritual.bloodmagic.ellipseRitual.spheroidRange.info=(Placement) The range that the ritual will place its blocks in. Spheroid is centered on the ritual - if one side is shorter than the side opposite the spheroid is truncated.
 ritual.bloodmagic.ellipseRitual.chest.info=(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.
 
-ritual.bloodmagic.placerRitual.placerRange.info=(Placement) The range that the ritual will place its blocks in. 
+ritual.bloodmagic.placerRitual.placerRange.info=(Placement) The range that the ritual will place its blocks in.
 ritual.bloodmagic.placerRitual.chest.info=(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.
 ritual.bloodmagic.fellingRitual.fellingRange.info=(Cutting) The range that the ritual will search out logs and leaves in order to cut down.
 ritual.bloodmagic.fellingRitual.chest.info=(Chest) The location of the inventory that the ritual will place the results into.
@@ -755,7 +764,6 @@ ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.500=So think carefully befor
 ritual.bloodmagic.featheredEarthRitual.info=Prevents falldamage in an area.
 ritual.bloodmagic.condorRitual.info=Provides flight in an area around the ritual.
 ritual.bloodmagic.eternalSoulRitual.info=Capable of transferring Life Essence from a Network back into an Altar at a cost.
-
 
 # Chat
 chat.bloodmagic.altarMaker.setTier=Set Tier to: %d

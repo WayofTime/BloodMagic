@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.ritual.harvest.IHarvestHandler;
 import WayofTime.bloodmagic.ritual.harvest.HarvestRegistry;
+import WayofTime.bloodmagic.ritual.harvest.IHarvestHandler;
 import com.google.common.collect.Lists;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.InventoryHelper;
@@ -77,30 +77,10 @@ public class RitualHarvest extends Ritual {
 
     @Override
     public void gatherComponents(Consumer<RitualComponent> components) {
-        components.accept(new RitualComponent(new BlockPos(1, 0, 1), EnumRuneType.DUSK));
-        components.accept(new RitualComponent(new BlockPos(1, 0, -1), EnumRuneType.DUSK));
-        components.accept(new RitualComponent(new BlockPos(-1, 0, -1), EnumRuneType.DUSK));
-        components.accept(new RitualComponent(new BlockPos(-1, 0, 1), EnumRuneType.DUSK));
-        components.accept(new RitualComponent(new BlockPos(2, 0, 0), EnumRuneType.EARTH));
-        components.accept(new RitualComponent(new BlockPos(-2, 0, 0), EnumRuneType.EARTH));
-        components.accept(new RitualComponent(new BlockPos(0, 0, 2), EnumRuneType.EARTH));
-        components.accept(new RitualComponent(new BlockPos(0, 0, -2), EnumRuneType.EARTH));
-        components.accept(new RitualComponent(new BlockPos(3, 0, 1), EnumRuneType.EARTH));
-        components.accept(new RitualComponent(new BlockPos(3, 0, -1), EnumRuneType.EARTH));
-        components.accept(new RitualComponent(new BlockPos(-3, 0, 1), EnumRuneType.EARTH));
-        components.accept(new RitualComponent(new BlockPos(-3, 0, -1), EnumRuneType.EARTH));
-        components.accept(new RitualComponent(new BlockPos(1, 0, 3), EnumRuneType.EARTH));
-        components.accept(new RitualComponent(new BlockPos(-1, 0, 3), EnumRuneType.EARTH));
-        components.accept(new RitualComponent(new BlockPos(1, 0, -3), EnumRuneType.EARTH));
-        components.accept(new RitualComponent(new BlockPos(-1, 0, -3), EnumRuneType.EARTH));
-        components.accept(new RitualComponent(new BlockPos(2, 0, 3), EnumRuneType.WATER));
-        components.accept(new RitualComponent(new BlockPos(3, 0, 2), EnumRuneType.WATER));
-        components.accept(new RitualComponent(new BlockPos(2, 0, -3), EnumRuneType.WATER));
-        components.accept(new RitualComponent(new BlockPos(-3, 0, 2), EnumRuneType.WATER));
-        components.accept(new RitualComponent(new BlockPos(-2, 0, 3), EnumRuneType.WATER));
-        components.accept(new RitualComponent(new BlockPos(3, 0, -2), EnumRuneType.WATER));
-        components.accept(new RitualComponent(new BlockPos(-2, 0, -3), EnumRuneType.WATER));
-        components.accept(new RitualComponent(new BlockPos(-3, 0, -2), EnumRuneType.WATER));
+        addCornerRunes(components, 1, 0, EnumRuneType.DUSK);
+        addParallelRunes(components, 2, 0, EnumRuneType.EARTH);
+        addOffsetRunes(components, 3, 1, 0, EnumRuneType.EARTH);
+        addOffsetRunes(components, 3, 2, 0, EnumRuneType.WATER);
     }
 
     @Override
