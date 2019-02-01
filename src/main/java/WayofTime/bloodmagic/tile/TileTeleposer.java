@@ -1,12 +1,13 @@
 package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.block.BlockTeleposer;
+import WayofTime.bloodmagic.command.sub.SubCommandTeleposer;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.event.TeleposeEvent;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
-import WayofTime.bloodmagic.ritual.portal.Teleports;
 import WayofTime.bloodmagic.teleport.TeleportQueue;
+import WayofTime.bloodmagic.teleport.Teleports;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
@@ -56,6 +57,17 @@ public class TileTeleposer extends TileInventory implements ITickable {
             }
 
             previousInput = currentInput;
+
+            if (world.getTotalWorldTime() % 100 == 0) {
+                ItemStack focusStack = getStackInSlot(0);
+                if (!focusStack.isEmpty()) {
+                    if (((ItemTelepositionFocus) focusStack.getItem()).getBinding(focusStack) != null)
+                        SubCommandTeleposer.teleposerSet.add(this);
+                    else
+                        SubCommandTeleposer.teleposerSet.remove(this);
+                } else
+                    SubCommandTeleposer.teleposerSet.remove(this);
+            }
         }
     }
 
@@ -66,14 +78,14 @@ public class TileTeleposer extends TileInventory implements ITickable {
             Binding binding = focus.getBinding(focusStack);
             if (binding == null)
                 return;
-            BlockPos focusPos = focus.getBlockPos(getStackInSlot(0));
-            World focusWorld = focus.getWorld(getStackInSlot(0));
+            BlockPos focusPos = focus.getBlockPos(focusStack);
+            World focusWorld = focus.getWorld(focusStack);
             if (focusWorld == null)
                 return;
 
             TileEntity boundTile = focusWorld.getTileEntity(focusPos);
             if (boundTile instanceof TileTeleposer && boundTile != this) {
-                final int focusLevel = (getStackInSlot(0).getItemDamage() + 1);
+                final int focusLevel = (focusStack.getItemDamage() + 1);
                 final int lpToBeDrained = (int) (0.5F * Math.sqrt((pos.getX() - focusPos.getX()) * (pos.getX() - focusPos.getX()) + (pos.getY() - focusPos.getY() + 1) * (pos.getY() - focusPos.getY() + 1) + (pos.getZ() - focusPos.getZ()) * (pos.getZ() - focusPos.getZ())));
 
                 if (NetworkHelper.syphonFromContainer(focusStack, SoulTicket.block(world, pos, lpToBeDrained * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1)))) {
