@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 public class BlockAlchemyTable extends Block implements IBMBlock {
     public static final PropertyBool INVISIBLE = PropertyBool.create("invisible");
     public static final PropertyEnum<EnumFacing> DIRECTION = PropertyEnum.create("direction", EnumFacing.class);
-    private static final AxisAlignedBB BODY = new AxisAlignedBB(0, 0, 0, 16 / 16F, 14 / 16F, 16 / 16F);
+    private static final AxisAlignedBB BODY = new AxisAlignedBB(0, 0, 0, 16 / 16F, 13 / 16F, 16 / 16F);
 
     public BlockAlchemyTable() {
         super(Material.ROCK);
