@@ -1,27 +1,27 @@
 package WayofTime.bloodmagic.potion;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
+import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.core.RegistrarBloodMagic;
-import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class PotionEventHandlers
@@ -168,5 +168,12 @@ public class PotionEventHandlers
         {
             event.setCanceled(true);
         }
+    }
+
+    @SubscribeEvent
+    public static void onEntityHurtEvent(LivingDamageEvent event) {
+        if (event.getSource() == DamageSource.FALL)
+            if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.FEATHERED))
+                event.setCanceled(true);
     }
 }

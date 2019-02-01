@@ -59,6 +59,7 @@ public class RegistrarBloodMagic
     public static final Potion CLING = MobEffects.HASTE;
     public static final Potion SACRIFICIAL_LAMB = MobEffects.HASTE;
     public static final Potion FLIGHT = MobEffects.HASTE;
+    public static final Potion FEATHERED = MobEffects.SPEED;
 
     public static IForgeRegistry<BloodOrb> BLOOD_ORBS = null;
 
@@ -95,7 +96,8 @@ public class RegistrarBloodMagic
                 new PotionBloodMagic("Bounce", false, 0x000000, 1, 1).setRegistryName("bounce"),
                 new PotionBloodMagic("Cling", false, 0x000000, 2, 1).setRegistryName("cling"),
                 new PotionBloodMagic("S. Lamb", false, 0x000000, 3, 1).setRegistryName("sacrificial_lamb"),
-                new PotionBloodMagic("Flight", false, 0x000000, 4, 0).setRegistryName("flight")
+                new PotionBloodMagic("Flight", false, 0x000000, 4, 0).setRegistryName("flight"),
+                new PotionBloodMagic("Feathered", false, 0x000000, 0, 0).setRegistryName("feathered")
                 );
     }
 
