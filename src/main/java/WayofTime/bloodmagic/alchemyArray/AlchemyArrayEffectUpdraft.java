@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.alchemyArray;
 
 import WayofTime.bloodmagic.iface.IAlchemyArray;
+import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,9 +21,14 @@ public class AlchemyArrayEffectUpdraft extends AlchemyArrayEffect {
 
     @Override
     public void onEntityCollidedWithBlock(IAlchemyArray array, World world, BlockPos pos, IBlockState state, Entity entity) {
-        double motionY = 1.5;
+        double motionY = 1;
+        double motionYGlowstoneMod = 0.1;
+        double motionYFeatherMod = 0.05;
 
         entity.fallDistance = 0;
+        TileAlchemyArray tileArray = (TileAlchemyArray) array;
+        motionY += motionYGlowstoneMod * (tileArray.getStackInSlot(0).getCount() - 1); // Glowstone Dust
+        motionY += motionYFeatherMod * (tileArray.getStackInSlot(1).getCount() - 1); // Feathers
 
         entity.motionY = motionY;
     }

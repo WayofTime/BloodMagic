@@ -62,6 +62,7 @@ public class RegistrarBloodMagic
     public static final Potion GROUNDED = MobEffects.HASTE;
     public static final Potion HEAVY_HEART = MobEffects.HASTE;
     public static final Potion SUSPENDED = MobEffects.HASTE;
+    public static final Potion FEATHERED = MobEffects.HASTE;
 
     public static IForgeRegistry<BloodOrb> BLOOD_ORBS = null;
 
@@ -101,7 +102,8 @@ public class RegistrarBloodMagic
                 new PotionBloodMagic("Flight", false, 0x000000, 4, 0).setRegistryName("flight"),
                 new PotionBloodMagic("Grounded", true, 0x000000, 1, 0).setRegistryName("grounded"),
                 new PotionBloodMagic("Suspended", false, 0x000000, 1, 0).setRegistryName("suspended"),
-                new PotionBloodMagic("Heavy Heart", true, 0x000000, 1, 0).setRegistryName("heavy_heart")
+                new PotionBloodMagic("Heavy Heart", true, 0x000000, 1, 0).setRegistryName("heavy_heart"),
+                new PotionBloodMagic("Feathered", false, 0x000000, 0, 0).setRegistryName("feathered")
         );
     }
 

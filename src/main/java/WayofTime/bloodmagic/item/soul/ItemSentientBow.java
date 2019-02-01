@@ -47,6 +47,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
     public static double[] soulDrainPerSwing = new double[] { 0.05, 0.1, 0.2, 0.4, 0.75, 1, 1.5 }; //TODO
     public static double[] soulDrop = new double[] { 2, 4, 7, 10, 13, 16, 24 };
     public static double[] staticDrop = new double[] { 1, 1, 2, 3, 3, 3, 4 };
+    public static float soullessShotVelocity = 2.5F;
 
     public ItemSentientBow()
     {
@@ -117,7 +118,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
 //        setStaticDropOfActivatedSword(stack, level >= 0 ? staticDrop[level] : 1);
 //        setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
 
-        setVelocityOfArrow(stack, level >= 0 ? 3 + getVelocityModifier(type, level) : 0);
+        setVelocityOfArrow(stack, level >= 0 ? 3 + getVelocityModifier(type, level) : soullessShotVelocity);
         setDamageAdded(stack, level >= 0 ? getDamageModifier(type, level) : 0);
     }
 
@@ -385,10 +386,9 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
                             entityArrow = itemarrow.createArrow(world, itemstack, player);
                         entityArrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
 
-                        if (newArrowVelocity == 0)
+                        if (Float.compare(getVelocityOfArrow(stack), soullessShotVelocity) < Float.MIN_NORMAL)
                         {
                             world.playSound(null, player.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.NEUTRAL, 0.4F, 1.0F);
-                            return;
                         }
 
                         if (arrowVelocity == 1.0F)

@@ -188,9 +188,10 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
                 if (MinecraftForge.EVENT_BUS.post(event))
                     return;
-
-                if (!checkBlockRanges(ritual.getModableRangeMap()))
-                    addBlockRanges(ritual.getModableRangeMap());
+              
+                if (!checkBlockRanges(getCurrentRitual().getModableRangeMap()))
+                    addBlockRanges(getCurrentRitual().getModableRangeMap());
+              
                 getCurrentRitual().performRitual(this);
             } else {
                 stopRitual(Ritual.BreakType.BREAK_STONE);

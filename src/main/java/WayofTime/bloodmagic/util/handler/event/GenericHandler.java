@@ -30,6 +30,7 @@ import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.potion.PotionEventHandlers;
+import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.RitualManager;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.util.Constants;
@@ -92,6 +93,7 @@ public class GenericHandler {
     public static Map<World, Map<EntityPlayer, Integer>> filledHandMapMap = new HashMap<>();
     private static Map<World, Map<EntityAnimal, EntityAITarget>> targetTaskMapMap = new HashMap<>();
     private static Map<World, Map<EntityAnimal, EntityAIBase>> attackTaskMapMap = new HashMap<>();
+    public static Set<IMasterRitualStone> featherRitualSet;
 
     @SubscribeEvent
     public static void onEntityFall(LivingFallEvent event) {

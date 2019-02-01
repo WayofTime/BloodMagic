@@ -10,10 +10,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -24,6 +26,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class PotionEventHandlers {
@@ -182,5 +185,12 @@ public class PotionEventHandlers {
         if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.PLANAR_BINDING) && event.isCancelable()) {
             event.setCanceled(true);
         }
+    }
+
+    @SubscribeEvent
+    public static void onEntityHurtEvent(LivingDamageEvent event) {
+        if (event.getSource() == DamageSource.FALL)
+            if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.FEATHERED))
+                event.setCanceled(true);
     }
 }
