@@ -1,7 +1,8 @@
 {
   "result": {
     "item": "bloodmagic:demon_brick_2",
-    "data": 0
+    "data": 0,
+    "count": 4
   },
   "pattern": [
     "ss",

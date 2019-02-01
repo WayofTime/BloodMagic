@@ -10,6 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -54,11 +55,19 @@ public interface IMasterRitualStone {
 
     void setActiveWillConfig(EntityPlayer player, List<EnumDemonWillType> typeList);
 
-    boolean setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2);
+    EnumReaderBoundaries setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2);
 
     List<EnumDemonWillType> getActiveWillConfig();
 
     default SoulTicket ticket(int amount) {
         return SoulTicket.block(getWorldObj(), getBlockPos(), amount);
     }
+
+    AreaDescriptor getBlockRange(String range);
+
+    void addBlockRanges(Map<String, AreaDescriptor> blockRanges);
+
+    void addBlockRange(String range, AreaDescriptor defaultRange);
+
+    Ritual getCurrentRitual();
 }

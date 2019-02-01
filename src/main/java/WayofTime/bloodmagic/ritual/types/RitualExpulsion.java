@@ -48,7 +48,7 @@ public class RitualExpulsion extends Ritual {
         if (masterRitualStone.getWorldObj().isRemote)
             return;
 
-        AreaDescriptor expulsionRange = getBlockRange(EXPULSION_RANGE);
+        AreaDescriptor expulsionRange = masterRitualStone.getBlockRange(EXPULSION_RANGE);
 
         List<UUID> whitelist = Lists.newArrayList();
         BlockPos masterPos = masterRitualStone.getBlockPos();

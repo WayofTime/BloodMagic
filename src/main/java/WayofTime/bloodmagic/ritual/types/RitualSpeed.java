@@ -50,7 +50,7 @@ public class RitualSpeed extends Ritual {
         double steadfastWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.STEADFAST, willConfig);
         double vengefulWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.VENGEFUL, willConfig);
 
-        AreaDescriptor speedRange = getBlockRange(SPEED_RANGE);
+        AreaDescriptor speedRange = masterRitualStone.getBlockRange(SPEED_RANGE);
 
         double vengefulDrain = 0;
         double destructiveDrain = 0;

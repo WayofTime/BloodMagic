@@ -1,5 +1,15 @@
 package WayofTime.bloodmagic.core;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.core.registry.OrbRegistry;
+import WayofTime.bloodmagic.entity.mob.*;
+import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
+import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
+import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
+import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
+import WayofTime.bloodmagic.orb.BloodOrb;
+import WayofTime.bloodmagic.potion.PotionBloodMagic;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
@@ -16,20 +26,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.core.registry.OrbRegistry;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedChicken;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedSpider;
-import WayofTime.bloodmagic.entity.mob.EntityCorruptedZombie;
-import WayofTime.bloodmagic.entity.mob.EntityMimic;
-import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
-import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
-import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
-import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
-import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
-import WayofTime.bloodmagic.orb.BloodOrb;
-import WayofTime.bloodmagic.potion.PotionBloodMagic;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
@@ -63,6 +59,10 @@ public class RegistrarBloodMagic
     public static final Potion CLING = MobEffects.HASTE;
     public static final Potion SACRIFICIAL_LAMB = MobEffects.HASTE;
     public static final Potion FLIGHT = MobEffects.HASTE;
+    public static final Potion GROUNDED = MobEffects.HASTE;
+    public static final Potion HEAVY_HEART = MobEffects.HASTE;
+    public static final Potion SUSPENDED = MobEffects.HASTE;
+    public static final Potion FEATHERED = MobEffects.HASTE;
 
     public static IForgeRegistry<BloodOrb> BLOOD_ORBS = null;
 
@@ -75,9 +75,13 @@ public class RegistrarBloodMagic
                 new BloodOrb("apprentice", 2, 25000, 5).withModel(new ModelResourceLocation(orb, "type=apprentice")).setRegistryName("apprentice"),
                 new BloodOrb("magician", 3, 150000, 15).withModel(new ModelResourceLocation(orb, "type=magician")).setRegistryName("magician"),
                 new BloodOrb("master", 4, 1000000, 25).withModel(new ModelResourceLocation(orb, "type=master")).setRegistryName("master"),
-                new BloodOrb("archmage", 5, 10000000, 50).withModel(new ModelResourceLocation(orb, "type=archmage")).setRegistryName("archmage"),
-                new BloodOrb("transcendent", 6, 30000000, 50).withModel(new ModelResourceLocation(orb, "type=transcendent")).setRegistryName("transcendent")
-                );
+                new BloodOrb("archmage", 5, 10000000, 50).withModel(new ModelResourceLocation(orb, "type=archmage")).setRegistryName("archmage")
+        );
+        if (ConfigHandler.general.enableTierSixEvenThoughThereIsNoContent) {
+            event.getRegistry().register(
+                    new BloodOrb("transcendent", 6, 30000000, 50).withModel(new ModelResourceLocation(orb, "type=transcendent")).setRegistryName("transcendent")
+            );
+        }
     }
 
     @SubscribeEvent
@@ -95,8 +99,12 @@ public class RegistrarBloodMagic
                 new PotionBloodMagic("Bounce", false, 0x000000, 1, 1).setRegistryName("bounce"),
                 new PotionBloodMagic("Cling", false, 0x000000, 2, 1).setRegistryName("cling"),
                 new PotionBloodMagic("S. Lamb", false, 0x000000, 3, 1).setRegistryName("sacrificial_lamb"),
-                new PotionBloodMagic("Flight", false, 0x000000, 4, 0).setRegistryName("flight")
-                );
+                new PotionBloodMagic("Flight", false, 0x000000, 4, 0).setRegistryName("flight"),
+                new PotionBloodMagic("Grounded", true, 0x000000, 1, 0).setRegistryName("grounded"),
+                new PotionBloodMagic("Suspended", false, 0x000000, 1, 0).setRegistryName("suspended"),
+                new PotionBloodMagic("Heavy Heart", true, 0x000000, 1, 0).setRegistryName("heavy_heart"),
+                new PotionBloodMagic("Feathered", false, 0x000000, 0, 0).setRegistryName("feathered")
+        );
     }
 
     @SubscribeEvent
@@ -115,7 +123,7 @@ public class RegistrarBloodMagic
                 EntityEntryBuilder.create().id("corrupted_sheep", ++entities).entity(EntityCorruptedSheep.class).name("corrupted_sheep").tracker(16 * 4, 3, true).build(),
                 EntityEntryBuilder.create().id("corrupted_chicken", ++entities).entity(EntityCorruptedChicken.class).name("corrupted_chicken").tracker(16 * 4, 3, true).build(),
                 EntityEntryBuilder.create().id("corrupted_spider", ++entities).entity(EntityCorruptedSpider.class).name("corrupted_spider").tracker(16 * 4, 3, true).build()
-                );
+        );
     }
 
     @SubscribeEvent

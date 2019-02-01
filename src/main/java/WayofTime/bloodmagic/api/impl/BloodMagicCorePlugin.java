@@ -2,10 +2,10 @@ package WayofTime.bloodmagic.api.impl;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.altar.ComponentType;
 import WayofTime.bloodmagic.api.BloodMagicPlugin;
 import WayofTime.bloodmagic.api.IBloodMagicAPI;
 import WayofTime.bloodmagic.api.IBloodMagicPlugin;
-import WayofTime.bloodmagic.altar.ComponentType;
 import WayofTime.bloodmagic.api.IBloodMagicRecipeRegistrar;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockDecorative;
@@ -17,9 +17,6 @@ import WayofTime.bloodmagic.incense.EnumTranquilityType;
 import WayofTime.bloodmagic.incense.TranquilityStack;
 import WayofTime.bloodmagic.util.StateUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
@@ -76,8 +73,10 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin
         BlockDecorative decorative = (BlockDecorative) RegistrarBloodMagicBlocks.DECORATIVE_BRICK;
         api.registerAltarComponent(decorative.getDefaultState().withProperty(decorative.getProperty(), EnumDecorative.BLOODSTONE_BRICK), ComponentType.BLOODSTONE.name());
         api.registerAltarComponent(decorative.getDefaultState().withProperty(decorative.getProperty(), EnumDecorative.BLOODSTONE_TILE), ComponentType.BLOODSTONE.name());
-        api.registerAltarComponent(decorative.getDefaultState().withProperty(decorative.getProperty(), EnumDecorative.CRYSTAL_BRICK), ComponentType.CRYSTAL.name());
-        api.registerAltarComponent(decorative.getDefaultState().withProperty(decorative.getProperty(), EnumDecorative.CRYSTAL_TILE), ComponentType.CRYSTAL.name());
+        if (ConfigHandler.general.enableTierSixEvenThoughThereIsNoContent) {
+            api.registerAltarComponent(decorative.getDefaultState().withProperty(decorative.getProperty(), EnumDecorative.CRYSTAL_BRICK), ComponentType.CRYSTAL.name());
+            api.registerAltarComponent(decorative.getDefaultState().withProperty(decorative.getProperty(), EnumDecorative.CRYSTAL_TILE), ComponentType.CRYSTAL.name());
+        }
 
         BlockBloodRune bloodRune = (BlockBloodRune) RegistrarBloodMagicBlocks.BLOOD_RUNE;
         for (BloodRuneType runeType : BloodRuneType.values())

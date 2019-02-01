@@ -1,17 +1,18 @@
 package WayofTime.bloodmagic.core;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.impl.BloodMagicRecipeRegistrar;
+import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.altar.AltarTier;
+import WayofTime.bloodmagic.api.impl.BloodMagicRecipeRegistrar;
+import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.core.registry.OrbRegistry;
 import WayofTime.bloodmagic.item.ItemSlate;
-import WayofTime.bloodmagic.ritual.EnumRuneType;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.item.alchemy.ItemCuttingFluid;
 import WayofTime.bloodmagic.item.alchemy.ItemLivingArmourPointsUpgrade;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.item.types.ComponentTypes;
+import WayofTime.bloodmagic.ritual.EnumRuneType;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.util.PluginUtil;
 import com.google.common.collect.Sets;
 import net.minecraft.init.Blocks;
@@ -98,8 +99,10 @@ public class RegistrarBloodMagicRecipes
         registrar.addBloodAltar(Ingredient.fromStacks(ItemSlate.SlateType.DEMONIC.getStack()), ItemSlate.SlateType.ETHEREAL.getStack(), AltarTier.FIVE.ordinal(), 30000, 40, 100);
 
         // SIX
-        registrar.addBloodAltar(Ingredient.fromStacks(new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 1, 2)), OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_TRANSCENDENT), AltarTier.SIX.ordinal(), 200000, 100, 200);
-        registrar.addBloodAltar(new OreIngredient("glowstone"), EnumRuneType.DAWN.getStack(), AltarTier.SIX.ordinal(), 200000, 100, 200);
+        if (ConfigHandler.general.enableTierSixEvenThoughThereIsNoContent) {
+            registrar.addBloodAltar(Ingredient.fromStacks(new ItemStack(RegistrarBloodMagicBlocks.DECORATIVE_BRICK, 1, 2)), OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_TRANSCENDENT), AltarTier.SIX.ordinal(), 200000, 100, 200);
+            registrar.addBloodAltar(new OreIngredient("glowstone"), EnumRuneType.DAWN.getStack(), AltarTier.SIX.ordinal(), 200000, 100, 200);
+        }
     }
 
     public static void registerAlchemyTableRecipes(BloodMagicRecipeRegistrar registrar)
@@ -210,6 +213,7 @@ public class RegistrarBloodMagicRecipes
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_PYLON), 400, 50, "blockIron", "stone", "gemLapis", RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL);
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTALLIZER), 500, 100, RegistrarBloodMagicBlocks.SOUL_FORGE, "stone", "gemLapis", "blockGlass");
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.DEMON_WILL_GAUGE), 400, 50, "ingotGold", "dustRedstone", "blockGlass", RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL);
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.RITUAL_DISMANTLER), 500, 100, new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, 1, 2), new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, 1, 2), new ItemStack(RegistrarBloodMagicItems.RITUAL_DIVINER), new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD));
     }
 
     public static void registerAlchemyArrayRecipes(BloodMagicRecipeRegistrar registrar)

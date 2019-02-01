@@ -68,4 +68,9 @@ public class Binding implements INBTSerializable<NBTTagCompound> {
         binding.deserializeNBT((NBTTagCompound) bindingTag);
         return binding;
     }
+
+    @Override
+    public String toString() {
+        return "Binding{" + "uuid=" + uuid + ", name='" + name + '\'' + '}';
+    }
 }

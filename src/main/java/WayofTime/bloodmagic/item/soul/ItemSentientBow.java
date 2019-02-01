@@ -44,14 +44,16 @@ import java.util.Locale;
 
 public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentientTool, IVariantProvider//, IMeshProvider
 {
-    public static int[] soulBracket = new int[]{16, 60, 200, 400, 1000, 2000, 4000};
-    public static double[] defaultDamageAdded = new double[]{0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75};
-    public static float[] velocityAdded = new float[]{0.25f, 0.5f, 0.75f, 1, 1.25f, 1.5f, 1.75f};
-    public static double[] soulDrainPerSwing = new double[]{0.05, 0.1, 0.2, 0.4, 0.75, 1, 1.5}; //TODO
-    public static double[] soulDrop = new double[]{2, 4, 7, 10, 13, 16, 24};
-    public static double[] staticDrop = new double[]{1, 1, 2, 3, 3, 3, 4};
+    public static int[] soulBracket = new int[] {16, 60, 200, 400, 1000, 2000, 4000};
+    public static double[] defaultDamageAdded = new double[] {0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75};
+    public static float[] velocityAdded = new float[] {0.25f, 0.5f, 0.75f, 1, 1.25f, 1.5f, 1.75f};
+    public static double[] soulDrainPerSwing = new double[] {0.05, 0.1, 0.2, 0.4, 0.75, 1, 1.5}; //TODO
+    public static double[] soulDrop = new double[] {2, 4, 7, 10, 13, 16, 24};
+    public static double[] staticDrop = new double[] {1, 1, 2, 3, 3, 3, 4};
+    public static float soullessShotVelocity = 2.5F;
 
     public ItemSentientBow() {
+
         super();
         setUnlocalizedName(BloodMagic.MODID + ".sentientBow");
         setCreativeTab(BloodMagic.TAB_BM);
@@ -108,7 +110,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
 //        setStaticDropOfActivatedSword(stack, level >= 0 ? staticDrop[level] : 1);
 //        setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
 
-        setVelocityOfArrow(stack, level >= 0 ? 3 + getVelocityModifier(type, level) : 0);
+        setVelocityOfArrow(stack, level >= 0 ? 3 + getVelocityModifier(type, level) : soullessShotVelocity);
         setDamageAdded(stack, level >= 0 ? getDamageModifier(type, level) : 0);
     }
 
@@ -350,9 +352,9 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
 
                         entityArrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
 
-                        if (newArrowVelocity == 0) {
+                        if (Float.compare(getVelocityOfArrow(stack), soullessShotVelocity) < Float.MIN_NORMAL)
+                        {
                             world.playSound(null, player.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.NEUTRAL, 0.4F, 1.0F);
-                            return;
                         }
 
                         if (arrowVelocity == 1.0F) {

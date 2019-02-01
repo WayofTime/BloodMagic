@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.block.base.BlockInteger;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
 import WayofTime.bloodmagic.teleport.PortalLocation;
 import WayofTime.bloodmagic.teleport.TeleportQueue;
-import WayofTime.bloodmagic.block.base.BlockInteger;
-import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
-import WayofTime.bloodmagic.ritual.portal.Teleports;
+import WayofTime.bloodmagic.teleport.Teleports;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

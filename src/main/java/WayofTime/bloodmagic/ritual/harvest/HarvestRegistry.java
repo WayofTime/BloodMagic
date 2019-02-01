@@ -14,7 +14,7 @@ public class HarvestRegistry {
     private static final List<IHarvestHandler> HARVEST_HANDLERS = Lists.newArrayList();
     private static final Map<Block, Integer> STANDARD_CROPS = Maps.newHashMap();
     private static final Set<IBlockState> TALL_CROPS = Sets.newHashSet();
-    private static final Map<IBlockState, IBlockState> STEM_CROPS = Maps.newHashMap();
+    private static final Multimap<IBlockState, IBlockState> STEM_CROPS = ArrayListMultimap.create();
     private static final Map<IBlockState, Integer> AMPLIFIERS = Maps.newHashMap();
 
     /**
@@ -95,8 +95,8 @@ public class HarvestRegistry {
         return ImmutableSet.copyOf(TALL_CROPS);
     }
 
-    public static Map<IBlockState, IBlockState> getStemCrops() {
-        return ImmutableMap.copyOf(STEM_CROPS);
+    public static Multimap<IBlockState, IBlockState> getStemCrops() {
+        return ImmutableMultimap.copyOf(STEM_CROPS);
     }
 
     public static Map<IBlockState, Integer> getAmplifiers() {

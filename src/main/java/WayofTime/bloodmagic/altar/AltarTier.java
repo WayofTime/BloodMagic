@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.altar;
 
+import WayofTime.bloodmagic.ConfigHandler;
 import com.google.common.collect.Lists;
 import net.minecraft.util.math.BlockPos;
 
@@ -126,7 +127,7 @@ public enum AltarTier {
         }
     };
 
-    public static final int MAXTIERS = values().length;
+    public static final int MAXTIERS = ConfigHandler.general.enableTierSixEvenThoughThereIsNoContent ? values().length : values().length-1;
 
     private List<AltarComponent> altarComponents;
 

@@ -29,6 +29,8 @@ import WayofTime.bloodmagic.network.DemonAuraPacketProcessor;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
+import WayofTime.bloodmagic.potion.PotionEventHandlers;
+import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.RitualManager;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.util.Constants;
@@ -75,6 +77,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -82,17 +85,15 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class GenericHandler {
-    public static Map<EntityPlayer, Double> bounceMap = new HashMap<>();
-    public static Map<EntityPlayer, Integer> filledHandMap = new HashMap<>();
-    private static Map<EntityAnimal, EntityAITarget> targetTaskMap = new HashMap<>();
-    private static Map<EntityAnimal, EntityAIBase> attackTaskMap = new HashMap<>();
+    public static Map<World, Map<EntityPlayer, Double>> bounceMapMap = new HashMap<>();
+    public static Map<World, Map<EntityPlayer, Integer>> filledHandMapMap = new HashMap<>();
+    private static Map<World, Map<EntityAnimal, EntityAITarget>> targetTaskMapMap = new HashMap<>();
+    private static Map<World, Map<EntityAnimal, EntityAIBase>> attackTaskMapMap = new HashMap<>();
+    public static Set<IMasterRitualStone> featherRitualSet;
 
     @SubscribeEvent
     public static void onEntityFall(LivingFallEvent event) {
@@ -104,7 +105,7 @@ public class GenericHandler {
                 if (player.getEntityWorld().isRemote) {
                     player.motionY *= -0.9;
                     player.fallDistance = 0;
-                    bounceMap.put(player, player.motionY);
+                    bounceMapMap.get(player.getEntityWorld()).put(player, player.motionY);
                 } else {
                     player.fallDistance = 0;
                     event.setCanceled(true);
@@ -115,10 +116,13 @@ public class GenericHandler {
 
     @SubscribeEvent
     public static void playerTickPost(TickEvent.PlayerTickEvent event) {
+        World world = event.player.getEntityWorld();
+        Map<EntityPlayer, Double> bounceMap = bounceMapMap.get(world);
         if (event.phase == TickEvent.Phase.END && bounceMap.containsKey(event.player)) {
             event.player.motionY = bounceMap.remove(event.player);
         }
 
+        Map<EntityPlayer, Integer> filledHandMap = filledHandMapMap.get(world);
         if (event.phase == TickEvent.Phase.END) {
             if (filledHandMap.containsKey(event.player)) {
                 int value = filledHandMap.get(event.player) - 1;
@@ -218,6 +222,9 @@ public class GenericHandler {
                 sendPlayerDemonWillAura((EntityPlayer) entity);
             }
 
+            World world = entity.getEntityWorld();
+            Map<EntityAnimal, EntityAITarget> targetTaskMap = targetTaskMapMap.get(world);
+            Map<EntityAnimal, EntityAIBase> attackTaskMap = attackTaskMapMap.get(world);
             if (event.getEntityLiving() instanceof EntityAnimal) {
                 EntityAnimal animal = (EntityAnimal) event.getEntityLiving();
                 if (animal.isPotionActive(RegistrarBloodMagic.SACRIFICIAL_LAMB)) {
@@ -449,5 +456,27 @@ public class GenericHandler {
 
     private static int durabilityToXp(int durability) {
         return durability / 2;
+    }
+
+    @SubscribeEvent
+    public static void onWorldLoad(WorldEvent.Load event) {
+        World world = event.getWorld();
+        bounceMapMap.computeIfAbsent(world, k -> new HashMap<>());
+        filledHandMapMap.computeIfAbsent(world, k -> new HashMap<>());
+        attackTaskMapMap.computeIfAbsent(world, k -> new HashMap<>());
+        targetTaskMapMap.computeIfAbsent(world, k -> new HashMap<>());
+        PotionEventHandlers.flightListMap.computeIfAbsent(world, k -> new ArrayList<>());
+        PotionEventHandlers.noGravityListMap.computeIfAbsent(world, k -> new ArrayList<>());
+    }
+
+    @SubscribeEvent
+    public static void onWorldUnload(WorldEvent.Unload event) {
+        World world = event.getWorld();
+        bounceMapMap.get(world).clear();
+        filledHandMapMap.get(world).clear();
+        attackTaskMapMap.get(world).clear();
+        targetTaskMapMap.get(world).clear();
+        PotionEventHandlers.flightListMap.get(world).clear();
+        PotionEventHandlers.noGravityListMap.get(world).clear();
     }
 }

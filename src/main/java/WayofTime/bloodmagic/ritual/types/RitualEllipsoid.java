@@ -42,7 +42,7 @@ public class RitualEllipsoid extends Ritual
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
         BlockPos masterPos = masterRitualStone.getBlockPos();
-        AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
+        AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
         TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
 
         if (currentEssence < getRefreshCost())
@@ -51,7 +51,7 @@ public class RitualEllipsoid extends Ritual
             return;
         }
 
-        AreaDescriptor sphereRange = getBlockRange(SPHEROID_RANGE);
+        AreaDescriptor sphereRange = masterRitualStone.getBlockRange(SPHEROID_RANGE);
         AxisAlignedBB sphereBB = sphereRange.getAABB(masterPos);
         int minX = (int) (masterPos.getX() - sphereBB.minX);
         int maxX = (int) (sphereBB.maxX - masterPos.getX()) - 1;

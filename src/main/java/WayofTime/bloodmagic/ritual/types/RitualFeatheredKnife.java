@@ -80,7 +80,7 @@ public class RitualFeatheredKnife extends Ritual {
 
         TileEntity tile = world.getTileEntity(altarPos);
 
-        AreaDescriptor altarRange = getBlockRange(ALTAR_RANGE);
+        AreaDescriptor altarRange = masterRitualStone.getBlockRange(ALTAR_RANGE);
 
         if (!altarRange.isWithinArea(altarOffsetPos) || !(tile instanceof IBloodAltar)) {
             for (BlockPos newPos : altarRange.getContainedPositions(pos)) {
@@ -100,7 +100,7 @@ public class RitualFeatheredKnife extends Ritual {
         if (tile instanceof IBloodAltar) {
             IBloodAltar tileAltar = (IBloodAltar) tile;
 
-            AreaDescriptor damageRange = getBlockRange(DAMAGE_RANGE);
+            AreaDescriptor damageRange = masterRitualStone.getBlockRange(DAMAGE_RANGE);
             AxisAlignedBB range = damageRange.getAABB(pos);
 
             double destructiveDrain = 0;

@@ -46,7 +46,7 @@ public class RitualMagnetic extends Ritual {
 
         BlockPos pos = masterRitualStone.getBlockPos();
 
-        AreaDescriptor placementRange = getBlockRange(PLACEMENT_RANGE);
+        AreaDescriptor placementRange = masterRitualStone.getBlockRange(PLACEMENT_RANGE);
 
         BlockPos replacement = pos;
         boolean replace = false;

@@ -35,7 +35,7 @@ public class RitualCrystalHarvest extends Ritual {
         int maxEffects = 1;
         int totalEffects = 0;
 
-        AreaDescriptor crystalRange = getBlockRange(CRYSTAL_RANGE);
+        AreaDescriptor crystalRange = masterRitualStone.getBlockRange(CRYSTAL_RANGE);
 
         crystalRange.resetIterator();
         while (crystalRange.hasNext()) {

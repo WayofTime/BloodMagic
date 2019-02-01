@@ -54,4 +54,24 @@ public interface IBloodMagicAPI {
      * @param componentType The type of Blood Altar component to register as.
      */
     void registerAltarComponent(@Nonnull IBlockState state, @Nonnull String componentType);
+
+    /**
+     * Removes an {@link IBlockState} from the component mappings
+     * <p>
+     * Valid component types:
+     * <ul>
+     * <li>GLOWSTONE</li>
+     * <li>BLOODSTONE</li>
+     * <li>BEACON</li>
+     * <li>BLOODRUNE</li>
+     * <li>CRYSTAL</li>
+     * <li>NOTAIR</li>
+     * </ul>
+     *
+     * @param state         The state to unregister
+     * @param componentType The type of Blood Altar component to unregister from.
+     */
+    void unregisterAltarComponent(@Nonnull IBlockState state, @Nonnull String componentType);
+
+
 }
