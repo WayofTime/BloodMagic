@@ -2,14 +2,15 @@ package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.text.WordUtils;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
@@ -24,7 +25,6 @@ public class ItemSigilBase extends ItemSigil implements IVariantProvider {
         super(lpUsed);
 
         setUnlocalizedName(BloodMagic.MODID + ".sigil." + name);
-        setCreativeTab(BloodMagic.TAB_BM);
 
         this.name = name;
         this.tooltipBase = "tooltip.bloodmagic.sigil." + name + ".";
@@ -38,14 +38,7 @@ public class ItemSigilBase extends ItemSigil implements IVariantProvider {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         if (TextHelper.canTranslate(tooltipBase + "desc"))
-            tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(tooltipBase + "desc"))));
-
-        if (!stack.hasTagCompound())
-            return;
-
-        Binding binding = getBinding(stack);
-        if (binding != null)
-            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.currentOwner", binding.getOwnerName()));
+            tooltip.addAll(Arrays.asList(WordUtils.wrap(new TextComponentTranslation(tooltipBase + "desc").getFormattedText(), 30, "/cut", false).split("/cut")));
 
         super.addInformation(stack, world, tooltip, flag);
     }
