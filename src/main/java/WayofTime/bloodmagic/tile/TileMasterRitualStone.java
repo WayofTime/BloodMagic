@@ -28,7 +28,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone {
     private UUID owner;
@@ -307,17 +310,12 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     public int setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2) {
         AreaDescriptor descriptor = this.getBlockRange(range);
         DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, getBlockPos());
-        switch (this.currentRitual.canBlockRangeBeModified(range, descriptor, this, offset1, offset2, holder)) {
-            case 1:
-                descriptor.modifyAreaByBlockPositions(offset1, offset2);
-                return 1;
-            case -1:
-                return -1;
-            case -2:
-                return -2;
-            default:
-                return 0;
-        }
+
+        int modificationType = currentRitual.canBlockRangeBeModified(range, descriptor, this, offset1, offset2, holder);
+        if (modificationType == 1)
+            descriptor.modifyAreaByBlockPositions(offset1, offset2);
+
+        return modificationType;
     }
 
     @Override
