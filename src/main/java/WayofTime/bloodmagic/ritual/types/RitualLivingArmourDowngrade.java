@@ -49,7 +49,7 @@ public class RitualLivingArmourDowngrade extends Ritual {
 
         BlockPos masterPos = masterRitualStone.getBlockPos();
 
-        AreaDescriptor downgradeRange = getBlockRange(DOWNGRADE_RANGE);
+        AreaDescriptor downgradeRange = masterRitualStone.getBlockRange(DOWNGRADE_RANGE);
 
         boolean isActivatorPresent = false;
         for (EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, downgradeRange.getAABB(masterRitualStone.getBlockPos()))) {

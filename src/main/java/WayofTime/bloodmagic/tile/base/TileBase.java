@@ -97,6 +97,14 @@ public class TileBase extends TileEntity {
     public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
         super.onDataPacket(net, pkt);
         readFromNBT(pkt.getNbtCompound());
+        onDataPacketClientReceived();
+    }
+
+    /**
+     * Hook for performing client side updates after data packets are received and processed
+     */
+    protected void onDataPacketClientReceived() {
+        // noop
     }
 
     @Override

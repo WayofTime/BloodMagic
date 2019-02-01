@@ -80,7 +80,7 @@ public class RitualGreenGrove extends Ritual {
         double rawDrain = 0;
         double vengefulDrain = 0;
 
-        AreaDescriptor growingRange = getBlockRange(GROW_RANGE);
+        AreaDescriptor growingRange = masterRitualStone.getBlockRange(GROW_RANGE);
 
         int maxGrowthVolume = getMaxVolumeForRange(GROW_RANGE, willConfig, holder);
         if (!growingRange.isWithinRange(getMaxVerticalRadiusForRange(GROW_RANGE, willConfig, holder), getMaxHorizontalRadiusForRange(GROW_RANGE, willConfig, holder)) || (maxGrowthVolume != 0 && growingRange.getVolume() > maxGrowthVolume)) {
@@ -126,7 +126,7 @@ public class RitualGreenGrove extends Ritual {
             WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrain, true);
         }
 
-        AreaDescriptor hydrateRange = getBlockRange(HYDRATE_RANGE);
+        AreaDescriptor hydrateRange = masterRitualStone.getBlockRange(HYDRATE_RANGE);
 
         double steadfastDrain = 0;
         if (steadfastWill > steadfastWillDrain) {
@@ -167,7 +167,7 @@ public class RitualGreenGrove extends Ritual {
 
         double corrosiveDrain = 0;
         if (corrosiveWill > corrosiveWillDrain) {
-            AreaDescriptor leechRange = getBlockRange(LEECH_RANGE);
+            AreaDescriptor leechRange = masterRitualStone.getBlockRange(LEECH_RANGE);
             AxisAlignedBB mobArea = leechRange.getAABB(pos);
             List<EntityLivingBase> entityList = world.getEntitiesWithinAABB(EntityLivingBase.class, mobArea);
             for (EntityLivingBase entityLiving : entityList) {

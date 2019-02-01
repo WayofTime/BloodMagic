@@ -35,8 +35,6 @@ public class TileDemonCrystal extends TileTicking
     {
         if (getWorld().isRemote)
         {
-            if(internalCounter % 20 == 0)
-                getWorld().markBlockRangeForRenderUpdate(pos, pos);
             return;
         }
 
@@ -207,5 +205,11 @@ public class TileDemonCrystal extends TileTicking
     public void setPlacement(EnumFacing placement)
     {
         this.placement = placement;
+    }
+
+    @Override
+    protected void onDataPacketClientReceived() {
+        super.onDataPacketClientReceived();
+        notifyUpdate();
     }
 }

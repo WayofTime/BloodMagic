@@ -33,7 +33,7 @@ public class RitualArmourEvolve extends Ritual {
 
         BlockPos pos = masterRitualStone.getBlockPos();
 
-        AreaDescriptor checkRange = getBlockRange(CHECK_RANGE);
+        AreaDescriptor checkRange = masterRitualStone.getBlockRange(CHECK_RANGE);
 
         List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, checkRange.getAABB(pos));
 

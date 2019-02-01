@@ -76,7 +76,7 @@ public class RitualLava extends Ritual {
         double rawDrained = 0;
 
         DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, pos);
-        AreaDescriptor lavaRange = getBlockRange(LAVA_RANGE);
+        AreaDescriptor lavaRange = masterRitualStone.getBlockRange(LAVA_RANGE);
 
         int maxLavaVolume = getMaxVolumeForRange(LAVA_RANGE, willConfig, holder);
         if (!lavaRange.isWithinRange(getMaxVerticalRadiusForRange(LAVA_RANGE, willConfig, holder), getMaxHorizontalRadiusForRange(LAVA_RANGE, willConfig, holder)) || (maxLavaVolume != 0 && lavaRange.getVolume() > maxLavaVolume)) {
@@ -102,7 +102,7 @@ public class RitualLava extends Ritual {
         }
 
         if (rawWill > 0) {
-            AreaDescriptor chestRange = getBlockRange(LAVA_TANK_RANGE);
+            AreaDescriptor chestRange = masterRitualStone.getBlockRange(LAVA_TANK_RANGE);
             TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
             double drain = getWillCostForRawWill(rawWill);
             int lpCost = getLPCostForRawWill(rawWill);
@@ -131,7 +131,7 @@ public class RitualLava extends Ritual {
 
         if (vengefulWill >= vengefulWillDrain) {
             double vengefulDrained = 0;
-            AreaDescriptor fuseRange = getBlockRange(FIRE_FUSE_RANGE);
+            AreaDescriptor fuseRange = masterRitualStone.getBlockRange(FIRE_FUSE_RANGE);
 
             AxisAlignedBB fuseArea = fuseRange.getAABB(pos);
             List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, fuseArea);
@@ -160,7 +160,7 @@ public class RitualLava extends Ritual {
 
         if (steadfastWill >= steadfastWillDrain) {
             double steadfastDrained = 0;
-            AreaDescriptor resistRange = getBlockRange(FIRE_RESIST_RANGE);
+            AreaDescriptor resistRange = masterRitualStone.getBlockRange(FIRE_RESIST_RANGE);
 
             int duration = getFireResistForWill(steadfastWill);
 
@@ -186,7 +186,7 @@ public class RitualLava extends Ritual {
 
         if (timer % corrosiveRefreshTime == 0 && corrosiveWill >= corrosiveWillDrain) {
             double corrosiveDrained = 0;
-            AreaDescriptor resistRange = getBlockRange(FIRE_DAMAGE_RANGE);
+            AreaDescriptor resistRange = masterRitualStone.getBlockRange(FIRE_DAMAGE_RANGE);
 
             float damage = getCorrosiveDamageForWill(corrosiveWill);
 

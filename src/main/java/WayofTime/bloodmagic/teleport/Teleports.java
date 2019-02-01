@@ -1,9 +1,8 @@
-package WayofTime.bloodmagic.ritual.portal;
+package WayofTime.bloodmagic.teleport;
 
 import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.event.TeleposeEvent;
-import WayofTime.bloodmagic.teleport.Teleport;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -148,7 +147,7 @@ public class Teleports {
 
                             network.syphon(ticket(oldWorld, player, getTeleportCost()));
 
-                            /* begin brandon3055 "BrandonsCore" intedimensional teleportation code */
+                            /* begin brandon3055 "BrandonsCore" interdimensional teleportation code */
 
                             PlayerList playerList = server.getPlayerList();
 

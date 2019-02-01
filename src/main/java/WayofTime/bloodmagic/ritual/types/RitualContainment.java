@@ -29,7 +29,7 @@ public class RitualContainment extends Ritual {
             return;
         }
 
-        AreaDescriptor containmentRange = getBlockRange(CONTAINMENT_RANGE);
+        AreaDescriptor containmentRange = masterRitualStone.getBlockRange(CONTAINMENT_RANGE);
 
         for (EntityLivingBase entity : world.getEntitiesWithinAABB(EntityLivingBase.class, containmentRange.getAABB(masterRitualStone.getBlockPos()))) {
             if (entity instanceof EntityPlayer && (((EntityPlayer) entity).capabilities.isCreativeMode || ((EntityPlayer) entity).getGameProfile().getId().equals(masterRitualStone.getOwner())))

@@ -31,7 +31,7 @@ public class RitualWater extends Ritual {
         int maxEffects = currentEssence / getRefreshCost();
         int totalEffects = 0;
 
-        AreaDescriptor waterRange = getBlockRange(WATER_RANGE);
+        AreaDescriptor waterRange = masterRitualStone.getBlockRange(WATER_RANGE);
 
         for (BlockPos newPos : waterRange.getContainedPositions(masterRitualStone.getBlockPos())) {
             if (world.isAirBlock(newPos)) {

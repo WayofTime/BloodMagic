@@ -1,5 +1,12 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffect;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectCraftingNew;
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
+import WayofTime.bloodmagic.core.registry.AlchemyArrayRecipeRegistry;
+import WayofTime.bloodmagic.iface.IAlchemyArray;
+import WayofTime.bloodmagic.util.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -9,19 +16,13 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffect;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectCraftingNew;
-import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
-import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
-import WayofTime.bloodmagic.core.registry.AlchemyArrayRecipeRegistry;
-import WayofTime.bloodmagic.iface.IAlchemyArray;
-import WayofTime.bloodmagic.util.Constants;
 
 public class TileAlchemyArray extends TileInventory implements ITickable, IAlchemyArray
 {
     public boolean isActive = false;
     public int activeCounter = 0;
     public EnumFacing rotation = EnumFacing.HORIZONTALS[0];
+    public int rotateCooldown = 0;
 
     private String key = "empty";
     public AlchemyArrayEffect arrayEffect;
@@ -110,6 +111,8 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
             arrayEffect = null;
             key = "empty";
         }
+        if (rotateCooldown > 0)
+            rotateCooldown--;
     }
 
     /**

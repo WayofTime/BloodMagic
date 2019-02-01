@@ -1,14 +1,23 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.core.data.SoulTicket;
+import WayofTime.bloodmagic.util.ISigilFluidItem;
+import WayofTime.bloodmagic.util.SigilFluidWrapper;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -20,7 +29,7 @@ import net.minecraftforge.fluids.capability.wrappers.FluidBlockWrapper;
 
 import javax.annotation.Nullable;
 
-public abstract class ItemSigilFluidBase extends ItemSigilBase {
+public abstract class ItemSigilFluidBase extends ItemSigilBase implements ISigilFluidItem {
     //Class for sigils that interact with fluids, either creating or deleting them.
     //Sigils still have to define their own onRightClick behavior, but the actual fluid-interacting code is largely limited to here.
     public final FluidStack sigilFluid;
@@ -125,4 +134,45 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase {
             handler = new BlockWrapper(block, world, blockPos);
         return tryInsertSigilFluid(handler, true);
     }
+
+    @Override
+    public FluidStack getFluid(ItemStack sigil) {
+        return sigilFluid;
+    }
+
+    @Override
+    public int getCapacity(ItemStack sigil) {
+        return 0;
+    }
+
+    @Override
+    public FluidStack drain(ItemStack sigil, int maxDrain, boolean doDrain) {
+        Binding binding = getBinding(sigil);
+
+        if (binding == null)
+            return null;
+
+        SoulNetwork network = NetworkHelper.getSoulNetwork(binding);
+
+        if (network.getCurrentEssence() < getLpUsed()) {
+            network.causeNausea();
+            return null;
+        }
+
+        if (doDrain)
+            network.syphon(SoulTicket.item(sigil, getLpUsed()));
+
+        return sigilFluid;
+    }
+
+    @Override
+    public int fill(ItemStack sigil, FluidStack resource, boolean doFill) {
+        return 0;
+    }
+
+    @Override
+    public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+        return new SigilFluidWrapper(stack, this);
+    }
+
 }

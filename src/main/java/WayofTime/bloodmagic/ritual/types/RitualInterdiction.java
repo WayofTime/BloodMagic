@@ -29,7 +29,7 @@ public class RitualInterdiction extends Ritual {
             return;
         }
 
-        AreaDescriptor interdictionRange = getBlockRange(INTERDICTION_RANGE);
+        AreaDescriptor interdictionRange = masterRitualStone.getBlockRange(INTERDICTION_RANGE);
 
         for (EntityLivingBase entity : world.getEntitiesWithinAABB(EntityLivingBase.class, interdictionRange.getAABB(masterRitualStone.getBlockPos()))) {
             if (entity instanceof EntityPlayer && (((EntityPlayer) entity).capabilities.isCreativeMode || ((EntityPlayer) entity).getGameProfile().getId().equals(masterRitualStone.getOwner())))
