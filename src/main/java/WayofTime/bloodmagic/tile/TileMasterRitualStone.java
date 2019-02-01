@@ -9,6 +9,7 @@ import WayofTime.bloodmagic.event.RitualEvent;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.ritual.EnumReaderBoundaries;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.Ritual;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
@@ -159,7 +160,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
                             this.cachedNetwork = network;
                             this.currentRitual = ritual;
 
-                            if(!checkBlockRanges(ritual.getModableRangeMap()))
+                            if (!checkBlockRanges(ritual.getModableRangeMap()))
                                 addBlockRanges(ritual.getModableRangeMap());
 
                             notifyUpdate();
@@ -188,10 +189,10 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
                 if (MinecraftForge.EVENT_BUS.post(event))
                     return;
-              
+
                 if (!checkBlockRanges(getCurrentRitual().getModableRangeMap()))
                     addBlockRanges(getCurrentRitual().getModableRangeMap());
-              
+
                 getCurrentRitual().performRitual(this);
             } else {
                 stopRitual(Ritual.BreakType.BREAK_STONE);
@@ -307,17 +308,17 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     public void setActiveWillConfig(EntityPlayer player, List<EnumDemonWillType> typeList) {
         this.currentActiveWillConfig = typeList;
     }
-    
+
     @Override
-    public boolean setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2) {
+    public EnumReaderBoundaries setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2) {
         AreaDescriptor descriptor = this.getBlockRange(range);
         DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, getBlockPos());
-        if (this.currentRitual.canBlockRangeBeModified(range, descriptor, this, offset1, offset2, holder)) {
-            descriptor.modifyAreaByBlockPositions(offset1, offset2);
-            return true;
-        }
 
-        return false;
+        EnumReaderBoundaries modificationType = currentRitual.canBlockRangeBeModified(range, descriptor, this, offset1, offset2, holder);
+        if (modificationType == EnumReaderBoundaries.SUCCESS)
+            descriptor.modifyAreaByBlockPositions(offset1, offset2);
+
+        return modificationType;
     }
 
     @Override
@@ -428,13 +429,13 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         modableRangeMap.put(range, defaultRange);
     }
 
-    public void addBlockRanges(Map<String, AreaDescriptor> blockRanges){
+    public void addBlockRanges(Map<String, AreaDescriptor> blockRanges) {
         for (Map.Entry<String, AreaDescriptor> entry : blockRanges.entrySet()) {
             modableRangeMap.put(entry.getKey(), entry.getValue());
         }
     }
 
-    public boolean checkBlockRanges(Map<String, AreaDescriptor> blockRanges){
+    public boolean checkBlockRanges(Map<String, AreaDescriptor> blockRanges) {
         for (Map.Entry<String, AreaDescriptor> entry : blockRanges.entrySet()) {
             if (modableRangeMap.get(entry.getKey()) == null)
                 return false;

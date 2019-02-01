@@ -55,7 +55,7 @@ public interface IMasterRitualStone {
 
     void setActiveWillConfig(EntityPlayer player, List<EnumDemonWillType> typeList);
 
-    boolean setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2);
+    EnumReaderBoundaries setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2);
 
     List<EnumDemonWillType> getActiveWillConfig();
 
@@ -68,4 +68,6 @@ public interface IMasterRitualStone {
     void addBlockRanges(Map<String, AreaDescriptor> blockRanges);
 
     void addBlockRange(String range, AreaDescriptor defaultRange);
+
+    Ritual getCurrentRitual();
 }
