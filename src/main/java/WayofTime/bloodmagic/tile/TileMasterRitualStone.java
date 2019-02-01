@@ -28,10 +28,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone {
     private UUID owner;
@@ -44,6 +41,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     private EnumFacing direction = EnumFacing.NORTH;
     private boolean inverted;
     private List<EnumDemonWillType> currentActiveWillConfig = new ArrayList<>();
+    protected final Map<String, AreaDescriptor> modableRangeMap = new HashMap<>();
 
     @Override
     public void onUpdate() {
@@ -185,10 +183,14 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     public void performRitual(World world, BlockPos pos) {
         if (!world.isRemote && getCurrentRitual() != null && BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(currentRitual), false)) {
             if (RitualHelper.checkValidRitual(getWorld(), getPos(), currentRitual, getDirection())) {
-                RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
+                Ritual ritual = getCurrentRitual();
+                RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), ritual);
 
                 if (MinecraftForge.EVENT_BUS.post(event))
                     return;
+
+                if (!checkBlockRanges(getCurrentRitual().getModableRangeMap()))
+                    addBlockRanges(getCurrentRitual().getModableRangeMap());
 
                 getCurrentRitual().performRitual(this);
             } else {

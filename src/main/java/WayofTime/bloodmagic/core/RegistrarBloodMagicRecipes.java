@@ -213,6 +213,7 @@ public class RegistrarBloodMagicRecipes
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_PYLON), 400, 50, "blockIron", "stone", "gemLapis", RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL);
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicBlocks.DEMON_CRYSTALLIZER), 500, 100, RegistrarBloodMagicBlocks.SOUL_FORGE, "stone", "gemLapis", "blockGlass");
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.DEMON_WILL_GAUGE), 400, 50, "ingotGold", "dustRedstone", "blockGlass", RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL);
+        registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.RITUAL_DISMANTLER), 500, 100, new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, 1, 2), new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, 1, 2), new ItemStack(RegistrarBloodMagicItems.RITUAL_DIVINER), new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD));
     }
 
     public static void registerAlchemyArrayRecipes(BloodMagicRecipeRegistrar registrar)

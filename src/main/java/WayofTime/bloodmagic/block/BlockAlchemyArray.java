@@ -1,6 +1,8 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectMovement;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectUpdraft;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.util.Utils;
@@ -9,6 +11,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -88,11 +91,16 @@ public class BlockAlchemyArray extends Block {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        //TODO: Right click should rotate it
         TileAlchemyArray array = (TileAlchemyArray) world.getTileEntity(pos);
 
-        if (array == null || player.isSneaking())
+        if (array == null)
             return false;
+        if (player.isSneaking() && array.rotateCooldown == 0) {
+            array.setRotation(array.getRotation().rotateY());
+            array.rotateCooldown = 5;
+            world.notifyBlockUpdate(pos, state, state, 3);
+            return false;
+        }
 
         ItemStack playerItem = player.getHeldItem(hand);
 
@@ -103,6 +111,21 @@ public class BlockAlchemyArray extends Block {
                 Utils.insertItemToTile(array, player, 1);
                 array.attemptCraft();
             } else {
+                return true;
+            }
+            if (array.arrayEffect instanceof AlchemyArrayEffectMovement && (playerItem.getItem() == Items.REDSTONE || playerItem.getItem() == Items.FEATHER)
+                    || array.arrayEffect instanceof AlchemyArrayEffectUpdraft && (playerItem.getItem() == Items.FEATHER || playerItem.getItem() == Items.GLOWSTONE_DUST)) {
+                for (int i = 0; i < array.getSizeInventory(); i++) {
+                    ItemStack stack = array.getStackInSlot(i);
+                    if (ItemStack.areItemsEqual(stack, playerItem)) {
+                        if (stack.getCount() < 127) {
+                            stack.setCount(stack.getCount() + 1);
+                            playerItem.shrink(1);
+                        }
+                        break;
+                    }
+                }
+                world.notifyBlockUpdate(pos, state, state, 3);
                 return true;
             }
         }
