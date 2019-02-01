@@ -158,16 +158,15 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                                 int maxVolume = ritual.getMaxVolumeForRange(range, null, null);
 
                                 switch (master.setBlockRangeByBounds(player, range, containedPos, pos2)) {
-                                    case 1:
+                                    case SUCCESS:
                                         player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.success"), true);
                                         break;
-                                    case -1:
+                                    case NOT_WITHIN_BOUNDARIES:
                                         player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.tooFar", maxVerticalRange, maxHorizontalRange), false);
                                         break;
-                                    case -2:
+                                    case VOLUME_TOO_LARGE:
                                         player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.tooBig", maxVolume), false);
                                         break;
-                                    case 0:
                                     default:
                                         player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.noRange"), false);
                                         break;

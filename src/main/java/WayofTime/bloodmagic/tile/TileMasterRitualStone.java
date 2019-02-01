@@ -9,6 +9,7 @@ import WayofTime.bloodmagic.event.RitualEvent;
 import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.ritual.EnumReaderBoundaries;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.Ritual;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
@@ -309,12 +310,12 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public int setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2) {
+    public EnumReaderBoundaries setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2) {
         AreaDescriptor descriptor = this.getBlockRange(range);
         DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, getBlockPos());
 
-        int modificationType = currentRitual.canBlockRangeBeModified(range, descriptor, this, offset1, offset2, holder);
-        if (modificationType == 1)
+        EnumReaderBoundaries modificationType = currentRitual.canBlockRangeBeModified(range, descriptor, this, offset1, offset2, holder);
+        if (modificationType == EnumReaderBoundaries.SUCCESS)
             descriptor.modifyAreaByBlockPositions(offset1, offset2);
 
         return modificationType;

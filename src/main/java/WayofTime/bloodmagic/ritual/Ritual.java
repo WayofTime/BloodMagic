@@ -185,13 +185,13 @@ public abstract class Ritual {
         return rangeList.get(0);
     }
 
-    public int canBlockRangeBeModified(String range, AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2, DemonWillHolder holder) {
+    public EnumReaderBoundaries canBlockRangeBeModified(String range, AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2, DemonWillHolder holder) {
         List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
         int maxVolume = getMaxVolumeForRange(range, willConfig, holder);
         int maxVertical = getMaxVerticalRadiusForRange(range, willConfig, holder);
         int maxHorizontal = getMaxHorizontalRadiusForRange(range, willConfig, holder);
 
-        return (maxVolume <= 0 || descriptor.getVolumeForOffsets(offset1, offset2) <= maxVolume) ? descriptor.isWithinRange(offset1, offset2, maxVertical, maxHorizontal) ? 1 : -1 : -2;
+        return (maxVolume <= 0 || descriptor.getVolumeForOffsets(offset1, offset2) <= maxVolume) ? descriptor.isWithinRange(offset1, offset2, maxVertical, maxHorizontal) ? EnumReaderBoundaries.SUCCESS : EnumReaderBoundaries.NOT_WITHIN_BOUNDARIES : EnumReaderBoundaries.VOLUME_TOO_LARGE;
     }
 
     protected void setMaximumVolumeAndDistanceOfRange(String range, int volume, int horizontalRadius, int verticalRadius) {
