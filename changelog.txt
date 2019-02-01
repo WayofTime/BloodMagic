@@ -1,4 +1,50 @@
 ------------------------------------------------------
+Version 2.4.0
+------------------------------------------------------
+
+It's been a while, eh? Some of you may be asking yourself "whats up with bloodmagic" like that damned recon on a certain
+social media site. Well here's what's up: put something snarky here when done writing changelog
+
+There's so much here, I'm probably going to miss some. Here's a general overview from just skimming commit titles.
+
+Much of this was done via PR because I'm ~~lazy~~ too busy having fun with Fabric.
+
+- Fixed harvest moon not working with pumpkins
+- [API] Added a way to unregister an altar component
+- Moved anything related to Tier 6 behind an opt-in config. Please stop asking me how to get it.
+- Fixed small demon stone bricks recipe so it returns 4 instead of 1
+- Ported some old rituals from 1.7
+    - Cry of the Eternal Soul
+    - Reverence of the Condor
+    - Ritual of the Feathered Earth
+- Added a new ritual, Ritual of Grounding
+- Optimized bound tool harvesting
+- Fixed render issues with demon crystals
+- Fixed Hymn of Syphoning not updating some tanks visually
+- Added very basic documentation for several rituals to the guide book
+- Made meteor costs for Mark of the Falling Tower configurable in the meteor json
+- Fluid related sigils should now work identically to buckets of the fluid
+- Fixed ritual tinkerer area setting behaving wonkily
+- Fixed Seer Sigil not working for incense altars
+- Added the ability to buff movement and updraft arrays by providing more of their ingredient
+- Ported the ritual dismantler from 1.7.10
+- Logic fix for the Solar Powered
+    - Now it requires a clear line of sight to the sky as well as it being day time
+- Fixed Sigil of Magnetism AOE being offset from the player
+- Rewrote commands
+    - They're different in some way, some how
+    - Don't ask me how
+- Quality of life improvements for the ritual tinkerer
+- Changed the activation crystal levels of some rituals to use the awakened crystal
+    - Mark of the Falling Tower
+    - All the living armor ones
+    - It's late and I'm tired don't hate me for being too lazy to look up their names
+- Fixed up some bounding boxes for some blocks with fancier models
+- Sentient Bow now properly handles modded and potion-ified arrows
+
+I can't wait for this to turn out to be very broken so I can yell at the contributor :>
+
+------------------------------------------------------
 Version 2.3.3
 ------------------------------------------------------
 
