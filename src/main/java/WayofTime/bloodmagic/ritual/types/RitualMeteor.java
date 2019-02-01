@@ -22,7 +22,8 @@ public class RitualMeteor extends Ritual {
     public static final double destructiveWillDrain = 50;
 
     public RitualMeteor() {
-        super("ritualMeteor", 0, 0, "ritual." + BloodMagic.MODID + ".meteorRitual");
+        super("ritualMeteor", 2, 0, "ritual." + BloodMagic.MODID + ".meteorRitual");
+
         addBlockRange(ITEM_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
         setMaximumVolumeAndDistanceOfRange(ITEM_RANGE, 0, 10, 10);
     }
