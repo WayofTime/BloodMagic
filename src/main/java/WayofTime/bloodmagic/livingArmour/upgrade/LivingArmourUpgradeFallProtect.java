@@ -8,19 +8,15 @@ import net.minecraft.util.DamageSource;
 
 public class LivingArmourUpgradeFallProtect extends LivingArmourUpgrade {
     public static final int[] costs = new int[]{2, 5, 9, 15, 25};
-    public static final double[] protectionLevel = new double[]{0.2, 0.4, 0.6, 0.8, 1};
+    public static final float[] protectionLevel = new float[]{0.2f, 0.4f, 0.6f, 0.8f, 1f};
 
     public LivingArmourUpgradeFallProtect(int level) {
         super(level);
     }
 
-    @Override
-    public double getArmourProtection(EntityLivingBase wearer, DamageSource source) {
-        if (source.equals(DamageSource.FALL)) {
-            return protectionLevel[this.level];
-        }
-
-        return 0;
+    
+    public float getDamageMultiplier() {
+        return 1-protectionLevel[this.level];
     }
 
     @Override

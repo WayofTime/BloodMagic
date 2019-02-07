@@ -11,6 +11,7 @@ import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowHeal;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeStormTrooper;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFallProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerJump;
 import WayofTime.bloodmagic.livingArmour.upgrade.*;
@@ -31,6 +32,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -367,6 +369,31 @@ public class LivingArmourHandler
                         entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
 
                         world.spawnEntity(entityarrow);
+                    }
+                }
+            }
+        }
+    }
+    
+    // Applies: Softfall
+    @SubscribeEvent
+    public static void onPlayerFall(LivingFallEvent event) {
+        if (event.getEntityLiving() instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+
+            if (LivingArmour.hasFullSet(player))
+            {
+
+                ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                if (armour != null)
+                {
+                    StatTrackerFallProtect.incrementCounter(armour, event.getDamageMultiplier()*(event.getDistance()-3));
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.fallProtect", chestStack);
+                    if (upgrade instanceof LivingArmourUpgradeFallProtect) {
+                        LivingArmourUpgradeFallProtect fallUpgrade = (LivingArmourUpgradeFallProtect) upgrade;
+                        event.setDamageMultiplier(event.getDamageMultiplier()*fallUpgrade.getDamageMultiplier());
                     }
                 }
             }
