@@ -344,7 +344,7 @@ public class LivingArmourHandler
                         ItemArrow itemarrow = (ItemArrow) ((stack.getItem() instanceof ItemArrow ? arrowStack.getItem() : Items.ARROW));
                         EntityArrow entityarrow = itemarrow.createArrow(world, arrowStack, player);
                         entityarrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, velocity * 3.0F, 1.0F);
-                        entityarrow.addTag("Arrow Shot");
+                        entityarrow.addTag("arrow_shot");
                         float velocityModifier = 0.6f * velocity;
 
                         entityarrow.motionX += (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
@@ -380,7 +380,7 @@ public class LivingArmourHandler
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent.Arrow event)
     {
-        if (event.getArrow().removeTag("Arrow Shot"))
+        if (event.getArrow().removeTag("arrow_shot"))
         {
             Entity entity = event.getRayTraceResult().entityHit;
 
