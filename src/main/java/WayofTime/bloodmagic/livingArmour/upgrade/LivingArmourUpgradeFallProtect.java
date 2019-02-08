@@ -8,7 +8,7 @@ import net.minecraft.util.DamageSource;
 
 public class LivingArmourUpgradeFallProtect extends LivingArmourUpgrade {
     public static final int[] costs = new int[]{2, 5, 9, 15, 25};
-    public static final float[] protectionLevel = new float[]{0.2f, 0.4f, 0.6f, 0.8f, 1f};
+    public static final float[] protectionLevel = new float[]{0.2F, 0.4F, 0.6F, 0.8F, 1F};
 
     public LivingArmourUpgradeFallProtect(int level) {
         super(level);
@@ -16,7 +16,7 @@ public class LivingArmourUpgradeFallProtect extends LivingArmourUpgrade {
 
     
     public float getDamageMultiplier() {
-        return 1-protectionLevel[this.level];
+        return 1 - protectionLevel[this.level];
     }
 
     @Override

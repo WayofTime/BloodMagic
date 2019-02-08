@@ -389,11 +389,11 @@ public class LivingArmourHandler
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)
                 {
-                    StatTrackerFallProtect.incrementCounter(armour, event.getDamageMultiplier()*(event.getDistance()-3));
+                    StatTrackerFallProtect.incrementCounter(armour, event.getDamageMultiplier() * (event.getDistance() - 3));
                     LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.fallProtect", chestStack);
                     if (upgrade instanceof LivingArmourUpgradeFallProtect) {
                         LivingArmourUpgradeFallProtect fallUpgrade = (LivingArmourUpgradeFallProtect) upgrade;
-                        event.setDamageMultiplier(event.getDamageMultiplier()*fallUpgrade.getDamageMultiplier());
+                        event.setDamageMultiplier(event.getDamageMultiplier() * fallUpgrade.getDamageMultiplier());
                     }
                 }
             }
