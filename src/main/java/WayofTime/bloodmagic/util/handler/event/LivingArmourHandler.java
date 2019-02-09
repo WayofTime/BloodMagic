@@ -30,6 +30,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -163,10 +164,12 @@ public class LivingArmourHandler
                     if (event.getItemStack().getItemUseAction() == EnumAction.DRINK)
                     {
                         ItemStack drinkStack = event.getItemStack();
-                        if(!(drinkStack.getItem() instanceof ItemSplashPotion)) {
+                        if (!(drinkStack.getItem() instanceof ItemSplashPotion))
+                        {
                             LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.quenched", chestStack);
 
-                            if (upgrade instanceof LivingArmourUpgradeQuenched) {
+                            if (upgrade instanceof LivingArmourUpgradeQuenched)
+                            {
                                 event.setCanceled(true);
                             }
                         }
@@ -343,7 +346,7 @@ public class LivingArmourHandler
                         ItemArrow itemarrow = (ItemArrow) ((stack.getItem() instanceof ItemArrow ? arrowStack.getItem() : Items.ARROW));
                         EntityArrow entityarrow = itemarrow.createArrow(world, arrowStack, player);
                         entityarrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, velocity * 3.0F, 1.0F);
-
+                        entityarrow.addTag("arrow_shot");
                         float velocityModifier = 0.6f * velocity;
 
                         entityarrow.motionX += (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
@@ -373,8 +376,7 @@ public class LivingArmourHandler
                 }
             }
         }
-    }
-    
+    }    
     // Applies: Softfall
     @SubscribeEvent
     public static void onPlayerFall(LivingFallEvent event) {
@@ -396,6 +398,21 @@ public class LivingArmourHandler
                         event.setDamageMultiplier(event.getDamageMultiplier() * fallUpgrade.getDamageMultiplier());
                     }
                 }
+            }
+        }
+    }
+  
+    // Applies: Arrow Shot
+    @SubscribeEvent
+    public static void onProjectileImpact(ProjectileImpactEvent.Arrow event)
+    {
+        if (event.getArrow().removeTag("arrow_shot"))
+        {
+            Entity entity = event.getRayTraceResult().entityHit;
+
+            if (entity != null)
+            {
+                entity.hurtResistantTime = 0;
             }
         }
     }
