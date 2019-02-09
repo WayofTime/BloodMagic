@@ -17,6 +17,9 @@ public class OreDictItemFilter extends TestItemFilter {
 
     @Override
     public boolean doStacksMatch(ItemStack filterStack, ItemStack testStack) {
+        if (filterStack.isEmpty() || testStack.isEmpty())
+            return false;
+
         int[] filterIds = OreDictionary.getOreIDs(filterStack);
         int[] testIds = OreDictionary.getOreIDs(testStack);
 
