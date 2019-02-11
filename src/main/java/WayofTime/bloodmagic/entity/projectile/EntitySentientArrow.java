@@ -168,6 +168,18 @@ public class EntitySentientArrow extends EntityTippedArrow {
     @Override
     public void onUpdate() {
         super.onUpdate();
+        if (this.specialArrowClass != null) {
+            if (!this.world.isRemote) {
+                this.specialEntity.posX = this.posX;
+                this.specialEntity.posY = this.posY;
+                this.specialEntity.posZ = this.posZ;
+
+                this.specialEntity.onUpdate();
+                if (this.inGround) {
+                    this.specialEntity.setDead();
+                }
+            }
+        }
         switch (type) {
             case DESTRUCTIVE:
                 if (this.potion != null) {
@@ -177,8 +189,8 @@ public class EntitySentientArrow extends EntityTippedArrow {
                     this.world.createExplosion(this, this.posX, this.posY, this.posZ, currentLevel >= 0 ? destructiveExplosionRadius[currentLevel] : 0, false);
                     if (this.potion != null && this.specialArrowClass == null) {
                         createPotionFromArrow(null);
-                        this.setDead();
                     }
+                    this.setDead();
                 }
                 break;
             case CORROSIVE:
@@ -204,19 +216,7 @@ public class EntitySentientArrow extends EntityTippedArrow {
                 break;
         }
 
-        if (this.specialArrowClass != null) {
-            if (!this.world.isRemote) {
-                this.specialEntity.posX = this.posX;
-                this.specialEntity.posY = this.posY;
-                this.specialEntity.posZ = this.posZ;
 
-                this.specialEntity.onUpdate();
-                if (this.inGround) {
-                    this.setDead();
-                    this.specialEntity.setDead();
-                }
-            }
-        }
     }
 
     //TODO: Potion splash (for destructive will fired tipped arrows) currently does not have a visual effect.
