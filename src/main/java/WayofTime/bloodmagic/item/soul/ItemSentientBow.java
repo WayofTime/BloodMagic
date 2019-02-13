@@ -305,6 +305,40 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
         return entityArrow;
     }
 
+    public EntitySentientArrow getDuplicateArrow(ItemStack bowStack, World world, EntityPlayer player,
+            double reimburseMultiplier) {
+
+        EnumDemonWillType willType = this.getCurrentType(bowStack);
+        ItemStack arrow = this.getFiredArrow(player);
+
+        ItemArrow itemarrow = ((ItemArrow) (arrow.getItem() instanceof ItemArrow ? arrow.getItem() : Items.ARROW));
+        EntitySentientArrow entityArrow;
+        double reimburseAmount = (this.getDropOfActivatedBow(bowStack) * world.rand.nextDouble()
+            + this.getStaticDropOfActivatedBow(bowStack)) * reimburseMultiplier;
+
+        if (itemarrow == Items.ARROW) {
+            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(willType, player);
+            entityArrow = new EntitySentientArrow(world, player, willType, reimburseAmount, getLevel(soulsRemaining),
+                (PotionType) null);
+        } else if (itemarrow == Items.TIPPED_ARROW) {
+            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(willType, player);
+            entityArrow = new EntitySentientArrow(world, player, willType, reimburseAmount, getLevel(soulsRemaining),
+                arrow);
+        } else if (itemarrow == Items.SPECTRAL_ARROW) {
+            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(willType, player);
+            entityArrow = new EntitySentientArrow(world, player, willType, reimburseAmount, getLevel(soulsRemaining),
+                new PotionType(new PotionEffect(MobEffects.GLOWING, 200, 0)));
+        } else {
+            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(willType, player);
+            entityArrow = new EntitySentientArrow(world, player, willType, reimburseAmount, getLevel(soulsRemaining),
+                itemarrow.createArrow(world, bowStack, player));
+        }
+
+        player.addStat(StatList.getObjectUseStats(this));
+
+        return entityArrow;
+    }
+    
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entityLiving, int timeLeft) {
         if (entityLiving instanceof EntityPlayer) {
