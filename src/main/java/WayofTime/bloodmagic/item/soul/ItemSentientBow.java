@@ -334,9 +334,12 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
                         ItemArrow itemarrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.ARROW));
                         EntityArrow entityArrow;
                         double amount = (this.getDropOfActivatedBow(stack) * world.rand.nextDouble() + this.getStaticDropOfActivatedBow(stack));
-
+                        
                         float newArrowVelocity = arrowVelocity * getVelocityOfArrow(stack);
-                        if (itemarrow == Items.ARROW) {
+                        
+                        if (getLevel(PlayerDemonWillHandler.getTotalDemonWill(type, player)) <= 0) {
+                            entityArrow = itemarrow.createArrow(world, itemstack, entityLiving);
+                        } else if (itemarrow == Items.ARROW) {
                             double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
                             entityArrow = new EntitySentientArrow(world, entityLiving, type, amount, getLevel(soulsRemaining), (PotionType) null);
                         } else if (itemarrow == Items.TIPPED_ARROW) {
