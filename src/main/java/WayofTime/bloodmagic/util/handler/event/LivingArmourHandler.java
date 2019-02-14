@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.item.soul.ItemSentientBow;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
@@ -314,6 +315,7 @@ public class LivingArmourHandler
         World world = event.getEntityPlayer().getEntityWorld();
         ItemStack stack = event.getBow();
         EntityPlayer player = event.getEntityPlayer();
+        boolean sentientShot = false;
 
         if (world.isRemote)
             return;
@@ -338,13 +340,21 @@ public class LivingArmourHandler
 
                     if (velocity > 1.0F)
                         velocity = 1.0F;
-
+                    if (event.getBow().getItem() instanceof ItemSentientBow) {
+                        sentientShot = true;
+                    }
                     int extraArrows = ((LivingArmourUpgradeArrowShot) upgrade).getExtraArrows();
                     for (int n = 0; n < extraArrows; n++)
                     {
                         ItemStack arrowStack = new ItemStack(Items.ARROW);
                         ItemArrow itemarrow = (ItemArrow) ((stack.getItem() instanceof ItemArrow ? arrowStack.getItem() : Items.ARROW));
-                        EntityArrow entityarrow = itemarrow.createArrow(world, arrowStack, player);
+                        EntityArrow entityarrow;
+                        if (sentientShot) { // if the arrow was fired from a sentient bow
+                            ItemSentientBow sentientBow = (ItemSentientBow) stack.getItem();
+                            entityarrow = sentientBow.getDuplicateArrow(stack, world, player, 1 / extraArrows);
+                        } else {
+                            entityarrow = itemarrow.createArrow(world, arrowStack, player);
+                        }
                         entityarrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, velocity * 3.0F, 1.0F);
                         entityarrow.addTag("arrow_shot");
                         float velocityModifier = 0.6f * velocity;
