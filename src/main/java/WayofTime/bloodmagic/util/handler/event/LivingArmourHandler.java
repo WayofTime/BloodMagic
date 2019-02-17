@@ -265,8 +265,14 @@ public class LivingArmourHandler
 
                         if (upgrade instanceof LivingArmourUpgradeStepAssist)
                         {
-                            player.stepHeight = ((LivingArmourUpgradeStepAssist) upgrade).getStepAssist();
-                            hasAssist = true;
+                            if (!player.isSneaking()) 
+                            {
+                                player.stepHeight = ((LivingArmourUpgradeStepAssist) upgrade).getStepAssist();
+                                hasAssist = true;
+                            } else
+                            {
+                                player.stepHeight = 0.6F;
+                            }
                         }
                     }
                 }
