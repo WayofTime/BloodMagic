@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -25,7 +26,7 @@ public class DataProviderAlchemyArray implements IWailaDataProvider {
     @Nonnull
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES).setStackDisplayName(TextHelper.getFormattedText(RegistrarBloodMagicBlocks.ALCHEMY_ARRAY.getLocalizedName()));
+        return new ItemStack(RegistrarBloodMagicItems.ARCANE_ASHES).setStackDisplayName(TextFormatting.WHITE + RegistrarBloodMagicBlocks.ALCHEMY_ARRAY.getLocalizedName());
     }
 
     @Nonnull
