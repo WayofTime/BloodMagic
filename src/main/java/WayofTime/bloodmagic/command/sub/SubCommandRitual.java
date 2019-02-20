@@ -141,4 +141,9 @@ public class SubCommandRitual extends CommandTreeBase {
         }
 
     }
+
+    @Override
+    public int getRequiredPermissionLevel() {
+        return 2;
+    }
 }
