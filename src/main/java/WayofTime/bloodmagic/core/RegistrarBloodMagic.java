@@ -89,6 +89,7 @@ public class RegistrarBloodMagic
     {
         event.getRegistry().registerAll(
                 new PotionBloodMagic("Boost", false, 0xFFFFFF, 0, 0).setRegistryName("boost"),
+                new PotionBloodMagic("Whirlwind", false, 0xFFFFFF, 0, 0).setRegistryName("whirlwind"),
                 new PotionBloodMagic("Planar Binding", false, 0, 2, 0).setRegistryName("planar_binding"),
                 new PotionBloodMagic("Soul Snare", false, 0xFFFFFF, 3, 0).setRegistryName("soul_snare"),
                 new PotionBloodMagic("Soul Fray", true, 0xFFFFFF, 4, 0).setRegistryName("soul_fray"),
