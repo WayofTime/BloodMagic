@@ -94,14 +94,16 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
                 return super.onItemRightClick(world, player, hand);
 
             if (evt.shouldDrainHealth) {
+                DamageSourceBloodMagic damageSrc = DamageSourceBloodMagic.INSTANCE;
                 player.hurtResistantTime = 0;
-                player.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 0.001F);
-                player.setHealth(Math.max(player.getHealth() - 2, 0.0001f));
-                if (player.getHealth() <= 0.001f) {
-                    player.onDeath(DamageSourceBloodMagic.INSTANCE);
-                    player.setHealth(0);
+                float playerHealth = player.getHealth();
+                if (Math.floor(player.getHealth() - 2) <= 0) {
+                    player.attackEntityFrom(damageSrc, Float.MAX_VALUE);
+                } else {
+                    float damageAmount = net.minecraftforge.common.ForgeHooks.onLivingDamage(player, damageSrc, 2.0F);
+                    player.getCombatTracker().trackDamage(damageSrc, playerHealth, damageAmount);
+                    player.setHealth(Math.max(player.getHealth() - 2, 0.001f));
                 }
-//                player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 2.0F);
             }
 
             if (!evt.shouldFillAltar)
