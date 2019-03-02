@@ -10,10 +10,14 @@ import WayofTime.bloodmagic.teleport.Teleports;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.audio.Sound;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -76,27 +80,24 @@ public class BlockDimensionalPortal extends BlockInteger {
         if (!world.isRemote && world.getTileEntity(pos) instanceof TileDimensionalPortal) {
             TileDimensionalPortal tile = (TileDimensionalPortal) world.getTileEntity(pos);
 
-            if (LocationsHandler.getLocationsHandler() != null) {
-                ArrayList<PortalLocation> linkedLocations = LocationsHandler.getLocationsHandler().getLinkedLocations(tile.portalID);
+            LocationsHandler.verifyIsInitialized();
+            ArrayList<PortalLocation> linkedLocations = LocationsHandler.getLinkedLocations(tile.portalID);
 
-                if (linkedLocations != null && !linkedLocations.isEmpty() && linkedLocations.size() > 1) {
-                    if (world.getTileEntity(tile.getMasterStonePos()) != null && world.getTileEntity(tile.getMasterStonePos()) instanceof IMasterRitualStone) {
-                        IMasterRitualStone masterRitualStone = (IMasterRitualStone) world.getTileEntity(tile.getMasterStonePos());
-                        if (linkedLocations.get(0).equals(new PortalLocation(masterRitualStone.getBlockPos().up(), world.provider.getDimension()))) {
-                            PortalLocation portal = linkedLocations.get(1);
-                            if (portal.getDimension() == world.provider.getDimension()) {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(portal.getX(), portal.getY(), portal.getZ(), entity, masterRitualStone.getOwner(), false));
-                            } else {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(portal.getX(), portal.getY(), portal.getZ(), entity, masterRitualStone.getOwner(), world, portal.getDimension(), false));
-                            }
-                        } else if (linkedLocations.get(1).equals(new PortalLocation(masterRitualStone.getBlockPos().up(), world.provider.getDimension()))) {
-                            PortalLocation portal = linkedLocations.get(0);
-                            if (portal.getDimension() == world.provider.getDimension()) {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(portal.getX(), portal.getY(), portal.getZ(), entity, masterRitualStone.getOwner(), false));
-                            } else {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(portal.getX(), portal.getY(), portal.getZ(), entity, masterRitualStone.getOwner(), world, portal.getDimension(), false));
-                            }
-                        }
+            if (linkedLocations != null && linkedLocations.size() > 1) {
+                if (world.getTileEntity(tile.getMasterStonePos()) != null && world.getTileEntity(tile.getMasterStonePos()) instanceof IMasterRitualStone) {
+                    IMasterRitualStone masterRitualStone = (IMasterRitualStone) world.getTileEntity(tile.getMasterStonePos());
+                    PortalLocation portal;
+                    int index = linkedLocations.size() - 1; //index of most recent PortalLocation
+                    if (linkedLocations.get(index).equals(new PortalLocation(masterRitualStone.getBlockPos().up(), world.provider.getDimension()))) {
+                        portal = linkedLocations.get(index-1); // if most recent PortalLocaiton = this, get the 2nd most recent
+                    } else {
+                        portal = linkedLocations.get(index);
+                    }
+                        
+                    if (portal.getDimension() == world.provider.getDimension()) {
+                        TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(portal.getX(), portal.getY(), portal.getZ(), entity, masterRitualStone.getOwner(), false));
+                    } else {
+                        TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(portal.getX(), portal.getY(), portal.getZ(), entity, masterRitualStone.getOwner(), world, portal.getDimension(), false));
                     }
                 }
             }

@@ -86,11 +86,10 @@ public class RitualPortal extends Ritual {
                     }
                 }
             }
-
-            if (LocationsHandler.getLocationsHandler().addLocation(name, new PortalLocation(x, y + 1, z, world.provider.getDimension()))) {
-                portalRitualTag.setString(PORTAL_ID_TAG, name);
-                return true;
-            }
+            LocationsHandler.verifyIsInitialized();
+            LocationsHandler.addLocation(name, new PortalLocation(x, y + 1, z, world.provider.getDimension()));
+            portalRitualTag.setString(PORTAL_ID_TAG, name);
+            return true;
         }
         return false;
     }
@@ -152,7 +151,8 @@ public class RitualPortal extends Ritual {
         int z = masterRitualStone.getBlockPos().getZ();
         EnumFacing direction = masterRitualStone.getDirection();
 
-        LocationsHandler.getLocationsHandler().removeLocation(portalRitualTag.getString(PORTAL_ID_TAG), new PortalLocation(x, y + 1, z, world.provider.getDimension()));
+        LocationsHandler.verifyIsInitialized();
+        LocationsHandler.removeLocation(portalRitualTag.getString(PORTAL_ID_TAG), new PortalLocation(x, y + 1, z, world.provider.getDimension()));
 
         if (direction == EnumFacing.NORTH || direction == EnumFacing.SOUTH) {
             for (int i = x - 2; i <= x + 2; i++) {
@@ -172,7 +172,7 @@ public class RitualPortal extends Ritual {
             }
         }
 
-        portalRitualTag.removeTag(PORTAL_ID_TAG);
+        portalRitualTag.removeTag(portalRitualTag.getString(PORTAL_ID_TAG));
     }
 
     @Override

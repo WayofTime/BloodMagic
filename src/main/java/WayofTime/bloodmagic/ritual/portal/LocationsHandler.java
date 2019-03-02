@@ -9,39 +9,30 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class LocationsHandler implements Serializable {
+public final class LocationsHandler implements Serializable {
 
     public static final long serialVersionUID = 10102001;
     private static final String fileName = String.valueOf(DimensionManager.getCurrentSaveRootDirectory()) + "/" + BloodMagic.MODID + "/PortalLocations.dat";
     private static HashMap<String, ArrayList<PortalLocation>> portals;
-    private static LocationsHandler locationsHandler;
+    private static boolean initialized = false;
+    
+    private LocationsHandler() {}
 
-    private LocationsHandler() {
-        portals = new HashMap<>();
-    }
-
-    public boolean addLocation(String name, PortalLocation location) {
+    public static boolean addLocation(String name, PortalLocation location) {
         ArrayList<PortalLocation> portalLocations = portals.get(name);
         if (portalLocations == null) {
             portals.put(name, new ArrayList<>());
             updateFile(fileName, portals);
         }
-        if (!portals.get(name).isEmpty() && portals.get(name).size() >= 2) {
-            BMLog.DEBUG.info("Location {} already exists.", name);
-            updateFile(fileName, portals);
-            return false;
-        } else {
-            portals.get(name).add(location);
-            BMLog.DEBUG.info("Adding {}", name);
-            updateFile(fileName, portals);
-            return true;
-        }
+        portals.get(name).add(location);
+        BMLog.DEBUG.info("Adding {}", name);
+        updateFile(fileName, portals);
+        return true;
     }
 
-    public boolean removeLocation(String name, PortalLocation location) {
+    public static boolean removeLocation(String name, PortalLocation location) {
         if (portals.get(name) != null && !portals.get(name).isEmpty()) {
-            if (portals.get(name).contains(location)) {
-                portals.get(name).remove(location);
+            if (portals.get(name).remove(location)) {
                 BMLog.DEBUG.info("Removing {}", name);
                 updateFile(fileName, portals);
                 return true;
@@ -54,17 +45,17 @@ public class LocationsHandler implements Serializable {
         return false;
     }
 
-    public ArrayList<PortalLocation> getLinkedLocations(String name) {
+    public static ArrayList<PortalLocation> getLinkedLocations(String name) {
         return portals.get(name);
     }
 
-    public static LocationsHandler getLocationsHandler() {
-        if (locationsHandler == null || loadFile() == null) {
-            locationsHandler = new LocationsHandler();
-            return locationsHandler;
-        } else {
-            portals = loadFile();
-            return locationsHandler;
+    public static void verifyIsInitialized() {
+        if (!initialized) {            
+            HashMap<String, ArrayList<PortalLocation>> map = loadFile();
+            if(map == null) {
+                portals = new HashMap<>();
+            }
+            initialized = true;
         }
     }
 
