@@ -97,7 +97,7 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
                 DamageSourceBloodMagic damageSrc = DamageSourceBloodMagic.INSTANCE;
                 player.hurtResistantTime = 0;
                 float playerHealth = player.getHealth();
-                if (Math.floor(player.getHealth() - 2) <= 0) {
+                if (Math.ceil(player.getHealth() - 2) <= 0) {
                     player.attackEntityFrom(damageSrc, Float.MAX_VALUE);
                 } else {
                     float damageAmount = net.minecraftforge.common.ForgeHooks.onLivingDamage(player, damageSrc, 2.0F);
