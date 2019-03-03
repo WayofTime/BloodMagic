@@ -50,14 +50,17 @@ public class ItemLivingArmourPointsUpgrade extends ItemEnum.Variant<ItemLivingAr
             return super.onItemUseFinish(stack, worldIn, entityLiving);
 
         EntityPlayer player = (EntityPlayer) entityLiving;
+        boolean isCreative = player.capabilities.isCreativeMode;
 
-        if (!player.capabilities.isCreativeMode)
+        if (!isCreative)
             stack.shrink(1);
 
         if (!worldIn.isRemote) {
-            player.addPotionEffect(new PotionEffect(MobEffects.WITHER, 300, 5));
-            player.addPotionEffect(new PotionEffect(MobEffects.POISON, 300, 5));
-            player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 400, 1));
+            if (!isCreative) {
+                player.addPotionEffect(new PotionEffect(MobEffects.WITHER, 300, 5));
+                player.addPotionEffect(new PotionEffect(MobEffects.POISON, 300, 5));
+                player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 400, 1));
+            }
 
             if (LivingArmour.hasFullSet(player)) {
                 ItemStack chestStack = Iterables.toArray(player.getArmorInventoryList(), ItemStack.class)[2];
@@ -65,7 +68,7 @@ public class ItemLivingArmourPointsUpgrade extends ItemEnum.Variant<ItemLivingAr
                 if (armour != null) {
                     if (armour.maxUpgradePoints < 200)
                         armour.maxUpgradePoints = 200;
-                    else if (player.capabilities.isCreativeMode && armour.maxUpgradePoints < 10000)
+                    else if (isCreative && armour.maxUpgradePoints < 10000)
                         armour.maxUpgradePoints = 10000;
                     ((ItemLivingArmour) chestStack.getItem()).setLivingArmour(chestStack, armour, true);
                     ItemLivingArmour.setLivingArmour(chestStack, armour);
