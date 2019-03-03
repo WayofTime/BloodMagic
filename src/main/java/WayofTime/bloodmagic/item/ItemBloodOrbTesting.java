@@ -29,10 +29,10 @@ public class ItemBloodOrbTesting extends Item implements IVariantProvider {
         if (!world.isRemote)
             if (player.isSneaking()) {
                 network.setCurrentEssence(Integer.MAX_VALUE);
-                player.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.fill.success", player.getDisplayName().getFormattedText()));
+                player.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.fill.success", player.getDisplayName()));
             } else {
                 network.setCurrentEssence(NetworkHelper.getMaximumForTier(network.getOrbTier()));
-                player.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.cap.success", player.getDisplayName().getFormattedText()));
+                player.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.cap.success", player.getDisplayName()));
             }
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
@@ -51,7 +51,7 @@ public class ItemBloodOrbTesting extends Item implements IVariantProvider {
             if (!player.isSwingInProgress) {
                 if (player.isSneaking()) {
                     network.setCurrentEssence(0);
-                    player.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.set.success", player.getDisplayName().getFormattedText(), 0));
+                    player.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.set.success", player.getDisplayName(), 0));
                 } else {
                     player.sendMessage(new TextComponentTranslation("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence()));
                 }

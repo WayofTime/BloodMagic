@@ -120,7 +120,7 @@ public class SubCommandNetwork extends CommandTreeBase {
             }
             network.syphonAndDamage(player, SoulTicket.command(sender, this.getName(), amount));
             int newE = network.getCurrentEssence();
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.syphon.success", currE - newE, player.getDisplayName().getFormattedText()));
+            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.syphon.success", currE - newE, player.getDisplayName()));
         }
     }
 
@@ -135,7 +135,7 @@ public class SubCommandNetwork extends CommandTreeBase {
             Integer amount = commandHelperAmount(server, sender, args);
             if (amount == null)
                 return;
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.add.success", network.add(SoulTicket.command(sender, getName(), amount), NetworkHelper.getMaximumForTier(network.getOrbTier())), player.getDisplayName().getFormattedText()));
+            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.add.success", network.add(SoulTicket.command(sender, getName(), amount), NetworkHelper.getMaximumForTier(network.getOrbTier())), player.getDisplayName()));
         }
     }
 
@@ -151,7 +151,7 @@ public class SubCommandNetwork extends CommandTreeBase {
             if (amount == null)
                 return;
             network.setCurrentEssence(amount);
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.set.success", player.getDisplayName().getFormattedText(), amount));
+            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.set.success", player.getDisplayName(), amount));
         }
     }
 
@@ -169,7 +169,7 @@ public class SubCommandNetwork extends CommandTreeBase {
                 return;
             }
             this.player = args.length < 1 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
-            sender.sendMessage(new TextComponentString((player != sender ? player.getDisplayName().getFormattedText() + " " : "" + new TextComponentTranslation("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence()).getFormattedText())));
+            sender.sendMessage(new TextComponentString((player != sender ? player.getDisplayName() + " " : "" + new TextComponentTranslation("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence()).getFormattedText())));
         }
     }
 
@@ -183,7 +183,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         @Override
         public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             network.setCurrentEssence(NetworkHelper.getMaximumForTier(network.getOrbTier()));
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.cap.success", player.getDisplayName().getFormattedText()));
+            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.cap.success", player.getDisplayName()));
         }
     }
 
@@ -202,7 +202,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         @Override
         public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             network.setCurrentEssence(Integer.MAX_VALUE);
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.fill.success", player.getDisplayName().getFormattedText()));
+            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.fill.success", player.getDisplayName()));
         }
     }
 
@@ -219,7 +219,7 @@ public class SubCommandNetwork extends CommandTreeBase {
             if (tickethistory.isEmpty())
                 for (SoulTicket i : network.getTicketHistory())
                     sender.sendMessage(i.getDescription());
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success", player.getDisplayName().getFormattedText()));
+            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success", player.getDisplayName()));
         }
     }
 }

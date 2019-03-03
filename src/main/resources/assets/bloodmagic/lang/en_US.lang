@@ -679,6 +679,7 @@ ritual.bloodmagic.groundingRitual.steadfast.info=(Steadfast) Affects Bosses. Doe
 ritual.bloodmagic.groundingRitual.vengeful.info=(Vengeful) Makes effects stronger. (+Corrosive) Applies Levitation. (+Destructive) Higher Heavy Heart amplifier.
 ritual.bloodmagic.condorRitual.info=Provides flight in an area around the ritual.
 ritual.bloodmagic.eternalSoulRitual.info=Capable of transferring Life Essence from a Network back into an Altar at a cost.
+ritual.bloodmagic.featheredEarthRitual.info=Prevents falldamage in an area.
 
 ritual.bloodmagic.crystalSplitRitual.info=Splits apart a well-grown Raw crystal cluster into seperal aspected crystal clusters.
 ritual.bloodmagic.fullStomachRitual.info=Takes food from the linked chest and fills the player's saturation with it.
@@ -763,10 +764,6 @@ ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.1=Beware, mortal, for you ar
 ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.100=Unlike my comrades, I offer one of the most grim deals that you could possibly hope for as a magician that deals in your own health.
 ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.300=Although your wounds may heal, they will do so slowly if you accept my "offering," and the stings of battle will plague you even more.
 ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.500=So think carefully before you rush into something that you may regret, since even though your cup may be empty it will be almost impossible to fill once more...
-
-ritual.bloodmagic.featheredEarthRitual.info=Prevents falldamage in an area.
-ritual.bloodmagic.condorRitual.info=Provides flight in an area around the ritual.
-ritual.bloodmagic.eternalSoulRitual.info=Capable of transferring Life Essence from a Network back into an Altar at a cost.
 
 # Chat
 chat.bloodmagic.altarMaker.setTier=Set Tier to: %d
