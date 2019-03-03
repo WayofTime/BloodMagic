@@ -48,6 +48,7 @@ public class RegistrarBloodMagicItems
 {
 
     public static final Item BLOOD_ORB = Items.AIR;
+    public static final Item BLOOD_ORB_TESTING = Items.AIR;
     public static final Item ACTIVATION_CRYSTAL = Items.AIR;
     public static final Item SLATE = Items.AIR;
     public static final Item INSCRIPTION_TOOL = Items.AIR;
@@ -141,6 +142,7 @@ public class RegistrarBloodMagicItems
 
         items.addAll(Lists.newArrayList(
                 new ItemBloodOrb().setRegistryName("blood_orb"),
+                new ItemBloodOrbTesting().setRegistryName("blood_orb_testing"),
                 new ItemActivationCrystal().setRegistryName("activation_crystal"),
                 new ItemSlate().setRegistryName("slate"),
                 new ItemInscriptionTool().setRegistryName("inscription_tool"),

@@ -110,6 +110,11 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
      * @return - True if a rune was successfully added
      */
     public boolean addRuneToRitual(ItemStack stack, World world, BlockPos pos, EntityPlayer player) {
+        if (player.isCreative()) {
+            RitualHelper.createRitual(world, pos, getDirection(stack), BloodMagic.RITUAL_MANAGER.getRitual(this.getCurrentRitual(stack)), false);
+            return true;
+        }
+
         TileEntity tile = world.getTileEntity(pos);
 
         if (tile instanceof TileMasterRitualStone) {
@@ -145,8 +150,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
                         world.setBlockState(newPos, newState);
                         return true;
                     } else {
-                        return false; // TODO: Possibly replace the block with a
-                        // ritual stone
+                        return false; // TODO: Possibly replace the block with a ritual stone // Whitelist?
                     }
                 }
             }

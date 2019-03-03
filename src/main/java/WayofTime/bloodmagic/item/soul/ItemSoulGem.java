@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item.soul;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionWillGem;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.iface.IMultiWillTool;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.IDemonWill;
@@ -14,14 +15,13 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -32,7 +32,7 @@ import java.util.Locale;
 import java.util.function.Consumer;
 
 public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, IMultiWillTool {
-    public static String[] names = {"petty", "lesser", "common", "greater", "grand"};
+    public static String[] names = {"creative", "petty", "lesser", "common", "greater", "grand"};
 
     public ItemSoulGem() {
         super();
@@ -41,6 +41,12 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
         setHasSubtypes(true);
         setMaxStackSize(1);
         setCreativeTab(BloodMagic.TAB_BM);
+        this.addPropertyOverride(new ResourceLocation("type"), new IItemPropertyGetter() {
+            @SideOnly(Side.CLIENT)
+            public float apply(ItemStack stack, World world, EntityLivingBase entityIn) {
+                return ((ItemSentientBow) RegistrarBloodMagicItems.SOUL_GEM).getCurrentType(stack).ordinal();
+            }
+        });
     }
 
     @Override
@@ -69,6 +75,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     @Override
     public void gatherVariants(Consumer<String> variants) {
         for (EnumDemonWillType type : EnumDemonWillType.values()) {
+            variants.accept("type=creative_" + type.getName().toLowerCase());
             variants.accept("type=petty_" + type.getName().toLowerCase());
             variants.accept("type=lesser_" + type.getName().toLowerCase());
             variants.accept("type=common_" + type.getName().toLowerCase());
@@ -190,7 +197,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
 
         double soulsDrained = Math.min(drainAmount, souls);
 
-        if (doDrain) {
+        if (doDrain && !(soulGemStack.getMetadata() == 0)) {
             setWill(type, soulGemStack, souls - soulsDrained);
         }
 
@@ -206,14 +213,16 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
 
         switch (soulGemStack.getMetadata()) {
             case 0:
-                return 64;
+                return Integer.MAX_VALUE;
             case 1:
-                return 256;
+                return 64;
             case 2:
-                return 1024;
+                return 256;
             case 3:
-                return 4096;
+                return 1024;
             case 4:
+                return 4096;
+            case 5:
                 return 16384;
         }
         return 64;

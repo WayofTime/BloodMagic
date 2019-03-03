@@ -6,6 +6,11 @@
   },
   "variants": {
     "type": {
+      "creative_default": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGrand"
+        }
+      },
       "petty_default": {
         "textures": {
           "layer0": "bloodmagic:items/SoulGemPetty"
@@ -29,6 +34,11 @@
       "grand_default": {
         "textures": {
           "layer0": "bloodmagic:items/SoulGemGrand"
+        }
+      },
+      "creative_corrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGrand_corrosive"
         }
       },
       "petty_corrosive": {
@@ -56,6 +66,11 @@
           "layer0": "bloodmagic:items/SoulGemGrand_corrosive"
         }
       },
+      "creative_vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGrand_vengeful"
+        }
+      },
       "petty_vengeful": {
         "textures": {
           "layer0": "bloodmagic:items/SoulGemPetty_vengeful"
@@ -79,6 +94,11 @@
       "grand_vengeful": {
         "textures": {
           "layer0": "bloodmagic:items/SoulGemGrand_vengeful"
+        }
+      },
+      "creative_destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGrand_destructive"
         }
       },
       "petty_destructive": {
@@ -106,29 +126,34 @@
           "layer0": "bloodmagic:items/SoulGemGrand_destructive"
         }
       },
-      "petty_steadfast": {
-        "textures": {
-          "layer0": "bloodmagic:items/SoulGemPetty_steadfast"
-        }
-      },
-      "lesser_steadfast": {
-        "textures": {
-          "layer0": "bloodmagic:items/SoulGemLesser_steadfast"
-        }
-      },
-      "common_steadfast": {
-        "textures": {
-          "layer0": "bloodmagic:items/SoulGemCommon_steadfast"
-        }
-      },
-      "greater_steadfast": {
-        "textures": {
-          "layer0": "bloodmagic:items/SoulGemGreater_steadfast"
-        }
-      },
-      "grand_steadfast": {
+      "creative_steadfast": {
         "textures": {
           "layer0": "bloodmagic:items/SoulGemGrand_steadfast"
+        },
+        "petty_steadfast": {
+          "textures": {
+            "layer0": "bloodmagic:items/SoulGemPetty_steadfast"
+          }
+        },
+        "lesser_steadfast": {
+          "textures": {
+            "layer0": "bloodmagic:items/SoulGemLesser_steadfast"
+          }
+        },
+        "common_steadfast": {
+          "textures": {
+            "layer0": "bloodmagic:items/SoulGemCommon_steadfast"
+          }
+        },
+        "greater_steadfast": {
+          "textures": {
+            "layer0": "bloodmagic:items/SoulGemGreater_steadfast"
+          }
+        },
+        "grand_steadfast": {
+          "textures": {
+            "layer0": "bloodmagic:items/SoulGemGrand_steadfast"
+          }
         }
       }
     }

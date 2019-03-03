@@ -63,6 +63,14 @@ public class ItemLivingArmourPointsUpgrade extends ItemEnum.Variant<ItemLivingAr
                 ItemStack chestStack = Iterables.toArray(player.getArmorInventoryList(), ItemStack.class)[2];
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null) {
+                    if (player.capabilities.isCreativeMode) {
+                        if (armour.maxUpgradePoints < 10000) {
+                            armour.maxUpgradePoints = 10000;
+                            ((ItemLivingArmour) chestStack.getItem()).setLivingArmour(chestStack, armour, true);
+                            ItemLivingArmour.setLivingArmour(chestStack, armour);
+                        }
+                    }
+
                     if (armour.maxUpgradePoints < 200) {
                         armour.maxUpgradePoints = 200;
                         ((ItemLivingArmour) chestStack.getItem()).setLivingArmour(chestStack, armour, true);

@@ -46,6 +46,7 @@ item.bloodmagic.orb.magician.name=Magician Blood Orb
 item.bloodmagic.orb.master.name=Master Blood Orb
 item.bloodmagic.orb.archmage.name=Archmage Blood Orb
 item.bloodmagic.orb.transcendent.name=Transcendent Blood Orb
+item.bloodmagic.orb.testing.name=Orb of Testing
 
 item.bloodmagic.reagent.incendium.name=Incendium
 item.bloodmagic.reagent.magicales.name=Magicales
@@ -164,6 +165,7 @@ item.bloodmagic.downgradeTome.name=Living Armour Downgrade Tome
 item.bloodmagic.upgradeTrainer.name=Living Armour Training Bracelet
 
 item.bloodmagic.sentientSword.name=Sentient Sword
+item.bloodmagic.soulGem.creative.name=Creative Tartaric Gem
 item.bloodmagic.soulGem.petty.name=Petty Tartaric Gem
 item.bloodmagic.soulGem.lesser.name=Lesser Tartaric Gem
 item.bloodmagic.soulGem.common.name=Common Tartaric Gem
@@ -528,6 +530,7 @@ tooltip.bloodmagic.sentientSword.desc=Uses demon will to unleash its full potent
 tooltip.bloodmagic.sentientAxe.desc=Uses demon will to unleash its full potential.
 tooltip.bloodmagic.sentientPickaxe.desc=Uses demon will to unleash its full potential.
 tooltip.bloodmagic.sentientShovel.desc=Uses demon will to unleash its full potential.
+tooltip.bloodmagic.soulGem.creative=You wonder where the will originates from, it doesn't seem to diminish...
 tooltip.bloodmagic.soulGem.petty=A gem used to contain a little will
 tooltip.bloodmagic.soulGem.lesser=A gem used to contain some will
 tooltip.bloodmagic.soulGem.common=A gem used to contain more will
@@ -927,6 +930,7 @@ jei.bloodmagic.recipe.ticksRequired=Time: %,d Ticks
 
 jei.bloodmagic.desc.altarBuilder=A creative-only item for use in debugging and testing.\n\nShift + Right click to change the tier to build. Right click an Altar to initiate the build.\n\nBreak an Altar while holding to dismantle it.
 jei.bloodmagic.desc.demonicWill=An imprint of a demonic entity attached to a creature.\n\nCan be obtained by killing a mob with a sentient weapon or by throwing a snare at a mob and killing it while it has white particles.
+jei.bloodmagic.desc.orb.testing=A creative-only item for use in debugging and testing.\n\nSneak + Right click to fill your Soul Network, Right click to cap it off.\n\nSneak + Left click to Empty your Soul Network, Left click to
 
 # WAILA
 waila.bloodmagic.sneak=&oSneak for Information
