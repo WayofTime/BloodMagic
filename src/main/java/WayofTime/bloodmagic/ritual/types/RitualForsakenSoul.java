@@ -76,7 +76,7 @@ public class RitualForsakenSoul extends Ritual {
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
         BlockPos pos = masterRitualStone.getBlockPos();
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }

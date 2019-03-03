@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.altar.AltarComponent;
-import WayofTime.bloodmagic.altar.ComponentType;
 import WayofTime.bloodmagic.altar.AltarTier;
+import WayofTime.bloodmagic.altar.ComponentType;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -46,7 +46,7 @@ public class RitualAltarBuilder extends Ritual {
 
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }

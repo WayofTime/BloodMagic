@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +35,7 @@ public class RitualSpeed extends Ritual {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -131,15 +131,15 @@ public class RitualSpeed extends Ritual {
         }
 
         if (rawDrain > 0) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrain, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrain, !masterRitualStone.getIsCreativeActivated());
         }
 
         if (vengefulDrain > 0) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrain, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrain, !masterRitualStone.getIsCreativeActivated());
         }
 
         if (destructiveDrain > 0) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveDrain, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveDrain, !masterRitualStone.getIsCreativeActivated());
         }
     }
 

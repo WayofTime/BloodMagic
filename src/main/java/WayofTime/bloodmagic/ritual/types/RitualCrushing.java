@@ -2,14 +2,12 @@ package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.compress.CompressionRegistry;
-import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
-import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.ritual.crushing.CrushingRegistry;
 import WayofTime.bloodmagic.ritual.crushing.ICrushingHandler;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.util.Utils;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
@@ -27,11 +25,9 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 @RitualRegister("crushing")
@@ -64,7 +60,7 @@ public class RitualCrushing extends Ritual {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -142,7 +138,7 @@ public class RitualCrushing extends Ritual {
                         Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, result);
                     }
 
-                    WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, willDrain, true);
+                    WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, willDrain, !masterRitualStone.getIsCreativeActivated());
                     corrosiveWill -= willDrain;
 
                     masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(lpDrain));
@@ -162,7 +158,7 @@ public class RitualCrushing extends Ritual {
                 ItemStack copyStack = checkStack.copy();
 
                 if (steadfastWill >= steadfastWillDrain) {
-                    WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastWillDrain, true);
+                    WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastWillDrain, !masterRitualStone.getIsCreativeActivated());
                     steadfastWill -= steadfastWillDrain;
                 } else {
                     continue;
@@ -198,7 +194,7 @@ public class RitualCrushing extends Ritual {
                 }
 
                 if (fortune > 0) {
-                    WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveWillDrain, true);
+                    WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveWillDrain, !masterRitualStone.getIsCreativeActivated());
                     destructiveWill -= destructiveWillDrain;
                 }
             }
@@ -223,12 +219,12 @@ public class RitualCrushing extends Ritual {
                     Utils.spawnStackAtBlock(world, pos, EnumFacing.UP, returned);
                 }
 
-                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulWillDrain, true);
+                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulWillDrain, !masterRitualStone.getIsCreativeActivated());
             }
         }
 
         if (rawDrain > 0) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrain, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrain, !masterRitualStone.getIsCreativeActivated());
         }
     }
 

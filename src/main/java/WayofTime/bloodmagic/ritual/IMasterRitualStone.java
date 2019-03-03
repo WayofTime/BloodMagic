@@ -60,7 +60,10 @@ public interface IMasterRitualStone {
     List<EnumDemonWillType> getActiveWillConfig();
 
     default SoulTicket ticket(int amount) {
-        return SoulTicket.block(getWorldObj(), getBlockPos(), amount);
+        if (!this.getIsCreativeActivated())
+            return SoulTicket.block(getWorldObj(), getBlockPos(), amount);
+        else
+            return SoulTicket.block(getWorldObj(), getBlockPos(), 0);
     }
 
     AreaDescriptor getBlockRange(String range);
@@ -70,4 +73,8 @@ public interface IMasterRitualStone {
     void addBlockRange(String range, AreaDescriptor defaultRange);
 
     Ritual getCurrentRitual();
+
+    boolean getIsCreativeActivated();
+
+    void setIsCreativeActivated(boolean isCreative);
 }

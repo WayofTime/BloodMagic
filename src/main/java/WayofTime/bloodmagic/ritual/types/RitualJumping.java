@@ -26,7 +26,7 @@ public class RitualJumping extends Ritual {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }

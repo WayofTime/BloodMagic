@@ -43,6 +43,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     private boolean inverted;
     private List<EnumDemonWillType> currentActiveWillConfig = new ArrayList<>();
     protected final Map<String, AreaDescriptor> modableRangeMap = new HashMap<>();
+    public boolean isCreative = false;
 
     @Override
     public void onUpdate() {
@@ -127,12 +128,16 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         Binding binding = ((IBindable) activationCrystal.getItem()).getBinding(activationCrystal);
         if (binding != null && ritual != null) {
             if (activationCrystal.getItem() instanceof ItemActivationCrystal) {
-                int crystalLevel = ((ItemActivationCrystal) activationCrystal.getItem()).getCrystalLevel(activationCrystal);
+                ItemActivationCrystal crystal = (ItemActivationCrystal) activationCrystal.getItem();
+                int crystalLevel = crystal.getCrystalLevel(activationCrystal);
                 if (RitualHelper.canCrystalActivate(ritual, crystalLevel)) {
                     if (!getWorld().isRemote) {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(binding);
+                        if (crystalLevel == Integer.MAX_VALUE)
+                            isCreative = true;
 
-                        if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost() && (activator != null && !activator.capabilities.isCreativeMode)) {
+                        if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost()
+                                && (activator != null && !activator.capabilities.isCreativeMode && !isCreative)) {
                             activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.weak"), true);
                             return false;
                         }
@@ -149,7 +154,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
                         }
 
                         if (ritual.activateRitual(this, activator, binding.getOwnerId())) {
-                            if (!isRedstoned() && (activator != null && !activator.capabilities.isCreativeMode))
+                            if (!isRedstoned() && (activator != null && !activator.capabilities.isCreativeMode && !isCreative))
                                 network.syphon(ticket(ritual.getActivationCost()));
 
                             if (activator != null)
@@ -389,6 +394,16 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
     public Ritual getCurrentRitual() {
         return currentRitual;
+    }
+
+    @Override
+    public boolean getIsCreativeActivated() {
+        return this.isCreative;
+    }
+
+    @Override
+    public void setIsCreativeActivated(boolean isCreative) {
+        this.isCreative = isCreative;
     }
 
     public void setCurrentRitual(Ritual currentRitual) {

@@ -29,7 +29,7 @@ public class RitualCobblestone extends Ritual {
         TileEntity tileEntity = world.getTileEntity(masterRitualStone.getBlockPos().up());
         Block block = Blocks.COBBLESTONE;
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }

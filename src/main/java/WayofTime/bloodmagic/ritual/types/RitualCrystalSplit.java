@@ -1,8 +1,10 @@
 package WayofTime.bloodmagic.ritual.types;
 
-import java.util.function.Consumer;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -11,10 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.tile.TileDemonCrystal;
+
+import java.util.function.Consumer;
 
 @RitualRegister("crystal_split")
 public class RitualCrystalSplit extends Ritual
@@ -30,8 +30,7 @@ public class RitualCrystalSplit extends Ritual
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }

@@ -68,7 +68,7 @@ public class SubCommandRitual extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String... args) throws CommandException {
             if (args.length == 0) {
-                sender.sendMessage(new TextComponentTranslation("commands.blooodmagic.ritual.create.noRitual"));
+                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.create.noRitual"));
                 return;
             } else if (args.length == 2 && (args[1].equals("help") || args[1].equals("?"))) {
                 sender.sendMessage(new TextComponentTranslation(BloodMagic.RITUAL_MANAGER.getRitual(args[0]).getTranslationKey() + ".info"));

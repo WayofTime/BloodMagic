@@ -43,7 +43,7 @@ public class RitualPump extends Ritual {
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
         TileEntity tileEntity = world.getTileEntity(masterRitualStone.getBlockPos().up());
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }

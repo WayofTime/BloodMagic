@@ -210,7 +210,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
                 sendOwnedTeleposerList(sender, null);
             else if (!sender.getEntityWorld().isRemote) {
                 if (teleposerID > teleposerArray.length) {
-                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.outofbounds"));
+                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.error.outofbounds"));
                     return;
                 }
                 TileTeleposer brunhilde = teleposerArray[teleposerID]; // every teleposer is a brunhilde!
@@ -242,7 +242,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
                 sendOwnedTeleposerList(sender, null);
             else if (!sender.getEntityWorld().isRemote) {
                 if (teleposerID > teleposerArray.length) {
-                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.outofbounds"));
+                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.error.outofbounds"));
                     return;
                 }
                 TileTeleposer brunhilde = teleposerArray[teleposerID]; // every teleposer is a brunhilde!
@@ -270,7 +270,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
                 sendOwnedTeleposerList(sender, null);
             else if (!sender.getEntityWorld().isRemote) {
                 if (teleposerID > teleposerArray.length) {
-                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.outofbounds"));
+                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.error.outofbounds"));
                     return;
                 }
                 TileTeleposer brunhilde = teleposerArray[teleposerID]; // every teleposer is a brunhilde!

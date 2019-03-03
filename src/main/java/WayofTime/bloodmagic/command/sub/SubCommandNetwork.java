@@ -169,7 +169,7 @@ public class SubCommandNetwork extends CommandTreeBase {
                 return;
             }
             this.player = args.length < 1 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
-            sender.sendMessage(new TextComponentString((player != sender ? player.getDisplayName() + " " : "" + new TextComponentTranslation("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence()).getFormattedText())));
+            sender.sendMessage(new TextComponentString((player != sender ? player.getDisplayName().getFormattedText() + " " : "" + new TextComponentTranslation("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence()).getFormattedText())));
         }
     }
 

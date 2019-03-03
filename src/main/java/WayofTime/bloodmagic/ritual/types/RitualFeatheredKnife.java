@@ -3,15 +3,15 @@ package WayofTime.bloodmagic.ritual.types;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.altar.IBloodAltar;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
+import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.util.helper.PlayerSacrificeHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -54,7 +54,7 @@ public class RitualFeatheredKnife extends Ritual {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -165,13 +165,13 @@ public class RitualFeatheredKnife extends Ritual {
             }
 
             if (destructiveDrain > 0) {
-                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, destructiveDrain, true);
+                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveDrain, !masterRitualStone.getIsCreativeActivated());
             }
         }
 
         masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost() * totalEffects));
         if (totalEffects > 0 && consumeRawWill) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawWillDrain, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawWillDrain, !masterRitualStone.getIsCreativeActivated());
         }
     }
 

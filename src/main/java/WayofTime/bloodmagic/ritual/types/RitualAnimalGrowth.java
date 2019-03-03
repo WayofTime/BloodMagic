@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
@@ -47,7 +47,7 @@ public class RitualAnimalGrowth extends Ritual {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -146,19 +146,19 @@ public class RitualAnimalGrowth extends Ritual {
         }
 
         if (performedEffect && consumeRawWill) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawWillDrain, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawWillDrain, !masterRitualStone.getIsCreativeActivated());
         }
 
         if (vengefulDrain > 0) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrain, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrain, !masterRitualStone.getIsCreativeActivated());
         }
 
         if (steadfastDrain > 0) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastDrain, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastDrain, !masterRitualStone.getIsCreativeActivated());
         }
 
         if (destructiveDrain > 0) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveDrain, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveDrain, !masterRitualStone.getIsCreativeActivated());
         }
 
         masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(totalGrowths * getRefreshCost()));

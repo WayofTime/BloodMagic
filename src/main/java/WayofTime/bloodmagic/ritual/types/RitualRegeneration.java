@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,7 +41,7 @@ public class RitualRegeneration extends Ritual {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -137,7 +137,7 @@ public class RitualRegeneration extends Ritual {
         }
 
         if (corrosiveDrain > 0) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrain, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrain, !masterRitualStone.getIsCreativeActivated());
         }
 
         masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(totalCost));

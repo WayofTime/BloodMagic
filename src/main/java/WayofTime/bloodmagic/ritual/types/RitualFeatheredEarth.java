@@ -33,7 +33,7 @@ public class RitualFeatheredEarth extends Ritual {
         double y = pos.getY();
         double z = pos.getZ();
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }

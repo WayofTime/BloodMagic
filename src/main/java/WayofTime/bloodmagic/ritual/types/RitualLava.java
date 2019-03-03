@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
-import WayofTime.bloodmagic.soul.DemonWillHolder;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.soul.DemonWillHolder;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -64,7 +64,7 @@ public class RitualLava extends Ritual {
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
         int lpDrain = 0;
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -154,7 +154,7 @@ public class RitualLava extends Ritual {
             }
 
             if (vengefulDrained > 0) {
-                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrained, true);
+                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrained, !masterRitualStone.getIsCreativeActivated());
             }
         }
 
@@ -180,7 +180,7 @@ public class RitualLava extends Ritual {
             }
 
             if (steadfastDrained > 0) {
-                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastDrained, true);
+                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastDrained, !masterRitualStone.getIsCreativeActivated());
             }
         }
 
@@ -207,12 +207,12 @@ public class RitualLava extends Ritual {
             }
 
             if (corrosiveDrained > 0) {
-                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrained, true);
+                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrained, !masterRitualStone.getIsCreativeActivated());
             }
         }
 
         if (rawDrained > 0) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrained, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrained, !masterRitualStone.getIsCreativeActivated());
         }
 
         masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(lpDrain));

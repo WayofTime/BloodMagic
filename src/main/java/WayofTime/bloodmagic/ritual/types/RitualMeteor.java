@@ -84,15 +84,15 @@ public class RitualMeteor extends Ritual {
 
         if (successful) {
             if (rawWill > 0) {
-                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawWill, true);
+                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawWill, !masterRitualStone.getIsCreativeActivated());
             }
 
             if (corrosiveWill > 0) {
-                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveWill, true);
+                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveWill, !masterRitualStone.getIsCreativeActivated());
             }
 
             if (steadfastWill > 0) {
-                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastWill, true);
+                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastWill, !masterRitualStone.getIsCreativeActivated());
             }
         }
     }

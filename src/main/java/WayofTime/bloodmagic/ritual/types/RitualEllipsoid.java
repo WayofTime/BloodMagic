@@ -45,8 +45,7 @@ public class RitualEllipsoid extends Ritual
         AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
         TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }

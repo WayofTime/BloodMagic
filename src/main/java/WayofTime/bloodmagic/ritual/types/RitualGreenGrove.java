@@ -2,11 +2,11 @@ package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.core.RegistrarBloodMagic;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
@@ -55,7 +55,7 @@ public class RitualGreenGrove extends Ritual {
         BlockPos pos = masterRitualStone.getBlockPos();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -119,11 +119,11 @@ public class RitualGreenGrove extends Ritual {
         }
 
         if (rawDrain > 0) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrain, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrain, !masterRitualStone.getIsCreativeActivated());
         }
 
         if (vengefulDrain > 0) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrain, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrain, !masterRitualStone.getIsCreativeActivated());
         }
 
         AreaDescriptor hydrateRange = masterRitualStone.getBlockRange(HYDRATE_RANGE);
@@ -162,7 +162,7 @@ public class RitualGreenGrove extends Ritual {
         }
 
         if (steadfastDrain > 0) {
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastDrain, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastDrain, !masterRitualStone.getIsCreativeActivated());
         }
 
         double corrosiveDrain = 0;
@@ -190,7 +190,7 @@ public class RitualGreenGrove extends Ritual {
             }
 
             if (corrosiveDrain > 0) {
-                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrain, true);
+                WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrain, !masterRitualStone.getIsCreativeActivated());
             }
         }
 

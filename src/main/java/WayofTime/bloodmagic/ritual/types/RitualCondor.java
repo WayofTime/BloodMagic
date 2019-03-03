@@ -32,7 +32,7 @@ public class RitualCondor extends Ritual {
         List<EntityPlayer> entityPlayers = world.getEntitiesWithinAABB(EntityPlayer.class, aabb);
         int entityCount = entityPlayers.size();
 
-        if (currentEssence < getRefreshCost() * entityCount) {
+        if (currentEssence < getRefreshCost() * entityCount && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         } else {

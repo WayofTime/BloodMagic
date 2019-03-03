@@ -39,7 +39,7 @@ public class RitualGrounding extends Ritual {
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
         BlockPos pos = masterRitualStone.getBlockPos();
 
-        if (currentEssence < getRefreshCost()) {
+        if (currentEssence < getRefreshCost() && !masterRitualStone.getIsCreativeActivated()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -120,15 +120,15 @@ public class RitualGrounding extends Ritual {
 
 
         if (rawDrained > 0)
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrained, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DEFAULT, rawDrained, !masterRitualStone.getIsCreativeActivated());
         if (corrosiveDrained > 0)
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrained, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.CORROSIVE, corrosiveDrained, !masterRitualStone.getIsCreativeActivated());
         if (destructiveDrained > 0)
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveDrained, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveDrained, !masterRitualStone.getIsCreativeActivated());
         if (steadfastDrained > 0)
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastDrained, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, steadfastDrained, !masterRitualStone.getIsCreativeActivated());
         if (vengefulDrained > 0)
-            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrained, true);
+            WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.VENGEFUL, vengefulDrained, !masterRitualStone.getIsCreativeActivated());
 
         masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost() * totalEffects));
     }
