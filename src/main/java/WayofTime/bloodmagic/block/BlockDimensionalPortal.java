@@ -76,20 +76,18 @@ public class BlockDimensionalPortal extends BlockInteger {
         if (!world.isRemote && world.getTileEntity(pos) instanceof TileDimensionalPortal) {
             TileDimensionalPortal tile = (TileDimensionalPortal) world.getTileEntity(pos);
 
-            LocationsHandler.verifyIsInitialized();
             ArrayList<PortalLocation> linkedLocations = LocationsHandler.getLinkedLocations(tile.portalID);
 
             if (linkedLocations != null && linkedLocations.size() > 1) {
-                if (world.getTileEntity(tile.getMasterStonePos()) != null && world.getTileEntity(tile.getMasterStonePos()) instanceof IMasterRitualStone) {
-                    IMasterRitualStone masterRitualStone = (IMasterRitualStone) world.getTileEntity(tile.getMasterStonePos());
+                TileEntity tileEntity = world.getTileEntity(tile.getMasterStonePos());
+                if (tileEntity instanceof IMasterRitualStone) {
+                    IMasterRitualStone masterRitualStone = (IMasterRitualStone) tileEntity;
                     PortalLocation portal;
                     int index = linkedLocations.size() - 1; //index of most recent PortalLocation
-                    if (linkedLocations.get(index).equals(new PortalLocation(masterRitualStone.getBlockPos().up(), world.provider.getDimension()))) {
-                        portal = linkedLocations.get(index-1); // if most recent PortalLocaiton = this, get the 2nd most recent
-                    } else {
-                        portal = linkedLocations.get(index);
-                    }
-                        
+                    if (linkedLocations.get(index).equals(new PortalLocation(masterRitualStone.getBlockPos().up(), world.provider.getDimension())))
+                        index--; // if most recent PortalLocation = this, get the 2nd most recent
+                    portal = linkedLocations.get(index);
+                    
                     if (portal.getDimension() == world.provider.getDimension()) {
                         TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(portal.getX(), portal.getY(), portal.getZ(), entity, masterRitualStone.getOwner(), false));
                     } else {

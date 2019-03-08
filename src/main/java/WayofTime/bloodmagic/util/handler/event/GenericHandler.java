@@ -32,6 +32,7 @@ import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.potion.PotionEventHandlers;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.RitualManager;
+import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
@@ -79,6 +80,8 @@ import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -467,6 +470,7 @@ public class GenericHandler {
         targetTaskMapMap.computeIfAbsent(world, k -> new HashMap<>());
         PotionEventHandlers.flightListMap.computeIfAbsent(world, k -> new ArrayList<>());
         PotionEventHandlers.noGravityListMap.computeIfAbsent(world, k -> new ArrayList<>());
+        LocationsHandler.verifyIsInitialized();;
     }
 
     @SubscribeEvent
@@ -478,5 +482,9 @@ public class GenericHandler {
         targetTaskMapMap.get(world).clear();
         PotionEventHandlers.flightListMap.get(world).clear();
         PotionEventHandlers.noGravityListMap.get(world).clear();
+    }
+
+    @EventHandler
+    public static void onServerStarted(FMLServerStartedEvent event) {
     }
 }
