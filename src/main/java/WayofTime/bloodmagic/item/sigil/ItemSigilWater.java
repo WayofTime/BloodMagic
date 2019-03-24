@@ -1,14 +1,18 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.core.data.SoulTicket;
+import WayofTime.bloodmagic.iface.ISentientSwordEffectProvider;
 import WayofTime.bloodmagic.iface.ISigil;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.block.BlockCauldron;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +22,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class ItemSigilWater extends ItemSigilFluidBase {
+public class ItemSigilWater extends ItemSigilFluidBase implements ISentientSwordEffectProvider {
     public ItemSigilWater() {
         super("water", 100, new FluidStack(FluidRegistry.WATER, 1000));
     }
@@ -75,5 +79,20 @@ public class ItemSigilWater extends ItemSigilFluidBase {
         }
 
         return super.onItemRightClick(world, player, hand);
+    }
+
+    
+    
+    @Override
+    public boolean applyOnHitEffect(EnumDemonWillType type, int willLevel, ItemStack swordStack, ItemStack providerStack,
+	    EntityLivingBase attacker, EntityLivingBase target) {
+	
+	target.hurtResistantTime = 0;
+	int LPUsage = getLpUsed() * (willLevel + 1);
+	if (NetworkHelper.getSoulNetwork(getBinding(providerStack)).syphonAndDamage((EntityPlayer) attacker, SoulTicket.item(providerStack, attacker.getEntityWorld(), attacker, LPUsage)).isSuccess()) {
+	    return target.attackEntityFrom(DamageSource.DROWN, willLevel + 1);
+	}
+	
+	return false;
     }
 }

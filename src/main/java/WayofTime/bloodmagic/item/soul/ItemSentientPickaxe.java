@@ -202,9 +202,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
                 ItemStack offStack = attackerPlayer.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
                 if (offStack.getItem() instanceof ISentientSwordEffectProvider) {
                     ISentientSwordEffectProvider provider = (ISentientSwordEffectProvider) offStack.getItem();
-                    if (provider.providesEffectForWill(type)) {
-                        provider.applyOnHitEffect(type, stack, offStack, attacker, target);
-                    }
+                    provider.applyOnHitEffect(type, willBracket, stack, offStack, attacker, target);
                 }
             }
 

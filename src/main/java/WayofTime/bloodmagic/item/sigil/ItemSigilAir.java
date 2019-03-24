@@ -59,13 +59,8 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
     }
 
     @Override
-    public boolean applyOnHitEffect(EnumDemonWillType type, ItemStack swordStack, ItemStack providerStack, EntityLivingBase attacker, EntityLivingBase target) {
+    public boolean applyOnHitEffect(EnumDemonWillType type, int willLevel, ItemStack swordStack, ItemStack providerStack, EntityLivingBase attacker, EntityLivingBase target) {
         target.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, 0));
         return true;
-    }
-
-    @Override
-    public boolean providesEffectForWill(EnumDemonWillType type) {
-        return false;
     }
 }
