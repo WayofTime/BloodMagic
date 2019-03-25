@@ -81,18 +81,16 @@ public class ItemSigilWater extends ItemSigilFluidBase implements ISentientSword
         return super.onItemRightClick(world, player, hand);
     }
 
-    
-    
     @Override
     public boolean applyOnHitEffect(EnumDemonWillType type, int willLevel, ItemStack swordStack, ItemStack providerStack,
 	    EntityLivingBase attacker, EntityLivingBase target) {
 	
-	target.hurtResistantTime = 0;
-	int LPUsage = getLpUsed() * (willLevel + 1);
-	if (NetworkHelper.getSoulNetwork(getBinding(providerStack)).syphonAndDamage((EntityPlayer) attacker, SoulTicket.item(providerStack, attacker.getEntityWorld(), attacker, LPUsage)).isSuccess()) {
-	    return target.attackEntityFrom(DamageSource.DROWN, willLevel + 1);
-	}
+        target.hurtResistantTime = 0;
+        int LPUsage = getLpUsed() * (willLevel + 1);
+        if (NetworkHelper.getSoulNetwork(getBinding(providerStack)).syphonAndDamage((EntityPlayer) attacker, SoulTicket.item(providerStack, attacker.getEntityWorld(), attacker, LPUsage)).isSuccess()) {
+            return target.attackEntityFrom(DamageSource.DROWN, willLevel + 1);
+        }
 	
-	return false;
+        return false;
     }
 }
