@@ -41,7 +41,7 @@ public class GuiItemRoutingNode extends GuiContainer {
     }
 
     private int getCurrentActiveSlotPriority() {
-        EnumFacing direction = EnumFacing.getFront(inventory.currentActiveSlot);
+        EnumFacing direction = EnumFacing.byIndex(inventory.currentActiveSlot);
         if (direction != null) {
             return inventory.getPriority(direction);
         }

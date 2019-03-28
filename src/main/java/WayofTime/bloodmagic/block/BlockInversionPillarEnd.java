@@ -16,7 +16,7 @@ public class BlockInversionPillarEnd extends BlockEnum<EnumInversionCap> impleme
     public BlockInversionPillarEnd() {
         super(Material.ROCK, EnumInversionCap.class);
 
-        setUnlocalizedName(BloodMagic.MODID + ".inversionpillarend.");
+        setTranslationKey(BloodMagic.MODID + ".inversionpillarend.");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

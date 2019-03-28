@@ -37,7 +37,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
     public BlockMimic() {
         super(Material.ROCK, EnumMimic.class);
 
-        setUnlocalizedName(BloodMagic.MODID + ".mimic.");
+        setTranslationKey(BloodMagic.MODID + ".mimic.");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

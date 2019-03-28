@@ -14,7 +14,7 @@ public class BlockItemRoutingNode extends BlockRoutingNode {
     public BlockItemRoutingNode() {
         super();
 
-        setUnlocalizedName(BloodMagic.MODID + ".itemRouting");
+        setTranslationKey(BloodMagic.MODID + ".itemRouting");
     }
 
     @Override

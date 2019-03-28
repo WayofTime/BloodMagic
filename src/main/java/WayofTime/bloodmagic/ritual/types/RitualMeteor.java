@@ -1,12 +1,13 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 import WayofTime.bloodmagic.meteor.Meteor;
 import WayofTime.bloodmagic.meteor.MeteorRegistry;
+import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -21,7 +22,8 @@ public class RitualMeteor extends Ritual {
     public static final double destructiveWillDrain = 50;
 
     public RitualMeteor() {
-        super("ritualMeteor", 0, 1000000, "ritual." + BloodMagic.MODID + ".meteorRitual");
+        super("ritualMeteor", 2, 0, "ritual." + BloodMagic.MODID + ".meteorRitual");
+
         addBlockRange(ITEM_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
         setMaximumVolumeAndDistanceOfRange(ITEM_RANGE, 0, 10, 10);
     }
@@ -41,7 +43,7 @@ public class RitualMeteor extends Ritual {
         double steadfastWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.STEADFAST, willConfig);
         double vengefulWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.VENGEFUL, willConfig);
 
-        AreaDescriptor itemDetectionRange = getBlockRange(ITEM_RANGE);
+        AreaDescriptor itemDetectionRange = masterRitualStone.getBlockRange(ITEM_RANGE);
         List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, itemDetectionRange.getAABB(pos));
 
         double radiusModifier = getRadiusModifier(rawWill);
@@ -53,15 +55,25 @@ public class RitualMeteor extends Ritual {
         for (EntityItem entityItem : itemList) {
             ItemStack stack = entityItem.getItem();
             Meteor meteor = MeteorRegistry.getMeteorForItem(stack);
-            if (meteor != null) {
-                EntityMeteor entityMeteor = new EntityMeteor(world, pos.getX(), 260, pos.getZ(), 0, -0.1, 0, radiusModifier, explosionModifier, fillerChance);
-                entityMeteor.setMeteorStack(stack.copy());
-                world.spawnEntity(entityMeteor);
 
-                entityItem.setDead();
+            if (meteor != null) {
+                SoulNetwork network = masterRitualStone.getOwnerNetwork();
+                int cost = meteor.getCost();
+                if (currentEssence < cost) {
+                    network.causeNausea();
+                    break;
+                } else {
+                    network.syphon(masterRitualStone.ticket(cost));
+                    EntityMeteor entityMeteor = new EntityMeteor(world, pos.getX(), 260, pos.getZ(), 0, -0.1, 0, radiusModifier, explosionModifier, fillerChance);
+                    entityMeteor.setMeteorStack(stack.copy());
+                    world.spawnEntity(entityMeteor);
+
+                    entityItem.setDead();
+
+                }
 
                 if (destructiveWill >= destructiveWillDrain && currentEssence >= 1000000000) {
-                    masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(1000000));
+                    network.syphon(masterRitualStone.ticket(cost / 10));
                 } else {
                     masterRitualStone.setActive(false);
                 }

@@ -81,7 +81,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         super.deserialize(tag);
 
         isSlave = tag.getBoolean("isSlave");
-        direction = EnumFacing.getFront(tag.getInteger(Constants.NBT.DIRECTION));
+        direction = EnumFacing.byIndex(tag.getInteger(Constants.NBT.DIRECTION));
         connectedPos = new BlockPos(tag.getInteger(Constants.NBT.X_COORD), tag.getInteger(Constants.NBT.Y_COORD), tag.getInteger(Constants.NBT.Z_COORD));
 
         burnTime = tag.getInteger("burnTime");

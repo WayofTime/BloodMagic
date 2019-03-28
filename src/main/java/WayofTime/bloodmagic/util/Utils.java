@@ -41,6 +41,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -59,7 +60,7 @@ public class Utils {
 
     static {
         try {
-            Field colorValue = ReflectionHelper.findField(EnumDyeColor.class, "field_193351_w", "colorValue");
+            Field colorValue = ObfuscationReflectionHelper.findField(EnumDyeColor.class, "field_193351_w");
             colorValue.setAccessible(true);
             for (EnumDyeColor color : EnumDyeColor.values()) {
                 DYE_COLOR_VALUES.put(color, (int) colorValue.get(color));
@@ -130,7 +131,7 @@ public class Utils {
     public static boolean canEntitySeeBlock(World world, Entity entity, BlockPos pos) {
         Vec3d relativePosition = new Vec3d(entity.posX - pos.getX() - 0.5, entity.posY + (double) entity.getEyeHeight() - pos.getY() - 0.5, entity.posZ - pos.getZ() - 0.5);
         EnumFacing dir = EnumFacing.getFacingFromVector((float) relativePosition.x, (float) relativePosition.y, (float) relativePosition.z);
-        RayTraceResult result = world.rayTraceBlocks(new Vec3d(entity.posX, entity.posY + (double) entity.getEyeHeight(), entity.posZ), new Vec3d(pos.getX() + 0.5 + dir.getFrontOffsetX() * 0.4, pos.getY() + 0.5 + dir.getFrontOffsetY() * 0.4, pos.getZ() + 0.5 + dir.getFrontOffsetZ() * 0.4), false, true, true);
+        RayTraceResult result = world.rayTraceBlocks(new Vec3d(entity.posX, entity.posY + (double) entity.getEyeHeight(), entity.posZ), new Vec3d(pos.getX() + 0.5 + dir.getXOffset() * 0.4, pos.getY() + 0.5 + dir.getYOffset() * 0.4, pos.getZ() + 0.5 + dir.getZOffset() * 0.4), false, true, true);
         return result == null || pos.equals(result.getBlockPos());
     }
 
@@ -967,7 +968,7 @@ public class Utils {
         if (player instanceof EntityPlayerMP)
             reachDistance = ((EntityPlayerMP) player).interactionManager.getBlockReachDistance();
 
-        Vec3d reachPosition = eyePosition.addVector((double) f6 * reachDistance, (double) f5 * reachDistance, (double) f7 * reachDistance);
+        Vec3d reachPosition = eyePosition.add((double) f6 * reachDistance, (double) f5 * reachDistance, (double) f7 * reachDistance);
         return player.getEntityWorld().rayTraceBlocks(eyePosition, reachPosition, useLiquids, !useLiquids, false);
     }
 }

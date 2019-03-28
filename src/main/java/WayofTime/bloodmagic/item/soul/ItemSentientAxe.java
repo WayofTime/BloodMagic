@@ -75,7 +75,7 @@ public class ItemSentientAxe extends ItemAxe implements IDemonWillWeapon, IMeshP
         setMaxDamage(getMaxDamage() * 2);
 //        super(ModItems.soulToolMaterial);
 
-        setUnlocalizedName(BloodMagic.MODID + ".sentientAxe");
+        setTranslationKey(BloodMagic.MODID + ".sentientAxe");
         setCreativeTab(BloodMagic.TAB_BM);
     }
 

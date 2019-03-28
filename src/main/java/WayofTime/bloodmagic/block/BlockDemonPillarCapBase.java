@@ -14,7 +14,7 @@ public class BlockDemonPillarCapBase<E extends Enum<E> & IStringSerializable> ex
     public BlockDemonPillarCapBase(String baseName, Material materialIn, Class<E> enumClass) {
         super(materialIn, enumClass);
 
-        setUnlocalizedName(BloodMagic.MODID + "." + baseName + ".");
+        setTranslationKey(BloodMagic.MODID + "." + baseName + ".");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

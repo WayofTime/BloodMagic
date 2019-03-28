@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.block.base.BlockInteger;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
 import WayofTime.bloodmagic.teleport.PortalLocation;
 import WayofTime.bloodmagic.teleport.TeleportQueue;
-import WayofTime.bloodmagic.block.base.BlockInteger;
-import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
-import WayofTime.bloodmagic.ritual.portal.Teleports;
+import WayofTime.bloodmagic.teleport.Teleports;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -32,7 +32,7 @@ public class BlockDimensionalPortal extends BlockInteger {
 
     public BlockDimensionalPortal() {
         super(Material.PORTAL, 2);
-        setUnlocalizedName(BloodMagic.MODID + ".dimensionalPortal");
+        setTranslationKey(BloodMagic.MODID + ".dimensionalPortal");
         setBlockUnbreakable();
         setResistance(2000);
         setLightOpacity(0);
@@ -72,7 +72,7 @@ public class BlockDimensionalPortal extends BlockInteger {
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState blockState, Entity entity) {
+    public void onEntityCollision(World world, BlockPos pos, IBlockState blockState, Entity entity) {
         if (!world.isRemote && world.getTileEntity(pos) instanceof TileDimensionalPortal) {
             TileDimensionalPortal tile = (TileDimensionalPortal) world.getTileEntity(pos);
 
@@ -129,7 +129,7 @@ public class BlockDimensionalPortal extends BlockInteger {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.TRANSLUCENT;
     }
 

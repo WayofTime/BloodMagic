@@ -24,7 +24,7 @@ import java.util.List;
 
 public class ItemExperienceBook extends Item implements IVariantProvider {
     public ItemExperienceBook() {
-        setUnlocalizedName(BloodMagic.MODID + ".experienceTome");
+        setTranslationKey(BloodMagic.MODID + ".experienceTome");
         setMaxStackSize(1);
         setCreativeTab(BloodMagic.TAB_BM);
     }

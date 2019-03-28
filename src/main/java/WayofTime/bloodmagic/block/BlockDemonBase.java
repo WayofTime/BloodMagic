@@ -11,7 +11,7 @@ public class BlockDemonBase<E extends Enum<E> & IStringSerializable> extends Blo
     public BlockDemonBase(String baseName, Class<E> enumClass) {
         super(Material.ROCK, enumClass);
 
-        setUnlocalizedName(BloodMagic.MODID + "." + baseName + ".");
+        setTranslationKey(BloodMagic.MODID + "." + baseName + ".");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

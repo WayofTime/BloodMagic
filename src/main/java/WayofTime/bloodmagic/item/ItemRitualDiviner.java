@@ -46,15 +46,15 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
     public static String[] names = {"normal", "dusk", "dawn"};
 
     public ItemRitualDiviner() {
-        setUnlocalizedName(BloodMagic.MODID + ".ritualDiviner");
+        setTranslationKey(BloodMagic.MODID + ".ritualDiviner");
         setCreativeTab(BloodMagic.TAB_BM);
         setHasSubtypes(true);
         setMaxStackSize(1);
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
+    public String getTranslationKey(ItemStack stack) {
+        return super.getTranslationKey(stack) + names[stack.getItemDamage()];
     }
 
     @Override
@@ -66,7 +66,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
         if (ritual == null)
             return displayName;
 
-        return displayName + ": " + TextHelper.localize(ritual.getUnlocalizedName());
+        return displayName + ": " + TextHelper.localize(ritual.getTranslationKey());
     }
 
     @Override
@@ -208,7 +208,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
 
         Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(this.getCurrentRitual(stack));
         if (ritual != null) {
-            tooltip.add(TextHelper.localize("tooltip.bloodmagic.diviner.currentRitual", TextHelper.localize(ritual.getUnlocalizedName())));
+            tooltip.add(TextHelper.localize("tooltip.bloodmagic.diviner.currentRitual", TextHelper.localize(ritual.getTranslationKey())));
 
             boolean sneaking = Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
             boolean extraInfo = sneaking && Keyboard.isKeyDown(Keyboard.KEY_M);
@@ -217,8 +217,8 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
                 tooltip.add("");
 
                 for (EnumDemonWillType type : EnumDemonWillType.values()) {
-                    if (TextHelper.canTranslate(ritual.getUnlocalizedName() + "." + type.getName().toLowerCase() + ".info")) {
-                        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(ritual.getUnlocalizedName() + "." + type.getName().toLowerCase() + ".info"))));
+                    if (TextHelper.canTranslate(ritual.getTranslationKey() + "." + type.getName().toLowerCase() + ".info")) {
+                        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(ritual.getTranslationKey() + "." + type.getName().toLowerCase() + ".info"))));
                     }
                 }
             } else if (sneaking) {
@@ -281,8 +281,8 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
                 tooltip.add(TextHelper.localize(tooltipBase + "totalRune", totalRunes));
             } else {
                 tooltip.add("");
-                if (TextHelper.canTranslate(ritual.getUnlocalizedName() + ".info")) {
-                    tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(ritual.getUnlocalizedName() + ".info"))));
+                if (TextHelper.canTranslate(ritual.getTranslationKey() + ".info")) {
+                    tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(ritual.getTranslationKey() + ".info"))));
                     tooltip.add("");
                 }
 
@@ -453,7 +453,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
     public void notifyRitualChange(String key, EntityPlayer player) {
         Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(key);
         if (ritual != null) {
-            player.sendStatusMessage(new TextComponentTranslation(ritual.getUnlocalizedName()), true);
+            player.sendStatusMessage(new TextComponentTranslation(ritual.getTranslationKey()), true);
         }
     }
 

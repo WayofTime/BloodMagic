@@ -46,7 +46,7 @@ public class GhostItemHelper {
         NBTTagCompound tag = newStack.getTagCompound();
         int amount = getItemGhostAmount(ghostStack);
         tag.removeTag(Constants.NBT.GHOST_STACK_SIZE);
-        if (tag.hasNoTags()) {
+        if (tag.isEmpty()) {
             newStack.setTagCompound(null);
         }
         newStack.setCount(amount);

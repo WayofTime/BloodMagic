@@ -23,7 +23,7 @@ public class BlockRitualStone extends BlockEnum<EnumRuneType> implements IRitual
     public BlockRitualStone() {
         super(Material.ROCK, EnumRuneType.class);
 
-        setUnlocalizedName(BloodMagic.MODID + ".ritualStone.");
+        setTranslationKey(BloodMagic.MODID + ".ritualStone.");
         setCreativeTab(BloodMagic.TAB_BM);
         setSoundType(SoundType.STONE);
         setHardness(2.0F);

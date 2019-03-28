@@ -21,14 +21,14 @@ public class ItemEnum<T extends Enum<T> & ISubItem> extends Item {
 
         this.types = enumClass.getEnumConstants();
 
-        setUnlocalizedName(BloodMagic.MODID + "." + baseName);
+        setTranslationKey(BloodMagic.MODID + "." + baseName);
         setHasSubtypes(types.length > 1);
         setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + "." + getItemType(stack).getInternalName();
+    public String getTranslationKey(ItemStack stack) {
+        return super.getTranslationKey(stack) + "." + getItemType(stack).getInternalName();
     }
 
     @Override

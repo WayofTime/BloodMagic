@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
@@ -12,6 +14,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class ItemSigilVoid extends ItemSigilFluidBase {
@@ -52,7 +55,43 @@ public class ItemSigilVoid extends ItemSigilFluidBase {
                 }
             }
         }
-
         return super.onItemRightClick(world, player, hand);
     }
+
+    @Override
+    public FluidStack getFluid(ItemStack sigil) {
+        return null;
+    }
+
+    @Override
+    public int getCapacity(ItemStack sigil) {
+        return 10000;
+    }
+
+    @Override
+    public int fill(ItemStack sigil, FluidStack resource, boolean doFill) {
+        if (resource == null || resource.amount <= 0)
+            return 0;
+
+        Binding binding = getBinding(sigil);
+
+        if (binding == null)
+            return 0;
+
+        int capacity = getCapacity(sigil);
+
+        if (!doFill)
+            return Math.min(capacity, resource.amount);
+
+        SoulNetwork network = NetworkHelper.getSoulNetwork(binding);
+
+        if (network.getCurrentEssence() < getLpUsed()) {
+            network.causeNausea();
+            return 0;
+        }
+
+        network.syphon(SoulTicket.item(sigil, getLpUsed()));
+        return Math.min(capacity, resource.amount);
+    }
 }
+

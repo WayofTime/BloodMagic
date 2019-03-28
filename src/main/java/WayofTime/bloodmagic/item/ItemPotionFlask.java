@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 
 public class ItemPotionFlask extends Item implements IMeshProvider {
     public ItemPotionFlask() {
-        setUnlocalizedName(BloodMagic.MODID + ".potionFlask");
+        setTranslationKey(BloodMagic.MODID + ".potionFlask");
         setCreativeTab(BloodMagic.TAB_BM);
         setMaxStackSize(1);
         setMaxDamage(8);

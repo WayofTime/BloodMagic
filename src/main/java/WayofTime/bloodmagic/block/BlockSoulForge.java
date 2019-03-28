@@ -27,7 +27,7 @@ public class BlockSoulForge extends Block implements IVariantProvider, IBMBlock 
     public BlockSoulForge() {
         super(Material.IRON);
 
-        setUnlocalizedName(BloodMagic.MODID + ".soulForge");
+        setTranslationKey(BloodMagic.MODID + ".soulForge");
         setHardness(2.0F);
         setResistance(5.0F);
         setSoundType(SoundType.METAL);

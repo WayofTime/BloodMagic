@@ -35,7 +35,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
     public BlockRitualController() {
         super(Material.ROCK, EnumRitualController.class);
 
-        setUnlocalizedName(BloodMagic.MODID + ".stone.ritual.");
+        setTranslationKey(BloodMagic.MODID + ".stone.ritual.");
         setCreativeTab(BloodMagic.TAB_BM);
         setSoundType(SoundType.STONE);
         setHardness(2.0F);
@@ -97,7 +97,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
     }
 
     @Override
-    public void onBlockDestroyedByExplosion(World world, BlockPos pos, Explosion explosion) {
+    public void onExplosionDestroy(World world, BlockPos pos, Explosion explosion) {
         TileEntity tile = world.getTileEntity(pos);
 
         if (tile instanceof TileMasterRitualStone)

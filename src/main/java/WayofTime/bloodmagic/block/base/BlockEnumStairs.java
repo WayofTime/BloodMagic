@@ -116,7 +116,7 @@ public class BlockEnumStairs<E extends Enum<E> & IStringSerializable> extends Bl
     @Override
     public IBlockState getStateFromMeta(int meta) {
         IBlockState state = getBlockState().getBaseState().withProperty(BlockStairs.HALF, (meta & 8) > 0 ? BlockStairs.EnumHalf.TOP : BlockStairs.EnumHalf.BOTTOM);
-        state = state.withProperty(FACING, EnumFacing.getFront(5 - (meta & 6) / 2)).withProperty(this.getProperty(), getTypes()[meta % 2]);
+        state = state.withProperty(FACING, EnumFacing.byIndex(5 - (meta & 6) / 2)).withProperty(this.getProperty(), getTypes()[meta % 2]);
         return state;
     }
 

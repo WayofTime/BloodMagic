@@ -50,7 +50,7 @@ public class RitualSpeed extends Ritual {
         double steadfastWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.STEADFAST, willConfig);
         double vengefulWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.VENGEFUL, willConfig);
 
-        AreaDescriptor speedRange = getBlockRange(SPEED_RANGE);
+        AreaDescriptor speedRange = masterRitualStone.getBlockRange(SPEED_RANGE);
 
         double vengefulDrain = 0;
         double destructiveDrain = 0;
@@ -171,7 +171,7 @@ public class RitualSpeed extends Ritual {
 
     @Override
     public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
-        return new ITextComponent[]{new TextComponentTranslation(this.getUnlocalizedName() + ".info"), new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".destructive.info"), new TextComponentTranslation(this.getUnlocalizedName() + ".vengeful.info")};
+        return new ITextComponent[]{new TextComponentTranslation(this.getTranslationKey() + ".info"), new TextComponentTranslation(this.getTranslationKey() + ".default.info"), new TextComponentTranslation(this.getTranslationKey() + ".corrosive.info"), new TextComponentTranslation(this.getTranslationKey() + ".steadfast.info"), new TextComponentTranslation(this.getTranslationKey() + ".destructive.info"), new TextComponentTranslation(this.getTranslationKey() + ".vengeful.info")};
     }
 
     public double getVerticalSpeedForWill(double rawWill) {

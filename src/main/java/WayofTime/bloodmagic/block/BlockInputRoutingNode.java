@@ -17,7 +17,7 @@ public class BlockInputRoutingNode extends BlockRoutingNode {
     public BlockInputRoutingNode() {
         super();
 
-        setUnlocalizedName(BloodMagic.MODID + ".inputRouting");
+        setTranslationKey(BloodMagic.MODID + ".inputRouting");
     }
 
     @Override

@@ -22,7 +22,7 @@ public class BlockBloodRune extends BlockEnum<BloodRuneType> implements IBloodRu
     public BlockBloodRune() {
         super(Material.ROCK, BloodRuneType.class);
 
-        setUnlocalizedName(BloodMagic.MODID + ".rune.");
+        setTranslationKey(BloodMagic.MODID + ".rune.");
         setCreativeTab(BloodMagic.TAB_BM);
         setSoundType(SoundType.STONE);
         setHardness(2.0F);

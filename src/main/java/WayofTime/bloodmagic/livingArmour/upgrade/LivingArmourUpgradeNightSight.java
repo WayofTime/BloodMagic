@@ -31,17 +31,13 @@ public class LivingArmourUpgradeNightSight extends LivingArmourUpgrade {
     public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
         if (world.getLight(player.getPosition(), false) <= 9) {
             isActive = true;
-            if (player.isPotionActive(MobEffects.NIGHT_VISION)) {
-                int dur = player.getActivePotionEffect(MobEffects.NIGHT_VISION).getDuration();
-                if (dur > 100 && dur < 20 * 60 * 20) {
-                    //Don't override the potion effect if the other potion effect is sufficiently long.
-                    return;
-                }
-            }
+            if (player.isPotionActive(MobEffects.NIGHT_VISION))
+                return;
 
-            player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, Constants.Misc.NIGHT_VISION_CONSTANT_BEGIN, 0, false, false));
-        } else {
+            player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, false, false));
+        } else if (isActive) {
             isActive = false;
+            player.removePotionEffect(MobEffects.NIGHT_VISION);
         }
     }
 
@@ -71,7 +67,7 @@ public class LivingArmourUpgradeNightSight extends LivingArmourUpgrade {
     }
 
     @Override
-    public String getUnlocalizedName() {
+    public String getTranslationKey() {
         return tooltipBase + "nightSight";
     }
 }

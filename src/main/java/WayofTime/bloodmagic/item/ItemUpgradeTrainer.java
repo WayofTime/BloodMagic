@@ -27,7 +27,7 @@ public class ItemUpgradeTrainer extends Item implements IUpgradeTrainer, IVarian
         super();
 
         setCreativeTab(BloodMagic.TAB_TOMES);
-        setUnlocalizedName(BloodMagic.MODID + ".upgradeTrainer");
+        setTranslationKey(BloodMagic.MODID + ".upgradeTrainer");
         setHasSubtypes(true);
         setMaxStackSize(1);
     }
@@ -55,7 +55,7 @@ public class ItemUpgradeTrainer extends Item implements IUpgradeTrainer, IVarian
             return;
         LivingArmourUpgrade upgrade = LivingUpgrades.getUpgrade(stack);
         if (upgrade != null) {
-            tooltip.add(TextHelper.localize(upgrade.getUnlocalizedName()));
+            tooltip.add(TextHelper.localize(upgrade.getTranslationKey()));
         }
     }
 

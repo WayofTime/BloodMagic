@@ -17,12 +17,12 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class BlockIncenseAltar extends Block implements IVariantProvider, IBMBlock {
-    protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.3F, 0F, 0.3F, 0.72F, 1F, 0.72F);
+    protected static final AxisAlignedBB AABB = new AxisAlignedBB(5 / 16F, 0F, 5 / 16F, 12 / 16F, 1F, 11 / 16F);
 
     public BlockIncenseAltar() {
         super(Material.ROCK);
 
-        setUnlocalizedName(BloodMagic.MODID + ".incenseAltar");
+        setTranslationKey(BloodMagic.MODID + ".incenseAltar");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

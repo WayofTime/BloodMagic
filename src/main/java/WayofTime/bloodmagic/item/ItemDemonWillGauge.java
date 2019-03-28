@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ItemDemonWillGauge extends Item implements IVariantProvider, IDemonWillViewer {
     public ItemDemonWillGauge() {
-        setUnlocalizedName(BloodMagic.MODID + ".willGauge");
+        setTranslationKey(BloodMagic.MODID + ".willGauge");
         setMaxStackSize(1);
         setCreativeTab(BloodMagic.TAB_BM);
     }

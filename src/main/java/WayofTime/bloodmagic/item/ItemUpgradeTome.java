@@ -31,7 +31,7 @@ public class ItemUpgradeTome extends Item implements IVariantProvider {
         super();
 
         setCreativeTab(BloodMagic.TAB_TOMES);
-        setUnlocalizedName(BloodMagic.MODID + ".upgradeTome");
+        setTranslationKey(BloodMagic.MODID + ".upgradeTome");
         setHasSubtypes(true);
         setMaxStackSize(1);
     }
@@ -65,15 +65,15 @@ public class ItemUpgradeTome extends Item implements IVariantProvider {
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getTranslationKey(ItemStack stack) {
         if (!stack.hasTagCompound())
-            return super.getUnlocalizedName(stack);
+            return super.getTranslationKey(stack);
 
         LivingArmourUpgrade upgrade = LivingUpgrades.getUpgrade(stack);
         if (upgrade != null && upgrade.isDowngrade())
             return "item." + BloodMagic.MODID + ".downgradeTome";
 
-        return super.getUnlocalizedName(stack);
+        return super.getTranslationKey(stack);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class ItemUpgradeTome extends Item implements IVariantProvider {
             return;
         LivingArmourUpgrade upgrade = LivingUpgrades.getUpgrade(stack);
         if (upgrade != null) {
-            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getUnlocalizedName()), upgrade.getUpgradeLevel() + 1));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getTranslationKey()), upgrade.getUpgradeLevel() + 1));
         }
     }
 }

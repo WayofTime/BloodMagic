@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.ritual.EnumRitualReaderState;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.ritual.Ritual;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.util.ChatUtil;
@@ -20,6 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,7 +38,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
 
     public ItemRitualReader() {
         super();
-        setUnlocalizedName(BloodMagic.MODID + ".ritualReader");
+        setTranslationKey(BloodMagic.MODID + ".ritualReader");
         setMaxStackSize(1);
         setCreativeTab(BloodMagic.TAB_BM);
     }
@@ -90,6 +92,8 @@ public class ItemRitualReader extends Item implements IVariantProvider {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof IMasterRitualStone) {
                 IMasterRitualStone master = (IMasterRitualStone) tile;
+                if (master.getCurrentRitual() == null)
+                    super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
                 this.setMasterBlockPos(stack, pos);
                 this.setBlockPos(stack, BlockPos.ORIGIN);
 
@@ -99,7 +103,8 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                         break;
                     case SET_AREA:
                         String range = this.getCurrentBlockRange(stack);
-                        if (player.isSneaking()) {
+
+                        if (range == null || player.isSneaking()) {
                             String newRange = master.getNextBlockRange(range);
                             range = newRange;
                             this.setCurrentBlockRange(stack, newRange);
@@ -136,16 +141,37 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                     if (!masterPos.equals(BlockPos.ORIGIN)) {
                         BlockPos containedPos = getBlockPos(stack);
                         if (containedPos.equals(BlockPos.ORIGIN)) {
-                            this.setBlockPos(stack, pos.subtract(masterPos));
+                            BlockPos pos1 = pos.subtract(masterPos);
+                            this.setBlockPos(stack, pos1);
                             player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.firstBlock"), true);
-                            //TODO: Notify player.
+                            player.sendMessage(new TextComponentString(pos1.toString()));
                         } else {
                             tile = world.getTileEntity(masterPos);
                             if (tile instanceof IMasterRitualStone) {
                                 IMasterRitualStone master = (IMasterRitualStone) tile;
-                                master.setBlockRangeByBounds(player, this.getCurrentBlockRange(stack), containedPos, pos.subtract(masterPos));
-                            }
+                                BlockPos pos2 = pos.subtract(masterPos);
+                                String range = this.getCurrentBlockRange(stack);
+                                Ritual ritual = master.getCurrentRitual();
+                                //TODO: Fix AreaDescriptor area handling to be inclusive, then remove the "-1" for range calculation below.
+                                int maxHorizontalRange = ritual.getMaxHorizontalRadiusForRange(range, null, null) - 1;
+                                int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, null, null) - 1;
+                                int maxVolume = ritual.getMaxVolumeForRange(range, null, null);
 
+                                switch (master.setBlockRangeByBounds(player, range, containedPos, pos2)) {
+                                    case SUCCESS:
+                                        player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.success"), true);
+                                        break;
+                                    case NOT_WITHIN_BOUNDARIES:
+                                        player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.tooFar", maxVerticalRange, maxHorizontalRange), false);
+                                        break;
+                                    case VOLUME_TOO_LARGE:
+                                        player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.tooBig", maxVolume), false);
+                                        break;
+                                    default:
+                                        player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.noRange"), false);
+                                        break;
+                                }
+                            }
                             this.setBlockPos(stack, BlockPos.ORIGIN);
                         }
                     }

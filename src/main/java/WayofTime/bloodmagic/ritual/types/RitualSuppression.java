@@ -31,7 +31,7 @@ public class RitualSuppression extends Ritual {
         }
 
         final int refresh = 100;
-        AreaDescriptor suppressionRange = getBlockRange(SUPPRESSION_RANGE);
+        AreaDescriptor suppressionRange = masterRitualStone.getBlockRange(SUPPRESSION_RANGE);
 
         for (BlockPos blockPos : suppressionRange.getContainedPositions(masterRitualStone.getBlockPos())) {
             IBlockState state = world.getBlockState(blockPos);

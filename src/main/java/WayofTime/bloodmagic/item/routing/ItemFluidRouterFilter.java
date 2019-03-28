@@ -31,15 +31,15 @@ public class ItemFluidRouterFilter extends Item implements IFluidFilterProvider,
     {
         super();
 
-        setUnlocalizedName(BloodMagic.MODID + ".fluidFilter.");
+        setTranslationKey(BloodMagic.MODID + ".fluidFilter.");
         setHasSubtypes(true);
         setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
+    public String getTranslationKey(ItemStack stack)
     {
-        return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
+        return super.getTranslationKey(stack) + names[stack.getItemDamage()];
     }
 
     @Override

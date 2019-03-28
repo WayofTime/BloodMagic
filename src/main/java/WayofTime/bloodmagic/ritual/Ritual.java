@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.ritual;
 
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -51,7 +51,7 @@ public abstract class Ritual {
 
     public void readFromNBT(NBTTagCompound tag) {
         NBTTagList tags = tag.getTagList("areas", 10);
-        if (tags.hasNoTags()) {
+        if (tags.isEmpty()) {
             return;
         }
 
@@ -185,26 +185,13 @@ public abstract class Ritual {
         return rangeList.get(0);
     }
 
-    public boolean setBlockRangeByBounds(String range, IMasterRitualStone master, BlockPos offset1, BlockPos offset2) {
-        AreaDescriptor descriptor = this.getBlockRange(range);
-        World world = master.getWorldObj();
-        BlockPos masterPos = master.getBlockPos();
-        DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, masterPos);
-        if (canBlockRangeBeModified(range, descriptor, master, offset1, offset2, holder)) {
-            descriptor.modifyAreaByBlockPositions(offset1, offset2);
-            return true;
-        }
-
-        return false;
-    }
-
-    protected boolean canBlockRangeBeModified(String range, AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2, DemonWillHolder holder) {
+    public EnumReaderBoundaries canBlockRangeBeModified(String range, AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2, DemonWillHolder holder) {
         List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
         int maxVolume = getMaxVolumeForRange(range, willConfig, holder);
         int maxVertical = getMaxVerticalRadiusForRange(range, willConfig, holder);
         int maxHorizontal = getMaxHorizontalRadiusForRange(range, willConfig, holder);
 
-        return (maxVolume <= 0 || descriptor.getVolumeForOffsets(offset1, offset2) <= maxVolume) && descriptor.isWithinRange(offset1, offset2, maxVertical, maxHorizontal);
+        return (maxVolume <= 0 || descriptor.getVolumeForOffsets(offset1, offset2) <= maxVolume) ? descriptor.isWithinRange(offset1, offset2, maxVertical, maxHorizontal) ? EnumReaderBoundaries.SUCCESS : EnumReaderBoundaries.NOT_WITHIN_BOUNDARIES : EnumReaderBoundaries.VOLUME_TOO_LARGE;
     }
 
     protected void setMaximumVolumeAndDistanceOfRange(String range, int volume, int horizontalRadius, int verticalRadius) {
@@ -250,12 +237,12 @@ public abstract class Ritual {
     }
 
     public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
-        return new ITextComponent[]{new TextComponentTranslation(this.getUnlocalizedName() + ".info")};
+        return new ITextComponent[]{new TextComponentTranslation(this.getTranslationKey() + ".info")};
     }
 
     public ITextComponent provideInformationOfRangeToPlayer(EntityPlayer player, String range) {
         if (getListOfRanges().contains(range)) {
-            return new TextComponentTranslation(this.getUnlocalizedName() + "." + range + ".info");
+            return new TextComponentTranslation(this.getTranslationKey() + "." + range + ".info");
         } else {
             return new TextComponentTranslation("ritual.bloodmagic.blockRange.noRange");
         }
@@ -314,7 +301,7 @@ public abstract class Ritual {
         return renderer;
     }
 
-    public String getUnlocalizedName() {
+    public String getTranslationKey() {
         return unlocalizedName;
     }
 

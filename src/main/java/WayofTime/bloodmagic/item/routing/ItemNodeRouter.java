@@ -30,7 +30,7 @@ import java.util.List;
 
 public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvider {
     public ItemNodeRouter() {
-        setUnlocalizedName(BloodMagic.MODID + ".nodeRouter");
+        setTranslationKey(BloodMagic.MODID + ".nodeRouter");
         setMaxStackSize(1);
         setCreativeTab(BloodMagic.TAB_BM);
     }

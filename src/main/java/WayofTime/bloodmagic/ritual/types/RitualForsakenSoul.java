@@ -86,7 +86,7 @@ public class RitualForsakenSoul extends Ritual {
 
         List<TileDemonCrystal> crystalList = new ArrayList<>();
 
-        AreaDescriptor crystalRange = getBlockRange(CRYSTAL_RANGE);
+        AreaDescriptor crystalRange = masterRitualStone.getBlockRange(CRYSTAL_RANGE);
 
         crystalRange.resetIterator();
         while (crystalRange.hasNext()) {
@@ -97,7 +97,7 @@ public class RitualForsakenSoul extends Ritual {
             }
         }
 
-        AreaDescriptor damageRange = getBlockRange(DAMAGE_RANGE);
+        AreaDescriptor damageRange = masterRitualStone.getBlockRange(DAMAGE_RANGE);
         AxisAlignedBB range = damageRange.getAABB(pos);
 
         List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, range);

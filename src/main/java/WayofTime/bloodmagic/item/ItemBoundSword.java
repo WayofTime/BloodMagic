@@ -36,7 +36,7 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     public ItemBoundSword() {
         super(RegistrarBloodMagicItems.BOUND_TOOL_MATERIAL);
 
-        setUnlocalizedName(BloodMagic.MODID + ".bound.sword");
+        setTranslationKey(BloodMagic.MODID + ".bound.sword");
         setCreativeTab(BloodMagic.TAB_BM);
     }
 

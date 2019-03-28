@@ -56,7 +56,7 @@ public class RitualAnimalGrowth extends Ritual {
         int totalGrowths = 0;
         BlockPos pos = masterRitualStone.getBlockPos();
 
-        AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
+        AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
         TileEntity chest = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
         IItemHandler itemHandler = null;
         if (chest != null) {
@@ -83,7 +83,7 @@ public class RitualAnimalGrowth extends Ritual {
         boolean breedAnimals = steadfastWill >= steadfastWillDrain && itemHandler != null;
         boolean kamikaze = destructiveWill >= destructiveWillDrain;
 
-        AreaDescriptor growingRange = getBlockRange(GROWTH_RANGE);
+        AreaDescriptor growingRange = masterRitualStone.getBlockRange(GROWTH_RANGE);
         AxisAlignedBB axis = growingRange.getAABB(masterRitualStone.getBlockPos());
         List<EntityAnimal> animalList = world.getEntitiesWithinAABB(EntityAnimal.class, axis);
 
@@ -192,12 +192,12 @@ public class RitualAnimalGrowth extends Ritual {
     @Override
     public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
         return new ITextComponent[]{
-                new TextComponentTranslation(this.getUnlocalizedName() + ".info"),
-                new TextComponentTranslation(this.getUnlocalizedName() + ".default.info"),
-                new TextComponentTranslation(this.getUnlocalizedName() + ".corrosive.info"),
-                new TextComponentTranslation(this.getUnlocalizedName() + ".steadfast.info"),
-                new TextComponentTranslation(this.getUnlocalizedName() + ".destructive.info"),
-                new TextComponentTranslation(this.getUnlocalizedName() + ".vengeful.info")
+                new TextComponentTranslation(this.getTranslationKey() + ".info"),
+                new TextComponentTranslation(this.getTranslationKey() + ".default.info"),
+                new TextComponentTranslation(this.getTranslationKey() + ".corrosive.info"),
+                new TextComponentTranslation(this.getTranslationKey() + ".steadfast.info"),
+                new TextComponentTranslation(this.getTranslationKey() + ".destructive.info"),
+                new TextComponentTranslation(this.getTranslationKey() + ".vengeful.info")
         };
     }
 

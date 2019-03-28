@@ -10,7 +10,7 @@ public class BlockDemonLight extends BlockEnum<EnumSubWillType> {
     public BlockDemonLight() {
         super(Material.ROCK, EnumSubWillType.class);
 
-        setUnlocalizedName(BloodMagic.MODID + ".demonlight.");
+        setTranslationKey(BloodMagic.MODID + ".demonlight.");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

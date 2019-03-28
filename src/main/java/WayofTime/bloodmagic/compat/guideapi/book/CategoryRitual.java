@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.compat.guideapi.book;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.core.registry.AltarRecipeRegistry.AltarRecipe;
-import WayofTime.bloodmagic.ritual.EnumRuneType;
 import WayofTime.bloodmagic.compat.guideapi.BookUtils;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAltarRecipe;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.registry.AltarRecipeRegistry.AltarRecipe;
+import WayofTime.bloodmagic.ritual.EnumRuneType;
 import WayofTime.bloodmagic.util.helper.RecipeHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.IPage;
@@ -116,6 +116,21 @@ public class CategoryRitual
         addRitualPagesToEntries("meteor", entries);
         addRitualPagesToEntries("downgrade", entries);
         addRitualPagesToEntries("crystalSplit", entries);
+        addRitualPagesToEntries("portal", entries);
+        addRitualPagesToEntries("altarBuilder", entries);
+        addRitualPagesToEntries("pump", entries);
+        addRitualPagesToEntries("cobble", entries);
+        addRitualPagesToEntries("ellipsoid", entries);
+        addRitualPagesToEntries("crystalHarvest", entries);
+        addRitualPagesToEntries("forsakenSoul", entries);
+        addRitualPagesToEntries("animalGrowth", entries);
+        addRitualPagesToEntries("livingEvolution", entries);
+        addRitualPagesToEntries("upgradeRemove", entries);
+        addRitualPagesToEntries("fullStomach", entries);
+        addRitualPagesToEntries("eternalSoul", entries);
+        addRitualPagesToEntries("condor", entries);
+        addRitualPagesToEntries("featheredEarth", entries);
+        addRitualPagesToEntries("grounding", entries);
 
         for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
         {

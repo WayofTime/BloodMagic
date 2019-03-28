@@ -42,13 +42,13 @@ public class BloodMagic {
     public static final RitualManager RITUAL_MANAGER = new RitualManager(new Configuration(new File(Loader.instance().getConfigDir(), MODID + "/" + "rituals.cfg")));
     public static final CreativeTabs TAB_BM = new CreativeTabs(MODID + ".creativeTab") {
         @Override
-        public ItemStack getTabIconItem() {
+        public ItemStack createIcon() {
             return OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK);
         }
     };
     public static CreativeTabs TAB_TOMES = new CreativeTabs(MODID + ".creativeTabTome") {
         @Override
-        public ItemStack getTabIconItem() {
+        public ItemStack createIcon() {
             return new ItemStack(RegistrarBloodMagicItems.UPGRADE_TOME);
         }
 

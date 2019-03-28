@@ -21,7 +21,7 @@ public class BlockLifeEssence extends BlockFluidClassic {
     public BlockLifeEssence() {
         super(LIFE_ESSENCE, Material.WATER);
 
-        setUnlocalizedName(BloodMagic.MODID + ".fluid.lifeEssence");
+        setTranslationKey(BloodMagic.MODID + ".fluid.lifeEssence");
         getLifeEssence().setBlock(this);
     }
 
@@ -36,7 +36,7 @@ public class BlockLifeEssence extends BlockFluidClassic {
     }
 
     @Override
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.SOLID;
     }
 

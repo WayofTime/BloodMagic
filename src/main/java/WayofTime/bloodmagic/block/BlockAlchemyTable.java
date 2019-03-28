@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.item.block.ItemBlockAlchemyTable;
 import WayofTime.bloodmagic.tile.TileAlchemyTable;
+import WayofTime.bloodmagic.util.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -17,6 +17,7 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -26,18 +27,23 @@ import javax.annotation.Nullable;
 public class BlockAlchemyTable extends Block implements IBMBlock {
     public static final PropertyBool INVISIBLE = PropertyBool.create("invisible");
     public static final PropertyEnum<EnumFacing> DIRECTION = PropertyEnum.create("direction", EnumFacing.class);
+    private static final AxisAlignedBB BODY = new AxisAlignedBB(0, 0, 0, 16 / 16F, 13 / 16F, 16 / 16F);
 
     public BlockAlchemyTable() {
         super(Material.ROCK);
 //        this.setDefaultState(this.blockState.getBaseState().withProperty(DIRECTION, EnumFacing.DOWN).withProperty(INVISIBLE, false));
 
-        setUnlocalizedName(BloodMagic.MODID + ".alchemyTable");
+        setTranslationKey(BloodMagic.MODID + ".alchemyTable");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 0);
 
 //        setBlockBounds(0.3F, 0F, 0.3F, 0.72F, 1F, 0.72F);
+    }
+
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return BODY;
     }
 
     @Override

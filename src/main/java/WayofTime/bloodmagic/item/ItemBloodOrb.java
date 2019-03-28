@@ -24,18 +24,18 @@ import java.util.List;
 
 public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb {
     public ItemBloodOrb() {
-        setUnlocalizedName(BloodMagic.MODID + ".orb");
+        setTranslationKey(BloodMagic.MODID + ".orb");
         this.setMaxDamage(0);
         setHasSubtypes(true);
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getTranslationKey(ItemStack stack) {
         BloodOrb orb = getOrb(stack);
         if (orb == null)
-            return super.getUnlocalizedName(stack);
+            return super.getTranslationKey(stack);
 
-        return super.getUnlocalizedName(stack) + "." + orb.getName();
+        return super.getTranslationKey(stack) + "." + orb.getName();
     }
 
     @Override
@@ -94,7 +94,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb {
 
         BloodOrb orb = getOrb(stack);
         if (flag.isAdvanced() && orb != null)
-            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.orb.owner", orb.getRegistryName().getResourceDomain()));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.orb.owner", orb.getRegistryName().getNamespace()));
 
         super.addInformation(stack, world, tooltip, flag);
     }

@@ -48,7 +48,7 @@ public class LivingArmourUpgradeStormTrooper extends LivingArmourUpgrade {
     }
 
     @Override
-    public String getUnlocalizedName() {
+    public String getTranslationKey() {
         return tooltipBase + "stormTrooper";
     }
 

@@ -21,8 +21,8 @@ public class ItemBlockDemonCrystal extends ItemBlock {
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + EnumDemonWillType.values()[stack.getItemDamage()].toString().toLowerCase(Locale.ENGLISH);
+    public String getTranslationKey(ItemStack stack) {
+        return super.getTranslationKey(stack) + EnumDemonWillType.values()[stack.getItemDamage()].toString().toLowerCase(Locale.ENGLISH);
     }
 
     @Override

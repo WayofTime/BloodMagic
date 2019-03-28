@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.recipe.LivingArmourDowngradeRecipe;
 import WayofTime.bloodmagic.core.registry.LivingArmourDowngradeRecipeRegistry;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.recipe.LivingArmourDowngradeRecipe;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
@@ -33,7 +33,7 @@ public class RitualLivingArmourDowngrade extends Ritual {
     private int internalTimer = 0;
 
     public RitualLivingArmourDowngrade() {
-        super("ritualDowngrade", 0, 10000, "ritual." + BloodMagic.MODID + ".downgradeRitual");
+        super("ritualDowngrade", 2, 10000, "ritual." + BloodMagic.MODID + ".downgradeRitual");
         addBlockRange(DOWNGRADE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-3, 0, -3), 7));
     }
 
@@ -49,7 +49,7 @@ public class RitualLivingArmourDowngrade extends Ritual {
 
         BlockPos masterPos = masterRitualStone.getBlockPos();
 
-        AreaDescriptor downgradeRange = getBlockRange(DOWNGRADE_RANGE);
+        AreaDescriptor downgradeRange = masterRitualStone.getBlockRange(DOWNGRADE_RANGE);
 
         boolean isActivatorPresent = false;
         for (EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, downgradeRange.getAABB(masterRitualStone.getBlockPos()))) {

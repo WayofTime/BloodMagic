@@ -75,7 +75,7 @@ public class ItemSentientShovel extends ItemSpade implements IDemonWillWeapon, I
         setMaxDamage(getMaxDamage() * 2);
 //        super(ModItems.soulToolMaterial);
 
-        setUnlocalizedName(BloodMagic.MODID + ".sentientShovel");
+        setTranslationKey(BloodMagic.MODID + ".sentientShovel");
         setCreativeTab(BloodMagic.TAB_BM);
     }
 

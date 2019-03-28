@@ -30,7 +30,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     @Override
     public void update() {
         if (!getWorld().isRemote) {
-            currentInput = getWorld().isBlockIndirectlyGettingPowered(pos);
+            currentInput = getWorld().getRedstonePowerFromNeighbors(pos);
 //            currentInput = getWorld().getStrongPower(pos);
         }
     }

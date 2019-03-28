@@ -3,10 +3,11 @@ package WayofTime.bloodmagic.item;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.core.data.SoulTicket;
-import WayofTime.bloodmagic.util.BlockStack;
 import WayofTime.bloodmagic.util.ItemStackWrapper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import com.google.common.collect.*;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -66,27 +67,26 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider {
             for (int j = 0; j <= 2 * range; j++) {
                 for (int k = -range; k <= range; k++) {
                     BlockPos blockPos = playerPos.add(i, j, k);
-                    BlockStack blockStack = BlockStack.getStackFromPos(world, blockPos);
+                    IBlockState blockState = world.getBlockState(blockPos);
 
-                    if (blockStack.getBlock().isAir(blockStack.getState(), world, blockPos))
+                    if (world.isAirBlock(blockPos))
                         continue;
 
-                    Material material = blockStack.getState().getMaterial();
-                    if (material != Material.GROUND && material != Material.CLAY && material != Material.GRASS && !EFFECTIVE_ON.contains(blockStack.getBlock()))
+                    Material material = blockState.getMaterial();
+                    if (material != Material.GROUND && material != Material.CLAY && material != Material.GRASS && !EFFECTIVE_ON.contains(blockState.getBlock()))
                         continue;
 
-                    BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockStack.getState(), player);
+                    BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockState, player);
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         continue;
 
-                    sharedHarvest(stack, world, player, blockPos, blockStack, drops, silkTouch, fortuneLvl);
+                    sharedHarvest(stack, world, player, blockPos, blockState, silkTouch, fortuneLvl);
                 }
             }
         }
 
         NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, (int) (charge * charge * charge / 2.7)));
         world.createExplosion(player, playerPos.getX(), playerPos.getY(), playerPos.getZ(), 0.5F, false);
-        dropStacks(drops, world, playerPos.add(0, 1, 0));
     }
 
     @Override

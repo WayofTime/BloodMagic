@@ -23,7 +23,7 @@ public class BlockPhantom extends Block implements IVariantProvider {
     public BlockPhantom() {
         super(Material.CLOTH);
 
-        setUnlocalizedName(BloodMagic.MODID + ".phantom");
+        setTranslationKey(BloodMagic.MODID + ".phantom");
         setCreativeTab(BloodMagic.TAB_BM);
     }
 
@@ -54,7 +54,7 @@ public class BlockPhantom extends Block implements IVariantProvider {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.TRANSLUCENT;
     }
 

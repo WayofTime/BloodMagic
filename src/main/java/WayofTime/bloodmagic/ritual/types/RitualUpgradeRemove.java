@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.livingArmour.StatTracker;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.util.helper.ItemHelper.LivingUpgrades;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import com.google.common.collect.Iterables;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
@@ -26,7 +26,7 @@ public class RitualUpgradeRemove extends Ritual {
     public static final String CHECK_RANGE = "fillRange";
 
     public RitualUpgradeRemove() {
-        super("ritualUpgradeRemove", 0, 25000, "ritual." + BloodMagic.MODID + ".upgradeRemoveRitual");
+        super("ritualUpgradeRemove", 2, 25000, "ritual." + BloodMagic.MODID + ".upgradeRemoveRitual");
         addBlockRange(CHECK_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1, 2, 1));
     }
 
@@ -40,7 +40,7 @@ public class RitualUpgradeRemove extends Ritual {
 
         BlockPos pos = masterRitualStone.getBlockPos();
 
-        AreaDescriptor checkRange = getBlockRange(CHECK_RANGE);
+        AreaDescriptor checkRange = masterRitualStone.getBlockRange(CHECK_RANGE);
 
         List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, checkRange.getAABB(pos));
 

@@ -19,7 +19,7 @@ public class RitualArmourEvolve extends Ritual {
     public static final String CHECK_RANGE = "fillRange";
 
     public RitualArmourEvolve() {
-        super("ritualArmourEvolve", 0, 50000, "ritual." + BloodMagic.MODID + ".armourEvolveRitual");
+        super("ritualArmourEvolve", 2, 50000, "ritual." + BloodMagic.MODID + ".armourEvolveRitual");
         addBlockRange(CHECK_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1, 2, 1));
     }
 
@@ -33,7 +33,7 @@ public class RitualArmourEvolve extends Ritual {
 
         BlockPos pos = masterRitualStone.getBlockPos();
 
-        AreaDescriptor checkRange = getBlockRange(CHECK_RANGE);
+        AreaDescriptor checkRange = masterRitualStone.getBlockRange(CHECK_RANGE);
 
         List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, checkRange.getAABB(pos));
 

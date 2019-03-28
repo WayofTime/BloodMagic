@@ -5,12 +5,14 @@ import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.item.soul.ItemSentientBow;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowHeal;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeStormTrooper;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFallProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerJump;
 import WayofTime.bloodmagic.livingArmour.upgrade.*;
@@ -29,8 +31,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -161,10 +165,12 @@ public class LivingArmourHandler
                     if (event.getItemStack().getItemUseAction() == EnumAction.DRINK)
                     {
                         ItemStack drinkStack = event.getItemStack();
-                        if(!(drinkStack.getItem() instanceof ItemSplashPotion)) {
+                        if (!(drinkStack.getItem() instanceof ItemSplashPotion))
+                        {
                             LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.quenched", chestStack);
 
-                            if (upgrade instanceof LivingArmourUpgradeQuenched) {
+                            if (upgrade instanceof LivingArmourUpgradeQuenched)
+                            {
                                 event.setCanceled(true);
                             }
                         }
@@ -259,8 +265,14 @@ public class LivingArmourHandler
 
                         if (upgrade instanceof LivingArmourUpgradeStepAssist)
                         {
-                            player.stepHeight = ((LivingArmourUpgradeStepAssist) upgrade).getStepAssist();
-                            hasAssist = true;
+                            if (!player.isSneaking()) 
+                            {
+                                player.stepHeight = ((LivingArmourUpgradeStepAssist) upgrade).getStepAssist();
+                                hasAssist = true;
+                            } else
+                            {
+                                player.stepHeight = 0.6F;
+                            }
                         }
                     }
                 }
@@ -309,6 +321,7 @@ public class LivingArmourHandler
         World world = event.getEntityPlayer().getEntityWorld();
         ItemStack stack = event.getBow();
         EntityPlayer player = event.getEntityPlayer();
+        boolean sentientShot = false;
 
         if (world.isRemote)
             return;
@@ -333,15 +346,23 @@ public class LivingArmourHandler
 
                     if (velocity > 1.0F)
                         velocity = 1.0F;
-
+                    if (event.getBow().getItem() instanceof ItemSentientBow) {
+                        sentientShot = true;
+                    }
                     int extraArrows = ((LivingArmourUpgradeArrowShot) upgrade).getExtraArrows();
                     for (int n = 0; n < extraArrows; n++)
                     {
                         ItemStack arrowStack = new ItemStack(Items.ARROW);
                         ItemArrow itemarrow = (ItemArrow) ((stack.getItem() instanceof ItemArrow ? arrowStack.getItem() : Items.ARROW));
-                        EntityArrow entityarrow = itemarrow.createArrow(world, arrowStack, player);
+                        EntityArrow entityarrow;
+                        if (sentientShot) { // if the arrow was fired from a sentient bow
+                            ItemSentientBow sentientBow = (ItemSentientBow) stack.getItem();
+                            entityarrow = sentientBow.getDuplicateArrow(stack, world, player, 1 / extraArrows);
+                        } else {
+                            entityarrow = itemarrow.createArrow(world, arrowStack, player);
+                        }
                         entityarrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, velocity * 3.0F, 1.0F);
-
+                        entityarrow.addTag("arrow_shot");
                         float velocityModifier = 0.6f * velocity;
 
                         entityarrow.motionX += (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
@@ -369,6 +390,45 @@ public class LivingArmourHandler
                         world.spawnEntity(entityarrow);
                     }
                 }
+            }
+        }
+    }    
+    // Applies: Softfall
+    @SubscribeEvent
+    public static void onPlayerFall(LivingFallEvent event) {
+        if (event.getEntityLiving() instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+
+            if (LivingArmour.hasFullSet(player))
+            {
+
+                ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                if (armour != null)
+                {
+                    StatTrackerFallProtect.incrementCounter(armour, event.getDamageMultiplier() * (event.getDistance() - 3));
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.fallProtect", chestStack);
+                    if (upgrade instanceof LivingArmourUpgradeFallProtect) {
+                        LivingArmourUpgradeFallProtect fallUpgrade = (LivingArmourUpgradeFallProtect) upgrade;
+                        event.setDamageMultiplier(event.getDamageMultiplier() * fallUpgrade.getDamageMultiplier());
+                    }
+                }
+            }
+        }
+    }
+  
+    // Applies: Arrow Shot
+    @SubscribeEvent
+    public static void onProjectileImpact(ProjectileImpactEvent.Arrow event)
+    {
+        if (event.getArrow().removeTag("arrow_shot"))
+        {
+            Entity entity = event.getRayTraceResult().entityHit;
+
+            if (entity != null)
+            {
+                entity.hurtResistantTime = 0;
             }
         }
     }

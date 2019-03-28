@@ -14,7 +14,7 @@ public class BlockDecorative extends BlockEnum<EnumDecorative> {
     public BlockDecorative() {
         super(Material.ROCK, EnumDecorative.class);
 
-        setUnlocalizedName(BloodMagic.MODID + ".");
+        setTranslationKey(BloodMagic.MODID + ".");
         setCreativeTab(BloodMagic.TAB_BM);
         setHardness(2.0F);
         setResistance(5.0F);

@@ -68,7 +68,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
     public ItemSentientSword() {
         super(RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL);
 
-        setUnlocalizedName(BloodMagic.MODID + ".sentientSword");
+        setTranslationKey(BloodMagic.MODID + ".sentientSword");
         setCreativeTab(BloodMagic.TAB_BM);
     }
 

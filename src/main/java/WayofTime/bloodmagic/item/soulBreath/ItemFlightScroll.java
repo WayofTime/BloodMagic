@@ -42,7 +42,7 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
     public ItemFlightScroll()
     {
         super();
-        setUnlocalizedName(BloodMagic.MODID + ".icarusScroll");
+        setTranslationKey(BloodMagic.MODID + ".icarusScroll");
         setCreativeTab(BloodMagic.TAB_BM);
     }
 

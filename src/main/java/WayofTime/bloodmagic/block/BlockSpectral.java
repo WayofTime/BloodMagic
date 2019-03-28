@@ -28,7 +28,7 @@ public class BlockSpectral extends Block {
     public BlockSpectral() {
         super(Material.CLOTH);
 
-        setUnlocalizedName(BloodMagic.MODID + ".spectral");
+        setTranslationKey(BloodMagic.MODID + ".spectral");
     }
 
     @Override
@@ -58,7 +58,7 @@ public class BlockSpectral extends Block {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.TRANSLUCENT;
     }
 

@@ -39,7 +39,7 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
     public BlockBloodTank() {
         super(Material.IRON, TileBloodTank.CAPACITIES.length - 1, "tier");
 
-        setUnlocalizedName(BloodMagic.MODID + ".bloodTank");
+        setTranslationKey(BloodMagic.MODID + ".bloodTank");
         setHardness(2.0F);
         setResistance(5.0F);
         setSoundType(SoundType.GLASS);
@@ -60,7 +60,7 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT_MIPPED;
     }
 
@@ -91,7 +91,7 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
         if (success) {
             world.checkLight(blockPos);
             world.updateComparatorOutputLevel(blockPos, this);
-            world.markAndNotifyBlock(blockPos, world.getChunkFromBlockCoords(blockPos), state, state, 3);
+            world.markAndNotifyBlock(blockPos, world.getChunk(blockPos), state, state, 3);
             return true;
         }
 
@@ -138,7 +138,7 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
 
         world.checkLight(pos);
         world.updateComparatorOutputLevel(pos, this);
-        world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), blockState, blockState, 3);
+        world.markAndNotifyBlock(pos, world.getChunk(pos), blockState, blockState, 3);
     }
 
     @Override

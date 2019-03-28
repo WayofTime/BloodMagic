@@ -33,7 +33,7 @@ public class RitualPlacer extends Ritual {
     public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         BlockPos masterPos = masterRitualStone.getBlockPos();
-        AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
+        AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
         TileEntity tileEntity = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
 
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
@@ -43,7 +43,7 @@ public class RitualPlacer extends Ritual {
             return;
         }
 
-        AreaDescriptor areaDescriptor = getBlockRange(PLACER_RANGE);
+        AreaDescriptor areaDescriptor = masterRitualStone.getBlockRange(PLACER_RANGE);
 
         if (tileEntity != null) {
             if (tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)) {

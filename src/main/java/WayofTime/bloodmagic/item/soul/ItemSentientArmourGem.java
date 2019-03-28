@@ -26,7 +26,7 @@ public class ItemSentientArmourGem extends Item implements IMeshProvider {
         super();
 
         setCreativeTab(BloodMagic.TAB_BM);
-        setUnlocalizedName(BloodMagic.MODID + ".sentientArmourGem");
+        setTranslationKey(BloodMagic.MODID + ".sentientArmourGem");
         setMaxStackSize(1);
     }
 
