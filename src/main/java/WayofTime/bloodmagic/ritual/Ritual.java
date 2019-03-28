@@ -216,6 +216,7 @@ public abstract class Ritual {
         return horizontalRangeMap.get(range);
     }
 
+    //TODO: Is this even needed? If yes, it should be fixed at some point (something similar should be in the RitualTinkerer).
     public ITextComponent getErrorForBlockRangeOnFail(EntityPlayer player, String range, IMasterRitualStone master, BlockPos offset1, BlockPos offset2) {
         AreaDescriptor descriptor = this.getBlockRange(range);
         if (descriptor == null) {
