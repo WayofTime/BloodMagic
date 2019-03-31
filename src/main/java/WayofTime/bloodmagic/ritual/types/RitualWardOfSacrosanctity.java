@@ -14,14 +14,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-@RitualRegister("veilofevil")
-public class RitualVeilOfEvil extends Ritual {
-    public static final String VEIL_RANGE = "veilRange";
+@RitualRegister("ward_of_sacrosanctity")
+public class RitualWardOfSacrosanctity extends Ritual {
+    public static final String SPAWN_WARD = "spawnWard";
 
-    public RitualVeilOfEvil() {
-        super("ritualVeilOfEvil", 0, 40000, "ritual." + BloodMagic.MODID + ".veiLOfEvilRitual");
-        addBlockRange(VEIL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-16, 0, -16), 33));
-        setMaximumVolumeAndDistanceOfRange(VEIL_RANGE, 0, 256, 256);
+    public RitualWardOfSacrosanctity() {
+        super("ritualWellOfSuffering", 0, 40000, "ritual." + BloodMagic.MODID + ".wellOfSufferingRitual");
+        addBlockRange(SPAWN_WARD, new AreaDescriptor.Rectangle(new BlockPos(-16, -10, -16), 33));
+
+        setMaximumVolumeAndDistanceOfRange(SPAWN_WARD, 0, 256, 256);
     }
 
     @Override
@@ -57,46 +58,48 @@ public class RitualVeilOfEvil extends Ritual {
 
         /* Actual ritual stuff begins here */
 
-        if (GenericHandler.forceSpawnMap.containsKey(world)) {
-            Map<IMasterRitualStone, AreaDescriptor> preventSpawnMap = GenericHandler.forceSpawnMap.get(world);
+        if (GenericHandler.preventSpawnMap.containsKey(world)) {
+            Map<IMasterRitualStone, AreaDescriptor> preventSpawnMap = GenericHandler.preventSpawnMap.get(world);
             if (preventSpawnMap != null) {
-                preventSpawnMap.put(masterRitualStone, masterRitualStone.getBlockRange(VEIL_RANGE));
+                preventSpawnMap.put(masterRitualStone, masterRitualStone.getBlockRange(SPAWN_WARD));
             } else {
                 preventSpawnMap = new HashMap<>();
-                preventSpawnMap.put(masterRitualStone, masterRitualStone.getBlockRange(VEIL_RANGE));
-                GenericHandler.forceSpawnMap.put(world, preventSpawnMap);
+                preventSpawnMap.put(masterRitualStone, masterRitualStone.getBlockRange(SPAWN_WARD));
+                GenericHandler.preventSpawnMap.put(world, preventSpawnMap);
             }
         } else {
             HashMap<IMasterRitualStone, AreaDescriptor> preventSpawnMap = new HashMap<>();
-            preventSpawnMap.put(masterRitualStone, masterRitualStone.getBlockRange(VEIL_RANGE));
-            GenericHandler.forceSpawnMap.put(world, preventSpawnMap);
+            preventSpawnMap.put(masterRitualStone, masterRitualStone.getBlockRange(SPAWN_WARD));
+            GenericHandler.preventSpawnMap.put(world, preventSpawnMap);
         }
 
         masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
     }
 
     @Override
+    public int getRefreshTime() {
+        return 25;
+    }
+
+    @Override
     public int getRefreshCost() {
-        return 0;
+        return 2;
     }
 
     @Override
     public void gatherComponents(Consumer<RitualComponent> components) {
-
-        addOffsetRunes(components, 1, 0, 2, EnumRuneType.DUSK);
-        addCornerRunes(components, 3, 0, EnumRuneType.FIRE);
-
-        for (int i = 0; i <= 1; i++) {
-            addParallelRunes(components, (4 + i), i, EnumRuneType.DUSK);
-            addOffsetRunes(components, (4 + i), i, -1, EnumRuneType.BLANK);
-            addOffsetRunes(components, 4, 5, i, EnumRuneType.EARTH);
+        for (int i = 2; i < 5; i++) {
+            if (i < 4) {
+                addParallelRunes(components, 1, 0, EnumRuneType.AIR);
+            }
+            addCornerRunes(components, i, 0, EnumRuneType.FIRE);
         }
-
-        addCornerRunes(components, 5, 1, EnumRuneType.BLANK);
+        addParallelRunes(components, 5, 0, EnumRuneType.DUSK);
+        addOffsetRunes(components, 5, 6, 0, EnumRuneType.WATER);
     }
 
     @Override
     public Ritual getNewCopy() {
-        return new RitualVeilOfEvil();
+        return new RitualWardOfSacrosanctity();
     }
 }
