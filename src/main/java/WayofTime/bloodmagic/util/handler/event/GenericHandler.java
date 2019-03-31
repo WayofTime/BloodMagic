@@ -467,7 +467,7 @@ public class GenericHandler {
 
     // VeilOfEvil, WardOfSacrosanctity
     @SubscribeEvent
-    public void onLivingSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
+    public static void onLivingSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
         World world = event.getWorld();
 
         if (!(event.getEntityLiving() instanceof EntityMob)) {
