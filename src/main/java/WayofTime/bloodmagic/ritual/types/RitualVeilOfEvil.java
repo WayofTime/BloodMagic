@@ -36,8 +36,8 @@ public class RitualVeilOfEvil extends Ritual {
             return;
         }
 
-        int maxEffects = currentEssence / getRefreshCost();
-        int totalEffects = 0;
+        // int maxEffects = currentEssence / getRefreshCost();
+        // int totalEffects = 0;
 
         /* Default will augment stuff */
         List<EnumDemonWillType> willConfig = masterRitualStone.getActiveWillConfig();
@@ -58,18 +58,18 @@ public class RitualVeilOfEvil extends Ritual {
         /* Actual ritual stuff begins here */
 
         if (GenericHandler.forceSpawnMap.containsKey(world)) {
-            Map<IMasterRitualStone, AreaDescriptor> preventSpawnMap = GenericHandler.forceSpawnMap.get(world);
-            if (preventSpawnMap != null) {
-                preventSpawnMap.put(masterRitualStone, masterRitualStone.getBlockRange(VEIL_RANGE));
+            Map<IMasterRitualStone, AreaDescriptor> forceSpawnMap = GenericHandler.forceSpawnMap.get(world);
+            if (forceSpawnMap != null) {
+                forceSpawnMap.put(masterRitualStone, masterRitualStone.getBlockRange(VEIL_RANGE));
             } else {
-                preventSpawnMap = new HashMap<>();
-                preventSpawnMap.put(masterRitualStone, masterRitualStone.getBlockRange(VEIL_RANGE));
-                GenericHandler.forceSpawnMap.put(world, preventSpawnMap);
+                forceSpawnMap = new HashMap<>();
+                forceSpawnMap.put(masterRitualStone, masterRitualStone.getBlockRange(VEIL_RANGE));
+                GenericHandler.forceSpawnMap.put(world, forceSpawnMap);
             }
         } else {
-            HashMap<IMasterRitualStone, AreaDescriptor> preventSpawnMap = new HashMap<>();
-            preventSpawnMap.put(masterRitualStone, masterRitualStone.getBlockRange(VEIL_RANGE));
-            GenericHandler.forceSpawnMap.put(world, preventSpawnMap);
+            HashMap<IMasterRitualStone, AreaDescriptor> forceSpawnMap = new HashMap<>();
+            forceSpawnMap.put(masterRitualStone, masterRitualStone.getBlockRange(VEIL_RANGE));
+            GenericHandler.forceSpawnMap.put(world, forceSpawnMap);
         }
 
         masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));

@@ -33,6 +33,7 @@ import WayofTime.bloodmagic.potion.PotionEventHandlers;
 import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.RitualManager;
+import WayofTime.bloodmagic.ritual.types.RitualVeilOfEvil;
 import WayofTime.bloodmagic.ritual.types.RitualWardOfSacrosanctity;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.util.Constants;
@@ -466,12 +467,13 @@ public class GenericHandler {
 
     // VeilOfEvil, WardOfSacrosanctity
     @SubscribeEvent
-    public void onLivingSpawnEvent(LivingSpawnEvent event) {
+    public void onLivingSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
         World world = event.getWorld();
 
         if (!(event.getEntityLiving() instanceof EntityMob)) {
             return;
         }
+        System.out.println("found entity to be spawned");
 
         /* WardOfSacrosanctity */
 
@@ -513,12 +515,13 @@ public class GenericHandler {
                 for (Map.Entry<IMasterRitualStone, AreaDescriptor> entry : fMap.entrySet()) {
                     IMasterRitualStone masterRitualStone = entry.getKey();
                     AreaDescriptor blockRange = entry.getValue();
+                    System.out.println("found a map");
 
-                    if (masterRitualStone != null && masterRitualStone.isActive() && masterRitualStone.getCurrentRitual() instanceof RitualWardOfSacrosanctity) {
+                    if (masterRitualStone != null && masterRitualStone.isActive() && masterRitualStone.getCurrentRitual() instanceof RitualVeilOfEvil) {
+                        System.out.println("is active");
                         if (blockRange.offset(masterRitualStone.getBlockPos()).isWithinArea(new BlockPos(event.getX(), event.getY(), event.getZ()))) {
+                            System.out.println("is in");
                             switch (event.getResult()) {
-                                case ALLOW:
-                                    break;
                                 case DEFAULT:
                                     event.setResult(Result.ALLOW);
                                     break;

@@ -37,8 +37,8 @@ public class RitualWardOfSacrosanctity extends Ritual {
             return;
         }
 
-        int maxEffects = currentEssence / getRefreshCost();
-        int totalEffects = 0;
+        // int maxEffects = currentEssence / getRefreshCost();
+        // int totalEffects = 0;
 
         /* Default will augment stuff */
         List<EnumDemonWillType> willConfig = masterRitualStone.getActiveWillConfig();
