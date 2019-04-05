@@ -92,10 +92,10 @@ public class PotionEventHandlers {
 //            }
 //        }
         List<EntityLivingBase> noGravityList = noGravityListMap.get(event.getEntityLiving().getEntityWorld());
-        if ((!(eventEntityLiving instanceof EntityPlayer) || !((EntityPlayer) eventEntityLiving).isSpectator()) && eventEntityLiving.isPotionActive(RegistrarBloodMagic.SUSPENDED)) {
+        if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.SUSPENDED) && !eventEntityLiving.hasNoGravity()) {
             eventEntityLiving.setNoGravity(true);
             noGravityList.add(eventEntityLiving);
-        } else {
+        } else if (noGravityList.contains(eventEntityLiving)) {
             eventEntityLiving.setNoGravity(false);
             noGravityList.remove(eventEntityLiving);
         }
