@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.function.Consumer;
 
-@RitualRegister("transformation")
+@RitualRegister("gaia_transformation")
 public class RitualGaiaTransformation extends Ritual {
 
     public static final int willRefreshTime = 20;

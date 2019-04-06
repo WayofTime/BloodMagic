@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-@RitualRegister("veilofevil")
+@RitualRegister("veil_of_evil")
 public class RitualVeilOfEvil extends Ritual {
     public static final String VEIL_RANGE = "veilRange";
 

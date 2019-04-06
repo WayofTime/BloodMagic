@@ -473,7 +473,6 @@ public class GenericHandler {
         if (!(event.getEntityLiving() instanceof EntityMob)) {
             return;
         }
-        System.out.println("found entity to be spawned");
 
         /* WardOfSacrosanctity */
 
