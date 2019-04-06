@@ -19,7 +19,7 @@ public class RitualWardOfSacrosanctity extends Ritual {
     public static final String SPAWN_WARD = "spawnWard";
 
     public RitualWardOfSacrosanctity() {
-        super("ritualWellOfSuffering", 0, 40000, "ritual." + BloodMagic.MODID + ".wellOfSufferingRitual");
+        super("ritualWardOfSacrosanctity", 0, 40000, "ritual." + BloodMagic.MODID + ".wardOfSacrosanctityRitual");
         addBlockRange(SPAWN_WARD, new AreaDescriptor.Rectangle(new BlockPos(-16, -10, -16), 33));
 
         setMaximumVolumeAndDistanceOfRange(SPAWN_WARD, 0, 256, 256);

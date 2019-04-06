@@ -19,7 +19,7 @@ public class RitualVeilOfEvil extends Ritual {
     public static final String VEIL_RANGE = "veilRange";
 
     public RitualVeilOfEvil() {
-        super("ritualVeilOfEvil", 0, 40000, "ritual." + BloodMagic.MODID + ".veiLOfEvilRitual");
+        super("ritualVeilOfEvil", 0, 40000, "ritual." + BloodMagic.MODID + ".veilOfEvilRitual");
         addBlockRange(VEIL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-16, 0, -16), 33));
         setMaximumVolumeAndDistanceOfRange(VEIL_RANGE, 0, 256, 256);
     }
