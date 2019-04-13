@@ -468,7 +468,7 @@ public class GenericHandler {
         targetTaskMapMap.computeIfAbsent(world, k -> new HashMap<>());
         PotionEventHandlers.flightListMap.computeIfAbsent(world, k -> new ArrayList<>());
         PotionEventHandlers.noGravityListMap.computeIfAbsent(world, k -> new ArrayList<>());
-        LocationsHandler.verifyIsInitialized();;
+        LocationsHandler.verifyIsInitialized();
     }
 
     @SubscribeEvent
