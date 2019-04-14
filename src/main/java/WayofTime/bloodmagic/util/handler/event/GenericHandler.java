@@ -434,7 +434,7 @@ public class GenericHandler {
         EntityPlayer player = event.getEntityPlayer();
         ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, player);
 
-        if (Loader.isModLoaded("unmending")) {
+        if (!Loader.isModLoaded("unmending")) {
             if (!itemstack.isEmpty() && itemstack.isItemDamaged()) {
                 int i = Math.min(xpToDurability(event.getOrb().xpValue), itemstack.getItemDamage());
                 event.getOrb().xpValue -= durabilityToXp(i);
