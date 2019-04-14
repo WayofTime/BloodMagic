@@ -78,6 +78,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -433,10 +434,12 @@ public class GenericHandler {
         EntityPlayer player = event.getEntityPlayer();
         ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, player);
 
-        if (!itemstack.isEmpty() && itemstack.isItemDamaged()) {
-            int i = Math.min(xpToDurability(event.getOrb().xpValue), itemstack.getItemDamage());
-            event.getOrb().xpValue -= durabilityToXp(i);
-            itemstack.setItemDamage(itemstack.getItemDamage() - i);
+        if (Loader.isModLoaded("unmending")) {
+            if (!itemstack.isEmpty() && itemstack.isItemDamaged()) {
+                int i = Math.min(xpToDurability(event.getOrb().xpValue), itemstack.getItemDamage());
+                event.getOrb().xpValue -= durabilityToXp(i);
+                itemstack.setItemDamage(itemstack.getItemDamage() - i);
+            }
         }
 
         if (!player.getEntityWorld().isRemote) {
