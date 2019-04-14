@@ -44,13 +44,13 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
         RayTraceResult rayTrace = this.rayTrace(world, player, false);
 
         if (rayTrace == null) {
-            return super.onItemRightClick(world, player, EnumHand.MAIN_HAND);
+            return super.onItemRightClick(world, player, hand);
         } else {
             if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
                 TileEntity tile = world.getTileEntity(rayTrace.getBlockPos());
 
                 if (!(tile instanceof IBloodAltar))
-                    return super.onItemRightClick(world, player, EnumHand.MAIN_HAND);
+                    return super.onItemRightClick(world, player, hand);
 
                 LPContainer.tryAndFillAltar((IBloodAltar) tile, stack, world, rayTrace.getBlockPos());
             }
