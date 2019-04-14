@@ -71,8 +71,8 @@ public class ItemSigilTeleposition extends ItemSigilBase {
                         TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(blockPos, player, bindingOwnerID, world, tile.getWorld().provider.getDimension(), true));
                     }
                 }
-                }
             }
+        }
 
         return super.onItemRightClick(world, player, hand);
     }

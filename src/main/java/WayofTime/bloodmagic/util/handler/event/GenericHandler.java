@@ -360,7 +360,7 @@ public class GenericHandler {
 
                     BindableHelper.applyBinding(held, player); // Bind item to the player
                 }
-            // If the binding exists, we'll check if the player's name has changed since they last used it and update that if so.
+                // If the binding exists, we'll check if the player's name has changed since they last used it and update that if so.
             } else if (binding.getOwnerId().equals(player.getGameProfile().getId()) && !binding.getOwnerName().equals(player.getGameProfile().getName())) {
                 binding.setOwnerName(player.getGameProfile().getName());
                 BindableHelper.applyBinding(held, binding);
@@ -419,9 +419,9 @@ public class GenericHandler {
     }
 
     @SubscribeEvent
-    public static void onRitualDeath(LivingDropsEvent event){
-        if(!ConfigHandler.values.wellOfSufferingDrops){
-            if(event.getSource().equals(RitualManager.RITUAL_DAMAGE)) {
+    public static void onRitualDeath(LivingDropsEvent event) {
+        if (!ConfigHandler.values.wellOfSufferingDrops) {
+            if (event.getSource().equals(RitualManager.RITUAL_DAMAGE)) {
                 event.getDrops().clear();
             }
         }

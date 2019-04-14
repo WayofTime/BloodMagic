@@ -40,7 +40,8 @@ public enum ComponentTypes implements ISubItem {
     CATALYST_POWER_1,
     REAGENT_CLAW,
     REAGENT_BOUNCE,
-    REAGENT_FROST,;
+    REAGENT_FROST,
+    ;
 
     @Nonnull
     @Override

@@ -7,10 +7,8 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.Locale;
 
-public class Constants
-{
-    public static class NBT
-    {
+public class Constants {
+    public static class NBT {
         public static final String OWNER_UUID = "ownerUUID";
         public static final String OWNER_NAME = "ownerNAME";
         public static final String USES = "uses";
@@ -133,13 +131,11 @@ public class Constants
         public static final String BREATH = "breath";
     }
 
-    public static class Mod
-    {
+    public static class Mod {
         public static final String DOMAIN = BloodMagic.MODID.toLowerCase(Locale.ENGLISH) + ":";
     }
 
-    public static final class Gui
-    {
+    public static final class Gui {
         public static final int TELEPOSER_GUI = 0;
         public static final int SOUL_FORGE_GUI = 1;
         public static final int ROUTING_NODE_GUI = 2;
@@ -148,8 +144,7 @@ public class Constants
         public static final int SIGIL_HOLDING_GUI = 5;
     }
 
-    public static class Compat
-    {
+    public static class Compat {
         public static final String JEI_CATEGORY_ALTAR = BloodMagic.MODID + ":altar";
         public static final String JEI_CATEGORY_BINDING = BloodMagic.MODID + ":binding";
         public static final String JEI_CATEGORY_ALCHEMYARRAY = BloodMagic.MODID + ":alchemyArray";
@@ -166,8 +161,7 @@ public class Constants
         public static final Item THAUMCRAFT_GOGGLES = ForgeRegistries.ITEMS.getValue(new ResourceLocation("Thaumcraft", "goggles"));
     }
 
-    public static class Misc
-    {
+    public static class Misc {
         public static final int POTION_ARRAY_SIZE = 256;
         public static final float ALTERED_STEP_HEIGHT = 1.00314159f;
         public static final int NIGHT_VISION_CONSTANT_BEGIN = 30020;

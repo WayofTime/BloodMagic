@@ -16,7 +16,7 @@ public class StorageBlockCraftingManager {
     private static final StorageBlockCraftingManager instance = new StorageBlockCraftingManager();
     private List<IRecipe> recipes = new LinkedList<>();
 
-    public void addRecipe(IRecipe recipe){
+    public void addRecipe(IRecipe recipe) {
         this.recipes.add(recipe);
     }
 

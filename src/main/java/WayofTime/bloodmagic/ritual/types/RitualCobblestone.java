@@ -53,11 +53,11 @@ public class RitualCobblestone extends Ritual {
                         alchemyArray.decrStackSize(0, 1);
                         world.setBlockToAir(alchemyArray.getPos());
                         break;
-                /*
-                 * case 4: block = Blocks.end_stone;
-                 * alchemyArray.decrStackSize(0, 1);
-                 * world.setBlockToAir(alchemyArray.getPos()); break;
-                 */
+                    /*
+                     * case 4: block = Blocks.end_stone;
+                     * alchemyArray.decrStackSize(0, 1);
+                     * world.setBlockToAir(alchemyArray.getPos()); break;
+                     */
                     default:
                         break;
                 }

@@ -37,13 +37,13 @@ public class BaseCompressionHandler extends CompressionHandler {
     public int getRemainingNeeded(ItemStack[] inv) {
         int needed = this.required.getCount();
         int kept = this.getLeftover();
-        return iterateThroughInventory(this.required, kept, inv, needed,  true);
+        return iterateThroughInventory(this.required, kept, inv, needed, true);
     }
 
     public int drainInventory(ItemStack[] inv) {
         int needed = this.required.getCount();
         int kept = this.getLeftover();
-        return iterateThroughInventory(this.required, kept, inv, needed,  true);
+        return iterateThroughInventory(this.required, kept, inv, needed, true);
     }
 
     public int getLeftover() {

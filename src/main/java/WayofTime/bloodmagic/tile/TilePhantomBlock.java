@@ -29,7 +29,7 @@ public class TilePhantomBlock extends TileTicking {
 
     @Override
     public void onUpdate() {
-        if(!world.isRemote) {
+        if (!world.isRemote) {
             EntityPlayer player = world.getClosestPlayer(getPos().getX(), getPos().getY(), getPos().getZ(), 10.0D, ItemSigilPhantomBridge.IS_PHANTOM_ACTIVE);
             if (player != null && !player.isSneaking())
                 return;

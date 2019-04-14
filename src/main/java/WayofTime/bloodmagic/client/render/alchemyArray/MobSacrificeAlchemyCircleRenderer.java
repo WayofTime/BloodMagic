@@ -13,41 +13,33 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.alchemyArray.AlchemyCircleRenderer;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 
-public class MobSacrificeAlchemyCircleRenderer extends AlchemyCircleRenderer
-{
+public class MobSacrificeAlchemyCircleRenderer extends AlchemyCircleRenderer {
     private ResourceLocation bottomArrayResource = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/MovementArray.png");
 
     private ResourceLocation mobSacrificeSwirlResource = new ResourceLocation("bloodmagic", "textures/models/mobsacrificeswirl.png");
 
-    public MobSacrificeAlchemyCircleRenderer(ResourceLocation location)
-    {
+    public MobSacrificeAlchemyCircleRenderer(ResourceLocation location) {
         super(location);
     }
 
-    public MobSacrificeAlchemyCircleRenderer()
-    {
+    public MobSacrificeAlchemyCircleRenderer() {
         this(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/mobsacrifice.png"));
     }
 
     @Override
-    public float getSizeModifier(float craftTime)
-    {
-        if (craftTime < 40)
-        {
+    public float getSizeModifier(float craftTime) {
+        if (craftTime < 40) {
             return 0;
-        } else if (craftTime > 40 && craftTime < 100)
-        {
+        } else if (craftTime > 40 && craftTime < 100) {
             return (craftTime - 40) / 60f;
         }
         return 1;
     }
 
     @Override
-    public float getRotation(float craftTime)
-    {
+    public float getRotation(float craftTime) {
         float offset = 50;
-        if (craftTime >= offset)
-        {
+        if (craftTime >= offset) {
             float modifier = (craftTime - offset) * 5f;
             return modifier * 1f;
         }
@@ -55,16 +47,13 @@ public class MobSacrificeAlchemyCircleRenderer extends AlchemyCircleRenderer
     }
 
     @Override
-    public float getSecondaryRotation(float craftTime)
-    {
+    public float getSecondaryRotation(float craftTime) {
         return 0;
     }
 
     @Override
-    public void renderAt(TileEntity tile, double x, double y, double z, float craftTime)
-    {
-        if (!(tile instanceof TileAlchemyArray))
-        {
+    public void renderAt(TileEntity tile, double x, double y, double z, float craftTime) {
+        if (!(tile instanceof TileAlchemyArray)) {
             return;
         }
 
@@ -94,30 +83,29 @@ public class MobSacrificeAlchemyCircleRenderer extends AlchemyCircleRenderer
 
         GlStateManager.translate(sideHit.getXOffset() * offsetFromFace, sideHit.getYOffset() * offsetFromFace, sideHit.getZOffset() * offsetFromFace);
 
-        switch (sideHit)
-        {
-        case DOWN:
-            GlStateManager.translate(0, 0, 1);
-            GlStateManager.rotate(-90.0f, 1, 0, 0);
-            break;
-        case EAST:
-            GlStateManager.rotate(-90.0f, 0, 1, 0);
-            GlStateManager.translate(0, 0, -1);
-            break;
-        case NORTH:
-            break;
-        case SOUTH:
-            GlStateManager.rotate(180.0f, 0, 1, 0);
-            GlStateManager.translate(-1, 0, -1);
-            break;
-        case UP:
-            GlStateManager.translate(0, 1, 0);
-            GlStateManager.rotate(90.0f, 1, 0, 0);
-            break;
-        case WEST:
-            GlStateManager.translate(0, 0, 1);
-            GlStateManager.rotate(90.0f, 0, 1, 0);
-            break;
+        switch (sideHit) {
+            case DOWN:
+                GlStateManager.translate(0, 0, 1);
+                GlStateManager.rotate(-90.0f, 1, 0, 0);
+                break;
+            case EAST:
+                GlStateManager.rotate(-90.0f, 0, 1, 0);
+                GlStateManager.translate(0, 0, -1);
+                break;
+            case NORTH:
+                break;
+            case SOUTH:
+                GlStateManager.rotate(180.0f, 0, 1, 0);
+                GlStateManager.translate(-1, 0, -1);
+                break;
+            case UP:
+                GlStateManager.translate(0, 1, 0);
+                GlStateManager.rotate(90.0f, 1, 0, 0);
+                break;
+            case WEST:
+                GlStateManager.translate(0, 0, 1);
+                GlStateManager.rotate(90.0f, 0, 1, 0);
+                break;
         }
 
         GlStateManager.pushMatrix();
@@ -136,8 +124,7 @@ public class MobSacrificeAlchemyCircleRenderer extends AlchemyCircleRenderer
 //        GlStateManager.rotate((float) (yaw + 360 * getStartupPitchYawRatio(craftTime)), 0, 0, 1);
 //        GlStateManager.rotate((float) ((pitch + 90) * getStartupPitchYawRatio(craftTime)), 1, 0, 0);
 
-        for (int i = 1; i <= 3; i++)
-        {
+        for (int i = 1; i <= 3; i++) {
             GlStateManager.pushMatrix();
             Minecraft.getMinecraft().renderEngine.bindTexture(bottomArrayResource);
             translateAndRotateFloatingArray(tessellator, wr, size, rot, craftTime, i);
@@ -153,11 +140,9 @@ public class MobSacrificeAlchemyCircleRenderer extends AlchemyCircleRenderer
 
         //Render the swirlz
         float swirlSize = 3;
-        if (craftTime <= 40)
-        {
+        if (craftTime <= 40) {
             swirlSize = 0;
-        } else if (craftTime <= 100)
-        {
+        } else if (craftTime <= 100) {
             swirlSize = 3 * (craftTime - 40) / 60;
         }
         GlStateManager.pushMatrix();
@@ -180,66 +165,58 @@ public class MobSacrificeAlchemyCircleRenderer extends AlchemyCircleRenderer
         GlStateManager.popMatrix();
     }
 
-    public float getStartupPitchYawRatio(float craftTime)
-    {
-        if (craftTime <= 80)
-        {
+    public float getStartupPitchYawRatio(float craftTime) {
+        if (craftTime <= 80) {
             return 0;
-        } else if (craftTime > 80 && craftTime < 140)
-        {
+        } else if (craftTime > 80 && craftTime < 140) {
             return (craftTime - 80) / 60f;
         }
 
         return 1;
     }
 
-    private void translateAndRotateFloatingArray(Tessellator tessellator, BufferBuilder builder, double size, float rotation, float craftTime, int circle)
-    {
+    private void translateAndRotateFloatingArray(Tessellator tessellator, BufferBuilder builder, double size, float rotation, float craftTime, int circle) {
         double verticalOffset = 2;
 
         float primaryRotation = 0;
         float secondaryRotation = 0;
-        if (craftTime >= 40)
-        {
+        if (craftTime >= 40) {
             primaryRotation = (craftTime - 40) * 4f;
             secondaryRotation = (craftTime - 40) * 2f;
         }
 
         float translationOffset = 1;
-        if (craftTime < 80)
-        {
+        if (craftTime < 80) {
             translationOffset = 0;
-        } else if (craftTime < 140)
-        {
+        } else if (craftTime < 140) {
             translationOffset = (craftTime - 80) / 60;
         }
 
-        switch (circle)
-        {
-        case 1:
-            GlStateManager.translate(0, 0, -verticalOffset);
-            GlStateManager.rotate(rotation / 200, 1, 0, 0);
-            GlStateManager.rotate(rotation / 10, 0, 0, 1);
-            GlStateManager.translate(1.7 * translationOffset, 0, 0);
-            break;
-        case 2:
-            GlStateManager.translate(0, 0, -verticalOffset);
+        switch (circle) {
+            case 1:
+                GlStateManager.translate(0, 0, -verticalOffset);
+                GlStateManager.rotate(rotation / 200, 1, 0, 0);
+                GlStateManager.rotate(rotation / 10, 0, 0, 1);
+                GlStateManager.translate(1.7 * translationOffset, 0, 0);
+                break;
+            case 2:
+                GlStateManager.translate(0, 0, -verticalOffset);
 //            GlStateManager.rotate(254, 0, 0, 1);
-            GlStateManager.rotate((float) (rotation / 150 + 120), 1, 0, 0);
-            GlStateManager.rotate(120, 0, 1, 0);
-            GlStateManager.rotate(-rotation / 10, 0, 0, 1);
-            GlStateManager.translate(1.2 * translationOffset, 0, 0);
-            break;
-        case 3:
-            GlStateManager.translate(0, 0, -verticalOffset);
+                GlStateManager.rotate((float) (rotation / 150 + 120), 1, 0, 0);
+                GlStateManager.rotate(120, 0, 1, 0);
+                GlStateManager.rotate(-rotation / 10, 0, 0, 1);
+                GlStateManager.translate(1.2 * translationOffset, 0, 0);
+                break;
+            case 3:
+                GlStateManager.translate(0, 0, -verticalOffset);
 //            GlStateManager.rotate(130, 0, 0, 1);
-            GlStateManager.rotate((float) (rotation / 100 + 284), 1, 0, 0);
-            GlStateManager.rotate(240, 0, 1, 0);
-            GlStateManager.rotate(-rotation / 7 + 180, 0, 0, 1);
-            GlStateManager.translate(2 * translationOffset, 0, 0);
-            break;
-        default:
-            //What are you doing, Way???
+                GlStateManager.rotate((float) (rotation / 100 + 284), 1, 0, 0);
+                GlStateManager.rotate(240, 0, 1, 0);
+                GlStateManager.rotate(-rotation / 7 + 180, 0, 0, 1);
+                GlStateManager.translate(2 * translationOffset, 0, 0);
+                break;
+            default:
+                //What are you doing, Way???
         }
 
         GlStateManager.rotate(primaryRotation, 0, 1, 0);
@@ -249,8 +226,7 @@ public class MobSacrificeAlchemyCircleRenderer extends AlchemyCircleRenderer
         renderStandardCircle(tessellator, builder, size);
     }
 
-    private void renderStandardCircle(Tessellator tessellator, BufferBuilder builder, double size)
-    {
+    private void renderStandardCircle(Tessellator tessellator, BufferBuilder builder, double size) {
         double var31 = 0.0D;
         double var33 = 1.0D;
         double var35 = 0;

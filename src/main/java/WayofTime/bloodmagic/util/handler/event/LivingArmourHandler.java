@@ -45,31 +45,24 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
-public class LivingArmourHandler
-{
+public class LivingArmourHandler {
 
     @SubscribeEvent
-    public static void onEntityHealed(LivingHealEvent event)
-    {
-        if (event.getEntityLiving() instanceof EntityPlayer)
-        {
+    public static void onEntityHealed(LivingHealEvent event) {
+        if (event.getEntityLiving() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntity();
-            if (LivingArmour.hasFullSet(player))
-            {
+            if (LivingArmour.hasFullSet(player)) {
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-                if (armour != null)
-                {
+                if (armour != null) {
                     double modifier = 1;
                     LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.slowHeal", chestStack);
 
-                    if (upgrade instanceof LivingArmourUpgradeSlowHeal)
-                    {
+                    if (upgrade instanceof LivingArmourUpgradeSlowHeal) {
                         modifier *= ((LivingArmourUpgradeSlowHeal) upgrade).getHealingModifier();
                     }
 
-                    if (modifier != 1)
-                    {
+                    if (modifier != 1) {
                         event.setAmount((float) (event.getAmount() * modifier));
                     }
                 }
@@ -78,23 +71,18 @@ public class LivingArmourHandler
     }
 
     @SubscribeEvent
-    public static void onMiningSpeedCheck(PlayerEvent.BreakSpeed event)
-    {
+    public static void onMiningSpeedCheck(PlayerEvent.BreakSpeed event) {
         EntityPlayer player = event.getEntityPlayer();
-        if (LivingArmour.hasFullSet(player))
-        {
+        if (LivingArmour.hasFullSet(player)) {
             ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
             LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-            if (armour != null)
-            {
+            if (armour != null) {
                 double modifier = 1;
-                for (LivingArmourUpgrade upgrade : armour.upgradeMap.values())
-                {
+                for (LivingArmourUpgrade upgrade : armour.upgradeMap.values()) {
                     modifier *= upgrade.getMiningSpeedModifier(player);
                 }
 
-                if (modifier != 1)
-                {
+                if (modifier != 1) {
                     event.setNewSpeed((float) (event.getOriginalSpeed() * modifier));
                 }
             }
@@ -103,31 +91,24 @@ public class LivingArmourHandler
 
     // Applies: Storm Trooper
     @SubscribeEvent
-    public static void onEntityJoinedWorld(EntityJoinWorldEvent event)
-    {
+    public static void onEntityJoinedWorld(EntityJoinWorldEvent event) {
         Entity owner = null;
-        if (event.getEntity() instanceof EntityArrow)
-        {
+        if (event.getEntity() instanceof EntityArrow) {
             owner = ((EntityArrow) event.getEntity()).shootingEntity;
-        } else if (event.getEntity() instanceof EntityThrowable)
-        {
+        } else if (event.getEntity() instanceof EntityThrowable) {
             owner = ((EntityThrowable) event.getEntity()).getThrower();
         }
 
-        if (owner instanceof EntityPlayer)
-        {
+        if (owner instanceof EntityPlayer) {
             Entity projectile = event.getEntity();
             EntityPlayer player = (EntityPlayer) owner;
-            if (LivingArmour.hasFullSet(player))
-            {
+            if (LivingArmour.hasFullSet(player)) {
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-                if (armour != null)
-                {
+                if (armour != null) {
                     LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.stormTrooper", chestStack);
 
-                    if (upgrade instanceof LivingArmourUpgradeStormTrooper)
-                    {
+                    if (upgrade instanceof LivingArmourUpgradeStormTrooper) {
                         float velocityModifier = (float) (((LivingArmourUpgradeStormTrooper) upgrade).getArrowJiggle(player) * Math.sqrt(projectile.motionX * projectile.motionX + projectile.motionY * projectile.motionY + projectile.motionZ * projectile.motionZ));
 
                         projectile.motionX += 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
@@ -140,37 +121,28 @@ public class LivingArmourHandler
     }
 
     @SubscribeEvent
-    public static void onPlayerClick(PlayerInteractEvent event)
-    {
-        if (event.isCancelable())
-        {
+    public static void onPlayerClick(PlayerInteractEvent event) {
+        if (event.isCancelable()) {
             EntityPlayer player = event.getEntityPlayer();
 
-            if (LivingArmour.hasFullSet(player))
-            {
+            if (LivingArmour.hasFullSet(player)) {
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-                if (armour != null)
-                {
-                    if (event.getHand() == EnumHand.OFF_HAND)
-                    {
+                if (armour != null) {
+                    if (event.getHand() == EnumHand.OFF_HAND) {
                         LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.crippledArm", chestStack);
 
-                        if (upgrade instanceof LivingArmourUpgradeCrippledArm)
-                        {
+                        if (upgrade instanceof LivingArmourUpgradeCrippledArm) {
                             event.setCanceled(true);
                         }
                     }
 
-                    if (event.getItemStack().getItemUseAction() == EnumAction.DRINK)
-                    {
+                    if (event.getItemStack().getItemUseAction() == EnumAction.DRINK) {
                         ItemStack drinkStack = event.getItemStack();
-                        if (!(drinkStack.getItem() instanceof ItemSplashPotion))
-                        {
+                        if (!(drinkStack.getItem() instanceof ItemSplashPotion)) {
                             LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.quenched", chestStack);
 
-                            if (upgrade instanceof LivingArmourUpgradeQuenched)
-                            {
+                            if (upgrade instanceof LivingArmourUpgradeQuenched) {
                                 event.setCanceled(true);
                             }
                         }
@@ -182,24 +154,19 @@ public class LivingArmourHandler
 
     // Applies: Grim Reaper
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onEntityDeath(LivingDeathEvent event)
-    {
-        if (event.getEntityLiving() instanceof EntityPlayer)
-        {
+    public static void onEntityDeath(LivingDeathEvent event) {
+        if (event.getEntityLiving() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 
-            if (LivingArmour.hasFullSet(player))
-            {
+            if (LivingArmour.hasFullSet(player)) {
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-                if (armour != null)
-                {
+                if (armour != null) {
                     StatTrackerGrimReaperSprint.incrementCounter(armour);
 
                     LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.grimReaper", chestStack);
 
-                    if (upgrade instanceof LivingArmourUpgradeGrimReaperSprint && ((LivingArmourUpgradeGrimReaperSprint) upgrade).canSavePlayer(player))
-                    {
+                    if (upgrade instanceof LivingArmourUpgradeGrimReaperSprint && ((LivingArmourUpgradeGrimReaperSprint) upgrade).canSavePlayer(player)) {
                         ((LivingArmourUpgradeGrimReaperSprint) upgrade).applyEffectOnRebirth(player);
                         event.setCanceled(true);
                         event.setResult(Event.Result.DENY);
@@ -213,26 +180,20 @@ public class LivingArmourHandler
 
     // Applies: Jump
     @SubscribeEvent
-    public static void onJumpEvent(LivingEvent.LivingJumpEvent event)
-    {
-        if (event.getEntityLiving() instanceof EntityPlayer)
-        {
+    public static void onJumpEvent(LivingEvent.LivingJumpEvent event) {
+        if (event.getEntityLiving() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 
-            if (LivingArmour.hasFullSet(player))
-            {
+            if (LivingArmour.hasFullSet(player)) {
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-                if (armour != null)
-                {
+                if (armour != null) {
                     StatTrackerJump.incrementCounter(armour);
 
-                    if (!player.isSneaking())
-                    {
+                    if (!player.isSneaking()) {
                         LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(BloodMagic.MODID + ".upgrade.jump", chestStack);
 
-                        if (upgrade instanceof LivingArmourUpgradeJump)
-                        {
+                        if (upgrade instanceof LivingArmourUpgradeJump) {
                             player.motionY += ((LivingArmourUpgradeJump) upgrade).getJumpModifier();
                         }
                     }
@@ -243,34 +204,25 @@ public class LivingArmourHandler
 
     // Applies: Step Assist, Speed Boost
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
-    {
-        if (event.getEntityLiving() instanceof EntityPlayer)
-        {
+    public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
+        if (event.getEntityLiving() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntityLiving();
             boolean hasAssist = false;
-            if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.BOOST))
-            {
+            if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.BOOST)) {
                 hasAssist = true;
                 player.stepHeight = Constants.Misc.ALTERED_STEP_HEIGHT;
-            } else
-            {
-                if (LivingArmour.hasFullSet(player))
-                {
+            } else {
+                if (LivingArmour.hasFullSet(player)) {
                     ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                     LivingArmour armour = ItemLivingArmour.getLivingArmourFromStack(chestStack);
-                    if (armour != null)
-                    {
+                    if (armour != null) {
                         LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.stepAssist", chestStack);
 
-                        if (upgrade instanceof LivingArmourUpgradeStepAssist)
-                        {
-                            if (!player.isSneaking()) 
-                            {
+                        if (upgrade instanceof LivingArmourUpgradeStepAssist) {
+                            if (!player.isSneaking()) {
                                 player.stepHeight = ((LivingArmourUpgradeStepAssist) upgrade).getStepAssist();
                                 hasAssist = true;
-                            } else
-                            {
+                            } else {
                                 player.stepHeight = 0.6F;
                             }
                         }
@@ -283,31 +235,26 @@ public class LivingArmourHandler
 
             float percentIncrease = 0;
 
-            if (LivingArmour.hasFullSet(player))
-            {
+            if (LivingArmour.hasFullSet(player)) {
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 LivingArmour armour = ItemLivingArmour.getLivingArmourFromStack(chestStack);
-                if (armour != null)
-                {
+                if (armour != null) {
                     LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(BloodMagic.MODID + ".upgrade.movement", chestStack);
 
-                    if (upgrade instanceof LivingArmourUpgradeSpeed)
-                    {
+                    if (upgrade instanceof LivingArmourUpgradeSpeed) {
                         percentIncrease += ((LivingArmourUpgradeSpeed) upgrade).getSpeedModifier();
                     }
                 }
             }
 
-            if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.BOOST))
-            {
+            if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.BOOST)) {
                 int i = event.getEntityLiving().getActivePotionEffect(RegistrarBloodMagic.BOOST).getAmplifier();
                 {
                     percentIncrease += (i + 1) * 0.5f;
                 }
             }
 
-            if (percentIncrease > 0 && (player.onGround || player.capabilities.isFlying) && (Math.abs(player.moveForward) > 0 || Math.abs(player.moveStrafing) > 0))
-            {
+            if (percentIncrease > 0 && (player.onGround || player.capabilities.isFlying) && (Math.abs(player.moveForward) > 0 || Math.abs(player.moveStrafing) > 0)) {
                 player.travel(player.moveStrafing * percentIncrease, 0, player.moveForward * percentIncrease);
             }
         }
@@ -316,8 +263,7 @@ public class LivingArmourHandler
     // Applies: Arrow Shot
     // Tracks: Arrow Shot
     @SubscribeEvent
-    public static void onArrowFire(ArrowLooseEvent event)
-    {
+    public static void onArrowFire(ArrowLooseEvent event) {
         World world = event.getEntityPlayer().getEntityWorld();
         ItemStack stack = event.getBow();
         EntityPlayer player = event.getEntityPlayer();
@@ -326,17 +272,14 @@ public class LivingArmourHandler
         if (world.isRemote)
             return;
 
-        if (LivingArmour.hasFullSet(player))
-        {
+        if (LivingArmour.hasFullSet(player)) {
             ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
             LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-            if (armour != null)
-            {
+            if (armour != null) {
                 StatTrackerArrowShot.incrementCounter(armour);
 
                 LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.arrowShot", chestStack);
-                if (upgrade instanceof LivingArmourUpgradeArrowShot)
-                {
+                if (upgrade instanceof LivingArmourUpgradeArrowShot) {
                     int charge = event.getCharge();
                     float velocity = (float) charge / 20.0F;
                     velocity = (velocity * velocity + velocity * 2.0F) / 3.0F;
@@ -350,8 +293,7 @@ public class LivingArmourHandler
                         sentientShot = true;
                     }
                     int extraArrows = ((LivingArmourUpgradeArrowShot) upgrade).getExtraArrows();
-                    for (int n = 0; n < extraArrows; n++)
-                    {
+                    for (int n = 0; n < extraArrows; n++) {
                         ItemStack arrowStack = new ItemStack(Items.ARROW);
                         ItemArrow itemarrow = (ItemArrow) ((stack.getItem() instanceof ItemArrow ? arrowStack.getItem() : Items.ARROW));
                         EntityArrow entityarrow;
@@ -392,21 +334,19 @@ public class LivingArmourHandler
                 }
             }
         }
-    }    
+    }
+
     // Applies: Softfall
     @SubscribeEvent
     public static void onPlayerFall(LivingFallEvent event) {
-        if (event.getEntityLiving() instanceof EntityPlayer)
-        {
+        if (event.getEntityLiving() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 
-            if (LivingArmour.hasFullSet(player))
-            {
+            if (LivingArmour.hasFullSet(player)) {
 
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-                if (armour != null)
-                {
+                if (armour != null) {
                     StatTrackerFallProtect.incrementCounter(armour, event.getDamageMultiplier() * (event.getDistance() - 3));
                     LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.fallProtect", chestStack);
                     if (upgrade instanceof LivingArmourUpgradeFallProtect) {
@@ -417,17 +357,14 @@ public class LivingArmourHandler
             }
         }
     }
-  
+
     // Applies: Arrow Shot
     @SubscribeEvent
-    public static void onProjectileImpact(ProjectileImpactEvent.Arrow event)
-    {
-        if (event.getArrow().removeTag("arrow_shot"))
-        {
+    public static void onProjectileImpact(ProjectileImpactEvent.Arrow event) {
+        if (event.getArrow().removeTag("arrow_shot")) {
             Entity entity = event.getRayTraceResult().entityHit;
 
-            if (entity != null)
-            {
+            if (entity != null) {
                 entity.hurtResistantTime = 0;
             }
         }

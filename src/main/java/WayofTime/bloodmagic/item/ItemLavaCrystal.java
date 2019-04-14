@@ -70,7 +70,7 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
             return null;
 
         NBTTagCompound nbt = (NBTTagCompound) bindingTag;
-        return new Binding(NBTUtil.getUUIDFromTag(nbt.getCompoundTag("id")),nbt.getString("name"));
+        return new Binding(NBTUtil.getUUIDFromTag(nbt.getCompoundTag("id")), nbt.getString("name"));
     }
 
     @Override

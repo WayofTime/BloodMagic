@@ -385,9 +385,9 @@ public class EntitySentientSpecter extends EntityDemonBase {
     @Override
     public boolean shouldAttackEntity(EntityLivingBase attacker, EntityLivingBase owner) {
         if (!(attacker instanceof EntityCreeper) && !(attacker instanceof EntityGhast)) {
-                return super.shouldAttackEntity(attacker, owner);
-            }
-            return false;
+            return super.shouldAttackEntity(attacker, owner);
+        }
+        return false;
     }
 
     @Override

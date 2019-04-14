@@ -8,8 +8,7 @@ import net.minecraft.util.NonNullList;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-public class RecipeSacrificeCraft
-{
+public class RecipeSacrificeCraft {
     @Nonnull
     private final NonNullList<Ingredient> input;
     @Nonnull
@@ -17,8 +16,7 @@ public class RecipeSacrificeCraft
     @Nonnegative
     private final double healthRequired;
 
-    public RecipeSacrificeCraft(@Nonnull NonNullList<Ingredient> input, @Nonnull ItemStack output, @Nonnegative double healthRequired)
-    {
+    public RecipeSacrificeCraft(@Nonnull NonNullList<Ingredient> input, @Nonnull ItemStack output, @Nonnegative double healthRequired) {
         Preconditions.checkNotNull(input, "input cannot be null.");
         Preconditions.checkNotNull(output, "output cannot be null.");
         Preconditions.checkArgument(healthRequired >= 0, "healthRequired cannot be negative.");
@@ -29,20 +27,17 @@ public class RecipeSacrificeCraft
     }
 
     @Nonnull
-    public final NonNullList<Ingredient> getInput()
-    {
+    public final NonNullList<Ingredient> getInput() {
         return input;
     }
 
     @Nonnull
-    public final ItemStack getOutput()
-    {
+    public final ItemStack getOutput() {
         return output;
     }
 
     @Nonnegative
-    public final double getHealthRequired()
-    {
+    public final double getHealthRequired() {
         return healthRequired;
     }
 }
