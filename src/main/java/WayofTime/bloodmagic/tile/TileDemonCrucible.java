@@ -204,7 +204,7 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
 
     @Override
     public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction) {
-        return !stack.isEmpty() && (stack.getItem() instanceof IDemonWillGem || stack.getItem() instanceof IDiscreteDemonWill);
+        return !stack.isEmpty() && inventory.get(0).isEmpty() && (stack.getItem() instanceof IDemonWillGem || stack.getItem() instanceof IDiscreteDemonWill);
     }
 
     @Override
