@@ -80,7 +80,7 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase implements ISigil
     protected boolean tryInsertSigilFluid(IFluidHandler destination, boolean doTransfer) {
         if (destination == null)
             return false;
-        return destination.fill(sigilFluid, doTransfer) > 0;
+        return destination.fill(sigilFluid.copy(), doTransfer) > 0;
     }
 
     /* Tries basically the oppostive of the above, removing fluids instead of adding them
@@ -118,8 +118,8 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase implements ISigil
         }
 
         //If the fluid vaporizes, this exists here in the lava sigil solely so the code is usable for other fluids
-        if (world.provider.doesWaterVaporize() && fluid.doesVaporize(sigilFluid)) {
-            fluid.vaporize(player, world, blockPos, sigilFluid);
+        if (world.provider.doesWaterVaporize() && fluid.doesVaporize(sigilFluid.copy())) {
+            fluid.vaporize(player, world, blockPos, sigilFluid.copy());
             return true;
         }
 
@@ -137,7 +137,7 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase implements ISigil
 
     @Override
     public FluidStack getFluid(ItemStack sigil) {
-        return sigilFluid;
+        return sigilFluid.copy();
     }
 
     @Override
@@ -162,7 +162,7 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase implements ISigil
         if (doDrain)
             network.syphon(SoulTicket.item(sigil, getLpUsed()));
 
-        return sigilFluid;
+        return sigilFluid.copy();
     }
 
     @Override
