@@ -49,7 +49,7 @@ public class TileTeleposer extends TileInventory implements ITickable {
 
     @Override
     public void update() {
-        if (!getWorld().isRemote) {
+        if (!getWorld().isRemote && canInitiateTeleport()) {
             int currentInput = getWorld().getStrongPower(pos);
 
             if (previousInput == 0 && currentInput != 0) {
