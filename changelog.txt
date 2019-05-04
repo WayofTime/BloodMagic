@@ -33,7 +33,7 @@ Misc:
     - Fixed "Blood Letter's Pack" and "Coat of Arms" passing the wrong hand
     - Stop insertions into Demon Crucible if the inventory is not empty
     - Fixed abnormal deaths at your own hands through the sacrificial dagger (hopefully)
-    - Fixed "Unbending" mod incompatibility
+    - Fixed "Unmending" mod incompatibility
     - Fixed world unload crash
     - Fixed Teleposers crashing if someone force-fed it junk
     - added Nut being angery at contributors for messing stuff up
