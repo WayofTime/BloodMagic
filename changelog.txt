@@ -1,4 +1,52 @@
 ------------------------------------------------------
+Version 2.4.?
+------------------------------------------------------
+
+Nut was too lazy to create a changelog, it's AEon's turn now!
+Based on commit history from Feb 02 - May the 4th be with you
+
+
+Living Armor:
+    - Fixed "Soft Fall" not preventing damage
+    - "Nocturnal Prowess" should not flash anymore
+    - "Trickshot" now ignores HurtResistanceTime
+    - "Trickshot" now works properly with sentient arrows
+    - "Step Assist" does not take effect while sneaking
+
+Sentient Bow:
+    - Fixed Destructive Will arrows exploding continuously
+    - Fixed Tipped Arrows getting improved even if no Will can be used
+
+Sigils:
+    - Buffed "Sigil of the Fast Miner" to be in accordance to the "Sanguine Scientium"
+    - Fixed a bug where "Sigil of the Fast Miner" would also cause the whirlwind effect
+    - Added "Whirlwind" to the potion registry
+    - Fixed broken Sigil tooltip formatting
+
+Misc:
+    - Fixed routing node oredict filter
+    - Use TextFormatting rather than color codes in block lang names
+    - Mystery drain still mysterious
+    - Fixed some and streamlined ritual block ranges
+    - Formatted Project code
+    - Fixed BlockState parsing
+    - Fixed "Blood Letter's Pack" and "Coat of Arms" passing the wrong hand
+    - Stop insertions into Demon Crucible if the inventory is not empty
+    - Fixed abnormal deaths at your own hands through the sacrificial dagger (hopefully)
+    - Fixed "Unbending" mod incompatibility
+    - Fixed world unload crash
+    - Fixed Teleposers crashing if someone force-fed it junk
+    - added Nut being angery at contributors for messing stuff up
+
+Not merged yet:
+    - Fixed "Serenade of the Nether" replacing lava source blocks with lava
+    - Fixed "Gate of the Fold" and altered its functionality to accomodate multiple portals with the same key
+    - Fixed FluidSigils only filling fractions of a bucket and not being able to place liquids after having filled fractions of a bucket once
+    - Added Veil of Evil & Ward of Sacrosanctity
+    - Added additional Sentient Sword mechanics if a Sigil is held in the offhand slot
+    - Added creative item handling and new creative/test items
+
+------------------------------------------------------
 Version 2.4.0
 ------------------------------------------------------
 
