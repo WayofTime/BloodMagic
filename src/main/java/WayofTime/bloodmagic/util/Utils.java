@@ -1,16 +1,15 @@
 package WayofTime.bloodmagic.util;
 
 import WayofTime.bloodmagic.altar.ComponentType;
-import WayofTime.bloodmagic.iface.IDemonWillViewer;
-import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.iface.IDemonWillViewer;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.PlayerVelocityPacketProcessor;
 import WayofTime.bloodmagic.tile.TileInventory;
+import WayofTime.bloodmagic.util.helper.NBTHelper;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -42,7 +41,6 @@ import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -801,7 +799,7 @@ public class Utils {
 
     public static boolean isFlowingLiquid(World world, BlockPos pos, IBlockState state) {
         Block block = state.getBlock();
-        return ((block instanceof IFluidBlock && Math.abs(((IFluidBlock) block).getFilledPercentage(world, pos)) == 1) || (block instanceof BlockLiquid && block.getMetaFromState(state) != 0));
+        return isBlockLiquid(state) && !(state == block.getDefaultState());
     }
 
     public static boolean spawnStackAtBlock(World world, BlockPos pos, @Nullable EnumFacing pushDirection, ItemStack stack) {
