@@ -25,18 +25,20 @@ Sigils:
 
 Misc:
     - Fixed routing node oredict filter
-    - Use TextFormatting rather than color codes in block lang names
-    - Mystery drain still mysterious
-    - Fixed some and streamlined ritual block ranges
+    - Fixed "Blood Letter's Pack" and "Coat of Arms" always being used in the main hand slot (action bar/hotbar)
+    - Stop insertions into Demon Crucible if the inventory is not empty
+    - Fixed abnormal deaths at your own hands through the sacrificial dagger (hopefully) (Gravestone bugginess)
+    - Fixed "Unmending" mod incompatibility
+    - Fixed Teleposers crashing the game if someone force-fed it junk
+    - added Nut being angery at contributors for messing stuff up
+
+Technical Stuff no player cares about:
     - Formatted Project code
     - Fixed BlockState parsing
-    - Fixed "Blood Letter's Pack" and "Coat of Arms" passing the wrong hand
-    - Stop insertions into Demon Crucible if the inventory is not empty
-    - Fixed abnormal deaths at your own hands through the sacrificial dagger (hopefully)
-    - Fixed "Unmending" mod incompatibility
-    - Fixed world unload crash
-    - Fixed Teleposers crashing if someone force-fed it junk
-    - added Nut being angery at contributors for messing stuff up
+    - Fixed some and streamlined ritual block ranges
+    - Mystery drain still mysterious
+    - Use TextFormatting rather than color codes in block lang names
+    - Fixed world unload crash (may happen if a world is loaded by world generators or JEI Resource graphing)
 
 Not merged yet:
     - Fixed "Serenade of the Nether" replacing lava source blocks with lava
