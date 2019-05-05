@@ -41,10 +41,10 @@ Technical Stuff no player cares about:
     - Fixed world unload crash (may happen if a world is loaded by world generators or JEI Resource graphing)
 
 Not merged yet:
-    - Fixed "Serenade of the Nether" replacing lava source blocks with lava
+    - Fixed "Serenade of the Nether" replacing lava source blocks with lava (fixed underlying function to detect flowing liquids)
     - Fixed "Gate of the Fold" and altered its functionality to accomodate multiple portals with the same key
     - Fixed FluidSigils only filling fractions of a bucket and not being able to place liquids after having filled fractions of a bucket once
-    - Added Veil of Evil & Ward of Sacrosanctity
+    - Ported Veil of Evil & Ward of Sacrosanctity
     - Added additional Sentient Sword mechanics if a Sigil is held in the offhand slot
     - Added creative item handling and new creative/test items
 
