@@ -797,7 +797,7 @@ public class Utils {
         return (state instanceof IFluidBlock || state.getMaterial().isLiquid());
     }
 
-    public static boolean isFlowingLiquid(World world, BlockPos pos, IBlockState state) {
+    public static boolean isFlowingLiquid(IBlockState state) {
         Block block = state.getBlock();
         return isBlockLiquid(state) && !(state == block.getDefaultState());
     }

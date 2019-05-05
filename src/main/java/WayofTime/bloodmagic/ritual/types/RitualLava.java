@@ -85,7 +85,7 @@ public class RitualLava extends Ritual {
 
         for (BlockPos newPos : lavaRange.getContainedPositions(pos)) {
             IBlockState state = world.getBlockState(newPos);
-            if (world.isAirBlock(newPos) || Utils.isFlowingLiquid(world, newPos, state)) {
+            if (world.isAirBlock(newPos) || Utils.isFlowingLiquid(state)) {
                 int lpCost = getLPCostForRawWill(rawWill);
                 if (currentEssence < lpCost) {
                     break;
