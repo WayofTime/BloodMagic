@@ -6,6 +6,8 @@ import net.minecraft.world.World;
 
 
 public class AdvancedCompressionHandler extends CompressionHandler {
+    private ItemStack stack;
+    private ItemStack lastInvStack = ItemStack.EMPTY;
 
     public ItemStack compressInventory(ItemStack[] inv, World world) {
         for (ItemStack invStack : inv) {
@@ -14,8 +16,7 @@ public class AdvancedCompressionHandler extends CompressionHandler {
             }
 
             for (int i = 3; i >= 2; i--) {
-                ItemStack stack;
-                ItemStack lastInvStack = ItemStack.EMPTY;
+
                 if (!CompressionRegistry.areItemStacksEqual(invStack, lastInvStack)) {
                     StorageBlockCraftingManager.reversibleCheck = invStack;
                     stack = StorageBlockCraftingManager.getRecipe(invStack, world, i);
