@@ -47,6 +47,8 @@ Not merged yet:
     - Ported Veil of Evil & Ward of Sacrosanctity
     - Added additional Sentient Sword mechanics if a Sigil is held in the offhand slot
     - Added creative item handling and new creative/test items
+    - Fixed "Sigil of Compression" bug that would eat leftover items (usually everything between 55 and 64 items for a 3x3 compression)
+    - Greatly improved "Sigil of Compression" performance
 
 ------------------------------------------------------
 Version 2.4.0
