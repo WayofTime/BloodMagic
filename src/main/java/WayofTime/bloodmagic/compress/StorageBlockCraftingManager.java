@@ -38,7 +38,7 @@ public class StorageBlockCraftingManager {
     };
     static ItemStack reversibleCheck;
     private HashSet<IRecipe> recipes = new HashSet<>(); // TODO: Clear when recipes are reloaded in 1.14
-    private Set<Item> blacklist = new HashSet<>();
+    private Set<ItemStack> blacklist = new HashSet<>();
 
     public static boolean isResultStackReversible(ItemStack stack, World world) {
         if (stack.isEmpty()) {
@@ -53,7 +53,7 @@ public class StorageBlockCraftingManager {
 
     public static ItemStack getRecipe(ItemStack stack, World world, int gridSize) {
         StorageBlockCraftingManager craftingManagerSB = getInstance();
-        if (craftingManagerSB.blacklist.contains(stack.getItem())) {
+        if (craftingManagerSB.blacklist.contains(stack)) {
             return ItemStack.EMPTY;
         }
         InventoryCrafting inventory = inventoryCrafting[3 - gridSize];
@@ -70,7 +70,7 @@ public class StorageBlockCraftingManager {
             craftingManagerSB.addRecipe(CraftingManager.findMatchingRecipe(inventory, world));
             return result;
         }
-        craftingManagerSB.blacklist.add(stack.getItem());
+        craftingManagerSB.blacklist.add(stack);
         return ItemStack.EMPTY;
     }
 

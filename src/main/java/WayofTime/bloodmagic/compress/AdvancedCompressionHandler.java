@@ -1,12 +1,11 @@
 package WayofTime.bloodmagic.compress;
 
-
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.World;
 
 
 public class AdvancedCompressionHandler extends CompressionHandler {
-    private ItemStack lastInvStack = ItemStack.EMPTY;
 
     public ItemStack compressInventory(ItemStack[] inv, World world) {
         for (ItemStack invStack : inv) {
@@ -15,17 +14,26 @@ public class AdvancedCompressionHandler extends CompressionHandler {
             }
 
             for (int i = 3; i >= 2; i--) {
+                ItemStack invStackCopy = invStack.copy();
+                invStackCopy.setCount(1);
+                Tuple<ItemStack, Integer> stackTuple = CompressionRegistry.compressionMap.get(invStackCopy);
                 ItemStack stack;
-                if (!CompressionRegistry.areItemStacksEqual(invStack, lastInvStack)) {
+                if (stackTuple == null) {
                     StorageBlockCraftingManager.reversibleCheck = invStack;
                     stack = StorageBlockCraftingManager.getRecipe(invStack, world, i);
+                    if (stack.isEmpty())
+                        continue;
+                    CompressionRegistry.compressionMap.put(invStackCopy, new Tuple<>(stack, i * i));
                 } else {
-                    stack = lastInvStack;
+                    stack = stackTuple.getFirst();
+                    if (stackTuple.getSecond() != i * i)
+                        return ItemStack.EMPTY;
                 }
+
                 if (!stack.isEmpty()) {
 
                     int needed = (i == 2 ? 4 : 9);
-                    int remaining = iterateThroughInventory(invStack, invStack.getMaxStackSize() - needed, inv, needed, true); // if more than needed gets consumed at any point, the simulate test was needed after all
+                    int remaining = iterateThroughInventory(invStack, CompressionRegistry.getItemThreshold(invStack, needed), inv, needed, true);
                     if (remaining <= 0)
                         return stack;
                 }
