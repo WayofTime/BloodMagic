@@ -25,6 +25,7 @@ Sigils:
 
 Misc:
     - Fixed routing node oredict filter
+    - Fixed mimic vanishing in some cases
     - Fixed "Blood Letter's Pack" and "Coat of Arms" always being used in the main hand slot (action bar/hotbar)
     - Stop insertions into Demon Crucible if the inventory is not empty
     - Fixed abnormal deaths at your own hands through the sacrificial dagger (hopefully) (Gravestone bugginess)
@@ -34,7 +35,7 @@ Misc:
 
 Technical Stuff no player cares about:
     - Formatted Project code
-    - Fixed BlockState parsing
+    - Fixed BlockState parsing (mimic vanishing)
     - Fixed some and streamlined ritual block ranges
     - Mystery drain still mysterious
     - Use TextFormatting rather than color codes in block lang names
