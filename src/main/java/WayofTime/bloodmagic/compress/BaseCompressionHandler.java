@@ -1,10 +1,12 @@
 package WayofTime.bloodmagic.compress;
 
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.World;
 
 public class BaseCompressionHandler extends CompressionHandler {
-    private final ItemStack required;
+    public final ItemStack required;
     private final ItemStack result;
     private final int leftover;
 
@@ -32,6 +34,26 @@ public class BaseCompressionHandler extends CompressionHandler {
         }
 
         return ItemStack.EMPTY;
+    }
+
+    protected void compress(InventoryPlayer inv, Tuple<ItemStack, Integer> stackAndAmount) {
+        /* Calculates how many compressed items can be added and how much should be left.
+            Proceeds to first add the items that should be left over and then the compressed items to the inventory.
+         */
+        int keptAmount = this.getLeftover() + stackAndAmount.getSecond() % this.required.getCount();
+        int resultAmount = (stackAndAmount.getSecond() - keptAmount) / this.required.getCount();
+        ItemStack kept = stackAndAmount.getFirst();
+        while (keptAmount > 64) {
+            kept.setCount(64);
+            inv.addItemStackToInventory(kept);
+            keptAmount -= 64;
+        }
+        kept.setCount(keptAmount);
+        inv.addItemStackToInventory(kept);
+
+        for (int i = 0; i < resultAmount; i++) {
+            inv.addItemStackToInventory(this.result);
+        }
     }
 
     public int getRemainingNeeded(ItemStack[] inv) {

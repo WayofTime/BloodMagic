@@ -1,15 +1,13 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.compress.CompressionRegistry;
-import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
-import WayofTime.bloodmagic.core.registry.AlchemyTableRecipeRegistry;
+import WayofTime.bloodmagic.compress.CompressionHandler;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.ritual.crushing.CrushingRegistry;
 import WayofTime.bloodmagic.ritual.crushing.ICrushingHandler;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.util.Utils;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
@@ -27,11 +25,9 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 @RitualRegister("crushing")
@@ -216,7 +212,7 @@ public class RitualCrushing extends Ritual {
         }
 
         if (hasOperated && tile != null && vengefulWill >= vengefulWillDrain) {
-            Pair<ItemStack, Boolean> pair = CompressionRegistry.compressInventory(tile, world);
+            Pair<ItemStack, Boolean> pair = CompressionHandler.compressInventory(tile, world);
             if (pair.getRight()) {
                 ItemStack returned = pair.getLeft();
                 if (returned != null) {

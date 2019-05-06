@@ -1,16 +1,8 @@
 package WayofTime.bloodmagic.compress;
 
-import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,11 +10,14 @@ import java.util.Map;
  * form.
  */
 public class CompressionRegistry {
-    public static List<CompressionHandler> compressionRegistry = new ArrayList<>();
+    public static Map<ItemStack, BaseCompressionHandler> compressionRegistry = new HashMap<>();
+    public static AdvancedCompressionHandler advancedCompressionHandler = new AdvancedCompressionHandler();
     public static Map<ItemStack, Integer> thresholdMap = new HashMap<>();
 
-    public static void registerHandler(CompressionHandler handler) {
-        compressionRegistry.add(handler);
+    public static void registerBaseHandler(BaseCompressionHandler handler) {
+        ItemStack standardized = handler.required.copy();
+        standardized.setCount(1);
+        compressionRegistry.put(standardized, handler);
     }
 
     /**
@@ -33,48 +28,6 @@ public class CompressionRegistry {
      */
     public static void registerItemThreshold(ItemStack stack, int threshold) {
         thresholdMap.put(stack, threshold);
-    }
-
-    public static ItemStack compressInventory(ItemStack[] inv, World world) {
-        for (CompressionHandler handler : compressionRegistry) {
-            ItemStack stack = handler.compressInventory(inv, world);
-            if (!stack.isEmpty()) {
-                return stack;
-            }
-        }
-
-        return null;
-    }
-
-    public static Pair<ItemStack, Boolean> compressInventory(TileEntity tile, World world) {
-        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
-            IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-            ItemStack[] inventory = new ItemStack[itemHandler.getSlots()]; //THIS MUST NOT BE EDITED!
-            ItemStack[] copyInventory = new ItemStack[itemHandler.getSlots()];
-
-            for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
-                inventory[slot] = itemHandler.extractItem(slot, 64, true);
-                copyInventory[slot] = inventory[slot].copy();
-            }
-
-            for (CompressionHandler handler : compressionRegistry) {
-                ItemStack stack = handler.compressInventory(copyInventory, world);
-                if (!stack.isEmpty()) {
-                    for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
-                        if (inventory[slot] != null && !ItemStack.areItemStacksEqual(inventory[slot], copyInventory[slot])) {
-                            itemHandler.extractItem(slot, inventory[slot].getCount(), false);
-                            if (copyInventory[slot] != null) {
-                                itemHandler.insertItem(slot, copyInventory[slot], false);
-                            }
-                        }
-                    }
-
-                    return Pair.of(Utils.insertStackIntoTile(stack, itemHandler), true);
-                }
-            }
-        }
-
-        return Pair.of(ItemStack.EMPTY, false);
     }
 
     public static int getItemThreshold(ItemStack stack) {

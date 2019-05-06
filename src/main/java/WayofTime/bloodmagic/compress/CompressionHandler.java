@@ -1,17 +1,79 @@
 package WayofTime.bloodmagic.compress;
 
+import WayofTime.bloodmagic.util.Utils;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import org.apache.commons.lang3.tuple.Pair;
 
-public abstract class CompressionHandler {
-    /**
-     * Called to look at the inventory and syphons the required stack. Returns
-     * resultant stack if successful, and null if not.
-     *
-     * @param inv The inventory iterated through
-     * @return The result of the compression
-     */
-    public abstract ItemStack compressInventory(ItemStack[] inv, World world);
+import java.util.HashMap;
+import java.util.Map;
+
+public class CompressionHandler {
+    public ItemStack compressInventory(ItemStack[] inv, World world) {
+        return null;
+    }
+
+    public void compressInventory(InventoryPlayer inv, World world) {
+        // Assigns existing BaseCompressionHandlers to their standardized ItemStacks with the amount found in the inventory (ex: handler, Snowball, 154) -> 154 Snowballs in the whole inventory
+        Map<BaseCompressionHandler, Tuple<ItemStack, Integer>> compressor = new HashMap<>();
+        for (ItemStack i : inv.mainInventory) {
+            if (!i.isEmpty()) {
+                ItemStack standardized = i.copy();
+                standardized.setCount(1);
+                BaseCompressionHandler handler = CompressionRegistry.compressionRegistry.get(standardized);
+                if (handler != null) {
+                    compressor.put(handler, new Tuple<>(standardized, compressor.get(handler).getSecond() + i.getCount()));
+                }
+            }
+        }
+        for (BaseCompressionHandler i : compressor.keySet()) {
+            i.compress(inv, compressor.get(i));
+        }
+
+        CompressionRegistry.advancedCompressionHandler.compressInventory(inv, world);
+    }
+
+
+    // got lazy at the end... no advanced compression for this one
+    // TODO: Implement correctly
+    // TODO: Fix it
+    // TODO: Advanced Handler
+    // F.M.L.
+    public static Pair<ItemStack, Boolean> compressInventory(TileEntity tile, World world) {
+        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
+            IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+            ItemStack[] inventory = new ItemStack[itemHandler.getSlots()]; //THIS MUST NOT BE EDITED!
+            ItemStack[] copyInventory = new ItemStack[itemHandler.getSlots()];
+
+            for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
+                inventory[slot] = itemHandler.extractItem(slot, 64, true);
+                copyInventory[slot] = inventory[slot].copy();
+            }
+
+            for (BaseCompressionHandler handler : CompressionRegistry.compressionRegistry.values()) {
+                ItemStack stack = handler.compressInventory(copyInventory, world);
+                if (!stack.isEmpty()) {
+                    for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
+                        if (inventory[slot] != null && !ItemStack.areItemStacksEqual(inventory[slot], copyInventory[slot])) {
+                            itemHandler.extractItem(slot, inventory[slot].getCount(), false);
+                            if (copyInventory[slot] != null) {
+                                itemHandler.insertItem(slot, copyInventory[slot], false);
+                            }
+                        }
+                    }
+
+                    return Pair.of(Utils.insertStackIntoTile(stack, itemHandler), true);
+                }
+            }
+        }
+
+        return Pair.of(ItemStack.EMPTY, false);
+    }
 
     public int iterateThroughInventory(ItemStack required, int kept, ItemStack[] inv, int needed, boolean doDrain) {
         int i = -1;

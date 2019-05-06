@@ -1,47 +1,7 @@
 package WayofTime.bloodmagic.registry;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.oredict.OreDictionary;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectArrowTurret;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectAttractor;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBinding;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBounce;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectFurnaceFuel;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectLaputa;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectMobSacrifice;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectMovement;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectSigil;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectSkeletonTurret;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectSpike;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectTeleport;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectUpdraft;
-import WayofTime.bloodmagic.client.render.alchemyArray.AttractorAlchemyCircleRenderer;
-import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
-import WayofTime.bloodmagic.client.render.alchemyArray.DualAlchemyCircleRenderer;
-import WayofTime.bloodmagic.client.render.alchemyArray.LowAlchemyCircleRenderer;
-import WayofTime.bloodmagic.client.render.alchemyArray.LowStaticAlchemyCircleRenderer;
-import WayofTime.bloodmagic.client.render.alchemyArray.MobSacrificeAlchemyCircleRenderer;
-import WayofTime.bloodmagic.client.render.alchemyArray.SingleAlchemyCircleRenderer;
-import WayofTime.bloodmagic.client.render.alchemyArray.StaticAlchemyCircleRenderer;
-import WayofTime.bloodmagic.client.render.alchemyArray.TurretAlchemyCircleRenderer;
-import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
+import WayofTime.bloodmagic.alchemyArray.*;
+import WayofTime.bloodmagic.client.render.alchemyArray.*;
 import WayofTime.bloodmagic.compress.BaseCompressionHandler;
 import WayofTime.bloodmagic.compress.CompressionRegistry;
 import WayofTime.bloodmagic.compress.StorageBlockCraftingManager;
@@ -53,22 +13,30 @@ import WayofTime.bloodmagic.core.registry.LivingArmourDowngradeRecipeRegistry;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.item.types.ComponentTypes;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeBattleHungry;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeDigSlowdown;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeDisoriented;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeMeleeDecrease;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowHeal;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowness;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeStormTrooper;
+import WayofTime.bloodmagic.livingArmour.downgrade.*;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableDyeableRecipe;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTablePotionRecipe;
 import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.Utils;
-
 import com.google.common.base.Stopwatch;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class ModRecipes {
 
@@ -135,9 +103,8 @@ public class ModRecipes {
         Stopwatch stopwatch = Stopwatch.createStarted();
         StorageBlockCraftingManager.getInstance().addStorageBlockRecipes();
 
-        CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.GLOWSTONE_DUST, 4, 0), new ItemStack(Blocks.GLOWSTONE), 64));
-        CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.SNOWBALL, 4, 0), new ItemStack(Blocks.SNOW), 8));
-        CompressionRegistry.registerHandler(new AdvancedCompressionHandler());
+        CompressionRegistry.registerBaseHandler(new BaseCompressionHandler(new ItemStack(Items.GLOWSTONE_DUST, 4, 0), new ItemStack(Blocks.GLOWSTONE), 64));
+        CompressionRegistry.registerBaseHandler(new BaseCompressionHandler(new ItemStack(Items.SNOWBALL, 4, 0), new ItemStack(Blocks.SNOW), 8));
 
         stopwatch.stop();
 
