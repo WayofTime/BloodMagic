@@ -830,6 +830,7 @@ commands.bloodmagic.help.help=Displays the help information for the "/bloodmagic
 
 commands.bloodmagic.network.usage=/bloodmagic network [syphon|add|get|fill|cap] player [amount]
 commands.bloodmagic.network.help=LP network utilities
+
 commands.bloodmagic.network.syphon.help=Removes the given amount of LP from the given player's LP network.
 commands.bloodmagic.network.syphon.success=Successfully syphoned %d LP from %s.
 commands.bloodmagic.network.syphon.usage=/bloodmagic network syphon [player] [amount]
@@ -848,7 +849,8 @@ commands.bloodmagic.network.fill.success=Successfully filled %s's LP network.
 commands.bloodmagic.network.cap.help=Fills the given player's LP network to the max that their highest Blood Orb can store.
 commands.bloodmagic.network.cap.usage=/bloodmagic network cap [player]
 commands.bloodmagic.network.cap.success=Successfully capped off %s's LP network.
-
+commands.bloodmagic.network.tickethistory.help=Shows the soul ticket history containing information about LP consumers for the player
+commands.bloodmagic.network.tickethistory.usage=/bloodmagic network tickethistory [player]
 
 commands.bloodmagic.bind.usage=/bloodmagic bind [true|false] [player] ("?" or "help" for help)
 commands.bloodmagic.bind.help=Attempts to (un)bind the currently held item.
