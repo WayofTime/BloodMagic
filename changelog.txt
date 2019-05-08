@@ -1,9 +1,10 @@
 ------------------------------------------------------
 Version 2.4.?
 ------------------------------------------------------
+            ^- fill in appropriate version number
 
 Nut was too lazy to create a changelog, it's AEon's turn now!
-Based on commit history from Feb 02 - May the 4th be with you
+Changes made from Feb 02 - now (Fill end date in later)
 
 
 Living Armor:
@@ -46,10 +47,12 @@ Not merged yet:
     - Fixed "Gate of the Fold" and altered its functionality to accomodate multiple portals with the same key
     - Fixed FluidSigils only filling fractions of a bucket and not being able to place liquids after having filled fractions of a bucket once
     - Ported Veil of Evil & Ward of Sacrosanctity
-    - Added additional Sentient Sword mechanics if a Sigil is held in the offhand slot
+    - Added additional Sentient Sword mechanics if a Sigil is held in the offhand slot (effects applied on attack)
     - Added creative item handling and new creative/test items
     - Fixed "Sigil of Compression" bug that would eat leftover items (usually everything between 55 and 64 items for a 3x3 compression)
     - Greatly improved "Sigil of Compression" performance
+    - Fixed `/bloodmagic network get` command
+    - Added translation keys for tickethistory command help strings
 
 ------------------------------------------------------
 Version 2.4.0
