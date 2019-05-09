@@ -53,6 +53,7 @@ Not merged yet:
     - Greatly improved "Sigil of Compression" performance
     - Fixed `/bloodmagic network get` command
     - Added translation keys for tickethistory command help strings
+    - Added repair recipes for Sentient Tools & Living Armor to JEI
 
 ------------------------------------------------------
 Version 2.4.0
