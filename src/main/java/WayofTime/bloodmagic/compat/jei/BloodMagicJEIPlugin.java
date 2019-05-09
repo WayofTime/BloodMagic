@@ -34,9 +34,15 @@ import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.ItemHelper.LivingUpgrades;
 import mezz.jei.api.*;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
+import mezz.jei.api.recipe.IRecipeWrapper;
+import mezz.jei.api.recipe.IVanillaRecipeFactory;
+import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 @JEIPlugin
@@ -57,6 +63,8 @@ public class BloodMagicJEIPlugin implements IModPlugin {
         registry.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArrayRecipes(), Constants.Compat.JEI_CATEGORY_ALCHEMYARRAY);
         registry.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyRecipes(), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
         registry.addRecipes(AlchemyTableRecipeRegistry.getRecipeList(), Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
+
+        registry.addRecipes(getAnvilRecipes(), VanillaRecipeCategoryUid.ANVIL);
 
         registry.handleRecipes(RecipeBloodAltar.class, AltarRecipeJEI::new, Constants.Compat.JEI_CATEGORY_ALTAR);
         registry.handleRecipes(RecipeTartaricForge.class, TartaricForgeRecipeJEI::new, Constants.Compat.JEI_CATEGORY_SOULFORGE);
@@ -126,5 +134,56 @@ public class BloodMagicJEIPlugin implements IModPlugin {
                 new AlchemyTableRecipeCategory(),
                 new ArmourDowngradeRecipeCategory()
         );
+    }
+
+    public Collection<IRecipeWrapper> getAnvilRecipes() {
+        IVanillaRecipeFactory vanillaRecipeFactory = jeiHelper.getVanillaRecipeFactory();
+
+        List<ItemStack> outputSwords = new LinkedList<>();
+        List<ItemStack> outputPickaxes = new LinkedList<>();
+        List<ItemStack> outputAxes = new LinkedList<>();
+        List<ItemStack> outputBows = new LinkedList<>();
+        List<ItemStack> outputShovels = new LinkedList<>();
+
+        List<ItemStack> inputRight = new LinkedList<>();
+
+        List<List<ItemStack>> sentientOutputs = new LinkedList<>();
+
+        List<ItemStack> sentientTools = new LinkedList<>();
+        sentientTools.add(new ItemStack(RegistrarBloodMagicItems.SENTIENT_AXE));
+        sentientTools.add(new ItemStack(RegistrarBloodMagicItems.SENTIENT_PICKAXE));
+        sentientTools.add(new ItemStack(RegistrarBloodMagicItems.SENTIENT_BOW));
+        sentientTools.add(new ItemStack(RegistrarBloodMagicItems.SENTIENT_SHOVEL));
+        sentientTools.add(new ItemStack(RegistrarBloodMagicItems.SENTIENT_SWORD));
+
+        for (int i = 4; i > 0; i--) {
+            for (ItemStack j : sentientTools) {
+                int maxDmg = j.getMaxDamage();
+                j.setItemDamage(maxDmg - (maxDmg / 4) * i);
+            }
+            outputAxes.add(sentientTools.get(0).copy());
+            outputPickaxes.add(sentientTools.get(1).copy());
+            outputBows.add(sentientTools.get(2).copy());
+            outputShovels.add(sentientTools.get(3).copy());
+            outputSwords.add(sentientTools.get(4).copy());
+
+            inputRight.add(new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, i));
+        }
+        sentientOutputs.add(outputAxes);
+        sentientOutputs.add(outputPickaxes);
+        sentientOutputs.add(outputBows);
+        sentientOutputs.add(outputShovels);
+        sentientOutputs.add(outputSwords);
+
+
+        Collection<IRecipeWrapper> collection = new LinkedList<>();
+
+        for (int i = 0; i < 5; i++) {
+            ItemStack inputLeft = sentientTools.get(i);
+            inputLeft.setItemDamage(inputLeft.getMaxDamage());
+            collection.add(vanillaRecipeFactory.createAnvilRecipe(inputLeft, inputRight, sentientOutputs.get(i)));
+        }
+
+        return collection;
     }
 }
