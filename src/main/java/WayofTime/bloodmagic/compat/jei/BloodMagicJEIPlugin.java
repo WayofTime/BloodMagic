@@ -139,13 +139,16 @@ public class BloodMagicJEIPlugin implements IModPlugin {
     public Collection<IRecipeWrapper> getAnvilRecipes() {
         IVanillaRecipeFactory vanillaRecipeFactory = jeiHelper.getVanillaRecipeFactory();
 
+
+        /* Sentient Tool repair recipes */
+
         List<ItemStack> outputSwords = new LinkedList<>();
         List<ItemStack> outputPickaxes = new LinkedList<>();
         List<ItemStack> outputAxes = new LinkedList<>();
         List<ItemStack> outputBows = new LinkedList<>();
         List<ItemStack> outputShovels = new LinkedList<>();
 
-        List<ItemStack> inputRight = new LinkedList<>();
+        List<ItemStack> inputRightSentient = new LinkedList<>();
 
         List<List<ItemStack>> sentientOutputs = new LinkedList<>();
 
@@ -167,7 +170,7 @@ public class BloodMagicJEIPlugin implements IModPlugin {
             outputShovels.add(sentientTools.get(3).copy());
             outputSwords.add(sentientTools.get(4).copy());
 
-            inputRight.add(new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, i));
+            inputRightSentient.add(new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, i));
         }
         sentientOutputs.add(outputAxes);
         sentientOutputs.add(outputPickaxes);
@@ -181,7 +184,47 @@ public class BloodMagicJEIPlugin implements IModPlugin {
         for (int i = 0; i < 5; i++) {
             ItemStack inputLeft = sentientTools.get(i);
             inputLeft.setItemDamage(inputLeft.getMaxDamage());
-            collection.add(vanillaRecipeFactory.createAnvilRecipe(inputLeft, inputRight, sentientOutputs.get(i)));
+            collection.add(vanillaRecipeFactory.createAnvilRecipe(inputLeft, inputRightSentient, sentientOutputs.get(i)));
+        }
+
+        /* Living Armor repair recipes */
+
+        List<ItemStack> outputHelmets = new LinkedList<>();
+        List<ItemStack> outputChestplates = new LinkedList<>();
+        List<ItemStack> outputLeggings = new LinkedList<>();
+        List<ItemStack> outputBoots = new LinkedList<>();
+
+        List<ItemStack> inputRightLiving = new LinkedList<>();
+
+        List<List<ItemStack>> livingOutputs = new LinkedList<>();
+
+        List<ItemStack> livingTools = new LinkedList<>();
+        livingTools.add(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET));
+        livingTools.add(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST));
+        livingTools.add(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_LEGGINGS));
+        livingTools.add(new ItemStack(RegistrarBloodMagicItems.LIVING_ARMOUR_BOOTS));
+
+        for (int i = 4; i > 0; i--) {
+            for (ItemStack j : livingTools) {
+                int maxDmg = j.getMaxDamage();
+                j.setItemDamage(maxDmg - (maxDmg / 4) * i);
+            }
+            outputHelmets.add(livingTools.get(0).copy());
+            outputChestplates.add(livingTools.get(1).copy());
+            outputLeggings.add(livingTools.get(2).copy());
+            outputBoots.add(livingTools.get(3).copy());
+
+            inputRightLiving.add(new ItemStack(RegistrarBloodMagicItems.COMPONENT, i, 8));
+        }
+        livingOutputs.add(outputHelmets);
+        livingOutputs.add(outputChestplates);
+        livingOutputs.add(outputLeggings);
+        livingOutputs.add(outputBoots);
+
+        for (int i = 0; i < 4; i++) {
+            ItemStack inputLeft = livingTools.get(i);
+            inputLeft.setItemDamage(inputLeft.getMaxDamage());
+            collection.add(vanillaRecipeFactory.createAnvilRecipe(inputLeft, inputRightLiving, livingOutputs.get(i)));
         }
 
         return collection;
