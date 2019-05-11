@@ -25,7 +25,7 @@ Sigils:
     - Fixed broken Sigil tooltip formatting
 
 Misc:
-    - Fixed routing node oredict filter
+    - Fixed routing node oredict filter (crashes)
     - Fixed mimic vanishing in some cases
     - Fixed "Blood Letter's Pack" and "Coat of Arms" always being used in the main hand slot (action bar/hotbar)
     - Stop insertions into Demon Crucible if the inventory is not empty
