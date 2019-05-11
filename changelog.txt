@@ -49,6 +49,11 @@ Not merged yet:
     - Ported Veil of Evil & Ward of Sacrosanctity
     - Added additional Sentient Sword mechanics if a Sigil is held in the offhand slot (effects applied on attack)
     - Added creative item handling and new creative/test items
+    	- Orb of Testing (Cap, Fill, Empty, Get)
+	- Creative Activation Crystal (Prevents LP, Will drain, Nausea)
+	- Ritual Diviner (Places instantly, ignores blocks)
+	- Draft of Angelus (increases upgrade points to 10,000 if used with >200 points and creative)
+	- Tartaric Gems
     - Fixed "Sigil of Compression" bug that would eat leftover items (usually everything between 55 and 64 items for a 3x3 compression)
     - Greatly improved "Sigil of Compression" performance
     - Fixed `/bloodmagic network get` command
