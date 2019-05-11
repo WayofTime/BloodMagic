@@ -71,7 +71,7 @@ public class RitualWellOfSuffering extends Ritual {
         if (tile instanceof TileAltar) {
             TileAltar tileAltar = (TileAltar) tile;
 
-            AreaDescriptor damageRange = getBlockRange(DAMAGE_RANGE);
+            AreaDescriptor damageRange = masterRitualStone.getBlockRange(DAMAGE_RANGE);
             AxisAlignedBB range = damageRange.getAABB(pos);
 
             List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, range);

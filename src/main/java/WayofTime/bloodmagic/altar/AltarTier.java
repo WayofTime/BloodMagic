@@ -127,7 +127,7 @@ public enum AltarTier {
         }
     };
 
-    public static final int MAXTIERS = ConfigHandler.general.enableTierSixEvenThoughThereIsNoContent ? values().length : values().length-1;
+    public static final int MAXTIERS = ConfigHandler.general.enableTierSixEvenThoughThereIsNoContent ? values().length : values().length - 1;
 
     private List<AltarComponent> altarComponents;
 

@@ -55,7 +55,7 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
         if (sigilStack.getItem() instanceof ItemSigilHolding) {
             List<ItemStack> internalInv = ItemSigilHolding.getInternalInventory(sigilStack);
             int currentSlot = ItemSigilHolding.getCurrentItemOrdinal(sigilStack);
-            if(internalInv != null && !internalInv.get(currentSlot).isEmpty()) {
+            if (internalInv != null && !internalInv.get(currentSlot).isEmpty()) {
                 return (internalInv.get(currentSlot).getItem() == RegistrarBloodMagicItems.SIGIL_SEER && !simple) || (internalInv.get(currentSlot).getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION && simple);
             }
         }

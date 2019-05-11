@@ -32,7 +32,8 @@ public class ItemSlate extends ItemEnum.Variant<ItemSlate.SlateType> {
         REINFORCED,
         IMBUED,
         DEMONIC,
-        ETHEREAL,;
+        ETHEREAL,
+        ;
 
         @Nonnull
         @Override

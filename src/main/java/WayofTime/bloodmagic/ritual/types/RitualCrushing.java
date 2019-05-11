@@ -116,18 +116,18 @@ public class RitualCrushing extends Ritual {
                 ItemStack copyStack = checkStack.copy();
 
                 for (ICrushingHandler handler : CrushingRegistry.getCrushingHandlerList()) {
-                   int lpDrain = handler.getLpDrain();
-                   double willDrain = handler.getWillDrain();
+                    int lpDrain = handler.getLpDrain();
+                    double willDrain = handler.getWillDrain();
 
-                   if (corrosiveWill < willDrain || currentEssence < lpDrain + getRefreshCost()) {
-                       continue;
-                   }
+                    if (corrosiveWill < willDrain || currentEssence < lpDrain + getRefreshCost()) {
+                        continue;
+                    }
 
-                   ItemStack result = handler.getRecipeOutput(copyStack, world, pos);
+                    ItemStack result = handler.getRecipeOutput(copyStack, world, pos);
 
-                   if (result.isEmpty()) {
-                      continue;
-                   }
+                    if (result.isEmpty()) {
+                        continue;
+                    }
 
                     if (tile != null) {
                         result = Utils.insertStackIntoTile(result, tile, EnumFacing.DOWN);

@@ -14,7 +14,7 @@ public class LivingArmourUpgradeFallProtect extends LivingArmourUpgrade {
         super(level);
     }
 
-    
+
     public float getDamageMultiplier() {
         return 1 - protectionLevel[this.level];
     }

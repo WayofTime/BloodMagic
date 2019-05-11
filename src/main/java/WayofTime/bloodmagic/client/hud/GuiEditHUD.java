@@ -34,7 +34,9 @@ public class GuiEditHUD extends GuiScreen {
     public void initGui() {
         super.initGui();
 
-        addButton(new GuiButtonExt(0, width / 2 - 155, height - 30, 70, 20, I18n.format("gui.bloodmagic.toggle")){{enabled = false;}});
+        addButton(new GuiButtonExt(0, width / 2 - 155, height - 30, 70, 20, I18n.format("gui.bloodmagic.toggle")) {{
+            enabled = false;
+        }});
         addButton(new GuiButtonExt(1, width / 2 - 75, height - 30, 70, 20, I18n.format("gui.bloodmagic.default")));
         addButton(new GuiButtonExt(2, width / 2 + 5, height - 30, 70, 20, I18n.format("gui.bloodmagic.save")));
         addButton(new GuiButtonExt(3, width / 2 + 90, height - 30, 70, 20, I18n.format("gui.bloodmagic.cancel")));

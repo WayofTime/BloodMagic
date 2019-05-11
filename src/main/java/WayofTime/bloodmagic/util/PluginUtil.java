@@ -45,7 +45,7 @@ public class PluginUtil {
         // Bring core plugin up to top
         discoveredAnnotations.sort((o1, o2) -> {
             if (o1.getLeft().getClass() == BloodMagicCorePlugin.class)
-             return -1;
+                return -1;
 
             return o1.getClass().getCanonicalName().compareToIgnoreCase(o2.getClass().getCanonicalName());
         });
@@ -120,8 +120,7 @@ public class PluginUtil {
     public enum RegistrationStep {
 
         PLUGIN_REGISTER(p -> p.getLeft().register(BloodMagicAPI.INSTANCE)),
-        RECIPE_REGISTER(p -> p.getLeft().registerRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar()))
-        ;
+        RECIPE_REGISTER(p -> p.getLeft().registerRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar()));
 
         private final Consumer<Pair<IBloodMagicPlugin, BloodMagicPlugin>> consumer;
 

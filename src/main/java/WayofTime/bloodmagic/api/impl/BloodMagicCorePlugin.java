@@ -23,12 +23,10 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 @BloodMagicPlugin
-public class BloodMagicCorePlugin implements IBloodMagicPlugin
-{
+public class BloodMagicCorePlugin implements IBloodMagicPlugin {
 
     @Override
-    public void register(IBloodMagicAPI apiInterface)
-    {
+    public void register(IBloodMagicAPI apiInterface) {
         BloodMagicAPI api = (BloodMagicAPI) apiInterface;
         // Add forced blacklistings
         api.getBlacklist().addTeleposer(RegistrarBloodMagicBlocks.INPUT_ROUTING_NODE);
@@ -84,8 +82,7 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin
     }
 
     @Override
-    public void registerRecipes(IBloodMagicRecipeRegistrar recipeRegistrar)
-    {
+    public void registerRecipes(IBloodMagicRecipeRegistrar recipeRegistrar) {
         RegistrarBloodMagicRecipes.registerAltarRecipes((BloodMagicRecipeRegistrar) recipeRegistrar);
         RegistrarBloodMagicRecipes.registerAlchemyTableRecipes((BloodMagicRecipeRegistrar) recipeRegistrar);
         RegistrarBloodMagicRecipes.registerTartaricForgeRecipes((BloodMagicRecipeRegistrar) recipeRegistrar);
@@ -93,10 +90,8 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin
         RegistrarBloodMagicRecipes.registerSacrificeCraftRecipes((BloodMagicRecipeRegistrar) recipeRegistrar);
     }
 
-    private static void handleConfigValues(BloodMagicAPI api)
-    {
-        for (String value : ConfigHandler.values.sacrificialValues)
-        {
+    private static void handleConfigValues(BloodMagicAPI api) {
+        for (String value : ConfigHandler.values.sacrificialValues) {
             String[] split = value.split(";");
             if (split.length != 2) // Not valid format
                 continue;
@@ -104,18 +99,15 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin
             api.getValueManager().setSacrificialValue(new ResourceLocation(split[0]), Integer.parseInt(split[1]));
         }
 
-        for (String value : ConfigHandler.blacklist.teleposer)
-        {
+        for (String value : ConfigHandler.blacklist.teleposer) {
             EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(value));
-            if (entityEntry == null)
-            { // It's not an entity (or at least not a valid one), so let's try a block.
+            if (entityEntry == null) { // It's not an entity (or at least not a valid one), so let's try a block.
                 String[] blockData = value.split("\\[");
                 Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockData[0]));
                 if (block == Blocks.AIR || block == null) // Not a valid block either
                     continue;
 
-                if (blockData.length > 1)
-                { // We have properties listed, so let's build a state.
+                if (blockData.length > 1) { // We have properties listed, so let's build a state.
                     api.getBlacklist().addTeleposer(StateUtil.parseState(value));
                     continue;
                 }
@@ -127,15 +119,13 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin
             api.getBlacklist().addTeleposer(entityEntry.getRegistryName());
         }
 
-        for (String value : ConfigHandler.blacklist.transposer)
-        {
+        for (String value : ConfigHandler.blacklist.transposer) {
             String[] blockData = value.split("\\[");
             Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockData[0]));
             if (block == Blocks.AIR || block == null) // Not a valid block
                 continue;
 
-            if (blockData.length > 1)
-            { // We have properties listed, so let's build a state.
+            if (blockData.length > 1) { // We have properties listed, so let's build a state.
                 api.getBlacklist().addTeleposer(StateUtil.parseState(value));
                 continue;
             }
@@ -143,8 +133,7 @@ public class BloodMagicCorePlugin implements IBloodMagicPlugin
             api.getBlacklist().addTeleposer(block);
         }
 
-        for (String value : ConfigHandler.blacklist.wellOfSuffering)
-        {
+        for (String value : ConfigHandler.blacklist.wellOfSuffering) {
             EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(value));
             if (entityEntry == null) // Not a valid entity
                 continue;

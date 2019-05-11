@@ -17,16 +17,14 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.function.Consumer;
 
 @RitualRegister("ellipsoid")
-public class RitualEllipsoid extends Ritual
-{
+public class RitualEllipsoid extends Ritual {
     public static final String SPHEROID_RANGE = "spheroidRange";
     public static final String CHEST_RANGE = "chest";
 
     private boolean cached = false;
     private BlockPos currentPos; //Offset
 
-    public RitualEllipsoid()
-    {
+    public RitualEllipsoid() {
         super("ritualEllipsoid", 0, 20000, "ritual." + BloodMagic.MODID + ".ellipseRitual");
         addBlockRange(SPHEROID_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -10, -10), new BlockPos(11, 11, 11)));
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
@@ -36,8 +34,7 @@ public class RitualEllipsoid extends Ritual
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
@@ -59,20 +56,16 @@ public class RitualEllipsoid extends Ritual
         int minZ = (int) (masterPos.getZ() - sphereBB.minZ);
         int maxZ = (int) (sphereBB.maxZ - masterPos.getZ()) - 1;
 
-        if (tileInventory != null)
-        {
-            if (tileInventory.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN))
-            {
+        if (tileInventory != null) {
+            if (tileInventory.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
                 IItemHandler itemHandler = tileInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
 
-                if (itemHandler.getSlots() <= 0)
-                {
+                if (itemHandler.getSlots() <= 0) {
                     return;
                 }
 
                 int blockSlot = -1;
-                for (int invSlot = 0; invSlot < itemHandler.getSlots(); invSlot++)
-                {
+                for (int invSlot = 0; invSlot < itemHandler.getSlots(); invSlot++) {
                     ItemStack stack = itemHandler.extractItem(invSlot, 1, true);
                     if (stack.isEmpty() || !(stack.getItem() instanceof ItemBlock))
                         continue;
@@ -81,8 +74,7 @@ public class RitualEllipsoid extends Ritual
                     break;
                 }
 
-                if (blockSlot == -1)
-                {
+                if (blockSlot == -1) {
                     return;
                 }
 
@@ -94,8 +86,7 @@ public class RitualEllipsoid extends Ritual
                 int i = -minY;
                 int k = -minZ;
 
-                if (currentPos != null)
-                {
+                if (currentPos != null) {
                     j = currentPos.getY();
                     i = Math.min(xR, Math.max(-minX, currentPos.getX()));
                     k = Math.min(zR, Math.max(-minZ, currentPos.getZ()));
@@ -103,25 +94,19 @@ public class RitualEllipsoid extends Ritual
                 int checks = 0;
                 int maxChecks = 100;
 
-                while (j <= maxY)
-                {
-                    while (i <= maxX)
-                    {
-                        while (k <= maxZ)
-                        {
+                while (j <= maxY) {
+                    while (i <= maxX) {
+                        while (k <= maxZ) {
                             checks++;
-                            if (checks >= maxChecks)
-                            {
+                            if (checks >= maxChecks) {
                                 this.currentPos = new BlockPos(i, j, k);
                                 return;
                             }
 
-                            if (checkIfEllipsoidShell(xR, yR, zR, i, j, k))
-                            {
+                            if (checkIfEllipsoidShell(xR, yR, zR, i, j, k)) {
                                 BlockPos newPos = masterPos.add(i, j, k);
 //
-                                if (!world.getBlockState(newPos).getBlock().isReplaceable(world, newPos))
-                                {
+                                if (!world.getBlockState(newPos).getBlock().isReplaceable(world, newPos)) {
                                     k++;
                                     continue;
                                 }
@@ -155,11 +140,9 @@ public class RitualEllipsoid extends Ritual
         }
     }
 
-    public boolean checkIfEllipsoidShell(int xR, int yR, int zR, int xOff, int yOff, int zOff)
-    {
+    public boolean checkIfEllipsoidShell(int xR, int yR, int zR, int xOff, int yOff, int zOff) {
         //Checking shell in the x-direction
-        if (!checkIfEllipsoid(xR, yR, zR, xOff, yOff, zOff))
-        {
+        if (!checkIfEllipsoid(xR, yR, zR, xOff, yOff, zOff)) {
             return false;
         }
 
@@ -185,21 +168,18 @@ public class RitualEllipsoid extends Ritual
 //        return false;
     }
 
-    public boolean checkIfEllipsoid(float xR, float yR, float zR, float xOff, float yOff, float zOff)
-    {
+    public boolean checkIfEllipsoid(float xR, float yR, float zR, float xOff, float yOff, float zOff) {
         float possOffset = 0.5f;
         return xOff * xOff / ((xR + possOffset) * (xR + possOffset)) + yOff * yOff / ((yR + possOffset) * (yR + possOffset)) + zOff * zOff / ((zR + possOffset) * (zR + possOffset)) <= 1;
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 5;
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 1;
     }
 
@@ -211,8 +191,7 @@ public class RitualEllipsoid extends Ritual
 //    }
 
     @Override
-    public void gatherComponents(Consumer<RitualComponent> components)
-    {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addCornerRunes(components, 1, 0, EnumRuneType.DUSK);
 
         addRune(components, 4, 0, 0, EnumRuneType.FIRE);
@@ -253,8 +232,7 @@ public class RitualEllipsoid extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualEllipsoid();
     }
 }

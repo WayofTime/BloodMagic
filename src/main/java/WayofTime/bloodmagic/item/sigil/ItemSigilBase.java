@@ -6,7 +6,6 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -38,7 +37,7 @@ public class ItemSigilBase extends ItemSigil implements IVariantProvider {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         if (TextHelper.canTranslate(tooltipBase + "desc"))
-            tooltip.addAll(Arrays.asList(WordUtils.wrap(new TextComponentTranslation(tooltipBase + "desc").getFormattedText(), 30, "/cut", false).split("/cut")));
+            tooltip.addAll(Arrays.asList(WordUtils.wrap(TextHelper.localizeEffect(tooltipBase + "desc"), 30, "/cut", false).split("/cut")));
 
         super.addInformation(stack, world, tooltip, flag);
     }

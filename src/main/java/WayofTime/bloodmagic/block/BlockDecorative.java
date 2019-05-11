@@ -24,7 +24,7 @@ public class BlockDecorative extends BlockEnum<EnumDecorative> {
 
     @Override
     public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> subBlocks) {
-        for (EnumDecorative type : EnumDecorative.values()){
+        for (EnumDecorative type : EnumDecorative.values()) {
             if (!ConfigHandler.general.enableTierSixEvenThoughThereIsNoContent && (type == EnumDecorative.CRYSTAL_TILE || type == EnumDecorative.CRYSTAL_BRICK))
                 continue;
             subBlocks.add(new ItemStack(this, 1, type.ordinal()));

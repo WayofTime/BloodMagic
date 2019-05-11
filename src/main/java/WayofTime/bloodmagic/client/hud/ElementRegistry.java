@@ -98,7 +98,8 @@ public class ElementRegistry {
             return;
 
         try (FileReader reader = new FileReader(CONFIG)) {
-            Map<String, Vector2f> toLoad = GSON.fromJson(reader, new TypeToken<Map<String, Vector2f>>() {}.getType());
+            Map<String, Vector2f> toLoad = GSON.fromJson(reader, new TypeToken<Map<String, Vector2f>>() {
+            }.getType());
             for (Map.Entry<String, Vector2f> entry : toLoad.entrySet()) {
                 ElementInfo info = ELEMENT_INFO.get(new ResourceLocation(entry.getKey()));
                 if (info != null)

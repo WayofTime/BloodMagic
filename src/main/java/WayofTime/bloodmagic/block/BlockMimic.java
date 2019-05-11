@@ -219,7 +219,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
         }
         return null;
     }
-    
+
     @Override
     public ItemBlock getItem() {
         return new ItemBlockMimic(this);

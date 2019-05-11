@@ -53,7 +53,7 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
         if (entityLiving instanceof EntityPlayer && !entityLiving.getEntityWorld().isRemote)
-            if(PlayerSacrificeHelper.sacrificePlayerHealth((EntityPlayer) entityLiving))
+            if (PlayerSacrificeHelper.sacrificePlayerHealth((EntityPlayer) entityLiving))
                 IncenseHelper.setHasMaxIncense(stack, (EntityPlayer) entityLiving, false);
     }
 
@@ -94,14 +94,16 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
                 return super.onItemRightClick(world, player, hand);
 
             if (evt.shouldDrainHealth) {
+                DamageSourceBloodMagic damageSrc = DamageSourceBloodMagic.INSTANCE;
                 player.hurtResistantTime = 0;
-                player.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 0.001F);
-                player.setHealth(Math.max(player.getHealth() - 2, 0.0001f));
-                if (player.getHealth() <= 0.001f) {
-                    player.onDeath(DamageSourceBloodMagic.INSTANCE);
-                    player.setHealth(0);
+                float playerHealth = player.getHealth();
+                if (Math.ceil(player.getHealth() - 2) <= 0) {
+                    player.attackEntityFrom(damageSrc, Float.MAX_VALUE);
+                } else {
+                    float damageAmount = net.minecraftforge.common.ForgeHooks.onLivingDamage(player, damageSrc, 2.0F);
+                    player.getCombatTracker().trackDamage(damageSrc, playerHealth, damageAmount);
+                    player.setHealth(Math.max(player.getHealth() - 2, 0.001f));
                 }
-//                player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 2.0F);
             }
 
             if (!evt.shouldFillAltar)
@@ -132,9 +134,9 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
         if (!world.isRemote && entity instanceof EntityPlayer) {
             boolean prepared = this.isPlayerPreparedForSacrifice(world, (EntityPlayer) entity);
             this.setUseForSacrifice(stack, prepared);
-            if(IncenseHelper.getHasMaxIncense(stack) && !prepared)
+            if (IncenseHelper.getHasMaxIncense(stack) && !prepared)
                 IncenseHelper.setHasMaxIncense(stack, (EntityPlayer) entity, false);
-            if(prepared) {
+            if (prepared) {
                 boolean isMax = IncenseHelper.getMaxIncense((EntityPlayer) entity) == IncenseHelper.getCurrentIncense((EntityPlayer) entity);
                 IncenseHelper.setHasMaxIncense(stack, (EntityPlayer) entity, isMax);
             }
@@ -178,15 +180,15 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack)
-    {
+    public boolean hasEffect(ItemStack stack) {
         return IncenseHelper.getHasMaxIncense(stack) || super.hasEffect(stack);
     }
 
     public enum DaggerType implements ISubItem {
 
         NORMAL,
-        CREATIVE,;
+        CREATIVE,
+        ;
 
         @Nonnull
         @Override

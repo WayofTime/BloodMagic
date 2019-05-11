@@ -46,7 +46,8 @@ public enum KeyBindings {
             if (player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
                 ClientHandler.cycleSigil(player.getHeldItemMainhand(), player, 1);
         }
-    },;
+    },
+    ;
     // @formatter:on
 
     private final IKeyConflictContext keyConflictContext;

@@ -64,7 +64,7 @@ public class RitualGrounding extends Ritual {
         double vengefulDrained = 0;
 
         /* Actual ritual stuff begins here */
-        AreaDescriptor groundingRange = getBlockRange(GROUNDING_RANGE);
+        AreaDescriptor groundingRange = masterRitualStone.getBlockRange(GROUNDING_RANGE);
         List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, groundingRange.getAABB(pos));
         for (EntityLivingBase entity : entities) {
             if (totalEffects >= maxEffects) {

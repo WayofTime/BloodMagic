@@ -11,8 +11,7 @@ import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.IDemonWillConduit;
 import WayofTime.bloodmagic.tile.base.TileTicking;
 
-public class TileDemonCrystallizer extends TileTicking implements IDemonWillConduit
-{
+public class TileDemonCrystallizer extends TileTicking implements IDemonWillConduit {
     public static final int maxWill = 100;
     public static final double drainRate = 1;
     public static final double willToFormCrystal = 99;
@@ -21,16 +20,13 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
     public DemonWillHolder holder = new DemonWillHolder();
     public double internalCounter = 0;
 
-    public TileDemonCrystallizer()
-    {
+    public TileDemonCrystallizer() {
 
     }
 
     @Override
-    public void onUpdate()
-    {
-        if (getWorld().isRemote)
-        {
+    public void onUpdate() {
+        if (getWorld().isRemote) {
             return;
         }
 
@@ -39,15 +35,11 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
         {
             EnumDemonWillType highestType = WorldDemonWillHandler.getHighestDemonWillType(getWorld(), pos);
             double amount = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, highestType);
-            if (amount >= willToFormCrystal)
-            {
+            if (amount >= willToFormCrystal) {
                 internalCounter += getCrystalFormationRate(amount);
-                if (internalCounter >= totalFormationTime)
-                {
-                    if (WorldDemonWillHandler.drainWill(getWorld(), getPos(), highestType, willToFormCrystal, false) >= willToFormCrystal)
-                    {
-                        if (formCrystal(highestType, offsetPos))
-                        {
+                if (internalCounter >= totalFormationTime) {
+                    if (WorldDemonWillHandler.drainWill(getWorld(), getPos(), highestType, willToFormCrystal, false) >= willToFormCrystal) {
+                        if (formCrystal(highestType, offsetPos)) {
                             WorldDemonWillHandler.drainWill(getWorld(), getPos(), highestType, willToFormCrystal, true);
                             internalCounter = 0;
                         }
@@ -57,12 +49,10 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
         }
     }
 
-    public boolean formCrystal(EnumDemonWillType type, BlockPos position)
-    {
+    public boolean formCrystal(EnumDemonWillType type, BlockPos position) {
         getWorld().setBlockState(position, RegistrarBloodMagicBlocks.DEMON_CRYSTAL.getStateFromMeta(type.ordinal()));
         TileEntity tile = getWorld().getTileEntity(position);
-        if (tile instanceof TileDemonCrystal)
-        {
+        if (tile instanceof TileDemonCrystal) {
             ((TileDemonCrystal) tile).setPlacement(EnumFacing.UP);
             return true;
         }
@@ -70,21 +60,18 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
         return false;
     }
 
-    public double getCrystalFormationRate(double currentWill)
-    {
+    public double getCrystalFormationRate(double currentWill) {
         return 1;
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag)
-    {
+    public void deserialize(NBTTagCompound tag) {
         holder.readFromNBT(tag, "Will");
         internalCounter = tag.getDouble("internalCounter");
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag)
-    {
+    public NBTTagCompound serialize(NBTTagCompound tag) {
         holder.writeToNBT(tag, "Will");
         tag.setDouble("internalCounter", internalCounter);
         return tag;
@@ -93,26 +80,21 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
     // IDemonWillConduit
 
     @Override
-    public int getWeight()
-    {
+    public int getWeight() {
         return 10;
     }
 
     @Override
-    public double fillDemonWill(EnumDemonWillType type, double amount, boolean doFill)
-    {
-        if (amount <= 0)
-        {
+    public double fillDemonWill(EnumDemonWillType type, double amount, boolean doFill) {
+        if (amount <= 0) {
             return 0;
         }
 
-        if (!canFill(type))
-        {
+        if (!canFill(type)) {
             return 0;
         }
 
-        if (!doFill)
-        {
+        if (!doFill) {
             return Math.min(maxWill - holder.getWill(type), amount);
         }
 
@@ -120,17 +102,14 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
     }
 
     @Override
-    public double drainDemonWill(EnumDemonWillType type, double amount, boolean doDrain)
-    {
+    public double drainDemonWill(EnumDemonWillType type, double amount, boolean doDrain) {
         double drained = amount;
         double current = holder.getWill(type);
-        if (current < drained)
-        {
+        if (current < drained) {
             drained = current;
         }
 
-        if (doDrain)
-        {
+        if (doDrain) {
             return holder.drainWill(type, amount);
         }
 
@@ -138,20 +117,17 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
     }
 
     @Override
-    public boolean canFill(EnumDemonWillType type)
-    {
+    public boolean canFill(EnumDemonWillType type) {
         return true;
     }
 
     @Override
-    public boolean canDrain(EnumDemonWillType type)
-    {
+    public boolean canDrain(EnumDemonWillType type) {
         return true;
     }
 
     @Override
-    public double getCurrentWill(EnumDemonWillType type)
-    {
+    public double getCurrentWill(EnumDemonWillType type) {
         return holder.getWill(type);
     }
 }
