@@ -1167,6 +1167,3 @@ New
 Changed
 - Lots of internals have changed. Too many to list.
 - A graphical overhaul of everything has been implemented. These textures were provided by CyanideX's Unity texture pack. BBoldt and Yulife (Inap) from the Unity team are our new permanent texture artists.
-
-Bug Fixes
--
