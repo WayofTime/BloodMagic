@@ -17,8 +17,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileAlchemyArray extends TileInventory implements ITickable, IAlchemyArray
-{
+public class TileAlchemyArray extends TileInventory implements ITickable, IAlchemyArray {
     public boolean isActive = false;
     public int activeCounter = 0;
     public EnumFacing rotation = EnumFacing.HORIZONTALS[0];
@@ -28,22 +27,18 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     public AlchemyArrayEffect arrayEffect;
     private boolean doDropIngredients = true;
 
-    public TileAlchemyArray()
-    {
+    public TileAlchemyArray() {
         super(2, "alchemyArray");
     }
 
-    public void onEntityCollidedWithBlock(IBlockState state, Entity entity)
-    {
-        if (arrayEffect != null)
-        {
+    public void onEntityCollidedWithBlock(IBlockState state, Entity entity) {
+        if (arrayEffect != null) {
             arrayEffect.onEntityCollidedWithBlock(this, getWorld(), pos, state, entity);
         }
     }
 
     @Override
-    public void deserialize(NBTTagCompound tagCompound)
-    {
+    public void deserialize(NBTTagCompound tagCompound) {
         super.deserialize(tagCompound);
         this.isActive = tagCompound.getBoolean("isActive");
         this.activeCounter = tagCompound.getInteger("activeCounter");
@@ -51,23 +46,20 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
         if (!tagCompound.hasKey("doDropIngredients")) //Check if the array is old
         {
             this.doDropIngredients = true;
-        } else
-        {
+        } else {
             this.doDropIngredients = tagCompound.getBoolean("doDropIngredients");
         }
         this.rotation = EnumFacing.HORIZONTALS[tagCompound.getInteger(Constants.NBT.DIRECTION)];
 
         NBTTagCompound arrayTag = tagCompound.getCompoundTag("arrayTag");
         arrayEffect = AlchemyArrayRecipeRegistry.getAlchemyArrayEffect(key);
-        if (arrayEffect != null)
-        {
+        if (arrayEffect != null) {
             arrayEffect.readFromNBT(arrayTag);
         }
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tagCompound)
-    {
+    public NBTTagCompound serialize(NBTTagCompound tagCompound) {
         super.serialize(tagCompound);
         tagCompound.setBoolean("isActive", isActive);
         tagCompound.setInteger("activeCounter", activeCounter);
@@ -76,8 +68,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
         tagCompound.setInteger(Constants.NBT.DIRECTION, rotation.getHorizontalIndex());
 
         NBTTagCompound arrayTag = new NBTTagCompound();
-        if (arrayEffect != null)
-        {
+        if (arrayEffect != null) {
             arrayEffect.writeToNBT(arrayTag);
         }
         tagCompound.setTag("arrayTag", arrayTag);
@@ -86,25 +77,20 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     }
 
     @Override
-    public int getInventoryStackLimit()
-    {
+    public int getInventoryStackLimit() {
         return 1;
     }
 
     //Use this to prevent the Array from dropping items - useful for arrays that need to "consume" ingredients well before the effect.
-    public void setItemDrop(boolean dropItems)
-    {
+    public void setItemDrop(boolean dropItems) {
         this.doDropIngredients = dropItems;
     }
 
     @Override
-    public void update()
-    {
-        if (isActive && attemptCraft())
-        {
+    public void update() {
+        if (isActive && attemptCraft()) {
             activeCounter++;
-        } else
-        {
+        } else {
             isActive = false;
             doDropIngredients = true;
             activeCounter = 0;
@@ -119,61 +105,48 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
      * This occurs when the block is destroyed.
      */
     @Override
-    public void dropItems()
-    {
-        if (arrayEffect == null || doDropIngredients)
-        {
+    public void dropItems() {
+        if (arrayEffect == null || doDropIngredients) {
             super.dropItems();
         }
     }
 
-    public boolean attemptCraft()
-    {
+    public boolean attemptCraft() {
         AlchemyArrayEffect effect = AlchemyArrayRecipeRegistry.getAlchemyArrayEffect(this.getStackInSlot(0), this.getStackInSlot(1));
-        if (effect != null)
-        {
-            if (arrayEffect == null)
-            {
+        if (effect != null) {
+            if (arrayEffect == null) {
                 arrayEffect = effect;
                 key = effect.getKey();
-            } else
-            {
+            } else {
                 String effectKey = effect.getKey();
-                if (effectKey.equals(key))
-                {
+                if (effectKey.equals(key)) {
                     //Good! Moving on.
-                } else
-                {
+                } else {
                     //Something has changed, therefore we have to move our stuffs.
                     //TODO: Add an AlchemyArrayEffect.onBreak(); ?
                     arrayEffect = effect;
                     key = effect.getKey();
                 }
             }
-        } else
-        {
+        } else {
             RecipeAlchemyArray recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArray(getStackInSlot(0), getStackInSlot(1));
             if (recipe == null)
                 return false;
 
             AlchemyArrayEffect newEffect = new AlchemyArrayEffectCraftingNew(recipe);
-            if (arrayEffect == null)
-            {
+            if (arrayEffect == null) {
                 arrayEffect = newEffect;
                 key = newEffect.key;
-            } else if (!newEffect.key.equals(key))
-            {
+            } else if (!newEffect.key.equals(key)) {
                 arrayEffect = newEffect;
                 key = newEffect.key;
             }
         }
 
-        if (arrayEffect != null)
-        {
+        if (arrayEffect != null) {
             isActive = true;
 
-            if (arrayEffect.update(this, this.activeCounter))
-            {
+            if (arrayEffect.update(this, this.activeCounter)) {
                 this.decrStackSize(0, 1);
                 this.decrStackSize(1, 1);
                 this.getWorld().setBlockToAir(getPos());
@@ -186,20 +159,17 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     }
 
     @Override
-    public EnumFacing getRotation()
-    {
+    public EnumFacing getRotation() {
         return rotation;
     }
 
-    public void setRotation(EnumFacing rotation)
-    {
+    public void setRotation(EnumFacing rotation) {
         this.rotation = rotation;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getRenderBoundingBox()
-    {
+    public AxisAlignedBB getRenderBoundingBox() {
         return Block.FULL_BLOCK_AABB.offset(getPos());
     }
 }

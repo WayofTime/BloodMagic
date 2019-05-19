@@ -17,21 +17,17 @@ import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
 
 @RitualRegister("crystal_split")
-public class RitualCrystalSplit extends Ritual
-{
-    public RitualCrystalSplit()
-    {
+public class RitualCrystalSplit extends Ritual {
+    public RitualCrystalSplit() {
         super("ritualCrystalSplit", 0, 20000, "ritual." + BloodMagic.MODID + ".crystalSplitRitual");
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone)
-    {
+    public void performRitual(IMasterRitualStone masterRitualStone) {
         World world = masterRitualStone.getWorldObj();
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        if (currentEssence < getRefreshCost())
-        {
+        if (currentEssence < getRefreshCost()) {
             masterRitualStone.getOwnerNetwork().causeNausea();
             return;
         }
@@ -41,16 +37,14 @@ public class RitualCrystalSplit extends Ritual
         BlockPos rawPos = pos.up(2);
 
         TileEntity tile = world.getTileEntity(rawPos);
-        if (!(tile instanceof TileDemonCrystal) || ((TileDemonCrystal) tile).getType() != EnumDemonWillType.DEFAULT)
-        {
+        if (!(tile instanceof TileDemonCrystal) || ((TileDemonCrystal) tile).getType() != EnumDemonWillType.DEFAULT) {
             return;
         }
 
         IBlockState rawState = world.getBlockState(rawPos);
 
         TileDemonCrystal rawTile = (TileDemonCrystal) tile;
-        if (rawTile.crystalCount >= 5)
-        {
+        if (rawTile.crystalCount >= 5) {
             BlockPos vengefulPos = pos.offset(rotateFacing(EnumFacing.NORTH, direction)).up();
             BlockPos corrosivePos = pos.offset(rotateFacing(EnumFacing.EAST, direction)).up();
             BlockPos steadfastPos = pos.offset(rotateFacing(EnumFacing.SOUTH, direction)).up();
@@ -62,50 +56,38 @@ public class RitualCrystalSplit extends Ritual
             int destructiveCrystals = 0;
 
             tile = world.getTileEntity(vengefulPos);
-            if (tile instanceof TileDemonCrystal && ((TileDemonCrystal) tile).getType() == EnumDemonWillType.VENGEFUL && ((TileDemonCrystal) tile).crystalCount < 7)
-            {
+            if (tile instanceof TileDemonCrystal && ((TileDemonCrystal) tile).getType() == EnumDemonWillType.VENGEFUL && ((TileDemonCrystal) tile).crystalCount < 7) {
                 vengefulCrystals = ((TileDemonCrystal) tile).crystalCount;
-            } else if (!(tile instanceof TileDemonCrystal) && world.isAirBlock(vengefulPos))
-            {
+            } else if (!(tile instanceof TileDemonCrystal) && world.isAirBlock(vengefulPos)) {
                 // #donothing, no point setting the crystal to 0 again
-            } else
-            {
+            } else {
                 return;
             }
 
             tile = world.getTileEntity(corrosivePos);
-            if (tile instanceof TileDemonCrystal && ((TileDemonCrystal) tile).getType() == EnumDemonWillType.CORROSIVE && ((TileDemonCrystal) tile).crystalCount < 7)
-            {
+            if (tile instanceof TileDemonCrystal && ((TileDemonCrystal) tile).getType() == EnumDemonWillType.CORROSIVE && ((TileDemonCrystal) tile).crystalCount < 7) {
                 corrosiveCrystals = ((TileDemonCrystal) tile).crystalCount;
-            } else if (!(tile instanceof TileDemonCrystal) && world.isAirBlock(corrosivePos))
-            {
+            } else if (!(tile instanceof TileDemonCrystal) && world.isAirBlock(corrosivePos)) {
 
-            } else
-            {
+            } else {
                 return;
             }
 
             tile = world.getTileEntity(steadfastPos);
-            if (tile instanceof TileDemonCrystal && ((TileDemonCrystal) tile).getType() == EnumDemonWillType.STEADFAST && ((TileDemonCrystal) tile).crystalCount < 7)
-            {
+            if (tile instanceof TileDemonCrystal && ((TileDemonCrystal) tile).getType() == EnumDemonWillType.STEADFAST && ((TileDemonCrystal) tile).crystalCount < 7) {
                 steadfastCrystals = ((TileDemonCrystal) tile).crystalCount;
-            } else if (!(tile instanceof TileDemonCrystal) && world.isAirBlock(steadfastPos))
-            {
+            } else if (!(tile instanceof TileDemonCrystal) && world.isAirBlock(steadfastPos)) {
 
-            } else
-            {
+            } else {
                 return;
             }
 
             tile = world.getTileEntity(destructivePos);
-            if (tile instanceof TileDemonCrystal && ((TileDemonCrystal) tile).getType() == EnumDemonWillType.DESTRUCTIVE && ((TileDemonCrystal) tile).crystalCount < 7)
-            {
+            if (tile instanceof TileDemonCrystal && ((TileDemonCrystal) tile).getType() == EnumDemonWillType.DESTRUCTIVE && ((TileDemonCrystal) tile).crystalCount < 7) {
                 destructiveCrystals = ((TileDemonCrystal) tile).crystalCount;
-            } else if (!(tile instanceof TileDemonCrystal) && world.isAirBlock(destructivePos))
-            {
+            } else if (!(tile instanceof TileDemonCrystal) && world.isAirBlock(destructivePos)) {
 
-            } else
-            {
+            } else {
                 return;
             }
 
@@ -120,29 +102,24 @@ public class RitualCrystalSplit extends Ritual
         }
     }
 
-    public EnumFacing rotateFacing(EnumFacing facing, EnumFacing rotation)
-    {
-        switch (rotation)
-        {
-        case EAST:
-            return facing.rotateY();
-        case SOUTH:
-            return facing.rotateY().rotateY();
-        case WEST:
-            return facing.rotateYCCW();
-        case NORTH:
-        default:
-            return facing;
+    public EnumFacing rotateFacing(EnumFacing facing, EnumFacing rotation) {
+        switch (rotation) {
+            case EAST:
+                return facing.rotateY();
+            case SOUTH:
+                return facing.rotateY().rotateY();
+            case WEST:
+                return facing.rotateYCCW();
+            case NORTH:
+            default:
+                return facing;
         }
     }
 
-    public void growCrystal(World world, BlockPos pos, EnumDemonWillType type, int currentCrystalCount)
-    {
-        if (currentCrystalCount <= 0)
-        {
+    public void growCrystal(World world, BlockPos pos, EnumDemonWillType type, int currentCrystalCount) {
+        if (currentCrystalCount <= 0) {
             world.setBlockState(pos, RegistrarBloodMagicBlocks.DEMON_CRYSTAL.getStateFromMeta(type.ordinal()), 3);
-        } else
-        {
+        } else {
             TileDemonCrystal tile = (TileDemonCrystal) world.getTileEntity(pos);
             tile.crystalCount++;
             tile.markDirty();
@@ -152,20 +129,17 @@ public class RitualCrystalSplit extends Ritual
     }
 
     @Override
-    public int getRefreshTime()
-    {
+    public int getRefreshTime() {
         return 20;
     }
 
     @Override
-    public int getRefreshCost()
-    {
+    public int getRefreshCost() {
         return 1000;
     }
 
     @Override
-    public void gatherComponents(Consumer<RitualComponent> components)
-    {
+    public void gatherComponents(Consumer<RitualComponent> components) {
         addRune(components, 0, 0, -1, EnumRuneType.FIRE);
         addRune(components, 1, 0, 0, EnumRuneType.EARTH);
         addRune(components, 0, 0, 1, EnumRuneType.WATER);
@@ -177,14 +151,12 @@ public class RitualCrystalSplit extends Ritual
     }
 
     @Override
-    public Ritual getNewCopy()
-    {
+    public Ritual getNewCopy() {
         return new RitualCrystalSplit();
     }
 
     @Override
-    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player)
-    {
-        return new ITextComponent[] { new TextComponentTranslation(this.getTranslationKey() + ".info") };
+    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
+        return new ITextComponent[]{new TextComponentTranslation(this.getTranslationKey() + ".info")};
     }
 }

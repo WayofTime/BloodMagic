@@ -15,33 +15,27 @@ import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectArrowTurret;
 import WayofTime.bloodmagic.alchemyArray.AlchemyCircleRenderer;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 
-public class TurretAlchemyCircleRenderer extends AlchemyCircleRenderer
-{
+public class TurretAlchemyCircleRenderer extends AlchemyCircleRenderer {
     private ResourceLocation bottomArrayResource = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/MovementArray.png");
     private ResourceLocation middleArrayResource = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SkeletonTurret2.png");
 
-    public TurretAlchemyCircleRenderer(ResourceLocation location)
-    {
+    public TurretAlchemyCircleRenderer(ResourceLocation location) {
         super(location);
     }
 
-    public TurretAlchemyCircleRenderer()
-    {
+    public TurretAlchemyCircleRenderer() {
         this(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/MovementArray.png"));
     }
 
     @Override
-    public float getSizeModifier(float craftTime)
-    {
+    public float getSizeModifier(float craftTime) {
         return 1;
     }
 
     @Override
-    public float getRotation(float craftTime)
-    {
+    public float getRotation(float craftTime) {
         float offset = 50;
-        if (craftTime >= offset)
-        {
+        if (craftTime >= offset) {
             float modifier = (craftTime - offset) * 5f;
             return modifier * 1f;
         }
@@ -49,16 +43,13 @@ public class TurretAlchemyCircleRenderer extends AlchemyCircleRenderer
     }
 
     @Override
-    public float getSecondaryRotation(float craftTime)
-    {
+    public float getSecondaryRotation(float craftTime) {
         return 0;
     }
 
     @Override
-    public void renderAt(TileEntity tile, double x, double y, double z, float craftTime)
-    {
-        if (!(tile instanceof TileAlchemyArray))
-        {
+    public void renderAt(TileEntity tile, double x, double y, double z, float craftTime) {
+        if (!(tile instanceof TileAlchemyArray)) {
             return;
         }
 
@@ -69,8 +60,7 @@ public class TurretAlchemyCircleRenderer extends AlchemyCircleRenderer
         double pitch = 0;
         double yaw = 0;
         int arrowTimer = -1;
-        if (effect instanceof AlchemyArrayEffectArrowTurret)
-        {
+        if (effect instanceof AlchemyArrayEffectArrowTurret) {
             AlchemyArrayEffectArrowTurret turretEffect = (AlchemyArrayEffectArrowTurret) effect;
             pitch = (turretEffect.getPitch() - turretEffect.getLastPitch()) * f + turretEffect.getLastPitch();
             yaw = (turretEffect.getYaw() - turretEffect.getLastYaw()) * f + turretEffect.getLastYaw();
@@ -103,30 +93,29 @@ public class TurretAlchemyCircleRenderer extends AlchemyCircleRenderer
 
         GlStateManager.translate(sideHit.getXOffset() * offsetFromFace, sideHit.getYOffset() * offsetFromFace, sideHit.getZOffset() * offsetFromFace);
 
-        switch (sideHit)
-        {
-        case DOWN:
-            GlStateManager.translate(0, 0, 1);
-            GlStateManager.rotate(-90.0f, 1, 0, 0);
-            break;
-        case EAST:
-            GlStateManager.rotate(-90.0f, 0, 1, 0);
-            GlStateManager.translate(0, 0, -1);
-            break;
-        case NORTH:
-            break;
-        case SOUTH:
-            GlStateManager.rotate(180.0f, 0, 1, 0);
-            GlStateManager.translate(-1, 0, -1);
-            break;
-        case UP:
-            GlStateManager.translate(0, 1, 0);
-            GlStateManager.rotate(90.0f, 1, 0, 0);
-            break;
-        case WEST:
-            GlStateManager.translate(0, 0, 1);
-            GlStateManager.rotate(90.0f, 0, 1, 0);
-            break;
+        switch (sideHit) {
+            case DOWN:
+                GlStateManager.translate(0, 0, 1);
+                GlStateManager.rotate(-90.0f, 1, 0, 0);
+                break;
+            case EAST:
+                GlStateManager.rotate(-90.0f, 0, 1, 0);
+                GlStateManager.translate(0, 0, -1);
+                break;
+            case NORTH:
+                break;
+            case SOUTH:
+                GlStateManager.rotate(180.0f, 0, 1, 0);
+                GlStateManager.translate(-1, 0, -1);
+                break;
+            case UP:
+                GlStateManager.translate(0, 1, 0);
+                GlStateManager.rotate(90.0f, 1, 0, 0);
+                break;
+            case WEST:
+                GlStateManager.translate(0, 0, 1);
+                GlStateManager.rotate(90.0f, 0, 1, 0);
+                break;
         }
 
         GlStateManager.pushMatrix();
@@ -177,93 +166,71 @@ public class TurretAlchemyCircleRenderer extends AlchemyCircleRenderer
         GlStateManager.popMatrix();
     }
 
-    public float getStartupPitchYawRatio(float craftTime)
-    {
-        if (craftTime <= 80)
-        {
+    public float getStartupPitchYawRatio(float craftTime) {
+        if (craftTime <= 80) {
             return 0;
-        } else if (craftTime > 80 && craftTime < 140)
-        {
+        } else if (craftTime > 80 && craftTime < 140) {
             return (craftTime - 80) / 60f;
         }
 
         return 1;
     }
 
-    public double getBottomHeightOffset(double craftTime, double arrowAnimation)
-    {
-        if (craftTime <= 40)
-        {
+    public double getBottomHeightOffset(double craftTime, double arrowAnimation) {
+        if (craftTime <= 40) {
             return 0;
-        } else if (craftTime > 40 && craftTime < 100)
-        {
+        } else if (craftTime > 40 && craftTime < 100) {
             return -0.4 * (craftTime - 40) / 60d;
-        } else if (craftTime >= 100 && craftTime < 140)
-        {
+        } else if (craftTime >= 100 && craftTime < 140) {
             return -0.4 * (140 - craftTime) / 40d;
         }
 
-        if (arrowAnimation > 0 && arrowAnimation < 45)
-        {
+        if (arrowAnimation > 0 && arrowAnimation < 45) {
             return -0.4 * (arrowAnimation) / 45;
-        } else if (arrowAnimation >= 45 && arrowAnimation < 50)
-        {
+        } else if (arrowAnimation >= 45 && arrowAnimation < 50) {
             return -0.4 * (50 - arrowAnimation) / 5;
         }
 
         return 0;
     }
 
-    public double getMiddleHeightOffset(double craftTime, double arrowAnimation)
-    {
-        if (craftTime <= 40)
-        {
+    public double getMiddleHeightOffset(double craftTime, double arrowAnimation) {
+        if (craftTime <= 40) {
             return 0;
-        } else if (craftTime > 40 && craftTime < 100)
-        {
+        } else if (craftTime > 40 && craftTime < 100) {
             return 0.1 * (craftTime - 40) / 60d;
-        } else if (craftTime >= 100 && craftTime < 140)
-        {
+        } else if (craftTime >= 100 && craftTime < 140) {
             return 0.1 * (140 - craftTime) / 40d;
         }
 
-        if (arrowAnimation > 0 && arrowAnimation < 45)
-        {
+        if (arrowAnimation > 0 && arrowAnimation < 45) {
             return 0.1 * (arrowAnimation) / 45;
-        } else if (arrowAnimation >= 45 && arrowAnimation < 50)
-        {
+        } else if (arrowAnimation >= 45 && arrowAnimation < 50) {
             return 0.1 * (50 - arrowAnimation) / 5;
         }
 
         return 0;
     }
 
-    public double getTopHeightOffset(double craftTime, double arrowAnimation)
-    {
-        if (craftTime <= 40)
-        {
+    public double getTopHeightOffset(double craftTime, double arrowAnimation) {
+        if (craftTime <= 40) {
             return 0;
-        } else if (craftTime > 40 && craftTime < 100)
-        {
+        } else if (craftTime > 40 && craftTime < 100) {
             return 0.4 * (craftTime - 40) / 60d;
-        } else if (craftTime >= 100 && craftTime < 140)
-        {
+        } else if (craftTime >= 100 && craftTime < 140) {
             return 0.4 * (140 - craftTime) / 40d;
         }
 
-        if (arrowAnimation > 0 && arrowAnimation < 45)
-        {
+        if (arrowAnimation > 0 && arrowAnimation < 45) {
             return 0.4 * (arrowAnimation) / 45;
-        } else if (arrowAnimation >= 45 && arrowAnimation < 50)
-        {
+        } else if (arrowAnimation >= 45 && arrowAnimation < 50) {
             return 0.4 * (50 - arrowAnimation) / 5;
         }
 
         return 0;
     }
 
-    private void renderStandardCircle(Tessellator tessellator, BufferBuilder builder, double size)
-    {
+    private void renderStandardCircle(Tessellator tessellator, BufferBuilder builder, double size) {
         double var31 = 0.0D;
         double var33 = 1.0D;
         double var35 = 0;

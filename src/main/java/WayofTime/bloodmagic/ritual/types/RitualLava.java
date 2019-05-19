@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
-import WayofTime.bloodmagic.soul.DemonWillHolder;
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.soul.DemonWillHolder;
+import WayofTime.bloodmagic.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -85,7 +85,7 @@ public class RitualLava extends Ritual {
 
         for (BlockPos newPos : lavaRange.getContainedPositions(pos)) {
             IBlockState state = world.getBlockState(newPos);
-            if (world.isAirBlock(newPos) || Utils.isFlowingLiquid(world, newPos, state)) {
+            if (world.isAirBlock(newPos) || Utils.isFlowingLiquid(state)) {
                 int lpCost = getLPCostForRawWill(rawWill);
                 if (currentEssence < lpCost) {
                     break;

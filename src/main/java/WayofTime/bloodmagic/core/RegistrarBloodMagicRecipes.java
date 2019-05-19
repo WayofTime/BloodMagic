@@ -37,16 +37,12 @@ import java.util.List;
 import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
-public class RegistrarBloodMagicRecipes
-{
+public class RegistrarBloodMagicRecipes {
 
     @SubscribeEvent
-    public static void registerRecipes(RegistryEvent.Register<IRecipe> event)
-    {
-        for (int i = 0; i < ItemSoulGem.names.length; i++)
-        {
-            for (EnumDemonWillType willType : EnumDemonWillType.values())
-            {
+    public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
+        for (int i = 0; i < ItemSoulGem.names.length; i++) {
+            for (EnumDemonWillType willType : EnumDemonWillType.values()) {
                 ItemStack baseGemStack = new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, i);
                 ItemStack newGemStack = new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, i);
 
@@ -65,8 +61,7 @@ public class RegistrarBloodMagicRecipes
         RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL.setRepairItem(EnumDemonWillType.DEFAULT.getStack());
     }
 
-    public static void registerAltarRecipes(BloodMagicRecipeRegistrar registrar)
-    {
+    public static void registerAltarRecipes(BloodMagicRecipeRegistrar registrar) {
         // ONE
         registrar.addBloodAltar(new OreIngredient("gemDiamond"), OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK), AltarTier.ONE.ordinal(), 2000, 2, 1);
         registrar.addBloodAltar(new OreIngredient("stone"), ItemSlate.SlateType.BLANK.getStack(), AltarTier.ONE.ordinal(), 1000, 5, 5);
@@ -105,8 +100,7 @@ public class RegistrarBloodMagicRecipes
         }
     }
 
-    public static void registerAlchemyTableRecipes(BloodMagicRecipeRegistrar registrar)
-    {
+    public static void registerAlchemyTableRecipes(BloodMagicRecipeRegistrar registrar) {
         registrar.addAlchemyTable(new ItemStack(Items.STRING, 4), 0, 100, 0, Blocks.WOOL, Items.FLINT);
         registrar.addAlchemyTable(new ItemStack(Items.FLINT, 2), 0, 20, 0, Blocks.GRAVEL, Items.FLINT);
         registrar.addAlchemyTable(new ItemStack(Items.LEATHER, 4), 100, 200, 1, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.FLINT, Items.WATER_BUCKET);
@@ -139,16 +133,13 @@ public class RegistrarBloodMagicRecipes
 
         Set<String> addedOreRecipeList = Sets.newHashSet("oreIron", "oreGold", "oreCoal", "oreRedstone"); // We already added these above
         String[] oreList = OreDictionary.getOreNames().clone();
-        for (String ore : oreList)
-        {
-            if (ore.startsWith("ore") && !addedOreRecipeList.contains(ore))
-            {
+        for (String ore : oreList) {
+            if (ore.startsWith("ore") && !addedOreRecipeList.contains(ore)) {
                 String dustName = ore.replaceFirst("ore", "dust");
 
                 List<ItemStack> discoveredOres = OreDictionary.getOres(ore);
                 List<ItemStack> dustList = OreDictionary.getOres(dustName);
-                if (dustList != null && !dustList.isEmpty() && discoveredOres != null && !discoveredOres.isEmpty())
-                {
+                if (dustList != null && !dustList.isEmpty() && discoveredOres != null && !discoveredOres.isEmpty()) {
                     ItemStack dustStack = dustList.get(0).copy();
                     dustStack.setCount(2);
                     registrar.addAlchemyTable(dustStack, 400, 200, 1, ore, ItemCuttingFluid.FluidType.BASIC.getStack());
@@ -158,8 +149,7 @@ public class RegistrarBloodMagicRecipes
         }
     }
 
-    public static void registerTartaricForgeRecipes(BloodMagicRecipeRegistrar registrar)
-    {
+    public static void registerTartaricForgeRecipes(BloodMagicRecipeRegistrar registrar) {
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM), 1, 1, "dustRedstone", "ingotGold", "blockGlass", "dyeBlue");
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1), 60, 20, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM), "gemDiamond", "blockRedstone", "blockLapis");
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 2), 240, 50, new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 1), "gemDiamond", "blockGold", ItemSlate.SlateType.IMBUED.getStack());
@@ -216,8 +206,7 @@ public class RegistrarBloodMagicRecipes
         registrar.addTartaricForge(new ItemStack(RegistrarBloodMagicItems.RITUAL_DISMANTLER), 500, 100, new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, 1, 2), new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, 1, 2), new ItemStack(RegistrarBloodMagicItems.RITUAL_DIVINER), new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD));
     }
 
-    public static void registerAlchemyArrayRecipes(BloodMagicRecipeRegistrar registrar)
-    {
+    public static void registerAlchemyArrayRecipes(BloodMagicRecipeRegistrar registrar) {
         registrar.addAlchemyArray(new ItemStack(Items.REDSTONE), ItemSlate.SlateType.BLANK.getStack(), new ItemStack(RegistrarBloodMagicItems.SIGIL_DIVINATION), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/DivinationSigil.png"));
 
         registrar.addAlchemyArray(ComponentTypes.REAGENT_WATER.getStack(), ItemSlate.SlateType.BLANK.getStack(), new ItemStack(RegistrarBloodMagicItems.SIGIL_WATER), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WaterSigil.png"));
@@ -244,8 +233,7 @@ public class RegistrarBloodMagicRecipes
 
     }
 
-    public static void registerSacrificeCraftRecipes(BloodMagicRecipeRegistrar registrar)
-    {
+    public static void registerSacrificeCraftRecipes(BloodMagicRecipeRegistrar registrar) {
         registrar.addSacrificeCraft(new ItemStack(RegistrarBloodMagicBlocks.TELEPOSER), 10, Items.REDSTONE);
     }
 }

@@ -2,8 +2,7 @@ package WayofTime.bloodmagic.soul;
 
 import net.minecraft.item.ItemStack;
 
-public interface ISoulBreathContainer
-{
+public interface ISoulBreathContainer {
     double getBreath(ItemStack stack);
 
     void setBreath(ItemStack stack, double amount);

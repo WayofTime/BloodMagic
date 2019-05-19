@@ -82,7 +82,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb {
         if (binding.getOwnerId().equals(player.getGameProfile().getId()))
             ownerNetwork.setOrbTier(orb.getTier());
 
-        ownerNetwork.add(SoulTicket.item(stack, world, player,200), orb.getCapacity()); // Add LP to owner's network
+        ownerNetwork.add(SoulTicket.item(stack, world, player, 200), orb.getCapacity()); // Add LP to owner's network
         ownerNetwork.hurtPlayer(player, 200); // Hurt whoever is using it
         return super.onItemRightClick(world, player, hand);
     }

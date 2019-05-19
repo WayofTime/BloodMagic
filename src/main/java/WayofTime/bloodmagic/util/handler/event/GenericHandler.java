@@ -82,6 +82,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -440,10 +441,12 @@ public class GenericHandler {
         EntityPlayer player = event.getEntityPlayer();
         ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, player);
 
-        if (!itemstack.isEmpty() && itemstack.isItemDamaged()) {
-            int i = Math.min(xpToDurability(event.getOrb().xpValue), itemstack.getItemDamage());
-            event.getOrb().xpValue -= durabilityToXp(i);
-            itemstack.setItemDamage(itemstack.getItemDamage() - i);
+        if (!Loader.isModLoaded("unmending")) {
+            if (!itemstack.isEmpty() && itemstack.isItemDamaged()) {
+                int i = Math.min(xpToDurability(event.getOrb().xpValue), itemstack.getItemDamage());
+                event.getOrb().xpValue -= durabilityToXp(i);
+                itemstack.setItemDamage(itemstack.getItemDamage() - i);
+            }
         }
 
         if (!player.getEntityWorld().isRemote) {
@@ -555,13 +558,11 @@ public class GenericHandler {
     @SubscribeEvent
     public static void onWorldUnload(WorldEvent.Unload event) {
         World world = event.getWorld();
-        bounceMapMap.get(world).clear();
-        filledHandMapMap.get(world).clear();
-        attackTaskMapMap.get(world).clear();
-        targetTaskMapMap.get(world).clear();
-        forceSpawnMap.get(world).clear();
-        preventSpawnMap.get(world).clear();
-        PotionEventHandlers.flightListMap.get(world).clear();
-        PotionEventHandlers.noGravityListMap.get(world).clear();
+        bounceMapMap.getOrDefault(world, Collections.emptyMap()).clear();
+        filledHandMapMap.getOrDefault(world, Collections.emptyMap()).clear();
+        attackTaskMapMap.getOrDefault(world, Collections.emptyMap()).clear();
+        targetTaskMapMap.getOrDefault(world, Collections.emptyMap()).clear();
+        PotionEventHandlers.flightListMap.getOrDefault(world, Collections.emptyList()).clear();
+        PotionEventHandlers.noGravityListMap.getOrDefault(world, Collections.emptyList()).clear();
     }
 }

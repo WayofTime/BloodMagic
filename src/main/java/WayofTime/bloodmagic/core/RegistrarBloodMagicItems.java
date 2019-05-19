@@ -44,8 +44,7 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
 @SuppressWarnings("unchecked")
-public class RegistrarBloodMagicItems
-{
+public class RegistrarBloodMagicItems {
 
     public static final Item BLOOD_ORB = Items.AIR;
     public static final Item ACTIVATION_CRYSTAL = Items.AIR;
@@ -129,8 +128,7 @@ public class RegistrarBloodMagicItems
     public static List<Item> items;
 
     @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event)
-    {
+    public static void registerItems(RegistryEvent.Register<Item> event) {
         items = Lists.newArrayList();
 
         RegistrarBloodMagicBlocks.blocks.stream().filter(block -> block instanceof IBMBlock && ((IBMBlock) block).getItem() != null).forEach(block ->
@@ -215,15 +213,14 @@ public class RegistrarBloodMagicItems
                 new ItemPotionFlask().setRegistryName("potion_flask"),
                 new ItemAlchemicVial().setRegistryName("alchemic_vial"),
                 new ItemFlightScroll().setRegistryName("icarus_scroll")
-                ));
+        ));
 
         event.getRegistry().registerAll(items.toArray(new Item[0]));
     }
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public static void registerRenders(ModelRegistryEvent event)
-    {
+    public static void registerRenders(ModelRegistryEvent event) {
         items.stream().filter(i -> i instanceof IVariantProvider).forEach(i ->
         {
             Int2ObjectMap<String> variants = new Int2ObjectOpenHashMap<>();

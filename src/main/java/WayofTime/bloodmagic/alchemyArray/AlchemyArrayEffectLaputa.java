@@ -13,8 +13,7 @@ import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
 
-public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect
-{
+public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect {
     public static final int TELEPOSE_DELAY = 4;
 
     private BlockPos currentPos = BlockPos.ORIGIN;
@@ -22,20 +21,16 @@ public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect
     private int radius = -1;
     private int teleportHeightOffset = 5;
 
-    public AlchemyArrayEffectLaputa(String key)
-    {
+    public AlchemyArrayEffectLaputa(String key) {
         super(key);
     }
 
     @Override
-    public boolean update(TileEntity tile, int ticksActive)
-    {
-        if (ticksActive >= 100)
-        {
+    public boolean update(TileEntity tile, int ticksActive) {
+        if (ticksActive >= 100) {
             World world = tile.getWorld();
 
-            if (radius == -1)
-            {
+            if (radius == -1) {
                 ((TileAlchemyArray) tile).setItemDrop(false);
                 radius = getRandomRadius(world.rand);
                 teleportHeightOffset = getRandomHeightOffset(world.rand);
@@ -43,8 +38,7 @@ public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect
             }
 
             BlockPos pos = tile.getPos();
-            if (world.isRemote)
-            {
+            if (world.isRemote) {
                 return false;
             }
 
@@ -52,8 +46,7 @@ public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect
             int i = -radius;
             int k = -radius;
 
-            if (currentPos != null)
-            {
+            if (currentPos != null) {
                 j = currentPos.getY();
                 i = currentPos.getX();
                 k = currentPos.getZ();
@@ -61,34 +54,27 @@ public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect
             int checks = 0;
             int maxChecks = 100;
 
-            while (j <= radius)
-            {
-                while (i <= radius)
-                {
-                    while (k <= radius)
-                    {
-                        if (i == 0 && j == 0 && k == 0)
-                        {
+            while (j <= radius) {
+                while (i <= radius) {
+                    while (k <= radius) {
+                        if (i == 0 && j == 0 && k == 0) {
                             k++;
                             continue;
                         }
 
                         checks++;
-                        if (checks >= maxChecks)
-                        {
+                        if (checks >= maxChecks) {
                             this.currentPos = new BlockPos(i, j, k);
                             return false;
                         }
 
-                        if (checkIfSphere(radius, i, j, k))
-                        {
+                        if (checkIfSphere(radius, i, j, k)) {
                             BlockPos newPos = pos.add(i, j, k);
                             BlockPos offsetPos = newPos.up(teleportHeightOffset);
                             IBlockState state = world.getBlockState(newPos);
 
                             TeleposeEvent event = new TeleposeEvent(world, newPos, world, offsetPos);
-                            if (state.getBlockHardness(world, newPos) > 0 && !MinecraftForge.EVENT_BUS.post(event) && Utils.swapLocations(event.initalWorld, event.initialBlockPos, event.finalWorld, event.finalBlockPos))
-                            {
+                            if (state.getBlockHardness(world, newPos) > 0 && !MinecraftForge.EVENT_BUS.post(event) && Utils.swapLocations(event.initalWorld, event.initialBlockPos, event.finalWorld, event.finalBlockPos)) {
                                 k++;
                                 this.currentPos = new BlockPos(i, j, k);
 
@@ -112,25 +98,21 @@ public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect
         return false;
     }
 
-    public boolean checkIfSphere(float radius, float xOff, float yOff, float zOff)
-    {
+    public boolean checkIfSphere(float radius, float xOff, float yOff, float zOff) {
         float possOffset = 0.5f;
         return xOff * xOff + yOff * yOff + zOff * zOff <= ((radius + possOffset) * (radius + possOffset));
     }
 
-    public int getRandomRadius(Random rand)
-    {
+    public int getRandomRadius(Random rand) {
         return rand.nextInt(5) + 4;
     }
 
-    public int getRandomHeightOffset(Random rand)
-    {
+    public int getRandomHeightOffset(Random rand) {
         return radius * 2 + 1 + rand.nextInt(5);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
         tag.setInteger("radius", radius);
         tag.setInteger("teleportHeightOffset", teleportHeightOffset);
         tag.setInteger(Constants.NBT.X_COORD, currentPos.getX());
@@ -139,16 +121,14 @@ public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
         radius = tag.getInteger("radius");
         teleportHeightOffset = tag.getInteger("teleportHeightOffset");
         currentPos = new BlockPos(tag.getInteger(Constants.NBT.X_COORD), tag.getInteger(Constants.NBT.Y_COORD), tag.getInteger(Constants.NBT.Z_COORD));
     }
 
     @Override
-    public AlchemyArrayEffect getNewCopy()
-    {
+    public AlchemyArrayEffect getNewCopy() {
         return new AlchemyArrayEffectLaputa(key);
     }
 }
