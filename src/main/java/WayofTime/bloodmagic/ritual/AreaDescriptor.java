@@ -41,6 +41,8 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
 
     public abstract int getVolume();
 
+    public abstract int getHeight();
+
     public abstract boolean isWithinRange(int verticalLimit, int horizontalLimit);
 
     /**
@@ -113,6 +115,11 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
         public AxisAlignedBB getAABB(BlockPos pos) {
             AxisAlignedBB tempAABB = new AxisAlignedBB(minimumOffset, maximumOffset);
             return tempAABB.offset(pos.getX(), pos.getY(), pos.getZ());
+        }
+
+        @Override
+        public int getHeight() {
+            return this.maximumOffset.getY() - this.minimumOffset.getY();
         }
 
         /**
@@ -270,6 +277,13 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
             blockPosCache = new ArrayList<>();
         }
 
+
+        @Override
+        public int getHeight() {
+            return this.radius * 2;
+        }
+
+
         @Override
         public List<BlockPos> getContainedPositions(BlockPos pos) {
             if (!cache || !pos.equals(cachedPosition) || blockPosCache.isEmpty()) {
@@ -402,6 +416,12 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
             this.size = size;
             this.blockPosCache = new ArrayList<>();
         }
+
+        @Override
+        public int getHeight() {
+            return this.size * 2 + 1;
+        }
+
 
         @Override
         public List<BlockPos> getContainedPositions(BlockPos pos) {
