@@ -1,5 +1,5 @@
 ------------------------------------------------------
-Version 2.4.?
+Version 2.4.1
 ------------------------------------------------------
             ^- fill in appropriate version number
 
@@ -23,6 +23,15 @@ Sigils:
     - Fixed a bug where "Sigil of the Fast Miner" would also cause the whirlwind effect
     - Added "Whirlwind" to the potion registry
     - Fixed broken Sigil tooltip formatting
+    - Fixed Sigil of Holding not updating some Sigil data, allowing for exploits
+    - Greatly improved "Sigil of Compression" performance
+    - Fixed "Sigil of Compression" bug that would eat leftover items (usually everything between 55 and 64 items for a 3x3 compression)
+
+
+Rituals:
+    - Ported Veil of Evil & Ward of Sacrosanctity
+    - Fixed "Serenade of the Nether" replacing lava source blocks with lava (fixed underlying function to detect flowing liquids)
+    - Added configurability to Ritual of the High Jump by modifying a new ritual area with the Ritual Tinkerer
 
 Misc:
     - Fixed routing node oredict filter
@@ -33,6 +42,9 @@ Misc:
     - Fixed "Unmending" mod incompatibility
     - Fixed Teleposers crashing the game if someone force-fed it junk
     - added Nut being angery at contributors for messing stuff up
+    - Added some Russian language strings for the guide book
+    - Added repair recipes for Sentient Tools & Living Armor to JEI
+
 
 Technical Stuff no player cares about:
     - Formatted Project code
@@ -41,19 +53,15 @@ Technical Stuff no player cares about:
     - Mystery drain still mysterious
     - Use TextFormatting rather than color codes in block lang names
     - Fixed world unload crash (may happen if a world is loaded by world generators or JEI Resource graphing)
-
-Not merged yet:
-    - Fixed "Serenade of the Nether" replacing lava source blocks with lava (fixed underlying function to detect flowing liquids)
-    - Fixed "Gate of the Fold" and altered its functionality to accomodate multiple portals with the same key
-    - Fixed FluidSigils only filling fractions of a bucket and not being able to place liquids after having filled fractions of a bucket once
-    - Ported Veil of Evil & Ward of Sacrosanctity
-    - Added additional Sentient Sword mechanics if a Sigil is held in the offhand slot (effects applied on attack)
-    - Added creative item handling and new creative/test items
-    - Fixed "Sigil of Compression" bug that would eat leftover items (usually everything between 55 and 64 items for a 3x3 compression)
-    - Greatly improved "Sigil of Compression" performance
     - Fixed `/bloodmagic network get` command
     - Added translation keys for tickethistory command help strings
-    - Added repair recipes for Sentient Tools & Living Armor to JEI
+
+Not merged yet:
+
+    - Fixed "Gate of the Fold" and altered its functionality to accomodate multiple portals with the same key [regression:
+    - Added creative item handling and new creative/test items
+    - Fixed FluidSigils only filling fractions of a bucket and not being able to place liquids after having filled fractions of a bucket once
+    - Added additional Sentient Sword mechanics if a Sigil is held in the offhand slot (effects applied on attack)
 
 ------------------------------------------------------
 Version 2.4.0
