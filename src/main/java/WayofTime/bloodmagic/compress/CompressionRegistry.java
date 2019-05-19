@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.compress;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -18,8 +19,9 @@ import java.util.Map;
  * form.
  */
 public class CompressionRegistry {
-    public static List<CompressionHandler> compressionRegistry = new ArrayList<>();
+    private static List<CompressionHandler> compressionRegistry = new ArrayList<>();
     public static Map<ItemStack, Integer> thresholdMap = new HashMap<>();
+    static Map<ItemStack, Tuple<ItemStack, Integer>> compressionMap = new HashMap<>();
 
     public static void registerHandler(CompressionHandler handler) {
         compressionRegistry.add(handler);
@@ -77,9 +79,23 @@ public class CompressionRegistry {
         return Pair.of(ItemStack.EMPTY, false);
     }
 
-    public static int getItemThreshold(ItemStack stack) {
-        return stack.getItem().getItemStackLimit(stack); //this should work according to the guide, leaving behind a full stack of the source item (unless otherwise specified with a BaseCompressionHandler recipe)
+
+    public static int getItemThreshold(ItemStack stack, int needed) {
+        Integer threshold = thresholdMap.get(stack);
+        if (threshold != null)
+            return threshold;
+        else
+            return stack.getMaxStackSize() - needed;
     }
+
+    public static int getItemThreshold(ItemStack stack) {
+        Integer threshold = thresholdMap.get(stack);
+        if (threshold != null)
+            return threshold;
+        else
+            return stack.getMaxStackSize();
+    }
+
 
     public static boolean areItemStacksEqual(ItemStack stack, ItemStack compressedStack) {
         return stack.isItemEqual(compressedStack) && (stack.getTagCompound() == null ? !compressedStack.hasTagCompound() : stack.getTagCompound().equals(compressedStack.getTagCompound()));
