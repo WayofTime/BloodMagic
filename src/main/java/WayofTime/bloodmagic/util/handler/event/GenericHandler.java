@@ -30,8 +30,11 @@ import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.potion.BMPotionUtils;
 import WayofTime.bloodmagic.potion.PotionEventHandlers;
+import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.RitualManager;
+import WayofTime.bloodmagic.ritual.types.RitualVeilOfEvil;
+import WayofTime.bloodmagic.ritual.types.RitualWardOfSacrosanctity;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
@@ -73,6 +76,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
@@ -80,6 +84,7 @@ import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -94,6 +99,8 @@ public class GenericHandler {
     public static Map<World, Map<EntityPlayer, Integer>> filledHandMapMap = new HashMap<>();
     private static Map<World, Map<EntityAnimal, EntityAITarget>> targetTaskMapMap = new HashMap<>();
     private static Map<World, Map<EntityAnimal, EntityAIBase>> attackTaskMapMap = new HashMap<>();
+    public static Map<World, Map<IMasterRitualStone, AreaDescriptor>> preventSpawnMap = new HashMap<>();
+    public static Map<World, Map<IMasterRitualStone, AreaDescriptor>> forceSpawnMap = new HashMap<>();
     public static Set<IMasterRitualStone> featherRitualSet;
 
     @SubscribeEvent
@@ -461,6 +468,80 @@ public class GenericHandler {
         return durability / 2;
     }
 
+    // VeilOfEvil, WardOfSacrosanctity
+    @SubscribeEvent
+    public static void onLivingSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
+        World world = event.getWorld();
+
+        if (!(event.getEntityLiving() instanceof EntityMob)) {
+            return;
+        }
+
+        /* WardOfSacrosanctity */
+
+        if (preventSpawnMap.containsKey(world)) {
+            Map<IMasterRitualStone, AreaDescriptor> pMap = preventSpawnMap.get(world);
+
+            if (pMap != null) {
+                for (Map.Entry<IMasterRitualStone, AreaDescriptor> entry : pMap.entrySet()) {
+                    IMasterRitualStone masterRitualStone = entry.getKey();
+                    AreaDescriptor blockRange = entry.getValue();
+
+                    if (masterRitualStone != null && masterRitualStone.isActive() && masterRitualStone.getCurrentRitual() instanceof RitualWardOfSacrosanctity) {
+                        if (blockRange.offset(masterRitualStone.getBlockPos()).isWithinArea(new BlockPos(event.getX(), event.getY(), event.getZ()))) {
+                            switch (event.getResult()) {
+                                case ALLOW:
+                                    event.setResult(Result.DEFAULT);
+                                    break;
+                                case DEFAULT:
+                                    event.setResult(Result.DENY);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        }
+                    } else {
+                        pMap.remove(masterRitualStone);
+                    }
+                }
+            }
+        }
+
+        /* VeilOfEvil */
+
+        if (forceSpawnMap.containsKey(world)) {
+            Map<IMasterRitualStone, AreaDescriptor> fMap = forceSpawnMap.get(world);
+
+            if (fMap != null) {
+                for (Map.Entry<IMasterRitualStone, AreaDescriptor> entry : fMap.entrySet()) {
+                    IMasterRitualStone masterRitualStone = entry.getKey();
+                    AreaDescriptor blockRange = entry.getValue();
+                    System.out.println("found a map");
+
+                    if (masterRitualStone != null && masterRitualStone.isActive() && masterRitualStone.getCurrentRitual() instanceof RitualVeilOfEvil) {
+                        System.out.println("is active");
+                        if (blockRange.offset(masterRitualStone.getBlockPos()).isWithinArea(new BlockPos(event.getX(), event.getY(), event.getZ()))) {
+                            System.out.println("is in");
+                            switch (event.getResult()) {
+                                case DEFAULT:
+                                    event.setResult(Result.ALLOW);
+                                    break;
+                                case DENY:
+                                    event.setResult(Result.DEFAULT);
+                                default:
+                                    break;
+                            }
+                            break;
+                        }
+                    } else {
+                        fMap.remove(masterRitualStone);
+                    }
+                }
+            }
+        }
+    }
+
     @SubscribeEvent
     public static void onWorldLoad(WorldEvent.Load event) {
         World world = event.getWorld();
@@ -468,6 +549,8 @@ public class GenericHandler {
         filledHandMapMap.computeIfAbsent(world, k -> new HashMap<>());
         attackTaskMapMap.computeIfAbsent(world, k -> new HashMap<>());
         targetTaskMapMap.computeIfAbsent(world, k -> new HashMap<>());
+        forceSpawnMap.computeIfAbsent(world, k -> new HashMap<>());
+        preventSpawnMap.computeIfAbsent(world, k -> new HashMap<>());
         PotionEventHandlers.flightListMap.computeIfAbsent(world, k -> new ArrayList<>());
         PotionEventHandlers.noGravityListMap.computeIfAbsent(world, k -> new ArrayList<>());
     }

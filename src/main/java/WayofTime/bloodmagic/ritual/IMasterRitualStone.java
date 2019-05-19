@@ -33,6 +33,8 @@ public interface IMasterRitualStone {
 
     void setCooldown(int cooldown);
 
+    boolean isActive();
+
     void setActive(boolean active);
 
     EnumFacing getDirection();
