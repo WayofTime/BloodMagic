@@ -5,15 +5,10 @@ guide.bloodmagic.author=Blood Magic
 guide.bloodmagic.welcome=Blood Magic
 
 # Page Information
-guide.bloodmagic.page.bloodAltar=Blood Altar Recipe
-guide.bloodmagic.page.soulForge=Hellfire Forge Recipe
-guide.bloodmagic.page.tier=Tier: %d
-guide.bloodmagic.page.lp=LP: %d
-guide.bloodmagic.page.minimumWill=Minimum Will: %f
-guide.bloodmagic.page.drainedWill=Drained Will: %f
-guide.bloodmagic.shapelessOrb=Shapeless Orb Recipe
-guide.bloodmagic.shapedOrb=Shaped Orb Recipe
-guide.bloodmagic.page.alchemyArray=Alchemy Array
+guide.bloodmagic.page.bloodAltar=Рецепт Кровавого Алтаря
+guide.bloodmagic.page.soulForge=Рецепт Кузницы Адского Пламени
+guide.bloodmagic.shapelessOrb=Бесформенный рецепт шара
+guide.bloodmagic.shapedOrb=Форменный рецепт шара
 
 
 # Categories
@@ -25,47 +20,6 @@ guide.bloodmagic.category.alchemy=Алхимик
 
 # Ritual Master Entries
 guide.bloodmagic.entry.ritual.intro=Вступление
-guide.bloodmagic.entry.ritual.basics=The Basics of Rituals
-guide.bloodmagic.entry.ritual.ritualStone=Ritual Stones
-guide.bloodmagic.entry.ritual.masterRitualStone=Master Ritual Stone
-guide.bloodmagic.entry.ritual.activationCrystal=Activation Crystals
-guide.bloodmagic.entry.ritual.diviner=The Ritual Diviner
-guide.bloodmagic.entry.ritual.fullSpring=Ritual of the Full Spring
-guide.bloodmagic.entry.ritual.lava=Serenade of the Nether
-guide.bloodmagic.entry.ritual.greenGrove=Ritual of the Green Grove
-guide.bloodmagic.entry.ritual.magnetism=Ritual of Magnetism
-guide.bloodmagic.entry.ritual.crusher=Ritual of the Crusher
-guide.bloodmagic.entry.ritual.highJump=Ritual of the High Jump
-guide.bloodmagic.entry.ritual.speed=Ritual of Speed
-guide.bloodmagic.entry.ritual.wellOfSuffering=Well of Suffering
-guide.bloodmagic.entry.ritual.featheredKnife=Ritual of the Feathered Knife
-guide.bloodmagic.entry.ritual.regen=Ritual of Regeneration
-guide.bloodmagic.entry.ritual.harvest=Reap of the Harvest Moon
-guide.bloodmagic.entry.ritual.interdiction=Ritual of Interdiction
-guide.bloodmagic.entry.ritual.containment=Ritual of Containment
-guide.bloodmagic.entry.ritual.suppression=Dome of Suppression
-guide.bloodmagic.entry.ritual.expulsion=Aura of Expulsion
-guide.bloodmagic.entry.ritual.zephyr=Call of the Zephyr
-guide.bloodmagic.entry.ritual.laying=Laying of the Filler
-guide.bloodmagic.entry.ritual.timberman=Crash of the Timberman
-guide.bloodmagic.entry.ritual.meteor=Mark of the Falling Tower
-guide.bloodmagic.entry.ritual.downgrade=Penance of the Leadened Soul
-guide.bloodmagic.entry.ritual.crystalSplit=Resonance of the Faceted Crystal
-guide.bloodmagic.entry.ritual.portal=The Gate of the Fold
-guide.bloodmagic.entry.ritual.altarBuilder=The Assembly of the High Altar
-guide.bloodmagic.entry.ritual.pump=Hymn of Syphoning
-guide.bloodmagic.entry.ritual.cobble=Le Vulcanos Frigius
-guide.bloodmagic.entry.ritual.ellipsoid=Focus of the Ellipsoid
-guide.bloodmagic.entry.ritual.crystalHarvest=Crack of the Fractured Crystal
-guide.bloodmagic.entry.ritual.forsakenSoul=Gathering of the Forsaken Souls
-guide.bloodmagic.entry.ritual.animalGrowth=Ritual of the Shephard
-guide.bloodmagic.entry.ritual.livingEvolution=Ritual of the Living Evolution
-guide.bloodmagic.entry.ritual.upgradeRemove=Ritual of the Cleansing Soul
-guide.bloodmagic.entry.ritual.fullStomach=Ritual of the Satiated Stomach
-guide.bloodmagic.entry.ritual.eternalSoul=Ritual of the Eternal Soul
-guide.bloodmagic.entry.ritual.condor=Reverence of the Condor
-guide.bloodmagic.entry.ritual.featheredEarth=Ritual of the Feathered Earth
-guide.bloodmagic.entry.ritual.grounding=Ritual of Grounding
 
 # Ritual Master Entry Text
 guide.bloodmagic.entry.ritual.intro.info=Добрый вечер. Меня зовут Магус Аркана. За эти годы у меня было много обликов: вор и дружинник, волшебник и воин, бродячий кочевник и даже политик. Название, которое я держу в настоящее время, - это то, что многие не могут понять, что при самом упоминании о нем возникают образы жестокости, которые в некоторых случаях были заслужены, но во многих других введены в заблуждение. Я, конечно, говорю о том, чтобы быть Кровавым Магом, хотя мои друзья просто называют меня Магом, тогда как мои враги называют меня Мастером Ритуала.\n\tМои ученики приставали ко мне уже много месяцев, пытаясь заставить меня задокументировать все бесчисленные приключения, которые у меня были, в какой-то форме книги, которую я мог бы распространять среди любых начинающих магов. Я был настойчив, но это был Тиберий, который выразил это лучше всего: «Хотя вы, возможно, и сами не сможете оценить его ценность, услышать тонкости любого рода ремесла от человека, который достиг мастерства в этой области, окажется неоценимым для будущих поколений. «Неважно, насколько точно кто-то другой пересказывает это, если у вас нет полной уверенности в источнике, золотой песок может быть не чем иным, как серой». Вы могли бы сказать, что в тот момент он углублялся в алхимию, но так как он долгое время был моим первым учеником, я склонен ценить его мнение.\n\tТак, начинающий кровавый маг, тренирующийся в тайне, который многие еще делают не до конца понимаю, подайте мне уши, потому что эти слова заслуживают внимания: область, которую вы изучаете, имеет много аспектов, и без тщательного рассмотрения вы можете обнаружить, что ваши инструменты не хватает. Поэтому не забывайте часто читать эту книгу - я вложил много чар в книгу, которую вы носите с собой, чтобы всякий раз, когда я пишу в своей основной копии, слова менялись для вас.\n\tТак что сядьте, расслабьтесь и наслаждайтесь учением очень старого человека. Вы можете узнать больше, чем вы рассчитывали.
@@ -227,22 +181,7 @@ guide.bloodmagic.entry.architect.acceleration.info=В отличие от бол
 guide.bloodmagic.entry.architect.tier3.info=Хорошо известно, что алтарь Уровня 3 требует, чтобы вы закрыли четыре колонны блоками светящихся камней из Пустоты. Что не так хорошо понято, так это то, что вы можете вместо этого использовать Морские Фонари. Поэтому, если вы оказались очень далеко от перехода в Пустоту, но у вас есть доступ к океанским храмам, вы можете использовать другие способы для продвижения в Магии Крови.
 
 # Demon Kin Entries
-guide.bloodmagic.entry.demon.intro=Bella Highborn
-guide.bloodmagic.entry.demon.snare=Demon Will and Snares
-guide.bloodmagic.entry.demon.forge=Hellfire Forge
-guide.bloodmagic.entry.demon.petty=Petty Tartaric Gem
-guide.bloodmagic.entry.demon.sword=Sentient Sword
-guide.bloodmagic.entry.demon.lesser=Lesser Tartaric Gem
-guide.bloodmagic.entry.demon.reactions=Unexpected Reactions
-guide.bloodmagic.entry.demon.sentientGem=Sentient Armour
-guide.bloodmagic.entry.demon.routing=Item Routing
-guide.bloodmagic.entry.demon.aura=Demon Will Aura
-guide.bloodmagic.entry.demon.types=Different Will Types
-guide.bloodmagic.entry.demon.crucible=Demon Crucible
-guide.bloodmagic.entry.demon.crystallizer=Demon Crystallizer
-guide.bloodmagic.entry.demon.cluster=Demon Crystal Cluster
-guide.bloodmagic.entry.demon.pylon=Demon Pylon
-guide.bloodmagic.entry.demon.gauge=Demon Will Aura Gauge
+# TODO
 
 # Demon Kin Entry Texts
 guide.bloodmagic.entry.demon.intro.info=Меня зовут Белла Хайборн, и я известна как Король Демонов. Несколько месяцев назад на мою деревню напала волна демонов, убив всех остальных людей и уничтожив все здания. Я мало что помню о нападении,кроме криков боли, когда каждый человек, которого я знал, покидал этот мир ради более счастливого. К счастью, демоны не услышали меня, когда я забилась под корзины с фруктами в подвале церкви Интактилис, отчаянно пытаясь не дать своим крикам присоединиться к хору других голосов. \nБыл один ужасный момент, когда я случайно опрокинула алтарь с благовониями в церкви, и демон ворвался в святилище, невозмутимый тем, что мы считали священным местом. Это было огромное четвероногое чудовище с кривыми клыками, свисающими из выступающей пасти, слюна капала на зазубренные мечи вместо когтей. Он оглядел комнату и, клянусь, на секунду встретился со мной взглядом, но потом просто ушел, словно ничего не видел и не слышал. Потом все было как в тумане. \nПрошел целый день, прежде чем кто-то пришел посмотреть, что случилось. Торговый караван увидел вдалеке дым и решил пройти длинным путем мимо демонов. Многие из торговцев даже не хотели смотреть на меня, опасаясь, что это дурное предзнаменование, потому что только мне удалось остаться невредимым. Но два брата решили сжалиться надо мной и попытаться убедить остальных членов каравана взять меня с собой. Мне пришлось продать жезл жрицы и запереться, но мне удалось купить безопасный проход в деревню достаточно далеко от пути демонов разрушения. 
