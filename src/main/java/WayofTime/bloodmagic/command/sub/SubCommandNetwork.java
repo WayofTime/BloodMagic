@@ -85,11 +85,11 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public final void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
+                sender.sendMessage(new TextComponentTranslation(getHelp()));
+                return;
+            }
             if (!getName().equals("get")) {
-                if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                    sender.sendMessage(new TextComponentTranslation(getHelp()));
-                    return;
-                }
                 this.player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
                 this.uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
                 this.network = NetworkHelper.getSoulNetwork(uuid);
@@ -164,11 +164,9 @@ public class SubCommandNetwork extends CommandTreeBase {
 
         @Override
         public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-            if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
-                return;
-            }
             this.player = args.length < 1 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+            this.uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
+            this.network = NetworkHelper.getSoulNetwork(uuid);
             sender.sendMessage(new TextComponentString((player != sender ? player.getDisplayName().getFormattedText() + " " : "" + new TextComponentTranslation("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence()).getFormattedText())));
         }
     }
@@ -216,7 +214,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         @Override
         public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             List<SoulTicket> tickethistory = network.getTicketHistory();
-            if (tickethistory.isEmpty())
+            if (!tickethistory.isEmpty())
                 for (SoulTicket i : network.getTicketHistory())
                     sender.sendMessage(i.getDescription());
             sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success", player.getDisplayName().getFormattedText()));
