@@ -14,11 +14,14 @@ import java.util.function.Consumer;
 @RitualRegister("jumping")
 public class RitualJumping extends Ritual {
     public static final String JUMP_RANGE = "jumpRange";
+    public static final String JUMP_POWER = "jumpPower";
 
     public RitualJumping() {
         super("ritualJump", 0, 5000, "ritual." + BloodMagic.MODID + ".jumpRitual");
         addBlockRange(JUMP_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 1, -1), 3, 1, 3));
         setMaximumVolumeAndDistanceOfRange(JUMP_RANGE, 0, 5, 5);
+        addBlockRange(JUMP_POWER, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 0, 5, 0));
+        setMaximumVolumeAndDistanceOfRange(JUMP_POWER, 0, 0, 100);
     }
 
     @Override
@@ -41,7 +44,7 @@ public class RitualJumping extends Ritual {
                 break;
             }
 
-            double motionY = 1.5;
+            double motionY = masterRitualStone.getBlockRange(JUMP_POWER).getHeight() * 0.3;
 
             entity.fallDistance = 0;
             if (entity.isSneaking()) {
@@ -66,7 +69,7 @@ public class RitualJumping extends Ritual {
 
     @Override
     public int getRefreshCost() {
-        return 5;
+        return getBlockRange(JUMP_POWER).getHeight();
     }
 
     @Override
