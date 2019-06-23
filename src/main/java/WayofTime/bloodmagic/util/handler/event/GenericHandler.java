@@ -558,11 +558,11 @@ public class GenericHandler {
     @SubscribeEvent
     public static void onWorldUnload(WorldEvent.Unload event) {
         World world = event.getWorld();
-        bounceMapMap.getOrDefault(world, Collections.emptyMap()).clear();
-        filledHandMapMap.getOrDefault(world, Collections.emptyMap()).clear();
-        attackTaskMapMap.getOrDefault(world, Collections.emptyMap()).clear();
-        targetTaskMapMap.getOrDefault(world, Collections.emptyMap()).clear();
-        PotionEventHandlers.flightListMap.getOrDefault(world, Collections.emptyList()).clear();
-        PotionEventHandlers.noGravityListMap.getOrDefault(world, Collections.emptyList()).clear();
+        bounceMapMap.remove(world);
+        filledHandMapMap.remove(world);
+        attackTaskMapMap.remove(world);
+        targetTaskMapMap.remove(world);
+        PotionEventHandlers.flightListMap.remove(world);
+        PotionEventHandlers.noGravityListMap.remove(world);
     }
 }
