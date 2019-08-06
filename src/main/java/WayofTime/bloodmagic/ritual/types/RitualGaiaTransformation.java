@@ -10,6 +10,7 @@ import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -23,6 +24,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 @RitualRegister("gaia_transformation")
@@ -71,15 +73,16 @@ public class RitualGaiaTransformation extends Ritual {
 
         /* Actual ritual stuff begins here */
 
-        if (cooldown > 0) {
-            masterRitualStone.setCooldown(cooldown - 1);
+        if (masterRitualStone.getCooldown() > 0) {
+            masterRitualStone.setCooldown(masterRitualStone.getCooldown() - 1);
 
             if (world.rand.nextInt(15) == 0) {
                 world.addWeatherEffect(new EntityLightningBolt(world, x - 1 + world.rand.nextInt(3), y + 1, z - 1 + world.rand.nextInt(3), false));
             }
-
+            System.out.println("Cooldown remaining: " + masterRitualStone.getCooldown());
             return;
         }
+        System.out.println("Init phase passed");
 
         int range = 10;
 
@@ -104,6 +107,7 @@ public class RitualGaiaTransformation extends Ritual {
                             Block block = world.getBlockState(new BlockPos(x - range + i - 1, y + 1, z - range + j)).getBlock();
 
                             if (!RegistrarBloodMagicBlocks.DECORATIVE_BRICK.equals(block)) {
+                                System.out.println("Border Detected");
                                 boolList[i - 1][j] = true;
                                 isReady = false;
                             }
@@ -113,6 +117,7 @@ public class RitualGaiaTransformation extends Ritual {
                             Block block = world.getBlockState(new BlockPos(x - range + i, y + 1, z - range + j - 1)).getBlock();
 
                             if (!RegistrarBloodMagicBlocks.DECORATIVE_BRICK.equals(block)) {
+                                System.out.println("Border Detected");
                                 boolList[i][j - 1] = true;
                                 isReady = false;
                             }
@@ -122,6 +127,7 @@ public class RitualGaiaTransformation extends Ritual {
                             Block block = world.getBlockState(new BlockPos(x - range + i + 1, y + 1, z - range + j)).getBlock();
 
                             if (!RegistrarBloodMagicBlocks.DECORATIVE_BRICK.equals(block)) {
+                                System.out.println("Border Detected");
                                 boolList[i + 1][j] = true;
                                 isReady = false;
                             }
@@ -131,6 +137,7 @@ public class RitualGaiaTransformation extends Ritual {
                             Block block = world.getBlockState(new BlockPos(x - range + i, y + 1, z - range + j + 1)).getBlock();
 
                             if (!RegistrarBloodMagicBlocks.DECORATIVE_BRICK.equals(block)) {
+                                System.out.println("Border detected");
                                 boolList[i][j + 1] = true;
                                 isReady = false;
                             }
@@ -139,6 +146,7 @@ public class RitualGaiaTransformation extends Ritual {
                 }
             }
         }
+        System.out.println("Area detected");
 
         float temperature = 0.5f;
         float humidity = 0.5f;
@@ -161,10 +169,12 @@ public class RitualGaiaTransformation extends Ritual {
                 IItemHandler inv = Utils.getInventory(tile, null);
                 if (inv != null) {
                     ItemStack itemStack = inv.getStackInSlot(0);
+                    System.out.println(itemStack);
 
                     if (itemStack != null && !itemStack.isEmpty()) {
                         if (!(masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(this.getRefreshCost())) == this.getRefreshCost())) {
                             BlockPos targetPos = world.getPlayerEntityByUUID(masterRitualStone.getOwner()).getPosition();
+                            System.out.println(targetPos);
                             world.addWeatherEffect(new EntityLightningBolt(world, targetPos.getX(), targetPos.getY(), targetPos.getZ(), false));
                             if (world.rand.nextInt(4) == 0)
                                 break;
@@ -215,13 +225,13 @@ public class RitualGaiaTransformation extends Ritual {
                             temperature -= 0.1f * itemStack.getCount();
                             isItemConsumed = true;
                         }
+                        if (isItemConsumed) {
+                            inv.extractItem(0, inv.getSlotLimit(0), false);
+                            IBlockState state = world.getBlockState(tilePos);
+                            world.notifyBlockUpdate(tilePos, state, state, 3);
+                            world.addWeatherEffect(new EntityLightningBolt(world, x + i, y + 1, z + j, false));
+                        }
                     }
-                }
-                if (isItemConsumed) {
-                    inv.extractItem(0, inv.getSlotLimit(0), false);
-                    IBlockState state = world.getBlockState(tilePos);
-                    world.notifyBlockUpdate(tilePos, state, state, 3);
-                    world.addWeatherEffect(new EntityLightningBolt(world, x + i, y + 1, z + j, false));
                 }
             }
         }
@@ -294,6 +304,11 @@ public class RitualGaiaTransformation extends Ritual {
         masterRitualStone.setActive(false);
     }
 
+    @Override
+    public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player, UUID owner) {
+        masterRitualStone.setCooldown(cooldown);
+        return true;
+    }
 
     @Override
     public int getRefreshTime() {
