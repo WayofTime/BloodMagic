@@ -68,19 +68,15 @@ public class RitualEternalSoul extends Ritual {
         List<EntityPlayer> list = world.getEntitiesWithinAABB(EntityPlayer.class,
                 new AxisAlignedBB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f,
                         pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)
-                        .expand(horizontalRange, verticalRange, horizontalRange));
+                        .expand(horizontalRange, verticalRange, horizontalRange).expand(0, -verticalRange, 0));
 
-        EntityPlayer entityOwner = null;
-        for (EntityPlayer player : list) {
-            if (PlayerHelper.getUUIDFromPlayer(player) == owner)
-                entityOwner = player;
-        }
+        EntityPlayer entityOwner = PlayerHelper.getPlayerFromUUID(owner);
 
         int fillAmount = Math.min(currentEssence / 2, altar.fill(new FluidStack(BlockLifeEssence.getLifeEssence(), 10000), false));
 
         altar.fill(new FluidStack(BlockLifeEssence.getLifeEssence(), fillAmount), true);
 
-        if (entityOwner != null && entityOwner.getHealth() > 2.0f && fillAmount != 0)
+        if (entityOwner != null && list.contains(entityOwner) && entityOwner.getHealth() > 2.0f && fillAmount != 0)
             entityOwner.setHealth(2.0f);
 
         masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(fillAmount * 2));
