@@ -8,6 +8,14 @@
   },
   "variants": {
         "normal": [{
+        }
+        ],
+    "powered=true": [
+      {
+      }
+    ],
+    "powered=false": [
+      {
 
         }]
     }

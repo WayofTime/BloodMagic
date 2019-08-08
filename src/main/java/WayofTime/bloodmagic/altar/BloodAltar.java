@@ -3,17 +3,20 @@ package WayofTime.bloodmagic.altar;
 import WayofTime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
+import WayofTime.bloodmagic.block.BlockAltar;
+import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.block.enums.BloodRuneType;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
-import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import com.google.common.base.Enums;
+import net.minecraft.block.BlockRedstoneLight;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -239,8 +242,14 @@ public class BloodAltar implements IFluidHandler {
             tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
         }
 
-        if (internalCounter % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))
+        if (internalCounter % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0)) {
+            /* Redstone Lamp below altar: Switch Off */
+            if (world.getBlockState(pos).getValue(BlockAltar.POWERED)) {
+                world.setBlockState(pos, world.getBlockState(pos).cycleProperty(BlockAltar.POWERED), 3);
+                world.notifyNeighborsOfStateChange(pos, RegistrarBloodMagicBlocks.ALTAR, false);
+            }
             startCycle();
+        }
 
         updateAltar();
     }
@@ -317,6 +326,13 @@ public class BloodAltar implements IFluidHandler {
                     if (world instanceof WorldServer) {
                         WorldServer server = (WorldServer) world;
                         server.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.3, 0, 0.3, 0);
+                    }
+
+                    /* Redstone Lamp below altar: Switch On */
+                    /* Switches on when crafting finishes */
+                    if (world.getBlockState(pos.down()).getBlock() instanceof BlockRedstoneLight) {
+                        world.setBlockState(pos, world.getBlockState(pos).cycleProperty(BlockAltar.POWERED), 3);
+                        world.notifyNeighborsOfStateChange(pos, RegistrarBloodMagicBlocks.ALTAR, false);
                     }
 
                     this.cooldownAfterCrafting = 30;
