@@ -189,18 +189,10 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
 
     /* Redstone code, taken from BlockLever */
 
-    /**
-     * @deprecated call via {@link IBlockState#getWeakPower(IBlockAccess, BlockPos, EnumFacing)} whenever possible.
-     * Implementing/overriding is fine.
-     */
     public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
         return blockState.getValue(POWERED) ? 15 : 0;
     }
 
-    /**
-     * @deprecated call via {@link IBlockState#getStrongPower(IBlockAccess, BlockPos, EnumFacing)} whenever possible.
-     * Implementing/overriding is fine.
-     */
     public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
         if (!blockState.getValue(POWERED)) {
             return 0;
@@ -209,25 +201,14 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
         }
     }
 
-    /**
-     * Can this block provide power. Only wire currently seems to have this change based on its state.
-     *
-     * @deprecated call via {@link IBlockState#canProvidePower()} whenever possible. Implementing/overriding is fine.
-     */
     public boolean canProvidePower(IBlockState state) {
         return true;
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(POWERED, (meta & 8) > 0);
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
     public int getMetaFromState(IBlockState state) {
         int i = 0;
 
