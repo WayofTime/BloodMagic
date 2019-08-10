@@ -122,6 +122,14 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
             return this.maximumOffset.getY() - this.minimumOffset.getY();
         }
 
+        public BlockPos getMinimumOffset() {
+            return minimumOffset;
+        }
+
+        public BlockPos getMaximumOffset() {
+            return maximumOffset;
+        }
+
         /**
          * Sets the offsets of the AreaDescriptor in a safe way that will make
          * minimumOffset the lowest corner

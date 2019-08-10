@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.ritual.EnumRitualReaderState;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.Ritual;
@@ -21,7 +22,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -100,11 +100,20 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                 switch (state) {
                     case INFORMATION:
                         master.provideInformationOfRitualToPlayer(player);
+                        if (player.isSneaking()) {
+                            Ritual ritual = master.getCurrentRitual();
+                            BlockPos masterPos = getMasterBlockPos(stack);
+                            for (String range : ritual.getListOfRanges()) {
+                                AreaDescriptor.Rectangle aabb = (AreaDescriptor.Rectangle) ritual.getBlockRange(range);
+                                master.setBlockRangeByBounds(player, range, aabb.getMinimumOffset().subtract(masterPos), aabb.getMaximumOffset().subtract(masterPos));
+                            }
+                            break;
+                        }
                         break;
                     case SET_AREA:
                         String range = this.getCurrentBlockRange(stack);
 
-                        if (range == null || player.isSneaking()) {
+                        if (range == null || range.isEmpty() || player.isSneaking()) {
                             String newRange = master.getNextBlockRange(range);
                             range = newRange;
                             this.setCurrentBlockRange(stack, newRange);
@@ -144,17 +153,21 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                             BlockPos pos1 = pos.subtract(masterPos);
                             this.setBlockPos(stack, pos1);
                             player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.firstBlock"), true);
-                            player.sendMessage(new TextComponentString(pos1.toString()));
                         } else {
                             tile = world.getTileEntity(masterPos);
                             if (tile instanceof IMasterRitualStone) {
                                 IMasterRitualStone master = (IMasterRitualStone) tile;
                                 BlockPos pos2 = pos.subtract(masterPos);
                                 String range = this.getCurrentBlockRange(stack);
+                                if (range == null || range.isEmpty()) {
+                                    String newRange = master.getNextBlockRange(range);
+                                    range = newRange;
+                                    this.setCurrentBlockRange(stack, newRange);
+                                }
                                 Ritual ritual = master.getCurrentRitual();
                                 //TODO: Fix AreaDescriptor area handling to be inclusive, then remove the "-1" for range calculation below.
-                                int maxHorizontalRange = ritual.getMaxHorizontalRadiusForRange(range, null, null) - 1;
-                                int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, null, null) - 1;
+                                int maxHorizontalRange = ritual.getMaxHorizontalRadiusForRange(range, null, null);
+                                int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, null, null);
                                 int maxVolume = ritual.getMaxVolumeForRange(range, null, null);
 
                                 switch (master.setBlockRangeByBounds(player, range, containedPos, pos2)) {
