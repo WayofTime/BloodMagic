@@ -100,17 +100,19 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                 switch (state) {
                     case INFORMATION:
                         master.provideInformationOfRitualToPlayer(player);
-                        if (player.isSneaking()) {
+
+                        break;
+                    case SET_AREA:
+                        if (player.isSneaking() && player.getHeldItem(EnumHand.OFF_HAND).getItem() instanceof ItemBloodOrb) {
                             Ritual ritual = master.getCurrentRitual();
                             BlockPos masterPos = getMasterBlockPos(stack);
                             for (String range : ritual.getListOfRanges()) {
-                                AreaDescriptor.Rectangle aabb = (AreaDescriptor.Rectangle) ritual.getBlockRange(range);
-                                master.setBlockRangeByBounds(player, range, aabb.getMinimumOffset().subtract(masterPos), aabb.getMaximumOffset().subtract(masterPos));
+                                AreaDescriptor aabb = ritual.getBlockRange(range);
+                                master.setBlockRange(range, aabb);
                             }
                             break;
                         }
-                        break;
-                    case SET_AREA:
+
                         String range = this.getCurrentBlockRange(stack);
 
                         if (range == null || range.isEmpty() || player.isSneaking()) {

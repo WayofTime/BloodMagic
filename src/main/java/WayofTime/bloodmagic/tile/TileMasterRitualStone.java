@@ -425,13 +425,27 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         return null;
     }
 
+    @Override
     public void addBlockRange(String range, AreaDescriptor defaultRange) {
-        modableRangeMap.put(range, defaultRange);
+        modableRangeMap.putIfAbsent(range, defaultRange.copy());
     }
 
+    @Override
     public void addBlockRanges(Map<String, AreaDescriptor> blockRanges) {
         for (Map.Entry<String, AreaDescriptor> entry : blockRanges.entrySet()) {
-            modableRangeMap.put(entry.getKey(), entry.getValue());
+            modableRangeMap.putIfAbsent(entry.getKey(), entry.getValue().copy());
+        }
+    }
+
+    @Override
+    public void setBlockRange(String range, AreaDescriptor defaultRange) {
+        modableRangeMap.put(range, defaultRange.copy());
+    }
+
+    @Override
+    public void setBlockRanges(Map<String, AreaDescriptor> blockRanges) {
+        for (Map.Entry<String, AreaDescriptor> entry : blockRanges.entrySet()) {
+            modableRangeMap.put(entry.getKey(), entry.getValue().copy());
         }
     }
 

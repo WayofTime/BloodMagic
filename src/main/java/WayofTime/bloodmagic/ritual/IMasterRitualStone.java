@@ -71,5 +71,9 @@ public interface IMasterRitualStone {
 
     void addBlockRange(String range, AreaDescriptor defaultRange);
 
+    void setBlockRanges(Map<String, AreaDescriptor> blockRanges);
+
+    void setBlockRange(String range, AreaDescriptor defaultRange);
+
     Ritual getCurrentRitual();
 }
