@@ -517,12 +517,9 @@ public class GenericHandler {
                 for (Map.Entry<IMasterRitualStone, AreaDescriptor> entry : fMap.entrySet()) {
                     IMasterRitualStone masterRitualStone = entry.getKey();
                     AreaDescriptor blockRange = entry.getValue();
-                    System.out.println("found a map");
 
                     if (masterRitualStone != null && masterRitualStone.isActive() && masterRitualStone.getCurrentRitual() instanceof RitualVeilOfEvil) {
-                        System.out.println("is active");
                         if (blockRange.offset(masterRitualStone.getBlockPos()).isWithinArea(new BlockPos(event.getX(), event.getY(), event.getZ()))) {
-                            System.out.println("is in");
                             switch (event.getResult()) {
                                 case DEFAULT:
                                     event.setResult(Result.ALLOW);
