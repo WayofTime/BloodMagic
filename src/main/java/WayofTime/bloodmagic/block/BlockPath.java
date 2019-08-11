@@ -9,11 +9,13 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath {
@@ -46,9 +48,6 @@ public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath {
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-        if (getMetaFromState(state) <= 1) {
-            setSoundType(SoundType.WOOD);
-        }
     }
 
     @Override
@@ -57,6 +56,14 @@ public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath {
             return Material.ROCK;
         else
             return Material.WOOD;
+    }
+
+    @Override
+    public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
+        if (getMetaFromState(state) <= 1)
+            return SoundType.WOOD;
+        else
+            return super.getSoundType();
     }
 
     @Override
