@@ -32,6 +32,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone {
+    protected final Map<String, AreaDescriptor> modableRangeMap = new HashMap<>();
     private UUID owner;
     private SoulNetwork cachedNetwork;
     private boolean active;
@@ -42,7 +43,6 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     private EnumFacing direction = EnumFacing.NORTH;
     private boolean inverted;
     private List<EnumDemonWillType> currentActiveWillConfig = new ArrayList<>();
-    protected final Map<String, AreaDescriptor> modableRangeMap = new HashMap<>();
 
     @Override
     public void onUpdate() {
