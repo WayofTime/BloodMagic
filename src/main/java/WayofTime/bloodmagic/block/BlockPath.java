@@ -28,14 +28,14 @@ public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath {
         setResistance(5.0F);
         setSoundType(SoundType.STONE);
 
-        setHarvestLevel("axe", 0, getStateFromMeta(0));
-        setHarvestLevel("axe", 0, getStateFromMeta(1));
-        setHarvestLevel("pickaxe", 0, getStateFromMeta(2));
-        setHarvestLevel("pickaxe", 0, getStateFromMeta(3));
-        setHarvestLevel("pickaxe", 0, getStateFromMeta(4));
-        setHarvestLevel("pickaxe", 0, getStateFromMeta(5));
-        setHarvestLevel("pickaxe", 3, getStateFromMeta(6));
-        setHarvestLevel("pickaxe", 3, getStateFromMeta(7));
+        setHarvestLevel("axe", 0, getDefaultState().withProperty(getProperty(), EnumPath.WOOD));
+        setHarvestLevel("axe", 0, getDefaultState().withProperty(getProperty(), EnumPath.WOODTILE));
+        setHarvestLevel("pickaxe", 0, getDefaultState().withProperty(getProperty(), EnumPath.STONE));
+        setHarvestLevel("pickaxe", 0, getDefaultState().withProperty(getProperty(), EnumPath.STONETILE));
+        setHarvestLevel("pickaxe", 0, getDefaultState().withProperty(getProperty(), EnumPath.WORNSTONE));
+        setHarvestLevel("pickaxe", 0, getDefaultState().withProperty(getProperty(), EnumPath.WORNSTONETILE));
+        setHarvestLevel("pickaxe", 3, getDefaultState().withProperty(getProperty(), EnumPath.OBSIDIAN));
+        setHarvestLevel("pickaxe", 3, getDefaultState().withProperty(getProperty(), EnumPath.OBSIDIANTILE));
     }
 
     @Override
@@ -46,15 +46,17 @@ public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath {
 
     @Override
     public Material getMaterial(IBlockState state) {
-        if (getMetaFromState(state) > 1)
-            return Material.ROCK;
-        else
+        EnumPath path = state.getValue(getProperty());
+        if (path.equals(EnumPath.WOOD) || path.equals(EnumPath.WOODTILE))
             return Material.WOOD;
+        else
+            return Material.ROCK;
     }
 
     @Override
     public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
-        if (getMetaFromState(state) <= 1)
+        EnumPath path = state.getValue(getProperty());
+        if (path.equals(EnumPath.WOOD) || path.equals(EnumPath.WOODTILE))
             return SoundType.WOOD;
         else
             return super.getSoundType();
