@@ -359,7 +359,7 @@ public class CategoryArchitect
 
         List<IPage> capacityPages = new ArrayList<>();
 
-        IRecipe capacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4));
+        IRecipe capacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 6));
         if (capacityRecipe != null)
         {
             capacityPages.add(BookUtils.getPageForRecipe(capacityRecipe));
@@ -370,7 +370,7 @@ public class CategoryArchitect
 
         List<IPage> displacementPages = new ArrayList<>();
 
-        IRecipe displacementRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4));
+        IRecipe displacementRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 5));
         if (displacementRecipe != null)
         {
             displacementPages.add(BookUtils.getPageForRecipe(displacementRecipe));
