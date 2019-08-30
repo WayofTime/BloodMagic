@@ -1,19 +1,33 @@
 ------------------------------------------------------
 Version 2.4.?
 ------------------------------------------------------
+Living Armor:
+    - Fixed Storm Trooper Level 4 costing 65 instead of -65 upgrade points (#1631)
 
+Technical Stuff:
+    - Fixed Veil of Evil and Ward of Sacrosanctity console spam (which could eventually lead to an out of memory exception) (#1639)
 
 Not merged yet:
-
-    - Fixed "Gate of the Fold" and altered its functionality to accomodate multiple portals with the same key [regression:    - Fixed FluidSigils only filling fractions of a bucket and not being able to place liquids after having filled fractions of a bucket once
-    - Added additional Sentient Sword mechanics if a Sigil is held in the offhand slot (effects applied on attack)
-    - Added creative item handling and new creative/test items
+    - Fixed GLSL shader compilation errors (affected Mesa driver (AMD GPU) on Linux) (#1624)
+    - Fixed Ritual of the Eternal Soul (Ritual Stone layout & didn't work) (#1633)
+    - Ported Ritual of Gaia's Transformation, a ritual to change the biome (#1629)
+    - A Blood Altar with a Redstone Lamp below it will now emit a redstone signal upon finishing crafting (#1635)
+    - Fixed Ritual Tinkerer (ritual area is now unique per ritual instance), added the ability to reset the ritual ranges to default (#1636)
+    - Wooden Paths now behave like wood instead of stone (sound & efficient tool) (#1638)
+    - Fixed parts of the German translation. Other translations still need to be reworked to accomodate changed translation keys (#1640)
+    - Fixed Guidebook showing wrong recipes (Rune of Self-Sacrifice instead of others) (#1641)
+    - Fixed "Gate of the Fold" and altered its functionality to accomodate multiple portals with the same key (#1553)
+    - Fixed FluidSigils only filling fractions of a bucket and not being able to place liquids after having filled fractions of a bucket once (#1585)
+    - Fixed `/bloodmagic network` command permissions (#1613)
+    - Added creative item handling and new creative/test items (#1556)
     	- Orb of Testing (Cap, Fill, Empty, Get)
 	    - Creative Activation Crystal (Prevents LP, Will drain, Nausea)
 	    - Ritual Diviner (Places instantly, ignores blocks)
 	    - Draft of Angelus (increases upgrade points to 10,000 if used with >200 points and creative)
 	    - Tartaric Gems
 
+Shelved:
+    - Added additional Sentient Sword mechanics if a Sigil is held in the offhand slot (effects applied on attack) (#1569)
 
 ------------------------------------------------------
 Version 2.4.1
@@ -60,7 +74,7 @@ Misc:
     - added Nut being angery at contributors for messing stuff up
     - Added some Russian language strings for the guide book
     - Added repair recipes for Sentient Tools & Living Armor to JEI
-
+    - Many translation keys have changed which makes affected translations fall back to english
 
 Technical Stuff no player cares about:
     - Formatted Project code
