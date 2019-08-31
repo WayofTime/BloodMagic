@@ -9,10 +9,8 @@ import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -59,13 +57,16 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
     }
 
     @Override
-    public boolean applyOnHitEffect(EnumDemonWillType type, ItemStack swordStack, ItemStack providerStack, EntityLivingBase attacker, EntityLivingBase target) {
-        target.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, 0));
-        return true;
-    }
+    public boolean applyOnHitEffect(EnumDemonWillType type, int willLevel, ItemStack swordStack, ItemStack providerStack, EntityLivingBase attacker, EntityLivingBase target) {
+	//to ensure it will not return 0
+        willLevel += 1;
+        int LPUsage = getLpUsed() * willLevel;
 
-    @Override
-    public boolean providesEffectForWill(EnumDemonWillType type) {
+        if (NetworkHelper.getSoulNetwork(getBinding(providerStack)).syphonAndDamage((EntityPlayer) attacker, SoulTicket.item(providerStack, attacker.getEntityWorld(), attacker, LPUsage)).isSuccess()) {
+            target.addVelocity(-.2 * attacker.motionX, 0.1, -.2 * attacker.motionZ);
+            target.fallDistance += 3 + willLevel;
+            return true;
+        }
         return false;
     }
 }

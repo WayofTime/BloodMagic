@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
  * Base class for all (static) sigils.
  */
 public class ItemSigil extends ItemBindableBase implements ISigil {
-    private int lpUsed;
+    protected int lpUsed;
 
     public ItemSigil(int lpUsed) {
         super();
