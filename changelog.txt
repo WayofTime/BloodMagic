@@ -8,6 +8,7 @@ Technical Stuff:
     - Fixed Veil of Evil and Ward of Sacrosanctity console spam (which could eventually lead to an out of memory exception) (#1639)
 
 Not merged yet:
+    - Fixed a rare crash that could occur when summoning mobs (#1618)
     - Added on hit effects for sentient tools (sword) for elemental sigils (#1650)
     - Fixed GLSL shader compilation errors (affected Mesa driver (AMD GPU) on Linux) (#1624)
     - Fixed Ritual of the Eternal Soul (Ritual Stone layout & didn't work) (#1633)
