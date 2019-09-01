@@ -8,6 +8,7 @@ Technical Stuff:
     - Fixed Veil of Evil and Ward of Sacrosanctity console spam (which could eventually lead to an out of memory exception) (#1639)
 
 Not merged yet:
+    - Added on hit effects for sentient tools (sword) for elemental sigils (#1650)
     - Fixed GLSL shader compilation errors (affected Mesa driver (AMD GPU) on Linux) (#1624)
     - Fixed Ritual of the Eternal Soul (Ritual Stone layout & didn't work) (#1633)
     - Ported Ritual of Gaia's Transformation, a ritual to change the biome (#1629)
