@@ -7,11 +7,16 @@ import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -63,8 +68,9 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
         int LPUsage = getLpUsed() * willLevel;
 
         if (NetworkHelper.getSoulNetwork(getBinding(providerStack)).syphonAndDamage((EntityPlayer) attacker, SoulTicket.item(providerStack, attacker.getEntityWorld(), attacker, LPUsage)).isSuccess()) {
-            target.addVelocity(-.2 * attacker.motionX, 0.1, -.2 * attacker.motionZ);
-            target.fallDistance += 3 + willLevel;
+            int knockbackLevel = EnchantmentHelper.getKnockbackModifier(attacker);
+            target.addVelocity(-0.2 * attacker.motionX, 0.075 * (willLevel + knockbackLevel), -0.2 * attacker.motionZ);
+            target.addPotionEffect(new PotionEffect(RegistrarBloodMagic.HEAVY_HEART, 30 * (willLevel + knockbackLevel), 1));
             return true;
         }
         return false;

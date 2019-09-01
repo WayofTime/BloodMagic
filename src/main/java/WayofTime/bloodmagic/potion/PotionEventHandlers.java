@@ -187,5 +187,11 @@ public class PotionEventHandlers {
         if (event.getSource() == DamageSource.FALL)
             if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.FEATHERED))
                 event.setCanceled(true);
+
+        if (event.getSource().isFireDamage()) {
+            PotionEffect fireVuln = event.getEntityLiving().getActivePotionEffect(RegistrarBloodMagic.FIRE_VULNERABILITY);
+            if (fireVuln != null)
+                event.setAmount(event.getAmount() * (1 + 0.25F * (1 + fireVuln.getAmplifier())));
+        }
     }
 }

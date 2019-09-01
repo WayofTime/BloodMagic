@@ -62,6 +62,7 @@ public class RegistrarBloodMagic {
     public static final Potion HEAVY_HEART = MobEffects.HASTE;
     public static final Potion SUSPENDED = MobEffects.HASTE;
     public static final Potion FEATHERED = MobEffects.HASTE;
+    public static final Potion FIRE_VULNERABILITY = MobEffects.FIRE_RESISTANCE;
 
     public static IForgeRegistry<BloodOrb> BLOOD_ORBS = null;
 
@@ -101,7 +102,8 @@ public class RegistrarBloodMagic {
                 new PotionBloodMagic("Grounded", true, 0x000000, 1, 0).setRegistryName("grounded"),
                 new PotionBloodMagic("Suspended", false, 0x000000, 1, 0).setRegistryName("suspended"),
                 new PotionBloodMagic("Heavy Heart", true, 0x000000, 1, 0).setRegistryName("heavy_heart"),
-                new PotionBloodMagic("Feathered", false, 0x000000, 0, 0).setRegistryName("feathered")
+                new PotionBloodMagic("Feathered", false, 0x000000, 0, 0).setRegistryName("feathered"),
+                new PotionBloodMagic("Fire Vuln.", true, 0xAA5500, 0, 0).setRegistryName("fire_vulnerability")
         );
     }
 

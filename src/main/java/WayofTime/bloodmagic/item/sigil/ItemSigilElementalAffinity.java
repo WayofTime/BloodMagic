@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.ISentientSwordEffectProvider;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
@@ -10,9 +11,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class ItemSigilElementalAffinity extends ItemSigilToggleableBase implements ISentientSwordEffectProvider {
     public ItemSigilElementalAffinity() {
@@ -34,6 +36,7 @@ public class ItemSigilElementalAffinity extends ItemSigilToggleableBase implemen
     public boolean applyOnHitEffect(EnumDemonWillType type, int willLevel, ItemStack swordStack, ItemStack providerStack, EntityLivingBase attacker, EntityLivingBase target)
     {
         boolean highWill = willLevel >= 3;
+        boolean found = false;
         int LPUsage = getLpUsed();
         if (highWill)
             LPUsage *= 2;
@@ -48,7 +51,6 @@ public class ItemSigilElementalAffinity extends ItemSigilToggleableBase implemen
             
             // If attacker has a lot of will, attempt to disable all elemental affinity sigils in target's inventory
             // otherwise disable just 1
-            boolean found = false;
             // disable any in their main inventory
             for (ItemStack stack: ((EntityPlayer) target).inventory.mainInventory) {
                 current = stack.getItem();
@@ -69,13 +71,31 @@ public class ItemSigilElementalAffinity extends ItemSigilToggleableBase implemen
                     current = stack.getItem();
                     if (current instanceof ItemSigilElementalAffinity) {
                         ((ItemSigilElementalAffinity) current).setActivatedState(stack, false);
+                        found = true;
                     }
                 }
             }
-            
         }
-        target.removePotionEffect(MobEffects.FIRE_RESISTANCE);
-        target.removePotionEffect(MobEffects.WATER_BREATHING);
+        if (found || !(target instanceof EntityPlayer)) {
+            target.removePotionEffect(MobEffects.FIRE_RESISTANCE);
+            target.removePotionEffect(MobEffects.WATER_BREATHING);
+        }
+        if (!found) {
+            World world = target.getEntityWorld();
+            Random random = new Random();
+            int number = random.nextInt(4);
+            System.out.println(number);
+            if (number == 0) {
+                target.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 20, willLevel));
+            } else if (number == 1) {
+                target.addPotionEffect(new PotionEffect(RegistrarBloodMagic.DEAFNESS, 20 * willLevel, 0));
+            } else if (number == 2) {
+                target.rotationPitch = world.rand.nextFloat() * 360;
+                target.rotationYaw = world.rand.nextFloat() * 180 - 90;
+            } else if (number == 3) {
+                target.addPotionEffect(new PotionEffect(RegistrarBloodMagic.FIRE_VULNERABILITY, 20 * willLevel, 2 * willLevel));
+            }
+        }
         return true;
     }
 }
