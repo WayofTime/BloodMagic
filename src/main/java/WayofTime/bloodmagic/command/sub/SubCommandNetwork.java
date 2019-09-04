@@ -50,6 +50,11 @@ public class SubCommandNetwork extends CommandTreeBase {
         public SoulNetwork network;
         public String uuid;
 
+        @Override
+        public int getRequiredPermissionLevel() {
+            return 2;
+        }
+
         public Integer commandHelperAmount(MinecraftServer server, ICommandSender sender, String[] args) {
             int amount;
             if (args.length == 0)
