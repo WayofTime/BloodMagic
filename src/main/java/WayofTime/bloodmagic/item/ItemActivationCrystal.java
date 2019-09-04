@@ -55,7 +55,7 @@ public class ItemActivationCrystal extends ItemEnum.Variant<ItemActivationCrysta
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.getBlockState(pos).getBlock().equals(Blocks.OBSIDIAN) && Blocks.PORTAL.trySpawnPortal(worldIn, pos.offset(facing))) {
-            if (NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(player.getHeldItem(hand), 100)).isSuccess())
+            if (NetworkHelper.getSoulNetwork(getBinding(player.getHeldItem(hand))).syphonAndDamage(player, SoulTicket.item(player.getHeldItem(hand), 100)).isSuccess())
                 return EnumActionResult.SUCCESS;
             else return EnumActionResult.FAIL;
         }
