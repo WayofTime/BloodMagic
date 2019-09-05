@@ -91,17 +91,16 @@ public class ItemLavaCrystal extends ItemBindableBase implements IVariantProvide
         if (!player.canPlayerEdit(pos, facing, itemstack))
             return EnumActionResult.FAIL;
 
-        else {
-            if (worldIn.isAirBlock(pos) && NetworkHelper.getSoulNetwork(getBinding(player.getHeldItem(hand))).syphonAndDamage(player, SoulTicket.item(player.getHeldItem(hand), 100)).isSuccess()) {
-                worldIn.playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
-                worldIn.setBlockState(pos, Blocks.FIRE.getDefaultState(), 11);
-            } else return EnumActionResult.FAIL;
+        if (worldIn.isAirBlock(pos) && NetworkHelper.getSoulNetwork(getBinding(player.getHeldItem(hand))).syphonAndDamage(player, SoulTicket.item(player.getHeldItem(hand), 100)).isSuccess()) {
+            worldIn.playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
+            worldIn.setBlockState(pos, Blocks.FIRE.getDefaultState(), 11);
+        } else
+            return EnumActionResult.FAIL;
 
-            if (player instanceof EntityPlayerMP)
-                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP) player, pos, itemstack);
+        if (player instanceof EntityPlayerMP)
+            CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP) player, pos, itemstack);
 
-            return EnumActionResult.SUCCESS;
-        }
+        return EnumActionResult.SUCCESS;
     }
 
     @Override
