@@ -18,7 +18,10 @@ import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -39,10 +42,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockAltar extends Block implements IVariantProvider, IDocumentedBlock, IBMBlock {
+    public static final PropertyBool POWERED = PropertyBool.create("powered");
     private static final AxisAlignedBB BODY = new AxisAlignedBB(0, 0, 0, 16 / 16F, 12 / 16F, 16 / 16F);
 
     public BlockAltar() {
         super(Material.ROCK);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(POWERED, false));
+
 
         setTranslationKey(BloodMagic.MODID + ".altar");
         setCreativeTab(BloodMagic.TAB_BM);
@@ -179,5 +185,40 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
     @Override
     public ItemBlock getItem() {
         return new ItemBlock(this);
+    }
+
+    /* Redstone code, taken from BlockLever */
+
+    public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+        return blockState.getValue(POWERED) ? 15 : 0;
+    }
+
+    public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+        if (!blockState.getValue(POWERED)) {
+            return 0;
+        } else {
+            return 15;
+        }
+    }
+
+    public boolean canProvidePower(IBlockState state) {
+        return true;
+    }
+
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(POWERED, meta > 0);
+    }
+
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(POWERED) ? 1 : 0;
+    }
+
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, POWERED);
+    }
+
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+
+        return this.getDefaultState().withProperty(POWERED, false);
     }
 }
