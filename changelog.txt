@@ -1,27 +1,36 @@
 ------------------------------------------------------
-Version 2.4.?
+Version 2.4.2
 ------------------------------------------------------
+Blood Altar:
+    - A Blood Altar with a Redstone Lamp below it will now emit a redstone signal upon finishing crafting (#1635)
+    - Fixed Blood Altar being able to obtain negative progress (#1649)
+
 Living Armor:
     - Fixed Storm Trooper Level 4 costing 65 instead of -65 upgrade points (#1631)
+
+Rituals:
+    - Ported Ritual of Gaia's Transformation, a ritual to change the biome (#1629)
+    - Fixed Ritual of the Eternal Soul (Ritual Stone layout & didn't work) (#1633)
+    - Fixed Ritual Tinkerer (ritual area is now unique per ritual instance), added the ability to reset the ritual ranges to default (#1636)
+
+Misc:
+    - Lava Crystals can now set things on fire (#1652)
+    - Fixed parts of the German translation. Other translations still need to be reworked to accomodate changed translation keys (#1640)
+    - Fixed Guidebook showing wrong recipes (Rune of Self-Sacrifice instead of others) (#1641)
+    - Wooden Paths now behave like wood instead of stone (sound & efficient tool) (#1638)
+
 
 Technical Stuff:
     - Fixed Veil of Evil and Ward of Sacrosanctity console spam (which could eventually lead to an out of memory exception) (#1639)
     - Fixed GLSL shader compilation errors (affected Mesa driver (AMD GPU) on Linux) (#1624)
     - Fixed `/bloodmagic network` command permissions (#1613)
+    - Fixed a rare crash that could occur when summoning mobs (#1618)
+
 
 Not merged yet:
-    - Activation Crystals can now activate Nether Portals (#1651)
-    - Lava Crystals can now set things on fire (#1652)
-    - Fixed a rare crash that could occur when summoning mobs (#1618)
-    - Added on hit effects for sentient tools (sword) for elemental sigils (#1650)
-    - Fixed Ritual of the Eternal Soul (Ritual Stone layout & didn't work) (#1633)
-    - Ported Ritual of Gaia's Transformation, a ritual to change the biome (#1629)
-    - A Blood Altar with a Redstone Lamp below it will now emit a redstone signal upon finishing crafting (#1635)
-    - Fixed Ritual Tinkerer (ritual area is now unique per ritual instance), added the ability to reset the ritual ranges to default (#1636)
-    - Wooden Paths now behave like wood instead of stone (sound & efficient tool) (#1638)
-    - Fixed parts of the German translation. Other translations still need to be reworked to accomodate changed translation keys (#1640)
-    - Fixed Guidebook showing wrong recipes (Rune of Self-Sacrifice instead of others) (#1641)
+
     - Fixed "Gate of the Fold" and altered its functionality to accomodate multiple portals with the same key (#1553)
+    - Added on hit effects for sentient tools (sword) for elemental sigils (#1650)
     - Fixed FluidSigils only filling fractions of a bucket and not being able to place liquids after having filled fractions of a bucket once (#1585)
     - Added creative item handling and new creative/test items (#1556)
     	- Orb of Testing (Cap, Fill, Empty, Get)
