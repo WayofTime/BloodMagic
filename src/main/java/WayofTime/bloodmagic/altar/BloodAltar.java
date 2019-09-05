@@ -307,7 +307,7 @@ public class BloodAltar implements IFluidHandler {
                 }
 
             } else if (!hasOperated && progress > 0) {
-                progress -= (int) (efficiencyMultiplier * drainRate);
+                progress = Math.max(0, progress - (int) (efficiencyMultiplier * drainRate));
 
                 if (internalCounter % 2 == 0 && world instanceof WorldServer) {
                     WorldServer server = (WorldServer) world;

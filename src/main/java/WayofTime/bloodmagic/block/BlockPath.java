@@ -9,10 +9,12 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath {
@@ -26,20 +28,38 @@ public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath {
         setResistance(5.0F);
         setSoundType(SoundType.STONE);
 
-        setHarvestLevel("axe", 0, getStateFromMeta(0));
-        setHarvestLevel("axe", 0, getStateFromMeta(1));
-        setHarvestLevel("pickaxe", 0, getStateFromMeta(2));
-        setHarvestLevel("pickaxe", 0, getStateFromMeta(3));
-        setHarvestLevel("pickaxe", 0, getStateFromMeta(4));
-        setHarvestLevel("pickaxe", 0, getStateFromMeta(5));
-        setHarvestLevel("pickaxe", 3, getStateFromMeta(6));
-        setHarvestLevel("pickaxe", 3, getStateFromMeta(7));
+        setHarvestLevel("axe", 0, getDefaultState().withProperty(getProperty(), EnumPath.WOOD));
+        setHarvestLevel("axe", 0, getDefaultState().withProperty(getProperty(), EnumPath.WOODTILE));
+        setHarvestLevel("pickaxe", 0, getDefaultState().withProperty(getProperty(), EnumPath.STONE));
+        setHarvestLevel("pickaxe", 0, getDefaultState().withProperty(getProperty(), EnumPath.STONETILE));
+        setHarvestLevel("pickaxe", 0, getDefaultState().withProperty(getProperty(), EnumPath.WORNSTONE));
+        setHarvestLevel("pickaxe", 0, getDefaultState().withProperty(getProperty(), EnumPath.WORNSTONETILE));
+        setHarvestLevel("pickaxe", 3, getDefaultState().withProperty(getProperty(), EnumPath.OBSIDIAN));
+        setHarvestLevel("pickaxe", 3, getDefaultState().withProperty(getProperty(), EnumPath.OBSIDIANTILE));
     }
 
     @Override
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
         tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.decoration.safe"));
         super.addInformation(stack, world, tooltip, tooltipFlag);
+    }
+
+    @Override
+    public Material getMaterial(IBlockState state) {
+        EnumPath path = state.getValue(getProperty());
+        if (path.equals(EnumPath.WOOD) || path.equals(EnumPath.WOODTILE))
+            return Material.WOOD;
+        else
+            return Material.ROCK;
+    }
+
+    @Override
+    public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
+        EnumPath path = state.getValue(getProperty());
+        if (path.equals(EnumPath.WOOD) || path.equals(EnumPath.WOODTILE))
+            return SoundType.WOOD;
+        else
+            return super.getSoundType();
     }
 
     @Override

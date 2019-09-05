@@ -1,17 +1,21 @@
 package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.altar.IBloodAltar;
+import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
+import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,12 +23,15 @@ import java.util.function.Consumer;
 
 @RitualRegister("eternal_soul")
 public class RitualEternalSoul extends Ritual {
+    public static final String ALTAR_RANGE = "altar";
 
-
-    private IBloodAltar altar = null;
+    private BlockPos altarOffsetPos = new BlockPos(0, 0, 0);
 
     public RitualEternalSoul() {
         super("ritualEternalSoul", 2, 2000000, "ritual." + BloodMagic.MODID + ".eternalSoulRitual");
+        addBlockRange(ALTAR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-5, -10, -5), 11, 21, 11));
+
+        setMaximumVolumeAndDistanceOfRange(ALTAR_RANGE, 0, 10, 15);
     }
 
     @Override
@@ -33,20 +40,29 @@ public class RitualEternalSoul extends Ritual {
         int currentEssence = NetworkHelper.getSoulNetwork(owner).getCurrentEssence();
         World world = masterRitualStone.getWorldObj();
         BlockPos pos = masterRitualStone.getBlockPos();
+        BlockPos altarPos = pos.add(altarOffsetPos);
 
-        if (this.altar == null) {
-            for (int i = -5; i <= 5; i++) {
-                for (int j = -5; j <= 5; j++) {
-                    for (int k = -10; k <= 10; k++) {
-                        if (world.getTileEntity(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k)) instanceof IBloodAltar) {
-                            this.altar = (IBloodAltar) world.getTileEntity(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k));
-                        }
-                    }
+        TileEntity tile = world.getTileEntity(altarPos);
+        AreaDescriptor altarRange = masterRitualStone.getBlockRange(ALTAR_RANGE);
+
+        if (!altarRange.isWithinArea(altarOffsetPos) || !(tile instanceof TileAltar)) {
+            for (BlockPos newPos : altarRange.getContainedPositions(pos)) {
+                TileEntity nextTile = world.getTileEntity(newPos);
+                if (nextTile instanceof TileAltar) {
+                    tile = nextTile;
+                    altarOffsetPos = newPos.subtract(pos);
+
+                    altarRange.resetCache();
+                    break;
                 }
             }
         }
-        if (!(this.altar instanceof IFluidHandler))
+
+        if (!(tile instanceof TileAltar)) {
             return;
+        }
+
+        BloodAltar altar = (BloodAltar) tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 
         int horizontalRange = 15;
         int verticalRange = 20;
@@ -54,20 +70,19 @@ public class RitualEternalSoul extends Ritual {
         List<EntityPlayer> list = world.getEntitiesWithinAABB(EntityPlayer.class,
                 new AxisAlignedBB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f,
                         pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)
-                        .expand(horizontalRange, verticalRange, horizontalRange));
+                        .expand(horizontalRange, verticalRange, horizontalRange).expand(0, -verticalRange, 0));
 
-        EntityPlayer entityOwner = null;
-        for (EntityPlayer player : list) {
-            if (PlayerHelper.getUUIDFromPlayer(player) == owner)
-                entityOwner = player;
-        }
+        EntityPlayer entityOwner = PlayerHelper.getPlayerFromUUID(owner);
 
-        int fillAmount = Math.min(currentEssence / 2, ((IFluidHandler) this.altar).fill(new FluidStack(BlockLifeEssence.getLifeEssence(), 10000), false));
+        int fillAmount = Math.min(currentEssence / 2, altar.fill(new FluidStack(BlockLifeEssence.getLifeEssence(), 10000), false));
 
-        ((IFluidHandler) this.altar).fill(new FluidStack(BlockLifeEssence.getLifeEssence(), fillAmount), true);
+        altar.fill(new FluidStack(BlockLifeEssence.getLifeEssence(), fillAmount), true);
 
-        if (entityOwner != null && entityOwner.getHealth() > 2.0f && fillAmount != 0)
+        if (entityOwner != null && list.contains(entityOwner) && entityOwner.getHealth() > 2.0f && fillAmount != 0)
             entityOwner.setHealth(2.0f);
+
+        for (EntityPlayer player : list)
+            player.addPotionEffect(new PotionEffect(RegistrarBloodMagic.SOUL_FRAY, 100));
 
         masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(fillAmount * 2));
 
@@ -86,7 +101,7 @@ public class RitualEternalSoul extends Ritual {
 
     @Override
     public void gatherComponents(Consumer<RitualComponent> components) {
-        addCornerRunes(components, 0, 1, EnumRuneType.FIRE);
+        addCornerRunes(components, 1, 0, EnumRuneType.FIRE);
 
         for (int i = 0; i < 4; i++) {
             addCornerRunes(components, 2, i, EnumRuneType.AIR);

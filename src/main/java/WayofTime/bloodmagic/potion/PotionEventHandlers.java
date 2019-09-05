@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.potion;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
+import com.google.common.collect.Lists;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
@@ -55,7 +56,7 @@ public class PotionEventHandlers {
     @SubscribeEvent
     public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
         EntityLivingBase eventEntityLiving = event.getEntityLiving();
-        List<EntityPlayer> flightList = flightListMap.get(eventEntityLiving.getEntityWorld());
+        List<EntityPlayer> flightList = flightListMap.getOrDefault(eventEntityLiving.getEntityWorld(), Lists.newArrayList());
 
         if (eventEntityLiving instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) eventEntityLiving;
@@ -91,7 +92,7 @@ public class PotionEventHandlers {
 //                }
 //            }
 //        }
-        List<EntityLivingBase> noGravityList = noGravityListMap.get(event.getEntityLiving().getEntityWorld());
+        List<EntityLivingBase> noGravityList = noGravityListMap.getOrDefault(event.getEntityLiving().getEntityWorld(), Lists.newArrayList());
         if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.SUSPENDED) && !eventEntityLiving.hasNoGravity()) {
             eventEntityLiving.setNoGravity(true);
             noGravityList.add(eventEntityLiving);
