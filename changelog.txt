@@ -1,6 +1,8 @@
 ------------------------------------------------------
 Version 2.4.2
 ------------------------------------------------------
+Now with no guarantees for working textures!
+
 Blood Altar:
     - A Blood Altar with a Redstone Lamp below it will now emit a redstone signal upon finishing crafting (#1635)
     - Fixed Blood Altar being able to obtain negative progress (#1649)
@@ -25,19 +27,6 @@ Technical Stuff:
     - Fixed GLSL shader compilation errors (affected Mesa driver (AMD GPU) on Linux) (#1624)
     - Fixed `/bloodmagic network` command permissions (#1613)
     - Fixed a rare crash that could occur when summoning mobs (#1618)
-
-
-Not merged yet:
-
-    - Fixed "Gate of the Fold" and altered its functionality to accomodate multiple portals with the same key (#1553)
-    - Added on hit effects for sentient tools (sword) for elemental sigils (#1650)
-    - Fixed FluidSigils only filling fractions of a bucket and not being able to place liquids after having filled fractions of a bucket once (#1585)
-    - Added creative item handling and new creative/test items (#1556)
-    	- Orb of Testing (Cap, Fill, Empty, Get)
-	    - Creative Activation Crystal (Prevents LP, Will drain, Nausea)
-	    - Ritual Diviner (Places instantly, ignores blocks)
-	    - Draft of Angelus (increases upgrade points to 10,000 if used with >200 points and creative)
-	    - Tartaric Gems
 
 ------------------------------------------------------
 Version 2.4.1
