@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.compat.guideapi.book;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.compat.guideapi.BookUtils;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAlchemyArray;
 import WayofTime.bloodmagic.compat.guideapi.page.PageTartaricForgeRecipe;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.util.helper.RecipeHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.IPage;
@@ -62,6 +62,20 @@ public class CategoryAlchemy
         }
         speedPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "speed" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "speed"), new EntryText(speedPages, TextHelper.localize(keyBase + "speed"), true));
+
+        List<IPage> buffPages = new ArrayList<>();
+
+        buffPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "buff" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "buff"), new EntryText(buffPages, TextHelper.localize(keyBase + "buff"), true));
+
+        List<IPage> fastMinerPages = new ArrayList<>();
+
+        PageAlchemyArray fastMinerRecipePage = BookUtils.getAlchemyPage("fastMiner");
+        if (fastMinerRecipePage != null) {
+            fastMinerPages.add(fastMinerRecipePage);
+        }
+        fastMinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "fastMiner" + ".info"), 370));
+        entries.put(new ResourceLocation(keyBase + "fastMiner"), new EntryText(fastMinerPages, TextHelper.localize(keyBase + "fastMiner"), true));
 
         List<IPage> updraftPages = new ArrayList<>();
 
@@ -122,21 +136,6 @@ public class CategoryAlchemy
         }
         laputaPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "laputa" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "laputa"), new EntryText(laputaPages, TextHelper.localize(keyBase + "laputa"), true));
-
-        List<IPage> buffPages = new ArrayList<>();
-
-        buffPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "buff" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "buff"), new EntryText(buffPages, TextHelper.localize(keyBase + "buff"), true));
-
-        List<IPage> fastMinerPages = new ArrayList<>();
-
-        PageAlchemyArray fastMinerRecipePage = BookUtils.getAlchemyPage("fastMiner");
-        if (fastMinerRecipePage != null)
-        {
-            fastMinerPages.add(fastMinerRecipePage);
-        }
-        fastMinerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "fastMiner" + ".info"), 370));
-        entries.put(new ResourceLocation(keyBase + "fastMiner"), new EntryText(fastMinerPages, TextHelper.localize(keyBase + "fastMiner"), true));
 
         for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
         {

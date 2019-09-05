@@ -1,9 +1,6 @@
 package WayofTime.bloodmagic.compat.guideapi.book;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.recipe.TartaricForgeRecipe;
-import WayofTime.bloodmagic.core.registry.AltarRecipeRegistry.AltarRecipe;
-import WayofTime.bloodmagic.core.registry.OrbRegistry;
 import WayofTime.bloodmagic.compat.guideapi.BookUtils;
 import WayofTime.bloodmagic.compat.guideapi.entry.EntryText;
 import WayofTime.bloodmagic.compat.guideapi.page.PageAlchemyArray;
@@ -12,7 +9,10 @@ import WayofTime.bloodmagic.compat.guideapi.page.PageTartaricForgeRecipe;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.registry.AltarRecipeRegistry.AltarRecipe;
+import WayofTime.bloodmagic.core.registry.OrbRegistry;
 import WayofTime.bloodmagic.item.types.ComponentTypes;
+import WayofTime.bloodmagic.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.util.helper.RecipeHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import amerifrance.guideapi.api.IPage;
@@ -59,6 +59,16 @@ public class CategoryArchitect
 
         altarPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "bloodaltar" + ".info.2"), 370));
         entries.put(new ResourceLocation(keyBase + "bloodaltar"), new EntryText(altarPages, TextHelper.localize(keyBase + "bloodaltar"), true));
+
+        List<IPage> daggerPages = new ArrayList<>();
+
+        AltarRecipe daggerOfSacrificeRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.DAGGER_OF_SACRIFICE));
+        if (daggerOfSacrificeRecipe != null) {
+            daggerPages.add(new PageAltarRecipe(daggerOfSacrificeRecipe));
+        }
+
+        daggerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "dagger" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "dagger"), new EntryText(daggerPages, TextHelper.localize(keyBase + "dagger"), true));
 
         List<IPage> ashPages = new ArrayList<>();
 
@@ -206,17 +216,6 @@ public class CategoryArchitect
         apprenticeorbPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "apprenticeorb" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "apprenticeorb"), new EntryText(apprenticeorbPages, TextHelper.localize(keyBase + "apprenticeorb"), true));
 
-        List<IPage> daggerPages = new ArrayList<>();
-
-        AltarRecipe daggerOfSacrificeRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.DAGGER_OF_SACRIFICE));
-        if (daggerOfSacrificeRecipe != null)
-        {
-            daggerPages.add(new PageAltarRecipe(daggerOfSacrificeRecipe));
-        }
-
-        daggerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "dagger" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "dagger"), new EntryText(daggerPages, TextHelper.localize(keyBase + "dagger"), true));
-
         List<IPage> runeSacrificePages = new ArrayList<>();
 
         IRecipe runeSacrificeRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 3));
@@ -359,7 +358,7 @@ public class CategoryArchitect
 
         List<IPage> capacityPages = new ArrayList<>();
 
-        IRecipe capacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4));
+        IRecipe capacityRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 6));
         if (capacityRecipe != null)
         {
             capacityPages.add(BookUtils.getPageForRecipe(capacityRecipe));
@@ -370,7 +369,7 @@ public class CategoryArchitect
 
         List<IPage> displacementPages = new ArrayList<>();
 
-        IRecipe displacementRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 4));
+        IRecipe displacementRecipe = RecipeHelper.getRecipeForOutput(new ItemStack(RegistrarBloodMagicBlocks.BLOOD_RUNE, 1, 5));
         if (displacementRecipe != null)
         {
             displacementPages.add(BookUtils.getPageForRecipe(displacementRecipe));
@@ -486,6 +485,41 @@ public class CategoryArchitect
         downgradePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "downgrade" + ".info"), 370));
         entries.put(new ResourceLocation(keyBase + "downgrade"), new EntryText(downgradePages, TextHelper.localize(keyBase + "downgrade"), true));
 
+        List<IPage> boundBladePages = new ArrayList<>();
+
+        PageAlchemyArray boundBladePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_SWORD));
+        if (boundBladePage != null) {
+            boundBladePages.add(boundBladePage);
+        }
+
+        boundBladePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "boundBlade" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "boundBlade"), new EntryText(boundBladePages, TextHelper.localize(keyBase + "boundBlade"), true));
+
+        List<IPage> boundToolPages = new ArrayList<>();
+
+        PageAlchemyArray boundToolPage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_PICKAXE));
+        if (boundToolPage != null) {
+            boundToolPages.add(boundToolPage);
+        }
+
+        boundToolPage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_AXE));
+        if (boundToolPage != null) {
+            boundToolPages.add(boundToolPage);
+        }
+
+        boundToolPage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_SHOVEL));
+        if (boundToolPage != null) {
+            boundToolPages.add(boundToolPage);
+        }
+
+        boundToolPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "boundTool" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "boundTool"), new EntryText(boundToolPages, TextHelper.localize(keyBase + "boundTool"), true));
+
+        List<IPage> weakShardPages = new ArrayList<>();
+
+        weakShardPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakShard" + ".info.1"), 370));
+        entries.put(new ResourceLocation(keyBase + "weakShard"), new EntryText(weakShardPages, TextHelper.localize(keyBase + "weakShard"), true));
+
         List<IPage> teleposerPages = new ArrayList<>();
 
         AltarRecipe teleposerFocusRecipe = RecipeHelper.getAltarRecipeForOutput(new ItemStack(RegistrarBloodMagicItems.TELEPOSITION_FOCUS));
@@ -502,45 +536,6 @@ public class CategoryArchitect
 
         teleposerPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "teleposer" + ".info.1"), 370));
         entries.put(new ResourceLocation(keyBase + "teleposer"), new EntryText(teleposerPages, TextHelper.localize(keyBase + "teleposer"), true));
-
-        List<IPage> boundBladePages = new ArrayList<>();
-
-        PageAlchemyArray boundBladePage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_SWORD));
-        if (boundBladePage != null)
-        {
-            boundBladePages.add(boundBladePage);
-        }
-
-        boundBladePages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "boundBlade" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "boundBlade"), new EntryText(boundBladePages, TextHelper.localize(keyBase + "boundBlade"), true));
-
-        List<IPage> boundToolPages = new ArrayList<>();
-
-        PageAlchemyArray boundToolPage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_PICKAXE));
-        if (boundToolPage != null)
-        {
-            boundToolPages.add(boundToolPage);
-        }
-
-        boundToolPage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_AXE));
-        if (boundToolPage != null)
-        {
-            boundToolPages.add(boundToolPage);
-        }
-
-        boundToolPage = BookUtils.getAlchemyPage(new ItemStack(RegistrarBloodMagicItems.BOUND_SHOVEL));
-        if (boundToolPage != null)
-        {
-            boundToolPages.add(boundToolPage);
-        }
-
-        boundToolPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "boundTool" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "boundTool"), new EntryText(boundToolPages, TextHelper.localize(keyBase + "boundTool"), true));
-
-        List<IPage> weakShardPages = new ArrayList<>();
-
-        weakShardPages.addAll(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "weakShard" + ".info.1"), 370));
-        entries.put(new ResourceLocation(keyBase + "weakShard"), new EntryText(weakShardPages, TextHelper.localize(keyBase + "weakShard"), true));
 
         List<IPage> masterOrbPages = new ArrayList<>();
 
