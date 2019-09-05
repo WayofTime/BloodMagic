@@ -35,11 +35,15 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
 
     }
 
+    public abstract AreaDescriptor copy();
+
     public abstract int getVolumeForOffsets(BlockPos offset1, BlockPos offset2);
 
     public abstract boolean isWithinRange(BlockPos offset1, BlockPos offset2, int verticalLimit, int horizontalLimit);
 
     public abstract int getVolume();
+
+    public abstract int getHeight();
 
     public abstract boolean isWithinRange(int verticalLimit, int horizontalLimit);
 
@@ -89,6 +93,14 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
             this(minimumOffset, size, size, size);
         }
 
+        public Rectangle(AreaDescriptor.Rectangle rectangle) {
+            this(rectangle.minimumOffset, rectangle.maximumOffset);
+        }
+
+        public AreaDescriptor.Rectangle copy() {
+            return new AreaDescriptor.Rectangle(this);
+        }
+
         @Override
         public List<BlockPos> getContainedPositions(BlockPos pos) {
             if (!cache || !pos.equals(cachedPosition) || blockPosCache.isEmpty()) {
@@ -113,6 +125,19 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
         public AxisAlignedBB getAABB(BlockPos pos) {
             AxisAlignedBB tempAABB = new AxisAlignedBB(minimumOffset, maximumOffset);
             return tempAABB.offset(pos.getX(), pos.getY(), pos.getZ());
+        }
+
+        @Override
+        public int getHeight() {
+            return this.maximumOffset.getY() - this.minimumOffset.getY();
+        }
+
+        public BlockPos getMinimumOffset() {
+            return minimumOffset;
+        }
+
+        public BlockPos getMaximumOffset() {
+            return maximumOffset;
         }
 
         /**
@@ -264,11 +289,26 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
             setRadius(minimumOffset, radius);
         }
 
+        public HemiSphere(AreaDescriptor.HemiSphere hemiSphere) {
+            this(hemiSphere.minimumOffset, hemiSphere.radius);
+        }
+
+        public AreaDescriptor.HemiSphere copy() {
+            return new AreaDescriptor.HemiSphere(this);
+        }
+
         public void setRadius(BlockPos minimumOffset, int radius) {
             this.minimumOffset = new BlockPos(Math.min(minimumOffset.getX(), minimumOffset.getX()), Math.min(minimumOffset.getY(), minimumOffset.getY()), Math.min(minimumOffset.getZ(), minimumOffset.getZ()));
             this.radius = radius;
             blockPosCache = new ArrayList<>();
         }
+
+
+        @Override
+        public int getHeight() {
+            return this.radius * 2;
+        }
+
 
         @Override
         public List<BlockPos> getContainedPositions(BlockPos pos) {
@@ -402,6 +442,20 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
             this.size = size;
             this.blockPosCache = new ArrayList<>();
         }
+
+        public Cross(AreaDescriptor.Cross cross) {
+            this(cross.centerPos, cross.size);
+        }
+
+        public AreaDescriptor.Cross copy() {
+            return new AreaDescriptor.Cross(this);
+        }
+
+        @Override
+        public int getHeight() {
+            return this.size * 2 + 1;
+        }
+
 
         @Override
         public List<BlockPos> getContainedPositions(BlockPos pos) {

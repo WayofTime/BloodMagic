@@ -66,11 +66,15 @@ public class PlayerSacrificeHelper {
                 float sacrificedHealth = health - maxHealth / 10.0f;
                 int lpAdded = (int) (sacrificedHealth * ConfigHandler.values.sacrificialDaggerConversion * getModifier(amount));
 
-                SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, (int) sacrificedHealth, lpAdded);
-                if (MinecraftForge.EVENT_BUS.post(evt))
-                    return false;
+                IBloodAltar altar = getAltar(player.getEntityWorld(), player.getPosition());
+                if (altar != null) {
+                    SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, (int) sacrificedHealth, lpAdded);
+                    if (MinecraftForge.EVENT_BUS.post(evt))
+                        return false;
 
-                if (findAndFillAltar(player.getEntityWorld(), player, evt.lpAdded, false)) {
+                    altar.sacrificialDaggerCall(evt.lpAdded, false);
+                    altar.startCycle();
+
                     player.setHealth(maxHealth / 10.0f);
                     setPlayerIncense(player, 0);
                     player.addPotionEffect(new PotionEffect(RegistrarBloodMagic.SOUL_FRAY, soulFrayDuration));

@@ -131,6 +131,8 @@ public class CategoryRitual
         addRitualPagesToEntries("condor", entries);
         addRitualPagesToEntries("featheredEarth", entries);
         addRitualPagesToEntries("grounding", entries);
+        addRitualPagesToEntries("veilOfEvil", entries);
+        addRitualPagesToEntries("wardOfSacrosanctity", entries);
 
         for (Entry<ResourceLocation, EntryAbstract> entry : entries.entrySet())
         {
