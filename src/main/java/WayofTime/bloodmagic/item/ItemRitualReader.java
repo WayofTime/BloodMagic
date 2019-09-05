@@ -166,7 +166,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                                     this.setCurrentBlockRange(stack, newRange);
                                 }
                                 Ritual ritual = master.getCurrentRitual();
-                                //TODO: Fix AreaDescriptor area handling to be inclusive, then remove the "-1" for range calculation below.
+
                                 int maxHorizontalRange = ritual.getMaxHorizontalRadiusForRange(range, null, null);
                                 int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, null, null);
                                 int maxVolume = ritual.getMaxVolumeForRange(range, null, null);
