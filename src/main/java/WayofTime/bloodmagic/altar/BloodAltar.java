@@ -3,16 +3,16 @@ package WayofTime.bloodmagic.altar;
 import WayofTime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
+import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.block.enums.BloodRuneType;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.orb.IBloodOrb;
-import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import com.google.common.base.Enums;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -297,7 +297,7 @@ public class BloodAltar implements IFluidHandler {
                 }
 
             } else if (!hasOperated && progress > 0) {
-                progress -= (int) (efficiencyMultiplier * drainRate);
+                progress = Math.max(0, progress - (int) (efficiencyMultiplier * drainRate));
 
                 if (internalCounter % 2 == 0 && world instanceof WorldServer) {
                     WorldServer server = (WorldServer) world;
