@@ -210,13 +210,7 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
     }
 
     public int getMetaFromState(IBlockState state) {
-        int i = 0;
-
-        if (state.getValue(POWERED)) {
-            i = 1;
-        }
-
-        return i;
+        return state.getValue(POWERED) ? 1 : 0;
     }
 
     protected BlockStateContainer createBlockState() {

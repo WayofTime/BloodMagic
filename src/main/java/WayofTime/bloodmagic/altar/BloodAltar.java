@@ -244,8 +244,9 @@ public class BloodAltar implements IFluidHandler {
 
         if (internalCounter % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0)) {
             /* Redstone Lamp below altar: Switch Off */
-            if (world.getBlockState(pos).getValue(BlockAltar.POWERED)) {
-                world.setBlockState(pos, world.getBlockState(pos).cycleProperty(BlockAltar.POWERED), 3);
+            IBlockState state = world.getBlockState(pos);
+            if (state.getValue(BlockAltar.POWERED)) {
+                world.setBlockState(pos, state.cycleProperty(BlockAltar.POWERED), 3);
                 world.notifyNeighborsOfStateChange(pos, RegistrarBloodMagicBlocks.ALTAR, false);
             }
             startCycle();
