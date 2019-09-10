@@ -201,7 +201,7 @@ tile.bloodmagic.stone.ritual.imperfect.name=不完善的仪式石
 tile.bloodmagic.stone.ritual.inverted.name=反转的主仪式石
 
 tile.bloodmagic.altar.name=血之祭坛
-tile.bloodmagic.alchemyArray.name=&r&f炼金矩阵
+tile.bloodmagic.alchemyArray.name=炼金矩阵
 
 tile.bloodmagic.rune.blank.name=空白符文
 tile.bloodmagic.rune.speed.name=速度符文
@@ -740,7 +740,7 @@ ritual.bloodmagic.ellipseRitual.spheroidRange.info=（放置）仪式将放置�
 ritual.bloodmagic.ellipseRitual.chest.info=(箱子) 箱子位置, 仪式将提取其中的方块放置于世界中。
 
 ritual.bloodmagic.placerRitual.placerRange.info=(放置) 仪式将放置方块的区域。
-ritual.bloodmagic.placerRitual.chest.info=（箱子）该仪式将获得放置在世界的有物品栏的方块的位置。
+ritual.bloodmagic.placerRitual.chest.info=(箱子) 箱子位置, 仪式将提取其中的方块放置于世界中。
 ritual.bloodmagic.fellingRitual.fellingRange.info=(砍伐) 仪式将搜寻原木和树叶并进行砍伐的区域。
 ritual.bloodmagic.fellingRitual.chest.info=(箱子) 箱子位置, 仪式将把掉落物放入其中。
 ritual.bloodmagic.pumpRitual.pumpRange.info=(引水) 仪式于世界中获取液体的区域。
