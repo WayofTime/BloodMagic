@@ -51,6 +51,23 @@ guide.bloodmagic.entry.ritual.timberman=伐林仪式
 guide.bloodmagic.entry.ritual.meteor=坠星标位
 guide.bloodmagic.entry.ritual.downgrade=沉重灵魂的忏悔
 guide.bloodmagic.entry.ritual.crystalSplit=结晶共鸣
+guide.bloodmagic.entry.ritual.portal=折域之门
+guide.bloodmagic.entry.ritual.altarBuilder=祭坛集结号
+guide.bloodmagic.entry.ritual.pump=虹吸圣曲
+guide.bloodmagic.entry.ritual.cobble=极寒火山
+guide.bloodmagic.entry.ritual.ellipsoid=椭球焦点
+guide.bloodmagic.entry.ritual.crystalHarvest=碎晶裂纹
+guide.bloodmagic.entry.ritual.forsakenSoul=孤魂集会
+guide.bloodmagic.entry.ritual.animalGrowth=牧养仪式
+guide.bloodmagic.entry.ritual.livingEvolution=束灵进化
+guide.bloodmagic.entry.ritual.upgradeRemove=净灵之音
+guide.bloodmagic.entry.ritual.fullStomach=盛宴之歌
+guide.bloodmagic.entry.ritual.eternalSoul=永魂之泣
+guide.bloodmagic.entry.ritual.condor=崇敬之鹰
+guide.bloodmagic.entry.ritual.featheredEarth=羽地仪式
+guide.bloodmagic.entry.ritual.grounding=大地束缚仪式
+guide.bloodmagic.entry.ritual.veilOfEvil=邪恶暗纱
+guide.bloodmagic.entry.ritual.wardOfSacrosanctity=至圣守护
 
 # Ritual Master Entry Text
 guide.bloodmagic.entry.ritual.intro.info=晚上好，我就是马格斯·阿尔卡纳。在外人看来我有很多身份：盗贼、自警团、巫师、战士、吟游诗人、甚至政治家。而现在，只有少数人清楚地知道我的头衔——只需提及一下，那臆想中的残暴图景就可以令人闻风丧胆——纵使这个说法有一半是误导，但这个说法有一半的确是真相。诚然，我说的便是作为职业存在的血法师。我的朋友一般都直呼我的名，而我的敌人一般称我为仪式大师。\n\t/cut现在呢，我的学生们，为了让我把毕生所学传播给下一代有志者们，缠在我身边已有数月了。我一直在坚守秘密，但提比略对此的评论更为精辟：“尽管你自己还看不到你自己的潜力，但不论是在什么魔法领域中，那些已臻化境的大师们的故事总是对下一代人有好处的。然而，重现奇迹的细节其实并没有那么重要。若是没有对魔法能量的绝对自信，即便是金沙，也不过是一堆硫磺粉而已。”当然你可以认为/cut他已经触碰到了炼金术的真谛，但他毕竟是我的第一个学生，我有时候也会认真思考他的想法。\n\t所以呢，那些仍在苦苦寻找前进的道路的年轻血法师们，且听我一言：血魔法的领域之广阔不是常人可以理解的，若不加思考地前进，很快你就会遇到瓶颈。因此，请务必时常翻阅这本书——这本书上有我的魔法，只要我写下来新的内容，你们就能立刻看到。\n\t/cut诸位请坐。不要紧张，试着去感受老一辈血法师的教诲。或许会比你讨价还价求到的东西还要有用。
@@ -83,6 +100,23 @@ guide.bloodmagic.entry.ritual.timberman.info=种了一堆树？想必你需要�
 guide.bloodmagic.entry.ritual.meteor.info=就目前来说，这个仪式是所有仪式中最强大的仪式之一。激活此仪式需要消耗一百万LP，并且还有一段冷却时间。然而它的效果也十分强大——只需提供合适的祭品，它就可以从宇宙中召唤一颗陨石并直接砸向地面。诚然，这样一个大家伙会在地面上造成大爆炸，但因为它来自宇宙中，所以可能会包含大量稀有矿石。 \n\t/cut可用的祭品包括铁块、金块和钻石。（事实上，可用的祭品是可以被整合作者或用户控制的）
 guide.bloodmagic.entry.ritual.downgrade.info=为了获得更强大的力量，你或许需要献祭某种东西作为交换。而这“沉重灵魂的忏悔”的任务正是如此——将一些物品献祭给一个虚无缥缈的实体，你便可以以束灵护甲的属性下降为代价，来换取更多的升级点数。仪式落成后，你需要在最高的空白仪式石挂一个面朝主仪式石的物品展示框，然后在薄暮仪式石上放一个能装东西的方块（例如箱子）。要献祭的物品需要放入那个装东西的地方，而核心物品/cut应挂入物品展示框内。仪式激活后，你便可以蹲在主仪式石上并获得降级后的物品。\n\t举例，对于淬火降级来说，核心物品是个水瓶，需要献祭的物品是龙息。\n\t所有可用的降级都可以通过JEI查询到——查询主仪式石的用途即可。另外，对于一个特定的降级来说，核心物品是一定的，所以你也可以选择查询某个物品来定位某个降级所需的祭品。
 guide.bloodmagic.entry.ritual.crystalSplit.info=晶化恶魔意志一旦形成，就不能再重新分解成其他类型的意志——至少我之前是这么认为的。“结晶共鸣”仪式可以利用四元素仪式石，从原生恶魔意志中分离出各种其他类型的恶魔意志。\n\t首先要在主仪式石上方两格处放置原生意志晶簇。你可以在主仪式石上放一座结晶坛，结晶坛上放置恶魔晶簇，这样就可以了。然后，确保四种元素的仪式石上不能有方块/cut遮挡，确认完后就可以等待结晶生长了。\n\t晶簇长出五瓣后，这个仪式就会将四瓣晶簇分离出去，此时四元素仪式石上会长出腐蚀、坚毅、恶意和破坏四种类型的恶魔晶簇各一瓣。若中间的原生晶簇仍能继续生长，且周围的四种其他类型的晶簇仍然保持完整，那么这个过程就会持续下去。\n\t这个过程的工作原理很简单，/cut原生意志晶簇有五瓣或者更多瓣的时候，仪式会收割其中的四瓣，转化为更无形的存在。然后，新产生的意志就会被推出原生恶魔晶簇的范围，迫使类型相近的意志聚集在一起。不同类型的意志最终会在仪式石上集结，而仪式石本身也是可供某种非原生意志生长的基础。
+guide.bloodmagic.entry.ritual.portal.info=##REQ-LORE##\n\t折域之门是一个无需过多交互，便能实现跨维度传送的仪式。激活仪式时，紧贴仪式石的所有方块将作为连接传送门的关键。如果存在另一个在激活时围绕相同方块的折域之门，两者将被连接在一起，一旦穿过传送门就能传送到另一方。同一时间至多只能有两个传送门能连接在一块。\n\t/cut激活消耗：50,000LP\n\t传送消耗：1,000LP（相同维度）/10,000LP（不同维度）
+guide.bloodmagic.entry.ritual.altarBuilder.info=##REQ-LORE##\n\t祭坛集结号是一个用于搭建新的祭坛金字塔的仪式，通过获取其连接容器中的方块来铺设（通常是主仪式石上的箱子）。\n\t激活消耗：450LP\n\t每次放置方块消耗：75LP
+guide.bloodmagic.entry.ritual.pump.info=##REQ-LORE##\n\t虹吸圣曲用于吸取仪式周围和下方的液体，存入主仪式石上方的适当容器（例如血之储罐）。吸取液体的位置将用石头填放，以防止流动的液体造成性能问题。\n\t激活消耗：500LP\n\t每次操作消耗：250LP
+guide.bloodmagic.entry.ritual.cobble.info=##REQ-LORE##\n\t厌倦了用原始的刷石机来产圆石？厌倦了被安监局找上门，或是不小心就灭掉你的熔岩源？这个仪式就是为你准备的！快速地产出难以匹敌的巨量圆石；用上高效又不过时的血液，而非危险又有限的熔岩（除非你是用血液产熔岩） \n\n\t/cut这个仪式默认下在上方生成圆石，便于获取与使用。 \n\t激活消耗：500LP\n\t每方块消耗：25LP
+guide.bloodmagic.entry.ritual.ellipsoid.info=##REQ-LORE##\n\t椭球的焦点能生成一个空心球体（默认下），球体材料来源于于主仪式石连接的容器（通常是主仪式石上方的箱子）。\n\t激活消耗：20,000LP\n\t每次放置方块消耗: 5LP
+guide.bloodmagic.entry.ritual.crystalHarvest.info=##REQ-LORE##\n\t碎晶裂纹能破坏其范围内所有恶魔意志晶簇的多余晶体，留下一块，并把破坏掉的晶体扔在地上。与“和风之唤”仪式结合，则可以把掉落的物品收集起来，储存进容器中便于后续使用。\n\t 激活消耗：40,000LP \n\t 每次操作消耗：50LP
+guide.bloodmagic.entry.ritual.forsakenSoul.info=##REQ-LORE##\n\t孤魂集会能加快仪式上方（默认下）的恶魔意志晶簇的生长。然而它并不能凭空生成意志，且晶簇的生长仍然需要恶魔结晶坛。运用机械师所识——生物具有“独特性”，要使晶簇更有效率的生长，就需要更多种类的生物死亡。同时，然而它也不能凭空生成恶魔意志灵域，所以你需要把意志晶体回馈于大气，或是将存有意志的地狱魂石放置于恶魔坩埚中。/cut这应该能免去外出收割恶魔意志的需要，除非供给于祭坛的生物不足且/或是把意志给消耗尽了。 \n\t激活消耗：40,000LP\n\t每伤害刻每生物消耗：2LP
+guide.bloodmagic.entry.ritual.animalGrowth.info=##REQ-LORE##\n\t牧养仪式能够显著地加快动物的生长速度。 \n\t供给上复仇意志，仪式还能增加繁衍率；供给破坏意志，动物会搜寻敌对生物并靠近爆炸；供给坚毅意志，仪式会自动获取主仪式石上方容器（默认）的食物，喂食动物。 \n\t 激活消耗：10,000LP\n\t每次操作每只动物消耗：2LP
+guide.bloodmagic.entry.ritual.livingEvolution.info=##REQ-LORE##\n\t束灵进化仪式能够将束灵护甲的最大升级点数提升至300点。使用时仅需装备一套束灵护甲，激活仪式，然后站在主仪式石上方。\n\t激活消耗：50,000LP
+guide.bloodmagic.entry.ritual.upgradeRemove.info=##REQ-LORE##\n\t净灵之音能够移除束灵护甲的所有升级和降级。使用时仅需装备一套束灵护甲，激活仪式，然后站在主仪式石上方。 \n\t激活消耗：50,000LP
+guide.bloodmagic.entry.ritual.fullStomach.info=##REQ-LORE##\n\t盛宴之歌能够获取主仪式石上方箱子的食物，喂食区域内的玩家。食物将以有效的方式喂食给玩家，除非食物在不同食用方式下能提供比最大饱和度更多的效果。 \n\t激活消耗：100,000\n\t每次操作消耗：20LP
+guide.bloodmagic.entry.ritual.eternalSoul.info=##REQ-LORE##\n\t 永魂之泣能够反过来将LP从灵魂网络转移至祭坛。该过程与输入液态生命源质到祭坛一样受到通常的限制。每转移一点LP到祭坛将消耗灵魂网络的2LP \n\t激活消耗：2,000,000LP\n\t每次操作消耗：2*转移LP
+guide.bloodmagic.entry.ritual.condor.info=##REQ-LORE##\n\t 崇敬之鹰使仪式附近范围内的玩家能够飞行。 \n\t激活消耗：1,000,000LP\n\t每次操作消耗：2LP
+guide.bloodmagic.entry.ritual.featheredEarth.info=##REQ-LORE##\n\t羽地仪式能够不断地将掉落高度减少为0，显现出消除掉落伤害地能力。 \n\t激活消耗：5,000LP\n\t每秒消耗：20LP
+guide.bloodmagic.entry.ritual.grounding.info=##REQ-LORE##\n\t大地束缚仪式能够操作仪式范围的重力。默认下，仪式会将生物拖制于地表，并阻碍其跳跃。 \n\t供给上原生意志，仪式能够额外影响到玩家。 \n\t腐蚀意志能直接消除所有的重力。 \n\t破坏意志会大大增加仪式影响的实体受到的掉落伤害。 \n\t/cut坚毅意志允许仪式影响Boss生物。 \n\t单独的复仇意志增强大地束缚的效果，然而与腐蚀意志组合，仪式效果则会转换为提供浮空能力。复仇意志同样还能进一步增加破坏意志的掉落伤害。\n\t激活消耗：5,000LP\n\t每秒消耗: 20LP
+guide.bloodmagic.entry.ritual.veilOfEvil.info=##REQ-LORE##\n\t邪恶暗纱能够在仪式的范围上投射出一个魔法的笼罩，使生物出现在它们通常不会出现的地方。遵循原版规则的生成会强行进行。被阻止的生成会遵循原版规则。
+guide.bloodmagic.entry.ritual.wardOfSacrosanctity.info=##REQ-LORE##\n\t至圣守护能够提供强力的守护，放止通常会生成的生物生成。遵循原版规则的生成会被阻止。强行进行或被允许的生成会遵循原版规则。
 
 # Architect Entries
 guide.bloodmagic.entry.architect.intro=前言
