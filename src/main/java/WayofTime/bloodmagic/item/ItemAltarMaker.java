@@ -10,17 +10,17 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -48,13 +48,13 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote)
             return super.onItemRightClick(world, player, hand);
 
         if (!player.capabilities.isCreativeMode) {
-            player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.altarMaker.creativeOnly"), true);
+            player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.altarMaker.creativeOnly"), true);
             return super.onItemRightClick(world, player, hand);
         }
 
@@ -67,7 +67,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
                 stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1);
 
             setTierToBuild(AltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)]);
-            player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)), true);
+            player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)), true);
             return super.onItemRightClick(world, player, hand);
         }
 
@@ -75,9 +75,9 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
         if (rayTrace == null || rayTrace.typeOfHit != RayTraceResult.Type.BLOCK)
             return super.onItemRightClick(world, player, hand);
 
-        IBlockState state = world.getBlockState(rayTrace.getBlockPos());
+        BlockState state = world.getBlockState(rayTrace.getBlockPos());
         if (state.getBlock() instanceof BlockAltar) {
-            player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.altarMaker.building", NumeralHelper.toRoman(tierToBuild.toInt())), true);
+            player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.altarMaker.building", NumeralHelper.toRoman(tierToBuild.toInt())), true);
             buildAltar(world, rayTrace.getBlockPos());
 
             world.notifyBlockUpdate(rayTrace.getBlockPos(), state, state, 3);
@@ -115,14 +115,14 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
         ((IBloodAltar) world.getTileEntity(pos)).checkTier();
     }
 
-    public String destroyAltar(EntityPlayer player) {
+    public String destroyAltar(PlayerEntity player) {
         World world = player.getEntityWorld();
         if (world.isRemote)
             return "";
 
         RayTraceResult rayTrace = rayTrace(world, player, false);
         BlockPos pos = rayTrace.getBlockPos();
-        IBlockState state = world.getBlockState(pos);
+        BlockState state = world.getBlockState(pos);
         AltarTier altarTier = AltarUtil.getTier(world, pos);
 
         if (altarTier.equals(AltarTier.ONE))

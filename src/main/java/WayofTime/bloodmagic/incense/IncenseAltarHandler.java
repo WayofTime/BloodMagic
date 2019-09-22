@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.incense;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -28,7 +28,7 @@ public class IncenseAltarHandler {
         }
     }
 
-    public static void registerIncenseComponent(int altarLevel, BlockPos offsetPos, Block block, IBlockState state) {
+    public static void registerIncenseComponent(int altarLevel, BlockPos offsetPos, Block block, BlockState state) {
         registerIncenseComponent(altarLevel, new IncenseAltarComponent(offsetPos, block, state));
     }
 
@@ -42,8 +42,8 @@ public class IncenseAltarHandler {
             } else {
                 boolean hasAllComponentsThisTier = true;
                 for (IncenseAltarComponent component : incenseComponentMap.get(i)) {
-                    BlockPos offsetPos = pos.add(component.getOffset(EnumFacing.NORTH));
-                    IBlockState state = world.getBlockState(offsetPos);
+                    BlockPos offsetPos = pos.add(component.getOffset(Direction.NORTH));
+                    BlockState state = world.getBlockState(offsetPos);
                     Block block = state.getBlock();
                     if (component.doesBlockMatch(block, state)) {
                         hasAllComponentsThisTier = false;

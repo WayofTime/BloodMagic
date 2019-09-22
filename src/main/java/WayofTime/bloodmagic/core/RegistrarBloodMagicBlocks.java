@@ -10,11 +10,11 @@ import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import net.minecraft.init.Blocks;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -134,7 +134,7 @@ public class RegistrarBloodMagicBlocks {
     public static void registerModels(ModelRegistryEvent event) {
         ModelLoader.setCustomStateMapper(LIFE_ESSENCE, new StateMapperBase() {
             @Override
-            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+            protected ModelResourceLocation getModelResourceLocation(BlockState state) {
                 return new ModelResourceLocation(state.getBlock().getRegistryName(), "fluid");
             }
         });

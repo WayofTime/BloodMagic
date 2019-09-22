@@ -2,21 +2,21 @@ package WayofTime.bloodmagic.item.soulBreath;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import WayofTime.bloodmagic.soul.ISoulBreathContainer;
 import WayofTime.bloodmagic.util.Constants;
 
 public abstract class ItemSoulBreathContainer extends Item implements ISoulBreathContainer {
     @Override
     public double getBreath(ItemStack stack) {
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         return tag.getDouble(Constants.NBT.BREATH);
     }
 
     @Override
     public void setBreath(ItemStack stack, double amount) {
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.BREATH, amount);
     }

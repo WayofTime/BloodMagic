@@ -2,11 +2,11 @@ package WayofTime.bloodmagic.recipe.alchemyTable;
 
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemBanner;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.item.*;
+import net.minecraft.item.DyeColor;
+import net.minecraft.item.BannerItem;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -65,16 +65,16 @@ public class AlchemyTableDyeableRecipe extends AlchemyTableRecipe {
 
             if (tagOrDyeStack.getItem() == Items.NAME_TAG) {
                 if (!outputStack.hasTagCompound()) {
-                    outputStack.setTagCompound(new NBTTagCompound());
+                    outputStack.setTagCompound(new CompoundNBT());
                 }
 
                 outputStack.getTagCompound().setString(Constants.NBT.COLOR, tagOrDyeStack.getDisplayName());
 
                 return outputStack;
             } else {
-                EnumDyeColor dyeColor = ItemBanner.getBaseColor(tagOrDyeStack);
+                DyeColor dyeColor = BannerItem.getBaseColor(tagOrDyeStack);
                 if (!outputStack.hasTagCompound()) {
-                    outputStack.setTagCompound(new NBTTagCompound());
+                    outputStack.setTagCompound(new CompoundNBT());
                 }
 
                 outputStack.getTagCompound().setString(Constants.NBT.COLOR, String.valueOf(Utils.DYE_COLOR_VALUES.getOrDefault(dyeColor, 0)));

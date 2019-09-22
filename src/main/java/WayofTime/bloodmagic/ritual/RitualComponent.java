@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.ritual;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
 /**
@@ -16,7 +16,7 @@ public class RitualComponent {
         this.runeType = runeType;
     }
 
-    public int getX(EnumFacing direction) {
+    public int getX(Direction direction) {
         switch (direction) {
             case EAST:
                 return -this.getOffset().getZ();
@@ -33,7 +33,7 @@ public class RitualComponent {
         return this.getOffset().getY();
     }
 
-    public int getZ(EnumFacing direction) {
+    public int getZ(Direction direction) {
         switch (direction) {
             case EAST:
                 return this.getOffset().getX();
@@ -46,7 +46,7 @@ public class RitualComponent {
         }
     }
 
-    public BlockPos getOffset(EnumFacing direction) {
+    public BlockPos getOffset(Direction direction) {
         return new BlockPos(getX(direction), offset.getY(), getZ(direction));
     }
 

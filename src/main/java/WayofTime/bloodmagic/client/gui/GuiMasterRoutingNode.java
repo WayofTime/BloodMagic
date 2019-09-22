@@ -2,18 +2,18 @@ package WayofTime.bloodmagic.client.gui;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.tile.container.ContainerMasterRoutingNode;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiMasterRoutingNode extends GuiContainer {
+public class GuiMasterRoutingNode extends ContainerScreen {
 
-    public GuiMasterRoutingNode(InventoryPlayer playerInventory, IInventory tileRoutingNode) {
+    public GuiMasterRoutingNode(PlayerInventory playerInventory, IInventory tileRoutingNode) {
         super(new ContainerMasterRoutingNode(playerInventory, tileRoutingNode));
         this.xSize = 216;
         this.ySize = 216;

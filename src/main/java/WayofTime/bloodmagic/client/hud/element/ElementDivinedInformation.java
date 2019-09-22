@@ -3,10 +3,10 @@ package WayofTime.bloodmagic.client.hud.element;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 
 import java.util.List;
 
@@ -21,8 +21,8 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
 
     @Override
     public boolean shouldRender(Minecraft minecraft) {
-        EntityPlayer player = Minecraft.getMinecraft().player;
-        ItemStack sigilStack = player.getHeldItem(EnumHand.MAIN_HAND);
+        PlayerEntity player = Minecraft.getMinecraft().player;
+        ItemStack sigilStack = player.getHeldItem(Hand.MAIN_HAND);
         boolean flag = false;
         if (simple) {
             if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION || sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
@@ -30,7 +30,7 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
             else flag = isFlagSigilHolding(sigilStack, true);
 
             if (!flag) {
-                sigilStack = player.getHeldItem(EnumHand.OFF_HAND);
+                sigilStack = player.getHeldItem(Hand.OFF_HAND);
                 if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION || sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
                     flag = true;
                 else flag = isFlagSigilHolding(sigilStack, true);
@@ -42,7 +42,7 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
             else flag = isFlagSigilHolding(sigilStack, false);
 
             if (!flag) {
-                sigilStack = player.getHeldItem(EnumHand.OFF_HAND);
+                sigilStack = player.getHeldItem(Hand.OFF_HAND);
                 if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
                     flag = true;
                 else flag = isFlagSigilHolding(sigilStack, false);

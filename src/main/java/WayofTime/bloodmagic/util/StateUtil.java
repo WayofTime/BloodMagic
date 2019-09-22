@@ -1,15 +1,15 @@
 package WayofTime.bloodmagic.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class StateUtil {
-    public static IBlockState parseState(String state) {
+    public static BlockState parseState(String state) {
         if (state.contains("[")) {
             String[] split = state.split("\\[");
             split[1] = split[1].substring(0, split[1].lastIndexOf("]")); // Make sure brackets are removed from state
@@ -19,7 +19,7 @@ public class StateUtil {
                 return block.getDefaultState();
 
             BlockStateContainer blockState = block.getBlockState();
-            IBlockState returnState = blockState.getBaseState();
+            BlockState returnState = blockState.getBaseState();
 
             // Force our values into the state
             String[] stateValues = split[1].split(","); // Splits up each value

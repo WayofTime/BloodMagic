@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.ritual;
 
 import WayofTime.bloodmagic.util.Constants;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.structure.template.PlacementSettings;
-import net.minecraft.world.gen.structure.template.Template;
+import net.minecraft.world.gen.feature.template.PlacementSettings;
+import net.minecraft.world.gen.feature.template.Template;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,11 +27,11 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
 
     public abstract void resetIterator();
 
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
 
     }
 
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
 
     }
 
@@ -205,13 +205,13 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
         }
 
         @Override
-        public void readFromNBT(NBTTagCompound tag) {
+        public void readFromNBT(CompoundNBT tag) {
             minimumOffset = new BlockPos(tag.getInteger(Constants.NBT.X_COORD + "min"), tag.getInteger(Constants.NBT.Y_COORD + "min"), tag.getInteger(Constants.NBT.Z_COORD + "min"));
             maximumOffset = new BlockPos(tag.getInteger(Constants.NBT.X_COORD + "max"), tag.getInteger(Constants.NBT.Y_COORD + "max"), tag.getInteger(Constants.NBT.Z_COORD + "max"));
         }
 
         @Override
-        public void writeToNBT(NBTTagCompound tag) {
+        public void writeToNBT(CompoundNBT tag) {
             tag.setInteger(Constants.NBT.X_COORD + "min", minimumOffset.getX());
             tag.setInteger(Constants.NBT.Y_COORD + "min", minimumOffset.getY());
             tag.setInteger(Constants.NBT.Z_COORD + "min", minimumOffset.getZ());

@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.entity.ai;
 
 import WayofTime.bloodmagic.entity.mob.EntityDemonBase;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.item.ItemBow;
-import net.minecraft.util.EnumHand;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.item.BowItem;
+import net.minecraft.util.Hand;
 
-public class EntityAIAttackRangedBow extends EntityAIBase {
+public class EntityAIAttackRangedBow extends Goal {
     private final EntityDemonBase entity;
     private final double moveSpeedAmp;
     private final float maxAttackDistance;
@@ -37,7 +37,7 @@ public class EntityAIAttackRangedBow extends EntityAIBase {
     }
 
     protected boolean isBowInMainhand() {
-        return this.entity.getHeldItemMainhand().getItem() instanceof ItemBow;
+        return this.entity.getHeldItemMainhand().getItem() instanceof BowItem;
     }
 
     /**
@@ -68,7 +68,7 @@ public class EntityAIAttackRangedBow extends EntityAIBase {
      * Updates the task
      */
     public void updateTask() {
-        EntityLivingBase entitylivingbase = this.entity.getAttackTarget();
+        LivingEntity entitylivingbase = this.entity.getAttackTarget();
 
         if (entitylivingbase != null) {
             double d0 = this.entity.getDistanceSq(entitylivingbase.posX, entitylivingbase.getEntityBoundingBox().minY, entitylivingbase.posZ);
@@ -126,12 +126,12 @@ public class EntityAIAttackRangedBow extends EntityAIBase {
 
                     if (i >= 20) {
                         this.entity.resetActiveHand();
-                        this.entity.attackEntityWithRangedAttack(entitylivingbase, ItemBow.getArrowVelocity(i));
+                        this.entity.attackEntityWithRangedAttack(entitylivingbase, BowItem.getArrowVelocity(i));
                         this.attackTime = this.attackCooldown;
                     }
                 }
             } else if (--this.attackTime <= 0 && this.seeTime >= -60) {
-                this.entity.setActiveHand(EnumHand.MAIN_HAND);
+                this.entity.setActiveHand(Hand.MAIN_HAND);
             }
         }
     }

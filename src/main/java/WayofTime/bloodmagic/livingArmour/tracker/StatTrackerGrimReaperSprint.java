@@ -7,8 +7,8 @@ import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
 import WayofTime.bloodmagic.util.BMLog;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -31,17 +31,17 @@ public class StatTrackerGrimReaperSprint extends StatTracker {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         totalDeaths = tag.getInteger(BloodMagic.MODID + ".tracker.grimReaper");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         tag.setInteger(BloodMagic.MODID + ".tracker.grimReaper", totalDeaths);
     }
 
     @Override
-    public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+    public boolean onTick(World world, PlayerEntity player, LivingArmour livingArmour) {
         if (changeMap.containsKey(livingArmour)) {
             double change = Math.abs(changeMap.get(livingArmour));
             if (change > 0) {
@@ -59,7 +59,7 @@ public class StatTrackerGrimReaperSprint extends StatTracker {
     }
 
     @Override
-    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+    public void onDeactivatedTick(World world, PlayerEntity player, LivingArmour livingArmour) {
         if (changeMap.containsKey(livingArmour)) {
             changeMap.remove(livingArmour);
         }

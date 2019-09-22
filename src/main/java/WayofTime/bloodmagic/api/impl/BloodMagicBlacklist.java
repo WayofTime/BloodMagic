@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.util.BMLog;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -13,10 +13,10 @@ import java.util.Set;
 
 public class BloodMagicBlacklist implements IBloodMagicBlacklist {
 
-    private final Set<IBlockState> teleposer;
+    private final Set<BlockState> teleposer;
     private final Set<ResourceLocation> teleposerEntities;
-    private final Set<IBlockState> transposition;
-    private final Set<IBlockState> greenGrove;
+    private final Set<BlockState> transposition;
+    private final Set<BlockState> greenGrove;
     private final Set<ResourceLocation> sacrifice;
 
     public BloodMagicBlacklist() {
@@ -28,7 +28,7 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
     }
 
     @Override
-    public void addTeleposer(@Nonnull IBlockState state) {
+    public void addTeleposer(@Nonnull BlockState state) {
         if (!teleposer.contains(state)) {
             BMLog.API_VERBOSE.info("Blacklist: Added {} to the Teleposer blacklist.", state);
             teleposer.add(state);
@@ -36,7 +36,7 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
     }
 
     public void addTeleposer(@Nonnull Block block) {
-        for (IBlockState state : block.getBlockState().getValidStates())
+        for (BlockState state : block.getBlockState().getValidStates())
             addTeleposer(state);
     }
 
@@ -49,7 +49,7 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
     }
 
     @Override
-    public void addTransposition(@Nonnull IBlockState state) {
+    public void addTransposition(@Nonnull BlockState state) {
         if (!transposition.contains(state)) {
             BMLog.API_VERBOSE.info("Blacklist: Added {} to the Transposition blacklist.", state);
             transposition.add(state);
@@ -57,12 +57,12 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
     }
 
     public void addTransposition(@Nonnull Block block) {
-        for (IBlockState state : block.getBlockState().getValidStates())
+        for (BlockState state : block.getBlockState().getValidStates())
             addTransposition(state);
     }
 
     @Override
-    public void addGreenGrove(@Nonnull IBlockState state) {
+    public void addGreenGrove(@Nonnull BlockState state) {
         if (!greenGrove.contains(state)) {
             BMLog.API_VERBOSE.info("Blacklist: Added {} to the Green Grove blacklist.", state);
             greenGrove.add(state);
@@ -70,7 +70,7 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
     }
 
     public void addGreenGrove(@Nonnull Block block) {
-        for (IBlockState state : block.getBlockState().getValidStates())
+        for (BlockState state : block.getBlockState().getValidStates())
             addGreenGrove(state);
     }
 
@@ -84,7 +84,7 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
 
     // Internal use getters
 
-    public Set<IBlockState> getTeleposer() {
+    public Set<BlockState> getTeleposer() {
         return ImmutableSet.copyOf(teleposer);
     }
 
@@ -92,11 +92,11 @@ public class BloodMagicBlacklist implements IBloodMagicBlacklist {
         return ImmutableSet.copyOf(teleposerEntities);
     }
 
-    public Set<IBlockState> getTransposition() {
+    public Set<BlockState> getTransposition() {
         return ImmutableSet.copyOf(transposition);
     }
 
-    public Set<IBlockState> getGreenGrove() {
+    public Set<BlockState> getGreenGrove() {
         return ImmutableSet.copyOf(greenGrove);
     }
 

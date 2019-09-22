@@ -10,13 +10,13 @@ import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.util.helper.*;
 import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.EnumAction;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.item.UseAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
@@ -51,10 +51,10 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
-        if (entityLiving instanceof EntityPlayer && !entityLiving.getEntityWorld().isRemote)
-            if (PlayerSacrificeHelper.sacrificePlayerHealth((EntityPlayer) entityLiving))
-                IncenseHelper.setHasMaxIncense(stack, (EntityPlayer) entityLiving, false);
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
+        if (entityLiving instanceof PlayerEntity && !entityLiving.getEntityWorld().isRemote)
+            if (PlayerSacrificeHelper.sacrificePlayerHealth((PlayerEntity) entityLiving))
+                IncenseHelper.setHasMaxIncense(stack, (PlayerEntity) entityLiving, false);
     }
 
     @Override
@@ -63,19 +63,19 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack stack) {
-        return EnumAction.BOW;
+    public UseAction getItemUseAction(ItemStack stack) {
+        return UseAction.BOW;
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
             return super.onItemRightClick(world, player, hand);
 
         if (this.canUseForSacrifice(stack)) {
             player.setActiveHand(hand);
-            return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+            return new ActionResult<>(ActionResultType.SUCCESS, stack);
         }
 
         int lpAdded = ConfigHandler.values.sacrificialDaggerConversion * 2;
@@ -131,19 +131,19 @@ public class ItemSacrificialDagger extends ItemEnum<ItemSacrificialDagger.Dagger
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
-        if (!world.isRemote && entity instanceof EntityPlayer) {
-            boolean prepared = this.isPlayerPreparedForSacrifice(world, (EntityPlayer) entity);
+        if (!world.isRemote && entity instanceof PlayerEntity) {
+            boolean prepared = this.isPlayerPreparedForSacrifice(world, (PlayerEntity) entity);
             this.setUseForSacrifice(stack, prepared);
             if (IncenseHelper.getHasMaxIncense(stack) && !prepared)
-                IncenseHelper.setHasMaxIncense(stack, (EntityPlayer) entity, false);
+                IncenseHelper.setHasMaxIncense(stack, (PlayerEntity) entity, false);
             if (prepared) {
-                boolean isMax = IncenseHelper.getMaxIncense((EntityPlayer) entity) == IncenseHelper.getCurrentIncense((EntityPlayer) entity);
-                IncenseHelper.setHasMaxIncense(stack, (EntityPlayer) entity, isMax);
+                boolean isMax = IncenseHelper.getMaxIncense((PlayerEntity) entity) == IncenseHelper.getCurrentIncense((PlayerEntity) entity);
+                IncenseHelper.setHasMaxIncense(stack, (PlayerEntity) entity, isMax);
             }
         }
     }
 
-    public boolean isPlayerPreparedForSacrifice(World world, EntityPlayer player) {
+    public boolean isPlayerPreparedForSacrifice(World world, PlayerEntity player) {
         return !world.isRemote && (PlayerSacrificeHelper.getPlayerIncense(player) > 0);
     }
 

@@ -12,12 +12,11 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.ItemInscriptionTool;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemBanner;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.item.*;
+import net.minecraft.item.BannerItem;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
@@ -46,7 +45,7 @@ public class CraftingHandler {
         }
 
         if (event.getOutput().getItem() == ForgeModContainer.getInstance().universalBucket && event.getAltarRecipe().getSyphon() == 1000) {
-            NBTTagCompound bucketTags = FluidUtil.getFilledBucket(new FluidStack(BlockLifeEssence.getLifeEssence(), Fluid.BUCKET_VOLUME)).getTagCompound();
+            CompoundNBT bucketTags = FluidUtil.getFilledBucket(new FluidStack(BlockLifeEssence.getLifeEssence(), Fluid.BUCKET_VOLUME)).getTagCompound();
             event.getOutput().setTagCompound(bucketTags);
         }
     }
@@ -73,7 +72,7 @@ public class CraftingHandler {
             if (event.getRight().getItem() == Items.NAME_TAG) {
                 ItemStack output = event.getLeft().copy();
                 if (!output.hasTagCompound())
-                    output.setTagCompound(new NBTTagCompound());
+                    output.setTagCompound(new CompoundNBT());
                 output.getTagCompound().setString(Constants.NBT.COLOR, event.getRight().getDisplayName());
                 event.setCost(1);
 
@@ -83,10 +82,10 @@ public class CraftingHandler {
             }
 
             if (event.getRight().getItem() == Items.DYE) {
-                EnumDyeColor dyeColor = ItemBanner.getBaseColor(event.getRight());
+                DyeColor dyeColor = BannerItem.getBaseColor(event.getRight());
                 ItemStack output = event.getLeft().copy();
                 if (!output.hasTagCompound())
-                    output.setTagCompound(new NBTTagCompound());
+                    output.setTagCompound(new CompoundNBT());
                 output.getTagCompound().setString(Constants.NBT.COLOR, String.valueOf(Utils.DYE_COLOR_VALUES.getOrDefault(dyeColor, 0)));
                 event.setCost(1);
 
@@ -145,6 +144,6 @@ public class CraftingHandler {
     @SubscribeEvent
     public static void handleFuelLevel(FurnaceFuelBurnTimeEvent event) {
         if (ItemStack.areItemsEqual(event.getItemStack(), ComponentTypes.SAND_COAL.getStack()))
-            event.setBurnTime(TileEntityFurnace.getItemBurnTime(new ItemStack(Items.COAL)));
+            event.setBurnTime(FurnaceTileEntity.getItemBurnTime(new ItemStack(Items.COAL)));
     }
 }

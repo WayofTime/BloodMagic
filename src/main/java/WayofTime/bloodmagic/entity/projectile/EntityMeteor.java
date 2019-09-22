@@ -3,18 +3,18 @@ package WayofTime.bloodmagic.entity.projectile;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.meteor.MeteorRegistry;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.ThrowableEntity;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IThrowableEntity;
 
-public class EntityMeteor extends EntityThrowable implements IThrowableEntity {
+public class EntityMeteor extends ThrowableEntity implements IThrowableEntity {
     public ItemStack meteorStack = ItemStack.EMPTY;
     protected int ticksInAir = 0;
     protected int maxTicksInAir = 600;
@@ -63,7 +63,7 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity {
     }
 
     protected void onImpact(Entity mop) {
-        if (mop instanceof EntityLivingBase) {
+        if (mop instanceof LivingEntity) {
             doDamage(100, mop);
         }
 
@@ -86,7 +86,7 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity {
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound nbt) {
+    public void writeEntityToNBT(CompoundNBT nbt) {
         super.writeEntityToNBT(nbt);
         nbt.setInteger(Constants.NBT.PROJECTILE_TICKS_IN_AIR, ticksInAir);
         nbt.setInteger(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR, maxTicksInAir);
@@ -100,7 +100,7 @@ public class EntityMeteor extends EntityThrowable implements IThrowableEntity {
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound nbt) {
+    public void readEntityFromNBT(CompoundNBT nbt) {
         super.readEntityFromNBT(nbt);
         ticksInAir = nbt.getInteger(Constants.NBT.PROJECTILE_TICKS_IN_AIR);
         maxTicksInAir = nbt.getInteger(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR);

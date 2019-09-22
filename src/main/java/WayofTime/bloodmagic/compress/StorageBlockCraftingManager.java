@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.compress;
 
 import WayofTime.bloodmagic.util.BMLog;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -15,21 +15,21 @@ import java.util.Set;
 
 public class StorageBlockCraftingManager {
     private static final StorageBlockCraftingManager instance = new StorageBlockCraftingManager();
-    private static InventoryCrafting[] inventoryCrafting = {
-            new InventoryCrafting(new Container() {
-                public boolean canInteractWith(EntityPlayer player) {
+    private static CraftingInventory[] inventoryCrafting = {
+            new CraftingInventory(new Container() {
+                public boolean canInteractWith(PlayerEntity player) {
                     return false;
                 }
             },
                     3, 3),
-            new InventoryCrafting(new Container() {
-                public boolean canInteractWith(EntityPlayer player) {
+            new CraftingInventory(new Container() {
+                public boolean canInteractWith(PlayerEntity player) {
                     return false;
                 }
             },
                     2, 2),
-            new InventoryCrafting(new Container() {
-                public boolean canInteractWith(EntityPlayer player) {
+            new CraftingInventory(new Container() {
+                public boolean canInteractWith(PlayerEntity player) {
                     return false;
                 }
             },
@@ -56,7 +56,7 @@ public class StorageBlockCraftingManager {
         if (craftingManagerSB.blacklist.contains(stack)) {
             return ItemStack.EMPTY;
         }
-        InventoryCrafting inventory = inventoryCrafting[3 - gridSize];
+        CraftingInventory inventory = inventoryCrafting[3 - gridSize];
         for (int i = 0; i < inventory.getSizeInventory(); i++) {
             inventory.setInventorySlotContents(i, stack);
         }
@@ -74,7 +74,7 @@ public class StorageBlockCraftingManager {
         return ItemStack.EMPTY;
     }
 
-    public static ItemStack getNNRecipeOutput(InventoryCrafting inventory, World world) {
+    public static ItemStack getNNRecipeOutput(CraftingInventory inventory, World world) {
         IRecipe checkForNull = CraftingManager.findMatchingRecipe(inventory, world);
         if (checkForNull != null) {
             return checkForNull.getRecipeOutput();
@@ -102,11 +102,11 @@ public class StorageBlockCraftingManager {
         BMLog.DEBUG.info("Total number of compression recipes: " + this.recipes.size());
     }
 
-    public ItemStack findMatchingRecipe(InventoryCrafting craftingInventory, World world) {
+    public ItemStack findMatchingRecipe(CraftingInventory craftingInventory, World world) {
         return this.findMatchingRecipe(craftingInventory, world, this.recipes);
     }
 
-    private ItemStack findMatchingRecipe(InventoryCrafting craftingInventory, World world, HashSet<IRecipe> list) {
+    private ItemStack findMatchingRecipe(CraftingInventory craftingInventory, World world, HashSet<IRecipe> list) {
         int i = 0;
         ItemStack itemstack = ItemStack.EMPTY;
         ItemStack itemstack1 = ItemStack.EMPTY;

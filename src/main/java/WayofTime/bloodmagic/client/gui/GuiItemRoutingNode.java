@@ -8,15 +8,15 @@ import WayofTime.bloodmagic.tile.container.ContainerItemRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -24,15 +24,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
-public class GuiItemRoutingNode extends GuiContainer {
-    private GuiTextField textBox;
+public class GuiItemRoutingNode extends ContainerScreen {
+    private TextFieldWidget textBox;
 
     private TileFilteredRoutingNode inventory;
     private ContainerItemRoutingNode container;
 
     private int left, top;
 
-    public GuiItemRoutingNode(InventoryPlayer playerInventory, IInventory tileRoutingNode) {
+    public GuiItemRoutingNode(PlayerInventory playerInventory, IInventory tileRoutingNode) {
         super(new ContainerItemRoutingNode(playerInventory, tileRoutingNode));
         this.xSize = 201;
         this.ySize = 169;
@@ -41,7 +41,7 @@ public class GuiItemRoutingNode extends GuiContainer {
     }
 
     private int getCurrentActiveSlotPriority() {
-        EnumFacing direction = EnumFacing.byIndex(inventory.currentActiveSlot);
+        Direction direction = Direction.byIndex(inventory.currentActiveSlot);
         if (direction != null) {
             return inventory.getPriority(direction);
         }
@@ -56,17 +56,17 @@ public class GuiItemRoutingNode extends GuiContainer {
         top = (this.height - this.ySize) / 2;
 
         this.buttonList.clear();
-        this.buttonList.add(new GuiButton(0, left + 176, top + 14, 18, 18, "D"));
-        this.buttonList.add(new GuiButton(1, left + 176, top + 32, 18, 18, "U"));
-        this.buttonList.add(new GuiButton(2, left + 176, top + 50, 18, 18, "N"));
-        this.buttonList.add(new GuiButton(3, left + 176, top + 68, 18, 18, "S"));
-        this.buttonList.add(new GuiButton(4, left + 176, top + 86, 18, 18, "W"));
-        this.buttonList.add(new GuiButton(5, left + 176, top + 104, 18, 18, "E"));
-        this.buttonList.add(new GuiButton(6, left + 160, top + 50, 10, 18, ">"));
-        this.buttonList.add(new GuiButton(7, left + 132, top + 50, 10, 18, "<"));
+        this.buttonList.add(new Button(0, left + 176, top + 14, 18, 18, "D"));
+        this.buttonList.add(new Button(1, left + 176, top + 32, 18, 18, "U"));
+        this.buttonList.add(new Button(2, left + 176, top + 50, 18, 18, "N"));
+        this.buttonList.add(new Button(3, left + 176, top + 68, 18, 18, "S"));
+        this.buttonList.add(new Button(4, left + 176, top + 86, 18, 18, "W"));
+        this.buttonList.add(new Button(5, left + 176, top + 104, 18, 18, "E"));
+        this.buttonList.add(new Button(6, left + 160, top + 50, 10, 18, ">"));
+        this.buttonList.add(new Button(7, left + 132, top + 50, 10, 18, "<"));
         disableDirectionalButton(inventory.currentActiveSlot);
 
-        this.textBox = new GuiTextField(0, this.fontRenderer, left + 94, top + 37, 70, 12);
+        this.textBox = new TextFieldWidget(0, this.fontRenderer, left + 94, top + 37, 70, 12);
         this.textBox.setEnableBackgroundDrawing(false);
         this.textBox.setText("");
     }
@@ -137,7 +137,7 @@ public class GuiItemRoutingNode extends GuiContainer {
      * for buttons)
      */
     @Override
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(Button button) throws IOException {
         if (button.enabled) {
             BloodMagicPacketHandler.INSTANCE.sendToServer(new ItemRouterButtonPacketProcessor(button.id, inventory.getPos(), inventory.getWorld()));
             if (button.id < 6) {
@@ -149,7 +149,7 @@ public class GuiItemRoutingNode extends GuiContainer {
     }
 
     private void enableAllDirectionalButtons() {
-        for (GuiButton button : this.buttonList) {
+        for (Button button : this.buttonList) {
             button.enabled = true;
         }
     }

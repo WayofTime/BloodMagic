@@ -3,8 +3,8 @@ package WayofTime.bloodmagic.client.hud;
 import WayofTime.bloodmagic.client.hud.element.HUDElement;
 import com.google.common.collect.Maps;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -17,16 +17,16 @@ import javax.vecmath.Vector2f;
 import java.awt.Point;
 import java.util.Map;
 
-public class GuiEditHUD extends GuiScreen {
+public class GuiEditHUD extends Screen {
 
     private static final int LINE_COLOR = 0x2D2D2D;
 
-    private final GuiScreen parent;
+    private final Screen parent;
     private final Map<ResourceLocation, Vector2f> currentOverrides = Maps.newHashMap();
     private HUDElement dragged;
     public boolean changes;
 
-    public GuiEditHUD(GuiScreen parent) {
+    public GuiEditHUD(Screen parent) {
         this.parent = parent;
     }
 
@@ -102,7 +102,7 @@ public class GuiEditHUD extends GuiScreen {
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) {
+    protected void actionPerformed(Button button) {
         switch (button.id) {
             case 0: {
                 Minecraft.getMinecraft().displayGuiScreen(parent);

@@ -6,8 +6,8 @@ import WayofTime.bloodmagic.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeMeleeDamage;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -30,17 +30,17 @@ public class StatTrackerMeleeDamage extends StatTracker {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         totalDamageDealt = tag.getDouble(BloodMagic.MODID + ".tracker.meleeDamage");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         tag.setDouble(BloodMagic.MODID + ".tracker.meleeDamage", totalDamageDealt);
     }
 
     @Override
-    public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+    public boolean onTick(World world, PlayerEntity player, LivingArmour livingArmour) {
         if (changeMap.containsKey(livingArmour)) {
             double change = Math.abs(changeMap.get(livingArmour));
             if (change > 0) {
@@ -58,7 +58,7 @@ public class StatTrackerMeleeDamage extends StatTracker {
     }
 
     @Override
-    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+    public void onDeactivatedTick(World world, PlayerEntity player, LivingArmour livingArmour) {
         if (changeMap.containsKey(livingArmour)) {
             changeMap.remove(livingArmour);
         }

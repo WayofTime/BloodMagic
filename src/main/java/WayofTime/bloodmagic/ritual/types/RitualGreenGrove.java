@@ -9,15 +9,15 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.*;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.block.Blocks;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class RitualGreenGrove extends Ritual {
     public static double steadfastWillDrain = 0.05;
     public static int defaultRefreshTime = 20;
     public static double defaultGrowthChance = 0.3;
-    public static IBlockState farmlandState = Blocks.FARMLAND.getDefaultState().withProperty(BlockFarmland.MOISTURE, 7);
+    public static BlockState farmlandState = Blocks.FARMLAND.getDefaultState().withProperty(FarmlandBlock.MOISTURE, 7);
     public int refreshTime = 20;
 
     public RitualGreenGrove() {
@@ -88,14 +88,14 @@ public class RitualGreenGrove extends Ritual {
         }
 
         for (BlockPos newPos : growingRange.getContainedPositions(pos)) {
-            IBlockState state = world.getBlockState(newPos);
+            BlockState state = world.getBlockState(newPos);
 
             if (!BloodMagicAPI.INSTANCE.getBlacklist().getGreenGrove().contains(state)) {
-                boolean flag = state.getBlock() instanceof IGrowable || state.getBlock() instanceof BlockCactus || state.getBlock() instanceof BlockReed;
+                boolean flag = state.getBlock() instanceof IGrowable || state.getBlock() instanceof CactusBlock || state.getBlock() instanceof SugarCaneBlock;
                 if (flag) {
                     if (world.rand.nextDouble() < growthChance) {
                         state.getBlock().updateTick(world, newPos, state, new Random());
-                        IBlockState newState = world.getBlockState(newPos);
+                        BlockState newState = world.getBlockState(newPos);
                         if (!newState.equals(state)) {
                             world.playEvent(2005, newPos, 0);
                             totalGrowths++;
@@ -139,7 +139,7 @@ public class RitualGreenGrove extends Ritual {
                     break;
                 }
 
-                IBlockState state = world.getBlockState(newPos);
+                BlockState state = world.getBlockState(newPos);
                 Block block = state.getBlock();
 
                 boolean hydratedBlock = false;
@@ -169,21 +169,21 @@ public class RitualGreenGrove extends Ritual {
         if (corrosiveWill > corrosiveWillDrain) {
             AreaDescriptor leechRange = masterRitualStone.getBlockRange(LEECH_RANGE);
             AxisAlignedBB mobArea = leechRange.getAABB(pos);
-            List<EntityLivingBase> entityList = world.getEntitiesWithinAABB(EntityLivingBase.class, mobArea);
-            for (EntityLivingBase entityLiving : entityList) {
+            List<LivingEntity> entityList = world.getEntitiesWithinAABB(LivingEntity.class, mobArea);
+            for (LivingEntity entityLiving : entityList) {
                 if (corrosiveWill < corrosiveWillDrain) {
                     break;
                 }
 
-                if (entityLiving instanceof EntityPlayer) {
+                if (entityLiving instanceof PlayerEntity) {
                     continue;
                 }
 
-                if (entityLiving.isPotionActive(RegistrarBloodMagic.PLANT_LEECH) || !entityLiving.isPotionApplicable(new PotionEffect(RegistrarBloodMagic.PLANT_LEECH))) {
+                if (entityLiving.isPotionActive(RegistrarBloodMagic.PLANT_LEECH) || !entityLiving.isPotionApplicable(new EffectInstance(RegistrarBloodMagic.PLANT_LEECH))) {
                     continue;
                 }
 
-                entityLiving.addPotionEffect(new PotionEffect(RegistrarBloodMagic.PLANT_LEECH, 200, 0));
+                entityLiving.addPotionEffect(new EffectInstance(RegistrarBloodMagic.PLANT_LEECH, 200, 0));
 
                 corrosiveWill -= corrosiveWillDrain;
                 corrosiveDrain += corrosiveWillDrain;
@@ -266,8 +266,8 @@ public class RitualGreenGrove extends Ritual {
     }
 
     @Override
-    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
-        return new ITextComponent[]{new TextComponentTranslation(this.getTranslationKey() + ".info"), new TextComponentTranslation(this.getTranslationKey() + ".default.info"), new TextComponentTranslation(this.getTranslationKey() + ".corrosive.info"), new TextComponentTranslation(this.getTranslationKey() + ".steadfast.info"), new TextComponentTranslation(this.getTranslationKey() + ".destructive.info"), new TextComponentTranslation(this.getTranslationKey() + ".vengeful.info")};
+    public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player) {
+        return new ITextComponent[]{new TranslationTextComponent(this.getTranslationKey() + ".info"), new TranslationTextComponent(this.getTranslationKey() + ".default.info"), new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"), new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"), new TranslationTextComponent(this.getTranslationKey() + ".destructive.info"), new TranslationTextComponent(this.getTranslationKey() + ".vengeful.info")};
     }
 
     @Override

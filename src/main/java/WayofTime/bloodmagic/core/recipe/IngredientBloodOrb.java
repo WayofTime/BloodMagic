@@ -6,7 +6,7 @@ import WayofTime.bloodmagic.core.registry.OrbRegistry;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntComparators;
 import it.unimi.dsi.fastutil.ints.IntList;
-import net.minecraft.client.util.RecipeItemHelper;
+import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;

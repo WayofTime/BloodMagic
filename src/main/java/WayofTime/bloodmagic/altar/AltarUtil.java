@@ -3,8 +3,8 @@ package WayofTime.bloodmagic.altar;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.tile.TileAltar;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -26,7 +26,7 @@ public class AltarUtil {
         for (AltarTier tier : AltarTier.values()) {
             for (AltarComponent component : tier.getAltarComponents()) {
                 BlockPos componentPos = pos.add(component.getOffset());
-                IBlockState worldState = world.getBlockState(componentPos);
+                BlockState worldState = world.getBlockState(componentPos);
 
                 if (worldState.getBlock() instanceof IAltarComponent)
                     if (((IAltarComponent) worldState.getBlock()).getType(world, worldState, componentPos) == component.getComponent())
@@ -35,7 +35,7 @@ public class AltarUtil {
                 if (component.getComponent() == ComponentType.NOTAIR && worldState.getMaterial() != Material.AIR && !worldState.getMaterial().isLiquid())
                     continue;
 
-                List<IBlockState> validStates = BloodMagicAPI.INSTANCE.getComponentStates(component.getComponent());
+                List<BlockState> validStates = BloodMagicAPI.INSTANCE.getComponentStates(component.getComponent());
                 if (!validStates.contains(worldState))
                     return lastCheck;
             }
@@ -55,7 +55,7 @@ public class AltarUtil {
                 continue;
 
             BlockPos componentPos = pos.add(component.getOffset());
-            IBlockState state = world.getBlockState(componentPos);
+            BlockState state = world.getBlockState(componentPos);
             if (state.getBlock() instanceof BlockBloodRune)
                 upgrades.upgrade(((BlockBloodRune) state.getBlock()).getBloodRune(world, componentPos, state));
         }
@@ -71,11 +71,11 @@ public class AltarUtil {
         for (AltarTier tier : AltarTier.values()) {
             for (AltarComponent component : tier.getAltarComponents()) {
                 BlockPos componentPos = pos.add(component.getOffset());
-                IBlockState worldState = world.getBlockState(componentPos);
+                BlockState worldState = world.getBlockState(componentPos);
                 if (component.getComponent() == ComponentType.NOTAIR && worldState.getMaterial() != Material.AIR && !worldState.getMaterial().isLiquid())
                     continue;
 
-                List<IBlockState> validStates = BloodMagicAPI.INSTANCE.getComponentStates(component.getComponent());
+                List<BlockState> validStates = BloodMagicAPI.INSTANCE.getComponentStates(component.getComponent());
                 if (!validStates.contains(worldState))
                     return Pair.of(componentPos, component.getComponent());
             }

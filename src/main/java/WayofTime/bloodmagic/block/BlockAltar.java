@@ -17,22 +17,22 @@ import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.tuple.Pair;
@@ -57,17 +57,17 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
         setHarvestLevel("pickaxe", 1);
     }
 
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
         return BODY;
     }
 
     @Override
-    public boolean hasComparatorInputOverride(IBlockState state) {
+    public boolean hasComparatorInputOverride(BlockState state) {
         return true;
     }
 
     @Override
-    public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
+    public int getComparatorInputOverride(BlockState state, World world, BlockPos pos) {
         if (world.isRemote)
             return 0;
 
@@ -102,32 +102,32 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean isNormalCube(BlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
+    public boolean causesSuffocation(BlockState state) {
         return true;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
         TileAltar altar = (TileAltar) world.getTileEntity(pos);
 
         if (altar == null || player.isSneaking())
@@ -150,7 +150,7 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
     }
 
     @Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
+    public void breakBlock(World world, BlockPos blockPos, BlockState blockState) {
         TileEntity tile = world.getTileEntity(blockPos);
         if (tile instanceof TileAltar)
             ((TileAltar) tile).dropItems();
@@ -159,41 +159,41 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(BlockState state) {
         return true;
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
+    public TileEntity createTileEntity(World world, BlockState state) {
         return new TileAltar();
     }
 
     // IDocumentedBlock
 
     @Override
-    public List<ITextComponent> getDocumentation(EntityPlayer player, World world, BlockPos pos, IBlockState state) {
+    public List<ITextComponent> getDocumentation(PlayerEntity player, World world, BlockPos pos, BlockState state) {
         List<ITextComponent> docs = new ArrayList<>();
         IBloodAltar altar = ((IBloodAltar) world.getTileEntity(pos));
         Pair<BlockPos, ComponentType> missingBlock = AltarUtil.getFirstMissingComponent(world, pos, altar.getTier().toInt());
         if (missingBlock != null)
-            docs.add(new TextComponentTranslation("chat.bloodmagic.altar.nextTier", new TextComponentTranslation(missingBlock.getRight().getKey()), Utils.prettifyBlockPosString(missingBlock.getLeft())));
+            docs.add(new TranslationTextComponent("chat.bloodmagic.altar.nextTier", new TranslationTextComponent(missingBlock.getRight().getKey()), Utils.prettifyBlockPosString(missingBlock.getLeft())));
 
         return docs;
     }
 
     @Override
-    public ItemBlock getItem() {
-        return new ItemBlock(this);
+    public BlockItem getItem() {
+        return new BlockItem(this);
     }
 
     /* Redstone code, taken from BlockLever */
 
-    public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+    public int getWeakPower(BlockState blockState, IBlockAccess blockAccess, BlockPos pos, Direction side) {
         return blockState.getValue(POWERED) ? 15 : 0;
     }
 
-    public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+    public int getStrongPower(BlockState blockState, IBlockAccess blockAccess, BlockPos pos, Direction side) {
         if (!blockState.getValue(POWERED)) {
             return 0;
         } else {
@@ -201,15 +201,15 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
         }
     }
 
-    public boolean canProvidePower(IBlockState state) {
+    public boolean canProvidePower(BlockState state) {
         return true;
     }
 
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(POWERED, meta > 0);
     }
 
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return state.getValue(POWERED) ? 1 : 0;
     }
 
@@ -217,7 +217,7 @@ public class BlockAltar extends Block implements IVariantProvider, IDocumentedBl
         return new BlockStateContainer(this, POWERED);
     }
 
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    public BlockState getStateForPlacement(World worldIn, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
 
         return this.getDefaultState().withProperty(POWERED, false);
     }

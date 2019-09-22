@@ -3,29 +3,29 @@ package WayofTime.bloodmagic.client.render.entity;
 import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderBiped;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.layers.LayerArrow;
-import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
-import net.minecraft.client.renderer.entity.layers.LayerCustomHead;
-import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
-import net.minecraft.item.EnumAction;
+import net.minecraft.client.renderer.entity.BipedRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.layers.*;
+import net.minecraft.client.renderer.entity.layers.BipedArmorLayer;
+import net.minecraft.client.renderer.entity.layers.HeadLayer;
+import net.minecraft.client.renderer.entity.layers.HeldItemLayer;
+import net.minecraft.item.UseAction;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHandSide;
+import net.minecraft.util.HandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderSentientSpecter extends RenderBiped<EntitySentientSpecter> {
+public class RenderSentientSpecter extends BipedRenderer<EntitySentientSpecter> {
     public static final ResourceLocation texture = new ResourceLocation("bloodmagic", "textures/entities/specter.png");
 
-    public RenderSentientSpecter(RenderManager renderManager) {
+    public RenderSentientSpecter(EntityRendererManager renderManager) {
         super(renderManager, new ModelBiped(0.0F), 0);
-        this.addLayer(new LayerBipedArmor(this));
-        this.addLayer(new LayerHeldItem(this));
-        this.addLayer(new LayerArrow(this));
-        this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
+        this.addLayer(new BipedArmorLayer(this));
+        this.addLayer(new HeldItemLayer(this));
+        this.addLayer(new ArrowLayer(this));
+        this.addLayer(new HeadLayer(this.getMainModel().bipedHead));
     }
 
     public ModelBiped getMainModel() {
@@ -55,11 +55,11 @@ public class RenderSentientSpecter extends RenderBiped<EntitySentientSpecter> {
             modelbiped$armpose = ModelBiped.ArmPose.ITEM;
 
             if (clientPlayer.getItemInUseCount() > 0) {
-                EnumAction enumaction = itemstack.getItemUseAction();
+                UseAction enumaction = itemstack.getItemUseAction();
 
-                if (enumaction == EnumAction.BLOCK) {
+                if (enumaction == UseAction.BLOCK) {
                     modelbiped$armpose = ModelBiped.ArmPose.BLOCK;
-                } else if (enumaction == EnumAction.BOW) {
+                } else if (enumaction == UseAction.BOW) {
                     modelbiped$armpose = ModelBiped.ArmPose.BOW_AND_ARROW;
                 }
             }
@@ -69,15 +69,15 @@ public class RenderSentientSpecter extends RenderBiped<EntitySentientSpecter> {
             modelbiped$armpose1 = ModelBiped.ArmPose.ITEM;
 
             if (clientPlayer.getItemInUseCount() > 0) {
-                EnumAction enumaction1 = itemstack1.getItemUseAction();
+                UseAction enumaction1 = itemstack1.getItemUseAction();
 
-                if (enumaction1 == EnumAction.BLOCK) {
+                if (enumaction1 == UseAction.BLOCK) {
                     modelbiped$armpose1 = ModelBiped.ArmPose.BLOCK;
                 }
             }
         }
 
-        if (clientPlayer.getPrimaryHand() == EnumHandSide.RIGHT) {
+        if (clientPlayer.getPrimaryHand() == HandSide.RIGHT) {
             modelplayer.rightArmPose = modelbiped$armpose;
             modelplayer.leftArmPose = modelbiped$armpose1;
         } else {

@@ -6,15 +6,15 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.EnumAction;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.UseAction;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -36,8 +36,8 @@ public class ItemPotionFlask extends Item implements IMeshProvider {
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entityLiving) {
-        EntityPlayer player = entityLiving instanceof EntityPlayer ? (EntityPlayer) entityLiving : null;
+    public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entityLiving) {
+        PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
 
         int remainingUses = stack.getMaxDamage() - stack.getItemDamage();
         if (remainingUses <= 0) {
@@ -51,8 +51,8 @@ public class ItemPotionFlask extends Item implements IMeshProvider {
         }
 
         if (!world.isRemote) {
-            for (PotionEffect potioneffect : PotionUtils.getEffectsFromStack(stack)) {
-                entityLiving.addPotionEffect(new PotionEffect(potioneffect));
+            for (EffectInstance potioneffect : PotionUtils.getEffectsFromStack(stack)) {
+                entityLiving.addPotionEffect(new EffectInstance(potioneffect));
             }
         }
 
@@ -65,8 +65,8 @@ public class ItemPotionFlask extends Item implements IMeshProvider {
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack stack) {
-        return EnumAction.DRINK;
+    public UseAction getItemUseAction(ItemStack stack) {
+        return UseAction.DRINK;
     }
 
     @Override
@@ -75,34 +75,34 @@ public class ItemPotionFlask extends Item implements IMeshProvider {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         int remainingUses = stack.getMaxDamage() - stack.getItemDamage();
         if (remainingUses > 0 || !stack.hasTagCompound() || !stack.getTagCompound().hasKey("empty"))
-            return EnumActionResult.PASS;
+            return ActionResultType.PASS;
 
         RayTraceResult trace = rayTrace(world, player, true);
 
         if (trace.typeOfHit == RayTraceResult.Type.BLOCK && world.getBlockState(trace.getBlockPos()).getMaterial() == Material.WATER) {
             world.playSound(player, player.posX, player.posY, player.posZ, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
             player.setHeldItem(hand, new ItemStack(this));
-            return EnumActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
 
         return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         int remainingUses = stack.getMaxDamage() - stack.getItemDamage();
         if (remainingUses <= 0) {
             NBTHelper.checkNBT(stack);
             stack.getTagCompound().setBoolean("empty", true);
-            return new ActionResult<>(EnumActionResult.PASS, stack);
+            return new ActionResult<>(ActionResultType.PASS, stack);
         }
         player.setActiveHand(hand);
-        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<>(ActionResultType.SUCCESS, stack);
     }
 
     @Override

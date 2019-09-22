@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.network;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -39,7 +39,7 @@ public class PlayerFallDistancePacketProcessor implements IMessage, IMessageHand
         return null;
     }
 
-    public void onMessageFromClient(EntityPlayer player) {
+    public void onMessageFromClient(PlayerEntity player) {
         player.fallDistance = fallDistance;
     }
 }

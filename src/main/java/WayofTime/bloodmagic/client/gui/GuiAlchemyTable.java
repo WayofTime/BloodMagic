@@ -4,20 +4,20 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.tile.TileAlchemyTable;
 import WayofTime.bloodmagic.tile.container.ContainerAlchemyTable;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiAlchemyTable extends GuiContainer {
+public class GuiAlchemyTable extends ContainerScreen {
     public IInventory tileTable;
 
-    public GuiAlchemyTable(InventoryPlayer playerInventory, IInventory tileTable) {
+    public GuiAlchemyTable(PlayerInventory playerInventory, IInventory tileTable) {
         super(new ContainerAlchemyTable(playerInventory, tileTable));
         this.tileTable = tileTable;
         this.xSize = 176;

@@ -7,14 +7,14 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -50,7 +50,7 @@ public class ItemExperienceBook extends Item implements IVariantProvider {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote) {
             if (player.isSneaking())
@@ -59,7 +59,7 @@ public class ItemExperienceBook extends Item implements IVariantProvider {
                 giveOneLevelExpToPlayer(stack, player);
         }
 
-        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<>(ActionResultType.SUCCESS, stack);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ItemExperienceBook extends Item implements IVariantProvider {
         variants.put(0, "type=experiencetome");
     }
 
-    public void giveOneLevelExpToPlayer(ItemStack stack, EntityPlayer player) {
+    public void giveOneLevelExpToPlayer(ItemStack stack, PlayerEntity player) {
         float progress = player.experience;
         int expToNext = getExperienceForNextLevel(player.experienceLevel);
 
@@ -90,7 +90,7 @@ public class ItemExperienceBook extends Item implements IVariantProvider {
         }
     }
 
-    public void absorbOneLevelExpFromPlayer(ItemStack stack, EntityPlayer player) {
+    public void absorbOneLevelExpFromPlayer(ItemStack stack, PlayerEntity player) {
         float progress = player.experience;
 
         if (progress > 0) {
@@ -107,11 +107,11 @@ public class ItemExperienceBook extends Item implements IVariantProvider {
     }
 
     // Credits to Ender IO for some of the experience code, although now modified slightly for my convenience.
-    public static int getPlayerXP(EntityPlayer player) {
+    public static int getPlayerXP(PlayerEntity player) {
         return (int) (getExperienceForLevel(player.experienceLevel) + (player.experience * player.xpBarCap()));
     }
 
-    public static void addPlayerXP(EntityPlayer player, int amount) {
+    public static void addPlayerXP(PlayerEntity player, int amount) {
         int experience = Math.max(0, getPlayerXP(player) + amount);
         player.experienceTotal = experience;
         player.experienceLevel = getLevelForExperience(experience);
@@ -122,7 +122,7 @@ public class ItemExperienceBook extends Item implements IVariantProvider {
     public static void setStoredExperience(ItemStack stack, double exp) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble("experience", exp);
     }
@@ -130,7 +130,7 @@ public class ItemExperienceBook extends Item implements IVariantProvider {
     public static double getStoredExperience(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         return tag.getDouble("experience");
     }
@@ -164,7 +164,7 @@ public class ItemExperienceBook extends Item implements IVariantProvider {
         return res;
     }
 
-    public static double getExperienceAcquiredToNext(EntityPlayer player) {
+    public static double getExperienceAcquiredToNext(PlayerEntity player) {
         return player.experience * player.xpBarCap();
     }
 

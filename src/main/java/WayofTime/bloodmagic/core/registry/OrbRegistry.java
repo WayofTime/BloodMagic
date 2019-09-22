@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.orb.BloodOrb;
 import com.google.common.collect.ArrayListMultimap;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class OrbRegistry {
 
     public static ItemStack getOrbStack(BloodOrb orb) {
         ItemStack ret = new ItemStack(ORB_ITEM);
-        NBTTagCompound tag = new NBTTagCompound();
+        CompoundNBT tag = new CompoundNBT();
         tag.setString("orb", orb.getRegistryName().toString());
         ret.setTagCompound(tag);
         return ret;

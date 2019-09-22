@@ -4,7 +4,7 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.types.ISubItem;
 import WayofTime.bloodmagic.util.Constants;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.text.TextFormatting;
 
@@ -47,7 +47,7 @@ public enum EnumRuneType implements IStringSerializable, ISubItem {
     @Override
     public ItemStack getStack(int count) {
         ItemStack ret = new ItemStack(RegistrarBloodMagicItems.INSCRIPTION_TOOL, count, ordinal());
-        NBTTagCompound tag = new NBTTagCompound();
+        CompoundNBT tag = new CompoundNBT();
         tag.setInteger(Constants.NBT.USES, 10);
         ret.setTagCompound(tag);
         return ret;

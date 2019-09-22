@@ -5,8 +5,8 @@ import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.ritual.*;
 import com.google.common.collect.Iterables;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.effect.LightningBoltEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -35,9 +35,9 @@ public class RitualArmourEvolve extends Ritual {
 
         AreaDescriptor checkRange = masterRitualStone.getBlockRange(CHECK_RANGE);
 
-        List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, checkRange.getAABB(pos));
+        List<PlayerEntity> playerList = world.getEntitiesWithinAABB(PlayerEntity.class, checkRange.getAABB(pos));
 
-        for (EntityPlayer player : playerList) {
+        for (PlayerEntity player : playerList) {
             if (LivingArmour.hasFullSet(player)) {
                 ItemStack chestStack = Iterables.toArray(player.getArmorInventoryList(), ItemStack.class)[2];
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
@@ -48,7 +48,7 @@ public class RitualArmourEvolve extends Ritual {
 
                         masterRitualStone.setActive(false);
 
-                        world.spawnEntity(new EntityLightningBolt(world, pos.getX(), pos.getY() - 1, pos.getZ(), true));
+                        world.spawnEntity(new LightningBoltEntity(world, pos.getX(), pos.getY() - 1, pos.getZ(), true));
                     }
                 }
             }

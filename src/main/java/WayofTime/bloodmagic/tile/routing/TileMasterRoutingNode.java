@@ -5,10 +5,10 @@ import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.routing.*;
 import WayofTime.bloodmagic.tile.TileInventory;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -52,7 +52,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                 if (outputTile instanceof IOutputItemRoutingNode) {
                     IOutputItemRoutingNode outputNode = (IOutputItemRoutingNode) outputTile;
 
-                    for (EnumFacing facing : EnumFacing.VALUES) {
+                    for (Direction facing : Direction.VALUES) {
                         if (!outputNode.isInventoryConnectedToSide(facing) || !outputNode.isOutput(facing)) {
                             continue;
                         }
@@ -74,7 +74,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                 if (outputTile instanceof IOutputFluidRoutingNode) {
                     IOutputFluidRoutingNode outputNode = (IOutputFluidRoutingNode) outputTile;
 
-                    for (EnumFacing facing : EnumFacing.VALUES) {
+                    for (Direction facing : Direction.VALUES) {
                         if (!outputNode.isTankConnectedToSide(facing) || !outputNode.isFluidOutput(facing)) {
                             continue;
                         }
@@ -104,7 +104,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                 if (inputTile instanceof IInputItemRoutingNode) {
                     IInputItemRoutingNode inputNode = (IInputItemRoutingNode) inputTile;
 
-                    for (EnumFacing facing : EnumFacing.VALUES) {
+                    for (Direction facing : Direction.VALUES) {
                         if (!inputNode.isInventoryConnectedToSide(facing) || !inputNode.isInput(facing)) {
                             continue;
                         }
@@ -126,7 +126,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                 if (inputTile instanceof IInputFluidRoutingNode) {
                     IInputFluidRoutingNode inputNode = (IInputFluidRoutingNode) inputTile;
 
-                    for (EnumFacing facing : EnumFacing.VALUES) {
+                    for (Direction facing : Direction.VALUES) {
                         if (!inputNode.isTankConnectedToSide(facing) || !inputNode.isFluidInput(facing)) {
                             continue;
                         }
@@ -186,11 +186,11 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
-        NBTTagList tags = new NBTTagList();
+        ListNBT tags = new ListNBT();
         for (BlockPos pos : generalNodeList) {
-            NBTTagCompound posTag = new NBTTagCompound();
+            CompoundNBT posTag = new CompoundNBT();
             posTag.setInteger(Constants.NBT.X_COORD, pos.getX());
             posTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
             posTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
@@ -198,9 +198,9 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
         }
         tag.setTag(Constants.NBT.ROUTING_MASTER_GENERAL, tags);
 
-        tags = new NBTTagList();
+        tags = new ListNBT();
         for (BlockPos pos : inputNodeList) {
-            NBTTagCompound posTag = new NBTTagCompound();
+            CompoundNBT posTag = new CompoundNBT();
             posTag.setInteger(Constants.NBT.X_COORD, pos.getX());
             posTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
             posTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
@@ -208,9 +208,9 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
         }
         tag.setTag(Constants.NBT.ROUTING_MASTER_INPUT, tags);
 
-        tags = new NBTTagList();
+        tags = new ListNBT();
         for (BlockPos pos : outputNodeList) {
-            NBTTagCompound posTag = new NBTTagCompound();
+            CompoundNBT posTag = new CompoundNBT();
             posTag.setInteger(Constants.NBT.X_COORD, pos.getX());
             posTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
             posTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
@@ -221,26 +221,26 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(CompoundNBT tag) {
         super.deserialize(tag);
 
-        NBTTagList tags = tag.getTagList(Constants.NBT.ROUTING_MASTER_GENERAL, 10);
+        ListNBT tags = tag.getTagList(Constants.NBT.ROUTING_MASTER_GENERAL, 10);
         for (int i = 0; i < tags.tagCount(); i++) {
-            NBTTagCompound blockTag = tags.getCompoundTagAt(i);
+            CompoundNBT blockTag = tags.getCompoundTagAt(i);
             BlockPos newPos = new BlockPos(blockTag.getInteger(Constants.NBT.X_COORD), blockTag.getInteger(Constants.NBT.Y_COORD), blockTag.getInteger(Constants.NBT.Z_COORD));
             generalNodeList.add(newPos);
         }
 
         tags = tag.getTagList(Constants.NBT.ROUTING_MASTER_INPUT, 10);
         for (int i = 0; i < tags.tagCount(); i++) {
-            NBTTagCompound blockTag = tags.getCompoundTagAt(i);
+            CompoundNBT blockTag = tags.getCompoundTagAt(i);
             BlockPos newPos = new BlockPos(blockTag.getInteger(Constants.NBT.X_COORD), blockTag.getInteger(Constants.NBT.Y_COORD), blockTag.getInteger(Constants.NBT.Z_COORD));
             inputNodeList.add(newPos);
         }
 
         tags = tag.getTagList(Constants.NBT.ROUTING_MASTER_OUTPUT, 10);
         for (int i = 0; i < tags.tagCount(); i++) {
-            NBTTagCompound blockTag = tags.getCompoundTagAt(i);
+            CompoundNBT blockTag = tags.getCompoundTagAt(i);
             BlockPos newPos = new BlockPos(blockTag.getInteger(Constants.NBT.X_COORD), blockTag.getInteger(Constants.NBT.Y_COORD), blockTag.getInteger(Constants.NBT.Z_COORD));
             outputNodeList.add(newPos);
         }

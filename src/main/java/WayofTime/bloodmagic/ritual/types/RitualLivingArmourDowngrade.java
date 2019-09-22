@@ -9,14 +9,14 @@ import WayofTime.bloodmagic.recipe.LivingArmourDowngradeRecipe;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.item.EntityItemFrame;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.effect.LightningBoltEntity;
+import net.minecraft.entity.item.ItemFrameEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -52,7 +52,7 @@ public class RitualLivingArmourDowngrade extends Ritual {
         AreaDescriptor downgradeRange = masterRitualStone.getBlockRange(DOWNGRADE_RANGE);
 
         boolean isActivatorPresent = false;
-        for (EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, downgradeRange.getAABB(masterRitualStone.getBlockPos()))) {
+        for (PlayerEntity player : world.getEntitiesWithinAABB(PlayerEntity.class, downgradeRange.getAABB(masterRitualStone.getBlockPos()))) {
             if (player.getGameProfile().getId().equals(masterRitualStone.getOwner())) {
                 ItemStack keyStack = getStackFromItemFrame(world, masterPos, masterRitualStone.getDirection());
                 if (keyStack.isEmpty()) {
@@ -67,12 +67,12 @@ public class RitualLivingArmourDowngrade extends Ritual {
                 internalTimer++;
 
                 if (player.isSneaking()) {
-                    double distance2 = masterPos.offset(EnumFacing.UP).distanceSqToCenter(player.posX, player.posY, player.posZ);
+                    double distance2 = masterPos.offset(Direction.UP).distanceSqToCenter(player.posX, player.posY, player.posZ);
                     if (distance2 > 1) {
                         return;
                     }
 
-                    BlockPos chestPos = masterPos.offset(masterRitualStone.getDirection(), 2).offset(EnumFacing.UP);
+                    BlockPos chestPos = masterPos.offset(masterRitualStone.getDirection(), 2).offset(Direction.UP);
                     TileEntity tile = world.getTileEntity(chestPos);
                     if (tile == null) {
                         return;
@@ -91,7 +91,7 @@ public class RitualLivingArmourDowngrade extends Ritual {
                         if (recipe != null) {
                             LivingArmourUpgrade upgrade = recipe.getRecipeOutput();
                             if (LivingArmour.hasFullSet(player)) {
-                                ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                                ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
                                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                                 if (armour != null) {
                                     if (armour.canApplyUpgrade(player, upgrade)) {
@@ -100,7 +100,7 @@ public class RitualLivingArmourDowngrade extends Ritual {
 
                                             recipe.consumeInventory(inv);
 
-                                            EntityLightningBolt lightning = new EntityLightningBolt(world, chestPos.getX(), chestPos.getY(), chestPos.getZ(), true);
+                                            LightningBoltEntity lightning = new LightningBoltEntity(world, chestPos.getX(), chestPos.getY(), chestPos.getZ(), true);
                                             world.spawnEntity(lightning);
 
                                             masterRitualStone.setActive(false);
@@ -125,26 +125,26 @@ public class RitualLivingArmourDowngrade extends Ritual {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         super.readFromNBT(tag);
 
         this.internalTimer = tag.getInteger("internalTimer");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         super.writeToNBT(tag);
 
         tag.setInteger("internalTimer", internalTimer);
     }
 
-    public ItemStack getStackFromItemFrame(World world, BlockPos masterPos, EnumFacing direction) {
+    public ItemStack getStackFromItemFrame(World world, BlockPos masterPos, Direction direction) {
         BlockPos offsetPos = new BlockPos(0, 3, 0);
         offsetPos = offsetPos.offset(direction, 2);
 
         AxisAlignedBB bb = new AxisAlignedBB(masterPos.add(offsetPos));
-        List<EntityItemFrame> frames = world.getEntitiesWithinAABB(EntityItemFrame.class, bb);
-        for (EntityItemFrame frame : frames) {
+        List<ItemFrameEntity> frames = world.getEntitiesWithinAABB(ItemFrameEntity.class, bb);
+        for (ItemFrameEntity frame : frames) {
             if (!frame.getDisplayedItem().isEmpty()) {
                 return frame.getDisplayedItem();
             }

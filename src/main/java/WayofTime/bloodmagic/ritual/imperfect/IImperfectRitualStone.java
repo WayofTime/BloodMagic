@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.ritual.imperfect;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -11,7 +11,7 @@ import net.minecraft.world.World;
  */
 public interface IImperfectRitualStone {
 
-    boolean performRitual(World world, BlockPos pos, ImperfectRitual imperfectRitual, EntityPlayer player);
+    boolean performRitual(World world, BlockPos pos, ImperfectRitual imperfectRitual, PlayerEntity player);
 
     World getRitualWorld();
 

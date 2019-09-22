@@ -5,11 +5,11 @@ import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,7 +22,7 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase {
     }
 
     @Override
-    public boolean onSigilUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onSigilUse(ItemStack stack, PlayerEntity player, World world, BlockPos blockPos, Direction side, float hitX, float hitY, float hitZ) {
         if (PlayerHelper.isFakePlayer(player))
             return false;
 
@@ -37,7 +37,7 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase {
     }
 
     @Override
-    public void onSigilUpdate(ItemStack stack, World worldIn, EntityPlayer player, int itemSlot, boolean isSelected) {
+    public void onSigilUpdate(ItemStack stack, World worldIn, PlayerEntity player, int itemSlot, boolean isSelected) {
         if (PlayerHelper.isFakePlayer(player))
             return;
 
@@ -51,15 +51,15 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase {
             for (int iz = posZ - range; iz <= posZ + range; iz++) {
                 for (int iy = posY - verticalRange; iy <= posY + verticalRange; iy++) {
                     BlockPos blockPos = new BlockPos(ix, iy, iz);
-                    IBlockState state = worldIn.getBlockState(blockPos);
+                    BlockState state = worldIn.getBlockState(blockPos);
 
                     if (!BloodMagicAPI.INSTANCE.getBlacklist().getGreenGrove().contains(state)) {
                         if (state.getBlock() instanceof IGrowable) {
                             if (worldIn.rand.nextInt(50) == 0) {
-                                IBlockState preBlockState = worldIn.getBlockState(blockPos);
+                                BlockState preBlockState = worldIn.getBlockState(blockPos);
                                 state.getBlock().updateTick(worldIn, blockPos, state, worldIn.rand);
 
-                                IBlockState newState = worldIn.getBlockState(blockPos);
+                                BlockState newState = worldIn.getBlockState(blockPos);
                                 if (!newState.equals(preBlockState) && !worldIn.isRemote)
                                     worldIn.playEvent(2005, blockPos, 0);
                             }
@@ -70,10 +70,10 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase {
         }
     }
 
-    private boolean applyBonemeal(World worldIn, BlockPos target, EntityPlayer player, ItemStack sigilStack) {
-        IBlockState iblockstate = worldIn.getBlockState(target);
+    private boolean applyBonemeal(World worldIn, BlockPos target, PlayerEntity player, ItemStack sigilStack) {
+        BlockState iblockstate = worldIn.getBlockState(target);
 
-        BonemealEvent event = new BonemealEvent(player, worldIn, target, iblockstate, EnumHand.MAIN_HAND, sigilStack);
+        BonemealEvent event = new BonemealEvent(player, worldIn, target, iblockstate, Hand.MAIN_HAND, sigilStack);
         if (MinecraftForge.EVENT_BUS.post(event))
             return false;
         else if (event.getResult() == Result.ALLOW)

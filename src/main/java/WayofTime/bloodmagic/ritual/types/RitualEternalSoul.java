@@ -8,8 +8,8 @@ import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -67,12 +67,12 @@ public class RitualEternalSoul extends Ritual {
         int horizontalRange = 15;
         int verticalRange = 20;
 
-        List<EntityPlayer> list = world.getEntitiesWithinAABB(EntityPlayer.class,
+        List<PlayerEntity> list = world.getEntitiesWithinAABB(PlayerEntity.class,
                 new AxisAlignedBB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f,
                         pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)
                         .expand(horizontalRange, verticalRange, horizontalRange).expand(0, -verticalRange, 0));
 
-        EntityPlayer entityOwner = PlayerHelper.getPlayerFromUUID(owner);
+        PlayerEntity entityOwner = PlayerHelper.getPlayerFromUUID(owner);
 
         int fillAmount = Math.min(currentEssence / 2, altar.fill(new FluidStack(BlockLifeEssence.getLifeEssence(), 10000), false));
 
@@ -81,8 +81,8 @@ public class RitualEternalSoul extends Ritual {
         if (entityOwner != null && list.contains(entityOwner) && entityOwner.getHealth() > 2.0f && fillAmount != 0)
             entityOwner.setHealth(2.0f);
 
-        for (EntityPlayer player : list)
-            player.addPotionEffect(new PotionEffect(RegistrarBloodMagic.SOUL_FRAY, 100));
+        for (PlayerEntity player : list)
+            player.addPotionEffect(new EffectInstance(RegistrarBloodMagic.SOUL_FRAY, 100));
 
         masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(fillAmount * 2));
 

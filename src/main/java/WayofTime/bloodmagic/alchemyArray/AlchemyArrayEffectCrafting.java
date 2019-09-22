@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.alchemyArray;
 
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
@@ -36,7 +36,7 @@ public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect {
 
             ItemStack output = outputStack.copy();
 
-            EntityItem outputEntity = new EntityItem(tile.getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
+            ItemEntity outputEntity = new ItemEntity(tile.getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
 
             tile.getWorld().spawnEntity(outputEntity);
 
@@ -47,12 +47,12 @@ public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
 
     }
 

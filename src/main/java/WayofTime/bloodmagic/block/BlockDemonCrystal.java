@@ -10,20 +10,20 @@ import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -42,8 +42,8 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
 
     public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 6);
     public static final PropertyEnum<EnumDemonWillType> TYPE = PropertyEnum.create("type", EnumDemonWillType.class);
-    public static final PropertyEnum<EnumFacing> ATTACHED = PropertyEnum.create("attached", EnumFacing.class);
-    private static final EnumMap<EnumFacing, AxisAlignedBB> bounds = new EnumMap<>(EnumFacing.class);
+    public static final PropertyEnum<Direction> ATTACHED = PropertyEnum.create("attached", Direction.class);
+    private static final EnumMap<Direction, AxisAlignedBB> bounds = new EnumMap<>(Direction.class);
 
     // Bounding / Collision boxes
     private static final AxisAlignedBB[] UP = {
@@ -103,7 +103,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
 
     public BlockDemonCrystal() {
         super(Material.ROCK);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, EnumDemonWillType.DEFAULT).withProperty(ATTACHED, EnumFacing.UP));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, EnumDemonWillType.DEFAULT).withProperty(ATTACHED, Direction.UP));
 
         setTranslationKey(BloodMagic.MODID + ".demonCrystal.");
         setCreativeTab(BloodMagic.TAB_BM);
@@ -137,7 +137,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
     }
 
     // collects a sublist from 0 to age for the collision boxes
-    private static List<AxisAlignedBB> getCollisionBoxList(IBlockState state) {
+    private static List<AxisAlignedBB> getCollisionBoxList(BlockState state) {
         int age = state.getValue(BlockDemonCrystal.AGE) + 1;
         switch (state.getValue(BlockDemonCrystal.ATTACHED)) {
             case DOWN:
@@ -157,7 +157,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
         TileEntity tile = source.getTileEntity(pos);
         if (tile != null)
             state = getActualState(state, tile.getWorld(), pos);
@@ -179,7 +179,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileDemonCrystal) {
@@ -207,7 +207,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileDemonCrystal) {
             EnumDemonWillType type = state.getValue(TYPE);
@@ -218,7 +218,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public BlockState getActualState(BlockState state, IBlockAccess world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileDemonCrystal) {
             TileDemonCrystal crystal = (TileDemonCrystal) tile;
@@ -229,13 +229,13 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileDemonCrystal) {
             TileDemonCrystal crystal = (TileDemonCrystal) tile;
-            EnumFacing placement = crystal.getPlacement();
+            Direction placement = crystal.getPlacement();
             BlockPos offsetPos = pos.offset(placement.getOpposite());
-            IBlockState offsetState = world.getBlockState(offsetPos);
+            BlockState offsetState = world.getBlockState(offsetPos);
 
             if (!offsetState.isSideSolid(world, offsetPos, placement))
                 world.destroyBlock(pos, true);
@@ -243,62 +243,62 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
     }
 
     @Override
-    public boolean canPlaceBlockOnSide(World world, BlockPos pos, EnumFacing side) {
+    public boolean canPlaceBlockOnSide(World world, BlockPos pos, Direction side) {
         BlockPos offsetPos = pos.offset(side.getOpposite());
-        IBlockState offsetState = world.getBlockState(offsetPos);
+        BlockState offsetState = world.getBlockState(offsetPos);
 
         return offsetState.isSideSolid(world, offsetPos, side) && this.canPlaceBlockAt(world, pos);
     }
 
     @Override
-    public void getSubBlocks(CreativeTabs creativeTabs, NonNullList<ItemStack> list) {
+    public void getSubBlocks(ItemGroup creativeTabs, NonNullList<ItemStack> list) {
         for (EnumDemonWillType willType : EnumDemonWillType.values())
             list.add(new ItemStack(this, 1, willType.ordinal()));
     }
 
     @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity tile, ItemStack stack) {
+    public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity tile, ItemStack stack) {
         super.harvestBlock(world, player, pos, state, tile, stack);
         world.setBlockToAir(pos);
     }
 
     @Override
-    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+    public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest) {
         return willHarvest || super.removedByPlayer(state, world, pos, player, false);
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean isNormalCube(BlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
+    public boolean causesSuffocation(BlockState state) {
         return false;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(TYPE, EnumDemonWillType.values()[meta]);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
 
         return state.getValue(TYPE).ordinal();
     }
@@ -309,18 +309,18 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(BlockState state) {
         return true;
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
+    public TileEntity createTileEntity(World world, BlockState state) {
         return new TileDemonCrystal();
     }
 
     @Override
-    public ItemBlock getItem() {
+    public BlockItem getItem() {
         return new ItemBlockDemonCrystal(this);
     }
 
@@ -331,7 +331,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
     }
 
     @Override
-    public RayTraceResult collisionRayTrace(IBlockState blockState, World worldIn, BlockPos pos, Vec3d start, Vec3d end) {
+    public RayTraceResult collisionRayTrace(BlockState blockState, World worldIn, BlockPos pos, Vec3d start, Vec3d end) {
         List<RayTraceResult> list = Lists.newArrayList();
 
 
@@ -357,7 +357,7 @@ public class BlockDemonCrystal extends Block implements IBMBlock, IVariantProvid
     }
 
     @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean bool) {
+    public void addCollisionBoxToList(BlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean bool) {
         state = this.getActualState(state, worldIn, pos);
 
         for (AxisAlignedBB axisalignedbb : getCollisionBoxList(state)) {

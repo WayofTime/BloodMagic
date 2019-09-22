@@ -4,10 +4,10 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
 import com.google.common.collect.Lists;
 import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -48,16 +48,16 @@ public class RitualPump extends Ritual {
             return;
         }
 
-        if (tileEntity != null && tileEntity.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
-            IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
-            IBlockState tankState = world.getBlockState(masterRitualStone.getBlockPos().up());
+        if (tileEntity != null && tileEntity.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, Direction.DOWN)) {
+            IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, Direction.DOWN);
+            BlockState tankState = world.getBlockState(masterRitualStone.getBlockPos().up());
             int maxDrain = fluidHandler.getTankProperties()[0].getCapacity();
 
             if (fluidHandler.getTankProperties()[0].getContents() != null && fluidHandler.getTankProperties()[0].getContents().amount >= maxDrain)
                 return;
 
             for (BlockPos pos : masterRitualStone.getBlockRange(PUMP_RANGE).getContainedPositions(masterRitualStone.getBlockPos())) {
-                IBlockState state = world.getBlockState(pos);
+                BlockState state = world.getBlockState(pos);
                 IFluidHandler blockHandler = null;
                 if (state.getBlock() instanceof BlockLiquid)
                     blockHandler = new BlockLiquidWrapper((BlockLiquid) state.getBlock(), world, pos);

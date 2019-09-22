@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.alchemyArray;
 
 import WayofTime.bloodmagic.iface.ISigil;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 
 public class AlchemyArrayEffectSigil extends AlchemyArrayEffect {
@@ -23,12 +23,12 @@ public class AlchemyArrayEffectSigil extends AlchemyArrayEffect {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
 
     }
 

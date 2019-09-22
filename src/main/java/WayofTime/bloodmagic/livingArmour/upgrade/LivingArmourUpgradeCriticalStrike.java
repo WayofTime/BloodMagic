@@ -2,11 +2,11 @@ package WayofTime.bloodmagic.livingArmour.upgrade;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 public class LivingArmourUpgradeCriticalStrike extends LivingArmourUpgrade {
     public static final int[] costs = new int[]{5, 12, 22, 35, 49};
@@ -17,8 +17,8 @@ public class LivingArmourUpgradeCriticalStrike extends LivingArmourUpgrade {
     }
 
     @Override
-    public double getAdditionalDamageOnHit(double damage, EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon) {
-        boolean flag = wearer.fallDistance > 0.0F && !wearer.onGround && !wearer.isOnLadder() && !wearer.isInWater() && !wearer.isPotionActive(MobEffects.BLINDNESS) && !wearer.isRiding() && !wearer.isSprinting();
+    public double getAdditionalDamageOnHit(double damage, PlayerEntity wearer, LivingEntity hitEntity, ItemStack weapon) {
+        boolean flag = wearer.fallDistance > 0.0F && !wearer.onGround && !wearer.isOnLadder() && !wearer.isInWater() && !wearer.isPotionActive(Effects.BLINDNESS) && !wearer.isRiding() && !wearer.isSprinting();
 
         if (flag) {
             return getDamageModifier() * damage;
@@ -47,12 +47,12 @@ public class LivingArmourUpgradeCriticalStrike extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         // EMPTY
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         // EMPTY
     }
 

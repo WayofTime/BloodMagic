@@ -1,25 +1,25 @@
 package WayofTime.bloodmagic.structures;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.structure.template.PlacementSettings;
+import net.minecraft.world.gen.feature.template.PlacementSettings;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class DungeonUtil {
-    public static EnumFacing rotate(Mirror mirror, Rotation rotation, EnumFacing original) {
+    public static Direction rotate(Mirror mirror, Rotation rotation, Direction original) {
         return rotation.rotate(mirror.mirror(original));
     }
 
-    public static EnumFacing reverseRotate(Mirror mirror, Rotation rotation, EnumFacing original) {
+    public static Direction reverseRotate(Mirror mirror, Rotation rotation, Direction original) {
         return mirror.mirror(getOppositeRotation(rotation).rotate(original));
     }
 
-    public static EnumFacing getFacingForSettings(PlacementSettings settings, EnumFacing original) {
+    public static Direction getFacingForSettings(PlacementSettings settings, Direction original) {
         return rotate(settings.getMirror(), settings.getRotation(), original);
     }
 
@@ -34,7 +34,7 @@ public class DungeonUtil {
         }
     }
 
-    public static void addRoom(Map<EnumFacing, List<BlockPos>> doorMap, EnumFacing facing, BlockPos offsetPos) {
+    public static void addRoom(Map<Direction, List<BlockPos>> doorMap, Direction facing, BlockPos offsetPos) {
         if (doorMap.containsKey(facing)) {
             doorMap.get(facing).add(offsetPos);
         } else {

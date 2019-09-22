@@ -5,11 +5,11 @@ import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 public class LivingArmourUpgradePoisonResist extends LivingArmourUpgrade {
@@ -24,14 +24,14 @@ public class LivingArmourUpgradePoisonResist extends LivingArmourUpgrade {
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
-        if (player.isPotionActive(MobEffects.POISON) && poisonCooldown <= 0) {
-            PotionEffect eff = player.getActivePotionEffect(MobEffects.POISON);
+    public void onTick(World world, PlayerEntity player, ILivingArmour livingArmour) {
+        if (player.isPotionActive(Effects.POISON) && poisonCooldown <= 0) {
+            EffectInstance eff = player.getActivePotionEffect(Effects.POISON);
             if (eff.getAmplifier() <= poisonMaxCure[this.level]) {
-                player.removePotionEffect(MobEffects.POISON);
+                player.removePotionEffect(Effects.POISON);
                 poisonCooldown = poisonCooldownTime[this.level];
 
-                player.sendStatusMessage(new TextComponentString(TextHelper.localize(chatBase + "poisonRemove")), true);
+                player.sendStatusMessage(new StringTextComponent(TextHelper.localize(chatBase + "poisonRemove")), true);
             }
         } else if (poisonCooldown > 0) {
             poisonCooldown--;
@@ -54,12 +54,12 @@ public class LivingArmourUpgradePoisonResist extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         tag.setInteger(Constants.NBT.UPGRADE_POISON_TIMER, poisonCooldown);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         poisonCooldown = tag.getInteger(Constants.NBT.UPGRADE_POISON_TIMER);
     }
 

@@ -3,11 +3,11 @@ package WayofTime.bloodmagic.ritual.types;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -57,8 +57,8 @@ public class RitualEllipsoid extends Ritual {
         int maxZ = (int) (sphereBB.maxZ - masterPos.getZ()) - 1;
 
         if (tileInventory != null) {
-            if (tileInventory.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
-                IItemHandler itemHandler = tileInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+            if (tileInventory.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN)) {
+                IItemHandler itemHandler = tileInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN);
 
                 if (itemHandler.getSlots() <= 0) {
                     return;
@@ -67,7 +67,7 @@ public class RitualEllipsoid extends Ritual {
                 int blockSlot = -1;
                 for (int invSlot = 0; invSlot < itemHandler.getSlots(); invSlot++) {
                     ItemStack stack = itemHandler.extractItem(invSlot, 1, true);
-                    if (stack.isEmpty() || !(stack.getItem() instanceof ItemBlock))
+                    if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem))
                         continue;
 
                     blockSlot = invSlot;
@@ -111,7 +111,7 @@ public class RitualEllipsoid extends Ritual {
                                     continue;
                                 }
 
-                                IBlockState placeState = Block.getBlockFromItem(itemHandler.getStackInSlot(blockSlot).getItem()).getStateFromMeta(itemHandler.getStackInSlot(blockSlot).getItemDamage());
+                                BlockState placeState = Block.getBlockFromItem(itemHandler.getStackInSlot(blockSlot).getItem()).getStateFromMeta(itemHandler.getStackInSlot(blockSlot).getItemDamage());
                                 world.setBlockState(newPos, placeState);
 
                                 itemHandler.extractItem(blockSlot, 1, false);

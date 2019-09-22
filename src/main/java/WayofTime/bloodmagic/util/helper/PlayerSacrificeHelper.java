@@ -4,10 +4,10 @@ import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.altar.IBloodAltar;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,17 +16,17 @@ import net.minecraftforge.common.MinecraftForge;
 public class PlayerSacrificeHelper {
     public static float scalingOfSacrifice = 1f;
     public static int soulFrayDuration = 400;
-    public static Potion soulFrayId;
+    public static Effect soulFrayId;
 
-    public static double getPlayerIncense(EntityPlayer player) {
+    public static double getPlayerIncense(PlayerEntity player) {
         return IncenseHelper.getCurrentIncense(player);
     }
 
-    public static void setPlayerIncense(EntityPlayer player, double amount) {
+    public static void setPlayerIncense(PlayerEntity player, double amount) {
         IncenseHelper.setCurrentIncense(player, amount);
     }
 
-    public static boolean incrementIncense(EntityPlayer player, double min, double incenseAddition, double increment) {
+    public static boolean incrementIncense(PlayerEntity player, double min, double incenseAddition, double increment) {
         double amount = getPlayerIncense(player);
         if (amount < min || amount >= incenseAddition) {
             return false;
@@ -51,7 +51,7 @@ public class PlayerSacrificeHelper {
      * @param player - The player sacrificing
      * @return Whether or not the health sacrificing succeeded
      */
-    public static boolean sacrificePlayerHealth(EntityPlayer player) {
+    public static boolean sacrificePlayerHealth(PlayerEntity player) {
         if (player.isPotionActive(soulFrayId)) {
             return false;
         }
@@ -77,7 +77,7 @@ public class PlayerSacrificeHelper {
 
                     player.setHealth(maxHealth / 10.0f);
                     setPlayerIncense(player, 0);
-                    player.addPotionEffect(new PotionEffect(RegistrarBloodMagic.SOUL_FRAY, soulFrayDuration));
+                    player.addPotionEffect(new EffectInstance(RegistrarBloodMagic.SOUL_FRAY, soulFrayDuration));
 
                     return true;
                 }
@@ -96,12 +96,12 @@ public class PlayerSacrificeHelper {
      *
      * @param world             - The world
      * @param sacrificingEntity - The entity having the sacrifice done on (can be
-     *                          {@link EntityPlayer} for self-sacrifice)
+     *                          {@link PlayerEntity} for self-sacrifice)
      * @param amount            - The amount of which the altar should be filled
      * @param isSacrifice       - Whether this is a Sacrifice or a Self-Sacrifice
      * @return Whether the altar is found and (attempted) filled
      */
-    public static boolean findAndFillAltar(World world, EntityLivingBase sacrificingEntity, int amount, boolean isSacrifice) {
+    public static boolean findAndFillAltar(World world, LivingEntity sacrificingEntity, int amount, boolean isSacrifice) {
         IBloodAltar altarEntity = getAltar(world, sacrificingEntity.getPosition());
 
         if (altarEntity == null)

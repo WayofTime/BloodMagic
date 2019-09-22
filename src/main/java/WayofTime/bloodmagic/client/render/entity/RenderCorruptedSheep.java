@@ -6,17 +6,17 @@ import WayofTime.bloodmagic.client.render.entity.layer.LayerWill;
 import WayofTime.bloodmagic.client.render.model.ModelCorruptedSheep;
 import WayofTime.bloodmagic.client.render.model.ModelCorruptedSheep2;
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderCorruptedSheep extends RenderLiving<EntityCorruptedSheep> {
+public class RenderCorruptedSheep extends MobRenderer<EntityCorruptedSheep> {
     private static final ResourceLocation SHEARED_SHEEP_TEXTURES = new ResourceLocation("textures/entity/sheep/sheep.png");
 
-    public RenderCorruptedSheep(RenderManager renderManagerIn) {
+    public RenderCorruptedSheep(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new ModelCorruptedSheep2(0), 0.7F);
         this.addLayer(new LayerCorruptedSheepWool(this));
         this.addLayer(new LayerWill<>(this, new ModelCorruptedSheep(1.1f)));

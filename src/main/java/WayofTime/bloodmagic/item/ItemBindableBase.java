@@ -6,7 +6,7 @@ import WayofTime.bloodmagic.iface.IBindable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -29,6 +29,6 @@ public class ItemBindableBase extends Item implements IBindable {
 
         Binding binding = getBinding(stack);
         if (binding != null)
-            tooltip.add(new TextComponentTranslation("tooltip.bloodmagic.currentOwner", binding.getOwnerName()).getFormattedText());
+            tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentOwner", binding.getOwnerName()).getFormattedText());
     }
 }

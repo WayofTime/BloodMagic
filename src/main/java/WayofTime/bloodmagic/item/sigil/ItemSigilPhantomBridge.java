@@ -6,7 +6,7 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import com.google.common.base.Predicate;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
-    public static final Predicate<Entity> IS_PHANTOM_ACTIVE = (Entity entity) -> entity instanceof EntityPlayer && isPhantomActive((EntityPlayer) entity);
+    public static final Predicate<Entity> IS_PHANTOM_ACTIVE = (Entity entity) -> entity instanceof PlayerEntity && isPhantomActive((PlayerEntity) entity);
 
     public static final String[] CIRCLE7X7 = new String[]{
             "  XXX  ",
@@ -52,14 +52,14 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
             // <--X
     };
 
-    private Map<EntityPlayer, Pair<Double, Double>> prevPositionMap = new HashMap<>();
+    private Map<PlayerEntity, Pair<Double, Double>> prevPositionMap = new HashMap<>();
 
     public ItemSigilPhantomBridge() {
         super("phantom_bridge", 100);
     }
 
     @Override
-    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected) {
+    public void onSigilUpdate(ItemStack stack, World world, PlayerEntity player, int itemSlot, boolean isSelected) {
         if (PlayerHelper.isFakePlayer(player))
             return;
 
@@ -197,7 +197,7 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase {
         }
     }
 
-    public static boolean isPhantomActive(EntityPlayer entity) {
+    public static boolean isPhantomActive(PlayerEntity entity) {
         for (int i = 0; i < entity.inventory.getSizeInventory(); i++) {
             ItemStack stack = entity.inventory.getStackInSlot(i);
             if (stack.getItem() instanceof ItemSigilPhantomBridge)

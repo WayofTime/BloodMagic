@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.routing;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 
 public interface IItemRoutingNode extends IRoutingNode {
-    boolean isInventoryConnectedToSide(EnumFacing side);
+    boolean isInventoryConnectedToSide(Direction side);
 
-    int getPriority(EnumFacing side);
+    int getPriority(Direction side);
 }

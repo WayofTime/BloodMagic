@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.inversion;
 
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.tuple.Pair;
@@ -11,36 +11,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CorruptionHandler {
-    public static Map<Pair<Block, Integer>, Map<EnumDemonWillType, IBlockState>> corruptBlockMap = new HashMap<>();
+    public static Map<Pair<Block, Integer>, Map<EnumDemonWillType, BlockState>> corruptBlockMap = new HashMap<>();
 
-    public static void registerBlockCorruption(EnumDemonWillType type, Block block, int meta, IBlockState corruptedState) {
+    public static void registerBlockCorruption(EnumDemonWillType type, Block block, int meta, BlockState corruptedState) {
         Pair<Block, Integer> pair = Pair.of(block, meta);
         if (corruptBlockMap.containsKey(pair)) {
-            Map<EnumDemonWillType, IBlockState> stateMap = corruptBlockMap.get(pair);
+            Map<EnumDemonWillType, BlockState> stateMap = corruptBlockMap.get(pair);
             stateMap.put(type, corruptedState);
         } else {
-            Map<EnumDemonWillType, IBlockState> stateMap = new HashMap<>();
+            Map<EnumDemonWillType, BlockState> stateMap = new HashMap<>();
             stateMap.put(type, corruptedState);
             corruptBlockMap.put(pair, stateMap);
         }
     }
 
-    public static boolean isBlockCorruptible(World world, EnumDemonWillType type, BlockPos pos, IBlockState state, Block block) {
+    public static boolean isBlockCorruptible(World world, EnumDemonWillType type, BlockPos pos, BlockState state, Block block) {
         int meta = block.getMetaFromState(state);
         Pair<Block, Integer> pair = Pair.of(block, meta);
         if (corruptBlockMap.containsKey(pair)) {
-            Map<EnumDemonWillType, IBlockState> stateMap = corruptBlockMap.get(pair);
+            Map<EnumDemonWillType, BlockState> stateMap = corruptBlockMap.get(pair);
             return stateMap.containsKey(type);
         }
 
         return false;
     }
 
-    public static boolean corruptBlock(World world, EnumDemonWillType type, BlockPos pos, IBlockState state, Block block) {
+    public static boolean corruptBlock(World world, EnumDemonWillType type, BlockPos pos, BlockState state, Block block) {
         int meta = block.getMetaFromState(state);
         Pair<Block, Integer> pair = Pair.of(block, meta);
         if (corruptBlockMap.containsKey(pair)) {
-            Map<EnumDemonWillType, IBlockState> stateMap = corruptBlockMap.get(pair);
+            Map<EnumDemonWillType, BlockState> stateMap = corruptBlockMap.get(pair);
             if (stateMap.containsKey(type)) {
                 return world.setBlockState(pos, stateMap.get(type));
             }
@@ -75,7 +75,7 @@ public class CorruptionHandler {
                     }
 
                     BlockPos offsetPos = centerPos.add(i, j, k);
-                    IBlockState offsetState = world.getBlockState(offsetPos);
+                    BlockState offsetState = world.getBlockState(offsetPos);
                     Block offsetBlock = offsetState.getBlock();
                     corruptBlock(world, type, offsetPos, offsetState, offsetBlock);
                 }

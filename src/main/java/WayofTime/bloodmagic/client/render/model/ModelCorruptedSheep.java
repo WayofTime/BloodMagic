@@ -4,7 +4,7 @@ import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
 import net.minecraft.client.model.ModelQuadruped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -40,7 +40,7 @@ public class ModelCorruptedSheep extends ModelQuadruped {
      * float params here are the same second and third as in the
      * setRotationAngles method.
      */
-    public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float p_78086_2_, float p_78086_3_, float partialTickTime) {
+    public void setLivingAnimations(LivingEntity entitylivingbaseIn, float p_78086_2_, float p_78086_3_, float partialTickTime) {
         super.setLivingAnimations(entitylivingbaseIn, p_78086_2_, p_78086_3_, partialTickTime);
         this.head.rotationPointY = 6.0F + ((EntityCorruptedSheep) entitylivingbaseIn).getHeadRotationPointY(partialTickTime) * 9.0F;
         this.headRotationAngleX = ((EntityCorruptedSheep) entitylivingbaseIn).getHeadRotationAngleX(partialTickTime);

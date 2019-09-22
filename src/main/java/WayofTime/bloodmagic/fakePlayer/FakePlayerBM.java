@@ -2,10 +2,10 @@ package WayofTime.bloodmagic.fakePlayer;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.ServerWorld;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 @SuppressWarnings("EntityConstructor")
 public class FakePlayerBM extends FakePlayer {
 
-    public FakePlayerBM(WorldServer world, GameProfile name) {
+    public FakePlayerBM(ServerWorld world, GameProfile name) {
         super(world, name);
     }
 
@@ -30,15 +30,15 @@ public class FakePlayerBM extends FakePlayer {
     }
 
     @Override
-    protected void onNewPotionEffect(PotionEffect p_70670_1_) {
+    protected void onNewPotionEffect(EffectInstance p_70670_1_) {
     }
 
     @Override
-    protected void onChangedPotionEffect(PotionEffect effect, boolean p_70695_2_) {
+    protected void onChangedPotionEffect(EffectInstance effect, boolean p_70695_2_) {
     }
 
     @Override
-    protected void onFinishedPotionEffect(PotionEffect effect) {
+    protected void onFinishedPotionEffect(EffectInstance effect) {
     }
 
     protected void playEquipSound(@Nullable ItemStack stack) {

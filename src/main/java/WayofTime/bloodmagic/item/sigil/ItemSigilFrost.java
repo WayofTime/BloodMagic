@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import net.minecraft.enchantment.EnchantmentFrostWalker;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.enchantment.FrostWalkerEnchantment;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -12,10 +12,10 @@ public class ItemSigilFrost extends ItemSigilToggleableBase {
     }
 
     @Override
-    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected) {
+    public void onSigilUpdate(ItemStack stack, World world, PlayerEntity player, int itemSlot, boolean isSelected) {
         if (PlayerHelper.isFakePlayer(player))
             return;
 
-        EnchantmentFrostWalker.freezeNearby(player, world, player.getPosition(), 1);
+        FrostWalkerEnchantment.freezeNearby(player, world, player.getPosition(), 1);
     }
 }

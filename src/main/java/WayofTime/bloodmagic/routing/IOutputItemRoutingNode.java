@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.routing;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 
 public interface IOutputItemRoutingNode extends IItemRoutingNode {
-    boolean isOutput(EnumFacing side);
+    boolean isOutput(Direction side);
 
-    IItemFilter getOutputFilterForSide(EnumFacing side);
+    IItemFilter getOutputFilterForSide(Direction side);
 }

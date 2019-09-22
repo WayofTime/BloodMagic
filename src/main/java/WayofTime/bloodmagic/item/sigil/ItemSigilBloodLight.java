@@ -8,7 +8,7 @@ import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.*;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -27,12 +27,12 @@ public class ItemSigilBloodLight extends ItemSigilBase {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() instanceof ISigil.Holding)
             stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (PlayerHelper.isFakePlayer(player))
-            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+            return ActionResult.newResult(ActionResultType.FAIL, stack);
 
         RayTraceResult mop = this.rayTrace(world, player, false);
 

@@ -4,10 +4,10 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -42,7 +42,7 @@ public class RitualForsakenSoul extends Ritual {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         super.readFromNBT(tag);
 
         willBuffer = tag.getDouble("willBuffer");
@@ -58,7 +58,7 @@ public class RitualForsakenSoul extends Ritual {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         super.writeToNBT(tag);
 
         tag.setDouble("willBuffer", willBuffer);
@@ -100,20 +100,20 @@ public class RitualForsakenSoul extends Ritual {
         AreaDescriptor damageRange = masterRitualStone.getBlockRange(DAMAGE_RANGE);
         AxisAlignedBB range = damageRange.getAABB(pos);
 
-        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+        List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, range);
 
-        for (EntityLivingBase entity : entities) {
+        for (LivingEntity entity : entities) {
             EntityEntry entityEntry = EntityRegistry.getEntry(entity.getClass());
 
             if (entityEntry == null || BloodMagicAPI.INSTANCE.getBlacklist().getSacrifice().contains(entityEntry.getRegistryName()))
                 continue;
 
-            if (entity.isEntityAlive() && !(entity instanceof EntityPlayer)) {
+            if (entity.isEntityAlive() && !(entity instanceof PlayerEntity)) {
                 if (entity.attackEntityFrom(RitualManager.RITUAL_DAMAGE, 1)) {
                     if (!entity.isEntityAlive()) {
                         int uniqueness = calculateUniqueness(entity);
                         double modifier = 1;
-                        if (entity instanceof EntityAnimal && !((EntityAnimal) entity).collided) {
+                        if (entity instanceof AnimalEntity && !((AnimalEntity) entity).collided) {
                             modifier = 4;
                         }
 
@@ -147,7 +147,7 @@ public class RitualForsakenSoul extends Ritual {
      * @param mob
      * @return The amount of uniqueness to the last 10 mobs killed
      */
-    public int calculateUniqueness(EntityLivingBase mob) {
+    public int calculateUniqueness(LivingEntity mob) {
         int key = mob.getClass().hashCode();
         keyList.add(key);
         if (keyList.size() > MAX_UNIQUENESS) {

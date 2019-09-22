@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.teleport;
 
 import WayofTime.bloodmagic.util.Constants;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 
 import java.io.Serializable;
@@ -23,8 +23,8 @@ public class PortalLocation implements Serializable {
         this(blockPos.getX(), blockPos.getY(), blockPos.getZ(), dimension);
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-        NBTTagCompound locationTag = new NBTTagCompound();
+    public CompoundNBT writeToNBT(CompoundNBT tag) {
+        CompoundNBT locationTag = new CompoundNBT();
 
         locationTag.setInteger(Constants.NBT.X_COORD, x);
         locationTag.setInteger(Constants.NBT.Y_COORD, y);
@@ -80,9 +80,9 @@ public class PortalLocation implements Serializable {
         return dimension;
     }
 
-    public static PortalLocation readFromNBT(NBTTagCompound tag) {
+    public static PortalLocation readFromNBT(CompoundNBT tag) {
         if (tag.hasKey(Constants.NBT.PORTAL_LOCATION)) {
-            NBTTagCompound locationTag = tag.getCompoundTag(Constants.NBT.PORTAL_LOCATION);
+            CompoundNBT locationTag = tag.getCompoundTag(Constants.NBT.PORTAL_LOCATION);
             return new PortalLocation(locationTag.getInteger(Constants.NBT.X_COORD), locationTag.getInteger(Constants.NBT.Y_COORD), locationTag.getInteger(Constants.NBT.Z_COORD), locationTag.getInteger(Constants.NBT.DIMENSION_ID));
         }
         return null;

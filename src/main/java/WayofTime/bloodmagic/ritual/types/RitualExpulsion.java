@@ -6,10 +6,10 @@ import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.util.Utils;
 import com.google.common.collect.Lists;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumParticleTypes;
@@ -70,7 +70,7 @@ public class RitualExpulsion extends Ritual {
 
         final int teleportDistance = 100;
 
-        for (EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, expulsionRange.getAABB(masterRitualStone.getBlockPos()))) {
+        for (PlayerEntity player : world.getEntitiesWithinAABB(PlayerEntity.class, expulsionRange.getAABB(masterRitualStone.getBlockPos()))) {
             if (player.capabilities.isCreativeMode || player.getGameProfile().getId().equals(masterRitualStone.getOwner()) || whitelist.contains(player.getGameProfile().getId()))
                 continue;
 
@@ -81,9 +81,9 @@ public class RitualExpulsion extends Ritual {
         whitelist.clear();
     }
 
-    public boolean teleportRandomly(EntityLivingBase entityLiving, double distance) {
-        if (entityLiving instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entityLiving;
+    public boolean teleportRandomly(LivingEntity entityLiving, double distance) {
+        if (entityLiving instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entityLiving;
             if (player.capabilities.isCreativeMode)
                 return false;
         }
@@ -107,7 +107,7 @@ public class RitualExpulsion extends Ritual {
         return i >= 100;
     }
 
-    public boolean teleportTo(EntityLivingBase entityLiving, double par1, double par3, double par5, double lastX, double lastY, double lastZ) {
+    public boolean teleportTo(LivingEntity entityLiving, double par1, double par3, double par5, double lastX, double lastY, double lastZ) {
         EnderTeleportEvent event = new EnderTeleportEvent(entityLiving, par1, par3, par5, 0);
 
         if (MinecraftForge.EVENT_BUS.post(event)) {
@@ -125,7 +125,7 @@ public class RitualExpulsion extends Ritual {
             boolean flag1 = false;
 
             while (!flag1 && j > 0) {
-                IBlockState state = entityLiving.getEntityWorld().getBlockState(new BlockPos(i, j - 1, k));
+                BlockState state = entityLiving.getEntityWorld().getBlockState(new BlockPos(i, j - 1, k));
 
                 if (state.getMaterial().blocksMovement()) {
                     flag1 = true;
@@ -163,9 +163,9 @@ public class RitualExpulsion extends Ritual {
         }
     }
 
-    public void moveEntityViaTeleport(EntityLivingBase entityLiving, double x, double y, double z) {
-        if (entityLiving instanceof EntityPlayerMP) {
-            EntityPlayerMP player = (EntityPlayerMP) entityLiving;
+    public void moveEntityViaTeleport(LivingEntity entityLiving, double x, double y, double z) {
+        if (entityLiving instanceof ServerPlayerEntity) {
+            ServerPlayerEntity player = (ServerPlayerEntity) entityLiving;
 
             EnderTeleportEvent event = new EnderTeleportEvent(player, x, y, z, 5.0F);
 

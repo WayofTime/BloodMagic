@@ -5,8 +5,8 @@ import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeStepAssist;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 public class StatTrackerStepAssist extends StatTracker {
-    public static Map<EntityPlayer, Double> lastPosX = new HashMap<>();
-    public static Map<EntityPlayer, Double> lastPosZ = new HashMap<>();
+    public static Map<PlayerEntity, Double> lastPosX = new HashMap<>();
+    public static Map<PlayerEntity, Double> lastPosZ = new HashMap<>();
 
     public static int blocksRequired = 1000;
 
@@ -33,18 +33,18 @@ public class StatTrackerStepAssist extends StatTracker {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         totalMovement = tag.getDouble(BloodMagic.MODID + ".tracker.stepAssist");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         tag.setDouble(BloodMagic.MODID + ".tracker.stepAssist", totalMovement);
 
     }
 
     @Override
-    public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+    public boolean onTick(World world, PlayerEntity player, LivingArmour livingArmour) {
         if (!lastPosX.containsKey(player)) {
             lastPosX.put(player, player.posX);
             lastPosZ.put(player, player.posZ);
@@ -76,7 +76,7 @@ public class StatTrackerStepAssist extends StatTracker {
     }
 
     @Override
-    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+    public void onDeactivatedTick(World world, PlayerEntity player, LivingArmour livingArmour) {
 
     }
 

@@ -1,14 +1,14 @@
 package WayofTime.bloodmagic.event;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class BoundToolEvent extends Event {
-    public EntityPlayer player;
+    public PlayerEntity player;
 
-    public BoundToolEvent(EntityPlayer player) {
+    public BoundToolEvent(PlayerEntity player) {
         this.player = player;
     }
 
@@ -23,7 +23,7 @@ public class BoundToolEvent extends Event {
     public static class Charge extends BoundToolEvent {
         public ItemStack result;
 
-        public Charge(EntityPlayer player, ItemStack result) {
+        public Charge(PlayerEntity player, ItemStack result) {
             super(player);
             this.result = result;
         }
@@ -41,7 +41,7 @@ public class BoundToolEvent extends Event {
         public final ItemStack boundTool;
         public int charge;
 
-        public Release(EntityPlayer player, ItemStack boundTool, int charge) {
+        public Release(PlayerEntity player, ItemStack boundTool, int charge) {
             super(player);
             this.boundTool = boundTool;
             this.charge = charge;

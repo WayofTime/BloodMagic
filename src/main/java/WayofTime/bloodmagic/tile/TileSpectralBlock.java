@@ -5,8 +5,8 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.tile.base.TileTicking;
 import com.google.common.base.Strings;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -21,14 +21,14 @@ public class TileSpectralBlock extends TileTicking {
     }
 
     @Override
-    public void deserialize(NBTTagCompound tagCompound) {
+    public void deserialize(CompoundNBT tagCompound) {
         ticksRemaining = tagCompound.getInteger(Constants.NBT.TICKS_REMAINING);
         containedBlockName = tagCompound.getString(Constants.NBT.CONTAINED_BLOCK_NAME);
         containedBlockMeta = tagCompound.getInteger(Constants.NBT.CONTAINED_BLOCK_META);
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tagCompound) {
+    public CompoundNBT serialize(CompoundNBT tagCompound) {
         tagCompound.setInteger(Constants.NBT.TICKS_REMAINING, ticksRemaining);
         tagCompound.setString(Constants.NBT.CONTAINED_BLOCK_NAME, Strings.isNullOrEmpty(containedBlockName) ? "" : containedBlockName);
         tagCompound.setInteger(Constants.NBT.CONTAINED_BLOCK_META, containedBlockMeta);
@@ -48,7 +48,7 @@ public class TileSpectralBlock extends TileTicking {
         }
     }
 
-    private void setContainedBlockInfo(IBlockState blockState) {
+    private void setContainedBlockInfo(BlockState blockState) {
         containedBlockName = blockState.getBlock().getRegistryName().toString();
         containedBlockMeta = blockState.getBlock().getMetaFromState(blockState);
     }
@@ -75,7 +75,7 @@ public class TileSpectralBlock extends TileTicking {
     public static void createSpectralBlock(World world, BlockPos blockPos, int duration) {
         if (world.isAirBlock(blockPos))
             return;
-        IBlockState cachedState = world.getBlockState(blockPos);
+        BlockState cachedState = world.getBlockState(blockPos);
         world.setBlockState(blockPos, RegistrarBloodMagicBlocks.SPECTRAL.getDefaultState());
         TileSpectralBlock tile = (TileSpectralBlock) world.getTileEntity(blockPos);
         tile.setContainedBlockInfo(cachedState);

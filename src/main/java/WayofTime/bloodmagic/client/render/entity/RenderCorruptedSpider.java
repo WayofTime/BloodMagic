@@ -5,17 +5,17 @@ import WayofTime.bloodmagic.client.render.entity.layer.LayerWill;
 import WayofTime.bloodmagic.client.render.model.ModelCorruptedSpider;
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedSpider;
 import net.minecraft.client.model.ModelSpider;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderCorruptedSpider extends RenderLiving<EntityCorruptedSpider> {
+public class RenderCorruptedSpider extends MobRenderer<EntityCorruptedSpider> {
     private static final ResourceLocation SPIDER_TEXTURES = new ResourceLocation("textures/entity/spider/spider.png");
 
-    public RenderCorruptedSpider(RenderManager renderManagerIn) {
+    public RenderCorruptedSpider(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new ModelSpider(), 1.0F);
         this.addLayer(new LayerCorruptedSpiderEyes(this));
         this.addLayer(new LayerWill<>(this, new ModelCorruptedSpider(1.1f)));

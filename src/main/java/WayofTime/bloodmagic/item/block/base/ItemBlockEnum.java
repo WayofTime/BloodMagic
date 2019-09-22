@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.item.block.base;
 
 import WayofTime.bloodmagic.block.base.BlockEnum;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.MathHelper;
 
-public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends ItemBlock {
+public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends BlockItem {
 
     public ItemBlockEnum(BlockEnum<E> block) {
         super(block);

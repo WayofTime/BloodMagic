@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.client.key;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
 public interface IKeybindable {
-    void onKeyPressed(ItemStack stack, EntityPlayer player, KeyBindings key, boolean showInChat);
+    void onKeyPressed(ItemStack stack, PlayerEntity player, KeyBindings key, boolean showInChat);
 }

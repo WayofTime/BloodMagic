@@ -3,14 +3,14 @@ package WayofTime.bloodmagic.tile;
 import WayofTime.bloodmagic.iface.IPurificationAsh;
 import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.util.helper.PurificationHelper;
-import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.ServerWorld;
 
 import java.util.List;
 
@@ -39,14 +39,14 @@ public class TilePurificationAltar extends TileInventory implements ITickable {
         }
 
         AxisAlignedBB aabb = purityArea.getAABB(getPos());
-        List<EntityAnimal> animalList = getWorld().getEntitiesWithinAABB(EntityAnimal.class, aabb);
+        List<AnimalEntity> animalList = getWorld().getEntitiesWithinAABB(AnimalEntity.class, aabb);
         if (animalList.isEmpty()) {
             return;
         }
 
         boolean hasPerformed = false;
 
-        for (EntityAnimal animal : animalList) {
+        for (AnimalEntity animal : animalList) {
             double added = PurificationHelper.addPurity(animal, Math.min(purityRate, totalPurity), maxPurity);
             if (added > 0) {
                 totalPurity -= purityRate;
@@ -55,15 +55,15 @@ public class TilePurificationAltar extends TileInventory implements ITickable {
         }
 
         if (hasPerformed) {
-            if (getWorld().rand.nextInt(4) == 0 && getWorld() instanceof WorldServer) {
-                WorldServer server = (WorldServer) getWorld();
+            if (getWorld().rand.nextInt(4) == 0 && getWorld() instanceof ServerWorld) {
+                ServerWorld server = (ServerWorld) getWorld();
                 server.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 1, 0.02, 0.03, 0.02, 0);
             }
         }
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(CompoundNBT tag) {
         super.deserialize(tag);
         totalPurity = tag.getDouble("totalPurity");
         maxPurity = tag.getDouble("maxPurity");
@@ -71,7 +71,7 @@ public class TilePurificationAltar extends TileInventory implements ITickable {
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
 
         tag.setDouble("totalPurity", totalPurity);

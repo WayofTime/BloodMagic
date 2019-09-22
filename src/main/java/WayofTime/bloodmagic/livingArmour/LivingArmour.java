@@ -5,14 +5,14 @@ import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 import java.lang.reflect.Constructor;
@@ -33,7 +33,7 @@ public class LivingArmour implements ILivingArmour {
         return trackerMap.get(key);
     }
 
-    public double getAdditionalDamageOnHit(double damage, EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon) {
+    public double getAdditionalDamageOnHit(double damage, PlayerEntity wearer, LivingEntity hitEntity, ItemStack weapon) {
         double total = 0;
         for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet()) {
             total += entry.getValue().getAdditionalDamageOnHit(damage, wearer, hitEntity, weapon);
@@ -42,7 +42,7 @@ public class LivingArmour implements ILivingArmour {
         return total;
     }
 
-    public double getKnockbackOnHit(EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon) {
+    public double getKnockbackOnHit(PlayerEntity wearer, LivingEntity hitEntity, ItemStack weapon) {
         double total = 0;
         for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet()) {
             total += entry.getValue().getKnockbackOnHit(wearer, hitEntity, weapon);
@@ -74,7 +74,7 @@ public class LivingArmour implements ILivingArmour {
     }
 
     @Override
-    public boolean upgradeArmour(EntityPlayer user, LivingArmourUpgrade upgrade) {
+    public boolean upgradeArmour(PlayerEntity user, LivingArmourUpgrade upgrade) {
         String key = upgrade.getUniqueIdentifier();
         if (upgradeMap.containsKey(key)) {
             //Check if this is a higher level than the previous upgrade
@@ -112,7 +112,7 @@ public class LivingArmour implements ILivingArmour {
     }
 
     @Override
-    public boolean canApplyUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade) {
+    public boolean canApplyUpgrade(PlayerEntity user, LivingArmourUpgrade upgrade) {
         String key = upgrade.getUniqueIdentifier();
         if (upgradeMap.containsKey(key)) {
             //Check if this is a higher level than the previous upgrade
@@ -136,8 +136,8 @@ public class LivingArmour implements ILivingArmour {
     }
 
     @Override
-    public void notifyPlayerOfUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade) {
-        user.sendStatusMessage(new TextComponentString(TextHelper.localizeEffect(chatBase + "newUpgrade")), true);
+    public void notifyPlayerOfUpgrade(PlayerEntity user, LivingArmourUpgrade upgrade) {
+        user.sendStatusMessage(new StringTextComponent(TextHelper.localizeEffect(chatBase + "newUpgrade")), true);
     }
 
     /**
@@ -148,7 +148,7 @@ public class LivingArmour implements ILivingArmour {
      * @param player
      */
     @Override
-    public void onTick(World world, EntityPlayer player) {
+    public void onTick(World world, PlayerEntity player) {
         for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet()) {
             LivingArmourUpgrade upgrade = entry.getValue();
 
@@ -211,16 +211,16 @@ public class LivingArmour implements ILivingArmour {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         maxUpgradePoints = Math.max(100, tag.getInteger("maxUpgradePoints"));
 
-        NBTTagList upgradeTags = tag.getTagList("upgrades", 10);
+        ListNBT upgradeTags = tag.getTagList("upgrades", 10);
         if (upgradeTags != null) {
             for (int i = 0; i < upgradeTags.tagCount(); i++) {
-                NBTTagCompound upgradeTag = upgradeTags.getCompoundTagAt(i);
+                CompoundNBT upgradeTag = upgradeTags.getCompoundTagAt(i);
                 String key = upgradeTag.getString("key");
                 int level = upgradeTag.getInteger("level");
-                NBTTagCompound nbtTag = upgradeTag.getCompoundTag("upgrade");
+                CompoundNBT nbtTag = upgradeTag.getCompoundTag("upgrade");
                 LivingArmourUpgrade upgrade = LivingArmourHandler.generateUpgradeFromKey(key, level, nbtTag);
                 if (upgrade != null) {
                     upgradeMap.put(key, upgrade);
@@ -238,7 +238,7 @@ public class LivingArmour implements ILivingArmour {
                 }
                 StatTracker tracker = (StatTracker) obj;
                 String key = tracker.getUniqueIdentifier();
-                NBTTagCompound trackerTag = tag.getCompoundTag(key);
+                CompoundNBT trackerTag = tag.getCompoundTag(key);
                 if (!trackerTag.isEmpty()) {
                     tracker.readFromNBT(trackerTag);
                 }
@@ -250,16 +250,16 @@ public class LivingArmour implements ILivingArmour {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag, boolean forceWrite) {
+    public void writeToNBT(CompoundNBT tag, boolean forceWrite) {
         tag.setInteger("maxUpgradePoints", maxUpgradePoints);
 
-        NBTTagList tags = new NBTTagList();
+        ListNBT tags = new ListNBT();
 
         for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet()) {
-            NBTTagCompound upgradeTag = new NBTTagCompound();
+            CompoundNBT upgradeTag = new CompoundNBT();
 
             LivingArmourUpgrade upgrade = entry.getValue();
-            NBTTagCompound nbtTag = new NBTTagCompound();
+            CompoundNBT nbtTag = new CompoundNBT();
             upgrade.writeToNBT(nbtTag);
 
             upgradeTag.setString("key", upgrade.getUniqueIdentifier());
@@ -281,7 +281,7 @@ public class LivingArmour implements ILivingArmour {
             String key = tracker.getUniqueIdentifier();
 
             if (forceWrite || tracker.isDirty()) {
-                NBTTagCompound trackerTag = new NBTTagCompound();
+                CompoundNBT trackerTag = new CompoundNBT();
                 tracker.writeToNBT(trackerTag);
 
                 tag.setTag(key, trackerTag);
@@ -298,17 +298,17 @@ public class LivingArmour implements ILivingArmour {
      * @param tag
      */
     @Override
-    public void writeDirtyToNBT(NBTTagCompound tag) {
+    public void writeDirtyToNBT(CompoundNBT tag) {
         writeToNBT(tag, false);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         writeToNBT(tag, true);
     }
 
     @Override
-    public boolean removeUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade) {
+    public boolean removeUpgrade(PlayerEntity user, LivingArmourUpgrade upgrade) {
         String key = upgrade.getUniqueIdentifier();
         if (upgradeMap.containsKey(key)) {
             upgradeMap.remove(key);
@@ -319,9 +319,9 @@ public class LivingArmour implements ILivingArmour {
         return false;
     }
 
-    public static boolean hasFullSet(EntityPlayer player) {
-        for (EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
-            if (slot.getSlotType() != EntityEquipmentSlot.Type.ARMOR) {
+    public static boolean hasFullSet(PlayerEntity player) {
+        for (EquipmentSlotType slot : EquipmentSlotType.values()) {
+            if (slot.getSlotType() != EquipmentSlotType.Type.ARMOR) {
                 continue;
             }
             ItemStack slotStack = player.getItemStackFromSlot(slot);

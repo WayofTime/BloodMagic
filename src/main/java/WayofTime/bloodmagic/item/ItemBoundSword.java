@@ -13,16 +13,16 @@ import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
+import net.minecraft.item.SwordItem;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -32,7 +32,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ItemBoundSword extends ItemSword implements IBindable, IActivatable, IMeshProvider {
+public class ItemBoundSword extends SwordItem implements IBindable, IActivatable, IMeshProvider {
     public ItemBoundSword() {
         super(RegistrarBloodMagicItems.BOUND_TOOL_MATERIAL);
 
@@ -41,7 +41,7 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (player.isSneaking())
             setActivatedState(stack, !getActivated(stack));
@@ -67,17 +67,17 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
             return;
         }
 
-        if (entity instanceof EntityPlayer && getActivated(stack) && world.getTotalWorldTime() % 80 == 0)
-            NetworkHelper.getSoulNetwork(binding).syphonAndDamage((EntityPlayer) entity, SoulTicket.item(stack, world, entity, 20));
+        if (entity instanceof PlayerEntity && getActivated(stack) && world.getTotalWorldTime() % 80 == 0)
+            NetworkHelper.getSoulNetwork(binding).syphonAndDamage((PlayerEntity) entity, SoulTicket.item(stack, world, entity, 20));
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         return true;
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState block, BlockPos pos, EntityLivingBase entityLiving) {
+    public boolean onBlockDestroyed(ItemStack stack, World world, BlockState block, BlockPos pos, LivingEntity entityLiving) {
         return true;
     }
 
@@ -88,7 +88,7 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
+    public void getSubItems(ItemGroup tab, NonNullList<ItemStack> subItems) {
         if (!isInCreativeTab(tab))
             return;
 
@@ -112,9 +112,9 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack) {
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
         Multimap<String, AttributeModifier> multimap = HashMultimap.create();
-        if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
+        if (equipmentSlot == EquipmentSlotType.MAINHAND) {
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getActivated(stack) ? 8 : 2, 0));
             multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.4, 0));
         }

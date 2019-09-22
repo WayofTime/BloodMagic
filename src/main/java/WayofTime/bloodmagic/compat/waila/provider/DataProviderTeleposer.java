@@ -7,9 +7,9 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -31,7 +31,7 @@ public class DataProviderTeleposer implements IWailaDataProvider {
             return currenttip;
 
         if (accessor.getNBTData().hasKey("focus")) {
-            NBTTagCompound focusData = accessor.getNBTData().getCompoundTag("focus");
+            CompoundNBT focusData = accessor.getNBTData().getCompoundTag("focus");
             BlockPos boundPos = NBTUtil.getPosFromTag(focusData.getCompoundTag("pos"));
             int boundDim = focusData.getInteger("dim");
             String dimName = WordUtils.capitalizeFully(DimensionManager.getProviderType(boundDim).getName().replace("_", " "));
@@ -43,12 +43,12 @@ public class DataProviderTeleposer implements IWailaDataProvider {
     }
 
     @Override
-    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
+    public CompoundNBT getNBTData(ServerPlayerEntity player, TileEntity te, CompoundNBT tag, World world, BlockPos pos) {
         TileTeleposer teleposer = (TileTeleposer) te;
         ItemStack contained = teleposer.getStackInSlot(0);
         if (!contained.isEmpty() && contained.hasTagCompound()) {
             ItemTelepositionFocus focus = (ItemTelepositionFocus) contained.getItem();
-            NBTTagCompound focusData = new NBTTagCompound();
+            CompoundNBT focusData = new CompoundNBT();
             focusData.setTag("pos", NBTUtil.createPosTag(focus.getBlockPos(contained)));
             focusData.setInteger("dim", contained.getTagCompound().getInteger(Constants.NBT.DIMENSION_ID));
             tag.setTag("focus", focusData);

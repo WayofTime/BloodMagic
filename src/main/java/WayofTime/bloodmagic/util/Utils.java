@@ -10,30 +10,28 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockPortal;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.NetherPortalBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.*;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.*;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.item.DyeColor;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.Direction;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
@@ -54,13 +52,13 @@ import java.util.*;
 
 public class Utils {
 
-    public static final EnumMap<EnumDyeColor, Integer> DYE_COLOR_VALUES = Maps.newEnumMap(EnumDyeColor.class);
+    public static final EnumMap<DyeColor, Integer> DYE_COLOR_VALUES = Maps.newEnumMap(DyeColor.class);
 
     static {
         try {
-            Field colorValue = ObfuscationReflectionHelper.findField(EnumDyeColor.class, "field_193351_w");
+            Field colorValue = ObfuscationReflectionHelper.findField(DyeColor.class, "field_193351_w");
             colorValue.setAccessible(true);
-            for (EnumDyeColor color : EnumDyeColor.values()) {
+            for (DyeColor color : DyeColor.values()) {
                 DYE_COLOR_VALUES.put(color, (int) colorValue.get(color));
             }
         } catch (IllegalAccessException e) {
@@ -68,7 +66,7 @@ public class Utils {
         }
     }
 
-    public static float addAbsorptionToMaximum(EntityLivingBase entity, float added, int maximum, int duration) {
+    public static float addAbsorptionToMaximum(LivingEntity entity, float added, int maximum, int duration) {
         float currentAmount = entity.getAbsorptionAmount();
         added = Math.min(maximum - currentAmount, added);
 
@@ -78,7 +76,7 @@ public class Utils {
 
         if (duration > 0) {
             int potionLevel = (int) ((currentAmount + added) / 4);
-            entity.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, duration, potionLevel, true, false));
+            entity.addPotionEffect(new EffectInstance(Effects.ABSORPTION, duration, potionLevel, true, false));
         }
 
         entity.setAbsorptionAmount(currentAmount + added);
@@ -86,21 +84,21 @@ public class Utils {
         return added;
     }
 
-    public static boolean isImmuneToFireDamage(EntityLivingBase entity) {
-        return entity.isImmuneToFire() || entity.isPotionActive(MobEffects.FIRE_RESISTANCE);
+    public static boolean isImmuneToFireDamage(LivingEntity entity) {
+        return entity.isImmuneToFire() || entity.isPotionActive(Effects.FIRE_RESISTANCE);
     }
 
-    public static boolean isPlayerBesideSolidBlockFace(EntityPlayer player) {
+    public static boolean isPlayerBesideSolidBlockFace(PlayerEntity player) {
         World world = player.getEntityWorld();
         double minimumDistanceFromAxis = 0.7;
         BlockPos centralPos = player.getPosition();
-        for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+        for (Direction facing : Direction.HORIZONTALS) {
             BlockPos offsetPos = centralPos.offset(facing);
             double distance = Math.min(offsetPos.getX() + 0.5 - player.posX, offsetPos.getZ() + 0.5 - player.posZ);
             if (distance > minimumDistanceFromAxis) {
                 continue;
             }
-            IBlockState state = world.getBlockState(offsetPos);
+            BlockState state = world.getBlockState(offsetPos);
             if (state.isSideSolid(world, offsetPos, facing.getOpposite())) {
                 return true;
             }
@@ -109,7 +107,7 @@ public class Utils {
         return false;
     }
 
-    public static boolean canPlayerSeeDemonWill(EntityPlayer player) {
+    public static boolean canPlayerSeeDemonWill(PlayerEntity player) {
         IItemHandler inventory = new PlayerMainInvWrapper(player.inventory);
 
         for (int i = 0; i < inventory.getSlots(); i++) {
@@ -128,16 +126,16 @@ public class Utils {
 
     public static boolean canEntitySeeBlock(World world, Entity entity, BlockPos pos) {
         Vec3d relativePosition = new Vec3d(entity.posX - pos.getX() - 0.5, entity.posY + (double) entity.getEyeHeight() - pos.getY() - 0.5, entity.posZ - pos.getZ() - 0.5);
-        EnumFacing dir = EnumFacing.getFacingFromVector((float) relativePosition.x, (float) relativePosition.y, (float) relativePosition.z);
+        Direction dir = Direction.getFacingFromVector((float) relativePosition.x, (float) relativePosition.y, (float) relativePosition.z);
         RayTraceResult result = world.rayTraceBlocks(new Vec3d(entity.posX, entity.posY + (double) entity.getEyeHeight(), entity.posZ), new Vec3d(pos.getX() + 0.5 + dir.getXOffset() * 0.4, pos.getY() + 0.5 + dir.getYOffset() * 0.4, pos.getZ() + 0.5 + dir.getZOffset() * 0.4), false, true, true);
         return result == null || pos.equals(result.getBlockPos());
     }
 
     public static int plantSeedsInArea(World world, AxisAlignedBB aabb, int horizontalRadius, int verticalRadius) {
         int placedBlocks = 0;
-        List<EntityItem> itemEntities = world.getEntitiesWithinAABB(EntityItem.class, aabb);
+        List<ItemEntity> itemEntities = world.getEntitiesWithinAABB(ItemEntity.class, aabb);
 
-        for (EntityItem itemEntity : itemEntities) {
+        for (ItemEntity itemEntity : itemEntities) {
             placedBlocks += plantEntityItem(itemEntity, horizontalRadius, verticalRadius);
         }
 
@@ -167,10 +165,10 @@ public class Utils {
 
                             BlockPos newPos = centralPos.add(i, j, k);
                             if (world.isAirBlock(newPos)) {
-                                BlockPos offsetPos = newPos.offset(EnumFacing.DOWN);
-                                IBlockState state = world.getBlockState(offsetPos);
-                                if (state.getBlock().canSustainPlant(state, world, offsetPos, EnumFacing.UP, (IPlantable) item)) {
-                                    IBlockState plantState = ((IPlantable) item).getPlant(world, newPos);
+                                BlockPos offsetPos = newPos.offset(Direction.DOWN);
+                                BlockState state = world.getBlockState(offsetPos);
+                                if (state.getBlock().canSustainPlant(state, world, offsetPos, Direction.UP, (IPlantable) item)) {
+                                    BlockState plantState = ((IPlantable) item).getPlant(world, newPos);
                                     world.setBlockState(newPos, plantState, 3);
                                     world.playEvent(2001, newPos, Block.getIdFromBlock(plantState.getBlock()) + (plantState.getBlock().getMetaFromState(plantState) << 12));
                                     stack.shrink(1);
@@ -189,7 +187,7 @@ public class Utils {
         return planted;
     }
 
-    public static int plantEntityItem(EntityItem itemEntity, int horizontalRadius, int verticalRadius) {
+    public static int plantEntityItem(ItemEntity itemEntity, int horizontalRadius, int verticalRadius) {
         if (itemEntity == null || itemEntity.isDead) {
             return 0;
         }
@@ -207,7 +205,7 @@ public class Utils {
         return planted;
     }
 
-    public static int getDemonWillResolution(EntityPlayer player) {
+    public static int getDemonWillResolution(PlayerEntity player) {
         IItemHandler inventory = new PlayerMainInvWrapper(player.inventory);
 
         for (int i = 0; i < inventory.getSlots(); i++) {
@@ -224,22 +222,22 @@ public class Utils {
         return 1;
     }
 
-    public static NBTTagCompound getPersistentDataTag(EntityPlayer player) {
-        NBTTagCompound forgeData = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
-        NBTTagCompound beaconData = forgeData.getCompoundTag("BloodMagic");
+    public static CompoundNBT getPersistentDataTag(PlayerEntity player) {
+        CompoundNBT forgeData = player.getEntityData().getCompoundTag(PlayerEntity.PERSISTED_NBT_TAG);
+        CompoundNBT beaconData = forgeData.getCompoundTag("BloodMagic");
 
         //Creates/sets the tags if they don't exist 
         if (!forgeData.hasKey("BloodMagic"))
             forgeData.setTag("BloodMagic", beaconData);
-        if (!player.getEntityData().hasKey(EntityPlayer.PERSISTED_NBT_TAG))
-            player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, forgeData);
+        if (!player.getEntityData().hasKey(PlayerEntity.PERSISTED_NBT_TAG))
+            player.getEntityData().setTag(PlayerEntity.PERSISTED_NBT_TAG, forgeData);
 
         return beaconData;
     }
 
-    public static void setPlayerSpeedFromServer(EntityPlayer player, double motionX, double motionY, double motionZ) {
-        if (!player.getEntityWorld().isRemote && player instanceof EntityPlayerMP) {
-            BloodMagicPacketHandler.sendTo(new PlayerVelocityPacketProcessor(motionX, motionY, motionZ), (EntityPlayerMP) player);
+    public static void setPlayerSpeedFromServer(PlayerEntity player, double motionX, double motionY, double motionZ) {
+        if (!player.getEntityWorld().isRemote && player instanceof ServerPlayerEntity) {
+            BloodMagicPacketHandler.sendTo(new PlayerVelocityPacketProcessor(motionX, motionY, motionZ), (ServerPlayerEntity) player);
         }
     }
 
@@ -266,9 +264,9 @@ public class Utils {
      * @param player - The player to take the item from.
      * @return {@code true} if the ItemStack is inserted, {@code false}
      * otherwise
-     * @see #insertItemToTile(TileInventory, EntityPlayer, int)
+     * @see #insertItemToTile(TileInventory, PlayerEntity, int)
      */
-    public static boolean insertItemToTile(TileInventory tile, EntityPlayer player) {
+    public static boolean insertItemToTile(TileInventory tile, PlayerEntity player) {
         return insertItemToTile(tile, player, 0);
     }
 
@@ -284,7 +282,7 @@ public class Utils {
      * @return {@code true} if the ItemStack is inserted, {@code false}
      * otherwise
      */
-    public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot) {
+    public static boolean insertItemToTile(TileInventory tile, PlayerEntity player, int slot) {
         ItemStack slotStack = tile.getStackInSlot(slot);
         if (slotStack.isEmpty() && !player.getHeldItemMainhand().isEmpty()) {
             ItemStack input = player.getHeldItemMainhand().copy();
@@ -311,9 +309,9 @@ public class Utils {
     }
 
     @Nullable
-    public static IItemHandler getInventory(TileEntity tile, @Nullable EnumFacing facing) {
+    public static IItemHandler getInventory(TileEntity tile, @Nullable Direction facing) {
         if (facing == null)
-            facing = EnumFacing.DOWN;
+            facing = Direction.DOWN;
 
         IItemHandler itemHandler = null;
 
@@ -358,7 +356,7 @@ public class Utils {
         }
     }
 
-    public static float getModifiedDamage(EntityLivingBase attackedEntity, DamageSource source, float amount) {
+    public static float getModifiedDamage(LivingEntity attackedEntity, DamageSource source, float amount) {
         if (!attackedEntity.isEntityInvulnerable(source)) {
             if (amount <= 0)
                 return 0;
@@ -374,7 +372,7 @@ public class Utils {
         return 0;
     }
 
-    public static float applyArmor(EntityLivingBase entity, ItemStack[] inventory, DamageSource source, double damage) {
+    public static float applyArmor(LivingEntity entity, ItemStack[] inventory, DamageSource source, double damage) {
         damage *= 25;
         ArrayList<ArmorProperties> dmgVals = new ArrayList<>();
         for (int x = 0; x < inventory.length; x++) {
@@ -386,8 +384,8 @@ public class Utils {
             if (stack.getItem() instanceof ISpecialArmor) {
                 ISpecialArmor armor = (ISpecialArmor) stack.getItem();
                 prop = armor.getProperties(entity, stack, source, damage / 25D, x).copy();
-            } else if (stack.getItem() instanceof ItemArmor && !source.isUnblockable()) {
-                ItemArmor armor = (ItemArmor) stack.getItem();
+            } else if (stack.getItem() instanceof ArmorItem && !source.isUnblockable()) {
+                ArmorItem armor = (ArmorItem) stack.getItem();
                 prop = new ArmorProperties(0, armor.damageReduceAmount / 25D, Integer.MAX_VALUE);
             }
             if (prop != null) {
@@ -414,8 +412,8 @@ public class Utils {
         return (float) (damage / 25.0F);
     }
 
-    public static float applyPotionDamageCalculations(EntityLivingBase attackedEntity, DamageSource source, float damage) {
-        Potion resistance = MobEffects.RESISTANCE;
+    public static float applyPotionDamageCalculations(LivingEntity attackedEntity, DamageSource source, float damage) {
+        Effect resistance = Effects.RESISTANCE;
 
         if (source.isDamageAbsolute()) {
             return damage;
@@ -513,7 +511,7 @@ public class Utils {
         return returned;
     }
 
-    public static ItemStack insertStackIntoTile(ItemStack stack, TileEntity tile, EnumFacing dir) {
+    public static ItemStack insertStackIntoTile(ItemStack stack, TileEntity tile, Direction dir) {
         if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir)) {
             IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
 
@@ -525,7 +523,7 @@ public class Utils {
         return stack;
     }
 
-    public static int getNumberOfFreeSlots(TileEntity tile, EnumFacing dir) {
+    public static int getNumberOfFreeSlots(TileEntity tile, Direction dir) {
         int slots = 0;
 
         if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir)) {
@@ -572,7 +570,7 @@ public class Utils {
      * @param limit
      * @return
      */
-    public static ItemStack insertStackIntoTile(ItemStack stack, TileEntity tile, EnumFacing dir, int limit) {
+    public static ItemStack insertStackIntoTile(ItemStack stack, TileEntity tile, Direction dir, int limit) {
         if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir)) {
             IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
             int numberOfSlots = handler.getSlots();
@@ -622,7 +620,7 @@ public class Utils {
         return stack;
     }
 
-    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir) {
+    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, Direction dir) {
         if (stack.isEmpty()) {
             return ItemStack.EMPTY;
         }
@@ -657,11 +655,11 @@ public class Utils {
         return stack;
     }
 
-    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir) {
+    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, Direction dir) {
         return canInsertStackFullyIntoInventory(stack, inventory, dir, false, 0);
     }
 
-    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir, boolean fillToLimit, int limit) {
+    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, Direction dir, boolean fillToLimit, int limit) {
         if (stack.isEmpty()) {
             return true;
         }
@@ -734,7 +732,7 @@ public class Utils {
      * @param limit
      * @return
      */
-    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir, int limit) {
+    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, Direction dir, int limit) {
         if (stack.isEmpty()) {
             return ItemStack.EMPTY;
         }
@@ -793,17 +791,17 @@ public class Utils {
         return stack;
     }
 
-    public static boolean isBlockLiquid(IBlockState state) {
+    public static boolean isBlockLiquid(BlockState state) {
         return (state instanceof IFluidBlock || state.getMaterial().isLiquid());
     }
 
-    public static boolean isFlowingLiquid(IBlockState state) {
+    public static boolean isFlowingLiquid(BlockState state) {
         Block block = state.getBlock();
         return isBlockLiquid(state) && !(state == block.getDefaultState());
     }
 
-    public static boolean spawnStackAtBlock(World world, BlockPos pos, @Nullable EnumFacing pushDirection, ItemStack stack) {
-        EntityItem entityItem = new EntityItem(world);
+    public static boolean spawnStackAtBlock(World world, BlockPos pos, @Nullable Direction pushDirection, ItemStack stack) {
+        ItemEntity entityItem = new ItemEntity(world);
         BlockPos spawnPos = new BlockPos(pos);
         double velocity = 0.15D;
         if (pushDirection != null) {
@@ -854,17 +852,17 @@ public class Utils {
     public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos, boolean playSound) {
         TileEntity initialTile = initialWorld.getTileEntity(initialPos);
         TileEntity finalTile = finalWorld.getTileEntity(finalPos);
-        NBTTagCompound initialTag = new NBTTagCompound();
-        NBTTagCompound finalTag = new NBTTagCompound();
+        CompoundNBT initialTag = new CompoundNBT();
+        CompoundNBT finalTag = new CompoundNBT();
         if (initialTile != null)
             initialTile.writeToNBT(initialTag);
         if (finalTile != null)
             finalTile.writeToNBT(finalTag);
 
-        IBlockState initialState = initialWorld.getBlockState(initialPos);
-        IBlockState finalState = finalWorld.getBlockState(finalPos);
+        BlockState initialState = initialWorld.getBlockState(initialPos);
+        BlockState finalState = finalWorld.getBlockState(finalPos);
 
-        if ((initialState.getBlock().equals(Blocks.AIR) && finalState.getBlock().equals(Blocks.AIR)) || initialState.getBlock() instanceof BlockPortal || finalState.getBlock() instanceof BlockPortal)
+        if ((initialState.getBlock().equals(Blocks.AIR) && finalState.getBlock().equals(Blocks.AIR)) || initialState.getBlock() instanceof NetherPortalBlock || finalState.getBlock() instanceof NetherPortalBlock)
             return false;
 
         if (playSound) {
@@ -879,8 +877,8 @@ public class Utils {
             initialWorld.removeTileEntity(initialPos);
 
         //TILES CLEARED
-        IBlockState initialBlockState = initialWorld.getBlockState(initialPos);
-        IBlockState finalBlockState = finalWorld.getBlockState(finalPos);
+        BlockState initialBlockState = initialWorld.getBlockState(initialPos);
+        BlockState finalBlockState = finalWorld.getBlockState(finalPos);
         finalWorld.setBlockState(finalPos, initialBlockState, 3);
 
         if (initialTile != null) {
@@ -950,7 +948,7 @@ public class Utils {
         }
     }
 
-    public static RayTraceResult rayTrace(EntityPlayer player, boolean useLiquids) {
+    public static RayTraceResult rayTrace(PlayerEntity player, boolean useLiquids) {
         float pitch = player.rotationPitch;
         float yaw = player.rotationYaw;
         Vec3d eyePosition = new Vec3d(player.posX, player.posY + (double) player.getEyeHeight(), player.posZ);
@@ -963,8 +961,8 @@ public class Utils {
         float f7 = f2 * f4;
 
         double reachDistance = 5.0D;
-        if (player instanceof EntityPlayerMP)
-            reachDistance = ((EntityPlayerMP) player).interactionManager.getBlockReachDistance();
+        if (player instanceof ServerPlayerEntity)
+            reachDistance = ((ServerPlayerEntity) player).interactionManager.getBlockReachDistance();
 
         Vec3d reachPosition = eyePosition.add((double) f6 * reachDistance, (double) f5 * reachDistance, (double) f7 * reachDistance);
         return player.getEntityWorld().rayTraceBlocks(eyePosition, reachPosition, useLiquids, !useLiquids, false);

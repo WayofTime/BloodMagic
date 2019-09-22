@@ -5,15 +5,15 @@ import WayofTime.bloodmagic.iface.IBindable;
 import WayofTime.bloodmagic.util.helper.BindableHelper;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
 
 public class SubCommandBind extends CommandTreeBase {
-    public EntityPlayerMP player;
+    public ServerPlayerEntity player;
 
     public SubCommandBind() {
         addSubcommand(new CommandTreeHelp(this));
@@ -45,12 +45,12 @@ public class SubCommandBind extends CommandTreeBase {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-            sender.sendMessage(new TextComponentTranslation(getHelp()));
+            sender.sendMessage(new TranslationTextComponent(getHelp()));
             return;
         }
         if (sender.getEntityWorld().isRemote)
             return;
-        EntityPlayerMP player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+        ServerPlayerEntity player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
         ItemStack held = player.getHeldItemMainhand();
         boolean bind = true;
         if (held.getItem() instanceof IBindable) {
@@ -65,22 +65,22 @@ public class SubCommandBind extends CommandTreeBase {
                         player = getPlayer(server, sender, args[0]);
             if (bind) {
                 if (binding.getOwnerName().equals(player.getName())) {
-                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.error.ownerEqualsTarget"));
+                    sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.bind.error.ownerEqualsTarget"));
                     return;
                 }
                 binding = new Binding(player.getGameProfile().getId(), player.getGameProfile().getName());
                 BindableHelper.applyBinding(held, binding);
                 this.player = player;
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.success", getInfo()));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.bind.success", getInfo()));
             } else {
                 if (binding == null) {
-                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.error.notBound"));
+                    sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.bind.error.notBound"));
                 }
                 held.getTagCompound().removeTag("binding");
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.remove.success"));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.bind.remove.success"));
             }
         } else
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.bind.error.notBindable"));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.bind.error.notBindable"));
 
 
     }

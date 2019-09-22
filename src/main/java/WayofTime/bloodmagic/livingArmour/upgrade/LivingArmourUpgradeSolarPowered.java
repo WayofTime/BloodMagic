@@ -3,11 +3,11 @@ package WayofTime.bloodmagic.livingArmour.upgrade;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effects;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
@@ -25,7 +25,7 @@ public class LivingArmourUpgradeSolarPowered extends LivingArmourUpgrade {
     }
 
     @Override
-    public double getArmourProtection(EntityLivingBase wearer, DamageSource source) {
+    public double getArmourProtection(LivingEntity wearer, DamageSource source) {
         if (wearer.getEntityWorld().canSeeSky(wearer.getPosition()) && wearer.getEntityWorld().provider.isDaytime()) {
             return protectionLevel[this.level];
         }
@@ -34,7 +34,7 @@ public class LivingArmourUpgradeSolarPowered extends LivingArmourUpgrade {
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
+    public void onTick(World world, PlayerEntity player, ILivingArmour livingArmour) {
         counter++;
         if (world.canSeeSky(player.getPosition()) && world.provider.isDaytime()) {
             if (counter % regenCooldown[this.level] == 0 && player.getHealth() < player.getMaxHealth()) {
@@ -42,7 +42,7 @@ public class LivingArmourUpgradeSolarPowered extends LivingArmourUpgrade {
             }
 
             if (fireResistTime[this.level] != 0 && counter % fireResistCooldown[this.level] == 0) {
-                player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, fireResistTime[this.level], 0, false, false));
+                player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, fireResistTime[this.level], 0, false, false));
             }
         }
     }
@@ -63,12 +63,12 @@ public class LivingArmourUpgradeSolarPowered extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         tag.setInteger(BloodMagic.MODID + ".tracker.solarPowered", counter);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         counter = tag.getInteger(BloodMagic.MODID + ".tracker.solarPowered");
     }
 

@@ -13,17 +13,17 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import amerifrance.guideapi.api.IGuideLinked;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -44,7 +44,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = player.getHeldItem(hand);
         TileEntity tile = world.getTileEntity(pos);
 
@@ -57,7 +57,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
                 if (!key.isEmpty()) {
                     Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(key);
                     if (ritual != null) {
-                        EnumFacing direction = RitualHelper.getDirectionOfRitual(world, pos, ritual);
+                        Direction direction = RitualHelper.getDirectionOfRitual(world, pos, ritual);
                         // TODO: Give a message stating that this ritual is not a valid ritual.
                         if (direction != null && RitualHelper.checkValidRitual(world, pos, ritual, direction)) {
                             if (((TileMasterRitualStone) tile).activateRitual(heldItem, player, BloodMagic.RITUAL_MANAGER.getRitual(key))) {
@@ -66,17 +66,17 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
                                     ((TileMasterRitualStone) tile).setInverted(true);
                             }
                         } else {
-                            player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.notValid"), true);
+                            player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
                         }
                     } else {
-                        player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.notValid"), true);
+                        player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
                     }
                 } else {
-                    player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.notValid"), true);
+                    player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
                 }
             }
         } else if (state.getValue(getProperty()) == EnumRitualController.IMPERFECT && tile instanceof TileImperfectRitualStone) {
-            IBlockState ritualBlock = world.getBlockState(pos.up());
+            BlockState ritualBlock = world.getBlockState(pos.up());
             ImperfectRitual ritual = BloodMagic.RITUAL_MANAGER.getImperfectRitual(ritualBlock);
             if (ritual == null)
                 return false;
@@ -89,7 +89,7 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
     }
 
     @Override
-    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+    public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         TileEntity tile = world.getTileEntity(pos);
 
         if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone)
@@ -105,12 +105,12 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(BlockState state) {
         return true;
     }
 
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
+    public TileEntity createTileEntity(World world, BlockState state) {
         return state.getValue(getProperty()) != EnumRitualController.IMPERFECT ? new TileMasterRitualStone() : new TileImperfectRitualStone();
     }
 
@@ -118,8 +118,8 @@ public class BlockRitualController extends BlockEnum<EnumRitualController> imple
 
     @Override
     @Nullable
-    public ResourceLocation getLinkedEntry(World world, BlockPos pos, EntityPlayer player, ItemStack stack) {
-        IBlockState state = world.getBlockState(pos);
+    public ResourceLocation getLinkedEntry(World world, BlockPos pos, PlayerEntity player, ItemStack stack) {
+        BlockState state = world.getBlockState(pos);
         if (state.getValue(getProperty()).equals(EnumRitualController.MASTER)) {
             TileMasterRitualStone mrs = (TileMasterRitualStone) world.getTileEntity(pos);
             if (mrs == null || mrs.getCurrentRitual() == null)

@@ -13,7 +13,7 @@ import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -35,13 +35,13 @@ public class TileTeleposer extends TileInventory implements ITickable {
     }
 
     @Override
-    public void deserialize(NBTTagCompound tagCompound) {
+    public void deserialize(CompoundNBT tagCompound) {
         super.deserialize(tagCompound);
         previousInput = tagCompound.getInteger(Constants.NBT.PREVIOUS_INPUT);
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tagCompound) {
+    public CompoundNBT serialize(CompoundNBT tagCompound) {
         super.serialize(tagCompound);
         tagCompound.setInteger(Constants.NBT.PREVIOUS_INPUT, previousInput);
         return tagCompound;

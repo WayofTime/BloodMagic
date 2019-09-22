@@ -2,15 +2,15 @@ package WayofTime.bloodmagic.entity.ai;
 
 import WayofTime.bloodmagic.entity.mob.EntityAspectedDemonBase;
 import WayofTime.bloodmagic.util.BMLog;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class EntityAIPickUpAlly extends EntityAIBase {
+public class EntityAIPickUpAlly extends Goal {
     protected final int attackInterval = 20;
     protected EntityAspectedDemonBase entity;
     /**
@@ -39,7 +39,7 @@ public class EntityAIPickUpAlly extends EntityAIBase {
     private int failedPathFindingPenalty = 0;
     private boolean canPenalize = false;
 
-    private EntityLivingBase pickupTarget = null;
+    private LivingEntity pickupTarget = null;
 
     public EntityAIPickUpAlly(EntityAspectedDemonBase creature, double speedIn, boolean useLongMemory) {
         this.entity = creature;
@@ -58,8 +58,8 @@ public class EntityAIPickUpAlly extends EntityAIBase {
         }
 
         AxisAlignedBB bb = new AxisAlignedBB(entity.posX - 0.5, entity.posY - 0.5, entity.posZ - 0.5, entity.posX + 0.5, entity.posY + 0.5, entity.posZ + 0.5).grow(5);
-        List<EntityLivingBase> list = this.entity.getEntityWorld().getEntitiesWithinAABB(EntityLivingBase.class, bb, new EntityAspectedDemonBase.WillTypePredicate(entity.getType()));
-        for (EntityLivingBase testEntity : list) {
+        List<LivingEntity> list = this.entity.getEntityWorld().getEntitiesWithinAABB(LivingEntity.class, bb, new EntityAspectedDemonBase.WillTypePredicate(entity.getType()));
+        for (LivingEntity testEntity : list) {
             if (testEntity != this.entity) {
                 Path path = this.entity.getNavigator().getPathToEntityLiving(testEntity);
                 if (path != null) {
@@ -100,7 +100,7 @@ public class EntityAIPickUpAlly extends EntityAIBase {
      * Updates the task
      */
     public void updateTask() {
-        EntityLivingBase entitylivingbase = this.pickupTarget;
+        LivingEntity entitylivingbase = this.pickupTarget;
         this.entity.getLookHelper().setLookPositionWithEntity(entitylivingbase, 30.0F, 30.0F);
         double d0 = this.entity.getDistanceSq(entitylivingbase.posX, entitylivingbase.getEntityBoundingBox().minY, entitylivingbase.posZ);
         --this.delayCounter;
@@ -139,7 +139,7 @@ public class EntityAIPickUpAlly extends EntityAIBase {
         this.pickUpEntity(entitylivingbase, d0);
     }
 
-    protected void pickUpEntity(EntityLivingBase potentialPickup, double distance) {
+    protected void pickUpEntity(LivingEntity potentialPickup, double distance) {
         double d0 = this.getAttackReachSqr(potentialPickup);
 
         if (distance <= d0 && this.attackTick <= 0 && !potentialPickup.isRiding()) {
@@ -148,7 +148,7 @@ public class EntityAIPickUpAlly extends EntityAIBase {
         }
     }
 
-    protected double getAttackReachSqr(EntityLivingBase attackTarget) {
+    protected double getAttackReachSqr(LivingEntity attackTarget) {
         return (double) (this.entity.width * 2.0F * this.entity.width * 2.0F + attackTarget.width);
     }
 }

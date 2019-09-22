@@ -4,16 +4,16 @@ import WayofTime.bloodmagic.entity.mob.EntityDemonBase;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.pathfinding.Path;
-import net.minecraft.pathfinding.PathNavigate;
-import net.minecraft.util.EntitySelectors;
+import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
 
-public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase {
+public class EntityAIRetreatToHeal<T extends Entity> extends Goal {
     private final Predicate<Entity> canBeSeenSelector;
     /**
      * The entity we are attached to
@@ -31,7 +31,7 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase {
     /**
      * The PathNavigate of our entity
      */
-    private PathNavigate entityPathNavigate;
+    private PathNavigator entityPathNavigate;
     private Class<T> classToAvoid;
     private Predicate<? super T> avoidTargetSelector;
 
@@ -61,7 +61,7 @@ public class EntityAIRetreatToHeal<T extends Entity> extends EntityAIBase {
         }
 
         //This part almost doesn't matter
-        List<T> list = this.theEntity.getEntityWorld().getEntitiesWithinAABB(this.classToAvoid, this.theEntity.getEntityBoundingBox().expand((double) this.avoidDistance, 3.0D, (double) this.avoidDistance), Predicates.and(EntitySelectors.CAN_AI_TARGET, this.canBeSeenSelector, this.avoidTargetSelector));
+        List<T> list = this.theEntity.getEntityWorld().getEntitiesWithinAABB(this.classToAvoid, this.theEntity.getEntityBoundingBox().expand((double) this.avoidDistance, 3.0D, (double) this.avoidDistance), Predicates.and(EntityPredicates.CAN_AI_TARGET, this.canBeSeenSelector, this.avoidTargetSelector));
 
         if (list.isEmpty()) {
             return true; //No entities nearby, so I can freely heal

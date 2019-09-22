@@ -4,8 +4,8 @@ import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.altar.AltarTier;
 import WayofTime.bloodmagic.altar.IBloodAltar;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -22,19 +22,19 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable {
     }
 
     @Override
-    public void deserialize(NBTTagCompound tagCompound) {
+    public void deserialize(CompoundNBT tagCompound) {
         super.deserialize(tagCompound);
 
-        NBTTagCompound altarTag = tagCompound.getCompoundTag("bloodAltar");
+        CompoundNBT altarTag = tagCompound.getCompoundTag("bloodAltar");
 
         this.bloodAltar.readFromNBT(altarTag);
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tagCompound) {
+    public CompoundNBT serialize(CompoundNBT tagCompound) {
         super.serialize(tagCompound);
 
-        NBTTagCompound altarTag = new NBTTagCompound();
+        CompoundNBT altarTag = new CompoundNBT();
         this.bloodAltar.writeToNBT(altarTag);
 
         tagCompound.setTag("bloodAltar", altarTag);
@@ -170,7 +170,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable {
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return true;
         }
@@ -180,7 +180,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return (T) bloodAltar;
         }

@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.iface;
 
 import WayofTime.bloodmagic.item.sigil.ItemSigil;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -24,6 +24,6 @@ public interface ISigil {
 
     interface Holding {
         @Nonnull
-        ItemStack getHeldItem(ItemStack holdingStack, EntityPlayer player);
+        ItemStack getHeldItem(ItemStack holdingStack, PlayerEntity player);
     }
 }

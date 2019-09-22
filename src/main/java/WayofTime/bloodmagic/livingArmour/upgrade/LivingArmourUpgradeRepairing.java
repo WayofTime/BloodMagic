@@ -3,10 +3,10 @@ package WayofTime.bloodmagic.livingArmour.upgrade;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 public class LivingArmourUpgradeRepairing extends LivingArmourUpgrade {
@@ -22,11 +22,11 @@ public class LivingArmourUpgradeRepairing extends LivingArmourUpgrade {
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
+    public void onTick(World world, PlayerEntity player, ILivingArmour livingArmour) {
         if (delay <= 0) {
             delay = repairDelay[this.level];
 
-            EntityEquipmentSlot randomSlot = EntityEquipmentSlot.values()[2 + world.rand.nextInt(4)];
+            EquipmentSlotType randomSlot = EquipmentSlotType.values()[2 + world.rand.nextInt(4)];
             ItemStack repairStack = player.getItemStackFromSlot(randomSlot);
             if (!repairStack.isEmpty()) {
                 if (repairStack.isItemStackDamageable() && repairStack.isItemDamaged()) {
@@ -57,12 +57,12 @@ public class LivingArmourUpgradeRepairing extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         tag.setInteger("repairingDelay", delay);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         delay = tag.getInteger("repairingDelay");
     }
 

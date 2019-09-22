@@ -4,10 +4,10 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effects;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
@@ -24,17 +24,17 @@ public class LivingArmourUpgradeDigging extends LivingArmourUpgrade {
     }
 
     @Override
-    public double getMiningSpeedModifier(EntityPlayer player) {
+    public double getMiningSpeedModifier(PlayerEntity player) {
         return digSpeedModifier[this.level];
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
+    public void onTick(World world, PlayerEntity player, ILivingArmour livingArmour) {
         if (changeMap.containsKey(livingArmour) && changeMap.get(livingArmour)) {
             changeMap.put(livingArmour, false);
 
             if (digSpeedTime[this.level] > 0) {
-                player.addPotionEffect(new PotionEffect(MobEffects.SPEED, digSpeedTime[this.level], digSpeedLevel[this.level], false, false));
+                player.addPotionEffect(new EffectInstance(Effects.SPEED, digSpeedTime[this.level], digSpeedLevel[this.level], false, false));
             }
         }
     }
@@ -55,12 +55,12 @@ public class LivingArmourUpgradeDigging extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         // EMPTY
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         // EMPTY
     }
 

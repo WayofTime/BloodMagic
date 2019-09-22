@@ -6,19 +6,19 @@ import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodTank;
 import WayofTime.bloodmagic.tile.TileBloodTank;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -49,13 +49,13 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
         return BOX;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override
@@ -65,28 +65,28 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity tile, ItemStack stack) {
+    public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity tile, ItemStack stack) {
         super.harvestBlock(world, player, pos, state, tile, stack);
         world.setBlockToAir(pos);
     }
 
     @Override
-    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+    public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest) {
         return willHarvest || super.removedByPlayer(state, world, pos, player, willHarvest);
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos blockPos, BlockState state, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
         boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, blockPos, side);
         if (success) {
             world.checkLight(blockPos);
@@ -99,23 +99,23 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
     }
 
     @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
         if (!player.capabilities.isCreativeMode)
             this.dropBlockAsItem(worldIn, pos, state, 0);
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState blockState, int fortune) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState blockState, int fortune) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileBloodTank) {
             TileBloodTank bloodTank = (TileBloodTank) tile;
             ItemStack drop = new ItemStack(this, 1, bloodTank.getBlockMetadata());
-            NBTTagCompound fluidTag = new NBTTagCompound();
+            CompoundNBT fluidTag = new CompoundNBT();
 
             if (bloodTank.getTank().getFluid() != null) {
                 bloodTank.getTank().getFluid().writeToNBT(fluidTag);
-                NBTTagCompound dropTag = new NBTTagCompound();
+                CompoundNBT dropTag = new CompoundNBT();
                 dropTag.setTag("Fluid", fluidTag);
                 drop.setTagCompound(dropTag);
             }
@@ -125,11 +125,11 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState blockState, EntityLivingBase placer, ItemStack stack) {
+    public void onBlockPlacedBy(World world, BlockPos pos, BlockState blockState, LivingEntity placer, ItemStack stack) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileBloodTank) {
             TileBloodTank bloodTank = (TileBloodTank) tile;
-            NBTTagCompound tag = stack.getTagCompound();
+            CompoundNBT tag = stack.getTagCompound();
             if (stack.hasTagCompound() && stack.getTagCompound().hasKey("Fluid")) {
                 FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("Fluid"));
                 bloodTank.getTank().setFluid(fluidStack);
@@ -142,7 +142,7 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
     }
 
     @Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public int getLightValue(BlockState state, IBlockAccess world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileBloodTank) {
             FluidStack fluidStack = ((TileBloodTank) tile).getTank().getFluid();
@@ -153,17 +153,17 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
     }
 
     @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(BlockState state, RayTraceResult target, World world, BlockPos pos, PlayerEntity player) {
         return new ItemStack(this, 1, getMetaFromState(state));
     }
 
     @Override
-    public boolean hasComparatorInputOverride(IBlockState state) {
+    public boolean hasComparatorInputOverride(BlockState state) {
         return true;
     }
 
     @Override
-    public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
+    public int getComparatorInputOverride(BlockState state, World world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileBloodTank)
             return ((TileBloodTank) tile).getComparatorOutput();
@@ -171,17 +171,17 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
     }
 
     @Override
-    public TileEntity createTileEntity(World worldIn, IBlockState blockState) {
+    public TileEntity createTileEntity(World worldIn, BlockState blockState) {
         return new TileBloodTank(getMetaFromState(blockState));
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(BlockState state) {
         return true;
     }
 
     @Override
-    public ItemBlock getItem() {
+    public BlockItem getItem() {
         return new ItemBlockBloodTank(this);
     }
 

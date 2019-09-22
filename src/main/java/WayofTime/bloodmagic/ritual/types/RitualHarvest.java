@@ -5,11 +5,11 @@ import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.ritual.harvest.HarvestRegistry;
 import WayofTime.bloodmagic.ritual.harvest.IHarvestHandler;
 import com.google.common.collect.Lists;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -27,7 +27,7 @@ import java.util.function.Consumer;
  * <p>
  * This ritual includes a way to change the range based on what block is above
  * the MasterRitualStone. You can use
- * {@link HarvestRegistry#registerRangeAmplifier(net.minecraft.block.state.IBlockState, int)} to register a
+ * {@link HarvestRegistry#registerRangeAmplifier(BlockState, int)} to register a
  * new amplifier.
  */
 @RitualRegister("harvest")
@@ -89,11 +89,11 @@ public class RitualHarvest extends Ritual {
     }
 
     public static boolean harvestBlock(World world, BlockPos cropPos, BlockPos controllerPos) {
-        IBlockState harvestState = world.getBlockState(cropPos);
+        BlockState harvestState = world.getBlockState(cropPos);
         TileEntity potentialInventory = world.getTileEntity(controllerPos.up());
         IItemHandler itemHandler = null;
-        if (potentialInventory != null && potentialInventory.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN))
-            itemHandler = potentialInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+        if (potentialInventory != null && potentialInventory.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN))
+            itemHandler = potentialInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN);
 
         for (IHarvestHandler handler : HarvestRegistry.getHarvestHandlers()) {
             if (handler.test(world, cropPos, harvestState)) {

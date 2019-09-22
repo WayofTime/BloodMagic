@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.item.block.base;
 
 import WayofTime.bloodmagic.block.base.BlockInteger;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 
-public class ItemBlockInteger extends ItemBlock {
+public class ItemBlockInteger extends BlockItem {
 
     public ItemBlockInteger(BlockInteger block) {
         super(block);

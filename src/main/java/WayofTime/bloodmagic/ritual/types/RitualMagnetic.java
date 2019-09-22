@@ -5,14 +5,14 @@ import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.util.Utils;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.ServerWorld;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -59,7 +59,7 @@ public class RitualMagnetic extends Ritual {
             }
         }
 
-        IBlockState downState = world.getBlockState(pos.down());
+        BlockState downState = world.getBlockState(pos.down());
         int radius = getRadius(downState.getBlock());
 
         if (replace) {
@@ -78,9 +78,9 @@ public class RitualMagnetic extends Ritual {
                     while (k <= radius) {
                         BlockPos newPos = pos.add(i, j, k);
                         Vec3d newPosVector = new Vec3d(newPos);
-                        IBlockState state = world.getBlockState(newPos);
+                        BlockState state = world.getBlockState(newPos);
                         RayTraceResult fakeRayTrace = world.rayTraceBlocks(MRSpos, newPosVector, false);
-                        ItemStack checkStack = state.getBlock().getPickBlock(state, fakeRayTrace, world, newPos, getFakePlayer((WorldServer) world));
+                        ItemStack checkStack = state.getBlock().getPickBlock(state, fakeRayTrace, world, newPos, getFakePlayer((ServerWorld) world));
                         if (isBlockOre(checkStack)) {
                             Utils.swapLocations(world, newPos, world, replacement);
                             masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
@@ -145,7 +145,7 @@ public class RitualMagnetic extends Ritual {
         return new RitualMagnetic();
     }
 
-    private FakePlayer getFakePlayer(WorldServer world) {
+    private FakePlayer getFakePlayer(ServerWorld world) {
         return fakePlayer == null ? fakePlayer = FakePlayerFactory.get(world, new GameProfile(null, BloodMagic.MODID + "_ritual_magnetic")) : fakePlayer;
     }
 

@@ -6,9 +6,9 @@ import WayofTime.bloodmagic.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeNightSight;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -34,19 +34,19 @@ public class StatTrackerNightSight extends StatTracker {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         totalDamageDealt = tag.getDouble(BloodMagic.MODID + ".tracker.nightSight");
         totalNightVision = tag.getInteger(BloodMagic.MODID + ".tracker.nightSightVision");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         tag.setDouble(BloodMagic.MODID + ".tracker.nightSight", totalDamageDealt);
         tag.setInteger(BloodMagic.MODID + ".tracker.nightSightVision", totalNightVision);
     }
 
     @Override
-    public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+    public boolean onTick(World world, PlayerEntity player, LivingArmour livingArmour) {
         boolean test = false;
 
         if (changeMap.containsKey(livingArmour)) {
@@ -60,7 +60,7 @@ public class StatTrackerNightSight extends StatTracker {
             }
         }
 
-        if (world.getLight(player.getPosition()) <= 9 && player.isPotionActive(MobEffects.NIGHT_VISION)) {
+        if (world.getLight(player.getPosition()) <= 9 && player.isPotionActive(Effects.NIGHT_VISION)) {
             totalNightVision++;
             test = true;
         }
@@ -73,7 +73,7 @@ public class StatTrackerNightSight extends StatTracker {
     }
 
     @Override
-    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+    public void onDeactivatedTick(World world, PlayerEntity player, LivingArmour livingArmour) {
         if (changeMap.containsKey(livingArmour)) {
             changeMap.remove(livingArmour);
         }

@@ -8,8 +8,8 @@ import WayofTime.bloodmagic.teleport.PortalLocation;
 import WayofTime.bloodmagic.teleport.TeleportQueue;
 import WayofTime.bloodmagic.teleport.Teleports;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -39,22 +39,22 @@ public class BlockDimensionalPortal extends BlockInteger {
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean isNormalCube(BlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
+    public boolean causesSuffocation(BlockState state) {
         return false;
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(BlockState state, IBlockAccess world, BlockPos pos) {
         return null;
     }
 
@@ -67,12 +67,12 @@ public class BlockDimensionalPortal extends BlockInteger {
     }
 
     @Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public int getLightValue(BlockState state, IBlockAccess world, BlockPos pos) {
         return 12;
     }
 
     @Override
-    public void onEntityCollision(World world, BlockPos pos, IBlockState blockState, Entity entity) {
+    public void onEntityCollision(World world, BlockPos pos, BlockState blockState, Entity entity) {
         if (!world.isRemote && world.getTileEntity(pos) instanceof TileDimensionalPortal) {
             TileDimensionalPortal tile = (TileDimensionalPortal) world.getTileEntity(pos);
 
@@ -109,7 +109,7 @@ public class BlockDimensionalPortal extends BlockInteger {
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess world, BlockPos pos) {
         int meta = state.getBlock().getMetaFromState(state);
         if (meta == 0) {
             return AABB_0;
@@ -135,18 +135,18 @@ public class BlockDimensionalPortal extends BlockInteger {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random rand) {
         this.spawnParticles(world, pos.getX(), pos.getY(), pos.getZ());
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(BlockState state) {
         return true;
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
+    public TileEntity createTileEntity(World world, BlockState state) {
         return new TileDimensionalPortal();
     }
 

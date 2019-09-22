@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.core.data;
 
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.world.storage.WorldSavedData;
 
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class BMWorldSavedData extends WorldSavedData {
         this(ID);
     }
 
-    public SoulNetwork getNetwork(EntityPlayer player) {
+    public SoulNetwork getNetwork(PlayerEntity player) {
         return getNetwork(PlayerHelper.getUUIDFromPlayer(player));
     }
 
@@ -34,11 +34,11 @@ public class BMWorldSavedData extends WorldSavedData {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound) {
-        NBTTagList networkData = tagCompound.getTagList("networkData", 10);
+    public void readFromNBT(CompoundNBT tagCompound) {
+        ListNBT networkData = tagCompound.getTagList("networkData", 10);
 
         for (int i = 0; i < networkData.tagCount(); i++) {
-            NBTTagCompound data = networkData.getCompoundTagAt(i);
+            CompoundNBT data = networkData.getCompoundTagAt(i);
             SoulNetwork network = SoulNetwork.fromNBT(data);
             network.setParent(this);
             soulNetworks.put(network.getPlayerId(), network);
@@ -46,8 +46,8 @@ public class BMWorldSavedData extends WorldSavedData {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-        NBTTagList networkData = new NBTTagList();
+    public CompoundNBT writeToNBT(CompoundNBT tagCompound) {
+        ListNBT networkData = new ListNBT();
         for (SoulNetwork soulNetwork : soulNetworks.values())
             networkData.appendTag(soulNetwork.serializeNBT());
 

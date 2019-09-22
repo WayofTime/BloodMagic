@@ -4,7 +4,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.tile.TileSpectralBlock;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -34,7 +34,7 @@ public class RitualSuppression extends Ritual {
         AreaDescriptor suppressionRange = masterRitualStone.getBlockRange(SUPPRESSION_RANGE);
 
         for (BlockPos blockPos : suppressionRange.getContainedPositions(masterRitualStone.getBlockPos())) {
-            IBlockState state = world.getBlockState(blockPos);
+            BlockState state = world.getBlockState(blockPos);
 
             if (Utils.isBlockLiquid(state) && world.getTileEntity(blockPos) == null)
                 TileSpectralBlock.createSpectralBlock(world, blockPos, refresh);

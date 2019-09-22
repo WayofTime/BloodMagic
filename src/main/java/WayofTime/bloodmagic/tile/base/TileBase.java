@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.tile.base;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -17,27 +17,27 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class TileBase extends TileEntity {
     @Override
-    public final void readFromNBT(NBTTagCompound compound) {
+    public final void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
         deserializeBase(compound);
         deserialize(compound);
     }
 
     @Override
-    public final NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public final CompoundNBT writeToNBT(CompoundNBT compound) {
         super.writeToNBT(compound);
         serializeBase(compound);
         return serialize(compound);
     }
 
     /**
-     * Called by {@link #readFromNBT(NBTTagCompound)}
+     * Called by {@link #readFromNBT(CompoundNBT)}
      * <p>
      * Internal data (such as coordinates) are handled for you. Just read the data you need.
      *
      * @param tagCompound - The tag compound to read from
      */
-    public void deserialize(NBTTagCompound tagCompound) {
+    public void deserialize(CompoundNBT tagCompound) {
 
     }
 
@@ -47,19 +47,19 @@ public class TileBase extends TileEntity {
      * @param tagCompound - The tag compound to read from
      * @see TileTicking
      */
-    void deserializeBase(NBTTagCompound tagCompound) {
+    void deserializeBase(CompoundNBT tagCompound) {
 
     }
 
     /**
-     * Called by {@link #writeToNBT(NBTTagCompound)}
+     * Called by {@link #writeToNBT(CompoundNBT)}
      * <p>
      * Internal data (such as coordinates) are handled for you. Just read the data you need.
      *
      * @param tagCompound - The tag compound to write to.
      * @return the modified tag compound
      */
-    public NBTTagCompound serialize(NBTTagCompound tagCompound) {
+    public CompoundNBT serialize(CompoundNBT tagCompound) {
         return tagCompound;
     }
 
@@ -71,30 +71,30 @@ public class TileBase extends TileEntity {
      * @return the modified tag compound
      * @see TileTicking
      */
-    NBTTagCompound serializeBase(NBTTagCompound tagCompound) {
+    CompoundNBT serializeBase(CompoundNBT tagCompound) {
         return tagCompound;
     }
 
     public void notifyUpdate() {
-        IBlockState state = getWorld().getBlockState(getPos());
+        BlockState state = getWorld().getBlockState(getPos());
         getWorld().notifyBlockUpdate(getPos(), state, state, 3);
     }
 
     // Data syncing
 
     @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+    public boolean shouldRefresh(World world, BlockPos pos, BlockState oldState, BlockState newState) {
         return oldState.getBlock() != newState.getBlock();
     }
 
     @Override
-    public final SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(getPos(), -999, writeToNBT(new NBTTagCompound()));
+    public final SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(getPos(), -999, writeToNBT(new CompoundNBT()));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    public final void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         super.onDataPacket(net, pkt);
         readFromNBT(pkt.getNbtCompound());
         onDataPacketClientReceived();
@@ -108,12 +108,12 @@ public class TileBase extends TileEntity {
     }
 
     @Override
-    public final NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
+    public final CompoundNBT getUpdateTag() {
+        return writeToNBT(new CompoundNBT());
     }
 
     @Override
-    public final void handleUpdateTag(NBTTagCompound tag) {
+    public final void handleUpdateTag(CompoundNBT tag) {
         readFromNBT(tag);
     }
 }

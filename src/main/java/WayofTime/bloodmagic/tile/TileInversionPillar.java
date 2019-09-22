@@ -10,10 +10,10 @@ import WayofTime.bloodmagic.inversion.InversionPillarHandler;
 import WayofTime.bloodmagic.tile.base.TileTicking;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -133,9 +133,9 @@ public class TileInversionPillar extends TileTicking {
                 BlockPos candidatePos = findCandidatePositionForPillar(getWorld(), type, pos, allConnectedPos, 5, 10);
                 if (!candidatePos.equals(BlockPos.ORIGIN)) {
                     currentInversion = 0;
-                    IBlockState pillarState = RegistrarBloodMagicBlocks.INVERSION_PILLAR.getStateFromMeta(type.ordinal());
-                    IBlockState bottomState = RegistrarBloodMagicBlocks.INVERSION_PILLAR_END.getStateFromMeta(type.ordinal() * 2);
-                    IBlockState topState = RegistrarBloodMagicBlocks.INVERSION_PILLAR_END.getStateFromMeta(type.ordinal() * 2 + 1);
+                    BlockState pillarState = RegistrarBloodMagicBlocks.INVERSION_PILLAR.getStateFromMeta(type.ordinal());
+                    BlockState bottomState = RegistrarBloodMagicBlocks.INVERSION_PILLAR_END.getStateFromMeta(type.ordinal() * 2);
+                    BlockState topState = RegistrarBloodMagicBlocks.INVERSION_PILLAR_END.getStateFromMeta(type.ordinal() * 2 + 1);
                     getWorld().setBlockState(candidatePos, pillarState);
                     getWorld().setBlockState(candidatePos.down(), bottomState);
                     getWorld().setBlockState(candidatePos.up(), topState);
@@ -166,7 +166,7 @@ public class TileInversionPillar extends TileTicking {
             return;
         }
 
-        for (EnumFacing side : EnumFacing.HORIZONTALS) {
+        for (Direction side : Direction.HORIZONTALS) {
             BlockPos offsetPos = pos.offset(side, 16);
             double sideAmount = WorldDemonWillHandler.getCurrentWill(getWorld(), offsetPos, type);
             if (currentAmount > sideAmount) {
@@ -194,7 +194,7 @@ public class TileInversionPillar extends TileTicking {
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(CompoundNBT tag) {
         super.deserialize(tag);
 
         if (!tag.hasKey(Constants.NBT.WILL_TYPE)) {
@@ -211,7 +211,7 @@ public class TileInversionPillar extends TileTicking {
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
 
         tag.setString(Constants.NBT.WILL_TYPE, type.toString());
@@ -282,7 +282,7 @@ public class TileInversionPillar extends TileTicking {
                 return 1; //Invalid block (itself!)
             }
 
-            IBlockState state = getWorld().getBlockState(offsetPos);
+            BlockState state = getWorld().getBlockState(offsetPos);
             if (!state.getBlock().isAir(state, getWorld(), offsetPos)) {
                 //Consume Will and set this block
                 Block block = state.getBlock();
@@ -314,7 +314,7 @@ public class TileInversionPillar extends TileTicking {
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing side) {
+    public boolean hasCapability(Capability<?> capability, Direction side) {
         if (capability == CapabilityAnimation.ANIMATION_CAPABILITY) {
             return true;
         }
@@ -322,7 +322,7 @@ public class TileInversionPillar extends TileTicking {
     }
 
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing side) {
+    public <T> T getCapability(Capability<T> capability, Direction side) {
         if (capability == CapabilityAnimation.ANIMATION_CAPABILITY) {
             return CapabilityAnimation.ANIMATION_CAPABILITY.cast(asm);
         }

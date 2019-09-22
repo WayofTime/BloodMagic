@@ -12,20 +12,19 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -44,11 +43,11 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         if (world.isRemote)
             return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
 
-        IBlockState hitState = world.getBlockState(pos);
+        BlockState hitState = world.getBlockState(pos);
         if (player.isSneaking()) {
             if (hitState.getBlock() instanceof IDocumentedBlock) {
                 trySetDisplayedTier(world, pos);
@@ -65,7 +64,7 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote)
             return super.onItemRightClick(world, player, hand);
@@ -80,7 +79,7 @@ public class ItemSanguineBook extends Item implements IVariantProvider, IAltarMa
                 stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1);
 
             currentDisplayedTier = AltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)];
-            player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)), true);
+            player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.altarMaker.setTier", NumeralHelper.toRoman(stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1)), true);
 
             return super.onItemRightClick(world, player, hand);
         }

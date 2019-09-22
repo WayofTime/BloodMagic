@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.item.ExperienceOrbEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -16,7 +16,7 @@ public class ItemSigilMagnetism extends ItemSigilToggleableBase {
     }
 
     @Override
-    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected) {
+    public void onSigilUpdate(ItemStack stack, World world, PlayerEntity player, int itemSlot, boolean isSelected) {
         if (PlayerHelper.isFakePlayer(player))
             return;
 
@@ -25,16 +25,16 @@ public class ItemSigilMagnetism extends ItemSigilToggleableBase {
         float posX = Math.round(player.posX);
         float posY = (float) (player.posY - player.getEyeHeight());
         float posZ = Math.round(player.posZ);
-        List<EntityItem> entities = player.getEntityWorld().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).grow(range, verticalRange, range));
-        List<EntityXPOrb> xpOrbs = player.getEntityWorld().getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).grow(range, verticalRange, range));
+        List<ItemEntity> entities = player.getEntityWorld().getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).grow(range, verticalRange, range));
+        List<ExperienceOrbEntity> xpOrbs = player.getEntityWorld().getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).grow(range, verticalRange, range));
 
-        for (EntityItem entity : entities) {
+        for (ItemEntity entity : entities) {
             if (entity != null && !world.isRemote && !entity.isDead) {
                 entity.onCollideWithPlayer(player);
             }
         }
 
-        for (EntityXPOrb xpOrb : xpOrbs) {
+        for (ExperienceOrbEntity xpOrb : xpOrbs) {
             if (xpOrb != null && !world.isRemote) {
                 xpOrb.onCollideWithPlayer(player);
             }

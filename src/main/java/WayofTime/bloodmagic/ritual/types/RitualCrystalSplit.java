@@ -3,13 +3,13 @@ package WayofTime.bloodmagic.ritual.types;
 import java.util.function.Consumer;
 
 import WayofTime.bloodmagic.ritual.*;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
@@ -33,7 +33,7 @@ public class RitualCrystalSplit extends Ritual {
         }
 
         BlockPos pos = masterRitualStone.getBlockPos();
-        EnumFacing direction = masterRitualStone.getDirection();
+        Direction direction = masterRitualStone.getDirection();
         BlockPos rawPos = pos.up(2);
 
         TileEntity tile = world.getTileEntity(rawPos);
@@ -41,14 +41,14 @@ public class RitualCrystalSplit extends Ritual {
             return;
         }
 
-        IBlockState rawState = world.getBlockState(rawPos);
+        BlockState rawState = world.getBlockState(rawPos);
 
         TileDemonCrystal rawTile = (TileDemonCrystal) tile;
         if (rawTile.crystalCount >= 5) {
-            BlockPos vengefulPos = pos.offset(rotateFacing(EnumFacing.NORTH, direction)).up();
-            BlockPos corrosivePos = pos.offset(rotateFacing(EnumFacing.EAST, direction)).up();
-            BlockPos steadfastPos = pos.offset(rotateFacing(EnumFacing.SOUTH, direction)).up();
-            BlockPos destructivePos = pos.offset(rotateFacing(EnumFacing.WEST, direction)).up();
+            BlockPos vengefulPos = pos.offset(rotateFacing(Direction.NORTH, direction)).up();
+            BlockPos corrosivePos = pos.offset(rotateFacing(Direction.EAST, direction)).up();
+            BlockPos steadfastPos = pos.offset(rotateFacing(Direction.SOUTH, direction)).up();
+            BlockPos destructivePos = pos.offset(rotateFacing(Direction.WEST, direction)).up();
 
             int vengefulCrystals = 0;
             int corrosiveCrystals = 0;
@@ -102,7 +102,7 @@ public class RitualCrystalSplit extends Ritual {
         }
     }
 
-    public EnumFacing rotateFacing(EnumFacing facing, EnumFacing rotation) {
+    public Direction rotateFacing(Direction facing, Direction rotation) {
         switch (rotation) {
             case EAST:
                 return facing.rotateY();
@@ -123,7 +123,7 @@ public class RitualCrystalSplit extends Ritual {
             TileDemonCrystal tile = (TileDemonCrystal) world.getTileEntity(pos);
             tile.crystalCount++;
             tile.markDirty();
-            IBlockState state = world.getBlockState(pos);
+            BlockState state = world.getBlockState(pos);
             world.notifyBlockUpdate(pos, state, state, 3);
         }
     }
@@ -156,7 +156,7 @@ public class RitualCrystalSplit extends Ritual {
     }
 
     @Override
-    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
-        return new ITextComponent[]{new TextComponentTranslation(this.getTranslationKey() + ".info")};
+    public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player) {
+        return new ITextComponent[]{new TranslationTextComponent(this.getTranslationKey() + ".info")};
     }
 }

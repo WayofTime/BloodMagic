@@ -5,30 +5,30 @@ import WayofTime.bloodmagic.entity.mob.EntityMimic;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.tileentity.SkullTileEntityRenderer;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.Items;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.tileentity.TileEntitySkull;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.tileentity.SkullTileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderEntityMimic extends RenderLiving<EntityMimic> {
+public class RenderEntityMimic extends MobRenderer<EntityMimic> {
     private static final ResourceLocation SPIDER_TEXTURES = new ResourceLocation("textures/entity/spider/spider.png");
     Minecraft minecraft = Minecraft.getMinecraft();
 
-    public RenderEntityMimic(RenderManager renderManagerIn) {
+    public RenderEntityMimic(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new ModelMimic(), 1.0F);
     }
 
@@ -61,7 +61,7 @@ public class RenderEntityMimic extends RenderLiving<EntityMimic> {
                 GameProfile gameprofile = null;
 
                 if (itemstack.hasTagCompound()) {
-                    NBTTagCompound nbttagcompound = itemstack.getTagCompound();
+                    CompoundNBT nbttagcompound = itemstack.getTagCompound();
 
                     if (nbttagcompound.hasKey("SkullOwner", 10)) {
                         gameprofile = NBTUtil.readGameProfileFromNBT(nbttagcompound.getCompoundTag("SkullOwner"));
@@ -69,14 +69,14 @@ public class RenderEntityMimic extends RenderLiving<EntityMimic> {
                         String s = nbttagcompound.getString("SkullOwner");
 
                         if (!StringUtils.isNullOrEmpty(s)) {
-                            gameprofile = TileEntitySkull.updateGameProfile(new GameProfile(null, s));
-                            nbttagcompound.setTag("SkullOwner", NBTUtil.writeGameProfile(new NBTTagCompound(), gameprofile));
+                            gameprofile = SkullTileEntity.updateGameProfile(new GameProfile(null, s));
+                            nbttagcompound.setTag("SkullOwner", NBTUtil.writeGameProfile(new CompoundNBT(), gameprofile));
                         }
                     }
                 }
 
-                TileEntitySkullRenderer.instance.renderSkull(-0.5F, 0.0F, -0.5F, EnumFacing.UP, 180.0F, itemstack.getMetadata(), gameprofile, -1, 0);
-            } else if (!(item instanceof ItemArmor) || ((ItemArmor) item).getEquipmentSlot() != EntityEquipmentSlot.HEAD) {
+                SkullTileEntityRenderer.instance.renderSkull(-0.5F, 0.0F, -0.5F, Direction.UP, 180.0F, itemstack.getMetadata(), gameprofile, -1, 0);
+            } else if (!(item instanceof ArmorItem) || ((ArmorItem) item).getEquipmentSlot() != EquipmentSlotType.HEAD) {
                 GlStateManager.translate(0, 0.5f, 0);
                 GlStateManager.rotate(-(mimic.prevRotationYawHead + partialTicks * (mimic.rotationYawHead - mimic.prevRotationYawHead)) - 180, 0, 1, 0);
 

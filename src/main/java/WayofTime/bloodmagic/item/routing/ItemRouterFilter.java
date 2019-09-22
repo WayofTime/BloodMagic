@@ -8,7 +8,7 @@ import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -40,7 +40,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
+    public void getSubItems(ItemGroup creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 

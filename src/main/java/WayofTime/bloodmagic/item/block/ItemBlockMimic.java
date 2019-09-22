@@ -1,26 +1,21 @@
 package WayofTime.bloodmagic.item.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.tileentity.ChestTileEntity;
+import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.block.BlockMimic;
 import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.item.block.base.ItemBlockEnum;
-
-import WayofTime.bloodmagic.util.ChatUtil;
 
 public class ItemBlockMimic extends ItemBlockEnum {
     public ItemBlockMimic(BlockEnum block) {
@@ -29,7 +24,7 @@ public class ItemBlockMimic extends ItemBlockEnum {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
 
         //If not sneaking, do normal item use
@@ -40,12 +35,12 @@ public class ItemBlockMimic extends ItemBlockEnum {
         //IF sneaking and player has permission, replace the targeted block
         if (player.canPlayerEdit(pos, facing, stack)) {
             //Store information about the block being replaced and its appropriate itemstack
-            IBlockState replacedBlockstate = world.getBlockState(pos);
+            BlockState replacedBlockstate = world.getBlockState(pos);
             Block replacedBlock = replacedBlockstate.getBlock();
             ItemStack replacedStack = replacedBlock.getItem(world, pos, replacedBlockstate);
 
             //Get the state for the mimic
-            IBlockState mimicBlockstate = this.getBlock().getStateFromMeta(stack.getMetadata());
+            BlockState mimicBlockstate = this.getBlock().getStateFromMeta(stack.getMetadata());
 
 
             //Check if the block can be replaced
@@ -57,13 +52,13 @@ public class ItemBlockMimic extends ItemBlockEnum {
             //Check if the tile entity, if any, can be replaced
             TileEntity tileReplaced = world.getTileEntity(pos);
             if (!canReplaceTile(tileReplaced)) {
-                return EnumActionResult.FAIL;
+                return ActionResultType.FAIL;
             }
 
             //If tile can be replaced, store info about the tile
-            NBTTagCompound tileTag = getTagFromTileEntity(tileReplaced);
+            CompoundNBT tileTag = getTagFromTileEntity(tileReplaced);
             if (tileReplaced != null) {
-                NBTTagCompound voidTag = new NBTTagCompound();
+                CompoundNBT voidTag = new CompoundNBT();
                 voidTag.setInteger("x", pos.getX());
                 voidTag.setInteger("y", pos.getY());
                 voidTag.setInteger("z", pos.getZ());
@@ -93,27 +88,27 @@ public class ItemBlockMimic extends ItemBlockEnum {
                     mimic.dropItemsOnBreak = false;
                 }
             }
-            return EnumActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
 
-        return EnumActionResult.FAIL;
+        return ActionResultType.FAIL;
 
     }
 
     public boolean canReplaceTile(TileEntity tile) {
-        if (tile instanceof TileEntityChest) {
+        if (tile instanceof ChestTileEntity) {
             return true;
         }
 
         return tile == null;
     }
 
-    public boolean canReplaceBlock(World world, BlockPos pos, IBlockState state) {
+    public boolean canReplaceBlock(World world, BlockPos pos, BlockState state) {
         return state.getBlockHardness(world, pos) != -1.0F;
     }
 
-    public NBTTagCompound getTagFromTileEntity(TileEntity tile) {
-        NBTTagCompound tag = new NBTTagCompound();
+    public CompoundNBT getTagFromTileEntity(TileEntity tile) {
+        CompoundNBT tag = new CompoundNBT();
 
         if (tile != null) {
             return tile.writeToNBT(tag);

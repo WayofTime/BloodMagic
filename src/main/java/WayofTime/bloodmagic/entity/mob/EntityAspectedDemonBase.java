@@ -4,9 +4,9 @@ import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.gson.Serializers;
 import com.google.common.base.Predicate;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
@@ -182,14 +182,14 @@ public abstract class EntityAspectedDemonBase extends EntityDemonBase {
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound tag) {
+    public void writeEntityToNBT(CompoundNBT tag) {
         super.writeEntityToNBT(tag);
 
         tag.setString(Constants.NBT.WILL_TYPE, this.getType().toString());
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound tag) {
+    public void readEntityFromNBT(CompoundNBT tag) {
         super.readEntityFromNBT(tag);
 
         if (!tag.hasKey(Constants.NBT.WILL_TYPE)) {
@@ -200,7 +200,7 @@ public abstract class EntityAspectedDemonBase extends EntityDemonBase {
     }
 
     //Returns true if the inputted mob is on the same team.
-    public static class WillTypePredicate implements Predicate<EntityLivingBase> {
+    public static class WillTypePredicate implements Predicate<LivingEntity> {
         private final EnumDemonWillType type;
 
         public WillTypePredicate(EnumDemonWillType type) {
@@ -209,7 +209,7 @@ public abstract class EntityAspectedDemonBase extends EntityDemonBase {
 
         //Returns true if this mob is the same type.
         @Override
-        public boolean apply(EntityLivingBase input) {
+        public boolean apply(LivingEntity input) {
             if (input instanceof EntityAspectedDemonBase) {
                 if (((EntityAspectedDemonBase) input).getType() == type) {
                     return true;
@@ -220,7 +220,7 @@ public abstract class EntityAspectedDemonBase extends EntityDemonBase {
         }
     }
 
-    public class TeamAttackPredicate implements Predicate<EntityLivingBase> {
+    public class TeamAttackPredicate implements Predicate<LivingEntity> {
         private final EntityAspectedDemonBase demon;
 
         public TeamAttackPredicate(EntityAspectedDemonBase demon) {
@@ -229,7 +229,7 @@ public abstract class EntityAspectedDemonBase extends EntityDemonBase {
 
         //Returns true if this mob can attack the inputted mob.
         @Override
-        public boolean apply(EntityLivingBase input) {
+        public boolean apply(LivingEntity input) {
             if (input instanceof EntityAspectedDemonBase) {
                 if (((EntityAspectedDemonBase) input).getType() == demon.getType()) {
                     return false;

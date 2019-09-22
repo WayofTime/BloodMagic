@@ -9,10 +9,10 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -36,7 +36,7 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
             return currenttip;
 
         if (accessor.getNBTData().hasKey("altar")) {
-            NBTTagCompound altarData = accessor.getNBTData().getCompoundTag("altar");
+            CompoundNBT altarData = accessor.getNBTData().getCompoundTag("altar");
             currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarTier", altarData.getInteger("tier")));
             currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarCapacity", altarData.getInteger("capacity")));
             currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentEssence", altarData.getInteger("stored")));
@@ -52,7 +52,7 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
 
     @Nonnull
     @Override
-    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
+    public CompoundNBT getNBTData(ServerPlayerEntity player, TileEntity te, CompoundNBT tag, World world, BlockPos pos) {
         TileAltar altar = (TileAltar) te;
 
         boolean hasSigil = false;
@@ -78,7 +78,7 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
         if (!hasSeer && !hasSigil)
             return tag;
 
-        NBTTagCompound altarData = new NBTTagCompound();
+        CompoundNBT altarData = new CompoundNBT();
         altarData.setInteger("tier", altar.getTier().toInt());
         altarData.setInteger("capacity", altar.getCapacity());
         altarData.setInteger("stored", altar.getCurrentBlood());
@@ -92,7 +92,7 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
         return tag;
     }
 
-    public static boolean hasStack(ItemStack stack, EntityPlayer player) {
+    public static boolean hasStack(ItemStack stack, PlayerEntity player) {
         for (ItemStack inventoryStack : player.inventory.mainInventory)
             if (inventoryStack != null && inventoryStack.isItemEqual(stack))
                 return true;
@@ -100,7 +100,7 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
         return false;
     }
 
-    private static boolean holdingSeerSigil(EntityPlayer player) {
+    private static boolean holdingSeerSigil(PlayerEntity player) {
         if (player.getHeldItemMainhand().getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
             return true;
 
@@ -110,7 +110,7 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
         return false;
     }
 
-    private static boolean holdingDivinationSigil(EntityPlayer player) {
+    private static boolean holdingDivinationSigil(PlayerEntity player) {
         if (player.getHeldItemMainhand().getItem() instanceof ItemSigilDivination)
             return true;
 

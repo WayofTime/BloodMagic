@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.livingArmour.upgrade;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class LivingArmourUpgradeSelfSacrifice extends LivingArmourUpgrade {
     //TODO: Add extra effects for higher levels
@@ -33,12 +33,12 @@ public class LivingArmourUpgradeSelfSacrifice extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         // EMPTY
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         // EMPTY
     }
 

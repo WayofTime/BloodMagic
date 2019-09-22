@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.meteor;
 
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -32,7 +32,7 @@ public class Meteor {
         this.maxWeight = weight;
     }
 
-    public void generateMeteor(World world, BlockPos pos, IBlockState fillerBlock, double radiusModifier, double explosionModifier, double fillerChance) {
+    public void generateMeteor(World world, BlockPos pos, BlockState fillerBlock, double radiusModifier, double explosionModifier, double fillerChance) {
         world.newExplosion(null, pos.getX(), pos.getY(), pos.getZ(), (float) (explosionStrength * explosionModifier), true, true);
         int radius = (int) Math.ceil(getRadius() * radiusModifier);
         double floatingRadius = getRadius() * radiusModifier;
@@ -45,10 +45,10 @@ public class Meteor {
                     }
 
                     BlockPos newPos = pos.add(i, j, k);
-                    IBlockState state = world.getBlockState(newPos);
+                    BlockState state = world.getBlockState(newPos);
 
                     if (world.isAirBlock(newPos) || Utils.isBlockLiquid(state)) {
-                        IBlockState placedState = getRandomOreFromComponents(fillerBlock, fillerChance);
+                        BlockState placedState = getRandomOreFromComponents(fillerBlock, fillerChance);
                         if (placedState != null) {
                             world.setBlockState(newPos, placedState);
                         }
@@ -59,13 +59,13 @@ public class Meteor {
     }
 
     //fillerChance is the chance that the filler block will NOT be placed
-    public IBlockState getRandomOreFromComponents(IBlockState fillerBlock, double fillerChance) {
+    public BlockState getRandomOreFromComponents(BlockState fillerBlock, double fillerChance) {
         int goal = RAND.nextInt(getMaxWeight());
 
         for (MeteorComponent component : getComponents()) {
             goal -= component.getWeight();
             if (goal < 0) {
-                IBlockState state = component.getStateFromOre();
+                BlockState state = component.getStateFromOre();
                 if (state != null) {
                     return state;
                 } else {

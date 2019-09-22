@@ -10,13 +10,13 @@ import WayofTime.bloodmagic.util.helper.ItemHelper.LivingUpgrades;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,7 +37,7 @@ public class ItemUpgradeTome extends Item implements IVariantProvider {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote) {
             return super.onItemRightClick(world, player, hand);
@@ -48,7 +48,7 @@ public class ItemUpgradeTome extends Item implements IVariantProvider {
             return super.onItemRightClick(world, player, hand);
         }
 
-        ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+        ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
         if (chestStack.getItem() instanceof ItemLivingArmour) {
             LivingArmour armour = ItemLivingArmour.getLivingArmourFromStack(chestStack);
             if (armour == null) {
@@ -78,7 +78,7 @@ public class ItemUpgradeTome extends Item implements IVariantProvider {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
+    public void getSubItems(ItemGroup creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 

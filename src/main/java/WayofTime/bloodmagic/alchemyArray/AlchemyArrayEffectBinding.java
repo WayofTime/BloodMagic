@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.alchemyArray;
 
 import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.effect.LightningBoltEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -30,7 +30,7 @@ public class AlchemyArrayEffectBinding extends AlchemyArrayEffectCrafting {
             BlockPos pos = tile.getPos();
 
             ItemStack output = outputStack.copy();
-            EntityItem outputEntity = new EntityItem(tile.getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
+            ItemEntity outputEntity = new ItemEntity(tile.getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
 
             tile.getWorld().spawnEntity(outputEntity);
 
@@ -49,18 +49,18 @@ public class AlchemyArrayEffectBinding extends AlchemyArrayEffectCrafting {
             double dispX = distance * Math.sin(angle);
             double dispZ = -distance * Math.cos(angle);
 
-            EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ, true);
+            LightningBoltEntity lightning = new LightningBoltEntity(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ, true);
             world.spawnEntity(lightning);
         }
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         //EMPTY
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         //EMPTY
     }
 

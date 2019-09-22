@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -31,8 +31,8 @@ public class RitualInterdiction extends Ritual {
 
         AreaDescriptor interdictionRange = masterRitualStone.getBlockRange(INTERDICTION_RANGE);
 
-        for (EntityLivingBase entity : world.getEntitiesWithinAABB(EntityLivingBase.class, interdictionRange.getAABB(masterRitualStone.getBlockPos()))) {
-            if (entity instanceof EntityPlayer && (((EntityPlayer) entity).capabilities.isCreativeMode || ((EntityPlayer) entity).getGameProfile().getId().equals(masterRitualStone.getOwner())))
+        for (LivingEntity entity : world.getEntitiesWithinAABB(LivingEntity.class, interdictionRange.getAABB(masterRitualStone.getBlockPos()))) {
+            if (entity instanceof PlayerEntity && (((PlayerEntity) entity).capabilities.isCreativeMode || ((PlayerEntity) entity).getGameProfile().getId().equals(masterRitualStone.getOwner())))
                 continue;
 
             double xDif = entity.posX - (masterRitualStone.getBlockPos().getX() + 0.5);
@@ -44,7 +44,7 @@ public class RitualInterdiction extends Ritual {
             entity.motionZ = 0.1 * zDif;
             entity.fallDistance = 0;
 
-            if (entity instanceof EntityPlayer) {
+            if (entity instanceof PlayerEntity) {
                 entity.velocityChanged = true;
             }
         }

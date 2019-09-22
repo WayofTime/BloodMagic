@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.iface;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
 public interface ISentientTool {
-    boolean spawnSentientEntityOnDrop(ItemStack droppedStack, EntityPlayer player);
+    boolean spawnSentientEntityOnDrop(ItemStack droppedStack, PlayerEntity player);
 }

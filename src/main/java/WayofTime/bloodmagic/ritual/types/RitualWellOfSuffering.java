@@ -4,8 +4,8 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.tile.TileAltar;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -74,9 +74,9 @@ public class RitualWellOfSuffering extends Ritual {
             AreaDescriptor damageRange = masterRitualStone.getBlockRange(DAMAGE_RANGE);
             AxisAlignedBB range = damageRange.getAABB(pos);
 
-            List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+            List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, range);
 
-            for (EntityLivingBase entity : entities) {
+            for (LivingEntity entity : entities) {
                 EntityEntry entityEntry = EntityRegistry.getEntry(entity.getClass());
 
                 if (entityEntry == null || BloodMagicAPI.INSTANCE.getBlacklist().getSacrifice().contains(entityEntry.getRegistryName()))
@@ -87,7 +87,7 @@ public class RitualWellOfSuffering extends Ritual {
                 if (lifeEssenceRatio <= 0)
                     continue;
 
-                if (entity.isEntityAlive() && !(entity instanceof EntityPlayer)) {
+                if (entity.isEntityAlive() && !(entity instanceof PlayerEntity)) {
                     if (entity.attackEntityFrom(RitualManager.RITUAL_DAMAGE, 1)) {
                         if (entity.isChild())
                             lifeEssenceRatio *= 0.5F;

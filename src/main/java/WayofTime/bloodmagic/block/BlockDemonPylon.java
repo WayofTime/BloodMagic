@@ -4,13 +4,13 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileDemonPylon;
 import com.google.common.collect.Lists;
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BlockDemonPylon extends BlockContainer implements IBMBlock, IVariantProvider {
+public class BlockDemonPylon extends ContainerBlock implements IBMBlock, IVariantProvider {
     protected static final AxisAlignedBB BODY = new AxisAlignedBB(2 / 16F, 7 / 16F, 2 / 16F, 14 / 16F, 20 / 16F, 14 / 16F);
     private static final AxisAlignedBB[] FEET = {
             new AxisAlignedBB(10 / 16F, 0F, 2 / 16F, 14 / 16F, 7 / 16F, 6 / 16F), // NE
@@ -45,7 +45,7 @@ public class BlockDemonPylon extends BlockContainer implements IBMBlock, IVarian
 //        setBlockBounds(0.3F, 0F, 0.3F, 0.72F, 1F, 0.72F);
     }
 
-    private static List<AxisAlignedBB> getCollisionBoxList(IBlockState state) {
+    private static List<AxisAlignedBB> getCollisionBoxList(BlockState state) {
         ArrayList<AxisAlignedBB> collBox = new ArrayList<>(Arrays.asList(ARMS));
         collBox.add(BODY);
         collBox.addAll(Arrays.asList(FEET));
@@ -53,33 +53,33 @@ public class BlockDemonPylon extends BlockContainer implements IBMBlock, IVarian
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
         return BODY;
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean isNormalCube(BlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
+    public boolean causesSuffocation(BlockState state) {
         return false;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override
@@ -88,12 +88,12 @@ public class BlockDemonPylon extends BlockContainer implements IBMBlock, IVarian
     }
 
     @Override
-    public ItemBlock getItem() {
-        return new ItemBlock(this);
+    public BlockItem getItem() {
+        return new BlockItem(this);
     }
 
     @Override
-    public RayTraceResult collisionRayTrace(IBlockState blockState, World worldIn, BlockPos pos, Vec3d start, Vec3d end) {
+    public RayTraceResult collisionRayTrace(BlockState blockState, World worldIn, BlockPos pos, Vec3d start, Vec3d end) {
         List<RayTraceResult> list = Lists.newArrayList();
 
 
@@ -119,7 +119,7 @@ public class BlockDemonPylon extends BlockContainer implements IBMBlock, IVarian
     }
 
     @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean bool) {
+    public void addCollisionBoxToList(BlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean bool) {
         state = this.getActualState(state, worldIn, pos);
 
         for (AxisAlignedBB axisalignedbb : getCollisionBoxList(state)) {

@@ -6,13 +6,13 @@ import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
-import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.entity.boss.EntityWither;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.entity.boss.WitherEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -65,19 +65,19 @@ public class RitualGrounding extends Ritual {
 
         /* Actual ritual stuff begins here */
         AreaDescriptor groundingRange = masterRitualStone.getBlockRange(GROUNDING_RANGE);
-        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, groundingRange.getAABB(pos));
-        for (EntityLivingBase entity : entities) {
+        List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, groundingRange.getAABB(pos));
+        for (LivingEntity entity : entities) {
             if (totalEffects >= maxEffects) {
                 break;
             }
 
-            if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative())
+            if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isCreative())
                 continue;
 
             totalEffects++;
 
 
-            if (entity instanceof EntityPlayer) {
+            if (entity instanceof PlayerEntity) {
                 /* Raw will effect: Affects players */
                 if (world.getTotalWorldTime() % 10 == 0) {
                     if (rawWill >= willDrain) {
@@ -104,7 +104,7 @@ public class RitualGrounding extends Ritual {
                 (some bosses, like the wither, have a restriction to motion modification,
                 others, like the Ender Dragon, don't do potions) */
                 if (steadfastWill >= willDrain) {
-                    if (entity instanceof EntityWither || entity instanceof EntityDragon)
+                    if (entity instanceof WitherEntity || entity instanceof EnderDragonEntity)
                         entity.move(MoverType.SELF, 0, -0.05, 0); // to work on Wither and EnderDragon without interfering with other mod author's decisions (looking at you, Vazkii)
 
                     steadfastDrained += willDrain / 10f;
@@ -156,29 +156,29 @@ public class RitualGrounding extends Ritual {
         return new RitualGrounding();
     }
 
-    public double[] sharedWillEffects(World world, EntityLivingBase entity, double corrosiveWill, double destructiveWill, double vengefulWill, double corrosiveDrained, double destructiveDrained, double vengefulDrained) {
+    public double[] sharedWillEffects(World world, LivingEntity entity, double corrosiveWill, double destructiveWill, double vengefulWill, double corrosiveDrained, double destructiveDrained, double vengefulDrained) {
         /* Combination of corrosive + vengeful will: Levitation */
         if (corrosiveWill >= willDrain && vengefulWill >= willDrain) {
 
-            entity.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 20, 10));
+            entity.addPotionEffect(new EffectInstance(Effects.LEVITATION, 20, 10));
             vengefulDrained += willDrain;
             corrosiveDrained += willDrain;
 
             /* Corrosive will effect: Suspension */
         } else if (corrosiveWill >= willDrain) {
 
-            entity.addPotionEffect(new PotionEffect(RegistrarBloodMagic.SUSPENDED, 20, 0));
+            entity.addPotionEffect(new EffectInstance(RegistrarBloodMagic.SUSPENDED, 20, 0));
             corrosiveDrained += willDrain;
 
             /* Vengeful will effect: Stronger effect */
         } else if (vengefulWill >= willDrain) {
 
             vengefulDrained += willDrain;
-            entity.addPotionEffect(new PotionEffect(RegistrarBloodMagic.GROUNDED, 40, 20));
+            entity.addPotionEffect(new EffectInstance(RegistrarBloodMagic.GROUNDED, 40, 20));
 
         } else
 
-            entity.addPotionEffect(new PotionEffect(RegistrarBloodMagic.GROUNDED, 20, 10));
+            entity.addPotionEffect(new EffectInstance(RegistrarBloodMagic.GROUNDED, 20, 10));
 
         /* Destructive will effect: Increased fall damage */
         if (destructiveWill >= willDrain) {
@@ -188,11 +188,11 @@ public class RitualGrounding extends Ritual {
             if (vengefulWill >= willDrain + vengefulDrained) {
                 if (world.getTotalWorldTime() % 100 == 0) {
                     vengefulDrained += willDrain;
-                    entity.addPotionEffect(new PotionEffect(RegistrarBloodMagic.HEAVY_HEART, 200, 2));
+                    entity.addPotionEffect(new EffectInstance(RegistrarBloodMagic.HEAVY_HEART, 200, 2));
                 }
 
             } else if (world.getTotalWorldTime() % 50 == 0)
-                entity.addPotionEffect(new PotionEffect(RegistrarBloodMagic.HEAVY_HEART, 100, 1));
+                entity.addPotionEffect(new EffectInstance(RegistrarBloodMagic.HEAVY_HEART, 100, 1));
         }
         return new double[]{corrosiveDrained, destructiveDrained, vengefulDrained};
     }

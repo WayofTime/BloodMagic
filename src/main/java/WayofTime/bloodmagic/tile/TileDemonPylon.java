@@ -5,8 +5,8 @@ import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.IDemonWillConduit;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.tile.base.TileTicking;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
 public class TileDemonPylon extends TileTicking implements IDemonWillConduit {
@@ -27,7 +27,7 @@ public class TileDemonPylon extends TileTicking implements IDemonWillConduit {
         for (EnumDemonWillType type : EnumDemonWillType.values()) {
             double currentAmount = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
 
-            for (EnumFacing side : EnumFacing.HORIZONTALS) {
+            for (Direction side : Direction.HORIZONTALS) {
                 BlockPos offsetPos = pos.offset(side, 16);
                 double sideAmount = WorldDemonWillHandler.getCurrentWill(getWorld(), offsetPos, type);
                 if (sideAmount > currentAmount) {
@@ -40,12 +40,12 @@ public class TileDemonPylon extends TileTicking implements IDemonWillConduit {
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(CompoundNBT tag) {
         holder.readFromNBT(tag, "Will");
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public CompoundNBT serialize(CompoundNBT tag) {
         holder.writeToNBT(tag, "Will");
         return tag;
     }

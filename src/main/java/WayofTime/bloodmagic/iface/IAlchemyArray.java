@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.iface;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 
 public interface IAlchemyArray {
-    EnumFacing getRotation();
+    Direction getRotation();
 }

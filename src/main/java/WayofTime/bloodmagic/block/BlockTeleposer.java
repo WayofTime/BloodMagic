@@ -6,20 +6,20 @@ import WayofTime.bloodmagic.command.sub.SubCommandTeleposer;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.tile.TileTeleposer;
 import WayofTime.bloodmagic.util.Constants;
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockTeleposer extends BlockContainer implements IVariantProvider, IBMBlock {
+public class BlockTeleposer extends ContainerBlock implements IVariantProvider, IBMBlock {
     public BlockTeleposer() {
         super(Material.ROCK);
 
@@ -30,12 +30,12 @@ public class BlockTeleposer extends BlockContainer implements IVariantProvider, 
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
         ItemStack playerItem = player.getHeldItem(hand);
 
         if (playerItem.getItem() instanceof ItemTelepositionFocus)
@@ -47,7 +47,7 @@ public class BlockTeleposer extends BlockContainer implements IVariantProvider, 
     }
 
     @Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
+    public void breakBlock(World world, BlockPos blockPos, BlockState blockState) {
         TileTeleposer tileTeleposer = (TileTeleposer) world.getTileEntity(blockPos);
         if (tileTeleposer != null) {
             tileTeleposer.dropItems();
@@ -63,7 +63,7 @@ public class BlockTeleposer extends BlockContainer implements IVariantProvider, 
     }
 
     @Override
-    public ItemBlock getItem() {
-        return new ItemBlock(this);
+    public BlockItem getItem() {
+        return new BlockItem(this);
     }
 }

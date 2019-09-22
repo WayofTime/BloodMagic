@@ -5,21 +5,21 @@ import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntityGhast;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemAxe;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.monster.GhastEntity;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.passive.horse.HorseEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
@@ -28,12 +28,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.ServerWorld;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
+public class EntityDemonBase extends CreatureEntity implements IEntityOwnable {
     protected static final DataParameter<Byte> TAMED = EntityDataManager.createKey(EntityDemonBase.class, DataSerializers.BYTE);
     protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(EntityDemonBase.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 
@@ -59,7 +59,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
     }
 
     @Override
-    public boolean isPotionApplicable(PotionEffect effect) {
+    public boolean isPotionApplicable(EffectInstance effect) {
         return super.isPotionApplicable(effect);
     }
 
@@ -83,8 +83,8 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
         float f = (float) this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
         int i = 0;
 
-        if (attackedEntity instanceof EntityLivingBase) {
-            f += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(), ((EntityLivingBase) attackedEntity).getCreatureAttribute());
+        if (attackedEntity instanceof LivingEntity) {
+            f += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(), ((LivingEntity) attackedEntity).getCreatureAttribute());
             i += EnchantmentHelper.getKnockbackModifier(this);
         }
 
@@ -92,7 +92,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
 
         if (flag) {
             if (i > 0) {
-                ((EntityLivingBase) attackedEntity).knockBack(this, (float) i * 0.5F, (double) MathHelper.sin(this.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(this.rotationYaw * 0.017453292F)));
+                ((LivingEntity) attackedEntity).knockBack(this, (float) i * 0.5F, (double) MathHelper.sin(this.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(this.rotationYaw * 0.017453292F)));
                 this.motionX *= 0.6D;
                 this.motionZ *= 0.6D;
             }
@@ -103,12 +103,12 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
                 attackedEntity.setFire(j * 4);
             }
 
-            if (attackedEntity instanceof EntityPlayer) {
-                EntityPlayer entityplayer = (EntityPlayer) attackedEntity;
+            if (attackedEntity instanceof PlayerEntity) {
+                PlayerEntity entityplayer = (PlayerEntity) attackedEntity;
                 ItemStack itemstack = this.getHeldItemMainhand();
                 ItemStack itemstack1 = entityplayer.isHandActive() ? entityplayer.getActiveItemStack() : ItemStack.EMPTY;
 
-                if (!itemstack.isEmpty() && !itemstack1.isEmpty() && itemstack.getItem() instanceof ItemAxe && itemstack1.getItem() == Items.SHIELD) {
+                if (!itemstack.isEmpty() && !itemstack1.isEmpty() && itemstack.getItem() instanceof AxeItem && itemstack1.getItem() == Items.SHIELD) {
                     float f1 = 0.25F + (float) EnchantmentHelper.getEfficiencyModifier(this) * 0.05F;
 
                     if (this.rand.nextFloat() < f1) {
@@ -125,10 +125,10 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
     }
 
     @Override
-    public void setItemStackToSlot(EntityEquipmentSlot slotIn, ItemStack stack) {
+    public void setItemStackToSlot(EquipmentSlotType slotIn, ItemStack stack) {
         super.setItemStackToSlot(slotIn, stack);
 
-        if (!this.getEntityWorld().isRemote && slotIn == EntityEquipmentSlot.MAINHAND) {
+        if (!this.getEntityWorld().isRemote && slotIn == EquipmentSlotType.MAINHAND) {
             this.setCombatTask();
         }
     }
@@ -144,8 +144,8 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
     public void performEmergencyHeal(double toHeal) {
         this.heal((float) toHeal);
 
-        if (getEntityWorld() instanceof WorldServer) {
-            WorldServer server = (WorldServer) getEntityWorld();
+        if (getEntityWorld() instanceof ServerWorld) {
+            ServerWorld server = (ServerWorld) getEntityWorld();
             server.spawnParticle(EnumParticleTypes.HEART, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, 7, 0.2, 0.2, 0.2, 0);
         }
     }
@@ -160,7 +160,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound tag) {
+    public void writeEntityToNBT(CompoundNBT tag) {
         super.writeEntityToNBT(tag);
 
         if (this.getOwnerId() == null) {
@@ -172,7 +172,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound tag) {
+    public void readEntityFromNBT(CompoundNBT tag) {
         super.readEntityFromNBT(tag);
 
         String s;
@@ -197,8 +197,8 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
     }
 
     //TODO: Change to fit the given AI
-    public boolean shouldAttackEntity(EntityLivingBase attacker, EntityLivingBase owner) {
-        if (!(attacker instanceof EntityCreeper) && !(attacker instanceof EntityGhast)) {
+    public boolean shouldAttackEntity(LivingEntity attacker, LivingEntity owner) {
+        if (!(attacker instanceof CreeperEntity) && !(attacker instanceof GhastEntity)) {
             if (attacker instanceof IEntityOwnable) {
                 IEntityOwnable entityOwnable = (IEntityOwnable) attacker;
 
@@ -207,13 +207,13 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
                 }
             }
 
-            return !(attacker instanceof EntityPlayer && owner instanceof EntityPlayer && !((EntityPlayer) owner).canAttackPlayer((EntityPlayer) attacker)) && (!(attacker instanceof EntityHorse) || !((EntityHorse) attacker).isTame());
+            return !(attacker instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).canAttackPlayer((PlayerEntity) attacker)) && (!(attacker instanceof HorseEntity) || !((HorseEntity) attacker).isTame());
         } else {
             return false;
         }
     }
 
-    public void attackEntityWithRangedAttack(EntityLivingBase target, float velocity) {
+    public void attackEntityWithRangedAttack(LivingEntity target, float velocity) {
 
     }
 
@@ -276,7 +276,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
     }
 
     @Override
-    public EntityLivingBase getOwner() {
+    public LivingEntity getOwner() {
         try {
             UUID uuid = this.getOwnerId();
             return uuid == null ? null : this.getEntityWorld().getPlayerEntityByUUID(uuid);
@@ -285,11 +285,11 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
         }
     }
 
-    public void setOwner(EntityPlayer player) {
+    public void setOwner(PlayerEntity player) {
         setOwnerId(player.getUniqueID());
     }
 
-    public class TargetPredicate implements Predicate<EntityMob> {
+    public class TargetPredicate implements Predicate<MonsterEntity> {
         EntityDemonBase entity;
 
         public TargetPredicate(EntityDemonBase entity) {
@@ -297,7 +297,7 @@ public class EntityDemonBase extends EntityCreature implements IEntityOwnable {
         }
 
         @Override
-        public boolean apply(EntityMob input) {
+        public boolean apply(MonsterEntity input) {
             return entity.shouldAttackEntity(input, this.entity.getOwner());
         }
     }

@@ -8,10 +8,10 @@ import WayofTime.bloodmagic.core.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.iface.IAlchemyArray;
 import WayofTime.bloodmagic.util.Constants;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileAlchemyArray extends TileInventory implements ITickable, IAlchemyArray {
     public boolean isActive = false;
     public int activeCounter = 0;
-    public EnumFacing rotation = EnumFacing.HORIZONTALS[0];
+    public Direction rotation = Direction.HORIZONTALS[0];
     public int rotateCooldown = 0;
 
     private String key = "empty";
@@ -31,14 +31,14 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
         super(2, "alchemyArray");
     }
 
-    public void onEntityCollidedWithBlock(IBlockState state, Entity entity) {
+    public void onEntityCollidedWithBlock(BlockState state, Entity entity) {
         if (arrayEffect != null) {
             arrayEffect.onEntityCollidedWithBlock(this, getWorld(), pos, state, entity);
         }
     }
 
     @Override
-    public void deserialize(NBTTagCompound tagCompound) {
+    public void deserialize(CompoundNBT tagCompound) {
         super.deserialize(tagCompound);
         this.isActive = tagCompound.getBoolean("isActive");
         this.activeCounter = tagCompound.getInteger("activeCounter");
@@ -49,9 +49,9 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
         } else {
             this.doDropIngredients = tagCompound.getBoolean("doDropIngredients");
         }
-        this.rotation = EnumFacing.HORIZONTALS[tagCompound.getInteger(Constants.NBT.DIRECTION)];
+        this.rotation = Direction.HORIZONTALS[tagCompound.getInteger(Constants.NBT.DIRECTION)];
 
-        NBTTagCompound arrayTag = tagCompound.getCompoundTag("arrayTag");
+        CompoundNBT arrayTag = tagCompound.getCompoundTag("arrayTag");
         arrayEffect = AlchemyArrayRecipeRegistry.getAlchemyArrayEffect(key);
         if (arrayEffect != null) {
             arrayEffect.readFromNBT(arrayTag);
@@ -59,7 +59,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tagCompound) {
+    public CompoundNBT serialize(CompoundNBT tagCompound) {
         super.serialize(tagCompound);
         tagCompound.setBoolean("isActive", isActive);
         tagCompound.setInteger("activeCounter", activeCounter);
@@ -67,7 +67,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
         tagCompound.setBoolean("doDropIngredients", doDropIngredients);
         tagCompound.setInteger(Constants.NBT.DIRECTION, rotation.getHorizontalIndex());
 
-        NBTTagCompound arrayTag = new NBTTagCompound();
+        CompoundNBT arrayTag = new CompoundNBT();
         if (arrayEffect != null) {
             arrayEffect.writeToNBT(arrayTag);
         }
@@ -159,11 +159,11 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     }
 
     @Override
-    public EnumFacing getRotation() {
+    public Direction getRotation() {
         return rotation;
     }
 
-    public void setRotation(EnumFacing rotation) {
+    public void setRotation(Direction rotation) {
         this.rotation = rotation;
     }
 

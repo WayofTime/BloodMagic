@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.meteor;
 
 import com.google.common.collect.Maps;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -36,7 +36,7 @@ public class MeteorRegistry {
         return null;
     }
 
-    public static void generateMeteorForItem(ItemStack stack, World world, BlockPos pos, IBlockState fillerBlock, double radiusModifier, double explosionModifier, double fillerChance) {
+    public static void generateMeteorForItem(ItemStack stack, World world, BlockPos pos, BlockState fillerBlock, double radiusModifier, double explosionModifier, double fillerChance) {
         Meteor meteor = getMeteorForItem(stack);
         if (meteor != null)
             meteor.generateMeteor(world, pos, fillerBlock, radiusModifier, explosionModifier, fillerChance);

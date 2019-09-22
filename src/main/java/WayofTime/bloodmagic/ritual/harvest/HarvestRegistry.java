@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.ritual.harvest;
 
 import com.google.common.collect.*;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockStem;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.StemBlock;
 
 import java.util.List;
 import java.util.Map;
@@ -13,9 +13,9 @@ public class HarvestRegistry {
 
     private static final List<IHarvestHandler> HARVEST_HANDLERS = Lists.newArrayList();
     private static final Map<Block, Integer> STANDARD_CROPS = Maps.newHashMap();
-    private static final Set<IBlockState> TALL_CROPS = Sets.newHashSet();
-    private static final Multimap<IBlockState, IBlockState> STEM_CROPS = ArrayListMultimap.create();
-    private static final Map<IBlockState, Integer> AMPLIFIERS = Maps.newHashMap();
+    private static final Set<BlockState> TALL_CROPS = Sets.newHashSet();
+    private static final Multimap<BlockState, BlockState> STEM_CROPS = ArrayListMultimap.create();
+    private static final Map<BlockState, Integer> AMPLIFIERS = Maps.newHashMap();
 
     /**
      * Registers a handler for the Harvest Ritual to call.
@@ -49,7 +49,7 @@ public class HarvestRegistry {
      *
      * @param crop - The crop block to handle.
      */
-    public static void registerTallCrop(IBlockState crop) {
+    public static void registerTallCrop(BlockState crop) {
         if (!TALL_CROPS.contains(crop))
             TALL_CROPS.add(crop);
     }
@@ -62,13 +62,13 @@ public class HarvestRegistry {
      * Use {@link net.minecraftforge.oredict.OreDictionary#WILDCARD_VALUE} to
      * accept any meta for the crop block.
      * <p>
-     * The Stem must be instanceof {@link BlockStem}
+     * The Stem must be instanceof {@link StemBlock}
      *
      * @param crop - The crop block to handle.
      * @param stem - The stem of the crop
      */
-    public static void registerStemCrop(IBlockState crop, IBlockState stem) {
-        if (!STEM_CROPS.containsKey(crop) && stem.getBlock() instanceof BlockStem)
+    public static void registerStemCrop(BlockState crop, BlockState stem) {
+        if (!STEM_CROPS.containsKey(crop) && stem.getBlock() instanceof StemBlock)
             STEM_CROPS.put(stem, crop);
     }
 
@@ -78,7 +78,7 @@ public class HarvestRegistry {
      * @param block - The block for the amplifier.
      * @param range - The range the amplifier provides.
      */
-    public static void registerRangeAmplifier(IBlockState block, int range) {
+    public static void registerRangeAmplifier(BlockState block, int range) {
         if (!AMPLIFIERS.containsKey(block))
             AMPLIFIERS.put(block, range);
     }
@@ -91,15 +91,15 @@ public class HarvestRegistry {
         return ImmutableMap.copyOf(STANDARD_CROPS);
     }
 
-    public static Set<IBlockState> getTallCrops() {
+    public static Set<BlockState> getTallCrops() {
         return ImmutableSet.copyOf(TALL_CROPS);
     }
 
-    public static Multimap<IBlockState, IBlockState> getStemCrops() {
+    public static Multimap<BlockState, BlockState> getStemCrops() {
         return ImmutableMultimap.copyOf(STEM_CROPS);
     }
 
-    public static Map<IBlockState, Integer> getAmplifiers() {
+    public static Map<BlockState, Integer> getAmplifiers() {
         return ImmutableMap.copyOf(AMPLIFIERS);
     }
 }

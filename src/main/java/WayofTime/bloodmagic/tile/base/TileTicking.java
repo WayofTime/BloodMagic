@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.tile.base;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ITickable;
 
 /**
@@ -20,13 +20,13 @@ public abstract class TileTicking extends TileBase implements ITickable {
     }
 
     @Override
-    void deserializeBase(NBTTagCompound tagCompound) {
+    void deserializeBase(CompoundNBT tagCompound) {
         this.ticksExisted = tagCompound.getInteger("ticksExisted");
         this.shouldTick = tagCompound.getBoolean("shouldTick");
     }
 
     @Override
-    NBTTagCompound serializeBase(NBTTagCompound tagCompound) {
+    CompoundNBT serializeBase(CompoundNBT tagCompound) {
         tagCompound.setInteger("ticksExisted", getTicksExisted());
         tagCompound.setBoolean("shouldTick", shouldTick());
         return tagCompound;

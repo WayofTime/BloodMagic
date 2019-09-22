@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.block;
 
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 
 public interface IBMBlock {
 
-    ItemBlock getItem();
+    BlockItem getItem();
 }

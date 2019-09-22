@@ -3,18 +3,18 @@ package WayofTime.bloodmagic.item.block;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Locale;
 
-public class ItemBlockDemonCrystal extends ItemBlock {
+public class ItemBlockDemonCrystal extends BlockItem {
     public ItemBlockDemonCrystal(Block block) {
         super(block);
         setHasSubtypes(true);
@@ -31,7 +31,7 @@ public class ItemBlockDemonCrystal extends ItemBlock {
     }
 
     @Override
-    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState) {
+    public boolean placeBlockAt(ItemStack stack, PlayerEntity player, World world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, BlockState newState) {
         if (super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, newState)) {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileDemonCrystal) {

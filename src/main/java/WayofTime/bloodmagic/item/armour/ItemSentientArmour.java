@@ -11,20 +11,20 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effects;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMeshProvider, IMultiWillTool {
+public class ItemSentientArmour extends ArmorItem implements ISpecialArmor, IMeshProvider, IMultiWillTool {
     public static String[] names = {"helmet", "chest", "legs", "boots"};
 
     public static double[] willBracket = new double[]{30, 200, 600, 1500, 4000, 6000, 8000, 16000};
@@ -54,15 +54,15 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
 
     public static double[] speedBonus = new double[]{0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4};
 
-    public ItemSentientArmour(EntityEquipmentSlot armorType) {
-        super(ItemArmor.ArmorMaterial.IRON, 0, armorType);
+    public ItemSentientArmour(EquipmentSlotType armorType) {
+        super(ArmorItem.ArmorMaterial.IRON, 0, armorType);
         setTranslationKey(BloodMagic.MODID + ".sentientArmour.");
         setMaxDamage(250);
         setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
         if (this == RegistrarBloodMagicItems.SENTIENT_ARMOUR_CHEST || this == RegistrarBloodMagicItems.SENTIENT_ARMOUR_HELMET || this == RegistrarBloodMagicItems.SENTIENT_ARMOUR_BOOTS) {
             switch (this.getCurrentType(stack)) {
                 case DEFAULT:
@@ -99,16 +99,16 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     }
 
     @Override
-    public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
-        if (this.armorType == EntityEquipmentSlot.CHEST) {
+    public void onArmorTick(World world, PlayerEntity player, ItemStack stack) {
+        if (this.armorType == EquipmentSlotType.CHEST) {
             EnumDemonWillType type = this.getCurrentType(stack);
             switch (type) {
                 case CORROSIVE:
-                    if (player.isPotionActive(MobEffects.POISON)) {
-                        player.removeActivePotionEffect(MobEffects.POISON);
+                    if (player.isPotionActive(Effects.POISON)) {
+                        player.removeActivePotionEffect(Effects.POISON);
                     }
-                    if (player.isPotionActive(MobEffects.WITHER)) {
-                        player.removeActivePotionEffect(MobEffects.WITHER);
+                    if (player.isPotionActive(Effects.WITHER)) {
+                        player.removeActivePotionEffect(Effects.WITHER);
                     }
                     break;
                 default:
@@ -116,14 +116,14 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         }
     }
 
-    public void onPlayerAttacked(ItemStack stack, DamageSource source, EntityPlayer attackedPlayer) {
-        if (source.getTrueSource() instanceof EntityLivingBase) {
-            EntityLivingBase attacker = (EntityLivingBase) source.getTrueSource();
+    public void onPlayerAttacked(ItemStack stack, DamageSource source, PlayerEntity attackedPlayer) {
+        if (source.getTrueSource() instanceof LivingEntity) {
+            LivingEntity attacker = (LivingEntity) source.getTrueSource();
             EnumDemonWillType type = this.getCurrentType(stack);
             switch (type) {
                 case CORROSIVE:
                     if (!source.isProjectile()) {
-                        attacker.addPotionEffect(new PotionEffect(MobEffects.POISON, 100)); //TODO: customize duration
+                        attacker.addPotionEffect(new EffectInstance(Effects.POISON, 100)); //TODO: customize duration
                     }
                     break;
                 case DEFAULT:
@@ -139,7 +139,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     }
 
     @Override
-    public ArmorProperties getProperties(EntityLivingBase player, ItemStack stack, DamageSource source, double damage, int slot) {
+    public ArmorProperties getProperties(LivingEntity player, ItemStack stack, DamageSource source, double damage, int slot) {
         double armourReduction = 0.0;
         double damageAmount = 0.25;
 
@@ -166,9 +166,9 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         if (this == RegistrarBloodMagicItems.SENTIENT_ARMOUR_CHEST) {
             armourReduction = 0.24 / 0.64; // This values puts it at iron level
 
-            ItemStack helmet = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-            ItemStack leggings = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
-            ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+            ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
+            ItemStack leggings = player.getItemStackFromSlot(EquipmentSlotType.LEGS);
+            ItemStack boots = player.getItemStackFromSlot(EquipmentSlotType.FEET);
 
             if (helmet.isEmpty() || leggings.isEmpty() || boots.isEmpty()) {
                 damageAmount *= (armourReduction);
@@ -201,7 +201,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     }
 
     @Override
-    public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
+    public int getArmorDisplay(PlayerEntity player, ItemStack armor, int slot) {
         if (armor.getItem() == RegistrarBloodMagicItems.SENTIENT_ARMOUR_HELMET) {
             return 3;
         }
@@ -222,9 +222,9 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     }
 
     @Override
-    public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entity;
+    public void damageArmor(LivingEntity entity, ItemStack stack, DamageSource source, int damage, int slot) {
+        if (entity instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entity;
 
             EnumDemonWillType type = getCurrentType(stack);
 
@@ -241,28 +241,28 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
 
     public double getCostModifier(ItemStack stack) {
         NBTHelper.checkNBT(stack);
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         return tag.getDouble("costModifier");
     }
 
     public void setCostModifier(ItemStack stack, double modifier) {
         NBTHelper.checkNBT(stack);
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble("costModifier", modifier);
     }
 
     public double getArmourModifier(ItemStack stack) {
         NBTHelper.checkNBT(stack);
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         return tag.getDouble("armourModifier");
     }
 
     public void setArmourModifier(ItemStack stack, double modifier) {
         NBTHelper.checkNBT(stack);
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble("armourModifier", modifier);
     }
@@ -272,7 +272,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         return super.getTranslationKey(stack) + names[3 - armorType.getIndex()];
     }
 
-    public void revertArmour(EntityPlayer player, ItemStack itemStack) {
+    public void revertArmour(PlayerEntity player, ItemStack itemStack) {
         ItemStack stack = this.getContainedArmourStack(itemStack);
         player.setItemStackToSlot(armorType, stack);
     }
@@ -312,9 +312,9 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
         Multimap<String, AttributeModifier> multimap = HashMultimap.create();
-        if (slot == EntityEquipmentSlot.CHEST) {
+        if (slot == EquipmentSlotType.CHEST) {
             multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(new UUID(0, 318145), "Armor modifier", this.getHealthBonus(stack), 0));
             multimap.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.getName(), new AttributeModifier(new UUID(0, 8145), "Armor modifier", this.getKnockbackResistance(stack), 0));
             multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(new UUID(0, 94021), "Armor modifier", this.getSpeedBoost(stack), 2));
@@ -329,12 +329,12 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             return;
         }
 
-        NBTTagCompound tag = new NBTTagCompound();
+        CompoundNBT tag = new CompoundNBT();
         previousArmour.writeToNBT(tag);
 
-        NBTTagCompound omegaTag = newArmour.getTagCompound();
+        CompoundNBT omegaTag = newArmour.getTagCompound();
         if (omegaTag == null) {
-            omegaTag = new NBTTagCompound();
+            omegaTag = new CompoundNBT();
             newArmour.setTagCompound(omegaTag);
         }
 
@@ -344,12 +344,12 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     }
 
     public ItemStack getContainedArmourStack(ItemStack newArmour) {
-        NBTTagCompound omegaTag = newArmour.getTagCompound();
+        CompoundNBT omegaTag = newArmour.getTagCompound();
         if (omegaTag == null) {
             return null;
         }
 
-        NBTTagCompound tag = omegaTag.getCompoundTag("armour");
+        CompoundNBT tag = omegaTag.getCompoundTag("armour");
         return new ItemStack(tag);
     }
 
@@ -366,7 +366,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     public EnumDemonWillType getCurrentType(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         if (!tag.hasKey(Constants.NBT.WILL_TYPE)) {
             return EnumDemonWillType.DEFAULT;
@@ -378,7 +378,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     public void setCurrentType(EnumDemonWillType type, ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setString(Constants.NBT.WILL_TYPE, type.toString());
     }
@@ -391,7 +391,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             this.setCostModifier(armourStack, recurringCost);
             this.setCurrentType(type, armourStack);
 
-            if (this.armorType == EntityEquipmentSlot.CHEST) {
+            if (this.armorType == EquipmentSlotType.CHEST) {
                 this.setArmourModifier(armourStack, getArmourModifier(type, willBracket));
                 this.setHealthBonus(armourStack, this.getHealthModifier(type, willBracket));
                 this.setKnockbackResistance(armourStack, getKnockbackModifier(type, willBracket));
@@ -459,14 +459,14 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     public double getHealthBonus(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getDouble(Constants.NBT.SOUL_SWORD_HEALTH);
     }
 
     public void setHealthBonus(ItemStack stack, double hp) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_HEALTH, hp);
     }
@@ -474,14 +474,14 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     public double getKnockbackResistance(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getDouble("knockback");
     }
 
     public void setKnockbackResistance(ItemStack stack, double kb) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble("knockback", kb);
     }
@@ -489,14 +489,14 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     public double getSpeedBoost(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getDouble("speed");
     }
 
     public void setSpeedBoost(ItemStack stack, double speed) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble("speed", speed);
     }
@@ -504,14 +504,14 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     public double getDamageBoost(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getDouble("damage");
     }
 
     public void setDamageBoost(ItemStack stack, double damage) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble("damage", damage);
     }
@@ -519,19 +519,19 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     public double getAttackSpeedBoost(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getDouble("attackSpeed");
     }
 
     public void setAttackSpeedBoost(ItemStack stack, double attackSpeed) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble("attackSpeed", attackSpeed);
     }
 
-    public static void revertAllArmour(EntityPlayer player) {
+    public static void revertAllArmour(PlayerEntity player) {
         NonNullList<ItemStack> armourInventory = player.inventory.armorInventory;
         for (ItemStack stack : armourInventory) {
             if (stack != null && stack.getItem() instanceof ItemSentientArmour) {
@@ -540,15 +540,15 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         }
     }
 
-    public static boolean convertPlayerArmour(EnumDemonWillType type, double will, EntityPlayer player) {
+    public static boolean convertPlayerArmour(EnumDemonWillType type, double will, PlayerEntity player) {
         if (!canSustainArmour(type, will)) {
             return false;
         }
 
-        ItemStack helmetStack = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-        ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-        ItemStack leggingsStack = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
-        ItemStack bootsStack = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+        ItemStack helmetStack = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
+        ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+        ItemStack leggingsStack = player.getItemStackFromSlot(EquipmentSlotType.LEGS);
+        ItemStack bootsStack = player.getItemStackFromSlot(EquipmentSlotType.FEET);
 
         {
             ItemStack omegaHelmetStack = ((ItemSentientArmour) RegistrarBloodMagicItems.SENTIENT_ARMOUR_HELMET).getSubstituteStack(type, will, helmetStack);
@@ -556,10 +556,10 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             ItemStack omegaLeggingsStack = ((ItemSentientArmour) RegistrarBloodMagicItems.SENTIENT_ARMOUR_LEGGINGS).getSubstituteStack(type, will, leggingsStack);
             ItemStack omegaBootsStack = ((ItemSentientArmour) RegistrarBloodMagicItems.SENTIENT_ARMOUR_BOOTS).getSubstituteStack(type, will, bootsStack);
 
-            player.setItemStackToSlot(EntityEquipmentSlot.HEAD, omegaHelmetStack);
-            player.setItemStackToSlot(EntityEquipmentSlot.CHEST, omegaChestStack);
-            player.setItemStackToSlot(EntityEquipmentSlot.LEGS, omegaLeggingsStack);
-            player.setItemStackToSlot(EntityEquipmentSlot.FEET, omegaBootsStack);
+            player.setItemStackToSlot(EquipmentSlotType.HEAD, omegaHelmetStack);
+            player.setItemStackToSlot(EquipmentSlotType.CHEST, omegaChestStack);
+            player.setItemStackToSlot(EquipmentSlotType.LEGS, omegaLeggingsStack);
+            player.setItemStackToSlot(EquipmentSlotType.FEET, omegaBootsStack);
 
             return true;
         }

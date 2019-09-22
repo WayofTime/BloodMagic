@@ -9,15 +9,15 @@ import WayofTime.bloodmagic.tile.TileTeleposer;
 import WayofTime.bloodmagic.tile.container.*;
 import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {
     @Override
-    public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getServerGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
         BlockPos pos = new BlockPos(x, y, z);
 
         switch (id) {
@@ -39,8 +39,8 @@ public class GuiHandler implements IGuiHandler {
     }
 
     @Override
-    public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-        if (world instanceof WorldClient) {
+    public Object getClientGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
+        if (world instanceof ClientWorld) {
             BlockPos pos = new BlockPos(x, y, z);
 
             switch (id) {

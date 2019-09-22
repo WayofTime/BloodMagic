@@ -7,12 +7,12 @@ import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.*;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -23,12 +23,12 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() instanceof ISigil.Holding)
             stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (PlayerHelper.isFakePlayer(player))
-            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+            return ActionResult.newResult(ActionResultType.FAIL, stack);
 
         boolean unusable = isUnusable(stack);
         if (world.isRemote && !unusable) {
@@ -59,8 +59,8 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
     }
 
     @Override
-    public boolean applyOnHitEffect(EnumDemonWillType type, ItemStack swordStack, ItemStack providerStack, EntityLivingBase attacker, EntityLivingBase target) {
-        target.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, 0));
+    public boolean applyOnHitEffect(EnumDemonWillType type, ItemStack swordStack, ItemStack providerStack, LivingEntity attacker, LivingEntity target) {
+        target.addPotionEffect(new EffectInstance(Effects.LEVITATION, 200, 0));
         return true;
     }
 

@@ -3,8 +3,8 @@ package WayofTime.bloodmagic.ritual.types;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.ritual.*;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -29,7 +29,7 @@ public class RitualCondor extends Ritual {
 
         int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-        List<EntityPlayer> entityPlayers = world.getEntitiesWithinAABB(EntityPlayer.class, aabb);
+        List<PlayerEntity> entityPlayers = world.getEntitiesWithinAABB(PlayerEntity.class, aabb);
         int entityCount = entityPlayers.size();
 
         if (currentEssence < getRefreshCost() * entityCount) {
@@ -37,8 +37,8 @@ public class RitualCondor extends Ritual {
             return;
         } else {
             entityCount = 0;
-            for (EntityPlayer player : entityPlayers) {
-                player.addPotionEffect(new PotionEffect(RegistrarBloodMagic.FLIGHT, 20, 0));
+            for (PlayerEntity player : entityPlayers) {
+                player.addPotionEffect(new EffectInstance(RegistrarBloodMagic.FLIGHT, 20, 0));
             }
         }
 

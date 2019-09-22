@@ -6,15 +6,15 @@ import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 
@@ -85,11 +85,11 @@ public class RitualAnimalGrowth extends Ritual {
 
         AreaDescriptor growingRange = masterRitualStone.getBlockRange(GROWTH_RANGE);
         AxisAlignedBB axis = growingRange.getAABB(masterRitualStone.getBlockPos());
-        List<EntityAnimal> animalList = world.getEntitiesWithinAABB(EntityAnimal.class, axis);
+        List<AnimalEntity> animalList = world.getEntitiesWithinAABB(AnimalEntity.class, axis);
 
         boolean performedEffect = false;
 
-        for (EntityAnimal animal : animalList) {
+        for (AnimalEntity animal : animalList) {
             if (animal.getGrowingAge() < 0) {
                 animal.addGrowth(5);
                 totalGrowths++;
@@ -109,7 +109,7 @@ public class RitualAnimalGrowth extends Ritual {
                 if (kamikaze) {
                     if (destructiveWill >= destructiveWillDrain) {
                         if (!animal.isPotionActive(RegistrarBloodMagic.SACRIFICIAL_LAMB)) {
-                            animal.addPotionEffect(new PotionEffect(RegistrarBloodMagic.SACRIFICIAL_LAMB, 1200));
+                            animal.addPotionEffect(new EffectInstance(RegistrarBloodMagic.SACRIFICIAL_LAMB, 1200));
                             destructiveDrain += destructiveWillDrain;
                             destructiveWill -= destructiveWillDrain;
                             performedEffect = true;
@@ -190,14 +190,14 @@ public class RitualAnimalGrowth extends Ritual {
     }
 
     @Override
-    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
+    public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player) {
         return new ITextComponent[]{
-                new TextComponentTranslation(this.getTranslationKey() + ".info"),
-                new TextComponentTranslation(this.getTranslationKey() + ".default.info"),
-                new TextComponentTranslation(this.getTranslationKey() + ".corrosive.info"),
-                new TextComponentTranslation(this.getTranslationKey() + ".steadfast.info"),
-                new TextComponentTranslation(this.getTranslationKey() + ".destructive.info"),
-                new TextComponentTranslation(this.getTranslationKey() + ".vengeful.info")
+                new TranslationTextComponent(this.getTranslationKey() + ".info"),
+                new TranslationTextComponent(this.getTranslationKey() + ".default.info"),
+                new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"),
+                new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"),
+                new TranslationTextComponent(this.getTranslationKey() + ".destructive.info"),
+                new TranslationTextComponent(this.getTranslationKey() + ".vengeful.info")
         };
     }
 

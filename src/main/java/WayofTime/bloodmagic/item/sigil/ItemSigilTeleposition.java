@@ -9,14 +9,14 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -48,12 +48,12 @@ public class ItemSigilTeleposition extends ItemSigilBase {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() instanceof ISigil.Holding)
             stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (PlayerHelper.isFakePlayer(player))
-            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+            return ActionResult.newResult(ActionResultType.FAIL, stack);
 
         TeleportLocation location = getTeleportLocation(stack);
         Binding binding = getBinding(stack);
@@ -78,21 +78,21 @@ public class ItemSigilTeleposition extends ItemSigilBase {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() instanceof ISigil.Holding)
             stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (PlayerHelper.isFakePlayer(player))
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
 
         if (!world.isRemote && player.isSneaking() && NBTHelper.checkNBT(stack) != null) {
             if (world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileTeleposer) {
                 TeleportLocation teleportLocation = new TeleportLocation(world.provider.getDimension(), pos);
                 updateLocation(stack, teleportLocation);
-                return EnumActionResult.SUCCESS;
+                return ActionResultType.SUCCESS;
             }
         }
-        return EnumActionResult.FAIL;
+        return ActionResultType.FAIL;
     }
 
     @Nullable
@@ -103,7 +103,7 @@ public class ItemSigilTeleposition extends ItemSigilBase {
         if (!stack.hasTagCompound())
             return null;
 
-        NBTTagCompound locationTag = stack.getSubCompound("tplocation");
+        CompoundNBT locationTag = stack.getSubCompound("tplocation");
         if (locationTag == null)
             return null;
 
@@ -111,16 +111,16 @@ public class ItemSigilTeleposition extends ItemSigilBase {
     }
 
     public void updateLocation(ItemStack stack, TeleportLocation location) {
-        NBTTagCompound tagCompound;
+        CompoundNBT tagCompound;
         if (!stack.hasTagCompound())
-            stack.setTagCompound(tagCompound = new NBTTagCompound());
+            stack.setTagCompound(tagCompound = new CompoundNBT());
         else
             tagCompound = stack.getTagCompound();
 
         tagCompound.setTag("tplocation", location.serializeNBT());
     }
 
-    public static class TeleportLocation implements INBTSerializable<NBTTagCompound> {
+    public static class TeleportLocation implements INBTSerializable<CompoundNBT> {
 
         private int dim;
         private BlockPos pos;
@@ -138,20 +138,20 @@ public class ItemSigilTeleposition extends ItemSigilBase {
         }
 
         @Override
-        public NBTTagCompound serializeNBT() {
-            NBTTagCompound tag = new NBTTagCompound();
+        public CompoundNBT serializeNBT() {
+            CompoundNBT tag = new CompoundNBT();
             tag.setInteger("dim", dim);
             tag.setLong("pos", pos.toLong());
             return tag;
         }
 
         @Override
-        public void deserializeNBT(NBTTagCompound nbt) {
+        public void deserializeNBT(CompoundNBT nbt) {
             this.dim = nbt.getInteger("dim");
             this.pos = BlockPos.fromLong(nbt.getLong("pos"));
         }
 
-        public static TeleportLocation fromTag(NBTTagCompound tpTag) {
+        public static TeleportLocation fromTag(CompoundNBT tpTag) {
             TeleportLocation location = new TeleportLocation();
             location.deserializeNBT(tpTag);
             return location;

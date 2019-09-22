@@ -12,14 +12,14 @@ import javax.vecmath.Vector3d;
 
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.potion.Effects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,9 +33,9 @@ import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 
 public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshProvider, IActivatable {
-    public static Map<EntityPlayer, Map<EntityLivingBase, Vector3d>> floatMap = new HashMap<EntityPlayer, Map<EntityLivingBase, Vector3d>>();
-    public static Map<EntityPlayer, EntityLivingBase> heldEntityMap = new HashMap<EntityPlayer, EntityLivingBase>();
-    public static Map<EntityPlayer, Double> heldEntityOffsetMap = new HashMap<EntityPlayer, Double>();
+    public static Map<PlayerEntity, Map<LivingEntity, Vector3d>> floatMap = new HashMap<PlayerEntity, Map<LivingEntity, Vector3d>>();
+    public static Map<PlayerEntity, LivingEntity> heldEntityMap = new HashMap<PlayerEntity, LivingEntity>();
+    public static Map<PlayerEntity, Double> heldEntityOffsetMap = new HashMap<PlayerEntity, Double>();
 
     //TODO: A lot of this stuff could be moved to a toggle-able variant
     public ItemFlightScroll() {
@@ -60,7 +60,7 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
 
         if (!world.isRemote) {
@@ -83,7 +83,7 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+    public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity entity, Hand hand) {
         if (entity.world.isRemote) {
             return false;
         }
@@ -94,7 +94,7 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
             //TODO: Release entity completely?
             removeEntity(player, entity);
         } else {
-            EntityLivingBase heldEntity = getHeldEntity(player);
+            LivingEntity heldEntity = getHeldEntity(player);
             if (heldEntity != null && heldEntity.equals(entity)) {
                 heldEntityMap.remove(player);
             } else {
@@ -107,7 +107,7 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-        if (!world.isRemote && entity instanceof EntityPlayerMP && getActivated(stack)) {
+        if (!world.isRemote && entity instanceof ServerPlayerEntity && getActivated(stack)) {
             if (entity.ticksExisted % 20 == 0) {
                 double drainNeeded = getBreathCostPerSecond(stack);
                 if (this.drainBreath(stack, drainNeeded, false) >= drainNeeded) {
@@ -117,23 +117,23 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
                 }
             }
 
-            onEffectUpdate(stack, world, (EntityPlayer) entity, itemSlot, isSelected);
+            onEffectUpdate(stack, world, (PlayerEntity) entity, itemSlot, isSelected);
         }
 
         if (!world.isRemote) {
-            if (entity instanceof EntityPlayer) {
-                EntityPlayer player = (EntityPlayer) entity;
+            if (entity instanceof PlayerEntity) {
+                PlayerEntity player = (PlayerEntity) entity;
                 updateHeldEntityPosition(player);
                 if (floatMap.containsKey(player)) {
-                    Map<EntityLivingBase, Vector3d> entityMap = floatMap.get(player);
+                    Map<LivingEntity, Vector3d> entityMap = floatMap.get(player);
                     if (entityMap == null) {
                         return;
                     }
 
-                    List<EntityLivingBase> removalList = new ArrayList<EntityLivingBase>();
+                    List<LivingEntity> removalList = new ArrayList<LivingEntity>();
 
-                    for (Entry<EntityLivingBase, Vector3d> entry : entityMap.entrySet()) {
-                        EntityLivingBase floatingEntity = entry.getKey();
+                    for (Entry<LivingEntity, Vector3d> entry : entityMap.entrySet()) {
+                        LivingEntity floatingEntity = entry.getKey();
                         if (floatingEntity == null || floatingEntity.isDead || floatingEntity.dimension != player.dimension) {
                             removalList.add(floatingEntity);
                         }
@@ -141,7 +141,7 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
                         followOwner(player, floatingEntity, entry.getValue());
                     }
 
-                    for (EntityLivingBase livingEntity : removalList) {
+                    for (LivingEntity livingEntity : removalList) {
                         entityMap.remove(livingEntity);
                     }
 
@@ -154,14 +154,14 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
         }
     }
 
-    public static boolean updateEntityOffset(EntityPlayer player, EntityLivingBase living, Vector3d updatedOffset) {
+    public static boolean updateEntityOffset(PlayerEntity player, LivingEntity living, Vector3d updatedOffset) {
         //TODO: Check if this entity is contained in another player's map to prevent weird things.
         if (floatMap.containsKey(player)) {
-            Map<EntityLivingBase, Vector3d> entityMap = floatMap.get(player);
+            Map<LivingEntity, Vector3d> entityMap = floatMap.get(player);
             entityMap.put(living, updatedOffset);
             return true;
         } else {
-            Map<EntityLivingBase, Vector3d> entityMap = new HashMap<EntityLivingBase, Vector3d>();
+            Map<LivingEntity, Vector3d> entityMap = new HashMap<LivingEntity, Vector3d>();
             entityMap.put(living, updatedOffset);
             floatMap.put(player, entityMap);
             return true;
@@ -169,7 +169,7 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
     }
 
     @Nullable
-    public static EntityLivingBase getHeldEntity(EntityPlayer player) {
+    public static LivingEntity getHeldEntity(PlayerEntity player) {
         if (heldEntityMap.containsKey(player)) {
             return heldEntityMap.get(player);
         }
@@ -177,7 +177,7 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
         return null;
     }
 
-    public static double getHeldEntityOffset(EntityPlayer player) {
+    public static double getHeldEntityOffset(PlayerEntity player) {
         if (heldEntityMap.containsKey(player)) {
             return heldEntityOffsetMap.get(player);
         }
@@ -185,7 +185,7 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
         return 1;
     }
 
-    public static void holdEntity(EntityPlayer player, EntityLivingBase entityLiving) {
+    public static void holdEntity(PlayerEntity player, LivingEntity entityLiving) {
         float distance = player.getDistance(entityLiving);
         Vec3d lookVec = player.getLookVec();
         heldEntityMap.put(player, entityLiving);
@@ -193,8 +193,8 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
         updateEntityOffset(player, entityLiving, new Vector3d(lookVec.x * distance, lookVec.y * distance, lookVec.z * distance));
     }
 
-    public static void updateHeldEntityPosition(EntityPlayer player) {
-        EntityLivingBase entityLiving = getHeldEntity(player);
+    public static void updateHeldEntityPosition(PlayerEntity player) {
+        LivingEntity entityLiving = getHeldEntity(player);
         if (entityLiving != null) {
             double offset = getHeldEntityOffset(player);
             Vec3d lookVec = player.getLookVec();
@@ -202,13 +202,13 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
         }
     }
 
-    public static void removeEntity(EntityPlayer player, EntityLivingBase living) {
+    public static void removeEntity(PlayerEntity player, LivingEntity living) {
         if (living == null) {
             return;
         }
 
         if (floatMap.containsKey(player)) {
-            Map<EntityLivingBase, Vector3d> entityMap = floatMap.get(player);
+            Map<LivingEntity, Vector3d> entityMap = floatMap.get(player);
             if (entityMap.containsKey(living)) {
                 entityMap.remove(living);
             }
@@ -219,7 +219,7 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
         }
     }
 
-    public void followOwner(EntityPlayer owner, EntityLivingBase livingEntity, Vector3d offset) {
+    public void followOwner(PlayerEntity owner, LivingEntity livingEntity, Vector3d offset) {
         double offsetX = offset.x;
         double offsetY = offset.y;
         double offsetZ = offset.z;
@@ -228,7 +228,7 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
 
         double speed = Math.max(ownerSpeed * 20, 2); //May just want to call it a day and set this to "2"
 
-        livingEntity.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 20, 0, false, true));
+        livingEntity.addPotionEffect(new EffectInstance(Effects.LEVITATION, 20, 0, false, true));
 
         double wantedX = owner.posX + offsetX;
         double wantedY = owner.posY + offsetY;
@@ -247,8 +247,8 @@ public class ItemFlightScroll extends ItemSoulBreathContainer implements IMeshPr
         livingEntity.setVelocity(vec.x * speed, vec.y * speed, vec.z * speed);
     }
 
-    public void onEffectUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected) {
-        player.addPotionEffect(new PotionEffect(RegistrarBloodMagic.FLIGHT, 2, 0));
+    public void onEffectUpdate(ItemStack stack, World world, PlayerEntity player, int itemSlot, boolean isSelected) {
+        player.addPotionEffect(new EffectInstance(RegistrarBloodMagic.FLIGHT, 2, 0));
     }
 
     @Override

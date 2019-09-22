@@ -20,20 +20,20 @@ import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
 import com.google.common.collect.SetMultimap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
@@ -71,7 +71,7 @@ public class ClientHandler {
     public static Minecraft minecraft = Minecraft.getMinecraft();
     private static TileMasterRitualStone mrsHoloTile;
     private static Ritual mrsHoloRitual;
-    private static EnumFacing mrsHoloDirection;
+    private static Direction mrsHoloDirection;
     private static boolean mrsHoloDisplay;
 
     @SubscribeEvent
@@ -93,7 +93,7 @@ public class ClientHandler {
 
     @SubscribeEvent
     public static void onSoundEvent(PlaySoundEvent event) {
-        EntityPlayer player = Minecraft.getMinecraft().player;
+        PlayerEntity player = Minecraft.getMinecraft().player;
         if (player != null && player.isPotionActive(RegistrarBloodMagic.DEAFNESS)) {
             event.setResultSound(null);
         }
@@ -121,7 +121,7 @@ public class ClientHandler {
 
     @SubscribeEvent
     public static void render(RenderWorldLastEvent event) {
-        EntityPlayerSP player = minecraft.player;
+        ClientPlayerEntity player = minecraft.player;
         World world = player.getEntityWorld();
 
         if (mrsHoloTile != null) {
@@ -146,7 +146,7 @@ public class ClientHandler {
 
     @SubscribeEvent
     public static void onMouseEvent(MouseEvent event) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        ClientPlayerEntity player = Minecraft.getMinecraft().player;
 
         if (event.getDwheel() != 0 && player != null && player.isSneaking()) {
             ItemStack stack = player.getHeldItemMainhand();
@@ -241,10 +241,10 @@ public class ClientHandler {
         BMLog.DEBUG.info("Suppressed required texture errors in {}", stopwatch.stop());
     }
 
-    private static void renderRitualStones(EntityPlayerSP player, float partialTicks) {
+    private static void renderRitualStones(ClientPlayerEntity player, float partialTicks) {
         World world = player.getEntityWorld();
         ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getCurrentItem().getItem();
-        EnumFacing direction = ritualDiviner.getDirection(player.inventory.getCurrentItem());
+        Direction direction = ritualDiviner.getDirection(player.inventory.getCurrentItem());
         Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(ritualDiviner.getCurrentRitual(player.inventory.getCurrentItem()));
 
         if (ritual == null)
@@ -303,7 +303,7 @@ public class ClientHandler {
         GlStateManager.popMatrix();
     }
 
-    public static void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel) {
+    public static void cycleSigil(ItemStack stack, PlayerEntity player, int dWheel) {
         int mode = dWheel;
         if (!ConfigHandler.client.sigilHoldingSkipsEmptySlots) {
             mode = ItemSigilHolding.getCurrentItemOrdinal(stack);
@@ -313,17 +313,17 @@ public class ClientHandler {
         ItemSigilHolding.cycleToNextSigil(stack, mode);
         BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacketProcessor(player.inventory.currentItem, mode));
         ItemStack newStack = ItemSigilHolding.getItemStackInSlot(stack, ItemSigilHolding.getCurrentItemOrdinal(stack));
-        player.sendStatusMessage(newStack.isEmpty() ? new TextComponentString("") : newStack.getTextComponent(), true);
+        player.sendStatusMessage(newStack.isEmpty() ? new StringTextComponent("") : newStack.getTextComponent(), true);
     }
 
-    private static TextureAtlasSprite forName(TextureMap textureMap, String name, String dir) {
+    private static TextureAtlasSprite forName(AtlasTexture textureMap, String name, String dir) {
         return textureMap.registerSprite(new ResourceLocation(Constants.Mod.DOMAIN + dir + "/" + name));
     }
 
     public static void renderRitualStones(TileMasterRitualStone masterRitualStone, float partialTicks) {
-        EntityPlayerSP player = minecraft.player;
+        ClientPlayerEntity player = minecraft.player;
         World world = player.getEntityWorld();
-        EnumFacing direction = mrsHoloDirection;
+        Direction direction = mrsHoloDirection;
         Ritual ritual = mrsHoloRitual;
 
         if (ritual == null)
@@ -382,7 +382,7 @@ public class ClientHandler {
         GlStateManager.popMatrix();
     }
 
-    public static void setRitualHolo(TileMasterRitualStone masterRitualStone, Ritual ritual, EnumFacing direction, boolean displayed) {
+    public static void setRitualHolo(TileMasterRitualStone masterRitualStone, Ritual ritual, Direction direction, boolean displayed) {
         mrsHoloDisplay = displayed;
         mrsHoloTile = masterRitualStone;
         mrsHoloRitual = ritual;
@@ -393,6 +393,6 @@ public class ClientHandler {
         mrsHoloDisplay = false;
         mrsHoloTile = null;
         mrsHoloRitual = null;
-        mrsHoloDirection = EnumFacing.NORTH;
+        mrsHoloDirection = Direction.NORTH;
     }
 }

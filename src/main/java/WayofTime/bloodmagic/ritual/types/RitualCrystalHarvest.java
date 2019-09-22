@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.ritual.types;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -44,7 +44,7 @@ public class RitualCrystalHarvest extends Ritual {
             if (tile instanceof TileDemonCrystal) {
                 TileDemonCrystal demonCrystal = (TileDemonCrystal) tile;
                 if (demonCrystal.dropSingleCrystal()) {
-                    IBlockState state = world.getBlockState(nextPos);
+                    BlockState state = world.getBlockState(nextPos);
                     world.notifyBlockUpdate(nextPos, state, state, 3);
                     totalEffects++;
                     if (totalEffects >= maxEffects) {

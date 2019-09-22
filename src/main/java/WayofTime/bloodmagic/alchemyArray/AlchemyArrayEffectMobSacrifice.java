@@ -4,30 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.ServerWorld;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeSacrificeCraft;
 import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
-import WayofTime.bloodmagic.util.helper.PurificationHelper;
 
 public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect {
     public static final AreaDescriptor itemDescriptor = new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11);
@@ -59,11 +56,11 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect {
         if (ticksActive >= 200) {
             BlockPos pos = tile.getPos();
 
-            List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, itemDescriptor.getAABB(pos));
+            List<ItemEntity> itemList = world.getEntitiesWithinAABB(ItemEntity.class, itemDescriptor.getAABB(pos));
 
             List<ItemStack> inputList = new ArrayList<ItemStack>();
 
-            for (EntityItem entityItem : itemList) {
+            for (ItemEntity entityItem : itemList) {
                 if (entityItem.isDead || entityItem.getItem().isEmpty()) {
                     continue;
                 }
@@ -85,8 +82,8 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect {
                 double healthRequired = recipe.getHealthRequired();
                 double healthAvailable = 0;
 
-                List<EntityLivingBase> livingEntities = world.getEntitiesWithinAABB(EntityLivingBase.class, mobDescriptor.getAABB(pos));
-                for (EntityLivingBase living : livingEntities) {
+                List<LivingEntity> livingEntities = world.getEntitiesWithinAABB(LivingEntity.class, mobDescriptor.getAABB(pos));
+                for (LivingEntity living : livingEntities) {
                     double health = getEffectiveHealth(living);
                     if (health > 0) {
                         healthAvailable += health;
@@ -102,7 +99,7 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect {
 
                 if (craftTime >= REQUIRED_CRAFT_TIME) {
                     if (!world.isRemote) {
-                        for (EntityLivingBase living : livingEntities) {
+                        for (LivingEntity living : livingEntities) {
                             double health = getEffectiveHealth(living);
                             if (healthAvailable > 0 && health > 0) {
                                 healthAvailable -= health;
@@ -116,7 +113,7 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect {
                             }
                         }
 
-                        for (EntityItem itemEntity : itemList) {
+                        for (ItemEntity itemEntity : itemList) {
                             itemEntity.getItem().setCount(itemEntity.getItem().getCount() - 1);
                             if (itemEntity.getItem().isEmpty()) //TODO: Check container
                             {
@@ -124,13 +121,13 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect {
                             }
                         }
 
-                        world.spawnEntity(new EntityItem(world, pos.getX() + 0.5, pos.getY() + 2.5, pos.getZ() + 0.5, recipe.getOutput()));
+                        world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 2.5, pos.getZ() + 0.5, recipe.getOutput()));
                         craftTime = 0;
                     }
                 } else {
                     if (world.isRemote) {
                         Vec3d spawnPosition = new Vec3d(pos.getX() + 0.5, pos.getY() + 2.5, pos.getZ() + 0.5);
-                        for (EntityItem itemEntity : itemList) {
+                        for (ItemEntity itemEntity : itemList) {
                             ItemStack stack = itemEntity.getItem();
                             double velocityFactor = 0.1;
 
@@ -146,7 +143,7 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect {
 //                            world.spawnParticle(EnumParticleTypes.ITEM_CRACK, spawnPosition.x, spawnPosition.y, spawnPosition.z, velVec2.x, velVec2.y, velVec2.z, Item.getIdFromItem(stack.getItem()), stack.getMetadata());
                         }
 
-                        for (EntityLivingBase living : livingEntities) {
+                        for (LivingEntity living : livingEntities) {
                             double health = getEffectiveHealth(living);
                             if (health <= 0) {
                                 continue;
@@ -165,14 +162,14 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect {
     }
 
     //Future-proofing in case I want to make different mobs give different effective health
-    public double getEffectiveHealth(EntityLivingBase living) {
+    public double getEffectiveHealth(LivingEntity living) {
         if (living == null)
             return 0;
 
         if (!living.isNonBoss())
             return 0;
 
-        if (living instanceof EntityPlayer)
+        if (living instanceof PlayerEntity)
             return 0;
 
         if (living.isChild() && !(living instanceof IMob))
@@ -189,12 +186,12 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
 
     }
 

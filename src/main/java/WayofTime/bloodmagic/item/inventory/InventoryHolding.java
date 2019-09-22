@@ -4,9 +4,9 @@ import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import java.util.UUID;
 
@@ -17,7 +17,7 @@ public class InventoryHolding extends ItemInventory {
         super(itemStack, ItemSigilHolding.inventorySize, "SigilOfHolding");
     }
 
-    public void onGuiSaved(EntityPlayer entityPlayer) {
+    public void onGuiSaved(PlayerEntity entityPlayer) {
         masterStack = findParentStack(entityPlayer);
 
         if (!masterStack.isEmpty()) {
@@ -25,7 +25,7 @@ public class InventoryHolding extends ItemInventory {
         }
     }
 
-    public ItemStack findParentStack(EntityPlayer entityPlayer) {
+    public ItemStack findParentStack(PlayerEntity entityPlayer) {
         if (Utils.hasUUID(masterStack)) {
             UUID parentStackUUID = new UUID(masterStack.getTagCompound().getLong(Constants.NBT.MOST_SIG), masterStack.getTagCompound().getLong(Constants.NBT.LEAST_SIG));
             for (int i = 0; i < entityPlayer.inventory.getSizeInventory(); i++) {
@@ -43,10 +43,10 @@ public class InventoryHolding extends ItemInventory {
     }
 
     public void save() {
-        NBTTagCompound nbtTagCompound = masterStack.getTagCompound();
+        CompoundNBT nbtTagCompound = masterStack.getTagCompound();
 
         if (nbtTagCompound == null) {
-            nbtTagCompound = new NBTTagCompound();
+            nbtTagCompound = new CompoundNBT();
 
             UUID uuid = UUID.randomUUID();
             nbtTagCompound.setLong(Constants.NBT.MOST_SIG, uuid.getMostSignificantBits());

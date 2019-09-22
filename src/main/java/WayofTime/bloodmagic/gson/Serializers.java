@@ -5,9 +5,9 @@ import com.google.gson.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializer;
+import net.minecraft.network.datasync.IDataSerializer;
 import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
@@ -15,7 +15,7 @@ import java.lang.reflect.Type;
 
 public class Serializers {
     // Data serializers
-    public static final DataSerializer<EnumDemonWillType> WILL_TYPE_SERIALIZER = new DataSerializer<EnumDemonWillType>() {
+    public static final IDataSerializer<EnumDemonWillType> WILL_TYPE_SERIALIZER = new IDataSerializer<EnumDemonWillType>() {
         @Override
         public void write(PacketBuffer buf, EnumDemonWillType value) {
             buf.writeEnumValue(value);
@@ -38,15 +38,15 @@ public class Serializers {
     };
 
     // Serializers
-    public static final SerializerBase<EnumFacing> FACING_SERIALIZER = new SerializerBase<EnumFacing>() {
+    public static final SerializerBase<Direction> FACING_SERIALIZER = new SerializerBase<Direction>() {
         @Override
-        public Class<EnumFacing> getType() {
-            return EnumFacing.class;
+        public Class<Direction> getType() {
+            return Direction.class;
         }
 
         @Override
-        public EnumFacing deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            return EnumFacing.byName(json.getAsString());
+        public Direction deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return Direction.byName(json.getAsString());
         }
     };
     public static final SerializerBase<ResourceLocation> RESOURCELOCATION_SERIALIZER = new SerializerBase<ResourceLocation>() {

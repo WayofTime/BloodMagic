@@ -6,12 +6,12 @@ import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.handler.event.ClientHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -20,7 +20,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
-public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
+public class RenderAltar extends TileEntityRenderer<TileAltar> {
     private static final float MIN_HEIGHT = 0.499f;
     private static final float MAX_HEIGHT = 0.745f;
 
@@ -58,7 +58,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
 
         int fluidColor = fluid.getColor(fluidStack);
 
-        Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        Minecraft.getMinecraft().renderEngine.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
         setGLColorFromInt(fluidColor);
 
         double uMin = (double) fluidStillSprite.getMinU();
@@ -78,7 +78,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
     }
 
     private void renderItem(ItemStack stack) {
-        RenderItem itemRenderer = Minecraft.getMinecraft().getRenderItem();
+        ItemRenderer itemRenderer = Minecraft.getMinecraft().getRenderItem();
         if (!stack.isEmpty()) {
             GlStateManager.translate(0.5, 1, 0.5);
             GlStateManager.pushMatrix();
@@ -100,7 +100,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar> {
     }
 
     private void renderHologram(TileAltar altar, AltarTier tier, float partialTicks) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        ClientPlayerEntity player = Minecraft.getMinecraft().player;
         World world = player.world;
 
         if (tier == AltarTier.ONE)

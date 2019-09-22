@@ -10,11 +10,11 @@ import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemSpade;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ShovelItem;
+import net.minecraft.potion.Effects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
@@ -35,10 +35,10 @@ public class StatTrackerHandler {
     // Tracks: Digging, DigSlowdown
     @SubscribeEvent
     public static void blockBreakEvent(BlockEvent.BreakEvent event) {
-        EntityPlayer player = event.getPlayer();
+        PlayerEntity player = event.getPlayer();
         if (player != null) {
             if (LivingArmour.hasFullSet(player)) {
-                ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
                 if (chestStack.getItem() instanceof ItemLivingArmour) {
                     LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
 
@@ -54,15 +54,15 @@ public class StatTrackerHandler {
     // Tracks: Health Boost
     @SubscribeEvent
     public static void onEntityHealed(LivingHealEvent event) {
-        EntityLivingBase healedEntity = event.getEntityLiving();
-        if (!(healedEntity instanceof EntityPlayer)) {
+        LivingEntity healedEntity = event.getEntityLiving();
+        if (!(healedEntity instanceof PlayerEntity)) {
             return;
         }
 
-        EntityPlayer player = (EntityPlayer) healedEntity;
+        PlayerEntity player = (PlayerEntity) healedEntity;
 
         if (LivingArmour.hasFullSet(player)) {
-            ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+            ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
             LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
             if (armour != null) {
                 StatTrackerHealthboost.incrementCounter(armour, event.getAmount());
@@ -83,15 +83,15 @@ public class StatTrackerHandler {
     public static void entityHurt(LivingHurtEvent event) {
         DamageSource source = event.getSource();
         Entity sourceEntity = event.getSource().getTrueSource();
-        EntityLivingBase attackedEntity = event.getEntityLiving();
+        LivingEntity attackedEntity = event.getEntityLiving();
 
-        if (attackedEntity instanceof EntityPlayer) {
-            EntityPlayer attackedPlayer = (EntityPlayer) attackedEntity;
+        if (attackedEntity instanceof PlayerEntity) {
+            PlayerEntity attackedPlayer = (PlayerEntity) attackedEntity;
 
             // Living Armor Handling
             if (LivingArmour.hasFullSet(attackedPlayer)) {
                 float amount = Math.min(Utils.getModifiedDamage(attackedPlayer, event.getSource(), event.getAmount()), attackedPlayer.getHealth());
-                ItemStack chestStack = attackedPlayer.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                ItemStack chestStack = attackedPlayer.getItemStackFromSlot(EquipmentSlotType.CHEST);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null) {
                     if (sourceEntity != null && !source.isMagicDamage() && !source.isProjectile())
@@ -104,7 +104,7 @@ public class StatTrackerHandler {
                         StatTrackerArrowProtect.incrementCounter(armour, amount);
                 }
             } else {
-                ItemStack chestStack = attackedPlayer.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                ItemStack chestStack = attackedPlayer.getItemStackFromSlot(EquipmentSlotType.CHEST);
                 if (chestStack.getItem() instanceof ItemSentientArmour) {
                     ItemSentientArmour armour = (ItemSentientArmour) chestStack.getItem();
                     armour.onPlayerAttacked(chestStack, source, attackedPlayer);
@@ -112,15 +112,15 @@ public class StatTrackerHandler {
             }
         }
 
-        if (sourceEntity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) sourceEntity;
+        if (sourceEntity instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) sourceEntity;
 
             // Living Armor Handling
             if (LivingArmour.hasFullSet(player)) {
-                ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null) {
-                    ItemStack mainWeapon = player.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+                    ItemStack mainWeapon = player.getItemStackFromSlot(EquipmentSlotType.MAINHAND);
 
                     event.setAmount((float) (event.getAmount() + lastPlayerSwingStrength * armour.getAdditionalDamageOnHit(event.getAmount(), player, attackedEntity, mainWeapon)));
 
@@ -132,13 +132,13 @@ public class StatTrackerHandler {
                         if (player.getEntityWorld().getLight(player.getPosition()) <= 9)
                             StatTrackerNightSight.incrementCounter(armour, amount);
 
-                        if (mainWeapon.getItem() instanceof ItemSpade)
+                        if (mainWeapon.getItem() instanceof ShovelItem)
                             StatTrackerGraveDigger.incrementCounter(armour, amount);
 
                         if (player.isSprinting())
                             StatTrackerSprintAttack.incrementCounter(armour, amount);
 
-                        boolean isCritical = lastPlayerSwingStrength > 0.9 && player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.BLINDNESS) && !player.isRiding() && !player.isSprinting();
+                        boolean isCritical = lastPlayerSwingStrength > 0.9 && player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(Effects.BLINDNESS) && !player.isRiding() && !player.isSprinting();
                         if (isCritical)
                             StatTrackerCriticalStrike.incrementCounter(armour, amount);
 
@@ -154,10 +154,10 @@ public class StatTrackerHandler {
     // Tracks: Experienced
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onExperiencePickup(PlayerPickupXpEvent event) {
-        EntityPlayer player = event.getEntityPlayer();
+        PlayerEntity player = event.getEntityPlayer();
 
         if (LivingArmour.hasFullSet(player)) {
-            ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+            ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
             LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
             if (armour != null) {
                 LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.experienced", chestStack);

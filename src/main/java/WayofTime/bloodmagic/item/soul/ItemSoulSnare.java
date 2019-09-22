@@ -6,9 +6,9 @@ import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -33,7 +33,7 @@ public class ItemSoulSnare extends Item implements IVariantProvider {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand hand) {
         ItemStack stack = playerIn.getHeldItem(hand);
         if (!playerIn.capabilities.isCreativeMode) {
             stack.shrink(1);
@@ -47,7 +47,7 @@ public class ItemSoulSnare extends Item implements IVariantProvider {
             worldIn.spawnEntity(snare);
         }
 
-        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<>(ActionResultType.SUCCESS, stack);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ItemSoulSnare extends Item implements IVariantProvider {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
+    public void getSubItems(ItemGroup creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 

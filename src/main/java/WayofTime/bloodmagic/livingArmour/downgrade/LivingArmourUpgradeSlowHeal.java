@@ -3,8 +3,8 @@ package WayofTime.bloodmagic.livingArmour.downgrade;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 public class LivingArmourUpgradeSlowHeal extends LivingArmourUpgrade {
@@ -21,7 +21,7 @@ public class LivingArmourUpgradeSlowHeal extends LivingArmourUpgrade {
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
+    public void onTick(World world, PlayerEntity player, ILivingArmour livingArmour) {
 
     }
 
@@ -41,12 +41,12 @@ public class LivingArmourUpgradeSlowHeal extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         // EMPTY
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         // EMPTY
     }
 

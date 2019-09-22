@@ -2,17 +2,17 @@ package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.tile.base.TileBase;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -50,14 +50,14 @@ public class TileInventory extends TileBase implements IInventory {
     }
 
     @Override
-    public void deserialize(NBTTagCompound tagCompound) {
+    public void deserialize(CompoundNBT tagCompound) {
         super.deserialize(tagCompound);
-        NBTTagList tags = tagCompound.getTagList("Items", 10);
+        ListNBT tags = tagCompound.getTagList("Items", 10);
         inventory = NonNullList.withSize(size, ItemStack.EMPTY);
 
         for (int i = 0; i < tags.tagCount(); i++) {
             if (!isSyncedSlot(i)) {
-                NBTTagCompound data = tags.getCompoundTagAt(i);
+                CompoundNBT data = tags.getCompoundTagAt(i);
                 byte j = data.getByte("Slot");
 
                 if (j >= 0 && j < inventory.size()) {
@@ -68,13 +68,13 @@ public class TileInventory extends TileBase implements IInventory {
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tagCompound) {
+    public CompoundNBT serialize(CompoundNBT tagCompound) {
         super.serialize(tagCompound);
-        NBTTagList tags = new NBTTagList();
+        ListNBT tags = new ListNBT();
 
         for (int i = 0; i < inventory.size(); i++) {
             if ((!inventory.get(i).isEmpty()) && !isSyncedSlot(i)) {
-                NBTTagCompound data = new NBTTagCompound();
+                CompoundNBT data = new CompoundNBT();
                 data.setByte("Slot", (byte) i);
                 inventory.get(i).writeToNBT(data);
                 tags.appendTag(data);
@@ -146,12 +146,12 @@ public class TileInventory extends TileBase implements IInventory {
     }
 
     @Override
-    public void openInventory(EntityPlayer player) {
+    public void openInventory(PlayerEntity player) {
 
     }
 
     @Override
-    public void closeInventory(EntityPlayer player) {
+    public void closeInventory(PlayerEntity player) {
 
     }
 
@@ -192,7 +192,7 @@ public class TileInventory extends TileBase implements IInventory {
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(PlayerEntity player) {
         return true;
     }
 
@@ -208,17 +208,17 @@ public class TileInventory extends TileBase implements IInventory {
 
     @Override
     public ITextComponent getDisplayName() {
-        return new TextComponentString(getName());
+        return new StringTextComponent(getName());
     }
 
     protected void initializeItemHandlers() {
         if (this instanceof ISidedInventory) {
-            handlerDown = new SidedInvWrapper((ISidedInventory) this, EnumFacing.DOWN);
-            handlerUp = new SidedInvWrapper((ISidedInventory) this, EnumFacing.UP);
-            handlerNorth = new SidedInvWrapper((ISidedInventory) this, EnumFacing.NORTH);
-            handlerSouth = new SidedInvWrapper((ISidedInventory) this, EnumFacing.SOUTH);
-            handlerWest = new SidedInvWrapper((ISidedInventory) this, EnumFacing.WEST);
-            handlerEast = new SidedInvWrapper((ISidedInventory) this, EnumFacing.EAST);
+            handlerDown = new SidedInvWrapper((ISidedInventory) this, Direction.DOWN);
+            handlerUp = new SidedInvWrapper((ISidedInventory) this, Direction.UP);
+            handlerNorth = new SidedInvWrapper((ISidedInventory) this, Direction.NORTH);
+            handlerSouth = new SidedInvWrapper((ISidedInventory) this, Direction.SOUTH);
+            handlerWest = new SidedInvWrapper((ISidedInventory) this, Direction.WEST);
+            handlerEast = new SidedInvWrapper((ISidedInventory) this, Direction.EAST);
         } else {
             handlerDown = new InvWrapper(this);
             handlerUp = handlerDown;
@@ -231,7 +231,7 @@ public class TileInventory extends TileBase implements IInventory {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+    public <T> T getCapability(Capability<T> capability, Direction facing) {
         if (facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             switch (facing) {
                 case DOWN:
@@ -255,7 +255,7 @@ public class TileInventory extends TileBase implements IInventory {
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+    public boolean hasCapability(Capability<?> capability, Direction facing) {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
     }
 }

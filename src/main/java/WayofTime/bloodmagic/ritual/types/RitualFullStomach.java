@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -47,9 +47,9 @@ public class RitualFullStomach extends Ritual {
         IItemHandler inventory = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         int lastSlot = 0;
         AreaDescriptor fillingRange = masterRitualStone.getBlockRange(FILL_RANGE);
-        List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, fillingRange.getAABB(pos));
+        List<PlayerEntity> playerList = world.getEntitiesWithinAABB(PlayerEntity.class, fillingRange.getAABB(pos));
 
-        for (EntityPlayer player : playerList) {
+        for (PlayerEntity player : playerList) {
             FoodStats foodStats = player.getFoodStats();
             float satLevel = foodStats.getSaturationLevel();
 

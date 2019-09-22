@@ -9,11 +9,11 @@ import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,13 +39,13 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb {
     }
 
     @Override
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
+    public void getSubItems(ItemGroup creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
         for (BloodOrb orb : RegistrarBloodMagic.BLOOD_ORBS) {
             ItemStack orbStack = new ItemStack(this);
-            NBTTagCompound tag = new NBTTagCompound();
+            CompoundNBT tag = new CompoundNBT();
             tag.setString("orb", orb.getRegistryName().toString());
             orbStack.setTagCompound(tag);
             list.add(orbStack);
@@ -53,12 +53,12 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         BloodOrb orb = getOrb(stack);
 
         if (orb == null)
-            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+            return ActionResult.newResult(ActionResultType.FAIL, stack);
 
         if (world == null)
             return super.onItemRightClick(world, player, hand);

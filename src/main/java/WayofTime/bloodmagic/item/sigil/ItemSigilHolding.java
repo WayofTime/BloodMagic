@@ -15,13 +15,13 @@ import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -41,7 +41,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     }
 
     @Override
-    public void onKeyPressed(ItemStack stack, EntityPlayer player, KeyBindings key, boolean showInChat) {
+    public void onKeyPressed(ItemStack stack, PlayerEntity player, KeyBindings key, boolean showInChat) {
         if (stack == player.getHeldItemMainhand() && stack.getItem() instanceof ItemSigilHolding && key.equals(KeyBindings.OPEN_HOLDING)) {
             Utils.setUUID(stack);
             player.openGui(BloodMagic.instance, Constants.Gui.SIGIL_HOLDING_GUI, player.getEntityWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
@@ -84,62 +84,62 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
 
         int currentSlot = getCurrentItemOrdinal(stack);
         List<ItemStack> inv = getInternalInventory(stack);
         ItemStack itemUsing = inv.get(currentSlot);
 
         if (itemUsing.isEmpty() || ((IBindable) itemUsing.getItem()).getBinding(itemUsing) == null)
-            return EnumActionResult.PASS;
+            return ActionResultType.PASS;
 
-        EnumActionResult result = itemUsing.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
+        ActionResultType result = itemUsing.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
         saveInventory(stack, inv);
 
         return result;
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (PlayerHelper.isFakePlayer(player))
-            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+            return ActionResult.newResult(ActionResultType.FAIL, stack);
 
         int currentSlot = getCurrentItemOrdinal(stack);
         List<ItemStack> inv = getInternalInventory(stack);
         ItemStack itemUsing = inv.get(currentSlot);
 
         if (itemUsing.isEmpty() || ((IBindable) itemUsing.getItem()).getBinding(itemUsing) == null)
-            return ActionResult.newResult(EnumActionResult.PASS, stack);
+            return ActionResult.newResult(ActionResultType.PASS, stack);
 
         itemUsing.getItem().onItemRightClick(world, player, hand);
 
         saveInventory(stack, inv);
 
-        return ActionResult.newResult(EnumActionResult.PASS, stack);
+        return ActionResult.newResult(ActionResultType.PASS, stack);
     }
 
     @Nonnull
     @Override
-    public ItemStack getHeldItem(ItemStack holdingStack, EntityPlayer player) {
+    public ItemStack getHeldItem(ItemStack holdingStack, PlayerEntity player) {
         return getInternalInventory(holdingStack).get(getCurrentItemOrdinal(holdingStack));
     }
 
     public void saveInventory(ItemStack itemStack, List<ItemStack> inventory) {
-        NBTTagCompound itemTag = itemStack.getTagCompound();
+        CompoundNBT itemTag = itemStack.getTagCompound();
 
         if (itemTag == null)
-            itemStack.setTagCompound(itemTag = new NBTTagCompound());
+            itemStack.setTagCompound(itemTag = new CompoundNBT());
 
-        NBTTagCompound inventoryTag = new NBTTagCompound();
-        NBTTagList itemList = new NBTTagList();
+        CompoundNBT inventoryTag = new CompoundNBT();
+        ListNBT itemList = new ListNBT();
 
         for (int i = 0; i < inventorySize; i++) {
             if (!inventory.get(i).isEmpty()) {
-                NBTTagCompound tag = new NBTTagCompound();
+                CompoundNBT tag = new CompoundNBT();
                 tag.setByte(Constants.NBT.SLOT, (byte) i);
                 inventory.get(i).writeToNBT(tag);
                 itemList.appendTag(tag);
@@ -241,14 +241,14 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 
     public static List<ItemStack> getInternalInventory(ItemStack stack) {
         initModeTag(stack);
-        NBTTagCompound tagCompound = stack.getTagCompound();
+        CompoundNBT tagCompound = stack.getTagCompound();
 
         if (tagCompound == null) {
             return NonNullList.withSize(inventorySize, ItemStack.EMPTY);
         }
 
-        NBTTagCompound inventoryTag = tagCompound.getCompoundTag(Constants.NBT.ITEM_INVENTORY);
-        NBTTagList tagList = inventoryTag.getTagList(Constants.NBT.ITEMS, 10);
+        CompoundNBT inventoryTag = tagCompound.getCompoundTag(Constants.NBT.ITEM_INVENTORY);
+        ListNBT tagList = inventoryTag.getTagList(Constants.NBT.ITEMS, 10);
 
         if (tagList.isEmpty()) {
             return NonNullList.withSize(inventorySize, ItemStack.EMPTY);
@@ -257,7 +257,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         List<ItemStack> inv = NonNullList.withSize(inventorySize, ItemStack.EMPTY);
 
         for (int i = 0; i < tagList.tagCount(); i++) {
-            NBTTagCompound data = tagList.getCompoundTagAt(i);
+            CompoundNBT data = tagList.getCompoundTagAt(i);
             byte j = data.getByte(Constants.NBT.SLOT);
 
             if (j >= 0 && j < inv.size()) {

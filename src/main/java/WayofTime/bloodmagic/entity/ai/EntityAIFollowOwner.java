@@ -2,26 +2,26 @@ package WayofTime.bloodmagic.entity.ai;
 
 import WayofTime.bloodmagic.entity.mob.EntityDemonBase;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.pathfinding.PathNavigate;
-import net.minecraft.pathfinding.PathNavigateGround;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.block.Blocks;
+import net.minecraft.pathfinding.GroundPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityAIFollowOwner extends EntityAIBase {
+public class EntityAIFollowOwner extends Goal {
     World theWorld;
     float maxDist;
     float minDist;
     private EntityDemonBase thePet;
-    private EntityLivingBase theOwner;
+    private LivingEntity theOwner;
     private double followSpeed;
-    private PathNavigate petPathfinder;
+    private PathNavigator petPathfinder;
     private int timeToRecalcPath;
     private float oldWaterCost;
 
@@ -34,7 +34,7 @@ public class EntityAIFollowOwner extends EntityAIBase {
         this.maxDist = maxDistIn;
         this.setMutexBits(3);
 
-        if (!(thePetIn.getNavigator() instanceof PathNavigateGround)) {
+        if (!(thePetIn.getNavigator() instanceof GroundPathNavigator)) {
             throw new IllegalArgumentException("Unsupported mob type for FollowOwnerGoal");
         }
     }
@@ -43,11 +43,11 @@ public class EntityAIFollowOwner extends EntityAIBase {
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean shouldExecute() {
-        EntityLivingBase entitylivingbase = this.thePet.getOwner();
+        LivingEntity entitylivingbase = this.thePet.getOwner();
 
         if (entitylivingbase == null) {
             return false;
-        } else if (entitylivingbase instanceof EntityPlayer && ((EntityPlayer) entitylivingbase).isSpectator()) {
+        } else if (entitylivingbase instanceof PlayerEntity && ((PlayerEntity) entitylivingbase).isSpectator()) {
             return false;
         } else if (this.thePet.isStationary()) {
             return false;
@@ -85,7 +85,7 @@ public class EntityAIFollowOwner extends EntityAIBase {
     }
 
     private boolean isEmptyBlock(BlockPos pos) {
-        IBlockState iblockstate = this.theWorld.getBlockState(pos);
+        BlockState iblockstate = this.theWorld.getBlockState(pos);
         Block block = iblockstate.getBlock();
         return block == Blocks.AIR || !iblockstate.isFullCube();
     }

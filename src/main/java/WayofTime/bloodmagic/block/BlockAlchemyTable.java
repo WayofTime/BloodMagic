@@ -5,18 +5,18 @@ import WayofTime.bloodmagic.item.block.ItemBlockAlchemyTable;
 import WayofTime.bloodmagic.tile.TileAlchemyTable;
 import WayofTime.bloodmagic.util.Constants;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 
 public class BlockAlchemyTable extends Block implements IBMBlock {
     public static final PropertyBool INVISIBLE = PropertyBool.create("invisible");
-    public static final PropertyEnum<EnumFacing> DIRECTION = PropertyEnum.create("direction", EnumFacing.class);
+    public static final PropertyEnum<Direction> DIRECTION = PropertyEnum.create("direction", Direction.class);
     private static final AxisAlignedBB BODY = new AxisAlignedBB(0, 0, 0, 16 / 16F, 13 / 16F, 16 / 16F);
 
     public BlockAlchemyTable() {
@@ -42,42 +42,42 @@ public class BlockAlchemyTable extends Block implements IBMBlock {
 //        setBlockBounds(0.3F, 0F, 0.3F, 0.72F, 1F, 0.72F);
     }
 
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
         return BODY;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean isNormalCube(BlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
+    public boolean causesSuffocation(BlockState state) {
         return false;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override
-    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+    public boolean canRenderInLayer(BlockState state, BlockRenderLayer layer) {
         return layer == BlockRenderLayer.CUTOUT_MIPPED || layer == BlockRenderLayer.TRANSLUCENT;
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return this.getDefaultState();
     }
 
@@ -85,12 +85,12 @@ public class BlockAlchemyTable extends Block implements IBMBlock {
      * Convert the BlockState into the correct metadata value
      */
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return 0;
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public BlockState getActualState(BlockState state, IBlockAccess world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileAlchemyTable) {
             return state.withProperty(INVISIBLE, ((TileAlchemyTable) tile).isInvisible()).withProperty(DIRECTION, ((TileAlchemyTable) tile).getDirection());
@@ -105,7 +105,7 @@ public class BlockAlchemyTable extends Block implements IBMBlock {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
         BlockPos position = pos;
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileAlchemyTable) {
@@ -124,7 +124,7 @@ public class BlockAlchemyTable extends Block implements IBMBlock {
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState blockState) {
+    public void breakBlock(World world, BlockPos pos, BlockState blockState) {
         TileAlchemyTable tile = (TileAlchemyTable) world.getTileEntity(pos);
         if (tile != null && !tile.isSlave()) {
             tile.dropItems();
@@ -134,18 +134,18 @@ public class BlockAlchemyTable extends Block implements IBMBlock {
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(BlockState state) {
         return true;
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
+    public TileEntity createTileEntity(World world, BlockState state) {
         return new TileAlchemyTable();
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
         TileAlchemyTable tile = (TileAlchemyTable) world.getTileEntity(pos);
         if (tile != null) {
             BlockPos connectedPos = tile.getConnectedPos();
@@ -158,7 +158,7 @@ public class BlockAlchemyTable extends Block implements IBMBlock {
     }
 
     @Override
-    public ItemBlock getItem() {
+    public BlockItem getItem() {
         return new ItemBlockAlchemyTable(this);
     }
 }

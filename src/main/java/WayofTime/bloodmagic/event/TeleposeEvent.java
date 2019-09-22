@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.event;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -17,11 +17,11 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 public class TeleposeEvent extends Event {
     public final World initalWorld;
     public final BlockPos initialBlockPos;
-    public final IBlockState initialState;
+    public final BlockState initialState;
 
     public final World finalWorld;
     public final BlockPos finalBlockPos;
-    public final IBlockState finalState;
+    public final BlockState finalState;
 
     public TeleposeEvent(World initialWorld, BlockPos initialBlockPos, World finalWorld, BlockPos finalBlockPos) {
         this.initalWorld = initialWorld;

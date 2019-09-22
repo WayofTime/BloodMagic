@@ -8,9 +8,9 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -39,12 +39,12 @@ public class BlockRitualStone extends BlockEnum<EnumRuneType> implements IRitual
     }
 
     @Override
-    public int damageDropped(IBlockState state) {
+    public int damageDropped(BlockState state) {
         return 0;
     }
 
     @Override
-    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+    public boolean canSilkHarvest(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         return false;
     }
 
@@ -56,7 +56,7 @@ public class BlockRitualStone extends BlockEnum<EnumRuneType> implements IRitual
     @Override
     public void setRuneType(World world, BlockPos pos, EnumRuneType runeType) {
         int meta = runeType.ordinal();
-        IBlockState newState = RegistrarBloodMagicBlocks.RITUAL_STONE.getStateFromMeta(meta);
+        BlockState newState = RegistrarBloodMagicBlocks.RITUAL_STONE.getStateFromMeta(meta);
         world.setBlockState(pos, newState);
     }
 }

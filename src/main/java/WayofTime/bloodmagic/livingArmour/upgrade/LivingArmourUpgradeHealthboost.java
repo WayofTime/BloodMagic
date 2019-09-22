@@ -7,8 +7,8 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import org.apache.commons.codec.binary.StringUtils;
 
@@ -23,7 +23,7 @@ public class LivingArmourUpgradeHealthboost extends LivingArmourUpgrade {
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
+    public void onTick(World world, PlayerEntity player, ILivingArmour livingArmour) {
 
     }
 
@@ -53,12 +53,12 @@ public class LivingArmourUpgradeHealthboost extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         // EMPTY
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         // EMPTY
     }
 

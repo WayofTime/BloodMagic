@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.fakePlayer;
 
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.EnumPacketDirection;
-import net.minecraft.network.NetHandlerPlayServer;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.network.IPacket;
+import net.minecraft.network.PacketDirection;
+import net.minecraft.network.play.ServerPlayNetHandler;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.*;
-import net.minecraft.network.play.server.SPacketPlayerPosLook;
+import net.minecraft.network.play.server.SPlayerPositionLookPacket;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
@@ -15,9 +15,9 @@ import java.util.Set;
 /**
  * All credits for this go to CrazyPants, from EIO
  */
-public class FakeNetHandlerPlayServer extends NetHandlerPlayServer {
-    public FakeNetHandlerPlayServer(EntityPlayerMP p_i1530_3_) {
-        super(FMLCommonHandler.instance().getMinecraftServerInstance(), new net.minecraft.network.NetworkManager(EnumPacketDirection.CLIENTBOUND), p_i1530_3_);
+public class FakeNetHandlerPlayServer extends ServerPlayNetHandler {
+    public FakeNetHandlerPlayServer(ServerPlayerEntity p_i1530_3_) {
+        super(FMLCommonHandler.instance().getMinecraftServerInstance(), new net.minecraft.network.NetworkManager(PacketDirection.CLIENTBOUND), p_i1530_3_);
     }
 
     @Override
@@ -34,39 +34,39 @@ public class FakeNetHandlerPlayServer extends NetHandlerPlayServer {
     }
 
     @Override
-    public void processVehicleMove(CPacketVehicleMove packetIn) {
+    public void processVehicleMove(CMoveVehiclePacket packetIn) {
     }
 
     @Override
-    public void processConfirmTeleport(CPacketConfirmTeleport packetIn) {
+    public void processConfirmTeleport(CConfirmTeleportPacket packetIn) {
     }
 
     @Override
-    public void setPlayerLocation(double x, double y, double z, float yaw, float pitch, Set<SPacketPlayerPosLook.EnumFlags> relativeSet) {
+    public void setPlayerLocation(double x, double y, double z, float yaw, float pitch, Set<SPlayerPositionLookPacket.EnumFlags> relativeSet) {
     }
 
     @Override
-    public void processTryUseItemOnBlock(CPacketPlayerTryUseItemOnBlock packetIn) {
+    public void processTryUseItemOnBlock(CPlayerTryUseItemOnBlockPacket packetIn) {
     }
 
     @Override
-    public void processTryUseItem(CPacketPlayerTryUseItem packetIn) {
+    public void processTryUseItem(CPlayerTryUseItemPacket packetIn) {
     }
 
     @Override
-    public void processSteerBoat(CPacketSteerBoat packetIn) {
+    public void processSteerBoat(CSteerBoatPacket packetIn) {
     }
 
     @Override
-    public void processCustomPayload(CPacketCustomPayload packetIn) {
+    public void processCustomPayload(CCustomPayloadPacket packetIn) {
     }
 
     @Override
-    public void processInput(CPacketInput p_147358_1_) {
+    public void processInput(CInputPacket p_147358_1_) {
     }
 
     @Override
-    public void processPlayer(CPacketPlayer p_147347_1_) {
+    public void processPlayer(CPlayerPacket p_147347_1_) {
     }
 
     @Override
@@ -74,7 +74,7 @@ public class FakeNetHandlerPlayServer extends NetHandlerPlayServer {
     }
 
     @Override
-    public void processPlayerDigging(CPacketPlayerDigging p_147345_1_) {
+    public void processPlayerDigging(CPlayerDiggingPacket p_147345_1_) {
     }
 
     @Override
@@ -82,79 +82,79 @@ public class FakeNetHandlerPlayServer extends NetHandlerPlayServer {
     }
 
     @Override
-    public void sendPacket(Packet<?> p_147359_1_) {
+    public void sendPacket(IPacket<?> p_147359_1_) {
     }
 
     @Override
-    public void processHeldItemChange(CPacketHeldItemChange p_147355_1_) {
+    public void processHeldItemChange(CHeldItemChangePacket p_147355_1_) {
     }
 
     @Override
-    public void processChatMessage(CPacketChatMessage p_147354_1_) {
+    public void processChatMessage(CChatMessagePacket p_147354_1_) {
     }
 
     @Override
-    public void handleAnimation(CPacketAnimation packetIn) {
+    public void handleAnimation(CAnimateHandPacket packetIn) {
 
     }
 
     @Override
-    public void processEntityAction(CPacketEntityAction p_147357_1_) {
+    public void processEntityAction(CEntityActionPacket p_147357_1_) {
     }
 
     @Override
-    public void processUseEntity(CPacketUseEntity p_147340_1_) {
+    public void processUseEntity(CUseEntityPacket p_147340_1_) {
     }
 
     @Override
-    public void processClientStatus(CPacketClientStatus p_147342_1_) {
+    public void processClientStatus(CClientStatusPacket p_147342_1_) {
     }
 
     @Override
-    public void processCloseWindow(CPacketCloseWindow p_147356_1_) {
+    public void processCloseWindow(CCloseWindowPacket p_147356_1_) {
     }
 
     @Override
-    public void processClickWindow(CPacketClickWindow p_147351_1_) {
+    public void processClickWindow(CClickWindowPacket p_147351_1_) {
     }
 
     @Override
-    public void processEnchantItem(CPacketEnchantItem p_147338_1_) {
+    public void processEnchantItem(CEnchantItemPacket p_147338_1_) {
     }
 
     @Override
-    public void processCreativeInventoryAction(CPacketCreativeInventoryAction p_147344_1_) {
+    public void processCreativeInventoryAction(CCreativeInventoryActionPacket p_147344_1_) {
     }
 
     @Override
-    public void processConfirmTransaction(CPacketConfirmTransaction p_147339_1_) {
+    public void processConfirmTransaction(CConfirmTransactionPacket p_147339_1_) {
     }
 
     @Override
-    public void processUpdateSign(CPacketUpdateSign p_147343_1_) {
+    public void processUpdateSign(CUpdateSignPacket p_147343_1_) {
     }
 
     @Override
-    public void processKeepAlive(CPacketKeepAlive p_147353_1_) {
+    public void processKeepAlive(CKeepAlivePacket p_147353_1_) {
     }
 
     @Override
-    public void processPlayerAbilities(CPacketPlayerAbilities p_147348_1_) {
+    public void processPlayerAbilities(CPlayerAbilitiesPacket p_147348_1_) {
     }
 
     @Override
-    public void processTabComplete(CPacketTabComplete p_147341_1_) {
+    public void processTabComplete(CTabCompletePacket p_147341_1_) {
     }
 
     @Override
-    public void processClientSettings(CPacketClientSettings p_147352_1_) {
+    public void processClientSettings(CClientSettingsPacket p_147352_1_) {
     }
 
     @Override
-    public void handleSpectate(CPacketSpectate packetIn) {
+    public void handleSpectate(CSpectatePacket packetIn) {
     }
 
     @Override
-    public void handleResourcePackStatus(CPacketResourcePackStatus packetIn) {
+    public void handleResourcePackStatus(CResourcePackStatusPacket packetIn) {
     }
 }

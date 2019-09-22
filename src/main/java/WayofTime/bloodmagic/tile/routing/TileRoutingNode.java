@@ -5,10 +5,10 @@ import WayofTime.bloodmagic.routing.IItemRoutingNode;
 import WayofTime.bloodmagic.routing.IMasterRoutingNode;
 import WayofTime.bloodmagic.routing.IRoutingNode;
 import WayofTime.bloodmagic.tile.TileInventory;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -36,17 +36,17 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
-        NBTTagCompound masterTag = new NBTTagCompound();
+        CompoundNBT masterTag = new CompoundNBT();
         masterTag.setInteger(Constants.NBT.X_COORD, masterPos.getX());
         masterTag.setInteger(Constants.NBT.Y_COORD, masterPos.getY());
         masterTag.setInteger(Constants.NBT.Z_COORD, masterPos.getZ());
         tag.setTag(Constants.NBT.ROUTING_MASTER, masterTag);
 
-        NBTTagList tags = new NBTTagList();
+        ListNBT tags = new ListNBT();
         for (BlockPos pos : connectionList) {
-            NBTTagCompound posTag = new NBTTagCompound();
+            CompoundNBT posTag = new CompoundNBT();
             posTag.setInteger(Constants.NBT.X_COORD, pos.getX());
             posTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
             posTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
@@ -57,15 +57,15 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(CompoundNBT tag) {
         super.deserialize(tag);
         connectionList.clear();
-        NBTTagCompound masterTag = tag.getCompoundTag(Constants.NBT.ROUTING_MASTER);
+        CompoundNBT masterTag = tag.getCompoundTag(Constants.NBT.ROUTING_MASTER);
         masterPos = new BlockPos(masterTag.getInteger(Constants.NBT.X_COORD), masterTag.getInteger(Constants.NBT.Y_COORD), masterTag.getInteger(Constants.NBT.Z_COORD));
 
-        NBTTagList tags = tag.getTagList(Constants.NBT.ROUTING_CONNECTION, 10);
+        ListNBT tags = tag.getTagList(Constants.NBT.ROUTING_CONNECTION, 10);
         for (int i = 0; i < tags.tagCount(); i++) {
-            NBTTagCompound blockTag = tags.getCompoundTagAt(i);
+            CompoundNBT blockTag = tags.getCompoundTagAt(i);
             BlockPos newPos = new BlockPos(blockTag.getInteger(Constants.NBT.X_COORD), blockTag.getInteger(Constants.NBT.Y_COORD), blockTag.getInteger(Constants.NBT.Z_COORD));
             connectionList.add(newPos);
         }
@@ -159,12 +159,12 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     }
 
     @Override
-    public boolean isInventoryConnectedToSide(EnumFacing side) {
+    public boolean isInventoryConnectedToSide(Direction side) {
         return false;
     }
 
     @Override
-    public int getPriority(EnumFacing side) {
+    public int getPriority(Direction side) {
         return 0;
     }
 

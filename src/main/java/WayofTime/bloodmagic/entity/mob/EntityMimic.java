@@ -6,30 +6,30 @@ import WayofTime.bloodmagic.entity.ai.EntityAIMimicReform;
 import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.util.StateUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
-import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.passive.IronGolemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.block.Blocks;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.pathfinding.ClimberPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.PathNavigate;
-import net.minecraft.pathfinding.PathNavigateClimber;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
 public class EntityMimic extends EntityDemonBase {
@@ -39,31 +39,31 @@ public class EntityMimic extends EntityDemonBase {
     private static final DataParameter<Byte> CLIMBING = EntityDataManager.createKey(EntityMimic.class, DataSerializers.BYTE);
 
     public boolean dropItemsOnBreak = true;
-    public NBTTagCompound tileTag = new NBTTagCompound();
+    public CompoundNBT tileTag = new CompoundNBT();
     public int metaOfReplacedBlock = 0;
-    public IBlockState stateOfReplacedBlock = Blocks.AIR.getDefaultState();
+    public BlockState stateOfReplacedBlock = Blocks.AIR.getDefaultState();
     public int playerCheckRadius = 5;
 
     public EntityMimic(World worldIn) {
         super(worldIn);
         this.setSize(0.9F, 0.9F);
 
-        this.tasks.addTask(1, new EntityAISwimming(this));
-        this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
+        this.tasks.addTask(1, new SwimGoal(this));
+        this.tasks.addTask(3, new LeapAtTargetGoal(this, 0.4F));
         this.tasks.addTask(4, new EntityMimic.AISpiderAttack(this));
-        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1));
-        this.tasks.addTask(6, new EntityAIWander(this, 0.8D));
-        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(8, new EntityAILookIdle(this));
+        this.tasks.addTask(5, new MoveTowardsRestrictionGoal(this, 1));
+        this.tasks.addTask(6, new RandomWalkingGoal(this, 0.8D));
+        this.tasks.addTask(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+        this.tasks.addTask(8, new LookRandomlyGoal(this));
         this.tasks.addTask(7, new EntityAIMimicReform(this));
 
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-        this.targetTasks.addTask(2, new EntityMimic.AISpiderTarget(this, EntityPlayer.class));
-        this.targetTasks.addTask(3, new EntityMimic.AISpiderTarget(this, EntityIronGolem.class));
+        this.targetTasks.addTask(1, new HurtByTargetGoal(this, false));
+        this.targetTasks.addTask(2, new EntityMimic.AISpiderTarget(this, PlayerEntity.class));
+        this.targetTasks.addTask(3, new EntityMimic.AISpiderTarget(this, IronGolemEntity.class));
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound tag) {
+    public void writeEntityToNBT(CompoundNBT tag) {
         super.writeEntityToNBT(tag);
 
         tag.setBoolean("dropItemsOnBreak", dropItemsOnBreak);
@@ -74,7 +74,7 @@ public class EntityMimic extends EntityDemonBase {
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound tag) {
+    public void readEntityFromNBT(CompoundNBT tag) {
         super.readEntityFromNBT(tag);
 
         dropItemsOnBreak = tag.getBoolean("dropItemsOnBreak");
@@ -85,11 +85,11 @@ public class EntityMimic extends EntityDemonBase {
     }
 
     public ItemStack getMimicItemStack() {
-        return this.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+        return this.getItemStackFromSlot(EquipmentSlotType.CHEST);
     }
 
     public void setMimicItemStack(ItemStack stack) {
-        this.setItemStackToSlot(EntityEquipmentSlot.CHEST, stack);
+        this.setItemStackToSlot(EquipmentSlotType.CHEST, stack);
     }
 
     public boolean spawnHeldBlockOnDeath(World world, BlockPos pos) {
@@ -98,7 +98,7 @@ public class EntityMimic extends EntityDemonBase {
 
     public boolean spawnMimicBlockAtPosition(World world, BlockPos pos) {
         if (world.isAirBlock(pos)) {
-            IBlockState mimicState = RegistrarBloodMagicBlocks.MIMIC.getStateFromMeta(BlockMimic.sentientMimicMeta);
+            BlockState mimicState = RegistrarBloodMagicBlocks.MIMIC.getStateFromMeta(BlockMimic.sentientMimicMeta);
             world.setBlockState(pos, mimicState, 3);
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileMimic) {
@@ -116,7 +116,7 @@ public class EntityMimic extends EntityDemonBase {
         return false;
     }
 
-    public void initializeMimic(ItemStack heldStack, NBTTagCompound tileTag, boolean dropItemsOnBreak, IBlockState stateOfReplacedBlock, int playerCheckRadius, BlockPos homePosition) {
+    public void initializeMimic(ItemStack heldStack, CompoundNBT tileTag, boolean dropItemsOnBreak, BlockState stateOfReplacedBlock, int playerCheckRadius, BlockPos homePosition) {
         this.setMimicItemStack(heldStack);
         this.tileTag = tileTag;
         this.dropItemsOnBreak = dropItemsOnBreak;
@@ -195,8 +195,8 @@ public class EntityMimic extends EntityDemonBase {
      * Returns new PathNavigateGround instance
      */
     @Override
-    protected PathNavigate createNavigator(World worldIn) {
-        return new PathNavigateClimber(this, worldIn);
+    protected PathNavigator createNavigator(World worldIn) {
+        return new ClimberPathNavigator(this, worldIn);
     }
 
     @Override
@@ -211,7 +211,7 @@ public class EntityMimic extends EntityDemonBase {
      */
     @Override
     public void onUpdate() {
-        if (!this.getEntityWorld().isRemote && this.getEntityWorld().getDifficulty() == EnumDifficulty.PEACEFUL) {
+        if (!this.getEntityWorld().isRemote && this.getEntityWorld().getDifficulty() == Difficulty.PEACEFUL) {
             if (reformIntoMimicBlock(this.getPosition())) {
                 this.setDead();
             }
@@ -276,8 +276,8 @@ public class EntityMimic extends EntityDemonBase {
     }
 
     @Override
-    public boolean isPotionApplicable(PotionEffect potioneffectIn) {
-        return potioneffectIn.getPotion() != MobEffects.POISON && super.isPotionApplicable(potioneffectIn);
+    public boolean isPotionApplicable(EffectInstance potioneffectIn) {
+        return potioneffectIn.getPotion() != Effects.POISON && super.isPotionApplicable(potioneffectIn);
     }
 
     /**
@@ -308,18 +308,18 @@ public class EntityMimic extends EntityDemonBase {
         return 0.65F;
     }
 
-    static class AISpiderAttack extends EntityAIAttackMelee {
+    static class AISpiderAttack extends MeleeAttackGoal {
         public AISpiderAttack(EntityMimic spider) {
             super(spider, 1.0D, true);
         }
 
         @Override
-        protected double getAttackReachSqr(EntityLivingBase attackTarget) {
+        protected double getAttackReachSqr(LivingEntity attackTarget) {
             return (double) (4.0F + attackTarget.width);
         }
     }
 
-    static class AISpiderTarget<T extends EntityLivingBase> extends EntityAINearestAttackableTarget<T> {
+    static class AISpiderTarget<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
         public AISpiderTarget(EntityMimic spider, Class<T> classTarget) {
             super(spider, classTarget, true);
         }

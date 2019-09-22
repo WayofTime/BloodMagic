@@ -5,11 +5,11 @@ import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.Effects;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 public class LivingArmourUpgradeFireResist extends LivingArmourUpgrade {
@@ -24,13 +24,13 @@ public class LivingArmourUpgradeFireResist extends LivingArmourUpgrade {
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
+    public void onTick(World world, PlayerEntity player, ILivingArmour livingArmour) {
         if (player.isBurning() && fireCooldown <= 0) {
 
-            player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, fireResistDuration[this.level]));
+            player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, fireResistDuration[this.level]));
             fireCooldown = fireCooldownTime[this.level];
 
-            player.sendStatusMessage(new TextComponentString(TextHelper.localizeEffect(chatBase + "fireRemove")), true);
+            player.sendStatusMessage(new StringTextComponent(TextHelper.localizeEffect(chatBase + "fireRemove")), true);
 
         } else if (fireCooldown > 0) {
             fireCooldown--;
@@ -53,12 +53,12 @@ public class LivingArmourUpgradeFireResist extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         tag.setInteger(Constants.NBT.UPGRADE_FIRE_TIMER, fireCooldown);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         fireCooldown = tag.getInteger(Constants.NBT.UPGRADE_FIRE_TIMER);
     }
 

@@ -4,18 +4,18 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderItem;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderEntitySoulSnare extends Render<EntitySoulSnare> {
-    private final RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+public class RenderEntitySoulSnare extends EntityRenderer<EntitySoulSnare> {
+    private final ItemRenderer renderItem = Minecraft.getMinecraft().getRenderItem();
 
-    public RenderEntitySoulSnare(RenderManager renderManagerIn) {
+    public RenderEntitySoulSnare(EntityRendererManager renderManagerIn) {
         super(renderManagerIn);
     }
 
@@ -26,7 +26,7 @@ public class RenderEntitySoulSnare extends Render<EntitySoulSnare> {
         GlStateManager.scale(0.5F, 0.5F, 0.5F);
         GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-        this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        this.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
         this.renderItem.renderItem(new ItemStack(RegistrarBloodMagicItems.SOUL_SNARE), ItemCameraTransforms.TransformType.GROUND);
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
@@ -34,6 +34,6 @@ public class RenderEntitySoulSnare extends Render<EntitySoulSnare> {
     }
 
     protected ResourceLocation getEntityTexture(EntitySoulSnare entity) {
-        return TextureMap.LOCATION_BLOCKS_TEXTURE;
+        return AtlasTexture.LOCATION_BLOCKS_TEXTURE;
     }
 }

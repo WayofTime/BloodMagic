@@ -7,13 +7,13 @@ import WayofTime.bloodmagic.tile.TileTeleposer;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
@@ -52,7 +52,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
     }
 
     abstract class TeleposeHelper extends CommandTreeBase {
-        public EntityPlayer player;
+        public PlayerEntity player;
 
         @Override
         public String getUsage(ICommandSender sender) {
@@ -72,7 +72,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
             return 2;
         }
 
-        public TileTeleposer[] cleanUpAndCreateArrayFromTeleposerList(EntityPlayer player) {
+        public TileTeleposer[] cleanUpAndCreateArrayFromTeleposerList(PlayerEntity player) {
             if (player == null)
                 for (TileTeleposer i : teleposerSet) {
                     if (i == null || i.isInvalid() || i.isEmpty()) {
@@ -98,7 +98,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
 
         }
 
-        public void sendOwnedTeleposerList(ICommandSender sender, EntityPlayer player) {
+        public void sendOwnedTeleposerList(ICommandSender sender, PlayerEntity player) {
             teleposerArray = cleanUpAndCreateArrayFromTeleposerList(player);
             for (int i = 0; i < teleposerArray.length; i++) {
                 ItemStack stack = teleposerArray[i].getStackInSlot(0);
@@ -108,9 +108,9 @@ public class SubCommandTeleposer extends CommandTreeBase {
                     String name = binding.getOwnerName();
                     if (player != null) {
                         if (name.equals(player.getName()))
-                            sender.sendMessage(new TextComponentString(i + new TextComponentTranslation("commands.bloodmagic.teleposer.anddimension").getFormattedText() + teleposerArray[i].getWorld().provider.getDimension() + " " + teleposerArray[i].getPos() + " " + new TextComponentTranslation("commands.bloodmagic.teleposer.focusanddim").getFormattedText() + " " + focus.getWorld(stack).provider.getDimension() + " " + focus.getBlockPos(stack) + " " + new TextComponentTranslation("commands.bloodmagic.teleposer.owner").getFormattedText() + " " + name));
+                            sender.sendMessage(new StringTextComponent(i + new TranslationTextComponent("commands.bloodmagic.teleposer.anddimension").getFormattedText() + teleposerArray[i].getWorld().provider.getDimension() + " " + teleposerArray[i].getPos() + " " + new TranslationTextComponent("commands.bloodmagic.teleposer.focusanddim").getFormattedText() + " " + focus.getWorld(stack).provider.getDimension() + " " + focus.getBlockPos(stack) + " " + new TranslationTextComponent("commands.bloodmagic.teleposer.owner").getFormattedText() + " " + name));
                     } else
-                        sender.sendMessage(new TextComponentString(i + new TextComponentTranslation("commands.bloodmagic.teleposer.anddimension").getFormattedText() + teleposerArray[i].getWorld().provider.getDimension() + " " + teleposerArray[i].getPos() + " " + new TextComponentTranslation("commands.bloodmagic.teleposer.focusanddim").getFormattedText() + " " + focus.getWorld(stack).provider.getDimension() + " " + focus.getBlockPos(stack) + " " + new TextComponentTranslation("commands.bloodmagic.teleposer.owner").getFormattedText() + " " + name));
+                        sender.sendMessage(new StringTextComponent(i + new TranslationTextComponent("commands.bloodmagic.teleposer.anddimension").getFormattedText() + teleposerArray[i].getWorld().provider.getDimension() + " " + teleposerArray[i].getPos() + " " + new TranslationTextComponent("commands.bloodmagic.teleposer.focusanddim").getFormattedText() + " " + focus.getWorld(stack).provider.getDimension() + " " + focus.getBlockPos(stack) + " " + new TranslationTextComponent("commands.bloodmagic.teleposer.owner").getFormattedText() + " " + name));
                 }
             }
         }
@@ -126,12 +126,12 @@ public class SubCommandTeleposer extends CommandTreeBase {
             else if (args.length > 1 && Utils.isInteger(args[1]))
                 teleposerID = Integer.parseInt(args[1]);
             else {
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.error.arg.invalid"));
-                sender.sendMessage(new TextComponentTranslation(this.getUsage(sender)));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.error.arg.invalid"));
+                sender.sendMessage(new TranslationTextComponent(this.getUsage(sender)));
                 return null;
             }
             if (teleposerID < 0) {
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.error.negative"));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.error.negative"));
                 return null;
             }
             return teleposerID;
@@ -140,7 +140,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
         @Override
         public final void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             if (args.length == 1 && args[0].equals("?") || args[0].equals("help")) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
+                sender.sendMessage(new TranslationTextComponent(getHelp()));
                 return;
             }
             if (!(getName().equals("rmrf") || getName().equals("remove"))) {
@@ -179,7 +179,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
                 sendOwnedTeleposerList(sender, null);
             else if (!sender.getEntityWorld().isRemote) {
                 if (teleposerID > teleposerArray.length) {
-                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.error.outofbounds"));
+                    sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.error.outofbounds"));
                     return;
                 }
                 TileTeleposer brunhilde = teleposerArray[teleposerID]; // every teleposer is a brunhilde!
@@ -192,7 +192,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
             } else
                 return;
 
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success"));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.success"));
         }
     }
 
@@ -210,7 +210,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
                 sendOwnedTeleposerList(sender, null);
             else if (!sender.getEntityWorld().isRemote) {
                 if (teleposerID > teleposerArray.length) {
-                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.outofbounds"));
+                    sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.outofbounds"));
                     return;
                 }
                 TileTeleposer brunhilde = teleposerArray[teleposerID]; // every teleposer is a brunhilde!
@@ -225,7 +225,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
             } else
                 return;
 
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success"));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.success"));
         }
     }
 
@@ -242,7 +242,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
                 sendOwnedTeleposerList(sender, null);
             else if (!sender.getEntityWorld().isRemote) {
                 if (teleposerID > teleposerArray.length) {
-                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.outofbounds"));
+                    sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.outofbounds"));
                     return;
                 }
                 TileTeleposer brunhilde = teleposerArray[teleposerID]; // every teleposer is a brunhilde!
@@ -253,7 +253,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
             } else
                 return;
 
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success"));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.success"));
         }
     }
 
@@ -270,7 +270,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
                 sendOwnedTeleposerList(sender, null);
             else if (!sender.getEntityWorld().isRemote) {
                 if (teleposerID > teleposerArray.length) {
-                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.outofbounds"));
+                    sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.outofbounds"));
                     return;
                 }
                 TileTeleposer brunhilde = teleposerArray[teleposerID]; // every teleposer is a brunhilde!
@@ -298,7 +298,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
             } else
                 return;
 
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success"));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.success"));
         }
 
     }
@@ -322,7 +322,7 @@ public class SubCommandTeleposer extends CommandTreeBase {
             }
             cleanUpAndCreateArrayFromTeleposerList(null);
 
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success"));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.success"));
 
         }
     }

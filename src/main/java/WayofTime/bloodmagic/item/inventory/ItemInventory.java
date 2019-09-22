@@ -2,14 +2,14 @@ package WayofTime.bloodmagic.item.inventory;
 
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 
 public class ItemInventory implements IInventory {
     protected int[] syncedSlots = new int[0];
@@ -43,13 +43,13 @@ public class ItemInventory implements IInventory {
         return false;
     }
 
-    public void readFromNBT(NBTTagCompound tagCompound) {
-        NBTTagList tags = tagCompound.getTagList(Constants.NBT.ITEMS, 10);
+    public void readFromNBT(CompoundNBT tagCompound) {
+        ListNBT tags = tagCompound.getTagList(Constants.NBT.ITEMS, 10);
         inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
 
         for (int i = 0; i < tags.tagCount(); i++) {
             if (!isSyncedSlot(i)) {
-                NBTTagCompound data = tags.getCompoundTagAt(i);
+                CompoundNBT data = tags.getCompoundTagAt(i);
                 byte j = data.getByte(Constants.NBT.SLOT);
 
                 if (j >= 0 && j < inventory.size()) {
@@ -59,12 +59,12 @@ public class ItemInventory implements IInventory {
         }
     }
 
-    public void writeToNBT(NBTTagCompound tagCompound) {
-        NBTTagList tags = new NBTTagList();
+    public void writeToNBT(CompoundNBT tagCompound) {
+        ListNBT tags = new ListNBT();
 
         for (int i = 0; i < inventory.size(); i++) {
             if ((!inventory.get(i).isEmpty()) && !isSyncedSlot(i)) {
-                NBTTagCompound data = new NBTTagCompound();
+                CompoundNBT data = new CompoundNBT();
                 data.setByte(Constants.NBT.SLOT, (byte) i);
                 inventory.get(i).writeToNBT(data);
                 tags.appendTag(data);
@@ -77,7 +77,7 @@ public class ItemInventory implements IInventory {
     public void readFromStack(ItemStack masterStack) {
         if (masterStack != null) {
             NBTHelper.checkNBT(masterStack);
-            NBTTagCompound tag = masterStack.getTagCompound();
+            CompoundNBT tag = masterStack.getTagCompound();
             readFromNBT(tag.getCompoundTag(Constants.NBT.ITEM_INVENTORY));
         }
     }
@@ -85,8 +85,8 @@ public class ItemInventory implements IInventory {
     public void writeToStack(ItemStack masterStack) {
         if (masterStack != null) {
             NBTHelper.checkNBT(masterStack);
-            NBTTagCompound tag = masterStack.getTagCompound();
-            NBTTagCompound invTag = new NBTTagCompound();
+            CompoundNBT tag = masterStack.getTagCompound();
+            CompoundNBT invTag = new CompoundNBT();
             writeToNBT(invTag);
             tag.setTag(Constants.NBT.ITEM_INVENTORY, invTag);
         }
@@ -152,17 +152,17 @@ public class ItemInventory implements IInventory {
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(PlayerEntity player) {
         return true;
     }
 
     @Override
-    public void openInventory(EntityPlayer player) {
+    public void openInventory(PlayerEntity player) {
 
     }
 
     @Override
-    public void closeInventory(EntityPlayer player) {
+    public void closeInventory(PlayerEntity player) {
 
     }
 
@@ -203,7 +203,7 @@ public class ItemInventory implements IInventory {
 
     @Override
     public ITextComponent getDisplayName() {
-        return new TextComponentString(getName());
+        return new StringTextComponent(getName());
     }
 
     @Override

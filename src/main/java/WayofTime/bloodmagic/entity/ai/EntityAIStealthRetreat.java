@@ -1,21 +1,21 @@
 package WayofTime.bloodmagic.entity.ai;
 
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedChicken;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.pathfinding.Path;
-import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.math.Vec3d;
 
-public class EntityAIStealthRetreat extends EntityAIBase {
+public class EntityAIStealthRetreat extends Goal {
     private final double farSpeed;
     private final double nearSpeed;
     private final float avoidDistance;
     /**
      * The PathNavigate of our entity
      */
-    private final PathNavigate entityPathNavigate;
+    private final PathNavigator entityPathNavigate;
     /**
      * The entity we are attached to
      */
@@ -38,7 +38,7 @@ public class EntityAIStealthRetreat extends EntityAIBase {
     @Override
     public boolean shouldExecute() {
         if (this.entity.attackStateMachine == 2) {
-            EntityLivingBase attacked = this.entity.getAttackTarget();
+            LivingEntity attacked = this.entity.getAttackTarget();
             if (attacked == null) {
                 return false;
             }

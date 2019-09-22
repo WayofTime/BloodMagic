@@ -17,20 +17,20 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -71,7 +71,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
+    public void getSubItems(ItemGroup creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
@@ -80,24 +80,24 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         if (player.isSneaking()) {
             if (world.isRemote) {
                 trySetDisplayedRitual(stack, world, pos);
             }
 
-            return EnumActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         } else if (addRuneToRitual(stack, world, pos, player)) {
             if (world.isRemote) {
                 spawnParticles(world, pos.up(), 15);
             }
 
-            return EnumActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
             // TODO: Have the diviner automagically build the ritual
         }
 
-        return EnumActionResult.PASS;
+        return ActionResultType.PASS;
     }
 
     /**
@@ -109,13 +109,13 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
      * @param player - The Player attempting to place the ritual
      * @return - True if a rune was successfully added
      */
-    public boolean addRuneToRitual(ItemStack stack, World world, BlockPos pos, EntityPlayer player) {
+    public boolean addRuneToRitual(ItemStack stack, World world, BlockPos pos, PlayerEntity player) {
         TileEntity tile = world.getTileEntity(pos);
 
         if (tile instanceof TileMasterRitualStone) {
             Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(this.getCurrentRitual(stack));
             if (ritual != null) {
-                EnumFacing direction = getDirection(stack);
+                Direction direction = getDirection(stack);
                 List<RitualComponent> components = Lists.newArrayList();
                 ritual.gatherComponents(components::add);
                 for (RitualComponent component : components) {
@@ -124,7 +124,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
                     }
                     BlockPos offset = component.getOffset(direction);
                     BlockPos newPos = pos.add(offset);
-                    IBlockState state = world.getBlockState(newPos);
+                    BlockState state = world.getBlockState(newPos);
                     Block block = state.getBlock();
                     if (RitualHelper.isRune(world, newPos)) {
                         if (RitualHelper.isRuneType(world, newPos, component.getRuneType())) {
@@ -141,7 +141,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
                             return false;
                         }
                         int meta = component.getRuneType().ordinal();
-                        IBlockState newState = RegistrarBloodMagicBlocks.RITUAL_STONE.getStateFromMeta(meta);
+                        BlockState newState = RegistrarBloodMagicBlocks.RITUAL_STONE.getStateFromMeta(meta);
                         world.setBlockState(newPos, newState);
                         return true;
                     } else {
@@ -164,7 +164,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
             TileMasterRitualStone masterRitualStone = (TileMasterRitualStone) tile;
 
             if (ritual != null) {
-                EnumFacing direction = getDirection(itemStack);
+                Direction direction = getDirection(itemStack);
                 ClientHandler.setRitualHolo(masterRitualStone, ritual, direction, true);
             }
         }
@@ -176,7 +176,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
     }
 
     // TODO: Make this work for any IRitualStone
-    public boolean consumeStone(ItemStack stack, World world, EntityPlayer player) {
+    public boolean consumeStone(ItemStack stack, World world, PlayerEntity player) {
         if (player.capabilities.isCreativeMode) {
             return true;
         }
@@ -188,8 +188,8 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
                 continue;
             }
             Item item = newStack.getItem();
-            if (item instanceof ItemBlock) {
-                Block block = ((ItemBlock) item).getBlock();
+            if (item instanceof BlockItem) {
+                Block block = ((BlockItem) item).getBlock();
                 if (block == RegistrarBloodMagicBlocks.RITUAL_STONE) {
                     newStack.shrink(1);
                     return true;
@@ -293,11 +293,11 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         RayTraceResult ray = this.rayTrace(world, player, false);
         if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK) {
-            return new ActionResult<>(EnumActionResult.PASS, stack);
+            return new ActionResult<>(ActionResultType.PASS, stack);
         }
 
         if (player.isSneaking()) {
@@ -305,16 +305,16 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
                 cycleRitual(stack, player, false);
             }
 
-            return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+            return new ActionResult<>(ActionResultType.SUCCESS, stack);
         }
 
-        return new ActionResult<>(EnumActionResult.PASS, stack);
+        return new ActionResult<>(ActionResultType.PASS, stack);
     }
 
     @Override
-    public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack) {
-        if (!entityLiving.world.isRemote && entityLiving instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entityLiving;
+    public boolean onEntitySwing(LivingEntity entityLiving, ItemStack stack) {
+        if (!entityLiving.world.isRemote && entityLiving instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entityLiving;
 
             RayTraceResult ray = this.rayTrace(player.getEntityWorld(), player, false);
             if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK) {
@@ -340,64 +340,64 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
         variants.put(2, "type=dawn");
     }
 
-    public void cycleDirection(ItemStack stack, EntityPlayer player) {
-        EnumFacing direction = getDirection(stack);
-        EnumFacing newDirection;
+    public void cycleDirection(ItemStack stack, PlayerEntity player) {
+        Direction direction = getDirection(stack);
+        Direction newDirection;
         switch (direction) {
             case NORTH:
-                newDirection = EnumFacing.EAST;
+                newDirection = Direction.EAST;
                 break;
             case EAST:
-                newDirection = EnumFacing.SOUTH;
+                newDirection = Direction.SOUTH;
                 break;
             case SOUTH:
-                newDirection = EnumFacing.WEST;
+                newDirection = Direction.WEST;
                 break;
             case WEST:
-                newDirection = EnumFacing.NORTH;
+                newDirection = Direction.NORTH;
                 break;
             default:
-                newDirection = EnumFacing.NORTH;
+                newDirection = Direction.NORTH;
         }
 
         setDirection(stack, newDirection);
         notifyDirectionChange(newDirection, player);
     }
 
-    public void notifyDirectionChange(EnumFacing direction, EntityPlayer player) {
-        player.sendStatusMessage(new TextComponentTranslation(tooltipBase + "currentDirection", Utils.toFancyCasing(direction.name())), true);
+    public void notifyDirectionChange(Direction direction, PlayerEntity player) {
+        player.sendStatusMessage(new TranslationTextComponent(tooltipBase + "currentDirection", Utils.toFancyCasing(direction.name())), true);
     }
 
-    public void setDirection(ItemStack stack, EnumFacing direction) {
+    public void setDirection(ItemStack stack, Direction direction) {
         if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
+            stack.setTagCompound(new CompoundNBT());
         }
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
     }
 
-    public EnumFacing getDirection(ItemStack stack) {
+    public Direction getDirection(ItemStack stack) {
         if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
-            return EnumFacing.NORTH;
+            stack.setTagCompound(new CompoundNBT());
+            return Direction.NORTH;
         }
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         int dir = tag.getInteger(Constants.NBT.DIRECTION);
         if (dir == 0) {
-            return EnumFacing.NORTH;
+            return Direction.NORTH;
         }
 
-        return EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
+        return Direction.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
     }
 
     /**
      * Cycles the ritual forward or backward
      */
-    public void cycleRitual(ItemStack stack, EntityPlayer player, boolean reverse) {
+    public void cycleRitual(ItemStack stack, PlayerEntity player, boolean reverse) {
         String key = getCurrentRitual(stack);
         List<Ritual> rituals = BloodMagic.RITUAL_MANAGER.getSortedRituals();
         if (reverse)
@@ -450,29 +450,29 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
         return true;
     }
 
-    public void notifyRitualChange(String key, EntityPlayer player) {
+    public void notifyRitualChange(String key, PlayerEntity player) {
         Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(key);
         if (ritual != null) {
-            player.sendStatusMessage(new TextComponentTranslation(ritual.getTranslationKey()), true);
+            player.sendStatusMessage(new TranslationTextComponent(ritual.getTranslationKey()), true);
         }
     }
 
     public void setCurrentRitual(ItemStack stack, String key) {
         if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
+            stack.setTagCompound(new CompoundNBT());
         }
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setString("current_ritual", key);
     }
 
     public String getCurrentRitual(ItemStack stack) {
         if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
+            stack.setTagCompound(new CompoundNBT());
         }
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getString("current_ritual");
     }
 
@@ -495,7 +495,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
     }
 
     public static void spawnParticles(World worldIn, BlockPos pos, int amount) {
-        IBlockState state = worldIn.getBlockState(pos);
+        BlockState state = worldIn.getBlockState(pos);
         Block block = worldIn.getBlockState(pos).getBlock();
 
         if (block.isAir(state, worldIn, pos)) {

@@ -3,14 +3,14 @@ package WayofTime.bloodmagic.block;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -32,13 +32,13 @@ public class BlockBloodLight extends Block {
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
         return AABB;
     }
 
     @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(BlockState blockState, IBlockAccess worldIn, BlockPos pos) {
         return NULL_AABB;
     }
 
@@ -54,27 +54,27 @@ public class BlockBloodLight extends Block {
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean isNormalCube(BlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
+    public boolean causesSuffocation(BlockState state) {
         return false;
     }
 
     @Override
-    public int getLightValue(IBlockState state) {
+    public int getLightValue(BlockState state) {
         return 15;
     }
 
@@ -90,12 +90,12 @@ public class BlockBloodLight extends Block {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random rand) {
+        ClientPlayerEntity player = Minecraft.getMinecraft().player;
 
         if (rand.nextInt(3) != 0) {
             world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
-            ItemStack heldItem = player.getHeldItem(EnumHand.MAIN_HAND);
+            ItemStack heldItem = player.getHeldItem(Hand.MAIN_HAND);
 
             if (heldItem.isEmpty() || heldItem.getItem() != RegistrarBloodMagicItems.SIGIL_BLOOD_LIGHT)
                 return;

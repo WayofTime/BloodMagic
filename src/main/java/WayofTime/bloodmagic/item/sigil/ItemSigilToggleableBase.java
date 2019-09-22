@@ -6,7 +6,7 @@ import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -37,7 +37,7 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable implements IMes
         if (!stack.hasTagCompound())
             return;
 
-        tooltip.add(new TextComponentTranslation("tooltip.bloodmagic." + (getActivated(stack) ? "activated" : "deactivated")).getFormattedText());
+        tooltip.add(new TranslationTextComponent("tooltip.bloodmagic." + (getActivated(stack) ? "activated" : "deactivated")).getFormattedText());
     }
 
     @Override

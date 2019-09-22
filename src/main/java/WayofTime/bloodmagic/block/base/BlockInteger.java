@@ -4,8 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
@@ -43,22 +43,22 @@ public class BlockInteger extends Block {
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(property, meta);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return state.getValue(property);
     }
 
     @Override
-    public int damageDropped(IBlockState state) {
+    public int damageDropped(BlockState state) {
         return getMetaFromState(state);
     }
 
     @Override
-    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> subBlocks) {
+    public void getSubBlocks(ItemGroup tab, NonNullList<ItemStack> subBlocks) {
         for (int i = 0; i < maxMeta; i++)
             subBlocks.add(new ItemStack(this, 1, i));
     }

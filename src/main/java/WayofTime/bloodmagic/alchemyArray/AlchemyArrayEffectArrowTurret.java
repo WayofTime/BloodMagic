@@ -5,15 +5,15 @@ import java.util.List;
 import javax.vecmath.Vector2d;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.projectile.EntityTippedArrow;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemArrow;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.item.ArrowItem;
+import net.minecraft.item.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -23,7 +23,7 @@ import net.minecraftforge.items.IItemHandler;
 import WayofTime.bloodmagic.util.Utils;
 
 public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect {
-    public EntityLiving target;
+    public MobEntity target;
     public int arrowTimer;
     public static final int ARROW_WINDUP = 50;
     private int lastChestSlot = -1;
@@ -47,7 +47,7 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect {
         if (chestTile == null) {
             return false;
         }
-        IItemHandler itemHandler = Utils.getInventory(chestTile, EnumFacing.UP);
+        IItemHandler itemHandler = Utils.getInventory(chestTile, Direction.UP);
         if (itemHandler == null) {
             return false;
         }
@@ -55,7 +55,7 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect {
         ItemStack arrowStack = new ItemStack(Items.AIR);
         if (lastChestSlot >= 0 && lastChestSlot < itemHandler.getSlots()) {
             ItemStack testStack = itemHandler.extractItem(lastChestSlot, 1, true);
-            if (testStack.isEmpty() || !(testStack.getItem() instanceof ItemArrow)) {
+            if (testStack.isEmpty() || !(testStack.getItem() instanceof ArrowItem)) {
                 lastChestSlot = -1;
             } else {
                 arrowStack = testStack;
@@ -65,7 +65,7 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect {
         if (lastChestSlot < 0) {
             for (int i = 0; i < itemHandler.getSlots(); i++) {
                 ItemStack testStack = itemHandler.extractItem(i, 1, true);
-                if (!testStack.isEmpty() && testStack.getItem() instanceof ItemArrow) {
+                if (!testStack.isEmpty() && testStack.getItem() instanceof ArrowItem) {
                     arrowStack = testStack;
                     lastChestSlot = i;
                     break;
@@ -100,9 +100,9 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect {
             arrowTimer = -1;
         }
 
-        List<EntityMob> mobsInRange = world.getEntitiesWithinAABB(EntityMob.class, getBounds(pos));
+        List<MonsterEntity> mobsInRange = world.getEntitiesWithinAABB(MonsterEntity.class, getBounds(pos));
 
-        for (EntityMob entity : mobsInRange) {
+        for (MonsterEntity entity : mobsInRange) {
             if (canFireOnMob(world, pos, entity))// && isMobInFilter(ent))
             {
                 target = entity;
@@ -132,14 +132,14 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect {
         return lastYaw;
     }
 
-    public void fireOnTarget(World world, BlockPos pos, ItemStack arrowStack, EntityLiving targetMob) {
+    public void fireOnTarget(World world, BlockPos pos, ItemStack arrowStack, MobEntity targetMob) {
         float vel = 3f;
         double damage = 2;
         if (!world.isRemote) {
-            if (arrowStack.getItem() instanceof ItemArrow) {
+            if (arrowStack.getItem() instanceof ArrowItem) {
 //                ItemArrow arrow = (ItemArrow) arrowStack.getItem();
 //                EntityArrow entityarrow = arrow.createArrow(world, arrowStack, targetMob);
-                EntityTippedArrow entityarrow = new EntityTippedArrow(world);
+                ArrowEntity entityarrow = new ArrowEntity(world);
                 entityarrow.setPotionEffect(arrowStack);
                 entityarrow.posX = pos.getX() + 0.5;
                 entityarrow.posY = pos.getY() + 0.5;
@@ -192,12 +192,12 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
 
     }
 

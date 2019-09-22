@@ -5,9 +5,9 @@ import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.BloodRuneType;
 import WayofTime.bloodmagic.iface.IBloodRune;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -32,7 +32,7 @@ public class BlockBloodRune extends BlockEnum<BloodRuneType> implements IBloodRu
 
     @Nullable
     @Override
-    public BloodRuneType getBloodRune(IBlockAccess world, BlockPos pos, IBlockState state) {
+    public BloodRuneType getBloodRune(IBlockAccess world, BlockPos pos, BlockState state) {
         return state.getValue(getProperty());
     }
 

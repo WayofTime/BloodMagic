@@ -6,15 +6,15 @@ import WayofTime.bloodmagic.entity.ai.EntityAIStealthRetreat;
 import WayofTime.bloodmagic.entity.ai.EntityAIStealthTowardsTarget;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.*;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -55,16 +55,16 @@ public class EntityCorruptedChicken extends EntityAspectedDemonBase {
     }
 
     protected void initEntityAI() {
-        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(0, new SwimGoal(this));
 //        this.tasks.addTask(1, new EntityAIPanic(this, 1.4D));
         this.tasks.addTask(attackPriority, new EntityAIStealthTowardsTarget(this, 1));
         this.tasks.addTask(attackPriority, new EntityAIStealthRetreat(this, 6.0F, 1.4D, 1.4D));
-        this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-        this.tasks.addTask(7, new EntityAILookIdle(this));
+        this.tasks.addTask(5, new RandomWalkingGoal(this, 1.0D));
+        this.tasks.addTask(6, new LookAtGoal(this, PlayerEntity.class, 6.0F));
+        this.tasks.addTask(7, new LookRandomlyGoal(this));
 
-        this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 10, true, false, new EntityAspectedDemonBase.TeamAttackPredicate(this)));
+        this.targetTasks.addTask(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetTasks.addTask(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 10, true, false, new EntityAspectedDemonBase.TeamAttackPredicate(this)));
     }
 
     @Override
@@ -78,7 +78,7 @@ public class EntityCorruptedChicken extends EntityAspectedDemonBase {
     }
 
     public void cloak() {
-        this.addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 50, 0, false, false));
+        this.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 50, 0, false, false));
     }
 
     @Override
@@ -172,7 +172,7 @@ public class EntityCorruptedChicken extends EntityAspectedDemonBase {
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound compound) {
+    public void readEntityFromNBT(CompoundNBT compound) {
         super.readEntityFromNBT(compound);
 
         if (compound.hasKey("EggLayTime")) {
@@ -181,7 +181,7 @@ public class EntityCorruptedChicken extends EntityAspectedDemonBase {
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound compound) {
+    public void writeEntityToNBT(CompoundNBT compound) {
         super.writeEntityToNBT(compound);
         compound.setInteger("EggLayTime", this.timeUntilNextEgg);
     }
@@ -195,8 +195,8 @@ public class EntityCorruptedChicken extends EntityAspectedDemonBase {
         float f3 = 0.0F;
         passenger.setPosition(this.posX + (double) (0.1F * f), this.posY + (double) (this.height * 0.5F) + passenger.getYOffset() + 0.0D, this.posZ - (double) (0.1F * f1));
 
-        if (passenger instanceof EntityLivingBase) {
-            ((EntityLivingBase) passenger).renderYawOffset = this.renderYawOffset;
+        if (passenger instanceof LivingEntity) {
+            ((LivingEntity) passenger).renderYawOffset = this.renderYawOffset;
         }
     }
 }

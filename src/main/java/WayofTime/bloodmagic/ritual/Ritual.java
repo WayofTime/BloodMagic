@@ -3,13 +3,13 @@ package WayofTime.bloodmagic.ritual;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -49,17 +49,17 @@ public abstract class Ritual {
         this(name, crystalLevel, activationCost, null, unlocalizedName);
     }
 
-    public void readFromNBT(NBTTagCompound tag) {
-        NBTTagList tags = tag.getTagList("areas", 10);
+    public void readFromNBT(CompoundNBT tag) {
+        ListNBT tags = tag.getTagList("areas", 10);
         if (tags.isEmpty()) {
             return;
         }
 
         for (int i = 0; i < tags.tagCount(); i++) {
-            NBTTagCompound newTag = tags.getCompoundTagAt(i);
+            CompoundNBT newTag = tags.getCompoundTagAt(i);
             String rangeKey = newTag.getString("key");
 
-            NBTTagCompound storedTag = newTag.getCompoundTag("area");
+            CompoundNBT storedTag = newTag.getCompoundTag("area");
             AreaDescriptor desc = this.getBlockRange(rangeKey);
             if (desc != null) {
                 desc.readFromNBT(storedTag);
@@ -67,13 +67,13 @@ public abstract class Ritual {
         }
     }
 
-    public void writeToNBT(NBTTagCompound tag) {
-        NBTTagList tags = new NBTTagList();
+    public void writeToNBT(CompoundNBT tag) {
+        ListNBT tags = new ListNBT();
 
         for (Entry<String, AreaDescriptor> entry : modableRangeMap.entrySet()) {
-            NBTTagCompound newTag = new NBTTagCompound();
+            CompoundNBT newTag = new CompoundNBT();
             newTag.setString("key", entry.getKey());
-            NBTTagCompound storedTag = new NBTTagCompound();
+            CompoundNBT storedTag = new CompoundNBT();
 
             entry.getValue().writeToNBT(storedTag);
 
@@ -88,7 +88,7 @@ public abstract class Ritual {
     /**
      * Called when the player attempts to activate the ritual.
      * <p>
-     * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#activateRitual(ItemStack, EntityPlayer, Ritual)}
+     * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#activateRitual(ItemStack, PlayerEntity, Ritual)}
      *
      * @param masterRitualStone - The {@link IMasterRitualStone} that the ritual is bound to
      * @param player            - The activating player
@@ -96,7 +96,7 @@ public abstract class Ritual {
      *                          owner of the ritual if being reactivated.
      * @return - Whether activation was successful
      */
-    public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player, UUID owner) {
+    public boolean activateRitual(IMasterRitualStone masterRitualStone, PlayerEntity player, UUID owner) {
         return true;
     }
 
@@ -216,10 +216,10 @@ public abstract class Ritual {
         return horizontalRangeMap.get(range);
     }
 
-    public ITextComponent getErrorForBlockRangeOnFail(EntityPlayer player, String range, IMasterRitualStone master, BlockPos offset1, BlockPos offset2) {
+    public ITextComponent getErrorForBlockRangeOnFail(PlayerEntity player, String range, IMasterRitualStone master, BlockPos offset1, BlockPos offset2) {
         AreaDescriptor descriptor = this.getBlockRange(range);
         if (descriptor == null) {
-            return new TextComponentTranslation("ritual.bloodmagic.blockRange.tooBig", "?");
+            return new TranslationTextComponent("ritual.bloodmagic.blockRange.tooBig", "?");
         }
 
         List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
@@ -230,21 +230,21 @@ public abstract class Ritual {
         int maxHorizontal = this.getMaxHorizontalRadiusForRange(range, willConfig, holder);
 
         if (maxVolume > 0 && descriptor.getVolumeForOffsets(offset1, offset2) > maxVolume) {
-            return new TextComponentTranslation("ritual.bloodmagic.blockRange.tooBig", maxVolume);
+            return new TranslationTextComponent("ritual.bloodmagic.blockRange.tooBig", maxVolume);
         } else {
-            return new TextComponentTranslation("ritual.bloodmagic.blockRange.tooFar", maxVertical, maxHorizontal);
+            return new TranslationTextComponent("ritual.bloodmagic.blockRange.tooFar", maxVertical, maxHorizontal);
         }
     }
 
-    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
-        return new ITextComponent[]{new TextComponentTranslation(this.getTranslationKey() + ".info")};
+    public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player) {
+        return new ITextComponent[]{new TranslationTextComponent(this.getTranslationKey() + ".info")};
     }
 
-    public ITextComponent provideInformationOfRangeToPlayer(EntityPlayer player, String range) {
+    public ITextComponent provideInformationOfRangeToPlayer(PlayerEntity player, String range) {
         if (getListOfRanges().contains(range)) {
-            return new TextComponentTranslation(this.getTranslationKey() + "." + range + ".info");
+            return new TranslationTextComponent(this.getTranslationKey() + "." + range + ".info");
         } else {
-            return new TextComponentTranslation("ritual.bloodmagic.blockRange.noRange");
+            return new TranslationTextComponent("ritual.bloodmagic.blockRange.noRange");
         }
     }
 

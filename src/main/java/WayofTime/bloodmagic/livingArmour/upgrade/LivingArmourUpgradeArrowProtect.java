@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.livingArmour.upgrade;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 
 public class LivingArmourUpgradeArrowProtect extends LivingArmourUpgrade {
@@ -15,7 +15,7 @@ public class LivingArmourUpgradeArrowProtect extends LivingArmourUpgrade {
     }
 
     @Override
-    public double getArmourProtection(EntityLivingBase wearer, DamageSource source) {
+    public double getArmourProtection(LivingEntity wearer, DamageSource source) {
         if (source.isProjectile()) {
             return protectionLevel[this.level];
         }
@@ -39,12 +39,12 @@ public class LivingArmourUpgradeArrowProtect extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         // EMPTY
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         // EMPTY
     }
 

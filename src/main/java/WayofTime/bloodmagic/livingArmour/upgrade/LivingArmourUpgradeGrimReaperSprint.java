@@ -4,11 +4,11 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 public class LivingArmourUpgradeGrimReaperSprint extends LivingArmourUpgrade {
@@ -27,7 +27,7 @@ public class LivingArmourUpgradeGrimReaperSprint extends LivingArmourUpgrade {
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
+    public void onTick(World world, PlayerEntity player, ILivingArmour livingArmour) {
         if (deathTimer > 0) {
             deathTimer--;
         }
@@ -49,12 +49,12 @@ public class LivingArmourUpgradeGrimReaperSprint extends LivingArmourUpgrade {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         deathTimer = tag.getInteger(BloodMagic.MODID + ".tracker.grimReaper");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         tag.setInteger(BloodMagic.MODID + ".tracker.grimReaper", deathTimer);
     }
 
@@ -63,24 +63,24 @@ public class LivingArmourUpgradeGrimReaperSprint extends LivingArmourUpgrade {
         return tooltipBase + "grimReaper";
     }
 
-    public void applyEffectOnRebirth(EntityPlayer player) {
+    public void applyEffectOnRebirth(PlayerEntity player) {
         player.setHealth(player.getMaxHealth() * healthOnRevive[this.level]);
 
         int strDur = strengthDuration[this.level];
         if (strDur > 0) {
-            player.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, strDur, strengthValue[this.level]));
+            player.addPotionEffect(new EffectInstance(Effects.STRENGTH, strDur, strengthValue[this.level]));
         }
 
         int resDur = resistanceDuration[this.level];
         if (resDur > 0) {
-            player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, resDur, resistanceValue[this.level]));
+            player.addPotionEffect(new EffectInstance(Effects.RESISTANCE, resDur, resistanceValue[this.level]));
         }
 
         deathTimer = rebirthDelay[this.level];
-        player.sendStatusMessage(new TextComponentString(TextHelper.localizeEffect(chatBase + "grimReaper")), true);
+        player.sendStatusMessage(new StringTextComponent(TextHelper.localizeEffect(chatBase + "grimReaper")), true);
     }
 
-    public boolean canSavePlayer(EntityPlayer player) {
+    public boolean canSavePlayer(PlayerEntity player) {
         return deathTimer <= 0;
     }
 }

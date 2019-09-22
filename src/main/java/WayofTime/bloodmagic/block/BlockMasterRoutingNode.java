@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -20,13 +20,13 @@ public class BlockMasterRoutingNode extends BlockRoutingNode {
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(BlockState state) {
         return true;
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
+    public TileEntity createTileEntity(World world, BlockState state) {
         return new TileMasterRoutingNode();
     }
 

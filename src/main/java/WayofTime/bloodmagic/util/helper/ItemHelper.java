@@ -7,7 +7,7 @@ import WayofTime.bloodmagic.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -91,7 +91,7 @@ public class ItemHelper {
         public static void setKey(ItemStack stack, String key) {
             if (stack.getItem() instanceof ItemUpgradeTome || stack.getItem() instanceof IUpgradeTrainer) {
                 NBTHelper.checkNBT(stack);
-                NBTTagCompound tag = stack.getTagCompound();
+                CompoundNBT tag = stack.getTagCompound();
 
                 tag.setString("key", key);
             }
@@ -100,7 +100,7 @@ public class ItemHelper {
         public static String getKey(ItemStack stack) {
             if (stack.getItem() instanceof ItemUpgradeTome || stack.getItem() instanceof IUpgradeTrainer) {
                 NBTHelper.checkNBT(stack);
-                NBTTagCompound tag = stack.getTagCompound();
+                CompoundNBT tag = stack.getTagCompound();
 
                 return tag.getString("key");
             }
@@ -111,7 +111,7 @@ public class ItemHelper {
         public static void setLevel(ItemStack stack, int level) {
             if (stack.getItem() instanceof ItemUpgradeTome || stack.getItem() instanceof IUpgradeTrainer) {
                 NBTHelper.checkNBT(stack);
-                NBTTagCompound tag = stack.getTagCompound();
+                CompoundNBT tag = stack.getTagCompound();
 
                 tag.setInteger("level", level);
             }
@@ -120,7 +120,7 @@ public class ItemHelper {
         public static int getLevel(ItemStack stack) {
             if (stack.getItem() instanceof ItemUpgradeTome || stack.getItem() instanceof IUpgradeTrainer) {
                 NBTHelper.checkNBT(stack);
-                NBTTagCompound tag = stack.getTagCompound();
+                CompoundNBT tag = stack.getTagCompound();
 
                 return tag.getInteger("level");
             }

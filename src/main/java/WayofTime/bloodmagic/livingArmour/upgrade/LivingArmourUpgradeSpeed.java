@@ -5,16 +5,12 @@ import WayofTime.bloodmagic.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
-import org.apache.commons.codec.binary.StringUtils;
-
-import java.util.UUID;
 
 public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade {
     public static final int[] costs = new int[]{3, 7, 13, 26, 42, 60, 90, 130, 180, 250};
@@ -33,14 +29,14 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade {
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
+    public void onTick(World world, PlayerEntity player, ILivingArmour livingArmour) {
         if (player.isSprinting()) {
             if (sprintSpeedTime[this.level] > 0) {
-                player.addPotionEffect(new PotionEffect(MobEffects.SPEED, sprintSpeedTime[this.level], sprintSpeedLevel[this.level], false, false));
+                player.addPotionEffect(new EffectInstance(Effects.SPEED, sprintSpeedTime[this.level], sprintSpeedLevel[this.level], false, false));
             }
 
-            if (sprintRegenTime[this.level] > 0 && !player.isPotionActive(MobEffects.REGENERATION)) {
-                player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, sprintRegenTime[this.level], 0, false, false));
+            if (sprintRegenTime[this.level] > 0 && !player.isPotionActive(Effects.REGENERATION)) {
+                player.addPotionEffect(new EffectInstance(Effects.REGENERATION, sprintRegenTime[this.level], 0, false, false));
             }
         }
     }
@@ -75,12 +71,12 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         // EMPTY
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         // EMPTY
     }
 

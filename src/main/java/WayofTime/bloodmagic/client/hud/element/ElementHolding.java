@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -62,7 +62,7 @@ public class ElementHolding extends HUDElement {
         return true;
     }
 
-    protected void renderHotbarItem(int x, int y, float partialTicks, EntityPlayer player, ItemStack stack) {
+    protected void renderHotbarItem(int x, int y, float partialTicks, PlayerEntity player, ItemStack stack) {
         if (!stack.isEmpty()) {
             float animation = (float) stack.getAnimationsToGo() - partialTicks;
 

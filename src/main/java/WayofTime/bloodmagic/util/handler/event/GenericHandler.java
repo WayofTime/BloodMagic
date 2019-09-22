@@ -43,31 +43,31 @@ import WayofTime.bloodmagic.util.helper.ItemHelper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAITarget;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.TargetGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.potion.Effects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -95,18 +95,18 @@ import java.util.*;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class GenericHandler {
-    public static Map<World, Map<EntityPlayer, Double>> bounceMapMap = new HashMap<>();
-    public static Map<World, Map<EntityPlayer, Integer>> filledHandMapMap = new HashMap<>();
-    private static Map<World, Map<EntityAnimal, EntityAITarget>> targetTaskMapMap = new HashMap<>();
-    private static Map<World, Map<EntityAnimal, EntityAIBase>> attackTaskMapMap = new HashMap<>();
+    public static Map<World, Map<PlayerEntity, Double>> bounceMapMap = new HashMap<>();
+    public static Map<World, Map<PlayerEntity, Integer>> filledHandMapMap = new HashMap<>();
+    private static Map<World, Map<AnimalEntity, TargetGoal>> targetTaskMapMap = new HashMap<>();
+    private static Map<World, Map<AnimalEntity, Goal>> attackTaskMapMap = new HashMap<>();
     public static Map<World, Map<IMasterRitualStone, AreaDescriptor>> preventSpawnMap = new HashMap<>();
     public static Map<World, Map<IMasterRitualStone, AreaDescriptor>> forceSpawnMap = new HashMap<>();
     public static Set<IMasterRitualStone> featherRitualSet;
 
     @SubscribeEvent
     public static void onEntityFall(LivingFallEvent event) {
-        if (event.getEntityLiving() instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+        if (event.getEntityLiving() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             if (player.isPotionActive(RegistrarBloodMagic.BOUNCE) && !player.isSneaking() && event.getDistance() > 2) {
                 event.setDamageMultiplier(0);
 
@@ -125,12 +125,12 @@ public class GenericHandler {
     @SubscribeEvent
     public static void playerTickPost(TickEvent.PlayerTickEvent event) {
         World world = event.player.getEntityWorld();
-        Map<EntityPlayer, Double> bounceMap = bounceMapMap.get(world);
+        Map<PlayerEntity, Double> bounceMap = bounceMapMap.get(world);
         if (event.phase == TickEvent.Phase.END && bounceMap.containsKey(event.player)) {
             event.player.motionY = bounceMap.remove(event.player);
         }
 
-        Map<EntityPlayer, Integer> filledHandMap = filledHandMapMap.get(world);
+        Map<PlayerEntity, Integer> filledHandMap = filledHandMapMap.get(world);
         if (event.phase == TickEvent.Phase.END) {
             if (filledHandMap.containsKey(event.player)) {
                 int value = filledHandMap.get(event.player) - 1;
@@ -146,9 +146,9 @@ public class GenericHandler {
     @SubscribeEvent
     public static void onPlayerClick(PlayerInteractEvent event) {
         if (event.isCancelable() && event.getEntityPlayer().isPotionActive(RegistrarBloodMagic.CONSTRICT)) {
-            EntityPlayer player = event.getEntityPlayer();
+            PlayerEntity player = event.getEntityPlayer();
             int level = player.getActivePotionEffect(RegistrarBloodMagic.CONSTRICT).getAmplifier();
-            if (event.getHand() == EnumHand.OFF_HAND || level > 1) {
+            if (event.getHand() == Hand.OFF_HAND || level > 1) {
                 event.setCanceled(true);
             }
         }
@@ -156,7 +156,7 @@ public class GenericHandler {
 
     @SubscribeEvent
     public static void onPlayerDropItem(ItemTossEvent event) {
-        EntityItem itemEntity = event.getEntityItem();
+        ItemEntity itemEntity = event.getEntityItem();
         if (itemEntity != null) {
             ItemStack stack = itemEntity.getItem();
             Item item = stack.getItem();
@@ -192,22 +192,22 @@ public class GenericHandler {
         if (event.getEntity().getEntityWorld().isRemote)
             return;
 
-        if (event.getSource().getTrueSource() instanceof EntityPlayer && !PlayerHelper.isFakePlayer((EntityPlayer) event.getSource().getTrueSource())) {
-            EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
+        if (event.getSource().getTrueSource() instanceof PlayerEntity && !PlayerHelper.isFakePlayer((PlayerEntity) event.getSource().getTrueSource())) {
+            PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
 
-            if (!player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).isEmpty() && player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() instanceof ItemPackSacrifice) {
-                ItemPackSacrifice pack = (ItemPackSacrifice) player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem();
+            if (!player.getItemStackFromSlot(EquipmentSlotType.CHEST).isEmpty() && player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() instanceof ItemPackSacrifice) {
+                ItemPackSacrifice pack = (ItemPackSacrifice) player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem();
 
-                boolean shouldSyphon = pack.getStoredLP(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST)) < pack.CAPACITY;
+                boolean shouldSyphon = pack.getStoredLP(player.getItemStackFromSlot(EquipmentSlotType.CHEST)) < pack.CAPACITY;
                 float damageDone = event.getEntityLiving().getHealth() < event.getAmount() ? event.getAmount() - event.getEntityLiving().getHealth() : event.getAmount();
                 int totalLP = Math.round(damageDone * ConfigHandler.values.coatOfArmsConversion);
 
                 if (shouldSyphon)
-                    ItemHelper.LPContainer.addLPToItem(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST), totalLP, pack.CAPACITY);
+                    ItemHelper.LPContainer.addLPToItem(player.getItemStackFromSlot(EquipmentSlotType.CHEST), totalLP, pack.CAPACITY);
             }
 
             if (LivingArmour.hasFullSet(player)) {
-                ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null) {
 
@@ -224,21 +224,21 @@ public class GenericHandler {
     @SubscribeEvent
     public static void onLivingUpdate(LivingUpdateEvent event) {
         if (!event.getEntityLiving().getEntityWorld().isRemote) {
-            EntityLivingBase entity = event.getEntityLiving();
-            if (entity instanceof EntityPlayer && entity.ticksExisted % 50 == 0) //TODO: Change to an incremental counter
+            LivingEntity entity = event.getEntityLiving();
+            if (entity instanceof PlayerEntity && entity.ticksExisted % 50 == 0) //TODO: Change to an incremental counter
             {
-                sendPlayerDemonWillAura((EntityPlayer) entity);
+                sendPlayerDemonWillAura((PlayerEntity) entity);
             }
 
             World world = entity.getEntityWorld();
-            Map<EntityAnimal, EntityAITarget> targetTaskMap = targetTaskMapMap.get(world);
-            Map<EntityAnimal, EntityAIBase> attackTaskMap = attackTaskMapMap.get(world);
-            if (event.getEntityLiving() instanceof EntityAnimal) {
-                EntityAnimal animal = (EntityAnimal) event.getEntityLiving();
+            Map<AnimalEntity, TargetGoal> targetTaskMap = targetTaskMapMap.get(world);
+            Map<AnimalEntity, Goal> attackTaskMap = attackTaskMapMap.get(world);
+            if (event.getEntityLiving() instanceof AnimalEntity) {
+                AnimalEntity animal = (AnimalEntity) event.getEntityLiving();
                 if (animal.isPotionActive(RegistrarBloodMagic.SACRIFICIAL_LAMB)) {
                     if (!targetTaskMap.containsKey(animal)) {
-                        EntityAITarget task = new EntityAINearestAttackableTarget<>(animal, EntityMob.class, false);
-                        EntityAIBase attackTask = new EntityAIAttackMelee(animal, 1.0D, false);
+                        TargetGoal task = new NearestAttackableTargetGoal<>(animal, MonsterEntity.class, false);
+                        Goal attackTask = new MeleeAttackGoal(animal, 1.0D, false);
                         animal.targetTasks.addTask(1, task);
                         animal.tasks.addTask(1, attackTask);
                         targetTaskMap.put(animal, task);
@@ -257,10 +257,10 @@ public class GenericHandler {
             }
         }
 
-        EntityLivingBase entity = event.getEntityLiving();
+        LivingEntity entity = event.getEntityLiving();
 
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entity;
+        if (entity instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entity;
             if (player.isSneaking() && player.isPotionActive(RegistrarBloodMagic.CLING) && Utils.isPlayerBesideSolidBlockFace(player) && !player.onGround) {
                 if (player.getEntityWorld().isRemote) {
                     player.motionY = 0;
@@ -272,10 +272,10 @@ public class GenericHandler {
             }
         }
 
-        if (entity.isPotionActive(MobEffects.NIGHT_VISION)) {
-            int duration = entity.getActivePotionEffect(MobEffects.NIGHT_VISION).getDuration();
+        if (entity.isPotionActive(Effects.NIGHT_VISION)) {
+            int duration = entity.getActivePotionEffect(Effects.NIGHT_VISION).getDuration();
             if (duration == Constants.Misc.NIGHT_VISION_CONSTANT_END) {
-                entity.removePotionEffect(MobEffects.NIGHT_VISION);
+                entity.removePotionEffect(Effects.NIGHT_VISION);
             }
         }
 
@@ -301,14 +301,14 @@ public class GenericHandler {
     }
 
     //    @SideOnly(Side.SERVER)
-    public static void sendPlayerDemonWillAura(EntityPlayer player) {
-        if (player instanceof EntityPlayerMP) {
+    public static void sendPlayerDemonWillAura(PlayerEntity player) {
+        if (player instanceof ServerPlayerEntity) {
             BlockPos pos = player.getPosition();
             DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(player.getEntityWorld().provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);
             if (holder != null) {
-                BloodMagicPacketHandler.sendTo(new DemonAuraPacketProcessor(holder), (EntityPlayerMP) player);
+                BloodMagicPacketHandler.sendTo(new DemonAuraPacketProcessor(holder), (ServerPlayerEntity) player);
             } else {
-                BloodMagicPacketHandler.sendTo(new DemonAuraPacketProcessor(new DemonWillHolder()), (EntityPlayerMP) player);
+                BloodMagicPacketHandler.sendTo(new DemonAuraPacketProcessor(new DemonWillHolder()), (ServerPlayerEntity) player);
             }
         }
     }
@@ -316,11 +316,11 @@ public class GenericHandler {
     // Handles destroying altar
     @SubscribeEvent
     public static void harvestEvent(PlayerEvent.HarvestCheck event) {
-        IBlockState state = event.getTargetBlock();
+        BlockState state = event.getTargetBlock();
         Block block = state.getBlock();
-        if (block instanceof BlockAltar && event.getEntityPlayer() != null && event.getEntityPlayer() instanceof EntityPlayerMP && !event.getEntityPlayer().getHeldItemMainhand().isEmpty() && event.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemAltarMaker) {
+        if (block instanceof BlockAltar && event.getEntityPlayer() != null && event.getEntityPlayer() instanceof ServerPlayerEntity && !event.getEntityPlayer().getHeldItemMainhand().isEmpty() && event.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemAltarMaker) {
             ItemAltarMaker altarMaker = (ItemAltarMaker) event.getEntityPlayer().getHeldItemMainhand().getItem();
-            event.getEntityPlayer().sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.altarMaker.destroy", altarMaker.destroyAltar(event.getEntityPlayer())), true);
+            event.getEntityPlayer().sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.altarMaker.destroy", altarMaker.destroyAltar(event.getEntityPlayer())), true);
         }
     }
 
@@ -351,7 +351,7 @@ public class GenericHandler {
         if (event.getWorld().isRemote)
             return;
 
-        EntityPlayer player = event.getEntityPlayer();
+        PlayerEntity player = event.getEntityPlayer();
 
         if (PlayerHelper.isFakePlayer(player))
             return;
@@ -390,10 +390,10 @@ public class GenericHandler {
 
     @SubscribeEvent
     public static void selfSacrificeEvent(SacrificeKnifeUsedEvent event) {
-        EntityPlayer player = event.player;
+        PlayerEntity player = event.player;
 
         if (LivingArmour.hasFullSet(player)) {
-            ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+            ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
             LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
             if (armour != null) {
                 StatTrackerSelfSacrifice.incrementCounter(armour, event.healthDrained / 2);
@@ -411,18 +411,18 @@ public class GenericHandler {
     // Drop Blood Shards
     @SubscribeEvent
     public static void onLivingDrops(LivingDropsEvent event) {
-        EntityLivingBase attackedEntity = event.getEntityLiving();
+        LivingEntity attackedEntity = event.getEntityLiving();
         DamageSource source = event.getSource();
         Entity entity = source.getTrueSource();
 
-        if (entity != null && entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entity;
+        if (entity != null && entity instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entity;
             ItemStack heldStack = player.getHeldItemMainhand();
 
-            if (!heldStack.isEmpty() && heldStack.getItem() == RegistrarBloodMagicItems.BOUND_SWORD && !(attackedEntity instanceof EntityAnimal))
+            if (!heldStack.isEmpty() && heldStack.getItem() == RegistrarBloodMagicItems.BOUND_SWORD && !(attackedEntity instanceof AnimalEntity))
                 for (int i = 0; i <= EnchantmentHelper.getLootingModifier(player); i++)
                     if (attackedEntity.getEntityWorld().rand.nextDouble() < 0.2)
-                        event.getDrops().add(new EntityItem(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD, 1, 0)));
+                        event.getDrops().add(new ItemEntity(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD, 1, 0)));
         }
     }
 
@@ -438,7 +438,7 @@ public class GenericHandler {
     // Experience Tome
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onExperiencePickup(PlayerPickupXpEvent event) {
-        EntityPlayer player = event.getEntityPlayer();
+        PlayerEntity player = event.getEntityPlayer();
         ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, player);
 
         if (!Loader.isModLoaded("unmending")) {
@@ -473,7 +473,7 @@ public class GenericHandler {
     public static void onLivingSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
         World world = event.getWorld();
 
-        if (!(event.getEntityLiving() instanceof EntityMob)) {
+        if (!(event.getEntityLiving() instanceof MonsterEntity)) {
             return;
         }
 

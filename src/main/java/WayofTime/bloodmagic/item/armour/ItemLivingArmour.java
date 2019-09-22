@@ -20,18 +20,18 @@ import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
@@ -52,7 +52,7 @@ import java.util.Map.Entry;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshProvider {
+public class ItemLivingArmour extends ArmorItem implements ISpecialArmor, IMeshProvider {
     public static final boolean useSpecialArmourCalculation = true;
     public static String[] names = {"helmet", "chest", "legs", "boots"};
     //TODO: Save/delete cache periodically.
@@ -60,8 +60,8 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     private static Field _FLAGS = ReflectionHelper.findField(Entity.class, "FLAGS", "field_184240_ax");
     private static DataParameter<Byte> FLAGS = null;
 
-    public ItemLivingArmour(EntityEquipmentSlot armorType) {
-        super(ItemArmor.ArmorMaterial.IRON, 0, armorType);
+    public ItemLivingArmour(EquipmentSlotType armorType) {
+        super(ArmorItem.ArmorMaterial.IRON, 0, armorType);
         setTranslationKey(BloodMagic.MODID + ".livingArmour.");
 //        setMaxDamage(250);
         setMaxDamage((int) (getMaxDamage() * 1.5));
@@ -69,14 +69,14 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     }
 
     @Override
-    public void onCreated(ItemStack stack, World world, EntityPlayer player) {
+    public void onCreated(ItemStack stack, World world, PlayerEntity player) {
         if (stack != null && !world.isRemote && stack.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST) {
             Utils.setUUID(stack);
         }
     }
 
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
         if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST || this == RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET || this == RegistrarBloodMagicItems.LIVING_ARMOUR_BOOTS) {
             return "bloodmagic:models/armor/livingArmour_layer_1.png";
         }
@@ -106,7 +106,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     }
 
     @Override
-    public ArmorProperties getProperties(EntityLivingBase player, ItemStack stack, DamageSource source, double damage, int slot) {
+    public ArmorProperties getProperties(LivingEntity player, ItemStack stack, DamageSource source, double damage, int slot) {
         double armourReduction = 0.0;
         double damageAmount = 0.25;
 
@@ -133,9 +133,9 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST) {
             armourReduction = 0.24 / 0.64; // This values puts it at iron level
 
-            ItemStack helmet = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-            ItemStack leggings = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
-            ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+            ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
+            ItemStack leggings = player.getItemStackFromSlot(EquipmentSlotType.LEGS);
+            ItemStack boots = player.getItemStackFromSlot(EquipmentSlotType.FEET);
 
             if (helmet.isEmpty() || leggings.isEmpty() || boots.isEmpty()) {
                 damageAmount *= (armourReduction);
@@ -178,7 +178,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     }
 
     @Override
-    public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
+    public int getArmorDisplay(PlayerEntity player, ItemStack armor, int slot) {
         if (armor.getItem() == RegistrarBloodMagicItems.LIVING_ARMOUR_HELMET) {
             return 3;
         }
@@ -199,7 +199,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     }
 
     @Override
-    public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
+    public void damageArmor(LivingEntity entity, ItemStack stack, DamageSource source, int damage, int slot) {
         if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST) {
             int preDamage = stack.getItemDamage();
             if (source.isUnblockable()) {
@@ -208,8 +208,8 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 
             if (damage > this.getMaxDamage(stack) - this.getDamage(stack)) {
                 //TODO: Syphon a load of LP.
-                if (entity.getEntityWorld().isRemote && entity instanceof EntityPlayer) {
-                    EntityPlayer player = (EntityPlayer) entity;
+                if (entity.getEntityWorld().isRemote && entity instanceof PlayerEntity) {
+                    PlayerEntity player = (PlayerEntity) entity;
                     SoulNetwork network = NetworkHelper.getSoulNetwork(player);
                     network.syphonAndDamage(player, SoulTicket.item(stack, entity.getEntityWorld(), entity, damage * 100));
                 }
@@ -220,8 +220,8 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
             stack.damageItem(damage, entity);
 
             int receivedDamage = stack.getItemDamage() - preDamage;
-            if (entity instanceof EntityPlayer) {
-                EntityPlayer player = (EntityPlayer) entity;
+            if (entity instanceof PlayerEntity) {
+                PlayerEntity player = (PlayerEntity) entity;
                 if (LivingArmour.hasFullSet(player)) {
                     LivingArmour armour = ItemLivingArmour.getLivingArmour(stack);
                     if (armour != null) {
@@ -277,13 +277,13 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     }
 
     @Override
-    public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
+    public void onArmorTick(World world, PlayerEntity player, ItemStack stack) {
         super.onArmorTick(world, player, stack);
 
         if (world.isRemote && this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST) {
-            if (player instanceof EntityPlayerSP) //Sanity check
+            if (player instanceof ClientPlayerEntity) //Sanity check
             {
-                EntityPlayerSP spPlayer = (EntityPlayerSP) player;
+                ClientPlayerEntity spPlayer = (ClientPlayerEntity) player;
 
                 if (FLAGS == null) {
                     try {
@@ -295,7 +295,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 
                 if (FLAGS != null) {
                     if (LivingArmour.hasFullSet(player)) {
-                        ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                        ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
                         LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(BloodMagic.MODID + ".upgrade.elytra", chestStack);
                         if (upgrade instanceof LivingArmourUpgradeElytra) {
                             if (spPlayer.movementInput.jump && !spPlayer.onGround && spPlayer.motionY < 0.0D && !spPlayer.capabilities.isFlying) {
@@ -333,8 +333,8 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
-        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST && isEnabled(stack) && slot == EntityEquipmentSlot.CHEST) {
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST && isEnabled(stack) && slot == EquipmentSlotType.CHEST) {
             LivingArmour armour = ItemLivingArmour.getLivingArmourFromStack(stack);
 
             return armour.getAttributeModifiers();
@@ -377,7 +377,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     }
 
     public void setLivingArmour(ItemStack stack, LivingArmour armour, boolean forceWrite) {
-        NBTTagCompound livingTag = new NBTTagCompound();
+        CompoundNBT livingTag = new CompoundNBT();
 
         if (!forceWrite) {
             livingTag = getArmourTag(stack);
@@ -389,43 +389,43 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         setArmourTag(stack, livingTag);
     }
 
-    public void setArmourTag(ItemStack stack, NBTTagCompound livingTag) {
+    public void setArmourTag(ItemStack stack, CompoundNBT livingTag) {
         if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
+            stack.setTagCompound(new CompoundNBT());
         }
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setTag(Constants.NBT.LIVING_ARMOUR, livingTag);
     }
 
     public void setIsEnabled(ItemStack stack, boolean bool) {
         NBTHelper.checkNBT(stack);
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         tag.setBoolean("enabled", bool);
     }
 
     public boolean isEnabled(ItemStack stack) {
         NBTHelper.checkNBT(stack);
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getBoolean("enabled");
     }
 
     public void setIsElytra(ItemStack stack, boolean bool) {
         NBTHelper.checkNBT(stack);
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         tag.setBoolean("elytra", bool);
     }
 
     public boolean isElytra(ItemStack stack) {
         NBTHelper.checkNBT(stack);
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getBoolean("elytra");
     }
 
     @Nullable
     public static LivingArmour getLivingArmourFromStack(ItemStack stack) {
-        NBTTagCompound livingTag = getArmourTag(stack);
+        CompoundNBT livingTag = getArmourTag(stack);
 
         LivingArmour livingArmour = new LivingArmour();
         livingArmour.readFromNBT(livingTag);
@@ -433,12 +433,12 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         return livingArmour;
     }
 
-    public static NBTTagCompound getArmourTag(ItemStack stack) {
+    public static CompoundNBT getArmourTag(ItemStack stack) {
         if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
+            stack.setTagCompound(new CompoundNBT());
         }
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getCompoundTag(Constants.NBT.LIVING_ARMOUR);
     }
 

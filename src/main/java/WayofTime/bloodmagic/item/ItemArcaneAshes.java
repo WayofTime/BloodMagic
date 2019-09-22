@@ -7,13 +7,13 @@ import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,13 +36,13 @@ public class ItemArcaneAshes extends Item implements IVariantProvider {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos blockPos, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         BlockPos newPos = blockPos.offset(side);
 
         if (world.isAirBlock(newPos)) {
             if (!world.isRemote) {
-                EnumFacing rotation = EnumFacing.fromAngle(player.getRotationYawHead());
+                Direction rotation = Direction.fromAngle(player.getRotationYawHead());
                 world.setBlockState(newPos, RegistrarBloodMagicBlocks.ALCHEMY_ARRAY.getDefaultState());
                 TileEntity tile = world.getTileEntity(newPos);
                 if (tile instanceof TileAlchemyArray) {
@@ -52,10 +52,10 @@ public class ItemArcaneAshes extends Item implements IVariantProvider {
                 stack.damageItem(1, player);
             }
 
-            return EnumActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
 
-        return EnumActionResult.FAIL;
+        return ActionResultType.FAIL;
     }
 
     @Override

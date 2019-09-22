@@ -5,12 +5,12 @@ import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.block.base.ItemBlockEnum;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
@@ -46,22 +46,22 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(property, types[meta]);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return state.getValue(property).ordinal();
     }
 
     @Override
-    public int damageDropped(IBlockState state) {
+    public int damageDropped(BlockState state) {
         return getMetaFromState(state);
     }
 
     @Override
-    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> subBlocks) {
+    public void getSubBlocks(ItemGroup tab, NonNullList<ItemStack> subBlocks) {
         for (E type : types)
             subBlocks.add(new ItemStack(this, 1, type.ordinal()));
     }
@@ -71,7 +71,7 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     }
 
     @Override
-    public ItemBlock getItem() {
+    public BlockItem getItem() {
         return new ItemBlockEnum<>(this);
     }
 

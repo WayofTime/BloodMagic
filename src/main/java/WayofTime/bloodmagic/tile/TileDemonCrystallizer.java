@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.tile;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
@@ -30,7 +30,7 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
             return;
         }
 
-        BlockPos offsetPos = pos.offset(EnumFacing.UP);
+        BlockPos offsetPos = pos.offset(Direction.UP);
         if (getWorld().isAirBlock(offsetPos)) //Room for a crystal to grow
         {
             EnumDemonWillType highestType = WorldDemonWillHandler.getHighestDemonWillType(getWorld(), pos);
@@ -53,7 +53,7 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
         getWorld().setBlockState(position, RegistrarBloodMagicBlocks.DEMON_CRYSTAL.getStateFromMeta(type.ordinal()));
         TileEntity tile = getWorld().getTileEntity(position);
         if (tile instanceof TileDemonCrystal) {
-            ((TileDemonCrystal) tile).setPlacement(EnumFacing.UP);
+            ((TileDemonCrystal) tile).setPlacement(Direction.UP);
             return true;
         }
 
@@ -65,13 +65,13 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(CompoundNBT tag) {
         holder.readFromNBT(tag, "Will");
         internalCounter = tag.getDouble("internalCounter");
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public CompoundNBT serialize(CompoundNBT tag) {
         holder.writeToNBT(tag, "Will");
         tag.setDouble("internalCounter", internalCounter);
         return tag;

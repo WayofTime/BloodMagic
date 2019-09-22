@@ -7,10 +7,10 @@ import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import com.google.common.collect.EvictingQueue;
 import com.google.common.collect.ImmutableList;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -19,11 +19,11 @@ import java.util.List;
 import java.util.Queue;
 import java.util.UUID;
 
-public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
+public class SoulNetwork implements INBTSerializable<CompoundNBT> {
 
     private final Queue<SoulTicket> ticketHistory;
     private BMWorldSavedData parent;
-    private EntityPlayer cachedPlayer;
+    private PlayerEntity cachedPlayer;
     private UUID playerId;
     private int currentEssence;
     private int orbTier;
@@ -104,7 +104,7 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
         return syphon(new SoulTicket(amount));
     }
 
-    public BooleanResult<Integer> syphonAndDamage(EntityPlayer user, SoulTicket ticket) {
+    public BooleanResult<Integer> syphonAndDamage(PlayerEntity user, SoulTicket ticket) {
         if (user.getEntityWorld().isRemote)
             return BooleanResult.newResult(false, 0);
 
@@ -127,16 +127,16 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
     }
 
     /**
-     * @deprecated Use {@link #syphonAndDamage(EntityPlayer, SoulTicket)} instead.
+     * @deprecated Use {@link #syphonAndDamage(PlayerEntity, SoulTicket)} instead.
      */
     @Deprecated
-    public boolean syphonAndDamage(EntityPlayer user, int amount) {
+    public boolean syphonAndDamage(PlayerEntity user, int amount) {
         return syphonAndDamage(user, new SoulTicket(amount)).isSuccess();
     }
 
     public void causeNausea() {
         if (getPlayer() != null)
-            getPlayer().addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 99));
+            getPlayer().addPotionEffect(new EffectInstance(Effects.NAUSEA, 99));
     }
 
     /**
@@ -147,7 +147,7 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
         causeNausea();
     }
 
-    public void hurtPlayer(EntityPlayer user, float syphon) {
+    public void hurtPlayer(PlayerEntity user, float syphon) {
         if (user != null) {
             if (syphon < 100 && syphon > 0) {
                 if (!user.capabilities.isCreativeMode) {
@@ -174,7 +174,7 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
     }
 
     @Nullable
-    public EntityPlayer getPlayer() {
+    public PlayerEntity getPlayer() {
         if (cachedPlayer == null)
             cachedPlayer = PlayerHelper.getPlayerFromUUID(playerId);
 
@@ -191,7 +191,7 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
         return this;
     }
 
-    public EntityPlayer getCachedPlayer() {
+    public PlayerEntity getCachedPlayer() {
         return cachedPlayer;
     }
 
@@ -226,8 +226,8 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
     // INBTSerializable
 
     @Override
-    public NBTTagCompound serializeNBT() {
-        NBTTagCompound tagCompound = new NBTTagCompound();
+    public CompoundNBT serializeNBT() {
+        CompoundNBT tagCompound = new CompoundNBT();
         tagCompound.setString("playerId", getPlayerId().toString());
         tagCompound.setInteger("currentEssence", getCurrentEssence());
         tagCompound.setInteger("orbTier", getOrbTier());
@@ -235,13 +235,13 @@ public class SoulNetwork implements INBTSerializable<NBTTagCompound> {
     }
 
     @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
+    public void deserializeNBT(CompoundNBT nbt) {
         this.playerId = UUID.fromString(nbt.getString("playerId"));
         this.currentEssence = nbt.getInteger("currentEssence");
         this.orbTier = nbt.getInteger("orbTier");
     }
 
-    public static SoulNetwork fromNBT(NBTTagCompound tagCompound) {
+    public static SoulNetwork fromNBT(CompoundNBT tagCompound) {
         SoulNetwork soulNetwork = new SoulNetwork();
         soulNetwork.deserializeNBT(tagCompound);
         return soulNetwork;

@@ -7,14 +7,13 @@ import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -35,7 +34,7 @@ public class ItemSentientArmourGem extends Item implements IMeshProvider {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         boolean hasSentientArmour = false;
         NonNullList<ItemStack> armourInventory = player.inventory.armorInventory;
         for (ItemStack armourStack : armourInventory) {
@@ -54,7 +53,7 @@ public class ItemSentientArmourGem extends Item implements IMeshProvider {
             ItemSentientArmour.convertPlayerArmour(type, will, player);
         }
 
-        return new ActionResult<>(EnumActionResult.PASS, player.getHeldItem(hand));
+        return new ActionResult<>(ActionResultType.PASS, player.getHeldItem(hand));
     }
 
     @SideOnly(Side.CLIENT)

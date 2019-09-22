@@ -4,15 +4,15 @@ import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.incense.*;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.ServerWorld;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +35,7 @@ public class TileIncenseAltar extends TileInventory implements ITickable {
     @Override
     public void update() {
         AxisAlignedBB aabb = incenseArea.getAABB(getPos());
-        List<EntityPlayer> playerList = getWorld().getEntitiesWithinAABB(EntityPlayer.class, aabb);
+        List<PlayerEntity> playerList = getWorld().getEntitiesWithinAABB(PlayerEntity.class, aabb);
         if (playerList.isEmpty()) {
             return;
         }
@@ -46,29 +46,29 @@ public class TileIncenseAltar extends TileInventory implements ITickable {
 
         boolean hasPerformed = false;
 
-        for (EntityPlayer player : playerList) {
+        for (PlayerEntity player : playerList) {
             if (PlayerSacrificeHelper.incrementIncense(player, 0, incenseAddition, incenseAddition / 100)) {
                 hasPerformed = true;
             }
         }
 
         if (hasPerformed) {
-            if (getWorld().rand.nextInt(4) == 0 && getWorld() instanceof WorldServer) {
-                WorldServer server = (WorldServer) getWorld();
+            if (getWorld().rand.nextInt(4) == 0 && getWorld() instanceof ServerWorld) {
+                ServerWorld server = (ServerWorld) getWorld();
                 server.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 1, 0.02, 0.03, 0.02, 0);
             }
         }
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(CompoundNBT tag) {
         super.deserialize(tag);
         tranquility = tag.getDouble("tranquility");
         incenseAddition = tag.getDouble("incenseAddition");
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
         tag.setDouble("tranquility", tranquility);
         tag.setDouble("incenseAddition", incenseAddition);
@@ -90,11 +90,11 @@ public class TileIncenseAltar extends TileInventory implements ITickable {
 
                 canFormRoad = true;
                 level:
-                for (EnumFacing horizontalFacing : EnumFacing.HORIZONTALS) {
+                for (Direction horizontalFacing : Direction.HORIZONTALS) {
                     BlockPos facingOffsetPos = verticalPos.offset(horizontalFacing, currentDistance);
                     for (int j = -1; j <= 1; j++) {
                         BlockPos offsetPos = facingOffsetPos.offset(horizontalFacing.rotateY(), j);
-                        IBlockState state = getWorld().getBlockState(offsetPos);
+                        BlockState state = getWorld().getBlockState(offsetPos);
                         Block block = state.getBlock();
                         if (!(block instanceof IIncensePath && ((IIncensePath) block).getLevelOfPath(getWorld(), offsetPos, state) >= currentDistance - 2)) {
                             canFormRoad = false;
@@ -118,7 +118,7 @@ public class TileIncenseAltar extends TileInventory implements ITickable {
 
                         for (int y = yOffset; y <= 2 + yOffset; y++) {
                             BlockPos offsetPos = pos.add(i, y, j);
-                            IBlockState state = getWorld().getBlockState(offsetPos);
+                            BlockState state = getWorld().getBlockState(offsetPos);
                             Block block = state.getBlock();
                             TranquilityStack stack = IncenseTranquilityRegistry.getTranquilityOfBlock(getWorld(), offsetPos, block, state);
                             if (stack != null) {

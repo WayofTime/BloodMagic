@@ -16,15 +16,15 @@ import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import com.google.common.base.Enums;
-import net.minecraft.block.BlockRedstoneLight;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.RedstoneLampBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -75,7 +75,7 @@ public class BloodAltar implements IFluidHandler {
         this.tileAltar = tileAltar;
     }
 
-    public void readFromNBT(NBTTagCompound tagCompound) {
+    public void readFromNBT(CompoundNBT tagCompound) {
         if (!tagCompound.hasKey(Constants.NBT.EMPTY)) {
             FluidStack fluid = FluidStack.loadFluidStackFromNBT(tagCompound);
 
@@ -119,7 +119,7 @@ public class BloodAltar implements IFluidHandler {
         currentTierDisplayed = Enums.getIfPresent(AltarTier.class, tagCompound.getString(Constants.NBT.ALTAR_CURRENT_TIER_DISPLAYED)).or(AltarTier.ONE);
     }
 
-    public void writeToNBT(NBTTagCompound tagCompound) {
+    public void writeToNBT(CompoundNBT tagCompound) {
 
         if (fluid != null)
             fluid.writeToNBT(tagCompound);
@@ -213,9 +213,9 @@ public class BloodAltar implements IFluidHandler {
             lockdownDuration--;
 
         if (internalCounter % 20 == 0) {
-            for (EnumFacing facing : EnumFacing.VALUES) {
+            for (Direction facing : Direction.VALUES) {
                 BlockPos newPos = pos.offset(facing);
-                IBlockState block = world.getBlockState(newPos);
+                BlockState block = world.getBlockState(newPos);
                 block.getBlock().onNeighborChange(world, newPos, pos);
             }
         }
@@ -244,7 +244,7 @@ public class BloodAltar implements IFluidHandler {
 
         if (internalCounter % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0)) {
             /* Redstone Lamp below altar: Switch Off */
-            IBlockState state = world.getBlockState(pos);
+            BlockState state = world.getBlockState(pos);
             if (state.getValue(BlockAltar.POWERED)) {
                 world.setBlockState(pos, state.cycleProperty(BlockAltar.POWERED), 3);
                 world.notifyNeighborsOfStateChange(pos, RegistrarBloodMagicBlocks.ALTAR, false);
@@ -301,16 +301,16 @@ public class BloodAltar implements IFluidHandler {
 
                 hasOperated = true;
 
-                if (internalCounter % 4 == 0 && world instanceof WorldServer) {
-                    WorldServer server = (WorldServer) world;
+                if (internalCounter % 4 == 0 && world instanceof ServerWorld) {
+                    ServerWorld server = (ServerWorld) world;
                     server.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.2, 0, 0.2, 0);
                 }
 
             } else if (!hasOperated && progress > 0) {
                 progress = Math.max(0, progress - (int) (efficiencyMultiplier * drainRate));
 
-                if (internalCounter % 2 == 0 && world instanceof WorldServer) {
-                    WorldServer server = (WorldServer) world;
+                if (internalCounter % 2 == 0 && world instanceof ServerWorld) {
+                    ServerWorld server = (ServerWorld) world;
                     server.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.1, 0, 0.1, 0);
                 }
             }
@@ -324,14 +324,14 @@ public class BloodAltar implements IFluidHandler {
                     tileAltar.setInventorySlotContents(0, event.getOutput());
                     progress = 0;
 
-                    if (world instanceof WorldServer) {
-                        WorldServer server = (WorldServer) world;
+                    if (world instanceof ServerWorld) {
+                        ServerWorld server = (ServerWorld) world;
                         server.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.3, 0, 0.3, 0);
                     }
 
                     /* Redstone Lamp below altar: Switch On */
                     /* Switches on when crafting finishes */
-                    if (world.getBlockState(pos.down()).getBlock() instanceof BlockRedstoneLight) {
+                    if (world.getBlockState(pos.down()).getBlock() instanceof RedstoneLampBlock) {
                         world.setBlockState(pos, world.getBlockState(pos).cycleProperty(BlockAltar.POWERED), 3);
                         world.notifyNeighborsOfStateChange(pos, RegistrarBloodMagicBlocks.ALTAR, false);
                     }
@@ -357,8 +357,8 @@ public class BloodAltar implements IFluidHandler {
                 int drain = NetworkHelper.getSoulNetwork(binding).add(SoulTicket.block(world, pos, liquidDrained), (int) (orb.getCapacity() * this.orbCapacityMultiplier));
                 fluid.amount = fluid.amount - drain;
 
-                if (drain > 0 && internalCounter % 4 == 0 && world instanceof WorldServer) {
-                    WorldServer server = (WorldServer) world;
+                if (drain > 0 && internalCounter % 4 == 0 && world instanceof ServerWorld) {
+                    ServerWorld server = (ServerWorld) world;
                     server.spawnParticle(EnumParticleTypes.SPELL_WITCH, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0, 0, 0, 0.001);
                 }
             }

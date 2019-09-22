@@ -7,10 +7,10 @@ import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
 
@@ -46,7 +46,7 @@ public class SubCommandNetwork extends CommandTreeBase {
 
     abstract class NetworkCommand extends CommandTreeBase {
 
-        public EntityPlayerMP player;
+        public ServerPlayerEntity player;
         public SoulNetwork network;
         public String uuid;
 
@@ -64,12 +64,12 @@ public class SubCommandNetwork extends CommandTreeBase {
             else if (args.length > 1 && Utils.isInteger(args[1]))
                 amount = Integer.parseInt(args[1]);
             else {
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.error.arg.invalid"));
-                sender.sendMessage(new TextComponentTranslation(this.getUsage(sender)));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.error.arg.invalid"));
+                sender.sendMessage(new TranslationTextComponent(this.getUsage(sender)));
                 return null;
             }
             if (amount < 0) {
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.error.negative"));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.error.negative"));
                 return null;
             }
             return amount;
@@ -91,7 +91,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         @Override
         public final void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
+                sender.sendMessage(new TranslationTextComponent(getHelp()));
                 return;
             }
             if (!getName().equals("get")) {
@@ -118,14 +118,14 @@ public class SubCommandNetwork extends CommandTreeBase {
                 return;
             int currE = network.getCurrentEssence();
             if (amount > currE) {
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.syphon.amountTooHigh"));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.network.syphon.amountTooHigh"));
                 if (currE == 0)
                     return;
                 amount = Math.min(amount, currE);
             }
             network.syphonAndDamage(player, SoulTicket.command(sender, this.getName(), amount));
             int newE = network.getCurrentEssence();
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.syphon.success", currE - newE, player.getDisplayName().getFormattedText()));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.network.syphon.success", currE - newE, player.getDisplayName().getFormattedText()));
         }
     }
 
@@ -140,7 +140,7 @@ public class SubCommandNetwork extends CommandTreeBase {
             Integer amount = commandHelperAmount(server, sender, args);
             if (amount == null)
                 return;
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.add.success", network.add(SoulTicket.command(sender, getName(), amount), NetworkHelper.getMaximumForTier(network.getOrbTier())), player.getDisplayName().getFormattedText()));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.network.add.success", network.add(SoulTicket.command(sender, getName(), amount), NetworkHelper.getMaximumForTier(network.getOrbTier())), player.getDisplayName().getFormattedText()));
         }
     }
 
@@ -156,7 +156,7 @@ public class SubCommandNetwork extends CommandTreeBase {
             if (amount == null)
                 return;
             network.setCurrentEssence(amount);
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.set.success", player.getDisplayName().getFormattedText(), amount));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.network.set.success", player.getDisplayName().getFormattedText(), amount));
         }
     }
 
@@ -172,7 +172,7 @@ public class SubCommandNetwork extends CommandTreeBase {
             this.player = args.length < 1 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
             this.uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
             this.network = NetworkHelper.getSoulNetwork(uuid);
-            sender.sendMessage(new TextComponentString((player != sender ? player.getDisplayName().getFormattedText() + " " : "" + new TextComponentTranslation("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence()).getFormattedText())));
+            sender.sendMessage(new StringTextComponent((player != sender ? player.getDisplayName().getFormattedText() + " " : "" + new TranslationTextComponent("tooltip.bloodmagic.sigil.divination.currentEssence", network.getCurrentEssence()).getFormattedText())));
         }
     }
 
@@ -186,7 +186,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         @Override
         public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             network.setCurrentEssence(NetworkHelper.getMaximumForTier(network.getOrbTier()));
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.cap.success", player.getDisplayName().getFormattedText()));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.network.cap.success", player.getDisplayName().getFormattedText()));
         }
     }
 
@@ -205,7 +205,7 @@ public class SubCommandNetwork extends CommandTreeBase {
         @Override
         public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             network.setCurrentEssence(Integer.MAX_VALUE);
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.network.fill.success", player.getDisplayName().getFormattedText()));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.network.fill.success", player.getDisplayName().getFormattedText()));
         }
     }
 
@@ -222,7 +222,7 @@ public class SubCommandNetwork extends CommandTreeBase {
             if (!tickethistory.isEmpty())
                 for (SoulTicket i : network.getTicketHistory())
                     sender.sendMessage(i.getDescription());
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success", player.getDisplayName().getFormattedText()));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.success", player.getDisplayName().getFormattedText()));
         }
     }
 }

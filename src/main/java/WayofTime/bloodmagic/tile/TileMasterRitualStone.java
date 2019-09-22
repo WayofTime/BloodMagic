@@ -19,12 +19,12 @@ import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.*;
 import com.google.common.base.Strings;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -40,7 +40,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     private int activeTime;
     private int cooldown;
     private Ritual currentRitual;
-    private EnumFacing direction = EnumFacing.NORTH;
+    private Direction direction = Direction.NORTH;
     private boolean inverted;
     private List<EnumDemonWillType> currentActiveWillConfig = new ArrayList<>();
 
@@ -73,20 +73,20 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(CompoundNBT tag) {
         owner = tag.hasUniqueId("owner") ? tag.getUniqueId("owner") : null;
         if (owner != null)
             cachedNetwork = NetworkHelper.getSoulNetwork(owner);
         currentRitual = BloodMagic.RITUAL_MANAGER.getRitual(tag.getString(Constants.NBT.CURRENT_RITUAL));
         if (currentRitual != null) {
-            NBTTagCompound ritualTag = tag.getCompoundTag(Constants.NBT.CURRENT_RITUAL_TAG);
+            CompoundNBT ritualTag = tag.getCompoundTag(Constants.NBT.CURRENT_RITUAL_TAG);
             if (!ritualTag.isEmpty()) {
                 currentRitual.readFromNBT(ritualTag);
             }
         }
         active = tag.getBoolean(Constants.NBT.IS_RUNNING);
         activeTime = tag.getInteger(Constants.NBT.RUNTIME);
-        direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
+        direction = Direction.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
         redstoned = tag.getBoolean(Constants.NBT.IS_REDSTONED);
 
         for (EnumDemonWillType type : EnumDemonWillType.values()) {
@@ -97,13 +97,13 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public CompoundNBT serialize(CompoundNBT tag) {
         String ritualId = BloodMagic.RITUAL_MANAGER.getId(getCurrentRitual());
         if (owner != null)
             tag.setUniqueId("owner", owner);
         tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
         if (currentRitual != null) {
-            NBTTagCompound ritualTag = new NBTTagCompound();
+            CompoundNBT ritualTag = new CompoundNBT();
             currentRitual.writeToNBT(ritualTag);
             tag.setTag(Constants.NBT.CURRENT_RITUAL_TAG, ritualTag);
         }
@@ -120,7 +120,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public boolean activateRitual(ItemStack activationCrystal, @Nullable EntityPlayer activator, Ritual ritual) {
+    public boolean activateRitual(ItemStack activationCrystal, @Nullable PlayerEntity activator, Ritual ritual) {
         if (PlayerHelper.isFakePlayer(activator))
             return false;
 
@@ -133,7 +133,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
                         SoulNetwork network = NetworkHelper.getSoulNetwork(binding);
 
                         if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost() && (activator != null && !activator.capabilities.isCreativeMode)) {
-                            activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.weak"), true);
+                            activator.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.weak"), true);
                             return false;
                         }
 
@@ -144,7 +144,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
                         if (MinecraftForge.EVENT_BUS.post(event)) {
                             if (activator != null)
-                                activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.prevent"), true);
+                                activator.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.prevent"), true);
                             return false;
                         }
 
@@ -153,7 +153,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
                                 network.syphon(ticket(ritual.getActivationCost()));
 
                             if (activator != null)
-                                activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.activate"), true);
+                                activator.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.activate"), true);
 
                             this.active = true;
                             this.owner = binding.getOwnerId();
@@ -174,7 +174,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
             }
         } else {
             if (activator != null)
-                activator.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.ritual.notValid"), true);
+                activator.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
         }
 
         return false;
@@ -229,11 +229,11 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public EnumFacing getDirection() {
+    public Direction getDirection() {
         return direction;
     }
 
-    public void setDirection(EnumFacing direction) {
+    public void setDirection(Direction direction) {
         this.direction = direction;
     }
 
@@ -291,26 +291,26 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public void provideInformationOfRitualToPlayer(EntityPlayer player) {
+    public void provideInformationOfRitualToPlayer(PlayerEntity player) {
         if (this.currentRitual != null) {
             ChatUtil.sendNoSpam(player, this.currentRitual.provideInformationOfRitualToPlayer(player));
         }
     }
 
     @Override
-    public void provideInformationOfRangeToPlayer(EntityPlayer player, String range) {
+    public void provideInformationOfRangeToPlayer(PlayerEntity player, String range) {
         if (this.currentRitual != null && this.currentRitual.getListOfRanges().contains(range)) {
             ChatUtil.sendNoSpam(player, this.currentRitual.provideInformationOfRangeToPlayer(player, range));
         }
     }
 
     @Override
-    public void setActiveWillConfig(EntityPlayer player, List<EnumDemonWillType> typeList) {
+    public void setActiveWillConfig(PlayerEntity player, List<EnumDemonWillType> typeList) {
         this.currentActiveWillConfig = typeList;
     }
 
     @Override
-    public EnumReaderBoundaries setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2) {
+    public EnumReaderBoundaries setBlockRangeByBounds(PlayerEntity player, String range, BlockPos offset1, BlockPos offset2) {
         AreaDescriptor descriptor = this.getBlockRange(range);
         DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, getBlockPos());
 
@@ -327,10 +327,10 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     }
 
     @Override
-    public void provideInformationOfWillConfigToPlayer(EntityPlayer player, List<EnumDemonWillType> typeList) {
+    public void provideInformationOfWillConfigToPlayer(PlayerEntity player, List<EnumDemonWillType> typeList) {
         //There is probably an easier way to make expanded chat messages
         if (typeList.size() >= 1) {
-            Object[] translations = new TextComponentTranslation[typeList.size()];
+            Object[] translations = new TranslationTextComponent[typeList.size()];
             StringBuilder constructedString = new StringBuilder("%s");
 
             for (int i = 1; i < typeList.size(); i++) {
@@ -338,12 +338,12 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
             }
 
             for (int i = 0; i < typeList.size(); i++) {
-                translations[i] = new TextComponentTranslation("tooltip.bloodmagic.currentBaseType." + typeList.get(i).name.toLowerCase());
+                translations[i] = new TranslationTextComponent("tooltip.bloodmagic.currentBaseType." + typeList.get(i).name.toLowerCase());
             }
 
-            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.willConfig.set", new TextComponentTranslation(constructedString.toString(), translations)));
+            ChatUtil.sendNoSpam(player, new TranslationTextComponent("ritual.bloodmagic.willConfig.set", new TranslationTextComponent(constructedString.toString(), translations)));
         } else {
-            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.bloodmagic.willConfig.void"));
+            ChatUtil.sendNoSpam(player, new TranslationTextComponent("ritual.bloodmagic.willConfig.void"));
         }
     }
 

@@ -3,18 +3,18 @@ package WayofTime.bloodmagic.entity.mob;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.entity.ai.EntityAIPickUpAlly;
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.ai.*;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.pathfinding.ClimberPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.PathNavigate;
-import net.minecraft.pathfinding.PathNavigateClimber;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -34,17 +34,17 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase {
     }
 
     protected void initEntityAI() {
-        this.tasks.addTask(1, new EntityAISwimming(this));
-        this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
+        this.tasks.addTask(1, new SwimGoal(this));
+        this.tasks.addTask(3, new LeapAtTargetGoal(this, 0.4F));
         this.tasks.addTask(3, new EntityAIPickUpAlly(this, 1, true));
         this.tasks.addTask(4, new EntityCorruptedSpider.AISpiderAttack(this));
-        this.tasks.addTask(5, new EntityAIWander(this, 0.8D));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(6, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
+        this.tasks.addTask(5, new RandomWalkingGoal(this, 0.8D));
+        this.tasks.addTask(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+        this.tasks.addTask(6, new LookRandomlyGoal(this));
+        this.targetTasks.addTask(1, new HurtByTargetGoal(this, false));
 
-        this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 10, true, false, new EntityAspectedDemonBase.TeamAttackPredicate(this)));
+        this.targetTasks.addTask(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetTasks.addTask(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 10, true, false, new EntityAspectedDemonBase.TeamAttackPredicate(this)));
     }
 
     @Override
@@ -78,8 +78,8 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase {
     }
 
     @Override
-    protected PathNavigate createNavigator(World worldIn) {
-        return new PathNavigateClimber(this, worldIn);
+    protected PathNavigator createNavigator(World worldIn) {
+        return new ClimberPathNavigator(this, worldIn);
     }
 
     @Override
@@ -137,8 +137,8 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase {
     }
 
     @Override
-    public boolean isPotionApplicable(PotionEffect potioneffectIn) {
-        return potioneffectIn.getPotion() != MobEffects.POISON && super.isPotionApplicable(potioneffectIn);
+    public boolean isPotionApplicable(EffectInstance potioneffectIn) {
+        return potioneffectIn.getPotion() != Effects.POISON && super.isPotionApplicable(potioneffectIn);
     }
 
     public boolean isBesideClimbableBlock() {
@@ -162,7 +162,7 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase {
         return 0.65F;
     }
 
-    static class AISpiderAttack extends EntityAIAttackMelee {
+    static class AISpiderAttack extends MeleeAttackGoal {
         public AISpiderAttack(EntityCorruptedSpider spider) {
             super(spider, 1.0D, true);
         }
@@ -181,12 +181,12 @@ public class EntityCorruptedSpider extends EntityAspectedDemonBase {
             }
         }
 
-        protected double getAttackReachSqr(EntityLivingBase attackTarget) {
+        protected double getAttackReachSqr(LivingEntity attackTarget) {
             return (double) (4.0F + attackTarget.width);
         }
     }
 
-    static class AISpiderTarget<T extends EntityLivingBase> extends EntityAINearestAttackableTarget<T> {
+    static class AISpiderTarget<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
         public AISpiderTarget(EntityCorruptedSpider spider, Class<T> classTarget) {
             super(spider, classTarget, true);
         }

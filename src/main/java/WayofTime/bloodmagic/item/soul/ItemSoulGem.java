@@ -13,15 +13,14 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -49,7 +48,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         EnumDemonWillType type = this.getCurrentType(stack);
         double drain = Math.min(this.getWill(type, stack), this.getMaxWill(type, stack) / 10);
@@ -57,7 +56,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
         double filled = PlayerDemonWillHandler.addDemonWill(type, player, drain, stack);
         this.drainWill(type, stack, filled, true);
 
-        return new ActionResult<>(EnumActionResult.PASS, stack);
+        return new ActionResult<>(ActionResultType.PASS, stack);
     }
 
     @Override
@@ -78,7 +77,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     }
 
     @Override
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
+    public void getSubItems(ItemGroup creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
@@ -166,7 +165,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
             return 0;
         }
 
-        NBTTagCompound tag = soulGemStack.getTagCompound();
+        CompoundNBT tag = soulGemStack.getTagCompound();
 
         return tag.getDouble(Constants.NBT.SOULS);
     }
@@ -175,7 +174,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     public void setWill(EnumDemonWillType type, ItemStack soulGemStack, double souls) {
         setCurrentType(type, soulGemStack);
 
-        NBTTagCompound tag = soulGemStack.getTagCompound();
+        CompoundNBT tag = soulGemStack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOULS, souls);
     }
@@ -223,7 +222,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     public EnumDemonWillType getCurrentType(ItemStack soulGemStack) {
         NBTHelper.checkNBT(soulGemStack);
 
-        NBTTagCompound tag = soulGemStack.getTagCompound();
+        CompoundNBT tag = soulGemStack.getTagCompound();
 
         if (!tag.hasKey(Constants.NBT.WILL_TYPE)) {
             return EnumDemonWillType.DEFAULT;
@@ -235,7 +234,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     public void setCurrentType(EnumDemonWillType type, ItemStack soulGemStack) {
         NBTHelper.checkNBT(soulGemStack);
 
-        NBTTagCompound tag = soulGemStack.getTagCompound();
+        CompoundNBT tag = soulGemStack.getTagCompound();
 
         if (type == EnumDemonWillType.DEFAULT) {
             if (tag.hasKey(Constants.NBT.WILL_TYPE)) {

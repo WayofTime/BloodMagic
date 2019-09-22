@@ -3,12 +3,12 @@ package WayofTime.bloodmagic.tile.routing;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.item.inventory.ItemInventory;
 import WayofTime.bloodmagic.util.GhostItemHelper;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 
 public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedInventory {
@@ -21,7 +21,7 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
         super(size, name);
     }
 
-    public ItemStack getFilterStack(EnumFacing side) {
+    public ItemStack getFilterStack(Direction side) {
         int index = side.getIndex();
 
         return getStackInSlot(index);
@@ -37,12 +37,12 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     }
 
     @Override
-    public boolean isInventoryConnectedToSide(EnumFacing side) {
+    public boolean isInventoryConnectedToSide(Direction side) {
         return true;
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(CompoundNBT tag) {
         super.deserialize(tag);
         currentActiveSlot = tag.getInteger("currentSlot");
         priorities = tag.getIntArray(Constants.NBT.ROUTING_PRIORITY);
@@ -51,11 +51,11 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
         }
 
         if (!tag.getBoolean("updated")) {
-            NBTTagList tags = tag.getTagList("Items", 10);
+            ListNBT tags = tag.getTagList("Items", 10);
             inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
             for (int i = 0; i < tags.tagCount(); i++) {
                 if (!isSyncedSlot(i)) {
-                    NBTTagCompound data = tags.getCompoundTagAt(i);
+                    CompoundNBT data = tags.getCompoundTagAt(i);
                     byte j = data.getByte("Slot");
 
                     if (j == 0) {
@@ -71,7 +71,7 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
         tag.setInteger("currentSlot", currentActiveSlot);
         tag.setIntArray(Constants.NBT.ROUTING_PRIORITY, priorities);
@@ -86,34 +86,34 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     }
 
     @Override
-    public int[] getSlotsForFace(EnumFacing side) {
+    public int[] getSlotsForFace(Direction side) {
         return new int[0];
     }
 
     @Override
-    public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+    public boolean canInsertItem(int index, ItemStack itemStackIn, Direction direction) {
         return false;
     }
 
     @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+    public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
         return false;
     }
 
     @Override
-    public int getPriority(EnumFacing side) {
+    public int getPriority(Direction side) {
         return priorities[side.getIndex()];
     }
 
     public void incrementCurrentPriotiryToMaximum(int max) {
         priorities[currentActiveSlot] = Math.min(priorities[currentActiveSlot] + 1, max);
-        IBlockState state = getWorld().getBlockState(pos);
+        BlockState state = getWorld().getBlockState(pos);
         getWorld().notifyBlockUpdate(pos, state, state, 3);
     }
 
     public void decrementCurrentPriority() {
         priorities[currentActiveSlot] = Math.max(priorities[currentActiveSlot] - 1, 0);
-        IBlockState state = getWorld().getBlockState(pos);
+        BlockState state = getWorld().getBlockState(pos);
         getWorld().notifyBlockUpdate(pos, state, state, 3);
     }
 }

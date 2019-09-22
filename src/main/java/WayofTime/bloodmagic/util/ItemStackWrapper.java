@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.util;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class ItemStackWrapper {
     public final Item item;
     public final int stackSize;
     public final int meta;
-    public NBTTagCompound nbtTag;
+    public CompoundNBT nbtTag;
 
     public ItemStackWrapper(Item item, int stackSize, int meta) {
         this.item = item;
@@ -77,11 +77,11 @@ public class ItemStackWrapper {
         return meta;
     }
 
-    public NBTTagCompound getNbtTag() {
+    public CompoundNBT getNbtTag() {
         return nbtTag;
     }
 
-    public void setNbtTag(NBTTagCompound nbtTag) {
+    public void setNbtTag(CompoundNBT nbtTag) {
         this.nbtTag = nbtTag;
     }
 

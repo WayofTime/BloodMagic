@@ -4,15 +4,15 @@ import java.util.List;
 
 import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockFurnace;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FurnaceBlock;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -29,9 +29,9 @@ public class AlchemyArrayEffectFurnaceFuel extends AlchemyArrayEffect {
     public boolean update(TileEntity tile, int ticksActive) {
         BlockPos pos = tile.getPos();
         World world = tile.getWorld();
-        EntityPlayer sacrifice = null;
+        PlayerEntity sacrifice = null;
 
-        for (EnumFacing face : EnumFacing.VALUES) {
+        for (Direction face : Direction.VALUES) {
             BlockPos furnacePos = pos.offset(face);
             Block block = world.getBlockState(furnacePos).getBlock();
             if (block != Blocks.FURNACE) //This will only work vanilla furnaces. No others!
@@ -40,13 +40,13 @@ public class AlchemyArrayEffectFurnaceFuel extends AlchemyArrayEffect {
             }
 
             TileEntity bottomTile = world.getTileEntity(furnacePos);
-            if (bottomTile instanceof TileEntityFurnace) {
-                TileEntityFurnace furnaceTile = (TileEntityFurnace) bottomTile;
+            if (bottomTile instanceof FurnaceTileEntity) {
+                FurnaceTileEntity furnaceTile = (FurnaceTileEntity) bottomTile;
                 if (canFurnaceSmelt(furnaceTile) && !furnaceTile.isBurning()) {
                     if (sacrifice == null || sacrifice.isDead) {
                         AxisAlignedBB bb = new AxisAlignedBB(pos).grow(radius);
-                        List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, bb);
-                        for (EntityPlayer player : playerList) {
+                        List<PlayerEntity> playerList = world.getEntitiesWithinAABB(PlayerEntity.class, bb);
+                        for (PlayerEntity player : playerList) {
                             if (!player.isDead) {
                                 sacrifice = player;
                             }
@@ -70,13 +70,13 @@ public class AlchemyArrayEffectFurnaceFuel extends AlchemyArrayEffect {
         return false;
     }
 
-    public static boolean addFuelTime(TileEntityFurnace furnaceTile, World world, BlockPos furnacePos, int cookTime) {
+    public static boolean addFuelTime(FurnaceTileEntity furnaceTile, World world, BlockPos furnacePos, int cookTime) {
         furnaceTile.setField(0, cookTime);
-        BlockFurnace.setState(true, world, furnacePos);
+        FurnaceBlock.setState(true, world, furnacePos);
         return true;
     }
 
-    public static boolean canFurnaceSmelt(TileEntityFurnace furnaceTile) {
+    public static boolean canFurnaceSmelt(FurnaceTileEntity furnaceTile) {
         ItemStack burnStack = furnaceTile.getStackInSlot(0);
         if (burnStack.isEmpty()) {
             return false;
@@ -103,12 +103,12 @@ public class AlchemyArrayEffectFurnaceFuel extends AlchemyArrayEffect {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
 
     }
 

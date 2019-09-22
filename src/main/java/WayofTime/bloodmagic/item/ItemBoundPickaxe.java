@@ -7,17 +7,17 @@ import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -38,24 +38,24 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         return true;
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState block, BlockPos pos, EntityLivingBase entityLiving) {
+    public boolean onBlockDestroyed(ItemStack stack, World world, BlockState block, BlockPos pos, LivingEntity entityLiving) {
         return true;
     }
 
     @Override
-    public boolean canHarvestBlock(IBlockState blockIn) {
+    public boolean canHarvestBlock(BlockState blockIn) {
         return blockIn == Blocks.OBSIDIAN ? this.toolMaterial.getHarvestLevel() == 3
                 : (blockIn != Blocks.DIAMOND_BLOCK && blockIn != Blocks.DIAMOND_ORE ? (blockIn != Blocks.EMERALD_ORE && blockIn != Blocks.EMERALD_BLOCK ? (blockIn != Blocks.GOLD_BLOCK && blockIn != Blocks.GOLD_ORE ? (blockIn != Blocks.IRON_BLOCK && blockIn != Blocks.IRON_ORE ? (blockIn != Blocks.LAPIS_BLOCK && blockIn != Blocks.LAPIS_ORE ? (blockIn != Blocks.REDSTONE_ORE && blockIn != Blocks.LIT_REDSTONE_ORE ? (blockIn.getMaterial() == Material.ROCK || (blockIn.getMaterial() == Material.IRON || blockIn.getMaterial() == Material.ANVIL)) : this.toolMaterial.getHarvestLevel() >= 2)
                 : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2);
     }
 
     @Override
-    public float getDestroySpeed(ItemStack stack, IBlockState state) {
+    public float getDestroySpeed(ItemStack stack, BlockState state) {
         if (!getActivated(stack))
             return 1.0F;
 
@@ -63,7 +63,7 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
     }
 
     @Override
-    protected void onBoundRelease(ItemStack stack, World world, EntityPlayer player, int charge) {
+    protected void onBoundRelease(ItemStack stack, World world, PlayerEntity player, int charge) {
         if (world.isRemote)
             return;
 
@@ -78,7 +78,7 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
             for (int j = 0; j <= 2 * range; j++) {
                 for (int k = -range; k <= range; k++) {
                     BlockPos blockPos = playerPos.add(i, j, k);
-                    IBlockState blockState = world.getBlockState(blockPos);
+                    BlockState blockState = world.getBlockState(blockPos);
 
                     if (world.isAirBlock(blockPos))
                         continue;
@@ -100,9 +100,9 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider {
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack) {
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
         Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
-        if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
+        if (equipmentSlot == EquipmentSlotType.MAINHAND) {
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getActivated(stack) ? 5 : 2, 0));
             multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", -2.5, 0));
         }

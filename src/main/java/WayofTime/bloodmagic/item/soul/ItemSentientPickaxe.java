@@ -17,25 +17,25 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemPickaxe;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.world.EnumDifficulty;
+import net.minecraft.util.Hand;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -43,7 +43,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon, IMeshProvider, IMultiWillTool, ISentientTool {
+public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon, IMeshProvider, IMultiWillTool, ISentientTool {
     public static int[] soulBracket = new int[]{16, 60, 200, 400, 1000};
     public static double[] defaultDamageAdded = new double[]{1, 2, 3, 3.5, 4};
     public static double[] destructiveDamageAdded = new double[]{2, 3, 4, 5, 6};
@@ -80,7 +80,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     }
 
     @Override
-    public float getDestroySpeed(ItemStack stack, IBlockState state) {
+    public float getDestroySpeed(ItemStack stack, BlockState state) {
         float value = super.getDestroySpeed(stack, state);
         if (value > 1) {
             return (float) (value + getDigSpeedOfSword(stack));
@@ -89,7 +89,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
         }
     }
 
-    public void recalculatePowers(ItemStack stack, World world, EntityPlayer player) {
+    public void recalculatePowers(ItemStack stack, World world, PlayerEntity player) {
         EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);
         double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
         this.setCurrentType(stack, soulsRemaining > 0 ? type : EnumDemonWillType.DEFAULT);
@@ -166,10 +166,10 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
         }
     }
 
-    public void applyEffectToEntity(EnumDemonWillType type, int willBracket, EntityLivingBase target, EntityPlayer attacker) {
+    public void applyEffectToEntity(EnumDemonWillType type, int willBracket, LivingEntity target, PlayerEntity attacker) {
         switch (type) {
             case CORROSIVE:
-                target.addPotionEffect(new PotionEffect(MobEffects.WITHER, poisonTime[willBracket], poisonLevel[willBracket]));
+                target.addPotionEffect(new EffectInstance(Effects.WITHER, poisonTime[willBracket], poisonLevel[willBracket]));
                 break;
             case DEFAULT:
                 break;
@@ -178,7 +178,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
             case STEADFAST:
                 if (!target.isEntityAlive()) {
                     float absorption = attacker.getAbsorptionAmount();
-                    attacker.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, absorptionTime[willBracket], 127));
+                    attacker.addPotionEffect(new EffectInstance(Effects.ABSORPTION, absorptionTime[willBracket], 127));
                     attacker.setAbsorptionAmount((float) Math.min(absorption + target.getMaxHealth() * 0.05f, maxAbsorptionHearts));
                 }
                 break;
@@ -188,10 +188,10 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (super.hitEntity(stack, target, attacker)) {
-            if (attacker instanceof EntityPlayer) {
-                EntityPlayer attackerPlayer = (EntityPlayer) attacker;
+            if (attacker instanceof PlayerEntity) {
+                PlayerEntity attackerPlayer = (PlayerEntity) attacker;
                 this.recalculatePowers(stack, attackerPlayer.getEntityWorld(), attackerPlayer);
                 EnumDemonWillType type = this.getCurrentType(stack);
                 double will = PlayerDemonWillHandler.getTotalDemonWill(type, attackerPlayer);
@@ -199,7 +199,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
 
                 applyEffectToEntity(type, willBracket, target, attackerPlayer);
 
-                ItemStack offStack = attackerPlayer.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
+                ItemStack offStack = attackerPlayer.getItemStackFromSlot(EquipmentSlotType.OFFHAND);
                 if (offStack.getItem() instanceof ISentientSwordEffectProvider) {
                     ISentientSwordEffectProvider provider = (ISentientSwordEffectProvider) offStack.getItem();
                     if (provider.providesEffectForWill(type)) {
@@ -218,7 +218,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     public EnumDemonWillType getCurrentType(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         if (!tag.hasKey(Constants.NBT.WILL_TYPE)) {
             return EnumDemonWillType.DEFAULT;
@@ -230,13 +230,13 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     public void setCurrentType(ItemStack stack, EnumDemonWillType type) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setString(Constants.NBT.WILL_TYPE, type.toString());
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         recalculatePowers(player.getHeldItem(hand), world, player);
         return super.onItemRightClick(world, player, hand);
     }
@@ -268,7 +268,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     }
 
     @Override
-    public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
+    public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
         recalculatePowers(stack, player.getEntityWorld(), player);
 
         double drain = this.getDrainOfActivatedSword(stack);
@@ -299,14 +299,14 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     }
 
     @Override
-    public List<ItemStack> getRandomDemonWillDrop(EntityLivingBase killedEntity, EntityLivingBase attackingEntity, ItemStack stack, int looting) {
+    public List<ItemStack> getRandomDemonWillDrop(LivingEntity killedEntity, LivingEntity attackingEntity, ItemStack stack, int looting) {
         List<ItemStack> soulList = new ArrayList<>();
 
-        if (killedEntity.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && !(killedEntity instanceof IMob)) {
+        if (killedEntity.getEntityWorld().getDifficulty() != Difficulty.PEACEFUL && !(killedEntity instanceof IMob)) {
             return soulList;
         }
 
-        double willModifier = killedEntity instanceof EntitySlime ? 0.67 : 1;
+        double willModifier = killedEntity instanceof SlimeEntity ? 0.67 : 1;
 
         IDemonWill soul = ((IDemonWill) RegistrarBloodMagicItems.MONSTER_SOUL);
 
@@ -324,9 +324,9 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
 
     //TODO: Change attack speed.
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
         Multimap<String, AttributeModifier> multimap = HashMultimap.create();
-        if (slot == EntityEquipmentSlot.MAINHAND) {
+        if (slot == EquipmentSlotType.MAINHAND) {
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getDamageOfActivatedSword(stack), 0));
             multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", this.getAttackSpeedOfSword(stack), 0));
             multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(new UUID(0, 31818145), "Weapon modifier", this.getHealthBonusOfSword(stack), 0));
@@ -339,14 +339,14 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     public double getDamageOfActivatedSword(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getDouble(Constants.NBT.SOUL_SWORD_DAMAGE);
     }
 
     public void setDamageOfActivatedSword(ItemStack stack, double damage) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_DAMAGE, damage);
     }
@@ -354,14 +354,14 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     public double getDrainOfActivatedSword(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN);
     }
 
     public void setDrainOfActivatedSword(ItemStack stack, double drain) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN, drain);
     }
@@ -369,14 +369,14 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     public double getStaticDropOfActivatedSword(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP);
     }
 
     public void setStaticDropOfActivatedSword(ItemStack stack, double drop) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP, drop);
     }
@@ -384,14 +384,14 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     public double getDropOfActivatedSword(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getDouble(Constants.NBT.SOUL_SWORD_DROP);
     }
 
     public void setDropOfActivatedSword(ItemStack stack, double drop) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_DROP, drop);
     }
@@ -399,14 +399,14 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     public double getHealthBonusOfSword(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getDouble(Constants.NBT.SOUL_SWORD_HEALTH);
     }
 
     public void setHealthBonusOfSword(ItemStack stack, double hp) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_HEALTH, hp);
     }
@@ -414,14 +414,14 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     public double getAttackSpeedOfSword(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getDouble(Constants.NBT.SOUL_SWORD_ATTACK_SPEED);
     }
 
     public void setAttackSpeedOfSword(ItemStack stack, double speed) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_ATTACK_SPEED, speed);
     }
@@ -429,14 +429,14 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     public double getSpeedOfSword(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getDouble(Constants.NBT.SOUL_SWORD_SPEED);
     }
 
     public void setSpeedOfSword(ItemStack stack, double speed) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_SPEED, speed);
     }
@@ -444,20 +444,20 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
     public double getDigSpeedOfSword(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         return tag.getDouble(Constants.NBT.SOUL_SWORD_DIG_SPEED);
     }
 
     public void setDigSpeedOfSword(ItemStack stack, double speed) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_DIG_SPEED, speed);
     }
 
     @Override
-    public boolean spawnSentientEntityOnDrop(ItemStack droppedStack, EntityPlayer player) {
+    public boolean spawnSentientEntityOnDrop(ItemStack droppedStack, PlayerEntity player) {
         World world = player.getEntityWorld();
         if (!world.isRemote) {
             this.recalculatePowers(droppedStack, world, player);
@@ -474,7 +474,7 @@ public class ItemSentientPickaxe extends ItemPickaxe implements IDemonWillWeapon
             specterEntity.setPosition(player.posX, player.posY, player.posZ);
             world.spawnEntity(specterEntity);
 
-            specterEntity.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, droppedStack.copy());
+            specterEntity.setItemStackToSlot(EquipmentSlotType.MAINHAND, droppedStack.copy());
 
             specterEntity.setType(this.getCurrentType(droppedStack));
             specterEntity.setOwner(player);

@@ -7,8 +7,8 @@ import WayofTime.bloodmagic.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ITickable;
 
 import java.util.HashMap;
@@ -89,7 +89,7 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(CompoundNBT tag) {
         super.deserialize(tag);
 
         willMap.clear();
@@ -103,7 +103,7 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
 
         for (Entry<EnumDemonWillType, Double> entry : willMap.entrySet()) {
@@ -198,17 +198,17 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
     }
 
     @Override
-    public int[] getSlotsForFace(EnumFacing side) {
+    public int[] getSlotsForFace(Direction side) {
         return new int[]{0};
     }
 
     @Override
-    public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction) {
+    public boolean canInsertItem(int index, ItemStack stack, Direction direction) {
         return !stack.isEmpty() && inventory.get(0).isEmpty() && (stack.getItem() instanceof IDemonWillGem || stack.getItem() instanceof IDiscreteDemonWill);
     }
 
     @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+    public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
         return true;
     }
 }

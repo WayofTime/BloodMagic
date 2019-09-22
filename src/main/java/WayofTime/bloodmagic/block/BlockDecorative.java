@@ -6,7 +6,7 @@ import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumDecorative;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
@@ -23,7 +23,7 @@ public class BlockDecorative extends BlockEnum<EnumDecorative> {
     }
 
     @Override
-    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> subBlocks) {
+    public void getSubBlocks(ItemGroup tab, NonNullList<ItemStack> subBlocks) {
         for (EnumDecorative type : EnumDecorative.values()) {
             if (!ConfigHandler.general.enableTierSixEvenThoughThereIsNoContent && (type == EnumDecorative.CRYSTAL_TILE || type == EnumDecorative.CRYSTAL_BRICK))
                 continue;

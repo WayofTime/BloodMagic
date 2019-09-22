@@ -12,21 +12,21 @@ import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulator, IItemLPContainer, IVariantProvider {
+public class ItemPackSelfSacrifice extends ArmorItem implements IAltarManipulator, IItemLPContainer, IVariantProvider {
     /**
      * How much LP per half heart
      */
@@ -45,17 +45,17 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
     public final float HEALTHREQ = 0.5f;
 
     public ItemPackSelfSacrifice() {
-        super(ArmorMaterial.CHAIN, 0, EntityEquipmentSlot.CHEST);
+        super(ArmorMaterial.CHAIN, 0, EquipmentSlotType.CHEST);
 
         setTranslationKey(BloodMagic.MODID + ".pack.selfSacrifice");
         setCreativeTab(BloodMagic.TAB_BM);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote)
-            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+            return ActionResult.newResult(ActionResultType.FAIL, stack);
 
         RayTraceResult position = this.rayTrace(world, player, false);
 
@@ -72,11 +72,11 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
             }
         }
 
-        return ActionResult.newResult(EnumActionResult.FAIL, stack);
+        return ActionResult.newResult(ActionResultType.FAIL, stack);
     }
 
     @Override
-    public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
+    public void onArmorTick(World world, PlayerEntity player, ItemStack stack) {
         if (world.isRemote || player.capabilities.isCreativeMode)
             return;
 

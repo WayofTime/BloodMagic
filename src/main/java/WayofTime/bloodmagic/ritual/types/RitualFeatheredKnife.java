@@ -12,15 +12,15 @@ import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -105,9 +105,9 @@ public class RitualFeatheredKnife extends Ritual {
 
             double destructiveDrain = 0;
 
-            List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, range);
+            List<PlayerEntity> entities = world.getEntitiesWithinAABB(PlayerEntity.class, range);
 
-            for (EntityPlayer player : entities) {
+            for (PlayerEntity player : entities) {
                 float healthThreshold = steadfastWill >= steadfastWillThreshold ? 0.7f : 0.3f;
 
                 if (vengefulWill >= vengefulWillThreshold && !player.getGameProfile().getId().equals(masterRitualStone.getOwner())) {
@@ -128,7 +128,7 @@ public class RitualFeatheredKnife extends Ritual {
                         lpModifier *= PlayerSacrificeHelper.getModifier(incenseAmount);
 
                         PlayerSacrificeHelper.setPlayerIncense(player, 0);
-                        player.addPotionEffect(new PotionEffect(RegistrarBloodMagic.SOUL_FRAY, PlayerSacrificeHelper.soulFrayDuration));
+                        player.addPotionEffect(new EffectInstance(RegistrarBloodMagic.SOUL_FRAY, PlayerSacrificeHelper.soulFrayDuration));
                     }
 
                     if (destructiveWill >= destructiveWillDrain * sacrificedHealth) {
@@ -138,7 +138,7 @@ public class RitualFeatheredKnife extends Ritual {
                     }
 
                     if (LivingArmour.hasFullSet(player)) {
-                        ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                        ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
                         LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                         if (armour != null) {
                             LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.selfSacrifice", chestStack);
@@ -202,8 +202,8 @@ public class RitualFeatheredKnife extends Ritual {
     }
 
     @Override
-    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
-        return new ITextComponent[]{new TextComponentTranslation(this.getTranslationKey() + ".info"), new TextComponentTranslation(this.getTranslationKey() + ".default.info"), new TextComponentTranslation(this.getTranslationKey() + ".corrosive.info"), new TextComponentTranslation(this.getTranslationKey() + ".steadfast.info"), new TextComponentTranslation(this.getTranslationKey() + ".destructive.info"), new TextComponentTranslation(this.getTranslationKey() + ".vengeful.info")};
+    public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player) {
+        return new ITextComponent[]{new TranslationTextComponent(this.getTranslationKey() + ".info"), new TranslationTextComponent(this.getTranslationKey() + ".default.info"), new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"), new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"), new TranslationTextComponent(this.getTranslationKey() + ".destructive.info"), new TranslationTextComponent(this.getTranslationKey() + ".vengeful.info")};
     }
 
     public double getLPModifierForWill(double destructiveWill) {

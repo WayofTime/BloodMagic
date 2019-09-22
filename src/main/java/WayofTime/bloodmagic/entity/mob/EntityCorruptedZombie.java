@@ -4,27 +4,27 @@ import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.entity.ai.EntityAIAttackRangedBow;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntityGhast;
-import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemBow;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.monster.GhastEntity;
+import net.minecraft.entity.monster.ZombiePigmanEntity;
+import net.minecraft.entity.passive.IronGolemEntity;
+import net.minecraft.entity.merchant.villager.VillagerEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BowItem;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
 public class EntityCorruptedZombie extends EntityAspectedDemonBase {
     private final EntityAIAttackRangedBow aiArrowAttack = new EntityAIAttackRangedBow(this, 1.0D, 20, 15.0F);
-    private final EntityAIAttackMelee aiAttackOnCollide = new EntityAIAttackMelee(this, 1.0D, false);
+    private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.0D, false);
 
     private final int attackPriority = 3;
 
@@ -32,18 +32,18 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase {
         super(worldIn);
         this.setSize(0.6F, 1.95F);
 //        ((PathNavigateGround) getNavigator()).setCanSwim(false);
-        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(0, new SwimGoal(this));
         this.tasks.addTask(attackPriority, aiAttackOnCollide);
-        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
-        this.tasks.addTask(7, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(8, new EntityAILookIdle(this));
+        this.tasks.addTask(5, new MoveTowardsRestrictionGoal(this, 1.0D));
+        this.tasks.addTask(7, new RandomWalkingGoal(this, 1.0D));
+        this.tasks.addTask(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+        this.tasks.addTask(8, new LookRandomlyGoal(this));
 
-        this.tasks.addTask(6, new EntityAIMoveThroughVillage(this, 1.0D, false));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, EntityPigZombie.class));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityVillager.class, false));
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityIronGolem.class, true));
+        this.tasks.addTask(6, new MoveThroughVillageGoal(this, 1.0D, false));
+        this.targetTasks.addTask(1, new HurtByTargetGoal(this, true, ZombiePigmanEntity.class));
+        this.targetTasks.addTask(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetTasks.addTask(3, new NearestAttackableTargetGoal<>(this, VillagerEntity.class, false));
+        this.targetTasks.addTask(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 
         this.setCombatTask();
 //        this.targetTasks.addTask(8, new EntityAINearestAttackableTarget<EntityMob>(this, EntityMob.class, 10, true, false, new TargetPredicate(this)));
@@ -66,10 +66,10 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase {
             this.tasks.removeTask(this.aiArrowAttack);
             ItemStack itemstack = this.getHeldItemMainhand();
 
-            if (!itemstack.isEmpty() && itemstack.getItem() instanceof ItemBow) {
+            if (!itemstack.isEmpty() && itemstack.getItem() instanceof BowItem) {
                 int i = 20;
 
-                if (this.getEntityWorld().getDifficulty() != EnumDifficulty.HARD) {
+                if (this.getEntityWorld().getDifficulty() != Difficulty.HARD) {
                     i = 40;
                 }
 
@@ -146,8 +146,8 @@ public class EntityCorruptedZombie extends EntityAspectedDemonBase {
 
     //TODO: Change to fit the given AI
     @Override
-    public boolean shouldAttackEntity(EntityLivingBase attacker, EntityLivingBase owner) {
-        return !(attacker instanceof EntityCreeper) && !(attacker instanceof EntityGhast) && super.shouldAttackEntity(attacker, owner);
+    public boolean shouldAttackEntity(LivingEntity attacker, LivingEntity owner) {
+        return !(attacker instanceof CreeperEntity) && !(attacker instanceof GhastEntity) && super.shouldAttackEntity(attacker, owner);
     }
 
     @Override

@@ -8,13 +8,13 @@ import WayofTime.bloodmagic.util.SigilFluidWrapper;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -57,8 +57,8 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase implements ISigil
      * This one is literally identical to the FluidUtil method of the same signature.
      */
     @Nullable
-    protected IFluidHandler getFluidHandler(World world, BlockPos blockPos, @Nullable EnumFacing side) {
-        IBlockState state = world.getBlockState(blockPos);
+    protected IFluidHandler getFluidHandler(World world, BlockPos blockPos, @Nullable Direction side) {
+        BlockState state = world.getBlockState(blockPos);
         Block block = state.getBlock();
         TileEntity tile = world.getTileEntity(blockPos);
         if (tile != null) {
@@ -96,7 +96,7 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase implements ISigil
      * This is the big troublesome one, oddly enough.
      * It's genericized in case anyone wants to create variant sigils with weird fluids.
      */
-    protected boolean tryPlaceSigilFluid(EntityPlayer player, World world, BlockPos blockPos) {
+    protected boolean tryPlaceSigilFluid(PlayerEntity player, World world, BlockPos blockPos) {
 
         //Make sure world coordinants are valid
         if (world == null || blockPos == null) {
@@ -109,7 +109,7 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase implements ISigil
         }
 
         //Check if the block is an air block or otherwise replaceable
-        IBlockState state = world.getBlockState(blockPos);
+        BlockState state = world.getBlockState(blockPos);
         Material mat = state.getMaterial();
         boolean isDestSolid = mat.isSolid();
         boolean isDestReplaceable = state.getBlock().isReplaceable(world, blockPos);
@@ -171,7 +171,7 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase implements ISigil
     }
 
     @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+    public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
         return new SigilFluidWrapper(stack, this);
     }
 

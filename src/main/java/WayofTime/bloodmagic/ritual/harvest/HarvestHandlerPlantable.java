@@ -2,9 +2,9 @@ package WayofTime.bloodmagic.ritual.harvest;
 
 import WayofTime.bloodmagic.util.BMLog;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CropsBlock;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -51,7 +51,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler {
     }
 
     @Override
-    public boolean harvest(World world, BlockPos pos, IBlockState state, List<ItemStack> drops) {
+    public boolean harvest(World world, BlockPos pos, BlockState state, List<ItemStack> drops) {
         NonNullList<ItemStack> blockDrops = NonNullList.create();
         state.getBlock().getDrops(blockDrops, world, pos, state, 0);
         boolean foundSeed = false;
@@ -84,7 +84,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler {
     }
 
     @Override
-    public boolean test(World world, BlockPos pos, IBlockState state) {
+    public boolean test(World world, BlockPos pos, BlockState state) {
         return HarvestRegistry.getStandardCrops().containsKey(state.getBlock()) && state.getBlock().getMetaFromState(state) == HarvestRegistry.getStandardCrops().get(state.getBlock());
     }
 
@@ -106,7 +106,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler {
             Field names = pamRegistry.getDeclaredField("cropNames");
             Method getCrop = pamRegistry.getMethod("getCrop", String.class);
             for (String name : (String[]) names.get(null)) {
-                BlockCrops crop = (BlockCrops) getCrop.invoke(null, name);
+                CropsBlock crop = (CropsBlock) getCrop.invoke(null, name);
                 HarvestRegistry.registerStandardCrop(crop, crop.getMaxAge());
             }
         } catch (ClassNotFoundException e) {

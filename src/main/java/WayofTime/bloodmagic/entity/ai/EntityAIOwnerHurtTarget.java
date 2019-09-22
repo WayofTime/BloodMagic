@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.entity.ai;
 
 import WayofTime.bloodmagic.entity.mob.EntityDemonBase;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAITarget;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.TargetGoal;
 
-public class EntityAIOwnerHurtTarget extends EntityAITarget {
+public class EntityAIOwnerHurtTarget extends TargetGoal {
     EntityDemonBase theEntityDemonBase;
-    EntityLivingBase theTarget;
+    LivingEntity theTarget;
     private int timestamp;
 
     public EntityAIOwnerHurtTarget(EntityDemonBase theEntityDemonBaseIn) {
@@ -22,7 +22,7 @@ public class EntityAIOwnerHurtTarget extends EntityAITarget {
         if (!this.theEntityDemonBase.isTamed()) {
             return false;
         } else {
-            EntityLivingBase entitylivingbase = this.theEntityDemonBase.getOwner();
+            LivingEntity entitylivingbase = this.theEntityDemonBase.getOwner();
 
             if (entitylivingbase == null) {
                 return false;
@@ -39,7 +39,7 @@ public class EntityAIOwnerHurtTarget extends EntityAITarget {
      */
     public void startExecuting() {
         this.taskOwner.setAttackTarget(this.theTarget);
-        EntityLivingBase entitylivingbase = this.theEntityDemonBase.getOwner();
+        LivingEntity entitylivingbase = this.theEntityDemonBase.getOwner();
 
         if (entitylivingbase != null) {
             this.timestamp = entitylivingbase.getLastAttackedEntityTime();

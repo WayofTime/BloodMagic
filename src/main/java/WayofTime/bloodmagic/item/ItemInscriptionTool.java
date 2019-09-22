@@ -8,15 +8,15 @@ import WayofTime.bloodmagic.ritual.EnumRuneType;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -37,7 +37,7 @@ public class ItemInscriptionTool extends ItemEnum.Variant<EnumRuneType> implemen
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
+    public void getSubItems(ItemGroup creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
@@ -46,7 +46,7 @@ public class ItemInscriptionTool extends ItemEnum.Variant<EnumRuneType> implemen
                 continue;
 
             ItemStack stack = new ItemStack(this, 1, runeType.ordinal());
-            NBTTagCompound tag = new NBTTagCompound();
+            CompoundNBT tag = new CompoundNBT();
             tag.setInteger(Constants.NBT.USES, 10);
             stack.setTagCompound(tag);
             list.add(stack);
@@ -54,9 +54,9 @@ public class ItemInscriptionTool extends ItemEnum.Variant<EnumRuneType> implemen
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
-        IBlockState state = world.getBlockState(pos);
+        BlockState state = world.getBlockState(pos);
 
         if (state.getBlock() instanceof BlockRitualStone && !((BlockRitualStone) state.getBlock()).isRuneType(world, pos, getItemType(stack))) {
             stack = NBTHelper.checkNBT(stack);
@@ -68,10 +68,10 @@ public class ItemInscriptionTool extends ItemEnum.Variant<EnumRuneType> implemen
                 if (uses <= 0)
                     player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
             }
-            return EnumActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
 
-        return EnumActionResult.FAIL;
+        return ActionResultType.FAIL;
     }
 
     @Override

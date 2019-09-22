@@ -4,20 +4,20 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileDemonCrystallizer;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-public class BlockDemonCrystallizer extends BlockContainer implements IVariantProvider, IBMBlock {
+public class BlockDemonCrystallizer extends ContainerBlock implements IVariantProvider, IBMBlock {
     public BlockDemonCrystallizer() {
         super(Material.ROCK);
 
@@ -31,33 +31,33 @@ public class BlockDemonCrystallizer extends BlockContainer implements IVariantPr
     }
 
     @Override
-    public boolean isSideSolid(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-        return side == EnumFacing.UP;
+    public boolean isSideSolid(BlockState state, IBlockAccess world, BlockPos pos, Direction side) {
+        return side == Direction.UP;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean isNormalCube(BlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
+    public boolean causesSuffocation(BlockState state) {
         return false;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class BlockDemonCrystallizer extends BlockContainer implements IVariantPr
     }
 
     @Override
-    public ItemBlock getItem() {
-        return new ItemBlock(this);
+    public BlockItem getItem() {
+        return new BlockItem(this);
     }
 }

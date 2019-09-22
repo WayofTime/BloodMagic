@@ -5,10 +5,10 @@ import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
 import WayofTime.bloodmagic.alchemyArray.AlchemyCircleRenderer;
 import WayofTime.bloodmagic.core.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.ItemStack;
 
-public class RenderAlchemyArray extends TileEntitySpecialRenderer<TileAlchemyArray> {
+public class RenderAlchemyArray extends TileEntityRenderer<TileAlchemyArray> {
     @Override
     public void render(TileAlchemyArray alchemyArray, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         ItemStack inputStack = alchemyArray.getStackInSlot(0);

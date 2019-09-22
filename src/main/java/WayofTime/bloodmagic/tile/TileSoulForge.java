@@ -10,7 +10,7 @@ import WayofTime.bloodmagic.soul.IDemonWillConduit;
 import WayofTime.bloodmagic.soul.IDemonWillGem;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -34,14 +34,14 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(CompoundNBT tag) {
         super.deserialize(tag);
 
         burnTime = tag.getInteger(Constants.NBT.SOUL_FORGE_BURN);
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
 
         tag.setInteger(Constants.NBT.SOUL_FORGE_BURN, burnTime);

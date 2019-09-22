@@ -2,9 +2,9 @@ package WayofTime.bloodmagic.meteor;
 
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -21,7 +21,7 @@ public class MeteorComponent {
         this.oreName = oreName;
     }
 
-    public IBlockState getStateFromOre() {
+    public BlockState getStateFromOre() {
         if (oreName.contains(":")) {
             String[] stringList = oreName.split(":");
             String domain = stringList[0];
@@ -40,9 +40,9 @@ public class MeteorComponent {
         List<ItemStack> list = OreDictionary.getOres(oreName);
         if (list != null && !list.isEmpty()) {
             for (ItemStack stack : list) {
-                if (stack != null && stack.getItem() instanceof ItemBlock) {
-                    Block block = ((ItemBlock) stack.getItem()).getBlock();
-                    IBlockState state = block.getStateFromMeta(stack.getItemDamage());
+                if (stack != null && stack.getItem() instanceof BlockItem) {
+                    Block block = ((BlockItem) stack.getItem()).getBlock();
+                    BlockState state = block.getStateFromMeta(stack.getItemDamage());
 
                     return state;
                 }

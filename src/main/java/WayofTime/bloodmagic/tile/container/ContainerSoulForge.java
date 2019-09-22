@@ -3,17 +3,17 @@ package WayofTime.bloodmagic.tile.container;
 import WayofTime.bloodmagic.soul.IDemonWill;
 import WayofTime.bloodmagic.soul.IDemonWillGem;
 import WayofTime.bloodmagic.tile.TileSoulForge;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerSoulForge extends Container {
     private final IInventory tileForge;
 
-    public ContainerSoulForge(InventoryPlayer inventoryPlayer, IInventory tileForge) {
+    public ContainerSoulForge(PlayerInventory inventoryPlayer, IInventory tileForge) {
         this.tileForge = tileForge;
         this.addSlotToContainer(new Slot(tileForge, 0, 8, 15));
         this.addSlotToContainer(new Slot(tileForge, 1, 80, 15));
@@ -34,7 +34,7 @@ public class ContainerSoulForge extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
@@ -77,7 +77,7 @@ public class ContainerSoulForge extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(PlayerEntity playerIn) {
         return this.tileForge.isUsableByPlayer(playerIn);
     }
 

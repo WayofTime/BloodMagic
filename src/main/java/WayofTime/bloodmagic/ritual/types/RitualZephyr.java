@@ -3,10 +3,10 @@ package WayofTime.bloodmagic.ritual.types;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -42,17 +42,17 @@ public class RitualZephyr extends Ritual {
 
             AreaDescriptor zephyrRange = masterRitualStone.getBlockRange(ZEPHYR_RANGE);
 
-            List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, zephyrRange.getAABB(masterRitualStone.getBlockPos()));
+            List<ItemEntity> itemList = world.getEntitiesWithinAABB(ItemEntity.class, zephyrRange.getAABB(masterRitualStone.getBlockPos()));
             int count = 0;
 
-            for (EntityItem entityItem : itemList) {
+            for (ItemEntity entityItem : itemList) {
                 if (entityItem.isDead) {
                     continue;
                 }
 
                 ItemStack copyStack = entityItem.getItem().copy();
                 int originalAmount = copyStack.getCount();
-                ItemStack newStack = Utils.insertStackIntoTile(copyStack, tileInventory, EnumFacing.DOWN);
+                ItemStack newStack = Utils.insertStackIntoTile(copyStack, tileInventory, Direction.DOWN);
 
                 if (!newStack.isEmpty() && newStack.getCount() < originalAmount) {
                     count++;

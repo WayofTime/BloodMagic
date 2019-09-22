@@ -6,7 +6,7 @@ import WayofTime.bloodmagic.iface.IDemonWillViewer;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -36,12 +36,12 @@ public class ItemDemonWillGauge extends Item implements IVariantProvider, IDemon
     }
 
     @Override
-    public boolean canSeeDemonWillAura(World world, ItemStack stack, EntityPlayer player) {
+    public boolean canSeeDemonWillAura(World world, ItemStack stack, PlayerEntity player) {
         return true;
     }
 
     @Override
-    public int getDemonWillAuraResolution(World world, ItemStack stack, EntityPlayer player) {
+    public int getDemonWillAuraResolution(World world, ItemStack stack, PlayerEntity player) {
         return 100;
     }
 }

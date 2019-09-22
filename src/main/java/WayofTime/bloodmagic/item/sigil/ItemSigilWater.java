@@ -4,13 +4,13 @@ import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import net.minecraft.block.BlockCauldron;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.CauldronBlock;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -24,18 +24,18 @@ public class ItemSigilWater extends ItemSigilFluidBase {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() instanceof ISigil.Holding)
             stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (PlayerHelper.isFakePlayer(player))
-            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+            return ActionResult.newResult(ActionResultType.FAIL, stack);
 
         if (!world.isRemote && !isUnusable(stack)) {
             RayTraceResult rayTrace = this.rayTrace(world, player, false);
 
             if (rayTrace == null || rayTrace.typeOfHit != RayTraceResult.Type.BLOCK) {
-                return ActionResult.newResult(EnumActionResult.PASS, stack);
+                return ActionResult.newResult(ActionResultType.PASS, stack);
             }
 
             BlockPos blockPos = rayTrace.getBlockPos();
@@ -47,20 +47,20 @@ public class ItemSigilWater extends ItemSigilFluidBase {
                 if (destination != null && tryInsertSigilFluid(destination, false) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
                     boolean result = tryInsertSigilFluid(destination, true);
                     if (result)
-                        return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+                        return ActionResult.newResult(ActionResultType.SUCCESS, stack);
                 }
                 //Do the same as above, but use sidedness to interact with the fluid handler.
                 IFluidHandler destinationSide = getFluidHandler(world, blockPos, rayTrace.sideHit);
                 if (destinationSide != null && tryInsertSigilFluid(destinationSide, false) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
                     boolean result = tryInsertSigilFluid(destinationSide, true);
                     if (result)
-                        return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+                        return ActionResult.newResult(ActionResultType.SUCCESS, stack);
                 }
 
                 //Special vanilla cauldron handling, yay.
                 if (world.getBlockState(blockPos).getBlock() == Blocks.CAULDRON && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
-                    world.setBlockState(blockPos, Blocks.CAULDRON.getDefaultState().withProperty(BlockCauldron.LEVEL, 3));
-                    return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+                    world.setBlockState(blockPos, Blocks.CAULDRON.getDefaultState().withProperty(CauldronBlock.LEVEL, 3));
+                    return ActionResult.newResult(ActionResultType.SUCCESS, stack);
                 }
 
                 //Case for if block at blockPos is not a tank
@@ -68,7 +68,7 @@ public class ItemSigilWater extends ItemSigilFluidBase {
                 if (destination == null && destinationSide == null) {
                     BlockPos targetPos = blockPos.offset(rayTrace.sideHit);
                     if (tryPlaceSigilFluid(player, world, targetPos) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()) {
-                        return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+                        return ActionResult.newResult(ActionResultType.SUCCESS, stack);
                     }
                 }
             }

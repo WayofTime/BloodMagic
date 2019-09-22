@@ -6,10 +6,10 @@ import WayofTime.bloodmagic.teleport.PortalLocation;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -22,28 +22,28 @@ public class RitualPortal extends Ritual {
 
     public static final String PORTAL_NBT_TAG = "PortalRitualTag";
     public static final String PORTAL_ID_TAG = "PortalRitualID";
-    private NBTTagCompound portalRitualTag;
+    private CompoundNBT portalRitualTag;
 
     public RitualPortal() {
         super("ritualPortal", 0, 50000, "ritual." + BloodMagic.MODID + ".portalRitual");
-        portalRitualTag = new NBTTagCompound();
+        portalRitualTag = new CompoundNBT();
     }
 
     @Override
-    public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player, UUID owner) {
+    public boolean activateRitual(IMasterRitualStone masterRitualStone, PlayerEntity player, UUID owner) {
         World world = masterRitualStone.getWorldObj();
         int x = masterRitualStone.getBlockPos().getX();
         int y = masterRitualStone.getBlockPos().getY();
         int z = masterRitualStone.getBlockPos().getZ();
-        EnumFacing direction = masterRitualStone.getDirection();
+        Direction direction = masterRitualStone.getDirection();
 
         String name = owner.toString();
-        IBlockState blockState;
+        BlockState blockState;
 
         if (!world.isRemote) {
             portalRitualTag.removeTag(PORTAL_ID_TAG);
 
-            if (direction == EnumFacing.NORTH || direction == EnumFacing.SOUTH) {
+            if (direction == Direction.NORTH || direction == Direction.SOUTH) {
                 for (int i = x - 3; i <= x + 3; i++) {
                     for (int k = z - 2; k <= z + 2; k++) {
                         if (!world.isAirBlock(new BlockPos(i, y, k)) && !(getBlockState(world, i, y, k).getBlock() == RegistrarBloodMagicBlocks.RITUAL_STONE)) {
@@ -64,7 +64,7 @@ public class RitualPortal extends Ritual {
                         name = addStringToEnd(name, ForgeRegistries.BLOCKS.getKey(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
                     }
                 }
-            } else if (direction == EnumFacing.EAST || direction == EnumFacing.WEST) {
+            } else if (direction == Direction.EAST || direction == Direction.WEST) {
                 for (int k = z - 3; k <= z + 3; k++) {
                     for (int i = x - 2; i <= x + 2; i++) {
                         if (!world.isAirBlock(new BlockPos(i, y, k)) && !(getBlockState(world, i, y, k).getBlock() == RegistrarBloodMagicBlocks.RITUAL_STONE)) {
@@ -105,15 +105,15 @@ public class RitualPortal extends Ritual {
         int x = masterRitualStone.getBlockPos().getX();
         int y = masterRitualStone.getBlockPos().getY();
         int z = masterRitualStone.getBlockPos().getZ();
-        EnumFacing direction = masterRitualStone.getDirection();
+        Direction direction = masterRitualStone.getDirection();
 
-        if (direction == EnumFacing.NORTH || direction == EnumFacing.SOUTH) {
+        if (direction == Direction.NORTH || direction == Direction.SOUTH) {
             for (int i = x - 1; i <= x + 1; i++) {
                 for (int j = y + 1; j <= y + 3; j++) {
                     BlockPos tempPos = new BlockPos(i, j, z);
 
                     if (world.isAirBlock(tempPos)) {
-                        IBlockState blockState = RegistrarBloodMagicBlocks.DIMENSIONAL_PORTAL.getStateFromMeta(0);
+                        BlockState blockState = RegistrarBloodMagicBlocks.DIMENSIONAL_PORTAL.getStateFromMeta(0);
                         world.setBlockState(tempPos, blockState, 3);
 
                         if (world.getTileEntity(tempPos) != null && world.getTileEntity(tempPos) instanceof TileDimensionalPortal) {
@@ -124,12 +124,12 @@ public class RitualPortal extends Ritual {
                     }
                 }
             }
-        } else if (direction == EnumFacing.EAST || direction == EnumFacing.WEST) {
+        } else if (direction == Direction.EAST || direction == Direction.WEST) {
             for (int k = z - 1; k <= z + 1; k++) {
                 for (int j = y + 1; j <= y + 3; j++) {
                     BlockPos tempPos = new BlockPos(x, j, k);
                     if (world.isAirBlock(tempPos)) {
-                        IBlockState blockState = RegistrarBloodMagicBlocks.DIMENSIONAL_PORTAL.getStateFromMeta(1);
+                        BlockState blockState = RegistrarBloodMagicBlocks.DIMENSIONAL_PORTAL.getStateFromMeta(1);
                         world.setBlockState(tempPos, blockState, 3);
 
                         if (world.getTileEntity(tempPos) != null && world.getTileEntity(tempPos) instanceof TileDimensionalPortal) {
@@ -150,11 +150,11 @@ public class RitualPortal extends Ritual {
         int x = masterRitualStone.getBlockPos().getX();
         int y = masterRitualStone.getBlockPos().getY();
         int z = masterRitualStone.getBlockPos().getZ();
-        EnumFacing direction = masterRitualStone.getDirection();
+        Direction direction = masterRitualStone.getDirection();
 
         LocationsHandler.getLocationsHandler().removeLocation(portalRitualTag.getString(PORTAL_ID_TAG), new PortalLocation(x, y + 1, z, world.provider.getDimension()));
 
-        if (direction == EnumFacing.NORTH || direction == EnumFacing.SOUTH) {
+        if (direction == Direction.NORTH || direction == Direction.SOUTH) {
             for (int i = x - 2; i <= x + 2; i++) {
                 for (int j = y + 1; j <= y + 3; j++) {
                     if (getBlockState(world, i, j, z).getBlock() == RegistrarBloodMagicBlocks.DIMENSIONAL_PORTAL) {
@@ -162,7 +162,7 @@ public class RitualPortal extends Ritual {
                     }
                 }
             }
-        } else if (direction == EnumFacing.EAST || direction == EnumFacing.WEST) {
+        } else if (direction == Direction.EAST || direction == Direction.WEST) {
             for (int k = z - 2; k <= z + 2; k++) {
                 for (int j = y + 1; j <= y + 3; j++) {
                     if (getBlockState(world, x, j, k).getBlock() == RegistrarBloodMagicBlocks.DIMENSIONAL_PORTAL) {
@@ -207,20 +207,20 @@ public class RitualPortal extends Ritual {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         super.readFromNBT(tag);
 
         portalRitualTag = tag.getCompoundTag(PORTAL_NBT_TAG);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         super.writeToNBT(tag);
 
         tag.setTag(PORTAL_NBT_TAG, portalRitualTag);
     }
 
-    public IBlockState getBlockState(World world, int x, int y, int z) {
+    public BlockState getBlockState(World world, int x, int y, int z) {
         return world.getBlockState(new BlockPos(x, y, z));
     }
 

@@ -12,12 +12,12 @@ import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.recipe.alchemyTable.AlchemyTableRecipe;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
@@ -34,7 +34,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     public static final int toolSlot = 7;
     public static final int outputSlot = 8;
 
-    public EnumFacing direction = EnumFacing.NORTH;
+    public Direction direction = Direction.NORTH;
     public boolean isSlave = false;
     public int burnTime = 0;
     public int ticksRequired = 1;
@@ -46,7 +46,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         super(9, "alchemyTable");
     }
 
-    public void setInitialTableParameters(EnumFacing direction, boolean isSlave, BlockPos connectedPos) {
+    public void setInitialTableParameters(Direction direction, boolean isSlave, BlockPos connectedPos) {
         this.isSlave = isSlave;
         this.connectedPos = connectedPos;
 
@@ -69,11 +69,11 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(CompoundNBT tag) {
         super.deserialize(tag);
 
         isSlave = tag.getBoolean("isSlave");
-        direction = EnumFacing.byIndex(tag.getInteger(Constants.NBT.DIRECTION));
+        direction = Direction.byIndex(tag.getInteger(Constants.NBT.DIRECTION));
         connectedPos = new BlockPos(tag.getInteger(Constants.NBT.X_COORD), tag.getInteger(Constants.NBT.Y_COORD), tag.getInteger(Constants.NBT.Z_COORD));
 
         burnTime = tag.getInteger("burnTime");
@@ -85,7 +85,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
 
         tag.setBoolean("isSlave", isSlave);
@@ -107,7 +107,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+    public <T> T getCapability(Capability<T> capability, Direction facing) {
         if (facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (this.isSlave()) {
                 TileEntity tile = getWorld().getTileEntity(connectedPos);
@@ -123,7 +123,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     }
 
     @Override
-    public int[] getSlotsForFace(EnumFacing side) {
+    public int[] getSlotsForFace(Direction side) {
         switch (side) {
             case DOWN:
                 return new int[]{outputSlot};
@@ -135,7 +135,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     }
 
     @Override
-    public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction) {
+    public boolean canInsertItem(int index, ItemStack stack, Direction direction) {
         switch (direction) {
             case DOWN:
                 return index != outputSlot && index != orbSlot && index != toolSlot;
@@ -159,7 +159,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     }
 
     @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+    public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
         switch (direction) {
             case DOWN:
                 return index == outputSlot;
@@ -182,7 +182,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         }
     }
 
-    public List<Integer> getAccessibleInputSlots(EnumFacing direction) {
+    public List<Integer> getAccessibleInputSlots(Direction direction) {
         List<Integer> list = new ArrayList<>();
 
         for (int i = 0; i < 6; i++) {
@@ -236,7 +236,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
                     burnTime = 0;
 
-                    IBlockState state = getWorld().getBlockState(pos);
+                    BlockState state = getWorld().getBlockState(pos);
                     getWorld().notifyBlockUpdate(getPos(), state, state, 3);
                 } else if (burnTime > ticksRequired + 10) {
                     burnTime = 0;
@@ -394,7 +394,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         }
     }
 
-    public EnumFacing getDirection() {
+    public Direction getDirection() {
         return direction;
     }
 

@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.entity.ai;
 
 import WayofTime.bloodmagic.entity.mob.EntityDemonBase;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAITarget;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.TargetGoal;
 
-public class EntityAIOwnerHurtByTarget extends EntityAITarget {
+public class EntityAIOwnerHurtByTarget extends TargetGoal {
     EntityDemonBase theDefendingTameable;
-    EntityLivingBase theOwnerAttacker;
+    LivingEntity theOwnerAttacker;
     private int timestamp;
 
     public EntityAIOwnerHurtByTarget(EntityDemonBase theDefendingTameableIn) {
@@ -22,7 +22,7 @@ public class EntityAIOwnerHurtByTarget extends EntityAITarget {
         if (!this.theDefendingTameable.isTamed()) {
             return false;
         } else {
-            EntityLivingBase owner = this.theDefendingTameable.getOwner();
+            LivingEntity owner = this.theDefendingTameable.getOwner();
 
             if (owner == null) {
                 return false;
@@ -39,7 +39,7 @@ public class EntityAIOwnerHurtByTarget extends EntityAITarget {
      */
     public void startExecuting() {
         this.taskOwner.setAttackTarget(this.theOwnerAttacker);
-        EntityLivingBase owner = this.theDefendingTameable.getOwner();
+        LivingEntity owner = this.theDefendingTameable.getOwner();
 
         if (owner != null) {
             this.timestamp = owner.getRevengeTimer();

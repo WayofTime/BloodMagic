@@ -4,24 +4,24 @@ import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileAlchemyTable;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemBlockAlchemyTable extends ItemBlock implements IVariantProvider {
+public class ItemBlockAlchemyTable extends BlockItem implements IVariantProvider {
     public ItemBlockAlchemyTable(Block block) {
         super(block);
     }
 
     @Override
-    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState) {
+    public boolean placeBlockAt(ItemStack stack, PlayerEntity player, World world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, BlockState newState) {
         float yaw = player.rotationYaw;
-        EnumFacing direction = EnumFacing.fromAngle(yaw);
+        Direction direction = Direction.fromAngle(yaw);
 
         if (direction.getYOffset() != 0) {
             return false;
@@ -41,7 +41,7 @@ public class ItemBlockAlchemyTable extends ItemBlock implements IVariantProvider
             return false;
         }
 
-        IBlockState state = world.getBlockState(pos);
+        BlockState state = world.getBlockState(pos);
         if (state.getBlock() == this.block) {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileAlchemyTable) {

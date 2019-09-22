@@ -23,8 +23,8 @@ import WayofTime.bloodmagic.util.Constants;
 import com.google.common.collect.ImmutableMap;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -127,9 +127,9 @@ public class ClientProxy extends CommonProxy {
     }
 
     private void addElytraLayer() {
-        RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
+        EntityRendererManager renderManager = Minecraft.getMinecraft().getRenderManager();
         try {
-            Map<String, RenderPlayer> skinMap = ObfuscationReflectionHelper.getPrivateValue(RenderManager.class, renderManager, "skinMap", "field_178636_l");
+            Map<String, PlayerRenderer> skinMap = ObfuscationReflectionHelper.getPrivateValue(EntityRendererManager.class, renderManager, "skinMap", "field_178636_l");
             skinMap.get("default").addLayer(new LayerBloodElytra(skinMap.get("default")));
             skinMap.get("slim").addLayer(new LayerBloodElytra(skinMap.get("slim")));
             BMLog.DEBUG.info("Elytra layer added");

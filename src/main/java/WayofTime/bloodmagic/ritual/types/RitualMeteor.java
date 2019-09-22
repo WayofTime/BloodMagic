@@ -8,7 +8,7 @@ import WayofTime.bloodmagic.meteor.Meteor;
 import WayofTime.bloodmagic.meteor.MeteorRegistry;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -44,7 +44,7 @@ public class RitualMeteor extends Ritual {
         double vengefulWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.VENGEFUL, willConfig);
 
         AreaDescriptor itemDetectionRange = masterRitualStone.getBlockRange(ITEM_RANGE);
-        List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, itemDetectionRange.getAABB(pos));
+        List<ItemEntity> itemList = world.getEntitiesWithinAABB(ItemEntity.class, itemDetectionRange.getAABB(pos));
 
         double radiusModifier = getRadiusModifier(rawWill);
         double explosionModifier = getExplosionModifier(steadfastWill);
@@ -52,7 +52,7 @@ public class RitualMeteor extends Ritual {
 
         boolean successful = false;
 
-        for (EntityItem entityItem : itemList) {
+        for (ItemEntity entityItem : itemList) {
             ItemStack stack = entityItem.getItem();
             Meteor meteor = MeteorRegistry.getMeteorForItem(stack);
 

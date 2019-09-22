@@ -6,8 +6,8 @@ import WayofTime.bloodmagic.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeJump;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -31,18 +31,18 @@ public class StatTrackerJump extends StatTracker {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         totalJumps = tag.getInteger(BloodMagic.MODID + ".tracker.jump");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         tag.setInteger(BloodMagic.MODID + ".tracker.jump", totalJumps);
 
     }
 
     @Override
-    public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+    public boolean onTick(World world, PlayerEntity player, LivingArmour livingArmour) {
         if (changeMap.containsKey(livingArmour)) {
             int change = Math.abs(changeMap.get(livingArmour));
             if (change > 0) {
@@ -60,7 +60,7 @@ public class StatTrackerJump extends StatTracker {
     }
 
     @Override
-    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+    public void onDeactivatedTick(World world, PlayerEntity player, LivingArmour livingArmour) {
         if (changeMap.containsKey(livingArmour)) {
             changeMap.remove(livingArmour);
         }

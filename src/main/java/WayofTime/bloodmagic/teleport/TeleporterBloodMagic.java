@@ -3,10 +3,10 @@ package WayofTime.bloodmagic.teleport;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Teleporter;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.ServerWorld;
 
 public class TeleporterBloodMagic extends Teleporter {
-    public TeleporterBloodMagic(WorldServer worldServer) {
+    public TeleporterBloodMagic(ServerWorld worldServer) {
         super(worldServer);
     }
 

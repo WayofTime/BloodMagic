@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.client.render.model.ModelCorruptedSheep;
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.DyeColor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -27,12 +27,12 @@ public class LayerCorruptedSheepWool implements LayerRenderer<EntityCorruptedShe
             if (entitylivingbaseIn.hasCustomName() && "jeb_".equals(entitylivingbaseIn.getCustomNameTag())) {
                 int i1 = 25;
                 int i = entitylivingbaseIn.ticksExisted / 25 + entitylivingbaseIn.getEntityId();
-                int j = EnumDyeColor.values().length;
+                int j = DyeColor.values().length;
                 int k = i % j;
                 int l = (i + 1) % j;
                 float f = ((float) (entitylivingbaseIn.ticksExisted % 25) + partialTicks) / 25.0F;
-                float[] afloat1 = EntityCorruptedSheep.getDyeRgb(EnumDyeColor.byMetadata(k));
-                float[] afloat2 = EntityCorruptedSheep.getDyeRgb(EnumDyeColor.byMetadata(l));
+                float[] afloat1 = EntityCorruptedSheep.getDyeRgb(DyeColor.byMetadata(k));
+                float[] afloat2 = EntityCorruptedSheep.getDyeRgb(DyeColor.byMetadata(l));
                 GlStateManager.color(afloat1[0] * (1.0F - f) + afloat2[0] * f, afloat1[1] * (1.0F - f) + afloat2[1] * f, afloat1[2] * (1.0F - f) + afloat2[2] * f);
             } else {
                 float[] afloat = EntityCorruptedSheep.getDyeRgb(entitylivingbaseIn.getFleeceColor());

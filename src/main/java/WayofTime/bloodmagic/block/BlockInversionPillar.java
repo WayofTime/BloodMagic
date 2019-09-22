@@ -8,13 +8,12 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.Properties;
 
 public class BlockInversionPillar extends BlockEnum<EnumSubWillType> {
     public BlockInversionPillar() {
@@ -29,7 +28,7 @@ public class BlockInversionPillar extends BlockEnum<EnumSubWillType> {
     }
 
     @Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
+    public void breakBlock(World world, BlockPos blockPos, BlockState blockState) {
         TileEntity tile = world.getTileEntity(blockPos);
         if (tile instanceof TileInversionPillar) {
             TileInversionPillar tilePillar = (TileInversionPillar) world.getTileEntity(blockPos);
@@ -40,33 +39,33 @@ public class BlockInversionPillar extends BlockEnum<EnumSubWillType> {
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public BlockState getActualState(BlockState state, IBlockAccess world, BlockPos pos) {
         return super.getActualState(state, world, pos).withProperty(Properties.StaticProperty, true);
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean isNormalCube(BlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
+    public boolean causesSuffocation(BlockState state) {
         return false;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override
@@ -76,12 +75,12 @@ public class BlockInversionPillar extends BlockEnum<EnumSubWillType> {
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(BlockState state) {
         return true;
     }
 
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
+    public TileEntity createTileEntity(World world, BlockState state) {
         return new TileInversionPillar(state.getValue(getProperty()).getType());
     }
 

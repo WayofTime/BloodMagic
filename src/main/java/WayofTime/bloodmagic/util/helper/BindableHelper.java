@@ -3,20 +3,20 @@ package WayofTime.bloodmagic.util.helper;
 import WayofTime.bloodmagic.core.data.Binding;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.event.ItemBindEvent;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class BindableHelper {
 
-    public static void applyBinding(ItemStack stack, EntityPlayer player) {
+    public static void applyBinding(ItemStack stack, PlayerEntity player) {
         Binding binding = new Binding(player.getGameProfile().getId(), player.getGameProfile().getName());
         applyBinding(stack, binding);
     }
 
     public static void applyBinding(ItemStack stack, Binding binding) {
         if (!stack.hasTagCompound())
-            stack.setTagCompound(new NBTTagCompound());
+            stack.setTagCompound(new CompoundNBT());
 
         stack.getTagCompound().setTag("binding", binding.serializeNBT());
     }

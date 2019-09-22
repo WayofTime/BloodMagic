@@ -7,11 +7,11 @@ import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import com.google.common.collect.Lists;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -23,12 +23,12 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() instanceof ISigil.Holding)
             stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
         if (PlayerHelper.isFakePlayer(player))
-            return ActionResult.newResult(EnumActionResult.FAIL, stack);
+            return ActionResult.newResult(ActionResultType.FAIL, stack);
 
         if (!world.isRemote) {
             super.onItemRightClick(world, player, hand);
@@ -38,8 +38,8 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader {
                 int currentEssence = NetworkHelper.getSoulNetwork(binding).getCurrentEssence();
                 List<ITextComponent> toSend = Lists.newArrayList();
                 if (!binding.getOwnerId().equals(player.getGameProfile().getId()))
-                    toSend.add(new TextComponentTranslation(tooltipBase + "otherNetwork", binding.getOwnerName()));
-                toSend.add(new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence));
+                    toSend.add(new TranslationTextComponent(tooltipBase + "otherNetwork", binding.getOwnerName()));
+                toSend.add(new TranslationTextComponent(tooltipBase + "currentEssence", currentEssence));
                 ChatUtil.sendNoSpam(player, toSend.toArray(new ITextComponent[toSend.size()]));
             }
         }

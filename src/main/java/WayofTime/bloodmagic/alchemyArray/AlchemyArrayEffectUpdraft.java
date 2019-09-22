@@ -2,9 +2,9 @@ package WayofTime.bloodmagic.alchemyArray;
 
 import WayofTime.bloodmagic.iface.IAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,7 +20,7 @@ public class AlchemyArrayEffectUpdraft extends AlchemyArrayEffect {
     }
 
     @Override
-    public void onEntityCollidedWithBlock(IAlchemyArray array, World world, BlockPos pos, IBlockState state, Entity entity) {
+    public void onEntityCollidedWithBlock(IAlchemyArray array, World world, BlockPos pos, BlockState state, Entity entity) {
         double motionY = 1;
         double motionYGlowstoneMod = 0.1;
         double motionYFeatherMod = 0.05;
@@ -34,12 +34,12 @@ public class AlchemyArrayEffectUpdraft extends AlchemyArrayEffect {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
 
     }
 

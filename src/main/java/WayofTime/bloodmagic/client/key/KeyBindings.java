@@ -6,7 +6,7 @@ import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.network.KeyProcessor;
 import WayofTime.bloodmagic.util.handler.event.ClientHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.settings.IKeyConflictContext;
@@ -33,7 +33,7 @@ public enum KeyBindings {
         @SideOnly(Side.CLIENT)
         @Override
         public void handleKeybind() {
-            EntityPlayerSP player = Minecraft.getMinecraft().player;
+            ClientPlayerEntity player = Minecraft.getMinecraft().player;
             if (player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
                 ClientHandler.cycleSigil(player.getHeldItemMainhand(), player, -1);
         }
@@ -42,7 +42,7 @@ public enum KeyBindings {
         @SideOnly(Side.CLIENT)
         @Override
         public void handleKeybind() {
-            EntityPlayerSP player = Minecraft.getMinecraft().player;
+            ClientPlayerEntity player = Minecraft.getMinecraft().player;
             if (player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
                 ClientHandler.cycleSigil(player.getHeldItemMainhand(), player, 1);
         }

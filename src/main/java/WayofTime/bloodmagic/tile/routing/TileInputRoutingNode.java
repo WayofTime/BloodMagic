@@ -6,7 +6,7 @@ import WayofTime.bloodmagic.routing.*;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -17,12 +17,12 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
     }
 
     @Override
-    public boolean isInput(EnumFacing side) {
+    public boolean isInput(Direction side) {
         return true;
     }
 
     @Override
-    public IItemFilter getInputFilterForSide(EnumFacing side) {
+    public IItemFilter getInputFilterForSide(Direction side) {
         TileEntity tile = getWorld().getTileEntity(pos.offset(side));
         if (tile != null) {
             IItemHandler handler = Utils.getInventory(tile, side.getOpposite());
@@ -46,12 +46,12 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
     }
 
     @Override
-    public boolean isFluidInput(EnumFacing side) {
+    public boolean isFluidInput(Direction side) {
         return true;
     }
 
     @Override
-    public IFluidFilter getInputFluidFilterForSide(EnumFacing side) {
+    public IFluidFilter getInputFluidFilterForSide(Direction side) {
         TileEntity tile = getWorld().getTileEntity(pos.offset(side));
         if (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) {
             IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
@@ -67,7 +67,7 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
     }
 
     @Override
-    public boolean isTankConnectedToSide(EnumFacing side) {
+    public boolean isTankConnectedToSide(Direction side) {
         return true;
     }
 }

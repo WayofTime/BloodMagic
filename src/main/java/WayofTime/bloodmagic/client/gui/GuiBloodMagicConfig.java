@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.client.hud.ConfigEntryEditHUD;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.fml.client.IModGuiFactory;
 import net.minecraftforge.fml.client.config.DummyConfigElement;
@@ -18,7 +18,7 @@ import java.util.Set;
 
 public class GuiBloodMagicConfig extends GuiConfig {
 
-    public GuiBloodMagicConfig(GuiScreen parentScreen) {
+    public GuiBloodMagicConfig(Screen parentScreen) {
         super(parentScreen, getElements(), BloodMagic.MODID, false, false, BloodMagic.NAME);
     }
 
@@ -52,7 +52,7 @@ public class GuiBloodMagicConfig extends GuiConfig {
         }
 
         @Override
-        public GuiScreen createConfigGui(GuiScreen parentScreen) {
+        public Screen createConfigGui(Screen parentScreen) {
             return new GuiBloodMagicConfig(parentScreen);
         }
 

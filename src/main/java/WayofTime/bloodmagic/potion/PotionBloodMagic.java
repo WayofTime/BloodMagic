@@ -2,14 +2,14 @@ package WayofTime.bloodmagic.potion;
 
 import WayofTime.bloodmagic.BloodMagic;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PotionBloodMagic extends Potion {
+public class PotionBloodMagic extends Effect {
     public static ResourceLocation texture = new ResourceLocation(BloodMagic.MODID, "textures/misc/potions.png");
 
     public PotionBloodMagic(String name, boolean badEffect, int potionColor, int iconIndexX, int iconIndexY) {
@@ -19,22 +19,22 @@ public class PotionBloodMagic extends Potion {
     }
 
     @Override
-    public boolean shouldRenderInvText(PotionEffect effect) {
+    public boolean shouldRenderInvText(EffectInstance effect) {
         return true;
     }
 
-    public PotionEffect apply(EntityLivingBase entity, int duration) {
+    public EffectInstance apply(LivingEntity entity, int duration) {
         return apply(entity, duration, 0);
     }
 
-    public PotionEffect apply(EntityLivingBase entity, int duration, int level) {
-        PotionEffect effect = new PotionEffect(this, duration, level, false, false);
+    public EffectInstance apply(LivingEntity entity, int duration, int level) {
+        EffectInstance effect = new EffectInstance(this, duration, level, false, false);
         entity.addPotionEffect(effect);
         return effect;
     }
 
-    public int getLevel(EntityLivingBase entity) {
-        PotionEffect effect = entity.getActivePotionEffect(this);
+    public int getLevel(LivingEntity entity) {
+        EffectInstance effect = entity.getActivePotionEffect(this);
         if (effect != null) {
             return effect.getAmplifier();
         }
@@ -42,7 +42,7 @@ public class PotionBloodMagic extends Potion {
     }
 
     @Override
-    public boolean shouldRender(PotionEffect effect) {
+    public boolean shouldRender(EffectInstance effect) {
         return true;
     }
 

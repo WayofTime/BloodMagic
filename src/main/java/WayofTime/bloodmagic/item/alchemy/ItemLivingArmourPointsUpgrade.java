@@ -8,15 +8,15 @@ import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.Iterables;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.EnumAction;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.UseAction;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -39,25 +39,25 @@ public class ItemLivingArmourPointsUpgrade extends ItemEnum.Variant<ItemLivingAr
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand hand) {
         playerIn.setActiveHand(hand);
-        return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(hand));
+        return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(hand));
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
-        if (!(entityLiving instanceof EntityPlayer))
+    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+        if (!(entityLiving instanceof PlayerEntity))
             return super.onItemUseFinish(stack, worldIn, entityLiving);
 
-        EntityPlayer player = (EntityPlayer) entityLiving;
+        PlayerEntity player = (PlayerEntity) entityLiving;
 
         if (!player.capabilities.isCreativeMode)
             stack.shrink(1);
 
         if (!worldIn.isRemote) {
-            player.addPotionEffect(new PotionEffect(MobEffects.WITHER, 300, 5));
-            player.addPotionEffect(new PotionEffect(MobEffects.POISON, 300, 5));
-            player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 400, 1));
+            player.addPotionEffect(new EffectInstance(Effects.WITHER, 300, 5));
+            player.addPotionEffect(new EffectInstance(Effects.POISON, 300, 5));
+            player.addPotionEffect(new EffectInstance(Effects.REGENERATION, 400, 1));
 
             if (LivingArmour.hasFullSet(player)) {
                 ItemStack chestStack = Iterables.toArray(player.getArmorInventoryList(), ItemStack.class)[2];
@@ -81,8 +81,8 @@ public class ItemLivingArmourPointsUpgrade extends ItemEnum.Variant<ItemLivingAr
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack stack) {
-        return EnumAction.DRINK;
+    public UseAction getItemUseAction(ItemStack stack) {
+        return UseAction.DRINK;
     }
 
     public enum UpgradeType implements ISubItem {

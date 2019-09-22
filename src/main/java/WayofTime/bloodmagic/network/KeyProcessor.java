@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.network;
 import WayofTime.bloodmagic.client.key.IKeybindable;
 import WayofTime.bloodmagic.client.key.KeyBindings;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -35,7 +35,7 @@ public class KeyProcessor implements IMessage, IMessageHandler<KeyProcessor, IMe
 
     @Override
     public IMessage onMessage(KeyProcessor msg, MessageContext ctx) {
-        EntityPlayer entityPlayer = ctx.getServerHandler().player;
+        PlayerEntity entityPlayer = ctx.getServerHandler().player;
 
         if (entityPlayer != null) {
             ItemStack heldStack = entityPlayer.getHeldItemMainhand();

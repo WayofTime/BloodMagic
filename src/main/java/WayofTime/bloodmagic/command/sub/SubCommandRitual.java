@@ -6,12 +6,12 @@ import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.helper.RitualHelper;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
@@ -69,13 +69,13 @@ public class SubCommandRitual extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String... args) throws CommandException {
             if (args.length == 0) {
-                sender.sendMessage(new TextComponentTranslation("commands.blooodmagic.ritual.create.noRitual"));
+                sender.sendMessage(new TranslationTextComponent("commands.blooodmagic.ritual.create.noRitual"));
                 return;
             } else if (args.length == 2 && (args[1].equals("help") || args[1].equals("?"))) {
-                sender.sendMessage(new TextComponentTranslation(BloodMagic.RITUAL_MANAGER.getRitual(args[0]).getTranslationKey() + ".info"));
+                sender.sendMessage(new TranslationTextComponent(BloodMagic.RITUAL_MANAGER.getRitual(args[0]).getTranslationKey() + ".info"));
                 return;
             }
-            EntityPlayerMP player = args.length < 3 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[1]);
+            ServerPlayerEntity player = args.length < 3 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[1]);
             boolean safe = false;
             if (args.length > 1 && args.length < 4) {
                 int k = args.length - 1;
@@ -89,14 +89,14 @@ public class SubCommandRitual extends CommandTreeBase {
 
             BlockPos pos = player.getPosition().down();
             World world = player.getEntityWorld();
-            EnumFacing direction = player.getHorizontalFacing();
+            Direction direction = player.getHorizontalFacing();
 
             if (RitualHelper.createRitual(world, pos, direction, BloodMagic.RITUAL_MANAGER.getRitual(args[0]), safe))
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success"));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.success"));
             else if (!safe)
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.create.error.outOfWorldBoundaries"));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.ritual.create.error.outOfWorldBoundaries"));
             else
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritaul.create.error.unsafe"));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.ritaul.create.error.unsafe"));
 
         }
 
@@ -120,7 +120,7 @@ public class SubCommandRitual extends CommandTreeBase {
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String... args) throws CommandException {
-            EntityPlayerMP player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
+            ServerPlayerEntity player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
             TileMasterRitualStone tile = getMRS(player);
             boolean safe = false;
             if (args.length > 0 && args.length < 3) {
@@ -132,13 +132,13 @@ public class SubCommandRitual extends CommandTreeBase {
             }
             if (tile != null)
                 if (RitualHelper.repairRitualFromRuins(tile, safe))
-                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success"));
+                    sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.success"));
                 else if (!safe)
-                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.create.error.outOfWorldBoundaries"));
+                    sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.ritual.create.error.outOfWorldBoundaries"));
                 else
-                    sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritaul.create.error.unsafe"));
+                    sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.ritaul.create.error.unsafe"));
             else
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.ritual.error.noMRS"));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.ritual.error.noMRS"));
         }
 
     }

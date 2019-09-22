@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.iface;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -28,5 +28,5 @@ public interface IDocumentedBlock {
      * Provide an empty list if there is no available documentation.
      */
     @Nonnull
-    List<ITextComponent> getDocumentation(EntityPlayer player, World world, BlockPos pos, IBlockState state);
+    List<ITextComponent> getDocumentation(PlayerEntity player, World world, BlockPos pos, BlockState state);
 }

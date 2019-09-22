@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.iface;
 
 import WayofTime.bloodmagic.util.Constants;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import javax.annotation.Nonnull;
 
@@ -16,7 +16,7 @@ public interface IActivatable {
     default ItemStack setActivatedState(ItemStack stack, boolean activated) {
         if (!stack.isEmpty()) {
             if (!stack.hasTagCompound())
-                stack.setTagCompound(new NBTTagCompound());
+                stack.setTagCompound(new CompoundNBT());
 
             stack.getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
         }

@@ -5,11 +5,11 @@ import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.tile.base.TileTicking;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.MathHelper;
 
 public class TileDemonCrystal extends TileTicking {
@@ -22,7 +22,7 @@ public class TileDemonCrystal extends TileTicking {
     public double progressToNextCrystal = 0;
     public int internalCounter = 0;
     public int crystalCount = 1;
-    public EnumFacing placement = EnumFacing.UP; //Side that this crystal is placed on.
+    public Direction placement = Direction.UP; //Side that this crystal is placed on.
 
     public TileDemonCrystal() {
         this.crystalCount = 1;
@@ -84,7 +84,7 @@ public class TileDemonCrystal extends TileTicking {
             return 0;
         }
 
-        IBlockState state = getWorld().getBlockState(pos);
+        BlockState state = getWorld().getBlockState(pos);
         int meta = this.getBlockType().getMetaFromState(state);
         EnumDemonWillType type = EnumDemonWillType.values()[meta];
 
@@ -122,7 +122,7 @@ public class TileDemonCrystal extends TileTicking {
 
     public boolean dropSingleCrystal() {
         if (!getWorld().isRemote && crystalCount > 1) {
-            IBlockState state = getWorld().getBlockState(pos);
+            BlockState state = getWorld().getBlockState(pos);
             EnumDemonWillType type = state.getValue(BlockDemonCrystal.TYPE);
             ItemStack stack = BlockDemonCrystal.getItemStackDropped(type, 1);
             if (!stack.isEmpty()) {
@@ -145,15 +145,15 @@ public class TileDemonCrystal extends TileTicking {
     }
 
     @Override
-    public void deserialize(NBTTagCompound tag) {
+    public void deserialize(CompoundNBT tag) {
         holder.readFromNBT(tag, "Will");
         crystalCount = tag.getInteger("crystalCount");
-        placement = EnumFacing.byIndex(tag.getInteger("placement"));
+        placement = Direction.byIndex(tag.getInteger("placement"));
         progressToNextCrystal = tag.getDouble("progress");
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tag) {
+    public CompoundNBT serialize(CompoundNBT tag) {
         holder.writeToNBT(tag, "Will");
         tag.setInteger("crystalCount", crystalCount);
         tag.setInteger("placement", placement.getIndex());
@@ -169,11 +169,11 @@ public class TileDemonCrystal extends TileTicking {
         this.crystalCount = crystalCount;
     }
 
-    public EnumFacing getPlacement() {
+    public Direction getPlacement() {
         return placement;
     }
 
-    public void setPlacement(EnumFacing placement) {
+    public void setPlacement(Direction placement) {
         this.placement = placement;
     }
 

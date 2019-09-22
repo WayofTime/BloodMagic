@@ -4,7 +4,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.types.ISubItem;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -33,7 +33,7 @@ public class ItemEnum<T extends Enum<T> & ISubItem> extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
+    public void getSubItems(ItemGroup tab, NonNullList<ItemStack> subItems) {
         if (!isInCreativeTab(tab))
             return;
 

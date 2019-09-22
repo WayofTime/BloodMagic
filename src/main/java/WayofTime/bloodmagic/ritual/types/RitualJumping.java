@@ -3,8 +3,8 @@ package WayofTime.bloodmagic.ritual.types;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -38,8 +38,8 @@ public class RitualJumping extends Ritual {
         int totalEffects = 0;
 
         AreaDescriptor jumpRange = masterRitualStone.getBlockRange(JUMP_RANGE);
-        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, jumpRange.getAABB(masterRitualStone.getBlockPos()));
-        for (EntityLivingBase entity : entities) {
+        List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, jumpRange.getAABB(masterRitualStone.getBlockPos()));
+        for (LivingEntity entity : entities) {
             if (totalEffects >= maxEffects) {
                 break;
             }
@@ -54,8 +54,8 @@ public class RitualJumping extends Ritual {
             entity.motionY = motionY;
             totalEffects++;
 
-            if (entity instanceof EntityPlayer) {
-                Utils.setPlayerSpeedFromServer((EntityPlayer) entity, entity.motionX, entity.motionY, entity.motionZ);
+            if (entity instanceof PlayerEntity) {
+                Utils.setPlayerSpeedFromServer((PlayerEntity) entity, entity.motionX, entity.motionY, entity.motionZ);
             }
         }
 

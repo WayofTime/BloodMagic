@@ -4,8 +4,8 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.RitualRegister;
 import WayofTime.bloodmagic.ritual.imperfect.IImperfectRitualStone;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitual;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.block.Blocks;
 
 @RitualRegister.Imperfect("night")
 public class ImperfectRitualNight extends ImperfectRitual {
@@ -14,7 +14,7 @@ public class ImperfectRitualNight extends ImperfectRitual {
     }
 
     @Override
-    public boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player) {
+    public boolean onActivate(IImperfectRitualStone imperfectRitualStone, PlayerEntity player) {
 
         if (!imperfectRitualStone.getRitualWorld().isRemote)
             imperfectRitualStone.getRitualWorld().setWorldTime((imperfectRitualStone.getRitualWorld().getWorldTime() / 24000) * 24000 + 13800);

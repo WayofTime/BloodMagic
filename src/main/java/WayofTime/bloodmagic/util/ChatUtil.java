@@ -4,12 +4,12 @@ import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiNewChat;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.client.gui.NewChatGui;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -20,7 +20,7 @@ public class ChatUtil {
     private static int lastAdded;
 
     private static void sendNoSpamMessages(ITextComponent[] messages) {
-        GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
+        NewChatGui chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
         for (int i = DELETION_ID + messages.length - 1; i <= lastAdded; i++) {
             chat.deleteChatLine(i);
         }
@@ -31,14 +31,14 @@ public class ChatUtil {
     }
 
     /**
-     * Returns a standard {@link TextComponentString} for the given
+     * Returns a standard {@link StringTextComponent} for the given
      * {@link String} .
      *
      * @param s The string to wrap.
      * @return An {@link ITextComponent} containing the string.
      */
     public static ITextComponent wrap(String s) {
-        return new TextComponentString(s);
+        return new StringTextComponent(s);
     }
 
     /**
@@ -60,7 +60,7 @@ public class ChatUtil {
      * @param args The args to apply to the format
      */
     public static ITextComponent wrapFormatted(String s, Object... args) {
-        return new TextComponentTranslation(s, args);
+        return new TranslationTextComponent(s, args);
     }
 
     /**
@@ -69,16 +69,16 @@ public class ChatUtil {
      * @param player The player to send the chat to
      * @param lines  The lines to send
      */
-    public static void sendChat(EntityPlayer player, String... lines) {
+    public static void sendChat(PlayerEntity player, String... lines) {
         sendChat(player, wrap(lines));
     }
 
     /**
      * Localizes the lines before sending them.
      *
-     * @see #sendChat(EntityPlayer, String...)
+     * @see #sendChat(PlayerEntity, String...)
      */
-    public static void sendChatUnloc(EntityPlayer player, String... unlocLines) {
+    public static void sendChatUnloc(PlayerEntity player, String... unlocLines) {
         sendChat(player, TextHelper.localizeAll(unlocLines));
     }
 
@@ -88,7 +88,7 @@ public class ChatUtil {
      * @param player The player to send the chat lines to.
      * @param lines  The {@link ITextComponent chat components} to send.yes
      */
-    public static void sendChat(EntityPlayer player, ITextComponent... lines) {
+    public static void sendChat(PlayerEntity player, ITextComponent... lines) {
         for (ITextComponent c : lines) {
             player.sendMessage(c);
         }
@@ -117,7 +117,7 @@ public class ChatUtil {
     /**
      * Skips the packet sending, unsafe to call on servers.
      *
-     * @see #sendNoSpam(EntityPlayerMP, ITextComponent...)
+     * @see #sendNoSpam(ServerPlayerEntity, ITextComponent...)
      */
     public static void sendNoSpamClient(ITextComponent... lines) {
         sendNoSpamMessages(lines);
@@ -126,46 +126,46 @@ public class ChatUtil {
     /**
      * Localizes the strings before sending them.
      *
-     * @see #sendNoSpam(EntityPlayer, String...)
+     * @see #sendNoSpam(PlayerEntity, String...)
      */
-    public static void sendNoSpamUnloc(EntityPlayer player, String... unlocLines) {
+    public static void sendNoSpamUnloc(PlayerEntity player, String... unlocLines) {
         sendNoSpam(player, TextHelper.localizeAll(unlocLines));
     }
 
     /**
      * @see #wrap(String)
-     * @see #sendNoSpam(EntityPlayer, ITextComponent...)
+     * @see #sendNoSpam(PlayerEntity, ITextComponent...)
      */
-    public static void sendNoSpam(EntityPlayer player, String... lines) {
+    public static void sendNoSpam(PlayerEntity player, String... lines) {
         sendNoSpam(player, wrap(lines));
     }
 
     /**
-     * First checks if the player is instanceof {@link EntityPlayerMP} before
+     * First checks if the player is instanceof {@link ServerPlayerEntity} before
      * casting.
      *
-     * @see #sendNoSpam(EntityPlayerMP, ITextComponent...)
+     * @see #sendNoSpam(ServerPlayerEntity, ITextComponent...)
      */
-    public static void sendNoSpam(EntityPlayer player, ITextComponent... lines) {
-        if (player instanceof EntityPlayerMP) {
-            sendNoSpam((EntityPlayerMP) player, lines);
+    public static void sendNoSpam(PlayerEntity player, ITextComponent... lines) {
+        if (player instanceof ServerPlayerEntity) {
+            sendNoSpam((ServerPlayerEntity) player, lines);
         }
     }
 
     /**
      * Localizes the strings before sending them.
      *
-     * @see #sendNoSpam(EntityPlayerMP, String...)
+     * @see #sendNoSpam(ServerPlayerEntity, String...)
      */
-    public static void sendNoSpamUnloc(EntityPlayerMP player, String... unlocLines) {
+    public static void sendNoSpamUnloc(ServerPlayerEntity player, String... unlocLines) {
         sendNoSpam(player, TextHelper.localizeAll(unlocLines));
     }
 
     /**
      * @see #wrap(String)
-     * @see #sendNoSpam(EntityPlayerMP, ITextComponent...)
+     * @see #sendNoSpam(ServerPlayerEntity, ITextComponent...)
      */
-    public static void sendNoSpam(EntityPlayerMP player, String... lines) {
+    public static void sendNoSpam(ServerPlayerEntity player, String... lines) {
         sendNoSpam(player, wrap(lines));
     }
 
@@ -178,7 +178,7 @@ public class ChatUtil {
      * @param player The player to send the chat message to
      * @param lines  The chat lines to send.
      */
-    public static void sendNoSpam(EntityPlayerMP player, ITextComponent... lines) {
+    public static void sendNoSpam(ServerPlayerEntity player, ITextComponent... lines) {
         if (lines.length > 0)
             BloodMagicPacketHandler.INSTANCE.sendTo(new PacketNoSpamChat(lines), player);
     }

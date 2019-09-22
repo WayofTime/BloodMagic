@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +18,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
-public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRoutingNode> {
+public class RenderItemRoutingNode extends TileEntityRenderer<TileRoutingNode> {
     private static final ResourceLocation beamTexture = new ResourceLocation(BloodMagic.MODID, "textures/entities/nodeBeam.png");
     private static final Minecraft mc = Minecraft.getMinecraft();
 

@@ -3,11 +3,11 @@ package WayofTime.bloodmagic.ritual.types;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -46,8 +46,8 @@ public class RitualPlacer extends Ritual {
         AreaDescriptor areaDescriptor = masterRitualStone.getBlockRange(PLACER_RANGE);
 
         if (tileEntity != null) {
-            if (tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
-                IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+            if (tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN)) {
+                IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN);
 
                 if (itemHandler.getSlots() <= 0) {
                     return;
@@ -60,10 +60,10 @@ public class RitualPlacer extends Ritual {
 
                     for (int invSlot = 0; invSlot < itemHandler.getSlots(); invSlot++) {
                         ItemStack stack = itemHandler.extractItem(invSlot, 1, true);
-                        if (stack.isEmpty() || !(stack.getItem() instanceof ItemBlock))
+                        if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem))
                             continue;
 
-                        IBlockState placeState = Block.getBlockFromItem(itemHandler.getStackInSlot(invSlot).getItem()).getStateFromMeta(itemHandler.getStackInSlot(invSlot).getItemDamage());
+                        BlockState placeState = Block.getBlockFromItem(itemHandler.getStackInSlot(invSlot).getItem()).getStateFromMeta(itemHandler.getStackInSlot(invSlot).getItemDamage());
                         world.setBlockState(blockPos, placeState);
                         itemHandler.extractItem(invSlot, 1, false);
                         tileEntity.markDirty();

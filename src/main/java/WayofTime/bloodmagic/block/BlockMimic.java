@@ -9,19 +9,18 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.tile.TileMimic;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.item.block.ItemBlockMimic;
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -48,7 +47,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
 
     @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(BlockState state, IBlockAccess world, BlockPos pos) {
         switch (this.getMetaFromState(state)) {
             case 1:
             case 2:
@@ -60,7 +59,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
                     if (mimicBlock == Blocks.AIR) {
                         return FULL_BLOCK_AABB;
                     }
-                    IBlockState mimicState = tileMimic.getReplacedState();
+                    BlockState mimicState = tileMimic.getReplacedState();
                     if (mimicBlock != this) {
                         return mimicState.getCollisionBoundingBox(world, pos);
                     }
@@ -76,14 +75,14 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
 
     @Override
     @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos) {
+    public AxisAlignedBB getSelectedBoundingBox(BlockState state, World world, BlockPos pos) {
         TileMimic tileMimic = (TileMimic) world.getTileEntity(pos);
         if (tileMimic != null && !tileMimic.getStackInSlot(0).isEmpty()) {
             Block mimicBlock = Block.getBlockFromItem(tileMimic.getStackInSlot(0).getItem());
             if (mimicBlock == Blocks.AIR) {
                 return FULL_BLOCK_AABB;
             }
-            IBlockState mimicState = tileMimic.getReplacedState();
+            BlockState mimicState = tileMimic.getReplacedState();
             if (mimicBlock != this) {
                 return mimicState.getSelectedBoundingBox(world, pos);
             }
@@ -93,7 +92,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
     }
 
     @Override
-    public int getLightOpacity(IBlockState state) {
+    public int getLightOpacity(BlockState state) {
         switch (this.getMetaFromState(state)) {
             case 2:
             case 4:
@@ -104,7 +103,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
     }
 
     @Override
-    public int getLightValue(IBlockState state) {
+    public int getLightValue(BlockState state) {
         switch (this.getMetaFromState(state)) {
             case 3:
                 return 15;
@@ -114,7 +113,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         if (state.getBlock() == this) {
             return super.getMetaFromState(state);
         }
@@ -123,23 +122,23 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
         TileMimic mimic = (TileMimic) world.getTileEntity(pos);
 
         return mimic != null && mimic.onBlockActivated(world, pos, state, player, hand, player.getHeldItem(hand), side);
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public BlockState getActualState(BlockState state, IBlockAccess world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileMimic) {
             TileMimic mimic = (TileMimic) tile;
             ItemStack stack = mimic.getStackInSlot(0);
-            if (stack.getItem() instanceof ItemBlock) {
-                Block block = ((ItemBlock) stack.getItem()).getBlock();
-                IBlockState mimicState = mimic.getReplacedState();
+            if (stack.getItem() instanceof BlockItem) {
+                Block block = ((BlockItem) stack.getItem()).getBlock();
+                BlockState mimicState = mimic.getReplacedState();
                 if (block != this) {
-                    if (block.getRenderType(mimicState) == EnumBlockRenderType.ENTITYBLOCK_ANIMATED) {
+                    if (block.getRenderType(mimicState) == BlockRenderType.ENTITYBLOCK_ANIMATED) {
                         return RegistrarBloodMagicBlocks.BLOOD_LIGHT.getDefaultState(); //Small and invisible-ish, basically this is returned in order to not render over the animated block (TESR)
                     }
 
@@ -151,32 +150,32 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean isNormalCube(BlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
+    public boolean causesSuffocation(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+    public boolean canRenderInLayer(BlockState state, BlockRenderLayer layer) {
         return layer == BlockRenderLayer.CUTOUT_MIPPED || layer == BlockRenderLayer.CUTOUT;
     }
 
     @Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
+    public void breakBlock(World world, BlockPos blockPos, BlockState blockState) {
         TileEntity tile = world.getTileEntity(blockPos);
         if (tile instanceof TileMimic) {
             TileMimic TileMimic = (TileMimic) world.getTileEntity(blockPos);
@@ -188,12 +187,12 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(BlockState state) {
         return true;
     }
 
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
+    public TileEntity createTileEntity(World world, BlockState state) {
         return new TileMimic();
     }
 
@@ -201,13 +200,13 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
 
     @Nullable
     @Override
-    public ComponentType getType(World world, IBlockState state, BlockPos pos) {
+    public ComponentType getType(World world, BlockState state, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileMimic) {
             TileMimic mimic = (TileMimic) tile;
             ItemStack stack = mimic.getStackInSlot(0);
-            if (stack.getItem() instanceof ItemBlock) {
-                Block block = ((ItemBlock) stack.getItem()).getBlock();
+            if (stack.getItem() instanceof BlockItem) {
+                Block block = ((BlockItem) stack.getItem()).getBlock();
                 if (block instanceof IAltarComponent) {
                     return ((IAltarComponent) block).getType(world, mimic.getReplacedState(), pos);
                 } else {
@@ -221,7 +220,7 @@ public class BlockMimic extends BlockEnum<EnumMimic> implements IAltarComponent 
     }
 
     @Override
-    public ItemBlock getItem() {
+    public BlockItem getItem() {
         return new ItemBlockMimic(this);
     }
 

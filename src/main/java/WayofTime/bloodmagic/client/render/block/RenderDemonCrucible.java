@@ -4,15 +4,15 @@ import WayofTime.bloodmagic.tile.TileDemonCrucible;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.RenderItem;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class RenderDemonCrucible extends TileEntitySpecialRenderer<TileDemonCrucible> {
+public class RenderDemonCrucible extends TileEntityRenderer<TileDemonCrucible> {
     public static Minecraft mc = Minecraft.getMinecraft();
     public static ResourceLocation resource = new ResourceLocation("bloodmagic", "textures/blocks/lifeEssenceStill.png");
     public static float minHeight = 0.6497f;
@@ -29,10 +29,10 @@ public class RenderDemonCrucible extends TileEntitySpecialRenderer<TileDemonCruc
     }
 
     private void renderItem(World world, ItemStack stack, float partialTicks) {
-        RenderItem itemRenderer = mc.getRenderItem();
+        ItemRenderer itemRenderer = mc.getRenderItem();
         if (!stack.isEmpty()) {
             GlStateManager.translate(0.5, 1.5, 0.5);
-            EntityItem entityitem = new EntityItem(world, 0.0D, 0.0D, 0.0D, stack);
+            ItemEntity entityitem = new ItemEntity(world, 0.0D, 0.0D, 0.0D, stack);
             entityitem.getItem().setCount(1);
             entityitem.hoverStart = 0.0F;
             GlStateManager.pushMatrix();

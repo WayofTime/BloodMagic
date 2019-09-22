@@ -2,10 +2,10 @@ package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -18,10 +18,10 @@ public class ItemSigilFastMiner extends ItemSigilToggleableBase {
     }
 
     @Override
-    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected) {
+    public void onSigilUpdate(ItemStack stack, World world, PlayerEntity player, int itemSlot, boolean isSelected) {
         if (PlayerHelper.isFakePlayer(player))
             return;
-        player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 2, 1, true, false));
+        player.addPotionEffect(new EffectInstance(Effects.HASTE, 2, 1, true, false));
     }
 
     @Override
@@ -31,10 +31,10 @@ public class ItemSigilFastMiner extends ItemSigilToggleableBase {
         int potionPotency = 2;
 
         AxisAlignedBB bb = new AxisAlignedBB(pos).grow(radius);
-        List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, bb);
-        for (EntityPlayer player : playerList) {
-            if (!player.isPotionActive(MobEffects.HASTE) || (player.isPotionActive(MobEffects.HASTE) && player.getActivePotionEffect(MobEffects.HASTE).getAmplifier() < potionPotency)) {
-                player.addPotionEffect(new PotionEffect(MobEffects.HASTE, ticks, potionPotency));
+        List<PlayerEntity> playerList = world.getEntitiesWithinAABB(PlayerEntity.class, bb);
+        for (PlayerEntity player : playerList) {
+            if (!player.isPotionActive(Effects.HASTE) || (player.isPotionActive(Effects.HASTE) && player.getActivePotionEffect(Effects.HASTE).getAmplifier() < potionPotency)) {
+                player.addPotionEffect(new EffectInstance(Effects.HASTE, ticks, potionPotency));
                 if (!player.capabilities.isCreativeMode) {
                     player.hurtResistantTime = 0;
                     player.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 1.0F);

@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.ritual.types;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -31,8 +31,8 @@ public class RitualContainment extends Ritual {
 
         AreaDescriptor containmentRange = masterRitualStone.getBlockRange(CONTAINMENT_RANGE);
 
-        for (EntityLivingBase entity : world.getEntitiesWithinAABB(EntityLivingBase.class, containmentRange.getAABB(masterRitualStone.getBlockPos()))) {
-            if (entity instanceof EntityPlayer && (((EntityPlayer) entity).capabilities.isCreativeMode || ((EntityPlayer) entity).getGameProfile().getId().equals(masterRitualStone.getOwner())))
+        for (LivingEntity entity : world.getEntitiesWithinAABB(LivingEntity.class, containmentRange.getAABB(masterRitualStone.getBlockPos()))) {
+            if (entity instanceof PlayerEntity && (((PlayerEntity) entity).capabilities.isCreativeMode || ((PlayerEntity) entity).getGameProfile().getId().equals(masterRitualStone.getOwner())))
                 continue;
 
             double xDif = entity.posX - (masterRitualStone.getBlockPos().getX() + 0.5);

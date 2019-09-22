@@ -5,12 +5,12 @@ import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -60,7 +60,7 @@ public class RitualSpeed extends Ritual {
             rawWill = 0; //Simplifies later calculations
         }
 
-        for (EntityLivingBase entity : world.getEntitiesWithinAABB(EntityLivingBase.class, speedRange.getAABB(masterRitualStone.getBlockPos()))) {
+        for (LivingEntity entity : world.getEntitiesWithinAABB(LivingEntity.class, speedRange.getAABB(masterRitualStone.getBlockPos()))) {
             if (entity.isSneaking())
                 continue;
 
@@ -71,7 +71,7 @@ public class RitualSpeed extends Ritual {
                 continue;
             }
 
-            if (entity instanceof EntityPlayer && (transportChildren ^ transportAdults)) {
+            if (entity instanceof PlayerEntity && (transportChildren ^ transportAdults)) {
                 continue;
             }
 
@@ -87,7 +87,7 @@ public class RitualSpeed extends Ritual {
 
             double motionY = getVerticalSpeedForWill(rawWill);
             double speed = getHorizontalSpeedForWill(rawWill);
-            EnumFacing direction = masterRitualStone.getDirection();
+            Direction direction = masterRitualStone.getDirection();
 
             if (rawWill >= rawWillDrain) {
                 rawWill -= rawWillDrain;
@@ -125,8 +125,8 @@ public class RitualSpeed extends Ritual {
                     break;
             }
 
-            if (entity instanceof EntityPlayer) {
-                Utils.setPlayerSpeedFromServer((EntityPlayer) entity, entity.motionX, entity.motionY, entity.motionZ);
+            if (entity instanceof PlayerEntity) {
+                Utils.setPlayerSpeedFromServer((PlayerEntity) entity, entity.motionX, entity.motionY, entity.motionZ);
             }
         }
 
@@ -170,8 +170,8 @@ public class RitualSpeed extends Ritual {
     }
 
     @Override
-    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
-        return new ITextComponent[]{new TextComponentTranslation(this.getTranslationKey() + ".info"), new TextComponentTranslation(this.getTranslationKey() + ".default.info"), new TextComponentTranslation(this.getTranslationKey() + ".corrosive.info"), new TextComponentTranslation(this.getTranslationKey() + ".steadfast.info"), new TextComponentTranslation(this.getTranslationKey() + ".destructive.info"), new TextComponentTranslation(this.getTranslationKey() + ".vengeful.info")};
+    public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player) {
+        return new ITextComponent[]{new TranslationTextComponent(this.getTranslationKey() + ".info"), new TranslationTextComponent(this.getTranslationKey() + ".default.info"), new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"), new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"), new TranslationTextComponent(this.getTranslationKey() + ".destructive.info"), new TranslationTextComponent(this.getTranslationKey() + ".vengeful.info")};
     }
 
     public double getVerticalSpeedForWill(double rawWill) {

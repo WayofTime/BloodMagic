@@ -5,9 +5,9 @@ import WayofTime.bloodmagic.block.base.BlockEnum;
 import WayofTime.bloodmagic.block.enums.EnumPath;
 import WayofTime.bloodmagic.incense.IIncensePath;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
@@ -45,7 +45,7 @@ public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath {
     }
 
     @Override
-    public Material getMaterial(IBlockState state) {
+    public Material getMaterial(BlockState state) {
         EnumPath path = state.getValue(getProperty());
         if (path.equals(EnumPath.WOOD) || path.equals(EnumPath.WOODTILE))
             return Material.WOOD;
@@ -54,7 +54,7 @@ public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath {
     }
 
     @Override
-    public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
+    public SoundType getSoundType(BlockState state, World world, BlockPos pos, @Nullable Entity entity) {
         EnumPath path = state.getValue(getProperty());
         if (path.equals(EnumPath.WOOD) || path.equals(EnumPath.WOODTILE))
             return SoundType.WOOD;
@@ -63,7 +63,7 @@ public class BlockPath extends BlockEnum<EnumPath> implements IIncensePath {
     }
 
     @Override
-    public int getLevelOfPath(World world, BlockPos pos, IBlockState state) {
+    public int getLevelOfPath(World world, BlockPos pos, BlockState state) {
         switch (this.getMetaFromState(state)) {
             case 0:
             case 1:

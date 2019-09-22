@@ -8,7 +8,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class ElementDemonAura extends HUDElement {
     @Override
     public void draw(ScaledResolution resolution, float partialTicks, int drawX, int drawY) {
         Minecraft minecraft = Minecraft.getMinecraft();
-        EntityPlayer player = minecraft.player;
+        PlayerEntity player = minecraft.player;
 
         minecraft.getTextureManager().bindTexture(BAR_LOCATION);
         GlStateManager.color(1.0F, 1.0F, 1.0F);

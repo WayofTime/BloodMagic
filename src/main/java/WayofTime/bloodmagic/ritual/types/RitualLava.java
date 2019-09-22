@@ -8,17 +8,17 @@ import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.block.Blocks;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -84,7 +84,7 @@ public class RitualLava extends Ritual {
         }
 
         for (BlockPos newPos : lavaRange.getContainedPositions(pos)) {
-            IBlockState state = world.getBlockState(newPos);
+            BlockState state = world.getBlockState(newPos);
             if (world.isAirBlock(newPos) || Utils.isFlowingLiquid(state)) {
                 int lpCost = getLPCostForRawWill(rawWill);
                 if (currentEssence < lpCost) {
@@ -134,19 +134,19 @@ public class RitualLava extends Ritual {
             AreaDescriptor fuseRange = masterRitualStone.getBlockRange(FIRE_FUSE_RANGE);
 
             AxisAlignedBB fuseArea = fuseRange.getAABB(pos);
-            List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, fuseArea);
+            List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, fuseArea);
 
-            for (EntityLivingBase entity : entities) {
+            for (LivingEntity entity : entities) {
                 if (vengefulWill < vengefulWillDrain) {
                     break;
                 }
 
-                if (entity instanceof EntityPlayer) {
+                if (entity instanceof PlayerEntity) {
                     continue;
                 }
 
                 if (!entity.isPotionActive(RegistrarBloodMagic.FIRE_FUSE)) {
-                    entity.addPotionEffect(new PotionEffect(RegistrarBloodMagic.FIRE_FUSE, 100, 0));
+                    entity.addPotionEffect(new EffectInstance(RegistrarBloodMagic.FIRE_FUSE, 100, 0));
 
                     vengefulDrained += vengefulWillDrain;
                     vengefulWill -= vengefulWillDrain;
@@ -165,14 +165,14 @@ public class RitualLava extends Ritual {
             int duration = getFireResistForWill(steadfastWill);
 
             AxisAlignedBB resistArea = resistRange.getAABB(pos);
-            List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, resistArea);
+            List<PlayerEntity> entities = world.getEntitiesWithinAABB(PlayerEntity.class, resistArea);
 
-            for (EntityPlayer entity : entities) {
+            for (PlayerEntity entity : entities) {
                 if (steadfastWill < steadfastWillDrain) {
                     break;
                 }
-                if (!entity.isPotionActive(MobEffects.FIRE_RESISTANCE) || (entity.getActivePotionEffect(MobEffects.FIRE_RESISTANCE).getDuration() < 2)) {
-                    entity.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 100, 0));
+                if (!entity.isPotionActive(Effects.FIRE_RESISTANCE) || (entity.getActivePotionEffect(Effects.FIRE_RESISTANCE).getDuration() < 2)) {
+                    entity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 100, 0));
 
                     steadfastDrained += steadfastWillDrain;
                     steadfastWill -= steadfastWillDrain;
@@ -191,9 +191,9 @@ public class RitualLava extends Ritual {
             float damage = getCorrosiveDamageForWill(corrosiveWill);
 
             AxisAlignedBB damageArea = resistRange.getAABB(pos);
-            List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, damageArea);
+            List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, damageArea);
 
-            for (EntityLivingBase entity : entities) {
+            for (LivingEntity entity : entities) {
                 if (corrosiveWill < corrosiveWillDrain) {
                     break;
                 }
@@ -229,8 +229,8 @@ public class RitualLava extends Ritual {
     }
 
     @Override
-    public ITextComponent[] provideInformationOfRitualToPlayer(EntityPlayer player) {
-        return new ITextComponent[]{new TextComponentTranslation(this.getTranslationKey() + ".info"), new TextComponentTranslation(this.getTranslationKey() + ".default.info"), new TextComponentTranslation(this.getTranslationKey() + ".corrosive.info"), new TextComponentTranslation(this.getTranslationKey() + ".steadfast.info"), new TextComponentTranslation(this.getTranslationKey() + ".destructive.info"), new TextComponentTranslation(this.getTranslationKey() + ".vengeful.info")};
+    public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player) {
+        return new ITextComponent[]{new TranslationTextComponent(this.getTranslationKey() + ".info"), new TranslationTextComponent(this.getTranslationKey() + ".default.info"), new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"), new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"), new TranslationTextComponent(this.getTranslationKey() + ".destructive.info"), new TranslationTextComponent(this.getTranslationKey() + ".vengeful.info")};
     }
 
     @Override

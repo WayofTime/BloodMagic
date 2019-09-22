@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.network;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.util.ChatUtil;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -31,7 +31,7 @@ public class BloodMagicPacketHandler {
         sendToAllAround(message, te, 64);
     }
 
-    public static void sendTo(IMessage message, EntityPlayerMP player) {
+    public static void sendTo(IMessage message, ServerPlayerEntity player) {
         INSTANCE.sendTo(message, player);
     }
 }

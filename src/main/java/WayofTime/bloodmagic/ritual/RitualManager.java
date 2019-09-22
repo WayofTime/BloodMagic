@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.util.BMLog;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
@@ -107,7 +107,7 @@ public class RitualManager {
         return ritualsReverse.get(ritual);
     }
 
-    public ImperfectRitual getImperfectRitual(IBlockState state) {
+    public ImperfectRitual getImperfectRitual(BlockState state) {
         for (ImperfectRitual ritual : imperfectRituals.values())
             if (ritual.getBlockRequirement().test(state))
                 return ritual;

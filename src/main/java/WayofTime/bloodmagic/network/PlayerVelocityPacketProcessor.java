@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.network;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -51,7 +51,7 @@ public class PlayerVelocityPacketProcessor implements IMessage, IMessageHandler<
 
     @SideOnly(Side.CLIENT)
     public void onMessageFromServer() {
-        EntityPlayer player = Minecraft.getMinecraft().player;
+        PlayerEntity player = Minecraft.getMinecraft().player;
         player.motionX = motionX;
         player.motionY = motionY;
         player.motionZ = motionZ;

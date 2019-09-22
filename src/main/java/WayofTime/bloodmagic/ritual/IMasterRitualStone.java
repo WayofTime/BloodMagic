@@ -3,9 +3,9 @@ package WayofTime.bloodmagic.ritual;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -23,7 +23,7 @@ public interface IMasterRitualStone {
 
     SoulNetwork getOwnerNetwork();
 
-    boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator, Ritual ritual);
+    boolean activateRitual(ItemStack activationCrystal, PlayerEntity activator, Ritual ritual);
 
     void performRitual(World world, BlockPos pos);
 
@@ -37,7 +37,7 @@ public interface IMasterRitualStone {
 
     void setActive(boolean active);
 
-    EnumFacing getDirection();
+    Direction getDirection();
 
     boolean areTanksEmpty();
 
@@ -49,15 +49,15 @@ public interface IMasterRitualStone {
 
     String getNextBlockRange(String range);
 
-    void provideInformationOfRitualToPlayer(EntityPlayer player);
+    void provideInformationOfRitualToPlayer(PlayerEntity player);
 
-    void provideInformationOfRangeToPlayer(EntityPlayer player, String range);
+    void provideInformationOfRangeToPlayer(PlayerEntity player, String range);
 
-    void provideInformationOfWillConfigToPlayer(EntityPlayer player, List<EnumDemonWillType> typeList);
+    void provideInformationOfWillConfigToPlayer(PlayerEntity player, List<EnumDemonWillType> typeList);
 
-    void setActiveWillConfig(EntityPlayer player, List<EnumDemonWillType> typeList);
+    void setActiveWillConfig(PlayerEntity player, List<EnumDemonWillType> typeList);
 
-    EnumReaderBoundaries setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2);
+    EnumReaderBoundaries setBlockRangeByBounds(PlayerEntity player, String range, BlockPos offset1, BlockPos offset2);
 
     List<EnumDemonWillType> getActiveWillConfig();
 

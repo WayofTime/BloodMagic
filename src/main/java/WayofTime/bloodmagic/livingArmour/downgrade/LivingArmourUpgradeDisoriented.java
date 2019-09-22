@@ -3,8 +3,8 @@ package WayofTime.bloodmagic.livingArmour.downgrade;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 public class LivingArmourUpgradeDisoriented extends LivingArmourUpgrade {
@@ -16,7 +16,7 @@ public class LivingArmourUpgradeDisoriented extends LivingArmourUpgrade {
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
+    public void onTick(World world, PlayerEntity player, ILivingArmour livingArmour) {
         if (world.isRemote && player.ticksExisted % 20 == 0 && world.rand.nextDouble() <= chance[this.level]) {
             player.rotationYaw = world.rand.nextFloat() * 360;
             player.rotationPitch = world.rand.nextFloat() * 180 - 90;
@@ -44,11 +44,11 @@ public class LivingArmourUpgradeDisoriented extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
     }
 
     @Override

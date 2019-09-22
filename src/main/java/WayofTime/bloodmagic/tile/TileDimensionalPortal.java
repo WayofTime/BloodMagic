@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.tile;
 import WayofTime.bloodmagic.ritual.types.RitualPortal;
 import WayofTime.bloodmagic.tile.base.TileBase;
 import com.google.common.base.Strings;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 
 public class TileDimensionalPortal extends TileBase {
@@ -12,7 +12,7 @@ public class TileDimensionalPortal extends TileBase {
     public int masterStoneY;
     public int masterStoneZ;
 
-    public void deserialize(NBTTagCompound tagCompound) {
+    public void deserialize(CompoundNBT tagCompound) {
         portalID = tagCompound.getString(RitualPortal.PORTAL_ID_TAG);
 
         masterStoneX = tagCompound.getInteger("masterStoneX");
@@ -20,7 +20,7 @@ public class TileDimensionalPortal extends TileBase {
         masterStoneZ = tagCompound.getInteger("masterStoneZ");
     }
 
-    public NBTTagCompound serialize(NBTTagCompound tagCompound) {
+    public CompoundNBT serialize(CompoundNBT tagCompound) {
         tagCompound.setString(RitualPortal.PORTAL_ID_TAG, Strings.isNullOrEmpty(portalID) ? "" : portalID);
 
         tagCompound.setInteger("masterStoneX", masterStoneX);

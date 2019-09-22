@@ -6,8 +6,8 @@ import WayofTime.bloodmagic.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeKnockbackResist;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class StatTrackerFood extends StatTracker {
-    public static Map<EntityPlayer, Integer> lastFoodEatenMap = new HashMap<>();
+    public static Map<PlayerEntity, Integer> lastFoodEatenMap = new HashMap<>();
 
     public static int[] foodRequired = new int[]{100, 200, 300, 500, 1000};
 
@@ -33,18 +33,18 @@ public class StatTrackerFood extends StatTracker {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         foodEaten = tag.getInteger(BloodMagic.MODID + ".tracker.foodEaten");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         tag.setInteger(BloodMagic.MODID + ".tracker.foodEaten", foodEaten);
 
     }
 
     @Override
-    public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+    public boolean onTick(World world, PlayerEntity player, LivingArmour livingArmour) {
         if (!lastFoodEatenMap.containsKey(player)) {
             lastFoodEatenMap.put(player, 20);
             return false;
@@ -66,7 +66,7 @@ public class StatTrackerFood extends StatTracker {
     }
 
     @Override
-    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+    public void onDeactivatedTick(World world, PlayerEntity player, LivingArmour livingArmour) {
         if (lastFoodEatenMap.containsKey(player)) {
             lastFoodEatenMap.remove(player);
         }

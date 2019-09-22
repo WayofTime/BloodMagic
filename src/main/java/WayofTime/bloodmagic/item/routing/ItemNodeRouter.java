@@ -10,16 +10,16 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -40,7 +40,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         if (!stack.hasTagCompound())
             return;
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         BlockPos coords = getBlockPos(stack);
 
         if (coords != null && tag != null) {
@@ -49,10 +49,10 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
     }
 
     @Override
-    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+    public ActionResultType onItemUseFirst(PlayerEntity player, World world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (world.isRemote) {
-            return EnumActionResult.PASS;
+            return ActionResultType.PASS;
         }
 
         TileEntity tileHit = world.getTileEntity(pos);
@@ -62,17 +62,17 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
             BlockPos containedPos = getBlockPos(stack);
             if (!containedPos.equals(BlockPos.ORIGIN)) {
                 this.setBlockPos(stack, BlockPos.ORIGIN);
-                player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.remove"), true);
-                return EnumActionResult.FAIL;
+                player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.remove"), true);
+                return ActionResultType.FAIL;
             }
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
         }
         IRoutingNode node = (IRoutingNode) tileHit;
         BlockPos containedPos = getBlockPos(stack);
         if (containedPos.equals(BlockPos.ORIGIN)) {
             this.setBlockPos(stack, pos);
-            player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.set"), true);
-            return EnumActionResult.SUCCESS;
+            player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.set"), true);
+            return ActionResultType.SUCCESS;
         } else {
             TileEntity pastTile = world.getTileEntity(containedPos);
             if (pastTile instanceof IRoutingNode) {
@@ -87,16 +87,16 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                             master.addConnection(pos, containedPos);
                             master.addNodeToList(node);
                             node.addConnection(containedPos);
-                            player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.link.master"), true);
+                            player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
                             this.setBlockPos(stack, BlockPos.ORIGIN);
-                            return EnumActionResult.SUCCESS;
+                            return ActionResultType.SUCCESS;
                         }
                     } else {
                         master.addConnection(pos, containedPos);
                         node.addConnection(containedPos);
-                        player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.link.master"), true);
+                        player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
                         this.setBlockPos(stack, BlockPos.ORIGIN);
-                        return EnumActionResult.SUCCESS;
+                        return ActionResultType.SUCCESS;
                     }
 
                 } else if (node instanceof IMasterRoutingNode) {
@@ -109,16 +109,16 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                             master.addConnection(pos, containedPos);
                             pastNode.addConnection(pos);
                             master.addNodeToList(pastNode);
-                            player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.link.master"), true);
+                            player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
                             this.setBlockPos(stack, BlockPos.ORIGIN);
-                            return EnumActionResult.SUCCESS;
+                            return ActionResultType.SUCCESS;
                         }
                     } else {
                         master.addConnection(pos, containedPos);
                         pastNode.addConnection(pos);
-                        player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.link.master"), true);
+                        player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
                         this.setBlockPos(stack, BlockPos.ORIGIN);
-                        return EnumActionResult.SUCCESS;
+                        return ActionResultType.SUCCESS;
                     }
                 } else {
                     //Both nodes are not master nodes, so normal linking
@@ -132,9 +132,9 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                         }
                         pastNode.addConnection(pos);
                         node.addConnection(containedPos);
-                        player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.link.master"), true);
+                        player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
                         this.setBlockPos(stack, BlockPos.ORIGIN);
-                        return EnumActionResult.SUCCESS;
+                        return ActionResultType.SUCCESS;
                     } else if (pastNode.getMasterPos().equals(BlockPos.ORIGIN)) //pastNode is not connected to a master, but node is
                     {
                         TileEntity tile = world.getTileEntity(node.getMasterPos());
@@ -146,9 +146,9 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                         }
                         pastNode.addConnection(pos);
                         node.addConnection(containedPos);
-                        player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.link"), true);
+                        player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link"), true);
                         this.setBlockPos(stack, BlockPos.ORIGIN);
-                        return EnumActionResult.SUCCESS;
+                        return ActionResultType.SUCCESS;
                     } else if (node.getMasterPos().equals(BlockPos.ORIGIN)) //node is not connected to a master, but pastNode is
                     {
                         TileEntity tile = world.getTileEntity(pastNode.getMasterPos());
@@ -160,18 +160,18 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                         }
                         pastNode.addConnection(pos);
                         node.addConnection(containedPos);
-                        player.sendStatusMessage(new TextComponentTranslation("chat.bloodmagic.routing.link"), true);
+                        player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link"), true);
                         this.setBlockPos(stack, BlockPos.ORIGIN);
-                        return EnumActionResult.SUCCESS;
+                        return ActionResultType.SUCCESS;
                     } else {
                         this.setBlockPos(stack, BlockPos.ORIGIN);
-                        return EnumActionResult.SUCCESS;
+                        return ActionResultType.SUCCESS;
                     }
                 }
             }
         }
 
-        return EnumActionResult.FAIL;
+        return ActionResultType.FAIL;
     }
 
     @Override
@@ -186,7 +186,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
 
     public ItemStack setBlockPos(ItemStack stack, BlockPos pos) {
         NBTHelper.checkNBT(stack);
-        NBTTagCompound itemTag = stack.getTagCompound();
+        CompoundNBT itemTag = stack.getTagCompound();
         itemTag.setInteger(Constants.NBT.X_COORD, pos.getX());
         itemTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
         itemTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());

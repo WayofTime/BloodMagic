@@ -16,7 +16,7 @@ import WayofTime.bloodmagic.structures.ModDungeons;
 import WayofTime.bloodmagic.util.PluginUtil;
 import WayofTime.bloodmagic.util.handler.IMCHandler;
 import com.google.common.collect.Lists;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.config.Configuration;
@@ -40,13 +40,13 @@ public class BloodMagic {
     public static final boolean IS_DEV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
     public static final List<Pair<IBloodMagicPlugin, BloodMagicPlugin>> PLUGINS = Lists.newArrayList();
     public static final RitualManager RITUAL_MANAGER = new RitualManager(new Configuration(new File(Loader.instance().getConfigDir(), MODID + "/" + "rituals.cfg")));
-    public static final CreativeTabs TAB_BM = new CreativeTabs(MODID + ".creativeTab") {
+    public static final ItemGroup TAB_BM = new ItemGroup(MODID + ".creativeTab") {
         @Override
         public ItemStack createIcon() {
             return OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK);
         }
     };
-    public static CreativeTabs TAB_TOMES = new CreativeTabs(MODID + ".creativeTabTome") {
+    public static ItemGroup TAB_TOMES = new ItemGroup(MODID + ".creativeTabTome") {
         @Override
         public ItemStack createIcon() {
             return new ItemStack(RegistrarBloodMagicItems.UPGRADE_TOME);

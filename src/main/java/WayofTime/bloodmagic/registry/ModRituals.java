@@ -7,7 +7,7 @@ import WayofTime.bloodmagic.ritual.harvest.HarvestRegistry;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerPlantable;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerStem;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerTall;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Blocks;
 
 public class ModRituals {
     // TODO Move elsewhere

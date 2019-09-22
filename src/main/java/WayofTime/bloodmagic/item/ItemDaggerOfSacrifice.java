@@ -7,12 +7,12 @@ import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.util.helper.PurificationHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
@@ -32,17 +32,17 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider {
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker instanceof FakePlayer)
             return false;
 
-        if (target == null || attacker == null || attacker.getEntityWorld().isRemote || (attacker instanceof EntityPlayer && !(attacker instanceof EntityPlayerMP)))
+        if (target == null || attacker == null || attacker.getEntityWorld().isRemote || (attacker instanceof PlayerEntity && !(attacker instanceof ServerPlayerEntity)))
             return false;
 
         if (!target.isNonBoss())
             return false;
 
-        if (target instanceof EntityPlayer)
+        if (target instanceof PlayerEntity)
             return false;
 
         if (target.isChild() && !(target instanceof IMob))
@@ -60,8 +60,8 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider {
             return false;
 
         int lifeEssence = (int) (lifeEssenceRatio * target.getHealth());
-        if (target instanceof EntityAnimal) {
-            lifeEssence = (int) (lifeEssence * (1 + PurificationHelper.getCurrentPurity((EntityAnimal) target)));
+        if (target instanceof AnimalEntity) {
+            lifeEssence = (int) (lifeEssence * (1 + PurificationHelper.getCurrentPurity((AnimalEntity) target)));
         }
 
         if (target.isChild()) {

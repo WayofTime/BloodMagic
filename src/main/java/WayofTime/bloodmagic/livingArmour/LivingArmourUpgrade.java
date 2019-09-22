@@ -2,11 +2,11 @@ package WayofTime.bloodmagic.livingArmour;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
@@ -31,11 +31,11 @@ public abstract class LivingArmourUpgrade {
         this.level = Math.min(level, getMaxTier() - 1);
     }
 
-    public double getAdditionalDamageOnHit(double damage, EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon) {
+    public double getAdditionalDamageOnHit(double damage, PlayerEntity wearer, LivingEntity hitEntity, ItemStack weapon) {
         return 0;
     }
 
-    public double getKnockbackOnHit(EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon) {
+    public double getKnockbackOnHit(PlayerEntity wearer, LivingEntity hitEntity, ItemStack weapon) {
         return 0;
     }
 
@@ -45,7 +45,7 @@ public abstract class LivingArmourUpgrade {
      *
      * @return 0 for no damage blocked, 1 for full damage blocked
      */
-    public double getArmourProtection(EntityLivingBase wearer, DamageSource source) {
+    public double getArmourProtection(LivingEntity wearer, DamageSource source) {
         return 0;
     }
 
@@ -61,20 +61,20 @@ public abstract class LivingArmourUpgrade {
 
     public abstract int getCostOfUpgrade();
 
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
+    public void onTick(World world, PlayerEntity player, ILivingArmour livingArmour) {
     }
 
     public Multimap<String, AttributeModifier> getAttributeModifiers() {
         return HashMultimap.create();
     }
 
-    public double getMiningSpeedModifier(EntityPlayer player) {
+    public double getMiningSpeedModifier(PlayerEntity player) {
         return 1;
     }
 
-    public abstract void writeToNBT(NBTTagCompound tag);
+    public abstract void writeToNBT(CompoundNBT tag);
 
-    public abstract void readFromNBT(NBTTagCompound tag);
+    public abstract void readFromNBT(CompoundNBT tag);
 
     public int getRunicShielding() {
         return 0;

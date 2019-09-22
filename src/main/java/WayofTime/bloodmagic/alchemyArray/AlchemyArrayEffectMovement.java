@@ -2,11 +2,11 @@ package WayofTime.bloodmagic.alchemyArray;
 
 import WayofTime.bloodmagic.iface.IAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -21,13 +21,13 @@ public class AlchemyArrayEffectMovement extends AlchemyArrayEffect {
     }
 
     @Override
-    public void onEntityCollidedWithBlock(IAlchemyArray array, World world, BlockPos pos, IBlockState state, Entity entity) {
+    public void onEntityCollidedWithBlock(IAlchemyArray array, World world, BlockPos pos, BlockState state, Entity entity) {
         double motionY = 0.5;
         double motionYGlowstoneMod = 0.05;
         double speed = 1.5;
         double speedRedstoneMod = 0.15;
 
-        EnumFacing direction = array.getRotation();
+        Direction direction = array.getRotation();
         TileAlchemyArray tileArray = (TileAlchemyArray) array;
 
         motionY += motionYGlowstoneMod * (tileArray.getStackInSlot(0).getCount() - 1);
@@ -66,12 +66,12 @@ public class AlchemyArrayEffectMovement extends AlchemyArrayEffect {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
 
     }
 

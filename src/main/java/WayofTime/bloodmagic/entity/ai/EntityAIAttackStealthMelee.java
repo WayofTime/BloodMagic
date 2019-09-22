@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.entity.ai;
 
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedChicken;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.pathfinding.Path;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-public class EntityAIAttackStealthMelee extends EntityAIBase {
+public class EntityAIAttackStealthMelee extends Goal {
     protected final int attackInterval = 20;
     protected EntityCorruptedChicken chicken;
     /**
@@ -50,7 +50,7 @@ public class EntityAIAttackStealthMelee extends EntityAIBase {
             return false;
         }
 
-        EntityLivingBase entitylivingbase = this.chicken.getAttackTarget();
+        LivingEntity entitylivingbase = this.chicken.getAttackTarget();
 
         if (entitylivingbase == null) {
             return false;
@@ -85,7 +85,7 @@ public class EntityAIAttackStealthMelee extends EntityAIBase {
 
     @Override
     public void updateTask() {
-        EntityLivingBase entitylivingbase = this.chicken.getAttackTarget();
+        LivingEntity entitylivingbase = this.chicken.getAttackTarget();
         this.chicken.getLookHelper().setLookPositionWithEntity(entitylivingbase, 30.0F, 30.0F);
         double d0 = this.chicken.getDistanceSq(entitylivingbase.posX, entitylivingbase.getEntityBoundingBox().minY, entitylivingbase.posZ);
         --this.delayCounter;
@@ -124,19 +124,19 @@ public class EntityAIAttackStealthMelee extends EntityAIBase {
         this.attackEntity(entitylivingbase, d0);
     }
 
-    protected void attackEntity(EntityLivingBase attacked, double distance) {
+    protected void attackEntity(LivingEntity attacked, double distance) {
         double d0 = this.getAttackReachSqr(attacked);
 
         if (distance <= d0 && this.attackTick <= 0) {
             this.attackTick = 20;
-            this.chicken.swingArm(EnumHand.MAIN_HAND);
+            this.chicken.swingArm(Hand.MAIN_HAND);
             this.chicken.attackEntityAsMob(attacked);
 
             chicken.attackStateMachine = 2;
         }
     }
 
-    protected double getAttackReachSqr(EntityLivingBase attackTarget) {
+    protected double getAttackReachSqr(LivingEntity attackTarget) {
         return (double) (this.chicken.width * 2.0F * this.chicken.width * 2.0F + attackTarget.width);
     }
 }

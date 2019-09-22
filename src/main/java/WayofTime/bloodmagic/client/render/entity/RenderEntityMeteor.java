@@ -5,18 +5,18 @@ import WayofTime.bloodmagic.client.render.model.ModelMeteor;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderEntityMeteor extends Render<EntityMeteor> {
+public class RenderEntityMeteor extends EntityRenderer<EntityMeteor> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(BloodMagic.MODID, "textures/models/Meteor.png");
     private static final float SCALE = 1;
 
     public ModelBase model = new ModelMeteor();
 
-    public RenderEntityMeteor(RenderManager renderManagerIn) {
+    public RenderEntityMeteor(EntityRendererManager renderManagerIn) {
         super(renderManagerIn);
     }
 

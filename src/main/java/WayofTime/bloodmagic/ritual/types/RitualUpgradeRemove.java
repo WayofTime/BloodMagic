@@ -9,9 +9,9 @@ import WayofTime.bloodmagic.livingArmour.StatTracker;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.util.helper.ItemHelper.LivingUpgrades;
 import com.google.common.collect.Iterables;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.effect.LightningBoltEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -42,9 +42,9 @@ public class RitualUpgradeRemove extends Ritual {
 
         AreaDescriptor checkRange = masterRitualStone.getBlockRange(CHECK_RANGE);
 
-        List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, checkRange.getAABB(pos));
+        List<PlayerEntity> playerList = world.getEntitiesWithinAABB(PlayerEntity.class, checkRange.getAABB(pos));
 
-        for (EntityPlayer player : playerList) {
+        for (PlayerEntity player : playerList) {
             if (LivingArmour.hasFullSet(player)) {
                 boolean removedUpgrade = false;
 
@@ -66,7 +66,7 @@ public class RitualUpgradeRemove extends Ritual {
 
                         if (successful) {
                             removedUpgrade = true;
-                            world.spawnEntity(new EntityItem(world, player.posX, player.posY, player.posZ, upgradeStack));
+                            world.spawnEntity(new ItemEntity(world, player.posX, player.posY, player.posZ, upgradeStack));
                             for (Entry<String, StatTracker> trackerEntry : armour.trackerMap.entrySet()) {
                                 StatTracker tracker = trackerEntry.getValue();
                                 if (tracker != null) {
@@ -85,7 +85,7 @@ public class RitualUpgradeRemove extends Ritual {
 
                         masterRitualStone.setActive(false);
 
-                        world.spawnEntity(new EntityLightningBolt(world, pos.getX(), pos.getY() - 1, pos.getZ(), true));
+                        world.spawnEntity(new LightningBoltEntity(world, pos.getX(), pos.getY() - 1, pos.getZ(), true));
                     }
 
                 }

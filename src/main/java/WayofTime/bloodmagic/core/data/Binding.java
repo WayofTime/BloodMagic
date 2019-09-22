@@ -1,15 +1,15 @@
 package WayofTime.bloodmagic.core.data;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class Binding implements INBTSerializable<NBTTagCompound> {
+public class Binding implements INBTSerializable<CompoundNBT> {
 
     private UUID uuid;
     private String name;
@@ -24,15 +24,15 @@ public class Binding implements INBTSerializable<NBTTagCompound> {
     }
 
     @Override
-    public NBTTagCompound serializeNBT() {
-        NBTTagCompound tag = new NBTTagCompound();
+    public CompoundNBT serializeNBT() {
+        CompoundNBT tag = new CompoundNBT();
         tag.setTag("id", NBTUtil.createUUIDTag(uuid));
         tag.setString("name", name);
         return tag;
     }
 
     @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
+    public void deserializeNBT(CompoundNBT nbt) {
         this.uuid = NBTUtil.getUUIDFromTag(nbt.getCompoundTag("id"));
         this.name = nbt.getString("name");
     }
@@ -65,7 +65,7 @@ public class Binding implements INBTSerializable<NBTTagCompound> {
             return null;
 
         Binding binding = new Binding();
-        binding.deserializeNBT((NBTTagCompound) bindingTag);
+        binding.deserializeNBT((CompoundNBT) bindingTag);
         return binding;
     }
 

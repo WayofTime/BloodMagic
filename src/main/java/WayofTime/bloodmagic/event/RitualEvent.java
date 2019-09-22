@@ -4,7 +4,7 @@ import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.Ritual;
 import WayofTime.bloodmagic.ritual.imperfect.IImperfectRitualStone;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitual;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
@@ -40,16 +40,16 @@ public class RitualEvent extends Event {
      * This event is called when a ritual is activated. If cancelled, it will
      * not activate.
      * <p>
-     * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#activateRitual(ItemStack, EntityPlayer, Ritual)}
+     * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#activateRitual(ItemStack, PlayerEntity, Ritual)}
      */
     @Cancelable
     public static class RitualActivatedEvent extends RitualEvent {
 
-        private final EntityPlayer player;
+        private final PlayerEntity player;
         private final ItemStack crystalStack;
         private final int crystalTier;
 
-        public RitualActivatedEvent(IMasterRitualStone mrs, UUID ownerId, Ritual ritual, EntityPlayer player, ItemStack activationCrystal, int crystalTier) {
+        public RitualActivatedEvent(IMasterRitualStone mrs, UUID ownerId, Ritual ritual, PlayerEntity player, ItemStack activationCrystal, int crystalTier) {
             super(mrs, ownerId, ritual);
 
             this.player = player;
@@ -57,7 +57,7 @@ public class RitualEvent extends Event {
             this.crystalTier = crystalTier;
         }
 
-        public EntityPlayer getPlayer() {
+        public PlayerEntity getPlayer() {
             return player;
         }
 
@@ -109,10 +109,10 @@ public class RitualEvent extends Event {
     public static class ImperfectRitualActivatedEvent extends Event {
 
         private final IImperfectRitualStone ims;
-        private final EntityPlayer activator;
+        private final PlayerEntity activator;
         private final ImperfectRitual imperfectRitual;
 
-        public ImperfectRitualActivatedEvent(IImperfectRitualStone ims, EntityPlayer activator, ImperfectRitual imperfectRitual) {
+        public ImperfectRitualActivatedEvent(IImperfectRitualStone ims, PlayerEntity activator, ImperfectRitual imperfectRitual) {
             this.ims = ims;
             this.activator = activator;
             this.imperfectRitual = imperfectRitual;
@@ -122,7 +122,7 @@ public class RitualEvent extends Event {
             return ims;
         }
 
-        public EntityPlayer getActivator() {
+        public PlayerEntity getActivator() {
             return activator;
         }
 

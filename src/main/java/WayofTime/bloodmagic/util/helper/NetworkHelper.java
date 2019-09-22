@@ -9,7 +9,7 @@ import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.core.registry.OrbRegistry;
 import WayofTime.bloodmagic.core.data.BMWorldSavedData;
 import WayofTime.bloodmagic.core.data.SoulNetwork;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -53,7 +53,7 @@ public class NetworkHelper {
      * @param player - The Player
      * @see NetworkHelper#getSoulNetwork(String)
      */
-    public static SoulNetwork getSoulNetwork(EntityPlayer player) {
+    public static SoulNetwork getSoulNetwork(PlayerEntity player) {
         return getSoulNetwork(PlayerHelper.getUUIDFromPlayer(player));
     }
 
@@ -98,10 +98,10 @@ public class NetworkHelper {
      * @param user        - User of the item.
      * @param toSyphon    - Amount of LP to syphon
      * @return - Whether the action should be performed.
-     * @deprecated Use {@link #getSoulNetwork(EntityPlayer)} and {@link SoulNetwork#syphonAndDamage$(EntityPlayer, SoulTicket)}
+     * @deprecated Use {@link #getSoulNetwork(PlayerEntity)} and {@link SoulNetwork#syphonAndDamage$(PlayerEntity, SoulTicket)}
      */
     @Deprecated
-    public static boolean syphonAndDamage(SoulNetwork soulNetwork, EntityPlayer user, int toSyphon) {
+    public static boolean syphonAndDamage(SoulNetwork soulNetwork, PlayerEntity user, int toSyphon) {
 
 //        if (soulNetwork.getNewOwner() == null)
 //        {

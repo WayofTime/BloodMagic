@@ -23,9 +23,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.item.Items;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -182,14 +182,14 @@ public class RegistrarBloodMagicItems {
                 new ItemTelepositionFocus().setRegistryName("teleposition_focus"),
                 new ItemExperienceBook().setRegistryName("experience_tome"),
                 new ItemEnum.Variant<>(ShardType.class, "blood_shard").setRegistryName("blood_shard"),
-                new ItemLivingArmour(EntityEquipmentSlot.HEAD).setRegistryName("living_armour_helmet"),
-                new ItemLivingArmour(EntityEquipmentSlot.CHEST).setRegistryName("living_armour_chest"),
-                new ItemLivingArmour(EntityEquipmentSlot.LEGS).setRegistryName("living_armour_leggings"),
-                new ItemLivingArmour(EntityEquipmentSlot.FEET).setRegistryName("living_armour_boots"),
-                new ItemSentientArmour(EntityEquipmentSlot.HEAD).setRegistryName("sentient_armour_helmet"),
-                new ItemSentientArmour(EntityEquipmentSlot.CHEST).setRegistryName("sentient_armour_chest"),
-                new ItemSentientArmour(EntityEquipmentSlot.LEGS).setRegistryName("sentient_armour_leggings"),
-                new ItemSentientArmour(EntityEquipmentSlot.FEET).setRegistryName("sentient_armour_boots"),
+                new ItemLivingArmour(EquipmentSlotType.HEAD).setRegistryName("living_armour_helmet"),
+                new ItemLivingArmour(EquipmentSlotType.CHEST).setRegistryName("living_armour_chest"),
+                new ItemLivingArmour(EquipmentSlotType.LEGS).setRegistryName("living_armour_leggings"),
+                new ItemLivingArmour(EquipmentSlotType.FEET).setRegistryName("living_armour_boots"),
+                new ItemSentientArmour(EquipmentSlotType.HEAD).setRegistryName("sentient_armour_helmet"),
+                new ItemSentientArmour(EquipmentSlotType.CHEST).setRegistryName("sentient_armour_chest"),
+                new ItemSentientArmour(EquipmentSlotType.LEGS).setRegistryName("sentient_armour_leggings"),
+                new ItemSentientArmour(EquipmentSlotType.FEET).setRegistryName("sentient_armour_boots"),
                 new ItemAltarMaker().setRegistryName("altar_maker"),
                 new ItemUpgradeTome().setRegistryName("upgrade_tome"),
                 new ItemUpgradeTrainer().setRegistryName("upgrade_trainer"),

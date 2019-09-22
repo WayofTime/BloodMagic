@@ -6,9 +6,9 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank> {
+public class RenderBloodTank extends TileEntityRenderer<TileBloodTank> {
     private static final Minecraft mc = Minecraft.getMinecraft();
 
     @Override
@@ -30,7 +30,7 @@ public class RenderBloodTank extends TileEntitySpecialRenderer<TileBloodTank> {
 
         GlStateManager.pushMatrix();
 
-        bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
 
         renderFluid(bloodTank.getRenderHeight(), renderFluid, x, y, z);
 

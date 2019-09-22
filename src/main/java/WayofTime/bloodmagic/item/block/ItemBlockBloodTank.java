@@ -5,10 +5,10 @@ import WayofTime.bloodmagic.tile.TileBloodTank;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemBlockBloodTank extends ItemBlock {
+public class ItemBlockBloodTank extends BlockItem {
     public ItemBlockBloodTank(Block block) {
         super(block);
 
@@ -58,7 +58,7 @@ public class ItemBlockBloodTank extends ItemBlock {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs creativeTab, NonNullList<ItemStack> list) {
+    public void getSubItems(ItemGroup creativeTab, NonNullList<ItemStack> list) {
         if (!isInCreativeTab(creativeTab))
             return;
 
@@ -72,7 +72,7 @@ public class ItemBlockBloodTank extends ItemBlock {
     }
 
     @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+    public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
         return new FluidHandlerItemStack(stack, getCapacity(stack));
     }
 }

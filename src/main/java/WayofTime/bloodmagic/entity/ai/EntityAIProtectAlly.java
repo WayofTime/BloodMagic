@@ -2,14 +2,14 @@ package WayofTime.bloodmagic.entity.ai;
 
 import WayofTime.bloodmagic.entity.mob.EntityAspectedDemonBase;
 import WayofTime.bloodmagic.entity.mob.EntityCorruptedSheep;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class EntityAIProtectAlly extends EntityAIBase {
+public class EntityAIProtectAlly extends Goal {
     /**
      * The entity owner of this AITask
      */
@@ -39,8 +39,8 @@ public class EntityAIProtectAlly extends EntityAIBase {
     @Override
     public boolean shouldExecute() {
         AxisAlignedBB bb = new AxisAlignedBB(entity.posX - 0.5, entity.posY - 0.5, entity.posZ - 0.5, entity.posX + 0.5, entity.posY + 0.5, entity.posZ + 0.5).grow(5);
-        List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, bb, new EntityAspectedDemonBase.WillTypePredicate(entity.getType()));
-        for (EntityLivingBase testEntity : list) {
+        List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb, new EntityAspectedDemonBase.WillTypePredicate(entity.getType()));
+        for (LivingEntity testEntity : list) {
             if (testEntity != this.entity) {
                 if (this.entity.canProtectAlly(testEntity)) {
                     return true;
@@ -85,8 +85,8 @@ public class EntityAIProtectAlly extends EntityAIBase {
         this.castTimer = Math.max(0, this.castTimer - 1);
         if (castTimer == 0) {
             AxisAlignedBB bb = new AxisAlignedBB(entity.posX - 0.5, entity.posY - 0.5, entity.posZ - 0.5, entity.posX + 0.5, entity.posY + 0.5, entity.posZ + 0.5).grow(5);
-            List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, bb, new EntityAspectedDemonBase.WillTypePredicate(entity.getType()));
-            for (EntityLivingBase testEntity : list) {
+            List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb, new EntityAspectedDemonBase.WillTypePredicate(entity.getType()));
+            for (LivingEntity testEntity : list) {
                 if (testEntity != this.entity) {
                     if (this.entity.applyProtectionToAlly(testEntity)) {
                         return;

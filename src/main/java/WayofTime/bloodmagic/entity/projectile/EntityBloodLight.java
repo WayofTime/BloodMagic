@@ -3,13 +3,13 @@ package WayofTime.bloodmagic.entity.projectile;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.ThrowableEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -17,8 +17,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.common.registry.IThrowableEntity;
 
-public class EntityBloodLight extends EntityThrowable implements IThrowableEntity, IEntityAdditionalSpawnData {
-    public EntityLivingBase shootingEntity;
+public class EntityBloodLight extends ThrowableEntity implements IThrowableEntity, IEntityAdditionalSpawnData {
+    public LivingEntity shootingEntity;
     protected int ticksInAir = 0;
     protected int maxTicksInAir = 600;
 
@@ -33,7 +33,7 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
         this.setPosition(x, y, z);
     }
 
-    public EntityBloodLight(World world, EntityLivingBase player) {
+    public EntityBloodLight(World world, LivingEntity player) {
         super(world, player);
         shootingEntity = player;
         float par3 = 0.8F;
@@ -91,7 +91,7 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
 
             this.onImpact(mop.entityHit);
         } else if (mop.typeOfHit == RayTraceResult.Type.BLOCK) {
-            EnumFacing sideHit = mop.sideHit;
+            Direction sideHit = mop.sideHit;
             BlockPos blockPos = mop.getBlockPos().offset(sideHit);
 
             if (getEntityWorld().isAirBlock(blockPos)) {
@@ -107,8 +107,8 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
             shootingEntity.attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
             this.setDead();
         } else {
-            if (mop instanceof EntityLivingBase) {
-                ((EntityLivingBase) mop).setRevengeTarget(shootingEntity);
+            if (mop instanceof LivingEntity) {
+                ((LivingEntity) mop).setRevengeTarget(shootingEntity);
                 doDamage(1, mop);
             }
         }
@@ -140,14 +140,14 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound nbt) {
+    public void writeEntityToNBT(CompoundNBT nbt) {
         super.writeEntityToNBT(nbt);
         nbt.setInteger(Constants.NBT.PROJECTILE_TICKS_IN_AIR, ticksInAir);
         nbt.setInteger(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR, maxTicksInAir);
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound nbt) {
+    public void readEntityFromNBT(CompoundNBT nbt) {
         super.readEntityFromNBT(nbt);
         ticksInAir = nbt.getInteger(Constants.NBT.PROJECTILE_TICKS_IN_AIR);
         maxTicksInAir = nbt.getInteger(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR);
@@ -165,7 +165,7 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
 
     @Override
     public void setThrower(Entity entity) {
-        if (entity instanceof EntityLivingBase)
-            this.shootingEntity = (EntityLivingBase) entity;
+        if (entity instanceof LivingEntity)
+            this.shootingEntity = (LivingEntity) entity;
     }
 }

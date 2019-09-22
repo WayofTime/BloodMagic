@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.livingArmour.upgrade;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class LivingArmourUpgradeStepAssist extends LivingArmourUpgrade {
     public static final int[] costs = new int[]{20};
@@ -35,12 +35,12 @@ public class LivingArmourUpgradeStepAssist extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         // EMPTY
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         // EMPTY
     }
 

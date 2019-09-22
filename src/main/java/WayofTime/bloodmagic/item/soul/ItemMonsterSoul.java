@@ -10,7 +10,7 @@ import WayofTime.bloodmagic.item.types.ISubItem;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -50,7 +50,7 @@ public class ItemMonsterSoul extends ItemEnum.Variant<ItemMonsterSoul.WillType> 
 
         NBTHelper.checkNBT(soulStack);
 
-        NBTTagCompound tag = soulStack.getTagCompound();
+        CompoundNBT tag = soulStack.getTagCompound();
 
         return tag.getDouble(Constants.NBT.SOULS);
     }
@@ -59,7 +59,7 @@ public class ItemMonsterSoul extends ItemEnum.Variant<ItemMonsterSoul.WillType> 
     public void setWill(EnumDemonWillType type, ItemStack soulStack, double souls) {
         NBTHelper.checkNBT(soulStack);
 
-        NBTTagCompound tag = soulStack.getTagCompound();
+        CompoundNBT tag = soulStack.getTagCompound();
 
         soulStack.setItemDamage(type.ordinal());
 

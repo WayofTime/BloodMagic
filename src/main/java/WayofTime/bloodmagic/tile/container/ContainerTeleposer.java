@@ -1,17 +1,17 @@
 package WayofTime.bloodmagic.tile.container;
 
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerTeleposer extends Container {
     private final IInventory tileTeleposer;
 
-    public ContainerTeleposer(InventoryPlayer inventoryPlayer, IInventory tileTeleposer) {
+    public ContainerTeleposer(PlayerInventory inventoryPlayer, IInventory tileTeleposer) {
         this.tileTeleposer = tileTeleposer;
         this.addSlotToContainer(new SlotTeleposer(tileTeleposer, 0, 80, 33));
 
@@ -27,7 +27,7 @@ public class ContainerTeleposer extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+    public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slotObject = inventorySlots.get(slot);
         int slots = inventorySlots.size();
@@ -63,7 +63,7 @@ public class ContainerTeleposer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(PlayerEntity playerIn) {
         return this.tileTeleposer.isUsableByPlayer(playerIn);
     }
 

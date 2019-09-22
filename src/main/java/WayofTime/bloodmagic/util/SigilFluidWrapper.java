@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.util;
 
 import WayofTime.bloodmagic.item.sigil.ItemSigilFluidBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidStack;
@@ -36,12 +36,12 @@ public class SigilFluidWrapper implements ICapabilityProvider {
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing from) {
+    public boolean hasCapability(Capability<?> capability, Direction from) {
         return capability == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY;
     }
 
     @Override
-    public <T> T getCapability(Capability<T> capability, final EnumFacing from) {
+    public <T> T getCapability(Capability<T> capability, final Direction from) {
         if (!hasCapability(capability, from)) {
             return null;
         }

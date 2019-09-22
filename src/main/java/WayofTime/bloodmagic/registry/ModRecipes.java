@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.oredict.OreDictionary;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -149,30 +149,30 @@ public class ModRecipes {
     }
 
     public static void addPotionRecipes() {
-        addPotionRecipe(1000, 1, new ItemStack(Items.GHAST_TEAR), new PotionEffect(MobEffects.REGENERATION, 450));
-        addPotionRecipe(1000, 1, new ItemStack(Items.GOLDEN_CARROT), new PotionEffect(MobEffects.NIGHT_VISION, 2 * 60 * 20));
-        addPotionRecipe(1000, 1, new ItemStack(Items.MAGMA_CREAM), new PotionEffect(MobEffects.FIRE_RESISTANCE, 2 * 60 * 20));
-        addPotionRecipe(1000, 1, new ItemStack(Items.WATER_BUCKET), new PotionEffect(MobEffects.WATER_BREATHING, 2 * 60 * 20));
-        addPotionRecipe(1000, 1, new ItemStack(Items.SUGAR), new PotionEffect(MobEffects.SPEED, 2 * 60 * 20));
-        addPotionRecipe(1000, 1, new ItemStack(Items.SPECKLED_MELON), new PotionEffect(MobEffects.INSTANT_HEALTH, 1));
-        addPotionRecipe(1000, 1, new ItemStack(Items.SPIDER_EYE), new PotionEffect(MobEffects.POISON, 450));
-        addPotionRecipe(1000, 1, new ItemStack(Items.DYE, 1, 0), new PotionEffect(MobEffects.BLINDNESS, 450));
-        addPotionRecipe(1000, 1, new ItemStack(Items.FERMENTED_SPIDER_EYE), new PotionEffect(MobEffects.WEAKNESS, 450));
-        addPotionRecipe(1000, 1, new ItemStack(Items.BLAZE_POWDER), new PotionEffect(MobEffects.STRENGTH, 2 * 60 * 20));
-        addPotionRecipe(1000, 1, new ItemStack(Items.FEATHER), new PotionEffect(MobEffects.JUMP_BOOST, 2 * 60 * 20));
-        addPotionRecipe(1000, 1, new ItemStack(Items.CLAY_BALL), new PotionEffect(MobEffects.SLOWNESS, 450));
-        addPotionRecipe(1000, 1, new ItemStack(Items.REDSTONE), new PotionEffect(MobEffects.HASTE, 2 * 60 * 20));
-        addPotionRecipe(1000, 1, new ItemStack(Items.GLASS_BOTTLE), new PotionEffect(MobEffects.INVISIBILITY, 2 * 60 * 20));
-        addPotionRecipe(1000, 1, new ItemStack(Items.POISONOUS_POTATO), new PotionEffect(MobEffects.SATURATION, 1));
-        addPotionRecipe(1000, 1, new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD, 1, 0), new PotionEffect(MobEffects.HEALTH_BOOST, 2 * 60 * 20));
-        addPotionRecipe(1000, 1, new ItemStack(Blocks.SLIME_BLOCK), new PotionEffect(RegistrarBloodMagic.BOUNCE, 2 * 60 * 20));
-        addPotionRecipe(1000, 1, new ItemStack(Items.STRING), new PotionEffect(RegistrarBloodMagic.CLING, 2 * 60 * 20));
-        addPotionRecipe(1000, 1, new ItemStack(Items.CAKE), new PotionEffect(RegistrarBloodMagic.FLIGHT, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.GHAST_TEAR), new EffectInstance(Effects.REGENERATION, 450));
+        addPotionRecipe(1000, 1, new ItemStack(Items.GOLDEN_CARROT), new EffectInstance(Effects.NIGHT_VISION, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.MAGMA_CREAM), new EffectInstance(Effects.FIRE_RESISTANCE, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.WATER_BUCKET), new EffectInstance(Effects.WATER_BREATHING, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.SUGAR), new EffectInstance(Effects.SPEED, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.SPECKLED_MELON), new EffectInstance(Effects.INSTANT_HEALTH, 1));
+        addPotionRecipe(1000, 1, new ItemStack(Items.SPIDER_EYE), new EffectInstance(Effects.POISON, 450));
+        addPotionRecipe(1000, 1, new ItemStack(Items.DYE, 1, 0), new EffectInstance(Effects.BLINDNESS, 450));
+        addPotionRecipe(1000, 1, new ItemStack(Items.FERMENTED_SPIDER_EYE), new EffectInstance(Effects.WEAKNESS, 450));
+        addPotionRecipe(1000, 1, new ItemStack(Items.BLAZE_POWDER), new EffectInstance(Effects.STRENGTH, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.FEATHER), new EffectInstance(Effects.JUMP_BOOST, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.CLAY_BALL), new EffectInstance(Effects.SLOWNESS, 450));
+        addPotionRecipe(1000, 1, new ItemStack(Items.REDSTONE), new EffectInstance(Effects.HASTE, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.GLASS_BOTTLE), new EffectInstance(Effects.INVISIBILITY, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.POISONOUS_POTATO), new EffectInstance(Effects.SATURATION, 1));
+        addPotionRecipe(1000, 1, new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD, 1, 0), new EffectInstance(Effects.HEALTH_BOOST, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Blocks.SLIME_BLOCK), new EffectInstance(RegistrarBloodMagic.BOUNCE, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.STRING), new EffectInstance(RegistrarBloodMagic.CLING, 2 * 60 * 20));
+        addPotionRecipe(1000, 1, new ItemStack(Items.CAKE), new EffectInstance(RegistrarBloodMagic.FLIGHT, 2 * 60 * 20));
 
-        addPotionRecipe(1000, 1, new ItemStack(Items.BEETROOT), new PotionEffect(RegistrarBloodMagic.DEAFNESS, 450));
+        addPotionRecipe(1000, 1, new ItemStack(Items.BEETROOT), new EffectInstance(RegistrarBloodMagic.DEAFNESS, 450));
     }
 
-    public static void addPotionRecipe(int lpDrained, int tier, ItemStack inputStack, PotionEffect baseEffect) {
+    public static void addPotionRecipe(int lpDrained, int tier, ItemStack inputStack, EffectInstance baseEffect) {
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTablePotionRecipe(lpDrained, 100, tier, inputStack, baseEffect));
 
         List<ItemStack> lengtheningList = new ArrayList<>();
@@ -211,7 +211,7 @@ public class ModRecipes {
             Map<Integer, List<ITextComponent>> textMap = new HashMap<>();
             for (int tick : entry.getValue().getValue()) {
                 List<ITextComponent> textList = new ArrayList<>();
-                textList.add(new TextComponentTranslation("\u00A74%s", new TextComponentTranslation(messageBase + str + "." + tick)));
+                textList.add(new TranslationTextComponent("\u00A74%s", new TranslationTextComponent(messageBase + str + "." + tick)));
                 textMap.put(tick, textList);
             }
 

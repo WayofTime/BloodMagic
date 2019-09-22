@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.ritual.imperfect;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
 import java.util.function.Predicate;
@@ -12,12 +12,12 @@ import java.util.function.Predicate;
 public abstract class ImperfectRitual {
 
     private final String name;
-    private final Predicate<IBlockState> blockRequirement;
+    private final Predicate<BlockState> blockRequirement;
     private final int activationCost;
     private final boolean lightShow;
     private final String unlocalizedName;
 
-    public ImperfectRitual(String name, Predicate<IBlockState> blockRequirement, int activationCost, boolean lightShow, String unlocalizedName) {
+    public ImperfectRitual(String name, Predicate<BlockState> blockRequirement, int activationCost, boolean lightShow, String unlocalizedName) {
         this.name = name;
         this.blockRequirement = blockRequirement;
         this.activationCost = activationCost;
@@ -30,25 +30,25 @@ public abstract class ImperfectRitual {
      * @param blockRequirement The block required above the ImperfectRitualStone
      * @param activationCost   Base LP cost for activating the ritual
      */
-    public ImperfectRitual(String name, Predicate<IBlockState> blockRequirement, int activationCost, String unlocalizedName) {
+    public ImperfectRitual(String name, Predicate<BlockState> blockRequirement, int activationCost, String unlocalizedName) {
         this(name, blockRequirement, activationCost, false, unlocalizedName);
     }
 
     /**
      * Called when the player activates the ritual
-     * {@link WayofTime.bloodmagic.tile.TileImperfectRitualStone#performRitual(World, net.minecraft.util.math.BlockPos, ImperfectRitual, EntityPlayer)}
+     * {@link WayofTime.bloodmagic.tile.TileImperfectRitualStone#performRitual(World, net.minecraft.util.math.BlockPos, ImperfectRitual, PlayerEntity)}
      *
      * @param imperfectRitualStone - The {@link IImperfectRitualStone} that the ritual is bound to
      * @param player               - The player activating the ritual
      * @return - Whether activation was successful
      */
-    public abstract boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player);
+    public abstract boolean onActivate(IImperfectRitualStone imperfectRitualStone, PlayerEntity player);
 
     public String getName() {
         return name;
     }
 
-    public Predicate<IBlockState> getBlockRequirement() {
+    public Predicate<BlockState> getBlockRequirement() {
         return blockRequirement;
     }
 

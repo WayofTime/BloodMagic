@@ -14,15 +14,15 @@ import WayofTime.bloodmagic.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -66,11 +66,11 @@ public class ItemRitualReader extends Item implements IVariantProvider {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         RayTraceResult ray = this.rayTrace(world, player, false);
         if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK) {
-            return new ActionResult<>(EnumActionResult.PASS, stack);
+            return new ActionResult<>(ActionResultType.PASS, stack);
         }
 
         if (player.isSneaking()) {
@@ -78,14 +78,14 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                 cycleReader(stack, player);
             }
 
-            return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+            return new ActionResult<>(ActionResultType.SUCCESS, stack);
         }
 
-        return new ActionResult<>(EnumActionResult.PASS, stack);
+        return new ActionResult<>(ActionResultType.PASS, stack);
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote) {
             EnumRitualReaderState state = this.getState(stack);
@@ -103,7 +103,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
 
                         break;
                     case SET_AREA:
-                        if (player.isSneaking() && player.getHeldItem(EnumHand.OFF_HAND).getItem() instanceof ItemBloodOrb) {
+                        if (player.isSneaking() && player.getHeldItem(Hand.OFF_HAND).getItem() instanceof ItemBloodOrb) {
                             Ritual ritual = master.getCurrentRitual();
                             for (String range : ritual.getListOfRanges()) {
                                 AreaDescriptor aabb = ritual.getBlockRange(range);
@@ -144,7 +144,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                         break;
                 }
 
-                return EnumActionResult.FAIL;
+                return ActionResultType.FAIL;
             } else {
                 if (state == EnumRitualReaderState.SET_AREA) {
                     BlockPos masterPos = this.getMasterBlockPos(stack);
@@ -153,7 +153,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                         if (containedPos.equals(BlockPos.ORIGIN)) {
                             BlockPos pos1 = pos.subtract(masterPos);
                             this.setBlockPos(stack, pos1);
-                            player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.firstBlock"), true);
+                            player.sendStatusMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.firstBlock"), true);
                         } else {
                             tile = world.getTileEntity(masterPos);
                             if (tile instanceof IMasterRitualStone) {
@@ -173,16 +173,16 @@ public class ItemRitualReader extends Item implements IVariantProvider {
 
                                 switch (master.setBlockRangeByBounds(player, range, containedPos, pos2)) {
                                     case SUCCESS:
-                                        player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.success"), true);
+                                        player.sendStatusMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.success"), true);
                                         break;
                                     case NOT_WITHIN_BOUNDARIES:
-                                        player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.tooFar", maxVerticalRange, maxHorizontalRange), false);
+                                        player.sendStatusMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.tooFar", maxVerticalRange, maxHorizontalRange), false);
                                         break;
                                     case VOLUME_TOO_LARGE:
-                                        player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.tooBig", maxVolume), false);
+                                        player.sendStatusMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.tooBig", maxVolume), false);
                                         break;
                                     default:
-                                        player.sendStatusMessage(new TextComponentTranslation("ritual.bloodmagic.blockRange.noRange"), false);
+                                        player.sendStatusMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.noRange"), false);
                                         break;
                                 }
                             }
@@ -203,7 +203,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
 
     public ItemStack setBlockPos(ItemStack stack, BlockPos pos) {
         stack = NBTHelper.checkNBT(stack);
-        NBTTagCompound itemTag = stack.getTagCompound();
+        CompoundNBT itemTag = stack.getTagCompound();
         itemTag.setInteger(Constants.NBT.X_COORD, pos.getX());
         itemTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
         itemTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
@@ -217,7 +217,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
 
     public ItemStack setMasterBlockPos(ItemStack stack, BlockPos pos) {
         stack = NBTHelper.checkNBT(stack);
-        NBTTagCompound itemTag = stack.getTagCompound();
+        CompoundNBT itemTag = stack.getTagCompound();
         itemTag.setInteger(Constants.NBT.X_COORD + "master", pos.getX());
         itemTag.setInteger(Constants.NBT.Y_COORD + "master", pos.getY());
         itemTag.setInteger(Constants.NBT.Z_COORD + "master", pos.getZ());
@@ -227,7 +227,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
     public String getCurrentBlockRange(ItemStack stack) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         return tag.getString("range");
     }
@@ -235,12 +235,12 @@ public class ItemRitualReader extends Item implements IVariantProvider {
     public void setCurrentBlockRange(ItemStack stack, String range) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setString("range", range);
     }
 
-    public void cycleReader(ItemStack stack, EntityPlayer player) {
+    public void cycleReader(ItemStack stack, PlayerEntity player) {
         EnumRitualReaderState prevState = getState(stack);
         int val = prevState.ordinal();
         int nextVal = val + 1 >= EnumRitualReaderState.values().length ? 0 : val + 1;
@@ -250,25 +250,25 @@ public class ItemRitualReader extends Item implements IVariantProvider {
         notifyPlayerOfStateChange(nextState, player);
     }
 
-    public void notifyPlayerOfStateChange(EnumRitualReaderState state, EntityPlayer player) {
-        ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentState", new TextComponentTranslation(tooltipBase + state.toString().toLowerCase())));
+    public void notifyPlayerOfStateChange(EnumRitualReaderState state, PlayerEntity player) {
+        ChatUtil.sendNoSpam(player, new TranslationTextComponent(tooltipBase + "currentState", new TranslationTextComponent(tooltipBase + state.toString().toLowerCase())));
     }
 
     public void setState(ItemStack stack, EnumRitualReaderState state) {
         NBTHelper.checkNBT(stack);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setInteger(Constants.NBT.RITUAL_READER, state.ordinal());
     }
 
     public EnumRitualReaderState getState(ItemStack stack) {
         if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
+            stack.setTagCompound(new CompoundNBT());
             return EnumRitualReaderState.INFORMATION;
         }
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         return EnumRitualReaderState.values()[tag.getInteger(Constants.NBT.RITUAL_READER)];
     }

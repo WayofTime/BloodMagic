@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.entity.ai;
 
 import WayofTime.bloodmagic.entity.mob.EntityMimic;
-import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.BlockPos;
 
-public class EntityAIMimicReform extends EntityAIBase {
+public class EntityAIMimicReform extends Goal {
     private final EntityMimic theEntity;
 
     public EntityAIMimicReform(EntityMimic creatureIn) {

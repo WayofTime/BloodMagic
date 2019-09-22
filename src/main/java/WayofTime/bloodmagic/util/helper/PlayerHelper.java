@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.util.helper;
 
 import com.google.common.collect.Lists;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.UsernameCache;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -18,18 +18,18 @@ public class PlayerHelper {
      */
     private static final ArrayList<String> knownFakePlayers = Lists.newArrayList();
 
-    public static EntityPlayer getPlayerFromId(UUID uuid) {
+    public static PlayerEntity getPlayerFromId(UUID uuid) {
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
             return null;
 
         return FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(uuid);
     }
 
-    public static EntityPlayer getPlayerFromUUID(UUID uuid) {
+    public static PlayerEntity getPlayerFromUUID(UUID uuid) {
         return getPlayerFromId(uuid);
     }
 
-    public static UUID getUUIDFromPlayer(EntityPlayer player) {
+    public static UUID getUUIDFromPlayer(PlayerEntity player) {
         return player.getGameProfile().getId();
     }
 
@@ -43,7 +43,7 @@ public class PlayerHelper {
      * @param player - The player in question
      * @return If the player is fake or not
      */
-    public static boolean isFakePlayer(EntityPlayer player) {
+    public static boolean isFakePlayer(PlayerEntity player) {
         return player instanceof FakePlayer || (player != null && knownFakePlayers.contains(player.getClass().getCanonicalName()));
     }
 }

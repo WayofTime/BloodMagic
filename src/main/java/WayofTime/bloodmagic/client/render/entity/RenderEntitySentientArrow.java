@@ -4,8 +4,8 @@ import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -14,14 +14,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class RenderEntitySentientArrow extends Render<EntitySentientArrow> {
+public class RenderEntitySentientArrow extends EntityRenderer<EntitySentientArrow> {
     private static final ResourceLocation defaultTexture = new ResourceLocation("bloodmagic:textures/entities/soulArrow.png");
     private static final ResourceLocation corrosiveTexture = new ResourceLocation("bloodmagic:textures/entities/soulArrow_corrosive.png");
     private static final ResourceLocation vengefulTexture = new ResourceLocation("bloodmagic:textures/entities/soulArrow_vengeful.png");
     private static final ResourceLocation destructiveTexture = new ResourceLocation("bloodmagic:textures/entities/soulArrow_destructive.png");
     private static final ResourceLocation steadfastTexture = new ResourceLocation("bloodmagic:textures/entities/soulArrow_steadfast.png");
 
-    public RenderEntitySentientArrow(RenderManager renderManagerIn) {
+    public RenderEntitySentientArrow(EntityRendererManager renderManagerIn) {
         super(renderManagerIn);
     }
 

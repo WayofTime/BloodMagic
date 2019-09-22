@@ -6,15 +6,15 @@ import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -43,47 +43,47 @@ public class BlockRoutingNode extends Block implements IBMBlock, IVariantProvide
     }
 
     @Override
-    public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+    public boolean canConnectRedstone(BlockState state, IBlockAccess world, BlockPos pos, Direction side) {
         return true;
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
         return AABB;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean isNormalCube(BlockState state, IBlockAccess world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean causesSuffocation(IBlockState state) {
+    public boolean causesSuffocation(BlockState state) {
         return false;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override
-    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+    public boolean canRenderInLayer(BlockState state, BlockRenderLayer layer) {
         return layer == BlockRenderLayer.CUTOUT_MIPPED || layer == BlockRenderLayer.TRANSLUCENT;
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return this.getDefaultState();
     }
 
@@ -91,13 +91,13 @@ public class BlockRoutingNode extends Block implements IBMBlock, IVariantProvide
      * Convert the BlockState into the correct metadata value
      */
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return 0;
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        return state.withProperty(UP, this.shouldConnect(state, worldIn, pos.up(), EnumFacing.DOWN)).withProperty(DOWN, this.shouldConnect(state, worldIn, pos.down(), EnumFacing.UP)).withProperty(NORTH, this.shouldConnect(state, worldIn, pos.north(), EnumFacing.SOUTH)).withProperty(EAST, this.shouldConnect(state, worldIn, pos.east(), EnumFacing.WEST)).withProperty(SOUTH, this.shouldConnect(state, worldIn, pos.south(), EnumFacing.NORTH)).withProperty(WEST, this.shouldConnect(state, worldIn, pos.west(), EnumFacing.EAST));
+    public BlockState getActualState(BlockState state, IBlockAccess worldIn, BlockPos pos) {
+        return state.withProperty(UP, this.shouldConnect(state, worldIn, pos.up(), Direction.DOWN)).withProperty(DOWN, this.shouldConnect(state, worldIn, pos.down(), Direction.UP)).withProperty(NORTH, this.shouldConnect(state, worldIn, pos.north(), Direction.SOUTH)).withProperty(EAST, this.shouldConnect(state, worldIn, pos.east(), Direction.WEST)).withProperty(SOUTH, this.shouldConnect(state, worldIn, pos.south(), Direction.NORTH)).withProperty(WEST, this.shouldConnect(state, worldIn, pos.west(), Direction.EAST));
     }
 
     @Override
@@ -105,14 +105,14 @@ public class BlockRoutingNode extends Block implements IBMBlock, IVariantProvide
         return new BlockStateContainer(this, UP, DOWN, NORTH, EAST, WEST, SOUTH);
     }
 
-    public boolean shouldConnect(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing attachedSide) {
-        IBlockState blockState = world.getBlockState(pos);
+    public boolean shouldConnect(BlockState state, IBlockAccess world, BlockPos pos, Direction attachedSide) {
+        BlockState blockState = world.getBlockState(pos);
         Block block = blockState.getBlock();
         return block.getMaterial(blockState).isOpaque() && blockState.isFullCube();
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState blockState) {
+    public void breakBlock(World world, BlockPos pos, BlockState blockState) {
         if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileRoutingNode) {
@@ -126,8 +126,8 @@ public class BlockRoutingNode extends Block implements IBMBlock, IVariantProvide
     }
 
     @Override
-    public ItemBlock getItem() {
-        return new ItemBlock(this);
+    public BlockItem getItem() {
+        return new BlockItem(this);
     }
 
     @Override

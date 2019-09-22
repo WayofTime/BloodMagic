@@ -6,9 +6,9 @@ import WayofTime.bloodmagic.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePoisonResist;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -29,18 +29,18 @@ public class StatTrackerPoison extends StatTracker {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         totalPoisonTicks = tag.getInteger(BloodMagic.MODID + ".tracker.poison");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         tag.setInteger(BloodMagic.MODID + ".tracker.poison", totalPoisonTicks);
     }
 
     @Override
-    public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour) {
-        if (player.isPotionActive(MobEffects.POISON)) {
+    public boolean onTick(World world, PlayerEntity player, LivingArmour livingArmour) {
+        if (player.isPotionActive(Effects.POISON)) {
             totalPoisonTicks++;
             this.markDirty();
             return true;
@@ -50,7 +50,7 @@ public class StatTrackerPoison extends StatTracker {
     }
 
     @Override
-    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour) {
+    public void onDeactivatedTick(World world, PlayerEntity player, LivingArmour livingArmour) {
 
     }
 

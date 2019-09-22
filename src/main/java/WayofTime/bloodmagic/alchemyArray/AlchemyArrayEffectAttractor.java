@@ -5,12 +5,12 @@ import WayofTime.bloodmagic.fakePlayer.FakePlayerBM;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAITasks;
-import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.GoalSelector;
+import net.minecraft.entity.ai.goal.GoalSelector.EntityAITaskEntry;
 import net.minecraft.entity.monster.*;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathFinder;
 import net.minecraft.pathfinding.WalkNodeProcessor;
@@ -28,7 +28,7 @@ import java.util.*;
  */
 public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
     private FakePlayer target;
-    private Set<EntityLiving> tracking = new HashSet<>();
+    private Set<MobEntity> tracking = new HashSet<>();
 
     private int counter = 0;
     private int maxMobsAttracted = 10000;
@@ -48,7 +48,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
         BlockPos pos = tile.getPos();
         counter++;
         if (counter < 10) {
-            for (EntityLiving ent : tracking) {
+            for (MobEntity ent : tracking) {
                 onEntityTick(pos, ent);
             }
 
@@ -59,10 +59,10 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
 
         World world = tile.getWorld();
 
-        Set<EntityLiving> trackingThisTick = new HashSet<>();
-        List<EntityLiving> entsInBounds = world.getEntitiesWithinAABB(EntityLiving.class, getBounds(pos));
+        Set<MobEntity> trackingThisTick = new HashSet<>();
+        List<MobEntity> entsInBounds = world.getEntitiesWithinAABB(MobEntity.class, getBounds(pos));
 
-        for (EntityLiving ent : entsInBounds) {
+        for (MobEntity ent : entsInBounds) {
             if (!ent.isDead)// && isMobInFilter(ent))
             {
                 double x = (pos.getX() + 0.5D - ent.posX);
@@ -92,7 +92,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
             }
         }
 
-        for (EntityLiving e : tracking) {
+        for (MobEntity e : tracking) {
             if (!trackingThisTick.contains(e)) {
                 onUntracked(e);
             }
@@ -103,7 +103,7 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
         return false;
     }
 
-    public boolean canEntityBeTracked(BlockPos pos, EntityLiving entity) {
+    public boolean canEntityBeTracked(BlockPos pos, MobEntity entity) {
         return getEntityCooldown(pos, entity) <= 0;
     }
 
@@ -111,15 +111,15 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
         return "BMAttractor:" + pos;
     }
 
-    public int getEntityCooldown(BlockPos pos, EntityLiving entity) {
+    public int getEntityCooldown(BlockPos pos, MobEntity entity) {
         return entity.getEntityData().getInteger(getPosKey(pos));
     }
 
-    public void setEntityCooldown(BlockPos pos, EntityLiving entity, int cooldown) {
+    public void setEntityCooldown(BlockPos pos, MobEntity entity, int cooldown) {
         entity.getEntityData().setInteger(getPosKey(pos), cooldown);
     }
 
-    public void decrementEntityCooldown(BlockPos pos, EntityLiving entity) {
+    public void decrementEntityCooldown(BlockPos pos, MobEntity entity) {
         int cooldown = getEntityCooldown(pos, entity);
         if (cooldown > 0) {
             setEntityCooldown(pos, entity, cooldown - 1);
@@ -134,29 +134,29 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
         return 10;
     }
 
-    private void onUntracked(EntityLiving e) {
-        if (e instanceof EntityEnderman) {
+    private void onUntracked(MobEntity e) {
+        if (e instanceof EndermanEntity) {
             e.getEntityData().setBoolean("BM:tracked", false);
         }
     }
 
-    private void onTracked(EntityLiving e) {
-        if (e instanceof EntityEnderman) {
+    private void onTracked(MobEntity e) {
+        if (e instanceof EndermanEntity) {
             e.getEntityData().setBoolean("BM:tracked", true);
         }
     }
 
-    private void onEntityTick(BlockPos pos, EntityLiving ent) {
-        if (ent instanceof EntitySlime) {
+    private void onEntityTick(BlockPos pos, MobEntity ent) {
+        if (ent instanceof SlimeEntity) {
             ent.faceEntity(getTarget(ent.getEntityWorld(), pos), 10.0F, 20.0F);
-        } else if (ent instanceof EntitySilverfish) {
+        } else if (ent instanceof SilverfishEntity) {
             if (counter < 10) {
                 return;
             }
-            EntitySilverfish sf = (EntitySilverfish) ent;
+            SilverfishEntity sf = (SilverfishEntity) ent;
             Path pathentity = getPathEntityToEntity(ent, getTarget(ent.getEntityWorld(), pos), getRange());
             sf.getNavigator().setPath(pathentity, sf.getAIMoveSpeed());
-        } else if (ent instanceof EntityBlaze) {
+        } else if (ent instanceof BlazeEntity) {
             double x = (pos.getX() + 0.5D - ent.posX);
             double y = (pos.getY() + 1D - ent.posY);
             double z = (pos.getZ() + 0.5D - ent.posZ);
@@ -169,21 +169,21 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
                 }
                 ent.motionZ += z / distance * speed;
             }
-        } else if (ent instanceof EntityPigZombie || ent instanceof EntitySpider) {
+        } else if (ent instanceof ZombiePigmanEntity || ent instanceof SpiderEntity) {
             forceMove(pos, ent);
 //            ent.setAttackTarget(target);
-        } else if (ent instanceof EntityEnderman) {
+        } else if (ent instanceof EndermanEntity) {
             ent.setAttackTarget(getTarget(ent.getEntityWorld(), pos));
         }
     }
 
-    private void forceMove(BlockPos pos, EntityLiving ent) {
+    private void forceMove(BlockPos pos, MobEntity ent) {
         double x = (pos.getX() + 0.5D - ent.posX);
         double y = (pos.getY() + 1D - ent.posY);
         double z = (pos.getZ() + 0.5D - ent.posZ);
         double distance = Math.sqrt(x * x + y * y + z * z);
         if (distance > 2) {
-            EntityMob mod = (EntityMob) ent;
+            MonsterEntity mod = (MonsterEntity) ent;
             mod.faceEntity(getTarget(ent.getEntityWorld(), pos), 180, 0);
             mod.getMoveHelper().strafe(0, 0.3f);
             if (mod.posY < pos.getY()) {
@@ -200,10 +200,10 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
         int targZ = MathHelper.floor(targetEntity.posZ);
 
         PathFinder pf = new PathFinder(new WalkNodeProcessor());
-        return pf.findPath(targetEntity.getEntityWorld(), (EntityLiving) entity, new BlockPos(targX, targY, targZ), range);
+        return pf.findPath(targetEntity.getEntityWorld(), (MobEntity) entity, new BlockPos(targX, targY, targZ), range);
     }
 
-    private boolean trackMob(BlockPos pos, EntityLiving ent) {
+    private boolean trackMob(BlockPos pos, MobEntity ent) {
         //TODO: Figure out if this crud is needed
         if (useSetTarget(ent)) {
             ent.setAttackTarget(getTarget(ent.getEntityWorld(), pos));
@@ -215,13 +215,13 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
         }
     }
 
-    private boolean useSetTarget(EntityLiving ent) {
-        return ent instanceof EntityPigZombie || ent instanceof EntitySpider || ent instanceof EntitySilverfish;
+    private boolean useSetTarget(MobEntity ent) {
+        return ent instanceof ZombiePigmanEntity || ent instanceof SpiderEntity || ent instanceof SilverfishEntity;
     }
 
-    public void removeAssignedAITask(BlockPos pos, EntityLiving ent) {
+    public void removeAssignedAITask(BlockPos pos, MobEntity ent) {
         Set<EntityAITaskEntry> entries = ent.tasks.taskEntries;
-        EntityAIBase remove = null;
+        Goal remove = null;
         for (EntityAITaskEntry entry : entries) {
             if (entry.action instanceof AttractTask) {
                 AttractTask at = (AttractTask) entry.action;
@@ -237,11 +237,11 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
         }
     }
 
-    private boolean attractUsingAITask(BlockPos pos, EntityLiving ent) {
+    private boolean attractUsingAITask(BlockPos pos, MobEntity ent) {
         tracking.add(ent);
         Set<EntityAITaskEntry> entries = ent.tasks.taskEntries;
         // boolean hasTask = false;
-        EntityAIBase remove = null;
+        Goal remove = null;
         // boolean isTracked;
         for (EntityAITaskEntry entry : entries) {
             if (entry.action instanceof AttractTask) {
@@ -263,10 +263,10 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
         return true;
     }
 
-    private void cancelCurrentTasks(EntityLiving ent) {
+    private void cancelCurrentTasks(MobEntity ent) {
         Iterator<EntityAITaskEntry> iterator = ent.tasks.taskEntries.iterator();
 
-        List<EntityAITasks.EntityAITaskEntry> currentTasks = new ArrayList<>();
+        List<GoalSelector.EntityAITaskEntry> currentTasks = new ArrayList<>();
         while (iterator.hasNext()) {
             EntityAITaskEntry entityaitaskentry = iterator.next();
             if (entityaitaskentry != null) {
@@ -285,24 +285,24 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
         }
     }
 
-    private boolean applySpecialCase(BlockPos pos, EntityLiving ent) {
-        if (ent instanceof EntitySlime) {
+    private boolean applySpecialCase(BlockPos pos, MobEntity ent) {
+        if (ent instanceof SlimeEntity) {
             ent.faceEntity(getTarget(ent.getEntityWorld(), pos), 10.0F, 20.0F);
 //            ent.setAttackTarget(getTarget(ent.worldObj, pos));
             return true;
-        } else if (ent instanceof EntitySilverfish) {
-            EntitySilverfish es = (EntitySilverfish) ent;
+        } else if (ent instanceof SilverfishEntity) {
+            SilverfishEntity es = (SilverfishEntity) ent;
             Path pathentity = getPathEntityToEntity(ent, getTarget(ent.getEntityWorld(), pos), getRange());
             es.getNavigator().setPath(pathentity, es.getAIMoveSpeed());
             return true;
-        } else if (ent instanceof EntityBlaze) {
+        } else if (ent instanceof BlazeEntity) {
             return true;
         }
         return false;
     }
 
-    private boolean useSpecialCase(EntityLiving ent) {
-        return ent instanceof EntitySlime || ent instanceof EntitySilverfish || ent instanceof EntityBlaze;
+    private boolean useSpecialCase(MobEntity ent) {
+        return ent instanceof SlimeEntity || ent instanceof SilverfishEntity || ent instanceof BlazeEntity;
     }
 
     public FakePlayer getTarget(World world, BlockPos pos) {
@@ -315,12 +315,12 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
 
     }
 
@@ -329,15 +329,15 @@ public class AlchemyArrayEffectAttractor extends AlchemyArrayEffect {
         return new AlchemyArrayEffectAttractor(key);
     }
 
-    private static class AttractTask extends EntityAIBase {
-        private EntityLiving mob;
+    private static class AttractTask extends Goal {
+        private MobEntity mob;
         private BlockPos coord;
         private FakePlayer target;
         private int updatesSincePathing;
 
         private boolean started = false;
 
-        private AttractTask(EntityLiving mob, FakePlayer target, BlockPos coord) {
+        private AttractTask(MobEntity mob, FakePlayer target, BlockPos coord) {
             this.mob = mob;
             this.coord = coord;
             this.target = target;

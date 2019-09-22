@@ -3,12 +3,12 @@ package WayofTime.bloodmagic.entity.ai;
 import WayofTime.bloodmagic.entity.mob.EntityAspectedDemonBase;
 import WayofTime.bloodmagic.inversion.CorruptionHandler;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class EntityAIEatAndCorruptBlock extends EntityAIBase {
+public class EntityAIEatAndCorruptBlock extends Goal {
     /**
      * The entity owner of this AITask
      */
@@ -36,7 +36,7 @@ public class EntityAIEatAndCorruptBlock extends EntityAIBase {
             return false;
         } else {
             BlockPos pos = new BlockPos(this.grassEaterEntity.posX, this.grassEaterEntity.posY, this.grassEaterEntity.posZ).down();
-            IBlockState offsetState = world.getBlockState(pos);
+            BlockState offsetState = world.getBlockState(pos);
             Block offsetBlock = offsetState.getBlock();
             return CorruptionHandler.isBlockCorruptible(world, grassEaterEntity.getType(), pos, offsetState, offsetBlock);
         }
@@ -82,7 +82,7 @@ public class EntityAIEatAndCorruptBlock extends EntityAIBase {
             BlockPos blockpos = new BlockPos(this.grassEaterEntity.posX, this.grassEaterEntity.posY, this.grassEaterEntity.posZ);
 
             BlockPos offsetPos = blockpos.down();
-            IBlockState offsetState = world.getBlockState(offsetPos);
+            BlockState offsetState = world.getBlockState(offsetPos);
             Block offsetBlock = offsetState.getBlock();
 
             if (CorruptionHandler.isBlockCorruptible(world, grassEaterEntity.getType(), offsetPos, offsetState, offsetBlock)) {

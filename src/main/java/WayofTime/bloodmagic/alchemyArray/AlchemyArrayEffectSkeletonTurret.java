@@ -2,15 +2,15 @@ package WayofTime.bloodmagic.alchemyArray;
 
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import com.google.common.base.Predicate;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAITasks;
-import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.ai.goal.GoalSelector;
+import net.minecraft.entity.ai.goal.GoalSelector.EntityAITaskEntry;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.monster.SkeletonEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -25,8 +25,8 @@ import java.util.List;
  * Credits for the initial code go to Crazy Pants of EIO.
  */
 public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect {
-    public static Predicate<EntityMob> checkSkeleton = input -> !(input instanceof EntitySkeleton);
-    private EntitySkeleton turret;
+    public static Predicate<MonsterEntity> checkSkeleton = input -> !(input instanceof SkeletonEntity);
+    private SkeletonEntity turret;
 
     public AlchemyArrayEffectSkeletonTurret(String key) {
         super(key);
@@ -55,9 +55,9 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect {
 
         World world = tile.getWorld();
 
-        List<EntitySkeleton> skeletonsInRange = world.getEntitiesWithinAABB(EntitySkeleton.class, getBounds(pos));
+        List<SkeletonEntity> skeletonsInRange = world.getEntitiesWithinAABB(SkeletonEntity.class, getBounds(pos));
 
-        for (EntitySkeleton entity : skeletonsInRange) {
+        for (SkeletonEntity entity : skeletonsInRange) {
             if (!entity.isDead)// && isMobInFilter(ent))
             {
                 modifyAITargetTasks(entity);
@@ -87,20 +87,20 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect {
 //        e.getEntityData().setBoolean("BM:tracked", true);
 //    }
 
-    private boolean modifyAITargetTasks(EntitySkeleton entity) {
+    private boolean modifyAITargetTasks(SkeletonEntity entity) {
         cancelCurrentTargetTasks(entity);
 
 //        entity.setCombatTask();
-        entity.targetTasks.addTask(1, new EntityAINearestAttackableTarget(entity, EntityMob.class, 10, true, false, checkSkeleton));
+        entity.targetTasks.addTask(1, new NearestAttackableTargetGoal(entity, MonsterEntity.class, 10, true, false, checkSkeleton));
         entity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
         entity.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
         return true;
     }
 
-    private void cancelCurrentTargetTasks(EntityLiving entity) {
+    private void cancelCurrentTargetTasks(MobEntity entity) {
         Iterator<EntityAITaskEntry> iterator = entity.targetTasks.taskEntries.iterator();
 
-        List<EntityAITasks.EntityAITaskEntry> currentTasks = new ArrayList<>();
+        List<GoalSelector.EntityAITaskEntry> currentTasks = new ArrayList<>();
         while (iterator.hasNext()) {
             EntityAITaskEntry entityaitaskentry = iterator.next();
             if (entityaitaskentry != null)// && entityaitaskentry.action instanceof EntityAITarget)
@@ -115,12 +115,12 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
 
     }
 
@@ -129,15 +129,15 @@ public class AlchemyArrayEffectSkeletonTurret extends AlchemyArrayEffect {
         return new AlchemyArrayEffectSkeletonTurret(key);
     }
 
-    private static class AttractTask extends EntityAIBase {
-        private EntityLiving mob;
+    private static class AttractTask extends Goal {
+        private MobEntity mob;
         private BlockPos coord;
         private FakePlayer target;
         private int updatesSincePathing;
 
         private boolean started = false;
 
-        private AttractTask(EntityLiving mob, FakePlayer target, BlockPos coord) {
+        private AttractTask(MobEntity mob, FakePlayer target, BlockPos coord) {
             this.mob = mob;
             this.coord = coord;
             this.target = target;

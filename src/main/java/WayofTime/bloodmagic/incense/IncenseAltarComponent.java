@@ -1,33 +1,33 @@
 package WayofTime.bloodmagic.incense;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
 public class IncenseAltarComponent {
     public final BlockPos offsetPos;
     public final Block block;
-    public final IBlockState state;
+    public final BlockState state;
 
-    public IncenseAltarComponent(BlockPos offsetPos, Block block, IBlockState state) {
+    public IncenseAltarComponent(BlockPos offsetPos, Block block, BlockState state) {
         this.offsetPos = offsetPos;
         this.block = block;
         this.state = state;
     }
 
-    public boolean doesBlockMatch(Block block, IBlockState state) {
+    public boolean doesBlockMatch(Block block, BlockState state) {
         return this.block == block && block.getMetaFromState(state) == this.block.getMetaFromState(this.state);
     }
 
     /**
      * Base rotation is north.
      */
-    public BlockPos getOffset(EnumFacing rotation) {
+    public BlockPos getOffset(Direction rotation) {
         return new BlockPos(this.getX(rotation), offsetPos.getY(), this.getZ(rotation));
     }
 
-    public int getX(EnumFacing direction) {
+    public int getX(Direction direction) {
         switch (direction) {
             case EAST:
                 return -this.offsetPos.getZ();
@@ -40,7 +40,7 @@ public class IncenseAltarComponent {
         }
     }
 
-    public int getZ(EnumFacing direction) {
+    public int getZ(Direction direction) {
         switch (direction) {
             case EAST:
                 return this.offsetPos.getX();

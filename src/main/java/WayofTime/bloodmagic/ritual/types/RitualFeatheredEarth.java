@@ -3,9 +3,9 @@ package WayofTime.bloodmagic.ritual.types;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.ritual.*;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.LightningBoltEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -42,22 +42,22 @@ public class RitualFeatheredEarth extends Ritual {
         int totalEffects = 0;
 
         if (masterRitualStone.getCooldown() > 0) {
-            world.addWeatherEffect(new EntityLightningBolt(world, x + 4, y + 5, z + 4, false));
-            world.addWeatherEffect(new EntityLightningBolt(world, x + 4, y + 5, z - 4, false));
-            world.addWeatherEffect(new EntityLightningBolt(world, x - 4, y + 5, z - 4, false));
-            world.addWeatherEffect(new EntityLightningBolt(world, x - 4, y + 5, z + 4, false));
+            world.addWeatherEffect(new LightningBoltEntity(world, x + 4, y + 5, z + 4, false));
+            world.addWeatherEffect(new LightningBoltEntity(world, x + 4, y + 5, z - 4, false));
+            world.addWeatherEffect(new LightningBoltEntity(world, x - 4, y + 5, z - 4, false));
+            world.addWeatherEffect(new LightningBoltEntity(world, x - 4, y + 5, z + 4, false));
             masterRitualStone.setCooldown(0);
         }
 
         AreaDescriptor fallProtRange = masterRitualStone.getBlockRange(FALL_PROTECTION_RANGE);
         AxisAlignedBB fallProtBB = fallProtRange.getAABB(masterRitualStone.getBlockPos());
-        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, fallProtBB);
+        List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, fallProtBB);
 
-        for (EntityLivingBase entity : entities) {
+        for (LivingEntity entity : entities) {
             if (totalEffects >= maxEffects) {
                 break;
             }
-            entity.addPotionEffect(new PotionEffect(RegistrarBloodMagic.FEATHERED, 20, 0));
+            entity.addPotionEffect(new EffectInstance(RegistrarBloodMagic.FEATHERED, 20, 0));
             totalEffects++;
         }
 

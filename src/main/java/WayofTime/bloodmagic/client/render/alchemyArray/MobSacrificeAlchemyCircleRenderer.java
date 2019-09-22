@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -78,8 +78,8 @@ public class MobSacrificeAlchemyCircleRenderer extends AlchemyCircleRenderer {
         GlStateManager.translate(x, y, z);
 
         // Specify which face this "circle" is located on
-        EnumFacing sideHit = EnumFacing.UP;
-        EnumFacing rotation = tileArray.getRotation();
+        Direction sideHit = Direction.UP;
+        Direction rotation = tileArray.getRotation();
 
         GlStateManager.translate(sideHit.getXOffset() * offsetFromFace, sideHit.getYOffset() * offsetFromFace, sideHit.getZOffset() * offsetFromFace);
 

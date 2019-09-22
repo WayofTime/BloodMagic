@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.tile.base.TileBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidTank;
@@ -25,7 +25,7 @@ public class TileBloodTank extends TileBase {
     }
 
     @Override
-    public void deserialize(NBTTagCompound tagCompound) {
+    public void deserialize(CompoundNBT tagCompound) {
         super.deserialize(tagCompound);
         tank.readFromNBT(tagCompound.getCompoundTag(Constants.NBT.TANK));
         capacity = tagCompound.getInteger(Constants.NBT.ALTAR_CAPACITY);
@@ -33,10 +33,10 @@ public class TileBloodTank extends TileBase {
     }
 
     @Override
-    public NBTTagCompound serialize(NBTTagCompound tagCompound) {
+    public CompoundNBT serialize(CompoundNBT tagCompound) {
         super.serialize(tagCompound);
         if (tank.getFluidAmount() != 0)
-            tagCompound.setTag(Constants.NBT.TANK, tank.writeToNBT(new NBTTagCompound()));
+            tagCompound.setTag(Constants.NBT.TANK, tank.writeToNBT(new CompoundNBT()));
         tagCompound.setInteger(Constants.NBT.ALTAR_CAPACITY, capacity);
         return tagCompound;
     }
@@ -66,13 +66,13 @@ public class TileBloodTank extends TileBase {
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+    public boolean hasCapability(Capability<?> capability, Direction facing) {
         return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+    public <T> T getCapability(Capability<T> capability, Direction facing) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
             return (T) tank;
         return super.getCapability(capability, facing);

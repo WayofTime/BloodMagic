@@ -7,9 +7,9 @@ import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.PlayerHelper;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.server.command.CommandTreeBase;
 import net.minecraftforge.server.command.CommandTreeHelp;
 
@@ -37,7 +37,7 @@ public class SubCommandOrb extends CommandTreeBase {
 
     abstract class OrbCommand extends CommandTreeBase {
 
-        public EntityPlayerMP player;
+        public ServerPlayerEntity player;
         public String uuid;
         public SoulNetwork network;
         public Object info;
@@ -58,7 +58,7 @@ public class SubCommandOrb extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             if (args.length == 1 && (args[0].equals("?") || args[0].equals("help"))) {
-                sender.sendMessage(new TextComponentTranslation(getHelp()));
+                sender.sendMessage(new TranslationTextComponent(getHelp()));
                 return;
             }
             player = args.length < 2 ? getCommandSenderAsPlayer(sender) : getPlayer(server, sender, args[0]);
@@ -81,7 +81,7 @@ public class SubCommandOrb extends CommandTreeBase {
         @Override
         public void subExecute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             super.execute(server, sender, args);
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.orb.currenttier", network.getOrbTier()));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.orb.currenttier", network.getOrbTier()));
         }
     }
 
@@ -109,19 +109,19 @@ public class SubCommandOrb extends CommandTreeBase {
             else if (args.length == 2 && Utils.isInteger(args[1]))
                 targetTier = Integer.parseInt(args[1]);
             else {
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.error.arg.invalid"));
-                sender.sendMessage(new TextComponentTranslation(this.getUsage(sender)));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.error.arg.invalid"));
+                sender.sendMessage(new TranslationTextComponent(this.getUsage(sender)));
                 return;
             }
             if (targetTier < 0) {
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.error.negative"));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.error.negative"));
                 return;
             } else if (targetTier > maxTier) {
-                sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.orb.error.tierTooHigh", getInfo()));
+                sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.orb.error.tierTooHigh", getInfo()));
                 return;
             }
             network.setOrbTier(targetTier);
-            sender.sendMessage(new TextComponentTranslation("commands.bloodmagic.success"));
+            sender.sendMessage(new TranslationTextComponent("commands.bloodmagic.success"));
         }
     }
 }

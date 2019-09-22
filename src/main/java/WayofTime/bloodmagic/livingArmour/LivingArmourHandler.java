@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.livingArmour;
 
 import WayofTime.bloodmagic.util.BMLog;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class LivingArmourHandler {
         return generateUpgradeFromKey(key, level, null);
     }
 
-    public static LivingArmourUpgrade generateUpgradeFromKey(String key, int level, NBTTagCompound tag) {
+    public static LivingArmourUpgrade generateUpgradeFromKey(String key, int level, CompoundNBT tag) {
         Constructor<? extends LivingArmourUpgrade> ctor = upgradeConstructorMap.get(key);
         if (ctor != null) {
             try {

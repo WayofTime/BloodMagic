@@ -6,23 +6,22 @@ import WayofTime.bloodmagic.event.TeleposeEvent;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.SPacketEntityEffect;
-import net.minecraft.network.play.server.SPacketPlayerAbilities;
-import net.minecraft.network.play.server.SPacketRespawn;
-import net.minecraft.network.play.server.SPacketUpdateHealth;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.play.server.*;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.network.play.server.SPlayEntityEffectPacket;
+import net.minecraft.network.play.server.SUpdateHealthPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.ServerWorld;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -49,7 +48,7 @@ public class Teleports {
                 BlockPos targetTeleposer = new BlockPos(x, y, z);
                 if (entity.timeUntilPortal <= 0) {
                     entity.timeUntilPortal = 10;
-                    if (entity instanceof EntityPlayer) {
+                    if (entity instanceof PlayerEntity) {
 
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkOwner);
                         if (network.getCurrentEssence() < getTeleportCost())
@@ -58,13 +57,13 @@ public class Teleports {
                         if (teleposer && MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), targetTeleposer)))
                             return;
 
-                        EntityPlayerMP player = (EntityPlayerMP) entity;
+                        ServerPlayerEntity player = (ServerPlayerEntity) entity;
 
                         network.syphon(ticket(entity.world, player, getTeleportCost()));
 
                         player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
                         player.getEntityWorld().updateEntityWithOptionalForce(player, false);
-                        player.connection.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
+                        player.connection.sendPacket(new SUpdateHealthPacket(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
 
                         player.getEntityWorld().playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                         if (teleposer)
@@ -77,7 +76,7 @@ public class Teleports {
                         if (teleposer && MinecraftForge.EVENT_BUS.post(new TeleposeEvent.Ent(entity, entity.getEntityWorld(), entity.getPosition(), entity.getEntityWorld(), targetTeleposer)))
                             return;
 
-                        WorldServer world = (WorldServer) entity.getEntityWorld();
+                        ServerWorld world = (ServerWorld) entity.getEntityWorld();
 
                         network.syphon(ticket(world, entity, getTeleportCost() / 10));
 
@@ -122,15 +121,15 @@ public class Teleports {
                 if (entity.timeUntilPortal <= 0) {
                     entity.timeUntilPortal = 10;
                     MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-                    WorldServer oldWorldServer = server.getWorld(entity.dimension);
-                    WorldServer newWorldServer = server.getWorld(newWorldID);
+                    ServerWorld oldWorldServer = server.getWorld(entity.dimension);
+                    ServerWorld newWorldServer = server.getWorld(newWorldID);
                     BlockPos targetTeleposer = new BlockPos(x, y, z);
                     ChunkPos teleposerChunk = new ChunkPos(targetTeleposer);
                     ForgeChunkManager.Ticket chunkTicket = ForgeChunkManager.requestTicket("bloodmagic", newWorldServer, ForgeChunkManager.Type.NORMAL);
                     ForgeChunkManager.forceChunk(chunkTicket, teleposerChunk);
 
-                    if (entity instanceof EntityPlayer) {
-                        EntityPlayerMP player = (EntityPlayerMP) entity;
+                    if (entity instanceof PlayerEntity) {
+                        ServerPlayerEntity player = (ServerPlayerEntity) entity;
 
 
                         if (!player.getEntityWorld().isRemote) {
@@ -152,7 +151,7 @@ public class Teleports {
                             PlayerList playerList = server.getPlayerList();
 
                             player.dimension = newWorldID;
-                            player.connection.sendPacket(new SPacketRespawn(player.dimension, newWorldServer.getDifficulty(), newWorldServer.getWorldInfo().getTerrainType(), player.interactionManager.getGameType()));
+                            player.connection.sendPacket(new SRespawnPacket(player.dimension, newWorldServer.getDifficulty(), newWorldServer.getWorldInfo().getTerrainType(), player.interactionManager.getGameType()));
                             playerList.updatePermissionLevel(player);
                             oldWorldServer.removeEntityDangerously(player);
                             player.isDead = false;
@@ -170,13 +169,13 @@ public class Teleports {
                             playerList.preparePlayer(player, oldWorldServer);
                             player.connection.setPlayerLocation(x + 0.5, y + 0.5, z + 0.5, player.rotationYaw, player.rotationPitch);
                             player.interactionManager.setWorld(newWorldServer);
-                            player.connection.sendPacket(new SPacketPlayerAbilities(player.capabilities));
+                            player.connection.sendPacket(new SPlayerAbilitiesPacket(player.capabilities));
 
                             playerList.updateTimeAndWeatherForPlayer(player, newWorldServer);
                             playerList.syncPlayerInventory(player);
 
-                            for (PotionEffect potioneffect : player.getActivePotionEffects()) {
-                                player.connection.sendPacket(new SPacketEntityEffect(player.getEntityId(), potioneffect));
+                            for (EffectInstance potioneffect : player.getActivePotionEffects()) {
+                                player.connection.sendPacket(new SPlayEntityEffectPacket(player.getEntityId(), potioneffect));
                             }
                             FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, entity.dimension, newWorldID);
                             player.setLocationAndAngles(x + 0.5, y + 0.5, z + 0.5, player.rotationYaw, player.rotationPitch);
@@ -197,7 +196,7 @@ public class Teleports {
 
                         network.syphon(ticket(oldWorld, entity, getTeleportCost() / 10));
 
-                        NBTTagCompound tag = new NBTTagCompound();
+                        CompoundNBT tag = new CompoundNBT();
 
                         entity.writeToNBTOptional(tag);
                         entity.setDead();
@@ -244,6 +243,6 @@ public class Teleports {
     }
 
     public static SoulTicket ticket(World world, Entity entity, int amount) {
-        return new SoulTicket(new TextComponentString("teleport|" + world.provider.getDimension() + "|" + entity.getName() + "|" + entity.getPosition().toLong()), amount);
+        return new SoulTicket(new StringTextComponent("teleport|" + world.provider.getDimension() + "|" + entity.getName() + "|" + entity.getPosition().toLong()), amount);
     }
 }

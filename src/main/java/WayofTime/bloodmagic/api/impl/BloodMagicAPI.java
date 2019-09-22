@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.altar.ComponentType;
 import WayofTime.bloodmagic.util.BMLog;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -17,7 +17,7 @@ public class BloodMagicAPI implements IBloodMagicAPI {
     private final BloodMagicBlacklist blacklist;
     private final BloodMagicRecipeRegistrar recipeRegistrar;
     private final BloodMagicValueManager valueManager;
-    private final Multimap<ComponentType, IBlockState> altarComponents;
+    private final Multimap<ComponentType, BlockState> altarComponents;
 
     public BloodMagicAPI() {
         this.blacklist = new BloodMagicBlacklist();
@@ -45,7 +45,7 @@ public class BloodMagicAPI implements IBloodMagicAPI {
     }
 
     @Override
-    public void registerAltarComponent(@Nonnull IBlockState state, @Nonnull String componentType) {
+    public void registerAltarComponent(@Nonnull BlockState state, @Nonnull String componentType) {
         ComponentType component = null;
         for (ComponentType type : ComponentType.VALUES) {
             if (type.name().equalsIgnoreCase(componentType)) {
@@ -61,7 +61,7 @@ public class BloodMagicAPI implements IBloodMagicAPI {
     }
 
     @Override
-    public void unregisterAltarComponent(@Nonnull IBlockState state, @Nonnull String componentType) {
+    public void unregisterAltarComponent(@Nonnull BlockState state, @Nonnull String componentType) {
         ComponentType component = null;
         for (ComponentType type : ComponentType.VALUES) {
             if (type.name().equalsIgnoreCase(componentType)) {
@@ -77,7 +77,7 @@ public class BloodMagicAPI implements IBloodMagicAPI {
     }
 
     @Nonnull
-    public List<IBlockState> getComponentStates(ComponentType component) {
-        return (List<IBlockState>) altarComponents.get(component);
+    public List<BlockState> getComponentStates(ComponentType component) {
+        return (List<BlockState>) altarComponents.get(component);
     }
 }

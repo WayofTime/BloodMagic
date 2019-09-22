@@ -2,10 +2,10 @@ package WayofTime.bloodmagic.item.inventory;
 
 import WayofTime.bloodmagic.iface.ISigil;
 import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
@@ -13,9 +13,9 @@ public class ContainerHolding extends Container {
     public final InventoryHolding inventoryHolding;
     private final int PLAYER_INVENTORY_ROWS = 3;
     private final int PLAYER_INVENTORY_COLUMNS = 9;
-    private final EntityPlayer player;
+    private final PlayerEntity player;
 
-    public ContainerHolding(EntityPlayer player, InventoryHolding inventoryHolding) {
+    public ContainerHolding(PlayerEntity player, InventoryHolding inventoryHolding) {
         this.player = player;
         this.inventoryHolding = inventoryHolding;
         int currentSlotHeldIn = player.inventory.currentItem;
@@ -40,12 +40,12 @@ public class ContainerHolding extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer entityPlayer) {
+    public boolean canInteractWith(PlayerEntity entityPlayer) {
         return true;
     }
 
     @Override
-    public void onContainerClosed(EntityPlayer entityPlayer) {
+    public void onContainerClosed(PlayerEntity entityPlayer) {
         super.onContainerClosed(entityPlayer);
 
         if (!entityPlayer.getEntityWorld().isRemote) {
@@ -63,7 +63,7 @@ public class ContainerHolding extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int slotIndex) {
+    public ItemStack transferStackInSlot(PlayerEntity entityPlayer, int slotIndex) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slotObject = inventorySlots.get(slotIndex);
         int slots = inventorySlots.size();
@@ -106,15 +106,15 @@ public class ContainerHolding extends Container {
         return stack;
     }
 
-    public void saveInventory(EntityPlayer entityPlayer) {
+    public void saveInventory(PlayerEntity entityPlayer) {
         inventoryHolding.onGuiSaved(entityPlayer);
     }
 
     private class SlotHolding extends Slot {
-        private final EntityPlayer player;
+        private final PlayerEntity player;
         private ContainerHolding containerHolding;
 
-        public SlotHolding(ContainerHolding containerHolding, IInventory inventory, EntityPlayer player, int slotIndex, int x, int y) {
+        public SlotHolding(ContainerHolding containerHolding, IInventory inventory, PlayerEntity player, int slotIndex, int x, int y) {
             super(inventory, slotIndex, x, y);
             this.player = player;
             this.containerHolding = containerHolding;
@@ -146,7 +146,7 @@ public class ContainerHolding extends Container {
         }
 
         @Override
-        public boolean canTakeStack(EntityPlayer player) {
+        public boolean canTakeStack(PlayerEntity player) {
             return false;
         }
     }

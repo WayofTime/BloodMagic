@@ -17,7 +17,7 @@ import WayofTime.bloodmagic.incense.EnumTranquilityType;
 import WayofTime.bloodmagic.incense.TranquilityStack;
 import WayofTime.bloodmagic.util.StateUtil;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;

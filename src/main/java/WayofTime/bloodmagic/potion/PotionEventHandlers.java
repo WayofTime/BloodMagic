@@ -5,12 +5,12 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.entity.projectile.ThrowableEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -26,12 +26,12 @@ import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class PotionEventHandlers {
-    public static Map<World, List<EntityPlayer>> flightListMap = new HashMap<>();
-    public static Map<World, List<EntityLivingBase>> noGravityListMap = new HashMap<>();
+    public static Map<World, List<PlayerEntity>> flightListMap = new HashMap<>();
+    public static Map<World, List<LivingEntity>> noGravityListMap = new HashMap<>();
 
     @SubscribeEvent
     public static void onLivingJumpEvent(LivingEvent.LivingJumpEvent event) {
-        EntityLivingBase eventEntityLiving = event.getEntityLiving();
+        LivingEntity eventEntityLiving = event.getEntityLiving();
 
         if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.BOOST)) {
             int i = eventEntityLiving.getActivePotionEffect(RegistrarBloodMagic.BOOST).getAmplifier();
@@ -44,7 +44,7 @@ public class PotionEventHandlers {
 
     @SubscribeEvent
     public static void onLivingFall(LivingFallEvent event) {
-        EntityLivingBase eventEntityLiving = event.getEntityLiving();
+        LivingEntity eventEntityLiving = event.getEntityLiving();
 
         if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.HEAVY_HEART)) {
             int i = eventEntityLiving.getActivePotionEffect(RegistrarBloodMagic.HEAVY_HEART).getAmplifier() + 1;
@@ -55,11 +55,11 @@ public class PotionEventHandlers {
 
     @SubscribeEvent
     public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
-        EntityLivingBase eventEntityLiving = event.getEntityLiving();
-        List<EntityPlayer> flightList = flightListMap.getOrDefault(eventEntityLiving.getEntityWorld(), Lists.newArrayList());
+        LivingEntity eventEntityLiving = event.getEntityLiving();
+        List<PlayerEntity> flightList = flightListMap.getOrDefault(eventEntityLiving.getEntityWorld(), Lists.newArrayList());
 
-        if (eventEntityLiving instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) eventEntityLiving;
+        if (eventEntityLiving instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) eventEntityLiving;
             if (!player.world.isRemote) {
                 if (player.isPotionActive(RegistrarBloodMagic.FLIGHT)) {
                     if (!player.isSpectator() && !player.capabilities.allowFlying) {
@@ -92,7 +92,7 @@ public class PotionEventHandlers {
 //                }
 //            }
 //        }
-        List<EntityLivingBase> noGravityList = noGravityListMap.getOrDefault(event.getEntityLiving().getEntityWorld(), Lists.newArrayList());
+        List<LivingEntity> noGravityList = noGravityListMap.getOrDefault(event.getEntityLiving().getEntityWorld(), Lists.newArrayList());
         if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.SUSPENDED) && !eventEntityLiving.hasNoGravity()) {
             eventEntityLiving.setNoGravity(true);
             noGravityList.add(eventEntityLiving);
@@ -102,7 +102,7 @@ public class PotionEventHandlers {
         }
 
         if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.GROUNDED))
-            if (eventEntityLiving instanceof EntityPlayer && ((EntityPlayer) eventEntityLiving).capabilities.isFlying)
+            if (eventEntityLiving instanceof PlayerEntity && ((PlayerEntity) eventEntityLiving).capabilities.isFlying)
                 eventEntityLiving.motionY -= (0.05D * (double) (eventEntityLiving.getActivePotionEffect(RegistrarBloodMagic.GROUNDED).getAmplifier() + 1) - eventEntityLiving.motionY) * 0.2D;
             else
                 eventEntityLiving.motionY -= (0.1D * (double) (eventEntityLiving.getActivePotionEffect(RegistrarBloodMagic.GROUNDED).getAmplifier() + 1) - eventEntityLiving.motionY) * 0.2D;
@@ -120,10 +120,10 @@ public class PotionEventHandlers {
 
                 Entity throwingEntity = null;
 
-                if (projectile instanceof EntityArrow)
-                    throwingEntity = ((EntityArrow) projectile).shootingEntity;
-                else if (projectile instanceof EntityThrowable)
-                    throwingEntity = ((EntityThrowable) projectile).getThrower();
+                if (projectile instanceof AbstractArrowEntity)
+                    throwingEntity = ((AbstractArrowEntity) projectile).shootingEntity;
+                else if (projectile instanceof ThrowableEntity)
+                    throwingEntity = ((ThrowableEntity) projectile).getThrower();
 
                 if (throwingEntity != null && throwingEntity.equals(eventEntityLiving))
                     continue;
@@ -161,7 +161,7 @@ public class PotionEventHandlers {
     @SubscribeEvent
     public static void onPlayerRespawn(PlayerEvent.Clone event) {
         if (event.isWasDeath())
-            event.getEntityPlayer().addPotionEffect(new PotionEffect(RegistrarBloodMagic.SOUL_FRAY, 400));
+            event.getEntityPlayer().addPotionEffect(new EffectInstance(RegistrarBloodMagic.SOUL_FRAY, 400));
     }
 
     @SubscribeEvent

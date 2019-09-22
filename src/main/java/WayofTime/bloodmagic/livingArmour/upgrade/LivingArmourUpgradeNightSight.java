@@ -1,15 +1,14 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 public class LivingArmourUpgradeNightSight extends LivingArmourUpgrade {
@@ -23,21 +22,21 @@ public class LivingArmourUpgradeNightSight extends LivingArmourUpgrade {
     }
 
     @Override
-    public double getAdditionalDamageOnHit(double damage, EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon) {
+    public double getAdditionalDamageOnHit(double damage, PlayerEntity wearer, LivingEntity hitEntity, ItemStack weapon) {
         return isActive ? meleeDamage[this.level] : 0;
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour) {
+    public void onTick(World world, PlayerEntity player, ILivingArmour livingArmour) {
         if (world.getLight(player.getPosition(), false) <= 9) {
             isActive = true;
-            if (player.isPotionActive(MobEffects.NIGHT_VISION))
+            if (player.isPotionActive(Effects.NIGHT_VISION))
                 return;
 
-            player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, false, false));
+            player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, Integer.MAX_VALUE, 0, false, false));
         } else if (isActive) {
             isActive = false;
-            player.removePotionEffect(MobEffects.NIGHT_VISION);
+            player.removePotionEffect(Effects.NIGHT_VISION);
         }
     }
 
@@ -57,12 +56,12 @@ public class LivingArmourUpgradeNightSight extends LivingArmourUpgrade {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
 
     }
 

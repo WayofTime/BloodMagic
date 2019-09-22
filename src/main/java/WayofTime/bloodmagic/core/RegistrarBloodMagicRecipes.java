@@ -15,9 +15,9 @@ import WayofTime.bloodmagic.ritual.EnumRuneType;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.util.PluginUtil;
 import com.google.common.collect.Sets;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.init.PotionTypes;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
+import net.minecraft.potion.Potions;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -114,7 +114,7 @@ public class RegistrarBloodMagicRecipes {
         registrar.addAlchemyTable(ComponentTypes.SALTPETER.getStack(4), 0, 100, 0, ComponentTypes.PLANT_OIL.getStack(), ComponentTypes.PLANT_OIL.getStack(), "dustCoal");
         registrar.addAlchemyTable(new ItemStack(Items.GUNPOWDER, 3), 0, 100, 0, "dustSaltpeter", "dustSulfur", new ItemStack(Items.COAL, 1, 1));
         registrar.addAlchemyTable(ComponentTypes.SAND_COAL.getStack(4), 100, 100, 1, new ItemStack(Items.COAL, 1, 0), new ItemStack(Items.COAL, 1, 0), Items.FLINT);
-        registrar.addAlchemyTable(ItemCuttingFluid.FluidType.BASIC.getStack(), 1000, 400, 1, "dustCoal", "gunpowder", Items.REDSTONE, Items.SUGAR, ComponentTypes.PLANT_OIL.getStack(), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER));
+        registrar.addAlchemyTable(ItemCuttingFluid.FluidType.BASIC.getStack(), 1000, 400, 1, "dustCoal", "gunpowder", Items.REDSTONE, Items.SUGAR, ComponentTypes.PLANT_OIL.getStack(), PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), Potions.WATER));
         registrar.addAlchemyTable(ComponentTypes.SAND_IRON.getStack(2), 400, 200, 1, "oreIron", ItemCuttingFluid.FluidType.BASIC.getStack());
         registrar.addAlchemyTable(ComponentTypes.SAND_GOLD.getStack(2), 400, 200, 1, "oreGold", ItemCuttingFluid.FluidType.BASIC.getStack());
         registrar.addAlchemyTable(new ItemStack(Items.REDSTONE, 8), 400, 200, 1, "oreRedstone", ItemCuttingFluid.FluidType.BASIC.getStack());
@@ -127,7 +127,7 @@ public class RegistrarBloodMagicRecipes {
         registrar.addAlchemyTable(ComponentTypes.NEURO_TOXIN.getStack(), 1000, 100, 2, new ItemStack(Items.FISH, 1, 3));
         registrar.addAlchemyTable(ComponentTypes.ANTISEPTIC.getStack(2), 1000, 200, 2, ComponentTypes.PLANT_OIL.getStack(), "nuggetGold", "cropWheat", Items.SUGAR, Blocks.BROWN_MUSHROOM, Blocks.RED_MUSHROOM);
         registrar.addAlchemyTable(ItemLivingArmourPointsUpgrade.UpgradeType.DRAFT_ANGELUS.getStack(), 20000, 400, 3, ComponentTypes.NEURO_TOXIN.getStack(), ComponentTypes.ANTISEPTIC.getStack(), "dustGold", Items.FERMENTED_SPIDER_EYE, new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD, 1, 0), Items.GHAST_TEAR);
-        registrar.addAlchemyTable(new ItemStack(RegistrarBloodMagicItems.POTION_FLASK), 1000, 200, 2, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), "cropNetherWart", "dustRedstone", "dustGlowstone");
+        registrar.addAlchemyTable(new ItemStack(RegistrarBloodMagicItems.POTION_FLASK), 1000, 200, 2, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), Potions.WATER), "cropNetherWart", "dustRedstone", "dustGlowstone");
         registrar.addAlchemyTable(ComponentTypes.CATALYST_LENGTH_1.getStack(), 1000, 100, 2, "gunpowder", "cropNetherWart", "gemLapis");
         registrar.addAlchemyTable(ComponentTypes.CATALYST_POWER_1.getStack(), 1000, 100, 2, "gunpowder", "cropNetherWart", "dustRedstone");
 

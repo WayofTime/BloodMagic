@@ -7,7 +7,7 @@ import WayofTime.bloodmagic.util.BMLog;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class BloodMagicValueManager implements IBloodMagicValueManager {
 
     private final Map<ResourceLocation, Integer> sacrificial;
-    private final Map<IBlockState, TranquilityStack> tranquility;
+    private final Map<BlockState, TranquilityStack> tranquility;
 
     public BloodMagicValueManager() {
         this.sacrificial = Maps.newHashMap();
@@ -30,7 +30,7 @@ public class BloodMagicValueManager implements IBloodMagicValueManager {
     }
 
     @Override
-    public void setTranquility(@Nonnull IBlockState state, @Nonnull String tranquilityType, double value) {
+    public void setTranquility(@Nonnull BlockState state, @Nonnull String tranquilityType, double value) {
         EnumTranquilityType tranquility = null;
         for (EnumTranquilityType type : EnumTranquilityType.values()) {
             if (type.name().equalsIgnoreCase(tranquilityType)) {
@@ -46,7 +46,7 @@ public class BloodMagicValueManager implements IBloodMagicValueManager {
     }
 
     public void setTranquility(Block block, TranquilityStack tranquilityStack) {
-        for (IBlockState state : block.getBlockState().getValidStates()) {
+        for (BlockState state : block.getBlockState().getValidStates()) {
             BMLog.API_VERBOSE.info("Value Manager: Set tranquility value of {} to {} @ {}", state, tranquilityStack.type, tranquilityStack.value);
             tranquility.put(state, tranquilityStack);
         }
@@ -56,7 +56,7 @@ public class BloodMagicValueManager implements IBloodMagicValueManager {
         return ImmutableMap.copyOf(sacrificial);
     }
 
-    public Map<IBlockState, TranquilityStack> getTranquility() {
+    public Map<BlockState, TranquilityStack> getTranquility() {
         return ImmutableMap.copyOf(tranquility);
     }
 }

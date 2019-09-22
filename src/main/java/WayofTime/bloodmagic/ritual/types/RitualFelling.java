@@ -3,11 +3,11 @@ package WayofTime.bloodmagic.ritual.types;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
@@ -69,7 +69,7 @@ public class RitualFelling extends Ritual {
         if (blockPosIterator.hasNext() && tileInventory != null) {
             masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
             currentPos = blockPosIterator.next();
-            IItemHandler inventory = Utils.getInventory(tileInventory, EnumFacing.DOWN);
+            IItemHandler inventory = Utils.getInventory(tileInventory, Direction.DOWN);
             placeInInventory(world.getBlockState(currentPos), world, currentPos, inventory);
             world.setBlockToAir(currentPos);
             blockPosIterator.remove();
@@ -97,14 +97,14 @@ public class RitualFelling extends Ritual {
         return new RitualFelling();
     }
 
-    private void placeInInventory(IBlockState choppedState, World world, BlockPos choppedPos, @Nullable IItemHandler inventory) {
+    private void placeInInventory(BlockState choppedState, World world, BlockPos choppedPos, @Nullable IItemHandler inventory) {
         if (inventory == null)
             return;
 
         for (ItemStack stack : choppedState.getBlock().getDrops(world, choppedPos, world.getBlockState(choppedPos), 0)) {
             ItemStack remainder = ItemHandlerHelper.insertItem(inventory, stack, false);
             if (!remainder.isEmpty())
-                world.spawnEntity(new EntityItem(world, choppedPos.getX() + 0.4, choppedPos.getY() + 2, choppedPos.getZ() + 0.4, remainder));
+                world.spawnEntity(new ItemEntity(world, choppedPos.getX() + 0.4, choppedPos.getY() + 2, choppedPos.getZ() + 0.4, remainder));
         }
     }
 }

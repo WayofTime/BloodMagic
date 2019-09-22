@@ -10,9 +10,9 @@ import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import WayofTime.bloodmagic.orb.BloodOrb;
 import WayofTime.bloodmagic.potion.PotionBloodMagic;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.Potion;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -45,23 +45,23 @@ public class RegistrarBloodMagic {
     @GameRegistry.ObjectHolder("transcendent")
     public static final BloodOrb ORB_TRANSCENDENT = ORB_DEF;
 
-    public static final Potion BOOST = MobEffects.HASTE;
-    public static final Potion WHIRLWIND = MobEffects.HASTE;
-    public static final Potion PLANAR_BINDING = MobEffects.HASTE;
-    public static final Potion SOUL_SNARE = MobEffects.HASTE;
-    public static final Potion SOUL_FRAY = MobEffects.HASTE;
-    public static final Potion FIRE_FUSE = MobEffects.HASTE;
-    public static final Potion CONSTRICT = MobEffects.HASTE;
-    public static final Potion PLANT_LEECH = MobEffects.HASTE;
-    public static final Potion DEAFNESS = MobEffects.HASTE;
-    public static final Potion BOUNCE = MobEffects.HASTE;
-    public static final Potion CLING = MobEffects.HASTE;
-    public static final Potion SACRIFICIAL_LAMB = MobEffects.HASTE;
-    public static final Potion FLIGHT = MobEffects.HASTE;
-    public static final Potion GROUNDED = MobEffects.HASTE;
-    public static final Potion HEAVY_HEART = MobEffects.HASTE;
-    public static final Potion SUSPENDED = MobEffects.HASTE;
-    public static final Potion FEATHERED = MobEffects.HASTE;
+    public static final Effect BOOST = Effects.HASTE;
+    public static final Effect WHIRLWIND = Effects.HASTE;
+    public static final Effect PLANAR_BINDING = Effects.HASTE;
+    public static final Effect SOUL_SNARE = Effects.HASTE;
+    public static final Effect SOUL_FRAY = Effects.HASTE;
+    public static final Effect FIRE_FUSE = Effects.HASTE;
+    public static final Effect CONSTRICT = Effects.HASTE;
+    public static final Effect PLANT_LEECH = Effects.HASTE;
+    public static final Effect DEAFNESS = Effects.HASTE;
+    public static final Effect BOUNCE = Effects.HASTE;
+    public static final Effect CLING = Effects.HASTE;
+    public static final Effect SACRIFICIAL_LAMB = Effects.HASTE;
+    public static final Effect FLIGHT = Effects.HASTE;
+    public static final Effect GROUNDED = Effects.HASTE;
+    public static final Effect HEAVY_HEART = Effects.HASTE;
+    public static final Effect SUSPENDED = Effects.HASTE;
+    public static final Effect FEATHERED = Effects.HASTE;
 
     public static IForgeRegistry<BloodOrb> BLOOD_ORBS = null;
 
@@ -83,7 +83,7 @@ public class RegistrarBloodMagic {
     }
 
     @SubscribeEvent
-    public static void registerPotions(RegistryEvent.Register<Potion> event) {
+    public static void registerPotions(RegistryEvent.Register<Effect> event) {
         event.getRegistry().registerAll(
                 new PotionBloodMagic("Boost", false, 0xFFFFFF, 0, 0).setRegistryName("boost"),
                 new PotionBloodMagic("Whirlwind", false, 0xFFFFFF, 0, 0).setRegistryName("whirlwind"),

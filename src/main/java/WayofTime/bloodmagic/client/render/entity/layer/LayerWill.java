@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.client.render.entity.layer;
 import WayofTime.bloodmagic.entity.mob.EntityDemonBase;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -12,10 +12,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class LayerWill<T extends EntityDemonBase> implements LayerRenderer<T> {
     private static final ResourceLocation RAW_TEXTURE = new ResourceLocation("bloodmagic", "textures/entities/overlay/overlay_raw.png");
-    private final RenderLiving<T> renderer;
+    private final MobRenderer<T> renderer;
     private final ModelBase model;
 
-    public LayerWill(RenderLiving<T> rendererIn, ModelBase model) {
+    public LayerWill(MobRenderer<T> rendererIn, ModelBase model) {
         this.renderer = rendererIn;
         this.model = model;
     }

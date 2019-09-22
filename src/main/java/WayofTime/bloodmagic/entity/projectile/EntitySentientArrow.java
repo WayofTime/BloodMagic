@@ -3,23 +3,21 @@ package WayofTime.bloodmagic.entity.projectile;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.util.Constants;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.entity.projectile.EntityTippedArrow;
-import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.PotionTypes;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Effects;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.potion.PotionType;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
 import java.lang.invoke.MethodHandle;
@@ -28,13 +26,13 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Locale;
 
-public class EntitySentientArrow extends EntityTippedArrow {
-    public PotionType potion = PotionTypes.EMPTY;
+public class EntitySentientArrow extends ArrowEntity {
+    public Potion potion = Potions.EMPTY;
     public double reimbursedAmountOnHit = 0;
     public EnumDemonWillType type = EnumDemonWillType.DEFAULT;
     public int currentLevel = 0;
     public ItemStack itemStack;
-    public Class<? extends EntityArrow> specialArrowClass;
+    public Class<? extends AbstractArrowEntity> specialArrowClass;
     public float[] destructiveExplosionRadius = {0.5f, 1, 1.5f, 2, 2.5f, 3, 3.5f};
     public int[] poisonDuration = {50, 100, 150, 80, 120, 160, 200};
     public int[] poisonLevel = {0, 0, 0, 1, 1, 1, 1};
@@ -42,7 +40,7 @@ public class EntitySentientArrow extends EntityTippedArrow {
     public int[] levitationLevel = {0, 0, 0, 1, 1, 1, 2};
     public int[] slownessDuration = {40, 60, 100, 150, 200, 250, 300};
     public int[] slownessLevel = {0, 0, 0, 1, 1, 1, 2};
-    public EntityArrow specialEntity;
+    public AbstractArrowEntity specialEntity;
     public MethodHandle specialHitMH;
     public Method specialHit;
 
@@ -54,14 +52,14 @@ public class EntitySentientArrow extends EntityTippedArrow {
         super(worldIn, x, y, z);
     }
 
-    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel) {
+    public EntitySentientArrow(World worldIn, LivingEntity shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel) {
         super(worldIn, shooter);
         this.reimbursedAmountOnHit = reimburseAmount;
         this.type = type;
         this.currentLevel = currentLevel;
     }
 
-    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel, PotionType potion) {
+    public EntitySentientArrow(World worldIn, LivingEntity shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel, Potion potion) {
         super(worldIn, shooter);
         this.reimbursedAmountOnHit = reimburseAmount;
         this.type = type;
@@ -69,7 +67,7 @@ public class EntitySentientArrow extends EntityTippedArrow {
         this.potion = potion;
     }
 
-    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel, ItemStack itemStack) {
+    public EntitySentientArrow(World worldIn, LivingEntity shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel, ItemStack itemStack) {
         super(worldIn, shooter);
         this.reimbursedAmountOnHit = reimburseAmount;
         this.type = type;
@@ -77,7 +75,7 @@ public class EntitySentientArrow extends EntityTippedArrow {
         this.potion = PotionUtils.getPotionFromItem(itemStack);
     }
 
-    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel, EntityArrow specialArrow) {
+    public EntitySentientArrow(World worldIn, LivingEntity shooter, EnumDemonWillType type, double reimburseAmount, int currentLevel, AbstractArrowEntity specialArrow) {
         super(worldIn, shooter);
         this.reimbursedAmountOnHit = reimburseAmount;
         this.type = type;
@@ -86,35 +84,35 @@ public class EntitySentientArrow extends EntityTippedArrow {
         this.specialArrowClass = specialArrow.getClass();
     }
 
-    public void reimbursePlayer(EntityLivingBase hitEntity, float damage) {
-        if (this.shootingEntity instanceof EntityPlayer) {
-            if (hitEntity.getEntityWorld().getDifficulty() != EnumDifficulty.PEACEFUL && !(hitEntity instanceof IMob)) {
+    public void reimbursePlayer(LivingEntity hitEntity, float damage) {
+        if (this.shootingEntity instanceof PlayerEntity) {
+            if (hitEntity.getEntityWorld().getDifficulty() != Difficulty.PEACEFUL && !(hitEntity instanceof IMob)) {
                 return;
             }
 
-            PlayerDemonWillHandler.addDemonWill(type, (EntityPlayer) this.shootingEntity, reimbursedAmountOnHit * damage / 20f);
+            PlayerDemonWillHandler.addDemonWill(type, (PlayerEntity) this.shootingEntity, reimbursedAmountOnHit * damage / 20f);
         }
     }
 
     @Override
-    protected void arrowHit(EntityLivingBase living) {
+    protected void arrowHit(LivingEntity living) {
         int amp = -1;
         switch (type) {
             case CORROSIVE:
                 if (this.potion != null)
-                    for (PotionEffect i : this.potion.getEffects()) {
+                    for (EffectInstance i : this.potion.getEffects()) {
                         if (i.getEffectName().equals("poison")) {
                             amp = i.getAmplifier();
                             continue;
                         }
-                        living.addPotionEffect(new PotionEffect(i.getPotion(), i.getDuration(), i.getAmplifier()));
+                        living.addPotionEffect(new EffectInstance(i.getPotion(), i.getDuration(), i.getAmplifier()));
                     }
-                living.addPotionEffect(new PotionEffect(MobEffects.POISON, currentLevel >= 0 ? (amp > -1 && poisonLevel[currentLevel] != amp) ? poisonDuration[currentLevel] / 2 : poisonDuration[currentLevel] : 0, currentLevel >= 0 ? (amp > -1) ? Math.max(poisonLevel[currentLevel], amp) + 1 : poisonLevel[currentLevel] : 0));
+                living.addPotionEffect(new EffectInstance(Effects.POISON, currentLevel >= 0 ? (amp > -1 && poisonLevel[currentLevel] != amp) ? poisonDuration[currentLevel] / 2 : poisonDuration[currentLevel] : 0, currentLevel >= 0 ? (amp > -1) ? Math.max(poisonLevel[currentLevel], amp) + 1 : poisonLevel[currentLevel] : 0));
                 break;
             case DEFAULT:
                 if (this.potion != null)
-                    for (PotionEffect i : this.potion.getEffects()) {
-                        living.addPotionEffect(new PotionEffect(i.getPotion(), i.getDuration(), i.getAmplifier()));
+                    for (EffectInstance i : this.potion.getEffects()) {
+                        living.addPotionEffect(new EffectInstance(i.getPotion(), i.getDuration(), i.getAmplifier()));
                     }
                 break;
             case DESTRUCTIVE:
@@ -123,32 +121,32 @@ public class EntitySentientArrow extends EntityTippedArrow {
                 break;
             case STEADFAST:
                 if (this.potion != null)
-                    for (PotionEffect i : this.potion.getEffects()) {
+                    for (EffectInstance i : this.potion.getEffects()) {
                         if (i.getEffectName().equals("levitation")) {
                             amp = i.getAmplifier();
                             continue;
                         }
-                        living.addPotionEffect(new PotionEffect(i.getPotion(), i.getDuration(), i.getAmplifier()));
+                        living.addPotionEffect(new EffectInstance(i.getPotion(), i.getDuration(), i.getAmplifier()));
                     }
-                living.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, currentLevel >= 0 ? (amp > -1 && levitationLevel[currentLevel] != amp) ? levitationDuration[currentLevel] / 2 : levitationDuration[currentLevel] : 0, currentLevel >= 0 ? (amp > -1) ? Math.max(levitationLevel[currentLevel], amp) + 1 : levitationLevel[currentLevel] : 0));
+                living.addPotionEffect(new EffectInstance(Effects.LEVITATION, currentLevel >= 0 ? (amp > -1 && levitationLevel[currentLevel] != amp) ? levitationDuration[currentLevel] / 2 : levitationDuration[currentLevel] : 0, currentLevel >= 0 ? (amp > -1) ? Math.max(levitationLevel[currentLevel], amp) + 1 : levitationLevel[currentLevel] : 0));
                 break;
             case VENGEFUL:
                 if (this.potion != null)
-                    for (PotionEffect i : this.potion.getEffects()) {
+                    for (EffectInstance i : this.potion.getEffects()) {
                         if (i.getEffectName().equals("slowness")) {
                             amp = i.getAmplifier();
                             continue;
                         }
-                        living.addPotionEffect(new PotionEffect(i.getPotion(), i.getDuration(), i.getAmplifier()));
+                        living.addPotionEffect(new EffectInstance(i.getPotion(), i.getDuration(), i.getAmplifier()));
                     }
-                living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, currentLevel >= 0 ? (amp > -1 && slownessLevel[currentLevel] != amp) ? slownessDuration[currentLevel] / 2 : slownessDuration[currentLevel] : 0, currentLevel >= 0 ? (amp > -1) ? Math.max(slownessLevel[currentLevel], amp) + 1 : slownessLevel[currentLevel] : 0));
+                living.addPotionEffect(new EffectInstance(Effects.SLOWNESS, currentLevel >= 0 ? (amp > -1 && slownessLevel[currentLevel] != amp) ? slownessDuration[currentLevel] / 2 : slownessDuration[currentLevel] : 0, currentLevel >= 0 ? (amp > -1) ? Math.max(slownessLevel[currentLevel], amp) + 1 : slownessLevel[currentLevel] : 0));
                 break;
             default:
                 break;
         }
         if (this.specialArrowClass != null) {
             try {
-                this.specialHit = this.specialArrowClass.getMethod("arrowHit", EntityLivingBase.class);
+                this.specialHit = this.specialArrowClass.getMethod("arrowHit", LivingEntity.class);
                 this.specialHitMH = MethodHandles.lookup().unreflect(this.specialHit).bindTo(this.specialEntity);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -220,14 +218,14 @@ public class EntitySentientArrow extends EntityTippedArrow {
     }
 
     //TODO: Potion splash (for destructive will fired tipped arrows) currently does not have a visual effect.
-    private void createPotionFromArrow(EntityLivingBase living) {
+    private void createPotionFromArrow(LivingEntity living) {
         if (this.potion != null) {
             float radius = currentLevel >= 0 ? destructiveExplosionRadius[currentLevel] : 0;
             AxisAlignedBB axisalignedbb = this.getEntityBoundingBox().grow(radius * 2, radius, radius * 2);
-            List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
+            List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class, axisalignedbb);
 
             if (!list.isEmpty()) {
-                for (EntityLivingBase entitylivingbase : list) {
+                for (LivingEntity entitylivingbase : list) {
                     if (entitylivingbase.canBeHitWithPotion()) {
                         double d0 = this.getDistanceSq(entitylivingbase);
 
@@ -238,8 +236,8 @@ public class EntitySentientArrow extends EntityTippedArrow {
                                 d1 = 1.0D;
                             }
 
-                            for (PotionEffect potioneffect : this.potion.getEffects()) {
-                                Potion potion = potioneffect.getPotion();
+                            for (EffectInstance potioneffect : this.potion.getEffects()) {
+                                Effect potion = potioneffect.getPotion();
 
                                 if (potion.isInstant()) {
                                     potion.affectEntity(this, this.shootingEntity, entitylivingbase, potioneffect.getAmplifier(), d1);
@@ -247,7 +245,7 @@ public class EntitySentientArrow extends EntityTippedArrow {
                                     int i = (int) (d1 * (double) potioneffect.getDuration() + 0.5D);
 
                                     if (i > 20) {
-                                        entitylivingbase.addPotionEffect(new PotionEffect(potion, i, potioneffect.getAmplifier(), potioneffect.getIsAmbient(), potioneffect.doesShowParticles()));
+                                        entitylivingbase.addPotionEffect(new EffectInstance(potion, i, potioneffect.getAmplifier(), potioneffect.getIsAmbient(), potioneffect.doesShowParticles()));
                                     }
                                 }
                             }
@@ -259,7 +257,7 @@ public class EntitySentientArrow extends EntityTippedArrow {
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound tag) {
+    public void writeEntityToNBT(CompoundNBT tag) {
         super.writeEntityToNBT(tag);
 
         tag.setDouble("reimbursement", reimbursedAmountOnHit);
@@ -268,7 +266,7 @@ public class EntitySentientArrow extends EntityTippedArrow {
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound tag) {
+    public void readEntityFromNBT(CompoundNBT tag) {
         super.readEntityFromNBT(tag);
 
         reimbursedAmountOnHit = tag.getDouble("reimbursement");

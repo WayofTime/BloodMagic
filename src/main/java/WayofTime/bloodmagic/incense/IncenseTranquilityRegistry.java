@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.incense;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -15,7 +15,7 @@ public class IncenseTranquilityRegistry {
         handlerList.add(handler);
     }
 
-    public static TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state) {
+    public static TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, BlockState state) {
         for (ITranquilityHandler handler : handlerList) {
             TranquilityStack tranq = handler.getTranquilityOfBlock(world, pos, block, state);
             if (tranq != null) {

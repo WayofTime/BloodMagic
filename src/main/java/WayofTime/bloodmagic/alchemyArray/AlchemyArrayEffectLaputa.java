@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.alchemyArray;
 
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -71,7 +71,7 @@ public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect {
                         if (checkIfSphere(radius, i, j, k)) {
                             BlockPos newPos = pos.add(i, j, k);
                             BlockPos offsetPos = newPos.up(teleportHeightOffset);
-                            IBlockState state = world.getBlockState(newPos);
+                            BlockState state = world.getBlockState(newPos);
 
                             TeleposeEvent event = new TeleposeEvent(world, newPos, world, offsetPos);
                             if (state.getBlockHardness(world, newPos) > 0 && !MinecraftForge.EVENT_BUS.post(event) && Utils.swapLocations(event.initalWorld, event.initialBlockPos, event.finalWorld, event.finalBlockPos)) {
@@ -112,7 +112,7 @@ public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(CompoundNBT tag) {
         tag.setInteger("radius", radius);
         tag.setInteger("teleportHeightOffset", teleportHeightOffset);
         tag.setInteger(Constants.NBT.X_COORD, currentPos.getX());
@@ -121,7 +121,7 @@ public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundNBT tag) {
         radius = tag.getInteger("radius");
         teleportHeightOffset = tag.getInteger("teleportHeightOffset");
         currentPos = new BlockPos(tag.getInteger(Constants.NBT.X_COORD), tag.getInteger(Constants.NBT.Y_COORD), tag.getInteger(Constants.NBT.Z_COORD));

@@ -8,7 +8,7 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -36,14 +36,14 @@ public class ItemCuttingFluid extends ItemEnum.Variant<ItemCuttingFluid.FluidTyp
 
     public int getDamageOfFluid(ItemStack stack) {
         NBTHelper.checkNBT(stack);
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         return tag.getInteger("used");
     }
 
     public void applyDamageToFluid(ItemStack stack) {
         int damage = Math.min(getDamageOfFluid(stack) + 1, getMaxUsesForFluid(stack));
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
 
         tag.setInteger("used", damage);
     }

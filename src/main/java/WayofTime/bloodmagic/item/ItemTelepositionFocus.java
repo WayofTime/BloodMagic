@@ -8,11 +8,11 @@ import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.types.ISubItem;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -34,7 +34,7 @@ public class ItemTelepositionFocus extends ItemEnum.Variant<ItemTelepositionFocu
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         if (player.isSneaking()) {
             RayTraceResult mop = rayTrace(world, player, false);
 
@@ -59,7 +59,7 @@ public class ItemTelepositionFocus extends ItemEnum.Variant<ItemTelepositionFocu
         if (!stack.hasTagCompound())
             return;
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         BlockPos coords = getBlockPos(stack);
 
         if (coords != null && tag != null) {
@@ -80,7 +80,7 @@ public class ItemTelepositionFocus extends ItemEnum.Variant<ItemTelepositionFocu
 
     public ItemStack setBlockPos(ItemStack stack, World world, BlockPos pos) {
         stack = NBTHelper.checkNBT(stack);
-        NBTTagCompound itemTag = stack.getTagCompound();
+        CompoundNBT itemTag = stack.getTagCompound();
         itemTag.setInteger(Constants.NBT.X_COORD, pos.getX());
         itemTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
         itemTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());

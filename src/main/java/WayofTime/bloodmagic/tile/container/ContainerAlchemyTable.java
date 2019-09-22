@@ -2,18 +2,18 @@ package WayofTime.bloodmagic.tile.container;
 
 import WayofTime.bloodmagic.orb.IBloodOrb;
 import WayofTime.bloodmagic.tile.TileAlchemyTable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerAlchemyTable extends Container {
     private final IInventory tileTable;
 
-    public ContainerAlchemyTable(InventoryPlayer inventoryPlayer, IInventory tileTable) {
+    public ContainerAlchemyTable(PlayerInventory inventoryPlayer, IInventory tileTable) {
         this.tileTable = tileTable;
         this.addSlotToContainer(new Slot(tileTable, 0, 62, 15));
         this.addSlotToContainer(new Slot(tileTable, 1, 80, 51));
@@ -37,8 +37,8 @@ public class ContainerAlchemyTable extends Container {
     }
 
     @Override
-    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
-        InventoryPlayer inventoryPlayer = player.inventory;
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+        PlayerInventory inventoryPlayer = player.inventory;
 
         if (slotId < 6 && slotId >= 0) {
             Slot slot = this.getSlot(slotId);
@@ -51,7 +51,7 @@ public class ContainerAlchemyTable extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
@@ -95,7 +95,7 @@ public class ContainerAlchemyTable extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(PlayerEntity playerIn) {
         return this.tileTable.isUsableByPlayer(playerIn);
     }
 

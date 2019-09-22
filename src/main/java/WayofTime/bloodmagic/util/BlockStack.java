@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.util;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class BlockStack {
     private final Block block;
     private final int meta;
-    private final IBlockState state;
+    private final BlockState state;
 
     public BlockStack(Block block, int meta) {
         this.block = block;
@@ -34,7 +34,7 @@ public class BlockStack {
         return meta;
     }
 
-    public IBlockState getState() {
+    public BlockState getState() {
         return state;
     }
 
@@ -62,7 +62,7 @@ public class BlockStack {
     }
 
     public static BlockStack getStackFromPos(World world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
+        BlockState state = world.getBlockState(pos);
         return new BlockStack(state.getBlock(), state.getBlock().getMetaFromState(state));
     }
 }
