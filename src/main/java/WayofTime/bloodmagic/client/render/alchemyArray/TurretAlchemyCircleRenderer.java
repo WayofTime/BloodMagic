@@ -79,7 +79,7 @@ public class TurretAlchemyCircleRenderer extends AlchemyCircleRenderer {
         float size = 1.0F * getSizeModifier(craftTime);
 
         // Bind the texture to the circle
-        Minecraft.getMinecraft().renderEngine.bindTexture(arrayResource);
+        Minecraft.getInstance().renderEngine.bindTexture(arrayResource);
 
         GlStateManager.disableCull();
         GlStateManager.enableBlend();
@@ -135,21 +135,21 @@ public class TurretAlchemyCircleRenderer extends AlchemyCircleRenderer {
         GlStateManager.rotate((float) ((pitch + 90) * getStartupPitchYawRatio(craftTime)), 1, 0, 0);
 
         GlStateManager.pushMatrix();
-        Minecraft.getMinecraft().renderEngine.bindTexture(bottomArrayResource);
+        Minecraft.getInstance().renderEngine.bindTexture(bottomArrayResource);
         GlStateManager.rotate(-rot, 0, 0, 1);
         GlStateManager.translate(0, 0, -bottomHeightOffset);
         renderStandardCircle(tessellator, wr, size / 2);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
-        Minecraft.getMinecraft().renderEngine.bindTexture(middleArrayResource);
+        Minecraft.getInstance().renderEngine.bindTexture(middleArrayResource);
         GlStateManager.rotate(0, 0, 0, 1);
         GlStateManager.translate(0, 0, -middleHeightOffset);
         renderStandardCircle(tessellator, wr, size);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
-        Minecraft.getMinecraft().renderEngine.bindTexture(arrayResource);
+        Minecraft.getInstance().renderEngine.bindTexture(arrayResource);
         GlStateManager.rotate(rot, 0, 0, 1);
         GlStateManager.translate(0, 0, -topHeightOffset);
         renderStandardCircle(tessellator, wr, size);

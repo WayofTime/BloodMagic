@@ -47,7 +47,7 @@ public class ItemInscriptionTool extends ItemEnum.Variant<EnumRuneType> implemen
 
             ItemStack stack = new ItemStack(this, 1, runeType.ordinal());
             CompoundNBT tag = new CompoundNBT();
-            tag.setInteger(Constants.NBT.USES, 10);
+            tag.putInt(Constants.NBT.USES, 10);
             stack.setTagCompound(tag);
             list.add(stack);
         }

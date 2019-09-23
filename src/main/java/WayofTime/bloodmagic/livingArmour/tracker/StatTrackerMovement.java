@@ -40,7 +40,7 @@ public class StatTrackerMovement extends StatTracker {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setDouble(BloodMagic.MODID + ".tracker.movement", totalMovement);
+        tag.putDouble(BloodMagic.MODID + ".tracker.movement", totalMovement);
 
     }
 

@@ -64,7 +64,7 @@ public class ItemTelepositionFocus extends ItemEnum.Variant<ItemTelepositionFocu
 
         if (coords != null && tag != null) {
             tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.coords", coords.getX(), coords.getY(), coords.getZ()));
-            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.dimension", tag.getInteger(Constants.NBT.DIMENSION_ID)));
+            tooltip.add(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionFocus.dimension", tag.getInt(Constants.NBT.DIMENSION_ID)));
         }
     }
 
@@ -81,10 +81,10 @@ public class ItemTelepositionFocus extends ItemEnum.Variant<ItemTelepositionFocu
     public ItemStack setBlockPos(ItemStack stack, World world, BlockPos pos) {
         stack = NBTHelper.checkNBT(stack);
         CompoundNBT itemTag = stack.getTagCompound();
-        itemTag.setInteger(Constants.NBT.X_COORD, pos.getX());
-        itemTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
-        itemTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
-        itemTag.setInteger(Constants.NBT.DIMENSION_ID, world.provider.getDimension());
+        itemTag.putInt(Constants.NBT.X_COORD, pos.getX());
+        itemTag.putInt(Constants.NBT.Y_COORD, pos.getY());
+        itemTag.putInt(Constants.NBT.Z_COORD, pos.getZ());
+        itemTag.putInt(Constants.NBT.DIMENSION_ID, world.provider.getDimension());
         return stack;
     }
 

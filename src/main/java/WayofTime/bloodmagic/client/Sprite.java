@@ -43,7 +43,7 @@ public class Sprite {
     }
 
     public void draw(int x, int y) {
-        Minecraft.getMinecraft().renderEngine.bindTexture(textureLocation);
+        Minecraft.getInstance().renderEngine.bindTexture(textureLocation);
         float f = 0.00390625F;
         float f1 = 0.00390625F;
         Tessellator tessellator = Tessellator.getInstance();

@@ -32,12 +32,12 @@ public class StatTrackerJump extends StatTracker {
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        totalJumps = tag.getInteger(BloodMagic.MODID + ".tracker.jump");
+        totalJumps = tag.getInt(BloodMagic.MODID + ".tracker.jump");
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(BloodMagic.MODID + ".tracker.jump", totalJumps);
+        tag.putInt(BloodMagic.MODID + ".tracker.jump", totalJumps);
 
     }
 

@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class RenderDemonCrucible extends TileEntityRenderer<TileDemonCrucible> {
-    public static Minecraft mc = Minecraft.getMinecraft();
+    public static Minecraft mc = Minecraft.getInstance();
     public static ResourceLocation resource = new ResourceLocation("bloodmagic", "textures/blocks/lifeEssenceStill.png");
     public static float minHeight = 0.6497f;
     public static float maxHeight = 0.79f;

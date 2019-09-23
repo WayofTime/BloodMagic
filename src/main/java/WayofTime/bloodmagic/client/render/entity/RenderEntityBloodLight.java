@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderEntityBloodLight extends EntityRenderer<EntityBloodLight> {
-    private final ItemRenderer renderItem = Minecraft.getMinecraft().getRenderItem();
+    private final ItemRenderer renderItem = Minecraft.getInstance().getRenderItem();
 
     public RenderEntityBloodLight(EntityRendererManager renderManagerIn) {
         super(renderManagerIn);

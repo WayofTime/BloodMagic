@@ -32,12 +32,12 @@ public class StatTrackerSelfSacrifice extends StatTracker {
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        totalSacrifices = tag.getInteger(BloodMagic.MODID + ".tracker.selfSacrifice");
+        totalSacrifices = tag.getInt(BloodMagic.MODID + ".tracker.selfSacrifice");
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(BloodMagic.MODID + ".tracker.selfSacrifice", totalSacrifices);
+        tag.putInt(BloodMagic.MODID + ".tracker.selfSacrifice", totalSacrifices);
 
     }
 

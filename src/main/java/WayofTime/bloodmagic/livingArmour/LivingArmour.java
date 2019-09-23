@@ -212,15 +212,15 @@ public class LivingArmour implements ILivingArmour {
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        maxUpgradePoints = Math.max(100, tag.getInteger("maxUpgradePoints"));
+        maxUpgradePoints = Math.max(100, tag.getInt("maxUpgradePoints"));
 
-        ListNBT upgradeTags = tag.getTagList("upgrades", 10);
+        ListNBT upgradeTags = tag.getList("upgrades", 10);
         if (upgradeTags != null) {
             for (int i = 0; i < upgradeTags.tagCount(); i++) {
-                CompoundNBT upgradeTag = upgradeTags.getCompoundTagAt(i);
+                CompoundNBT upgradeTag = upgradeTags.getCompound(i);
                 String key = upgradeTag.getString("key");
-                int level = upgradeTag.getInteger("level");
-                CompoundNBT nbtTag = upgradeTag.getCompoundTag("upgrade");
+                int level = upgradeTag.getInt("level");
+                CompoundNBT nbtTag = upgradeTag.getCompound("upgrade");
                 LivingArmourUpgrade upgrade = LivingArmourHandler.generateUpgradeFromKey(key, level, nbtTag);
                 if (upgrade != null) {
                     upgradeMap.put(key, upgrade);
@@ -238,7 +238,7 @@ public class LivingArmour implements ILivingArmour {
                 }
                 StatTracker tracker = (StatTracker) obj;
                 String key = tracker.getUniqueIdentifier();
-                CompoundNBT trackerTag = tag.getCompoundTag(key);
+                CompoundNBT trackerTag = tag.getCompound(key);
                 if (!trackerTag.isEmpty()) {
                     tracker.readFromNBT(trackerTag);
                 }
@@ -251,7 +251,7 @@ public class LivingArmour implements ILivingArmour {
 
     @Override
     public void writeToNBT(CompoundNBT tag, boolean forceWrite) {
-        tag.setInteger("maxUpgradePoints", maxUpgradePoints);
+        tag.putInt("maxUpgradePoints", maxUpgradePoints);
 
         ListNBT tags = new ListNBT();
 
@@ -262,14 +262,14 @@ public class LivingArmour implements ILivingArmour {
             CompoundNBT nbtTag = new CompoundNBT();
             upgrade.writeToNBT(nbtTag);
 
-            upgradeTag.setString("key", upgrade.getUniqueIdentifier());
-            upgradeTag.setInteger("level", upgrade.getUpgradeLevel());
-            upgradeTag.setTag("upgrade", nbtTag);
+            upgradeTag.putString("key", upgrade.getUniqueIdentifier());
+            upgradeTag.putInt("level", upgrade.getUpgradeLevel());
+            upgradeTag.put("upgrade", nbtTag);
 
             tags.appendTag(upgradeTag);
         }
 
-        tag.setTag("upgrades", tags);
+        tag.put("upgrades", tags);
 
         for (Entry<String, StatTracker> entry : trackerMap.entrySet()) {
             StatTracker tracker = entry.getValue();
@@ -284,7 +284,7 @@ public class LivingArmour implements ILivingArmour {
                 CompoundNBT trackerTag = new CompoundNBT();
                 tracker.writeToNBT(trackerTag);
 
-                tag.setTag(key, trackerTag);
+                tag.put(key, trackerTag);
 
                 tracker.resetDirty();
             }

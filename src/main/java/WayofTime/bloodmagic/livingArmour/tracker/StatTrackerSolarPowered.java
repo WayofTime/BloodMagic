@@ -36,7 +36,7 @@ public class StatTrackerSolarPowered extends StatTracker {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setDouble(BloodMagic.MODID + ".tracker.solarPowered", totalHealthGenned);
+        tag.putDouble(BloodMagic.MODID + ".tracker.solarPowered", totalHealthGenned);
     }
 
     @Override

@@ -91,7 +91,7 @@ public class BlockBloodLight extends Block {
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random rand) {
-        ClientPlayerEntity player = Minecraft.getMinecraft().player;
+        ClientPlayerEntity player = Minecraft.getInstance().player;
 
         if (rand.nextInt(3) != 0) {
             world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);

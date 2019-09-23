@@ -51,7 +51,7 @@ public class DataProviderTeleposer implements IWailaDataProvider {
             CompoundNBT focusData = new CompoundNBT();
             focusData.setTag("pos", NBTUtil.createPosTag(focus.getBlockPos(contained)));
             focusData.setInteger("dim", contained.getTagCompound().getInteger(Constants.NBT.DIMENSION_ID));
-            tag.setTag("focus", focusData);
+            tag.put("focus", focusData);
         }
         return tag;
     }

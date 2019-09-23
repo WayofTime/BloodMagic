@@ -57,7 +57,7 @@ public class TileInventory extends TileBase implements IInventory {
 
         for (int i = 0; i < tags.tagCount(); i++) {
             if (!isSyncedSlot(i)) {
-                CompoundNBT data = tags.getCompoundTagAt(i);
+                CompoundNBT data = tags.getCompound(i);
                 byte j = data.getByte("Slot");
 
                 if (j >= 0 && j < inventory.size()) {
@@ -81,7 +81,7 @@ public class TileInventory extends TileBase implements IInventory {
             }
         }
 
-        tagCompound.setTag("Items", tags);
+        tagCompound.putTag("Items", tags);
         return tagCompound;
     }
 

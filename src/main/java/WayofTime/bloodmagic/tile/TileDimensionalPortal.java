@@ -15,17 +15,17 @@ public class TileDimensionalPortal extends TileBase {
     public void deserialize(CompoundNBT tagCompound) {
         portalID = tagCompound.getString(RitualPortal.PORTAL_ID_TAG);
 
-        masterStoneX = tagCompound.getInteger("masterStoneX");
-        masterStoneY = tagCompound.getInteger("masterStoneY");
-        masterStoneZ = tagCompound.getInteger("masterStoneZ");
+        masterStoneX = tagCompound.getInt("masterStoneX");
+        masterStoneY = tagCompound.getInt("masterStoneY");
+        masterStoneZ = tagCompound.getInt("masterStoneZ");
     }
 
     public CompoundNBT serialize(CompoundNBT tagCompound) {
-        tagCompound.setString(RitualPortal.PORTAL_ID_TAG, Strings.isNullOrEmpty(portalID) ? "" : portalID);
+        tagCompound.putString(RitualPortal.PORTAL_ID_TAG, Strings.isNullOrEmpty(portalID) ? "" : portalID);
 
-        tagCompound.setInteger("masterStoneX", masterStoneX);
-        tagCompound.setInteger("masterStoneY", masterStoneY);
-        tagCompound.setInteger("masterStoneZ", masterStoneZ);
+        tagCompound.putInt("masterStoneX", masterStoneX);
+        tagCompound.putInt("masterStoneY", masterStoneY);
+        tagCompound.putInt("masterStoneZ", masterStoneZ);
         return tagCompound;
     }
 

@@ -28,7 +28,7 @@ public class TileBloodTank extends TileBase {
     public void deserialize(CompoundNBT tagCompound) {
         super.deserialize(tagCompound);
         tank.readFromNBT(tagCompound.getCompoundTag(Constants.NBT.TANK));
-        capacity = tagCompound.getInteger(Constants.NBT.ALTAR_CAPACITY);
+        capacity = tagCompound.getInt(Constants.NBT.ALTAR_CAPACITY);
         tank.setCapacity(capacity);
     }
 
@@ -36,8 +36,8 @@ public class TileBloodTank extends TileBase {
     public CompoundNBT serialize(CompoundNBT tagCompound) {
         super.serialize(tagCompound);
         if (tank.getFluidAmount() != 0)
-            tagCompound.setTag(Constants.NBT.TANK, tank.writeToNBT(new CompoundNBT()));
-        tagCompound.setInteger(Constants.NBT.ALTAR_CAPACITY, capacity);
+            tagCompound.putTag(Constants.NBT.TANK, tank.writeToNBT(new CompoundNBT()));
+        tagCompound.putInt(Constants.NBT.ALTAR_CAPACITY, capacity);
         return tagCompound;
     }
 

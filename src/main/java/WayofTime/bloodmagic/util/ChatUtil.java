@@ -20,7 +20,7 @@ public class ChatUtil {
     private static int lastAdded;
 
     private static void sendNoSpamMessages(ITextComponent[] messages) {
-        NewChatGui chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
+        NewChatGui chat = Minecraft.getInstance().ingameGUI.getChatGUI();
         for (int i = DELETION_ID + messages.length - 1; i <= lastAdded; i++) {
             chat.deleteChatLine(i);
         }
@@ -219,7 +219,7 @@ public class ChatUtil {
         public static class Handler implements IMessageHandler<PacketNoSpamChat, IMessage> {
             @Override
             public IMessage onMessage(final PacketNoSpamChat message, MessageContext ctx) {
-                Minecraft.getMinecraft().addScheduledTask(() -> sendNoSpamMessages(message.chatLines));
+                Minecraft.getInstance().addScheduledTask(() -> sendNoSpamMessages(message.chatLines));
                 return null;
             }
         }

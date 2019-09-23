@@ -48,9 +48,9 @@ public class DataProviderAlchemyArray implements IWailaDataProvider {
     public CompoundNBT getNBTData(ServerPlayerEntity player, TileEntity te, CompoundNBT tag, World world, BlockPos pos) {
         TileAlchemyArray alchemyArray = (TileAlchemyArray) te;
         if (!alchemyArray.getStackInSlot(0).isEmpty())
-            tag.setString("reagent", alchemyArray.getStackInSlot(0).getDisplayName());
+            tag.putString("reagent", alchemyArray.getStackInSlot(0).getDisplayName());
         if (!alchemyArray.getStackInSlot(1).isEmpty())
-            tag.setString("catalyst", alchemyArray.getStackInSlot(1).getDisplayName());
+            tag.putString("catalyst", alchemyArray.getStackInSlot(1).getDisplayName());
         return tag;
     }
 }

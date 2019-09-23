@@ -176,14 +176,14 @@ public class EntityCorruptedChicken extends EntityAspectedDemonBase {
         super.readEntityFromNBT(compound);
 
         if (compound.hasKey("EggLayTime")) {
-            this.timeUntilNextEgg = compound.getInteger("EggLayTime");
+            this.timeUntilNextEgg = compound.getInt("EggLayTime");
         }
     }
 
     @Override
     public void writeEntityToNBT(CompoundNBT compound) {
         super.writeEntityToNBT(compound);
-        compound.setInteger("EggLayTime", this.timeUntilNextEgg);
+        compound.putInt("EggLayTime", this.timeUntilNextEgg);
     }
 
     @Override

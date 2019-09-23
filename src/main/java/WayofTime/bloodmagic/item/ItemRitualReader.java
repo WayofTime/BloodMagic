@@ -204,9 +204,9 @@ public class ItemRitualReader extends Item implements IVariantProvider {
     public ItemStack setBlockPos(ItemStack stack, BlockPos pos) {
         stack = NBTHelper.checkNBT(stack);
         CompoundNBT itemTag = stack.getTagCompound();
-        itemTag.setInteger(Constants.NBT.X_COORD, pos.getX());
-        itemTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
-        itemTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
+        itemTag.putInt(Constants.NBT.X_COORD, pos.getX());
+        itemTag.putInt(Constants.NBT.Y_COORD, pos.getY());
+        itemTag.putInt(Constants.NBT.Z_COORD, pos.getZ());
         return stack;
     }
 
@@ -218,9 +218,9 @@ public class ItemRitualReader extends Item implements IVariantProvider {
     public ItemStack setMasterBlockPos(ItemStack stack, BlockPos pos) {
         stack = NBTHelper.checkNBT(stack);
         CompoundNBT itemTag = stack.getTagCompound();
-        itemTag.setInteger(Constants.NBT.X_COORD + "master", pos.getX());
-        itemTag.setInteger(Constants.NBT.Y_COORD + "master", pos.getY());
-        itemTag.setInteger(Constants.NBT.Z_COORD + "master", pos.getZ());
+        itemTag.putInt(Constants.NBT.X_COORD + "master", pos.getX());
+        itemTag.putInt(Constants.NBT.Y_COORD + "master", pos.getY());
+        itemTag.putInt(Constants.NBT.Z_COORD + "master", pos.getZ());
         return stack;
     }
 
@@ -237,7 +237,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setString("range", range);
+        tag.putString("range", range);
     }
 
     public void cycleReader(ItemStack stack, PlayerEntity player) {
@@ -259,7 +259,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setInteger(Constants.NBT.RITUAL_READER, state.ordinal());
+        tag.putInt(Constants.NBT.RITUAL_READER, state.ordinal());
     }
 
     public EnumRitualReaderState getState(ItemStack stack) {
@@ -270,7 +270,7 @@ public class ItemRitualReader extends Item implements IVariantProvider {
 
         CompoundNBT tag = stack.getTagCompound();
 
-        return EnumRitualReaderState.values()[tag.getInteger(Constants.NBT.RITUAL_READER)];
+        return EnumRitualReaderState.values()[tag.getInt(Constants.NBT.RITUAL_READER)];
     }
 
     @Override

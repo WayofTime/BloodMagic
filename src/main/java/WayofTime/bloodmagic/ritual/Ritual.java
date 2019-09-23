@@ -50,16 +50,16 @@ public abstract class Ritual {
     }
 
     public void readFromNBT(CompoundNBT tag) {
-        ListNBT tags = tag.getTagList("areas", 10);
+        ListNBT tags = tag.getList("areas", 10);
         if (tags.isEmpty()) {
             return;
         }
 
-        for (int i = 0; i < tags.tagCount(); i++) {
-            CompoundNBT newTag = tags.getCompoundTagAt(i);
+        for (int i = 0; i < tags.size(); i++) {
+            CompoundNBT newTag = tags.getCompound(i);
             String rangeKey = newTag.getString("key");
 
-            CompoundNBT storedTag = newTag.getCompoundTag("area");
+            CompoundNBT storedTag = newTag.getCompound("area");
             AreaDescriptor desc = this.getBlockRange(rangeKey);
             if (desc != null) {
                 desc.readFromNBT(storedTag);
@@ -72,17 +72,17 @@ public abstract class Ritual {
 
         for (Entry<String, AreaDescriptor> entry : modableRangeMap.entrySet()) {
             CompoundNBT newTag = new CompoundNBT();
-            newTag.setString("key", entry.getKey());
+            newTag.putString("key", entry.getKey());
             CompoundNBT storedTag = new CompoundNBT();
 
             entry.getValue().writeToNBT(storedTag);
 
-            newTag.setTag("area", storedTag);
+            newTag.put("area", storedTag);
 
-            tags.appendTag(newTag);
+            tags.add(newTag);
         }
 
-        tag.setTag("areas", tags);
+        tag.put("areas", tags);
     }
 
     /**

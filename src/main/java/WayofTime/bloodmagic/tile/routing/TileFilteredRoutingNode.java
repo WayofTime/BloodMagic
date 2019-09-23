@@ -44,18 +44,18 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     @Override
     public void deserialize(CompoundNBT tag) {
         super.deserialize(tag);
-        currentActiveSlot = tag.getInteger("currentSlot");
+        currentActiveSlot = tag.getInt("currentSlot");
         priorities = tag.getIntArray(Constants.NBT.ROUTING_PRIORITY);
         if (priorities.length != 6) {
             priorities = new int[6];
         }
 
         if (!tag.getBoolean("updated")) {
-            ListNBT tags = tag.getTagList("Items", 10);
+            ListNBT tags = tag.getList("Items", 10);
             inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
             for (int i = 0; i < tags.tagCount(); i++) {
                 if (!isSyncedSlot(i)) {
-                    CompoundNBT data = tags.getCompoundTagAt(i);
+                    CompoundNBT data = tags.getCompound(i);
                     byte j = data.getByte("Slot");
 
                     if (j == 0) {
@@ -73,9 +73,9 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     @Override
     public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
-        tag.setInteger("currentSlot", currentActiveSlot);
-        tag.setIntArray(Constants.NBT.ROUTING_PRIORITY, priorities);
-        tag.setBoolean("updated", true);
+        tag.putInt("currentSlot", currentActiveSlot);
+        tag.putIntArray(Constants.NBT.ROUTING_PRIORITY, priorities);
+        tag.putBoolean("updated", true);
         return tag;
     }
 

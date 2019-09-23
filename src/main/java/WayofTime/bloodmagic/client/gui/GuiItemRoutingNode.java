@@ -129,7 +129,7 @@ public class GuiItemRoutingNode extends ContainerScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
 
-        Minecraft.getMinecraft().fontRenderer.drawString(inventory.getName(), xSize, ySize / 4, 4210752);
+        Minecraft.getInstance().fontRenderer.drawString(inventory.getName(), xSize, ySize / 4, 4210752);
     }
 
     /**

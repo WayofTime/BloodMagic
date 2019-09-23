@@ -214,7 +214,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setString(Constants.NBT.WILL_TYPE, type.toString());
+        tag.putString(Constants.NBT.WILL_TYPE, type.toString());
     }
 
     @Override
@@ -330,7 +330,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.SOUL_SWORD_DAMAGE, damage);
+        tag.putDouble(Constants.NBT.SOUL_SWORD_DAMAGE, damage);
     }
 
     public double getDrainOfActivatedSword(ItemStack stack) {
@@ -345,7 +345,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN, drain);
+        tag.putDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN, drain);
     }
 
     public double getStaticDropOfActivatedSword(ItemStack stack) {
@@ -360,7 +360,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP, drop);
+        tag.putDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP, drop);
     }
 
     public double getDropOfActivatedSword(ItemStack stack) {
@@ -375,7 +375,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.SOUL_SWORD_DROP, drop);
+        tag.putDouble(Constants.NBT.SOUL_SWORD_DROP, drop);
     }
 
     public double getHealthBonusOfSword(ItemStack stack) {
@@ -390,7 +390,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.SOUL_SWORD_HEALTH, hp);
+        tag.putDouble(Constants.NBT.SOUL_SWORD_HEALTH, hp);
     }
 
     public double getAttackSpeedOfSword(ItemStack stack) {
@@ -405,7 +405,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.SOUL_SWORD_ATTACK_SPEED, speed);
+        tag.putDouble(Constants.NBT.SOUL_SWORD_ATTACK_SPEED, speed);
     }
 
     public double getSpeedOfSword(ItemStack stack) {
@@ -420,7 +420,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.SOUL_SWORD_SPEED, speed);
+        tag.putDouble(Constants.NBT.SOUL_SWORD_SPEED, speed);
     }
 
     @Override

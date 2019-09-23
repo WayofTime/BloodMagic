@@ -256,24 +256,24 @@ public class TileMimic extends TileInventory implements ITickable {
         super.deserialize(tag);
 
         dropItemsOnBreak = tag.getBoolean("dropItemsOnBreak");
-        tileTag = tag.getCompoundTag("tileTag");
+        tileTag = tag.getCompound("tileTag");
         stateOfReplacedBlock = StateUtil.parseState(tag.getString("stateOfReplacedBlock"));
         mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, stateOfReplacedBlock);
-        playerCheckRadius = tag.getInteger("playerCheckRadius");
-        potionSpawnRadius = tag.getInteger("potionSpawnRadius");
-        potionSpawnInterval = Math.max(1, tag.getInteger("potionSpawnInterval"));
+        playerCheckRadius = tag.getInt("playerCheckRadius");
+        potionSpawnRadius = tag.getInt("potionSpawnRadius");
+        potionSpawnInterval = Math.max(1, tag.getInt("potionSpawnInterval"));
     }
 
     @Override
     public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
 
-        tag.setBoolean("dropItemsOnBreak", dropItemsOnBreak);
-        tag.setTag("tileTag", tileTag);
-        tag.setInteger("playerCheckRadius", playerCheckRadius);
-        tag.setInteger("potionSpawnRadius", potionSpawnRadius);
-        tag.setInteger("potionSpawnInterval", potionSpawnInterval);
-        tag.setString("stateOfReplacedBlock", stateOfReplacedBlock.toString());
+        tag.putBoolean("dropItemsOnBreak", dropItemsOnBreak);
+        tag.put("tileTag", tileTag);
+        tag.putInt("playerCheckRadius", playerCheckRadius);
+        tag.putInt("potionSpawnRadius", potionSpawnRadius);
+        tag.putInt("potionSpawnInterval", potionSpawnInterval);
+        tag.putString("stateOfReplacedBlock", stateOfReplacedBlock.toString());
 
         return tag;
     }
@@ -320,9 +320,9 @@ public class TileMimic extends TileInventory implements ITickable {
             if (world.setBlockState(pos, state, 3)) {
                 TileEntity tile = world.getTileEntity(pos);
                 if (tile != null) {
-                    tileTag.setInteger("x", pos.getX());
-                    tileTag.setInteger("y", pos.getY());
-                    tileTag.setInteger("z", pos.getZ());
+                    tileTag.putInt("x", pos.getX());
+                    tileTag.putInt("y", pos.getY());
+                    tileTag.putInt("z", pos.getZ());
                     tile.readFromNBT(tileTag);
                 }
 
@@ -346,9 +346,9 @@ public class TileMimic extends TileInventory implements ITickable {
 
                 if (tag != null) {
                     CompoundNBT copyTag = tag.copy();
-                    copyTag.setInteger("x", pos.getX());
-                    copyTag.setInteger("y", pos.getY());
-                    copyTag.setInteger("z", pos.getZ());
+                    copyTag.putInt("x", pos.getX());
+                    copyTag.putInt("y", pos.getY());
+                    copyTag.putInt("z", pos.getZ());
                     tile.readFromNBT(copyTag);
                 }
 

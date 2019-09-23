@@ -58,7 +58,7 @@ public class StaticAlchemyCircleRenderer extends AlchemyCircleRenderer {
         float size = 1.0F * getSizeModifier(craftTime);
 
         // Bind the texture to the circle
-        Minecraft.getMinecraft().renderEngine.bindTexture(arrayResource);
+        Minecraft.getInstance().renderEngine.bindTexture(arrayResource);
 
         GlStateManager.disableCull();
         GlStateManager.enableBlend();

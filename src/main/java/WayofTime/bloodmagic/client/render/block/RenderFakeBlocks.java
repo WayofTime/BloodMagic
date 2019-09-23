@@ -18,7 +18,7 @@ public class RenderFakeBlocks {
         double maxZ = minZ + 1;
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder wr = tessellator.getBuffer();
-        Minecraft.getMinecraft().renderEngine.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
+        Minecraft.getInstance().renderEngine.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
 
         wr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 

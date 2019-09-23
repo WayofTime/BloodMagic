@@ -28,7 +28,7 @@ public class ElementHolding extends HUDElement {
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         HOLDING_BAR.draw(drawX, drawY);
 
-        Minecraft minecraft = Minecraft.getMinecraft();
+        Minecraft minecraft = Minecraft.getInstance();
         ItemStack sigilHolding = minecraft.player.getHeldItemMainhand();
         // Check mainhand for Sigil of Holding
         if (!(sigilHolding.getItem() == RegistrarBloodMagicItems.SIGIL_HOLDING))
@@ -74,12 +74,12 @@ public class ElementHolding extends HUDElement {
                 GlStateManager.translate((float) (-(x + 8)), (float) (-(y + 12)), 0.0F);
             }
 
-            Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(player, stack, x, y);
+            Minecraft.getInstance().getRenderItem().renderItemAndEffectIntoGUI(player, stack, x, y);
 
             if (animation > 0.0F)
                 GlStateManager.popMatrix();
 
-            Minecraft.getMinecraft().getRenderItem().renderItemOverlays(Minecraft.getMinecraft().fontRenderer, stack, x, y);
+            Minecraft.getInstance().getRenderItem().renderItemOverlays(Minecraft.getInstance().fontRenderer, stack, x, y);
         }
     }
 }

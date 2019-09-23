@@ -185,7 +185,7 @@ public abstract class EntityAspectedDemonBase extends EntityDemonBase {
     public void writeEntityToNBT(CompoundNBT tag) {
         super.writeEntityToNBT(tag);
 
-        tag.setString(Constants.NBT.WILL_TYPE, this.getType().toString());
+        tag.putString(Constants.NBT.WILL_TYPE, this.getType().toString());
     }
 
     @Override

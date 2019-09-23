@@ -36,7 +36,7 @@ public class StatTrackerCriticalStrike extends StatTracker {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setDouble(BloodMagic.MODID + ".tracker.criticalStrike", totalDamageDealt);
+        tag.putDouble(BloodMagic.MODID + ".tracker.criticalStrike", totalDamageDealt);
     }
 
     @Override

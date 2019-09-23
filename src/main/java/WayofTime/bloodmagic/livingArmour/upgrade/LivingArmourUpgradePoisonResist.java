@@ -55,12 +55,12 @@ public class LivingArmourUpgradePoisonResist extends LivingArmourUpgrade {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(Constants.NBT.UPGRADE_POISON_TIMER, poisonCooldown);
+        tag.putInt(Constants.NBT.UPGRADE_POISON_TIMER, poisonCooldown);
     }
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        poisonCooldown = tag.getInteger(Constants.NBT.UPGRADE_POISON_TIMER);
+        poisonCooldown = tag.getInt(Constants.NBT.UPGRADE_POISON_TIMER);
     }
 
     @Override

@@ -128,14 +128,14 @@ public class RitualLivingArmourDowngrade extends Ritual {
     public void readFromNBT(CompoundNBT tag) {
         super.readFromNBT(tag);
 
-        this.internalTimer = tag.getInteger("internalTimer");
+        this.internalTimer = tag.getInt("internalTimer");
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
         super.writeToNBT(tag);
 
-        tag.setInteger("internalTimer", internalTimer);
+        tag.putInt("internalTimer", internalTimer);
     }
 
     public ItemStack getStackFromItemFrame(World world, BlockPos masterPos, Direction direction) {

@@ -79,14 +79,14 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
             cachedNetwork = NetworkHelper.getSoulNetwork(owner);
         currentRitual = BloodMagic.RITUAL_MANAGER.getRitual(tag.getString(Constants.NBT.CURRENT_RITUAL));
         if (currentRitual != null) {
-            CompoundNBT ritualTag = tag.getCompoundTag(Constants.NBT.CURRENT_RITUAL_TAG);
+            CompoundNBT ritualTag = tag.getCompound(Constants.NBT.CURRENT_RITUAL_TAG);
             if (!ritualTag.isEmpty()) {
                 currentRitual.readFromNBT(ritualTag);
             }
         }
         active = tag.getBoolean(Constants.NBT.IS_RUNNING);
-        activeTime = tag.getInteger(Constants.NBT.RUNTIME);
-        direction = Direction.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
+        activeTime = tag.getInt(Constants.NBT.RUNTIME);
+        direction = Direction.VALUES[tag.getInt(Constants.NBT.DIRECTION)];
         redstoned = tag.getBoolean(Constants.NBT.IS_REDSTONED);
 
         for (EnumDemonWillType type : EnumDemonWillType.values()) {
@@ -100,20 +100,20 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
     public CompoundNBT serialize(CompoundNBT tag) {
         String ritualId = BloodMagic.RITUAL_MANAGER.getId(getCurrentRitual());
         if (owner != null)
-            tag.setUniqueId("owner", owner);
-        tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
+            tag.putUniqueId("owner", owner);
+        tag.putString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
         if (currentRitual != null) {
             CompoundNBT ritualTag = new CompoundNBT();
             currentRitual.writeToNBT(ritualTag);
-            tag.setTag(Constants.NBT.CURRENT_RITUAL_TAG, ritualTag);
+            tag.put(Constants.NBT.CURRENT_RITUAL_TAG, ritualTag);
         }
-        tag.setBoolean(Constants.NBT.IS_RUNNING, isActive());
-        tag.setInteger(Constants.NBT.RUNTIME, getActiveTime());
-        tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
-        tag.setBoolean(Constants.NBT.IS_REDSTONED, redstoned);
+        tag.putBoolean(Constants.NBT.IS_RUNNING, isActive());
+        tag.putInt(Constants.NBT.RUNTIME, getActiveTime());
+        tag.putInt(Constants.NBT.DIRECTION, direction.getIndex());
+        tag.putBoolean(Constants.NBT.IS_REDSTONED, redstoned);
 
         for (EnumDemonWillType type : currentActiveWillConfig) {
-            tag.setBoolean("EnumWill" + type, true);
+            tag.putBoolean("EnumWill" + type, true);
         }
 
         return tag;

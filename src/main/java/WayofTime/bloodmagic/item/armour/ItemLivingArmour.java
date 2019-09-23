@@ -396,13 +396,13 @@ public class ItemLivingArmour extends ArmorItem implements ISpecialArmor, IMeshP
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setTag(Constants.NBT.LIVING_ARMOUR, livingTag);
+        tag.put(Constants.NBT.LIVING_ARMOUR, livingTag);
     }
 
     public void setIsEnabled(ItemStack stack, boolean bool) {
         NBTHelper.checkNBT(stack);
         CompoundNBT tag = stack.getTagCompound();
-        tag.setBoolean("enabled", bool);
+        tag.putBoolean("enabled", bool);
     }
 
     public boolean isEnabled(ItemStack stack) {
@@ -414,7 +414,7 @@ public class ItemLivingArmour extends ArmorItem implements ISpecialArmor, IMeshP
     public void setIsElytra(ItemStack stack, boolean bool) {
         NBTHelper.checkNBT(stack);
         CompoundNBT tag = stack.getTagCompound();
-        tag.setBoolean("elytra", bool);
+        tag.putBoolean("elytra", bool);
     }
 
     public boolean isElytra(ItemStack stack) {
@@ -439,7 +439,7 @@ public class ItemLivingArmour extends ArmorItem implements ISpecialArmor, IMeshP
         }
 
         CompoundNBT tag = stack.getTagCompound();
-        return tag.getCompoundTag(Constants.NBT.LIVING_ARMOUR);
+        return tag.getCompound(Constants.NBT.LIVING_ARMOUR);
     }
 
     //TODO: Add the ability to have the armour give an upgrade with a higher level

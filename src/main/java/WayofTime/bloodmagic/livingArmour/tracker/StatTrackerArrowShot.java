@@ -31,12 +31,12 @@ public class StatTrackerArrowShot extends StatTracker {
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        totalShots = tag.getInteger(BloodMagic.MODID + ".tracker.trickShot");
+        totalShots = tag.getInt(BloodMagic.MODID + ".tracker.trickShot");
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(BloodMagic.MODID + ".tracker.trickShot", totalShots);
+        tag.putInt(BloodMagic.MODID + ".tracker.trickShot", totalShots);
     }
 
     @Override

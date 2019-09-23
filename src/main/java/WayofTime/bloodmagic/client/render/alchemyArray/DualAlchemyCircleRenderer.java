@@ -99,7 +99,7 @@ public class DualAlchemyCircleRenderer extends AlchemyCircleRenderer {
         GlStateManager.rotate(rotation.getHorizontalAngle() + 180, 0, 0, 1);
 
         // Bind the texture to the circle
-        Minecraft.getMinecraft().renderEngine.bindTexture(arrayResource);
+        Minecraft.getInstance().renderEngine.bindTexture(arrayResource);
         GlStateManager.pushMatrix();
         GlStateManager.rotate(rot, 0, 0, 1);
         double var31 = 0.0D;
@@ -119,7 +119,7 @@ public class DualAlchemyCircleRenderer extends AlchemyCircleRenderer {
         GlStateManager.popMatrix();
 
         // Bind the second texture to the circle
-        Minecraft.getMinecraft().renderEngine.bindTexture(secondaryArrayResource);
+        Minecraft.getInstance().renderEngine.bindTexture(secondaryArrayResource);
         GlStateManager.pushMatrix();
         GlStateManager.rotate(-rot, 0, 0, 1);
 

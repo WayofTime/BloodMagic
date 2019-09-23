@@ -36,7 +36,7 @@ public class StatTrackerHealthboost extends StatTracker {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setDouble(BloodMagic.MODID + ".tracker.health", totalHealthGenned);
+        tag.putDouble(BloodMagic.MODID + ".tracker.health", totalHealthGenned);
     }
 
     @Override

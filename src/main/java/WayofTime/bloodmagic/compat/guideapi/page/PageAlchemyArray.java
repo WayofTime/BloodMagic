@@ -51,13 +51,13 @@ public class PageAlchemyArray extends Page {
         int x = guiLeft + 65;
         int y = guiTop + 30;
 
-        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("bloodmagicguide" + ":textures/gui/alchemyArrayCrafting.png"));
+        Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation("bloodmagicguide" + ":textures/gui/alchemyArrayCrafting.png"));
         guiBase.drawTexturedModalRect(x, y, 0, 0, 62, 88 + (outputStack.isEmpty() ? 0 : 26));
 
         guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.bloodmagic.page.alchemyArray"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
 
         for (ResourceLocation arrayResource : arrayResources) {
-            Minecraft.getMinecraft().getTextureManager().bindTexture(arrayResource);
+            Minecraft.getInstance().getTextureManager().bindTexture(arrayResource);
             GlStateManager.pushMatrix();
             GlStateManager.translate(x + 2, y + 28, 0);
             GlStateManager.scale(scale, scale, scale);

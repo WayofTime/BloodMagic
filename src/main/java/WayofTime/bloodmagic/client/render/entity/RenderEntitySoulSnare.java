@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderEntitySoulSnare extends EntityRenderer<EntitySoulSnare> {
-    private final ItemRenderer renderItem = Minecraft.getMinecraft().getRenderItem();
+    private final ItemRenderer renderItem = Minecraft.getInstance().getRenderItem();
 
     public RenderEntitySoulSnare(EntityRendererManager renderManagerIn) {
         super(renderManagerIn);

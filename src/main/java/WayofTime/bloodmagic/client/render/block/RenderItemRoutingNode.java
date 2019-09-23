@@ -20,7 +20,7 @@ import java.util.List;
 
 public class RenderItemRoutingNode extends TileEntityRenderer<TileRoutingNode> {
     private static final ResourceLocation beamTexture = new ResourceLocation(BloodMagic.MODID, "textures/entities/nodeBeam.png");
-    private static final Minecraft mc = Minecraft.getMinecraft();
+    private static final Minecraft mc = Minecraft.getInstance();
 
     @Override
     public void render(TileRoutingNode tileNode, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {

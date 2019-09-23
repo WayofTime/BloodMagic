@@ -147,17 +147,17 @@ public class TileDemonCrystal extends TileTicking {
     @Override
     public void deserialize(CompoundNBT tag) {
         holder.readFromNBT(tag, "Will");
-        crystalCount = tag.getInteger("crystalCount");
-        placement = Direction.byIndex(tag.getInteger("placement"));
+        crystalCount = tag.getInt("crystalCount");
+        placement = Direction.byIndex(tag.getInt("placement"));
         progressToNextCrystal = tag.getDouble("progress");
     }
 
     @Override
     public CompoundNBT serialize(CompoundNBT tag) {
         holder.writeToNBT(tag, "Will");
-        tag.setInteger("crystalCount", crystalCount);
-        tag.setInteger("placement", placement.getIndex());
-        tag.setDouble("progress", progressToNextCrystal);
+        tag.putInt("crystalCount", crystalCount);
+        tag.putInt("placement", placement.getIndex());
+        tag.putDouble("progress", progressToNextCrystal);
         return tag;
     }
 

@@ -36,7 +36,7 @@ public class StatTrackerRepairing extends StatTracker {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setDouble(BloodMagic.MODID + ".tracker.repair", totalDamage);
+        tag.putDouble(BloodMagic.MODID + ".tracker.repair", totalDamage);
     }
 
     @Override

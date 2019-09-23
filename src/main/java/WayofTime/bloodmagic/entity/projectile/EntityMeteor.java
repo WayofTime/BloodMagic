@@ -88,22 +88,22 @@ public class EntityMeteor extends ThrowableEntity implements IThrowableEntity {
     @Override
     public void writeEntityToNBT(CompoundNBT nbt) {
         super.writeEntityToNBT(nbt);
-        nbt.setInteger(Constants.NBT.PROJECTILE_TICKS_IN_AIR, ticksInAir);
-        nbt.setInteger(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR, maxTicksInAir);
-        nbt.setDouble("radiusModifier", radiusModifier);
-        nbt.setDouble("explosionModifier", explosionModifier);
-        nbt.setDouble("fillerChance", fillerChance);
+        nbt.putInt(Constants.NBT.PROJECTILE_TICKS_IN_AIR, ticksInAir);
+        nbt.putInt(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR, maxTicksInAir);
+        nbt.putDouble("radiusModifier", radiusModifier);
+        nbt.putDouble("explosionModifier", explosionModifier);
+        nbt.putDouble("fillerChance", fillerChance);
         if (!meteorStack.isEmpty())
             meteorStack.writeToNBT(nbt);
         else
-            nbt.setBoolean("noItem", true);
+            nbt.putBoolean("noItem", true);
     }
 
     @Override
     public void readEntityFromNBT(CompoundNBT nbt) {
         super.readEntityFromNBT(nbt);
-        ticksInAir = nbt.getInteger(Constants.NBT.PROJECTILE_TICKS_IN_AIR);
-        maxTicksInAir = nbt.getInteger(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR);
+        ticksInAir = nbt.getInt(Constants.NBT.PROJECTILE_TICKS_IN_AIR);
+        maxTicksInAir = nbt.getInt(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR);
         radiusModifier = nbt.getDouble("radiusModifier");
         explosionModifier = nbt.getDouble("explosionModifier");
         fillerChance = nbt.getDouble("fillerChance");

@@ -70,8 +70,8 @@ public class TileIncenseAltar extends TileInventory implements ITickable {
     @Override
     public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
-        tag.setDouble("tranquility", tranquility);
-        tag.setDouble("incenseAddition", incenseAddition);
+        tag.putDouble("tranquility", tranquility);
+        tag.putDouble("incenseAddition", incenseAddition);
         return tag;
     }
 

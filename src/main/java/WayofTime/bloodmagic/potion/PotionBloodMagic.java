@@ -49,7 +49,7 @@ public class PotionBloodMagic extends Effect {
     @Override
     @SideOnly(Side.CLIENT)
     public int getStatusIconIndex() {
-        Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+        Minecraft.getInstance().renderEngine.bindTexture(texture);
 
         return super.getStatusIconIndex();
     }

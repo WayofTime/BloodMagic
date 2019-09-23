@@ -87,7 +87,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init() {
         super.init();
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) ->
+        Minecraft.getInstance().getItemColors().registerItemColorHandler((stack, tintIndex) ->
         {
             try {
                 if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.COLOR))
@@ -98,7 +98,7 @@ public class ClientProxy extends CommonProxy {
             }
             return -1;
         }, RegistrarBloodMagicItems.SIGIL_HOLDING);
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) ->
+        Minecraft.getInstance().getItemColors().registerItemColorHandler((stack, tintIndex) ->
         {
             if (tintIndex != 0 && tintIndex != 2)
                 return -1;
@@ -108,7 +108,7 @@ public class ClientProxy extends CommonProxy {
 
             return PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(stack));
         }, RegistrarBloodMagicItems.POTION_FLASK);
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) ->
+        Minecraft.getInstance().getItemColors().registerItemColorHandler((stack, tintIndex) ->
         {
 //            if (tintIndex != 0 && tintIndex != 2)
 //                return -1;
@@ -127,7 +127,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     private void addElytraLayer() {
-        EntityRendererManager renderManager = Minecraft.getMinecraft().getRenderManager();
+        EntityRendererManager renderManager = Minecraft.getInstance().getRenderManager();
         try {
             Map<String, PlayerRenderer> skinMap = ObfuscationReflectionHelper.getPrivateValue(EntityRendererManager.class, renderManager, "skinMap", "field_178636_l");
             skinMap.get("default").addLayer(new LayerBloodElytra(skinMap.get("default")));

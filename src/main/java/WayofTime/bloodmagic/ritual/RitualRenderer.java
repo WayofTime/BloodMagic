@@ -7,6 +7,6 @@ public abstract class RitualRenderer {
     public abstract void renderAt(IMasterRitualStone masterRitualStone, double x, double y, double z);
 
     protected void bindTexture(ResourceLocation resourceLocation) {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(resourceLocation);
+        Minecraft.getInstance().getTextureManager().bindTexture(resourceLocation);
     }
 }

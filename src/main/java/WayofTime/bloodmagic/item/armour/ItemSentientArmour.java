@@ -250,7 +250,7 @@ public class ItemSentientArmour extends ArmorItem implements ISpecialArmor, IMes
         NBTHelper.checkNBT(stack);
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble("costModifier", modifier);
+        tag.putDouble("costModifier", modifier);
     }
 
     public double getArmourModifier(ItemStack stack) {
@@ -264,7 +264,7 @@ public class ItemSentientArmour extends ArmorItem implements ISpecialArmor, IMes
         NBTHelper.checkNBT(stack);
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble("armourModifier", modifier);
+        tag.putDouble("armourModifier", modifier);
     }
 
     @Override
@@ -338,7 +338,7 @@ public class ItemSentientArmour extends ArmorItem implements ISpecialArmor, IMes
             newArmour.setTagCompound(omegaTag);
         }
 
-        omegaTag.setTag("armour", tag);
+        omegaTag.put("armour", tag);
         Map<Enchantment, Integer> enchantmentMap = EnchantmentHelper.getEnchantments(previousArmour);
         EnchantmentHelper.setEnchantments(enchantmentMap, newArmour);
     }
@@ -349,7 +349,7 @@ public class ItemSentientArmour extends ArmorItem implements ISpecialArmor, IMes
             return null;
         }
 
-        CompoundNBT tag = omegaTag.getCompoundTag("armour");
+        CompoundNBT tag = omegaTag.getCompound("armour");
         return new ItemStack(tag);
     }
 
@@ -380,7 +380,7 @@ public class ItemSentientArmour extends ArmorItem implements ISpecialArmor, IMes
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setString(Constants.NBT.WILL_TYPE, type.toString());
+        tag.putString(Constants.NBT.WILL_TYPE, type.toString());
     }
 
     public void setAbilitiesOfArmour(EnumDemonWillType type, double willValue, ItemStack armourStack) {
@@ -468,7 +468,7 @@ public class ItemSentientArmour extends ArmorItem implements ISpecialArmor, IMes
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.SOUL_SWORD_HEALTH, hp);
+        tag.putDouble(Constants.NBT.SOUL_SWORD_HEALTH, hp);
     }
 
     public double getKnockbackResistance(ItemStack stack) {
@@ -483,7 +483,7 @@ public class ItemSentientArmour extends ArmorItem implements ISpecialArmor, IMes
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble("knockback", kb);
+        tag.putDouble("knockback", kb);
     }
 
     public double getSpeedBoost(ItemStack stack) {
@@ -498,7 +498,7 @@ public class ItemSentientArmour extends ArmorItem implements ISpecialArmor, IMes
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble("speed", speed);
+        tag.putDouble("speed", speed);
     }
 
     public double getDamageBoost(ItemStack stack) {
@@ -513,7 +513,7 @@ public class ItemSentientArmour extends ArmorItem implements ISpecialArmor, IMes
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble("damage", damage);
+        tag.putDouble("damage", damage);
     }
 
     public double getAttackSpeedBoost(ItemStack stack) {
@@ -528,7 +528,7 @@ public class ItemSentientArmour extends ArmorItem implements ISpecialArmor, IMes
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble("attackSpeed", attackSpeed);
+        tag.putDouble("attackSpeed", attackSpeed);
     }
 
     public static void revertAllArmour(PlayerEntity player) {

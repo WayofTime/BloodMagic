@@ -114,10 +114,10 @@ public class ElementRegistry {
     @SubscribeEvent
     public static void onRenderOverlay(RenderGameOverlayEvent.Pre event) {
         if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
-            ScaledResolution resolution = new ScaledResolution(Minecraft.getMinecraft());
+            ScaledResolution resolution = new ScaledResolution(Minecraft.getInstance());
 
             for (HUDElement element : HUD_ELEMENTS.values()) {
-                if (!element.shouldRender(Minecraft.getMinecraft()))
+                if (!element.shouldRender(Minecraft.getInstance()))
                     continue;
 
                 Vector2f position = ELEMENT_INFO.get(getKey(element)).getPosition();

@@ -38,14 +38,14 @@ public class ItemCuttingFluid extends ItemEnum.Variant<ItemCuttingFluid.FluidTyp
         NBTHelper.checkNBT(stack);
         CompoundNBT tag = stack.getTagCompound();
 
-        return tag.getInteger("used");
+        return tag.getInt("used");
     }
 
     public void applyDamageToFluid(ItemStack stack) {
         int damage = Math.min(getDamageOfFluid(stack) + 1, getMaxUsesForFluid(stack));
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setInteger("used", damage);
+        tag.putInt("used", damage);
     }
 
     public int getMaxUsesForFluid(ItemStack stack) {

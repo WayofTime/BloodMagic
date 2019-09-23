@@ -113,18 +113,18 @@ public class AlchemyArrayEffectLaputa extends AlchemyArrayEffect {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger("radius", radius);
-        tag.setInteger("teleportHeightOffset", teleportHeightOffset);
-        tag.setInteger(Constants.NBT.X_COORD, currentPos.getX());
-        tag.setInteger(Constants.NBT.Y_COORD, currentPos.getY());
-        tag.setInteger(Constants.NBT.Z_COORD, currentPos.getZ());
+        tag.putInt("radius", radius);
+        tag.putInt("teleportHeightOffset", teleportHeightOffset);
+        tag.putInt(Constants.NBT.X_COORD, currentPos.getX());
+        tag.putInt(Constants.NBT.Y_COORD, currentPos.getY());
+        tag.putInt(Constants.NBT.Z_COORD, currentPos.getZ());
     }
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        radius = tag.getInteger("radius");
-        teleportHeightOffset = tag.getInteger("teleportHeightOffset");
-        currentPos = new BlockPos(tag.getInteger(Constants.NBT.X_COORD), tag.getInteger(Constants.NBT.Y_COORD), tag.getInteger(Constants.NBT.Z_COORD));
+        radius = tag.getInt("radius");
+        teleportHeightOffset = tag.getInt("teleportHeightOffset");
+        currentPos = new BlockPos(tag.getInt(Constants.NBT.X_COORD), tag.getInt(Constants.NBT.Y_COORD), tag.getInt(Constants.NBT.Z_COORD));
     }
 
     @Override

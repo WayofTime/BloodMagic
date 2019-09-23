@@ -375,7 +375,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
+        tag.putInt(Constants.NBT.DIRECTION, direction.getIndex());
     }
 
     public Direction getDirection(ItemStack stack) {
@@ -386,12 +386,12 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
 
         CompoundNBT tag = stack.getTagCompound();
 
-        int dir = tag.getInteger(Constants.NBT.DIRECTION);
+        int dir = tag.getInt(Constants.NBT.DIRECTION);
         if (dir == 0) {
             return Direction.NORTH;
         }
 
-        return Direction.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
+        return Direction.VALUES[tag.getInt(Constants.NBT.DIRECTION)];
     }
 
     /**
@@ -464,7 +464,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider {
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setString("current_ritual", key);
+        tag.putString("current_ritual", key);
     }
 
     public String getCurrentRitual(ItemStack stack) {

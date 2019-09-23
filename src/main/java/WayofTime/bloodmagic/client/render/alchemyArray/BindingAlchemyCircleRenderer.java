@@ -99,7 +99,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
         float size = 3.0F;
 
         // Bind the texture to the circle
-        Minecraft.getMinecraft().renderEngine.bindTexture(arrayResource);
+        Minecraft.getInstance().renderEngine.bindTexture(arrayResource);
 
         GlStateManager.disableCull();
         GlStateManager.enableBlend();
@@ -159,7 +159,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 
         for (int i = 0; i < 5; i++) {
             GlStateManager.pushMatrix();
-            Minecraft.getMinecraft().renderEngine.bindTexture(arraysResources[i]);
+            Minecraft.getInstance().renderEngine.bindTexture(arraysResources[i]);
             float newSize = 1;
             float distance = BindingAlchemyCircleRenderer.getDistanceOfCircle(i, craftTime);
             float angle = BindingAlchemyCircleRenderer.getAngleOfCircle(i, craftTime);

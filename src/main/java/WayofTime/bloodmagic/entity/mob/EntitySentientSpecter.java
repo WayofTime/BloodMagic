@@ -358,9 +358,9 @@ public class EntitySentientSpecter extends EntityDemonBase {
     public void writeEntityToNBT(CompoundNBT tag) {
         super.writeEntityToNBT(tag);
 
-        tag.setString(Constants.NBT.WILL_TYPE, type.toString());
+        tag.putString(Constants.NBT.WILL_TYPE, type.toString());
 
-        tag.setBoolean("sentientArmour", wasGivenSentientArmour);
+        tag.putBoolean("sentientArmour", wasGivenSentientArmour);
     }
 
     @Override

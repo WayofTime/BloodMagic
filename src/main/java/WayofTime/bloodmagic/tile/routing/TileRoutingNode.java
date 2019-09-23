@@ -39,20 +39,20 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
         CompoundNBT masterTag = new CompoundNBT();
-        masterTag.setInteger(Constants.NBT.X_COORD, masterPos.getX());
-        masterTag.setInteger(Constants.NBT.Y_COORD, masterPos.getY());
-        masterTag.setInteger(Constants.NBT.Z_COORD, masterPos.getZ());
-        tag.setTag(Constants.NBT.ROUTING_MASTER, masterTag);
+        masterTag.putInt(Constants.NBT.X_COORD, masterPos.getX());
+        masterTag.putInt(Constants.NBT.Y_COORD, masterPos.getY());
+        masterTag.putInt(Constants.NBT.Z_COORD, masterPos.getZ());
+        tag.put(Constants.NBT.ROUTING_MASTER, masterTag);
 
         ListNBT tags = new ListNBT();
         for (BlockPos pos : connectionList) {
             CompoundNBT posTag = new CompoundNBT();
-            posTag.setInteger(Constants.NBT.X_COORD, pos.getX());
-            posTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
-            posTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
-            tags.appendTag(posTag);
+            posTag.putInt(Constants.NBT.X_COORD, pos.getX());
+            posTag.putInt(Constants.NBT.Y_COORD, pos.getY());
+            posTag.putInt(Constants.NBT.Z_COORD, pos.getZ());
+            tags.add(posTag);
         }
-        tag.setTag(Constants.NBT.ROUTING_CONNECTION, tags);
+        tag.put(Constants.NBT.ROUTING_CONNECTION, tags);
         return tag;
     }
 
@@ -60,13 +60,13 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     public void deserialize(CompoundNBT tag) {
         super.deserialize(tag);
         connectionList.clear();
-        CompoundNBT masterTag = tag.getCompoundTag(Constants.NBT.ROUTING_MASTER);
-        masterPos = new BlockPos(masterTag.getInteger(Constants.NBT.X_COORD), masterTag.getInteger(Constants.NBT.Y_COORD), masterTag.getInteger(Constants.NBT.Z_COORD));
+        CompoundNBT masterTag = tag.getCompound(Constants.NBT.ROUTING_MASTER);
+        masterPos = new BlockPos(masterTag.getInt(Constants.NBT.X_COORD), masterTag.getInt(Constants.NBT.Y_COORD), masterTag.getInt(Constants.NBT.Z_COORD));
 
-        ListNBT tags = tag.getTagList(Constants.NBT.ROUTING_CONNECTION, 10);
-        for (int i = 0; i < tags.tagCount(); i++) {
-            CompoundNBT blockTag = tags.getCompoundTagAt(i);
-            BlockPos newPos = new BlockPos(blockTag.getInteger(Constants.NBT.X_COORD), blockTag.getInteger(Constants.NBT.Y_COORD), blockTag.getInteger(Constants.NBT.Z_COORD));
+        ListNBT tags = tag.getList(Constants.NBT.ROUTING_CONNECTION, 10);
+        for (int i = 0; i < tags.size(); i++) {
+            CompoundNBT blockTag = tags.getCompound(i);
+            BlockPos newPos = new BlockPos(blockTag.getInt(Constants.NBT.X_COORD), blockTag.getInt(Constants.NBT.Y_COORD), blockTag.getInt(Constants.NBT.Z_COORD));
             connectionList.add(newPos);
         }
     }

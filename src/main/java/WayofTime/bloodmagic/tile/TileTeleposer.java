@@ -37,13 +37,13 @@ public class TileTeleposer extends TileInventory implements ITickable {
     @Override
     public void deserialize(CompoundNBT tagCompound) {
         super.deserialize(tagCompound);
-        previousInput = tagCompound.getInteger(Constants.NBT.PREVIOUS_INPUT);
+        previousInput = tagCompound.getInt(Constants.NBT.PREVIOUS_INPUT);
     }
 
     @Override
     public CompoundNBT serialize(CompoundNBT tagCompound) {
         super.serialize(tagCompound);
-        tagCompound.setInteger(Constants.NBT.PREVIOUS_INPUT, previousInput);
+        tagCompound.putInt(Constants.NBT.PREVIOUS_INPUT, previousInput);
         return tagCompound;
     }
 

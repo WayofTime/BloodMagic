@@ -150,13 +150,13 @@ public class SoulNetwork implements INBTSerializable<CompoundNBT> {
     public void hurtPlayer(PlayerEntity user, float syphon) {
         if (user != null) {
             if (syphon < 100 && syphon > 0) {
-                if (!user.capabilities.isCreativeMode) {
+                if (!user.isCreative()) {
                     user.hurtResistantTime = 0;
                     user.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 1.0F);
                 }
 
             } else if (syphon >= 100) {
-                if (!user.capabilities.isCreativeMode) {
+                if (!user.isCreative()) {
                     for (int i = 0; i < ((syphon + 99) / 100); i++) {
                         user.hurtResistantTime = 0;
                         user.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 1.0F);
@@ -228,17 +228,17 @@ public class SoulNetwork implements INBTSerializable<CompoundNBT> {
     @Override
     public CompoundNBT serializeNBT() {
         CompoundNBT tagCompound = new CompoundNBT();
-        tagCompound.setString("playerId", getPlayerId().toString());
-        tagCompound.setInteger("currentEssence", getCurrentEssence());
-        tagCompound.setInteger("orbTier", getOrbTier());
+        tagCompound.putString("playerId", getPlayerId().toString());
+        tagCompound.putInt("currentEssence", getCurrentEssence());
+        tagCompound.putInt("orbTier", getOrbTier());
         return tagCompound;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
         this.playerId = UUID.fromString(nbt.getString("playerId"));
-        this.currentEssence = nbt.getInteger("currentEssence");
-        this.orbTier = nbt.getInteger("orbTier");
+        this.currentEssence = nbt.getInt("currentEssence");
+        this.orbTier = nbt.getInt("orbTier");
     }
 
     public static SoulNetwork fromNBT(CompoundNBT tagCompound) {

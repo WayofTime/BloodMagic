@@ -36,7 +36,7 @@ public class StatTrackerGraveDigger extends StatTracker {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setDouble(BloodMagic.MODID + ".tracker.graveDigger", totalDamageDealt);
+        tag.putDouble(BloodMagic.MODID + ".tracker.graveDigger", totalDamageDealt);
     }
 
     @Override

@@ -36,13 +36,13 @@ public class StatTrackerNightSight extends StatTracker {
     @Override
     public void readFromNBT(CompoundNBT tag) {
         totalDamageDealt = tag.getDouble(BloodMagic.MODID + ".tracker.nightSight");
-        totalNightVision = tag.getInteger(BloodMagic.MODID + ".tracker.nightSightVision");
+        totalNightVision = tag.getInt(BloodMagic.MODID + ".tracker.nightSightVision");
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setDouble(BloodMagic.MODID + ".tracker.nightSight", totalDamageDealt);
-        tag.setInteger(BloodMagic.MODID + ".tracker.nightSightVision", totalNightVision);
+        tag.putDouble(BloodMagic.MODID + ".tracker.nightSight", totalDamageDealt);
+        tag.putInt(BloodMagic.MODID + ".tracker.nightSightVision", totalNightVision);
     }
 
     @Override

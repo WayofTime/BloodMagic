@@ -164,9 +164,9 @@ public class EntityDemonBase extends CreatureEntity implements IEntityOwnable {
         super.writeEntityToNBT(tag);
 
         if (this.getOwnerId() == null) {
-            tag.setString("OwnerUUID", "");
+            tag.putString("OwnerUUID", "");
         } else {
-            tag.setString("OwnerUUID", this.getOwnerId().toString());
+            tag.putString("OwnerUUID", this.getOwnerId().toString());
         }
 
     }

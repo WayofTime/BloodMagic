@@ -31,12 +31,12 @@ public class StatTrackerDigging extends StatTracker {
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        totalBlocksDug = tag.getInteger(BloodMagic.MODID + ".tracker.digging");
+        totalBlocksDug = tag.getInt(BloodMagic.MODID + ".tracker.digging");
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(BloodMagic.MODID + ".tracker.digging", totalBlocksDug);
+        tag.putInt(BloodMagic.MODID + ".tracker.digging", totalBlocksDug);
     }
 
     @Override

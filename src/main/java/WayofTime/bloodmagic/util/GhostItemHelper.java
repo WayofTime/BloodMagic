@@ -9,14 +9,14 @@ public class GhostItemHelper {
         NBTHelper.checkNBT(stack);
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setInteger(Constants.NBT.GHOST_STACK_SIZE, amount);
+        tag.putInt(Constants.NBT.GHOST_STACK_SIZE, amount);
     }
 
     public static int getItemGhostAmount(ItemStack stack) {
         NBTHelper.checkNBT(stack);
         CompoundNBT tag = stack.getTagCompound();
 
-        return tag.getInteger(Constants.NBT.GHOST_STACK_SIZE);
+        return tag.getInt(Constants.NBT.GHOST_STACK_SIZE);
     }
 
     public static boolean hasGhostAmount(ItemStack stack) {

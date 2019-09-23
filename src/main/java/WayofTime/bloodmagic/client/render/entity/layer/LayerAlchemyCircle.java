@@ -37,7 +37,7 @@ public class LayerAlchemyCircle<T extends EntityCorruptedSheep> implements Layer
         float size = 3.0F;
 
         // Bind the texture to the circle
-        Minecraft.getMinecraft().renderEngine.bindTexture(ARRAY_TEXTURE);
+        Minecraft.getInstance().renderEngine.bindTexture(ARRAY_TEXTURE);
 
         GlStateManager.disableCull();
         GlStateManager.enableBlend();

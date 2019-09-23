@@ -140,14 +140,14 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         for (int i = 0; i < inventorySize; i++) {
             if (!inventory.get(i).isEmpty()) {
                 CompoundNBT tag = new CompoundNBT();
-                tag.setByte(Constants.NBT.SLOT, (byte) i);
+                tag.putByte(Constants.NBT.SLOT, (byte) i);
                 inventory.get(i).writeToNBT(tag);
                 itemList.appendTag(tag);
             }
         }
 
-        inventoryTag.setTag(Constants.NBT.ITEMS, itemList);
-        itemTag.setTag(Constants.NBT.ITEM_INVENTORY, inventoryTag);
+        inventoryTag.put(Constants.NBT.ITEMS, itemList);
+        itemTag.put(Constants.NBT.ITEM_INVENTORY, inventoryTag);
     }
 
     @Override
@@ -248,7 +248,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
         }
 
         CompoundNBT inventoryTag = tagCompound.getCompoundTag(Constants.NBT.ITEM_INVENTORY);
-        ListNBT tagList = inventoryTag.getTagList(Constants.NBT.ITEMS, 10);
+        ListNBT tagList = inventoryTag.getList(Constants.NBT.ITEMS, 10);
 
         if (tagList.isEmpty()) {
             return NonNullList.withSize(inventorySize, ItemStack.EMPTY);

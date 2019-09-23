@@ -64,12 +64,12 @@ public class LivingArmourUpgradeSolarPowered extends LivingArmourUpgrade {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(BloodMagic.MODID + ".tracker.solarPowered", counter);
+        tag.putInt(BloodMagic.MODID + ".tracker.solarPowered", counter);
     }
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        counter = tag.getInteger(BloodMagic.MODID + ".tracker.solarPowered");
+        counter = tag.getInt(BloodMagic.MODID + ".tracker.solarPowered");
     }
 
     @Override

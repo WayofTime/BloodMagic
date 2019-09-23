@@ -54,11 +54,11 @@ public class RenderAltar extends TileEntityRenderer<TileAltar> {
 
         float size = 0.8f;
 
-        TextureAtlasSprite fluidStillSprite = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(fluid.getStill().toString());
+        TextureAtlasSprite fluidStillSprite = Minecraft.getInstance().getTextureMapBlocks().getTextureExtry(fluid.getStill().toString());
 
         int fluidColor = fluid.getColor(fluidStack);
 
-        Minecraft.getMinecraft().renderEngine.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
+        Minecraft.getInstance().renderEngine.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
         setGLColorFromInt(fluidColor);
 
         double uMin = (double) fluidStillSprite.getMinU();
@@ -78,7 +78,7 @@ public class RenderAltar extends TileEntityRenderer<TileAltar> {
     }
 
     private void renderItem(ItemStack stack) {
-        ItemRenderer itemRenderer = Minecraft.getMinecraft().getRenderItem();
+        ItemRenderer itemRenderer = Minecraft.getInstance().getRenderItem();
         if (!stack.isEmpty()) {
             GlStateManager.translate(0.5, 1, 0.5);
             GlStateManager.pushMatrix();
@@ -100,7 +100,7 @@ public class RenderAltar extends TileEntityRenderer<TileAltar> {
     }
 
     private void renderHologram(TileAltar altar, AltarTier tier, float partialTicks) {
-        ClientPlayerEntity player = Minecraft.getMinecraft().player;
+        ClientPlayerEntity player = Minecraft.getInstance().player;
         World world = player.world;
 
         if (tier == AltarTier.ONE)

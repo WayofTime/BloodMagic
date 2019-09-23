@@ -17,7 +17,7 @@ public class ElementItemStack extends HUDElement {
     @Override
     public void draw(ScaledResolution resolution, float partialTicks, int drawX, int drawY) {
         RenderHelper.enableGUIStandardItemLighting();
-        Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(stack, drawX, drawY);
+        Minecraft.getInstance().getRenderItem().renderItemIntoGUI(stack, drawX, drawY);
         RenderHelper.disableStandardItemLighting();
     }
 }

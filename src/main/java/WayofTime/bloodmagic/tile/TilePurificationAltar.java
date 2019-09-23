@@ -74,9 +74,9 @@ public class TilePurificationAltar extends TileInventory implements ITickable {
     public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
 
-        tag.setDouble("totalPurity", totalPurity);
-        tag.setDouble("maxPurity", maxPurity);
-        tag.setDouble("purityRate", purityRate);
+        tag.putDouble("totalPurity", totalPurity);
+        tag.putDouble("maxPurity", maxPurity);
+        tag.putDouble("purityRate", purityRate);
 
         return tag;
     }

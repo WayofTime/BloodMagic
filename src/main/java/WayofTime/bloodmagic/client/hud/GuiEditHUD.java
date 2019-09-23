@@ -47,7 +47,7 @@ public class GuiEditHUD extends Screen {
         drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        ScaledResolution resolution = new ScaledResolution(Minecraft.getMinecraft());
+        ScaledResolution resolution = new ScaledResolution(Minecraft.getInstance());
         for (HUDElement element : ElementRegistry.getElements()) {
             if (dragged == element)
                 continue;
@@ -87,7 +87,7 @@ public class GuiEditHUD extends Screen {
     @Override
     protected void mouseReleased(int mouseX, int mouseY, int state) {
         if (dragged != null) {
-            ScaledResolution resolution = new ScaledResolution(Minecraft.getMinecraft());
+            ScaledResolution resolution = new ScaledResolution(Minecraft.getInstance());
             Point bounded = getBoundedDrag(resolution, mouseX, mouseY);
             float xPos = (float) ((bounded.x) / resolution.getScaledWidth_double());
             float yPos = (float) ((bounded.y) / resolution.getScaledHeight_double());
@@ -105,7 +105,7 @@ public class GuiEditHUD extends Screen {
     protected void actionPerformed(Button button) {
         switch (button.id) {
             case 0: {
-                Minecraft.getMinecraft().displayGuiScreen(parent);
+                Minecraft.getInstance().displayGuiScreen(parent);
                 break;
             }
             case 1: {
@@ -116,12 +116,12 @@ public class GuiEditHUD extends Screen {
             }
             case 2: {
                 ElementRegistry.save(currentOverrides);
-                Minecraft.getMinecraft().displayGuiScreen(parent);
+                Minecraft.getInstance().displayGuiScreen(parent);
                 break;
             }
             case 3: {
                 currentOverrides.clear();
-                Minecraft.getMinecraft().displayGuiScreen(parent);
+                Minecraft.getInstance().displayGuiScreen(parent);
                 break;
             }
         }

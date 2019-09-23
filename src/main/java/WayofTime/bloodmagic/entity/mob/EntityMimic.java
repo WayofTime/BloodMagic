@@ -66,11 +66,11 @@ public class EntityMimic extends EntityDemonBase {
     public void writeEntityToNBT(CompoundNBT tag) {
         super.writeEntityToNBT(tag);
 
-        tag.setBoolean("dropItemsOnBreak", dropItemsOnBreak);
-        tag.setTag("tileTag", tileTag);
-        tag.setInteger("metaOfReplacedBlock", metaOfReplacedBlock);
-        tag.setInteger("playerCheckRadius", playerCheckRadius);
-        tag.setString("stateOfReplacedBlock", stateOfReplacedBlock.toString());
+        tag.putBoolean("dropItemsOnBreak", dropItemsOnBreak);
+        tag.put("tileTag", tileTag);
+        tag.putInt("metaOfReplacedBlock", metaOfReplacedBlock);
+        tag.putInt("playerCheckRadius", playerCheckRadius);
+        tag.putString("stateOfReplacedBlock", stateOfReplacedBlock.toString());
     }
 
     @Override
@@ -78,9 +78,9 @@ public class EntityMimic extends EntityDemonBase {
         super.readEntityFromNBT(tag);
 
         dropItemsOnBreak = tag.getBoolean("dropItemsOnBreak");
-        tileTag = tag.getCompoundTag("tileTag");
-        metaOfReplacedBlock = tag.getInteger("metaOfReplacedBlock");
-        playerCheckRadius = tag.getInteger("playerCheckRadius");
+        tileTag = tag.getCompound("tileTag");
+        metaOfReplacedBlock = tag.getInt("metaOfReplacedBlock");
+        playerCheckRadius = tag.getInt("playerCheckRadius");
         stateOfReplacedBlock = StateUtil.parseState(tag.getString("stateOfReplacedBlock"));
     }
 

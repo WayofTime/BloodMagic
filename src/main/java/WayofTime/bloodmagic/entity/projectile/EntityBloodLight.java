@@ -142,15 +142,15 @@ public class EntityBloodLight extends ThrowableEntity implements IThrowableEntit
     @Override
     public void writeEntityToNBT(CompoundNBT nbt) {
         super.writeEntityToNBT(nbt);
-        nbt.setInteger(Constants.NBT.PROJECTILE_TICKS_IN_AIR, ticksInAir);
-        nbt.setInteger(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR, maxTicksInAir);
+        nbt.putInt(Constants.NBT.PROJECTILE_TICKS_IN_AIR, ticksInAir);
+        nbt.putInt(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR, maxTicksInAir);
     }
 
     @Override
     public void readEntityFromNBT(CompoundNBT nbt) {
         super.readEntityFromNBT(nbt);
-        ticksInAir = nbt.getInteger(Constants.NBT.PROJECTILE_TICKS_IN_AIR);
-        maxTicksInAir = nbt.getInteger(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR);
+        ticksInAir = nbt.getInt(Constants.NBT.PROJECTILE_TICKS_IN_AIR);
+        maxTicksInAir = nbt.getInt(Constants.NBT.PROJECTILE_MAX_TICKS_IN_AIR);
     }
 
     @Override

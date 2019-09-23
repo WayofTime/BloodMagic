@@ -206,18 +206,18 @@ public abstract class AreaDescriptor implements Iterator<BlockPos> {
 
         @Override
         public void readFromNBT(CompoundNBT tag) {
-            minimumOffset = new BlockPos(tag.getInteger(Constants.NBT.X_COORD + "min"), tag.getInteger(Constants.NBT.Y_COORD + "min"), tag.getInteger(Constants.NBT.Z_COORD + "min"));
-            maximumOffset = new BlockPos(tag.getInteger(Constants.NBT.X_COORD + "max"), tag.getInteger(Constants.NBT.Y_COORD + "max"), tag.getInteger(Constants.NBT.Z_COORD + "max"));
+            minimumOffset = new BlockPos(tag.getInt(Constants.NBT.X_COORD + "min"), tag.getInt(Constants.NBT.Y_COORD + "min"), tag.getInt(Constants.NBT.Z_COORD + "min"));
+            maximumOffset = new BlockPos(tag.getInt(Constants.NBT.X_COORD + "max"), tag.getInt(Constants.NBT.Y_COORD + "max"), tag.getInt(Constants.NBT.Z_COORD + "max"));
         }
 
         @Override
         public void writeToNBT(CompoundNBT tag) {
-            tag.setInteger(Constants.NBT.X_COORD + "min", minimumOffset.getX());
-            tag.setInteger(Constants.NBT.Y_COORD + "min", minimumOffset.getY());
-            tag.setInteger(Constants.NBT.Z_COORD + "min", minimumOffset.getZ());
-            tag.setInteger(Constants.NBT.X_COORD + "max", maximumOffset.getX());
-            tag.setInteger(Constants.NBT.Y_COORD + "max", maximumOffset.getY());
-            tag.setInteger(Constants.NBT.Z_COORD + "max", maximumOffset.getZ());
+            tag.putInt(Constants.NBT.X_COORD + "min", minimumOffset.getX());
+            tag.putInt(Constants.NBT.Y_COORD + "min", minimumOffset.getY());
+            tag.putInt(Constants.NBT.Z_COORD + "min", minimumOffset.getZ());
+            tag.putInt(Constants.NBT.X_COORD + "max", maximumOffset.getX());
+            tag.putInt(Constants.NBT.Y_COORD + "max", maximumOffset.getY());
+            tag.putInt(Constants.NBT.Z_COORD + "max", maximumOffset.getZ());
         }
 
         @Override

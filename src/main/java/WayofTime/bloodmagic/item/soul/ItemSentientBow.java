@@ -164,7 +164,7 @@ public class ItemSentientBow extends BowItem implements IMultiWillTool, ISentien
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble("damage", damage);
+        tag.putDouble("damage", damage);
     }
 
     public double getDamageAdded(ItemStack stack) {
@@ -180,7 +180,7 @@ public class ItemSentientBow extends BowItem implements IMultiWillTool, ISentien
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setFloat("velocity", velocity);
+        tag.putFloat("velocity", velocity);
     }
 
     public float getVelocityOfArrow(ItemStack stack) {
@@ -200,7 +200,7 @@ public class ItemSentientBow extends BowItem implements IMultiWillTool, ISentien
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setString(Constants.NBT.WILL_TYPE, type.toString());
+        tag.putString(Constants.NBT.WILL_TYPE, type.toString());
     }
 
     public double getDrainOfActivatedBow(ItemStack stack) {
@@ -215,7 +215,7 @@ public class ItemSentientBow extends BowItem implements IMultiWillTool, ISentien
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN, drain);
+        tag.putDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN, drain);
     }
 
     public double getStaticDropOfActivatedBow(ItemStack stack) {
@@ -230,7 +230,7 @@ public class ItemSentientBow extends BowItem implements IMultiWillTool, ISentien
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP, drop);
+        tag.putDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP, drop);
     }
 
     public double getDropOfActivatedBow(ItemStack stack) {
@@ -245,7 +245,7 @@ public class ItemSentientBow extends BowItem implements IMultiWillTool, ISentien
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.SOUL_SWORD_DROP, drop);
+        tag.putDouble(Constants.NBT.SOUL_SWORD_DROP, drop);
     }
 
     @Override

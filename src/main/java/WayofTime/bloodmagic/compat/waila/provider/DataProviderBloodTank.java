@@ -42,10 +42,10 @@ public class DataProviderBloodTank implements IWailaDataProvider {
     @Override
     public CompoundNBT getNBTData(ServerPlayerEntity player, TileEntity te, CompoundNBT tag, World world, BlockPos pos) {
         TileBloodTank tank = (TileBloodTank) te;
-        tag.setInteger("tier", tank.getBlockMetadata() + 1);
-        tag.setInteger("capacity", tank.capacity);
+        tag.putInt("tier", tank.getBlockMetadata() + 1);
+        tag.putInt("capacity", tank.capacity);
         if (tank.getTank().getFluid() != null)
-            tag.setTag("fluid", tank.getTank().getFluid().writeToNBT(new CompoundNBT()));
+            tag.put("fluid", tank.getTank().getFluid().writeToNBT(new CompoundNBT()));
         return tag;
     }
 }

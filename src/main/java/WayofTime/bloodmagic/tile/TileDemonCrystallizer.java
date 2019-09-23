@@ -73,7 +73,7 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
     @Override
     public CompoundNBT serialize(CompoundNBT tag) {
         holder.writeToNBT(tag, "Will");
-        tag.setDouble("internalCounter", internalCounter);
+        tag.putDouble("internalCounter", internalCounter);
         return tag;
     }
 

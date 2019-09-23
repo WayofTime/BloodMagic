@@ -143,7 +143,7 @@ public class WillHandler {
 
         WillChunk ac = WorldDemonWillHandler.getWillChunk(dim, loc.x, loc.z);
         if (ac != null) {
-            nbt.setShort("base", ac.getBase());
+            nbt.putShort("base", ac.getBase());
             ac.getCurrentWill().writeToNBT(nbt, "current");
             if (!event.getChunk().isLoaded())
                 WorldDemonWillHandler.removeWillChunk(dim, loc.x, loc.z);

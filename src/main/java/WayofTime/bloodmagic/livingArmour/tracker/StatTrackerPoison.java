@@ -30,12 +30,12 @@ public class StatTrackerPoison extends StatTracker {
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        totalPoisonTicks = tag.getInteger(BloodMagic.MODID + ".tracker.poison");
+        totalPoisonTicks = tag.getInt(BloodMagic.MODID + ".tracker.poison");
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(BloodMagic.MODID + ".tracker.poison", totalPoisonTicks);
+        tag.putInt(BloodMagic.MODID + ".tracker.poison", totalPoisonTicks);
     }
 
     @Override

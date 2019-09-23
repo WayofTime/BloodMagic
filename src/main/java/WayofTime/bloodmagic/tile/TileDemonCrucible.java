@@ -107,7 +107,7 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
         super.serialize(tag);
 
         for (Entry<EnumDemonWillType, Double> entry : willMap.entrySet()) {
-            tag.setDouble("EnumWill" + entry.getKey().getName(), entry.getValue());
+            tag.putDouble("EnumWill" + entry.getKey().getName(), entry.getValue());
         }
         return tag;
     }

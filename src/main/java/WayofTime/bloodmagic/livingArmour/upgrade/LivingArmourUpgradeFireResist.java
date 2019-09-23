@@ -54,12 +54,12 @@ public class LivingArmourUpgradeFireResist extends LivingArmourUpgrade {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(Constants.NBT.UPGRADE_FIRE_TIMER, fireCooldown);
+        tag.putInt(Constants.NBT.UPGRADE_FIRE_TIMER, fireCooldown);
     }
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        fireCooldown = tag.getInteger(Constants.NBT.UPGRADE_FIRE_TIMER);
+        fireCooldown = tag.getInt(Constants.NBT.UPGRADE_FIRE_TIMER);
     }
 
     @Override

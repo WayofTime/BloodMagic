@@ -54,7 +54,7 @@ public class DemonWillHolder {
     }
 
     public void readFromNBT(CompoundNBT tag, String key) {
-        CompoundNBT willTag = tag.getCompoundTag(key);
+        CompoundNBT willTag = tag.getCompound(key);
 
         willMap.clear();
 
@@ -69,10 +69,10 @@ public class DemonWillHolder {
     public void writeToNBT(CompoundNBT tag, String key) {
         CompoundNBT willTag = new CompoundNBT();
         for (Entry<EnumDemonWillType, Double> entry : willMap.entrySet()) {
-            willTag.setDouble("EnumWill" + entry.getKey().getName(), entry.getValue());
+            willTag.putDouble("EnumWill" + entry.getKey().getName(), entry.getValue());
         }
 
-        tag.setTag(key, willTag);
+        tag.put(key, willTag);
     }
 
     public void clearWill() {

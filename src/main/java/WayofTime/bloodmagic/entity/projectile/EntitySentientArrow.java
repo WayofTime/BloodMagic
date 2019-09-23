@@ -260,9 +260,9 @@ public class EntitySentientArrow extends ArrowEntity {
     public void writeEntityToNBT(CompoundNBT tag) {
         super.writeEntityToNBT(tag);
 
-        tag.setDouble("reimbursement", reimbursedAmountOnHit);
-        tag.setInteger("currentLevel", currentLevel);
-        tag.setString(Constants.NBT.WILL_TYPE, type.toString());
+        tag.putDouble("reimbursement", reimbursedAmountOnHit);
+        tag.putInt("currentLevel", currentLevel);
+        tag.putString(Constants.NBT.WILL_TYPE, type.toString());
     }
 
     @Override
@@ -271,7 +271,7 @@ public class EntitySentientArrow extends ArrowEntity {
 
         reimbursedAmountOnHit = tag.getDouble("reimbursement");
         type = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
-        currentLevel = tag.getInteger("currentLevel");
+        currentLevel = tag.getInt("currentLevel");
     }
 
     @Override

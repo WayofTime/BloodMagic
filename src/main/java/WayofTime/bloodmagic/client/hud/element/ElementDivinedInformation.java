@@ -21,7 +21,7 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
 
     @Override
     public boolean shouldRender(Minecraft minecraft) {
-        PlayerEntity player = Minecraft.getMinecraft().player;
+        PlayerEntity player = Minecraft.getInstance().player;
         ItemStack sigilStack = player.getHeldItem(Hand.MAIN_HAND);
         boolean flag = false;
         if (simple) {

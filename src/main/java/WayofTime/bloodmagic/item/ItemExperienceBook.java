@@ -124,7 +124,7 @@ public class ItemExperienceBook extends Item implements IVariantProvider {
 
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble("experience", exp);
+        tag.putDouble("experience", exp);
     }
 
     public static double getStoredExperience(ItemStack stack) {

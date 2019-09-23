@@ -49,7 +49,7 @@ public class ItemInventory implements IInventory {
 
         for (int i = 0; i < tags.tagCount(); i++) {
             if (!isSyncedSlot(i)) {
-                CompoundNBT data = tags.getCompoundTagAt(i);
+                CompoundNBT data = tags.getCompound(i);
                 byte j = data.getByte(Constants.NBT.SLOT);
 
                 if (j >= 0 && j < inventory.size()) {
@@ -71,14 +71,14 @@ public class ItemInventory implements IInventory {
             }
         }
 
-        tagCompound.setTag(Constants.NBT.ITEMS, tags);
+        tagCompound.putTag(Constants.NBT.ITEMS, tags);
     }
 
     public void readFromStack(ItemStack masterStack) {
         if (masterStack != null) {
             NBTHelper.checkNBT(masterStack);
             CompoundNBT tag = masterStack.getTagCompound();
-            readFromNBT(tag.getCompoundTag(Constants.NBT.ITEM_INVENTORY));
+            readFromNBT(tag.getCompound(Constants.NBT.ITEM_INVENTORY));
         }
     }
 
@@ -88,7 +88,7 @@ public class ItemInventory implements IInventory {
             CompoundNBT tag = masterStack.getTagCompound();
             CompoundNBT invTag = new CompoundNBT();
             writeToNBT(invTag);
-            tag.setTag(Constants.NBT.ITEM_INVENTORY, invTag);
+            tag.put(Constants.NBT.ITEM_INVENTORY, invTag);
         }
     }
 

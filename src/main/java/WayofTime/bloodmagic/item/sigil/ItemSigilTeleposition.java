@@ -117,7 +117,7 @@ public class ItemSigilTeleposition extends ItemSigilBase {
         else
             tagCompound = stack.getTagCompound();
 
-        tagCompound.setTag("tplocation", location.serializeNBT());
+        tagCompound.putTag("tplocation", location.serializeNBT());
     }
 
     public static class TeleportLocation implements INBTSerializable<CompoundNBT> {
@@ -140,14 +140,14 @@ public class ItemSigilTeleposition extends ItemSigilBase {
         @Override
         public CompoundNBT serializeNBT() {
             CompoundNBT tag = new CompoundNBT();
-            tag.setInteger("dim", dim);
-            tag.setLong("pos", pos.toLong());
+            tag.putInt("dim", dim);
+            tag.putLong("pos", pos.toLong());
             return tag;
         }
 
         @Override
         public void deserializeNBT(CompoundNBT nbt) {
-            this.dim = nbt.getInteger("dim");
+            this.dim = nbt.getInt("dim");
             this.pos = BlockPos.fromLong(nbt.getLong("pos"));
         }
 

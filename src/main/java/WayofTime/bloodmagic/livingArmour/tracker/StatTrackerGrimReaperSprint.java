@@ -32,12 +32,12 @@ public class StatTrackerGrimReaperSprint extends StatTracker {
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        totalDeaths = tag.getInteger(BloodMagic.MODID + ".tracker.grimReaper");
+        totalDeaths = tag.getInt(BloodMagic.MODID + ".tracker.grimReaper");
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(BloodMagic.MODID + ".tracker.grimReaper", totalDeaths);
+        tag.putInt(BloodMagic.MODID + ".tracker.grimReaper", totalDeaths);
     }
 
     @Override

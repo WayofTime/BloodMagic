@@ -59,9 +59,9 @@ public class ItemBlockMimic extends ItemBlockEnum {
             CompoundNBT tileTag = getTagFromTileEntity(tileReplaced);
             if (tileReplaced != null) {
                 CompoundNBT voidTag = new CompoundNBT();
-                voidTag.setInteger("x", pos.getX());
-                voidTag.setInteger("y", pos.getY());
-                voidTag.setInteger("z", pos.getZ());
+                voidTag.putInt("x", pos.getX());
+                voidTag.putInt("y", pos.getY());
+                voidTag.putInt("z", pos.getZ());
                 tileReplaced.readFromNBT(voidTag);
             }
 

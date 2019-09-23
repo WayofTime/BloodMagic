@@ -51,12 +51,12 @@ public class LivingArmourUpgradeBattleHungry extends LivingArmourUpgrade {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger("timer", timer);
+        tag.putInt("timer", timer);
     }
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        timer = tag.getInteger("timer");
+        timer = tag.getInt("timer");
     }
 
     @Override

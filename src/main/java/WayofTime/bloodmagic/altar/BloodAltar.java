@@ -82,21 +82,21 @@ public class BloodAltar implements IFluidHandler {
             if (fluid != null)
                 setMainFluid(fluid);
 
-            FluidStack fluidOut = new FluidStack(BlockLifeEssence.getLifeEssence(), tagCompound.getInteger(Constants.NBT.OUTPUT_AMOUNT));
+            FluidStack fluidOut = new FluidStack(BlockLifeEssence.getLifeEssence(), tagCompound.getInt(Constants.NBT.OUTPUT_AMOUNT));
             setOutputFluid(fluidOut);
 
-            FluidStack fluidIn = new FluidStack(BlockLifeEssence.getLifeEssence(), tagCompound.getInteger(Constants.NBT.INPUT_AMOUNT));
+            FluidStack fluidIn = new FluidStack(BlockLifeEssence.getLifeEssence(), tagCompound.getInt(Constants.NBT.INPUT_AMOUNT));
             setInputFluid(fluidIn);
         }
 
-        internalCounter = tagCompound.getInteger("internalCounter");
+        internalCounter = tagCompound.getInt("internalCounter");
         altarTier = Enums.getIfPresent(AltarTier.class, tagCompound.getString(Constants.NBT.ALTAR_TIER)).or(AltarTier.ONE);
         isActive = tagCompound.getBoolean(Constants.NBT.ALTAR_ACTIVE);
-        liquidRequired = tagCompound.getInteger(Constants.NBT.ALTAR_LIQUID_REQ);
+        liquidRequired = tagCompound.getInt(Constants.NBT.ALTAR_LIQUID_REQ);
         canBeFilled = tagCompound.getBoolean(Constants.NBT.ALTAR_FILLABLE);
         isUpgraded = tagCompound.getBoolean(Constants.NBT.ALTAR_UPGRADED);
-        consumptionRate = tagCompound.getInteger(Constants.NBT.ALTAR_CONSUMPTION_RATE);
-        drainRate = tagCompound.getInteger(Constants.NBT.ALTAR_DRAIN_RATE);
+        consumptionRate = tagCompound.getInt(Constants.NBT.ALTAR_CONSUMPTION_RATE);
+        drainRate = tagCompound.getInt(Constants.NBT.ALTAR_DRAIN_RATE);
         consumptionMultiplier = tagCompound.getFloat(Constants.NBT.ALTAR_CONSUMPTION_MULTIPLIER);
         efficiencyMultiplier = tagCompound.getFloat(Constants.NBT.ALTAR_EFFICIENCY_MULTIPLIER);
         selfSacrificeEfficiencyMultiplier = tagCompound.getFloat(Constants.NBT.ALTAR_SELF_SACRIFICE_MULTIPLIER);
@@ -104,18 +104,18 @@ public class BloodAltar implements IFluidHandler {
         capacityMultiplier = tagCompound.getFloat(Constants.NBT.ALTAR_CAPACITY_MULTIPLIER);
         orbCapacityMultiplier = tagCompound.getFloat(Constants.NBT.ALTAR_ORB_CAPACITY_MULTIPLIER);
         dislocationMultiplier = tagCompound.getFloat(Constants.NBT.ALTAR_DISLOCATION_MULTIPLIER);
-        capacity = tagCompound.getInteger(Constants.NBT.ALTAR_CAPACITY);
-        bufferCapacity = tagCompound.getInteger(Constants.NBT.ALTAR_BUFFER_CAPACITY);
-        progress = tagCompound.getInteger(Constants.NBT.ALTAR_PROGRESS);
+        capacity = tagCompound.getInt(Constants.NBT.ALTAR_CAPACITY);
+        bufferCapacity = tagCompound.getInt(Constants.NBT.ALTAR_BUFFER_CAPACITY);
+        progress = tagCompound.getInt(Constants.NBT.ALTAR_PROGRESS);
         isResultBlock = tagCompound.getBoolean(Constants.NBT.ALTAR_IS_RESULT_BLOCK);
-        lockdownDuration = tagCompound.getInteger(Constants.NBT.ALTAR_LOCKDOWN_DURATION);
-        accelerationUpgrades = tagCompound.getInteger(Constants.NBT.ALTAR_ACCELERATION_UPGRADES);
-        demonBloodDuration = tagCompound.getInteger(Constants.NBT.ALTAR_DEMON_BLOOD_DURATION);
-        cooldownAfterCrafting = tagCompound.getInteger(Constants.NBT.ALTAR_COOLDOWN_AFTER_CRAFTING);
-        chargingRate = tagCompound.getInteger(Constants.NBT.ALTAR_CHARGE_RATE);
-        chargingFrequency = tagCompound.getInteger(Constants.NBT.ALTAR_CHARGE_FREQUENCY);
-        totalCharge = tagCompound.getInteger(Constants.NBT.ALTAR_TOTAL_CHARGE);
-        maxCharge = tagCompound.getInteger(Constants.NBT.ALTAR_MAX_CHARGE);
+        lockdownDuration = tagCompound.getInt(Constants.NBT.ALTAR_LOCKDOWN_DURATION);
+        accelerationUpgrades = tagCompound.getInt(Constants.NBT.ALTAR_ACCELERATION_UPGRADES);
+        demonBloodDuration = tagCompound.getInt(Constants.NBT.ALTAR_DEMON_BLOOD_DURATION);
+        cooldownAfterCrafting = tagCompound.getInt(Constants.NBT.ALTAR_COOLDOWN_AFTER_CRAFTING);
+        chargingRate = tagCompound.getInt(Constants.NBT.ALTAR_CHARGE_RATE);
+        chargingFrequency = tagCompound.getInt(Constants.NBT.ALTAR_CHARGE_FREQUENCY);
+        totalCharge = tagCompound.getInt(Constants.NBT.ALTAR_TOTAL_CHARGE);
+        maxCharge = tagCompound.getInt(Constants.NBT.ALTAR_MAX_CHARGE);
         currentTierDisplayed = Enums.getIfPresent(AltarTier.class, tagCompound.getString(Constants.NBT.ALTAR_CURRENT_TIER_DISPLAYED)).or(AltarTier.ONE);
     }
 
@@ -124,42 +124,42 @@ public class BloodAltar implements IFluidHandler {
         if (fluid != null)
             fluid.writeToNBT(tagCompound);
         else
-            tagCompound.setString(Constants.NBT.EMPTY, "");
+            tagCompound.putString(Constants.NBT.EMPTY, "");
 
         if (fluidOutput != null)
-            tagCompound.setInteger(Constants.NBT.OUTPUT_AMOUNT, fluidOutput.amount);
+            tagCompound.putInt(Constants.NBT.OUTPUT_AMOUNT, fluidOutput.amount);
 
         if (fluidInput != null)
-            tagCompound.setInteger(Constants.NBT.INPUT_AMOUNT, fluidInput.amount);
+            tagCompound.putInt(Constants.NBT.INPUT_AMOUNT, fluidInput.amount);
 
-        tagCompound.setInteger("internalCounter", internalCounter);
-        tagCompound.setString(Constants.NBT.ALTAR_TIER, altarTier.name());
-        tagCompound.setBoolean(Constants.NBT.ALTAR_ACTIVE, isActive);
-        tagCompound.setInteger(Constants.NBT.ALTAR_LIQUID_REQ, liquidRequired);
-        tagCompound.setBoolean(Constants.NBT.ALTAR_FILLABLE, canBeFilled);
-        tagCompound.setBoolean(Constants.NBT.ALTAR_UPGRADED, isUpgraded);
-        tagCompound.setInteger(Constants.NBT.ALTAR_CONSUMPTION_RATE, consumptionRate);
-        tagCompound.setInteger(Constants.NBT.ALTAR_DRAIN_RATE, drainRate);
-        tagCompound.setFloat(Constants.NBT.ALTAR_CONSUMPTION_MULTIPLIER, consumptionMultiplier);
-        tagCompound.setFloat(Constants.NBT.ALTAR_EFFICIENCY_MULTIPLIER, efficiencyMultiplier);
-        tagCompound.setFloat(Constants.NBT.ALTAR_SACRIFICE_MULTIPLIER, sacrificeEfficiencyMultiplier);
-        tagCompound.setFloat(Constants.NBT.ALTAR_SELF_SACRIFICE_MULTIPLIER, selfSacrificeEfficiencyMultiplier);
-        tagCompound.setBoolean(Constants.NBT.ALTAR_IS_RESULT_BLOCK, isResultBlock);
-        tagCompound.setFloat(Constants.NBT.ALTAR_CAPACITY_MULTIPLIER, capacityMultiplier);
-        tagCompound.setFloat(Constants.NBT.ALTAR_ORB_CAPACITY_MULTIPLIER, orbCapacityMultiplier);
-        tagCompound.setFloat(Constants.NBT.ALTAR_DISLOCATION_MULTIPLIER, dislocationMultiplier);
-        tagCompound.setInteger(Constants.NBT.ALTAR_CAPACITY, capacity);
-        tagCompound.setInteger(Constants.NBT.ALTAR_PROGRESS, progress);
-        tagCompound.setInteger(Constants.NBT.ALTAR_BUFFER_CAPACITY, bufferCapacity);
-        tagCompound.setInteger(Constants.NBT.ALTAR_LOCKDOWN_DURATION, lockdownDuration);
-        tagCompound.setInteger(Constants.NBT.ALTAR_ACCELERATION_UPGRADES, accelerationUpgrades);
-        tagCompound.setInteger(Constants.NBT.ALTAR_DEMON_BLOOD_DURATION, demonBloodDuration);
-        tagCompound.setInteger(Constants.NBT.ALTAR_COOLDOWN_AFTER_CRAFTING, cooldownAfterCrafting);
-        tagCompound.setInteger(Constants.NBT.ALTAR_CHARGE_RATE, chargingRate);
-        tagCompound.setInteger(Constants.NBT.ALTAR_CHARGE_FREQUENCY, chargingFrequency);
-        tagCompound.setInteger(Constants.NBT.ALTAR_TOTAL_CHARGE, totalCharge);
-        tagCompound.setInteger(Constants.NBT.ALTAR_MAX_CHARGE, maxCharge);
-        tagCompound.setString(Constants.NBT.ALTAR_CURRENT_TIER_DISPLAYED, currentTierDisplayed.name());
+        tagCompound.putInt("internalCounter", internalCounter);
+        tagCompound.putString(Constants.NBT.ALTAR_TIER, altarTier.name());
+        tagCompound.putBoolean(Constants.NBT.ALTAR_ACTIVE, isActive);
+        tagCompound.putInt(Constants.NBT.ALTAR_LIQUID_REQ, liquidRequired);
+        tagCompound.putBoolean(Constants.NBT.ALTAR_FILLABLE, canBeFilled);
+        tagCompound.putBoolean(Constants.NBT.ALTAR_UPGRADED, isUpgraded);
+        tagCompound.putInt(Constants.NBT.ALTAR_CONSUMPTION_RATE, consumptionRate);
+        tagCompound.putInt(Constants.NBT.ALTAR_DRAIN_RATE, drainRate);
+        tagCompound.putFloat(Constants.NBT.ALTAR_CONSUMPTION_MULTIPLIER, consumptionMultiplier);
+        tagCompound.putFloat(Constants.NBT.ALTAR_EFFICIENCY_MULTIPLIER, efficiencyMultiplier);
+        tagCompound.putFloat(Constants.NBT.ALTAR_SACRIFICE_MULTIPLIER, sacrificeEfficiencyMultiplier);
+        tagCompound.putFloat(Constants.NBT.ALTAR_SELF_SACRIFICE_MULTIPLIER, selfSacrificeEfficiencyMultiplier);
+        tagCompound.putBoolean(Constants.NBT.ALTAR_IS_RESULT_BLOCK, isResultBlock);
+        tagCompound.putFloat(Constants.NBT.ALTAR_CAPACITY_MULTIPLIER, capacityMultiplier);
+        tagCompound.putFloat(Constants.NBT.ALTAR_ORB_CAPACITY_MULTIPLIER, orbCapacityMultiplier);
+        tagCompound.putFloat(Constants.NBT.ALTAR_DISLOCATION_MULTIPLIER, dislocationMultiplier);
+        tagCompound.putInt(Constants.NBT.ALTAR_CAPACITY, capacity);
+        tagCompound.putInt(Constants.NBT.ALTAR_PROGRESS, progress);
+        tagCompound.putInt(Constants.NBT.ALTAR_BUFFER_CAPACITY, bufferCapacity);
+        tagCompound.putInt(Constants.NBT.ALTAR_LOCKDOWN_DURATION, lockdownDuration);
+        tagCompound.putInt(Constants.NBT.ALTAR_ACCELERATION_UPGRADES, accelerationUpgrades);
+        tagCompound.putInt(Constants.NBT.ALTAR_DEMON_BLOOD_DURATION, demonBloodDuration);
+        tagCompound.putInt(Constants.NBT.ALTAR_COOLDOWN_AFTER_CRAFTING, cooldownAfterCrafting);
+        tagCompound.putInt(Constants.NBT.ALTAR_CHARGE_RATE, chargingRate);
+        tagCompound.putInt(Constants.NBT.ALTAR_CHARGE_FREQUENCY, chargingFrequency);
+        tagCompound.putInt(Constants.NBT.ALTAR_TOTAL_CHARGE, totalCharge);
+        tagCompound.putInt(Constants.NBT.ALTAR_MAX_CHARGE, maxCharge);
+        tagCompound.putString(Constants.NBT.ALTAR_CURRENT_TIER_DISPLAYED, currentTierDisplayed.name());
     }
 
     public void startCycle() {

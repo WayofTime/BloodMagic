@@ -31,12 +31,12 @@ public class StatTrackerPhysicalProtect extends StatTracker {
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        totalDamage = tag.getInteger(BloodMagic.MODID + ".tracker.physicalProtect");
+        totalDamage = tag.getInt(BloodMagic.MODID + ".tracker.physicalProtect");
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(BloodMagic.MODID + ".tracker.physicalProtect", totalDamage);
+        tag.putInt(BloodMagic.MODID + ".tracker.physicalProtect", totalDamage);
     }
 
     @Override

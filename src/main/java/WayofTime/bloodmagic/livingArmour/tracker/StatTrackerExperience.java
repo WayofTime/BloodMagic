@@ -36,7 +36,7 @@ public class StatTrackerExperience extends StatTracker {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setDouble(BloodMagic.MODID + ".tracker.experienced", totalExperienceGained);
+        tag.putDouble(BloodMagic.MODID + ".tracker.experienced", totalExperienceGained);
     }
 
     @Override

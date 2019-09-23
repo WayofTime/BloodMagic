@@ -73,11 +73,11 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
         super.deserialize(tag);
 
         isSlave = tag.getBoolean("isSlave");
-        direction = Direction.byIndex(tag.getInteger(Constants.NBT.DIRECTION));
-        connectedPos = new BlockPos(tag.getInteger(Constants.NBT.X_COORD), tag.getInteger(Constants.NBT.Y_COORD), tag.getInteger(Constants.NBT.Z_COORD));
+        direction = Direction.byIndex(tag.getInt(Constants.NBT.DIRECTION));
+        connectedPos = new BlockPos(tag.getInt(Constants.NBT.X_COORD), tag.getInt(Constants.NBT.Y_COORD), tag.getInt(Constants.NBT.Z_COORD));
 
-        burnTime = tag.getInteger("burnTime");
-        ticksRequired = tag.getInteger("ticksRequired");
+        burnTime = tag.getInt("burnTime");
+        ticksRequired = tag.getInt("ticksRequired");
 
         byte[] array = tag.getByteArray("blockedSlots");
         for (int i = 0; i < array.length; i++)
@@ -88,20 +88,20 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
     public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
 
-        tag.setBoolean("isSlave", isSlave);
-        tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
-        tag.setInteger(Constants.NBT.X_COORD, connectedPos.getX());
-        tag.setInteger(Constants.NBT.Y_COORD, connectedPos.getY());
-        tag.setInteger(Constants.NBT.Z_COORD, connectedPos.getZ());
+        tag.putBoolean("isSlave", isSlave);
+        tag.putInt(Constants.NBT.DIRECTION, direction.getIndex());
+        tag.putInt(Constants.NBT.X_COORD, connectedPos.getX());
+        tag.putInt(Constants.NBT.Y_COORD, connectedPos.getY());
+        tag.putInt(Constants.NBT.Z_COORD, connectedPos.getZ());
 
-        tag.setInteger("burnTime", burnTime);
-        tag.setInteger("ticksRequired", ticksRequired);
+        tag.putInt("burnTime", burnTime);
+        tag.putInt("ticksRequired", ticksRequired);
 
         byte[] blockedSlotArray = new byte[blockedSlots.length];
         for (int i = 0; i < blockedSlots.length; i++)
             blockedSlotArray[i] = (byte) (blockedSlots[i] ? 1 : 0);
 
-        tag.setByteArray("blockedSlots", blockedSlotArray);
+        tag.putByteArray("blockedSlots", blockedSlotArray);
         return tag;
     }
 

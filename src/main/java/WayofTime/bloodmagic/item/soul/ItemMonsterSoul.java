@@ -63,7 +63,7 @@ public class ItemMonsterSoul extends ItemEnum.Variant<ItemMonsterSoul.WillType> 
 
         soulStack.setItemDamage(type.ordinal());
 
-        tag.setDouble(Constants.NBT.SOULS, souls);
+        tag.putDouble(Constants.NBT.SOULS, souls);
     }
 
     @Override

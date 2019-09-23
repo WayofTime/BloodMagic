@@ -31,7 +31,7 @@ public class ElementDemonAura extends HUDElement {
 
     @Override
     public void draw(ScaledResolution resolution, float partialTicks, int drawX, int drawY) {
-        Minecraft minecraft = Minecraft.getMinecraft();
+        Minecraft minecraft = Minecraft.getInstance();
         PlayerEntity player = minecraft.player;
 
         minecraft.getTextureManager().bindTexture(BAR_LOCATION);
@@ -73,6 +73,6 @@ public class ElementDemonAura extends HUDElement {
 
     @Override
     public boolean shouldRender(Minecraft minecraft) {
-        return Utils.canPlayerSeeDemonWill(Minecraft.getMinecraft().player);
+        return Utils.canPlayerSeeDemonWill(Minecraft.getInstance().player);
     }
 }

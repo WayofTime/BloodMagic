@@ -1,23 +1,23 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.util.Constants;
+import WayofTime.bloodmagic.compat.waila.BloodMagicHwylaPlugin;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
 import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
 import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.IComponentProvider;
+import mcp.mobius.waila.api.IDataAccessor;
+import mcp.mobius.waila.api.IPluginConfig;
+import mcp.mobius.waila.api.IServerDataProvider;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -25,35 +25,31 @@ import java.util.List;
  * href="https://github.com/tterrag1098">tterrag1098</a>. Originally implemented
  * in ImLookingAtBlood by <a href="https://github.com/Pokefenn">Pokefenn</a>.
  */
-public class DataProviderBloodAltar implements IWailaDataProvider {
+public class DataProviderBloodAltar implements IComponentProvider, IServerDataProvider<TileEntity> {
 
-    public static final IWailaDataProvider INSTANCE = new DataProviderBloodAltar();
+    public static final DataProviderBloodAltar INSTANCE = new DataProviderBloodAltar();
 
-    @Nonnull
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        if (!config.getConfig(Constants.Compat.WAILA_CONFIG_ALTAR))
-            return currenttip;
+    public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
+        if (!config.get(BloodMagicHwylaPlugin.CONFIG_SHOW_ALTAR_STATS))
+            return;
 
-        if (accessor.getNBTData().hasKey("altar")) {
-            CompoundNBT altarData = accessor.getNBTData().getCompoundTag("altar");
-            currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarTier", altarData.getInteger("tier")));
-            currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarCapacity", altarData.getInteger("capacity")));
-            currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentEssence", altarData.getInteger("stored")));
+        if (accessor.getServerData().contains("altar")) {
+            CompoundNBT altarData = accessor.getServerData().getCompound("altar");
+            tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.seer.currentAltarTier", altarData.getInt("tier")));
+            tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.seer.currentAltarCapacity", altarData.getInt("capacity")));
+            tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.seer.currentEssence", altarData.getInt("stored")));
 
-            if (altarData.hasKey("charge")) {
-                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentAltarProgress.percent", altarData.getInteger("progress") + "%"));
-                currenttip.add(TextHelper.localizeEffect("tooltip.bloodmagic.sigil.seer.currentCharge", altarData.getInteger("charge")));
+            if (altarData.contains("charge")) {
+                tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.seer.currentAltarProgress.percent", altarData.getInt("progress") + "%"));
+                tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.seer.currentCharge", altarData.getInt("charge")));
             }
         }
-
-        return currenttip;
     }
 
-    @Nonnull
     @Override
-    public CompoundNBT getNBTData(ServerPlayerEntity player, TileEntity te, CompoundNBT tag, World world, BlockPos pos) {
-        TileAltar altar = (TileAltar) te;
+    public void appendServerData(CompoundNBT tag, ServerPlayerEntity player, World world, TileEntity tileEntity) {
+        TileAltar altar = (TileAltar) tileEntity;
 
         boolean hasSigil = false;
         boolean hasSeer = false;
@@ -76,20 +72,18 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
         }
 
         if (!hasSeer && !hasSigil)
-            return tag;
+            return;
 
         CompoundNBT altarData = new CompoundNBT();
-        altarData.setInteger("tier", altar.getTier().toInt());
-        altarData.setInteger("capacity", altar.getCapacity());
-        altarData.setInteger("stored", altar.getCurrentBlood());
+        altarData.putInt("tier", altar.getTier().toInt());
+        altarData.putInt("capacity", altar.getCapacity());
+        altarData.putInt("stored", altar.getCurrentBlood());
         if (hasSeer) {
-            altarData.setInteger("progress", (int) (((double) altar.getProgress() / (double) altar.getLiquidRequired() * 100) / altar.getStackInSlot(0).getCount()));
-            altarData.setInteger("charge", altar.getTotalCharge());
+            altarData.putInt("progress", (int) (((double) altar.getProgress() / (double) altar.getLiquidRequired() * 100) / altar.getStackInSlot(0).getCount()));
+            altarData.putInt("charge", altar.getTotalCharge());
         }
 
-        tag.setTag("altar", altarData);
-
-        return tag;
+        tag.put("altar", altarData);
     }
 
     public static boolean hasStack(ItemStack stack, PlayerEntity player) {

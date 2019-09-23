@@ -17,7 +17,7 @@ import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class RenderBloodTank extends TileEntityRenderer<TileBloodTank> {
-    private static final Minecraft mc = Minecraft.getMinecraft();
+    private static final Minecraft mc = Minecraft.getInstance();
 
     @Override
     public void render(TileBloodTank bloodTank, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
@@ -49,7 +49,7 @@ public class RenderBloodTank extends TileEntityRenderer<TileBloodTank> {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
 
-        TextureAtlasSprite fluid = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(renderFluid.getStill().toString());
+        TextureAtlasSprite fluid = Minecraft.getInstance().getTextureMapBlocks().getAtlasSprite(renderFluid.getStill().toString());
         fluid = fluid == null ? mc.getTextureMapBlocks().getMissingSprite() : fluid;
 
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);

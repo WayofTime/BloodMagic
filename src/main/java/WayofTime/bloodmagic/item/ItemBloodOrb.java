@@ -46,7 +46,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb {
         for (BloodOrb orb : RegistrarBloodMagic.BLOOD_ORBS) {
             ItemStack orbStack = new ItemStack(this);
             CompoundNBT tag = new CompoundNBT();
-            tag.setString("orb", orb.getRegistryName().toString());
+            tag.putString("orb", orb.getRegistryName().toString());
             orbStack.setTagCompound(tag);
             list.add(orbStack);
         }

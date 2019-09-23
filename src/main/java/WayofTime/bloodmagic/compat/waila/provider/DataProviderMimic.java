@@ -50,7 +50,7 @@ public class DataProviderMimic implements IWailaDataProvider {
             if (shareTag != null)
                 item.setTag("nbt", shareTag);
 
-            tag.setTag("mimiced", item);
+            tag.put("mimiced", item);
         }
         return tag;
     }

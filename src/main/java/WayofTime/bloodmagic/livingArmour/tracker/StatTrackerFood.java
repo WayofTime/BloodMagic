@@ -34,12 +34,12 @@ public class StatTrackerFood extends StatTracker {
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        foodEaten = tag.getInteger(BloodMagic.MODID + ".tracker.foodEaten");
+        foodEaten = tag.getInt(BloodMagic.MODID + ".tracker.foodEaten");
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(BloodMagic.MODID + ".tracker.foodEaten", foodEaten);
+        tag.putInt(BloodMagic.MODID + ".tracker.foodEaten", foodEaten);
 
     }
 

@@ -31,12 +31,12 @@ public class StatTrackerFallProtect extends StatTracker {
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        totalDamage = tag.getInteger(BloodMagic.MODID + ".tracker.fallProtect");
+        totalDamage = tag.getInt(BloodMagic.MODID + ".tracker.fallProtect");
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(BloodMagic.MODID + ".tracker.fallProtect", totalDamage);
+        tag.putInt(BloodMagic.MODID + ".tracker.fallProtect", totalDamage);
     }
 
     @Override

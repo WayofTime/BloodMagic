@@ -58,12 +58,12 @@ public class LivingArmourUpgradeRepairing extends LivingArmourUpgrade {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger("repairingDelay", delay);
+        tag.putInt("repairingDelay", delay);
     }
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        delay = tag.getInteger("repairingDelay");
+        delay = tag.getInt("repairingDelay");
     }
 
     @Override

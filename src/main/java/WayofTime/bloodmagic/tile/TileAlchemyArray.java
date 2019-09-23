@@ -41,7 +41,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     public void deserialize(CompoundNBT tagCompound) {
         super.deserialize(tagCompound);
         this.isActive = tagCompound.getBoolean("isActive");
-        this.activeCounter = tagCompound.getInteger("activeCounter");
+        this.activeCounter = tagCompound.getInt("activeCounter");
         this.key = tagCompound.getString("key");
         if (!tagCompound.hasKey("doDropIngredients")) //Check if the array is old
         {
@@ -49,7 +49,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
         } else {
             this.doDropIngredients = tagCompound.getBoolean("doDropIngredients");
         }
-        this.rotation = Direction.HORIZONTALS[tagCompound.getInteger(Constants.NBT.DIRECTION)];
+        this.rotation = Direction.HORIZONTALS[tagCompound.getInt(Constants.NBT.DIRECTION)];
 
         CompoundNBT arrayTag = tagCompound.getCompoundTag("arrayTag");
         arrayEffect = AlchemyArrayRecipeRegistry.getAlchemyArrayEffect(key);
@@ -61,17 +61,17 @@ public class TileAlchemyArray extends TileInventory implements ITickable, IAlche
     @Override
     public CompoundNBT serialize(CompoundNBT tagCompound) {
         super.serialize(tagCompound);
-        tagCompound.setBoolean("isActive", isActive);
-        tagCompound.setInteger("activeCounter", activeCounter);
-        tagCompound.setString("key", "".equals(key) ? "empty" : key);
-        tagCompound.setBoolean("doDropIngredients", doDropIngredients);
-        tagCompound.setInteger(Constants.NBT.DIRECTION, rotation.getHorizontalIndex());
+        tagCompound.putBoolean("isActive", isActive);
+        tagCompound.putInt("activeCounter", activeCounter);
+        tagCompound.putString("key", "".equals(key) ? "empty" : key);
+        tagCompound.putBoolean("doDropIngredients", doDropIngredients);
+        tagCompound.putInt(Constants.NBT.DIRECTION, rotation.getHorizontalIndex());
 
         CompoundNBT arrayTag = new CompoundNBT();
         if (arrayEffect != null) {
             arrayEffect.writeToNBT(arrayTag);
         }
-        tagCompound.setTag("arrayTag", arrayTag);
+        tagCompound.putTag("arrayTag", arrayTag);
 
         return tagCompound;
     }

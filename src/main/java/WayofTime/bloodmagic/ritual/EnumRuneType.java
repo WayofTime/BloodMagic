@@ -48,7 +48,7 @@ public enum EnumRuneType implements IStringSerializable, ISubItem {
     public ItemStack getStack(int count) {
         ItemStack ret = new ItemStack(RegistrarBloodMagicItems.INSCRIPTION_TOOL, count, ordinal());
         CompoundNBT tag = new CompoundNBT();
-        tag.setInteger(Constants.NBT.USES, 10);
+        tag.putInt(Constants.NBT.USES, 10);
         ret.setTagCompound(tag);
         return ret;
     }

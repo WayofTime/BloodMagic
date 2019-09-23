@@ -203,8 +203,8 @@ public class TileInversionPillar extends TileTicking {
 
         type = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
         currentInversion = tag.getDouble("currentInversion");
-        currentInfectionRadius = tag.getInteger("currentInfectionRadius");
-        consecutiveFailedChecks = tag.getInteger("consecutiveFailedChecks");
+        currentInfectionRadius = tag.getInt("currentInfectionRadius");
+        consecutiveFailedChecks = tag.getInt("consecutiveFailedChecks");
 
         animationOffsetValue = tag.getFloat("animationOffset");
         animationOffset.setValue(animationOffsetValue);
@@ -214,11 +214,11 @@ public class TileInversionPillar extends TileTicking {
     public CompoundNBT serialize(CompoundNBT tag) {
         super.serialize(tag);
 
-        tag.setString(Constants.NBT.WILL_TYPE, type.toString());
-        tag.setDouble("currentInversion", currentInversion);
-        tag.setInteger("currentInfectionRadius", currentInfectionRadius);
-        tag.setInteger("consecutiveFailedChecks", consecutiveFailedChecks);
-        tag.setFloat("animationOffset", animationOffsetValue);
+        tag.putString(Constants.NBT.WILL_TYPE, type.toString());
+        tag.putDouble("currentInversion", currentInversion);
+        tag.putInt("currentInfectionRadius", currentInfectionRadius);
+        tag.putInt("consecutiveFailedChecks", consecutiveFailedChecks);
+        tag.putFloat("animationOffset", animationOffsetValue);
 
         return tag;
     }

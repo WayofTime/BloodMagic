@@ -33,7 +33,7 @@ public enum KeyBindings {
         @SideOnly(Side.CLIENT)
         @Override
         public void handleKeybind() {
-            ClientPlayerEntity player = Minecraft.getMinecraft().player;
+            ClientPlayerEntity player = Minecraft.getInstance().player;
             if (player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
                 ClientHandler.cycleSigil(player.getHeldItemMainhand(), player, -1);
         }
@@ -42,7 +42,7 @@ public enum KeyBindings {
         @SideOnly(Side.CLIENT)
         @Override
         public void handleKeybind() {
-            ClientPlayerEntity player = Minecraft.getMinecraft().player;
+            ClientPlayerEntity player = Minecraft.getInstance().player;
             if (player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
                 ClientHandler.cycleSigil(player.getHeldItemMainhand(), player, 1);
         }

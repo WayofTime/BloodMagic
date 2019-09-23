@@ -214,9 +214,9 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
     @Override
     public void writeEntityToNBT(CompoundNBT tag) {
         super.writeEntityToNBT(tag);
-        tag.setBoolean("Sheared", this.getSheared());
-        tag.setByte("Color", (byte) this.getFleeceColor().getMetadata());
-        tag.setInteger("protection", this.protectionCooldown);
+        tag.putBoolean("Sheared", this.getSheared());
+        tag.putByte("Color", (byte) this.getFleeceColor().getMetadata());
+        tag.putInt("protection", this.protectionCooldown);
     }
 
     @Override
@@ -224,7 +224,7 @@ public class EntityCorruptedSheep extends EntityAspectedDemonBase implements ISh
         super.readEntityFromNBT(tag);
         this.setSheared(tag.getBoolean("Sheared"));
         this.setFleeceColor(DyeColor.byMetadata(tag.getByte("Color")));
-        this.protectionCooldown = tag.getInteger("protection");
+        this.protectionCooldown = tag.getInt("protection");
     }
 
     @Override

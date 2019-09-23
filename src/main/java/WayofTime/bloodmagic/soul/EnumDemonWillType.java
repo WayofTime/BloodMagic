@@ -41,6 +41,6 @@ public enum EnumDemonWillType implements IStringSerializable, ISubItem {
     @Nonnull
     @Override
     public ItemStack getStack(int count) {
-        return new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, count, ordinal());
+        return new ItemStack(RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL, count);
     }
 }

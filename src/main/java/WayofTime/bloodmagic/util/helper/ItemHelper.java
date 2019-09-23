@@ -93,7 +93,7 @@ public class ItemHelper {
                 NBTHelper.checkNBT(stack);
                 CompoundNBT tag = stack.getTagCompound();
 
-                tag.setString("key", key);
+                tag.putString("key", key);
             }
         }
 
@@ -113,7 +113,7 @@ public class ItemHelper {
                 NBTHelper.checkNBT(stack);
                 CompoundNBT tag = stack.getTagCompound();
 
-                tag.setInteger("level", level);
+                tag.putInt("level", level);
             }
         }
 
@@ -122,7 +122,7 @@ public class ItemHelper {
                 NBTHelper.checkNBT(stack);
                 CompoundNBT tag = stack.getTagCompound();
 
-                return tag.getInteger("level");
+                return tag.getInt("level");
             }
 
             return 0;

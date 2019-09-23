@@ -50,12 +50,12 @@ public class LivingArmourUpgradeGrimReaperSprint extends LivingArmourUpgrade {
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        deathTimer = tag.getInteger(BloodMagic.MODID + ".tracker.grimReaper");
+        deathTimer = tag.getInt(BloodMagic.MODID + ".tracker.grimReaper");
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(BloodMagic.MODID + ".tracker.grimReaper", deathTimer);
+        tag.putInt(BloodMagic.MODID + ".tracker.grimReaper", deathTimer);
     }
 
     @Override

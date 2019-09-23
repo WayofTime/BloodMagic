@@ -26,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderEntityMimic extends MobRenderer<EntityMimic> {
     private static final ResourceLocation SPIDER_TEXTURES = new ResourceLocation("textures/entity/spider/spider.png");
-    Minecraft minecraft = Minecraft.getMinecraft();
+    Minecraft minecraft = Minecraft.getInstance();
 
     public RenderEntityMimic(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new ModelMimic(), 1.0F);
@@ -49,7 +49,7 @@ public class RenderEntityMimic extends MobRenderer<EntityMimic> {
 
             ItemStack itemstack = mimic.getMimicItemStack();
             Item item = itemstack.getItem();
-            Minecraft minecraft = Minecraft.getMinecraft();
+            Minecraft minecraft = Minecraft.getInstance();
             GlStateManager.pushMatrix();
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -70,7 +70,7 @@ public class RenderEntityMimic extends MobRenderer<EntityMimic> {
 
                         if (!StringUtils.isNullOrEmpty(s)) {
                             gameprofile = SkullTileEntity.updateGameProfile(new GameProfile(null, s));
-                            nbttagcompound.setTag("SkullOwner", NBTUtil.writeGameProfile(new CompoundNBT(), gameprofile));
+                            nbttagcompound.putTag("SkullOwner", NBTUtil.writeGameProfile(new CompoundNBT(), gameprofile));
                         }
                     }
                 }

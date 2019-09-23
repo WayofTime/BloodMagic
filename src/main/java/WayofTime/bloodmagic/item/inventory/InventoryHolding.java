@@ -49,8 +49,8 @@ public class InventoryHolding extends ItemInventory {
             nbtTagCompound = new CompoundNBT();
 
             UUID uuid = UUID.randomUUID();
-            nbtTagCompound.setLong(Constants.NBT.MOST_SIG, uuid.getMostSignificantBits());
-            nbtTagCompound.setLong(Constants.NBT.LEAST_SIG, uuid.getLeastSignificantBits());
+            nbtTagCompound.putLong(Constants.NBT.MOST_SIG, uuid.getMostSignificantBits());
+            nbtTagCompound.putLong(Constants.NBT.LEAST_SIG, uuid.getLeastSignificantBits());
         }
 
         writeToNBT(nbtTagCompound);

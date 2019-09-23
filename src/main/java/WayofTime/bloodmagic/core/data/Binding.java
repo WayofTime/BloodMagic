@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.core.data;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -26,14 +26,14 @@ public class Binding implements INBTSerializable<CompoundNBT> {
     @Override
     public CompoundNBT serializeNBT() {
         CompoundNBT tag = new CompoundNBT();
-        tag.setTag("id", NBTUtil.createUUIDTag(uuid));
-        tag.setString("name", name);
+        tag.put("id", NBTUtil.writeUniqueId(uuid));
+        tag.putString("name", name);
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
-        this.uuid = NBTUtil.getUUIDFromTag(nbt.getCompoundTag("id"));
+        this.uuid = NBTUtil.readUniqueId(nbt.getCompound("id"));
         this.name = nbt.getString("name");
     }
 
@@ -57,11 +57,11 @@ public class Binding implements INBTSerializable<CompoundNBT> {
 
     @Nullable
     public static Binding fromStack(ItemStack stack) {
-        if (!stack.hasTagCompound()) // Definitely hasn't been bound yet.
+        if (!stack.hasTag()) // Definitely hasn't been bound yet.
             return null;
 
-        NBTBase bindingTag = stack.getTagCompound().getTag("binding");
-        if (bindingTag == null || bindingTag.getId() != 10 || bindingTag.isEmpty()) // Make sure it's both a tag compound and that it has actual data.
+        INBT bindingTag = stack.getTag().get("binding");
+        if (bindingTag == null || bindingTag.getId() != 10) // Make sure it's both a tag compound and that it has actual data.
             return null;
 
         Binding binding = new Binding();

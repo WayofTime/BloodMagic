@@ -61,7 +61,7 @@ public class ItemSentientArmourGem extends Item implements IMeshProvider {
     public ItemMeshDefinition getMeshDefinition() {
         return stack -> {
             boolean flag = false;
-            NonNullList<ItemStack> armourInventory = Minecraft.getMinecraft().player.inventory.armorInventory;
+            NonNullList<ItemStack> armourInventory = Minecraft.getInstance().player.inventory.armorInventory;
             for (ItemStack armourStack : armourInventory) {
                 if (armourStack != null && armourStack.getItem() instanceof ItemSentientArmour) {
                     flag = true;

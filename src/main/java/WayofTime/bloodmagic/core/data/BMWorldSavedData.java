@@ -34,11 +34,11 @@ public class BMWorldSavedData extends WorldSavedData {
     }
 
     @Override
-    public void readFromNBT(CompoundNBT tagCompound) {
-        ListNBT networkData = tagCompound.getTagList("networkData", 10);
+    public void read(CompoundNBT tagCompound) {
+        ListNBT networkData = tagCompound.getList("networkData", 10);
 
-        for (int i = 0; i < networkData.tagCount(); i++) {
-            CompoundNBT data = networkData.getCompoundTagAt(i);
+        for (int i = 0; i < networkData.size(); i++) {
+            CompoundNBT data = networkData.getCompound(i);
             SoulNetwork network = SoulNetwork.fromNBT(data);
             network.setParent(this);
             soulNetworks.put(network.getPlayerId(), network);
@@ -46,12 +46,12 @@ public class BMWorldSavedData extends WorldSavedData {
     }
 
     @Override
-    public CompoundNBT writeToNBT(CompoundNBT tagCompound) {
+    public CompoundNBT write(CompoundNBT tagCompound) {
         ListNBT networkData = new ListNBT();
         for (SoulNetwork soulNetwork : soulNetworks.values())
-            networkData.appendTag(soulNetwork.serializeNBT());
+            networkData.add(soulNetwork.serializeNBT());
 
-        tagCompound.setTag("networkData", networkData);
+        tagCompound.put("networkData", networkData);
 
         return tagCompound;
     }

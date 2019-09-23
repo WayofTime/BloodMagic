@@ -116,7 +116,7 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
             if (bloodTank.getTank().getFluid() != null) {
                 bloodTank.getTank().getFluid().writeToNBT(fluidTag);
                 CompoundNBT dropTag = new CompoundNBT();
-                dropTag.setTag("Fluid", fluidTag);
+                dropTag.put("Fluid", fluidTag);
                 drop.setTagCompound(dropTag);
             }
 
@@ -131,7 +131,7 @@ public class BlockBloodTank extends BlockInteger implements IVariantProvider, IB
             TileBloodTank bloodTank = (TileBloodTank) tile;
             CompoundNBT tag = stack.getTagCompound();
             if (stack.hasTagCompound() && stack.getTagCompound().hasKey("Fluid")) {
-                FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("Fluid"));
+                FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(tag.getCompound("Fluid"));
                 bloodTank.getTank().setFluid(fluidStack);
             }
         }

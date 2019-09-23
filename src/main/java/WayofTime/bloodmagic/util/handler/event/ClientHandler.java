@@ -68,7 +68,7 @@ public class ClientHandler {
     public static TextureAtlasSprite bloodStoneBrick;
     public static TextureAtlasSprite beacon;
     public static TextureAtlasSprite crystalCluster;
-    public static Minecraft minecraft = Minecraft.getMinecraft();
+    public static Minecraft minecraft = Minecraft.getInstance();
     private static TileMasterRitualStone mrsHoloTile;
     private static Ritual mrsHoloRitual;
     private static Direction mrsHoloDirection;
@@ -93,7 +93,7 @@ public class ClientHandler {
 
     @SubscribeEvent
     public static void onSoundEvent(PlaySoundEvent event) {
-        PlayerEntity player = Minecraft.getMinecraft().player;
+        PlayerEntity player = Minecraft.getInstance().player;
         if (player != null && player.isPotionActive(RegistrarBloodMagic.DEAFNESS)) {
             event.setResultSound(null);
         }
@@ -146,7 +146,7 @@ public class ClientHandler {
 
     @SubscribeEvent
     public static void onMouseEvent(MouseEvent event) {
-        ClientPlayerEntity player = Minecraft.getMinecraft().player;
+        ClientPlayerEntity player = Minecraft.getInstance().player;
 
         if (event.getDwheel() != 0 && player != null && player.isSneaking()) {
             ItemStack stack = player.getHeldItemMainhand();

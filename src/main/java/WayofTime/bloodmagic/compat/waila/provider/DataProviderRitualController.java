@@ -57,21 +57,21 @@ public class DataProviderRitualController implements IWailaDataProvider {
 
         if (te instanceof TileMasterRitualStone) {
             TileMasterRitualStone mrs = (TileMasterRitualStone) te;
-            tag.setBoolean("master", true);
+            tag.putBoolean("master", true);
             if (mrs.getCurrentRitual() != null) {
-                tag.setString("ritual", mrs.getCurrentRitual().getTranslationKey());
-                tag.setBoolean("active", mrs.isActive());
+                tag.putString("ritual", mrs.getCurrentRitual().getTranslationKey());
+                tag.putBoolean("active", mrs.isActive());
                 if (mrs.getOwner() != null)
-                    tag.setString("owner", PlayerHelper.getUsernameFromUUID(mrs.getOwner()));
-                tag.setBoolean("enabled", BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(mrs.getCurrentRitual()), false));
+                    tag.putString("owner", PlayerHelper.getUsernameFromUUID(mrs.getOwner()));
+                tag.putBoolean("enabled", BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(mrs.getCurrentRitual()), false));
             }
         } else {
-            tag.setBoolean("master", false);
+            tag.putBoolean("master", false);
 
             ImperfectRitual ritual = BloodMagic.RITUAL_MANAGER.getImperfectRitual(world.getBlockState(pos.up()));
             if (ritual != null) {
-                tag.setString("ritual", ritual.getTranslationKey());
-                tag.setBoolean("enabled", BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(ritual), false));
+                tag.putString("ritual", ritual.getTranslationKey());
+                tag.putBoolean("enabled", BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(ritual), false));
             }
         }
 

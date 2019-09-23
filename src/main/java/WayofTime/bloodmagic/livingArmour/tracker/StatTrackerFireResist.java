@@ -29,12 +29,12 @@ public class StatTrackerFireResist extends StatTracker {
 
     @Override
     public void readFromNBT(CompoundNBT tag) {
-        totalFireTicks = tag.getInteger(BloodMagic.MODID + ".tracker.fire");
+        totalFireTicks = tag.getInt(BloodMagic.MODID + ".tracker.fire");
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setInteger(BloodMagic.MODID + ".tracker.fire", totalFireTicks);
+        tag.putInt(BloodMagic.MODID + ".tracker.fire", totalFireTicks);
     }
 
     @Override

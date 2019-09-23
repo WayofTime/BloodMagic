@@ -18,7 +18,7 @@ public abstract class ItemSoulBreathContainer extends Item implements ISoulBreat
     public void setBreath(ItemStack stack, double amount) {
         CompoundNBT tag = stack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.BREATH, amount);
+        tag.putDouble(Constants.NBT.BREATH, amount);
     }
 
     @Override

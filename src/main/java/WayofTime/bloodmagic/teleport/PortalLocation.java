@@ -26,11 +26,11 @@ public class PortalLocation implements Serializable {
     public CompoundNBT writeToNBT(CompoundNBT tag) {
         CompoundNBT locationTag = new CompoundNBT();
 
-        locationTag.setInteger(Constants.NBT.X_COORD, x);
-        locationTag.setInteger(Constants.NBT.Y_COORD, y);
-        locationTag.setInteger(Constants.NBT.Z_COORD, z);
-        locationTag.setInteger(Constants.NBT.DIMENSION_ID, dimension);
-        tag.setTag(Constants.NBT.PORTAL_LOCATION, locationTag);
+        locationTag.putInt(Constants.NBT.X_COORD, x);
+        locationTag.putInt(Constants.NBT.Y_COORD, y);
+        locationTag.putInt(Constants.NBT.Z_COORD, z);
+        locationTag.putInt(Constants.NBT.DIMENSION_ID, dimension);
+        tag.put(Constants.NBT.PORTAL_LOCATION, locationTag);
 
         return tag;
     }
@@ -82,8 +82,8 @@ public class PortalLocation implements Serializable {
 
     public static PortalLocation readFromNBT(CompoundNBT tag) {
         if (tag.hasKey(Constants.NBT.PORTAL_LOCATION)) {
-            CompoundNBT locationTag = tag.getCompoundTag(Constants.NBT.PORTAL_LOCATION);
-            return new PortalLocation(locationTag.getInteger(Constants.NBT.X_COORD), locationTag.getInteger(Constants.NBT.Y_COORD), locationTag.getInteger(Constants.NBT.Z_COORD), locationTag.getInteger(Constants.NBT.DIMENSION_ID));
+            CompoundNBT locationTag = tag.getCompound(Constants.NBT.PORTAL_LOCATION);
+            return new PortalLocation(locationTag.getInt(Constants.NBT.X_COORD), locationTag.getInt(Constants.NBT.Y_COORD), locationTag.getInt(Constants.NBT.Z_COORD), locationTag.getInt(Constants.NBT.DIMENSION_ID));
         }
         return null;
     }

@@ -22,16 +22,16 @@ public class TileSpectralBlock extends TileTicking {
 
     @Override
     public void deserialize(CompoundNBT tagCompound) {
-        ticksRemaining = tagCompound.getInteger(Constants.NBT.TICKS_REMAINING);
+        ticksRemaining = tagCompound.getInt(Constants.NBT.TICKS_REMAINING);
         containedBlockName = tagCompound.getString(Constants.NBT.CONTAINED_BLOCK_NAME);
-        containedBlockMeta = tagCompound.getInteger(Constants.NBT.CONTAINED_BLOCK_META);
+        containedBlockMeta = tagCompound.getInt(Constants.NBT.CONTAINED_BLOCK_META);
     }
 
     @Override
     public CompoundNBT serialize(CompoundNBT tagCompound) {
-        tagCompound.setInteger(Constants.NBT.TICKS_REMAINING, ticksRemaining);
-        tagCompound.setString(Constants.NBT.CONTAINED_BLOCK_NAME, Strings.isNullOrEmpty(containedBlockName) ? "" : containedBlockName);
-        tagCompound.setInteger(Constants.NBT.CONTAINED_BLOCK_META, containedBlockMeta);
+        tagCompound.putInt(Constants.NBT.TICKS_REMAINING, ticksRemaining);
+        tagCompound.putString(Constants.NBT.CONTAINED_BLOCK_NAME, Strings.isNullOrEmpty(containedBlockName) ? "" : containedBlockName);
+        tagCompound.putInt(Constants.NBT.CONTAINED_BLOCK_META, containedBlockMeta);
         return tagCompound;
     }
 

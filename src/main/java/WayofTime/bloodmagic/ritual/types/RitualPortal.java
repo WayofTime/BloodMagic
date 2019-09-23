@@ -88,7 +88,7 @@ public class RitualPortal extends Ritual {
             }
 
             if (LocationsHandler.getLocationsHandler().addLocation(name, new PortalLocation(x, y + 1, z, world.provider.getDimension()))) {
-                portalRitualTag.setString(PORTAL_ID_TAG, name);
+                portalRitualTag.putString(PORTAL_ID_TAG, name);
                 return true;
             }
         }
@@ -210,14 +210,14 @@ public class RitualPortal extends Ritual {
     public void readFromNBT(CompoundNBT tag) {
         super.readFromNBT(tag);
 
-        portalRitualTag = tag.getCompoundTag(PORTAL_NBT_TAG);
+        portalRitualTag = tag.getCompound(PORTAL_NBT_TAG);
     }
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
         super.writeToNBT(tag);
 
-        tag.setTag(PORTAL_NBT_TAG, portalRitualTag);
+        tag.put(PORTAL_NBT_TAG, portalRitualTag);
     }
 
     public BlockState getBlockState(World world, int x, int y, int z) {

@@ -176,7 +176,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
 
         CompoundNBT tag = soulGemStack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.SOULS, souls);
+        tag.putDouble(Constants.NBT.SOULS, souls);
     }
 
     @Override
@@ -244,7 +244,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
             return;
         }
 
-        tag.setString(Constants.NBT.WILL_TYPE, type.toString());
+        tag.putString(Constants.NBT.WILL_TYPE, type.toString());
     }
 
     @Override

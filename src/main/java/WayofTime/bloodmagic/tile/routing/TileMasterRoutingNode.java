@@ -191,32 +191,32 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
         ListNBT tags = new ListNBT();
         for (BlockPos pos : generalNodeList) {
             CompoundNBT posTag = new CompoundNBT();
-            posTag.setInteger(Constants.NBT.X_COORD, pos.getX());
-            posTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
-            posTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
+            posTag.putInt(Constants.NBT.X_COORD, pos.getX());
+            posTag.putInt(Constants.NBT.Y_COORD, pos.getY());
+            posTag.putInt(Constants.NBT.Z_COORD, pos.getZ());
             tags.appendTag(posTag);
         }
-        tag.setTag(Constants.NBT.ROUTING_MASTER_GENERAL, tags);
+        tag.put(Constants.NBT.ROUTING_MASTER_GENERAL, tags);
 
         tags = new ListNBT();
         for (BlockPos pos : inputNodeList) {
             CompoundNBT posTag = new CompoundNBT();
-            posTag.setInteger(Constants.NBT.X_COORD, pos.getX());
-            posTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
-            posTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
+            posTag.putInt(Constants.NBT.X_COORD, pos.getX());
+            posTag.putInt(Constants.NBT.Y_COORD, pos.getY());
+            posTag.putInt(Constants.NBT.Z_COORD, pos.getZ());
             tags.appendTag(posTag);
         }
-        tag.setTag(Constants.NBT.ROUTING_MASTER_INPUT, tags);
+        tag.put(Constants.NBT.ROUTING_MASTER_INPUT, tags);
 
         tags = new ListNBT();
         for (BlockPos pos : outputNodeList) {
             CompoundNBT posTag = new CompoundNBT();
-            posTag.setInteger(Constants.NBT.X_COORD, pos.getX());
-            posTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
-            posTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
+            posTag.putInt(Constants.NBT.X_COORD, pos.getX());
+            posTag.putInt(Constants.NBT.Y_COORD, pos.getY());
+            posTag.putInt(Constants.NBT.Z_COORD, pos.getZ());
             tags.appendTag(posTag);
         }
-        tag.setTag(Constants.NBT.ROUTING_MASTER_OUTPUT, tags);
+        tag.put(Constants.NBT.ROUTING_MASTER_OUTPUT, tags);
         return tag;
     }
 
@@ -224,24 +224,24 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     public void deserialize(CompoundNBT tag) {
         super.deserialize(tag);
 
-        ListNBT tags = tag.getTagList(Constants.NBT.ROUTING_MASTER_GENERAL, 10);
+        ListNBT tags = tag.getList(Constants.NBT.ROUTING_MASTER_GENERAL, 10);
         for (int i = 0; i < tags.tagCount(); i++) {
-            CompoundNBT blockTag = tags.getCompoundTagAt(i);
-            BlockPos newPos = new BlockPos(blockTag.getInteger(Constants.NBT.X_COORD), blockTag.getInteger(Constants.NBT.Y_COORD), blockTag.getInteger(Constants.NBT.Z_COORD));
+            CompoundNBT blockTag = tags.getCompound(i);
+            BlockPos newPos = new BlockPos(blockTag.getInt(Constants.NBT.X_COORD), blockTag.getInt(Constants.NBT.Y_COORD), blockTag.getInt(Constants.NBT.Z_COORD));
             generalNodeList.add(newPos);
         }
 
-        tags = tag.getTagList(Constants.NBT.ROUTING_MASTER_INPUT, 10);
+        tags = tag.getList(Constants.NBT.ROUTING_MASTER_INPUT, 10);
         for (int i = 0; i < tags.tagCount(); i++) {
-            CompoundNBT blockTag = tags.getCompoundTagAt(i);
-            BlockPos newPos = new BlockPos(blockTag.getInteger(Constants.NBT.X_COORD), blockTag.getInteger(Constants.NBT.Y_COORD), blockTag.getInteger(Constants.NBT.Z_COORD));
+            CompoundNBT blockTag = tags.getCompound(i);
+            BlockPos newPos = new BlockPos(blockTag.getInt(Constants.NBT.X_COORD), blockTag.getInt(Constants.NBT.Y_COORD), blockTag.getInt(Constants.NBT.Z_COORD));
             inputNodeList.add(newPos);
         }
 
-        tags = tag.getTagList(Constants.NBT.ROUTING_MASTER_OUTPUT, 10);
+        tags = tag.getList(Constants.NBT.ROUTING_MASTER_OUTPUT, 10);
         for (int i = 0; i < tags.tagCount(); i++) {
-            CompoundNBT blockTag = tags.getCompoundTagAt(i);
-            BlockPos newPos = new BlockPos(blockTag.getInteger(Constants.NBT.X_COORD), blockTag.getInteger(Constants.NBT.Y_COORD), blockTag.getInteger(Constants.NBT.Z_COORD));
+            CompoundNBT blockTag = tags.getCompound(i);
+            BlockPos newPos = new BlockPos(blockTag.getInt(Constants.NBT.X_COORD), blockTag.getInt(Constants.NBT.Y_COORD), blockTag.getInt(Constants.NBT.Z_COORD));
             outputNodeList.add(newPos);
         }
     }

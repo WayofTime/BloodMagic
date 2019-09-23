@@ -187,9 +187,9 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
     public ItemStack setBlockPos(ItemStack stack, BlockPos pos) {
         NBTHelper.checkNBT(stack);
         CompoundNBT itemTag = stack.getTagCompound();
-        itemTag.setInteger(Constants.NBT.X_COORD, pos.getX());
-        itemTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
-        itemTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
+        itemTag.putInt(Constants.NBT.X_COORD, pos.getX());
+        itemTag.putInt(Constants.NBT.Y_COORD, pos.getY());
+        itemTag.putInt(Constants.NBT.Z_COORD, pos.getZ());
         return stack;
     }
 }

@@ -39,7 +39,7 @@ public class ItemSigilTransposition extends ItemSigilBase {
 
         if (tag.hasKey("stored")) {
             tooltip.add(" ");
-            tooltip.add(tag.getCompoundTag("stored").getString("display"));
+            tooltip.add(tag.getCompound("stored").getString("display"));
         }
     }
 
@@ -51,7 +51,7 @@ public class ItemSigilTransposition extends ItemSigilBase {
 
         CompoundNBT tag = stack.getTagCompound();
         if (tag.hasKey("stored"))
-            return super.getItemStackDisplayName(stack) + " (" + tag.getCompoundTag("stored").getString("display") + ")";
+            return super.getItemStackDisplayName(stack) + " (" + tag.getCompound("stored").getString("display") + ")";
 
         return super.getItemStackDisplayName(stack);
     }
@@ -96,8 +96,8 @@ public class ItemSigilTransposition extends ItemSigilBase {
             } else if (stack.hasTagCompound() && stack.getTagCompound().hasKey("stored")) {
                 BlockState worldState = world.getBlockState(blockPos);
                 CompoundNBT storedTag = stack.getTagCompound().getCompoundTag("stored");
-                BlockState storedState = NBTUtil.readBlockState(storedTag.getCompoundTag("state"));
-                CompoundNBT tileData = storedTag.hasKey("tileData") ? storedTag.getCompoundTag("tileData") : null;
+                BlockState storedState = NBTUtil.readBlockState(storedTag.getCompound("state"));
+                CompoundNBT tileData = storedTag.hasKey("tileData") ? storedTag.getCompound("tileData") : null;
 
                 if (!worldState.getBlock().isReplaceable(world, blockPos))
                     blockPos = blockPos.offset(side);
@@ -133,7 +133,7 @@ public class ItemSigilTransposition extends ItemSigilBase {
             return super.getNBTShareTag(stack);
 
         CompoundNBT shareTag = stack.getTagCompound().copy();
-        CompoundNBT storedTag = shareTag.getCompoundTag("stored");
+        CompoundNBT storedTag = shareTag.getCompound("stored");
         storedTag.removeTag("state");
         storedTag.removeTag("stored");
 

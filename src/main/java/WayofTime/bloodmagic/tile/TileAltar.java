@@ -37,7 +37,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable {
         CompoundNBT altarTag = new CompoundNBT();
         this.bloodAltar.writeToNBT(altarTag);
 
-        tagCompound.setTag("bloodAltar", altarTag);
+        tagCompound.putTag("bloodAltar", altarTag);
         return tagCompound;
     }
 

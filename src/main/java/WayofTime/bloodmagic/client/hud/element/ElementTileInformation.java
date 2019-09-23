@@ -31,24 +31,24 @@ public abstract class ElementTileInformation<T extends TileEntity> extends HUDEl
     @SuppressWarnings("unchecked")
     @Override
     public void draw(ScaledResolution resolution, float partialTicks, int drawX, int drawY) {
-        T tile = (T) Minecraft.getMinecraft().world.getTileEntity(Minecraft.getMinecraft().objectMouseOver.getBlockPos());
+        T tile = (T) Minecraft.getInstance().world.getTileEntity(Minecraft.getInstance().objectMouseOver.getBlockPos());
 
         int yOffset = 0;
         for (Pair<Sprite, Function<T, String>> sprite : information) {
             sprite.getLeft().draw(drawX, drawY + yOffset);
             int textY = drawY + yOffset + (sprite.getLeft().getTextureHeight() / 4);
-            Minecraft.getMinecraft().fontRenderer.drawStringWithShadow((tile != null && tile.getClass() == tileClass) ? sprite.getRight().apply(tile) : "?", drawX + sprite.getLeft().getTextureWidth() + 2, textY, Color.WHITE.getRGB());
+            Minecraft.getInstance().fontRenderer.drawStringWithShadow((tile != null && tile.getClass() == tileClass) ? sprite.getRight().apply(tile) : "?", drawX + sprite.getLeft().getTextureWidth() + 2, textY, Color.WHITE.getRGB());
             yOffset += sprite.getLeft().getTextureHeight() + 2;
         }
     }
 
     @Override
     public boolean shouldRender(Minecraft minecraft) {
-        RayTraceResult trace = Minecraft.getMinecraft().objectMouseOver;
+        RayTraceResult trace = Minecraft.getInstance().objectMouseOver;
         if (trace == null || trace.typeOfHit != RayTraceResult.Type.BLOCK)
             return false;
 
-        TileEntity tile = Minecraft.getMinecraft().world.getTileEntity(trace.getBlockPos());
+        TileEntity tile = Minecraft.getInstance().world.getTileEntity(trace.getBlockPos());
         if (tile == null || !tileClass.isAssignableFrom(tile.getClass()))
             return false;
 

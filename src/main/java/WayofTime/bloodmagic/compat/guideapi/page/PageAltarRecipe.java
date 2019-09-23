@@ -37,7 +37,7 @@ public class PageAltarRecipe extends Page {
     @Override
     @SideOnly(Side.CLIENT)
     public void draw(Book book, CategoryAbstract category, EntryAbstract entry, int guiLeft, int guiTop, int mouseX, int mouseY, GuiBase guiBase, FontRenderer fontRenderer) {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("bloodmagicguide" + ":textures/gui/altar.png"));
+        Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation("bloodmagicguide" + ":textures/gui/altar.png"));
         guiBase.drawTexturedModalRect(guiLeft + 42, guiTop + 53, 0, 0, 146, 104);
 
         guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.bloodmagic.page.bloodAltar"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);

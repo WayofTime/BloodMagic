@@ -88,7 +88,7 @@ public class BMPotionUtils {
         NBTHelper.checkNBT(flaskStack);
         CompoundNBT tag = flaskStack.getTagCompound();
 
-        tag.setDouble(Constants.NBT.POTION_AUGMENT_LENGHT + potion.getName(), value);
+        tag.putDouble(Constants.NBT.POTION_AUGMENT_LENGHT + potion.getName(), value);
     }
 
     public static int getAugmentedLength(int originalLength, double lengthAugment, double powerAugment) {
@@ -113,7 +113,7 @@ public class BMPotionUtils {
                 nbttaglist.appendTag(potioneffect.writeCustomPotionEffectToNBT(new CompoundNBT()));
             }
 
-            nbttagcompound.setTag("CustomPotionEffects", nbttaglist);
+            nbttagcompound.putTag("CustomPotionEffects", nbttaglist);
             stack.setTagCompound(nbttagcompound);
             return stack;
         }

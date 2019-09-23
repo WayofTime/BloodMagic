@@ -16,22 +16,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * Handles data syncing and core data writing/reading.
  */
 public class TileBase extends TileEntity {
+
     @Override
-    public final void readFromNBT(CompoundNBT compound) {
-        super.readFromNBT(compound);
-        deserializeBase(compound);
-        deserialize(compound);
+    public final void deserializeNBT(CompoundNBT nbt) {
+        super.deserializeNBT(nbt);
+        deserializeBase(nbt);
+        deserialize(nbt);
     }
 
     @Override
-    public final CompoundNBT writeToNBT(CompoundNBT compound) {
-        super.writeToNBT(compound);
-        serializeBase(compound);
-        return serialize(compound);
+    public final CompoundNBT serializeNBT() {
+        CompoundNBT tag = super.serializeNBT();
+        serializeBase(tag);
+        return serialize(tag);
     }
 
     /**
-     * Called by {@link #readFromNBT(CompoundNBT)}
+     * Called by {@link #deserializeNBT(CompoundNBT)}
      * <p>
      * Internal data (such as coordinates) are handled for you. Just read the data you need.
      *
@@ -52,7 +53,7 @@ public class TileBase extends TileEntity {
     }
 
     /**
-     * Called by {@link #writeToNBT(CompoundNBT)}
+     * Called by {@link #serializeNBT()}
      * <p>
      * Internal data (such as coordinates) are handled for you. Just read the data you need.
      *
@@ -89,14 +90,14 @@ public class TileBase extends TileEntity {
 
     @Override
     public final SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(getPos(), -999, writeToNBT(new CompoundNBT()));
+        return new SUpdateTileEntityPacket(getPos(), -999, serializeNBT());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public final void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         super.onDataPacket(net, pkt);
-        readFromNBT(pkt.getNbtCompound());
+        deserialize(pkt.getNbtCompound());
         onDataPacketClientReceived();
     }
 
@@ -109,11 +110,11 @@ public class TileBase extends TileEntity {
 
     @Override
     public final CompoundNBT getUpdateTag() {
-        return writeToNBT(new CompoundNBT());
+        return serializeNBT();
     }
 
     @Override
     public final void handleUpdateTag(CompoundNBT tag) {
-        readFromNBT(tag);
+        deserializeNBT(tag);
     }
 }

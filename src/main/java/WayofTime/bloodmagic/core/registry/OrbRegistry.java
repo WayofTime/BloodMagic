@@ -51,7 +51,7 @@ public class OrbRegistry {
     public static ItemStack getOrbStack(BloodOrb orb) {
         ItemStack ret = new ItemStack(ORB_ITEM);
         CompoundNBT tag = new CompoundNBT();
-        tag.setString("orb", orb.getRegistryName().toString());
+        tag.putString("orb", orb.getRegistryName().toString());
         ret.setTagCompound(tag);
         return ret;
     }

@@ -69,7 +69,7 @@ public class MobSacrificeAlchemyCircleRenderer extends AlchemyCircleRenderer {
         float size = 1.0F * getSizeModifier(craftTime);
 
         // Bind the texture to the circle
-        Minecraft.getMinecraft().renderEngine.bindTexture(arrayResource);
+        Minecraft.getInstance().renderEngine.bindTexture(arrayResource);
 
         GlStateManager.disableCull();
         GlStateManager.enableBlend();
@@ -126,14 +126,14 @@ public class MobSacrificeAlchemyCircleRenderer extends AlchemyCircleRenderer {
 
         for (int i = 1; i <= 3; i++) {
             GlStateManager.pushMatrix();
-            Minecraft.getMinecraft().renderEngine.bindTexture(bottomArrayResource);
+            Minecraft.getInstance().renderEngine.bindTexture(bottomArrayResource);
             translateAndRotateFloatingArray(tessellator, wr, size, rot, craftTime, i);
             GlStateManager.popMatrix();
         }
 
         //Render the main array.
         GlStateManager.pushMatrix();
-        Minecraft.getMinecraft().renderEngine.bindTexture(arrayResource);
+        Minecraft.getInstance().renderEngine.bindTexture(arrayResource);
 //        GlStateManager.rotate(rot, 0, 0, 1);
         renderStandardCircle(tessellator, wr, 3);
         GlStateManager.popMatrix();
@@ -146,7 +146,7 @@ public class MobSacrificeAlchemyCircleRenderer extends AlchemyCircleRenderer {
             swirlSize = 3 * (craftTime - 40) / 60;
         }
         GlStateManager.pushMatrix();
-        Minecraft.getMinecraft().renderEngine.bindTexture(mobSacrificeSwirlResource);
+        Minecraft.getInstance().renderEngine.bindTexture(mobSacrificeSwirlResource);
         GlStateManager.translate(0, 0, 0.1);
         GlStateManager.rotate(rot / 3, 0, 0, 1);
         renderStandardCircle(tessellator, wr, swirlSize);

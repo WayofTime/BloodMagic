@@ -18,12 +18,12 @@ public class TilePhantomBlock extends TileTicking {
 
     @Override
     public void deserialize(CompoundNBT tagCompound) {
-        this.ticksRemaining = tagCompound.getInteger(Constants.NBT.TICKS_REMAINING);
+        this.ticksRemaining = tagCompound.getInt(Constants.NBT.TICKS_REMAINING);
     }
 
     @Override
     public CompoundNBT serialize(CompoundNBT tagCompound) {
-        tagCompound.setInteger(Constants.NBT.TICKS_REMAINING, ticksRemaining);
+        tagCompound.putInt(Constants.NBT.TICKS_REMAINING, ticksRemaining);
         return tagCompound;
     }
 

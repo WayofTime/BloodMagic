@@ -10,14 +10,14 @@ public class ElementString extends HUDElement {
     private ITextComponent[] display;
 
     public ElementString(ITextComponent... display) {
-        super(getMaxStringWidth(display), (Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT + 2) * display.length - 2);
+        super(getMaxStringWidth(display), (Minecraft.getInstance().fontRenderer.FONT_HEIGHT + 2) * display.length - 2);
 
         this.display = display;
     }
 
     @Override
     public void draw(ScaledResolution resolution, float partialTicks, int drawX, int drawY) {
-        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
         for (ITextComponent drawText : display) {
             fontRenderer.drawStringWithShadow(drawText.getFormattedText(), drawX, drawY, 14737632);
             drawY += fontRenderer.FONT_HEIGHT + 2;
@@ -25,7 +25,7 @@ public class ElementString extends HUDElement {
     }
 
     private static int getMaxStringWidth(ITextComponent... display) {
-        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
         int maxWidth = 0;
         for (ITextComponent drawText : display)
             if (fontRenderer.getStringWidth(drawText.getFormattedText()) > maxWidth)

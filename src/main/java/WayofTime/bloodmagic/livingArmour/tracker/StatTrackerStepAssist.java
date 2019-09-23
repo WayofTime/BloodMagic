@@ -39,7 +39,7 @@ public class StatTrackerStepAssist extends StatTracker {
 
     @Override
     public void writeToNBT(CompoundNBT tag) {
-        tag.setDouble(BloodMagic.MODID + ".tracker.stepAssist", totalMovement);
+        tag.putDouble(BloodMagic.MODID + ".tracker.stepAssist", totalMovement);
 
     }
 

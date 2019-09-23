@@ -52,7 +52,7 @@ public class RitualForsakenSoul extends Ritual {
         for (int i = 0; i < MAX_UNIQUENESS; i++) {
             String key = "uniq" + i;
             if (tag.hasKey(key)) {
-                keyList.add(tag.getInteger(key));
+                keyList.add(tag.getInt(key));
             }
         }
     }
@@ -61,12 +61,12 @@ public class RitualForsakenSoul extends Ritual {
     public void writeToNBT(CompoundNBT tag) {
         super.writeToNBT(tag);
 
-        tag.setDouble("willBuffer", willBuffer);
-        tag.setDouble("crystalBuffer", crystalBuffer);
+        tag.putDouble("willBuffer", willBuffer);
+        tag.putDouble("crystalBuffer", crystalBuffer);
 
         for (int i = 0; i < Math.min(MAX_UNIQUENESS, keyList.size()); i++) {
             String key = "uniq" + i;
-            tag.setInteger(key, keyList.get(i));
+            tag.putInt(key, keyList.get(i));
         }
     }
 
