@@ -291,7 +291,7 @@ public class BloodAltar implements IFluidHandler {
                 hasOperated = true;
             }
             if (fluid != null && fluid.amount >= 1) {
-                int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
+                int liquidDrained = Math.min((int) (consumptionRate * (1 + consumptionMultiplier)), fluid.amount);
 
                 if (liquidDrained > (liquidRequired * stackSize - progress))
                     liquidDrained = liquidRequired * stackSize - progress;
