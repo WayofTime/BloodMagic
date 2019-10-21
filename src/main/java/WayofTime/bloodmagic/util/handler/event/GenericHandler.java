@@ -250,9 +250,11 @@ public class GenericHandler {
                         targetTaskMap.remove(animal);
                         attackTaskMap.remove(animal);
                     }
-                } else if (targetTaskMap.containsKey(animal)) {
-                    targetTaskMap.remove(animal);
-                    attackTaskMap.remove(animal);
+                } else {
+                    if (targetTaskMap != null)
+                        targetTaskMap.remove(animal);
+                    if (attackTaskMap != null)
+                        attackTaskMap.remove(animal);
                 }
             }
         }
