@@ -1,12 +1,11 @@
 package WayofTime.bloodmagic.util.handler.event;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.core.RegistrarBloodMagic;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.soul.ItemSentientBow;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeCrippledArm;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeQuenched;
 import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeSlowHeal;
@@ -16,6 +15,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFallProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerJump;
 import WayofTime.bloodmagic.livingArmour.upgrade.*;
+import WayofTime.bloodmagic.util.Constants;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -247,15 +247,8 @@ public class LivingArmourHandler {
                 }
             }
 
-            if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.BOOST)) {
-                int i = event.getEntityLiving().getActivePotionEffect(RegistrarBloodMagic.BOOST).getAmplifier();
-                {
-                    percentIncrease += (i + 1) * 0.5f;
-                }
-            }
-
-            if (percentIncrease > 0 && (player.onGround || player.capabilities.isFlying) && (Math.abs(player.moveForward) > 0 || Math.abs(player.moveStrafing) > 0)) {
-                player.travel(player.moveStrafing * percentIncrease, 0, player.moveForward * percentIncrease);
+            if (percentIncrease != 0 && (player.onGround || player.capabilities.isFlying) && (Math.abs(player.moveForward) > 0 || Math.abs(player.moveStrafing) > 0)) {
+                player.travel(player.moveStrafing * percentIncrease, player.capabilities.isFlying ? player.moveVertical * percentIncrease : 0, player.moveForward * percentIncrease);
             }
         }
     }

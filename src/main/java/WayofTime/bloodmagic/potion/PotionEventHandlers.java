@@ -77,21 +77,27 @@ public class PotionEventHandlers {
                 }
             }
         }
-//        if (eventEntityLiving.isPotionActive(ModPotions.boost))
-//        {
-//            int i = eventEntityLiving.getActivePotionEffect(ModPotions.boost).getAmplifier();
-//            {
-//                float percentIncrease = (i + 1) * 0.05f;
-//
-//                if (eventEntityLiving instanceof EntityPlayer)
-//                {
-//                    EntityPlayer entityPlayer = (EntityPlayer) eventEntityLiving;
-//
-//                    if ((entityPlayer.onGround || entityPlayer.capabilities.isFlying) && entityPlayer.moveForward > 0F)
-//                        entityPlayer.moveFlying(0F, 1F, entityPlayer.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease);
-//                }
-//            }
-//        }
+
+        if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.BOOST)) {
+            float percentIncrease = 0;
+            int i = event.getEntityLiving().getActivePotionEffect(RegistrarBloodMagic.BOOST).getAmplifier();
+            {
+                percentIncrease += (i + 1) * 0.5F;
+            }
+
+            boolean isPlayerAndFlying = eventEntityLiving instanceof EntityPlayer && ((EntityPlayer) eventEntityLiving).capabilities.isFlying;
+            if (percentIncrease != 0 && (eventEntityLiving.onGround || isPlayerAndFlying) &&
+                    (eventEntityLiving.moveForward != 0 || eventEntityLiving.moveStrafing != 0 || eventEntityLiving.motionY != 0)) {
+
+                eventEntityLiving.travel(eventEntityLiving.moveStrafing * percentIncrease,
+                        isPlayerAndFlying ? eventEntityLiving.moveVertical * percentIncrease : 0, // TODO: Vertical movement doesn't seem to be impacted even with excessive values
+                        eventEntityLiving.moveForward * percentIncrease);
+
+                if (isPlayerAndFlying && eventEntityLiving.motionY != 0) // TODO: remove when entity.travel() works with vertical movement or a better solution exists.
+                    eventEntityLiving.motionY *= (1 + Math.min(percentIncrease, 0.75F)); // if this goes too high, it escalates
+            }
+        }
+
         List<EntityLivingBase> noGravityList = noGravityListMap.getOrDefault(event.getEntityLiving().getEntityWorld(), Lists.newArrayList());
         if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.SUSPENDED) && !eventEntityLiving.hasNoGravity()) {
             eventEntityLiving.setNoGravity(true);
