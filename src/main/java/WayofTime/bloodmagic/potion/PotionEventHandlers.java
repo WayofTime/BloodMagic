@@ -105,11 +105,12 @@ public class PotionEventHandlers {
         
         if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.GROUNDED)) {
             PotionEffect activeEffect = eventEntityLiving.getActivePotionEffect(RegistrarBloodMagic.GROUNDED);
-            if (activeEffect != null)
+            if (activeEffect != null) {
                 if (eventEntityLiving instanceof EntityPlayer && ((EntityPlayer) eventEntityLiving).capabilities.isFlying)
                     eventEntityLiving.motionY -= (0.05D * (double) activeEffect.getAmplifier() + 1 - eventEntityLiving.motionY) * 0.2D;
                 else
                     eventEntityLiving.motionY -= (0.1D * (double) activeEffect.getAmplifier() + 1 - eventEntityLiving.motionY) * 0.2D;
+            }
         }
 
         if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.WHIRLWIND)) {
