@@ -1,0 +1,28 @@
+buildscript {
+    repositories { 
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.moandjiezana.toml:toml4j:0.7.2'
+        classpath "blue.endless:jankson:1.1.0"
+    }
+}
+
+processResources {
+    filesMatching('**/mods.json') {
+        filter(Json5ToTomlFilter)
+        path = path.replaceFirst(/\.json$/, '.toml')
+    }
+}
+
+import blue.endless.jankson.Jankson
+import com.moandjiezana.toml.TomlWriter
+import groovy.json.JsonSlurper
+
+//shitshow ahead: groovy is too magic to call methods before call to super
+class Json5ToTomlFilter extends FilterReader {
+    Json5ToTomlFilter(Reader input) {
+        super(new StringReader(new TomlWriter().write(new JsonSlurper().parseText(Jankson.builder().build().load(input.text).toJson()))))
+    }
+}
