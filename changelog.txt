@@ -1,4 +1,16 @@
 ------------------------------------------------------
+Version 2.4.3
+------------------------------------------------------
+
+- Fixed Lava Crystals causing crash when used while not yet bound
+- Fixed Teleposers sending entities at the destination position the wrong way
+- Fixed Speed Runes not working on Tier 2 altars
+- Fixed crash when checking tasks for some entities
+- Fixed crash when checking some entities for potion effects
+- Re-implemented the Boost potion
+    - The PR still had TODOs in the description when I merged so this may not be complete yet
+
+------------------------------------------------------
 Version 2.4.2
 ------------------------------------------------------
 Now with no guarantees for working textures!
