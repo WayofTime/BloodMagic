@@ -291,7 +291,7 @@ public class BloodAltar implements IFluidHandler {
                 hasOperated = true;
             }
             if (fluid != null && fluid.amount >= 1) {
-                int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
+                int liquidDrained = Math.min((int) (consumptionRate * (1 + consumptionMultiplier)), fluid.amount);
 
                 if (liquidDrained > (liquidRequired * stackSize - progress))
                     liquidDrained = liquidRequired * stackSize - progress;
@@ -353,7 +353,7 @@ public class BloodAltar implements IFluidHandler {
                 return;
 
             if (fluid != null && fluid.amount >= 1) {
-                int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? orb.getFillRate() * (1 + consumptionMultiplier) : orb.getFillRate()), fluid.amount);
+                int liquidDrained = Math.min((int) (orb.getFillRate() * (1 + consumptionMultiplier)), fluid.amount);
                 int drain = NetworkHelper.getSoulNetwork(binding).add(SoulTicket.block(world, pos, liquidDrained), (int) (orb.getCapacity() * this.orbCapacityMultiplier));
                 fluid.amount = fluid.amount - drain;
 
