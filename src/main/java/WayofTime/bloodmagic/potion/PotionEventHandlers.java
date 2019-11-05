@@ -93,19 +93,25 @@ public class PotionEventHandlers {
 //            }
 //        }
         List<EntityLivingBase> noGravityList = noGravityListMap.getOrDefault(event.getEntityLiving().getEntityWorld(), Lists.newArrayList());
-        if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.SUSPENDED) && !eventEntityLiving.hasNoGravity()) {
-            eventEntityLiving.setNoGravity(true);
-            noGravityList.add(eventEntityLiving);
-        } else if (noGravityList.contains(eventEntityLiving)) {
-            eventEntityLiving.setNoGravity(false);
-            noGravityList.remove(eventEntityLiving);
+        if (noGravityList != null) {
+            if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.SUSPENDED) && !eventEntityLiving.hasNoGravity()) {
+                eventEntityLiving.setNoGravity(true);
+                noGravityList.add(eventEntityLiving);
+            } else if (noGravityList.contains(eventEntityLiving)) {
+                eventEntityLiving.setNoGravity(false);
+                noGravityList.remove(eventEntityLiving);
+            }
         }
-
-        if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.GROUNDED))
-            if (eventEntityLiving instanceof EntityPlayer && ((EntityPlayer) eventEntityLiving).capabilities.isFlying)
-                eventEntityLiving.motionY -= (0.05D * (double) (eventEntityLiving.getActivePotionEffect(RegistrarBloodMagic.GROUNDED).getAmplifier() + 1) - eventEntityLiving.motionY) * 0.2D;
-            else
-                eventEntityLiving.motionY -= (0.1D * (double) (eventEntityLiving.getActivePotionEffect(RegistrarBloodMagic.GROUNDED).getAmplifier() + 1) - eventEntityLiving.motionY) * 0.2D;
+        
+        if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.GROUNDED)) {
+            PotionEffect activeEffect = eventEntityLiving.getActivePotionEffect(RegistrarBloodMagic.GROUNDED);
+            if (activeEffect != null) {
+                if (eventEntityLiving instanceof EntityPlayer && ((EntityPlayer) eventEntityLiving).capabilities.isFlying)
+                    eventEntityLiving.motionY -= (0.05D * (double) activeEffect.getAmplifier() + 1 - eventEntityLiving.motionY) * 0.2D;
+                else
+                    eventEntityLiving.motionY -= (0.1D * (double) activeEffect.getAmplifier() + 1 - eventEntityLiving.motionY) * 0.2D;
+            }
+        }
 
         if (eventEntityLiving.isPotionActive(RegistrarBloodMagic.WHIRLWIND)) {
             int d0 = 3;
