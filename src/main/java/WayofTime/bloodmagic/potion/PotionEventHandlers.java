@@ -80,7 +80,7 @@ public class PotionEventHandlers {
 
         if (event.getEntityLiving().isPotionActive(RegistrarBloodMagic.BOOST)) {
             int amplifier = event.getEntityLiving().getActivePotionEffect(RegistrarBloodMagic.BOOST).getAmplifier();
-            float percentIncrease += (amplifier + 1) * 0.5F;
+            float percentIncrease = (amplifier + 1) * 0.5F;
 
             boolean isPlayerAndFlying = eventEntityLiving instanceof EntityPlayer && ((EntityPlayer) eventEntityLiving).capabilities.isFlying;
             if (percentIncrease != 0 && (eventEntityLiving.onGround || isPlayerAndFlying) &&
