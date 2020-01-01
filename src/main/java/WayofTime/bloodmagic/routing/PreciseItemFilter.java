@@ -6,6 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.Iterator;
 import java.util.List;
@@ -67,7 +68,11 @@ public class PreciseItemFilter implements IItemFilter {
         } else {
             requestList = filteredList;
             for (ItemStack filterStack : requestList) {
-                filterStack.setCount(filterStack.getCount() * -1); //Invert the stack size so that
+                // Invert the stack size so that after adding the items in the
+                // inventory filterStack's count will be the amount we can
+                // remove.
+                // Negative stacks count as empty, so this is safe.
+                filterStack.setCount(filterStack.getCount() * -1);
             }
 
             for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
@@ -89,114 +94,91 @@ public class PreciseItemFilter implements IItemFilter {
         requestList.removeIf(ItemStack::isEmpty);
     }
 
-    /**
-     * This method is only called when the output inventory this filter is
-     * managing receives an ItemStack. Should only really be called by the Input
-     * filter via it's transfer method.
-     *
-     * @param inputStack - The stack to transfer
-     * @return - The remainder of the stack after it has been absorbed into the
-     * inventory.
-     */
-    @Override
-    public ItemStack transferStackThroughOutputFilter(ItemStack inputStack) {
-        int allowedAmount = 0;
-        for (ItemStack filterStack : requestList) {
-            if (doStacksMatch(filterStack, inputStack)) {
-                allowedAmount = Math.min(filterStack.getCount(), inputStack.getCount());
-                break;
-            }
-        }
-
-        if (allowedAmount <= 0) {
-            return inputStack;
-        }
-
-        ItemStack testStack = inputStack.copy();
-        testStack.setCount(allowedAmount);
-        ItemStack remainderStack = Utils.insertStackIntoTile(testStack, itemHandler);
-
-        int changeAmount = allowedAmount - (remainderStack.isEmpty() ? 0 : remainderStack.getCount());
-        testStack = inputStack.copy();
-        testStack.shrink(changeAmount);
-
-        Iterator<ItemStack> itr = requestList.iterator();
-        while (itr.hasNext()) {
-            ItemStack filterStack = itr.next();
-            if (doStacksMatch(filterStack, inputStack)) {
-                filterStack.shrink(changeAmount);
-                if (filterStack.isEmpty()) {
-                    itr.remove();
-                }
-            }
-        }
-
-        World world = accessedTile.getWorld();
-        BlockPos pos = accessedTile.getPos();
-        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-
-        return testStack;
-    }
-
-    /**
-     * This method is only called on an input filter to transfer ItemStacks from
-     * the input inventory to the output inventory.
-     */
     @Override
     public int transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer) {
         for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
             ItemStack inputStack = itemHandler.getStackInSlot(slot);
-            if (inputStack.isEmpty() || itemHandler.extractItem(slot, inputStack.getCount(), true).isEmpty())//(accessedInventory instanceof ISidedInventory && !((ISidedInventory) accessedInventory).canExtractItem(slot, inputStack, accessedSide)))
-            {
+            if (inputStack.isEmpty()) {
                 continue;
             }
 
-            int allowedAmount = 0;
-            for (ItemStack filterStack : requestList) {
+            Iterator<ItemStack> itr = requestList.iterator();
+            ItemStack match = null;
+            while (itr.hasNext()) {
+                ItemStack filterStack = itr.next();
                 if (doStacksMatch(filterStack, inputStack)) {
-                    allowedAmount = Math.min(maxTransfer, Math.min(filterStack.getCount(), itemHandler.extractItem(slot, inputStack.getCount(), true).getCount()));
+                    match = filterStack;
                     break;
                 }
             }
 
-            if (allowedAmount <= 0) {
+            if (match == null) {
                 continue;
             }
 
-            ItemStack testStack = inputStack.copy();
-            testStack.setCount(allowedAmount);
-            ItemStack remainderStack = outputFilter.transferStackThroughOutputFilter(testStack);
-            int changeAmount = allowedAmount - (remainderStack.isEmpty() ? 0 : remainderStack.getCount());
-
-            if (!remainderStack.isEmpty() && remainderStack.getCount() == allowedAmount) {
-                //Nothing has changed. Moving on!
+            int allowedAmount = Math.min(maxTransfer, match.getCount());
+            int taken = outputFilter.offerStack(itemHandler, slot, allowedAmount);
+            if (taken == 0) {
                 continue;
             }
 
-            itemHandler.extractItem(slot, changeAmount, false);
-
-            Iterator<ItemStack> itr = requestList.iterator();
-            while (itr.hasNext()) {
-                ItemStack filterStack = itr.next();
-                if (doStacksMatch(filterStack, inputStack)) {
-                    filterStack.shrink(changeAmount);
-                    if (filterStack.isEmpty()) {
-                        itr.remove();
-                    }
-                }
+            match.shrink(taken);
+            if (match.isEmpty()) {
+                itr.remove();
             }
 
             World world = accessedTile.getWorld();
             BlockPos pos = accessedTile.getPos();
             world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
-            return changeAmount;
+            return taken;
         }
-
         return 0;
     }
 
     @Override
+    public int offerStack(IItemHandler inv, int slot, int maxTransfer) {
+        ItemStack invStack = inv.getStackInSlot(slot);
+        ItemStack match = null;
+        Iterator<ItemStack> itr = requestList.iterator();
+        while (itr.hasNext()) {
+            ItemStack filterStack = itr.next();
+            if (doStacksMatch(filterStack, invStack)) {
+                match = filterStack;
+                break;
+            }
+        }
+
+        if (match == null) {
+            return 0;
+        }
+
+        int allowed = Math.min(maxTransfer, match.getCount());
+        ItemStack extracted = inv.extractItem(slot, allowed, true);
+        ItemStack remainderStack = Utils.insertStackIntoTile(extracted, itemHandler);
+        int taken = extracted.getCount() - remainderStack.getCount();
+        inv.extractItem(slot, taken, false);
+
+        match.shrink(taken);
+        if (match.isEmpty()) {
+            itr.remove();
+        }
+
+        World world = accessedTile.getWorld();
+        BlockPos pos = accessedTile.getPos();
+        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+
+        return taken;
+    }
+
+    @Override
+    public boolean canSkip() {
+        return requestList.isEmpty();
+    }
+
+    /**
+     * @return True iff testStack matches this filter's conditions.
+     */
     public boolean doesStackMatchFilter(ItemStack testStack) {
         for (ItemStack filterStack : requestList) {
             if (doStacksMatch(filterStack, testStack)) {
@@ -207,8 +189,13 @@ public class PreciseItemFilter implements IItemFilter {
         return false;
     }
 
-    @Override
+    /**
+     * @param filterStack
+     * @param testStack
+     * @return True iff filterStack and testStack are equivalent using
+     *  this filter's conditions.
+     */
     public boolean doStacksMatch(ItemStack filterStack, ItemStack testStack) {
-        return Utils.canCombine(filterStack, testStack);
+        return ItemHandlerHelper.canItemStacksStack(filterStack, testStack);
     }
 }
