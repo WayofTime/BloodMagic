@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.routing;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class OreDictItemFilter extends TestItemFilter {
+public class OreDictItemFilter extends PreciseItemFilter {
     @Override
     public boolean doesStackMatchFilter(ItemStack testStack) {
         for (ItemStack filterStack : requestList) {

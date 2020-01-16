@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author WayofTime
  */
-public class TestItemFilter implements IItemFilter {
+public class PreciseItemFilter implements IItemFilter {
     /*
      * This list acts as the way the filter keeps track of its contents. For the
      * case of an output filter, it holds a list of ItemStacks that needs to be
