@@ -67,12 +67,19 @@ public class PreciseItemFilter implements IItemFilter {
             }
         } else {
             requestList = filteredList;
-            for (ItemStack filterStack : requestList) {
+
+            int available[] = new int[requestList.size()];
+            for (int i = 0; i < requestList.size(); i++) {
+                ItemStack stack = requestList.get(i);
                 // Invert the stack size so that after adding the items in the
-                // inventory filterStack's count will be the amount we can
+                // inventory, available[...] will contain the amount we can
                 // remove.
-                // Negative stacks count as empty, so this is safe.
-                filterStack.setCount(filterStack.getCount() * -1);
+                available[i] = -stack.getCount();
+                // Stacks with size <= 0 are treated as empty, causing many
+                // comparisons to treat them like air and disregard the actual
+                // item they contain. To prevent incorrect comparisons, we make
+                // sure the stacks we compare with are non-empty
+                stack.setCount(1);
             }
 
             for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
@@ -81,13 +88,15 @@ public class PreciseItemFilter implements IItemFilter {
                     continue;
                 }
 
-                int stackSize = checkedStack.getCount();
-
-                for (ItemStack filterStack : filteredList) {
-                    if (doStacksMatch(filterStack, checkedStack)) {
-                        filterStack.grow(stackSize);
+                for (int i = 0; i < requestList.size(); i++) {
+                    if (doStacksMatch(requestList.get(i), checkedStack)) {
+                        available[i] += checkedStack.getCount();
                     }
                 }
+            }
+
+            for (int i = 0; i < requestList.size(); i++) {
+                requestList.get(i).setCount(available[i]);
             }
         }
 
