@@ -89,7 +89,8 @@ public class RoutingFluidFilter implements IFluidFilter {
         }
 
         FluidStack copyStack = fluidStack.copy();
-        int filledAmount = fluidHandler.fill(fluidStack, true);
+        copyStack.amount = allowedAmount;
+        int filledAmount = fluidHandler.fill(copyStack, true);
         copyStack.amount = fluidStack.amount - filledAmount;
 
         Iterator<FluidStack> itr = requestList.iterator();
