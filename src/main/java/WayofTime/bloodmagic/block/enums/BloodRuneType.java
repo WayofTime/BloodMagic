@@ -1,29 +1,28 @@
-package WayofTime.bloodmagic.block.enums;
-
-import net.minecraft.util.IStringSerializable;
+package wayoftime.bloodmagic.block.enums;
 
 import java.util.Locale;
 
-public enum BloodRuneType implements IStringSerializable {
-    BLANK,
-    SPEED,
-    EFFICIENCY,
-    SACRIFICE,
-    SELF_SACRIFICE,
-    DISPLACEMENT,
-    CAPACITY,
-    AUGMENTED_CAPACITY,
-    ORB,
-    ACCELERATION,
-    CHARGING;
+import net.minecraft.util.IStringSerializable;
 
-    @Override
-    public String toString() {
-        return name().toLowerCase(Locale.ENGLISH);
-    }
+public enum BloodRuneType implements IStringSerializable
+{
+	BLANK, SPEED, EFFICIENCY, SACRIFICE, SELF_SACRIFICE, DISPLACEMENT, CAPACITY, AUGMENTED_CAPACITY, ORB, ACCELERATION,
+	CHARGING;
 
-    @Override
-    public String getName() {
-        return this.toString();
-    }
+	@Override
+	public String toString()
+	{
+		return name().toLowerCase(Locale.ENGLISH);
+	}
+
+	/**
+	 * getName()
+	 * 
+	 * @return
+	 */
+	@Override
+	public String getString()
+	{
+		return this.toString();
+	}
 }

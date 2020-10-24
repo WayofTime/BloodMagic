@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "bloodmagic:soulgempetty"
+  },
+  "input1": {
+    "tag": "forge:gems/diamond"
+  },
+  "input2": {
+    "tag": "forge:storage_blocks/redstone"
+  },
+  "input3": {
+    "tag": "forge:storage_blocks/lapis"
+  },
+  "output": {
+    "item": "bloodmagic:soulgemlesser"
+  },
+  "minimumDrain": 60.0,
+  "drain": 20.0
+}

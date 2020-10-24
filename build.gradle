@@ -8,41 +8,40 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
-
-plugins {
-    id "com.matthewprenger.cursegradle" version "1.3.0"
-    id "maven-publish"
-}
-
 apply plugin: 'net.minecraftforge.gradle'
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
-def build_number = System.getenv('BUILD_NUMBER') != null ? System.getenv('BUILD_NUMBER') : 'CUSTOM'
-def username = project.hasProperty('dev_username') ? "${dev_username}" : "${mod_name}"
+version = '1.16.3-3.0-0'
+group = 'com.yourname.modid' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'BloodMagic'
 
-group = package_group
-archivesBaseName = mod_name
-version = "${mc_version}-${mod_version}-${build_number}"
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
-repositories {
-    maven { url "http://dvs1.progwml6.com/files/maven" }
-    maven { url "http://tehnut.info/maven" }
-}
-
-dependencies {
-    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    compile fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
-    compile fg.deobf("mcp.mobius.waila:Hwyla:${waila_version}")
-}
-
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: "snapshot", version: "20190912-1.14.3"
+    // The mappings can be changed at any time, and must be in the following format.
+    // snapshot_YYYYMMDD   Snapshot are built nightly.
+    // stable_#            Stables are built at the discretion of the MCP team.
+    // Use non-default mappings at your own risk. they may not always work.
+    // Simply re-run your setup task after changing the mappings to update your workspace.
+    mappings channel: 'snapshot', version: '20200916-1.16.2'
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    
+    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
     runs {
         client {
             workingDirectory project.file('run')
-            property 'forge.logging.markers', ''
-            property 'forge.logging.console.level', 'info'
-            property 'username', username
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
 
             mods {
                 bloodmagic {
@@ -52,9 +51,31 @@ minecraft {
         }
 
         server {
-            workingDirectory project.file('run/server')
-            property 'forge.logging.markers', ''
-            property 'forge.logging.console.level', 'info'
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                bloodmagic {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'bloodmagic', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
                 bloodmagic {
@@ -65,119 +86,79 @@ minecraft {
     }
 }
 
-apply from: "gradle/process_mod_info.gradle"
-
-processResources {
-    inputs.property "version", project.version
-
-    from(sourceSets.main.resources.srcDirs) {
-        include '**/*.toml'
-
-        expand 'version': project.version
-    }
-    from(sourceSets.main.resources.srcDirs) {
-        exclude '**/*.toml'
+repositories {
+	maven {
+        url "http://dvs1.progwml6.com/files/maven/"
     }
 }
 
-allprojects {
-    tasks.withType(Javadoc) {
-        options.addStringOption('Xdoclint:none', '-quiet')
-    }
+dependencies {
+    // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
+    // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
+    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
+    minecraft 'net.minecraftforge:forge:1.16.3-34.1.11'
+    
+    // compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
+    // runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
+    
+    //deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
+    
+    compileOnly fg.deobf("mezz.jei:jei-1.16.2:7.1.3.19:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.2:7.1.3.19")
+    // You may put jars on which you depend on in ./libs or you may define them like so..
+    // compile "some.group:artifact:version:classifier"
+    // compile "some.group:artifact:version"
+
+    // Real examples
+    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
+    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
+
+    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
+    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+
+    // These dependencies get remapped to your current MCP mappings
+    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+
+    // For more info...
+    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
+    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
 }
 
+// Example for how to get properties into the manifest for reading by the runtime..
 jar {
-    classifier = ''
-    from sourceSets.main.output
-    manifest.mainAttributes(
-            "Built-By": System.getProperty('user.name'),
-            "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
+    manifest {
+        attributes([
+            "Specification-Title": "bloodmagic",
+            "Specification-Vendor": "bloodmagicsareus",
+            "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
-            "Implementation-Version": project.version,
-            "Built-On": "${mc_version}-${forge_version}"
-    )
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"bloodmagicsareus",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
 }
 
-// API jar
-task apiJar(type: Jar) {
-    classifier = 'api'
-    include 'com/WayofTime/bloodmagic/api/**/*'
-    exclude 'com/WayofTime/bloodmagic/api/impl/**/*'
-    from sourceSets.main.allSource
-    from sourceSets.main.output
-}
+// Example configuration to allow publishing using the maven-publish task
+// This is the preferred method to reobfuscate your jar file
+jar.finalizedBy('reobfJar') 
+// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
+//publish.dependsOn('reobfJar')
 
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allJava
-}
-
-tasks.build.dependsOn apiJar, sourcesJar
-
-tasks.withType(JavaCompile) { task ->
-    task.options.encoding = 'UTF-8'
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
 }
 
 publishing {
-    tasks.publish.dependsOn 'build'
     publications {
         mavenJava(MavenPublication) {
             artifact jar
-            artifact sourcesJar
-            artifact apiJar
         }
     }
     repositories {
-        if (project.hasProperty('maven_repo')) {
-            maven { url maven_repo }
-        } else {
-            mavenLocal()
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
         }
-    }
-}
-
-String getChangelogText() {
-    def changelogFile = new File('changelog.txt')
-    String str = ''
-    String separator = '---'
-    int lineCount = 0
-    boolean done = false
-    changelogFile.eachLine {
-        if (done || it == null) {
-            return
-        }
-        if (lineCount < 3) {
-            lineCount++
-            if (it.startsWith(separator)) {
-                return
-            }
-        }
-        if (!it.startsWith(separator)) {
-            str += "$it" + (lineCount < 3 ? ':\n\n' : '\n')
-            return
-        }
-        done = true // once we go past the first version block, parse no more
-    }
-    return str
-}
-
-def curseRelations = {
-    optionalLibrary 'jei'
-    optionalLibrary 'hwyla'
-}
-
-curseforge {
-    if (project.hasProperty('curse_key_TehNut'))
-        apiKey = project.curse_key_TehNut
-
-    project {
-        id = "${curse_id}"
-        changelog = getChangelogText()
-        releaseType = 'beta'
-
-        relations curseRelations
-
-        addArtifact sourcesJar
-        addArtifact apiJar
     }
 }

@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "minecraft:iron_pickaxe"
+  },
+  "input1": {
+    "item": "minecraft:iron_axe"
+  },
+  "input2": {
+    "item": "minecraft:iron_shovel"
+  },
+  "input3": {
+    "tag": "forge:gunpowder"
+  },
+  "output": {
+    "item": "bloodmagic:reagentfastminer"
+  },
+  "minimumDrain": 128.0,
+  "drain": 20.0
+}

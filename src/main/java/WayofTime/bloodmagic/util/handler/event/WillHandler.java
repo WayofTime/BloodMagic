@@ -1,166 +1,115 @@
-package WayofTime.bloodmagic.util.handler.event;
-
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.soul.*;
-import WayofTime.bloodmagic.core.RegistrarBloodMagic;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.demonAura.PosXY;
-import WayofTime.bloodmagic.demonAura.WillChunk;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.IndirectEntityDamageSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.Difficulty;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.world.ChunkDataEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+package wayoftime.bloodmagic.util.handler.event;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-@Mod.EventBusSubscriber(modid = BloodMagic.MODID)
-public class WillHandler {
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.Difficulty;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.potion.BloodMagicPotions;
+import wayoftime.bloodmagic.will.EnumDemonWillType;
+import wayoftime.bloodmagic.will.IDemonWill;
+import wayoftime.bloodmagic.will.IDemonWillWeapon;
+import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
-    private static final HashMap<Integer, Integer> SERVER_TICKS = new HashMap<>();
+@Mod.EventBusSubscriber(modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class WillHandler
+{
+	private static final HashMap<Integer, Integer> SERVER_TICKS = new HashMap<>();
 
-    // Adds Will to player
-    @SubscribeEvent
-    public static void onItemPickup(EntityItemPickupEvent event) {
-        ItemStack stack = event.getItem().getItem();
-        if (stack.getItem() instanceof IDemonWill) {
-            PlayerEntity player = event.getEntityPlayer();
-            EnumDemonWillType pickupType = ((IDemonWill) stack.getItem()).getType(stack);
-            ItemStack remainder = PlayerDemonWillHandler.addDemonWill(player, stack);
+	// Adds Will to player
+	@SubscribeEvent
+	public void onItemPickup(EntityItemPickupEvent event)
+	{
+		ItemStack stack = event.getItem().getItem();
+		if (stack.getItem() instanceof IDemonWill)
+		{
+			PlayerEntity player = event.getPlayer();
+			EnumDemonWillType pickupType = ((IDemonWill) stack.getItem()).getType(stack);
+			ItemStack remainder = PlayerDemonWillHandler.addDemonWill(player, stack);
 
-            if (remainder == null || ((IDemonWill) stack.getItem()).getWill(pickupType, stack) < 0.0001 || PlayerDemonWillHandler.isDemonWillFull(pickupType, player)) {
-                stack.setCount(0);
-                event.setResult(Event.Result.ALLOW);
-            }
-        }
-    }
+			if (remainder == null || ((IDemonWill) stack.getItem()).getWill(pickupType, stack) < 0.0001
+					|| PlayerDemonWillHandler.isDemonWillFull(pickupType, player))
+			{
+				stack.setCount(0);
+				event.setResult(Event.Result.ALLOW);
+			}
+		}
+	}
 
-    @SubscribeEvent
-    public static void onEntityAttacked(LivingDeathEvent event) {
-        if (event.getSource() instanceof IndirectEntityDamageSource) {
-            Entity sourceEntity = event.getSource().getImmediateSource();
+//	@SubscribeEvent
+//	public static void onEntityAttacked(LivingDeathEvent event)
+//	{
+//		if (event.getSource() instanceof EntityDamageSourceIndirect)
+//		{
+//			Entity sourceEntity = event.getSource().getImmediateSource();
+//
+//			if (sourceEntity instanceof EntitySentientArrow)
+//			{
+//				((EntitySentientArrow) sourceEntity).reimbursePlayer(event.getEntityLiving(), event.getEntityLiving().getMaxHealth());
+//			}
+//		}
+//	}
 
-            if (sourceEntity instanceof EntitySentientArrow) {
-                ((EntitySentientArrow) sourceEntity).reimbursePlayer(event.getEntityLiving(), event.getEntityLiving().getMaxHealth());
-            }
-        }
-    }
+	// Add/Drop Demon Will for Player
+	@SubscribeEvent
+	public void onLivingDrops(LivingDropsEvent event)
+	{
+		LivingEntity attackedEntity = event.getEntityLiving();
+		DamageSource source = event.getSource();
+		Entity entity = source.getTrueSource();
 
-    // Add/Drop Demon Will for Player
-    @SubscribeEvent
-    public static void onLivingDrops(LivingDropsEvent event) {
-        LivingEntity attackedEntity = event.getEntityLiving();
-        DamageSource source = event.getSource();
-        Entity entity = source.getTrueSource();
+		if (attackedEntity.isPotionActive(BloodMagicPotions.soulSnare) && (attackedEntity instanceof MobEntity
+				|| attackedEntity.getEntityWorld().getDifficulty() == Difficulty.PEACEFUL))
+		{
+			EffectInstance eff = attackedEntity.getActivePotionEffect(BloodMagicPotions.soulSnare);
+			int lvl = eff.getAmplifier();
 
-        if (attackedEntity.isPotionActive(RegistrarBloodMagic.SOUL_SNARE) && (attackedEntity instanceof MonsterEntity || attackedEntity.getEntityWorld().getDifficulty() == Difficulty.PEACEFUL)) {
-            EffectInstance eff = attackedEntity.getActivePotionEffect(RegistrarBloodMagic.SOUL_SNARE);
-            int lvl = eff.getAmplifier();
+			double amountOfSouls = attackedEntity.getEntityWorld().rand.nextDouble() * (lvl + 1) * (lvl + 1) * 4 + 1;
+			ItemStack soulStack = ((IDemonWill) BloodMagicItems.MONSTER_SOUL_RAW.get()).createWill(amountOfSouls);
+			event.getDrops().add(new ItemEntity(attackedEntity.getEntityWorld(), attackedEntity.getPosX(), attackedEntity.getPosY(), attackedEntity.getPosZ(), soulStack));
+		}
 
-            double amountOfSouls = attackedEntity.getEntityWorld().rand.nextDouble() * (lvl + 1) * (lvl + 1) * 5;
-            ItemStack soulStack = ((IDemonWill) RegistrarBloodMagicItems.MONSTER_SOUL).createWill(0, amountOfSouls);
-            event.getDrops().add(new ItemEntity(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
-        }
+		if (entity != null && entity instanceof PlayerEntity)
+		{
+			PlayerEntity player = (PlayerEntity) entity;
+			ItemStack heldStack = player.getHeldItemMainhand();
+			if (heldStack.getItem() instanceof IDemonWillWeapon && !player.getEntityWorld().isRemote)
+			{
+				IDemonWillWeapon demonWillWeapon = (IDemonWillWeapon) heldStack.getItem();
+				List<ItemStack> droppedSouls = demonWillWeapon.getRandomDemonWillDrop(attackedEntity, player, heldStack, event.getLootingLevel());
+				if (!droppedSouls.isEmpty())
+				{
+					ItemStack remainder;
+					for (ItemStack willStack : droppedSouls)
+					{
+						remainder = PlayerDemonWillHandler.addDemonWill(player, willStack);
 
-        if (entity != null && entity instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) entity;
-            ItemStack heldStack = player.getHeldItemMainhand();
-            if (heldStack.getItem() instanceof IDemonWillWeapon && !player.getEntityWorld().isRemote) {
-                IDemonWillWeapon demonWillWeapon = (IDemonWillWeapon) heldStack.getItem();
-                List<ItemStack> droppedSouls = demonWillWeapon.getRandomDemonWillDrop(attackedEntity, player, heldStack, event.getLootingLevel());
-                if (!droppedSouls.isEmpty()) {
-                    ItemStack remainder;
-                    for (ItemStack willStack : droppedSouls) {
-                        remainder = PlayerDemonWillHandler.addDemonWill(player, willStack);
-
-                        if (!remainder.isEmpty()) {
-                            EnumDemonWillType pickupType = ((IDemonWill) remainder.getItem()).getType(remainder);
-                            if (((IDemonWill) remainder.getItem()).getWill(pickupType, remainder) >= 0.0001) {
-                                event.getDrops().add(new ItemEntity(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, remainder));
-                            }
-                        }
-                    }
-                    player.inventoryContainer.detectAndSendChanges();
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onServerWorldTick(TickEvent.WorldTickEvent event) {
-        if (event.world.isRemote)
-            return;
-
-        int dim = event.world.provider.getDimension();
-        if (event.phase == TickEvent.Phase.END) {
-            if (!SERVER_TICKS.containsKey(dim))
-                SERVER_TICKS.put(dim, 0);
-
-            int ticks = (SERVER_TICKS.get(dim));
-
-            if (ticks % 20 == 0) {
-                CopyOnWriteArrayList<PosXY> dirtyChunks = WorldDemonWillHandler.dirtyChunks.get(dim);
-                if ((dirtyChunks != null) && (dirtyChunks.size() > 0)) {
-                    for (PosXY pos : dirtyChunks)
-                        event.world.markChunkDirty(new BlockPos(pos.x * 16, 5, pos.y * 16), null);
-
-                    dirtyChunks.clear();
-                }
-            }
-
-            SERVER_TICKS.put(dim, ticks + 1);
-        }
-
-    }
-
-    @SubscribeEvent
-    public static void chunkSave(ChunkDataEvent.Save event) {
-        int dim = event.getWorld().provider.getDimension();
-        ChunkPos loc = event.getChunk().getPos();
-
-        CompoundNBT nbt = new CompoundNBT();
-        event.getData().setTag("BloodMagic", nbt);
-
-        WillChunk ac = WorldDemonWillHandler.getWillChunk(dim, loc.x, loc.z);
-        if (ac != null) {
-            nbt.putShort("base", ac.getBase());
-            ac.getCurrentWill().writeToNBT(nbt, "current");
-            if (!event.getChunk().isLoaded())
-                WorldDemonWillHandler.removeWillChunk(dim, loc.x, loc.z);
-        }
-    }
-
-    @SubscribeEvent
-    public static void chunkLoad(ChunkDataEvent.Load event) {
-        int dim = event.getWorld().provider.getDimension();
-        if (event.getData().getCompoundTag("BloodMagic").hasKey("base")) {
-            CompoundNBT nbt = event.getData().getCompoundTag("BloodMagic");
-            short base = nbt.getShort("base");
-            DemonWillHolder current = new DemonWillHolder();
-            current.readFromNBT(nbt, "current");
-            WorldDemonWillHandler.addWillChunk(dim, event.getChunk(), base, current);
-        } else {
-            WorldDemonWillHandler.generateWill(event.getChunk());
-        }
-    }
+						if (!remainder.isEmpty())
+						{
+							EnumDemonWillType pickupType = ((IDemonWill) remainder.getItem()).getType(remainder);
+							if (((IDemonWill) remainder.getItem()).getWill(pickupType, remainder) >= 0.0001)
+							{
+								event.getDrops().add(new ItemEntity(attackedEntity.getEntityWorld(), attackedEntity.getPosX(), attackedEntity.getPosY(), attackedEntity.getPosZ(), remainder));
+							}
+						}
+					}
+					player.container.detectAndSendChanges();
+				}
+			}
+		}
+	}
 }

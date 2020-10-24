@@ -1,26 +1,43 @@
-package WayofTime.bloodmagic.client.render.block;
+package wayoftime.bloodmagic.client.render.block;
 
-import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
-import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
-import WayofTime.bloodmagic.alchemyArray.AlchemyCircleRenderer;
-import WayofTime.bloodmagic.core.registry.AlchemyArrayRecipeRegistry;
-import WayofTime.bloodmagic.tile.TileAlchemyArray;
+import com.mojang.blaze3d.matrix.MatrixStack;
+
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
+import wayoftime.bloodmagic.client.render.alchemyarray.AlchemyArrayRenderer;
+import wayoftime.bloodmagic.core.registry.AlchemyArrayRendererRegistry;
+import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
-public class RenderAlchemyArray extends TileEntityRenderer<TileAlchemyArray> {
-    @Override
-    public void render(TileAlchemyArray alchemyArray, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        ItemStack inputStack = alchemyArray.getStackInSlot(0);
-        ItemStack catalystStack = alchemyArray.getStackInSlot(1);
-        int craftTime = alchemyArray.activeCounter;
-        AlchemyCircleRenderer renderer = AlchemyArrayRecipeRegistry.getAlchemyCircleRenderer(inputStack, catalystStack);
-        if (renderer == AlchemyArrayRecipeRegistry.DEFAULT_RENDERER) {
-            RecipeAlchemyArray recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArray(inputStack, catalystStack);
-            if (recipe != null)
-                renderer = new AlchemyCircleRenderer(recipe.getCircleTexture());
-        }
+public class RenderAlchemyArray extends TileEntityRenderer<TileAlchemyArray>
+{
+	public static final AlchemyArrayRenderer arrayRenderer = new AlchemyArrayRenderer();
 
-        renderer.renderAt(alchemyArray, x, y, z, (craftTime > 0 ? craftTime + partialTicks : 0));
-    }
+	public RenderAlchemyArray(TileEntityRendererDispatcher rendererDispatcherIn)
+	{
+		super(rendererDispatcherIn);
+	}
+
+	@Override
+	public void render(TileAlchemyArray tileArray, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn)
+	{
+		ItemStack inputStack = tileArray.getStackInSlot(0);
+		ItemStack catalystStack = tileArray.getStackInSlot(1);
+//		arrayRenderer.renderAt(tileArray, 0, 0, 0, tileArray.activeCounter
+//				+ partialTicks, matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+
+		AlchemyArrayRenderer renderer = AlchemyArrayRendererRegistry.getRenderer(tileArray.getWorld(), inputStack, catalystStack);
+		if (renderer == null)
+		{
+			renderer = AlchemyArrayRendererRegistry.DEFAULT_RENDERER;
+		}
+
+		renderer.renderAt(tileArray, 0, 0, 0, tileArray.activeCounter
+				+ partialTicks, matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+//		arrayRenderer.renderAt(tileArray, 0, 0, 0, 0, matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+
+//		if (tileAltar.getCurrentTierDisplayed() != AltarTier.ONE)
+//			renderHologram(tileAltar, tileAltar.getCurrentTierDisplayed(), partialTicks);
+	}
 }

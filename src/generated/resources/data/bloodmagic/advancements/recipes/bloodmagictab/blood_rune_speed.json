@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:blood_rune_speed"
+    ]
+  },
+  "criteria": {
+    "has_blank_rune": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:blankrune"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:blood_rune_speed"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_blank_rune",
+      "has_the_recipe"
+    ]
+  ]
+}

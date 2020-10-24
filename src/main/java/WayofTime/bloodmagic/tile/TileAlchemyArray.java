@@ -1,175 +1,152 @@
-package WayofTime.bloodmagic.tile;
+package wayoftime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffect;
-import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectCraftingNew;
-import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
-import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
-import WayofTime.bloodmagic.core.registry.AlchemyArrayRecipeRegistry;
-import WayofTime.bloodmagic.iface.IAlchemyArray;
-import WayofTime.bloodmagic.util.Constants;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.registries.ObjectHolder;
+import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffect;
+import wayoftime.bloodmagic.core.registry.AlchemyArrayRegistry;
+import wayoftime.bloodmagic.util.Constants;
 
-public class TileAlchemyArray extends TileInventory implements ITickable, IAlchemyArray {
-    public boolean isActive = false;
-    public int activeCounter = 0;
-    public Direction rotation = Direction.HORIZONTALS[0];
-    public int rotateCooldown = 0;
+public class TileAlchemyArray extends TileInventory implements ITickableTileEntity
+{
+	@ObjectHolder("bloodmagic:alchemyarray")
+	public static TileEntityType<TileAlchemyArray> TYPE;
 
-    private String key = "empty";
-    public AlchemyArrayEffect arrayEffect;
-    private boolean doDropIngredients = true;
+	public boolean isActive = false;
+	public int activeCounter = 0;
+	public Direction rotation = Direction.byHorizontalIndex(0);
+	public int rotateCooldown = 0;
 
-    public TileAlchemyArray() {
-        super(2, "alchemyArray");
-    }
+	private String key = "";
+	public AlchemyArrayEffect arrayEffect;
+	private boolean doDropIngredients = true;
 
-    public void onEntityCollidedWithBlock(BlockState state, Entity entity) {
-        if (arrayEffect != null) {
-            arrayEffect.onEntityCollidedWithBlock(this, getWorld(), pos, state, entity);
-        }
-    }
+	public TileAlchemyArray(TileEntityType<?> type)
+	{
+		super(type, 2, "alchemyarray");
+//		this.bloodAltar = new BloodAltar(this);
+	}
 
-    @Override
-    public void deserialize(CompoundNBT tagCompound) {
-        super.deserialize(tagCompound);
-        this.isActive = tagCompound.getBoolean("isActive");
-        this.activeCounter = tagCompound.getInt("activeCounter");
-        this.key = tagCompound.getString("key");
-        if (!tagCompound.hasKey("doDropIngredients")) //Check if the array is old
-        {
-            this.doDropIngredients = true;
-        } else {
-            this.doDropIngredients = tagCompound.getBoolean("doDropIngredients");
-        }
-        this.rotation = Direction.HORIZONTALS[tagCompound.getInt(Constants.NBT.DIRECTION)];
+	public TileAlchemyArray()
+	{
+		this(TYPE);
+	}
 
-        CompoundNBT arrayTag = tagCompound.getCompoundTag("arrayTag");
-        arrayEffect = AlchemyArrayRecipeRegistry.getAlchemyArrayEffect(key);
-        if (arrayEffect != null) {
-            arrayEffect.readFromNBT(arrayTag);
-        }
-    }
+	@Override
+	public void deserialize(CompoundNBT tagCompound)
+	{
+		super.deserialize(tagCompound);
+		this.isActive = tagCompound.getBoolean("isActive");
+		this.activeCounter = tagCompound.getInt("activeCounter");
+		this.key = tagCompound.getString("stringKey");
+		if (!tagCompound.contains("doDropIngredients")) // Check if the array is old
+		{
+			this.doDropIngredients = true;
+		} else
+		{
+			this.doDropIngredients = tagCompound.getBoolean("doDropIngredients");
+		}
+		this.rotation = Direction.byHorizontalIndex(tagCompound.getInt(Constants.NBT.DIRECTION));
 
-    @Override
-    public CompoundNBT serialize(CompoundNBT tagCompound) {
-        super.serialize(tagCompound);
-        tagCompound.putBoolean("isActive", isActive);
-        tagCompound.putInt("activeCounter", activeCounter);
-        tagCompound.putString("key", "".equals(key) ? "empty" : key);
-        tagCompound.putBoolean("doDropIngredients", doDropIngredients);
-        tagCompound.putInt(Constants.NBT.DIRECTION, rotation.getHorizontalIndex());
+		CompoundNBT arrayTag = tagCompound.getCompound("arrayTag");
+//		arrayEffect = AlchemyArrayRegistry.getEffect(world, this.getStackInSlot(0), this.getStackInSlot(1));
+		if (arrayEffect != null)
+		{
+			arrayEffect.readFromNBT(arrayTag);
+		}
+	}
 
-        CompoundNBT arrayTag = new CompoundNBT();
-        if (arrayEffect != null) {
-            arrayEffect.writeToNBT(arrayTag);
-        }
-        tagCompound.putTag("arrayTag", arrayTag);
+	@Override
+	public CompoundNBT serialize(CompoundNBT tagCompound)
+	{
+		super.serialize(tagCompound);
+		tagCompound.putBoolean("isActive", isActive);
+		tagCompound.putInt("activeCounter", activeCounter);
+		tagCompound.putString("stringKey", "".equals(key) ? "empty" : key.toString());
+		tagCompound.putBoolean("doDropIngredients", doDropIngredients);
+		tagCompound.putInt(Constants.NBT.DIRECTION, rotation.getHorizontalIndex());
 
-        return tagCompound;
-    }
+		CompoundNBT arrayTag = new CompoundNBT();
+		if (arrayEffect != null)
+		{
+			arrayEffect.writeToNBT(arrayTag);
+		}
+		tagCompound.put("arrayTag", arrayTag);
 
-    @Override
-    public int getInventoryStackLimit() {
-        return 1;
-    }
+		return tagCompound;
+	}
 
-    //Use this to prevent the Array from dropping items - useful for arrays that need to "consume" ingredients well before the effect.
-    public void setItemDrop(boolean dropItems) {
-        this.doDropIngredients = dropItems;
-    }
+	@Override
+	public void tick()
+	{
+//		System.out.println("Active counter: " + this.activeCounter);
+		if (isActive && attemptCraft())
+		{
+			activeCounter++;
+		} else
+		{
+			isActive = false;
+			doDropIngredients = true;
+			activeCounter = 0;
+			arrayEffect = null;
+			key = "empty";
+		}
+		if (rotateCooldown > 0)
+			rotateCooldown--;
+	}
 
-    @Override
-    public void update() {
-        if (isActive && attemptCraft()) {
-            activeCounter++;
-        } else {
-            isActive = false;
-            doDropIngredients = true;
-            activeCounter = 0;
-            arrayEffect = null;
-            key = "empty";
-        }
-        if (rotateCooldown > 0)
-            rotateCooldown--;
-    }
+	public boolean attemptCraft()
+	{
+		if (arrayEffect != null)
+		{
+			isActive = true;
 
-    /**
-     * This occurs when the block is destroyed.
-     */
-    @Override
-    public void dropItems() {
-        if (arrayEffect == null || doDropIngredients) {
-            super.dropItems();
-        }
-    }
+		} else
+		{
+			AlchemyArrayEffect effect = AlchemyArrayRegistry.getEffect(world, this.getStackInSlot(0), this.getStackInSlot(1));
+			if (effect == null)
+			{
+//				key = effect.i
+				return false;
+			} else
+			{
+				arrayEffect = effect;
+			}
+		}
 
-    public boolean attemptCraft() {
-        AlchemyArrayEffect effect = AlchemyArrayRecipeRegistry.getAlchemyArrayEffect(this.getStackInSlot(0), this.getStackInSlot(1));
-        if (effect != null) {
-            if (arrayEffect == null) {
-                arrayEffect = effect;
-                key = effect.getKey();
-            } else {
-                String effectKey = effect.getKey();
-                if (effectKey.equals(key)) {
-                    //Good! Moving on.
-                } else {
-                    //Something has changed, therefore we have to move our stuffs.
-                    //TODO: Add an AlchemyArrayEffect.onBreak(); ?
-                    arrayEffect = effect;
-                    key = effect.getKey();
-                }
-            }
-        } else {
-            RecipeAlchemyArray recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArray(getStackInSlot(0), getStackInSlot(1));
-            if (recipe == null)
-                return false;
+		if (arrayEffect != null)
+		{
+			isActive = true;
+			if (arrayEffect.update(this, this.activeCounter))
+			{
+				this.decrStackSize(0, 1);
+				this.decrStackSize(1, 1);
+				this.getWorld().setBlockState(getPos(), Blocks.AIR.getDefaultState());
+			}
 
-            AlchemyArrayEffect newEffect = new AlchemyArrayEffectCraftingNew(recipe);
-            if (arrayEffect == null) {
-                arrayEffect = newEffect;
-                key = newEffect.key;
-            } else if (!newEffect.key.equals(key)) {
-                arrayEffect = newEffect;
-                key = newEffect.key;
-            }
-        }
+			return true;
+		}
+		return false;
+	}
 
-        if (arrayEffect != null) {
-            isActive = true;
+//	@Override
+	public Direction getRotation()
+	{
+		return rotation;
+	}
 
-            if (arrayEffect.update(this, this.activeCounter)) {
-                this.decrStackSize(0, 1);
-                this.decrStackSize(1, 1);
-                this.getWorld().setBlockToAir(getPos());
-            }
+	public void setRotation(Direction rotation)
+	{
+		this.rotation = rotation;
+	}
 
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
-    public Direction getRotation() {
-        return rotation;
-    }
-
-    public void setRotation(Direction rotation) {
-        this.rotation = rotation;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getRenderBoundingBox() {
-        return Block.FULL_BLOCK_AABB.offset(getPos());
-    }
+	@Override
+	public boolean isItemValidForSlot(int slot, ItemStack itemstack)
+	{
+		return slot == 0 || slot == 1;
+	}
 }

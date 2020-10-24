@@ -1,26 +1,30 @@
-package WayofTime.bloodmagic.iface;
-
-import WayofTime.bloodmagic.util.Constants;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+package wayoftime.bloodmagic.iface;
 
 import javax.annotation.Nonnull;
 
-public interface IActivatable {
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import wayoftime.bloodmagic.util.Constants;
 
-    default boolean getActivated(ItemStack stack) {
-        return !stack.isEmpty() && stack.hasTagCompound() && stack.getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
-    }
+public interface IActivatable
+{
 
-    @Nonnull
-    default ItemStack setActivatedState(ItemStack stack, boolean activated) {
-        if (!stack.isEmpty()) {
-            if (!stack.hasTagCompound())
-                stack.setTagCompound(new CompoundNBT());
+	default boolean getActivated(ItemStack stack)
+	{
+		return !stack.isEmpty() && stack.hasTag() && stack.getTag().getBoolean(Constants.NBT.ACTIVATED);
+	}
 
-            stack.getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
-        }
+	@Nonnull
+	default ItemStack setActivatedState(ItemStack stack, boolean activated)
+	{
+		if (!stack.isEmpty())
+		{
+			if (!stack.hasTag())
+				stack.setTag(new CompoundNBT());
 
-        return stack;
-    }
+			stack.getTag().putBoolean(Constants.NBT.ACTIVATED, activated);
+		}
+
+		return stack;
+	}
 }

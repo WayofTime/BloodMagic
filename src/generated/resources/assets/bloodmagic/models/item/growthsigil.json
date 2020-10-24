@@ -1,0 +1,16 @@
+{
+  "overrides": [
+    {
+      "predicate": {
+        "bloodmagic:active": 0.0
+      },
+      "model": "bloodmagic:item/variants/growthsigil_deactivated"
+    },
+    {
+      "predicate": {
+        "bloodmagic:active": 1.0
+      },
+      "model": "bloodmagic:item/variants/growthsigil_activated"
+    }
+  ]
+}

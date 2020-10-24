@@ -1,83 +1,101 @@
-package WayofTime.bloodmagic.api.impl;
+package wayoftime.bloodmagic.api.impl;
 
-import WayofTime.bloodmagic.api.IBloodMagicAPI;
-import WayofTime.bloodmagic.altar.ComponentType;
-import WayofTime.bloodmagic.util.BMLog;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-import net.minecraft.block.BlockState;
-
-import javax.annotation.Nonnull;
 import java.util.List;
 
-public class BloodMagicAPI implements IBloodMagicAPI {
+import javax.annotation.Nonnull;
 
-    public static final BloodMagicAPI INSTANCE = new BloodMagicAPI();
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 
-    private final BloodMagicBlacklist blacklist;
-    private final BloodMagicRecipeRegistrar recipeRegistrar;
-    private final BloodMagicValueManager valueManager;
-    private final Multimap<ComponentType, BlockState> altarComponents;
+import net.minecraft.block.BlockState;
+import wayoftime.bloodmagic.altar.ComponentType;
+import wayoftime.bloodmagic.api.IBloodMagicAPI;
+import wayoftime.bloodmagic.util.BMLog;
 
-    public BloodMagicAPI() {
-        this.blacklist = new BloodMagicBlacklist();
-        this.recipeRegistrar = new BloodMagicRecipeRegistrar();
-        this.valueManager = new BloodMagicValueManager();
-        this.altarComponents = ArrayListMultimap.create();
-    }
+public class BloodMagicAPI implements IBloodMagicAPI
+{
 
-    @Nonnull
-    @Override
-    public BloodMagicBlacklist getBlacklist() {
-        return blacklist;
-    }
+	public static final BloodMagicAPI INSTANCE = new BloodMagicAPI();
 
-    @Nonnull
-    @Override
-    public BloodMagicRecipeRegistrar getRecipeRegistrar() {
-        return recipeRegistrar;
-    }
+//	private final BloodMagicBlacklist blacklist;
+	private final BloodMagicRecipeRegistrar recipeRegistrar;
+//	private final BloodMagicValueManager valueManager;
+	private final Multimap<ComponentType, BlockState> altarComponents;
 
-    @Nonnull
-    @Override
-    public BloodMagicValueManager getValueManager() {
-        return valueManager;
-    }
+	public BloodMagicAPI()
+	{
+//		this.blacklist = new BloodMagicBlacklist();
+		this.recipeRegistrar = new BloodMagicRecipeRegistrar();
+//		this.valueManager = new BloodMagicValueManager();
+		this.altarComponents = ArrayListMultimap.create();
+	}
 
-    @Override
-    public void registerAltarComponent(@Nonnull BlockState state, @Nonnull String componentType) {
-        ComponentType component = null;
-        for (ComponentType type : ComponentType.VALUES) {
-            if (type.name().equalsIgnoreCase(componentType)) {
-                component = type;
-                break;
-            }
-        }
+//	@Nonnull
+//	@Override
+//	public BloodMagicBlacklist getBlacklist()
+//	{
+//		return blacklist;
+//	}
+//
+	@Nonnull
+	@Override
+	public BloodMagicRecipeRegistrar getRecipeRegistrar()
+	{
+		return recipeRegistrar;
+	}
+//
+//	@Nonnull
+//	@Override
+//	public BloodMagicValueManager getValueManager()
+//	{
+//		return valueManager;
+//	}
 
-        if (component != null) {
-            BMLog.API_VERBOSE.info("Registered {} as a {} altar component.", state, componentType);
-            altarComponents.put(component, state);
-        } else BMLog.API.warn("Invalid Altar component type: {}.", componentType);
-    }
+	@Override
+	public void registerAltarComponent(@Nonnull BlockState state, @Nonnull String componentType)
+	{
+		ComponentType component = null;
+		for (ComponentType type : ComponentType.VALUES)
+		{
+			if (type.name().equalsIgnoreCase(componentType))
+			{
+				component = type;
+				break;
+			}
+		}
 
-    @Override
-    public void unregisterAltarComponent(@Nonnull BlockState state, @Nonnull String componentType) {
-        ComponentType component = null;
-        for (ComponentType type : ComponentType.VALUES) {
-            if (type.name().equalsIgnoreCase(componentType)) {
-                component = type;
-                break;
-            }
-        }
+		if (component != null)
+		{
+			BMLog.API_VERBOSE.info("Registered {} as a {} altar component.", state, componentType);
+			altarComponents.put(component, state);
+		} else
+			BMLog.API.warn("Invalid Altar component type: {}.", componentType);
+	}
 
-        if (component != null) {
-            BMLog.API_VERBOSE.info("Unregistered {} from being a {} altar component.", state, componentType);
-            altarComponents.remove(component, state);
-        } else BMLog.API.warn("Invalid Altar component type: {}.", componentType);
-    }
+	@Override
+	public void unregisterAltarComponent(@Nonnull BlockState state, @Nonnull String componentType)
+	{
+		ComponentType component = null;
+		for (ComponentType type : ComponentType.VALUES)
+		{
+			if (type.name().equalsIgnoreCase(componentType))
+			{
+				component = type;
+				break;
+			}
+		}
 
-    @Nonnull
-    public List<BlockState> getComponentStates(ComponentType component) {
-        return (List<BlockState>) altarComponents.get(component);
-    }
+		if (component != null)
+		{
+			BMLog.API_VERBOSE.info("Unregistered {} from being a {} altar component.", state, componentType);
+			altarComponents.remove(component, state);
+		} else
+			BMLog.API.warn("Invalid Altar component type: {}.", componentType);
+	}
+
+	@Nonnull
+	public List<BlockState> getComponentStates(ComponentType component)
+	{
+		return (List<BlockState>) altarComponents.get(component);
+	}
 }

@@ -1,43 +1,94 @@
-package WayofTime.bloodmagic.entity.projectile;
+package wayoftime.bloodmagic.entity.projectile;
 
-import WayofTime.bloodmagic.core.RegistrarBloodMagic;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
+import net.minecraft.entity.projectile.ProjectileItemEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.IPacket;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ItemParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.network.NetworkHooks;
+import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
+import wayoftime.bloodmagic.potion.BloodMagicPotions;
 
-public class EntitySoulSnare extends ThrowableEntity {
+public class EntitySoulSnare extends ProjectileItemEntity
+{
+	public EntitySoulSnare(EntityType<EntitySoulSnare> p_i50159_1_, World p_i50159_2_)
+	{
+		super(p_i50159_1_, p_i50159_2_);
+	}
 
-    public EntitySoulSnare(World worldIn) {
-        super(worldIn);
-    }
+	public EntitySoulSnare(World worldIn, LivingEntity throwerIn)
+	{
+		super(BloodMagicEntityTypes.SNARE.getEntityType(), throwerIn, worldIn);
+	}
 
-    public EntitySoulSnare(World worldIn, LivingEntity throwerIn) {
-        super(worldIn, throwerIn);
-    }
+	public EntitySoulSnare(World worldIn, double x, double y, double z)
+	{
+		super(BloodMagicEntityTypes.SNARE.getEntityType(), x, y, z, worldIn);
+	}
 
-    public EntitySoulSnare(World worldIn, double x, double y, double z) {
-        super(worldIn, x, y, z);
-    }
+	protected Item getDefaultItem()
+	{
+		return BloodMagicItems.SOUL_SNARE.get();
+	}
 
-    @Override
-    protected void onImpact(RayTraceResult result) {
-        if (result.entityHit == this.getThrower() || this.ticksExisted < 2 || getEntityWorld().isRemote)
-            return;
+	@Override
+	public IPacket<?> createSpawnPacket()
+	{
+		return NetworkHooks.getEntitySpawningPacket(this);
+	}
 
-        if (result.entityHit instanceof LivingEntity) {
-            if (result.entityHit.getEntityWorld().rand.nextDouble() < 0.25)
-                ((LivingEntity) result.entityHit).addPotionEffect(new EffectInstance(RegistrarBloodMagic.SOUL_SNARE, 300, 0));
+	/**
+	 * Called when the arrow hits an entity
+	 */
+	protected void onEntityHit(EntityRayTraceResult result)
+	{
+		if (result.getEntity() == this.func_234616_v_() || this.ticksExisted < 2 || getEntityWorld().isRemote)
+			return;
 
-            result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) 0);
-        }
+		if (result.getEntity() instanceof LivingEntity)
+		{
+			((LivingEntity) result.getEntity()).addPotionEffect(new EffectInstance(BloodMagicPotions.soulSnare, 300, 0));
 
-        for (int j = 0; j < 8; ++j)
-            this.getEntityWorld().spawnParticle(EnumParticleTypes.SNOWBALL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+			result.getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.func_234616_v_()), (float) 0);
+		}
 
-        this.setDead();
-    }
+		this.setDead();
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	private IParticleData makeParticle()
+	{
+		ItemStack itemstack = this.func_213882_k();
+		return (IParticleData) (itemstack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL
+				: new ItemParticleData(ParticleTypes.ITEM, itemstack));
+	}
+
+	/**
+	 * Handler for {@link World#setEntityState}
+	 */
+	@OnlyIn(Dist.CLIENT)
+	public void handleStatusUpdate(byte id)
+	{
+		if (id == 3)
+		{
+			IParticleData iparticledata = this.makeParticle();
+
+			for (int i = 0; i < 8; ++i)
+			{
+				this.world.addParticle(iparticledata, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
+			}
+		}
+
+	}
 }

@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:array",
+  "texture": "bloodmagic:textures/models/alchemyarrays/lightsigil.png",
+  "baseinput": {
+    "item": "bloodmagic:reagentbloodlight"
+  },
+  "addedinput": {
+    "item": "bloodmagic:infusedslate"
+  },
+  "output": {
+    "item": "bloodmagic:bloodlightsigil"
+  }
+}

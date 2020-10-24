@@ -1,124 +1,233 @@
-package WayofTime.bloodmagic;
+package wayoftime.bloodmagic;
 
-import WayofTime.bloodmagic.api.BloodMagicPlugin;
-import WayofTime.bloodmagic.api.IBloodMagicPlugin;
-import WayofTime.bloodmagic.core.registry.OrbRegistry;
-import WayofTime.bloodmagic.ritual.RitualManager;
-import WayofTime.bloodmagic.client.gui.GuiHandler;
-import WayofTime.bloodmagic.command.CommandBloodMagic;
-import WayofTime.bloodmagic.core.RegistrarBloodMagic;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.meteor.MeteorConfigHandler;
-import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
-import WayofTime.bloodmagic.proxy.CommonProxy;
-import WayofTime.bloodmagic.registry.*;
-import WayofTime.bloodmagic.structures.ModDungeons;
-import WayofTime.bloodmagic.util.PluginUtil;
-import WayofTime.bloodmagic.util.handler.IMCHandler;
-import com.google.common.collect.Lists;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.gson.Gson;
+
+import net.minecraft.block.Block;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.launchwrapper.Launch;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.Loader;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.potion.Effect;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import org.apache.commons.lang3.tuple.Pair;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import wayoftime.bloodmagic.api.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.api.impl.BloodMagicCorePlugin;
+import wayoftime.bloodmagic.client.ClientEvents;
+import wayoftime.bloodmagic.client.render.entity.BloodLightRenderer;
+import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
+import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.data.GeneratorBaseRecipes;
+import wayoftime.bloodmagic.common.data.GeneratorBlockStates;
+import wayoftime.bloodmagic.common.data.GeneratorItemModels;
+import wayoftime.bloodmagic.common.data.GeneratorLanguage;
+import wayoftime.bloodmagic.common.data.GeneratorLootTable;
+import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
+import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
+import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
+import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
+import wayoftime.bloodmagic.core.registry.OrbRegistry;
+import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
+import wayoftime.bloodmagic.potion.BloodMagicPotions;
+import wayoftime.bloodmagic.tile.TileAlchemyArray;
+import wayoftime.bloodmagic.tile.TileAltar;
+import wayoftime.bloodmagic.tile.TileSoulForge;
+import wayoftime.bloodmagic.util.handler.event.GenericHandler;
+import wayoftime.bloodmagic.util.handler.event.WillHandler;
 
-import java.io.File;
-import java.util.List;
+@Mod("bloodmagic")
+//@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+public class BloodMagic
+{
+	public static final String MODID = "bloodmagic";
+	// Directly reference a log4j logger.
+	private static final Logger LOGGER = LogManager.getLogger();
 
-@Mod(modid = BloodMagic.MODID, name = BloodMagic.NAME, version = BloodMagic.VERSION, dependencies = BloodMagic.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.GuiBloodMagicConfig$Factory")
-public class BloodMagic {
-    public static final String MODID = "bloodmagic";
-    public static final String NAME = "Blood Magic: Alchemical Wizardry";
-    public static final String VERSION = "@VERSION@";
-    public static final String DEPEND = "required-after:guideapi;";
-    public static final boolean IS_DEV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
-    public static final List<Pair<IBloodMagicPlugin, BloodMagicPlugin>> PLUGINS = Lists.newArrayList();
-    public static final RitualManager RITUAL_MANAGER = new RitualManager(new Configuration(new File(Loader.instance().getConfigDir(), MODID + "/" + "rituals.cfg")));
-    public static final ItemGroup TAB_BM = new ItemGroup(MODID + ".creativeTab") {
-        @Override
-        public ItemStack createIcon() {
-            return OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_WEAK);
-        }
-    };
-    public static ItemGroup TAB_TOMES = new ItemGroup(MODID + ".creativeTabTome") {
-        @Override
-        public ItemStack createIcon() {
-            return new ItemStack(RegistrarBloodMagicItems.UPGRADE_TOME);
-        }
+	private static Gson GSON = null;
 
-        @Override
-        public boolean hasSearchBar() {
-            return true;
-        }
-    }.setNoTitle().setBackgroundImageName("item_search.png");
+	public static final BloodMagicPacketHandler packetHandler = new BloodMagicPacketHandler();
 
-    @SidedProxy(serverSide = "WayofTime.bloodmagic.proxy.CommonProxy", clientSide = "WayofTime.bloodmagic.proxy.ClientProxy")
-    public static CommonProxy proxy;
-    @Mod.Instance(BloodMagic.MODID)
-    public static BloodMagic instance;
+	public BloodMagic()
+	{
+		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-    static {
-        FluidRegistry.enableUniversalBucket();
-    }
+		modBus.addListener(this::setup);
+		modBus.addListener(this::onLoadComplete);
 
-    private File configDir;
+		BloodMagicBlocks.BLOCKS.register(modBus);
+		BloodMagicItems.ITEMS.register(modBus);
+//		RegistrarBloodMagic.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
+		BloodMagicItems.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
+		BloodMagicItems.BASICITEMS.register(modBus);
+		BloodMagicBlocks.BASICBLOCKS.register(modBus);
+		BloodMagicBlocks.FLUIDS.register(modBus);
+		BloodMagicBlocks.CONTAINERS.register(modBus);
+		BloodMagicEntityTypes.ENTITY_TYPES.register(modBus);
 
-    @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        configDir = new File(event.getModConfigurationDirectory(), "bloodmagic");
+		BloodMagicRecipeSerializers.RECIPE_SERIALIZERS.register(modBus);
 
-        PLUGINS.addAll(PluginUtil.gatherPlugins(event.getAsmData()));
-        PluginUtil.injectAPIInstances(PluginUtil.gatherInjections(event.getAsmData()));
+		// Register the setup method for modloading
+		modBus.addListener(this::setup);
+		// Register the enqueueIMC method for modloading
+		modBus.addListener(this::enqueueIMC);
+		// Register the processIMC method for modloading
+		modBus.addListener(this::processIMC);
+		// Register the doClientStuff method for modloading
+		modBus.addListener(this::doClientStuff);
+		modBus.addListener(this::gatherData);
 
-        ModTranquilityHandlers.init();
-        ModDungeons.init();
-        RITUAL_MANAGER.discover(event.getAsmData());
+		modBus.addGenericListener(Fluid.class, this::registerFluids);
+		modBus.addGenericListener(TileEntityType.class, this::registerTileEntityTypes);
+		modBus.addGenericListener(IRecipeSerializer.class, this::registerRecipes);
+		modBus.addGenericListener(Effect.class, BloodMagicPotions::registerPotions);
 
-        proxy.preInit();
-    }
+		MinecraftForge.EVENT_BUS.register(new GenericHandler());
 
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
-        BloodMagicPacketHandler.init();
+		MinecraftForge.EVENT_BUS.register(new WillHandler());
+//		MinecraftForge.EVENT_BUS.register(new BloodMagicBlocks());
+//		MinecraftForge.EVENT_BUS.addListener(this::commonSetup);
 
-        PluginUtil.handlePluginStep(PluginUtil.RegistrationStep.PLUGIN_REGISTER);
+		// Register ourselves for server and other game events we are interested in
+		MinecraftForge.EVENT_BUS.register(this);
+	}
 
-        ModRecipes.init();
-        ModRituals.initHarvestHandlers();
-        ModRituals.initCuttingFluids();
-        MeteorConfigHandler.init(new File(configDir, "meteors"));
-        ModArmourTrackers.init();
-        NetworkRegistry.INSTANCE.registerGuiHandler(BloodMagic.instance, new GuiHandler());
-        ModCorruptionBlocks.init();
+	private void registerRecipes(RegistryEvent.Register<IRecipeSerializer<?>> event)
+	{
+		System.out.println("Registering IngredientBloodOrb Serializer.");
+		CraftingHelper.register(IngredientBloodOrb.NAME, IngredientBloodOrb.Serializer.INSTANCE);
 
-        proxy.init();
-    }
+//        event.getRegistry().registerAll(
+//                new SewingRecipe.Serializer().setRegistryName("sewing")
+//        );
+	}
 
-    @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-        ModRecipes.addCompressionHandlers();
+	public static ResourceLocation rl(String name)
+	{
+		return new ResourceLocation(BloodMagic.MODID, name);
+	}
 
-        proxy.postInit();
-    }
+	public void registerFluids(RegistryEvent.Register<Fluid> event)
+	{
 
-    @Mod.EventHandler
-    public void modMapping(FMLModIdMappingEvent event) {
+	}
 
-    }
+	public void onLoadComplete(FMLLoadCompleteEvent event)
+	{
+		OrbRegistry.tierMap.put(BloodMagicItems.ORB_WEAK.get().getTier(), new ItemStack(BloodMagicItems.WEAK_BLOOD_ORB.get()));
+		BloodMagicCorePlugin.INSTANCE.register(BloodMagicAPI.INSTANCE);
 
-    @Mod.EventHandler
-    public void serverStarting(FMLServerStartingEvent event) {
-        event.registerServerCommand(new CommandBloodMagic());
-    }
+	}
 
-    @Mod.EventHandler
-    public void onIMCRecieved(FMLInterModComms.IMCEvent event) {
-        IMCHandler.handleIMC(event);
-    }
+	public void registerTileEntityTypes(RegistryEvent.Register<TileEntityType<?>> event)
+	{
+		LOGGER.info("Attempting to register Tile Entities");
+		event.getRegistry().register(TileEntityType.Builder.create(TileAltar::new, BloodMagicBlocks.BLOOD_ALTAR.get()).build(null).setRegistryName("altar"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileAlchemyArray::new, BloodMagicBlocks.ALCHEMY_ARRAY.get()).build(null).setRegistryName("alchemyarray"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileSoulForge::new, BloodMagicBlocks.SOUL_FORGE.get()).build(null).setRegistryName("soulforge"));
+	}
+
+	@SubscribeEvent
+	public void gatherData(GatherDataEvent event)
+	{
+//		GSON = new GsonBuilder().registerTypeAdapter(Variant.class, new Variant.Deserializer()).registerTypeAdapter(ItemCameraTransforms.class, new ItemCameraTransforms.Deserializer()).registerTypeAdapter(ItemTransformVec3f.class, new ItemTransformVec3f.Deserializer()).create();
+
+		DataGenerator gen = event.getGenerator();
+
+//        if(event.includeClient())
+		{
+			ItemModelProvider itemModels = new GeneratorItemModels(gen, event.getExistingFileHelper());
+			gen.addProvider(itemModels);
+			gen.addProvider(new GeneratorBlockStates(gen, itemModels.existingFileHelper));
+			gen.addProvider(new GeneratorLanguage(gen));
+			gen.addProvider(new BloodMagicRecipeProvider(gen));
+			gen.addProvider(new GeneratorBaseRecipes(gen));
+			gen.addProvider(new GeneratorLootTable(gen));
+		}
+	}
+
+	private void setup(final FMLCommonSetupEvent event)
+	{
+		// some preinit code
+//		LOGGER.info("HELLO FROM PREINIT");
+//		LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+		packetHandler.initialize();
+	}
+
+	private void doClientStuff(final FMLClientSetupEvent event)
+	{
+		// do something that can only be done on the client
+//		LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+		ClientEvents.registerContainerScreens();
+
+		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.SNARE.getEntityType(), SoulSnareRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.BLOOD_LIGHT.getEntityType(), BloodLightRenderer::new);
+		ClientEvents.registerItemModelProperties(event);
+	}
+
+	private void enqueueIMC(final InterModEnqueueEvent event)
+	{
+		// some example code to dispatch IMC to another mod
+//		InterModComms.sendTo("examplemod", "helloworld", () -> {
+//			LOGGER.info("Hello world from the MDK");
+//			return "Hello world";
+//		});
+	}
+
+	private void processIMC(final InterModProcessEvent event)
+	{
+		// some example code to receive and process InterModComms from other mods
+//		LOGGER.info("Got IMC {}", event.getIMCStream().map(m -> m.getMessageSupplier().get()).collect(Collectors.toList()));
+	}
+
+	// You can use SubscribeEvent and let the Event Bus discover methods to call
+	@SubscribeEvent
+	public void onServerStarting(FMLServerStartingEvent event)
+	{
+		// do something when the server starts
+//		LOGGER.info("HELLO from server starting");
+	}
+
+	// You can use EventBusSubscriber to automatically subscribe events on the
+	// contained class (this is subscribing to the MOD
+	// Event bus for receiving Registry Events)
+	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+	public static class RegistryEvents
+	{
+		@SubscribeEvent
+		public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent)
+		{
+			// register a new block here
+//			LOGGER.info("HELLO from Register Block");
+		}
+	}
+
+	// Custom ItemGroup TAB
+	public static final ItemGroup TAB = new ItemGroup("bloodmagictab")
+	{
+		@Override
+		public ItemStack createIcon()
+		{
+			return new ItemStack(BloodMagicBlocks.BLOOD_ALTAR.get());
+		}
+	};
 }

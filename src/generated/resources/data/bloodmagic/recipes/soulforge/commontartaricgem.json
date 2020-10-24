@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "bloodmagic:soulgemlesser"
+  },
+  "input1": {
+    "tag": "forge:gems/diamond"
+  },
+  "input2": {
+    "tag": "forge:storage_blocks/gold"
+  },
+  "input3": {
+    "item": "bloodmagic:infusedslate"
+  },
+  "output": {
+    "item": "bloodmagic:soulgemcommon"
+  },
+  "minimumDrain": 240.0,
+  "drain": 50.0
+}

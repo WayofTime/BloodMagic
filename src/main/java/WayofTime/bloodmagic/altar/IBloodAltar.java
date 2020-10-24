@@ -1,54 +1,55 @@
-package WayofTime.bloodmagic.altar;
+package wayoftime.bloodmagic.altar;
 
-public interface IBloodAltar {
-    int getCapacity();
+public interface IBloodAltar
+{
+	int getCapacity();
 
-    int getCurrentBlood();
+	int getCurrentBlood();
 
-    AltarTier getTier();
+	AltarTier getTier();
 
-    int getProgress();
+	int getProgress();
 
-    float getSacrificeMultiplier();
+	float getSacrificeMultiplier();
 
-    float getSelfSacrificeMultiplier();
+	float getSelfSacrificeMultiplier();
 
-    float getOrbMultiplier();
+	float getOrbMultiplier();
 
-    float getDislocationMultiplier();
+	float getDislocationMultiplier();
 
-    float getConsumptionMultiplier();
+	float getConsumptionMultiplier();
 
-    float getConsumptionRate();
+	float getConsumptionRate();
 
-    int getChargingRate();
+	int getChargingRate();
 
-    int getChargingFrequency();
+	int getChargingFrequency();
 
-    int getTotalCharge();
+	int getTotalCharge();
 
-    int getLiquidRequired();
+	int getLiquidRequired();
 
-    int getBufferCapacity();
+	int getBufferCapacity();
 
-    void sacrificialDaggerCall(int amount, boolean isSacrifice);
+	void sacrificialDaggerCall(int amount, boolean isSacrifice);
 
-    void startCycle();
+	void startCycle();
 
-    void checkTier();
+	void checkTier();
 
-    boolean isActive();
+	boolean isActive();
 
-    void setActive();
+	void setActive();
 
-    int fillMainTank(int amount);
+	int fillMainTank(int amount);
 
-    /**
-     * Will set the altar to initiate a cooldown cycle after it crafts before
-     * starting to craft again, giving the user time to interact with the altar.
-     * This can only be set while the altar is not active.
-     *
-     * @param cooldown - How long the cooldown should last
-     */
-    void requestPauseAfterCrafting(int cooldown);
+	/**
+	 * Will set the altar to initiate a cooldown cycle after it crafts before
+	 * starting to craft again, giving the user time to interact with the altar.
+	 * This can only be set while the altar is not active.
+	 *
+	 * @param cooldown - How long the cooldown should last
+	 */
+	void requestPauseAfterCrafting(int cooldown);
 }

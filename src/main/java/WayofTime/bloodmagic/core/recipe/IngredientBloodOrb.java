@@ -1,82 +1,112 @@
-package WayofTime.bloodmagic.core.recipe;
+package wayoftime.bloodmagic.core.recipe;
 
-import WayofTime.bloodmagic.orb.BloodOrb;
-import WayofTime.bloodmagic.orb.IBloodOrb;
-import WayofTime.bloodmagic.core.registry.OrbRegistry;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.ints.IntComparators;
-import it.unimi.dsi.fastutil.ints.IntList;
-import net.minecraft.item.crafting.RecipeItemHelper;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
+
+import com.google.gson.JsonObject;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.util.JSONUtils;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.crafting.IIngredientSerializer;
+import net.minecraftforge.common.crafting.VanillaIngredientSerializer;
+import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.core.registry.OrbRegistry;
+import wayoftime.bloodmagic.orb.BloodOrb;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
+public class IngredientBloodOrb extends Ingredient
+{
 
-public class IngredientBloodOrb extends Ingredient {
+//	private final BloodOrb orb;
+//	private NonNullList<ItemStack> orbs;
+//	private IntList itemIds = null;
+//	private ItemStack[] items;
 
-    private final BloodOrb orb;
-    private NonNullList<ItemStack> orbs;
-    private IntList itemIds = null;
-    private ItemStack[] items;
+	public static final ResourceLocation NAME = new ResourceLocation(BloodMagic.MODID, "bloodorb");
 
-    public IngredientBloodOrb(BloodOrb orb) {
-        super();
+	public final int orbTier;
 
-        this.orb = orb;
+	public static IngredientBloodOrb fromTier(int orbTier)
+	{
+		return new IngredientBloodOrb(orbTier);
+	}
 
-        List<ItemStack> orbGet = OrbRegistry.getOrbsDownToTier(orb.getTier());
-        orbs = NonNullList.withSize(orbGet.size(), ItemStack.EMPTY);
+	public static IngredientBloodOrb fromOrb(BloodOrb orb)
+	{
+		return new IngredientBloodOrb(orb.getTier());
+	}
 
-        for (int i = 0; i < orbGet.size(); i++)
-            orbs.set(i, orbGet.get(i));
-    }
+	protected IngredientBloodOrb(int orbTier)
+	{
+		super(Stream.of(new ItemList(orbTier)));
+		this.orbTier = orbTier;
+	}
 
-    @Override
-    @Nonnull
-    public ItemStack[] getMatchingStacks() {
-        if (items == null)
-            items = orbs.toArray(new ItemStack[0]);
-        return items;
-    }
+	public net.minecraftforge.common.crafting.IIngredientSerializer<? extends Ingredient> getSerializer()
+	{
+		return Serializer.INSTANCE;
+	}
 
-    @Override
-    @Nonnull
-    @SideOnly(Side.CLIENT)
-    public IntList getValidItemStacksPacked() {
-        if (this.itemIds == null || itemIds.size() != orbs.size()) {
-            this.itemIds = new IntArrayList(orbs.size());
+	private static class ItemList implements IItemList
+	{
+		private final int orbTier;
 
-            for (ItemStack itemstack : orbs)
-                this.itemIds.add(RecipeItemHelper.pack(itemstack));
+		public ItemList(int orbTier)
+		{
+			this.orbTier = orbTier;
+		}
 
-            this.itemIds.sort(IntComparators.NATURAL_COMPARATOR);
-        }
+		@Override
+		public Collection<ItemStack> getStacks()
+		{
+//			System.out.println("BING BONG");
+			List<ItemStack> orbGet = OrbRegistry.getOrbsDownToTier(orbTier);
+//			List<ItemStack> orbGet = new ArrayList<ItemStack>();
+//			orbGet.add(new ItemStack(Items.DIAMOND));
+//	        orbs = NonNullList.withSize(orbGet.size(), ItemStack.EMPTY);
+//	
+//	        for (int i = 0; i < orbGet.size(); i++)
+//	            orbs.set(i, orbGet.get(i));
+			return orbGet;
+		}
 
-        return this.itemIds;
-    }
+		@Override
+		public JsonObject serialize()
+		{
+			JsonObject object = new JsonObject();
+			object.addProperty("type", NAME.toString());
+			object.addProperty("orb_tier", orbTier);
+			return object;
+		}
+	}
 
-    @Override
-    public boolean apply(@Nullable ItemStack input) {
-        if (input == null || input.isEmpty())
-            return false;
+	public static class Serializer extends VanillaIngredientSerializer
+	{
+		public static final IIngredientSerializer<? extends Ingredient> INSTANCE = new Serializer();
 
-        if (!input.hasTagCompound())
-            return false;
+		@Override
+		public Ingredient parse(JsonObject json)
+		{
+			System.out.println("Parsing Blood Orb");
+			return new IngredientBloodOrb(JSONUtils.getInt(json, "orb_tier"));
+		}
+	}
 
-        if (!(input.getItem() instanceof IBloodOrb))
-            return false;
+//
+//	@Override
+//	public boolean test(@Nullable ItemStack input)
+//	{
+//		System.out.println("Testing");
+//		if (input == null || input.isEmpty())
+//			return false;
+//
+//		if (!(input.getItem() instanceof IBloodOrb))
+//			return false;
+//
+//		BloodOrb orb = ((IBloodOrb) input.getItem()).getOrb(input);
+//		return orb != null && orb.getTier() >= this.orbTier;
+//	}
 
-        BloodOrb orb = ((IBloodOrb) input.getItem()).getOrb(input);
-        return orb != null && orb.getTier() >= this.orb.getTier();
-    }
-
-    @Override
-    protected void invalidate() {
-        this.itemIds = null;
-    }
 }

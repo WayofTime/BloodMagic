@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "i i",
+    "sgs",
+    "sos"
+  ],
+  "key": {
+    "s": {
+      "tag": "forge:stone"
+    },
+    "g": {
+      "tag": "forge:ingots/gold"
+    },
+    "i": {
+      "tag": "forge:ingots/iron"
+    },
+    "o": {
+      "tag": "forge:storage_blocks/iron"
+    }
+  },
+  "result": {
+    "item": "bloodmagic:soulforge"
+  }
+}

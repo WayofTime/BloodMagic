@@ -1,0 +1,74 @@
+{
+  "overrides": [
+    {
+      "predicate": {
+        "bloodmagic:type": 0.0,
+        "bloodmagic:active": 0.0
+      },
+      "model": "bloodmagic:item/variants/soulsword_deactivated"
+    },
+    {
+      "predicate": {
+        "bloodmagic:type": 1.0,
+        "bloodmagic:active": 0.0
+      },
+      "model": "bloodmagic:item/variants/soulsword_corrosive_deactivated"
+    },
+    {
+      "predicate": {
+        "bloodmagic:type": 2.0,
+        "bloodmagic:active": 0.0
+      },
+      "model": "bloodmagic:item/variants/soulsword_destructive_deactivated"
+    },
+    {
+      "predicate": {
+        "bloodmagic:type": 3.0,
+        "bloodmagic:active": 0.0
+      },
+      "model": "bloodmagic:item/variants/soulsword_vengeful_deactivated"
+    },
+    {
+      "predicate": {
+        "bloodmagic:type": 4.0,
+        "bloodmagic:active": 0.0
+      },
+      "model": "bloodmagic:item/variants/soulsword_steadfast_deactivated"
+    },
+    {
+      "predicate": {
+        "bloodmagic:type": 0.0,
+        "bloodmagic:active": 1.0
+      },
+      "model": "bloodmagic:item/variants/soulsword_activated"
+    },
+    {
+      "predicate": {
+        "bloodmagic:type": 1.0,
+        "bloodmagic:active": 1.0
+      },
+      "model": "bloodmagic:item/variants/soulsword_corrosive_activated"
+    },
+    {
+      "predicate": {
+        "bloodmagic:type": 2.0,
+        "bloodmagic:active": 1.0
+      },
+      "model": "bloodmagic:item/variants/soulsword_destructive_activated"
+    },
+    {
+      "predicate": {
+        "bloodmagic:type": 3.0,
+        "bloodmagic:active": 1.0
+      },
+      "model": "bloodmagic:item/variants/soulsword_vengeful_activated"
+    },
+    {
+      "predicate": {
+        "bloodmagic:type": 4.0,
+        "bloodmagic:active": 1.0
+      },
+      "model": "bloodmagic:item/variants/soulsword_steadfast_activated"
+    }
+  ]
+}

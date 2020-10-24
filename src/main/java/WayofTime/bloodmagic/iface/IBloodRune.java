@@ -1,15 +1,14 @@
-package WayofTime.bloodmagic.iface;
-
-
-import WayofTime.bloodmagic.block.enums.BloodRuneType;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+package wayoftime.bloodmagic.iface;
 
 import javax.annotation.Nullable;
 
-public interface IBloodRune {
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import wayoftime.bloodmagic.block.enums.BloodRuneType;
 
-    @Nullable
-    BloodRuneType getBloodRune(IBlockAccess world, BlockPos pos, BlockState state);
+public interface IBloodRune
+{
+
+	@Nullable
+	BloodRuneType getBloodRune(World world, BlockPos pos);
 }

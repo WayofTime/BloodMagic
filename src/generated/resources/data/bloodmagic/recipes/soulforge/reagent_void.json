@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "minecraft:bucket"
+  },
+  "input1": {
+    "tag": "forge:string"
+  },
+  "input2": {
+    "tag": "forge:string"
+  },
+  "input3": {
+    "tag": "forge:gunpowder"
+  },
+  "output": {
+    "item": "bloodmagic:reagentvoid"
+  },
+  "minimumDrain": 64.0,
+  "drain": 10.0
+}

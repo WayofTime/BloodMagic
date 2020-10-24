@@ -1,10 +1,11 @@
-package WayofTime.bloodmagic.orb;
-
-import net.minecraft.item.ItemStack;
+package wayoftime.bloodmagic.orb;
 
 import javax.annotation.Nullable;
 
-public interface IBloodOrb {
-    @Nullable
-    BloodOrb getOrb(ItemStack stack);
+import net.minecraft.item.ItemStack;
+
+public interface IBloodOrb
+{
+	@Nullable
+	BloodOrb getOrb(ItemStack stack);
 }

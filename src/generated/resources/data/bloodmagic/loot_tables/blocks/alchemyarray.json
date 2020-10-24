@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "name": "bloodmagic:alchemyarray",
+      "rolls": 1.0,
+      "entries": []
+    }
+  ]
+}

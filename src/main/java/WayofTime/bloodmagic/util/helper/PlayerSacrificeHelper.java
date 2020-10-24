@@ -1,142 +1,160 @@
-package WayofTime.bloodmagic.util.helper;
+package wayoftime.bloodmagic.util.helper;
 
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.altar.IBloodAltar;
-import WayofTime.bloodmagic.core.RegistrarBloodMagic;
-import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import wayoftime.bloodmagic.ConfigHandler;
+import wayoftime.bloodmagic.altar.IBloodAltar;
+import wayoftime.bloodmagic.event.SacrificeKnifeUsedEvent;
 
-public class PlayerSacrificeHelper {
-    public static float scalingOfSacrifice = 1f;
-    public static int soulFrayDuration = 400;
-    public static Effect soulFrayId;
+public class PlayerSacrificeHelper
+{
+	public static float scalingOfSacrifice = 1f;
+	public static int soulFrayDuration = 400;
+	public static Potion soulFrayId;
 
-    public static double getPlayerIncense(PlayerEntity player) {
-        return IncenseHelper.getCurrentIncense(player);
-    }
+	public static double getPlayerIncense(PlayerEntity player)
+	{
+		return 0;
+//		return IncenseHelper.getCurrentIncense(player);
+	}
 
-    public static void setPlayerIncense(PlayerEntity player, double amount) {
-        IncenseHelper.setCurrentIncense(player, amount);
-    }
+	public static void setPlayerIncense(PlayerEntity player, double amount)
+	{
+//		IncenseHelper.setCurrentIncense(player, amount);
+	}
 
-    public static boolean incrementIncense(PlayerEntity player, double min, double incenseAddition, double increment) {
-        double amount = getPlayerIncense(player);
-        if (amount < min || amount >= incenseAddition) {
-            return false;
-        }
+	public static boolean incrementIncense(PlayerEntity player, double min, double incenseAddition, double increment)
+	{
+		return true;
+//		double amount = getPlayerIncense(player);
+//		if (amount < min || amount >= incenseAddition)
+//		{
+//			return false;
+//		}
+//
+//		amount = amount + Math.min(increment, incenseAddition - amount);
+//		setPlayerIncense(player, amount);
+//
+//		if (amount == incenseAddition)
+//		{
+//			IncenseHelper.setMaxIncense(player, incenseAddition);
+//		}
+//		// System.out.println("Amount of incense: " + amount + ", Increment: " +
+//		// increment);
+//
+//		return true;
+	}
 
-        amount = amount + Math.min(increment, incenseAddition - amount);
-        setPlayerIncense(player, amount);
+	/**
+	 * Sacrifices a player's health while the player is under the influence of
+	 * incense
+	 *
+	 * @param player - The player sacrificing
+	 * @return Whether or not the health sacrificing succeeded
+	 */
+	public static boolean sacrificePlayerHealth(PlayerEntity player)
+	{
+//		if (player.isPotionActive(soulFrayId))
+//		{
+//			return false;
+//		}
 
-        if (amount == incenseAddition) {
-            IncenseHelper.setMaxIncense(player, incenseAddition);
-        }
-        // System.out.println("Amount of incense: " + amount + ", Increment: " +
-        // increment);
+		double amount = getPlayerIncense(player);
 
-        return true;
-    }
+		if (amount >= 0)
+		{
+			float health = player.getHealth();
+			float maxHealth = player.getMaxHealth();
 
-    /**
-     * Sacrifices a player's health while the player is under the influence of
-     * incense
-     *
-     * @param player - The player sacrificing
-     * @return Whether or not the health sacrificing succeeded
-     */
-    public static boolean sacrificePlayerHealth(PlayerEntity player) {
-        if (player.isPotionActive(soulFrayId)) {
-            return false;
-        }
+			if (health > maxHealth / 10.0)
+			{
+				float sacrificedHealth = health - maxHealth / 10.0f;
+				int lpAdded = (int) (sacrificedHealth * ConfigHandler.values.sacrificialDaggerConversion
+						* getModifier(amount));
 
-        double amount = getPlayerIncense(player);
+				IBloodAltar altar = getAltar(player.getEntityWorld(), player.getPosition());
+				if (altar != null)
+				{
+					SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, (int) sacrificedHealth, lpAdded);
+					if (MinecraftForge.EVENT_BUS.post(evt))
+						return false;
 
-        if (amount >= 0) {
-            float health = player.getHealth();
-            float maxHealth = player.getMaxHealth();
+					altar.sacrificialDaggerCall(evt.lpAdded, false);
+					altar.startCycle();
 
-            if (health > maxHealth / 10.0) {
-                float sacrificedHealth = health - maxHealth / 10.0f;
-                int lpAdded = (int) (sacrificedHealth * ConfigHandler.values.sacrificialDaggerConversion * getModifier(amount));
+					player.setHealth(maxHealth / 10.0f);
+					setPlayerIncense(player, 0);
+//					player.addPotionEffect(new PotionEffect(RegistrarBloodMagic.SOUL_FRAY, soulFrayDuration));
 
-                IBloodAltar altar = getAltar(player.getEntityWorld(), player.getPosition());
-                if (altar != null) {
-                    SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, (int) sacrificedHealth, lpAdded);
-                    if (MinecraftForge.EVENT_BUS.post(evt))
-                        return false;
+					return true;
+				}
+			}
+		}
 
-                    altar.sacrificialDaggerCall(evt.lpAdded, false);
-                    altar.startCycle();
+		return false;
+	}
 
-                    player.setHealth(maxHealth / 10.0f);
-                    setPlayerIncense(player, 0);
-                    player.addPotionEffect(new EffectInstance(RegistrarBloodMagic.SOUL_FRAY, soulFrayDuration));
+	public static double getModifier(double amount)
+	{
+		return 1 + amount * scalingOfSacrifice;
+	}
 
-                    return true;
-                }
-            }
-        }
+	/**
+	 * Finds the nearest {@link IBloodAltar} and attempts to fill it
+	 *
+	 * @param world             - The world
+	 * @param sacrificingEntity - The entity having the sacrifice done on (can be
+	 *                          {@link PlayerEntity} for self-sacrifice)
+	 * @param amount            - The amount of which the altar should be filled
+	 * @param isSacrifice       - Whether this is a Sacrifice or a Self-Sacrifice
+	 * @return Whether the altar is found and (attempted) filled
+	 */
+	public static boolean findAndFillAltar(World world, LivingEntity sacrificingEntity, int amount, boolean isSacrifice)
+	{
+		IBloodAltar altarEntity = getAltar(world, sacrificingEntity.getPosition());
 
-        return false;
-    }
+		if (altarEntity == null)
+			return false;
 
-    public static double getModifier(double amount) {
-        return 1 + amount * scalingOfSacrifice;
-    }
+		altarEntity.sacrificialDaggerCall(amount, isSacrifice);
+		altarEntity.startCycle();
 
-    /**
-     * Finds the nearest {@link IBloodAltar} and attempts to fill it
-     *
-     * @param world             - The world
-     * @param sacrificingEntity - The entity having the sacrifice done on (can be
-     *                          {@link PlayerEntity} for self-sacrifice)
-     * @param amount            - The amount of which the altar should be filled
-     * @param isSacrifice       - Whether this is a Sacrifice or a Self-Sacrifice
-     * @return Whether the altar is found and (attempted) filled
-     */
-    public static boolean findAndFillAltar(World world, LivingEntity sacrificingEntity, int amount, boolean isSacrifice) {
-        IBloodAltar altarEntity = getAltar(world, sacrificingEntity.getPosition());
+		return true;
+	}
 
-        if (altarEntity == null)
-            return false;
+	/**
+	 * Gets the nearest {@link IBloodAltar}
+	 *
+	 * @param world    - The world
+	 * @param blockPos - The position of where the check should be in (in a 2 block
+	 *                 radius from this)
+	 * @return The nearest altar, if no altar is found, then this will return null
+	 */
+	public static IBloodAltar getAltar(World world, BlockPos blockPos)
+	{
+		TileEntity tileEntity;
 
-        altarEntity.sacrificialDaggerCall(amount, isSacrifice);
-        altarEntity.startCycle();
+		for (int x = -2; x <= 2; x++)
+		{
+			for (int y = -2; y <= 1; y++)
+			{
+				for (int z = -2; z <= 2; z++)
+				{
+					tileEntity = world.getTileEntity(blockPos.add(x, y, z));
 
-        return true;
-    }
+					if (tileEntity instanceof IBloodAltar)
+					{
+						return (IBloodAltar) tileEntity;
+					}
+				}
+			}
+		}
 
-    /**
-     * Gets the nearest {@link IBloodAltar}
-     *
-     * @param world    - The world
-     * @param blockPos - The position of where the check should be in (in a 2 block
-     *                 radius from this)
-     * @return The nearest altar, if no altar is found, then this will return
-     * null
-     */
-    public static IBloodAltar getAltar(World world, BlockPos blockPos) {
-        TileEntity tileEntity;
-
-        for (int x = -2; x <= 2; x++) {
-            for (int y = -2; y <= 1; y++) {
-                for (int z = -2; z <= 2; z++) {
-                    tileEntity = world.getTileEntity(blockPos.add(x, y, z));
-
-                    if (tileEntity instanceof IBloodAltar) {
-                        return (IBloodAltar) tileEntity;
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
+		return null;
+	}
 }

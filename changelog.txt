@@ -1,1196 +1,1053 @@
-------------------------------------------------------
-Version 2.4.2
-------------------------------------------------------
-Now with no guarantees for working textures!
-
-Blood Altar:
-    - A Blood Altar with a Redstone Lamp below it will now emit a redstone signal upon finishing crafting (#1635)
-    - Fixed Blood Altar being able to obtain negative progress (#1649)
-
-Living Armor:
-    - Fixed Storm Trooper Level 4 costing 65 instead of -65 upgrade points (#1631)
-
-Rituals:
-    - Fixed Ritual of the Eternal Soul (Ritual Stone layout & didn't work) (#1633)
-    - Fixed Ritual Tinkerer (ritual area is now unique per ritual instance), added the ability to reset the ritual ranges to default (#1636)
-
-Misc:
-    - Lava Crystals can now set things on fire (#1652)
-    - Fixed parts of the German translation. Other translations still need to be reworked to accomodate changed translation keys (#1640)
-    - Fixed Guidebook showing wrong recipes (Rune of Self-Sacrifice instead of others) (#1641)
-    - Wooden Paths now behave like wood instead of stone (sound & efficient tool) (#1638)
-
-
-Technical Stuff:
-    - Fixed Veil of Evil and Ward of Sacrosanctity console spam (which could eventually lead to an out of memory exception) (#1639)
-    - Fixed GLSL shader compilation errors (affected Mesa driver (AMD GPU) on Linux) (#1624)
-    - Fixed `/bloodmagic network` command permissions (#1613)
-    - Fixed a rare crash that could occur when summoning mobs (#1618)
-
-------------------------------------------------------
-Version 2.4.1
-------------------------------------------------------
-
-Nut was too lazy to create a changelog, it's AEon's turn now!
-Changes made from Feb 02 - now (Fill end date in later)
-
-
-Living Armor:
-    - Fixed "Soft Fall" not preventing damage
-    - "Nocturnal Prowess" should not flash anymore
-    - "Trickshot" now ignores HurtResistanceTime
-    - "Trickshot" now works properly with sentient arrows
-    - "Step Assist" does not take effect while sneaking
-
-Sentient Bow:
-    - Fixed Destructive Will arrows exploding continuously
-    - Fixed Tipped Arrows getting improved even if no Will can be used
-
-Sigils:
-    - Buffed "Sigil of the Fast Miner" to be in accordance to the "Sanguine Scientium"
-    - Fixed a bug where "Sigil of the Fast Miner" would also cause the whirlwind effect
-    - Added "Whirlwind" to the potion registry
-    - Fixed broken Sigil tooltip formatting
-    - Fixed Sigil of Holding not updating some Sigil data, allowing for exploits
-    - Greatly improved "Sigil of Compression" performance
-    - Fixed "Sigil of Compression" bug that would eat leftover items (usually everything between 55 and 64 items for a 3x3 compression)
-
-
-Rituals:
-    - Ported Veil of Evil & Ward of Sacrosanctity
-    - Fixed "Serenade of the Nether" replacing lava source blocks with lava (fixed underlying function to detect flowing liquids)
-    - Added configurability to Ritual of the High Jump by modifying a new ritual area with the Ritual Tinkerer
-
-Misc:
-    - Fixed routing node oredict filter (crashes)
-    - Fixed mimic vanishing in some cases
-    - Fixed "Blood Letter's Pack" and "Coat of Arms" always being used in the main hand slot (action bar/hotbar)
-    - Stop insertions into Demon Crucible if the inventory is not empty
-    - Fixed abnormal deaths at your own hands through the sacrificial dagger (hopefully) (Gravestone bugginess)
-    - Fixed "Unmending" mod incompatibility
-    - Fixed Teleposers crashing the game if someone force-fed it junk
-    - added Nut being angery at contributors for messing stuff up
-    - Added some Russian language strings for the guide book
-    - Added repair recipes for Sentient Tools & Living Armor to JEI
-    - Many translation keys have changed which makes affected translations fall back to english
-
-Technical Stuff no player cares about:
-    - Formatted Project code
-    - Fixed BlockState parsing (mimic vanishing)
-    - Fixed some and streamlined ritual block ranges
-    - Mystery drain still mysterious
-    - Use TextFormatting rather than color codes in block lang names
-    - Fixed world unload crash (may happen if a world is loaded by world generators or JEI Resource graphing)
-    - Fixed `/bloodmagic network get` command
-    - Added translation keys for tickethistory command help strings
-
-------------------------------------------------------
-Version 2.4.0
-------------------------------------------------------
-
-It's been a while, eh? Some of you may be asking yourself "whats up with bloodmagic" like that damned recon on a certain
-social media site. Well here's what's up: put something snarky here when done writing changelog
-
-There's so much here, I'm probably going to miss some. Here's a general overview from just skimming commit titles.
-
-Much of this was done via PR because I'm ~~lazy~~ too busy having fun with Fabric.
-
-- Fixed harvest moon not working with pumpkins
-- [API] Added a way to unregister an altar component
-- Moved anything related to Tier 6 behind an opt-in config. Please stop asking me how to get it.
-- Fixed small demon stone bricks recipe so it returns 4 instead of 1
-- Ported some old rituals from 1.7
-    - Cry of the Eternal Soul
-    - Reverence of the Condor
-    - Ritual of the Feathered Earth
-- Added a new ritual, Ritual of Grounding
-- Optimized bound tool harvesting
-- Fixed render issues with demon crystals
-- Fixed Hymn of Syphoning not updating some tanks visually
-- Added very basic documentation for several rituals to the guide book
-- Made meteor costs for Mark of the Falling Tower configurable in the meteor json
-- Fluid related sigils should now work identically to buckets of the fluid
-- Fixed ritual tinkerer area setting behaving wonkily
-- Fixed Seer Sigil not working for incense altars
-- Added the ability to buff movement and updraft arrays by providing more of their ingredient
-- Ported the ritual dismantler from 1.7.10
-- Logic fix for the Solar Powered
-    - Now it requires a clear line of sight to the sky as well as it being day time
-- Fixed Sigil of Magnetism AOE being offset from the player
-- Rewrote commands
-    - They're different in some way, some how
-    - Don't ask me how
-- Quality of life improvements for the ritual tinkerer
-- Changed the activation crystal levels of some rituals to use the awakened crystal
-    - Mark of the Falling Tower
-    - All the living armor ones
-    - It's late and I'm tired don't hate me for being too lazy to look up their names
-- Fixed up some bounding boxes for some blocks with fancier models
-- Sentient Bow now properly handles modded and potion-ified arrows
-
-I can't wait for this to turn out to be very broken so I can yell at the contributor :>
-
-------------------------------------------------------
-Version 2.3.3
-------------------------------------------------------
-
-- Fixed Altars not filling orbs of their own tier
-
-------------------------------------------------------
-Version 2.3.2
-------------------------------------------------------
-
-looky bois, we beta now
-
-- Fixed Sentient Sword attacking mobs and players without being provoked
-- Fixed weird Crystal Clusters being weird
-    - They are now less weird
-- Fixed Ritual Reader and Tinkerer not being in the creative tab
-- Fixed an NPE that would happen with some blocks in the Ritual of Magnetism's area of effect
-- Fixed Mimics not being able to replace blocks during placement
-- Fixed issues with inter-dimensional teleportation
-    - Teleposers and Teleposition Sigils are now fully functional
-- Fixed custom arrows not having their effects when fired from the Sentient Bow
-- Fixed Splash Potions being unthrowable while Living Armor had the quenched downgrade
-- Fixed Ritual Stones being considered Iron instead of Rock
-- Fixed the Lava, Water, and Void sigils so they now work properly with tanks
-- Fixed an issue where the Teleposer would attempt to damage an offline player
-- Fixed the Compression Sigil so it now functions
-- Fixed low tier altars being able to fill high tier orbs
-- Fixed Sentient Tools having the wrong material
-- Fixed Sentient Tools not having a repair material
-    - It is now demon crystals
-- Added a config to disable mob drops from mobs killed by the Well of Suffering
-- Added an additional glow to the Dagger of Sacrifice when it has a full incense bonus
-- Reworked the Phantom Bridge
-- Updated german translation
-- Updated chinese translation
-
-------------------------------------------------------
-Version 2.3.1
-------------------------------------------------------
-
-- Fixed Ritual of Magnetism not being registered
-- Fixed Mob Sacrifice Array so it no longer kills bosses and players
-- Fixed Will type serializer using lowercase names
-- Fixed item rendering for the Sigil of Holding HUD
-- Added mod id to command localization keys to prevent potential conflicts
-
-------------------------------------------------------
-Version 2.3.0
-------------------------------------------------------
-
-- Fixed Basic Cutting Fluid recipe so it no longer requires an unobtainable potion
-- Fixed Teleposer Blacklist not working
-- Fixed the bounding box on the Blood Tank
-- Fixed crafted Inscription Tools not having their uses tag applied
-- Fixed JEI queries with bound Blood Orbs
-- Fixed Crushing Ritual not passing a valid player
-- Fixed Mending applying to Potion Flasks
-- Fixed Teleposition Sigil not checking for a Teleposer at it's destination
-- Fixed Lava Crystal not syphoning LP
-- Fixed the Laputa array moving unbreakable blocks
-    - ie: Bedrock
-- Fixed the Ritual of the Green Grove not working on Cactus and Reeds
-- Added a Mob Sacrifice array
-- Updated the HUD system
-    - You can now edit the HUD layout via the in-game config editor with a drag'n'drop system.
-    - This screen is only available while in a world.
-- Updated the German translation
-- Updated the Chinese translation
-- [API] Reworked how rituals are registered
-    - This will break any addons that work with rituals
-    - If you report an issue to me regarding broken addons, it will be closed without any comment
-
-------------------------------------------------------
-Version 2.2.12
-------------------------------------------------------
-- Fixed Hellfire Forge and Alchemy Table's shape-crafted-ness.
-- Fixed Cutting Fluids so they now work properly.
-- Fixed the Fluid filters so that they now work perfectly in the routing system.
-- Fixed the Living Armour Upgrade that provides night vision, so it is no longer as finicky.
-- Proved that Way could update the version number properly without being told by the maid.
-
-------------------------------------------------------
-Version 2.2.11
-------------------------------------------------------
-- Fixed the Alchemy Array from voiding items when broken when it shouldn't have.
-- Fixed Blood Tank NBT transfer between item/tile form.
-- Made sure to not offend TehNut's sensibilities :NutMaid:
-
-------------------------------------------------------
-Version 2.2.10
-------------------------------------------------------
-- Fixed Turret Array crash on servers.
-- Fixed the Blood Altar so it can actually fill Blood Orbs (derp).
-
-------------------------------------------------------
-Version 2.2.9
-------------------------------------------------------
-- Fixed stupid NPE in the Furnace Array
-- Fixed various issues with the Alchemy Table:
-	- Now works for recipes that require an LP cost.
-	- Hoppers no longer lose items when items are placed into the "slave" Alchemy Table who has some slots restricted.
-- Added an entry to the book that explains you can, in fact, use Sea Lanterns instead of glowstone blocks for your Tier 3 altar.
-- Fixed the Demon Will crystals growing when they shouldn't. Also lowered the time between natural crystal growths in Will-enriched areas.
-	- Side note: who's bright idea was it to have to wait 15 minutes per crystal growth?
-- Added the "Resonance of the Faceted Crystal", which can be used to create your first aspected Will crystal clusters.
-- Made it so the Crystallizer no longer generates a random aspected Will crystal cluster.
-- Fixed rare crash with the Blood Altar, which only has a chance of occuring on restart.
-
-------------------------------------------------------
-Version 2.2.8
-------------------------------------------------------
-- Fixed a client side null-pointer exception with the Blood Lamp
-	- It's a bright idea to fix this as soon as I can.
-- Changed the recipe of the Teleport Array:
-	- Note from Scotty: Captain, I'll remind ya what happened last time you put an apple in her array! Use an Enderpearl and redstone dust next time!
-- Added new arrays
-	- The Turret Array:
-		> Place an array on top of an inventory with arrows and then place a bow and an arrow in the array. The array will target enemies greater than 3 blocks away and less than 32, using any arrows in the inventory.
-	- Spike Array:
-		> Place a piece of cobblestone and iron ingot in the array. The array deals damage to any living entity that enters
-- Increased the max number of items transferable by the Master Routing Node in its system to 64 per second. Will revisit this limit if I figure out a less silly upgrade system.
-- Added additional effects to the Sentient Bow when aspected to different Will types.
-- Added in book entries for the Teleport Array and the Turret Array.
-- Fixed the Haste sigil and "Quick Feet" so that they work with MC's new movement method.
-- Removed added health from "Quick Feet" - seriously, why was this a thing?
-- Readded the ritual "Focus of the Ellipsoid": creates a hollow ellipsoid from blocks provided in the connecting chest.
-	- Note: The dictionary definition for "Ellipsoid" is a three-dimensional figure whose plane sections are ellipses or circles. For those who weren't born in a math class, it means it is a sphere that has different radii in each direction.
-- Fixed an off by one in altar upgrade management causing the first of any upgrade to not be counted
-- Fixed the LP cost of the Master Blood Orb
-    - This bug has gone unnoticed for 2 years now.
-- Potion Flasks can be crafted now
-- Fixed a server crash when handling dye recipes
-- Moved several text outputs out of the chat and into the action bar
-- Fixed a crash when trying to use unbound toggle-able sigils in the Sigil of Holding
-- Fixed an issue where unbound sigils could be used inside the Sigil of Holding
-- Added missing items for Demon Crystals and Demon Pylons
-
-------------------------------------------------------
-Version 2.2.7
-------------------------------------------------------
-- Added the Furnace Array:
-    - Name pending.
-    - Takes health from nearby players to power adjacent furnaces.
-    - Not covered by standard medical insurance.
-- Added a new Teleport Array:
-    - Please keep all hands and feet inside the floating circle until you have come to a complete stop.
-    - Note to Scotty: Feed the non-floating circle a Feather followed by an Apple to initiate the Beaming sequence.
-- Seer Sigil should now properly mimic all functions of the Divination Sigil.
-- Fixed some console error spam when using Lava/Water/Void sigils.
-- Registered Sulfur (dustSulfur) and Saltpeter (dustSaltpeter) to the ore dictionary.
-- Rewrote how IBindable stores it's data:
-    - This will probably break existing worlds if you have Rituals running. Stop them before updating.
-    - This will also unbind any of your bound items. Bind them again after updating.
-    - *glances at the big red A next to all 1.12 files*
-- Fixed Haste being *constricted* when above level 2.
-- De-nerf Fast Miner array so it provides Haste 3 again.
-- Prepped API for recipe tweaking mods.
-
-------------------------------------------------------
-Version 2.2.6
-------------------------------------------------------
-
-- Fixed a weird thing where slates were weird
-- Added HUD elements for Tranquility and Inversion
-- Fixed Sigils stacking 64 times higher than they should have
-
-As a side note, I've been listening to http://loli.dance/ for the last like 2 hours now.
-
-------------------------------------------------------
-Version 2.2.5
-------------------------------------------------------
-
-- We are now even more sure we're looking at a block before doing blocky things
-- Fix Lava Crystal being consumed by furnaces
-- Augmented Capacity and Self Sacrifice runes remember their names now
-- Satiated Stomach will now let you gorge yourself on overly high saturation foods
-    - I'm looking at you, Pam. Stop being weird and giving your foods 28 saturation.
-- Made Mod ID node filter dumber so it actually, like, works properly
-- "Temporarily" disabled cross-dimensional teleports for entities. Temporarily.
-    - Did I mention this is temporary? As in totally not permanently?
-    - Who am I kidding? I'll probably forget about this.
-- Bounce Arrays are no longer death traps when sneaking.
-
-------------------------------------------------------
-Version 2.2.4
-------------------------------------------------------
-
-- Make sure we're looking at a block before doing blocky things
-- Slightly altered the altar's renderer
-- Added new spammy logging with config options
-    - Prints out information like mods registering things via the API and stuff
-
-------------------------------------------------------
-Version 2.2.3
-------------------------------------------------------
-
-- Fixed mundane components being really really really thirsty
-    - (everything required water reagents. everything.)
-- Buffed the Fast Miner array with a nerf
-    - Vanilla doesn't like Haste 3 I guess?
-- Moved Divination Sigil altar output to a HUD element
-    - RIP Blood Altar chat spam 2014-2018
-- Mark of the Falling Tower is now re-opened and ready for sacrifices.
-- Polished Demon Stones are no longer lonely uncraftable bois
-- Somewhat more efficient (at least LoC wise) altar upgrade checking
-- Blood Altar is now less stingy about outputs
-- Coerced augmented Potion Flask recipe outputs out of hiding
-
-------------------------------------------------------
-Version 2.2.2
-------------------------------------------------------
-
-- Fixed Alchemy Arrays so they might actually function now. Might.
-    - How did this even function properly before? I have no idea.
-- Soul Snare should now stop giving the thrower ghosty debuffs. Should.
-- Blood Magic is now in the mood to launch on servers. Probably.
-- Soul Forge crafting works again! Potentially!
-- Fixed the altar nuking any and all NBT attached to output items.
-- Fixed the version not being replaced properly
-- Rewrote Hwyla integration.
-    - Should now function a lot nicer.
-- Implemented a new API for recipe registration
-    - Still need to move the alchemy table over, but otherwise this seems to function just fine.
-- Implemented a new API for registering tranquility blocks.
-    - Will allow Chisel to stop crashing
-
-------------------------------------------------------
-Version 2.2.1
-------------------------------------------------------
-
-- Fixed crashes when using systems that depended on internal entity names
-- Fixed a crash when attempting to get the owner from unbound bindable items
-- Fixed a server crash on startup
-- Fixed GUIs not displaying the background and tooltips properly
-- Helped the Sentient Sword get over it's identity crisis
-- By the way I'm not actually upset or anything guys.
-    - Please stop overreacting Reddit.
-
-------------------------------------------------------
-Version 2.2.0
-------------------------------------------------------
-
-- Basic port to 1.12
-    - Does not include the vast majority of rewrites and cleanup I did on the other branch
-    - Completely untested. Done out of spite. Go away.
-    - There, you have it. Screw off now.
-
-------------------------------------------------------
-Version 2.1.11
-------------------------------------------------------
-
-- Added support for some modded crops (Untested. Theoretically they work)
-    - Harvestcraft
-    - Actually Additions
-    - Extra Utilities
-- Fixed permission level for sub-commands
-- Large Bloodstone Bricks should receive 4 from a craft
-- Fixed Diamond Meteor giving blocks of diamond
-- Dynamically calculate Meteor Weight
-- Fixed NPE in fluid filter
-- Fixed Blood Tank capacity being reset when the chunk reloaded
-- Updated russian translation
-- Fixed Rune Type capability not registering on physical client
-- Updated Sigil of Holding texture so set color is more visible
-- Fixed blocks destroyed by bound tools not storing any NBT data
-- Fixed Harvest ritual not working on Melons and Pumpkins
-- [API] Methods for removing recipes
-
-------------------------------------------------------
-Version 2.1.10
-------------------------------------------------------
-
-- Fixed malicious clients being able to load arbitrary chunks on the server
-- Fixed Bound tools not setting their tool class and harvest level
-
-------------------------------------------------------
-Version 2.1.9
-------------------------------------------------------
-
-- Fixed Alchemy Table overwriting output each time it crafted something
-    - https://github.com/WayofTime/BloodMagic/issues/1119
-- Blood Magic commands (/bloodmagic) can now be used in Command Blocks
-    - https://github.com/WayofTime/BloodMagic/issues/1117
-- Re-implemented the Soul Fray debuff on death
-    - No more exploiting sacrifice by killing yourself over and over (again)
-    - https://github.com/WayofTime/BloodMagic/issues/1118
-- Updated Traditional Chinese localization
-    - https://github.com/WayofTime/BloodMagic/pull/1116
-
-------------------------------------------------------
-Version 2.1.8
-------------------------------------------------------
-
-- Fixed more null stack issues
-    - Will it ever end?
-- Fixed a crash when activating a ritual via Redstone
-- Fixed a fluid handling issue with Blood Tanks
-    - https://github.com/WayofTime/BloodMagic/issues/1108
-- Fixed issue where Sigils inside a Sigil of Holding were using the wrong item
-    - https://github.com/WayofTime/BloodMagic/issues/1102
-- Fixed crash when activing Bound Tools
-    - https://github.com/WayofTime/BloodMagic/issues/1114
-- Updated the Chinese localization
-    - https://github.com/WayofTime/BloodMagic/pull/1052
-- Placer Ritual is now much more performant
-- Many recipes have been moved over to support the Ore Dictionary
-    - https://github.com/WayofTime/BloodMagic/issues/1101
-
-------------------------------------------------------
-Version 2.1.7
-------------------------------------------------------
-
-- Fixed Grave Digger not applying damage bonus
-    - https://github.com/WayofTime/BloodMagic/issues/1098
-- Fixed crash when attempting to handle the dropping of Demonic Will
-    - https://github.com/WayofTime/BloodMagic/issues/1091
-- Fixed Crash of the Timberman dupe
-    - This also adds support for IItemHandler based inventories
-    - https://github.com/WayofTime/BloodMagic/issues/1090
-- Fixed a crash when a Meteor struck the ground
-    - https://github.com/WayofTime/BloodMagic/issues/1088
-- Fixed the Seer's Sigil not using Roman Numerals to display the altar tier
-    - https://github.com/WayofTime/BloodMagic/pull/1094
-
-------------------------------------------------------
-Version 2.1.6
-------------------------------------------------------
-- Fixed invisible Sentient Specters destroying everything and everybody around their owners
-    - lol
-    - https://github.com/WayofTime/BloodMagic/issues/1065
-- Fixed occasional crash when Blood Altar checked it's recipe
-    - https://github.com/WayofTime/BloodMagic/issues/1086
-- Fixed Blood Light acting as a collidable block in obfuscated environments
-    - I think
-    - https://github.com/WayofTime/BloodMagic/issues/1083
-- Fixed crash when Alchemy Table fully depleted a Cutting Fluid item
-    - https://github.com/WayofTime/BloodMagic/issues/1082
-- Fixed crash when scrolling through Sigil of Holding
-    - https://github.com/WayofTime/BloodMagic/issues/1081
-- Fixed not being able to take Gems out of Demon Crucibles
-    - https://github.com/WayofTime/BloodMagic/issues/1079
-- Fixed some more null stack issues
-    - When is this going to be over...
-    - https://github.com/WayofTime/BloodMagic/issues/1068
-- Fixed JEI not displaying Armor Tomes
-- Fixed Body Builder level 4 being 5x more expensive than level 5
-    - https://github.com/WayofTime/BloodMagic/pull/1080
-- Updated Japanese localization
-    - https://github.com/WayofTime/BloodMagic/pull/1076
-
-------------------------------------------------------
-Version 2.1.5
-------------------------------------------------------
-- Fixed Hellfire Forge slots acting up
-    - i is not j no matter how similar they look
-- Fixed JEI compat for Alchemy Table recipes
-- Fixed a lot more null stack checks
-- Fixed (yet another) crash when creating an "invalid" stack of the Blood Tank
-- Fixed Demon Will Crystal and Teleposer crashy interaction
-- Fixed crash when working with toggleable sigils
-
-------------------------------------------------------
-Version 2.1.4
-------------------------------------------------------
-- Fixed a crash when checking if two items could be combined
-- Fixed a crash when attempting to open the Sigil of Holding GUI
-- Fixed a crash when somebody made an "invalid" stack of the Blood Tank
-- Fixed a crash/hilarity where a Blood Altar would update itself as a Comparator
-  - Thanks to Arcaratus for causing this. I haven't laughed that hard in a while.
-
-------------------------------------------------------
-Version 2.1.3
-------------------------------------------------------
-- Added a new Master Ritual Stone that inverts it's redstone activity
-- Fixed Living Armor attributes overriding eachother instead of adding up
-- Fixed Ore doubling sometimes adding invalid recipes
-- Downgrade tomes are now called Downgrade Tomes
-- Added some caching to rituals to (hopefully) increase performance with less world data query-ing
-
-------------------------------------------------------
-Version 2.1.2
-------------------------------------------------------
-- Fixed server crash when creating the guide entries
-
-------------------------------------------------------
-Version 2.1.1-70
-------------------------------------------------------
-- Updated to Minecraft 1.11(.2)
-- Fixed the Living Armour Sacrificial Upgrade
-- Fixed Bound Tools not draining LP
-- Implemented the Blood Tank
-  - Current recipes are temporary™
-- Empty flasks can now be refilled to create a new flask
-- Fixed Aura of Expulsion whitelist
-- Added the Altar's Charge value to the Waila Tooltip when holding a Seer's Sigil
-- Fixed meteor config error caused by EnderCore reloading configs early into startup
-- Fixed meteor config not generating new entries
-- Blacklisted Sentient Spectres from the Well of Suffering
-- Fixed Sigils drawing from the user instead of the bound network
-- Added Fluid routing to the routing nodes - this is done by using the Fluid Filter and placing a fluid container as the filter.
-- Made it so the book does not give the filling recipe when the Blood Orb recipe is queried. 
-- Added a null check for the Will getter for the Aura incase the WillChunk somehow does not generate. 
-- [API] Added a new IMC API for modders to register their blocks as an altar component.
-  - Example: Chisel Glowstone can now be used for the Tier 3 caps (once Chisel implements it)
-
-------------------------------------------------------
-Version 2.1.0-69
-------------------------------------------------------
-- Fixed Phantom Bridge sigil glitch when travelling between dimensions and teleporting large distances.
-- Added deprecated methods for easier updating - Oops!
-
-------------------------------------------------------
-Version 2.1.0-68
-------------------------------------------------------
-- Fixed Ritual of Regeneration's text
-- Fixed silly dupe bug with the Zephyr ritual. 
-
-------------------------------------------------------
-Version 2.1.0-67
-------------------------------------------------------
-- Added the Destructive Will effect to the Ritual of the Green Grove. This ritual now is done~
-- Finished the Augments for the Serenade of the Nether.
-- Implemented a new model for the Blood Altar to be more in-line with the rest of the mod (Thanks, wiiv!)
-- Made the Blood Altar respect the new capability system for fluid management.
-- Finished the Augments for the Ritual of the Feathered Knife.
-- Finished the Augments for the Ritual of the Crusher.
-- Finished most of the Augments for the Ritual of the Shepherd.
-- Changed the Ritual of the Feathered Knife so it respects the Tough Palms Living Armour Upgrade.
-- Fixed the Ritual of the Feathered Knife so that its health threshold is percent-based.
-- Made the aspected Sentient Tools drop their corresponding Will type on killing enemies.
-- Made it so peaceful animals provide more LP by default (to encourage creating your own farm).
-- Increased the effectiveness of animals for the Gathering of the Forsaken Souls ritual by a factor of 4.
-- Added the framework for the Purification Altar.
-- Fixed a crash with the Ritual Diviner when attempting to replace certain blocks.
-- Snares can no longer hit the thrower of the snare within 20 ticks of throwing it.
-- Updated the book so it contains most of the rituals.
-- Added some placeholder recipes for the Living Armour Downgrades - they will eventually change.
-
-------------------------------------------------------
-Version 2.1.0-66
-------------------------------------------------------
-- Made it so that when you acquire a Living Armour Upgrade from a Tome, it raises the corresponding Stat Tracker up to that upgrade level.
-- Added some more framework for the Living Armour Downgrades.
-- Modified the Grim Reaper's Sprint so it is better at later levels.
-- Added a Repairing Living Armour Upgrade (trained by damaging the chestplate of the Living Armour while you have a full set on - it repairs all of your armour pieces over time)
-- Modified the Dwarven Might skill to better change the mining speed when mining.
-- Added a Dig Slowdown armour downgrade called "Weakened Pick".
-- Added the framework for a ritual that grants downgrades (instead of the potion method).
-- Fixed the recipes for some of the Demon Will blocks
-- Added the Sigil of Elasticity, the Sigil of the Claw, and the Sigil of Winter's Breath.
-- Changed most of the BlockString blocks to a BlockEnum in order to solve a loading issue with schematics.
-- Added the entries for the Skeleton Turret Array and the Updraft Array
-- Added the Bounce Array
-- Modified the Sigil of the Phantom Bridge so it better performs with speed modifications
-- Added the ability to use Mimic Blocks containing a valid Altar Component to work with the altar (#945)
-  - Note: If using a Blood Rune, you do not get the ability of said rune. It just counts as a valid block.
-- Fixed `/bloodmagic network get NAME` using the wrong localization (#955)
-- Fixed Mimic Blocks causing an NPE with some Tile Entities (#951)
-- Fixed a massive FPS drop when looking at a Master Ritual Stone while holding a Ritual Tinkerer (#950)
-- Fixed an occasional crash when looking at a Mimic block with WAILA installed (#949)
-- Fixed the displayed Lesser Tartaric Gem recipe in the Guide (#947)
-- Fixed Dagger of Sacrifice one-shotting bosses. It now just doesn't work (#932)
-- Fixed controls re-binding after each startup (#922)
-- Added an alchemy array, the Array of the Fast Miner
-
-------------------------------------------------------
-Version 2.1.0-65
-------------------------------------------------------
-- Fixed NPE when attacking mobs when you don't have a set of Living Armour. Oops.
-
-------------------------------------------------------
-Version 2.1.0-64
-------------------------------------------------------
-- Fixed the symmetry issues of the Ritual of Containment
-- Changed the recipe of the Acceleration rune so that it is a T4 rune.
-- Added the Charging rune, which accumulates charge by using the LP from the Blood Altar (1 charge = 1 LP always). If enough charge is stored when crafting, the crafting occurs instantly.
-- Added the entries for the Rune of Augmented Capacity, Charging Rune, and Rune of Acceleration
-- Fixed the Sigil of Translocation so that it does not crash when picking up certain blocks. Also removed the damned lightning.
-- Changed the Quick Feet upgrade and the speed boost sigil so that their speeds are applied when strafing and walking backwards as well.
-
-------------------------------------------------------
-Version 2.1.0-63
-------------------------------------------------------
-- Removed the darn testing code from the Divination Sigil. >.>
-
-------------------------------------------------------
-Version 2.1.0-62
-------------------------------------------------------
-- Fixed the fact rituals were not working (Might have been a compiler error).
-
-------------------------------------------------------
-Version 2.1.0-61
-------------------------------------------------------
-- Added fancy rendering for the Inversion Pillars.
-- Made the Meteor registry more manageable by separating the meteors into independent .json files.
-- Fixed the Sigil of Holding so that it does not crash servers when pressing the Holding key ('H' by default)
-
-------------------------------------------------------
-Version 2.1.0-60
-------------------------------------------------------
-- Fixed routing node serialization.
-- Removed unwanted System.out lines when clicking on the slots in the routing node.
-
-------------------------------------------------------
-Version 2.1.0-59
-------------------------------------------------------
-- Added the Living Armour Upgrade, Nocturnal Prowess, which gives night vision in dark areas and increases damage while the area is dark.
-- Added a LOT of dungeon blocks. I mean a lot.
-- Finished adding the recipes for all of the blocks (except the Demon Alloy)
-- Added a temporary texture (finally) for the Inspectoris Scandalum
-- Fixed Specters spawning with the /give command
-- Fixed the sacrifice range of the altar.
-- Fixed the Regeneration ritual so that it works on non-players
-- Added Mimic entry to The Architect.
-- Configurified the Meteor Ritual - Modpacks and users can edit all of the major properties of the meteor ritual, including what items need to be dropped onto the ritual as well as what you get in the ritual, radius, etc. The config will refresh if there is a version change unless you set "resyncOnVersionChange" to false.
-- Merged the three brick variants into one.
-- Added the Inversion Pillar models and caps
-
-------------------------------------------------------
-Version 2.0.4-58
-------------------------------------------------------
-- Temporarily removed the dungeon stuff so that it doesn't crash.
-
-------------------------------------------------------
-Version 2.0.4-57
-------------------------------------------------------
-- Changed the Demon Will Aura Gauge so it refreshes based on the player's ticks existed
-- Made Draft of Angelus craftable with gold dust
-- Fixed Elytra upgrade
-- Added the Mimics - the real ones
-- Implemented a bit of framework for some T5 shenanigans.
-- Fixed the Incense Altar so it properly detected the south sides of the altar.
-- Updated the Filtered Item Routing Nodes' GUI so that it behaved less like ass. Also added the necessary nbt porting code.
-- Further improved the routing GUI by allowing an amount to be typed into the amount bar.
-- Updated the toggleable sigils so they drain the user's LP based on the user's total ticks existed instead of the world time. This is to solve the doDaylightCycle glitch in this scenario.
-
-------------------------------------------------------
-Version 2.0.4-56
-------------------------------------------------------
-- Fixed an incompatability between the 1.10.2 and the 1.9.4 versions
-
-------------------------------------------------------
-Version 2.0.4-55
-------------------------------------------------------
-- Made Guide-API a required mod.
-- Fixed a funky issue where the Sound of the Cleansing Soul did not reset the upgrade points internally.
-- Added Sentient Specters, which are essentially tamable companions. Drop a sentient tool if you have more than 1024 Will of a given type to summon one (at the cost of 100 Will).
-- Added Mimic Blocks!
-
-------------------------------------------------------
-Version 2.0.3-54
-------------------------------------------------------
-- Eliminated some of the "wonkiness" from the Air Sigil
-- Fixed the Hellfire Forge so that swapping Tartaric gems will not give free stuff.
-- Added the Potion Flask and a few of the potion effects - max amount of effects that can be added to a single flask is currently 3.
-- Fixed the Aura gauge not resetting in chunks that do not have any Aura
-- Added tooltips for the progress to the next upgrade for Living Armour (hold shift + M)
-- Finished off The Architect docs for now
-- Finished off The Demon Kin docs for the time being
-
-------------------------------------------------------
-Version 2.0.3-53
-------------------------------------------------------
-- Fixed issue where the mod doesn't load on servers. Oops.
-
-------------------------------------------------------
-Version 2.0.3-52
-------------------------------------------------------
-- Updated the Sanguine Scientiem with Alchemy Array recipes
-- Fixed the Blood Altar so that it can (again) work on a stack size larger than 1.
-
-------------------------------------------------------
-Version 2.0.3-51
-------------------------------------------------------
-- Added the Demon Will Aura Gauge to accurately determine the Will in the Aura.
-- Added the ability for rituals to have a Demon Will set on them. Now to get rituals to use them.
-- Fixed it so that the Crushing Ritual now ignores liquids
-- Added the Mark of the Falling Tower ritual. 
-- Changed the tooltip of the ritual diviner so that it gives information about the selected ritual.
-- Added more to the Sanguine Scientiem, including Hellfire Forge recipes and Altar recipes
-- Updated a lot of the text in the Sanguine Scientiem
-
-------------------------------------------------------
-Version 2.0.2-50
-------------------------------------------------------
-- Fixed bad NPE when using the WoS. (Well, I guess all NPEs are technically bad, but I guess it depends on your perspective. That said, I don't think a changelog is the best place for a theoretical discussion about the rights and wrongs of errors, so I will stop now.)
-
-------------------------------------------------------
-Version 2.0.2-49
-------------------------------------------------------
-- All Alchemy Array recipes are WIP and are subject to change! ^.^ They are created using the Arcane Ash and are shown as first item + second item.
-- Added the Movement Array (feather + redstone)
-- Added the Mob Beacon Array (2x Zombie Flesh)
-- Added the Updraft Array (feather + glowstone)
-- Added the Skeleton Turret Array (Arrow + feather)
-- Fixed the Lava Crystal recipe so that it can use all tiers of blood orb
-- Nerfed the Bound Blade. This is temporary, since the sword eventually will be modified.
-- Fixed Teleposers so they no longer crash 1.10 instances when teleposing tiles.
-
-------------------------------------------------------
-Version 2.0.2-48
-------------------------------------------------------
-- Fixed a stupid bug by a stupid Way
-
-------------------------------------------------------
-Version 2.0.2-47
-------------------------------------------------------
-- Fixed horrible memory leak in the Living Armour.
-- Item Nodes can now be disabled by a (weak) redstone signal.
-
-------------------------------------------------------
-Version 2.0.2-46
-------------------------------------------------------
-- Fixed it so Ritual stones can be placed by the Ritual Diviner again. Also made it so that rituals are activateable and don't crash servers.
-
-------------------------------------------------------
-Version 2.0.2-45
-------------------------------------------------------
-- Changed the recipe of the Sanguine Scientiem
-- Fixed the Routing system so that it properly eliminates the connection to the Master node when the Master node is broken.
-- Fixed an issue where the Spectral Blocks (from the Sigil of Suppression) would return the liquid on the client side before the sigil was deactivated.
-- Made it so that the bound tools are (supposedly more so) unbreakable. This will probably come bite me on the ehem later, but we'll see.
-- Added Fire Resistance Living Armour Upgrade, "Gift of Ignis."
-- Updated The Architect section of the documentation.
-- Fixed it so the Ritual will call stopRitual when a ritual stone is broken.
-- Added the recipe for the Inspectoris Scandalum (I had to check if I spelled that right) which acts as a helper for Altar Building
-- Right-clicking a MRS with the Ritual Diviner will affix the ritual hologram to the MRS.
-
-------------------------------------------------------
-Version 2.0.2-44
-------------------------------------------------------
-- Added the Draft of Angelus, which increases the max number of upgrade points for Living Armour. It's strawberry flavoured!
-- Fixed the Tome of Peritia again - <= and < are the same, right?
-- Fixed an interaction between the Tome of Peritia and the Experienced upgrade
-
-------------------------------------------------------
-Version 2.0.1-43
-------------------------------------------------------
-- Added an initial method to divine where a blood rune is missing for the next tier of altar.
-- Fixed an NPE with the Gathering of the Forsaken Souls
-- Fixed Absorption Hearts remaining after the absorption buff ends for the Steadfast Sentient Sword
-- Updated the Guide (Woooooooooooooo........)
-- (Possibly?) fixed Tome of Peritia bug of the Negative Speed of Light
-- Added recipes for all ores -> dust in the alchemy table.
-- Added the recipes for the Sentient Tools - yes, they all drop Will.
-- Fixed the bow so that it now gives you Will when you kill a mob - it does not drop the Will, it goes directly to you.
-
-------------------------------------------------------
-Version 2.0.1-42
-------------------------------------------------------
-- Fixed Demon Crucible's weird behaviour where right-clicking it with an invalid item would still put the item in the crucible
-	and give the player an item with a stacksize of 0.
-- WAILA!
-- Oh, and demon wings with the Elytra.
-
-------------------------------------------------------
-Version 2.0.1-40
-------------------------------------------------------
-- Bug fix version, and added several translations - some of these are still WIP.
-- Fixed render bug with the Alchemy Table
-- Demon WIll now drops from slimes at a reduced rate instead of not at all
-- Fixed Jesus Water effect with Life Essence
-- Added the Vengeful Will crystal cluster recipe. Oops! >.>
-- Changed the "Default" Will into "Raw" Will. 
-- Fixed an item duplication bug with how item pick-up is handled with the Zephyr ritual and the magnetism sigil.
-- Made the bound Axe function... correctly
-- Fixed a command block only issue with BM commands
-
-------------------------------------------------------
-Version 2.0.0-39
-------------------------------------------------------
-- Updated to 1.9.4!
-- Fixed the Trick Shot upgrade
-- Fixed Gate of the Fold endless loop
-- Added rune type colors to the Ritual Diviner tooltip
-- Crusher ritual ignores unbreakable blocks
-
-------------------------------------------------------
-Version 2.0.0-38
-------------------------------------------------------
-- Fixed it so that the Sentient weaponry is actually repairable using any demon will crystals in an anvil
-- Changed the stat tracker for Tough Palms so that it counts number of hearts sacrificed, not number of sacrifices
-- Fixed the Living Armour so that it wouldn't get damaged by self-sacrificing when you had upgrades that mitigate unblockable sources.
-- Fixed bound sword stuttering 
-
-------------------------------------------------------
-Version 2.0.0-37
-------------------------------------------------------
-- Fixed Elytra upgrade not working on servers. Oops!
-
-------------------------------------------------------
-Version 2.0.0-36
-------------------------------------------------------
-- Added JEI compat for the Alchemy Table
-- Changed the Item Routing system so that it used capabilities instead
-- Updated the Alchemy Table recipe system so that it can provide better custom recipes.
-- Added some more recipes (like rudimentary ore doubling) to the alchemy table.
-- Added Explosive Powder, which is used to reduce cobblestone into gravel and gravel into sand (64 uses)
-
-------------------------------------------------------
-Version 2.0.0-35
-------------------------------------------------------
-- Changed Living Armour so that it is now damagable. The Living Armour Chestplate will be damaged, but will not break. If it gets to ~0 durability, it will damage your LP network heavily.
-- Living Armour is now repairable in an anvil with Binding Reagent.
-- Started adding in the Alchemy Table... not really started.
-- Changed it so that the Mending enchantment consumes the EXP before the Tome of Peritia does
-- Added fall distance mitigation to the jump upgrade
-- Fixed Lava Crystals... again.
-- Worked on the Alchemy Table
-- Added the Elytra upgrade - craft the tome in an anvil by using a book and a full Elytra.
-
-------------------------------------------------------
-Version 2.0.0-34
-------------------------------------------------------
-- Added config to Blood Magic that will prevent the compression handler from reading the recipes added by the Compression mod (default is true).
-- Added Japanese localization and fixed Czech (I can't spell) localization.
-
-------------------------------------------------------
-Version 2.0.0-33
-------------------------------------------------------
-- Fixed a few localization derps.
-- Fixed a few minor bugs.
-
-------------------------------------------------------
-Version 2.0.0-32
-------------------------------------------------------
-- Changed Tome of Peritia's recipe
-- Added step assist living armour upgrade tracker.
-- Added new Living Armour upgrades:
-	- Added Charging Strike, which increases knockback and damage for attacks while sprinting
-	- Added True Strike, increasing the damage of critical hits
-- Updated for Forge 12.16.0.1859
-- Did some work on the Sentient Bow to start adding abilities to it
-- Fixed the Speed and Jump rituals so that they correctly update the player's motion.
-- Implemented the "Ritual Tinkerer" and added its recipe.
-
-------------------------------------------------------
-Version 2.0.0-31
-------------------------------------------------------
-- Fixed NPE when using an empty bucket.
-- Added Living Armour Upgrades:
-	- Strong Legs increases jump height. Pro tip: hold shift to bypass this jump boost.
-	- Soft Fall decreases all fall damage, up to 100% at level 5.
-	- Grave Digger, for fun times with alternative weapons
-- Added increase in speed for Routing nodes inside of a chunk with Demon Aura
-- Fixed OutOfBoundsException in the Sentient Sword when you didn't have enough Will.
-- Fixed custom potion effects so they could be applied server-sided
-- Added recipe for the Tome of Peritia
-
-------------------------------------------------------
-Version 2.0.0-30
-------------------------------------------------------
-- Wow, there are a lot of bug fixes lately.
-- Fixed it so that the blood orb is no longer consumed in the crafting grid.
-
-------------------------------------------------------
-Version 2.0.0-29
-------------------------------------------------------
-- Fixed formatting not working properly on servers.
-
-------------------------------------------------------
-Version 2.0.0-28
-------------------------------------------------------
-- Fixed the soul snare.
-- Removed health buff from Steadfast armour
-- Changed corrosive sword's effect from poison to wither
-- Fixed living armour's training bracelet so that it deactivates any training of upgrades not supported
-- Added "Experienced" living armour upgrade, which provides more xp from picked up orbs.
-- Updated to Forge 1826
-
-------------------------------------------------------
-Version 2.0.0-27
-------------------------------------------------------
-- Added OreDict support for the altar (was done in 26)
-- Made it so that the Tartaric gem would show visually what type of will was contained
-- Allowed the Sentient Sword to use different wills, and change its colour based on the used one. Also made it so you do not toggle it by right clicking, but it simply 
-	rechecks itself when you smack something and when you right-click.
-- Fixed item binding. Yusssss.
-- Added Sword, Armour, and Bow texture changes when you have different demonic will in your inventory.
-- Finalized sentient sword effects
-- Did work on the unique demon will effects for armour
-- FINALLY changed it so farm animals do not drop demon will.
-
-------------------------------------------------------
-Version 2.0.0-23
-------------------------------------------------------
-- Fixed "see through world" syndrome for most blocks
-- Fixed .obj models so that they will properly render while in-hand
-- Fixed routing node attaching logic
-- Changed the growth behavior of the crystals
-- Fixed Potion getting for various methods
-- Started work on crystal automation ritual
-- Finished first iteration of the iterator of AreaDescriptor (hehe)
-- Finished the crystal automation ritual, "Gathering of the Forsaken Souls." This ritual damages mobs in it's area (21^3 cube around the MRS) and once it kills a mob it
-	uses its life essence to feed the demonic will crystals inside of its area (two blocks above the ritual stone, 7x7 region and 5 high). This costs LP and 
-	demonic will from the aura of the particular type, and costs less will the more... varied the mobs killed are. Growth amount is dictated by the max health
-	of the mobs killed.
-- Updated to Forge 1811
-
-------------------------------------------------------
-Version 2.0.0-22
-------------------------------------------------------
-- Fixed client disconnect when joining servers
-- Fixed Bound Blade having same damage between activated and deactivated states
-- Fixed Sentient Armour gem so it works, now
-- Fixed Armour model textures
-- Fixed crash on newer versions of Forge
-- Updated zh_CN localization
-
-------------------------------------------------------
-Version 2.0.0-21
-------------------------------------------------------
-- Initial release to 1.9. Many glitches that have yet to be ironed out, some of them Forge issues. Probably best not to play with this one until Forge stabilizes.
-
-------------------------------------------------------
-Version 2.0.0-20
-------------------------------------------------------
-- Fixed Blood Altar crashing on odd occasions.
-- Fixed GUI of hellfire forge.
-- Fixed issue with Will Chunks not generating when requested in new chunks
-- Fixed issue where Orb Tier was never set for a player internally
-- Fixed Creative Dagger. It now works correctly. Shift + Right Click on an Altar to fill it to capacity.
-- Fixed step height being set to incorrect value. Your Chisels and Bits stairs should work, now!
-- Fixed Bound Tools not being enchantable.
-- Fixed Bound Tools "Beast Mode" breaking blocks unreliably.
-- Fixed Blood Light Sigil not using LP
-- Changed Will system so that it automatically goes into your inventory and then drops any excess Will on the ground.
-- Changed Blood Light to render more particles when the sigil is held to make them easier to find.
-- Added debug commands. These work exactly the same as in the 1.7.10 version
-- [API] Fixed AddToNetworkEvent not being cancellable even though it should be
-- [API] Helper method in NetworkHelper to obtain the highest possible capacity for a given tier.
-
-------------------------------------------------------
-Version 2.0.0-19
-------------------------------------------------------
-- Fixed path blocks so they are actually craftable.
-- Added gui stuff to enable priority in the item routing system: nodes with a lower value priority will be accessed first. (May be rotated in the future)
-- Grayed out the currently active side's button in the item routers.
-- Added Demon Pylon
-- Changed behaviour of Demon Crucible
-- Fully implemented the behaviour of the crystal growing process.
-	- A Demon Crucible will be able to syphon the demon will from the tartaric gems inside of its inventory - right click with a gem to place it into the inventory.
-	- The syphoned will from the gem will go into the chunk, staying in the air - it will not move to neighbouring chunks unless forced to do so through other means
-	- The Demon Pylon draws will in the air from surrounding chunks and puts it into its own chunk - this acts as sort of like a pressure system, where it will even out the will distribution, but only goes one way.
-	- The Demon Crystallizer takes 100 will from the air (need a demon crucible for it to work) and forms a demon crystal on top of it. There is a 10% chance that this crystal will be of a special type.
-	- The Demon Crystals can be mined in order to collect their crystals. These crystals can be used for crafting more powerful stuff. If you have over 1024 will on your person when you right click the crystal, you can harvest a single crystal instead of the entire thing.
-	- You can put the harvested crystals inside of a demon crucible. Each crystal is worth 10 will, so this acts as a way to semi-automate will creation.
-	- When a hellfire forge is inside of a chunk with demon will, it will fill its contained tartaric gem with will.
-	- Changed a few recipes (like the greater tartaric gem) to match this new system.
-
-------------------------------------------------------
-Version 2.0.0-18
-------------------------------------------------------
-- Fixed issue with lava crystal working even their is no LP available.
-- Added upgrade trainer
-- Fixed step height issue with C&B stuff. Apparently step height is now 0.6 by default instead of 0.5.
-- Added Ritual: Song of the Cleansing Soul to remove Living Armour upgrades from the armour.
-- Added Ritual: Ritual of Living Evolution, which is used to set the living armour's max upgrade points to 300.
-- Added Ritual: The Timberman to cut down trees. Requires a chest on top of the MRS in order to collect the drops from harvested trees.
-- Added Ritual: Hymn of Syphoning, which syphons up fluids around it in a 16 block radius and puts the fluid in the tank above it. The tank above it must have at least one bucket of the fluid you want to syphon inside of it.
-- Added Ritual: The Assembly of the High Altar, which places runes and blocks from the inventory above it in the world in the form of a blood altar. Autobuilding altars~
-- Added Ritual: The Gate of the Fold. 
-- Added Ritual: The Filler. Places blocks from the inventory on top of it in the world.
-- Added Ritual: Le Vulcanos Frigius
-
-- Added tooltip to living armour to show the current upgrade points of the armour.
-- Added recipe for the training bracelet. Combine in an anvil with an upgrade tome to set it as the upgrade to train.
-- Ammended range of Zephyr ritual
-- Fixed Green Grove ritual
-- Fixed Crusher ritual so it didn't break everything at once.
-- Removed the FOV effect from the Quick Feet speed upgrade.
-- Minor work on the Demon Crucible.
-- Crucibles now fill the tartaric gems of close-by hellfire forges
-- Fixed rituals not correctly re-activating when taking off a redstone signal after reloading the world.
-- Added Teleposition Sigil, which teleports the user to the bound Teleposer.
-- Added Transposition Sigil, which picks up the block clicked on including the NBT of the given tile.
-
-------------------------------------------------------
-Version 2.0.0-17
-------------------------------------------------------
-- Added Living Armour Upgrades
-	- Solar Powered
-	- Grim Reaper's Sprint
-	- [Thaumcraft] Runic Shielding
-- Fixed Blood Altar's progress resetting when clicking with another item
-- Fixed Divination and Seer sigils crashing when clicking on an altar while not bound
-- Added crafting recipes for the following sigils:
-	- Compression
-	- Phantom Bridge
-	- Ender Severance
-	- Haste
-- Dagger now bypasses checks of armour
-
-------------------------------------------------------
-Version 2.0.0-16
-------------------------------------------------------
-- Fixed a major bug with the Blood Orbs.
-
-------------------------------------------------------
-Version 2.0.0-15
-------------------------------------------------------
-- Added blood lamp sigil array texture and reagent. Made it so the blood lamp sigil will place the light when right clicking on a block.
-- Added magnetism sigil array texture and reagent.
-- Added the ability for the blood altar to have its buffer tanks accessed (Semi-tested)
-- Improved readability for large numbers
-- Fixed break particle for Alchemy Array
-- Waila handling for Alchemy Array
-- Fixed Ritual eating LP when reactivated via a Redstone signal
-- Ritual Stones now always drop blank stones
-- Bound Blade is now enchant-able
-- Goggles of Revealing upgrade for Living Helmet. Combine a Living Helmet and Goggles of Revealing in an Anvil
-- Fixed config for disabling rituals
-- [API] Lots of changes to the binding system. It's now handled automatically for all items that implement IBindable.
-- Added Incense Altar system.
-- Added models for the routing nodes, incense altar, and the hellfire forge.
-
-------------------------------------------------------
-Version 2.0.0-14
-------------------------------------------------------
-- [API] Added support for some IMC methods:
-    - FMLInterModComs.sendMessage("BloodMagic", "teleposerBlacklist", ItemStack)
-    - FMLInterModComs.sendMessage("BloodMagic", "sacrificeValue", "ClassName;Value")
-    - FMLInterModComs.sendMessage("BloodMagic", "greenGroveBlacklist", "domain:name")
-- Fixed the bound sword so that it now drops weak blood shards.
-- Fixed the demon will so that you can actually pick it up!
-
-------------------------------------------------------
-Version 2.0.0-13
-------------------------------------------------------
-- Added recipes and temp textures for path blocks. More path blocks to come.
-- Tweaked the Incense altar and added its recipe.
-- Fixed Blood Light sigil not providing the right coloured particles
-- Added the ability for the divination sigil to look up information about the incense altar.
-- Fix another NPE when checking of a player has a full set of Living Armor
-
-------------------------------------------------------
-Version 2.0.0-12
-------------------------------------------------------
-- This build doesn't exist. Shhh
-
-------------------------------------------------------
-Version 2.0.0-11
-------------------------------------------------------
-- Fix NPE when checking if a player has a full Living Armor set
-
-------------------------------------------------------
-Version 2.0.0-10
-------------------------------------------------------
-- Added recipe for Sentient Armour - craft a Sentient Armour Gem and right click with it to toggle the armour.
-- Added recipes for the Greater and Grand Tartaric gems. These are temporary recipes.
-- Updated textures.
-- Added ability to fill gems from other gems. Right click with a gem to fill other gems in your inventory.
-- Un-nerfed the Ritual Stone recipe to provide 4 again
-- Rituals can now be toggled with Redstone. Provide a redstone signal to the Master Ritual Stone to turn it off.
-- Made the Sentient sword able to block. 
-- Fixed the Sentient Sword so that even when not activated it will still do damage - just at a reduced amount.
-- Made it so that Demon Will will be voided if all of the player's tartaric gems are filled.
-
-------------------------------------------------------
-Version 2.0.0-9
-------------------------------------------------------
-- Fixed the rituals so that they no longer caused nausea no matter what.
-
-------------------------------------------------------
-Version 2.0.0-8
-------------------------------------------------------
-- Fixed crash when activating rituals while operating on servers
-- Added the majority of stuff for the item routing system.
-
-------------------------------------------------------
-Version 2.0.0-7
-------------------------------------------------------
-- JEI now displays more information for Altar recipes. Hover over the Altar image to view it.
-- Added particles to the Blood Altar on the server-side.
-- Allow configuration of entity sacrificial values
-- [API] Allow setting of entity sacrificial values via API. Takes precedence over config values.
-- [API] Method to easily get instances of Items and Blocks
-- [API] Allow mods to blacklist their blocks from the Green Grove ritual/sigil
-
-------------------------------------------------------
-Version 2.0.0-6
-------------------------------------------------------
-- Fixed the LivingArmourTracker for defense so that it no longer ate up armour (om nom nom nom)
-
-------------------------------------------------------
-Version 2.0.0-5
-------------------------------------------------------
-- Tweaked Sentient Sword's will drop rate
-- No longer 1.8.8 compatible
-- Cleaned some clutter from JEI
-- Added a potential fix to some server mod issues.
-
-
-------------------------------------------------------
-Version 2.0.0-4
-------------------------------------------------------
-- Added Physical resistance upgrade (Tough skin)
-- Added health boost upgrade (Healthy)
-- Added melee damage upgrade (Fierce strike)
-- Added trick shot upgrade (Have fun finding it! :D)
-- Added T5 orb recipe and Demonic Activation Crystal
-- Added Rituals:
-	- Animal Growth ritual
-	- Harvest ritual
-	- Magnetism ritual
-	- Crushing ritual
-	- Full Stomach ritual
-	
-- Added parts for the new Demon Will System
-	- Added the Demon Will item
-	- Added the Sentient Sword, which will be powered by consuming demon will
-	- Added a Lesser Tartaric Gem in order to hold onto more will
-	- SSSSSSSSoooooooouuuuuuulllllllllsssssss
-	- Added Hellfire Forge block
-	- Added rudimentary snare and recipe - has 25% chance for monster to drop its soul
-	- Added Sentient Bow
-	- Added Sentient Armour
-	
-- Fixed binding of togglable sigils
-- Added saving for ritual tags
-
-------------------------------------------------------
-Version 2.0.0-3
-------------------------------------------------------
-- Fixed client-side issue when shift-clicking lava crystals into a furnace while on a server.
-- Added poison upgrade to Living Armour
-- Fixed digging upgrade
-- Added self sacrifice upgrade to Living Armour (Tough Palms)
-- Added knockback resistance upgrade to Living Armour, trained via eating (Body Builder)
-
-
-------------------------------------------------------
-Version 2.0.0-2
-------------------------------------------------------
-- Added Life Essence bucket recipe
-- Added the rendering of LP inside of the altar
-- Added Living Armour including some upgrades:
-	- Added speed upgrade
-	- Added digging upgrade
-- Modified Divination Sigil recipe - no longer uses a block of glass because of issues on servers (tempramental)
-- Modified Apprentice Blood Orb recipe to require a block of redstone instead.
-- Added the Reagent Air recipe.
-
-
-------------------------------------------------------
-Version 2.0.0
-------------------------------------------------------
-
-Initial release of the open beta for the mod to Minecraft v1.8.9! This mod version has a lot of changes. Because it is a full-on rewrite, some of the mechanics of the mod have changed/are going to change. As such, the feel of the mod will be slightly different than previous iterations.
-This mod has a large amount of compatibility with the recipe look-up mod, Just Enough Items (JEI). It is VERY much recommended that you download JEI, since it will make your life a lot easier with the new mechanics.
-Because this is a beta of a rewrite, there will be a lot of missing content. I am trying my hardest to add new content as fast as I can, but my team and I are only human and can only code so fast. Please give a little patience while we make the mod the best it possibly can!
-Also, please submit bug reports or feature requests to the github, https://github.com/WayofTime/BloodMagic. We'll get to the issue soon!
-
-New
-- Added "Alchemy Array" crafting - this is achieved by making some "Arcane Ash" and clicking on the ground to create an array. You then click on the array with the first ingredient and then the second - breaking the array will give the items back.
-- Added JEI compatibility
-- Added WAILA compatibility (No more needing 3rd-party addons!)
-
-Changed
-- Lots of internals have changed. Too many to list.
-- A graphical overhaul of everything has been implemented. These textures were provided by CyanideX's Unity texture pack. BBoldt and Yulife (Inap) from the Unity team are our new permanent texture artists.
-
-Bug Fixes
--
+Build: 1.16.3-34.1.0 - Thu Sep 24 07:05:13 GMT 2020
+	lex:
+		Prep new RB.
+
+=========
+Build: 1.16.3-34.0.21 - Thu Sep 24 06:46:57 GMT 2020
+	ichttt:
+		Fix grass disappearing when alwaysSetupTerrainOffThread is true (#7291)
+
+=========
+Build: 1.16.3-34.0.20 - Thu Sep 24 06:41:41 GMT 2020
+	35673674+alcatrazEscapee:
+		Accessors for inspecting and removal of biome generation settings. Fixed carvers still being immutable. (#7339)
+
+=========
+Build: 1.16.3-34.0.19 - Thu Sep 24 06:36:25 GMT 2020
+	lex:
+		Revive BiomeManager and BiomeLayer hooks.
+
+=========
+Build: 1.16.3-34.0.18 - Thu Sep 24 03:12:19 GMT 2020
+	richard:
+		Fix a few minor issues with custom tag types and fix OptionalNamedTags (#7316)
+
+=========
+Build: 1.16.3-34.0.17 - Wed Sep 23 22:10:11 GMT 2020
+	diesieben07:
+		Fix ToggleableKeyBinding differences to vanilla. (#7338)
+
+=========
+Build: 1.16.3-34.0.16 - Wed Sep 23 21:34:47 GMT 2020
+	Yunus1903:
+		Updated build badge versions to 1.16.3 in readme (#7325)
+
+	diesieben07:
+		Fix forge light pipeline applying block offsets twice (#7323)
+
+=========
+Build: 1.16.3-34.0.14 - Wed Sep 23 21:16:46 GMT 2020
+	ichttt:
+		Add a better license error screen (#7350)
+
+=========
+Build: 1.16.3-34.0.13 - Tue Sep 22 19:14:17 GMT 2020
+	darklime:
+		Fixed container item being consumed in brewing stand. #7307 (#7314)
+
+=========
+Build: 1.16.3-34.0.12 - Tue Sep 22 19:06:10 GMT 2020
+	sciwhiz12:
+		Fix parse results of CommandEvent being disregarded (#7303)
+
+=========
+Build: 1.16.3-34.0.11 - Tue Sep 22 18:58:28 GMT 2020
+	17338378+Nightenom:
+		[1.16] Fix possible crash when using rendering regionCache (#7207)
+
+=========
+Build: 1.16.3-34.0.10 - Tue Sep 22 18:41:16 GMT 2020
+	35673674+alcatrazEscapee:
+		[1.16] Reimplement ICloudRenderHandler, ISkyRenderHandler and IWeatherRenderHandler (#6994)
+
+=========
+Build: 1.16.3-34.0.9 - Fri Sep 18 00:58:08 GMT 2020
+	35673674+alcatrazEscapee:
+		Make Biome.Climate and BiomeAmbiance fields accessible (#7336)
+
+=========
+Build: 1.16.3-34.0.8 - Thu Sep 17 20:42:53 GMT 2020
+	cpw:
+		Use mixin 0.8.1. Should fix problems with mixin not working properly with latest modlauncher.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.3-34.0.7 - Tue Sep 15 20:07:25 GMT 2020
+	sebastian:
+		Sets the empty/fill sounds for vanilla fluids.
+		Use Fluid's fillSound rather than emptySound when filling buckets.
+
+=========
+Build: 1.16.3-34.0.6 - Tue Sep 15 19:47:08 GMT 2020
+	cyborgmas18:
+		Add MatrixStack-aware alternatives to the methods in GuiUtils (#7127)
+
+=========
+Build: 1.16.3-34.0.5 - Tue Sep 15 16:51:58 GMT 2020
+	justin_wiblin:
+		Fix json biomes not setting registry name correctly for the BiomeLoadingEvent. (#7329)
+
+=========
+Build: 1.16.3-34.0.4 - Tue Sep 15 14:18:16 GMT 2020
+	David Quintana:
+		Fix inconsistencies in how the values from the model are passed into the baked model.
+		This puts them in line with vanilla, as intended.
+
+=========
+Build: 1.16.3-34.0.3 - Tue Sep 15 13:23:05 GMT 2020
+	Yunus1903:
+		Reimplemented drawHoveringText (#7268)
+
+=========
+Build: 1.16.3-34.0.2 - Tue Sep 15 00:43:19 GMT 2020
+	lex:
+		New BiomeLoadingEvent that allows modders to edit biomes as they are being deserialized.
+
+=========
+Build: 1.16.3-34.0.1 - Fri Sep 11 15:55:28 GMT 2020
+	lex:
+		Bump MCP version for lambda issue.
+
+=========
+Build: 1.16.3-34.0.0 - Thu Sep 10 19:10:33 GMT 2020
+	lex:
+		1.16.3 Update
+		Also included a bunch of warning cleanups.
+
+=========
+Build: 1.16.2-33.0.61 - Thu Sep 10 18:54:56 GMT 2020
+	42962686+RedstoneDubstep:
+		Fix tile entities being replaced when not needed. (#7318)
+
+=========
+Build: 1.16.2-33.0.60 - Thu Sep 10 18:02:15 GMT 2020
+	malte0811:
+		Fix exception when getting rendering box for tile entities with no collision boxes. (#7301)
+
+=========
+Build: 1.16.2-33.0.59 - Wed Sep 09 23:05:21 GMT 2020
+	cpw:
+		More crash reporting tweaks. Don't crash when trying to show warnings. Also, put the exception name in the error screen on the second line!
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.2-33.0.58 - Wed Sep 09 17:09:09 GMT 2020
+	diesieben07:
+		Fix Minecart speed cap on rail being initialized to 0 (#7315)
+
+=========
+Build: 1.16.2-33.0.57 - Wed Sep 09 02:10:45 GMT 2020
+	richard:
+		Add support for custom tag types (#7289)
+
+=========
+Build: 1.16.2-33.0.56 - Wed Sep 09 00:06:22 GMT 2020
+	cpw:
+		More crash report tweaks. Put a button to open the generated crash report on the error screen, tweak formatting of crash report, and add the enhanced stack trace data (transformers et al)
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.2-33.0.55 - Tue Sep 08 21:00:19 GMT 2020
+	championash5357:
+		New hook for better custom scaffolding movement (#7261)
+
+=========
+Build: 1.16.2-33.0.54 - Tue Sep 08 20:47:48 GMT 2020
+	mrtschipp:
+		Add partialTicks to RenderNameplateEvent (#7277)
+
+	cyborgmas18:
+		Prevent duplicate wrapper tags from crashing (#7283)
+
+	matthrewp:
+		Fix custom teleporters NPE (#7296)
+
+	cyborgmas18:
+		Fixed crash with zip paths (#7300)
+
+=========
+Build: 1.16.2-33.0.50 - Tue Sep 08 20:23:27 GMT 2020
+	nrbeech:
+		Fixing logic in getCurrentRailPosition to correctly identify the rail… (#7276)
+
+=========
+Build: 1.16.2-33.0.49 - Tue Sep 08 20:14:58 GMT 2020
+	sciwhiz12:
+		Remove dead ForgeHooks.canToolHarvestBlock function. (#7262)
+
+	sciwhiz12:
+		Bump resource pack version to 6 (#7299)
+
+	Edwin.mindcraft:
+		[1.16.x] Fixes for Bamboo, Enchantments and Conduits, small adjustments to bring some patches closer to the vanilla code. (#7239)
+
+=========
+Build: 1.16.2-33.0.46 - Tue Sep 08 19:50:14 GMT 2020
+	championash5357:
+		Re-implement DrawHighlightEvent$HighlightEntity Firing (#7233)
+
+=========
+Build: 1.16.2-33.0.45 - Tue Sep 08 19:25:58 GMT 2020
+	ichttt:
+		Reimplement FarmlandWaterManager (#7213)
+
+=========
+Build: 1.16.2-33.0.44 - Tue Sep 08 19:11:16 GMT 2020
+	cyborgmas18:
+		Add dataprovider for Global Loot Modifiers (#6960)
+
+=========
+Build: 1.16.2-33.0.43 - Tue Sep 08 19:01:09 GMT 2020
+	ichttt:
+		Fix crash when dumping crash report for an exception that has a null cause (#7308)
+
+=========
+Build: 1.16.2-33.0.42 - Mon Sep 07 01:29:40 GMT 2020
+	cpw:
+		Tweak crash report dump to visit all the causes up to the top.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.2-33.0.41 - Sun Sep 06 23:39:13 GMT 2020
+	cpw:
+		Fix ExplodedDirectoryLocator visiting non-existent paths. Closes #7203
+		
+		Also, bump modlauncher to 7.0.1 to fix resources.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.2-33.0.40 - Sun Sep 06 22:08:22 GMT 2020
+	cpw:
+		Use new enumeration mechanism in ModLauncher, to allow getResources to work. This enables serviceloader-in-mods, and other stuff that might need to visit multiple mod jars. Also, tweaked the visitor code slightly, may result in a trivial performance change. Closing #7302 as it's not really relevant any more.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+	cpw:
+		Park the polling thread for a bit, if we're not the one driving the task list forwards. This allows for the actual driver to work on low cpu count machines.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+	cpw:
+		Fix some potential issues in crash dumping during mod loading
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.2-33.0.37 - Thu Sep 03 16:37:38 GMT 2020
+	cpw:
+		Fix compiler issue in eclipse properly
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.2-33.0.36 - Thu Sep 03 12:40:52 GMT 2020
+	sciwhiz12:
+		Fix crash caused by previous commit (#7298)
+
+=========
+Build: 1.16.2-33.0.35 - Thu Sep 03 04:15:27 GMT 2020
+	lex:
+		Dirty casting hacks to fix eclipse compiler inference issue. I'm sorry cpw.
+
+=========
+Build: 1.16.2-33.0.34 - Thu Sep 03 03:38:16 GMT 2020
+	tterrag:
+		Fix broken ExistingFileHelper import
+		
+		Add licenses to some new files
+
+	tterrag:
+		Add validation via resources for tag providers (#7271)
+		
+		BREAKING CHANGE: Moved ExistingFileHelper to common package
+		Remove various workarounds from forge tag providers
+
+=========
+Build: 1.16.2-33.0.32 - Tue Sep 01 18:36:21 GMT 2020
+	cpw:
+		Move the "modloading" thread activity onto _our_ worker pool. It turns out that the vanilla worker pool can deadlock during stitching if it's insufficiently large, if modloader "waitForTransition" is also a worker member of that pool.
+		
+		Closes #7293 (to reproduce issue easily, modify Util.func_240979_a_ and change the values in the MathHelper.clamp call). I've verified that 3 and below for "max" cause the problem. (I didn't test a whole range of values, just sufficient to reproduce problem and verify fix). Note that setting it to zero (and using the "direct executor" that's inaccessible in normal operation) works as well with this fix.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.2-33.0.31 - Tue Sep 01 02:27:07 GMT 2020
+	cpw:
+		Fix missed debugging code. Read the config from the config.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.2-33.0.30 - Tue Sep 01 01:31:57 GMT 2020
+	cpw:
+		Revert "Shut down all other mod handlers if the loading cycle errors. This prevents other mods from throwing errors and being blamed for initial cause. This is a temporary hack until cpw re-writes the mod event dispatcher."
+		
+		This reverts commit 7592bbe8
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+	cpw:
+		Revert "Properly shutdown FMLModContainer's event bus when an error in a lifecycle event is detected."
+		
+		This reverts commit 30bad1e2
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+	cpw:
+		Redo event dispatch, removes a bunch of nonsense, and tries to integrate with the vanilla CF system where possible
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+	cpw:
+		Fix up all the things. Removed SidedProvider because it served no real purpose anymore.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+	cpw:
+		Fix up slight registry change and other 1.16.2 stuffs.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.2-33.0.23 - Sun Aug 30 23:05:24 GMT 2020
+	ichttt:
+		Add particle culling (#6981)
+
+=========
+Build: 1.16.2-33.0.22 - Wed Aug 26 16:50:02 GMT 2020
+	lex:
+		Wrap vanilla's 'default' biome registry in ForgeRegistry.
+		This should allow registering mod dimensions like in 1.16.1, while the data driven system is fleshed out.
+
+=========
+Build: 1.16.2-33.0.21 - Tue Aug 25 01:11:38 GMT 2020
+	David Quintana:
+		Clarify in the LazyOptional which methods carry the lazyness over to the returned value and which don't. (#6750)
+		
+		For consistency, this meant making a few changes:
+		- Renamed the existing lazy mapping method to lazyMap, to indicate that it doesn't run the mapping immediately.
+		- Added a new implementation of map(), which returns Optional<T>, and resolves the value in the process.
+		- Changed filter() to return Optional, since there's no way to filter lazily.
+		- Added a new method resolve(), which helps convert the custom LazyOptional class into a standard Optional, for use
+		with library methods that expect Optional<T>.
+		
+		* Update License headers.
+
+=========
+Build: 1.16.2-33.0.20 - Fri Aug 21 21:27:21 GMT 2020
+	sciwhiz12:
+		Add user-friendly exceptions when config loading fails (#7214)
+
+=========
+Build: 1.16.2-33.0.19 - Fri Aug 21 18:53:46 GMT 2020
+	dev:
+		Replace EntityHeight event with EntitySize event (#6858)
+
+=========
+Build: 1.16.2-33.0.18 - Fri Aug 21 18:38:31 GMT 2020
+	davide2910:
+		[1.16] ForgeEventFactory#canCreateFluidSource reintroduced (#7181)
+
+=========
+Build:  - Fri Aug 21 18:31:19 GMT 2020
+	cyborgmas18:
+		Cleanup and expand Forge tags (#7004)
+
+=========
+Build: 1.16.2-33.0.16 - Fri Aug 21 18:25:49 GMT 2020
+	sciwhiz12:
+		Fix modproperties property in mods.toml causing exception (#7192)
+
+=========
+Build: 1.16.2-33.0.15 - Fri Aug 21 18:15:53 GMT 2020
+	me:
+		Log info about server list warning (#7209)
+		
+		Make it easier to figure out what mods are missing or have to be marked as client/server side only.
+
+=========
+Build: 1.16.2-33.0.14 - Fri Aug 21 18:06:47 GMT 2020
+	goto.minecraft:
+		Fix ItemStack#isDamageable is not calling Item#isDamagable (#7221)
+
+=========
+Build: 1.16.2-33.0.13 - Fri Aug 21 17:48:58 GMT 2020
+	diesieben07:
+		Improve performance and cleanup code for DelegatingResourcePack (#7228)
+
+=========
+Build: 1.16.2-33.0.12 - Fri Aug 21 17:29:33 GMT 2020
+	cyborgmas18:
+		Fix small logging issues with loading pack.png for mods (#7265)
+
+=========
+Build: 1.16.2-33.0.11 - Fri Aug 21 17:23:30 GMT 2020
+	diesieben07:
+		Fix config iteration order (#7230)
+
+=========
+Build: 1.16.2-33.0.10 - Fri Aug 21 09:47:23 GMT 2020
+	lex:
+		Cleanup Forge's build script, fix some unneeded patches.
+		Add checkExcscheckAll tasks.
+
+=========
+Build: 1.16.2-33.0.9 - Fri Aug 21 04:35:17 GMT 2020
+	championash5357:
+		Readding DifficultyChangeEvent hooks (#7240)
+
+=========
+Build: 1.16.2-33.0.8 - Fri Aug 21 04:29:10 GMT 2020
+	malte0811:
+		Improve startup time by caching the manifest data for mod jars (#7256)
+
+=========
+Build: 1.16.2-33.0.7 - Wed Aug 19 05:47:46 GMT 2020
+	Yunus1903:
+		Removed HarvestDropsEvent (#7193)
+
+=========
+Build: 1.16.2-33.0.6 - Wed Aug 19 05:22:45 GMT 2020
+	cyborgmas18:
+		Remove forge optional tags in favor of Vanilla's new system. (#7246)
+
+=========
+Build: 1.16.2-33.0.5 - Fri Aug 14 19:05:15 GMT 2020
+	lex:
+		Fix creating nether portals.
+
+	lex:
+		New method for creating modded tag references, fix connecting to vanilla servers.
+
+=========
+Build: 1.16.2-33.0.3 - Fri Aug 14 02:17:01 GMT 2020
+	43609023+spnda:
+		Print mod file name on InvalidModFileException (#7241)
+
+=========
+Build: 1.16.2-33.0.2 - Thu Aug 13 19:26:22 GMT 2020
+	cyborgmas18:
+		Fix server connection, misapplied patch (#7245)
+
+	Yunus1903:
+		Updated MDK and README for 1.16.2 (#7243)
+
+=========
+Build: 1.16.2-33.0.0 - Thu Aug 13 07:37:04 GMT 2020
+	lex:
+		Initial 1.16.2 Update
+
+=========
+Build: 1.16.1-32.0.108 - Sun Aug 09 20:05:01 GMT 2020
+	David Quintana:
+		Fix ModelRegistryEvent firing every time resources reload instead of just once.
+
+=========
+Build: 1.16.1-32.0.107 - Sat Aug 08 01:00:42 GMT 2020
+	David Quintana:
+		Move ModelRegistryEvent invocation to when the model loading is about to start.
+		Freeze the ModelLoaderRegistry right after this event happens, just before model loading actually begins.
+		This means ModelRegistryEvent is now the correct place to register loaders, as it was intended.
+		This is a slight breaking change, but any mod that used FMLClientSetupEvent before will need to be updated regardless due to the existing race condition.
+
+=========
+Build: 1.16.1-32.0.106 - Tue Aug 04 00:19:22 GMT 2020
+	diesieben07:
+		Fix wrong BlockState param passed into canSustainPlant from FarmlandBlock (#7212)
+
+=========
+Build: 1.16.1-32.0.105 - Tue Aug 04 00:06:45 GMT 2020
+	sciwhiz12:
+		Add harvest levels for hoes and new 1.16 blocks for pickaxes Fixes #7187 (#7189)
+
+=========
+Build: 1.16.1-32.0.104 - Tue Aug 04 00:00:40 GMT 2020
+	sciwhiz12:
+		Fix debug world not generating modded blocks (#6926)
+
+	championash5357:
+		New IForgeBlock#getToolModifiedState hook allow better control over tools interacting with blocks. (#7176)
+
+	email.squishling:
+		Added new hook to allow Biomes to control their Edge biomes (#7000)
+
+=========
+Build: 1.16.1-32.0.101 - Mon Aug 03 22:55:18 GMT 2020
+	diesieben07:
+		Re-introduce "outdated" notification on Mods button in main menu (#7123)
+
+	brandon4261:
+		Add support for custom elytra (#7202)
+
+=========
+Build: 1.16.1-32.0.99 - Mon Aug 03 18:53:31 GMT 2020
+	sciwhiz12:
+		Fix RenderTickEvent using wrong partial ticks value when game is paused. Fixes #6991 (#7208)
+
+=========
+Build: 1.16.1-32.0.98 - Thu Jul 30 03:18:00 GMT 2020
+	tterrag:
+		Implement forge IBakedModel methods in vanilla wrapper models
+
+=========
+Build: 1.16.1-32.0.97 - Tue Jul 28 23:44:41 GMT 2020
+	lex:
+		Fix another case of swallowed errors not shutting down mods.
+
+=========
+Build: 1.16.1-32.0.96 - Tue Jul 28 21:40:06 GMT 2020
+	lex:
+		Shut down all other mod handlers if the loading cycle errors.
+		This prevents other mods from throwing errors and being blamed for initial cause.
+		This is a temporary hack until cpw re-writes the mod event dispatcher.
+
+=========
+Build:  - Tue Jul 28 19:01:27 GMT 2020
+	lex:
+		Properly shutdown FMLModContainer's event bus when an error in a lifecycle event is detected.
+
+	lex:
+		Enable EventBus type check during ForgeDev, and add IModBusEvent marker to ModelRegistryEvent.
+
+=========
+Build: 1.16.1-32.0.93 - Tue Jul 28 07:16:31 GMT 2020
+	lex:
+		Make license toml entry optional during 1.16.1
+		There are to many existing mods to make this required.
+		Yes, we are technically before a RB and can do breaking changes. However this is too large.
+
+=========
+Build: 1.16.1-32.0.92 - Tue Jul 28 01:14:20 GMT 2020
+	cpw:
+		Missed one event. NewRegistry needs the marker.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.1-32.0.91 - Tue Jul 28 01:07:03 GMT 2020
+	cpw:
+		Update MDK license to default to All rights reserved, and offer a link to chooseyourlicense.com as a place to research appropriate licenses.
+		
+		Note: the license field _is_ backwards compatible and will simply be ignored on older forge versions.
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.1-32.0.90 - Tue Jul 28 00:47:35 GMT 2020
+	cpw:
+		Update modlauncher, eventbus, accesstransformers and more to use a newer mechanism for generating ASM.
+		
+		Introduced IModBusEvent as a marker interface for events on the ModBus. Expect exceptions if you use
+		the modbus for events not listened there.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+	cpw:
+		Update coremods and spi, include mandatory license field in metadata. Added at top level of mods.toml file.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.1-32.0.88 - Mon Jul 27 23:35:24 GMT 2020
+	ray.neiheiser:
+		Fix rail 180 rotations (#7177)
+
+	jmansfield:
+		Fire AnimalTameEvent for cats (#7172) Closes #7171
+
+=========
+Build: 1.16.1-32.0.86 - Mon Jul 27 22:56:16 GMT 2020
+	lex:
+		Fix Biome generation error.
+
+=========
+Build: 1.16.1-32.0.85 - Mon Jul 27 21:36:07 GMT 2020
+	dev:
+		Fix SleepingTimeCheckEvent not being fired in initial sleep test. (#7005)
+
+=========
+Build: 1.16.1-32.0.84 - Mon Jul 27 21:30:24 GMT 2020
+	Yunus1903:
+		Fix ClimberPathNavigator spinning when width is small. Closes #6993 (#6997)
+
+=========
+Build: 1.16.1-32.0.83 - Mon Jul 27 21:19:50 GMT 2020
+	mrtschipp:
+		Re-added PlayerEvent.NameFormat (#6992)
+
+=========
+Build: 1.16.1-32.0.82 - Mon Jul 27 21:14:02 GMT 2020
+	email.squishling:
+		Fixed modded overworld biomes not spawning [1.16.x] (#6990)
+
+=========
+Build: 1.16.1-32.0.81 - Mon Jul 27 21:08:23 GMT 2020
+	christ.klinge:
+		Added EntityLeaveWorldEvent (#6984)
+
+=========
+Build: 1.16.1-32.0.80 - Mon Jul 27 21:02:53 GMT 2020
+	aqscode:
+		Re-implement moddable flammabilities (#6983)
+
+=========
+Build: 1.16.1-32.0.79 - Mon Jul 27 20:46:11 GMT 2020
+	diesieben07:
+		Re-add patch for PlayerSetSpawnEvent (#6977)
+
+	Yunus1903:
+		Updated versions in README and removed flocker.tv mentions (#6978)
+
+=========
+Build: 1.16.1-32.0.77 - Mon Jul 27 20:40:33 GMT 2020
+	sciwhiz12:
+		Fix ChunkDataEvents using different data tags (#6961) Fixes #6957
+
+=========
+Build:  - Mon Jul 27 20:27:00 GMT 2020
+	joetarbit:
+		Post SoundLoadEvent on mod bus instead of forge bus (#6955)
+
+=========
+Build: 1.16.1-32.0.75 - Wed Jul 22 01:26:19 GMT 2020
+	cpw:
+		Remove startupquery. Currently wasn't functional, and 1.16 has out of band state loading in all cases, so the complex functionality there is no longer needed. Going to research using the Lifecycle indicator from DFU as a proxy/replacement. Probably with some codec FUN.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.1-32.0.74 - Wed Jul 22 00:34:43 GMT 2020
+	lex:
+		Run Forge's data generators to sync 1.16 vanilla changes.
+
+=========
+Build: 1.16.1-32.0.73 - Wed Jul 22 00:13:48 GMT 2020
+	cpw:
+		Don't show the early launcher GUI when running data. It's not needed and prevents use on automated builds.
+		
+		Need to investigate why a bunch of tags seem to be being blown away by rerunning on forge.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.1-32.0.72 - Tue Jul 21 23:56:54 GMT 2020
+	cpw:
+		Add mixin
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.1-32.0.71 - Mon Jul 20 22:56:31 GMT 2020
+	cyborgmas18:
+		Load Modded Datapacks in DatapackScreen, before world creation (#6913)
+
+=========
+Build: 1.16.1-32.0.70 - Sat Jul 18 22:35:53 GMT 2020
+	tterrag:
+		Fix inconsistencies with model/blockstate datagen
+
+=========
+Build: 1.16.1-32.0.69 - Fri Jul 17 17:35:47 GMT 2020
+	dev:
+		Filter duplicate mod files from mod file scan data (#6855)
+
+=========
+Build: 1.16.1-32.0.68 - Thu Jul 16 21:56:30 GMT 2020
+	lex:
+		Fixed Forge commands. Closes #6973 Closes #6974 Closes #6976
+
+=========
+Build: 1.16.1-32.0.67 - Wed Jul 15 19:30:53 GMT 2020
+	jaredlll08:
+		Added an event for registering commands. closes #6968 (#6969)
+
+=========
+Build: 1.16.1-32.0.66 - Tue Jul 14 00:15:41 GMT 2020
+	darklime:
+		Make all functions in Style common. (#6931)
+
+=========
+Build: 1.16.1-32.0.65 - Mon Jul 13 22:44:53 GMT 2020
+	55965249+seymourimadeit:
+		Mark Raid.WaveMembers as an extensible enum. (#6878)
+
+=========
+Build: 1.16.1-32.0.64 - Mon Jul 13 22:17:58 GMT 2020
+	lex:
+		Fix checkPatches task. Closes #6956
+		Fix patched in method using srg name. Closes #6965
+		Fix capabilities not being collected for ClientWorld. Closes #6966
+		Fix TagEmptyCondition using client side copy of tags instead of server. Closes #6949
+		Fix ExtendedButton using narrator text. Closes #6958, Closes #6959
+		Fix misaligned patch in RepairContainer. Closes #6950, Closes #6953
+		Fix LivingJumpEvent not being fired for players jumping horses. Closes #6929
+		Remove extra getToughness method in ArmorItem. Closes #6970
+		Remove GetCollisionBoxesEvent. Closes #6921
+
+=========
+Build: 1.16.1-32.0.63 - Fri Jul 10 22:28:22 GMT 2020
+	richard:
+		Fix race condition with DeferredRegister for custom registries (#6951)
+
+=========
+Build: 1.16.1-32.0.62 - Fri Jul 10 17:49:51 GMT 2020
+	sciwhiz12:
+		Remove hooks into beacon base/payments. Vanilla uses tags now for extensibility. (#6948)
+
+=========
+Build: 1.16.1-32.0.61 - Wed Jul 08 21:33:38 GMT 2020
+	jaredlll08:
+		Expose the DataPackRegistries instance to the AddReloadListenerEvent (#6933)
+
+=========
+Build: 1.16.1-32.0.60 - Wed Jul 08 21:13:18 GMT 2020
+	sciwhiz12:
+		Fix canRepair not being set true as default (#6936)
+		
+		Closes #6934 and #6935
+
+=========
+Build: 1.16.1-32.0.59 - Wed Jul 08 14:56:39 GMT 2020
+	David Quintana:
+		Fix particles sometimes "losing" the lightmap and drawing fullbright.
+
+	David Quintana:
+		Fix misaligned patch causing LivingEquipmentChangeEvent to never be posted.
+
+=========
+Build: 1.16.1-32.0.57 - Mon Jul 06 21:32:33 GMT 2020
+	JDLogic:
+		Add simple patch checker and cleanup patches (#6851)
+		
+		* Add simple patch checker and cleanup patches
+		
+		* Address comments
+		 * move task implementation
+		 * genPatches is now finalized by checkPatches
+		 * the S2S artifacts are automatically removed
+		 * added class and method access checking
+
+=========
+Build: 1.16.1-32.0.56 - Mon Jul 06 21:27:02 GMT 2020
+	richard:
+		Fix the modifier combined name for keybinds displaying two pluses outside of forgedev #6901 (#6902)
+
+=========
+Build: 1.16.1-32.0.55 - Mon Jul 06 21:12:45 GMT 2020
+	richard:
+		Fix harvest level and tool type not actually getting set #6906 (#6922)
+
+=========
+Build: 1.16.1-32.0.54 - Mon Jul 06 20:46:01 GMT 2020
+	richard:
+		Reimplement ITeleporter Patches (#6886)
+
+=========
+Build: 1.16.1-32.0.53 - Mon Jul 06 20:39:37 GMT 2020
+	40738104+Mysterious-Dev:
+		Add function to add items with the same behavior as the pumpkin for enderman (#6890)
+
+=========
+Build: 1.16.1-32.0.52 - Mon Jul 06 20:33:17 GMT 2020
+	richard:
+		Custom Item integration with Piglins (#6914)
+
+=========
+Build: 1.16.1-32.0.51 - Mon Jul 06 20:20:02 GMT 2020
+	ichttt:
+		Some dead code cleanup, and re-implement some bed hooks. (#6903)
+
+=========
+Build: 1.16.1-32.0.50 - Mon Jul 06 20:06:39 GMT 2020
+	diesieben07:
+		Fix missing null checks in ForgeIngameGui (#6907)
+
+=========
+Build: 1.16.1-32.0.49 - Mon Jul 06 19:50:02 GMT 2020
+	sciwhiz12:
+		Fix swap offhand keybind not working in GUIs (#6920)
+
+=========
+Build: 1.16.1-32.0.48 - Mon Jul 06 19:42:07 GMT 2020
+	thpetuaudletang:
+		New AddReloadListenerEvent that gathers server side data reload handlers. (#6849)
+
+=========
+Build: 1.16.1-32.0.47 - Fri Jul 03 12:40:42 GMT 2020
+	David Quintana:
+		Attempt to use a more compatible method to initialize stencil support.
+		In case the separate attachments don't work for everyone, there's a new setting to choose the combined attachment.
+
+=========
+Build: 1.16.1-32.0.46 - Fri Jul 03 04:00:22 GMT 2020
+	David Quintana:
+		Update copyright year to 2020.
+
+	David Quintana:
+		Fix multi-layer item rendering.
+
+=========
+Build: 1.16.1-32.0.44 - Thu Jul 02 17:17:45 GMT 2020
+	David Quintana:
+		Model system improvements:
+		- Port some things I did in 1.14 which I couldn't do in 1.15 due to breaking changes.
+		- Fix multi-layer block models not working (1.16 RenderType doesn't override toString the same way anymore)
+		- Implement multi-layer item rendering.
+		- Improve CompositeModel submodel data passing.
+
+=========
+Build: 1.16.1-32.0.43 - Thu Jul 02 12:54:03 GMT 2020
+	MartijnvandenBrand:
+		Include model data in getQuads call (#6884)
+		
+		The model data wasn't included when getting quads from specific sides, but was when getting quads for side = null.
+
+	thpetuaudletang:
+		Pass matrixstack in tooltip render events (#6885)
+
+=========
+Build: 1.16.1-32.0.41 - Thu Jul 02 05:54:25 GMT 2020
+	tterrag:
+		Fix improper handling of baked lighting in forge light pipeline
+		
+		Closes #6812
+
+=========
+Build: 1.16.1-32.0.40 - Thu Jul 02 01:59:30 GMT 2020
+	richard:
+		Fix FMLServerAboutToStartEvent being fired too late on the integrated server https://github.com/MinecraftForge/MinecraftForge/issues/6859
+
+=========
+Build: 1.16.1-32.0.39 - Wed Jul 01 18:14:25 GMT 2020
+	ichttt:
+		Fix miss-aligned patch ItemEntity (#6895)
+
+=========
+Build: 1.16.1-32.0.38 - Tue Jun 30 20:19:32 GMT 2020
+	info:
+		Add hoe tool type (#6872)
+
+=========
+Build: 1.16.1-32.0.36 - Tue Jun 30 20:09:21 GMT 2020
+	curle:
+		Allow any armor to have custom knockback resistance (#6877)
+
+=========
+Build: 1.16.1-32.0.35 - Tue Jun 30 19:57:32 GMT 2020
+	diesieben07:
+		Add senderUUID to ClientChatReceivedEvent (#6881)
+
+=========
+Build: 1.16.1-32.0.34 - Tue Jun 30 02:33:58 GMT 2020
+	lex:
+		Re-write checkATs function and automate making Items/Blocks public.
+
+=========
+Build: 1.16.1-32.0.33 - Tue Jun 30 02:10:14 GMT 2020
+	cpw:
+		Reorganize modloading on the dediserver. This removes the DedicatedServer parameter from the FMLDedicatedServerSetupEvent.
+		Code for customizing the server instance should be moved to the ServerAboutToStartEvent or similar, where the server instance
+		is available.
+		
+		This reorganization means that mods will load fully before the server is even constructed, or the server properties loaded. We also move the EULA right to the front so we don't have to wait for bootstrap.
+		
+		This should fix the problems with mods which customize world data and other things.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.1-32.0.32 - Mon Jun 29 23:43:01 GMT 2020
+	thpetuaudletang:
+		Fix datagen resolving tags and exploding. (#6865)
+
+=========
+Build: 1.16.1-32.0.31 - Mon Jun 29 23:37:30 GMT 2020
+	mattmess1221:
+		Fix Language.javaLocale parsing (#6862)
+
+=========
+Build: 1.16.1-32.0.30 - Mon Jun 29 22:58:30 GMT 2020
+	diesieben07:
+		Fix IItemHandler wrappers for chests not updating both chests (#6875)
+
+=========
+Build: 1.16.1-32.0.29 - Mon Jun 29 21:08:55 GMT 2020
+	lex:
+		Fix missed patch in PlayerList and EntitySelectioonContext. Closes #6846 Closes #6850
+
+=========
+Build: 1.16.1-32.0.27 - Mon Jun 29 20:09:12 GMT 2020
+	richard:
+		Fix access levels being hardcoded to private via patch overriding AT entry (#6848)
+
+=========
+Build: 1.16.1-32.0.26 - Mon Jun 29 19:42:50 GMT 2020
+	lex:
+		Fix tag related issues when connecting to a vanilla server.
+
+=========
+Build: 1.16.1-32.0.25 - Sun Jun 28 22:08:15 GMT 2020
+	lex:
+		Fix Forge's internal handler being registered in wrong place.
+		Fix double call to loader end.
+
+=========
+Build: 1.16.1-32.0.24 - Sat Jun 27 22:50:54 GMT 2020
+	David Quintana:
+		Add a model loader that lets mods specify different models for different perspectives.
+		Allow custom models to reference vanilla item models as child models.
+
+=========
+Build: 1.16.1-32.0.23 - Fri Jun 26 23:55:23 GMT 2020
+	thpetuaudletang:
+		fix misapplied patch
+		
+		also sneak in an import patch removal
+
+=========
+Build: 1.16.1-32.0.21 - Fri Jun 26 22:40:19 GMT 2020
+	lex:
+		Fix blocks being harvested with incorrect tools.
+
+=========
+Build: 1.16.1-32.0.20 - Fri Jun 26 19:53:02 GMT 2020
+	lex:
+		Make installer use MCPConfig version to identify MC assets.
+
+=========
+Build: 1.16.1-32.0.19 - Fri Jun 26 18:27:49 GMT 2020
+	cpw:
+		Tweak the server startup a bit, make sure methods that can't work because they run before a server exists explode saying so.
+		Also fix other launch profiles.
+		
+		Signed-off-by: cpw <cpw+github@weeksfamily.ca>
+
+=========
+Build: 1.16.1-32.0.18 - Fri Jun 26 16:56:37 GMT 2020
+	lex:
+		Fix dedicated server loading by constructing mods before data packs are created.
+
+=========
+Build: 1.16.1-32.0.17 - Fri Jun 26 15:20:37 GMT 2020
+	David Quintana:
+		Fix create method.
+		Fix test mods not loading correctly.
+
+=========
+Build: 1.16.1-32.0.16 - Fri Jun 26 14:43:19 GMT 2020
+	David Quintana:
+		Reintroduce missed patch in EntityClassification.
+
+=========
+Build: 1.16.1-32.0.15 - Fri Jun 26 13:55:42 GMT 2020
+	thpetuaudletang:
+		Include a getter for the matrix stack in OverlayEvent (#6834)
+
+=========
+Build: 1.16.1-32.0.14 - Fri Jun 26 13:23:07 GMT 2020
+	thpetuaudletang:
+		Fix block render types not being properly applied to item entities (#6832)
+
+=========
+Build: 1.16.1-32.0.13 - Fri Jun 26 13:05:18 GMT 2020
+	mods.itsmeow:
+		[1.16.x] Allow GlobalEntityTypeAttributes' EntityType -> AttributeModifierMap to be added to (#6822)
+		
+		* Make GlobalEntityTypeAttributes map able to be added to
+		
+		* Split get patch into two lines
+		
+		* Favor Forge's map over vanilla
+
+=========
+Build: 1.16.1-32.0.12 - Fri Jun 26 12:59:19 GMT 2020
+	thpetuaudletang:
+		Fixed creative screen arrows (#6827)
+
+	Yunus1903:
+		Added call to method for tooltip with FontRenderer (#6831)
+
+=========
+Build: 1.16.1-32.0.10 - Fri Jun 26 12:36:59 GMT 2020
+	curle:
+		Retarget Block.Properties patch to the new AbstractBlock, reintroduce harvestLevel and harvestTool fields (#6819)
+		
+		* Retarget Block.Properties patch to the new AbstractBlock, reintroduces the harvestLevel and harvestTool fields.
+		
+		* Slight adjustment to fix the lootTableSupplier.
+
+=========
+Build: 1.16.1-32.0.9 - Fri Jun 26 12:31:37 GMT 2020
+	Yunus1903:
+		Fixed sneaking while swimming (#6817)
+
+=========
+Build:  - Fri Jun 26 12:25:07 GMT 2020
+	thpetuaudletang:
+		Fixed tooltip rendering issues (#6815)
+
+=========
+Build: 1.16.1-32.0.7 - Fri Jun 26 02:30:54 GMT 2020
+	thpetuaudletang:
+		Fixed villager trades having non-applicable enchants
+		
+		Also added an AT at lex's request
+
+=========
+Build: 1.16.1-32.0.6 - Fri Jun 26 01:52:19 GMT 2020
+	thpetuaudletang:
+		Fix locate command (#6811)
+
+	thpetuaudletang:
+		Fix block drops (#6810)
+
+	contact:
+		Add missing patch to ScreenShotHelper (#6809)
+		
+		Adds the missed patch back
+
+	Yunus1903:
+		Updated MDK mods.toml versions (#6808)
+
+	thpetuaudletang:
+		Fix locate command (#6811)
+
+	thpetuaudletang:
+		Fix block drops (#6810)
+
+	contact:
+		Add missing patch to ScreenShotHelper (#6809)
+		
+		Adds the missed patch back
+
+	Yunus1903:
+		Updated MDK mods.toml versions (#6808)
+
+	thpetuaudletang:
+		Fix locate command (#6811)
+
+	thpetuaudletang:
+		Fix block drops (#6810)
+
+	contact:
+		Add missing patch to ScreenShotHelper (#6809)
+		
+		Adds the missed patch back
+
+	Yunus1903:
+		Updated MDK mods.toml versions (#6808)
+
+=========
+Build: 1.16.1-32.0.2 - Fri Jun 26 01:41:51 GMT 2020
+	lex:
+		Rework BlockSnapshot and fix client notifications. Closes #6807
+
+=========
+Build: 1.16.1-32.0.1 - Thu Jun 25 23:24:48 GMT 2020
+	lex:
+		Bump MCPConfig version.

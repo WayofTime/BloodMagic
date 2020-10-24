@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:altar",
+  "input": {
+    "tag": "forge:storage_blocks/redstone"
+  },
+  "output": {
+    "item": "bloodmagic:apprenticebloodorb"
+  },
+  "upgradeLevel": 1,
+  "altarSyphon": 5000,
+  "consumptionRate": 5,
+  "drainRate": 5
+}

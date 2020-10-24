@@ -1,29 +1,32 @@
-package WayofTime.bloodmagic.iface;
+package wayoftime.bloodmagic.iface;
 
-import WayofTime.bloodmagic.item.sigil.ItemSigil;
+import javax.annotation.Nonnull;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
+import wayoftime.bloodmagic.common.item.ItemSigil;
 
 /**
- * Used for all {@link ItemSigil} <b>EXCEPT</b>
- * Sigils of Holdings.
+ * Used for all {@link ItemSigil} <b>EXCEPT</b> Sigils of Holdings.
  */
-public interface ISigil {
+public interface ISigil
+{
 
-    default boolean performArrayEffect(World world, BlockPos pos) {
-        return false;
-    }
+	default boolean performArrayEffect(World world, BlockPos pos)
+	{
+		return false;
+	}
 
-    default boolean hasArrayEffect() {
-        return false;
-    }
+	default boolean hasArrayEffect()
+	{
+		return false;
+	}
 
-    interface Holding {
-        @Nonnull
-        ItemStack getHeldItem(ItemStack holdingStack, PlayerEntity player);
-    }
+	interface Holding
+	{
+		@Nonnull
+		ItemStack getHeldItem(ItemStack holdingStack, PlayerEntity player);
+	}
 }

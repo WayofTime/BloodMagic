@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:blood_rune_charging"
+    ]
+  },
+  "criteria": {
+    "has_master_orb": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:masterbloodorb"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:blood_rune_charging"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_master_orb",
+      "has_the_recipe"
+    ]
+  ]
+}

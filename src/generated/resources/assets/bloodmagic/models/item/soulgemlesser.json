@@ -1,0 +1,34 @@
+{
+  "overrides": [
+    {
+      "predicate": {
+        "bloodmagic:type": 0.0
+      },
+      "model": "bloodmagic:item/variants/soulgemlesser"
+    },
+    {
+      "predicate": {
+        "bloodmagic:type": 1.0
+      },
+      "model": "bloodmagic:item/variants/soulgemlesser_corrosive"
+    },
+    {
+      "predicate": {
+        "bloodmagic:type": 2.0
+      },
+      "model": "bloodmagic:item/variants/soulgemlesser_destructive"
+    },
+    {
+      "predicate": {
+        "bloodmagic:type": 3.0
+      },
+      "model": "bloodmagic:item/variants/soulgemlesser_vengeful"
+    },
+    {
+      "predicate": {
+        "bloodmagic:type": 4.0
+      },
+      "model": "bloodmagic:item/variants/soulgemlesser_steadfast"
+    }
+  ]
+}

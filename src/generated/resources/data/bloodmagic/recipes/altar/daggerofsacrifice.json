@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:altar",
+  "input": {
+    "item": "minecraft:iron_sword"
+  },
+  "output": {
+    "item": "bloodmagic:daggerofsacrifice"
+  },
+  "upgradeLevel": 1,
+  "altarSyphon": 3000,
+  "consumptionRate": 5,
+  "drainRate": 5
+}

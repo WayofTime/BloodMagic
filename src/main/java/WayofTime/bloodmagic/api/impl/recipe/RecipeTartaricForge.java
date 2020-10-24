@@ -1,53 +1,77 @@
-package WayofTime.bloodmagic.api.impl.recipe;
+package wayoftime.bloodmagic.api.impl.recipe;
 
-import com.google.common.base.Preconditions;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
+import java.util.List;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-public class RecipeTartaricForge {
+import com.google.common.base.Preconditions;
 
-    @Nonnull
-    private final NonNullList<Ingredient> input;
-    @Nonnull
-    private final ItemStack output;
-    @Nonnegative
-    private final double minimumSouls;
-    @Nonnegative
-    private final double soulDrain;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.ResourceLocation;
 
-    public RecipeTartaricForge(@Nonnull NonNullList<Ingredient> input, @Nonnull ItemStack output, @Nonnegative double minimumSouls, @Nonnegative double soulDrain) {
-        Preconditions.checkNotNull(input, "input cannot be null.");
-        Preconditions.checkNotNull(output, "output cannot be null.");
-        Preconditions.checkArgument(minimumSouls >= 0, "minimumSouls cannot be negative.");
-        Preconditions.checkArgument(soulDrain >= 0, "soulDrain cannot be negative.");
+public abstract class RecipeTartaricForge extends BloodMagicRecipe
+{
+	@Nonnull
+	private final List<Ingredient> input;
+	@Nonnull
+	private final ItemStack output;
+	@Nonnegative
+	private final double minimumSouls;
+	@Nonnegative
+	private final double soulDrain;
 
-        this.input = input;
-        this.output = output;
-        this.minimumSouls = minimumSouls;
-        this.soulDrain = soulDrain;
-    }
+	public RecipeTartaricForge(ResourceLocation id, @Nonnull List<Ingredient> input, @Nonnull ItemStack output, @Nonnegative double minimumSouls, @Nonnegative double soulDrain)
+	{
+		super(id);
+		Preconditions.checkNotNull(input, "input cannot be null.");
+		Preconditions.checkNotNull(output, "output cannot be null.");
+		Preconditions.checkArgument(minimumSouls >= 0, "minimumSouls cannot be negative.");
+		Preconditions.checkArgument(soulDrain >= 0, "soulDrain cannot be negative.");
 
-    @Nonnull
-    public final NonNullList<Ingredient> getInput() {
-        return input;
-    }
+		this.input = input;
+		this.output = output;
+		this.minimumSouls = minimumSouls;
+		this.soulDrain = soulDrain;
+	}
 
-    @Nonnull
-    public final ItemStack getOutput() {
-        return output;
-    }
+	@Nonnull
+	public final List<Ingredient> getInput()
+	{
+		return input;
+	}
 
-    @Nonnegative
-    public final double getMinimumSouls() {
-        return minimumSouls;
-    }
+	@Nonnull
+	public final ItemStack getOutput()
+	{
+		return output;
+	}
 
-    @Nonnegative
-    public final double getSoulDrain() {
-        return soulDrain;
-    }
+	@Nonnegative
+	public final double getMinimumSouls()
+	{
+		return minimumSouls;
+	}
+
+	@Nonnegative
+	public final double getSoulDrain()
+	{
+		return soulDrain;
+	}
+
+	@Override
+	public void write(PacketBuffer buffer)
+	{
+		buffer.writeInt(input.size());
+		for (int i = 0; i < input.size(); i++)
+		{
+			input.get(i).write(buffer);
+		}
+		buffer.writeItemStack(output);
+		buffer.writeDouble(minimumSouls);
+		buffer.writeDouble(soulDrain);
+
+	}
 }

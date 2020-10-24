@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "tag": "forge:dusts/redstone"
+  },
+  "input1": {
+    "tag": "forge:ingots/gold"
+  },
+  "input2": {
+    "tag": "forge:glass"
+  },
+  "input3": {
+    "tag": "forge:gems/lapis"
+  },
+  "output": {
+    "item": "bloodmagic:soulgempetty"
+  },
+  "minimumDrain": 1.0,
+  "drain": 1.0
+}

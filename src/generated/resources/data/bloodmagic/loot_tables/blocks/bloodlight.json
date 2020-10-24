@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "name": "bloodmagic:bloodlight",
+      "rolls": 1.0,
+      "entries": []
+    }
+  ]
+}

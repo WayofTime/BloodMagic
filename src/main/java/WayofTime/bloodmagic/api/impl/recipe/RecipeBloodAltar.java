@@ -1,72 +1,104 @@
-package WayofTime.bloodmagic.api.impl.recipe;
-
-import WayofTime.bloodmagic.altar.AltarTier;
-import com.google.common.base.Preconditions;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
+package wayoftime.bloodmagic.api.impl.recipe;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-public class RecipeBloodAltar {
+import com.google.common.base.Preconditions;
 
-    @Nonnull
-    private final Ingredient input;
-    @Nonnull
-    private final ItemStack output;
-    @Nonnull
-    private final AltarTier minimumTier;
-    @Nonnegative
-    private final int syphon;
-    @Nonnegative
-    private final int consumeRate;
-    @Nonnegative
-    private final int drainRate;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import wayoftime.bloodmagic.altar.AltarTier;
 
-    public RecipeBloodAltar(@Nonnull Ingredient input, @Nonnull ItemStack output, @Nonnegative int minimumTier, @Nonnegative int syphon, @Nonnegative int consumeRate, @Nonnegative int drainRate) {
-        Preconditions.checkNotNull(input, "input cannot be null.");
-        Preconditions.checkNotNull(output, "output cannot be null.");
-        Preconditions.checkArgument(minimumTier >= 0, "minimumTier cannot be negative.");
-        Preconditions.checkArgument(minimumTier <= AltarTier.MAXTIERS, "minimumTier cannot be higher than max tier");
-        Preconditions.checkArgument(syphon >= 0, "syphon cannot be negative.");
-        Preconditions.checkArgument(consumeRate >= 0, "consumeRate cannot be negative.");
-        Preconditions.checkArgument(drainRate >= 0, "drain cannot be negative.");
+public abstract class RecipeBloodAltar extends BloodMagicRecipe
+{
 
-        this.input = input;
-        this.output = output;
-        this.minimumTier = AltarTier.values()[minimumTier];
-        this.syphon = syphon;
-        this.consumeRate = consumeRate;
-        this.drainRate = drainRate;
-    }
+	@Nonnull
+	private final Ingredient input;
+	@Nonnull
+	private final ItemStack output;
+	@Nonnull
+	private final AltarTier minimumTier;
+	@Nonnegative
+	private final int syphon;
+	@Nonnegative
+	private final int consumeRate;
+	@Nonnegative
+	private final int drainRate;
 
-    @Nonnull
-    public final Ingredient getInput() {
-        return input;
-    }
+	public RecipeBloodAltar(ResourceLocation id, @Nonnull Ingredient input, @Nonnull ItemStack output, @Nonnegative int minimumTier, @Nonnegative int syphon, @Nonnegative int consumeRate, @Nonnegative int drainRate)
+	{
+		super(id);
+		Preconditions.checkNotNull(input, "input cannot be null.");
+		Preconditions.checkNotNull(output, "output cannot be null.");
+		Preconditions.checkArgument(minimumTier >= 0, "minimumTier cannot be negative.");
+		Preconditions.checkArgument(minimumTier <= AltarTier.MAXTIERS, "minimumTier cannot be higher than max tier");
+		Preconditions.checkArgument(syphon >= 0, "syphon cannot be negative.");
+		Preconditions.checkArgument(consumeRate >= 0, "consumeRate cannot be negative.");
+		Preconditions.checkArgument(drainRate >= 0, "drain cannot be negative.");
 
-    @Nonnull
-    public final ItemStack getOutput() {
-        return output;
-    }
+		this.input = input;
+		this.output = output;
+		this.minimumTier = AltarTier.values()[minimumTier];
+		this.syphon = syphon;
+		this.consumeRate = consumeRate;
+		this.drainRate = drainRate;
+	}
 
-    @Nonnull
-    public AltarTier getMinimumTier() {
-        return minimumTier;
-    }
+	@Nonnull
+	public final Ingredient getInput()
+	{
+		return input;
+	}
 
-    @Nonnegative
-    public final int getSyphon() {
-        return syphon;
-    }
+	@Override
+	public final NonNullList<Ingredient> getIngredients()
+	{
+		NonNullList<Ingredient> list = NonNullList.create();
+		list.add(getInput());
+		return list;
+	}
 
-    @Nonnegative
-    public final int getConsumeRate() {
-        return consumeRate;
-    }
+	@Nonnull
+	public final ItemStack getOutput()
+	{
+		return output;
+	}
 
-    @Nonnegative
-    public final int getDrainRate() {
-        return drainRate;
-    }
+	@Nonnull
+	public AltarTier getMinimumTier()
+	{
+		return minimumTier;
+	}
+
+	@Nonnegative
+	public final int getSyphon()
+	{
+		return syphon;
+	}
+
+	@Nonnegative
+	public final int getConsumeRate()
+	{
+		return consumeRate;
+	}
+
+	@Nonnegative
+	public final int getDrainRate()
+	{
+		return drainRate;
+	}
+
+	@Override
+	public void write(PacketBuffer buffer)
+	{
+		input.write(buffer);
+		buffer.writeItemStack(output);
+		buffer.writeInt(minimumTier.ordinal());
+		buffer.writeInt(syphon);
+		buffer.writeInt(consumeRate);
+		buffer.writeInt(drainRate);
+	}
 }

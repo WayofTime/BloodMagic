@@ -1,24 +1,29 @@
-package WayofTime.bloodmagic.altar;
-
-import WayofTime.bloodmagic.block.enums.BloodRuneType;
-import com.google.common.collect.Maps;
+package wayoftime.bloodmagic.altar;
 
 import java.util.EnumMap;
 
-public class AltarUpgrade {
+import com.google.common.collect.Maps;
 
-    private final EnumMap<BloodRuneType, Integer> upgradeLevels;
+import wayoftime.bloodmagic.block.enums.BloodRuneType;
 
-    public AltarUpgrade() {
-        this.upgradeLevels = Maps.newEnumMap(BloodRuneType.class);
-    }
+public class AltarUpgrade
+{
 
-    public AltarUpgrade upgrade(BloodRuneType rune) {
-        upgradeLevels.compute(rune, (r, l) -> l == null ? 1 : l + 1);
-        return this;
-    }
+	private final EnumMap<BloodRuneType, Integer> upgradeLevels;
 
-    public int getLevel(BloodRuneType rune) {
-        return upgradeLevels.getOrDefault(rune, 0);
-    }
+	public AltarUpgrade()
+	{
+		this.upgradeLevels = Maps.newEnumMap(BloodRuneType.class);
+	}
+
+	public AltarUpgrade upgrade(BloodRuneType rune)
+	{
+		upgradeLevels.compute(rune, (r, l) -> l == null ? 1 : l + 1);
+		return this;
+	}
+
+	public int getLevel(BloodRuneType rune)
+	{
+		return upgradeLevels.getOrDefault(rune, 0);
+	}
 }

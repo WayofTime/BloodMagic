@@ -1,53 +1,87 @@
-package WayofTime.bloodmagic.api.impl.recipe;
-
-import WayofTime.bloodmagic.BloodMagic;
-import com.google.common.base.Preconditions;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
+package wayoftime.bloodmagic.api.impl.recipe;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-public class RecipeAlchemyArray {
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 
-    @Nonnull
-    private final Ingredient input;
-    @Nonnull
-    private final Ingredient catalyst;
-    @Nonnull
-    private final ItemStack output;
-    @Nonnull
-    private final ResourceLocation circleTexture;
+public abstract class RecipeAlchemyArray extends BloodMagicRecipe
+{
+	private final ResourceLocation id;
+	private final ResourceLocation texture;
+	@Nonnull
+	private final Ingredient baseInput;
+	@Nonnull
+	private final Ingredient addedInput;
+	@Nonnull
+	private final ItemStack output;
 
-    public RecipeAlchemyArray(@Nonnull Ingredient input, @Nonnull Ingredient catalyst, @Nonnull ItemStack output, @Nullable ResourceLocation circleTexture) {
-        Preconditions.checkNotNull(input, "input cannot be null.");
-        Preconditions.checkNotNull(catalyst, "catalyst cannot be null.");
-        Preconditions.checkNotNull(output, "output cannot be null.");
+	protected RecipeAlchemyArray(ResourceLocation id, ResourceLocation texture, @Nonnull Ingredient baseIngredient, @Nonnull Ingredient addedIngredient, @Nonnull ItemStack result)
+	{
+		super(id);
+		this.id = id;
+		this.texture = texture;
+		this.baseInput = baseIngredient;
+		this.addedInput = addedIngredient;
+		this.output = result;
+	}
 
-        this.input = input;
-        this.catalyst = catalyst;
-        this.output = output;
-        this.circleTexture = circleTexture == null ? new ResourceLocation(BloodMagic.MODID, "textures/models/AlchemyArrays/WIPArray.png") : circleTexture;
-    }
+	@Nonnull
+	public final ResourceLocation getId()
+	{
+		return id;
+	}
 
-    @Nonnull
-    public Ingredient getInput() {
-        return input;
-    }
+	@Nonnull
+	public final ResourceLocation getTexture()
+	{
+		return texture;
+	}
 
-    @Nonnull
-    public Ingredient getCatalyst() {
-        return catalyst;
-    }
+	@Nonnull
+	public final Ingredient getBaseInput()
+	{
+		return baseInput;
+	}
 
-    @Nonnull
-    public ItemStack getOutput() {
-        return output;
-    }
+	@Nonnull
+	public final Ingredient getAddedInput()
+	{
+		return addedInput;
+	}
 
-    @Nonnull
-    public ResourceLocation getCircleTexture() {
-        return circleTexture;
-    }
+	@Override
+	public final NonNullList<Ingredient> getIngredients()
+	{
+		NonNullList<Ingredient> list = NonNullList.create();
+		list.add(getBaseInput());
+		list.add(getAddedInput());
+		return list;
+	}
+
+	@Nonnull
+	public final ItemStack getOutput()
+	{
+		return output;
+	}
+
+	@Override
+	public void write(PacketBuffer buffer)
+	{
+		if (texture != null)
+		{
+			buffer.writeBoolean(true);
+			buffer.writeResourceLocation(texture);
+		} else
+		{
+			buffer.writeBoolean(false);
+		}
+
+		baseInput.write(buffer);
+		addedInput.write(buffer);
+		buffer.writeItemStack(output);
+	}
 }

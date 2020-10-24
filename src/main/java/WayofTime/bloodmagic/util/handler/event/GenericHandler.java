@@ -1,565 +1,73 @@
-package WayofTime.bloodmagic.util.handler.event;
+package wayoftime.bloodmagic.util.handler.event;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
-import WayofTime.bloodmagic.block.BlockAltar;
-import WayofTime.bloodmagic.core.RegistrarBloodMagic;
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.core.data.SoulNetwork;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
-import WayofTime.bloodmagic.entity.mob.EntitySentientSpecter;
-import WayofTime.bloodmagic.event.ItemBindEvent;
-import WayofTime.bloodmagic.event.SacrificeKnifeUsedEvent;
-import WayofTime.bloodmagic.event.TeleposeEvent;
-import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.iface.ISentientTool;
-import WayofTime.bloodmagic.item.ItemAltarMaker;
-import WayofTime.bloodmagic.item.ItemExperienceBook;
-import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
-import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.livingArmour.downgrade.LivingArmourUpgradeBattleHungry;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
-import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
-import WayofTime.bloodmagic.network.DemonAuraPacketProcessor;
-import WayofTime.bloodmagic.orb.BloodOrb;
-import WayofTime.bloodmagic.orb.IBloodOrb;
-import WayofTime.bloodmagic.potion.BMPotionUtils;
-import WayofTime.bloodmagic.potion.PotionEventHandlers;
-import WayofTime.bloodmagic.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.ritual.RitualManager;
-import WayofTime.bloodmagic.ritual.types.RitualVeilOfEvil;
-import WayofTime.bloodmagic.ritual.types.RitualWardOfSacrosanctity;
-import WayofTime.bloodmagic.soul.DemonWillHolder;
-import WayofTime.bloodmagic.util.Constants;
-import WayofTime.bloodmagic.util.Utils;
-import WayofTime.bloodmagic.util.helper.BindableHelper;
-import WayofTime.bloodmagic.util.helper.ItemHelper;
-import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.util.helper.PlayerHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.TargetGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.potion.Effects;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.item.ItemTossEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
-import net.minecraftforge.event.world.ExplosionEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.Event.Result;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.registry.EntityEntry;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
-
-import java.util.*;
-
-@Mod.EventBusSubscriber(modid = BloodMagic.MODID)
-public class GenericHandler {
-    public static Map<World, Map<PlayerEntity, Double>> bounceMapMap = new HashMap<>();
-    public static Map<World, Map<PlayerEntity, Integer>> filledHandMapMap = new HashMap<>();
-    private static Map<World, Map<AnimalEntity, TargetGoal>> targetTaskMapMap = new HashMap<>();
-    private static Map<World, Map<AnimalEntity, Goal>> attackTaskMapMap = new HashMap<>();
-    public static Map<World, Map<IMasterRitualStone, AreaDescriptor>> preventSpawnMap = new HashMap<>();
-    public static Map<World, Map<IMasterRitualStone, AreaDescriptor>> forceSpawnMap = new HashMap<>();
-    public static Set<IMasterRitualStone> featherRitualSet;
-
-    @SubscribeEvent
-    public static void onEntityFall(LivingFallEvent event) {
-        if (event.getEntityLiving() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-            if (player.isPotionActive(RegistrarBloodMagic.BOUNCE) && !player.isSneaking() && event.getDistance() > 2) {
-                event.setDamageMultiplier(0);
-
-                if (player.getEntityWorld().isRemote) {
-                    player.motionY *= -0.9;
-                    player.fallDistance = 0;
-                    bounceMapMap.get(player.getEntityWorld()).put(player, player.motionY);
-                } else {
-                    player.fallDistance = 0;
-                    event.setCanceled(true);
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public static void playerTickPost(TickEvent.PlayerTickEvent event) {
-        World world = event.player.getEntityWorld();
-        Map<PlayerEntity, Double> bounceMap = bounceMapMap.get(world);
-        if (event.phase == TickEvent.Phase.END && bounceMap.containsKey(event.player)) {
-            event.player.motionY = bounceMap.remove(event.player);
-        }
-
-        Map<PlayerEntity, Integer> filledHandMap = filledHandMapMap.get(world);
-        if (event.phase == TickEvent.Phase.END) {
-            if (filledHandMap.containsKey(event.player)) {
-                int value = filledHandMap.get(event.player) - 1;
-                if (value <= 0) {
-                    filledHandMap.remove(event.player);
-                } else {
-                    filledHandMap.put(event.player, value);
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerClick(PlayerInteractEvent event) {
-        if (event.isCancelable() && event.getEntityPlayer().isPotionActive(RegistrarBloodMagic.CONSTRICT)) {
-            PlayerEntity player = event.getEntityPlayer();
-            int level = player.getActivePotionEffect(RegistrarBloodMagic.CONSTRICT).getAmplifier();
-            if (event.getHand() == Hand.OFF_HAND || level > 1) {
-                event.setCanceled(true);
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerDropItem(ItemTossEvent event) {
-        ItemEntity itemEntity = event.getEntityItem();
-        if (itemEntity != null) {
-            ItemStack stack = itemEntity.getItem();
-            Item item = stack.getItem();
-            if (stack.hasTagCompound() && item instanceof ISentientTool) {
-                if (((ISentientTool) item).spawnSentientEntityOnDrop(stack, event.getPlayer())) {
-                    event.setCanceled(true);
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onExplosion(ExplosionEvent.Start event) {
-        World world = event.getWorld();
-        Explosion exp = event.getExplosion();
-        Vec3d position = exp.getPosition();
-        double radius = 3;
-
-        AxisAlignedBB bb = new AxisAlignedBB(position.x - radius, position.y - radius, position.z - radius, position.x + radius, position.y + radius, position.z + radius);
-        List<EntitySentientSpecter> specterList = world.getEntitiesWithinAABB(EntitySentientSpecter.class, bb);
-        if (!specterList.isEmpty()) {
-            for (EntitySentientSpecter specter : specterList) {
-                if (specter.absorbExplosion(exp)) {
-                    event.setCanceled(true);
-                    return;
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onEntityHurt(LivingHurtEvent event) {
-        if (event.getEntity().getEntityWorld().isRemote)
-            return;
-
-        if (event.getSource().getTrueSource() instanceof PlayerEntity && !PlayerHelper.isFakePlayer((PlayerEntity) event.getSource().getTrueSource())) {
-            PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
-
-            if (!player.getItemStackFromSlot(EquipmentSlotType.CHEST).isEmpty() && player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() instanceof ItemPackSacrifice) {
-                ItemPackSacrifice pack = (ItemPackSacrifice) player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem();
-
-                boolean shouldSyphon = pack.getStoredLP(player.getItemStackFromSlot(EquipmentSlotType.CHEST)) < pack.CAPACITY;
-                float damageDone = event.getEntityLiving().getHealth() < event.getAmount() ? event.getAmount() - event.getEntityLiving().getHealth() : event.getAmount();
-                int totalLP = Math.round(damageDone * ConfigHandler.values.coatOfArmsConversion);
-
-                if (shouldSyphon)
-                    ItemHelper.LPContainer.addLPToItem(player.getItemStackFromSlot(EquipmentSlotType.CHEST), totalLP, pack.CAPACITY);
-            }
-
-            if (LivingArmour.hasFullSet(player)) {
-                ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
-                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-                if (armour != null) {
-
-                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.battleHunger", chestStack);
-                    if (upgrade instanceof LivingArmourUpgradeBattleHungry) {
-                        ((LivingArmourUpgradeBattleHungry) upgrade).resetTimer();
-                    }
-                }
-            }
-        }
-    }
-
-    // Handles sending the client the Demon Will Aura updates
-    @SubscribeEvent
-    public static void onLivingUpdate(LivingUpdateEvent event) {
-        if (!event.getEntityLiving().getEntityWorld().isRemote) {
-            LivingEntity entity = event.getEntityLiving();
-            if (entity instanceof PlayerEntity && entity.ticksExisted % 50 == 0) //TODO: Change to an incremental counter
-            {
-                sendPlayerDemonWillAura((PlayerEntity) entity);
-            }
-
-            World world = entity.getEntityWorld();
-            Map<AnimalEntity, TargetGoal> targetTaskMap = targetTaskMapMap.get(world);
-            Map<AnimalEntity, Goal> attackTaskMap = attackTaskMapMap.get(world);
-            if (event.getEntityLiving() instanceof AnimalEntity) {
-                AnimalEntity animal = (AnimalEntity) event.getEntityLiving();
-                if (animal.isPotionActive(RegistrarBloodMagic.SACRIFICIAL_LAMB)) {
-                    if (!targetTaskMap.containsKey(animal)) {
-                        TargetGoal task = new NearestAttackableTargetGoal<>(animal, MonsterEntity.class, false);
-                        Goal attackTask = new MeleeAttackGoal(animal, 1.0D, false);
-                        animal.targetTasks.addTask(1, task);
-                        animal.tasks.addTask(1, attackTask);
-                        targetTaskMap.put(animal, task);
-                        attackTaskMap.put(animal, attackTask);
-                    }
-
-                    if (animal.getAttackTarget() != null && animal.getDistanceSq(animal.getAttackTarget()) < 4) {
-                        animal.getEntityWorld().createExplosion(null, animal.posX, animal.posY + (double) (animal.height / 16.0F), animal.posZ, 2 + animal.getActivePotionEffect(RegistrarBloodMagic.SACRIFICIAL_LAMB).getAmplifier() * 1.5f, false);
-                        targetTaskMap.remove(animal);
-                        attackTaskMap.remove(animal);
-                    }
-                } else if (targetTaskMap.containsKey(animal)) {
-                    targetTaskMap.remove(animal);
-                    attackTaskMap.remove(animal);
-                }
-            }
-        }
-
-        LivingEntity entity = event.getEntityLiving();
-
-        if (entity instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) entity;
-            if (player.isSneaking() && player.isPotionActive(RegistrarBloodMagic.CLING) && Utils.isPlayerBesideSolidBlockFace(player) && !player.onGround) {
-                if (player.getEntityWorld().isRemote) {
-                    player.motionY = 0;
-                    player.motionX *= 0.8;
-                    player.motionZ *= 0.8;
-                } else {
-                    player.fallDistance = 0;
-                }
-            }
-        }
-
-        if (entity.isPotionActive(Effects.NIGHT_VISION)) {
-            int duration = entity.getActivePotionEffect(Effects.NIGHT_VISION).getDuration();
-            if (duration == Constants.Misc.NIGHT_VISION_CONSTANT_END) {
-                entity.removePotionEffect(Effects.NIGHT_VISION);
-            }
-        }
-
-        if (entity.isPotionActive(RegistrarBloodMagic.FIRE_FUSE)) {
-            Random random = entity.getEntityWorld().rand;
-            entity.getEntityWorld().spawnParticle(EnumParticleTypes.FLAME, entity.posX + random.nextDouble() * 0.3, entity.posY + random.nextDouble() * 0.3, entity.posZ + random.nextDouble() * 0.3, 0, 0.06d, 0);
-
-            int r = entity.getActivePotionEffect(RegistrarBloodMagic.FIRE_FUSE).getAmplifier();
-            int radius = r + 1;
-
-            if (entity.getActivePotionEffect(RegistrarBloodMagic.FIRE_FUSE).getDuration() <= 3) {
-                entity.getEntityWorld().createExplosion(null, entity.posX, entity.posY, entity.posZ, radius, false);
-            }
-        }
-
-        if (entity.isPotionActive(RegistrarBloodMagic.PLANT_LEECH)) {
-            int amplifier = entity.getActivePotionEffect(RegistrarBloodMagic.PLANT_LEECH).getAmplifier();
-            int timeRemaining = entity.getActivePotionEffect(RegistrarBloodMagic.PLANT_LEECH).getDuration();
-            if (timeRemaining % 10 == 0) {
-                BMPotionUtils.damageMobAndGrowSurroundingPlants(entity, 2 + amplifier, 1, 0.5 * 3 / (amplifier + 3), 25 * (1 + amplifier));
-            }
-        }
-    }
-
-    //    @SideOnly(Side.SERVER)
-    public static void sendPlayerDemonWillAura(PlayerEntity player) {
-        if (player instanceof ServerPlayerEntity) {
-            BlockPos pos = player.getPosition();
-            DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(player.getEntityWorld().provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);
-            if (holder != null) {
-                BloodMagicPacketHandler.sendTo(new DemonAuraPacketProcessor(holder), (ServerPlayerEntity) player);
-            } else {
-                BloodMagicPacketHandler.sendTo(new DemonAuraPacketProcessor(new DemonWillHolder()), (ServerPlayerEntity) player);
-            }
-        }
-    }
-
-    // Handles destroying altar
-    @SubscribeEvent
-    public static void harvestEvent(PlayerEvent.HarvestCheck event) {
-        BlockState state = event.getTargetBlock();
-        Block block = state.getBlock();
-        if (block instanceof BlockAltar && event.getEntityPlayer() != null && event.getEntityPlayer() instanceof ServerPlayerEntity && !event.getEntityPlayer().getHeldItemMainhand().isEmpty() && event.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemAltarMaker) {
-            ItemAltarMaker altarMaker = (ItemAltarMaker) event.getEntityPlayer().getHeldItemMainhand().getItem();
-            event.getEntityPlayer().sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.altarMaker.destroy", altarMaker.destroyAltar(event.getEntityPlayer())), true);
-        }
-    }
-
-    // Handle Teleposer block blacklist
-    @SubscribeEvent
-    public static void onTelepose(TeleposeEvent event) {
-        if (BloodMagicAPI.INSTANCE.getBlacklist().getTeleposer().contains(event.initialState) || BloodMagicAPI.INSTANCE.getBlacklist().getTeleposer().contains(event.finalState))
-            event.setCanceled(true);
-    }
-
-    // Handle Teleposer entity blacklist
-    @SubscribeEvent
-    public static void onTeleposeEntity(TeleposeEvent.Ent event) {
-        EntityEntry entry = EntityRegistry.getEntry(event.entity.getClass());
-        if (entry != null && BloodMagicAPI.INSTANCE.getBlacklist().getTeleposerEntities().contains(entry.getRegistryName()))
-            event.setCanceled(true);
-    }
-
-    // Sets teleport cooldown for Teleposed entities to 5 ticks (1/4 second) instead of 150 (7.5 seconds)
-    @SubscribeEvent
-    public static void onTeleposeEntityPost(TeleposeEvent.Ent.Post event) {
-        event.entity.timeUntilPortal = 5;
-    }
-
-    // Handles binding of IBindable's as well as setting a player's highest orb tier
-    @SubscribeEvent
-    public static void onInteract(PlayerInteractEvent.RightClickItem event) {
-        if (event.getWorld().isRemote)
-            return;
-
-        PlayerEntity player = event.getEntityPlayer();
-
-        if (PlayerHelper.isFakePlayer(player))
-            return;
-
-        ItemStack held = event.getItemStack();
-        if (!held.isEmpty() && held.getItem() instanceof IBindable) { // Make sure it's bindable
-            IBindable bindable = (IBindable) held.getItem();
-            Binding binding = bindable.getBinding(held);
-            if (binding == null) { // If the binding is null, let's create one
-                if (bindable.onBind(player, held)) {
-                    ItemBindEvent toPost = new ItemBindEvent(player, held);
-                    if (MinecraftForge.EVENT_BUS.post(toPost)) // Allow cancellation of binding
-                        return;
-
-                    BindableHelper.applyBinding(held, player); // Bind item to the player
-                }
-                // If the binding exists, we'll check if the player's name has changed since they last used it and update that if so.
-            } else if (binding.getOwnerId().equals(player.getGameProfile().getId()) && !binding.getOwnerName().equals(player.getGameProfile().getName())) {
-                binding.setOwnerName(player.getGameProfile().getName());
-                BindableHelper.applyBinding(held, binding);
-            }
-        }
-
-        if (!held.isEmpty() && held.getItem() instanceof IBloodOrb) {
-            IBloodOrb bloodOrb = (IBloodOrb) held.getItem();
-            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
-
-            BloodOrb orb = bloodOrb.getOrb(held);
-            if (orb == null)
-                return;
-
-            if (orb.getTier() > network.getOrbTier())
-                network.setOrbTier(orb.getTier());
-        }
-    }
-
-    @SubscribeEvent
-    public static void selfSacrificeEvent(SacrificeKnifeUsedEvent event) {
-        PlayerEntity player = event.player;
-
-        if (LivingArmour.hasFullSet(player)) {
-            ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
-            LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-            if (armour != null) {
-                StatTrackerSelfSacrifice.incrementCounter(armour, event.healthDrained / 2);
-                LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.selfSacrifice", chestStack);
-
-                if (upgrade instanceof LivingArmourUpgradeSelfSacrifice) {
-                    double modifier = ((LivingArmourUpgradeSelfSacrifice) upgrade).getSacrificeModifier();
-
-                    event.lpAdded = (int) (event.lpAdded * (1 + modifier));
-                }
-            }
-        }
-    }
-
-    // Drop Blood Shards
-    @SubscribeEvent
-    public static void onLivingDrops(LivingDropsEvent event) {
-        LivingEntity attackedEntity = event.getEntityLiving();
-        DamageSource source = event.getSource();
-        Entity entity = source.getTrueSource();
-
-        if (entity != null && entity instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) entity;
-            ItemStack heldStack = player.getHeldItemMainhand();
-
-            if (!heldStack.isEmpty() && heldStack.getItem() == RegistrarBloodMagicItems.BOUND_SWORD && !(attackedEntity instanceof AnimalEntity))
-                for (int i = 0; i <= EnchantmentHelper.getLootingModifier(player); i++)
-                    if (attackedEntity.getEntityWorld().rand.nextDouble() < 0.2)
-                        event.getDrops().add(new ItemEntity(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD, 1, 0)));
-        }
-    }
-
-    @SubscribeEvent
-    public static void onRitualDeath(LivingDropsEvent event) {
-        if (!ConfigHandler.values.wellOfSufferingDrops) {
-            if (event.getSource().equals(RitualManager.RITUAL_DAMAGE)) {
-                event.getDrops().clear();
-            }
-        }
-    }
-
-    // Experience Tome
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onExperiencePickup(PlayerPickupXpEvent event) {
-        PlayerEntity player = event.getEntityPlayer();
-        ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, player);
-
-        if (!Loader.isModLoaded("unmending")) {
-            if (!itemstack.isEmpty() && itemstack.isItemDamaged()) {
-                int i = Math.min(xpToDurability(event.getOrb().xpValue), itemstack.getItemDamage());
-                event.getOrb().xpValue -= durabilityToXp(i);
-                itemstack.setItemDamage(itemstack.getItemDamage() - i);
-            }
-        }
-
-        if (!player.getEntityWorld().isRemote) {
-            for (ItemStack stack : player.inventory.mainInventory) {
-                if (stack.getItem() instanceof ItemExperienceBook) {
-                    ItemExperienceBook.addExperience(stack, event.getOrb().xpValue);
-                    event.getOrb().xpValue = 0;
-                    break;
-                }
-            }
-        }
-    }
-
-    private static int xpToDurability(int xp) {
-        return xp * 2;
-    }
-
-    private static int durabilityToXp(int durability) {
-        return durability / 2;
-    }
-
-    // VeilOfEvil, WardOfSacrosanctity
-    @SubscribeEvent
-    public static void onLivingSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
-        World world = event.getWorld();
-
-        if (!(event.getEntityLiving() instanceof MonsterEntity)) {
-            return;
-        }
-
-        /* WardOfSacrosanctity */
-
-        if (preventSpawnMap.containsKey(world)) {
-            Map<IMasterRitualStone, AreaDescriptor> pMap = preventSpawnMap.get(world);
-
-            if (pMap != null) {
-                for (Map.Entry<IMasterRitualStone, AreaDescriptor> entry : pMap.entrySet()) {
-                    IMasterRitualStone masterRitualStone = entry.getKey();
-                    AreaDescriptor blockRange = entry.getValue();
-
-                    if (masterRitualStone != null && masterRitualStone.isActive() && masterRitualStone.getCurrentRitual() instanceof RitualWardOfSacrosanctity) {
-                        if (blockRange.offset(masterRitualStone.getBlockPos()).isWithinArea(new BlockPos(event.getX(), event.getY(), event.getZ()))) {
-                            switch (event.getResult()) {
-                                case ALLOW:
-                                    event.setResult(Result.DEFAULT);
-                                    break;
-                                case DEFAULT:
-                                    event.setResult(Result.DENY);
-                                    break;
-                                default:
-                                    break;
-                            }
-                            break;
-                        }
-                    } else {
-                        pMap.remove(masterRitualStone);
-                    }
-                }
-            }
-        }
-
-        /* VeilOfEvil */
-
-        if (forceSpawnMap.containsKey(world)) {
-            Map<IMasterRitualStone, AreaDescriptor> fMap = forceSpawnMap.get(world);
-
-            if (fMap != null) {
-                for (Map.Entry<IMasterRitualStone, AreaDescriptor> entry : fMap.entrySet()) {
-                    IMasterRitualStone masterRitualStone = entry.getKey();
-                    AreaDescriptor blockRange = entry.getValue();
-
-                    if (masterRitualStone != null && masterRitualStone.isActive() && masterRitualStone.getCurrentRitual() instanceof RitualVeilOfEvil) {
-                        if (blockRange.offset(masterRitualStone.getBlockPos()).isWithinArea(new BlockPos(event.getX(), event.getY(), event.getZ()))) {
-                            switch (event.getResult()) {
-                                case DEFAULT:
-                                    event.setResult(Result.ALLOW);
-                                    break;
-                                case DENY:
-                                    event.setResult(Result.DEFAULT);
-                                default:
-                                    break;
-                            }
-                            break;
-                        }
-                    } else {
-                        fMap.remove(masterRitualStone);
-                    }
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onWorldLoad(WorldEvent.Load event) {
-        World world = event.getWorld();
-        bounceMapMap.computeIfAbsent(world, k -> new HashMap<>());
-        filledHandMapMap.computeIfAbsent(world, k -> new HashMap<>());
-        attackTaskMapMap.computeIfAbsent(world, k -> new HashMap<>());
-        targetTaskMapMap.computeIfAbsent(world, k -> new HashMap<>());
-        forceSpawnMap.computeIfAbsent(world, k -> new HashMap<>());
-        preventSpawnMap.computeIfAbsent(world, k -> new HashMap<>());
-        PotionEventHandlers.flightListMap.computeIfAbsent(world, k -> new ArrayList<>());
-        PotionEventHandlers.noGravityListMap.computeIfAbsent(world, k -> new ArrayList<>());
-    }
-
-    @SubscribeEvent
-    public static void onWorldUnload(WorldEvent.Unload event) {
-        World world = event.getWorld();
-        bounceMapMap.remove(world);
-        filledHandMapMap.remove(world);
-        attackTaskMapMap.remove(world);
-        targetTaskMapMap.remove(world);
-        PotionEventHandlers.flightListMap.remove(world);
-        PotionEventHandlers.noGravityListMap.remove(world);
-    }
+import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.core.data.Binding;
+import wayoftime.bloodmagic.core.data.SoulNetwork;
+import wayoftime.bloodmagic.event.ItemBindEvent;
+import wayoftime.bloodmagic.iface.IBindable;
+import wayoftime.bloodmagic.orb.BloodOrb;
+import wayoftime.bloodmagic.orb.IBloodOrb;
+import wayoftime.bloodmagic.util.helper.BindableHelper;
+import wayoftime.bloodmagic.util.helper.NetworkHelper;
+import wayoftime.bloodmagic.util.helper.PlayerHelper;
+
+@Mod.EventBusSubscriber(modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class GenericHandler
+{
+	// Handles binding of IBindable's as well as setting a player's highest orb tier
+	@SubscribeEvent
+	public void onInteract(PlayerInteractEvent.RightClickItem event)
+	{
+		if (event.getWorld().isRemote)
+			return;
+
+		PlayerEntity player = event.getPlayer();
+
+		if (PlayerHelper.isFakePlayer(player))
+			return;
+
+		ItemStack held = event.getItemStack();
+		if (!held.isEmpty() && held.getItem() instanceof IBindable)
+		{ // Make sure it's bindable
+			IBindable bindable = (IBindable) held.getItem();
+			Binding binding = bindable.getBinding(held);
+			if (binding == null)
+			{ // If the binding is null, let's create one
+				if (bindable.onBind(player, held))
+				{
+					ItemBindEvent toPost = new ItemBindEvent(player, held);
+					if (MinecraftForge.EVENT_BUS.post(toPost)) // Allow cancellation of binding
+						return;
+
+					BindableHelper.applyBinding(held, player); // Bind item to the player
+				}
+				// If the binding exists, we'll check if the player's name has changed since
+				// they last used it and update that if so.
+			} else if (binding.getOwnerId().equals(player.getGameProfile().getId())
+					&& !binding.getOwnerName().equals(player.getGameProfile().getName()))
+			{
+				binding.setOwnerName(player.getGameProfile().getName());
+				BindableHelper.applyBinding(held, binding);
+			}
+		}
+
+		if (!held.isEmpty() && held.getItem() instanceof IBloodOrb)
+		{
+			IBloodOrb bloodOrb = (IBloodOrb) held.getItem();
+			SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+
+			BloodOrb orb = bloodOrb.getOrb(held);
+			if (orb == null)
+				return;
+
+			if (orb.getTier() > network.getOrbTier())
+				network.setOrbTier(orb.getTier());
+		}
+	}
 }

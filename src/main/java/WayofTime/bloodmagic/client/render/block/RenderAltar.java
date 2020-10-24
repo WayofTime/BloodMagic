@@ -1,164 +1,281 @@
-package WayofTime.bloodmagic.client.render.block;
+package wayoftime.bloodmagic.client.render.block;
 
-import WayofTime.bloodmagic.altar.AltarComponent;
-import WayofTime.bloodmagic.altar.AltarTier;
-import WayofTime.bloodmagic.block.BlockLifeEssence;
-import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.util.handler.event.ClientHandler;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+
+import net.minecraft.block.RedstoneBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.Atlases;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.Fluid;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.fluids.FluidStack;
-import org.lwjgl.opengl.GL11;
+import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
+import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model3D;
+import wayoftime.bloodmagic.client.render.RenderResizableCuboid;
+import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.tile.TileAltar;
 
-public class RenderAltar extends TileEntityRenderer<TileAltar> {
-    private static final float MIN_HEIGHT = 0.499f;
-    private static final float MAX_HEIGHT = 0.745f;
+public class RenderAltar extends TileEntityRenderer<TileAltar>
+{
+	public RenderAltar(TileEntityRendererDispatcher rendererDispatcherIn)
+	{
+		super(rendererDispatcherIn);
+	}
 
-    @Override
-    public void render(TileAltar tileAltar, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        ItemStack inputStack = tileAltar.getStackInSlot(0);
+	private static final float MIN_HEIGHT = 0.499f;
+	private static final float MAX_HEIGHT = 0.745f;
 
-        float level = ((float) tileAltar.getCurrentBlood()) / (float) tileAltar.getCapacity();
+	@Override
+	public void render(TileAltar tileAltar, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn)
+	{
+		RedstoneBlock d;
+		ItemStack inputStack = tileAltar.getStackInSlot(0);
 
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(x, y, z);
-        if (level > 0)
-            this.renderFluid(level);
-        this.renderItem(inputStack);
-        GlStateManager.popMatrix();
+		float level = ((float) tileAltar.getCurrentBlood()) / (float) tileAltar.getCapacity();
 
-        if (tileAltar.getCurrentTierDisplayed() != AltarTier.ONE)
-            renderHologram(tileAltar, tileAltar.getCurrentTierDisplayed(), partialTicks);
-    }
+		this.renderItem(inputStack, tileAltar, matrixStack, buffer, combinedLightIn, combinedOverlayIn);
 
-    private void renderFluid(float fluidLevel) {
-        GlStateManager.pushMatrix();
+		renderFluid(level, matrixStack, buffer, combinedLightIn, combinedOverlayIn);
 
-        Fluid fluid = BlockLifeEssence.getLifeEssence();
-        FluidStack fluidStack = new FluidStack(fluid, 1000);
+//		if (tileAltar.getCurrentTierDisplayed() != AltarTier.ONE)
+//			renderHologram(tileAltar, tileAltar.getCurrentTierDisplayed(), partialTicks);
+	}
 
-        GlStateManager.translate(0.5, MIN_HEIGHT + (fluidLevel) * (MAX_HEIGHT - MIN_HEIGHT), 0.5);
+	private void renderFluid(float fluidLevel, MatrixStack matrixStack, IRenderTypeBuffer renderer, int combinedLightIn, int combinedOverlayIn)
+	{
+		Fluid fluid = BloodMagicBlocks.LIFE_ESSENCE_FLUID.get();
+		FluidStack fluidStack = new FluidStack(fluid, 1000);
 
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder wr = tessellator.getBuffer();
+		FluidRenderData data = new FluidRenderData(fluidStack);
+		matrixStack.push();
 
-        float size = 0.8f;
+		Model3D model = getFluidModel(fluidLevel, data);
+		IVertexBuilder buffer = renderer.getBuffer(Atlases.getTranslucentCullBlockType());
 
-        TextureAtlasSprite fluidStillSprite = Minecraft.getInstance().getTextureMapBlocks().getTextureExtry(fluid.getStill().toString());
+//		matrixStack.translate(data.loca, y, z);
+//		int glow = data.calculateGlowLight(0);
+		RenderResizableCuboid.INSTANCE.renderCube(model, matrixStack, buffer, data.getColorARGB(1), combinedLightIn, combinedOverlayIn);
 
-        int fluidColor = fluid.getColor(fluidStack);
+		matrixStack.pop();
+	}
 
-        Minecraft.getInstance().renderEngine.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
-        setGLColorFromInt(fluidColor);
+	public float getRotation(float craftTime)
+	{
+		float offset = 2;
+		if (craftTime >= offset)
+		{
+			float modifier = (float) Math.pow(craftTime - offset, 1.5);
+			return modifier * 1f;
+		}
+		return 0;
+	}
 
-        double uMin = (double) fluidStillSprite.getMinU();
-        double uMax = (double) fluidStillSprite.getMaxU();
-        double vMin = (double) fluidStillSprite.getMinV();
-        double vMax = (double) fluidStillSprite.getMaxV();
+	public float getSecondaryRotation(float craftTime)
+	{
+		float offset = 50;
+		if (craftTime >= offset)
+		{
+			float modifier = (float) Math.pow(craftTime - offset, 1.7);
+			return modifier * 0.5f;
+		}
+		return 0;
+	}
 
-        wr.begin(7, DefaultVertexFormats.POSITION_TEX);
-//        wr.setBrightness(200);
-        wr.pos(size / 2f, 0, size / 2f).tex(uMax, vMax).endVertex();
-        wr.pos(size / 2f, 0, -size / 2f).tex(uMax, vMin).endVertex();
-        wr.pos(-size / 2f, 0, -size / 2f).tex(uMin, vMin).endVertex();
-        wr.pos(-size / 2f, 0, size / 2f).tex(uMin, vMax).endVertex();
-        tessellator.draw();
+	public float getSizeModifier(float craftTime)
+	{
+		if (craftTime >= 150 && craftTime <= 250)
+		{
+			return (200 - craftTime) / 50f;
+		}
+		return 1.0f;
+	}
 
-        GlStateManager.popMatrix();
-    }
+	public float getVerticalOffset(float craftTime)
+	{
+		if (craftTime >= 5)
+		{
+			if (craftTime <= 40)
+			{
+				return (float) ((-0.4) * Math.pow((craftTime - 5) / 35f, 3));
+			} else
+			{
+				return -0.4f;
+			}
+		}
+		return 0;
+	}
 
-    private void renderItem(ItemStack stack) {
-        ItemRenderer itemRenderer = Minecraft.getInstance().getRenderItem();
-        if (!stack.isEmpty()) {
-            GlStateManager.translate(0.5, 1, 0.5);
-            GlStateManager.pushMatrix();
-            GlStateManager.disableLighting();
+	private void renderItem(ItemStack stack, TileAltar tileAltar, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn)
+	{
+		matrixStack.push();
+		Minecraft mc = Minecraft.getInstance();
+		ItemRenderer itemRenderer = mc.getItemRenderer();
+		if (!stack.isEmpty())
+		{
+			matrixStack.translate(0.5, 1, 0.5);
+			matrixStack.push();
 
-            float rotation = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
+			float rotation = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
 
-            GlStateManager.rotate(rotation, 0.0F, 1.0F, 0);
-            GlStateManager.scale(0.75F, 0.75F, 0.75F);
-            GlStateManager.pushAttrib();
-            RenderHelper.enableStandardItemLighting();
-            itemRenderer.renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
-            RenderHelper.disableStandardItemLighting();
-            GlStateManager.popAttrib();
+			matrixStack.rotate(Vector3f.YP.rotationDegrees(rotation));
+			matrixStack.scale(0.5F, 0.5F, 0.5F);
+			RenderHelper.enableStandardItemLighting();
+			IBakedModel ibakedmodel = itemRenderer.getItemModelWithOverrides(stack, tileAltar.getWorld(), (LivingEntity) null);
+			itemRenderer.renderItem(stack, ItemCameraTransforms.TransformType.FIXED, true, matrixStack, buffer, combinedLightIn, combinedOverlayIn, ibakedmodel); // renderItem
+			RenderHelper.disableStandardItemLighting();
 
-            GlStateManager.enableLighting();
-            GlStateManager.popMatrix();
-        }
-    }
+			matrixStack.pop();
+		}
 
-    private void renderHologram(TileAltar altar, AltarTier tier, float partialTicks) {
-        ClientPlayerEntity player = Minecraft.getInstance().player;
-        World world = player.world;
+		matrixStack.pop();
+	}
 
-        if (tier == AltarTier.ONE)
-            return;
+	private Model3D getFluidModel(float fluidLevel, FluidRenderData data)
+	{
+		Model3D model = new BloodMagicRenderer.Model3D();
+		model.setTexture(data.getTexture());
+		model.minX = 0.1;
+		model.minY = MIN_HEIGHT;
+		model.minZ = 0.1;
+		model.maxX = 0.9;
+		model.maxY = (MAX_HEIGHT - MIN_HEIGHT) * fluidLevel + MIN_HEIGHT;
+		model.maxZ = 0.9;
 
-        GlStateManager.pushMatrix();
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GlStateManager.color(1F, 1F, 1F, 0.6125F);
+		return model;
+	}
 
-        BlockPos vec3, vX;
-        vec3 = altar.getPos();
-        double posX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
-        double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
-        double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
+	public class FluidRenderData
+	{
+		public BlockPos location;
 
-        for (AltarComponent altarComponent : tier.getAltarComponents()) {
-            vX = vec3.add(altarComponent.getOffset());
-            double minX = vX.getX() - posX;
-            double minY = vX.getY() - posY;
-            double minZ = vX.getZ() - posZ;
+		public int height;
+		public int length;
+		public int width;
 
-            if (!world.getBlockState(vX).isOpaqueCube()) {
-                TextureAtlasSprite texture = null;
+		public final FluidStack fluidType;
 
-                switch (altarComponent.getComponent()) {
-                    case BLOODRUNE:
-                        texture = ClientHandler.blankBloodRune;
-                        break;
-                    case NOTAIR:
-                        texture = ClientHandler.stoneBrick;
-                        break;
-                    case GLOWSTONE:
-                        texture = ClientHandler.glowstone;
-                        break;
-                    case BLOODSTONE:
-                        texture = ClientHandler.bloodStoneBrick;
-                        break;
-                    case BEACON:
-                        texture = ClientHandler.beacon;
-                        break;
-                    case CRYSTAL:
-                        texture = ClientHandler.crystalCluster;
-                        break;
-                }
+		public FluidRenderData(FluidStack fluidType)
+		{
+			this.fluidType = fluidType;
+		}
 
-                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
-            }
-        }
+		public TextureAtlasSprite getTexture()
+		{
+			return Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(fluidType.getFluid().getAttributes().getStillTexture());
+		}
 
-        GlStateManager.popMatrix();
-    }
+		public boolean isGaseous()
+		{
+			return fluidType.getFluid().getAttributes().isGaseous(fluidType);
+		}
 
-    private static void setGLColorFromInt(int color) {
-        float red = (color >> 16 & 0xFF) / 255.0F;
-        float green = (color >> 8 & 0xFF) / 255.0F;
-        float blue = (color & 0xFF) / 255.0F;
+		public int getColorARGB(float scale)
+		{
+			return fluidType.getFluid().getAttributes().getColor(fluidType);
+		}
 
-        GlStateManager.color(red, green, blue, 1.0F);
-    }
+		public int calculateGlowLight(int light)
+		{
+			return light;
+		}
+
+		@Override
+		public int hashCode()
+		{
+			int code = super.hashCode();
+			code = 31 * code + fluidType.getFluid().getRegistryName().hashCode();
+			if (fluidType.hasTag())
+			{
+				code = 31 * code + fluidType.getTag().hashCode();
+			}
+			return code;
+		}
+
+		@Override
+		public boolean equals(Object data)
+		{
+			return super.equals(data) && data instanceof FluidRenderData
+					&& fluidType.isFluidEqual(((FluidRenderData) data).fluidType);
+		}
+	}
+//
+//	private void renderHologram(TileAltar altar, AltarTier tier, float partialTicks)
+//	{
+//		EntityPlayerSP player = Minecraft.getMinecraft().player;
+//		World world = player.world;
+//
+//		if (tier == AltarTier.ONE)
+//			return;
+//
+//		GlStateManager.pushMatrix();
+//		GlStateManager.enableBlend();
+//		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+//		GlStateManager.color(1F, 1F, 1F, 0.6125F);
+//
+//		BlockPos vec3, vX;
+//		vec3 = altar.getPos();
+//		double posX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
+//		double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
+//		double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
+//
+//		for (AltarComponent altarComponent : tier.getAltarComponents())
+//		{
+//			vX = vec3.add(altarComponent.getOffset());
+//			double minX = vX.getX() - posX;
+//			double minY = vX.getY() - posY;
+//			double minZ = vX.getZ() - posZ;
+//
+//			if (!world.getBlockState(vX).isOpaqueCube())
+//			{
+//				TextureAtlasSprite texture = null;
+//
+//				switch (altarComponent.getComponent())
+//				{
+//				case BLOODRUNE:
+//					texture = ClientHandler.blankBloodRune;
+//					break;
+//				case NOTAIR:
+//					texture = ClientHandler.stoneBrick;
+//					break;
+//				case GLOWSTONE:
+//					texture = ClientHandler.glowstone;
+//					break;
+//				case BLOODSTONE:
+//					texture = ClientHandler.bloodStoneBrick;
+//					break;
+//				case BEACON:
+//					texture = ClientHandler.beacon;
+//					break;
+//				case CRYSTAL:
+//					texture = ClientHandler.crystalCluster;
+//					break;
+//				}
+//
+//				RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
+//			}
+//		}
+//
+//		GlStateManager.popMatrix();
+//	}
+
+//	private static void setGLColorFromInt(int color)
+//	{
+//		float red = (color >> 16 & 0xFF) / 255.0F;
+//		float green = (color >> 8 & 0xFF) / 255.0F;
+//		float blue = (color & 0xFF) / 255.0F;
+//
+//		GlStateManager.color(red, green, blue, 1.0F);
+//	}
 }

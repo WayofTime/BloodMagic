@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "a a",
+    "aba",
+    "cdc"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:stone"
+    },
+    "b": {
+      "item": "minecraft:furnace"
+    },
+    "c": {
+      "tag": "forge:ingots/gold"
+    },
+    "d": {
+      "item": "bloodmagic:basemonstersoul"
+    }
+  },
+  "result": {
+    "item": "bloodmagic:altar"
+  }
+}

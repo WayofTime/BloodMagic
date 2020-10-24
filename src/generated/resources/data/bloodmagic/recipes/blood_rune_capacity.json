@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bcb",
+    "ada"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:stone"
+    },
+    "b": {
+      "item": "minecraft:bucket"
+    },
+    "c": {
+      "item": "bloodmagic:blankrune"
+    },
+    "d": {
+      "item": "bloodmagic:infusedslate"
+    }
+  },
+  "result": {
+    "item": "bloodmagic:altarcapacityrune"
+  }
+}

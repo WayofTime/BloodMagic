@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:blood_rune_capacity"
+    ]
+  },
+  "criteria": {
+    "has_imbued_slate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:infusedslate"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:blood_rune_capacity"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_imbued_slate",
+      "has_the_recipe"
+    ]
+  ]
+}

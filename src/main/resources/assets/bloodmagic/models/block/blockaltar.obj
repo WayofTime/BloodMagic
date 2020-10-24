@@ -1,6 +1,6 @@
 # Blender v2.76 (sub 0) OBJ File: ''
 # www.blender.org
-mtllib BlockAltar.mtl
+mtllib blockaltar.mtl
 o Shape1
 v 0.000000 0.500000 1.000000
 v 0.000000 -0.000000 1.000000

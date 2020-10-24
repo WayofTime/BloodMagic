@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:altar",
+  "input": {
+    "item": "bloodmagic:reinforcedslate"
+  },
+  "output": {
+    "item": "bloodmagic:infusedslate"
+  },
+  "upgradeLevel": 2,
+  "altarSyphon": 5000,
+  "consumptionRate": 15,
+  "drainRate": 10
+}

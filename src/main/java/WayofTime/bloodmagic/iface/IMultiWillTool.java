@@ -1,8 +1,9 @@
-package WayofTime.bloodmagic.iface;
+package wayoftime.bloodmagic.iface;
 
-import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import net.minecraft.item.ItemStack;
+import wayoftime.bloodmagic.will.EnumDemonWillType;
 
-public interface IMultiWillTool {
-    EnumDemonWillType getCurrentType(ItemStack stack);
+public interface IMultiWillTool
+{
+	EnumDemonWillType getCurrentType(ItemStack stack);
 }

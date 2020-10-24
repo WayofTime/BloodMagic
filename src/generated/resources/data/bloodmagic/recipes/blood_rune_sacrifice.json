@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "cdc",
+    "aea"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:stone"
+    },
+    "b": {
+      "item": "bloodmagic:reinforcedslate"
+    },
+    "c": {
+      "tag": "forge:ingots/gold"
+    },
+    "d": {
+      "item": "bloodmagic:blankrune"
+    },
+    "e": {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 2
+    }
+  },
+  "result": {
+    "item": "bloodmagic:sacrificerune"
+  }
+}

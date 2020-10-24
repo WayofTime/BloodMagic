@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "tag": "forge:string"
+  },
+  "input1": {
+    "tag": "forge:ingots/gold"
+  },
+  "input2": {
+    "tag": "forge:ingots/gold"
+  },
+  "input3": {
+    "tag": "forge:storage_blocks/iron"
+  },
+  "output": {
+    "item": "bloodmagic:reagentmagnetism"
+  },
+  "minimumDrain": 600.0,
+  "drain": 10.0
+}
