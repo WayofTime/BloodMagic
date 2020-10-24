@@ -49,6 +49,7 @@ import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
+import wayoftime.bloodmagic.ritual.RitualManager;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.tile.TileSoulForge;
@@ -66,6 +67,7 @@ public class BloodMagic
 	private static Gson GSON = null;
 
 	public static final BloodMagicPacketHandler packetHandler = new BloodMagicPacketHandler();
+	public static final RitualManager RITUAL_MANAGER = new RitualManager();
 
 	public BloodMagic()
 	{
@@ -134,8 +136,11 @@ public class BloodMagic
 	public void onLoadComplete(FMLLoadCompleteEvent event)
 	{
 		OrbRegistry.tierMap.put(BloodMagicItems.ORB_WEAK.get().getTier(), new ItemStack(BloodMagicItems.WEAK_BLOOD_ORB.get()));
+		OrbRegistry.tierMap.put(BloodMagicItems.ORB_APPRENTICE.get().getTier(), new ItemStack(BloodMagicItems.APPRENTICE_BLOOD_ORB.get()));
+		OrbRegistry.tierMap.put(BloodMagicItems.ORB_MAGICIAN.get().getTier(), new ItemStack(BloodMagicItems.MAGICIAN_BLOOD_ORB.get()));
+		OrbRegistry.tierMap.put(BloodMagicItems.ORB_MASTER.get().getTier(), new ItemStack(BloodMagicItems.MASTER_BLOOD_ORB.get()));
 		BloodMagicCorePlugin.INSTANCE.register(BloodMagicAPI.INSTANCE);
-
+		RITUAL_MANAGER.discover();
 	}
 
 	public void registerTileEntityTypes(RegistryEvent.Register<TileEntityType<?>> event)

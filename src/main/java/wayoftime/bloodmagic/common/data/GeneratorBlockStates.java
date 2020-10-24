@@ -28,6 +28,13 @@ public class GeneratorBlockStates extends BlockStateProvider
 		}
 
 		buildCubeAll(BloodMagicBlocks.BLOOD_LIGHT.get());
+		buildCubeAll(BloodMagicBlocks.BLANK_RITUAL_STONE.get());
+		buildCubeAll(BloodMagicBlocks.AIR_RITUAL_STONE.get());
+		buildCubeAll(BloodMagicBlocks.WATER_RITUAL_STONE.get());
+		buildCubeAll(BloodMagicBlocks.FIRE_RITUAL_STONE.get());
+		buildCubeAll(BloodMagicBlocks.EARTH_RITUAL_STONE.get());
+		buildCubeAll(BloodMagicBlocks.DUSK_RITUAL_STONE.get());
+		buildCubeAll(BloodMagicBlocks.DAWN_RITUAL_STONE.get());
 	}
 
 	private void buildCubeAll(Block block)

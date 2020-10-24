@@ -36,6 +36,14 @@ public class GeneratorItemModels extends ItemModelProvider
 			registerBlockModel(block.get());
 		}
 
+		registerBlockModel(BloodMagicBlocks.BLANK_RITUAL_STONE.get());
+		registerBlockModel(BloodMagicBlocks.AIR_RITUAL_STONE.get());
+		registerBlockModel(BloodMagicBlocks.WATER_RITUAL_STONE.get());
+		registerBlockModel(BloodMagicBlocks.FIRE_RITUAL_STONE.get());
+		registerBlockModel(BloodMagicBlocks.EARTH_RITUAL_STONE.get());
+		registerBlockModel(BloodMagicBlocks.DUSK_RITUAL_STONE.get());
+		registerBlockModel(BloodMagicBlocks.DAWN_RITUAL_STONE.get());
+
 		registerToggleableItem(BloodMagicItems.GREEN_GROVE_SIGIL.get());
 		registerToggleableItem(BloodMagicItems.FAST_MINER_SIGIL.get());
 		registerToggleableItem(BloodMagicItems.MAGNETISM_SIGIL.get());

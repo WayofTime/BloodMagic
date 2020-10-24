@@ -18,6 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.block.enums.BloodRuneType;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.tile.contailer.ContainerSoulForge;
 
 public class BloodMagicBlocks
@@ -47,6 +48,16 @@ public class BloodMagicBlocks
 
 	public static final RegistryObject<Block> BLOOD_ALTAR = BLOCKS.register("altar", () -> new BlockAltar());
 	public static final RegistryObject<Block> BLOOD_LIGHT = BLOCKS.register("bloodlight", () -> new BlockBloodLight());
+
+	public static final RegistryObject<Block> BLANK_RITUAL_STONE = BLOCKS.register("ritualstone", () -> new BlockRitualStone(EnumRuneType.BLANK));
+	public static final RegistryObject<Block> AIR_RITUAL_STONE = BLOCKS.register("airritualstone", () -> new BlockRitualStone(EnumRuneType.AIR));
+	public static final RegistryObject<Block> WATER_RITUAL_STONE = BLOCKS.register("waterritualstone", () -> new BlockRitualStone(EnumRuneType.WATER));
+	public static final RegistryObject<Block> FIRE_RITUAL_STONE = BLOCKS.register("fireritualstone", () -> new BlockRitualStone(EnumRuneType.FIRE));
+	public static final RegistryObject<Block> EARTH_RITUAL_STONE = BLOCKS.register("earthritualstone", () -> new BlockRitualStone(EnumRuneType.EARTH));
+	public static final RegistryObject<Block> DUSK_RITUAL_STONE = BLOCKS.register("duskritualstone", () -> new BlockRitualStone(EnumRuneType.DUSK));
+	public static final RegistryObject<Block> DAWN_RITUAL_STONE = BLOCKS.register("lightritualstone", () -> new BlockRitualStone(EnumRuneType.DAWN));
+
+	public static final RegistryObject<Block> MASTER_RITUAL_STONE = BASICBLOCKS.register("masterritualstone", () -> new BlockMasterRitualStone(false));
 
 	private static ForgeFlowingFluid.Properties makeProperties()
 	{

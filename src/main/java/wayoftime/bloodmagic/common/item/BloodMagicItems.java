@@ -54,6 +54,13 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> ORB_RUNE_ITEM = ITEMS.register("orbcapacityrune", () -> new BlockItem(BloodMagicBlocks.ORB_RUNE.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> ACCELERATION_RUNE_ITEM = ITEMS.register("accelerationrune", () -> new BlockItem(BloodMagicBlocks.ACCELERATION_RUNE.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> CHARGING_RUNE_ITEM = ITEMS.register("chargingrune", () -> new BlockItem(BloodMagicBlocks.CHARGING_RUNE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> BLANK_RITUAL_STONE_ITEM = ITEMS.register("ritualstone", () -> new BlockItem(BloodMagicBlocks.BLANK_RITUAL_STONE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> AIR_RITUAL_STONE_ITEM = ITEMS.register("airritualstone", () -> new BlockItem(BloodMagicBlocks.AIR_RITUAL_STONE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> WATER_RITUAL_STONE_ITEM = ITEMS.register("waterritualstone", () -> new BlockItem(BloodMagicBlocks.WATER_RITUAL_STONE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> FIRE_RITUAL_STONE_ITEM = ITEMS.register("fireritualstone", () -> new BlockItem(BloodMagicBlocks.FIRE_RITUAL_STONE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> EARTH_RITUAL_STONE_ITEM = ITEMS.register("earthritualstone", () -> new BlockItem(BloodMagicBlocks.EARTH_RITUAL_STONE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> DUSK_RITUAL_STONE_ITEM = ITEMS.register("duskritualstone", () -> new BlockItem(BloodMagicBlocks.DUSK_RITUAL_STONE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> DAWN_RITUAL_STONE_ITEM = ITEMS.register("lightritualstone", () -> new BlockItem(BloodMagicBlocks.DAWN_RITUAL_STONE.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> BLOOD_ALTAR_ITEM = ITEMS.register("altar", () -> new BlockItem(BloodMagicBlocks.BLOOD_ALTAR.get(), new Item.Properties().group(BloodMagic.TAB)));
 
@@ -86,6 +93,10 @@ public class BloodMagicItems
 
 	public static final RegistryObject<Item> ARCANE_ASHES = BASICITEMS.register("arcaneashes", () -> new ItemArcaneAshes());
 	public static final RegistryObject<Item> DAGGER_OF_SACRIFICE = BASICITEMS.register("daggerofsacrifice", () -> new ItemDaggerOfSacrifice());
+
+	public static final RegistryObject<Item> WEAK_ACTIVATION_CRYSTAL = BASICITEMS.register("activationcrystalweak", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.WEAK));
+	public static final RegistryObject<Item> AWAKENED_ACTIVATION_CRYSTAL = BASICITEMS.register("activationcrystalawakened", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.AWAKENED));
+	public static final RegistryObject<Item> CREATIVE_ACTIVATION_CRYSTAL = BASICITEMS.register("activationcrystalcreative", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.CREATIVE));
 
 	// Reagents used to make the Sigils
 	public static final RegistryObject<Item> REAGENT_WATER = BASICITEMS.register("reagentwater", () -> new ItemBase());

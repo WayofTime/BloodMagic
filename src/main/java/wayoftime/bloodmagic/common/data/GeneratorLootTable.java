@@ -49,33 +49,17 @@ public class GeneratorLootTable extends LootTableProvider
 				this.registerDropSelfLootTable(block.get());
 			}
 
-			this.registerDropSelfLootTable(BloodMagicBlocks.BLOOD_ALTAR.get());
+			registerDropSelfLootTable(BloodMagicBlocks.BLOOD_ALTAR.get());
 			registerNoDropLootTable(BloodMagicBlocks.ALCHEMY_ARRAY.get());
 			registerNoDropLootTable(BloodMagicBlocks.BLOOD_LIGHT.get());
-			this.registerDropSelfLootTable(BloodMagicBlocks.SOUL_FORGE.get());
-
-//			LootPool.Builder builder = LootPool.builder().name(ModBlocks.GOO_BLOCK.get().getRegistryName().toString()).rolls(ConstantRange.of(1)).acceptCondition(SurvivesExplosion.builder()).addEntry(ItemLootEntry.builder(ModItems.GOO_RESIDUE.get()));
-//			this.registerLootTable(ModBlocks.GOO_BLOCK.get(), LootTable.builder().addLootPool(builder));
-//
-//			LootPool.Builder builder2 = LootPool.builder().name(ModBlocks.GOO_BLOCK_TERRAIN.get().getRegistryName().toString()).rolls(ConstantRange.of(1)).acceptCondition(SurvivesExplosion.builder()).addEntry(ItemLootEntry.builder(ModItems.GOO_RESIDUE.get()));
-//			this.registerLootTable(ModBlocks.GOO_BLOCK_TERRAIN.get(), LootTable.builder().addLootPool(builder2));
-//
-//			this.registerDropSelfLootTable(ModBlocks.GOO_BLOCK_POISON.get());
-//			this.registerDropSelfLootTable(ModBlocks.GNT_BLOCK_T1.get());
-//			this.registerDropSelfLootTable(ModBlocks.GNT_BLOCK_T2.get());
-//			this.registerDropSelfLootTable(ModBlocks.GNT_BLOCK_T3.get());
-//			this.registerDropSelfLootTable(ModBlocks.GNT_BLOCK_T4.get());
-//			this.registerDropSelfLootTable(ModBlocks.TURRET_BLOCK.get());
-//			this.registerDropSelfLootTable(ModBlocks.ZAPPER_TURRET_BLOCK.get());
-//			this.registerDropSelfLootTable(ModBlocks.ANTI_GOO_BEACON.get());
-//			this.registerDropSelfLootTable(ModBlocks.ANTI_GOO_FIELD_GEN.get());
-//			this.registerDropSelfLootTable(ModBlocks.GOOLIMINATIONFIELDGEN.get());
-//			this.registerDropSelfLootTable(ModBlocks.GOO_DETECTOR.get());
-//			this.registerDropping(ModBlocks.GOO_RENDER.get(), ItemStack.EMPTY.getItem());
-//			// this.registerDropping(ModBlocks.GOO_RENDER_BURST.get(),
-//			// ItemStack.EMPTY.getItem());
-//			this.registerDropping(ModBlocks.GOO_RENDER_TERRAIN.get(), ItemStack.EMPTY.getItem());
-
+			registerDropSelfLootTable(BloodMagicBlocks.SOUL_FORGE.get());
+			registerDropSelfLootTable(BloodMagicBlocks.BLANK_RITUAL_STONE.get());
+			registerDropping(BloodMagicBlocks.AIR_RITUAL_STONE.get(), BloodMagicBlocks.BLANK_RITUAL_STONE.get());
+			registerDropping(BloodMagicBlocks.WATER_RITUAL_STONE.get(), BloodMagicBlocks.BLANK_RITUAL_STONE.get());
+			registerDropping(BloodMagicBlocks.FIRE_RITUAL_STONE.get(), BloodMagicBlocks.BLANK_RITUAL_STONE.get());
+			registerDropping(BloodMagicBlocks.EARTH_RITUAL_STONE.get(), BloodMagicBlocks.BLANK_RITUAL_STONE.get());
+			registerDropping(BloodMagicBlocks.DUSK_RITUAL_STONE.get(), BloodMagicBlocks.BLANK_RITUAL_STONE.get());
+			registerDropping(BloodMagicBlocks.DAWN_RITUAL_STONE.get(), BloodMagicBlocks.BLANK_RITUAL_STONE.get());
 		}
 
 		private void registerNoDropLootTable(Block block)
