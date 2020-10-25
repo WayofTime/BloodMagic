@@ -49,7 +49,7 @@ public class ClientHandler
 	public static ResourceLocation ritualStoneEarth = BloodMagic.rl("block/earthritualstone");;
 	public static ResourceLocation ritualStoneAir = BloodMagic.rl("block/airritualstone");;
 	public static ResourceLocation ritualStoneDawn = BloodMagic.rl("block/dawnritualstone");;
-	public static ResourceLocation ritualStoneDusk = BloodMagic.rl("block/lightritualstone");;
+	public static ResourceLocation ritualStoneDusk = BloodMagic.rl("block/duskritualstone");;
 	public static TextureAtlasSprite blankBloodRune;
 	public static TextureAtlasSprite stoneBrick;
 	public static TextureAtlasSprite glowstone;
