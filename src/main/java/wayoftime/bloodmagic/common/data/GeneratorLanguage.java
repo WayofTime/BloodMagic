@@ -71,6 +71,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.currentBaseType.steadfast", "Steadfast");
 		add("tooltip.bloodmagic.sacrificialdagger.desc", "Just a prick of the finger will suffice...");
 		add("tooltip.bloodmagic.slate.desc", "Infused stone inside of a Blood Altar");
+		add("tooltip.bloodmagic.inscriber.desc", "The writing is on the wall...");
 
 		add("tooltip.bloodmagic.sigil.water.desc", "Infinite water, anyone?");
 		add("tooltip.bloodmagic.sigil.lava.desc", "HOT! DO NOT EAT");
@@ -178,6 +179,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addItem(BloodMagicItems.DAGGER_OF_SACRIFICE, "Dagger of Sacrifice");
 		addItem(BloodMagicItems.SACRIFICIAL_DAGGER, "Sacrificial Knife");
+		addItem(BloodMagicItems.LAVA_CRYSTAL, "Lava Crystal");
 
 		addItem(BloodMagicItems.REAGENT_WATER, "Water Reagent");
 		addItem(BloodMagicItems.REAGENT_LAVA, "Lava Reagent");
