@@ -3,7 +3,6 @@ package wayoftime.bloodmagic.client.render.block;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import net.minecraft.block.RedstoneBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -40,7 +39,6 @@ public class RenderAltar extends TileEntityRenderer<TileAltar>
 	@Override
 	public void render(TileAltar tileAltar, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn)
 	{
-		RedstoneBlock d;
 		ItemStack inputStack = tileAltar.getStackInSlot(0);
 
 		float level = ((float) tileAltar.getCurrentBlood()) / (float) tileAltar.getCapacity();

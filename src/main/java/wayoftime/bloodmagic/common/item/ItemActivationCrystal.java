@@ -30,7 +30,7 @@ public class ItemActivationCrystal extends Item implements IBindable
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.activation_crystal." + type.name().toLowerCase()));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.activationcrystal." + type.name().toLowerCase()));
 
 		if (!stack.hasTag())
 			return;

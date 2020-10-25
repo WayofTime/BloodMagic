@@ -220,7 +220,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 		} else
 		{
 			if (activator != null)
-				activator.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
+				activator.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notvalid"), true);
 		}
 
 		return false;

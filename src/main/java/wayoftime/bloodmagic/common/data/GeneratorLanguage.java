@@ -81,7 +81,53 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.sigil.air.desc", "I feel lighter already...");
 		add("tooltip.bloodmagic.sigil.bloodlight.desc", "I see a light!");
 
+		add("tooltip.bloodmagic.activationcrystal.weak", "Activates low-level rituals");
+		add("tooltip.bloodmagic.activationcrystal.awakened", "Activates more powerful rituals");
+		add("tooltip.bloodmagic.activationcrystal.creative", "Creative Only - Activates any ritual");
+
 		add("itemGroup.bloodmagictab", "Blood Magic");
+
+		// Ritual info
+		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");
+		add("tooltip.bloodmagic.diviner.blankRune", "Blank Runes: %d");
+		add("tooltip.bloodmagic.diviner.waterRune", "Water Runes: %d");
+		add("tooltip.bloodmagic.diviner.airRune", "Air Runes: %d");
+		add("tooltip.bloodmagic.diviner.fireRune", "Fire Runes: %d");
+		add("tooltip.bloodmagic.diviner.earthRune", "Earth Runes: %d");
+		add("tooltip.bloodmagic.diviner.duskRune", "Dusk Runes: %d");
+		add("tooltip.bloodmagic.diviner.dawnRune", "Dawn Runes: %d");
+		add("tooltip.bloodmagic.diviner.totalRune", "Total Runes: %d");
+		add("tooltip.bloodmagic.diviner.extraInfo", "Press shift for extra info");
+		add("tooltip.bloodmagic.diviner.currentDirection", "Current Direction: %s");
+
+		add("ritual.bloodmagic.testRitual", "Test Ritual");
+		add("ritual.bloodmagic.waterRitual", "Ritual of the Full Spring");
+		add("ritual.bloodmagic.lavaRitual", "Serenade of the Nether");
+		add("ritual.bloodmagic.greenGroveRitual", "Ritual of the Green Grove");
+		add("ritual.bloodmagic.jumpRitual", "Ritual of the High Jump");
+		add("ritual.bloodmagic.wellOfSufferingRitual", "Well of Suffering");
+		add("ritual.bloodmagic.featheredKnifeRitual", "Ritual of the Feathered Knife");
+		add("ritual.bloodmagic.regenerationRitual", "Ritual of Regeneration");
+		add("ritual.bloodmagic.harvestRitual", "Reap of the Harvest Moon");
+		add("ritual.bloodmagic.magneticRitual", "Ritual of Magnetism");
+		add("ritual.bloodmagic.crushingRitual", "Ritual of the Crusher");
+		add("ritual.bloodmagic.fullStomachRitual", "Ritual of the Satiated Stomach");
+		add("ritual.bloodmagic.interdictionRitual", "Ritual of Interdiction");
+		add("ritual.bloodmagic.containmentRitual", "Ritual of Containment");
+		add("ritual.bloodmagic.speedRitual", "Ritual of Speed");
+		add("ritual.bloodmagic.suppressionRitual", "Ritual of Suppression");
+		add("ritual.bloodmagic.expulsionRitual", "Aura of Expulsion");
+		add("ritual.bloodmagic.zephyrRitual", "Call of the Zephyr");
+		add("ritual.bloodmagic.upgradeRemoveRitual", "Sound of the Cleansing Soul");
+		add("ritual.bloodmagic.armourEvolveRitual", "Ritual of Living Evolution");
+		add("ritual.bloodmagic.animalGrowthRitual", "Ritual of the Shepherd");
+
+		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
+		add("ritual.bloodmagic.placerRitual", "The Filler");
+		add("ritual.bloodmagic.fellingRitual", "The Timberman");
+		add("ritual.bloodmagic.pumpRitual", "Hymn of Siphoning");
+		add("ritual.bloodmagic.altarBuilderRitual", "The Assembly of the High Altar");
+		add("ritual.bloodmagic.portalRitual", "The Gate of the Fold");
 
 		// Block names
 		addBlock(BloodMagicBlocks.BLANK_RUNE, "Blank Rune");
@@ -96,6 +142,14 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.CHARGING_RUNE, "Charging Rune");
 		addBlock(BloodMagicBlocks.BLOOD_ALTAR, "Blood Altar");
 		addBlock(BloodMagicBlocks.SOUL_FORGE, "Hellfire Forge");
+		addBlock(BloodMagicBlocks.BLANK_RITUAL_STONE, "Ritual Stone");
+		addBlock(BloodMagicBlocks.AIR_RITUAL_STONE, "Air Ritual Stone");
+		addBlock(BloodMagicBlocks.WATER_RITUAL_STONE, "Water Ritual Stone");
+		addBlock(BloodMagicBlocks.FIRE_RITUAL_STONE, "Fire Ritual Stone");
+		addBlock(BloodMagicBlocks.EARTH_RITUAL_STONE, "Earth Ritual Stone");
+		addBlock(BloodMagicBlocks.DUSK_RITUAL_STONE, "Dusk Ritual Stone");
+		addBlock(BloodMagicBlocks.DAWN_RITUAL_STONE, "Dawn Ritual Stone");
+		addBlock(BloodMagicBlocks.MASTER_RITUAL_STONE, "Master Ritual Stone");
 
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
@@ -144,6 +198,15 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SOUL_SNARE, "Soul Snare");
 		addItem(BloodMagicItems.SENTIENT_SWORD, "Sentient Sword");
 
+		addItem(BloodMagicItems.WEAK_ACTIVATION_CRYSTAL, "Weak Activation Crystal");
+		addItem(BloodMagicItems.AWAKENED_ACTIVATION_CRYSTAL, "Awakened Activation Crystal");
+		addItem(BloodMagicItems.CREATIVE_ACTIVATION_CRYSTAL, "Creative Activation Crystal");
+		addItem(BloodMagicItems.WATER_INSCRIPTION_TOOL, "Inscription Tool: Water");
+		addItem(BloodMagicItems.FIRE_INSCRIPTION_TOOL, "Inscription Tool: Fire");
+		addItem(BloodMagicItems.EARTH_INSCRIPTION_TOOL, "Inscription Tool: Earth");
+		addItem(BloodMagicItems.AIR_INSCRIPTION_TOOL, "Inscription Tool: Air");
+		addItem(BloodMagicItems.DUSK_INSCRIPTION_TOOL, "Inscription Tool: Dusk");
+
 //		addItem(BloodMagicItems , "");
 
 		// JEI
@@ -157,5 +220,12 @@ public class GeneratorLanguage extends LanguageProvider
 		add("jei.bloodmagic.recipe.altar", "Blood Altar");
 		add("jei.bloodmagic.recipe.soulforge", "Hellfire Forge");
 		add("jei.bloodmagic.recipe.alchemyarraycrafting", "Alchemy Array");
+
+		// Chat
+		add("chat.bloodmagic.ritual.weak", "You feel a push, but are too weak to perform this ritual.");
+		add("chat.bloodmagic.ritual.prevent", "The ritual is actively resisting you!");
+		add("chat.bloodmagic.ritual.activate", "A rush of energy flows through the ritual!");
+		add("chat.bloodmagic.ritual.notValid", "You feel that these runes are not configured correctly...");
+
 	}
 }

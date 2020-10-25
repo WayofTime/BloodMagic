@@ -52,6 +52,7 @@ import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.ritual.RitualManager;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.tile.TileAltar;
+import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.tile.TileSoulForge;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
 import wayoftime.bloodmagic.util.handler.event.WillHandler;
@@ -149,6 +150,7 @@ public class BloodMagic
 		event.getRegistry().register(TileEntityType.Builder.create(TileAltar::new, BloodMagicBlocks.BLOOD_ALTAR.get()).build(null).setRegistryName("altar"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileAlchemyArray::new, BloodMagicBlocks.ALCHEMY_ARRAY.get()).build(null).setRegistryName("alchemyarray"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileSoulForge::new, BloodMagicBlocks.SOUL_FORGE.get()).build(null).setRegistryName("soulforge"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileMasterRitualStone::new, BloodMagicBlocks.MASTER_RITUAL_STONE.get()).build(null).setRegistryName("masterritualstone"));
 	}
 
 	@SubscribeEvent

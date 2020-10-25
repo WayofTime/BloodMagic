@@ -58,7 +58,7 @@ public class BlockRitualStone extends Block implements IRitualStone
 	public void setRuneType(World world, BlockPos pos, EnumRuneType runeType)
 	{
 		Block runeBlock = this;
-		switch (type)
+		switch (runeType)
 		{
 		case AIR:
 			runeBlock = BloodMagicBlocks.AIR_RITUAL_STONE.get();

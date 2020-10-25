@@ -25,6 +25,7 @@ import wayoftime.bloodmagic.common.item.soul.ItemSoulSnare;
 import wayoftime.bloodmagic.common.registration.impl.BloodOrbDeferredRegister;
 import wayoftime.bloodmagic.common.registration.impl.BloodOrbRegistryObject;
 import wayoftime.bloodmagic.orb.BloodOrb;
+import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.will.EnumDemonWillType;
 
 public class BloodMagicItems
@@ -62,6 +63,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUSK_RITUAL_STONE_ITEM = ITEMS.register("duskritualstone", () -> new BlockItem(BloodMagicBlocks.DUSK_RITUAL_STONE.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DAWN_RITUAL_STONE_ITEM = ITEMS.register("lightritualstone", () -> new BlockItem(BloodMagicBlocks.DAWN_RITUAL_STONE.get(), new Item.Properties().group(BloodMagic.TAB)));
 
+	public static final RegistryObject<Item> MASTER_RITUAL_STONE_ITEM = ITEMS.register("masterritualstone", () -> new BlockItem(BloodMagicBlocks.MASTER_RITUAL_STONE.get(), new Item.Properties().group(BloodMagic.TAB)));
+
 	public static final RegistryObject<Item> BLOOD_ALTAR_ITEM = ITEMS.register("altar", () -> new BlockItem(BloodMagicBlocks.BLOOD_ALTAR.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	// TODO: Need to rework the above instantiations for the ItemBlocks so that it's
@@ -94,9 +97,18 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> ARCANE_ASHES = BASICITEMS.register("arcaneashes", () -> new ItemArcaneAshes());
 	public static final RegistryObject<Item> DAGGER_OF_SACRIFICE = BASICITEMS.register("daggerofsacrifice", () -> new ItemDaggerOfSacrifice());
 
+	// Ritual stuffs
 	public static final RegistryObject<Item> WEAK_ACTIVATION_CRYSTAL = BASICITEMS.register("activationcrystalweak", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.WEAK));
 	public static final RegistryObject<Item> AWAKENED_ACTIVATION_CRYSTAL = BASICITEMS.register("activationcrystalawakened", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.AWAKENED));
 	public static final RegistryObject<Item> CREATIVE_ACTIVATION_CRYSTAL = BASICITEMS.register("activationcrystalcreative", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.CREATIVE));
+
+	public static final RegistryObject<Item> AIR_INSCRIPTION_TOOL = BASICITEMS.register("airscribetool", () -> new ItemInscriptionTool(EnumRuneType.AIR));
+	public static final RegistryObject<Item> FIRE_INSCRIPTION_TOOL = BASICITEMS.register("firescribetool", () -> new ItemInscriptionTool(EnumRuneType.FIRE));
+	public static final RegistryObject<Item> WATER_INSCRIPTION_TOOL = BASICITEMS.register("waterscribetool", () -> new ItemInscriptionTool(EnumRuneType.WATER));
+	public static final RegistryObject<Item> EARTH_INSCRIPTION_TOOL = BASICITEMS.register("earthscribetool", () -> new ItemInscriptionTool(EnumRuneType.EARTH));
+	public static final RegistryObject<Item> DUSK_INSCRIPTION_TOOL = BASICITEMS.register("duskscribetool", () -> new ItemInscriptionTool(EnumRuneType.DUSK));
+
+	public static final RegistryObject<Item> BASE_RITUAL_DIVINER = BASICITEMS.register("ritualdiviner", () -> new ItemRitualDiviner(0));
 
 	// Reagents used to make the Sigils
 	public static final RegistryObject<Item> REAGENT_WATER = BASICITEMS.register("reagentwater", () -> new ItemBase());

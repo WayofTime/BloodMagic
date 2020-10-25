@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:ritual_stone_master"
+    ]
+  },
+  "criteria": {
+    "has_magician_orb": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:magicianbloodorb"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:ritual_stone_master"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_magician_orb",
+      "has_the_recipe"
+    ]
+  ]
+}

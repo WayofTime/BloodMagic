@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:altar",
+  "input": {
+    "item": "minecraft:ghast_tear"
+  },
+  "output": {
+    "item": "bloodmagic:airscribetool",
+    "nbt": "{Damage:0}"
+  },
+  "upgradeLevel": 2,
+  "altarSyphon": 1000,
+  "consumptionRate": 5,
+  "drainRate": 5
+}

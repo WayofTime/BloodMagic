@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:altar",
+  "input": {
+    "tag": "forge:storage_blocks/coal"
+  },
+  "output": {
+    "item": "bloodmagic:duskscribetool",
+    "nbt": "{Damage:0}"
+  },
+  "upgradeLevel": 3,
+  "altarSyphon": 2000,
+  "consumptionRate": 20,
+  "drainRate": 10
+}

@@ -1,7 +1,7 @@
 package wayoftime.bloodmagic.tile.base;
 
-import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
 /**
@@ -9,7 +9,7 @@ import net.minecraft.tileentity.TileEntityType;
  * programmatically.
  */
 // TODO - Move implementations that depend on existed ticks to new methods from here.
-public abstract class TileTicking extends TileBase implements ITickable
+public abstract class TileTicking extends TileBase implements ITickableTileEntity
 {
 	private int ticksExisted;
 	private boolean shouldTick = true;

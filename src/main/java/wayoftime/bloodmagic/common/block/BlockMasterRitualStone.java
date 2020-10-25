@@ -66,15 +66,15 @@ public class BlockMasterRitualStone extends Block
 							}
 						} else
 						{
-							player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
+							player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notvalid"), true);
 						}
 					} else
 					{
-						player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
+						player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notvalid"), true);
 					}
 				} else
 				{
-					player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
+					player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notvalid"), true);
 				}
 			}
 		}

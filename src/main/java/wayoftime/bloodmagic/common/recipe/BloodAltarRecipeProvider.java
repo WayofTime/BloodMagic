@@ -33,9 +33,14 @@ public class BloodAltarRecipeProvider implements ISubRecipeProvider
 		// THREE
 		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(BloodMagicItems.REINFORCED_SLATE.get()), new ItemStack(BloodMagicItems.IMBUED_SLATE.get()), AltarTier.THREE.ordinal(), 5000, 15, 10).build(consumer, BloodMagic.rl(basePath + "imbuedslate"));
 		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_GOLD), new ItemStack(BloodMagicItems.MAGICIAN_BLOOD_ORB.get()), AltarTier.THREE.ordinal(), 25000, 20, 20).build(consumer, BloodMagic.rl(basePath + "magicianbloodorb"));
+		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.OBSIDIAN), new ItemStack(BloodMagicItems.EARTH_INSCRIPTION_TOOL.get()), AltarTier.THREE.ordinal(), 1000, 5, 5).build(consumer, BloodMagic.rl(basePath + "earth_tool"));
+		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_LAPIS), new ItemStack(BloodMagicItems.WATER_INSCRIPTION_TOOL.get()), AltarTier.THREE.ordinal(), 1000, 5, 5).build(consumer, BloodMagic.rl(basePath + "water_tool"));
+		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(Items.MAGMA_CREAM), new ItemStack(BloodMagicItems.FIRE_INSCRIPTION_TOOL.get()), AltarTier.THREE.ordinal(), 1000, 5, 5).build(consumer, BloodMagic.rl(basePath + "fire_tool"));
+		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(Items.GHAST_TEAR), new ItemStack(BloodMagicItems.AIR_INSCRIPTION_TOOL.get()), AltarTier.THREE.ordinal(), 1000, 5, 5).build(consumer, BloodMagic.rl(basePath + "air_tool"));
 
 		// FOUR
 		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(BloodMagicItems.IMBUED_SLATE.get()), new ItemStack(BloodMagicItems.DEMONIC_SLATE.get()), AltarTier.FOUR.ordinal(), 15000, 20, 20).build(consumer, BloodMagic.rl(basePath + "demonicslate"));
+		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_COAL), new ItemStack(BloodMagicItems.DUSK_INSCRIPTION_TOOL.get()), AltarTier.FOUR.ordinal(), 2000, 20, 10).build(consumer, BloodMagic.rl(basePath + "dusk_tool"));
 
 //		BloodAltarRecipeBuilder.altar(input, output, minimumTier, syphon, consumeRate, drainRate).build(consumer, BloodMagic.rl(basePath + ""));
 

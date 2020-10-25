@@ -1,5 +1,7 @@
 package wayoftime.bloodmagic.util;
 
+import java.util.Locale;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -47,5 +49,10 @@ public class Utils
 		}
 
 		return false;
+	}
+
+	public static String toFancyCasing(String input)
+	{
+		return String.valueOf(input.charAt(0)).toUpperCase(Locale.ENGLISH) + input.substring(1);
 	}
 }

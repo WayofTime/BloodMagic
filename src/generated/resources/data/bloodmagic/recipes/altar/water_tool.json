@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:altar",
+  "input": {
+    "tag": "forge:storage_blocks/lapis"
+  },
+  "output": {
+    "item": "bloodmagic:waterscribetool",
+    "nbt": "{Damage:0}"
+  },
+  "upgradeLevel": 2,
+  "altarSyphon": 1000,
+  "consumptionRate": 5,
+  "drainRate": 5
+}
