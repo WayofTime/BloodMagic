@@ -149,7 +149,7 @@ public class Utils
 		double posZ = spawnPos.getZ() + 0.5;
 
 		ItemEntity entityItem = new ItemEntity(world, posX, posY, posZ, stack);
-		entityItem.setVelocity(velX, velY, velZ);
+		entityItem.setMotion(velX, velY, velZ);
 
 		entityItem.setItem(stack);
 		return world.addEntity(entityItem);
