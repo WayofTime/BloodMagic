@@ -28,6 +28,7 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -232,7 +233,7 @@ public class ItemRitualDiviner extends Item
 
 			boolean sneaking = Screen.hasShiftDown();
 //			boolean extraInfo = sneaking && Keyboard.isKeyDown(Keyboard.KEY_M);
-			boolean extraInfo = Screen.hasAltDown();
+			boolean extraInfo = sneaking && Screen.hasAltDown();
 
 			if (extraInfo)
 			{
@@ -315,8 +316,8 @@ public class ItemRitualDiviner extends Item
 					tooltip.add(new StringTextComponent(""));
 				}
 
-				tooltip.add(new TranslationTextComponent(tooltipBase + "extraInfo"));
-				tooltip.add(new TranslationTextComponent(tooltipBase + "extraExtraInfo"));
+				tooltip.add(new TranslationTextComponent(tooltipBase + "extraInfo").mergeStyle(TextFormatting.BLUE));
+				tooltip.add(new TranslationTextComponent(tooltipBase + "extraExtraInfo").mergeStyle(TextFormatting.BLUE));
 			}
 		}
 	}
@@ -341,6 +342,12 @@ public class ItemRitualDiviner extends Item
 			}
 
 			return new ActionResult<>(ActionResultType.SUCCESS, stack);
+		} else
+		{
+			if (!world.isRemote)
+			{
+				cycleDirection(stack, player);
+			}
 		}
 
 		return new ActionResult<>(ActionResultType.PASS, stack);

@@ -98,6 +98,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.diviner.dawnRune", "Dawn Runes: %d");
 		add("tooltip.bloodmagic.diviner.totalRune", "Total Runes: %d");
 		add("tooltip.bloodmagic.diviner.extraInfo", "Press shift for extra info");
+		add("tooltip.bloodmagic.diviner.extraExtraInfo", "-Hold shift + alt for augmentation info-");
 		add("tooltip.bloodmagic.diviner.currentDirection", "Current Direction: %s");
 
 		add("ritual.bloodmagic.testRitual", "Test Ritual");
@@ -206,6 +207,9 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.EARTH_INSCRIPTION_TOOL, "Inscription Tool: Earth");
 		addItem(BloodMagicItems.AIR_INSCRIPTION_TOOL, "Inscription Tool: Air");
 		addItem(BloodMagicItems.DUSK_INSCRIPTION_TOOL, "Inscription Tool: Dusk");
+
+		addItem(BloodMagicItems.BASE_RITUAL_DIVINER, "Ritual Diviner");
+		addItem(BloodMagicItems.DUSK_RITUAL_DIVINER, "Ritual Diviner [Dusk]");
 
 //		addItem(BloodMagicItems , "");
 

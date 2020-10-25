@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
@@ -33,7 +32,6 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model3D;
 import wayoftime.bloodmagic.client.render.RenderResizableCuboid;
-import wayoftime.bloodmagic.client.render.block.RenderFakeBlocks;
 import wayoftime.bloodmagic.common.item.ItemRitualDiviner;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
@@ -117,7 +115,13 @@ public class ClientHandler
 
 		if (tileEntity instanceof TileMasterRitualStone && !player.getHeldItemMainhand().isEmpty()
 				&& player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner)
-			renderRitualStones(player, event.getPartialTicks());
+		{
+			IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
+			MatrixStack stack = event.getMatrixStack();
+			renderRitualStones(stack, buffers, player, event.getPartialTicks());
+			RenderSystem.disableDepthTest();
+			buffers.finish();
+		}
 	}
 
 	private static TextureAtlasSprite forName(AtlasTexture textureMap, String name, String dir)
@@ -125,8 +129,9 @@ public class ClientHandler
 		return textureMap.getSprite(new ResourceLocation(BloodMagic.MODID + dir + "/" + name));
 	}
 
-	private static void renderRitualStones(ClientPlayerEntity player, float partialTicks)
+	private static void renderRitualStones(MatrixStack stack, IRenderTypeBuffer renderer, ClientPlayerEntity player, float partialTicks)
 	{
+		IVertexBuilder buffer = renderer.getBuffer(Atlases.getTranslucentCullBlockType());
 		World world = player.getEntityWorld();
 		ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getCurrentItem().getItem();
 		Direction direction = ritualDiviner.getDirection(player.inventory.getCurrentItem());
@@ -134,11 +139,6 @@ public class ClientHandler
 
 		if (ritual == null)
 			return;
-
-		GlStateManager.pushMatrix();
-		GlStateManager.enableBlend();
-//		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-//		GlStateManager.color4f(1F, 1F, 1F, 0.6125F);
 
 		BlockPos vec3, vX;
 		vec3 = ((BlockRayTraceResult) minecraft.objectMouseOver).getPos();
@@ -150,51 +150,58 @@ public class ClientHandler
 		ritual.gatherComponents(components::add);
 		for (RitualComponent ritualComponent : components)
 		{
+			stack.push();
 			vX = vec3.add(ritualComponent.getOffset(direction));
-			double minX = vX.getX() - posX;
-			double minY = vX.getY() - posY;
-			double minZ = vX.getZ() - posZ;
+			Vector3d eyePos = player.getEyePosition(partialTicks);
+			double minX = vX.getX() - eyePos.x;
+			double minY = vX.getY() - eyePos.y;
+			double minZ = vX.getZ() - eyePos.z;
+//			double minX = vX.getX() - posX;
+//			double minY = vX.getY() - posY;
+//			double minZ = vX.getZ() - posZ;
+
+			stack.translate(minX, minY, minZ);
 
 			if (!world.getBlockState(vX).isOpaqueCube(world, vX))
 			{
-				TextureAtlasSprite texture = null;
+				ResourceLocation rl = null;
 
-//				switch (ritualComponent.getRuneType())
-//				{
-//				case BLANK:
-//					texture = ritualStoneBlank;
-//					break;
-//				case WATER:
-//					texture = ritualStoneWater;
-//					break;
-//				case FIRE:
-//					texture = ritualStoneFire;
-//					break;
-//				case EARTH:
-//					texture = ritualStoneEarth;
-//					break;
-//				case AIR:
-//					texture = ritualStoneAir;
-//					break;
-//				case DAWN:
-//					texture = ritualStoneDawn;
-//					break;
-//				case DUSK:
-//					texture = ritualStoneDusk;
-//					break;
-//				}
+				switch (ritualComponent.getRuneType())
+				{
+				case BLANK:
+					rl = ritualStoneBlank;
+					break;
+				case WATER:
+					rl = ritualStoneWater;
+					break;
+				case FIRE:
+					rl = ritualStoneFire;
+					break;
+				case EARTH:
+					rl = ritualStoneEarth;
+					break;
+				case AIR:
+					rl = ritualStoneAir;
+					break;
+				case DAWN:
+					rl = ritualStoneDawn;
+					break;
+				case DUSK:
+					rl = ritualStoneDusk;
+					break;
+				}
 
-				RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
+				Model3D model = getBlockModel(rl);
+
+				RenderResizableCuboid.INSTANCE.renderCube(model, stack, buffer, 0xDDFFFFFF, 0x00F000F0, OverlayTexture.NO_OVERLAY);
 			}
+			stack.pop();
 		}
-
-		GlStateManager.popMatrix();
 	}
 
 	public static void renderRitualStones(MatrixStack stack, IRenderTypeBuffer renderer, TileMasterRitualStone masterRitualStone, float partialTicks)
 	{
 		IVertexBuilder buffer = renderer.getBuffer(Atlases.getTranslucentCullBlockType());
-		System.out.println("Attempting to render stones");
 		ClientPlayerEntity player = minecraft.player;
 		World world = player.getEntityWorld();
 		Direction direction = mrsHoloDirection;
@@ -204,10 +211,6 @@ public class ClientHandler
 		{
 			return;
 		}
-//		GlStateManager.pushMatrix();
-//		GlStateManager.enableBlend();
-//		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-//		GlStateManager.color4f(1F, 1F, 1F, 0.5F);
 
 		BlockPos vec3, vX;
 		vec3 = masterRitualStone.getPos();
@@ -226,11 +229,14 @@ public class ClientHandler
 			double minY = vX.getY() - eyePos.y;
 			double minZ = vX.getZ() - eyePos.z;
 
+//			double minX = vX.getX() - posX;
+//			double minY = vX.getY() - posY;
+//			double minZ = vX.getZ() - posZ;
+
 			stack.translate(minX, minY, minZ);
 
 			if (!world.getBlockState(vX).isOpaqueCube(world, vX))
 			{
-
 				ResourceLocation rl = null;
 
 				switch (ritualComponent.getRuneType())
