@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:lava_crystal"
+    ]
+  },
+  "criteria": {
+    "has_weak_orb": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:weakbloodorb"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:lava_crystal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_weak_orb",
+      "has_the_recipe"
+    ]
+  ]
+}

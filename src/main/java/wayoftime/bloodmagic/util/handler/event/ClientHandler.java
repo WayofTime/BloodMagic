@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.texture.AtlasTexture;
@@ -131,6 +132,8 @@ public class ClientHandler
 
 	private static void renderRitualStones(MatrixStack stack, IRenderTypeBuffer renderer, ClientPlayerEntity player, float partialTicks)
 	{
+		ActiveRenderInfo activerenderinfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
+		Vector3d eyePos = activerenderinfo.getProjectedView();
 		IVertexBuilder buffer = renderer.getBuffer(Atlases.getTranslucentCullBlockType());
 		World world = player.getEntityWorld();
 		ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getCurrentItem().getItem();
@@ -142,9 +145,6 @@ public class ClientHandler
 
 		BlockPos vec3, vX;
 		vec3 = ((BlockRayTraceResult) minecraft.objectMouseOver).getPos();
-		double posX = player.lastTickPosX + (player.getPosX() - player.lastTickPosX) * partialTicks;
-		double posY = player.lastTickPosY + (player.getPosY() - player.lastTickPosY) * partialTicks;
-		double posZ = player.lastTickPosZ + (player.getPosZ() - player.lastTickPosZ) * partialTicks;
 
 		List<RitualComponent> components = Lists.newArrayList();
 		ritual.gatherComponents(components::add);
@@ -152,13 +152,9 @@ public class ClientHandler
 		{
 			stack.push();
 			vX = vec3.add(ritualComponent.getOffset(direction));
-			Vector3d eyePos = player.getEyePosition(partialTicks);
 			double minX = vX.getX() - eyePos.x;
 			double minY = vX.getY() - eyePos.y;
 			double minZ = vX.getZ() - eyePos.z;
-//			double minX = vX.getX() - posX;
-//			double minY = vX.getY() - posY;
-//			double minZ = vX.getZ() - posZ;
 
 			stack.translate(minX, minY, minZ);
 
@@ -201,6 +197,8 @@ public class ClientHandler
 
 	public static void renderRitualStones(MatrixStack stack, IRenderTypeBuffer renderer, TileMasterRitualStone masterRitualStone, float partialTicks)
 	{
+		ActiveRenderInfo activerenderinfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
+		Vector3d eyePos = activerenderinfo.getProjectedView();
 		IVertexBuilder buffer = renderer.getBuffer(Atlases.getTranslucentCullBlockType());
 		ClientPlayerEntity player = minecraft.player;
 		World world = player.getEntityWorld();
@@ -214,9 +212,6 @@ public class ClientHandler
 
 		BlockPos vec3, vX;
 		vec3 = masterRitualStone.getPos();
-		double posX = player.lastTickPosX + (player.getPosX() - player.lastTickPosX) * partialTicks;
-		double posY = player.lastTickPosY + (player.getPosY() - player.lastTickPosY) * partialTicks;
-		double posZ = player.lastTickPosZ + (player.getPosZ() - player.lastTickPosZ) * partialTicks;
 
 		List<RitualComponent> components = Lists.newArrayList();
 		ritual.gatherComponents(components::add);
@@ -224,14 +219,10 @@ public class ClientHandler
 		{
 			stack.push();
 			vX = vec3.add(ritualComponent.getOffset(direction));
-			Vector3d eyePos = player.getEyePosition(partialTicks);
+
 			double minX = vX.getX() - eyePos.x;
 			double minY = vX.getY() - eyePos.y;
 			double minZ = vX.getZ() - eyePos.z;
-
-//			double minX = vX.getX() - posX;
-//			double minY = vX.getY() - posY;
-//			double minZ = vX.getZ() - posZ;
 
 			stack.translate(minX, minY, minZ);
 
