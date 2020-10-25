@@ -37,6 +37,7 @@ public class BloodAltarRecipeProvider implements ISubRecipeProvider
 		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_LAPIS), new ItemStack(BloodMagicItems.WATER_INSCRIPTION_TOOL.get()), AltarTier.THREE.ordinal(), 1000, 5, 5).build(consumer, BloodMagic.rl(basePath + "water_tool"));
 		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(Items.MAGMA_CREAM), new ItemStack(BloodMagicItems.FIRE_INSCRIPTION_TOOL.get()), AltarTier.THREE.ordinal(), 1000, 5, 5).build(consumer, BloodMagic.rl(basePath + "fire_tool"));
 		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(Items.GHAST_TEAR), new ItemStack(BloodMagicItems.AIR_INSCRIPTION_TOOL.get()), AltarTier.THREE.ordinal(), 1000, 5, 5).build(consumer, BloodMagic.rl(basePath + "air_tool"));
+		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(BloodMagicItems.LAVA_CRYSTAL.get()), new ItemStack(BloodMagicItems.WEAK_ACTIVATION_CRYSTAL.get()), AltarTier.THREE.ordinal(), 10000, 20, 10).build(consumer, BloodMagic.rl("weak_activation_crystal"));
 
 		// FOUR
 		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(BloodMagicItems.IMBUED_SLATE.get()), new ItemStack(BloodMagicItems.DEMONIC_SLATE.get()), AltarTier.FOUR.ordinal(), 15000, 20, 20).build(consumer, BloodMagic.rl(basePath + "demonicslate"));
