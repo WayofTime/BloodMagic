@@ -19,6 +19,8 @@ public class GeneratorLanguage extends LanguageProvider
 		// Creative Tab
 		add("itemGroup.bloodmagic.creativeTab", "Blood Magic");
 
+		add("chat.bloodmagic.damageSource", "%s's soul became too weak");
+
 		// Tile Entitites
 		add("tile.bloodmagic.soulforge.name", "Hellfire Forge");
 

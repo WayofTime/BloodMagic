@@ -102,7 +102,7 @@ public class ItemSacrificialDagger extends Item
 				player.hurtResistantTime = 0;
 				player.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 0.001F);
 				player.setHealth(Math.max(player.getHealth() - 1.998F, 0.0001f));
-				if (player.getHealth() <= 0.001f)
+				if (player.getHealth() <= 0.001f && !world.isRemote)
 				{
 					player.onDeath(DamageSourceBloodMagic.INSTANCE);
 					player.setHealth(0);
