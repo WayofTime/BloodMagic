@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:ritual_diviner_1"
+    ]
+  },
+  "criteria": {
+    "has_demon_slate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:demonslate"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:ritual_diviner_1"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_demon_slate",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BucketItem;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -54,10 +53,8 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase
 	{
 		BlockState state = world.getBlockState(blockPos);
 		Block block = state.getBlock();
-		BucketItem b;
-		System.out.println(block);
+
 		IFluidHandler targetFluidHandler = FluidUtil.getFluidHandler(world, blockPos, side).orElse(null);
-		System.out.println(targetFluidHandler);
 
 		if (targetFluidHandler == null)
 

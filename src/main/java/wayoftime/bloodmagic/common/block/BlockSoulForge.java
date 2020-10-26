@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -27,13 +28,6 @@ public class BlockSoulForge extends Block// implements IBMBlock
 	public BlockSoulForge()
 	{
 		super(Properties.create(Material.IRON).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
-
-//		setTranslationKey(BloodMagic.MODID + ".soulForge");
-//		setHardness(2.0F);
-//		setResistance(5.0F);
-//		setSoundType(SoundType.METAL);
-//		setHarvestLevel("pickaxe", 1);
-//		setCreativeTab(BloodMagic.TAB_BM);
 	}
 
 	@Override
@@ -76,20 +70,29 @@ public class BlockSoulForge extends Block// implements IBMBlock
 		return ActionResultType.SUCCESS;
 	}
 
-//	@Override
-//	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
-//	{
-//		TileSoulForge tileSoulForge = (TileSoulForge) world.getTileEntity(blockPos);
-//		if (tileSoulForge != null)
-//			tileSoulForge.dropItems();
-//
-//		super.breakBlock(world, blockPos, blockState);
-//	}
+	@Override
+	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	{
+		TileSoulForge forge = (TileSoulForge) world.getTileEntity(blockPos);
+		if (forge != null)
+			forge.dropItems();
 
-//
-//	@Override
-//	public BlockItem getItem()
-//	{
-//		return new BlockItem(this);
-//	}
+		super.onPlayerDestroy(world, blockPos, blockState);
+	}
+
+	@Override
+	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	{
+		if (!state.isIn(newState.getBlock()))
+		{
+			TileEntity tileentity = worldIn.getTileEntity(pos);
+			if (tileentity instanceof TileSoulForge)
+			{
+				((TileSoulForge) tileentity).dropItems();
+				worldIn.updateComparatorOutputLevel(pos, this);
+			}
+
+			super.onReplaced(state, worldIn, pos, newState, isMoving);
+		}
+	}
 }

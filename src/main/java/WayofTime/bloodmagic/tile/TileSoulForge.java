@@ -231,48 +231,6 @@ public class TileSoulForge extends TileInventory
 		return ((double) burnTime) / ticksRequired;
 	}
 
-//	private boolean canCraft(RecipeTartaricForge recipe)
-//	{
-//		if (recipe == null)
-//			return false;
-//
-//		ItemStack currentOutputStack = getStackInSlot(outputSlot);
-//		if (recipe.getOutput().isEmpty())
-//			return false;
-//		if (currentOutputStack.isEmpty())
-//			return true;
-//		if (!currentOutputStack.isItemEqual(recipe.getOutput()))
-//			return false;
-//		int result = currentOutputStack.getCount() + recipe.getOutput().getCount();
-//		return result <= getInventoryStackLimit() && result <= currentOutputStack.getMaxStackSize();
-//
-//	}
-//
-//	public void craftItem(RecipeTartaricForge recipe)
-//	{
-//		if (this.canCraft(recipe))
-//		{
-//			ItemStack currentOutputStack = getStackInSlot(outputSlot);
-//
-//			List<ItemStack> inputList = new ArrayList<>();
-//			for (int i = 0; i < 4; i++) if (!getStackInSlot(i).isEmpty())
-//				inputList.add(getStackInSlot(i).copy());
-//
-//			BloodMagicCraftedEvent.SoulForge event = new BloodMagicCraftedEvent.SoulForge(recipe.getOutput().copy(), inputList.toArray(new ItemStack[0]));
-//			MinecraftForge.EVENT_BUS.post(event);
-//
-//			if (currentOutputStack.isEmpty())
-//			{
-//				setInventorySlotContents(outputSlot, event.getOutput());
-//			} else if (ItemHandlerHelper.canItemStacksStack(currentOutputStack, event.getOutput()))
-//			{
-//				currentOutputStack.grow(event.getOutput().getCount());
-//			}
-//
-//			consumeInventory();
-//		}
-//	}
-
 	public double getWill(EnumDemonWillType type)
 	{
 		ItemStack soulStack = getStackInSlot(soulSlot);

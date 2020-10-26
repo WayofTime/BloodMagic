@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "tdt",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "bloodmagic:demonslate"
+    },
+    "t": {
+      "item": "bloodmagic:duskscribetool"
+    },
+    "d": {
+      "item": "bloodmagic:ritualdiviner"
+    }
+  },
+  "result": {
+    "item": "bloodmagic:ritualdivinerdusk"
+  }
+}
