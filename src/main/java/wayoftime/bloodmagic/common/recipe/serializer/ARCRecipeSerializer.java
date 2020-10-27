@@ -17,8 +17,10 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.api.SerializerHelper;
+import wayoftime.bloodmagic.api.event.recipes.FluidStackIngredient;
 import wayoftime.bloodmagic.api.impl.recipe.RecipeARC;
 import wayoftime.bloodmagic.util.Constants;
 
@@ -70,7 +72,24 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 			}
 		}
 
-		return this.factory.create(recipeId, inputIng, toolIng, output, addedItems);
+		FluidStackIngredient inputFluidIng = null;
+
+		if (json.has(Constants.JSON.INPUT_FLUID))
+		{
+			JsonElement inputFluid = JSONUtils.isJsonArray(json, Constants.JSON.INPUT_FLUID)
+					? JSONUtils.getJsonArray(json, Constants.JSON.INPUT_FLUID)
+					: JSONUtils.getJsonObject(json, Constants.JSON.INPUT_FLUID);
+			inputFluidIng = FluidStackIngredient.deserialize(inputFluid);
+		}
+
+		FluidStack outputFluid = null;
+
+		if (json.has(Constants.JSON.OUTPUT_FLUID))
+		{
+			outputFluid = SerializerHelper.deserializeFluid(json);
+		}
+
+		return this.factory.create(recipeId, inputIng, toolIng, inputFluidIng, output, addedItems, outputFluid);
 	}
 
 	@Override
@@ -98,7 +117,20 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 				buffer.writeDouble(pair.getValue());
 			}
 
-			return this.factory.create(recipeId, inputIng, toolIng, output, addedItems);
+			FluidStackIngredient inputFluid = null;
+			FluidStack outputFluid = null;
+
+			if (buffer.readBoolean())
+			{
+				inputFluid = FluidStackIngredient.read(buffer);
+			}
+
+			if (buffer.readBoolean())
+			{
+				outputFluid = FluidStack.readFromPacket(buffer);
+			}
+
+			return this.factory.create(recipeId, inputIng, toolIng, inputFluid, output, addedItems, outputFluid);
 		} catch (Exception e)
 		{
 //	Mekanism.logger.error("Error reading electrolysis recipe from packet.", e);
@@ -122,6 +154,6 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 	@FunctionalInterface
 	public interface IFactory<RECIPE extends RecipeARC>
 	{
-		RECIPE create(ResourceLocation id, Ingredient input, Ingredient arcTool, ItemStack output, List<Pair<ItemStack, Double>> addedItems);
+		RECIPE create(ResourceLocation id, Ingredient input, Ingredient arcTool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Double>> addedItems, FluidStack outputFluid);
 	}
 }

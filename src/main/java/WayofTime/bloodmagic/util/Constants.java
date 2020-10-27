@@ -141,10 +141,15 @@ public class Constants
 		public static final String ITEM = "item";
 		public static final String COUNT = "count";
 		public static final String NBT = "nbt";
+		public static final String TAG = "tag";
 		public static final String TYPE = "type";
 		public static final String TEXTURE = "texture";
 		public static final String CONDITIONS = "conditions";
 		public static final String CHANCE = "chance";
+		public static final String FLUID = "fluid";
+		public static final String AMOUNT = "amount";
+		public static final String INPUT_FLUID = "inputfluid";
+		public static final String OUTPUT_FLUID = "outputfluid";
 
 		public static final String ALTAR_TIER = Constants.NBT.ALTAR_TIER;
 		public static final String ALTAR_SYPHON = "altarSyphon";

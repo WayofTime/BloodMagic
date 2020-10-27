@@ -6,6 +6,14 @@
   "tool": {
     "item": "minecraft:acacia_boat"
   },
+  "inputfluid": {
+    "amount": 1000,
+    "fluid": "minecraft:lava"
+  },
+  "outputfluid": {
+    "fluid": "minecraft:water",
+    "amount": 100
+  },
   "output": {
     "item": "bloodmagic:altar"
   }

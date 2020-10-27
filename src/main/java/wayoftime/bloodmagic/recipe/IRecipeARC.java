@@ -10,20 +10,22 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
+import wayoftime.bloodmagic.api.event.recipes.FluidStackIngredient;
 import wayoftime.bloodmagic.api.impl.recipe.RecipeARC;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 
 public class IRecipeARC extends RecipeARC
 {
-	public IRecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, ItemStack output)
+	public IRecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid)
 	{
-		super(id, input, arc_tool, output, new ArrayList<Pair<ItemStack, Double>>());
+		super(id, input, arc_tool, inputFluid, output, new ArrayList<Pair<ItemStack, Double>>(), outputFluid);
 	}
 
-	public IRecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, ItemStack output, List<Pair<ItemStack, Double>> addedItems)
+	public IRecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Double>> addedItems, FluidStack outputFluid)
 	{
-		super(id, input, arc_tool, output, addedItems);
+		super(id, input, arc_tool, inputFluid, output, addedItems, outputFluid);
 	}
 
 	@Override
