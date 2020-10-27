@@ -66,7 +66,7 @@ public class BloodMagic
 {
 	public static final String MODID = "bloodmagic";
 	// Directly reference a log4j logger.
-	private static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogManager.getLogger();
 
 	private static Gson GSON = null;
 

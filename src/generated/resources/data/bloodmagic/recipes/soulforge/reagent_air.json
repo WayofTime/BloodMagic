@@ -1,0 +1,17 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "minecraft:ghast_tear"
+  },
+  "input1": {
+    "tag": "forge:feathers"
+  },
+  "input2": {
+    "tag": "forge:feathers"
+  },
+  "output": {
+    "item": "bloodmagic:reagentair"
+  },
+  "minimumDrain": 128.0,
+  "drain": 20.0
+}

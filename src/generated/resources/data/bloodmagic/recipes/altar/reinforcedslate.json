@@ -6,7 +6,7 @@
   "output": {
     "item": "bloodmagic:reinforcedslate"
   },
-  "upgradeLevel": 2,
+  "upgradeLevel": 1,
   "altarSyphon": 2000,
   "consumptionRate": 5,
   "drainRate": 5

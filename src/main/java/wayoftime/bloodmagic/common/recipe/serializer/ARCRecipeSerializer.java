@@ -11,6 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -19,6 +20,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.SerializerHelper;
 import wayoftime.bloodmagic.api.event.recipes.FluidStackIngredient;
 import wayoftime.bloodmagic.api.impl.recipe.RecipeARC;
@@ -110,15 +112,8 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 				addedItems.add(Pair.of(stack, chance));
 			}
 
-			buffer.writeInt(addedItems.size());
-			for (Pair<ItemStack, Double> pair : addedItems)
-			{
-				buffer.writeItemStack(pair.getLeft());
-				buffer.writeDouble(pair.getValue());
-			}
-
 			FluidStackIngredient inputFluid = null;
-			FluidStack outputFluid = null;
+			FluidStack outputFluid = new FluidStack(Fluids.EMPTY, 1000);
 
 			if (buffer.readBoolean())
 			{
@@ -133,7 +128,7 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 			return this.factory.create(recipeId, inputIng, toolIng, inputFluid, output, addedItems, outputFluid);
 		} catch (Exception e)
 		{
-//	Mekanism.logger.error("Error reading electrolysis recipe from packet.", e);
+			BloodMagic.LOGGER.error("Error reading ARC recipe from packet.", e);
 			throw e;
 		}
 	}
@@ -146,7 +141,7 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 			recipe.write(buffer);
 		} catch (Exception e)
 		{
-//	Mekanism.logger.error("Error writing electrolysis recipe to packet.", e);
+			BloodMagic.LOGGER.error("Error writing ARC recipe to packet.", e);
 			throw e;
 		}
 	}
