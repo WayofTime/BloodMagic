@@ -14,7 +14,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
-import wayoftime.bloodmagic.common.item.IARCTool;
+import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
 
 public class ContainerAlchemicalReactionChamber extends Container
@@ -88,7 +88,7 @@ public class ContainerAlchemicalReactionChamber extends Container
 				slot.onSlotChange(itemstack1, itemstack);
 			} else if (index > 9) // Attempting to transfer from main inventory
 			{
-				if (itemstack1.getItem() instanceof IARCTool) // Try the tool slot first
+				if (itemstack1.getItem().isIn(BloodMagicTags.ARC_TOOL)) // Try the tool slot first
 				{
 					if (!this.mergeItemStack(itemstack1, 0, 1, false))
 					{
@@ -150,7 +150,7 @@ public class ContainerAlchemicalReactionChamber extends Container
 		@Override
 		public boolean isItemValid(ItemStack itemStack)
 		{
-			return itemStack.getItem() instanceof IARCTool;
+			return itemStack.getItem().isIn(BloodMagicTags.ARC_TOOL);
 		}
 	}
 

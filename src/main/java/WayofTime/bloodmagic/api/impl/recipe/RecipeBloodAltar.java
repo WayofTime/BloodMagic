@@ -14,7 +14,6 @@ import wayoftime.bloodmagic.altar.AltarTier;
 
 public abstract class RecipeBloodAltar extends BloodMagicRecipe
 {
-
 	@Nonnull
 	private final Ingredient input;
 	@Nonnull

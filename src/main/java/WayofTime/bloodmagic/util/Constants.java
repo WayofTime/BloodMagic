@@ -133,8 +133,10 @@ public class Constants
 	public static class JSON
 	{
 		public static final String INPUT = "input";
+		public static final String TOOL = "tool";
 		public static final String BASEINPUT = "baseinput";
 		public static final String ADDEDINPUT = "addedinput";
+		public static final String ADDEDOUTPUT = "addedoutput";
 		public static final String OUTPUT = "output";
 		public static final String ITEM = "item";
 		public static final String COUNT = "count";
@@ -142,6 +144,7 @@ public class Constants
 		public static final String TYPE = "type";
 		public static final String TEXTURE = "texture";
 		public static final String CONDITIONS = "conditions";
+		public static final String CHANCE = "chance";
 
 		public static final String ALTAR_TIER = Constants.NBT.ALTAR_TIER;
 		public static final String ALTAR_SYPHON = "altarSyphon";

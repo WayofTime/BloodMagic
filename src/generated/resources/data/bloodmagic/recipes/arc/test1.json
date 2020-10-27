@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "forge:gems/diamond"
+  },
+  "tool": {
+    "tag": "forge:bones"
+  },
+  "addedoutput": [
+    {
+      "chance": 0.5,
+      "type": {
+        "item": "minecraft:diamond"
+      }
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:altar"
+  }
+}

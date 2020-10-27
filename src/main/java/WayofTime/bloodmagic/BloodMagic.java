@@ -38,7 +38,9 @@ import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.GeneratorBaseRecipes;
 import wayoftime.bloodmagic.common.data.GeneratorBlockStates;
+import wayoftime.bloodmagic.common.data.GeneratorBlockTags;
 import wayoftime.bloodmagic.common.data.GeneratorItemModels;
+import wayoftime.bloodmagic.common.data.GeneratorItemTags;
 import wayoftime.bloodmagic.common.data.GeneratorLanguage;
 import wayoftime.bloodmagic.common.data.GeneratorLootTable;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
@@ -117,7 +119,7 @@ public class BloodMagic
 
 	private void registerRecipes(RegistryEvent.Register<IRecipeSerializer<?>> event)
 	{
-		System.out.println("Registering IngredientBloodOrb Serializer.");
+//		System.out.println("Registering IngredientBloodOrb Serializer.");
 		CraftingHelper.register(IngredientBloodOrb.NAME, IngredientBloodOrb.Serializer.INSTANCE);
 
 //        event.getRegistry().registerAll(
@@ -171,6 +173,11 @@ public class BloodMagic
 			gen.addProvider(new BloodMagicRecipeProvider(gen));
 			gen.addProvider(new GeneratorBaseRecipes(gen));
 			gen.addProvider(new GeneratorLootTable(gen));
+
+			GeneratorBlockTags bmBlockTags = new GeneratorBlockTags(gen, event.getExistingFileHelper());
+			gen.addProvider(bmBlockTags);
+			gen.addProvider(new GeneratorItemTags(gen, bmBlockTags, event.getExistingFileHelper()));
+
 		}
 	}
 

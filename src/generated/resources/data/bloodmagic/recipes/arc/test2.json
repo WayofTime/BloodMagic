@@ -1,0 +1,12 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "forge:gems/diamond"
+  },
+  "tool": {
+    "item": "minecraft:acacia_boat"
+  },
+  "output": {
+    "item": "bloodmagic:altar"
+  }
+}

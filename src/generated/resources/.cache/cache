@@ -194,6 +194,8 @@ f38355165034ce314a9f0344ebc3a6cad22c76c8 data/bloodmagic/recipes/altar/reinforce
 584d01dff4d64bb88bd3783751a29723700f1728 data/bloodmagic/recipes/altar/slate.json
 926d4a0e165c87a15a609744d832d2f5f04a40d0 data/bloodmagic/recipes/altar/water_tool.json
 7551501cf361667ec7454c307b9d2368536fbed6 data/bloodmagic/recipes/altar/weakbloodorb.json
+4f511cfb93faf65aa50fabd7e753e0759ed95a1c data/bloodmagic/recipes/arc/test1.json
+14e7bce6990a346e36171564c29f93a14e50df44 data/bloodmagic/recipes/arc/test2.json
 e1285ec51100f2336c1ea1a1a3057e74a0dd84d1 data/bloodmagic/recipes/array/airsigil.json
 d1ac23080f72f21adb5908befefe965ffb4efd4f data/bloodmagic/recipes/array/bloodlightsigil.json
 1890706e5b93cd6df764b0419483c348e0d7f277 data/bloodmagic/recipes/array/divinationsigil.json
@@ -231,3 +233,4 @@ c0e75e0e12290d191245c5b0b5b13bc739d2ff44 data/bloodmagic/recipes/soulforge/reage
 a222d09abf1ea61feb684f2ac23d011c2034f526 data/bloodmagic/recipes/soulforge/reagent_water.json
 7e281841a2953c1284d332c2bbf75097f8128241 data/bloodmagic/recipes/soulforge/sentientsword.json
 d7d993bb729284a5201c164ea81fbe1d8e4e4750 data/bloodmagic/recipes/weak_activation_crystal.json
+94ff722e094a3479433cad0e4a1386f68f170e7b data/bloodmagic/tags/items/arc_tool.json

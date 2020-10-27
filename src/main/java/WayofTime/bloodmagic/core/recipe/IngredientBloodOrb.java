@@ -18,12 +18,6 @@ import wayoftime.bloodmagic.orb.BloodOrb;
 
 public class IngredientBloodOrb extends Ingredient
 {
-
-//	private final BloodOrb orb;
-//	private NonNullList<ItemStack> orbs;
-//	private IntList itemIds = null;
-//	private ItemStack[] items;
-
 	public static final ResourceLocation NAME = new ResourceLocation(BloodMagic.MODID, "bloodorb");
 
 	public final int orbTier;
@@ -61,14 +55,8 @@ public class IngredientBloodOrb extends Ingredient
 		@Override
 		public Collection<ItemStack> getStacks()
 		{
-//			System.out.println("BING BONG");
 			List<ItemStack> orbGet = OrbRegistry.getOrbsDownToTier(orbTier);
-//			List<ItemStack> orbGet = new ArrayList<ItemStack>();
-//			orbGet.add(new ItemStack(Items.DIAMOND));
-//	        orbs = NonNullList.withSize(orbGet.size(), ItemStack.EMPTY);
-//	
-//	        for (int i = 0; i < orbGet.size(); i++)
-//	            orbs.set(i, orbGet.get(i));
+
 			return orbGet;
 		}
 
@@ -89,24 +77,7 @@ public class IngredientBloodOrb extends Ingredient
 		@Override
 		public Ingredient parse(JsonObject json)
 		{
-			System.out.println("Parsing Blood Orb");
 			return new IngredientBloodOrb(JSONUtils.getInt(json, "orb_tier"));
 		}
 	}
-
-//
-//	@Override
-//	public boolean test(@Nullable ItemStack input)
-//	{
-//		System.out.println("Testing");
-//		if (input == null || input.isEmpty())
-//			return false;
-//
-//		if (!(input.getItem() instanceof IBloodOrb))
-//			return false;
-//
-//		BloodOrb orb = ((IBloodOrb) input.getItem()).getOrb(input);
-//		return orb != null && orb.getTier() >= this.orbTier;
-//	}
-
 }
