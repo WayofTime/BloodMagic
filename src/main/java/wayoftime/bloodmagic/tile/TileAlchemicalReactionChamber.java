@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -13,10 +14,14 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.fluids.FluidActionResult;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.tile.contailer.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.util.Constants;
@@ -60,7 +65,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 		inputTank.readFromNBT(inputTankTag);
 
 		CompoundNBT outputTankTag = tag.getCompound("outputtank");
-		inputTank.readFromNBT(outputTankTag);
+		outputTank.readFromNBT(outputTankTag);
 	}
 
 	@Override
@@ -75,7 +80,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 		tag.put("inputtank", inputTankTag);
 
 		CompoundNBT outputTankTag = new CompoundNBT();
-		inputTank.writeToNBT(outputTankTag);
+		outputTank.writeToNBT(outputTankTag);
 		tag.put("outputtank", outputTankTag);
 
 		return tag;
@@ -89,24 +94,74 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 			return;
 		}
 
-		ItemStack bucketStack = this.getStackInSlot(INPUT_BUCKET_SLOT);
+		if (world.getGameTime() % 20 == 0)
+		{
+			outputTank.fill(new FluidStack(Fluids.WATER, 100), FluidAction.EXECUTE);
+		}
+
+		ItemStack fullBucketStack = this.getStackInSlot(INPUT_BUCKET_SLOT);
+		ItemStack emptyBucketStack = this.getStackInSlot(OUTPUT_BUCKET_SLOT);
+
 		ItemStack[] outputInventory = new ItemStack[]
 		{ getStackInSlot(1), getStackInSlot(2), getStackInSlot(3), getStackInSlot(4), getStackInSlot(5) };
 
 		MultiSlotItemHandler outputSlotHandler = new MultiSlotItemHandler(outputInventory, 64);
-//		FluidActionResult res = FluidUtil.tryEmptyContainerAndStow(bucketStack, inputTank, outputSlotHandler, 1000, null, false);
-		FluidActionResult res = FluidUtil.tryEmptyContainerAndStow(bucketStack, inputTank, outputSlotHandler, 1000, null, true);
-		if (res.isSuccess())
+
+		if (!fullBucketStack.isEmpty() && inputTank.getSpace() >= 1000)
 		{
-//			FluidUtil.tryEmptyContainerAndStow(bucketStack, inputTank, outputSlotHandler, 1000, null, true);
-			this.setInventorySlotContents(INPUT_BUCKET_SLOT, ItemStack.EMPTY);
-
-			if (!res.getResult().isEmpty())
+			ItemStack testFullBucketStack = ItemHandlerHelper.copyStackWithSize(fullBucketStack, 1);
+			LazyOptional<IFluidHandlerItem> fluidHandlerWrapper = FluidUtil.getFluidHandler(testFullBucketStack);
+			if (fluidHandlerWrapper.isPresent())
 			{
-				List<ItemStack> arrayList = new ArrayList<>();
-				arrayList.add(res.getResult());
+				IFluidHandlerItem fluidHandler = fluidHandlerWrapper.resolve().get();
+				FluidStack transferedStack = FluidUtil.tryFluidTransfer(inputTank, fluidHandler, 1000, false);
+				if (!transferedStack.isEmpty())
+				{
+					fluidHandler.drain(transferedStack, FluidAction.EXECUTE);
+					List<ItemStack> arrayList = new ArrayList<>();
+					arrayList.add(fluidHandler.getContainer());
+					if (outputSlotHandler.canTransferAllItemsToSlots(arrayList, true))
+					{
+						inputTank.fill(transferedStack, FluidAction.EXECUTE);
+						outputSlotHandler.canTransferAllItemsToSlots(arrayList, false);
+						if (fullBucketStack.getCount() > 1)
+						{
+							fullBucketStack.setCount(fullBucketStack.getCount() - 1);
+						} else
+						{
+							setInventorySlotContents(INPUT_BUCKET_SLOT, ItemStack.EMPTY);
+						}
+					}
+				}
+			}
+		}
 
-				outputSlotHandler.canTransferAllItemsToSlots(arrayList, false);
+		if (!emptyBucketStack.isEmpty() && outputTank.getFluidAmount() >= 1000)
+		{
+			ItemStack testEmptyBucketStack = ItemHandlerHelper.copyStackWithSize(emptyBucketStack, 1);
+			LazyOptional<IFluidHandlerItem> fluidHandlerWrapper = FluidUtil.getFluidHandler(testEmptyBucketStack);
+			if (fluidHandlerWrapper.isPresent())
+			{
+				IFluidHandlerItem fluidHandler = fluidHandlerWrapper.resolve().get();
+				FluidStack transferedStack = FluidUtil.tryFluidTransfer(fluidHandler, outputTank, 1000, false);
+				if (!transferedStack.isEmpty())
+				{
+					fluidHandler.fill(transferedStack, FluidAction.EXECUTE);
+					List<ItemStack> arrayList = new ArrayList<>();
+					arrayList.add(fluidHandler.getContainer());
+					if (outputSlotHandler.canTransferAllItemsToSlots(arrayList, true))
+					{
+						outputTank.drain(transferedStack, FluidAction.EXECUTE);
+						outputSlotHandler.canTransferAllItemsToSlots(arrayList, false);
+						if (emptyBucketStack.getCount() > 1)
+						{
+							emptyBucketStack.setCount(emptyBucketStack.getCount() - 1);
+						} else
+						{
+							setInventorySlotContents(OUTPUT_BUCKET_SLOT, ItemStack.EMPTY);
+						}
+					}
+				}
 			}
 		}
 

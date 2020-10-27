@@ -54,7 +54,9 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 //		inputTank.fill(new FluidStack(Fluids.WATER, 1000), FluidAction.EXECUTE);
 
 		ClientHandler.handleGuiTank(stack, tileARC.inputTank, this.guiLeft + 8, this.guiTop
-				+ 40, 16, 63, 194, 0, 16, 64, mouseX, mouseY, background.toString(), tooltip);
+				+ 40, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), tooltip);
+		ClientHandler.handleGuiTank(stack, tileARC.outputTank, this.guiLeft + 152, this.guiTop
+				+ 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), tooltip);
 
 		if (!tooltip.isEmpty())
 			GuiUtils.drawHoveringText(stack, tooltip, mouseX, mouseY, width, height, -1, font);
@@ -83,6 +85,8 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 
 		ClientHandler.handleGuiTank(stack, tileARC.inputTank, this.guiLeft + 8, this.guiTop
 				+ 40, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), null);
+		ClientHandler.handleGuiTank(stack, tileARC.outputTank, this.guiLeft + 152, this.guiTop
+				+ 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), null);
 
 //		int l = this.getCookProgressScaled(90);
 //		this.blit(stack, i + 115, j + 14 + 90 - l, 176, 90 - l, 18, l);

@@ -140,6 +140,8 @@ public class MultiSlotItemHandler implements IItemHandler
 			copyList[i] = items[i].copy();
 		}
 
+		boolean hasStashedAll = true;
+
 		for (ItemStack stack : stackList)
 		{
 			if (stack.isEmpty())
@@ -167,12 +169,14 @@ public class MultiSlotItemHandler implements IItemHandler
 
 					if (stack.getCount() <= m)
 					{
+						ItemStack copy = stack.copy();
 						if (!simulate)
 						{
-							ItemStack copy = stack.copy();
 							copy.grow(stackInSlot.getCount());
 							copyList[slot] = copy;
 						}
+						stack = ItemStack.EMPTY;
+//						System.out.println("Count: " + stack.getCount() + ", m: " + m);
 
 						break slots;
 					} else
@@ -220,6 +224,7 @@ public class MultiSlotItemHandler implements IItemHandler
 
 			if (!stack.isEmpty())
 			{
+				hasStashedAll = false;
 				break;
 			}
 		}
@@ -229,7 +234,7 @@ public class MultiSlotItemHandler implements IItemHandler
 			items = copyList;
 		}
 
-		return false;
+		return hasStashedAll;
 	}
 
 	@Override
