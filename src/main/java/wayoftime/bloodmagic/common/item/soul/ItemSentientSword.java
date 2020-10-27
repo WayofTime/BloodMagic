@@ -20,6 +20,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -30,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.item.BMItemTier;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.iface.IMultiWillTool;
 import wayoftime.bloodmagic.util.Constants;
@@ -39,7 +41,7 @@ import wayoftime.bloodmagic.will.IDemonWill;
 import wayoftime.bloodmagic.will.IDemonWillWeapon;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
-public class ItemSentientSword extends Item implements IDemonWillWeapon, IMultiWillTool
+public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IMultiWillTool
 {
 	public static int[] soulBracket = new int[]
 	{ 16, 60, 200, 400, 1000, 2000, 4000 };
@@ -81,7 +83,7 @@ public class ItemSentientSword extends Item implements IDemonWillWeapon, IMultiW
 	public ItemSentientSword()
 	{
 //		super(RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL);
-		super(new Item.Properties().maxDamage(520).group(BloodMagic.TAB));
+		super(BMItemTier.SENTIENT, 6, -2.6f, new Item.Properties().maxDamage(520).group(BloodMagic.TAB));
 	}
 
 //	@Override
