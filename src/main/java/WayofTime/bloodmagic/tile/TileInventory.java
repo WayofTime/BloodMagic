@@ -264,11 +264,11 @@ public class TileInventory extends TileBase implements IInventory
 		if (this instanceof ISidedInventory)
 		{
 			handlerDown = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.DOWN));
-			handlerUp = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.DOWN));
-			handlerNorth = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.DOWN));
-			handlerSouth = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.DOWN));
-			handlerWest = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.DOWN));
-			handlerEast = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.DOWN));
+			handlerUp = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.UP));
+			handlerNorth = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.NORTH));
+			handlerSouth = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.SOUTH));
+			handlerWest = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.WEST));
+			handlerEast = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.EAST));
 		} else
 		{
 			handlerDown = LazyOptional.of(() -> new InvWrapper(this));

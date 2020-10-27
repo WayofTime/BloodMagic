@@ -23,6 +23,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		// Tile Entitites
 		add("tile.bloodmagic.soulforge.name", "Hellfire Forge");
+		add("tile.bloodmagic.arc.name", "Alchemical Reaction Chamber");
 
 		// Blood Orb tooltips
 		add("tooltip.bloodmagic.extraInfo", "&9-Hold shift for more info-");
@@ -103,6 +104,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.diviner.extraInfo", "Press shift for extra info");
 		add("tooltip.bloodmagic.diviner.extraExtraInfo", "-Hold shift + alt for augmentation info-");
 		add("tooltip.bloodmagic.diviner.currentDirection", "Current Direction: %s");
+
+		add("tooltip.bloodmagic.holdShiftForInfo", "Press shift for extra info");
 
 		add("ritual.bloodmagic.testRitual", "Test Ritual");
 		add("ritual.bloodmagic.waterRitual", "Ritual of the Full Spring");
@@ -234,6 +237,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("chat.bloodmagic.ritual.prevent", "The ritual is actively resisting you!");
 		add("chat.bloodmagic.ritual.activate", "A rush of energy flows through the ritual!");
 		add("chat.bloodmagic.ritual.notValid", "You feel that these runes are not configured correctly...");
+
+		// GUI
+		add("gui.bloodmagic.empty", "Empty");
 
 	}
 }

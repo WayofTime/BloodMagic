@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.util.handler.event;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -9,30 +10,44 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fml.common.Mod;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model3D;
 import wayoftime.bloodmagic.client.render.RenderResizableCuboid;
+import wayoftime.bloodmagic.client.utils.BMRenderTypes;
 import wayoftime.bloodmagic.common.item.ItemRitualDiviner;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
@@ -61,6 +76,36 @@ public class ClientHandler
 	private static Ritual mrsHoloRitual;
 	private static Direction mrsHoloDirection;
 	private static boolean mrsHoloDisplay;
+
+	static HashMap<String, ResourceLocation> resourceMap = new HashMap<String, ResourceLocation>();
+
+	public static Minecraft mc()
+	{
+		return Minecraft.getInstance();
+	}
+
+	public static void bindTexture(String path)
+	{
+		mc().getTextureManager().bindTexture(getResource(path));
+	}
+
+	public static void bindAtlas()
+	{
+		mc().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
+	}
+
+	public static ResourceLocation getResource(String path)
+	{
+		ResourceLocation rl = resourceMap.containsKey(path) ? resourceMap.get(path) : new ResourceLocation(path);
+		if (!resourceMap.containsKey(path))
+			resourceMap.put(path, rl);
+		return rl;
+	}
+
+	public static TextureAtlasSprite getSprite(ResourceLocation rl)
+	{
+		return mc().getModelManager().getAtlasTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE).getSprite(rl);
+	}
 
 	@SubscribeEvent
 	public static void onTextureStitch(TextureStitchEvent.Pre event)
@@ -297,4 +342,138 @@ public class ClientHandler
 		mrsHoloRitual = null;
 		mrsHoloDirection = Direction.NORTH;
 	}
+
+	public static void handleGuiTank(MatrixStack transform, IFluidTank tank, int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, String originalTexture, List<ITextComponent> tooltip)
+	{
+		handleGuiTank(transform, tank.getFluid(), tank.getCapacity(), x, y, w, h, oX, oY, oW, oH, mX, mY, originalTexture, tooltip);
+	}
+
+	public static void handleGuiTank(MatrixStack transform, FluidStack fluid, int capacity, int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, String originalTexture, List<ITextComponent> tooltip)
+	{
+		if (tooltip == null)
+		{
+			transform.push();
+			IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+			if (fluid != null && fluid.getFluid() != null)
+			{
+				int fluidHeight = (int) (h * (fluid.getAmount() / (float) capacity));
+				drawRepeatedFluidSpriteGui(buffer, transform, fluid, x, y + h - fluidHeight, w, fluidHeight);
+				RenderSystem.color3f(1, 1, 1);
+			}
+			int xOff = (w - oW) / 2;
+			int yOff = (h - oH) / 2;
+			RenderType renderType = BMRenderTypes.getGui(new ResourceLocation(originalTexture));
+			drawTexturedRect(buffer.getBuffer(renderType), transform, x + xOff, y + yOff, oW, oH, 256f, oX, oX
+					+ oW, oY, oY + oH);
+			buffer.finish(renderType);
+			transform.pop();
+		} else
+		{
+			if (mX >= x && mX < x + w && mY >= y && mY < y + h)
+				addFluidTooltip(fluid, tooltip, capacity);
+		}
+	}
+
+	public static void drawRepeatedFluidSpriteGui(IRenderTypeBuffer buffer, MatrixStack transform, FluidStack fluid, float x, float y, float w, float h)
+	{
+		RenderType renderType = BMRenderTypes.getGui(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
+		IVertexBuilder builder = buffer.getBuffer(renderType);
+		drawRepeatedFluidSprite(builder, transform, fluid, x, y, w, h);
+	}
+
+	public static void drawRepeatedFluidSprite(IVertexBuilder builder, MatrixStack transform, FluidStack fluid, float x, float y, float w, float h)
+	{
+		TextureAtlasSprite sprite = getSprite(fluid.getFluid().getAttributes().getStillTexture(fluid));
+		int col = fluid.getFluid().getAttributes().getColor(fluid);
+		int iW = sprite.getWidth();
+		int iH = sprite.getHeight();
+		if (iW > 0 && iH > 0)
+			drawRepeatedSprite(builder, transform, x, y, w, h, iW, iH, sprite.getMinU(), sprite.getMaxU(), sprite.getMinV(), sprite.getMaxV(), (col >> 16
+					& 255) / 255.0f, (col >> 8 & 255) / 255.0f, (col & 255) / 255.0f, 1);
+	}
+
+	public static void drawRepeatedSprite(IVertexBuilder builder, MatrixStack transform, float x, float y, float w, float h, int iconWidth, int iconHeight, float uMin, float uMax, float vMin, float vMax, float r, float g, float b, float alpha)
+	{
+		int iterMaxW = (int) (w / iconWidth);
+		int iterMaxH = (int) (h / iconHeight);
+		float leftoverW = w % iconWidth;
+		float leftoverH = h % iconHeight;
+		float leftoverWf = leftoverW / (float) iconWidth;
+		float leftoverHf = leftoverH / (float) iconHeight;
+		float iconUDif = uMax - uMin;
+		float iconVDif = vMax - vMin;
+		for (int ww = 0; ww < iterMaxW; ww++)
+		{
+			for (int hh = 0; hh < iterMaxH; hh++) drawTexturedRect(builder, transform, x + ww * iconWidth, y
+					+ hh * iconHeight, iconWidth, iconHeight, r, g, b, alpha, uMin, uMax, vMin, vMax);
+			drawTexturedRect(builder, transform, x + ww * iconWidth, y
+					+ iterMaxH * iconHeight, iconWidth, leftoverH, r, g, b, alpha, uMin, uMax, vMin, (vMin
+							+ iconVDif * leftoverHf));
+		}
+		if (leftoverW > 0)
+		{
+			for (int hh = 0; hh < iterMaxH; hh++) drawTexturedRect(builder, transform, x + iterMaxW * iconWidth, y
+					+ hh * iconHeight, leftoverW, iconHeight, r, g, b, alpha, uMin, (uMin
+							+ iconUDif * leftoverWf), vMin, vMax);
+			drawTexturedRect(builder, transform, x + iterMaxW * iconWidth, y
+					+ iterMaxH * iconHeight, leftoverW, leftoverH, r, g, b, alpha, uMin, (uMin
+							+ iconUDif * leftoverWf), vMin, (vMin + iconVDif * leftoverHf));
+		}
+	}
+
+	public static void drawTexturedRect(IVertexBuilder builder, MatrixStack transform, float x, float y, float w, float h, float r, float g, float b, float alpha, float u0, float u1, float v0, float v1)
+	{
+		Matrix4f mat = transform.getLast().getMatrix();
+		builder.pos(mat, x, y
+				+ h, 0).color(r, g, b, alpha).tex(u0, v1).overlay(OverlayTexture.NO_OVERLAY).lightmap(0xf000f0).normal(1, 1, 1).endVertex();
+		builder.pos(mat, x + w, y
+				+ h, 0).color(r, g, b, alpha).tex(u1, v1).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880).normal(1, 1, 1).endVertex();
+		builder.pos(mat, x
+				+ w, y, 0).color(r, g, b, alpha).tex(u1, v0).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880).normal(1, 1, 1).endVertex();
+		builder.pos(mat, x, y, 0).color(r, g, b, alpha).tex(u0, v0).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880).normal(1, 1, 1).endVertex();
+	}
+
+	public static void drawTexturedRect(IVertexBuilder builder, MatrixStack transform, int x, int y, int w, int h, float picSize, int u0, int u1, int v0, int v1)
+	{
+		drawTexturedRect(builder, transform, x, y, w, h, 1, 1, 1, 1, u0 / picSize, u1 / picSize, v0 / picSize, v1
+				/ picSize);
+	}
+
+	public static void addFluidTooltip(FluidStack fluid, List<ITextComponent> tooltip, int tankCapacity)
+	{
+		if (!fluid.isEmpty())
+			tooltip.add(applyFormat(fluid.getDisplayName(), fluid.getFluid().getAttributes().getRarity(fluid).color));
+		else
+			tooltip.add(new TranslationTextComponent("gui.bloodmagic.empty"));
+//		if (fluid.getFluid() instanceof IEFluid)
+//			((IEFluid) fluid.getFluid()).addTooltipInfo(fluid, null, tooltip);
+
+		if (mc().gameSettings.advancedItemTooltips && !fluid.isEmpty())
+		{
+			if (!Screen.hasShiftDown())
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.holdShiftForInfo"));
+			else
+			{
+				// TODO translation keys
+				tooltip.add(applyFormat(new StringTextComponent("Fluid Registry: " + fluid.getFluid().getRegistryName()), TextFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(new StringTextComponent("Density: " + fluid.getFluid().getAttributes().getDensity(fluid)), TextFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(new StringTextComponent("Temperature: " + fluid.getFluid().getAttributes().getTemperature(fluid)), TextFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(new StringTextComponent("Viscosity: " + fluid.getFluid().getAttributes().getViscosity(fluid)), TextFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(new StringTextComponent("NBT Data: " + fluid.getTag()), TextFormatting.DARK_GRAY));
+			}
+		}
+
+		if (tankCapacity > 0)
+			tooltip.add(applyFormat(new StringTextComponent(fluid.getAmount() + "/" + tankCapacity + "mB"), TextFormatting.GRAY));
+		else
+			tooltip.add(applyFormat(new StringTextComponent(fluid.getAmount() + "mB"), TextFormatting.GRAY));
+	}
+
+	public static IFormattableTextComponent applyFormat(ITextComponent component, TextFormatting... color)
+	{
+		Style style = component.getStyle();
+		for (TextFormatting format : color) style = style.applyFormatting(format);
+		return component.deepCopy().setStyle(style);
+	}
+
 }

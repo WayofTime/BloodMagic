@@ -26,7 +26,7 @@ public class BloodAltarRecipeProvider implements ISubRecipeProvider
 		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.STONE), new ItemStack(BloodMagicItems.SLATE.get()), AltarTier.ONE.ordinal(), 1000, 5, 5).build(consumer, new ResourceLocation(BloodMagic.MODID, basePath + "slate"));
 
 		// TWO
-		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(BloodMagicItems.SLATE.get()), new ItemStack(BloodMagicItems.REINFORCED_SLATE.get()), AltarTier.THREE.ordinal(), 2000, 5, 5).build(consumer, BloodMagic.rl(basePath + "reinforcedslate"));
+		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(BloodMagicItems.SLATE.get()), new ItemStack(BloodMagicItems.REINFORCED_SLATE.get()), AltarTier.TWO.ordinal(), 2000, 5, 5).build(consumer, BloodMagic.rl(basePath + "reinforcedslate"));
 		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_REDSTONE), new ItemStack(BloodMagicItems.APPRENTICE_BLOOD_ORB.get()), AltarTier.TWO.ordinal(), 5000, 5, 5).build(consumer, BloodMagic.rl(basePath + "apprenticebloodorb"));
 		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(Items.IRON_SWORD), new ItemStack(BloodMagicItems.DAGGER_OF_SACRIFICE.get()), AltarTier.TWO.ordinal(), 3000, 5, 5).build(consumer, BloodMagic.rl(basePath + "daggerofsacrifice"));
 

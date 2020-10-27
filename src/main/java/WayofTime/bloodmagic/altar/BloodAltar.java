@@ -178,7 +178,6 @@ public class BloodAltar// implements IFluidHandler
 
 	public void startCycle()
 	{
-//		System.out.println("Starting Cycle");
 		if (tileAltar.getWorld() != null)
 			tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
 
@@ -332,7 +331,6 @@ public class BloodAltar// implements IFluidHandler
 			}
 			if (fluid != null && fluid.getAmount() >= 1)
 			{
-				System.out.println("Draining in order to craft! Progress: " + progress + "/" + liquidRequired);
 //				int liquidDrained = Math.min((int) (altarTier.ordinal() >= 1
 //						? consumptionRate * (1 + consumptionMultiplier)
 //						: consumptionRate), fluid.getAmount());
