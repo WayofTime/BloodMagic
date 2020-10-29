@@ -1,0 +1,11 @@
+{
+  "name": "Divination Sigil",
+  "icon": "bloodmagic:divinationsigil",
+  "category": "sigil",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Divination Sigil$()."
+    }
+  ]
+}

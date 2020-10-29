@@ -136,6 +136,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.altarBuilderRitual", "The Assembly of the High Altar");
 		add("ritual.bloodmagic.portalRitual", "The Gate of the Fold");
 
+		// Guide
+		add("guide.bloodmagic.name", "Sanguine Scientiem");
+		add("guide.bloodmagic.landing_text", "\"It is my dear hope that by holding this tome in your hands, I may impart the knowledge of the lost art that is Blood Magic\"$(br)$(o)- Magus Arcana$()");
+
 		// Block names
 		addBlock(BloodMagicBlocks.BLANK_RUNE, "Blank Rune");
 		addBlock(BloodMagicBlocks.SPEED_RUNE, "Speed Rune");

@@ -15,7 +15,9 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.api.IBloodMagicRecipeRegistrar;
+import wayoftime.bloodmagic.api.impl.recipe.RecipeARC;
 import wayoftime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
@@ -246,6 +248,40 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar
 
 		for (RecipeBloodAltar recipe : altarRecipes) if (recipe.getInput().test(input))
 			return recipe;
+
+		return null;
+	}
+
+	public RecipeARC getARC(World world, @Nonnull ItemStack input, @Nonnull ItemStack arcToolInput, @Nonnull FluidStack inputFluid)
+	{
+		Preconditions.checkNotNull(input, "input cannot be null.");
+		Preconditions.checkNotNull(arcToolInput, "tool cannot be null.");
+		if (input.isEmpty() || arcToolInput.isEmpty())
+			return null;
+
+		List<RecipeARC> arcRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ARC);
+
+		for (RecipeARC recipe : arcRecipes)
+		{
+			if (recipe.getInput().test(input) && recipe.getTool().test(arcToolInput))
+			{
+				if (recipe.getFluidIngredient() == null)
+				{
+					return recipe;
+				} else if (recipe.getFluidIngredient().test(inputFluid))
+				{
+					return recipe;
+				}
+			}
+		}
+
+//		if (input.isEmpty())
+//			return null;
+//
+//		List<RecipeBloodAltar> altarRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ALTAR);
+//
+//		for (RecipeBloodAltar recipe : altarRecipes) if (recipe.getInput().test(input))
+//			return recipe;
 
 		return null;
 	}

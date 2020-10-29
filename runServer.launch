@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
-    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-        <listEntry value="/BloodMagic3"/>
-    </listAttribute>
-    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-        <listEntry value="4"/>
-    </listAttribute>
     <mapAttribute key="org.eclipse.debug.core.environmentVariables">
         <mapEntry key="FORGE_GROUP" value="net.minecraftforge"/>
         <mapEntry key="FORGE_VERSION" value="34.1.11"/>
@@ -15,12 +9,10 @@
         <mapEntry key="MOD_CLASSES" value="bloodmagic%%C:\Users\Scott\Desktop\BloodMagic3\bin\main;bloodmagic%%C:\Users\Scott\Desktop\BloodMagic3\bin\main"/>
         <mapEntry key="target" value="fmluserdevserver"/>
     </mapAttribute>
-    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_SHOW_CODEDETAILS_IN_EXCEPTION_MESSAGES" value="true"/>
-    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
     <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.buildship.core.classpathprovider"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="net.minecraftforge.userdev.LaunchTesting"/>
-    <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="BloodMagic3"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value=""/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="BloodMagic3"/>
-    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dforge.logging.console.level=debug -Dforge.logging.markers=SCAN,REGISTRIES,REGISTRYDUMP"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dforge.logging.console.level=debug -Dmixin.env.disableRefMap=true -Dforge.logging.markers=SCAN,REGISTRIES,REGISTRYDUMP"/>
     <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="C:\Users\Scott\Desktop\BloodMagic3\run"/>
 </launchConfiguration>

@@ -23,6 +23,8 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
+import wayoftime.bloodmagic.api.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.api.impl.recipe.RecipeARC;
 import wayoftime.bloodmagic.tile.contailer.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.MultiSlotItemHandler;
@@ -42,7 +44,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 	public FluidTank inputTank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 20);
 	public FluidTank outputTank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 20);
 
-	public int burnTime = 0;
+	public double currentProgress = 0;
 
 	public TileAlchemicalReactionChamber(TileEntityType<?> type)
 	{
@@ -59,7 +61,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 	{
 		super.deserialize(tag);
 
-		burnTime = tag.getInt(Constants.NBT.SOUL_FORGE_BURN);
+		currentProgress = tag.getDouble(Constants.NBT.ARC_PROGRESS);
 
 		CompoundNBT inputTankTag = tag.getCompound("inputtank");
 		inputTank.readFromNBT(inputTankTag);
@@ -73,7 +75,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 	{
 		super.serialize(tag);
 
-		tag.putInt(Constants.NBT.SOUL_FORGE_BURN, burnTime);
+		tag.putDouble(Constants.NBT.ARC_PROGRESS, currentProgress);
 
 		CompoundNBT inputTankTag = new CompoundNBT();
 		inputTank.writeToNBT(inputTankTag);
@@ -165,6 +167,15 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 			}
 		}
 
+		ItemStack inputStack = this.getStackInSlot(INPUT_SLOT);
+		ItemStack toolStack = this.getStackInSlot(ARC_TOOL_SLOT);
+		RecipeARC recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getARC(world, inputStack, toolStack, inputTank.getFluid());
+		if (recipe != null && outputSlotHandler.canTransferAllItemsToSlots(recipe.getAllListedOutputs(), true))
+		{
+			// We have enough fluid (if applicable) and the theoretical outputs can fit.
+
+		}
+
 		for (int i = 0; i < NUM_OUTPUTS; i++)
 		{
 			this.setInventorySlotContents(OUTPUT_SLOT + i, outputSlotHandler.getStackInSlot(i));
@@ -173,47 +184,72 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 //		FluidUtil.tryEmptyContainer(container, fluidDestination, maxAmount, player, doDrain)
 	}
 
-//	private boolean canCraft(RecipeTartaricForge recipe)
-//	{
-//		if (recipe == null)
-//			return false;
-//
-//		ItemStack currentOutputStack = getStackInSlot(outputSlot);
-//		if (recipe.getOutput().isEmpty())
-//			return false;
-//		if (currentOutputStack.isEmpty())
-//			return true;
-//		if (!currentOutputStack.isItemEqual(recipe.getOutput()))
-//			return false;
-//		int result = currentOutputStack.getCount() + recipe.getOutput().getCount();
-//		return result <= getInventoryStackLimit() && result <= currentOutputStack.getMaxStackSize();
-//
-//	}
-//
-//	public void craftItem(RecipeTartaricForge recipe)
-//	{
-//		if (this.canCraft(recipe))
-//		{
-//			ItemStack currentOutputStack = getStackInSlot(outputSlot);
-//
-//			List<ItemStack> inputList = new ArrayList<>();
-//			for (int i = 0; i < 4; i++) if (!getStackInSlot(i).isEmpty())
-//				inputList.add(getStackInSlot(i).copy());
-//
-//			BloodMagicCraftedEvent.SoulForge event = new BloodMagicCraftedEvent.SoulForge(recipe.getOutput().copy(), inputList.toArray(new ItemStack[0]));
-//			MinecraftForge.EVENT_BUS.post(event);
-//
-//			if (currentOutputStack.isEmpty())
-//			{
-//				setInventorySlotContents(outputSlot, event.getOutput());
-//			} else if (ItemHandlerHelper.canItemStacksStack(currentOutputStack, event.getOutput()))
-//			{
-//				currentOutputStack.grow(event.getOutput().getCount());
-//			}
-//
-//			consumeInventory();
-//		}
-//	}
+	private boolean canCraft(RecipeARC recipe, MultiSlotItemHandler outputSlotHandler)
+	{
+		if (recipe == null)
+			return false;
+
+		if (outputSlotHandler.canTransferAllItemsToSlots(recipe.getAllListedOutputs(), true))
+		{
+			FluidStack outputStack = recipe.getFluidOutput();
+			return outputStack.isEmpty() ? true
+					: outputTank.fill(outputStack, FluidAction.SIMULATE) >= outputStack.getAmount();
+		}
+
+		return false;
+	}
+
+	public void craftItem(RecipeARC recipe, MultiSlotItemHandler outputSlotHandler)
+	{
+		if (this.canCraft(recipe, outputSlotHandler))
+		{
+			outputSlotHandler.canTransferAllItemsToSlots(recipe.getAllOutputs(world.rand), false);
+			outputTank.fill(recipe.getFluidOutput().copy(), FluidAction.EXECUTE);
+			consumeInventory();
+		}
+	}
+
+	public void consumeInventory()
+	{
+		ItemStack inputStack = getStackInSlot(INPUT_SLOT);
+		if (!inputStack.isEmpty())
+		{
+			if (inputStack.getItem().hasContainerItem(inputStack))
+			{
+				setInventorySlotContents(INPUT_SLOT, inputStack.getItem().getContainerItem(inputStack));
+			} else
+			{
+				inputStack.shrink(1);
+				if (inputStack.isEmpty())
+				{
+					setInventorySlotContents(INPUT_SLOT, ItemStack.EMPTY);
+				}
+			}
+		}
+
+		ItemStack toolStack = getStackInSlot(ARC_TOOL_SLOT);
+		if (!toolStack.isEmpty())
+		{
+			if (toolStack.isDamageable())
+			{
+				toolStack.setDamage(toolStack.getDamage() + 1);
+				if (toolStack.getDamage() >= toolStack.getMaxDamage())
+				{
+					setInventorySlotContents(ARC_TOOL_SLOT, ItemStack.EMPTY);
+				}
+			} else if (toolStack.getItem().hasContainerItem(toolStack))
+			{
+				setInventorySlotContents(ARC_TOOL_SLOT, toolStack.getItem().getContainerItem(inputStack));
+			} else
+			{
+				toolStack.shrink(1);
+				if (toolStack.isEmpty())
+				{
+					setInventorySlotContents(ARC_TOOL_SLOT, ItemStack.EMPTY);
+				}
+			}
+		}
+	}
 
 	@Override
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)

@@ -103,6 +103,8 @@ public class Constants
 		public static final String SOUL_FORGE_BURN = "burnTime";
 		public static final String SOUL_FORGE_CONSUMED = "consumedSouls";
 
+		public static final String ARC_PROGRESS = "progress";
+
 		public static final String ROUTING_MASTER = "master";
 		public static final String ROUTING_CONNECTION = "connections";
 		public static final String ROUTING_PRIORITY = "prioritiesPeople";

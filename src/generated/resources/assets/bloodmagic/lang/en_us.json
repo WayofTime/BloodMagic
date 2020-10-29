@@ -25,6 +25,8 @@
   "chat.bloodmagic.ritual.prevent": "The ritual is actively resisting you!",
   "chat.bloodmagic.ritual.weak": "You feel a push, but are too weak to perform this ritual.",
   "gui.bloodmagic.empty": "Empty",
+  "guide.bloodmagic.landing_text": "\"It is my dear hope that by holding this tome in your hands, I may impart the knowledge of the lost art that is Blood Magic\"$(br)$(o)- Magus Arcana$()",
+  "guide.bloodmagic.name": "Sanguine Scientiem",
   "item.bloodmagic.activationcrystalawakened": "Awakened Activation Crystal",
   "item.bloodmagic.activationcrystalcreative": "Creative Activation Crystal",
   "item.bloodmagic.activationcrystalweak": "Weak Activation Crystal",

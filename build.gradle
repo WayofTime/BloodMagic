@@ -36,6 +36,8 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+            
+            properties 'mixin.env.disableRefMap': 'true'
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -52,6 +54,8 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+            
+            properties 'mixin.env.disableRefMap': 'true'
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -68,6 +72,8 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
+            
+            properties 'mixin.env.disableRefMap': 'true'
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -90,6 +96,10 @@ repositories {
 	maven {
         url "http://dvs1.progwml6.com/files/maven/"
     }
+    maven {
+        name = "The Loader"
+        url = "https://maven.blamejared.com"
+    }
 }
 
 dependencies {
@@ -105,6 +115,9 @@ dependencies {
     
     compileOnly fg.deobf("mezz.jei:jei-1.16.2:7.1.3.19:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.16.2:7.1.3.19")
+    
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"

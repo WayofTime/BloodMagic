@@ -176,7 +176,6 @@ public class MultiSlotItemHandler implements IItemHandler
 							copyList[slot] = copy;
 						}
 						stack = ItemStack.EMPTY;
-//						System.out.println("Count: " + stack.getCount() + ", m: " + m);
 
 						break slots;
 					} else

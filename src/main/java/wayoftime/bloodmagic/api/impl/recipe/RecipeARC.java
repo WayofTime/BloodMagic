@@ -65,11 +65,28 @@ public abstract class RecipeARC extends BloodMagicRecipe
 		return input;
 	}
 
+	@Nonnull
+	public final Ingredient getTool()
+	{
+		return arc_tool;
+	}
+
+	public final FluidStackIngredient getFluidIngredient()
+	{
+		return inputFluid;
+	}
+
+	public final FluidStack getFluidOutput()
+	{
+		return outputFluid;
+	}
+
 	@Override
 	public final NonNullList<Ingredient> getIngredients()
 	{
 		NonNullList<Ingredient> list = NonNullList.create();
 		list.add(getInput());
+		list.add(getTool());
 		return list;
 	}
 
