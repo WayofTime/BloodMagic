@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "csc",
+    "cfc",
+    "coc"
+  ],
+  "key": {
+    "c": {
+      "tag": "forge:cobblestone"
+    },
+    "f": {
+      "tag": "forge:storage_blocks/coal"
+    },
+    "s": {
+      "item": "bloodmagic:blankslate"
+    },
+    "o": {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 3
+    }
+  },
+  "result": {
+    "item": "bloodmagic:furnacecell_primitive"
+  }
+}

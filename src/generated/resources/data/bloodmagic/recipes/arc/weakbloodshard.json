@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "item": "bloodmagic:infusedslate"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc_tool_reverter"
+  },
+  "addedoutput": [
+    {
+      "chance": 0.2,
+      "type": {
+        "item": "bloodmagic:weakbloodshard"
+      }
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:weakbloodshard"
+  }
+}

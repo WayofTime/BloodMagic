@@ -170,6 +170,7 @@ public class Constants
 		public static final String JEI_CATEGORY_SOULFORGE = "soulforge";
 		public static final String JEI_CATEGORY_ALCHEMYTABLE = "alchemytable";
 		public static final String JEI_CATEGORY_ARMOURDOWNGRADE = "armourdowngrade";
+		public static final String JEI_CATEGORY_ARC = "arc";
 
 		public static final String WAILA_CONFIG_ALTAR = BloodMagic.MODID + ".bloodaltar";
 		public static final String WAILA_CONFIG_TELEPOSER = BloodMagic.MODID + ".teleposer";

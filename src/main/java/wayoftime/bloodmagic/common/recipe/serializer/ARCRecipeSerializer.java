@@ -84,14 +84,15 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 			inputFluidIng = FluidStackIngredient.deserialize(inputFluid);
 		}
 
-		FluidStack outputFluid = null;
+		FluidStack outputFluidStack = FluidStack.EMPTY;
 
 		if (json.has(Constants.JSON.OUTPUT_FLUID))
 		{
-			outputFluid = SerializerHelper.deserializeFluid(json);
+			JsonObject outputFluid = JSONUtils.getJsonObject(json, Constants.JSON.OUTPUT_FLUID).getAsJsonObject();
+			outputFluidStack = SerializerHelper.deserializeFluid(outputFluid);
 		}
 
-		return this.factory.create(recipeId, inputIng, toolIng, inputFluidIng, output, addedItems, outputFluid);
+		return this.factory.create(recipeId, inputIng, toolIng, inputFluidIng, output, addedItems, outputFluidStack);
 	}
 
 	@Override

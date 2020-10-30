@@ -88,20 +88,22 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 		ClientHandler.handleGuiTank(stack, tileARC.outputTank, this.guiLeft + 152, this.guiTop
 				+ 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), null);
 
-//		int l = this.getCookProgressScaled(90);
-//		this.blit(stack, i + 115, j + 14 + 90 - l, 176, 90 - l, 18, l);
+		int w = this.getCookProgressScaled(38);
+		System.out.println("Width: " + w);
+//		FurnaceTileEntity d;
+		this.blit(stack, i + 63, j + 44, 176, 90, w, 23);
 	}
 
 ////
-//	public int getCookProgressScaled(int scale)
-//	{
-//		double progress = ((TileSoulForge) tileSoulForge).getProgressForGui();
-////		if (tileSoulForge != null)
-////		{
-////			System.out.println("Tile is NOT null");
-////		}
-////		double progress = ((float) this.container.data.get(0)) / ((float) this.container.data.get(1));
-////		System.out.println(this.container.data.get(0));
-//		return (int) (progress * scale);
-//	}
+	public int getCookProgressScaled(int scale)
+	{
+		double progress = ((TileAlchemicalReactionChamber) tileARC).getProgressForGui();
+//		if (tileSoulForge != null)
+//		{
+//			System.out.println("Tile is NOT null");
+//		}
+//		double progress = ((float) this.container.data.get(0)) / ((float) this.container.data.get(1));
+//		System.out.println(this.container.data.get(0));
+		return (int) (progress * scale);
+	}
 }

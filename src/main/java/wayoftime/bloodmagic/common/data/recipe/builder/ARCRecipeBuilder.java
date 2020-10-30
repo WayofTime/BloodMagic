@@ -36,7 +36,7 @@ public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
 		this.arcTool = arcTool;
 		this.inputFluid = inputFluid;
 		this.output = output;
-		this.outputFluid = outputFluid;
+		this.outputFluid = outputFluid == null ? FluidStack.EMPTY : outputFluid;
 	}
 
 	public static ARCRecipeBuilder arc(Ingredient input, Ingredient arcTool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid)
@@ -92,7 +92,7 @@ public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
 				json.add(Constants.JSON.ADDEDOUTPUT, mainArray);
 			}
 
-			if (outputFluid != null)
+			if (outputFluid != null && !outputFluid.isEmpty())
 				json.add(Constants.JSON.OUTPUT_FLUID, SerializerHelper.serializeFluidStack(outputFluid));
 
 			json.add(Constants.JSON.OUTPUT, SerializerHelper.serializeItemStack(output));

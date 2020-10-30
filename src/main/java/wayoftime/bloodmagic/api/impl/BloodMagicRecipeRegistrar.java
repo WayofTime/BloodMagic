@@ -452,6 +452,11 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar
 		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ARRAY));
 	}
 
+	public Set<RecipeARC> getARCRecipes(World world)
+	{
+		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ARC));
+	}
+
 	public Set<RecipeAlchemyArray> getCraftingAlchemyArrayRecipes(World world)
 	{
 		Set<RecipeAlchemyArray> recipes = Set.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ARRAY));

@@ -222,6 +222,11 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BASE_RITUAL_DIVINER, "Ritual Diviner");
 		addItem(BloodMagicItems.DUSK_RITUAL_DIVINER, "Ritual Diviner [Dusk]");
 
+		addItem(BloodMagicItems.WEAK_BLOOD_SHARD, "Weak Blood Shard");
+
+		addItem(BloodMagicItems.SANGUINE_REVERTER, "Sanguine Reverter");
+		addItem(BloodMagicItems.PRIMITIVE_FURNACE_CELL, "Primitive Fuel Cell");
+
 //		addItem(BloodMagicItems , "");
 
 		// JEI

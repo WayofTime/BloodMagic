@@ -1,9 +1,6 @@
 {
   "replace": false,
   "values": [
-    "minecraft:diamond",
-    "bloodmagic:airscribetool",
-    "bloodmagic:sanguinereverter",
     "bloodmagic:lavacrystal",
     "bloodmagic:furnacecell_primitive"
   ]

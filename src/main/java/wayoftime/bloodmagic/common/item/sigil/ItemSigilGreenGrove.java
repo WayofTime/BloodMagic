@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.item.sigil;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -64,7 +65,7 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 
 //						if (!BloodMagicAPI.INSTANCE.getBlacklist().getGreenGrove().contains(state))
 						{
-							if (state.getBlock() instanceof IGrowable)
+							if (state.getBlock() instanceof IGrowable && state.getBlock() != Blocks.GRASS_BLOCK)
 							{
 								if (worldIn.rand.nextInt(50) == 0)
 								{

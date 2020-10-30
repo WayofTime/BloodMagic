@@ -117,6 +117,19 @@ public abstract class RecipeARC extends BloodMagicRecipe
 		return list;
 	}
 
+	public double[] getAllOutputChances()
+	{
+		int size = addedItems.size();
+
+		double[] chanceArray = new double[size];
+		for (int i = 0; i < size; i++)
+		{
+			chanceArray[i] = addedItems.get(i).getRight();
+		}
+
+		return chanceArray;
+	}
+
 	@Override
 	public void write(PacketBuffer buffer)
 	{
