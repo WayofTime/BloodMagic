@@ -162,6 +162,9 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.DAWN_RITUAL_STONE, "Dawn Ritual Stone");
 		addBlock(BloodMagicBlocks.MASTER_RITUAL_STONE, "Master Ritual Stone");
 
+		addBlock(BloodMagicBlocks.BLOODSTONE, "Large Bloodstone Brick");
+		addBlock(BloodMagicBlocks.BLOODSTONE_BRICK, "Bloodstone Brick");
+
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
 		addItem(BloodMagicItems.APPRENTICE_BLOOD_ORB, "Apprentice Blood Orb");

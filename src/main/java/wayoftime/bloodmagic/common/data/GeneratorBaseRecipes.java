@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
@@ -36,6 +37,8 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.SOUL_SNARE.get(), 4).key('r', Tags.Items.DUSTS_REDSTONE).key('s', Tags.Items.STRING).key('i', Tags.Items.INGOTS_IRON).patternLine("sis").patternLine("iri").patternLine("sis").addCriterion("has_redstone", hasItem(Items.REDSTONE)).build(consumer, BloodMagic.rl("soul_snare"));
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.BASE_RITUAL_DIVINER.get()).key('a', BloodMagicItems.AIR_INSCRIPTION_TOOL.get()).key('s', Tags.Items.RODS_WOODEN).key('d', Tags.Items.GEMS_DIAMOND).key('e', BloodMagicItems.EARTH_INSCRIPTION_TOOL.get()).key('f', BloodMagicItems.FIRE_INSCRIPTION_TOOL.get()).key('w', BloodMagicItems.WATER_INSCRIPTION_TOOL.get()).patternLine("dfd").patternLine("ase").patternLine("dwd").addCriterion("has_scribe", hasItem(BloodMagicItems.AIR_INSCRIPTION_TOOL.get())).build(consumer, BloodMagic.rl("ritual_diviner_0"));
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.DUSK_RITUAL_DIVINER.get()).key('S', BloodMagicItems.DEMONIC_SLATE.get()).key('t', BloodMagicItems.DUSK_INSCRIPTION_TOOL.get()).key('d', BloodMagicItems.BASE_RITUAL_DIVINER.get()).patternLine(" S ").patternLine("tdt").patternLine(" S ").addCriterion("has_demon_slate", hasItem(BloodMagicItems.DEMONIC_SLATE.get())).build(consumer, BloodMagic.rl("ritual_diviner_1"));
+		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.BLOODSTONE_BRICK.get(), 4).key('s', BloodMagicBlocks.BLOODSTONE.get()).patternLine("ss").patternLine("ss").addCriterion("has_weak_shard", hasItem(BloodMagicItems.WEAK_BLOOD_SHARD.get())).build(consumer, BloodMagic.rl("bloodstonebrick"));
+		ShapelessRecipeBuilder.shapelessRecipe(BloodMagicBlocks.BLOODSTONE.get(), 8).addIngredient(Tags.Items.STONE).addIngredient(BloodMagicItems.WEAK_BLOOD_SHARD.get()).addCriterion("has_weak_shard", hasItem(BloodMagicItems.WEAK_BLOOD_SHARD.get())).build(consumer, BloodMagic.rl("largebloodstonebrick"));
 	}
 
 	private void addBloodOrbRecipes(Consumer<IFinishedRecipe> consumer)

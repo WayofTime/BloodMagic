@@ -25,7 +25,7 @@ public class BlockRitualStone extends Block implements IRitualStone
 
 	public BlockRitualStone(EnumRuneType type)
 	{
-		super(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2));
+		super(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool());
 		this.type = type;
 	}
 

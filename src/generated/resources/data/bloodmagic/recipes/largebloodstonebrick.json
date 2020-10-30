@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:stone"
+    },
+    {
+      "item": "bloodmagic:weakbloodshard"
+    }
+  ],
+  "result": {
+    "item": "bloodmagic:largebloodstonebrick",
+    "count": 8
+  }
+}
