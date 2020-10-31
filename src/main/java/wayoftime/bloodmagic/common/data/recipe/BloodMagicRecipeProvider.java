@@ -7,6 +7,7 @@ import net.minecraft.data.DataGenerator;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.recipe.ARCRecipeProvider;
 import wayoftime.bloodmagic.common.recipe.AlchemyArrayRecipeProvider;
+import wayoftime.bloodmagic.common.recipe.AlchemyTableRecipeProvider;
 import wayoftime.bloodmagic.common.recipe.BloodAltarRecipeProvider;
 import wayoftime.bloodmagic.common.recipe.ISubRecipeProvider;
 import wayoftime.bloodmagic.common.recipe.TartaricForgeRecipeProvider;
@@ -21,6 +22,6 @@ public class BloodMagicRecipeProvider extends BaseRecipeProvider
 	@Override
 	protected List<ISubRecipeProvider> getSubRecipeProviders()
 	{
-		return Arrays.asList(new BloodAltarRecipeProvider(), new AlchemyArrayRecipeProvider(), new TartaricForgeRecipeProvider(), new ARCRecipeProvider());
+		return Arrays.asList(new BloodAltarRecipeProvider(), new AlchemyArrayRecipeProvider(), new TartaricForgeRecipeProvider(), new ARCRecipeProvider(), new AlchemyTableRecipeProvider());
 	}
 }

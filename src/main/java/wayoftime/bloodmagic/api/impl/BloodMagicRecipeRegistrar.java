@@ -19,6 +19,7 @@ import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.api.IBloodMagicRecipeRegistrar;
 import wayoftime.bloodmagic.api.impl.recipe.RecipeARC;
 import wayoftime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
+import wayoftime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
@@ -325,6 +326,45 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar
 //	}
 //
 	@Nullable
+	public RecipeAlchemyTable getAlchemyTable(World world, @Nonnull List<ItemStack> input)
+	{
+		Preconditions.checkNotNull(input, "input cannot be null.");
+		if (input.isEmpty())
+			return null;
+
+		List<RecipeAlchemyTable> tartaricForgeRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ALCHEMYTABLE);
+		mainLoop: for (RecipeAlchemyTable recipe : tartaricForgeRecipes)
+		{
+			if (recipe.getInput().size() != input.size())
+				continue;
+
+			List<Ingredient> recipeInput = new ArrayList<>(recipe.getInput());
+
+			for (int i = 0; i < input.size(); i++)
+			{
+				boolean matched = false;
+				for (int j = 0; j < recipeInput.size(); j++)
+				{
+					Ingredient ingredient = recipeInput.get(j);
+					if (ingredient.test(input.get(i)))
+					{
+						matched = true;
+						recipeInput.remove(j);
+						break;
+					}
+				}
+
+				if (!matched)
+					continue mainLoop;
+			}
+
+			return recipe;
+		}
+
+		return null;
+	}
+
+	@Nullable
 	public RecipeTartaricForge getTartaricForge(World world, @Nonnull List<ItemStack> input)
 	{
 		Preconditions.checkNotNull(input, "input cannot be null.");
@@ -455,6 +495,11 @@ public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar
 	public Set<RecipeARC> getARCRecipes(World world)
 	{
 		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ARC));
+	}
+
+	public Set<RecipeAlchemyTable> getAlchemyTableRecipes(World world)
+	{
+		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ALCHEMYTABLE));
 	}
 
 	public Set<RecipeAlchemyArray> getCraftingAlchemyArrayRecipes(World world)

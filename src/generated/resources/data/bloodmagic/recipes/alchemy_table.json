@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "wbw",
+    "gog"
+  ],
+  "key": {
+    "b": {
+      "tag": "forge:rods/blaze"
+    },
+    "s": {
+      "tag": "forge:stone"
+    },
+    "w": {
+      "tag": "minecraft:planks"
+    },
+    "g": {
+      "tag": "forge:ingots/gold"
+    },
+    "o": {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 1
+    }
+  },
+  "result": {
+    "item": "bloodmagic:alchemytable"
+  }
+}

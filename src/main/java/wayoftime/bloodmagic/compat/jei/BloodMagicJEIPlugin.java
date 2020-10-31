@@ -19,6 +19,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.compat.jei.alchemytable.AlchemyTableRecipeCategory;
 import wayoftime.bloodmagic.compat.jei.altar.BloodAltarRecipeCategory;
 import wayoftime.bloodmagic.compat.jei.arc.ARCFurnaceRecipeCategory;
 import wayoftime.bloodmagic.compat.jei.arc.ARCRecipeCategory;
@@ -40,6 +41,7 @@ public class BloodMagicJEIPlugin implements IModPlugin
 		registration.addRecipeCatalyst(new ItemStack(BloodMagicItems.ARCANE_ASHES.get()), AlchemyArrayCraftingCategory.UID);
 		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()), ARCRecipeCategory.UID);
 		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()), ARCFurnaceRecipeCategory.UID);
+		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMY_TABLE.get()), AlchemyTableRecipeCategory.UID);
 	}
 
 	@Override
@@ -51,6 +53,7 @@ public class BloodMagicJEIPlugin implements IModPlugin
 		registration.addRecipeCategories(new AlchemyArrayCraftingCategory(registration.getJeiHelpers().getGuiHelper()));
 		registration.addRecipeCategories(new ARCRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 		registration.addRecipeCategories(new ARCFurnaceRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+		registration.addRecipeCategories(new AlchemyTableRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 	}
 
 	@Override
@@ -62,6 +65,7 @@ public class BloodMagicJEIPlugin implements IModPlugin
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArrayRecipes(world), AlchemyArrayCraftingCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getARCRecipes(world), ARCRecipeCategory.UID);
 		registration.addRecipes(ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(IRecipeType.SMELTING)), ARCFurnaceRecipeCategory.UID);
+		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTableRecipes(world), AlchemyTableRecipeCategory.UID);
 	}
 
 	@Override

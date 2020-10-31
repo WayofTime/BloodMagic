@@ -27,5 +27,4 @@ public class IRecipeAlchemyArray extends RecipeAlchemyArray
 	{
 		return BloodMagicRecipeType.ARRAY;
 	}
-
 }

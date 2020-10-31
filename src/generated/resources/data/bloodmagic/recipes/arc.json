@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "SoS",
+    "IfI"
+  ],
+  "key": {
+    "s": {
+      "tag": "forge:stone"
+    },
+    "f": {
+      "item": "minecraft:furnace"
+    },
+    "o": {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 3
+    },
+    "I": {
+      "tag": "forge:storage_blocks/iron"
+    },
+    "S": {
+      "item": "bloodmagic:infusedslate"
+    }
+  },
+  "result": {
+    "item": "bloodmagic:alchemicalreactionchamber"
+  }
+}

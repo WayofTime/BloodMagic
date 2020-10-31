@@ -1,0 +1,18 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "minecraft:wool"
+    },
+    {
+      "item": "minecraft:flint"
+    }
+  ],
+  "output": {
+    "item": "minecraft:string",
+    "count": 4
+  },
+  "syphon": 0,
+  "ticks": 100,
+  "upgradeLevel": 0
+}

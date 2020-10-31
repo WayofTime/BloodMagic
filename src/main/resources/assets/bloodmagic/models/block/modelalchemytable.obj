@@ -1,6 +1,6 @@
 # Blender v2.76 (sub 0) OBJ File: ''
 # www.blender.org
-mtllib ModelAlchemyTable.mtl
+mtllib modelalchemytable.mtl
 o Decanter1
 v -0.125000 0.837500 0.718750
 v -0.306111 0.837500 0.767279

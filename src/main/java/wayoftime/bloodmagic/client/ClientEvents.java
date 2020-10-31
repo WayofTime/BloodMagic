@@ -1,6 +1,8 @@
 package wayoftime.bloodmagic.client;
 
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.IItemPropertyGetter;
@@ -10,18 +12,24 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.render.block.RenderAlchemyArray;
 import wayoftime.bloodmagic.client.render.block.RenderAltar;
+import wayoftime.bloodmagic.client.render.entity.BloodLightRenderer;
+import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemicalReactionChamber;
+import wayoftime.bloodmagic.client.screens.ScreenAlchemyTable;
 import wayoftime.bloodmagic.client.screens.ScreenSoulForge;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilToggleable;
 import wayoftime.bloodmagic.common.item.soul.ItemSentientSword;
+import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.iface.IMultiWillTool;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.tile.TileAltar;
@@ -41,27 +49,44 @@ public class ClientEvents
 	{
 		ScreenManager.registerFactory(BloodMagicBlocks.SOUL_FORGE_CONTAINER.get(), ScreenSoulForge::new);
 		ScreenManager.registerFactory(BloodMagicBlocks.ARC_CONTAINER.get(), ScreenAlchemicalReactionChamber::new);
+		ScreenManager.registerFactory(BloodMagicBlocks.ALCHEMY_TABLE_CONTAINER.get(), ScreenAlchemyTable::new);
+	}
+
+	@SuppressWarnings("deprecation")
+	public static void initClientEvents(FMLClientSetupEvent event)
+	{
+		DeferredWorkQueue.runLater(() -> {
+			RenderType rendertype = RenderType.getCutoutMipped();
+			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.ALCHEMY_TABLE.get(), rendertype);
+
+			ClientEvents.registerContainerScreens();
+
+			RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.SNARE.getEntityType(), SoulSnareRenderer::new);
+			RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.BLOOD_LIGHT.getEntityType(), BloodLightRenderer::new);
+
+			registerToggleableProperties(BloodMagicItems.GREEN_GROVE_SIGIL.get());
+			registerToggleableProperties(BloodMagicItems.FAST_MINER_SIGIL.get());
+			registerToggleableProperties(BloodMagicItems.MAGNETISM_SIGIL.get());
+			registerToggleableProperties(BloodMagicItems.ICE_SIGIL.get());
+			registerMultiWillTool(BloodMagicItems.SENTIENT_SWORD.get());
+			registerMultiWillTool(BloodMagicItems.PETTY_GEM.get());
+			registerMultiWillTool(BloodMagicItems.LESSER_GEM.get());
+			registerMultiWillTool(BloodMagicItems.COMMON_GEM.get());
+
+			ItemModelsProperties.registerProperty(BloodMagicItems.SENTIENT_SWORD.get(), BloodMagic.rl("active"), new IItemPropertyGetter()
+			{
+				@Override
+				public float call(ItemStack stack, ClientWorld world, LivingEntity entity)
+				{
+					return ((ItemSentientSword) stack.getItem()).getActivated(stack) ? 1 : 0;
+				}
+			});
+		});
 	}
 
 	public static void registerItemModelProperties(FMLClientSetupEvent event)
 	{
-		registerToggleableProperties(BloodMagicItems.GREEN_GROVE_SIGIL.get());
-		registerToggleableProperties(BloodMagicItems.FAST_MINER_SIGIL.get());
-		registerToggleableProperties(BloodMagicItems.MAGNETISM_SIGIL.get());
-		registerToggleableProperties(BloodMagicItems.ICE_SIGIL.get());
-		registerMultiWillTool(BloodMagicItems.SENTIENT_SWORD.get());
-		registerMultiWillTool(BloodMagicItems.PETTY_GEM.get());
-		registerMultiWillTool(BloodMagicItems.LESSER_GEM.get());
-		registerMultiWillTool(BloodMagicItems.COMMON_GEM.get());
 
-		ItemModelsProperties.registerProperty(BloodMagicItems.SENTIENT_SWORD.get(), BloodMagic.rl("active"), new IItemPropertyGetter()
-		{
-			@Override
-			public float call(ItemStack stack, ClientWorld world, LivingEntity entity)
-			{
-				return ((ItemSentientSword) stack.getItem()).getActivated(stack) ? 1 : 0;
-			}
-		});
 	}
 
 	public static void registerToggleableProperties(Item item)

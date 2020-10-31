@@ -2,12 +2,14 @@ package wayoftime.bloodmagic.common.data;
 
 import java.util.function.Consumer;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -52,6 +54,9 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.CHARGING_RUNE.get()).key('R', Tags.Items.DUSTS_REDSTONE).key('r', BloodMagicBlocks.BLANK_RUNE.get()).key('s', BloodMagicItems.DEMONIC_SLATE.get()).key('e', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_MASTER.get())).key('G', Tags.Items.DUSTS_GLOWSTONE).patternLine("RsR").patternLine("GrG").patternLine("ReR").addCriterion("has_master_orb", hasItem(BloodMagicItems.MASTER_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("blood_rune_charging"));
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.BLANK_RITUAL_STONE.get(), 4).key('a', Tags.Items.OBSIDIAN).key('b', BloodMagicItems.REINFORCED_SLATE.get()).key('c', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_APPRENTICE.get())).patternLine("aba").patternLine("bcb").patternLine("aba").addCriterion("has_apprentice_orb", hasItem(BloodMagicItems.APPRENTICE_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("ritual_stone_blank"));
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.MASTER_RITUAL_STONE.get()).key('a', Tags.Items.OBSIDIAN).key('b', BloodMagicBlocks.BLANK_RITUAL_STONE.get()).key('c', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_MAGICIAN.get())).patternLine("aba").patternLine("bcb").patternLine("aba").addCriterion("has_magician_orb", hasItem(BloodMagicItems.MAGICIAN_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("ritual_stone_master"));
+
+		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.ALCHEMY_TABLE.get()).key('b', Tags.Items.RODS_BLAZE).key('s', Tags.Items.STONE).key('w', ItemTags.PLANKS).key('g', Tags.Items.INGOTS_GOLD).key('o', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_WEAK.get())).patternLine("sss").patternLine("wbw").patternLine("gog").addCriterion("has_weak_orb", hasItem(BloodMagicItems.WEAK_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("alchemy_table"));
+		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()).key('s', Tags.Items.STONE).key('f', Blocks.FURNACE).key('o', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_MAGICIAN.get())).key('I', Tags.Items.STORAGE_BLOCKS_IRON).key('S', BloodMagicItems.IMBUED_SLATE.get()).patternLine("sss").patternLine("SoS").patternLine("IfI").addCriterion("has_magician_orb", hasItem(BloodMagicItems.MAGICIAN_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("arc"));
 
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.PRIMITIVE_FURNACE_CELL.get()).key('c', Tags.Items.COBBLESTONE).key('f', Tags.Items.STORAGE_BLOCKS_COAL).key('s', Ingredient.fromItems(BloodMagicItems.SLATE.get())).key('o', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_MAGICIAN.get())).patternLine("csc").patternLine("cfc").patternLine("coc").addCriterion("has_magician_orb", hasItem(BloodMagicItems.MAGICIAN_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("primitive_furnace_cell"));
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.LAVA_CRYSTAL.get()).key('a', Tags.Items.GLASS).key('b', Items.LAVA_BUCKET).key('c', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_WEAK.get())).key('d', Tags.Items.OBSIDIAN).key('e', Tags.Items.GEMS_DIAMOND).patternLine("aba").patternLine("bcb").patternLine("ded").addCriterion("has_weak_orb", hasItem(BloodMagicItems.WEAK_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("lava_crystal"));

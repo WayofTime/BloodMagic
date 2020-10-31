@@ -24,6 +24,7 @@ public class GeneratorLanguage extends LanguageProvider
 		// Tile Entitites
 		add("tile.bloodmagic.soulforge.name", "Hellfire Forge");
 		add("tile.bloodmagic.arc.name", "Alchemical Reaction Chamber");
+		add("tile.bloodmagic.alchemytable.name", "Alchemy Table");
 
 		// Blood Orb tooltips
 		add("tooltip.bloodmagic.extraInfo", "&9-Hold shift for more info-");
@@ -162,6 +163,9 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.DAWN_RITUAL_STONE, "Dawn Ritual Stone");
 		addBlock(BloodMagicBlocks.MASTER_RITUAL_STONE, "Master Ritual Stone");
 
+		addBlock(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER, "Alchemical Reaction Chamber");
+		addBlock(BloodMagicBlocks.ALCHEMY_TABLE, "Alchemy Table");
+
 		addBlock(BloodMagicBlocks.BLOODSTONE, "Large Bloodstone Brick");
 		addBlock(BloodMagicBlocks.BLOODSTONE_BRICK, "Bloodstone Brick");
 
@@ -243,6 +247,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("jei.bloodmagic.recipe.altar", "Blood Altar");
 		add("jei.bloodmagic.recipe.soulforge", "Hellfire Forge");
 		add("jei.bloodmagic.recipe.alchemyarraycrafting", "Alchemy Array");
+		add("jei.bloodmagic.recipe.arc", "ARC Recipe");
+		add("jei.bloodmagic.recipe.arcfurnace", "ARC Furnace Recipe");
+		add("jei.bloodmagic.recipe.alchemytable", "Alchemy Table");
 
 		// Chat
 		add("chat.bloodmagic.ritual.weak", "You feel a push, but are too weak to perform this ritual.");

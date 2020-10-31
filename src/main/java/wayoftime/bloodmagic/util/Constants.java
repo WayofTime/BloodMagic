@@ -153,6 +153,9 @@ public class Constants
 		public static final String INPUT_FLUID = "inputfluid";
 		public static final String OUTPUT_FLUID = "outputfluid";
 
+		public static final String SYPHON = "syphon";
+		public static final String TICKS = "ticks";
+
 		public static final String ALTAR_TIER = Constants.NBT.ALTAR_TIER;
 		public static final String ALTAR_SYPHON = "altarSyphon";
 		public static final String ALTAR_CONSUMPTION_RATE = Constants.NBT.ALTAR_CONSUMPTION_RATE;

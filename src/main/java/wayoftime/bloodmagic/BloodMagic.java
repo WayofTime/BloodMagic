@@ -20,7 +20,6 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -33,8 +32,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import wayoftime.bloodmagic.api.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.api.impl.BloodMagicCorePlugin;
 import wayoftime.bloodmagic.client.ClientEvents;
-import wayoftime.bloodmagic.client.render.entity.BloodLightRenderer;
-import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.GeneratorBaseRecipes;
 import wayoftime.bloodmagic.common.data.GeneratorBlockStates;
@@ -54,6 +51,7 @@ import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.ritual.RitualManager;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
+import wayoftime.bloodmagic.tile.TileAlchemyTable;
 import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.tile.TileSoulForge;
@@ -155,6 +153,7 @@ public class BloodMagic
 		event.getRegistry().register(TileEntityType.Builder.create(TileSoulForge::new, BloodMagicBlocks.SOUL_FORGE.get()).build(null).setRegistryName("soulforge"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileMasterRitualStone::new, BloodMagicBlocks.MASTER_RITUAL_STONE.get()).build(null).setRegistryName("masterritualstone"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileAlchemicalReactionChamber::new, BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()).build(null).setRegistryName("alchemicalreactionchamber"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileAlchemyTable::new, BloodMagicBlocks.ALCHEMY_TABLE.get()).build(null).setRegistryName("alchemytable"));
 	}
 
 	@SubscribeEvent
@@ -193,11 +192,8 @@ public class BloodMagic
 	{
 		// do something that can only be done on the client
 //		LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
-		ClientEvents.registerContainerScreens();
 
-		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.SNARE.getEntityType(), SoulSnareRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.BLOOD_LIGHT.getEntityType(), BloodLightRenderer::new);
-		ClientEvents.registerItemModelProperties(event);
+		ClientEvents.initClientEvents(event);
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event)
