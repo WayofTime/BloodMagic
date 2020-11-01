@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.common.data;
 import java.util.function.Consumer;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.data.CookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
@@ -15,6 +16,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.recipe.BaseRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
 
 public class GeneratorBaseRecipes extends BaseRecipeProvider
@@ -28,6 +30,7 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 	protected void registerRecipes(Consumer<IFinishedRecipe> consumer)
 	{
 		addVanillaRecipes(consumer);
+		addVanillaSmithingRecipes(consumer);
 		addBloodOrbRecipes(consumer);
 	}
 
@@ -41,6 +44,13 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.DUSK_RITUAL_DIVINER.get()).key('S', BloodMagicItems.DEMONIC_SLATE.get()).key('t', BloodMagicItems.DUSK_INSCRIPTION_TOOL.get()).key('d', BloodMagicItems.BASE_RITUAL_DIVINER.get()).patternLine(" S ").patternLine("tdt").patternLine(" S ").addCriterion("has_demon_slate", hasItem(BloodMagicItems.DEMONIC_SLATE.get())).build(consumer, BloodMagic.rl("ritual_diviner_1"));
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.BLOODSTONE_BRICK.get(), 4).key('s', BloodMagicBlocks.BLOODSTONE.get()).patternLine("ss").patternLine("ss").addCriterion("has_weak_shard", hasItem(BloodMagicItems.WEAK_BLOOD_SHARD.get())).build(consumer, BloodMagic.rl("bloodstonebrick"));
 		ShapelessRecipeBuilder.shapelessRecipe(BloodMagicBlocks.BLOODSTONE.get(), 8).addIngredient(Tags.Items.STONE).addIngredient(BloodMagicItems.WEAK_BLOOD_SHARD.get()).addCriterion("has_weak_shard", hasItem(BloodMagicItems.WEAK_BLOOD_SHARD.get())).build(consumer, BloodMagic.rl("largebloodstonebrick"));
+	}
+
+	private void addVanillaSmithingRecipes(Consumer<IFinishedRecipe> consumer)
+	{
+		String basePath = "smelting/";
+		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(BloodMagicTags.DUST_IRON), Items.IRON_INGOT, 0, 200).addCriterion("has_iron_sand", hasItem(BloodMagicItems.IRON_SAND.get())).build(consumer, BloodMagic.rl(basePath + "ingot_iron"));
+		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(BloodMagicTags.DUST_GOLD), Items.GOLD_INGOT, 0, 200).addCriterion("has_gold_sand", hasItem(BloodMagicItems.GOLD_SAND.get())).build(consumer, BloodMagic.rl(basePath + "ingot_gold"));
 	}
 
 	private void addBloodOrbRecipes(Consumer<IFinishedRecipe> consumer)
@@ -60,6 +70,8 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.PRIMITIVE_FURNACE_CELL.get()).key('c', Tags.Items.COBBLESTONE).key('f', Tags.Items.STORAGE_BLOCKS_COAL).key('s', Ingredient.fromItems(BloodMagicItems.SLATE.get())).key('o', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_MAGICIAN.get())).patternLine("csc").patternLine("cfc").patternLine("coc").addCriterion("has_magician_orb", hasItem(BloodMagicItems.MAGICIAN_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("primitive_furnace_cell"));
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.LAVA_CRYSTAL.get()).key('a', Tags.Items.GLASS).key('b', Items.LAVA_BUCKET).key('c', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_WEAK.get())).key('d', Tags.Items.OBSIDIAN).key('e', Tags.Items.GEMS_DIAMOND).patternLine("aba").patternLine("bcb").patternLine("ded").addCriterion("has_weak_orb", hasItem(BloodMagicItems.WEAK_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("lava_crystal"));
+
+		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.PRIMITIVE_HYDRATION_CELL.get()).key('B', Items.WATER_BUCKET).key('c', Tags.Items.COBBLESTONE).key('o', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_MAGICIAN.get())).key('s', BloodMagicItems.SLATE.get()).patternLine("csc").patternLine("cBc").patternLine("coc").addCriterion("has_magician_orb", hasItem(BloodMagicItems.MAGICIAN_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("primitive_hydration_cell"));
 //		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.SPEED_RUNE.get()).key('s', Items.GLASS).key('o', Ingredient.fromItems(Items.DIAMOND)).patternLine("sss").patternLine("sos").patternLine("sss").addCriterion("has_diamond", hasItem(Items.DIAMOND)).build(consumer, new ResourceLocation(BloodMagic.MODID, "speed_rune_from_standard"));
 //		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.SPEED_RUNE.get()).key('s', Items.GLASS).key('o', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_WEAK.get())).patternLine("sss").patternLine("sos").patternLine("sss").addCriterion("has_diamond", hasItem(Items.DIAMOND)).build(consumer, new ResourceLocation(BloodMagic.MODID, "speed_rune_from_orb"));
 	}

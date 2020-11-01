@@ -1,0 +1,12 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "item": "bloodmagic:magicianbloodorb"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/reverter"
+  },
+  "output": {
+    "item": "minecraft:gold_block"
+  }
+}

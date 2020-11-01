@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:smelting/ingot_iron"
+    ]
+  },
+  "criteria": {
+    "has_iron_sand": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:ironsand"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:smelting/ingot_iron"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_iron_sand",
+      "has_the_recipe"
+    ]
+  ]
+}

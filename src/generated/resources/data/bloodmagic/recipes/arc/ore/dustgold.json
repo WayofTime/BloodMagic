@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "item": "minecraft:gold_ore"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/explosive"
+  },
+  "output": {
+    "item": "bloodmagic:goldsand",
+    "count": 2
+  }
+}

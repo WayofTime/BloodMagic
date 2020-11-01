@@ -1,0 +1,16 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "forge:netherrack"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/explosive"
+  },
+  "outputfluid": {
+    "fluid": "minecraft:lava",
+    "amount": 5
+  },
+  "output": {
+    "item": "bloodmagic:sulfur"
+  }
+}

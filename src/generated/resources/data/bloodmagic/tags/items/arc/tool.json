@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#bloodmagic:arc/furnace",
+    "#bloodmagic:arc/reverter",
+    "#bloodmagic:arc/sieve",
+    "#bloodmagic:arc/explosive",
+    "#bloodmagic:arc/hydrate"
+  ]
+}

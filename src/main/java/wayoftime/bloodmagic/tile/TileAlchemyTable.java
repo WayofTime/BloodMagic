@@ -131,7 +131,6 @@ public class TileAlchemyTable extends TileInventory
 		return tag;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing)
 	{
