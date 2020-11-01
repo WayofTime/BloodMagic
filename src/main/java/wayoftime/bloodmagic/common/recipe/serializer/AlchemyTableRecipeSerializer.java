@@ -82,12 +82,6 @@ public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable>
 				input.add(i, Ingredient.read(buffer));
 			}
 
-			buffer.writeInt(input.size());
-			for (int i = 0; i < input.size(); i++)
-			{
-				input.get(i).write(buffer);
-			}
-
 			ItemStack output = buffer.readItemStack();
 			int syphon = buffer.readInt();
 			int ticks = buffer.readInt();
