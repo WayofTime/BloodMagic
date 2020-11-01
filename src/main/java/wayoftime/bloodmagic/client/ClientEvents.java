@@ -55,14 +55,14 @@ public class ClientEvents
 	@SuppressWarnings("deprecation")
 	public static void initClientEvents(FMLClientSetupEvent event)
 	{
+		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.SNARE.getEntityType(), SoulSnareRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.BLOOD_LIGHT.getEntityType(), BloodLightRenderer::new);
+
 		DeferredWorkQueue.runLater(() -> {
 			RenderType rendertype = RenderType.getCutoutMipped();
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.ALCHEMY_TABLE.get(), rendertype);
 
 			ClientEvents.registerContainerScreens();
-
-			RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.SNARE.getEntityType(), SoulSnareRenderer::new);
-			RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.BLOOD_LIGHT.getEntityType(), BloodLightRenderer::new);
 
 			registerToggleableProperties(BloodMagicItems.GREEN_GROVE_SIGIL.get());
 			registerToggleableProperties(BloodMagicItems.FAST_MINER_SIGIL.get());
