@@ -26,6 +26,7 @@ import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.tile.contailer.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.tile.contailer.ContainerAlchemyTable;
 import wayoftime.bloodmagic.tile.contailer.ContainerSoulForge;
+import wayoftime.bloodmagic.will.EnumDemonWillType;
 
 public class BloodMagicBlocks
 {
@@ -70,6 +71,12 @@ public class BloodMagicBlocks
 
 	public static final RegistryObject<Block> ALCHEMICAL_REACTION_CHAMBER = BLOCKS.register("alchemicalreactionchamber", () -> new BlockAlchemicalReactionChamber());
 	public static final RegistryObject<Block> ALCHEMY_TABLE = BLOCKS.register("alchemytable", () -> new BlockAlchemyTable());
+
+	public static final RegistryObject<Block> RAW_CRYSTAL_BLOCK = BLOCKS.register("rawdemoncrystal", () -> new BlockDemonCrystal(EnumDemonWillType.DEFAULT));
+	public static final RegistryObject<Block> CORROSIVE_CRYSTAL_BLOCK = BLOCKS.register("corrosivedemoncrystal", () -> new BlockDemonCrystal(EnumDemonWillType.CORROSIVE));
+	public static final RegistryObject<Block> DESTRUCTIVE_CRYSTAL_BLOCK = BLOCKS.register("destructivedemoncrystal", () -> new BlockDemonCrystal(EnumDemonWillType.DESTRUCTIVE));
+	public static final RegistryObject<Block> VENGEFUL_CRYSTAL_BLOCK = BLOCKS.register("vengefuldemoncrystal", () -> new BlockDemonCrystal(EnumDemonWillType.VENGEFUL));
+	public static final RegistryObject<Block> STEADFAST_CRYSTAL_BLOCK = BLOCKS.register("steadfastdemoncrystal", () -> new BlockDemonCrystal(EnumDemonWillType.STEADFAST));
 
 	private static ForgeFlowingFluid.Properties makeProperties()
 	{

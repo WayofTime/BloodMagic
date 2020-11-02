@@ -89,7 +89,6 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 				+ 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), null);
 
 		int w = this.getCookProgressScaled(38);
-		System.out.println("Width: " + w);
 //		FurnaceTileEntity d;
 		this.blit(stack, i + 63, j + 44, 176, 90, w, 23);
 	}

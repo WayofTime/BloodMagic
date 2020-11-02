@@ -1,0 +1,431 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "attached": "down",
+        "age": "0|1|2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal1",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "attached": "up",
+        "age": "0|1|2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal1"
+      }
+    },
+    {
+      "when": {
+        "attached": "north",
+        "age": "0|1|2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal1",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "attached": "south",
+        "age": "0|1|2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal1",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "west",
+        "age": "0|1|2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal1",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "east",
+        "age": "0|1|2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal1",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "attached": "down",
+        "age": "1|2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal2",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "attached": "up",
+        "age": "1|2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal2"
+      }
+    },
+    {
+      "when": {
+        "attached": "north",
+        "age": "1|2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal2",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "attached": "south",
+        "age": "1|2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal2",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "west",
+        "age": "1|2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal2",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "east",
+        "age": "1|2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal2",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "attached": "down",
+        "age": "2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal3",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "attached": "up",
+        "age": "2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal3"
+      }
+    },
+    {
+      "when": {
+        "attached": "north",
+        "age": "2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal3",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "attached": "south",
+        "age": "2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal3",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "west",
+        "age": "2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal3",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "east",
+        "age": "2|3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal3",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "attached": "down",
+        "age": "3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal4",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "attached": "up",
+        "age": "3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal4"
+      }
+    },
+    {
+      "when": {
+        "attached": "north",
+        "age": "3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal4",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "attached": "south",
+        "age": "3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal4",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "west",
+        "age": "3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal4",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "east",
+        "age": "3|4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal4",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "attached": "down",
+        "age": "4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal5",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "attached": "up",
+        "age": "4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal5"
+      }
+    },
+    {
+      "when": {
+        "attached": "north",
+        "age": "4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal5",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "attached": "south",
+        "age": "4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal5",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "west",
+        "age": "4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal5",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "east",
+        "age": "4|5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal5",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "attached": "down",
+        "age": "5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal6",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "attached": "up",
+        "age": "5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal6"
+      }
+    },
+    {
+      "when": {
+        "attached": "north",
+        "age": "5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal6",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "attached": "south",
+        "age": "5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal6",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "west",
+        "age": "5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal6",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "east",
+        "age": "5|6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal6",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "attached": "down",
+        "age": "6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal7",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "attached": "up",
+        "age": "6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal7"
+      }
+    },
+    {
+      "when": {
+        "attached": "north",
+        "age": "6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal7",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "attached": "south",
+        "age": "6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal7",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "west",
+        "age": "6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal7",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "attached": "east",
+        "age": "6"
+      },
+      "apply": {
+        "model": "bloodmagic:block/crystal/corrosivecrystal7",
+        "x": 90,
+        "y": 90
+      }
+    }
+  ]
+}

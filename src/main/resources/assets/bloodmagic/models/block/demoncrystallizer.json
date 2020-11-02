@@ -1,0 +1,10 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip-v": true, 
+  "model": "bloodmagic:models/block/blockdemoncrystallizer.obj",
+  "textures": {
+    "default": "bloodmagic:models/demoncrystallizer",
+    "particle": "#default"
+  }
+}

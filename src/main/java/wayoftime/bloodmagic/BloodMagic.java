@@ -53,6 +53,7 @@ import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.tile.TileAlchemyTable;
 import wayoftime.bloodmagic.tile.TileAltar;
+import wayoftime.bloodmagic.tile.TileDemonCrystal;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.tile.TileSoulForge;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
@@ -154,6 +155,7 @@ public class BloodMagic
 		event.getRegistry().register(TileEntityType.Builder.create(TileMasterRitualStone::new, BloodMagicBlocks.MASTER_RITUAL_STONE.get()).build(null).setRegistryName("masterritualstone"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileAlchemicalReactionChamber::new, BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()).build(null).setRegistryName("alchemicalreactionchamber"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileAlchemyTable::new, BloodMagicBlocks.ALCHEMY_TABLE.get()).build(null).setRegistryName("alchemytable"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileDemonCrystal::new, BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get(), BloodMagicBlocks.CORROSIVE_CRYSTAL_BLOCK.get(), BloodMagicBlocks.DESTRUCTIVE_CRYSTAL_BLOCK.get(), BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get()).build(null).setRegistryName("demoncrystal"));
 	}
 
 	@SubscribeEvent

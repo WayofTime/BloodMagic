@@ -1,0 +1,10 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip-v": true, 
+  "model": "bloodmagic:models/block/crystal/crystal2.obj",
+  "textures": {
+    "crystal": "bloodmagic:models/defaultcrystal",
+    "particle": "#crystal"
+  }
+}

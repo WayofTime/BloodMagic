@@ -1,0 +1,138 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "bloodmagic:steadfastdemoncrystal",
+              "properties": {
+                "age": "0"
+              }
+            }
+          ],
+          "quality": 1,
+          "name": "bloodmagic:steadfastcrystal"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "bloodmagic:steadfastdemoncrystal",
+              "properties": {
+                "age": "1"
+              }
+            }
+          ],
+          "quality": 2,
+          "name": "bloodmagic:steadfastcrystal"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "bloodmagic:steadfastdemoncrystal",
+              "properties": {
+                "age": "2"
+              }
+            }
+          ],
+          "quality": 3,
+          "name": "bloodmagic:steadfastcrystal"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "bloodmagic:steadfastdemoncrystal",
+              "properties": {
+                "age": "3"
+              }
+            }
+          ],
+          "quality": 4,
+          "name": "bloodmagic:steadfastcrystal"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "bloodmagic:steadfastdemoncrystal",
+              "properties": {
+                "age": "4"
+              }
+            }
+          ],
+          "quality": 5,
+          "name": "bloodmagic:steadfastcrystal"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "bloodmagic:steadfastdemoncrystal",
+              "properties": {
+                "age": "5"
+              }
+            }
+          ],
+          "quality": 6,
+          "name": "bloodmagic:steadfastcrystal"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "bloodmagic:steadfastdemoncrystal",
+              "properties": {
+                "age": "6"
+              }
+            }
+          ],
+          "quality": 7,
+          "name": "bloodmagic:steadfastcrystal"
+        }
+      ]
+    }
+  ]
+}

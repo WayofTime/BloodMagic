@@ -1,0 +1,6 @@
+{
+  "parent": "bloodmagic:block/crystal4",
+  "textures": {
+    "crystal": "bloodmagic:models/destructivecrystal"
+  }
+}

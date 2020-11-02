@@ -1,0 +1,10 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip-v": true, 
+  "model": "bloodmagic:models/block/blockdemonpylon.obj",
+  "textures": {
+    "default": "bloodmagic:models/demonpylon",
+    "particle": "#default"
+  }
+}

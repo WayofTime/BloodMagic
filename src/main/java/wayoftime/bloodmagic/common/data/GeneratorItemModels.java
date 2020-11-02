@@ -45,6 +45,12 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerBlockModel(BloodMagicBlocks.DAWN_RITUAL_STONE.get());
 		registerBlockModel(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get());
 
+		registerCustomBlockPath(BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get(), "crystal/defaultcrystal1");
+		registerCustomBlockPath(BloodMagicBlocks.CORROSIVE_CRYSTAL_BLOCK.get(), "crystal/corrosivecrystal1");
+		registerCustomBlockPath(BloodMagicBlocks.DESTRUCTIVE_CRYSTAL_BLOCK.get(), "crystal/destructivecrystal1");
+		registerCustomBlockPath(BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), "crystal/vengefulcrystal1");
+		registerCustomBlockPath(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get(), "crystal/steadfastcrystal1");
+
 		registerToggleableItem(BloodMagicItems.GREEN_GROVE_SIGIL.get());
 		registerToggleableItem(BloodMagicItems.FAST_MINER_SIGIL.get());
 		registerToggleableItem(BloodMagicItems.MAGNETISM_SIGIL.get());
@@ -53,6 +59,12 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerDemonWillVariantItem(BloodMagicItems.LESSER_GEM.get());
 		registerDemonWillVariantItem(BloodMagicItems.COMMON_GEM.get());
 		registerDemonSword(BloodMagicItems.SENTIENT_SWORD.get());
+	}
+
+	private void registerCustomBlockPath(Block block, String newPath)
+	{
+		String path = block.getRegistryName().getPath();
+		getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/" + newPath)));
 	}
 
 	private void registerBlockModel(Block block)
