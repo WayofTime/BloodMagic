@@ -8,5 +8,6 @@
   },
   "output": {
     "item": "minecraft:diamond"
-  }
+  },
+  "consumeingredient": true
 }

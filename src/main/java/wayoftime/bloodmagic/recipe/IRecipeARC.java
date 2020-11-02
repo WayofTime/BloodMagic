@@ -18,14 +18,14 @@ import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 
 public class IRecipeARC extends RecipeARC
 {
-	public IRecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid)
+	public IRecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid, boolean consumeIngredient)
 	{
-		super(id, input, arc_tool, inputFluid, output, new ArrayList<Pair<ItemStack, Double>>(), outputFluid);
+		super(id, input, arc_tool, inputFluid, output, new ArrayList<Pair<ItemStack, Double>>(), outputFluid, consumeIngredient);
 	}
 
-	public IRecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Double>> addedItems, FluidStack outputFluid)
+	public IRecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Double>> addedItems, FluidStack outputFluid, boolean consumeIngredient)
 	{
-		super(id, input, arc_tool, inputFluid, output, addedItems, outputFluid);
+		super(id, input, arc_tool, inputFluid, output, addedItems, outputFluid, consumeIngredient);
 	}
 
 	@Override

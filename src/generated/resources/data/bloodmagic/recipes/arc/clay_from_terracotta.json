@@ -12,5 +12,6 @@
   },
   "output": {
     "item": "minecraft:clay"
-  }
+  },
+  "consumeingredient": false
 }

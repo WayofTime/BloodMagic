@@ -92,7 +92,9 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 			outputFluidStack = SerializerHelper.deserializeFluid(outputFluid);
 		}
 
-		return this.factory.create(recipeId, inputIng, toolIng, inputFluidIng, output, addedItems, outputFluidStack);
+		boolean consumeIngredient = JSONUtils.getBoolean(json, "consumeingredient");
+
+		return this.factory.create(recipeId, inputIng, toolIng, inputFluidIng, output, addedItems, outputFluidStack, consumeIngredient);
 	}
 
 	@Override
@@ -126,7 +128,9 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 				outputFluid = FluidStack.readFromPacket(buffer);
 			}
 
-			return this.factory.create(recipeId, inputIng, toolIng, inputFluid, output, addedItems, outputFluid);
+			boolean consumeIngredient = buffer.readBoolean();
+
+			return this.factory.create(recipeId, inputIng, toolIng, inputFluid, output, addedItems, outputFluid, consumeIngredient);
 		} catch (Exception e)
 		{
 			BloodMagic.LOGGER.error("Error reading ARC recipe from packet.", e);
@@ -150,6 +154,6 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 	@FunctionalInterface
 	public interface IFactory<RECIPE extends RecipeARC>
 	{
-		RECIPE create(ResourceLocation id, Ingredient input, Ingredient arcTool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Double>> addedItems, FluidStack outputFluid);
+		RECIPE create(ResourceLocation id, Ingredient input, Ingredient arcTool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Double>> addedItems, FluidStack outputFluid, boolean consumeIngredient);
 	}
 }

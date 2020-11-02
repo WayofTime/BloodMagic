@@ -16,5 +16,6 @@
   ],
   "output": {
     "item": "bloodmagic:weakbloodshard"
-  }
+  },
+  "consumeingredient": false
 }

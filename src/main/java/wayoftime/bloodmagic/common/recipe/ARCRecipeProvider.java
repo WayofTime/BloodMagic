@@ -55,6 +55,6 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 
 	private void registerReversionRecipe(Ingredient input, ItemStack outputStack, Consumer<IFinishedRecipe> consumer, String path)
 	{
-		ARCRecipeBuilder.arc(input, Ingredient.fromTag(BloodMagicTags.ARC_TOOL_REVERTER), null, outputStack, null).build(consumer, BloodMagic.rl(path));
+		ARCRecipeBuilder.arcConsume(input, Ingredient.fromTag(BloodMagicTags.ARC_TOOL_REVERTER), null, outputStack, null).build(consumer, BloodMagic.rl(path));
 	}
 }

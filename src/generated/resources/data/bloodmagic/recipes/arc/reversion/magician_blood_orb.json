@@ -8,5 +8,6 @@
   },
   "output": {
     "item": "minecraft:gold_block"
-  }
+  },
+  "consumeingredient": true
 }

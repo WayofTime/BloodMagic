@@ -8,5 +8,6 @@
   },
   "output": {
     "item": "minecraft:redstone_block"
-  }
+  },
+  "consumeingredient": true
 }

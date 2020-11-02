@@ -287,7 +287,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 
 			outputSlotHandler.canTransferAllItemsToSlots(recipe.getAllOutputs(world.rand), false);
 			outputTank.fill(recipe.getFluidOutput().copy(), FluidAction.EXECUTE);
-			consumeInventory();
+			consumeInventory(recipe.getConsumeIngredient());
 		}
 	}
 
@@ -303,15 +303,15 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 		List<ItemStack> outputList = new ArrayList<>();
 		outputList.add(outputStack);
 		outputSlotHandler.canTransferAllItemsToSlots(outputList, false);
-		consumeInventory();
+		consumeInventory(false);
 	}
 
-	public void consumeInventory()
+	public void consumeInventory(boolean consumeInput)
 	{
 		ItemStack inputStack = getStackInSlot(INPUT_SLOT);
 		if (!inputStack.isEmpty())
 		{
-			if (inputStack.getItem().hasContainerItem(inputStack))
+			if (!consumeInput && inputStack.getItem().hasContainerItem(inputStack))
 			{
 				setInventorySlotContents(INPUT_SLOT, inputStack.getItem().getContainerItem(inputStack));
 			} else

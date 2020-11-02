@@ -9,5 +9,6 @@
   "output": {
     "item": "bloodmagic:goldsand",
     "count": 2
-  }
+  },
+  "consumeingredient": false
 }

@@ -20,5 +20,6 @@
   ],
   "output": {
     "item": "minecraft:clay_ball"
-  }
+  },
+  "consumeingredient": false
 }

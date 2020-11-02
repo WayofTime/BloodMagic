@@ -28,15 +28,16 @@ public abstract class RecipeARC extends BloodMagicRecipe
 	@Nonnull
 	private final ItemStack output;
 	private final FluidStack outputFluid;
+	private final boolean consumeIngredient;
 
 	private final List<Pair<ItemStack, Double>> addedItems;
 
-	protected RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid)
+	protected RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid, boolean consumeIngredient)
 	{
-		this(id, input, arc_tool, inputFluid, output, new ArrayList<Pair<ItemStack, Double>>(), outputFluid);
+		this(id, input, arc_tool, inputFluid, output, new ArrayList<Pair<ItemStack, Double>>(), outputFluid, consumeIngredient);
 	}
 
-	protected RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Double>> addedItems, FluidStack outputFluid)
+	protected RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Double>> addedItems, FluidStack outputFluid, boolean consumeIngredient)
 	{
 		super(id);
 		this.input = input;
@@ -45,6 +46,7 @@ public abstract class RecipeARC extends BloodMagicRecipe
 		this.output = output;
 		this.addedItems = addedItems;
 		this.outputFluid = outputFluid;
+		this.consumeIngredient = consumeIngredient;
 	}
 
 	public RecipeARC addRandomOutput(ItemStack stack, double chance)
@@ -130,6 +132,11 @@ public abstract class RecipeARC extends BloodMagicRecipe
 		return chanceArray;
 	}
 
+	public boolean getConsumeIngredient()
+	{
+		return consumeIngredient;
+	}
+
 	@Override
 	public void write(PacketBuffer buffer)
 	{
@@ -154,5 +161,6 @@ public abstract class RecipeARC extends BloodMagicRecipe
 		{
 			outputFluid.writeToPacket(buffer);
 		}
+		buffer.writeBoolean(consumeIngredient);
 	}
 }
