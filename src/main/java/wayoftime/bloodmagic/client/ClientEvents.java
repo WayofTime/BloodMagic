@@ -20,6 +20,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.render.block.RenderAlchemyArray;
 import wayoftime.bloodmagic.client.render.block.RenderAltar;
+import wayoftime.bloodmagic.client.render.block.RenderDemonCrucible;
 import wayoftime.bloodmagic.client.render.entity.BloodLightRenderer;
 import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemicalReactionChamber;
@@ -33,6 +34,7 @@ import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.iface.IMultiWillTool;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.tile.TileAltar;
+import wayoftime.bloodmagic.tile.TileDemonCrucible;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientEvents
@@ -42,6 +44,7 @@ public class ClientEvents
 	{
 		ClientRegistry.bindTileEntityRenderer(TileAltar.TYPE, RenderAltar::new);
 		ClientRegistry.bindTileEntityRenderer(TileAlchemyArray.TYPE, RenderAlchemyArray::new);
+		ClientRegistry.bindTileEntityRenderer(TileDemonCrucible.TYPE, RenderDemonCrucible::new);
 //		ClientRegistry.bindTileEntityRenderer(TileSoulForge.TYPE, RenderAlchemyArray::new);
 	}
 

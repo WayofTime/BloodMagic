@@ -9,6 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.IChunk;
 import wayoftime.bloodmagic.util.BMLog;
 import wayoftime.bloodmagic.will.DemonWillHolder;
 import wayoftime.bloodmagic.will.EnumDemonWillType;
@@ -35,9 +36,9 @@ public class WorldDemonWillHandler
 		return getWillHolder(getDimensionResourceLocation(world), pos.getX() >> 4, pos.getZ() >> 4);
 	}
 
-	public static WillWorld getWillWorld(int dim)
+	public static WillWorld getWillWorld(ResourceLocation rl)
 	{
-		return containedWills.get(dim);
+		return containedWills.get(rl);
 	}
 
 	@Nullable
@@ -60,13 +61,13 @@ public class WorldDemonWillHandler
 		}
 	}
 
-	public static void removeWillWorld(int dim)
+	public static void removeWillWorld(ResourceLocation rl)
 	{
-		containedWills.remove(dim);
-		BMLog.DEBUG.info("Removing demon will cache for world {}", dim);
+		containedWills.remove(rl);
+		BMLog.DEBUG.info("Removing demon will cache for world {}", rl);
 	}
 
-	public static void addWillChunk(ResourceLocation resourceLocation, Chunk chunk, short base, DemonWillHolder currentWill)
+	public static void addWillChunk(ResourceLocation resourceLocation, IChunk chunk, short base, DemonWillHolder currentWill)
 	{
 		WillWorld aw = containedWills.get(resourceLocation);
 		if (aw == null)
@@ -167,7 +168,7 @@ public class WorldDemonWillHandler
 		if (willChunk == null)
 		{
 			Chunk chunk = world.getChunk(pos.getX() >> 4, pos.getZ() >> 4);
-			generateWill(chunk);
+			generateWill(chunk, world);
 
 			willChunk = getWillChunk(getDimensionResourceLocation(world), pos.getX() >> 4, pos.getZ() >> 4);
 		}
@@ -206,13 +207,14 @@ public class WorldDemonWillHandler
 		}
 	}
 
-	public static void generateWill(Chunk chunk)
+	public static void generateWill(IChunk chunk, World world)
 	{
-		addWillChunk(chunk.getWorld().getDimensionKey().getLocation(), chunk, (short) 1, new DemonWillHolder());
+		addWillChunk(getDimensionResourceLocation(world), chunk, (short) 1, new DemonWillHolder());
 	}
 
-	private static ResourceLocation getDimensionResourceLocation(World world)
+	public static ResourceLocation getDimensionResourceLocation(World world)
 	{
 		return world.getDimensionKey().getLocation();
 	}
+
 }

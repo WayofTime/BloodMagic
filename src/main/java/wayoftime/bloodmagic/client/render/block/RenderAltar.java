@@ -69,52 +69,6 @@ public class RenderAltar extends TileEntityRenderer<TileAltar>
 		matrixStack.pop();
 	}
 
-	public float getRotation(float craftTime)
-	{
-		float offset = 2;
-		if (craftTime >= offset)
-		{
-			float modifier = (float) Math.pow(craftTime - offset, 1.5);
-			return modifier * 1f;
-		}
-		return 0;
-	}
-
-	public float getSecondaryRotation(float craftTime)
-	{
-		float offset = 50;
-		if (craftTime >= offset)
-		{
-			float modifier = (float) Math.pow(craftTime - offset, 1.7);
-			return modifier * 0.5f;
-		}
-		return 0;
-	}
-
-	public float getSizeModifier(float craftTime)
-	{
-		if (craftTime >= 150 && craftTime <= 250)
-		{
-			return (200 - craftTime) / 50f;
-		}
-		return 1.0f;
-	}
-
-	public float getVerticalOffset(float craftTime)
-	{
-		if (craftTime >= 5)
-		{
-			if (craftTime <= 40)
-			{
-				return (float) ((-0.4) * Math.pow((craftTime - 5) / 35f, 3));
-			} else
-			{
-				return -0.4f;
-			}
-		}
-		return 0;
-	}
-
 	private void renderItem(ItemStack stack, TileAltar tileAltar, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn)
 	{
 		matrixStack.push();
