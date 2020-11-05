@@ -8,4 +8,9 @@ public interface IARCTool
 	{
 		return 1;
 	}
+
+	default double getAdditionalOutputChanceMultiplier(ItemStack stack)
+	{
+		return 1;
+	}
 }

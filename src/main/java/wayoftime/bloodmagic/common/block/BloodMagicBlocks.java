@@ -73,6 +73,7 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> ALCHEMY_TABLE = BLOCKS.register("alchemytable", () -> new BlockAlchemyTable());
 
 	public static final RegistryObject<Block> DEMON_CRUCIBLE = BLOCKS.register("demoncrucible", () -> new BlockDemonCrucible());
+	public static final RegistryObject<Block> DEMON_CRYSTALLIZER = BLOCKS.register("demoncrystallizer", () -> new BlockDemonCrystallizer());
 
 	public static final RegistryObject<Block> RAW_CRYSTAL_BLOCK = BLOCKS.register("rawdemoncrystal", () -> new BlockDemonCrystal(EnumDemonWillType.DEFAULT));
 	public static final RegistryObject<Block> CORROSIVE_CRYSTAL_BLOCK = BLOCKS.register("corrosivedemoncrystal", () -> new BlockDemonCrystal(EnumDemonWillType.CORROSIVE));

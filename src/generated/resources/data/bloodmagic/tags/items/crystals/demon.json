@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "bloodmagic:defaultcrystal",
+    "bloodmagic:corrosivecrystal",
+    "bloodmagic:destructivecrystal",
+    "bloodmagic:vengefulcrystal",
+    "bloodmagic:steadfastcrystal"
+  ]
+}

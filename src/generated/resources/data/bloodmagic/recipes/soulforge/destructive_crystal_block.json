@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "bloodmagic:destructivecrystal"
+  },
+  "input1": {
+    "item": "bloodmagic:destructivecrystal"
+  },
+  "input2": {
+    "item": "bloodmagic:destructivecrystal"
+  },
+  "input3": {
+    "item": "bloodmagic:destructivecrystal"
+  },
+  "output": {
+    "item": "bloodmagic:destructivedemoncrystal"
+  },
+  "minimumDrain": 1200.0,
+  "drain": 100.0
+}

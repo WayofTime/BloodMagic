@@ -4,7 +4,7 @@
     "item": "minecraft:gold_ore"
   },
   "tool": {
-    "tag": "bloodmagic:arc/explosive"
+    "tag": "bloodmagic:arc/cuttingfluid"
   },
   "output": {
     "item": "bloodmagic:goldsand",

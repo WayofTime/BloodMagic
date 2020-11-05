@@ -7,6 +7,8 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.potion.Potions;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
@@ -33,6 +35,8 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.PLANT_OIL.get()), 100, 100, 1).addIngredient(Ingredient.fromTag(Tags.Items.CROPS_POTATO)).addIngredient(Ingredient.fromTag(Tags.Items.CROPS_POTATO)).addIngredient(Ingredient.fromItems(Items.BONE_MEAL)).build(consumer, BloodMagic.rl(basePath + "plantoil_from_taters"));
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.PLANT_OIL.get()), 100, 100, 1).addIngredient(Ingredient.fromTag(Tags.Items.CROPS_WHEAT)).addIngredient(Ingredient.fromTag(Tags.Items.CROPS_WHEAT)).addIngredient(Ingredient.fromItems(Items.BONE_MEAL)).build(consumer, BloodMagic.rl(basePath + "plantoil_from_wheat"));
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.PLANT_OIL.get()), 100, 100, 1).addIngredient(Ingredient.fromTag(Tags.Items.CROPS_BEETROOT)).addIngredient(Ingredient.fromTag(Tags.Items.CROPS_BEETROOT)).addIngredient(Ingredient.fromTag(Tags.Items.CROPS_BEETROOT)).addIngredient(Ingredient.fromItems(Items.BONE_MEAL)).build(consumer, BloodMagic.rl(basePath + "plantoil_from_beets"));
+
+		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.BASIC_CUTTING_FLUID.get()), 1000, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.PLANT_OIL.get())).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.fromItems(Items.SUGAR)).addIngredient(Ingredient.fromTag(BloodMagicTags.DUST_COAL)).addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER))).build(consumer, BloodMagic.rl(basePath + "basic_cutting_fluid"));
 	}
 
 }

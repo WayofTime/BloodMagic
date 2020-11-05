@@ -153,11 +153,11 @@ public class TartaricForgeRecipeCategory implements IRecipeCategory<RecipeTartar
 
 	public enum DefaultWill
 	{
-		SOUL(new ItemStack(BloodMagicItems.MONSTER_SOUL_RAW.get()), 64),
+		SOUL(new ItemStack(BloodMagicItems.MONSTER_SOUL_RAW.get()), 16),
 		PETTY(new ItemStack(BloodMagicItems.PETTY_GEM.get()), 64),
 		LESSER(new ItemStack(BloodMagicItems.LESSER_GEM.get()), 256),
-		COMMON(new ItemStack(BloodMagicItems.COMMON_GEM.get()), 1024);
-//		GREATER(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 3), 4096),
+		COMMON(new ItemStack(BloodMagicItems.COMMON_GEM.get()), 1024),
+		GREATER(new ItemStack(BloodMagicItems.GREATER_GEM.get()), 4096);
 //		GRAND(new ItemStack(RegistrarBloodMagicItems.SOUL_GEM, 1, 4), 16384);
 
 		public final ItemStack willStack;

@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "forge:ores/iron"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/cuttingfluid"
+  },
+  "output": {
+    "item": "bloodmagic:ironsand",
+    "count": 2
+  },
+  "consumeingredient": false
+}

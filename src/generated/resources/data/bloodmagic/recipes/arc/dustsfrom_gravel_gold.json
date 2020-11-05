@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "bloodmagic:gravels/gold"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/cuttingfluid"
+  },
+  "output": {
+    "item": "bloodmagic:goldsand"
+  },
+  "consumeingredient": false
+}

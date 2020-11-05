@@ -1,0 +1,30 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:plantoil"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:gunpowder"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "tag": "forge:dusts/coal"
+    },
+    {
+      "item": "minecraft:potion"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:basiccuttingfluid",
+    "nbt": "{Damage:0}"
+  },
+  "syphon": 1000,
+  "ticks": 200,
+  "upgradeLevel": 1
+}

@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "bloodmagic:soulforge"
+  },
+  "input1": {
+    "tag": "forge:stone"
+  },
+  "input2": {
+    "tag": "forge:gems/lapis"
+  },
+  "input3": {
+    "tag": "forge:glass"
+  },
+  "output": {
+    "item": "bloodmagic:demoncrystallizer"
+  },
+  "minimumDrain": 500.0,
+  "drain": 100.0
+}

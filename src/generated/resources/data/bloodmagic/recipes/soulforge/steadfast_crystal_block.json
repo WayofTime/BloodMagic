@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "bloodmagic:steadfastcrystal"
+  },
+  "input1": {
+    "item": "bloodmagic:steadfastcrystal"
+  },
+  "input2": {
+    "item": "bloodmagic:steadfastcrystal"
+  },
+  "input3": {
+    "item": "bloodmagic:steadfastcrystal"
+  },
+  "output": {
+    "item": "bloodmagic:steadfastdemoncrystal"
+  },
+  "minimumDrain": 1200.0,
+  "drain": 100.0
+}

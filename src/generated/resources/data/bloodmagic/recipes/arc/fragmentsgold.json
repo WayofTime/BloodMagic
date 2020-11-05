@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "forge:ores/gold"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/explosive"
+  },
+  "output": {
+    "item": "bloodmagic:goldfragment",
+    "count": 3
+  },
+  "consumeingredient": false
+}

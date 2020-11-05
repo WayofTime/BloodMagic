@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "bloodmagic:fragments/gold"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/resonator"
+  },
+  "output": {
+    "item": "bloodmagic:goldgravel"
+  },
+  "consumeingredient": false
+}

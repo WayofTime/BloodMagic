@@ -15,8 +15,8 @@ import wayoftime.bloodmagic.will.EnumDemonWillType;
 
 public class TileDemonCrystal extends TileTicking
 {
-	public static final double sameWillConversionRate = 50;
-	public static final double defaultWillConversionRate = 100;
+	public static final double sameWillConversionRate = 45;
+	public static final double defaultWillConversionRate = 90;
 	public static final double timeDelayForWrongWill = 0.6;
 	public final int maxWill = 100;
 	public final double drainRate = 1;
@@ -49,7 +49,7 @@ public class TileDemonCrystal extends TileTicking
 	@Override
 	public void onUpdate()
 	{
-		if (getWorld().isRemote)
+		if (world.isRemote)
 		{
 			return;
 		}
@@ -163,7 +163,6 @@ public class TileDemonCrystal extends TileTicking
 		int crystalCount = getCrystalCount();
 		if (!getWorld().isRemote && crystalCount > 1)
 		{
-			BlockState state = getWorld().getBlockState(pos);
 			EnumDemonWillType type = getWillType();
 //			EnumDemonWillType type = state.getValue(BlockDemonCrystal.TYPE);
 			ItemStack stack = BlockDemonCrystal.getItemStackDropped(type, 1);
@@ -181,6 +180,7 @@ public class TileDemonCrystal extends TileTicking
 
 	public double getCrystalGrowthPerSecond(double will)
 	{
+//		return 0.1;
 		return 1.0 / 200 * Math.sqrt(will / 200);
 	}
 
@@ -204,7 +204,7 @@ public class TileDemonCrystal extends TileTicking
 	public int getCrystalCount()
 	{
 		BlockState state = world.getBlockState(getPos());
-		return state.get(BlockDemonCrystal.AGE);
+		return state.get(BlockDemonCrystal.AGE) + 1;
 	}
 
 	public void setCrystalCount(int crystalCount)

@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "bloodmagic:fragments/iron"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/resonator"
+  },
+  "output": {
+    "item": "bloodmagic:irongravel"
+  },
+  "consumeingredient": false
+}

@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "bloodmagic:vengefulcrystal"
+  },
+  "input1": {
+    "item": "bloodmagic:vengefulcrystal"
+  },
+  "input2": {
+    "item": "bloodmagic:vengefulcrystal"
+  },
+  "input3": {
+    "item": "bloodmagic:vengefulcrystal"
+  },
+  "output": {
+    "item": "bloodmagic:vengefuldemoncrystal"
+  },
+  "minimumDrain": 1200.0,
+  "drain": 100.0
+}

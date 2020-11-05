@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "bloodmagic:defaultcrystal"
+  },
+  "input1": {
+    "item": "bloodmagic:defaultcrystal"
+  },
+  "input2": {
+    "item": "bloodmagic:defaultcrystal"
+  },
+  "input3": {
+    "item": "bloodmagic:defaultcrystal"
+  },
+  "output": {
+    "item": "bloodmagic:rawdemoncrystal"
+  },
+  "minimumDrain": 1200.0,
+  "drain": 100.0
+}

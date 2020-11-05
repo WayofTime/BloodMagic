@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "forge:ores/gold"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/cuttingfluid"
+  },
+  "output": {
+    "item": "bloodmagic:goldsand",
+    "count": 2
+  },
+  "consumeingredient": false
+}

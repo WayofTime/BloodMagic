@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -14,6 +15,7 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.util.LazyOptional;
@@ -35,7 +37,7 @@ import wayoftime.bloodmagic.tile.contailer.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.MultiSlotItemHandler;
 
-public class TileAlchemicalReactionChamber extends TileInventory implements ITickableTileEntity, INamedContainerProvider
+public class TileAlchemicalReactionChamber extends TileInventory implements ITickableTileEntity, INamedContainerProvider, ISidedInventory
 {
 	@ObjectHolder("bloodmagic:alchemicalreactionchamber")
 	public static TileEntityType<TileAlchemicalReactionChamber> TYPE;
@@ -113,8 +115,8 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 		ItemStack fullBucketStack = this.getStackInSlot(INPUT_BUCKET_SLOT);
 		ItemStack emptyBucketStack = this.getStackInSlot(OUTPUT_BUCKET_SLOT);
 
-		ItemStack[] outputInventory = new ItemStack[]
-		{ getStackInSlot(1), getStackInSlot(2), getStackInSlot(3), getStackInSlot(4), getStackInSlot(5) };
+		ItemStack[] outputInventory = new ItemStack[] { getStackInSlot(1), getStackInSlot(2), getStackInSlot(3),
+				getStackInSlot(4), getStackInSlot(5) };
 
 		MultiSlotItemHandler outputSlotHandler = new MultiSlotItemHandler(outputInventory, 64);
 
@@ -364,5 +366,50 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 	public double getProgressForGui()
 	{
 		return currentProgress;
+	}
+
+	@Override
+	public int[] getSlotsForFace(Direction side)
+	{
+		switch (side)
+		{
+		case UP:
+			return new int[] { ARC_TOOL_SLOT };
+		case DOWN:
+			return new int[] { 1, 2, 3, 4, 5 };
+		default:
+			return new int[] { 6, 7, 8 };
+		}
+	}
+
+	@Override
+	public boolean canInsertItem(int index, ItemStack itemStack, Direction direction)
+	{
+		if (index == INPUT_BUCKET_SLOT || index == OUTPUT_BUCKET_SLOT)
+		{
+			Optional<FluidStack> fluidStackOptional = FluidUtil.getFluidContained(itemStack);
+
+			return fluidStackOptional.isPresent()
+					&& ((index == OUTPUT_BUCKET_SLOT && !fluidStackOptional.get().isEmpty())
+							|| (index == INPUT_BUCKET_SLOT && fluidStackOptional.get().isEmpty()));
+		}
+
+		if (index >= OUTPUT_SLOT && index < OUTPUT_SLOT + NUM_OUTPUTS)
+		{
+			return false;
+		}
+
+		if (index == ARC_TOOL_SLOT)
+		{
+			return itemStack.getItem().isIn(BloodMagicTags.ARC_TOOL);
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, Direction direction)
+	{
+		return index >= OUTPUT_SLOT && index < OUTPUT_SLOT + NUM_OUTPUTS;
 	}
 }

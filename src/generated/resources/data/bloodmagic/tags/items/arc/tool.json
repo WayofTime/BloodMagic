@@ -5,6 +5,8 @@
     "#bloodmagic:arc/reverter",
     "#bloodmagic:arc/sieve",
     "#bloodmagic:arc/explosive",
-    "#bloodmagic:arc/hydrate"
+    "#bloodmagic:arc/hydrate",
+    "#bloodmagic:arc/resonator",
+    "#bloodmagic:arc/cuttingfluid"
   ]
 }

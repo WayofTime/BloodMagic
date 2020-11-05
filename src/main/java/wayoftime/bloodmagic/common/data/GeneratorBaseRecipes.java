@@ -36,6 +36,8 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 
 	private void addVanillaRecipes(Consumer<IFinishedRecipe> consumer)
 	{
+//		ConditionalRecipe.builder().addRecipe(ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.SACRIFICIAL_DAGGER.get()).key('g', Tags.Items.GLASS).key('G', Tags.Items.INGOTS_GOLD).key('i', Tags.Items.INGOTS_IRON).patternLine("ggg").patternLine(" Gg").patternLine("i g").addCriterion("has_glass", hasItem(Items.GLASS))::build);
+
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.SACRIFICIAL_DAGGER.get()).key('g', Tags.Items.GLASS).key('G', Tags.Items.INGOTS_GOLD).key('i', Tags.Items.INGOTS_IRON).patternLine("ggg").patternLine(" Gg").patternLine("i g").addCriterion("has_glass", hasItem(Items.GLASS)).build(consumer, BloodMagic.rl("sacrificial_dagger"));
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.BLOOD_ALTAR.get()).key('a', Tags.Items.STONE).key('b', Items.FURNACE).key('c', Tags.Items.INGOTS_GOLD).key('d', BloodMagicItems.MONSTER_SOUL_RAW.get()).patternLine("a a").patternLine("aba").patternLine("cdc").addCriterion("has_will", hasItem(BloodMagicItems.MONSTER_SOUL_RAW.get())).build(consumer, BloodMagic.rl("blood_altar"));
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.SOUL_FORGE.get()).key('s', Tags.Items.STONE).key('g', Tags.Items.INGOTS_GOLD).key('i', Tags.Items.INGOTS_IRON).key('o', Tags.Items.STORAGE_BLOCKS_IRON).patternLine("i i").patternLine("sgs").patternLine("sos").addCriterion("has_gold", hasItem(Items.GOLD_INGOT)).build(consumer, BloodMagic.rl("soul_forge"));

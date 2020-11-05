@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "tag": "forge:stone"
+  },
+  "input1": {
+    "tag": "forge:ingots"
+  },
+  "input2": {
+    "item": "bloodmagic:defaultcrystal"
+  },
+  "input3": {
+    "item": "bloodmagic:defaultcrystal"
+  },
+  "output": {
+    "item": "bloodmagic:primitive_crystalline_resonator",
+    "nbt": "{Damage:0}"
+  },
+  "minimumDrain": 1200.0,
+  "drain": 200.0
+}

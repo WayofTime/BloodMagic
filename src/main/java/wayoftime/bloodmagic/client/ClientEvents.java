@@ -75,6 +75,7 @@ public class ClientEvents
 			registerMultiWillTool(BloodMagicItems.PETTY_GEM.get());
 			registerMultiWillTool(BloodMagicItems.LESSER_GEM.get());
 			registerMultiWillTool(BloodMagicItems.COMMON_GEM.get());
+			registerMultiWillTool(BloodMagicItems.GREATER_GEM.get());
 
 			ItemModelsProperties.registerProperty(BloodMagicItems.SENTIENT_SWORD.get(), BloodMagic.rl("active"), new IItemPropertyGetter()
 			{

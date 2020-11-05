@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "bloodmagic:soulgemcommon"
+  },
+  "input1": {
+    "item": "bloodmagic:demonslate"
+  },
+  "input2": {
+    "item": "bloodmagic:weakbloodshard"
+  },
+  "input3": {
+    "tag": "bloodmagic:crystals/demon"
+  },
+  "output": {
+    "item": "bloodmagic:soulgemgreater"
+  },
+  "minimumDrain": 1000.0,
+  "drain": 100.0
+}

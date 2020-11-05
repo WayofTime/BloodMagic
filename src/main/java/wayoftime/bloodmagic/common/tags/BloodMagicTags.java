@@ -12,16 +12,50 @@ public class BloodMagicTags
 	public static final ITag.INamedTag<Item> ARC_TOOL_REVERTER = ItemTags.makeWrapperTag("bloodmagic:arc/reverter");
 	public static final ITag.INamedTag<Item> ARC_TOOL_EXPLOSIVE = ItemTags.makeWrapperTag("bloodmagic:arc/explosive");
 	public static final ITag.INamedTag<Item> ARC_TOOL_HYDRATE = ItemTags.makeWrapperTag("bloodmagic:arc/hydrate");
+	public static final ITag.INamedTag<Item> ARC_TOOL_RESONATOR = ItemTags.makeWrapperTag("bloodmagic:arc/resonator");
+	public static final ITag.INamedTag<Item> ARC_TOOL_CUTTINGFLUID = ItemTags.makeWrapperTag("bloodmagic:arc/cuttingfluid");
 
-	// Dusts
+	public static final ITag.INamedTag<Item> CRYSTAL_DEMON = ItemTags.makeWrapperTag("bloodmagic:crystals/demon");
+
+	// Ores
+	public static final ITag.INamedTag<Item> ORE_COPPER = getForgeOreTag("copper");
+	public static final ITag.INamedTag<Item> ORE_TIN = getForgeOreTag("tin");
+	public static final ITag.INamedTag<Item> ORE_LEAD = getForgeOreTag("lead");
+	public static final ITag.INamedTag<Item> ORE_OSMIUM = getForgeOreTag("osmium");
+	public static final ITag.INamedTag<Item> ORE_SILVER = getForgeOreTag("silver");
+
+	// Dusts (/Sands)
 	public static final ITag.INamedTag<Item> DUST_IRON = getForgeDustTag("iron");
 	public static final ITag.INamedTag<Item> DUST_GOLD = getForgeDustTag("gold");
 	public static final ITag.INamedTag<Item> DUST_COAL = getForgeDustTag("coal");
 	public static final ITag.INamedTag<Item> DUST_SALTPETER = getForgeDustTag("saltpeter");
 	public static final ITag.INamedTag<Item> DUST_SULFUR = getForgeDustTag("sulfur");
 
+	// Fragments
+	public static final ITag.INamedTag<Item> FRAGMENT_IRON = getFragmentTag("iron");
+	public static final ITag.INamedTag<Item> FRAGMENT_GOLD = getFragmentTag("gold");
+
+	// Gravels
+	public static final ITag.INamedTag<Item> GRAVEL_IRON = getGravelTag("iron");
+	public static final ITag.INamedTag<Item> GRAVEL_GOLD = getGravelTag("gold");
+
+	public static ITag.INamedTag<Item> getForgeOreTag(String name)
+	{
+		return ItemTags.makeWrapperTag("forge:ores/" + name);
+	}
+
 	public static ITag.INamedTag<Item> getForgeDustTag(String name)
 	{
 		return ItemTags.makeWrapperTag("forge:dusts/" + name);
+	}
+
+	public static ITag.INamedTag<Item> getFragmentTag(String name)
+	{
+		return ItemTags.makeWrapperTag("bloodmagic:fragments/" + name);
+	}
+
+	public static ITag.INamedTag<Item> getGravelTag(String name)
+	{
+		return ItemTags.makeWrapperTag("bloodmagic:gravels/" + name);
 	}
 }

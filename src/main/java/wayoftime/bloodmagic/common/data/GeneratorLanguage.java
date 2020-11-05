@@ -90,6 +90,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.activationcrystal.awakened", "Activates more powerful rituals");
 		add("tooltip.bloodmagic.activationcrystal.creative", "Creative Only - Activates any ritual");
 
+		add("tooltip.bloodmagic.arctool.additionaldrops", "Increases chance of additional outputs by: x%s");
+		add("tooltip.bloodmagic.arctool.uses", "Uses remaining: %s");
+
 		add("itemGroup.bloodmagictab", "Blood Magic");
 
 		// Ritual info
@@ -169,6 +172,15 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.BLOODSTONE, "Large Bloodstone Brick");
 		addBlock(BloodMagicBlocks.BLOODSTONE_BRICK, "Bloodstone Brick");
 
+		addBlock(BloodMagicBlocks.RAW_CRYSTAL_BLOCK, "Raw Crystal Cluster");
+		addBlock(BloodMagicBlocks.CORROSIVE_CRYSTAL_BLOCK, "Corrosive Crystal Cluster");
+		addBlock(BloodMagicBlocks.DESTRUCTIVE_CRYSTAL_BLOCK, "Destructive Crystal Cluster");
+		addBlock(BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK, "Vengeful Crystal Cluster");
+		addBlock(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK, "Steadfast Crystal Cluster");
+
+		addBlock(BloodMagicBlocks.DEMON_CRUCIBLE, "Demon Crucible");
+		addBlock(BloodMagicBlocks.DEMON_CRYSTALLIZER, "Demon Crystallizer");
+
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
 		addItem(BloodMagicItems.APPRENTICE_BLOOD_ORB, "Apprentice Blood Orb");
@@ -209,6 +221,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.PETTY_GEM, "Petty Tartaric Gem");
 		addItem(BloodMagicItems.LESSER_GEM, "Lesser Tartaric Gem");
 		addItem(BloodMagicItems.COMMON_GEM, "Common Tartaric Gem");
+		addItem(BloodMagicItems.GREATER_GEM, "Greater Tartaric Gem");
 		addItem(BloodMagicItems.MONSTER_SOUL_RAW, "Demon Will");
 		addItem(BloodMagicItems.MONSTER_SOUL_CORROSIVE, "Demon Will");
 		addItem(BloodMagicItems.MONSTER_SOUL_DESTRUCTIVE, "Demon Will");
@@ -233,6 +246,33 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addItem(BloodMagicItems.SANGUINE_REVERTER, "Sanguine Reverter");
 		addItem(BloodMagicItems.PRIMITIVE_FURNACE_CELL, "Primitive Fuel Cell");
+
+		addItem(BloodMagicItems.PRIMITIVE_CRYSTALLINE_RESONATOR, "Primitive Resonator");
+		addItem(BloodMagicItems.CRYSTALLINE_RESONATOR, "Crystalline Resonator");
+
+		addItem(BloodMagicItems.PRIMITIVE_HYDRATION_CELL, "Primitive Hydration Cell");
+		addItem(BloodMagicItems.PRIMITIVE_EXPLOSIVE_CELL, "Primitive Explosive Cell");
+		addItem(BloodMagicItems.EXPLOSIVE_POWDER, "Explosive Powder");
+
+		addItem(BloodMagicItems.BASIC_CUTTING_FLUID, "Basic Cutting Fluid");
+
+		// Alchemy Items
+		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");
+
+		// Sands
+		addItem(BloodMagicItems.COAL_SAND, "Coal Sand");
+		addItem(BloodMagicItems.IRON_SAND, "Iron Sand");
+		addItem(BloodMagicItems.GOLD_SAND, "Gold Sand");
+		addItem(BloodMagicItems.SULFUR, "Sulfur");
+		addItem(BloodMagicItems.SALTPETER, "Saltpeter");
+
+		// Fragments
+		addItem(BloodMagicItems.IRON_FRAGMENT, "Iron Ore Fragment");
+		addItem(BloodMagicItems.GOLD_FRAGMENT, "Gold Ore Fragment");
+
+		// Gravels
+		addItem(BloodMagicItems.IRON_GRAVEL, "Iron Gravel");
+		addItem(BloodMagicItems.GOLD_GRAVEL, "Gold Gravel");
 
 //		addItem(BloodMagicItems , "");
 

@@ -58,6 +58,7 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerDemonWillVariantItem(BloodMagicItems.PETTY_GEM.get());
 		registerDemonWillVariantItem(BloodMagicItems.LESSER_GEM.get());
 		registerDemonWillVariantItem(BloodMagicItems.COMMON_GEM.get());
+		registerDemonWillVariantItem(BloodMagicItems.GREATER_GEM.get());
 		registerDemonSword(BloodMagicItems.SENTIENT_SWORD.get());
 	}
 

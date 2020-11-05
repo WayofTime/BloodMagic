@@ -4,7 +4,7 @@
     "item": "minecraft:iron_ore"
   },
   "tool": {
-    "tag": "bloodmagic:arc/explosive"
+    "tag": "bloodmagic:arc/cuttingfluid"
   },
   "output": {
     "item": "bloodmagic:ironsand",
