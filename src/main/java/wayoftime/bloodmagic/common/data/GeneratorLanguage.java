@@ -149,7 +149,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.SPEED_RUNE, "Speed Rune");
 		addBlock(BloodMagicBlocks.SACRIFICE_RUNE, "Rune of Sacrifice");
 		addBlock(BloodMagicBlocks.SELF_SACRIFICE_RUNE, "Rune of Self Sacrifice");
-		addBlock(BloodMagicBlocks.DISPLACEMENT_RUNE, "DisplacementRune");
+		addBlock(BloodMagicBlocks.DISPLACEMENT_RUNE, "Displacement Rune");
 		addBlock(BloodMagicBlocks.CAPACITY_RUNE, "Rune of Capacity");
 		addBlock(BloodMagicBlocks.AUGMENTED_CAPACITY_RUNE, "Rune of Augmented Capacity");
 		addBlock(BloodMagicBlocks.ORB_RUNE, "Rune of the Orb");
@@ -243,6 +243,11 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.DUSK_RITUAL_DIVINER, "Ritual Diviner [Dusk]");
 
 		addItem(BloodMagicItems.WEAK_BLOOD_SHARD, "Weak Blood Shard");
+		addItem(BloodMagicItems.RAW_CRYSTAL, "Demon Will Crystal");
+		addItem(BloodMagicItems.CORROSIVE_CRYSTAL, "Corrosive Will Crystal");
+		addItem(BloodMagicItems.DESTRUCTIVE_CRYSTAL, "Destructive Will Crystal");
+		addItem(BloodMagicItems.VENGEFUL_CRYSTAL, "Vengeful Will Crystal");
+		addItem(BloodMagicItems.STEADFAST_CRYSTAL, "Steadfast Will Crystal");
 
 		addItem(BloodMagicItems.SANGUINE_REVERTER, "Sanguine Reverter");
 		addItem(BloodMagicItems.PRIMITIVE_FURNACE_CELL, "Primitive Fuel Cell");

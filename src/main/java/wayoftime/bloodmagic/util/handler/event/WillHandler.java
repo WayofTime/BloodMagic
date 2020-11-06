@@ -2,7 +2,7 @@ package wayoftime.bloodmagic.util.handler.event;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -17,7 +17,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.ChunkStatus;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
@@ -142,11 +146,18 @@ public class WillHandler
 
 			if (ticks % 20 == 0)
 			{
-				CopyOnWriteArrayList<PosXY> dirtyChunks = WorldDemonWillHandler.dirtyChunks.get(rl);
+//				CopyOnWriteArrayList<PosXY> dirtyChunks = WorldDemonWillHandler.dirtyChunks.get(rl);
+				ConcurrentLinkedQueue<PosXY> dirtyChunks = WorldDemonWillHandler.dirtyChunks.get(rl);
 				if ((dirtyChunks != null) && (dirtyChunks.size() > 0))
 				{
 					for (PosXY pos : dirtyChunks)
-						event.world.markChunkDirty(new BlockPos(pos.x * 16, 5, pos.y * 16), null);
+					{
+						IChunk chunk = event.world.getChunk(pos.x, pos.y, ChunkStatus.FULL, false);
+						if (chunk != null)
+						{
+							chunk.setModified(true);
+						}
+					}
 
 					dirtyChunks.clear();
 				}
@@ -155,6 +166,23 @@ public class WillHandler
 			SERVER_TICKS.put(rl, ticks + 1);
 		}
 
+	}
+
+	public static boolean isBlockLoaded(IBlockReader world, BlockPos pos)
+	{
+		if (world == null || !World.isValid(pos))
+		{
+			return false;
+		} else if (world instanceof IWorldReader)
+		{
+			// Note: We don't bother checking if it is a world and then isBlockPresent
+			// because
+			// all that does is also validate the y value is in bounds, and we already check
+			// to make
+			// sure the position is valid both in the y and xz directions
+			return ((IWorldReader) world).isBlockLoaded(pos);
+		}
+		return true;
 	}
 
 	@SubscribeEvent

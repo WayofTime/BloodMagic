@@ -1,7 +1,7 @@
 package wayoftime.bloodmagic.demonaura;
 
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.annotation.Nullable;
 
@@ -16,7 +16,7 @@ import wayoftime.bloodmagic.will.EnumDemonWillType;
 
 public class WorldDemonWillHandler
 {
-	public static ConcurrentHashMap<ResourceLocation, CopyOnWriteArrayList<PosXY>> dirtyChunks = new ConcurrentHashMap<>();
+	public static ConcurrentHashMap<ResourceLocation, ConcurrentLinkedQueue<PosXY>> dirtyChunks = new ConcurrentHashMap<>();
 	static ConcurrentHashMap<ResourceLocation, WillWorld> containedWills = new ConcurrentHashMap<>();
 
 	@Nullable
@@ -198,9 +198,9 @@ public class WorldDemonWillHandler
 		PosXY pos = new PosXY(chunk.loc.x, chunk.loc.y);
 		if (!dirtyChunks.containsKey(resourceLocation))
 		{
-			dirtyChunks.put(resourceLocation, new CopyOnWriteArrayList<>());
+			dirtyChunks.put(resourceLocation, new ConcurrentLinkedQueue<>());
 		}
-		CopyOnWriteArrayList<PosXY> dc = dirtyChunks.get(resourceLocation);
+		ConcurrentLinkedQueue<PosXY> dc = dirtyChunks.get(resourceLocation);
 		if (!dc.contains(pos))
 		{
 			dc.add(pos);
