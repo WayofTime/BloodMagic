@@ -15,7 +15,12 @@
               }
             }
           ],
-          "quality": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 1
+            }
+          ],
           "name": "bloodmagic:defaultcrystal"
         }
       ]
@@ -34,7 +39,12 @@
               }
             }
           ],
-          "quality": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 2
+            }
+          ],
           "name": "bloodmagic:defaultcrystal"
         }
       ]
@@ -53,7 +63,12 @@
               }
             }
           ],
-          "quality": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 3
+            }
+          ],
           "name": "bloodmagic:defaultcrystal"
         }
       ]
@@ -72,7 +87,12 @@
               }
             }
           ],
-          "quality": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 4
+            }
+          ],
           "name": "bloodmagic:defaultcrystal"
         }
       ]
@@ -91,7 +111,12 @@
               }
             }
           ],
-          "quality": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 5
+            }
+          ],
           "name": "bloodmagic:defaultcrystal"
         }
       ]
@@ -110,7 +135,12 @@
               }
             }
           ],
-          "quality": 6,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 6
+            }
+          ],
           "name": "bloodmagic:defaultcrystal"
         }
       ]
@@ -129,7 +159,12 @@
               }
             }
           ],
-          "quality": 7,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 7
+            }
+          ],
           "name": "bloodmagic:defaultcrystal"
         }
       ]

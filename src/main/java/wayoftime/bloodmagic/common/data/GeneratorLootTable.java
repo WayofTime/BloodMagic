@@ -26,6 +26,7 @@ import net.minecraft.loot.LootTableManager;
 import net.minecraft.loot.ValidationTracker;
 import net.minecraft.loot.conditions.BlockStateProperty;
 import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.loot.functions.SetCount;
 import net.minecraft.state.Property;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
@@ -96,7 +97,7 @@ public class GeneratorLootTable extends LootTableProvider
 			for (int i = 0; i < 7; i++)
 			{
 				ILootCondition.IBuilder harvestAge = BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(BlockDemonCrystal.AGE, i));
-				builder = builder.addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(item).quality(i + 1).acceptCondition(harvestAge)));
+				builder = builder.addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(item).acceptFunction(SetCount.builder(ConstantRange.of(i + 1))).acceptCondition(harvestAge)));
 			}
 
 			this.registerLootTable(block, builder);

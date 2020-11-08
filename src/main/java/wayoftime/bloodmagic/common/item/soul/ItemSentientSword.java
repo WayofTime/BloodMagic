@@ -22,6 +22,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
@@ -43,42 +45,27 @@ import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
 public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IMultiWillTool
 {
-	public static int[] soulBracket = new int[]
-	{ 16, 60, 200, 400, 1000, 2000, 4000 };
-	public static double[] defaultDamageAdded = new double[]
-	{ 1, 1.5, 2, 2.5, 3, 3.5, 4 };
-	public static double[] destructiveDamageAdded = new double[]
-	{ 1.5, 2.25, 3, 3.75, 4.5, 5.25, 6 };
-	public static double[] vengefulDamageAdded = new double[]
-	{ 0, 0.5, 1, 1.5, 2, 2.25, 2.5 };
-	public static double[] steadfastDamageAdded = new double[]
-	{ 0, 0.5, 1, 1.5, 2, 2.25, 2.5 };
-	public static double[] soulDrainPerSwing = new double[]
-	{ 0.05, 0.1, 0.2, 0.4, 0.75, 1, 1.25 };
-	public static double[] soulDrop = new double[]
-	{ 2, 4, 7, 10, 13, 15, 18 };
-	public static double[] staticDrop = new double[]
-	{ 1, 1, 2, 3, 3, 4, 4 };
+	public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000, 2000, 4000 };
+	public static double[] defaultDamageAdded = new double[] { 1, 1.5, 2, 2.5, 3, 3.5, 4 };
+	public static double[] destructiveDamageAdded = new double[] { 1.5, 2.25, 3, 3.75, 4.5, 5.25, 6 };
+	public static double[] vengefulDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2, 2.25, 2.5 };
+	public static double[] steadfastDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2, 2.25, 2.5 };
+	public static double[] soulDrainPerSwing = new double[] { 0.05, 0.1, 0.2, 0.4, 0.75, 1, 1.25 };
+	public static double[] soulDrop = new double[] { 2, 4, 7, 10, 13, 15, 18 };
+	public static double[] staticDrop = new double[] { 1, 1, 2, 3, 3, 4, 4 };
 
-	public static double[] healthBonus = new double[]
-	{ 0, 0, 0, 0, 0, 0, 0 }; // TODO: Think of implementing this later
-	public static double[] vengefulAttackSpeed = new double[]
-	{ -2.1, -2, -1.8, -1.7, -1.6, -1.6, -1.5 };
-	public static double[] destructiveAttackSpeed = new double[]
-	{ -2.6, -2.7, -2.8, -2.9, -3, -3, -3 };
+	public static double[] healthBonus = new double[] { 0, 0, 0, 0, 0, 0, 0 }; // TODO: Think of implementing this later
+	public static double[] vengefulAttackSpeed = new double[] { -2.1, -2, -1.8, -1.7, -1.6, -1.6, -1.5 };
+	public static double[] destructiveAttackSpeed = new double[] { -2.6, -2.7, -2.8, -2.9, -3, -3, -3 };
 
-	public static int[] absorptionTime = new int[]
-	{ 200, 300, 400, 500, 600, 700, 800 };
+	public static int[] absorptionTime = new int[] { 200, 300, 400, 500, 600, 700, 800 };
 
 	public static double maxAbsorptionHearts = 10;
 
-	public static int[] poisonTime = new int[]
-	{ 25, 50, 60, 80, 100, 120, 150 };
-	public static int[] poisonLevel = new int[]
-	{ 0, 0, 0, 1, 1, 1, 1 };
+	public static int[] poisonTime = new int[] { 25, 50, 60, 80, 100, 120, 150 };
+	public static int[] poisonLevel = new int[] { 0, 0, 0, 1, 1, 1, 1 };
 
-	public static double[] movementSpeed = new double[]
-	{ 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4 };
+	public static double[] movementSpeed = new double[] { 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4 };
 
 	public ItemSentientSword()
 	{
@@ -195,27 +182,27 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 
 	public void applyEffectToEntity(EnumDemonWillType type, int willBracket, LivingEntity target, LivingEntity attacker)
 	{
-//		switch (type)
-//		{
-//		case CORROSIVE:
-//			target.addPotionEffect(new PotionEffect(MobEffects.WITHER, poisonTime[willBracket], poisonLevel[willBracket]));
-//			break;
-//		case DEFAULT:
-//			break;
-//		case DESTRUCTIVE:
-//			break;
-//		case STEADFAST:
-//			if (!target.isEntityAlive())
-//			{
-//				float absorption = attacker.getAbsorptionAmount();
-//				attacker.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, absorptionTime[willBracket], 127));
-//				attacker.setAbsorptionAmount((float) Math.min(absorption
-//						+ target.getMaxHealth() * 0.05f, maxAbsorptionHearts));
-//			}
-//			break;
-//		case VENGEFUL:
-//			break;
-//		}
+		switch (type)
+		{
+		case CORROSIVE:
+			target.addPotionEffect(new EffectInstance(Effects.WITHER, poisonTime[willBracket], poisonLevel[willBracket]));
+			break;
+		case DEFAULT:
+			break;
+		case DESTRUCTIVE:
+			break;
+		case STEADFAST:
+			if (!target.isAlive())
+			{
+				float absorption = attacker.getAbsorptionAmount();
+				attacker.addPotionEffect(new EffectInstance(Effects.ABSORPTION, absorptionTime[willBracket], 127, false, false));
+				attacker.setAbsorptionAmount((float) Math.min(absorption + target.getMaxHealth()
+						* 0.05f, maxAbsorptionHearts));
+			}
+			break;
+		case VENGEFUL:
+			break;
+		}
 	}
 
 	@Override
@@ -356,9 +343,8 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 		{
 			if (i == 0 || attackingEntity.getEntityWorld().rand.nextDouble() < 0.4)
 			{
-				ItemStack soulStack = soul.createWill(willModifier
-						* (this.getDropOfActivatedSword(stack) * attackingEntity.getEntityWorld().rand.nextDouble()
-								+ this.getStaticDropOfActivatedSword(stack))
+				ItemStack soulStack = soul.createWill(willModifier * (this.getDropOfActivatedSword(stack)
+						* attackingEntity.getEntityWorld().rand.nextDouble() + this.getStaticDropOfActivatedSword(stack))
 						* killedEntity.getMaxHealth() / 20d);
 				soulList.add(soulStack);
 			}
