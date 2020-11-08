@@ -32,15 +32,13 @@ import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.iface.IBindable;
-import wayoftime.bloodmagic.iface.ICustomAlchemyConsumable;
 import wayoftime.bloodmagic.orb.BloodOrb;
 import wayoftime.bloodmagic.orb.IBloodOrb;
 import wayoftime.bloodmagic.tile.contailer.ContainerAlchemyTable;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
-public class TileAlchemyTable extends TileInventory
-		implements ISidedInventory, ITickableTileEntity, INamedContainerProvider
+public class TileAlchemyTable extends TileInventory implements ISidedInventory, ITickableTileEntity, INamedContainerProvider
 {
 	@ObjectHolder("bloodmagic:alchemytable")
 	public static TileEntityType<TileAlchemyTable> TYPE;
@@ -54,8 +52,7 @@ public class TileAlchemyTable extends TileInventory
 	public int ticksRequired = 1;
 
 	public BlockPos connectedPos = BlockPos.ZERO;
-	public boolean[] blockedSlots = new boolean[]
-	{ false, false, false, false, false, false };
+	public boolean[] blockedSlots = new boolean[] { false, false, false, false, false, false };
 
 	public TileAlchemyTable(TileEntityType<?> type)
 	{
@@ -158,14 +155,11 @@ public class TileAlchemyTable extends TileInventory
 		switch (side)
 		{
 		case DOWN:
-			return new int[]
-			{ outputSlot };
+			return new int[] { outputSlot };
 		case UP:
-			return new int[]
-			{ orbSlot };
+			return new int[] { orbSlot };
 		default:
-			return new int[]
-			{ 0, 1, 2, 3, 4, 5 };
+			return new int[] { 0, 1, 2, 3, 4, 5 };
 		}
 	}
 
@@ -299,16 +293,7 @@ public class TileAlchemyTable extends TileInventory
 						else
 							outputSlotStack.grow(event.getOutput().getCount());
 
-						for (int i = 0; i < 6; i++)
-						{
-							ItemStack currentStack = getStackInSlot(i);
-							if (currentStack.getItem().hasContainerItem(currentStack))
-								setInventorySlotContents(i, currentStack.getItem().getContainerItem(currentStack));
-							else if (currentStack.getItem() instanceof ICustomAlchemyConsumable)
-								setInventorySlotContents(i, ((ICustomAlchemyConsumable) currentStack.getItem()).drainUseOnAlchemyCraft(currentStack));
-							else
-								currentStack.shrink(1);
-						}
+						consumeInventory(recipeAlchemyTable);
 
 						burnTime = 0;
 						notifyUpdate();
@@ -431,6 +416,14 @@ public class TileAlchemyTable extends TileInventory
 				if (inputStack.getItem().hasContainerItem(inputStack))
 				{
 					setInventorySlotContents(i, inputStack.getItem().getContainerItem(inputStack));
+					continue;
+				} else if (inputStack.isDamageable())
+				{
+					inputStack.setDamage(inputStack.getDamage() + 1);
+					if (inputStack.getDamage() >= inputStack.getMaxDamage())
+					{
+						setInventorySlotContents(i, ItemStack.EMPTY);
+					}
 					continue;
 				}
 

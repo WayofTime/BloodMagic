@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:coal"
+    },
+    {
+      "item": "minecraft:coal"
+    },
+    {
+      "item": "minecraft:flint"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:coalsand",
+    "count": 4
+  },
+  "syphon": 400,
+  "ticks": 200,
+  "upgradeLevel": 1
+}
