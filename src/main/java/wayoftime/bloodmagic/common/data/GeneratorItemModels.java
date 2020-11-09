@@ -60,6 +60,9 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerDemonWillVariantItem(BloodMagicItems.COMMON_GEM.get());
 		registerDemonWillVariantItem(BloodMagicItems.GREATER_GEM.get());
 		registerDemonSword(BloodMagicItems.SENTIENT_SWORD.get());
+		registerDemonTool(BloodMagicItems.SENTIENT_AXE.get());
+		registerDemonTool(BloodMagicItems.SENTIENT_PICKAXE.get());
+		registerDemonTool(BloodMagicItems.SENTIENT_SHOVEL.get());
 	}
 
 	private void registerCustomBlockPath(Block block, String newPath)
@@ -122,6 +125,24 @@ public class GeneratorItemModels extends ItemModelProvider
 				ModelFile willFile = singleTexture("item/variants/" + path + name, mcLoc("item/handheld"), "layer0", modLoc("item/" + path + name));
 				builder = builder.override().predicate(BloodMagic.rl("type"), type.ordinal()).predicate(BloodMagic.rl("active"), i).model(willFile).end();
 			}
+		}
+	}
+
+	private void registerDemonTool(Item item)
+	{
+		String path = item.getRegistryName().getPath();
+		ItemModelBuilder builder = getBuilder(path);
+
+		for (EnumDemonWillType type : EnumDemonWillType.values())
+		{
+			String name = "";
+			if (type.ordinal() != 0)
+			{
+				name = "_" + type.name().toLowerCase() + name;
+			}
+			ModelFile willFile = singleTexture("item/variants/" + path + name, mcLoc("item/handheld"), "layer0", modLoc("item/" + path + name));
+			builder = builder.override().predicate(BloodMagic.rl("type"), type.ordinal()).model(willFile).end();
+
 		}
 	}
 }

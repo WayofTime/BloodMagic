@@ -8,6 +8,7 @@ import java.util.UUID;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -20,7 +21,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.ShovelItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -43,83 +44,70 @@ import wayoftime.bloodmagic.will.IDemonWill;
 import wayoftime.bloodmagic.will.IDemonWillWeapon;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
-public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IMultiWillTool
+public class ItemSentientShovel extends ShovelItem implements IDemonWillWeapon, IMultiWillTool
 {
-	public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000, 2000, 4000 };
-	public static double[] defaultDamageAdded = new double[] { 1, 1.5, 2, 2.5, 3, 3.5, 4 };
-	public static double[] destructiveDamageAdded = new double[] { 1.5, 2.25, 3, 3.75, 4.5, 5.25, 6 };
-	public static double[] vengefulDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2, 2.25, 2.5 };
-	public static double[] steadfastDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2, 2.25, 2.5 };
-	public static double[] soulDrainPerSwing = new double[] { 0.05, 0.1, 0.2, 0.4, 0.75, 1, 1.25 };
-	public static double[] soulDrop = new double[] { 2, 4, 7, 10, 13, 15, 18 };
-	public static double[] staticDrop = new double[] { 1, 1, 2, 3, 3, 4, 4 };
+	public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000 };
+	public static double[] defaultDamageAdded = new double[] { 1, 2, 3, 3.5, 4 };
+	public static double[] destructiveDamageAdded = new double[] { 2, 3, 4, 5, 6 };
+	public static double[] vengefulDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2 };
+	public static double[] steadfastDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2 };
+	public static double[] defaultDigSpeedAdded = new double[] { 1, 1.5, 2, 3, 4 };
+	public static double[] soulDrainPerSwing = new double[] { 0.05, 0.1, 0.2, 0.4, 0.75 };
+	public static double[] soulDrop = new double[] { 2, 4, 7, 10, 13 };
+	public static double[] staticDrop = new double[] { 1, 1, 2, 3, 3 };
 
-	public static double[] healthBonus = new double[] { 0, 0, 0, 0, 0, 0, 0 }; // TODO: Think of implementing this later
-	public static double[] vengefulAttackSpeed = new double[] { -2.1, -2, -1.8, -1.7, -1.6, -1.6, -1.5 };
-	public static double[] destructiveAttackSpeed = new double[] { -2.6, -2.7, -2.8, -2.9, -3, -3, -3 };
+	public static double[] healthBonus = new double[] { 0, 0, 0, 0, 0 }; // TODO: Think of implementing this later
+	public static double[] vengefulAttackSpeed = new double[] { -3, -2.8, -2.7, -2.6, -2.5 };
+	public static double[] destructiveAttackSpeed = new double[] { -3.1, -3.1, -3.2, -3.3, -3.3 };
 
-	public static int[] absorptionTime = new int[] { 200, 300, 400, 500, 600, 700, 800 };
+	public static int[] absorptionTime = new int[] { 200, 300, 400, 500, 600 };
 
 	public static double maxAbsorptionHearts = 10;
 
-	public static int[] poisonTime = new int[] { 25, 50, 60, 80, 100, 120, 150 };
-	public static int[] poisonLevel = new int[] { 0, 0, 0, 1, 1, 1, 1 };
+	public static int[] poisonTime = new int[] { 25, 50, 60, 80, 100 };
+	public static int[] poisonLevel = new int[] { 0, 0, 0, 1, 1 };
 
-	public static double[] movementSpeed = new double[] { 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4 };
+	public static double[] movementSpeed = new double[] { 0.05, 0.1, 0.15, 0.2, 0.25 };
 
-	public ItemSentientSword()
+	public static final double baseAttackDamage = 3;
+	public static final double baseAttackSpeed = -2.8;
+
+	public ItemSentientShovel()
 	{
-//		super(RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL);
-		super(BMItemTier.SENTIENT, 6, -2.6f, new Item.Properties().maxDamage(520).group(BloodMagic.TAB));
+		super(BMItemTier.SENTIENT, (int) baseAttackDamage, (float) baseAttackSpeed, new Item.Properties().maxDamage(520).group(BloodMagic.TAB));
 	}
 
-//	@Override
-//	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
-//	{
-//		return RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL == repair.getItem()
-//				|| super.getIsRepairable(toRepair, repair);
-//	}
+	@Override
+	public float getDestroySpeed(ItemStack stack, BlockState state)
+	{
+		float value = super.getDestroySpeed(stack, state);
+		if (value > 1)
+		{
+			return (float) (value + getDigSpeedOfSword(stack));
+		} else
+		{
+			return value;
+		}
+	}
 
 	public void recalculatePowers(ItemStack stack, World world, PlayerEntity player)
 	{
 		EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);
 		double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
-		recalculatePowers(stack, type, soulsRemaining);
-	}
-
-	public void recalculatePowers(ItemStack stack, EnumDemonWillType type, double will)
-	{
-		this.setCurrentType(stack, will > 0 ? type : EnumDemonWillType.DEFAULT);
-		int level = getLevel(stack, will);
+		this.setCurrentType(stack, soulsRemaining > 0 ? type : EnumDemonWillType.DEFAULT);
+		int level = getLevel(stack, soulsRemaining);
 
 		double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
 		double extraDamage = getExtraDamage(type, level);
 
-		setActivatedState(stack, will > 16);
-
 		setDrainOfActivatedSword(stack, drain);
-		setDamageOfActivatedSword(stack, 5 + extraDamage);
+		setDamageOfActivatedSword(stack, baseAttackDamage + extraDamage);
 		setStaticDropOfActivatedSword(stack, level >= 0 ? staticDrop[level] : 1);
 		setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
-		setAttackSpeedOfSword(stack, level >= 0 ? getAttackSpeed(type, level) : -2.4);
+		setAttackSpeedOfSword(stack, level >= 0 ? getAttackSpeed(type, level) : baseAttackSpeed);
 		setHealthBonusOfSword(stack, level >= 0 ? getHealthBonus(type, level) : 0);
 		setSpeedOfSword(stack, level >= 0 ? getMovementSpeed(type, level) : 0);
-	}
-
-	public boolean getActivated(ItemStack stack)
-	{
-		return !stack.isEmpty() && NBTHelper.checkNBT(stack).getTag().getBoolean(Constants.NBT.ACTIVATED);
-	}
-
-	public ItemStack setActivatedState(ItemStack stack, boolean activated)
-	{
-		if (!stack.isEmpty())
-		{
-			NBTHelper.checkNBT(stack).getTag().putBoolean(Constants.NBT.ACTIVATED, activated);
-			return stack;
-		}
-
-		return stack;
+		setDigSpeedOfSword(stack, level >= 0 ? getDigSpeed(type, level) : 0);
 	}
 
 	public double getExtraDamage(EnumDemonWillType type, int willBracket)
@@ -154,7 +142,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 		case DESTRUCTIVE:
 			return destructiveAttackSpeed[willBracket];
 		default:
-			return -2.4;
+			return -2.9;
 		}
 	}
 
@@ -180,7 +168,18 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 		}
 	}
 
-	public void applyEffectToEntity(EnumDemonWillType type, int willBracket, LivingEntity target, LivingEntity attacker)
+	public double getDigSpeed(EnumDemonWillType type, int willBracket)
+	{
+		switch (type)
+		{
+		case VENGEFUL:
+//            return movementSpeed[willBracket];
+		default:
+			return defaultDigSpeedAdded[willBracket];
+		}
+	}
+
+	public void applyEffectToEntity(EnumDemonWillType type, int willBracket, LivingEntity target, PlayerEntity attacker)
 	{
 		switch (type)
 		{
@@ -195,7 +194,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 			if (!target.isAlive())
 			{
 				float absorption = attacker.getAbsorptionAmount();
-				attacker.addPotionEffect(new EffectInstance(Effects.ABSORPTION, absorptionTime[willBracket], 127, false, false));
+				attacker.addPotionEffect(new EffectInstance(Effects.ABSORPTION, absorptionTime[willBracket], 127));
 				attacker.setAbsorptionAmount((float) Math.min(absorption + target.getMaxHealth()
 						* 0.05f, maxAbsorptionHearts));
 			}
@@ -220,7 +219,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 
 				applyEffectToEntity(type, willBracket, target, attackerPlayer);
 
-//				ItemStack offStack = attackerPlayer.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
+//				ItemStack offStack = attackerPlayer.getItemStackFromSlot(EquipmentSlotType.OFFHAND);
 //				if (offStack.getItem() instanceof ISentientSwordEffectProvider)
 //				{
 //					ISentientSwordEffectProvider provider = (ISentientSwordEffectProvider) offStack.getItem();
@@ -265,6 +264,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
 	{
 		recalculatePowers(player.getHeldItem(hand), world, player);
+
 		return super.onItemRightClick(world, player, hand);
 	}
 
@@ -296,7 +296,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 			return;
 
 //		tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sentientSword.desc"))));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sentientSword.desc"));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sentientShovel.desc"));
 		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase()));
 	}
 
@@ -506,4 +506,53 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 		tag.putDouble(Constants.NBT.SOUL_SWORD_SPEED, speed);
 	}
 
+	public double getDigSpeedOfSword(ItemStack stack)
+	{
+		NBTHelper.checkNBT(stack);
+
+		CompoundNBT tag = stack.getTag();
+		return tag.getDouble(Constants.NBT.SOUL_SWORD_DIG_SPEED);
+	}
+
+	public void setDigSpeedOfSword(ItemStack stack, double speed)
+	{
+		NBTHelper.checkNBT(stack);
+
+		CompoundNBT tag = stack.getTag();
+
+		tag.putDouble(Constants.NBT.SOUL_SWORD_DIG_SPEED, speed);
+	}
+
+//	@Override
+//	public boolean spawnSentientEntityOnDrop(ItemStack droppedStack, PlayerEntity player)
+//	{
+//		World world = player.getEntityWorld();
+//		if (!world.isRemote)
+//		{
+//			this.recalculatePowers(droppedStack, world, player);
+//
+//			EnumDemonWillType type = this.getCurrentType(droppedStack);
+//			double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+//			if (soulsRemaining < 1024)
+//			{
+//				return false;
+//			}
+//
+//			PlayerDemonWillHandler.consumeDemonWill(type, player, 100);
+//
+//			EntitySentientSpecter specterEntity = new EntitySentientSpecter(world);
+//			specterEntity.setPosition(player.posX, player.posY, player.posZ);
+//			world.spawnEntity(specterEntity);
+//
+//			specterEntity.setItemStackToSlot(EquipmentSlotType.MAINHAND, droppedStack.copy());
+//
+//			specterEntity.setType(this.getCurrentType(droppedStack));
+//			specterEntity.setOwner(player);
+//			specterEntity.setTamed(true);
+//
+//			return true;
+//		}
+//
+//		return false;
+//	}
 }

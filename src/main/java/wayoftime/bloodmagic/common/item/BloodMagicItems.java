@@ -21,6 +21,9 @@ import wayoftime.bloodmagic.common.item.sigil.ItemSigilMagnetism;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilVoid;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilWater;
 import wayoftime.bloodmagic.common.item.soul.ItemMonsterSoul;
+import wayoftime.bloodmagic.common.item.soul.ItemSentientAxe;
+import wayoftime.bloodmagic.common.item.soul.ItemSentientPickaxe;
+import wayoftime.bloodmagic.common.item.soul.ItemSentientShovel;
 import wayoftime.bloodmagic.common.item.soul.ItemSentientSword;
 import wayoftime.bloodmagic.common.item.soul.ItemSoulGem;
 import wayoftime.bloodmagic.common.item.soul.ItemSoulSnare;
@@ -146,6 +149,9 @@ public class BloodMagicItems
 
 	public static final RegistryObject<Item> SOUL_SNARE = BASICITEMS.register("soulsnare", ItemSoulSnare::new);
 	public static final RegistryObject<Item> SENTIENT_SWORD = ITEMS.register("soulsword", () -> new ItemSentientSword());
+	public static final RegistryObject<Item> SENTIENT_AXE = ITEMS.register("soulaxe", () -> new ItemSentientAxe());
+	public static final RegistryObject<Item> SENTIENT_PICKAXE = ITEMS.register("soulpickaxe", () -> new ItemSentientPickaxe());
+	public static final RegistryObject<Item> SENTIENT_SHOVEL = ITEMS.register("soulshovel", () -> new ItemSentientShovel());
 
 	public static final RegistryObject<Item> RAW_CRYSTAL_BLOCK_ITEM = ITEMS.register("rawdemoncrystal", () -> new BlockItem(BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> CORROSIVE_CRYSTAL_BLOCK_ITEM = ITEMS.register("corrosivedemoncrystal", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_CRYSTAL_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));

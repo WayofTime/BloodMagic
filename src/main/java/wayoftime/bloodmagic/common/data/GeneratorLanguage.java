@@ -229,6 +229,9 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.MONSTER_SOUL_VENGEFUL, "Demon Will");
 		addItem(BloodMagicItems.SOUL_SNARE, "Soul Snare");
 		addItem(BloodMagicItems.SENTIENT_SWORD, "Sentient Sword");
+		addItem(BloodMagicItems.SENTIENT_AXE, "Sentient Axe");
+		addItem(BloodMagicItems.SENTIENT_PICKAXE, "Sentient Pickaxe");
+		addItem(BloodMagicItems.SENTIENT_SHOVEL, "Sentient Shovel");
 
 		addItem(BloodMagicItems.WEAK_ACTIVATION_CRYSTAL, "Weak Activation Crystal");
 		addItem(BloodMagicItems.AWAKENED_ACTIVATION_CRYSTAL, "Awakened Activation Crystal");

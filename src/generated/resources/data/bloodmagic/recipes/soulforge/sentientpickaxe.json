@@ -1,0 +1,15 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "bloodmagic:soulgempetty"
+  },
+  "input1": {
+    "item": "minecraft:iron_pickaxe"
+  },
+  "output": {
+    "item": "bloodmagic:soulpickaxe",
+    "nbt": "{Damage:0}"
+  },
+  "minimumDrain": 0.0,
+  "drain": 0.0
+}
