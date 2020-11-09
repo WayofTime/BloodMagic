@@ -43,10 +43,10 @@ public class ItemSigilAir extends ItemSigilBase
 //			}
 
 			player.setMotion(vec.x * wantedVelocity, vec.y * wantedVelocity, vec.z * wantedVelocity);
-
-			world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F
-					+ (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 		}
+
+		world.playSound(player, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat())
+				* 0.8F);
 
 		if (!world.isRemote)
 		{

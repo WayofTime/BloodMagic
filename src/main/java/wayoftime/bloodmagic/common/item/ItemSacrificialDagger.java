@@ -119,11 +119,11 @@ public class ItemSacrificialDagger extends Item
 		double posX = player.getPosX();
 		double posY = player.getPosY();
 		double posZ = player.getPosZ();
-		world.playSound(null, posX, posY, posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F
-				+ (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+		world.playSound(player, posX, posY, posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat())
+				* 0.8F);
 
-		for (int l = 0; l < 8; ++l) world.addParticle(RedstoneParticleData.REDSTONE_DUST, posX + Math.random()
-				- Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);
+		for (int l = 0; l < 8; ++l)
+			world.addParticle(RedstoneParticleData.REDSTONE_DUST, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);
 
 		if (!world.isRemote && PlayerHelper.isFakePlayer(player))
 			return super.onItemRightClick(world, player, hand);
