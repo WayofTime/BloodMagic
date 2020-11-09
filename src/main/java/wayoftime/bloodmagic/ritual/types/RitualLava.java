@@ -274,8 +274,7 @@ public class RitualLava extends Ritual
 	@Override
 	public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player)
 	{
-		return new ITextComponent[]
-		{ new TranslationTextComponent(this.getTranslationKey() + ".info"),
+		return new ITextComponent[] { new TranslationTextComponent(this.getTranslationKey() + ".info"),
 				new TranslationTextComponent(this.getTranslationKey() + ".default.info"),
 				new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"),
 				new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"),

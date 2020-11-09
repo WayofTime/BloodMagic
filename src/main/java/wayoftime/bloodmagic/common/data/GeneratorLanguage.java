@@ -111,6 +111,15 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("tooltip.bloodmagic.holdShiftForInfo", "Press shift for extra info");
 
+		add("ritual.bloodmagic.blockRange.tooBig", "The block range given is too big! Needs to be at most %s blocks.");
+		add("ritual.bloodmagic.blockRange.tooFar", "The block range given is too far! Needs to be within a vertical range of %s blocks and a horizontal range of %s blocks.");
+		add("ritual.bloodmagic.blockRange.inactive", "The ritual stone is currently inactive, and cannot have its range modified.");
+		add("ritual.bloodmagic.blockRange.noRange", "The range was not properly chosen.");
+		add("ritual.bloodmagic.blockRange.firstBlock", "First block for new range stored.");
+		add("ritual.bloodmagic.blockRange.success", "New range successfully set!");
+		add("ritual.bloodmagic.willConfig.set", "The ritual will use these Demon Will types: %s");
+		add("ritual.bloodmagic.willConfig.void", "The ritual no longer uses Demon Will");
+
 		add("ritual.bloodmagic.testRitual", "Test Ritual");
 		add("ritual.bloodmagic.waterRitual", "Ritual of the Full Spring");
 		add("ritual.bloodmagic.lavaRitual", "Serenade of the Nether");

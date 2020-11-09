@@ -26,6 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRitualReaderState;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
@@ -34,6 +35,7 @@ import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
+import wayoftime.bloodmagic.will.DemonWillHolder;
 import wayoftime.bloodmagic.will.EnumDemonWillType;
 import wayoftime.bloodmagic.will.IDiscreteDemonWill;
 
@@ -202,10 +204,12 @@ public class ItemRitualReader extends Item
 									this.setCurrentBlockRange(stack, newRange);
 								}
 								Ritual ritual = master.getCurrentRitual();
+								List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
+								DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(master.getWorldObj(), master.getBlockPos());
 
-								int maxHorizontalRange = ritual.getMaxHorizontalRadiusForRange(range, null, null);
-								int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, null, null);
-								int maxVolume = ritual.getMaxVolumeForRange(range, null, null);
+								int maxHorizontalRange = ritual.getMaxHorizontalRadiusForRange(range, willConfig, holder);
+								int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, willConfig, holder);
+								int maxVolume = ritual.getMaxVolumeForRange(range, willConfig, holder);
 
 								switch (master.setBlockRangeByBounds(player, range, containedPos, pos2))
 								{
