@@ -350,8 +350,7 @@ public class BloodAltar// implements IFluidHandler
 //					server.spawnParticle(ParticleTypes.SPLASH, (double) pos.getX()
 //							+ worldIn.rand.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ()
 //									+ worldIn.rand.nextDouble(), 1, 0.0D, 0.0D, 0.0D, 1.0D);
-					server.spawnParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX() + 0.5, pos.getY()
-							+ 1.0, pos.getZ() + 0.5, 1, 0.2, 0.0, 0.2, 0.0);
+					server.spawnParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 1, 0.2, 0.0, 0.2, 0.0);
 				}
 
 			} else if (!hasOperated && progress > 0)
@@ -361,8 +360,7 @@ public class BloodAltar// implements IFluidHandler
 				if (internalCounter % 2 == 0 && world instanceof ServerWorld)
 				{
 					ServerWorld server = (ServerWorld) world;
-					server.spawnParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ()
-							+ 0.5, 1, 0.1, 0, 0.1, 0);
+					server.spawnParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.1, 0, 0.1, 0);
 				}
 			}
 
@@ -380,8 +378,7 @@ public class BloodAltar// implements IFluidHandler
 					if (world instanceof ServerWorld)
 					{
 						ServerWorld server = (ServerWorld) world;
-						server.spawnParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX() + 0.5, pos.getY()
-								+ 1, pos.getZ() + 0.5, 40, 0.3, 0, 0.3, 0);
+						server.spawnParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.3, 0, 0.3, 0);
 					}
 
 					this.cooldownAfterCrafting = 30;
@@ -416,8 +413,7 @@ public class BloodAltar// implements IFluidHandler
 				if (drain > 0 && internalCounter % 4 == 0 && world instanceof ServerWorld)
 				{
 					ServerWorld server = (ServerWorld) world;
-					server.spawnParticle(ParticleTypes.WITCH, pos.getX() + 0.5, pos.getY() + 1, pos.getZ()
-							+ 0.5, 1, 0, 0, 0, 0.001);
+					server.spawnParticle(ParticleTypes.WITCH, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0, 0, 0, 0.001);
 				}
 			}
 		}
@@ -460,8 +456,9 @@ public class BloodAltar// implements IFluidHandler
 			this.efficiencyMultiplier = (float) Math.pow(0.85, upgrade.getLevel(BloodRuneType.EFFICIENCY));
 			this.sacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getLevel(BloodRuneType.SACRIFICE));
 			this.selfSacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getLevel(BloodRuneType.SELF_SACRIFICE));
-			this.capacityMultiplier = (float) ((1 * Math.pow(1.10, upgrade.getLevel(BloodRuneType.AUGMENTED_CAPACITY)))
-					+ 0.20 * upgrade.getLevel(BloodRuneType.CAPACITY));
+			this.capacityMultiplier = (float) ((1
+					* Math.pow(1.10, upgrade.getLevel(BloodRuneType.AUGMENTED_CAPACITY))) + 0.20
+							* upgrade.getLevel(BloodRuneType.CAPACITY));
 			this.dislocationMultiplier = (float) (Math.pow(1.2, upgrade.getLevel(BloodRuneType.DISPLACEMENT)));
 			this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrade.getLevel(BloodRuneType.ORB));
 			this.chargingFrequency = Math.max(20 - accelerationUpgrades, 1);
@@ -497,15 +494,15 @@ public class BloodAltar// implements IFluidHandler
 	{
 		if (this.lockdownDuration > 0)
 		{
-			int amt = (int) Math.min(bufferCapacity
-					- fluidInput.getAmount(), (isSacrifice ? 1 + sacrificeEfficiencyMultiplier
-							: 1 + selfSacrificeEfficiencyMultiplier) * amount);
+			int amt = (int) Math.min(bufferCapacity - fluidInput.getAmount(), (isSacrifice
+					? 1 + sacrificeEfficiencyMultiplier
+					: 1 + selfSacrificeEfficiencyMultiplier) * amount);
 			fluidInput.setAmount(fluidInput.getAmount() + amt);
 		} else
 		{
-			fluid.setAmount((int) (fluid.getAmount()
-					+ Math.min(capacity - fluid.getAmount(), (isSacrifice ? 1 + sacrificeEfficiencyMultiplier
-							: 1 + selfSacrificeEfficiencyMultiplier) * amount)));
+			fluid.setAmount((int) (fluid.getAmount() + Math.min(capacity - fluid.getAmount(), (isSacrifice
+					? 1 + sacrificeEfficiencyMultiplier
+					: 1 + selfSacrificeEfficiencyMultiplier) * amount)));
 		}
 	}
 
@@ -758,11 +755,11 @@ public class BloodAltar// implements IFluidHandler
 		return currentTierDisplayed;
 	}
 
-	static class VariableSizeFluidHandler implements IFluidHandler
+	public static class VariableSizeFluidHandler implements IFluidHandler
 	{
 		BloodAltar altar;
 
-		VariableSizeFluidHandler(BloodAltar altar)
+		public VariableSizeFluidHandler(BloodAltar altar)
 		{
 			this.altar = altar;
 		}
@@ -777,21 +774,19 @@ public class BloodAltar// implements IFluidHandler
 		@Override
 		public FluidStack getFluidInTank(int tank)
 		{
-			// TODO Auto-generated method stub
-			return null;
+			return altar.fluid;
 		}
 
 		@Override
 		public int getTankCapacity(int tank)
 		{
-			// TODO Auto-generated method stub
-			return 0;
+			return altar.getCapacity();
 		}
 
 		@Override
 		public boolean isFluidValid(int tank, FluidStack stack)
 		{
-			return false;
+			return stack.getFluid() == BloodMagicBlocks.LIFE_ESSENCE_FLUID.get();
 		}
 
 		@Override
@@ -809,8 +804,7 @@ public class BloodAltar// implements IFluidHandler
 		@Override
 		public FluidStack drain(int maxDrain, FluidAction action)
 		{
-			// TODO Auto-generated method stub
-			return null;
+			return altar.drain(maxDrain, action == FluidAction.EXECUTE);
 		}
 	}
 }

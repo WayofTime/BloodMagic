@@ -302,6 +302,7 @@ f41e9bf8376ffcad07752b5657e27e06e500be0a data/bloodmagic/recipes/alchemytable/pl
 a91e81c79959b522bcd1bac901bca646184015de data/bloodmagic/recipes/alchemytable/string.json
 3c9d829f7bff8a4d607c46fc3ff4f86dffa28fd5 data/bloodmagic/recipes/altar/air_tool.json
 f41b0e9dfab608c42a85c3c5c5bbc050b03f02a1 data/bloodmagic/recipes/altar/apprenticebloodorb.json
+2269c03d8ba4b790fb6a30c32bdb0169c283e5e2 data/bloodmagic/recipes/altar/bucket_life.json
 2a67e37497a571b5ee944375d315fddccea87697 data/bloodmagic/recipes/altar/daggerofsacrifice.json
 c5a4a256a7437f2e13c574a6f0c4d75fc2e718cb data/bloodmagic/recipes/altar/demonicslate.json
 d79a96eb3eed597f1c18a8983764a6362a24748c data/bloodmagic/recipes/altar/dusk_tool.json

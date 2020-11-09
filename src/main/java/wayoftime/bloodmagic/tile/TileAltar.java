@@ -1,9 +1,16 @@
 package wayoftime.bloodmagic.tile;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.altar.AltarTier;
 import wayoftime.bloodmagic.altar.BloodAltar;
@@ -201,7 +208,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 	{
 		return bloodAltar.setCurrentTierDisplayed(altarTier);
 	}
-
+//
 //	@Override
 //	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing)
 //	{
@@ -212,16 +219,17 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 //
 //		return super.hasCapability(capability, facing);
 //	}
-//
-//	@SuppressWarnings("unchecked")
-//	@Override
-//	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
-//	{
-//		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-//		{
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
+	{
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+		{
+			return LazyOptional.of(() -> new BloodAltar.VariableSizeFluidHandler(bloodAltar)).cast();
 //			return (T) bloodAltar;
-//		}
-//
-//		return super.getCapability(capability, facing);
-//	}
+		}
+
+		return super.getCapability(capability, facing);
+	}
 }
