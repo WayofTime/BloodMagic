@@ -70,6 +70,7 @@ public class ClientHandler
 	public static ResourceLocation ritualStoneAir = BloodMagic.rl("block/airritualstone");;
 	public static ResourceLocation ritualStoneDawn = BloodMagic.rl("block/dawnritualstone");;
 	public static ResourceLocation ritualStoneDusk = BloodMagic.rl("block/duskritualstone");;
+	public static ResourceLocation boarder = new ResourceLocation("block/chiseled_sandstone");
 	public static TextureAtlasSprite blankBloodRune;
 	public static TextureAtlasSprite stoneBrick;
 	public static TextureAtlasSprite glowstone;
@@ -329,14 +330,10 @@ public class ClientHandler
 				Model3D model = getBlockModel(rl);
 
 				RenderResizableCuboid.INSTANCE.renderCube(model, stack, buffer, 0xDDFFFFFF, 0x00F000F0, OverlayTexture.NO_OVERLAY);
-
-//				RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
 			}
 
 			stack.pop();
 		}
-
-//		GlStateManager.popMatrix();
 	}
 
 	public static void renderRangeHologram(MatrixStack stack, IRenderTypeBuffer renderer, TileMasterRitualStone masterRitualStone, float partialTicks)
@@ -354,7 +351,6 @@ public class ClientHandler
 			EnumRitualReaderState state = ((ItemRitualReader) itemStack.getItem()).getState(itemStack);
 			if (state == EnumRitualReaderState.SET_AREA)
 			{
-				Ritual ritual = masterRitualStone.getCurrentRitual();
 				String range = ((ItemRitualReader) itemStack.getItem()).getCurrentBlockRange(itemStack);
 				AreaDescriptor descriptor = masterRitualStone.getBlockRange(range);
 				if (descriptor == null)
@@ -363,80 +359,28 @@ public class ClientHandler
 				}
 
 				stack.push();
-				BlockPos vec3, vX;
+				BlockPos vec3;
 				vec3 = masterRitualStone.getPos();
 				AxisAlignedBB aabb = descriptor.getAABB(vec3);
+				double sizeOffset = -1d / 16d;
+				if (aabb.contains(eyePos))
+				{
+					sizeOffset *= -1;
+				}
 
-				double minX = aabb.minX - eyePos.x;
-				double minY = aabb.minY - eyePos.y;
-				double minZ = aabb.minZ - eyePos.z;
+				double minX = aabb.minX - eyePos.x + sizeOffset;
+				double minY = aabb.minY - eyePos.y + sizeOffset;
+				double minZ = aabb.minZ - eyePos.z + sizeOffset;
 
 				stack.translate(minX, minY, minZ);
 
-				ResourceLocation rl = ritualStoneFire;
-				Model3D model = getBlockModelWithSize(rl, aabb.getXSize(), aabb.getYSize(), aabb.getZSize());
-				RenderResizableCuboid.INSTANCE.renderCube(model, stack, buffer, 0xDDFFFFFF, 0x00F000F0, OverlayTexture.NO_OVERLAY);
+				ResourceLocation rl = boarder;
+				Model3D model = getBlockModelWithSize(rl, aabb.getXSize() - 2 * sizeOffset, aabb.getYSize() - 2
+						* sizeOffset, aabb.getZSize() - 2 * sizeOffset);
+				RenderResizableCuboid.INSTANCE.renderCube(model, stack, buffer, 0x99FF4444, 0x00F000F0, OverlayTexture.NO_OVERLAY);
 				stack.pop();
 			}
 		}
-
-//		if (ritual == null)
-//		{
-//			return;
-//		}
-//
-//		BlockPos vec3, vX;
-//		vec3 = masterRitualStone.getPos();
-//
-//		List<RitualComponent> components = Lists.newArrayList();
-//		ritual.gatherComponents(components::add);
-//		for (RitualComponent ritualComponent : components)
-//		{
-//			stack.push();
-//			vX = vec3.add(ritualComponent.getOffset(direction));
-//
-//			double minX = vX.getX() - eyePos.x;
-//			double minY = vX.getY() - eyePos.y;
-//			double minZ = vX.getZ() - eyePos.z;
-//
-//			stack.translate(minX, minY, minZ);
-//
-//			if (!world.getBlockState(vX).isOpaqueCube(world, vX))
-//			{
-//				ResourceLocation rl = null;
-//
-//				switch (ritualComponent.getRuneType())
-//				{
-//				case BLANK:
-//					rl = ritualStoneBlank;
-//					break;
-//				case WATER:
-//					rl = ritualStoneWater;
-//					break;
-//				case FIRE:
-//					rl = ritualStoneFire;
-//					break;
-//				case EARTH:
-//					rl = ritualStoneEarth;
-//					break;
-//				case AIR:
-//					rl = ritualStoneAir;
-//					break;
-//				case DAWN:
-//					rl = ritualStoneDawn;
-//					break;
-//				case DUSK:
-//					rl = ritualStoneDusk;
-//					break;
-//				}
-//
-////				RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
-//			}
-//
-//			stack.pop();
-//		}
-
-//		GlStateManager.popMatrix();
 	}
 
 	private static Model3D getBlockModel(ResourceLocation rl)
