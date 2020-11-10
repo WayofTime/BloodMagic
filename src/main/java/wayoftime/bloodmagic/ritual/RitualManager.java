@@ -112,7 +112,7 @@ public class RitualManager
 
 	public Ritual getRitual(String id)
 	{
-		return rituals.get(id);
+		return rituals.get(id).getNewCopy();
 	}
 
 	public String getId(Ritual ritual)

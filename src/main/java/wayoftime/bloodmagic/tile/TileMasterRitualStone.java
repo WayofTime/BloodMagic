@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -114,6 +115,13 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 			{
 				currentRitual.readFromNBT(ritualTag);
 			}
+			addBlockRanges(currentRitual.getModableRangeMap());
+			for (Entry<String, AreaDescriptor> entry : modableRangeMap.entrySet())
+			{
+				CompoundNBT descriptorTag = ritualTag.getCompound(entry.getKey());
+				entry.getValue().readFromNBT(descriptorTag);
+//				ritualTag.put(entry.getKey(), descriptorTag);
+			}
 		}
 		active = tag.getBoolean(Constants.NBT.IS_RUNNING);
 		activeTime = tag.getInt(Constants.NBT.RUNTIME);
@@ -140,6 +148,12 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 		{
 			CompoundNBT ritualTag = new CompoundNBT();
 			currentRitual.writeToNBT(ritualTag);
+			for (Entry<String, AreaDescriptor> entry : modableRangeMap.entrySet())
+			{
+				CompoundNBT descriptorTag = new CompoundNBT();
+				entry.getValue().writeToNBT(descriptorTag);
+				ritualTag.put(entry.getKey(), descriptorTag);
+			}
 			tag.put(Constants.NBT.CURRENT_RITUAL_TAG, ritualTag);
 		}
 		tag.putBoolean(Constants.NBT.IS_RUNNING, isActive());
@@ -392,6 +406,8 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 		EnumReaderBoundaries modificationType = currentRitual.canBlockRangeBeModified(range, descriptor, this, offset1, offset2, holder);
 		if (modificationType == EnumReaderBoundaries.SUCCESS)
 			descriptor.modifyAreaByBlockPositions(offset1, offset2);
+
+		world.notifyBlockUpdate(pos, this.getBlockState(), this.getBlockState(), 3);
 
 		return modificationType;
 	}

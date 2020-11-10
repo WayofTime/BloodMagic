@@ -31,8 +31,10 @@ import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRitualReaderState;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
+import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
+import wayoftime.bloodmagic.util.handler.event.ClientHandler;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
@@ -148,6 +150,7 @@ public class ItemRitualReader extends Item
 					}
 
 					master.provideInformationOfRangeToPlayer(player, range);
+
 					break;
 				case SET_WILL_TYPES:
 					List<EnumDemonWillType> typeList = new ArrayList<>();
@@ -232,6 +235,22 @@ public class ItemRitualReader extends Item
 					}
 				}
 			}
+		} else
+		{
+			EnumRitualReaderState state = this.getState(stack);
+
+			if (state == EnumRitualReaderState.SET_AREA)
+			{
+				TileEntity tile = world.getTileEntity(pos);
+				if (tile instanceof TileMasterRitualStone)
+				{
+
+					System.out.println("Setting range holo... I think");
+					ClientHandler.setRitualRangeHolo((TileMasterRitualStone) tile, true);
+
+				}
+			}
+
 		}
 
 		return super.onItemUse(context);

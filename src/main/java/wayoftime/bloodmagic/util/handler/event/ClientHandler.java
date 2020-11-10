@@ -20,9 +20,11 @@ import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.inventory.container.PlayerContainer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -49,6 +51,9 @@ import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model3D;
 import wayoftime.bloodmagic.client.render.RenderResizableCuboid;
 import wayoftime.bloodmagic.client.utils.BMRenderTypes;
 import wayoftime.bloodmagic.common.item.ItemRitualDiviner;
+import wayoftime.bloodmagic.common.item.ItemRitualReader;
+import wayoftime.bloodmagic.ritual.AreaDescriptor;
+import wayoftime.bloodmagic.ritual.EnumRitualReaderState;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
@@ -73,9 +78,11 @@ public class ClientHandler
 //	public static TextureAtlasSprite crystalCluster;
 	public static Minecraft minecraft = Minecraft.getInstance();
 	private static TileMasterRitualStone mrsHoloTile;
+	private static TileMasterRitualStone mrsRangeTile;
 	private static Ritual mrsHoloRitual;
 	private static Direction mrsHoloDirection;
 	private static boolean mrsHoloDisplay;
+	private static boolean mrsRangeDisplay;
 
 	static HashMap<String, ResourceLocation> resourceMap = new HashMap<String, ResourceLocation>();
 
@@ -151,6 +158,25 @@ public class ClientHandler
 			} else
 			{
 				ClientHandler.setRitualHoloToNull();
+			}
+		}
+
+		if (mrsRangeTile != null)
+		{
+			if (world.getTileEntity(mrsRangeTile.getPos()) instanceof TileMasterRitualStone)
+			{
+				if (mrsRangeDisplay)
+				{
+					IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
+					MatrixStack stack = event.getMatrixStack();
+					renderRangeHologram(stack, buffers, mrsRangeTile, event.getPartialTicks());
+					RenderSystem.disableDepthTest();
+					buffers.finish();
+				} else
+					ClientHandler.setRitualRangeHoloToNull();
+			} else
+			{
+				ClientHandler.setRitualRangeHoloToNull();
 			}
 		}
 
@@ -313,6 +339,106 @@ public class ClientHandler
 //		GlStateManager.popMatrix();
 	}
 
+	public static void renderRangeHologram(MatrixStack stack, IRenderTypeBuffer renderer, TileMasterRitualStone masterRitualStone, float partialTicks)
+	{
+		ActiveRenderInfo activerenderinfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
+		Vector3d eyePos = activerenderinfo.getProjectedView();
+		IVertexBuilder buffer = renderer.getBuffer(Atlases.getTranslucentCullBlockType());
+		ClientPlayerEntity player = minecraft.player;
+		World world = player.getEntityWorld();
+
+		if (!player.getHeldItemMainhand().isEmpty()
+				&& player.getHeldItemMainhand().getItem() instanceof ItemRitualReader)
+		{
+			ItemStack itemStack = player.getHeldItemMainhand();
+			EnumRitualReaderState state = ((ItemRitualReader) itemStack.getItem()).getState(itemStack);
+			if (state == EnumRitualReaderState.SET_AREA)
+			{
+				Ritual ritual = masterRitualStone.getCurrentRitual();
+				String range = ((ItemRitualReader) itemStack.getItem()).getCurrentBlockRange(itemStack);
+				AreaDescriptor descriptor = masterRitualStone.getBlockRange(range);
+				if (descriptor == null)
+				{
+					return;
+				}
+
+				stack.push();
+				BlockPos vec3, vX;
+				vec3 = masterRitualStone.getPos();
+				AxisAlignedBB aabb = descriptor.getAABB(vec3);
+
+				double minX = aabb.minX - eyePos.x;
+				double minY = aabb.minY - eyePos.y;
+				double minZ = aabb.minZ - eyePos.z;
+
+				stack.translate(minX, minY, minZ);
+
+				ResourceLocation rl = ritualStoneFire;
+				Model3D model = getBlockModelWithSize(rl, aabb.getXSize(), aabb.getYSize(), aabb.getZSize());
+				RenderResizableCuboid.INSTANCE.renderCube(model, stack, buffer, 0xDDFFFFFF, 0x00F000F0, OverlayTexture.NO_OVERLAY);
+				stack.pop();
+			}
+		}
+
+//		if (ritual == null)
+//		{
+//			return;
+//		}
+//
+//		BlockPos vec3, vX;
+//		vec3 = masterRitualStone.getPos();
+//
+//		List<RitualComponent> components = Lists.newArrayList();
+//		ritual.gatherComponents(components::add);
+//		for (RitualComponent ritualComponent : components)
+//		{
+//			stack.push();
+//			vX = vec3.add(ritualComponent.getOffset(direction));
+//
+//			double minX = vX.getX() - eyePos.x;
+//			double minY = vX.getY() - eyePos.y;
+//			double minZ = vX.getZ() - eyePos.z;
+//
+//			stack.translate(minX, minY, minZ);
+//
+//			if (!world.getBlockState(vX).isOpaqueCube(world, vX))
+//			{
+//				ResourceLocation rl = null;
+//
+//				switch (ritualComponent.getRuneType())
+//				{
+//				case BLANK:
+//					rl = ritualStoneBlank;
+//					break;
+//				case WATER:
+//					rl = ritualStoneWater;
+//					break;
+//				case FIRE:
+//					rl = ritualStoneFire;
+//					break;
+//				case EARTH:
+//					rl = ritualStoneEarth;
+//					break;
+//				case AIR:
+//					rl = ritualStoneAir;
+//					break;
+//				case DAWN:
+//					rl = ritualStoneDawn;
+//					break;
+//				case DUSK:
+//					rl = ritualStoneDusk;
+//					break;
+//				}
+//
+////				RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ);
+//			}
+//
+//			stack.pop();
+//		}
+
+//		GlStateManager.popMatrix();
+	}
+
 	private static Model3D getBlockModel(ResourceLocation rl)
 	{
 		Model3D model = new BloodMagicRenderer.Model3D();
@@ -323,6 +449,20 @@ public class ClientHandler
 		model.maxX = 1;
 		model.maxY = 1;
 		model.maxZ = 1;
+
+		return model;
+	}
+
+	private static Model3D getBlockModelWithSize(ResourceLocation rl, double maxX, double maxY, double maxZ)
+	{
+		Model3D model = new BloodMagicRenderer.Model3D();
+		model.setTexture(Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(rl));
+		model.minX = 0;
+		model.minY = 0;
+		model.minZ = 0;
+		model.maxX = maxX;
+		model.maxY = maxY;
+		model.maxZ = maxZ;
 
 		return model;
 	}
@@ -341,6 +481,18 @@ public class ClientHandler
 		mrsHoloTile = null;
 		mrsHoloRitual = null;
 		mrsHoloDirection = Direction.NORTH;
+	}
+
+	public static void setRitualRangeHolo(TileMasterRitualStone masterRitualStone, boolean displayed)
+	{
+		mrsRangeDisplay = displayed;
+		mrsRangeTile = masterRitualStone;
+	}
+
+	public static void setRitualRangeHoloToNull()
+	{
+		mrsRangeDisplay = false;
+		mrsRangeTile = null;
 	}
 
 	public static void handleGuiTank(MatrixStack transform, IFluidTank tank, int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, String originalTexture, List<ITextComponent> tooltip)
@@ -363,8 +515,7 @@ public class ClientHandler
 			int xOff = (w - oW) / 2;
 			int yOff = (h - oH) / 2;
 			RenderType renderType = BMRenderTypes.getGui(new ResourceLocation(originalTexture));
-			drawTexturedRect(buffer.getBuffer(renderType), transform, x + xOff, y + yOff, oW, oH, 256f, oX, oX
-					+ oW, oY, oY + oH);
+			drawTexturedRect(buffer.getBuffer(renderType), transform, x + xOff, y + yOff, oW, oH, 256f, oX, oX + oW, oY, oY + oH);
 			buffer.finish(renderType);
 			transform.pop();
 		} else
@@ -404,32 +555,29 @@ public class ClientHandler
 		float iconVDif = vMax - vMin;
 		for (int ww = 0; ww < iterMaxW; ww++)
 		{
-			for (int hh = 0; hh < iterMaxH; hh++) drawTexturedRect(builder, transform, x + ww * iconWidth, y
-					+ hh * iconHeight, iconWidth, iconHeight, r, g, b, alpha, uMin, uMax, vMin, vMax);
-			drawTexturedRect(builder, transform, x + ww * iconWidth, y
-					+ iterMaxH * iconHeight, iconWidth, leftoverH, r, g, b, alpha, uMin, uMax, vMin, (vMin
-							+ iconVDif * leftoverHf));
+			for (int hh = 0; hh < iterMaxH; hh++) drawTexturedRect(builder, transform, x + ww * iconWidth, y + hh
+					* iconHeight, iconWidth, iconHeight, r, g, b, alpha, uMin, uMax, vMin, vMax);
+			drawTexturedRect(builder, transform, x + ww * iconWidth, y + iterMaxH
+					* iconHeight, iconWidth, leftoverH, r, g, b, alpha, uMin, uMax, vMin, (vMin + iconVDif
+							* leftoverHf));
 		}
 		if (leftoverW > 0)
 		{
-			for (int hh = 0; hh < iterMaxH; hh++) drawTexturedRect(builder, transform, x + iterMaxW * iconWidth, y
-					+ hh * iconHeight, leftoverW, iconHeight, r, g, b, alpha, uMin, (uMin
-							+ iconUDif * leftoverWf), vMin, vMax);
-			drawTexturedRect(builder, transform, x + iterMaxW * iconWidth, y
-					+ iterMaxH * iconHeight, leftoverW, leftoverH, r, g, b, alpha, uMin, (uMin
-							+ iconUDif * leftoverWf), vMin, (vMin + iconVDif * leftoverHf));
+			for (int hh = 0; hh < iterMaxH; hh++) drawTexturedRect(builder, transform, x + iterMaxW * iconWidth, y + hh
+					* iconHeight, leftoverW, iconHeight, r, g, b, alpha, uMin, (uMin + iconUDif
+							* leftoverWf), vMin, vMax);
+			drawTexturedRect(builder, transform, x + iterMaxW * iconWidth, y + iterMaxH
+					* iconHeight, leftoverW, leftoverH, r, g, b, alpha, uMin, (uMin + iconUDif
+							* leftoverWf), vMin, (vMin + iconVDif * leftoverHf));
 		}
 	}
 
 	public static void drawTexturedRect(IVertexBuilder builder, MatrixStack transform, float x, float y, float w, float h, float r, float g, float b, float alpha, float u0, float u1, float v0, float v1)
 	{
 		Matrix4f mat = transform.getLast().getMatrix();
-		builder.pos(mat, x, y
-				+ h, 0).color(r, g, b, alpha).tex(u0, v1).overlay(OverlayTexture.NO_OVERLAY).lightmap(0xf000f0).normal(1, 1, 1).endVertex();
-		builder.pos(mat, x + w, y
-				+ h, 0).color(r, g, b, alpha).tex(u1, v1).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880).normal(1, 1, 1).endVertex();
-		builder.pos(mat, x
-				+ w, y, 0).color(r, g, b, alpha).tex(u1, v0).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880).normal(1, 1, 1).endVertex();
+		builder.pos(mat, x, y + h, 0).color(r, g, b, alpha).tex(u0, v1).overlay(OverlayTexture.NO_OVERLAY).lightmap(0xf000f0).normal(1, 1, 1).endVertex();
+		builder.pos(mat, x + w, y + h, 0).color(r, g, b, alpha).tex(u1, v1).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880).normal(1, 1, 1).endVertex();
+		builder.pos(mat, x + w, y, 0).color(r, g, b, alpha).tex(u1, v0).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880).normal(1, 1, 1).endVertex();
 		builder.pos(mat, x, y, 0).color(r, g, b, alpha).tex(u0, v0).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880).normal(1, 1, 1).endVertex();
 	}
 
