@@ -389,8 +389,7 @@ public class BloodAltar// implements IFluidHandler
 		{
 			ItemStack contained = tileAltar.getStackInSlot(0);
 
-			if (contained.isEmpty() || !(contained.getItem() instanceof IBloodOrb)
-					|| !(contained.getItem() instanceof IBindable))
+			if (contained.isEmpty() || !(contained.getItem() instanceof IBloodOrb) || !(contained.getItem() instanceof IBindable))
 				return;
 
 			BloodOrb orb = ((IBloodOrb) contained.getItem()).getOrb(contained);
@@ -404,10 +403,8 @@ public class BloodAltar// implements IFluidHandler
 //				int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2
 //						? orb.getFillRate() * (1 + consumptionMultiplier)
 //						: orb.getFillRate()), fluid.getAmount());
-				int liquidDrained = Math.min((int) (orb.getFillRate()
-						* (1 + consumptionMultiplier)), fluid.getAmount());
-				int drain = NetworkHelper.getSoulNetwork(binding).add(liquidDrained, (int) (orb.getCapacity()
-						* this.orbCapacityMultiplier));
+				int liquidDrained = Math.min((int) (orb.getFillRate() * (1 + consumptionMultiplier)), fluid.getAmount());
+				int drain = NetworkHelper.getSoulNetwork(binding).add(liquidDrained, (int) (orb.getCapacity() * this.orbCapacityMultiplier));
 				fluid.setAmount(fluid.getAmount() - drain);
 
 				if (drain > 0 && internalCounter % 4 == 0 && world instanceof ServerWorld)
@@ -456,15 +453,12 @@ public class BloodAltar// implements IFluidHandler
 			this.efficiencyMultiplier = (float) Math.pow(0.85, upgrade.getLevel(BloodRuneType.EFFICIENCY));
 			this.sacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getLevel(BloodRuneType.SACRIFICE));
 			this.selfSacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getLevel(BloodRuneType.SELF_SACRIFICE));
-			this.capacityMultiplier = (float) ((1
-					* Math.pow(1.10, upgrade.getLevel(BloodRuneType.AUGMENTED_CAPACITY))) + 0.20
-							* upgrade.getLevel(BloodRuneType.CAPACITY));
+			this.capacityMultiplier = (float) ((1 + 0.20 * upgrade.getLevel(BloodRuneType.CAPACITY) * Math.pow(1.075, upgrade.getLevel(BloodRuneType.AUGMENTED_CAPACITY))));
 			this.dislocationMultiplier = (float) (Math.pow(1.2, upgrade.getLevel(BloodRuneType.DISPLACEMENT)));
 			this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrade.getLevel(BloodRuneType.ORB));
 			this.chargingFrequency = Math.max(20 - accelerationUpgrades, 1);
 			this.chargingRate = (int) (10 * upgrade.getLevel(BloodRuneType.CHARGING) * (1 + consumptionMultiplier / 2));
-			this.maxCharge = (int) (FluidAttributes.BUCKET_VOLUME * Math.max(0.5 * capacityMultiplier, 1)
-					* upgrade.getLevel(BloodRuneType.CHARGING));
+			this.maxCharge = (int) (FluidAttributes.BUCKET_VOLUME * Math.max(0.5 * capacityMultiplier, 1) * upgrade.getLevel(BloodRuneType.CHARGING));
 		}
 
 		this.capacity = (int) (FluidAttributes.BUCKET_VOLUME * 10 * capacityMultiplier);

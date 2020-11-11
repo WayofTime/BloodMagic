@@ -90,8 +90,7 @@ public class RitualLava extends Ritual
 		AreaDescriptor lavaRange = masterRitualStone.getBlockRange(LAVA_RANGE);
 
 		int maxLavaVolume = getMaxVolumeForRange(LAVA_RANGE, willConfig, holder);
-		if (!lavaRange.isWithinRange(getMaxVerticalRadiusForRange(LAVA_RANGE, willConfig, holder), getMaxHorizontalRadiusForRange(LAVA_RANGE, willConfig, holder))
-				|| (maxLavaVolume != 0 && lavaRange.getVolume() > maxLavaVolume))
+		if (!lavaRange.isWithinRange(getMaxVerticalRadiusForRange(LAVA_RANGE, willConfig, holder), getMaxHorizontalRadiusForRange(LAVA_RANGE, willConfig, holder)) || (maxLavaVolume != 0 && lavaRange.getVolume() > maxLavaVolume))
 		{
 			return;
 		}
@@ -202,8 +201,7 @@ public class RitualLava extends Ritual
 				{
 					break;
 				}
-				if (!entity.isPotionActive(Effects.FIRE_RESISTANCE)
-						|| (entity.getActivePotionEffect(Effects.FIRE_RESISTANCE).getDuration() < 2))
+				if (!entity.isPotionActive(Effects.FIRE_RESISTANCE) || (entity.getActivePotionEffect(Effects.FIRE_RESISTANCE).getDuration() < 2))
 				{
 					entity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 100, 0));
 

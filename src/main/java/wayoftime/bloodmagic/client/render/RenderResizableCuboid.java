@@ -44,8 +44,7 @@ public class RenderResizableCuboid
 		{
 			return new Vector3f(vector.getX(), vector.getY(), value);
 		}
-		throw new RuntimeException("Was given a null axis! That was probably not intentional, consider this a bug! (Vector = "
-				+ vector + ")");
+		throw new RuntimeException("Was given a null axis! That was probably not intentional, consider this a bug! (Vector = " + vector + ")");
 	}
 
 	public static double getValue(Vector3d vector, Axis axis)
@@ -60,8 +59,7 @@ public class RenderResizableCuboid
 		{
 			return vector.z;
 		}
-		throw new RuntimeException("Was given a null axis! That was probably not intentional, consider this a bug! (Vector = "
-				+ vector + ")");
+		throw new RuntimeException("Was given a null axis! That was probably not intentional, consider this a bug! (Vector = " + vector + ")");
 	}
 
 	public void renderCube(Model3D cube, MatrixStack matrix, IVertexBuilder buffer, int argb, int light, int overlay)
@@ -108,8 +106,7 @@ public class RenderResizableCuboid
 					// to see the texture artifacts
 					for (int uIndex = 0; uIndex < sizeU; uIndex++)
 					{
-						float[] baseUV = new float[]
-						{ minU, maxU, minV, maxV };
+						float[] baseUV = new float[] { minU, maxU, minV, maxV };
 						double addU = 1;
 						// If the size of the texture is greater than the cuboid goes on for then make
 						// sure the texture positions are lowered
@@ -127,8 +124,8 @@ public class RenderResizableCuboid
 								addV = sizeV - vIndex;
 								uv[V_MAX] = uv[V_MIN] + (uv[V_MAX] - uv[V_MIN]) * (float) addV;
 							}
-							float[] xyz = new float[]
-							{ uIndex, (float) (uIndex + addU), vIndex, (float) (vIndex + addV) };
+							float[] xyz = new float[] { uIndex, (float) (uIndex + addU), vIndex,
+									(float) (vIndex + addV) };
 
 							renderPoint(matrix4f, normal, buffer, face, u, v, other, uv, xyz, true, false, red, green, blue, alpha, light, overlay);
 							renderPoint(matrix4f, normal, buffer, face, u, v, other, uv, xyz, true, true, red, green, blue, alpha, light, overlay);
@@ -147,9 +144,7 @@ public class RenderResizableCuboid
 		matrix.pop();
 	}
 
-	private void renderPoint(Matrix4f matrix4f, Matrix3f normal, IVertexBuilder buffer, Direction face, Axis u, Axis v,
-			float other, float[] uv, float[] xyz, boolean minU, boolean minV, float red, float green, float blue,
-			float alpha, int light, int overlay)
+	private void renderPoint(Matrix4f matrix4f, Matrix3f normal, IVertexBuilder buffer, Direction face, Axis u, Axis v, float other, float[] uv, float[] xyz, boolean minU, boolean minV, float red, float green, float blue, float alpha, int light, int overlay)
 	{
 		int U_ARRAY = minU ? U_MIN : U_MAX;
 		int V_ARRAY = minV ? V_MIN : V_MAX;
@@ -160,8 +155,7 @@ public class RenderResizableCuboid
 		// TODO: Figure out how and why this works, it gives about the same brightness
 		// as we used to have but I don't understand why/how
 		float adjustment = 2.5F;
-		Vector3f norm = new Vector3f(normalForFace.getX() + adjustment, normalForFace.getY()
-				+ adjustment, normalForFace.getZ() + adjustment);
+		Vector3f norm = new Vector3f(normalForFace.getX() + adjustment, normalForFace.getY() + adjustment, normalForFace.getZ() + adjustment);
 		norm.normalize();
 		buffer.pos(matrix4f, vertex.getX(), vertex.getY(), vertex.getZ()).color(red, green, blue, alpha).tex(uv[U_ARRAY], uv[V_ARRAY]).overlay(overlay).lightmap(light).normal(normal, norm.getX(), norm.getY(), norm.getZ()).endVertex();
 	}

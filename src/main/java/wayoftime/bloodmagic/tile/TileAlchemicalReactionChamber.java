@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -18,26 +21,30 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
+import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.event.recipes.FluidStackIngredient;
 import wayoftime.bloodmagic.api.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.api.impl.recipe.RecipeARC;
 import wayoftime.bloodmagic.common.item.IARCTool;
 import wayoftime.bloodmagic.common.item.inventory.InventoryWrapper;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
+import wayoftime.bloodmagic.network.ARCTanksPacket;
 import wayoftime.bloodmagic.tile.contailer.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.MultiSlotItemHandler;
 
-public class TileAlchemicalReactionChamber extends TileInventory implements ITickableTileEntity, INamedContainerProvider, ISidedInventory
+public class TileAlchemicalReactionChamber extends TileInventory implements ITickableTileEntity, INamedContainerProvider, ISidedInventory, IFluidHandler
 {
 	@ObjectHolder("bloodmagic:alchemicalreactionchamber")
 	public static TileEntityType<TileAlchemicalReactionChamber> TYPE;
@@ -389,9 +396,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 		{
 			Optional<FluidStack> fluidStackOptional = FluidUtil.getFluidContained(itemStack);
 
-			return fluidStackOptional.isPresent()
-					&& ((index == OUTPUT_BUCKET_SLOT && !fluidStackOptional.get().isEmpty())
-							|| (index == INPUT_BUCKET_SLOT && fluidStackOptional.get().isEmpty()));
+			return fluidStackOptional.isPresent() && ((index == OUTPUT_BUCKET_SLOT && !fluidStackOptional.get().isEmpty()) || (index == INPUT_BUCKET_SLOT && fluidStackOptional.get().isEmpty()));
 		}
 
 		if (index >= OUTPUT_SLOT && index < OUTPUT_SLOT + NUM_OUTPUTS)
@@ -411,5 +416,95 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 	public boolean canExtractItem(int index, ItemStack stack, Direction direction)
 	{
 		return index >= OUTPUT_SLOT && index < OUTPUT_SLOT + NUM_OUTPUTS;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
+	{
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+		{
+			return LazyOptional.of(() -> this).cast();
+		}
+
+		return super.getCapability(capability, facing);
+	}
+
+	@Override
+	public int getTanks()
+	{
+		return 2;
+	}
+
+	@Override
+	public FluidStack getFluidInTank(int tank)
+	{
+		switch (tank)
+		{
+		case 0:
+			return inputTank.getFluid();
+		default:
+			return outputTank.getFluid();
+		}
+	}
+
+	@Override
+	public int getTankCapacity(int tank)
+	{
+		switch (tank)
+		{
+		case 0:
+			return inputTank.getCapacity();
+		default:
+			return outputTank.getCapacity();
+		}
+	}
+
+	@Override
+	public boolean isFluidValid(int tank, FluidStack stack)
+	{
+		switch (tank)
+		{
+		case 0:
+			return inputTank.isFluidValid(stack);
+		default:
+			return outputTank.isFluidValid(stack);
+		}
+	}
+
+	@Override
+	public int fill(FluidStack resource, FluidAction action)
+	{
+		int fillAmount = inputTank.fill(resource, action);
+		if (fillAmount > 0 && !world.isRemote)
+		{
+			BloodMagic.packetHandler.sendToAllTracking(new ARCTanksPacket(this), this);
+//			this.world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
+		}
+		return fillAmount;
+	}
+
+	@Override
+	public FluidStack drain(FluidStack resource, FluidAction action)
+	{
+		FluidStack drainedStack = outputTank.drain(resource, action);
+		if (!drainedStack.isEmpty() && !world.isRemote)
+		{
+			BloodMagic.packetHandler.sendToAllTracking(new ARCTanksPacket(this), this);
+//			this.world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
+		}
+		return drainedStack;
+	}
+
+	@Override
+	public FluidStack drain(int maxDrain, FluidAction action)
+	{
+		FluidStack drainedStack = outputTank.drain(maxDrain, action);
+		if (!drainedStack.isEmpty() && !world.isRemote)
+		{
+			BloodMagic.packetHandler.sendToAllTracking(new ARCTanksPacket(this), this);
+//			this.world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
+		}
+		return drainedStack;
 	}
 }

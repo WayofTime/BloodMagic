@@ -14,6 +14,7 @@ public class BloodMagicPacketHandler extends BasePacketHandler
 	public void initialize()
 	{
 		registerServerToClient(ChatUtil.PacketNoSpamChat.class, ChatUtil.PacketNoSpamChat::encode, ChatUtil.PacketNoSpamChat::decode, ChatUtil.PacketNoSpamChat::handle);
+		registerServerToClient(ARCTanksPacket.class, ARCTanksPacket::encode, ARCTanksPacket::decode, ARCTanksPacket::handle);
 //		INSTANCE.registerMessage(id, messageType, encoder, decoder, messageConsumer);
 //		INSTANCE.registerMessage(ChatUtil.PacketNoSpamChat.Handler.class, ChatUtil.PacketNoSpamChat.class, 0, Side.CLIENT);
 //		INSTANCE.registerMessage(ItemRouterButtonPacketProcessor.class, ItemRouterButtonPacketProcessor.class, 1, Side.SERVER);
