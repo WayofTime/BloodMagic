@@ -8,6 +8,8 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
 
@@ -56,6 +58,7 @@ public class ARCTanksPacket
 		context.get().setPacketHandled(true);
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	public static void updateTanks(BlockPos pos, CompoundNBT inputNBT, CompoundNBT outputNBT)
 	{
 		World world = Minecraft.getInstance().world;
