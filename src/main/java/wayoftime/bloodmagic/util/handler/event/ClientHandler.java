@@ -57,6 +57,7 @@ import wayoftime.bloodmagic.ritual.EnumRitualReaderState;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
+import wayoftime.bloodmagic.will.DemonWillHolder;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID, value = Dist.CLIENT)
 @OnlyIn(Dist.CLIENT)
@@ -84,6 +85,8 @@ public class ClientHandler
 	private static Direction mrsHoloDirection;
 	private static boolean mrsHoloDisplay;
 	private static boolean mrsRangeDisplay;
+
+	public static DemonWillHolder currentAura;
 
 	static HashMap<String, ResourceLocation> resourceMap = new HashMap<String, ResourceLocation>();
 
@@ -186,8 +189,7 @@ public class ClientHandler
 
 		TileEntity tileEntity = world.getTileEntity(((BlockRayTraceResult) minecraft.objectMouseOver).getPos());
 
-		if (tileEntity instanceof TileMasterRitualStone && !player.getHeldItemMainhand().isEmpty()
-				&& player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner)
+		if (tileEntity instanceof TileMasterRitualStone && !player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner)
 		{
 			IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
 			MatrixStack stack = event.getMatrixStack();
@@ -344,8 +346,7 @@ public class ClientHandler
 		ClientPlayerEntity player = minecraft.player;
 		World world = player.getEntityWorld();
 
-		if (!player.getHeldItemMainhand().isEmpty()
-				&& player.getHeldItemMainhand().getItem() instanceof ItemRitualReader)
+		if (!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() instanceof ItemRitualReader)
 		{
 			ItemStack itemStack = player.getHeldItemMainhand();
 			EnumRitualReaderState state = ((ItemRitualReader) itemStack.getItem()).getState(itemStack);
@@ -375,8 +376,7 @@ public class ClientHandler
 				stack.translate(minX, minY, minZ);
 
 				ResourceLocation rl = boarder;
-				Model3D model = getBlockModelWithSize(rl, aabb.getXSize() - 2 * sizeOffset, aabb.getYSize() - 2
-						* sizeOffset, aabb.getZSize() - 2 * sizeOffset);
+				Model3D model = getBlockModelWithSize(rl, aabb.getXSize() - 2 * sizeOffset, aabb.getYSize() - 2 * sizeOffset, aabb.getZSize() - 2 * sizeOffset);
 				RenderResizableCuboid.INSTANCE.renderCube(model, stack, buffer, 0x99FF4444, 0x00F000F0, OverlayTexture.NO_OVERLAY);
 				stack.pop();
 			}
@@ -483,8 +483,7 @@ public class ClientHandler
 		int iW = sprite.getWidth();
 		int iH = sprite.getHeight();
 		if (iW > 0 && iH > 0)
-			drawRepeatedSprite(builder, transform, x, y, w, h, iW, iH, sprite.getMinU(), sprite.getMaxU(), sprite.getMinV(), sprite.getMaxV(), (col >> 16
-					& 255) / 255.0f, (col >> 8 & 255) / 255.0f, (col & 255) / 255.0f, 1);
+			drawRepeatedSprite(builder, transform, x, y, w, h, iW, iH, sprite.getMinU(), sprite.getMaxU(), sprite.getMinV(), sprite.getMaxV(), (col >> 16 & 255) / 255.0f, (col >> 8 & 255) / 255.0f, (col & 255) / 255.0f, 1);
 	}
 
 	public static void drawRepeatedSprite(IVertexBuilder builder, MatrixStack transform, float x, float y, float w, float h, int iconWidth, int iconHeight, float uMin, float uMax, float vMin, float vMax, float r, float g, float b, float alpha)
@@ -499,20 +498,15 @@ public class ClientHandler
 		float iconVDif = vMax - vMin;
 		for (int ww = 0; ww < iterMaxW; ww++)
 		{
-			for (int hh = 0; hh < iterMaxH; hh++) drawTexturedRect(builder, transform, x + ww * iconWidth, y + hh
-					* iconHeight, iconWidth, iconHeight, r, g, b, alpha, uMin, uMax, vMin, vMax);
-			drawTexturedRect(builder, transform, x + ww * iconWidth, y + iterMaxH
-					* iconHeight, iconWidth, leftoverH, r, g, b, alpha, uMin, uMax, vMin, (vMin + iconVDif
-							* leftoverHf));
+			for (int hh = 0; hh < iterMaxH; hh++)
+				drawTexturedRect(builder, transform, x + ww * iconWidth, y + hh * iconHeight, iconWidth, iconHeight, r, g, b, alpha, uMin, uMax, vMin, vMax);
+			drawTexturedRect(builder, transform, x + ww * iconWidth, y + iterMaxH * iconHeight, iconWidth, leftoverH, r, g, b, alpha, uMin, uMax, vMin, (vMin + iconVDif * leftoverHf));
 		}
 		if (leftoverW > 0)
 		{
-			for (int hh = 0; hh < iterMaxH; hh++) drawTexturedRect(builder, transform, x + iterMaxW * iconWidth, y + hh
-					* iconHeight, leftoverW, iconHeight, r, g, b, alpha, uMin, (uMin + iconUDif
-							* leftoverWf), vMin, vMax);
-			drawTexturedRect(builder, transform, x + iterMaxW * iconWidth, y + iterMaxH
-					* iconHeight, leftoverW, leftoverH, r, g, b, alpha, uMin, (uMin + iconUDif
-							* leftoverWf), vMin, (vMin + iconVDif * leftoverHf));
+			for (int hh = 0; hh < iterMaxH; hh++)
+				drawTexturedRect(builder, transform, x + iterMaxW * iconWidth, y + hh * iconHeight, leftoverW, iconHeight, r, g, b, alpha, uMin, (uMin + iconUDif * leftoverWf), vMin, vMax);
+			drawTexturedRect(builder, transform, x + iterMaxW * iconWidth, y + iterMaxH * iconHeight, leftoverW, leftoverH, r, g, b, alpha, uMin, (uMin + iconUDif * leftoverWf), vMin, (vMin + iconVDif * leftoverHf));
 		}
 	}
 
@@ -527,8 +521,7 @@ public class ClientHandler
 
 	public static void drawTexturedRect(IVertexBuilder builder, MatrixStack transform, int x, int y, int w, int h, float picSize, int u0, int u1, int v0, int v1)
 	{
-		drawTexturedRect(builder, transform, x, y, w, h, 1, 1, 1, 1, u0 / picSize, u1 / picSize, v0 / picSize, v1
-				/ picSize);
+		drawTexturedRect(builder, transform, x, y, w, h, 1, 1, 1, 1, u0 / picSize, u1 / picSize, v0 / picSize, v1 / picSize);
 	}
 
 	public static void addFluidTooltip(FluidStack fluid, List<ITextComponent> tooltip, int tankCapacity)

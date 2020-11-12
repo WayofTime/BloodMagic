@@ -1,7 +1,9 @@
 package wayoftime.bloodmagic.util.handler.event;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -9,13 +11,16 @@ import net.minecraftforge.fml.common.Mod;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
+import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.event.ItemBindEvent;
 import wayoftime.bloodmagic.iface.IBindable;
+import wayoftime.bloodmagic.network.DemonAuraClientPacket;
 import wayoftime.bloodmagic.orb.BloodOrb;
 import wayoftime.bloodmagic.orb.IBloodOrb;
 import wayoftime.bloodmagic.util.helper.BindableHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
+import wayoftime.bloodmagic.will.DemonWillHolder;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class GenericHandler
@@ -49,8 +54,7 @@ public class GenericHandler
 				}
 				// If the binding exists, we'll check if the player's name has changed since
 				// they last used it and update that if so.
-			} else if (binding.getOwnerId().equals(player.getGameProfile().getId())
-					&& !binding.getOwnerName().equals(player.getGameProfile().getName()))
+			} else if (binding.getOwnerId().equals(player.getGameProfile().getId()) && !binding.getOwnerName().equals(player.getGameProfile().getName()))
 			{
 				binding.setOwnerName(player.getGameProfile().getName());
 				BindableHelper.applyBinding(held, binding);
@@ -68,6 +72,22 @@ public class GenericHandler
 
 			if (orb.getTier() > network.getOrbTier())
 				network.setOrbTier(orb.getTier());
+		}
+	}
+
+	public static void sendPlayerDemonWillAura(PlayerEntity player)
+	{
+		if (player instanceof ServerPlayerEntity)
+		{
+			BlockPos pos = player.getPosition();
+			DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(WorldDemonWillHandler.getDimensionResourceLocation(player.world), pos.getX() >> 4, pos.getZ() >> 4);
+			if (holder != null)
+			{
+				BloodMagic.packetHandler.sendTo(new DemonAuraClientPacket(holder), (ServerPlayerEntity) player);
+			} else
+			{
+				BloodMagic.packetHandler.sendTo(new DemonAuraClientPacket(new DemonWillHolder()), (ServerPlayerEntity) player);
+			}
 		}
 	}
 }

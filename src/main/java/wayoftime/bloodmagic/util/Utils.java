@@ -28,6 +28,8 @@ import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
+import wayoftime.bloodmagic.common.item.IDemonWillViewer;
 import wayoftime.bloodmagic.tile.TileInventory;
 
 public class Utils
@@ -92,9 +94,7 @@ public class Utils
 	public static boolean isFlowingLiquid(World world, BlockPos pos, BlockState state)
 	{
 		Block block = state.getBlock();
-		return ((block instanceof IFluidBlock && Math.abs(((IFluidBlock) block).getFilledPercentage(world, pos)) == 1)
-				|| (block instanceof FlowingFluidBlock
-						&& !((FlowingFluidBlock) block).getFluidState(state).isSource()));
+		return ((block instanceof IFluidBlock && Math.abs(((IFluidBlock) block).getFilledPercentage(world, pos)) == 1) || (block instanceof FlowingFluidBlock && !((FlowingFluidBlock) block).getFluidState(state).isSource()));
 	}
 
 	public static boolean spawnStackAtBlock(World world, BlockPos pos, @Nullable Direction pushDirection, ItemStack stack)
@@ -174,9 +174,7 @@ public class Utils
 		BlockState initialState = initialWorld.getBlockState(initialPos);
 		BlockState finalState = finalWorld.getBlockState(finalPos);
 
-		if ((initialState.getBlock().equals(Blocks.AIR) && finalState.getBlock().equals(Blocks.AIR))
-				|| initialState.getBlock() instanceof NetherPortalBlock
-				|| finalState.getBlock() instanceof NetherPortalBlock)
+		if ((initialState.getBlock().equals(Blocks.AIR) && finalState.getBlock().equals(Blocks.AIR)) || initialState.getBlock() instanceof NetherPortalBlock || finalState.getBlock() instanceof NetherPortalBlock)
 			return false;
 
 		if (playSound)
@@ -302,8 +300,7 @@ public class Utils
 			int[] array = ((ISidedInventory) inventory).getSlotsForFace(dir);
 			for (int in : array)
 			{
-				canBeInserted[in] = inventory.isItemValidForSlot(in, stack)
-						&& ((ISidedInventory) inventory).canInsertItem(in, stack, dir);
+				canBeInserted[in] = inventory.isItemValidForSlot(in, stack) && ((ISidedInventory) inventory).canInsertItem(in, stack, dir);
 			}
 		} else
 		{
@@ -349,8 +346,7 @@ public class Utils
 			int[] array = ((ISidedInventory) inventory).getSlotsForFace(dir);
 			for (int in : array)
 			{
-				canBeInserted[in] = inventory.isItemValidForSlot(in, stack)
-						&& ((ISidedInventory) inventory).canInsertItem(in, stack, dir);
+				canBeInserted[in] = inventory.isItemValidForSlot(in, stack) && ((ISidedInventory) inventory).canInsertItem(in, stack, dir);
 			}
 		} else
 		{
@@ -444,5 +440,47 @@ public class Utils
 		returned[1] = stack2;
 
 		return returned;
+	}
+
+	public static boolean canPlayerSeeDemonWill(PlayerEntity player)
+	{
+		IItemHandler inventory = new PlayerMainInvWrapper(player.inventory);
+
+		for (int i = 0; i < inventory.getSlots(); i++)
+		{
+			ItemStack stack = inventory.getStackInSlot(i);
+			if (stack.isEmpty())
+			{
+				continue;
+			}
+
+			if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), stack, player))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static double getDemonWillResolution(PlayerEntity player)
+	{
+		IItemHandler inventory = new PlayerMainInvWrapper(player.inventory);
+
+		for (int i = 0; i < inventory.getSlots(); i++)
+		{
+			ItemStack stack = inventory.getStackInSlot(i);
+			if (stack.isEmpty())
+			{
+				continue;
+			}
+
+			if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), stack, player))
+			{
+				return ((IDemonWillViewer) stack.getItem()).getDemonWillAuraResolution(player.getEntityWorld(), stack, player);
+			}
+		}
+
+		return 100;
 	}
 }

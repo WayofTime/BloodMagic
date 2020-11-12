@@ -32,6 +32,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import wayoftime.bloodmagic.api.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.api.impl.BloodMagicCorePlugin;
 import wayoftime.bloodmagic.client.ClientEvents;
+import wayoftime.bloodmagic.client.hud.Elements;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.GeneratorBaseRecipes;
 import wayoftime.bloodmagic.common.data.GeneratorBlockStates;
@@ -200,6 +201,7 @@ public class BloodMagic
 //		LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
 
 		ClientEvents.initClientEvents(event);
+		Elements.registerElements();
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event)
