@@ -16,6 +16,9 @@ public class GeneratorLanguage extends LanguageProvider
 	@Override
 	protected void addTranslations()
 	{
+		// HUD
+		add("hud.bloodmagic.inactive", "Inactive");
+
 		// Creative Tab
 		add("itemGroup.bloodmagic.creativeTab", "Blood Magic");
 
@@ -44,6 +47,17 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.sigil.divination.currentTranquility", "Current Tranquility: %d");
 //		add("tooltip.bloodmagic.sigil.divination.currentInversion", "Current Inversion: %d");
 		add("tooltip.bloodmagic.sigil.divination.currentBonus", "Current Bonus: +%d%%");
+
+		add("tooltip.bloodmagic.sigil.seer.desc", "When seeing all is not enough");
+		add("tooltip.bloodmagic.sigil.seer.currentAltarProgress", "Current Progress: %d LP/ %s LP");
+		add("tooltip.bloodmagic.sigil.seer.currentAltarProgress.percent", "Current Progress: %s");
+		add("tooltip.bloodmagic.sigil.seer.currentAltarConsumptionRate", "Consumption Rate: %d LP");
+		add("tooltip.bloodmagic.sigil.seer.currentAltarTier", "Current Tier: %d");
+		add("tooltip.bloodmagic.sigil.seer.currentEssence", "Current Essence: %d LP");
+		add("tooltip.bloodmagic.sigil.seer.currentAltarCapacity", "Current Capacity: %d LP");
+		add("tooltip.bloodmagic.sigil.seer.currentCharge", "Current Charge: %d");
+		add("tooltip.bloodmagic.sigil.seer.currentTranquility", "Current Tranquility: %d");
+		add("tooltip.bloodmagic.sigil.seer.currentBonus", "Current Bonus: +%d%%");
 
 		add("tooltip.bloodmagic.decoration.safe", "Safe for decoration");
 		add("tooltip.bloodmagic.decoration.notSafe", "Dangerous for decoration");
@@ -304,6 +318,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addBlock(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER, "Alchemical Reaction Chamber");
 		addBlock(BloodMagicBlocks.ALCHEMY_TABLE, "Alchemy Table");
+		addBlock(BloodMagicBlocks.INCENSE_ALTAR, "Incense Altar");
 
 		addBlock(BloodMagicBlocks.BLOODSTONE, "Large Bloodstone Brick");
 		addBlock(BloodMagicBlocks.BLOODSTONE_BRICK, "Bloodstone Brick");
@@ -316,6 +331,15 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addBlock(BloodMagicBlocks.DEMON_CRUCIBLE, "Demon Crucible");
 		addBlock(BloodMagicBlocks.DEMON_CRYSTALLIZER, "Demon Crystallizer");
+
+		addBlock(BloodMagicBlocks.WOOD_PATH, "Wooden Path");
+		addBlock(BloodMagicBlocks.WOOD_TILE_PATH, "Tiled Wooden Path");
+		addBlock(BloodMagicBlocks.STONE_PATH, "Stone Path");
+		addBlock(BloodMagicBlocks.STONE_TILE_PATH, "Tiled Stone Path");
+		addBlock(BloodMagicBlocks.WORN_STONE_PATH, "Worn Stone Path");
+		addBlock(BloodMagicBlocks.WORN_STONE_TILE_PATH, "Tiled Worn Stone Path");
+		addBlock(BloodMagicBlocks.OBSIDIAN_PATH, "Obsidian Path");
+		addBlock(BloodMagicBlocks.OBSIDIAN_TILE_PATH, "Tiled Obsidian Path");
 
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
@@ -332,6 +356,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.ICE_SIGIL, "Sigil of the Frozen Lake");
 		addItem(BloodMagicItems.AIR_SIGIL, "Air Sigil");
 		addItem(BloodMagicItems.BLOOD_LIGHT_SIGIL, "Sigil of the Blood Lamp");
+		addItem(BloodMagicItems.SEER_SIGIL, "Seer's Sigil");
 
 		addItem(BloodMagicBlocks.LIFE_ESSENCE_BUCKET, "Bucket of Life");
 		addItem(BloodMagicItems.ARCANE_ASHES, "Arcane Ashes");
@@ -353,6 +378,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.REAGENT_MAGNETISM, "Magnetism Reagent");
 		addItem(BloodMagicItems.REAGENT_AIR, "Air Reagent");
 		addItem(BloodMagicItems.REAGENT_BLOOD_LIGHT, "Blood Lamp Reagent");
+		addItem(BloodMagicItems.REAGENT_SIGHT, "Sight Reagent");
 
 		addItem(BloodMagicItems.PETTY_GEM, "Petty Tartaric Gem");
 		addItem(BloodMagicItems.LESSER_GEM, "Lesser Tartaric Gem");

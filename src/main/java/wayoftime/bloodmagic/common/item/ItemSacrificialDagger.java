@@ -25,6 +25,7 @@ import wayoftime.bloodmagic.ConfigHandler;
 import wayoftime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.DamageSourceBloodMagic;
+import wayoftime.bloodmagic.util.helper.IncenseHelper;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 import wayoftime.bloodmagic.util.helper.PlayerSacrificeHelper;
@@ -52,7 +53,14 @@ public class ItemSacrificialDagger extends Item
 	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft)
 	{
 		if (entityLiving instanceof PlayerEntity && !entityLiving.getEntityWorld().isRemote)
-			PlayerSacrificeHelper.sacrificePlayerHealth((PlayerEntity) entityLiving);
+			if (PlayerSacrificeHelper.sacrificePlayerHealth((PlayerEntity) entityLiving))
+				IncenseHelper.setHasMaxIncense(stack, (PlayerEntity) entityLiving, false);
+	}
+
+	@Override
+	public boolean hasEffect(ItemStack stack)
+	{
+		return IncenseHelper.getHasMaxIncense(stack) || super.hasEffect(stack);
 	}
 
 	@Override
@@ -114,13 +122,15 @@ public class ItemSacrificialDagger extends Item
 				return super.onItemRightClick(world, player, hand);
 
 			lpAdded = evt.lpAdded;
+		} else if (player.isSneaking())
+		{
+			lpAdded = Integer.MAX_VALUE;
 		}
 
 		double posX = player.getPosX();
 		double posY = player.getPosY();
 		double posZ = player.getPosZ();
-		world.playSound(player, posX, posY, posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat())
-				* 0.8F);
+		world.playSound(player, posX, posY, posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 
 		for (int l = 0; l < 8; ++l)
 			world.addParticle(RedstoneParticleData.REDSTONE_DUST, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);

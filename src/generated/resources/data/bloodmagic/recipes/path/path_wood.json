@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 2
+    }
+  ],
+  "result": {
+    "item": "bloodmagic:woodbrickpath",
+    "count": 4
+  }
+}

@@ -8,7 +8,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
@@ -77,8 +76,6 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 		if (!stack.hasTag())
 			return;
 
-		Items d;
-
 		EnumDemonWillType type = this.getCurrentType(stack);
 		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.soulGem." + name));
 		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(type, stack))));
@@ -133,8 +130,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 
 			if (soulsLeft < getMaxWill(thisType, soulGemStack))
 			{
-				double newSoulsLeft = Math.min(soulsLeft
-						+ soul.getWill(thisType, soulStack), getMaxWill(thisType, soulGemStack));
+				double newSoulsLeft = Math.min(soulsLeft + soul.getWill(thisType, soulStack), getMaxWill(thisType, soulGemStack));
 				soul.drainWill(thisType, soulStack, newSoulsLeft - soulsLeft);
 
 				setWill(thisType, soulGemStack, newSoulsLeft);

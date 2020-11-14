@@ -19,35 +19,35 @@ public class PlayerSacrificeHelper
 
 	public static double getPlayerIncense(PlayerEntity player)
 	{
-		return 0;
-//		return IncenseHelper.getCurrentIncense(player);
+//		return 0;
+		return IncenseHelper.getCurrentIncense(player);
 	}
 
 	public static void setPlayerIncense(PlayerEntity player, double amount)
 	{
-//		IncenseHelper.setCurrentIncense(player, amount);
+		IncenseHelper.setCurrentIncense(player, amount);
 	}
 
 	public static boolean incrementIncense(PlayerEntity player, double min, double incenseAddition, double increment)
 	{
-		return true;
-//		double amount = getPlayerIncense(player);
-//		if (amount < min || amount >= incenseAddition)
-//		{
-//			return false;
-//		}
-//
-//		amount = amount + Math.min(increment, incenseAddition - amount);
-//		setPlayerIncense(player, amount);
-//
-//		if (amount == incenseAddition)
-//		{
-//			IncenseHelper.setMaxIncense(player, incenseAddition);
-//		}
-//		// System.out.println("Amount of incense: " + amount + ", Increment: " +
-//		// increment);
-//
 //		return true;
+		double amount = getPlayerIncense(player);
+		if (amount < min || amount >= incenseAddition)
+		{
+			return false;
+		}
+
+		amount = amount + Math.min(increment, incenseAddition - amount);
+		setPlayerIncense(player, amount);
+
+		if (amount == incenseAddition)
+		{
+			IncenseHelper.setMaxIncense(player, incenseAddition);
+		}
+		// System.out.println("Amount of incense: " + amount + ", Increment: " +
+		// increment);
+
+		return true;
 	}
 
 	/**
@@ -74,8 +74,7 @@ public class PlayerSacrificeHelper
 			if (health > maxHealth / 10.0)
 			{
 				float sacrificedHealth = health - maxHealth / 10.0f;
-				int lpAdded = (int) (sacrificedHealth * ConfigHandler.values.sacrificialDaggerConversion
-						* getModifier(amount));
+				int lpAdded = (int) (sacrificedHealth * ConfigHandler.values.sacrificialDaggerConversion * getModifier(amount));
 
 				IBloodAltar altar = getAltar(player.getEntityWorld(), player.getPosition());
 				if (altar != null)

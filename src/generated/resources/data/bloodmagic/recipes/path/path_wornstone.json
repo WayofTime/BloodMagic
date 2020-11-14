@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "bloodmagic:stonebrickpath"
+    },
+    {
+      "item": "bloodmagic:stonebrickpath"
+    },
+    {
+      "item": "bloodmagic:stonebrickpath"
+    },
+    {
+      "item": "bloodmagic:stonebrickpath"
+    },
+    {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 4
+    }
+  ],
+  "result": {
+    "item": "bloodmagic:wornstonebrickpath",
+    "count": 4
+  }
+}

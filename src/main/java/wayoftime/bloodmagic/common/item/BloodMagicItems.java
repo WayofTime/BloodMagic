@@ -78,6 +78,16 @@ public class BloodMagicItems
 
 	public static final RegistryObject<Item> BLOOD_ALTAR_ITEM = ITEMS.register("altar", () -> new BlockItem(BloodMagicBlocks.BLOOD_ALTAR.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> ALCHEMY_TABLE_ITEM = ITEMS.register("alchemytable", () -> new ItemBlockAlchemyTable(BloodMagicBlocks.ALCHEMY_TABLE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> INCENSE_ALTAR_ITEM = ITEMS.register("incensealtar", () -> new BlockItem(BloodMagicBlocks.INCENSE_ALTAR.get(), new Item.Properties().group(BloodMagic.TAB)));
+
+	public static final RegistryObject<Item> WOOD_PATH_ITEM = ITEMS.register("woodbrickpath", () -> new BlockItem(BloodMagicBlocks.WOOD_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> WOOD_TILE_PATH_ITEM = ITEMS.register("woodtilepath", () -> new BlockItem(BloodMagicBlocks.WOOD_TILE_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> STONE_PATH_ITEM = ITEMS.register("stonebrickpath", () -> new BlockItem(BloodMagicBlocks.STONE_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> STONE_TILE_PATH_ITEM = ITEMS.register("stonetilepath", () -> new BlockItem(BloodMagicBlocks.STONE_TILE_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> WORN_STONE_PATH_ITEM = ITEMS.register("wornstonebrickpath", () -> new BlockItem(BloodMagicBlocks.WORN_STONE_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> WORN_STONE_TILE_PATH_ITEM = ITEMS.register("wornstonetilepath", () -> new BlockItem(BloodMagicBlocks.WORN_STONE_TILE_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> OBSIDIAN_PATH_ITEM = ITEMS.register("obsidianbrickpath", () -> new BlockItem(BloodMagicBlocks.OBSIDIAN_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> OBSIDIAN_TILE_PATH_ITEM = ITEMS.register("obsidiantilepath", () -> new BlockItem(BloodMagicBlocks.OBSIDIAN_TILE_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	// TODO: Need to rework the above instantiations for the ItemBlocks so that it's
 	// done with the Blocks.
@@ -90,6 +100,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> MASTER_BLOOD_ORB = BASICITEMS.register("masterbloodorb", () -> new ItemBloodOrb(ORB_MASTER));
 
 	public static final RegistryObject<Item> DIVINATION_SIGIL = BASICITEMS.register("divinationsigil", () -> new ItemSigilDivination(true));
+	public static final RegistryObject<Item> SEER_SIGIL = BASICITEMS.register("seersigil", () -> new ItemSigilDivination(false));
 	public static final RegistryObject<Item> SACRIFICIAL_DAGGER = BASICITEMS.register("sacrificialdagger", () -> new ItemSacrificialDagger());
 	public static final RegistryObject<Item> SLATE = BASICITEMS.register("blankslate", () -> new ItemBase());
 	public static final RegistryObject<Item> REINFORCED_SLATE = BASICITEMS.register("reinforcedslate", () -> new ItemBase());
@@ -136,6 +147,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> REAGENT_MAGNETISM = BASICITEMS.register("reagentmagnetism", () -> new ItemBase());
 	public static final RegistryObject<Item> REAGENT_AIR = BASICITEMS.register("reagentair", () -> new ItemBase());
 	public static final RegistryObject<Item> REAGENT_BLOOD_LIGHT = BASICITEMS.register("reagentbloodlight", () -> new ItemBase());
+	public static final RegistryObject<Item> REAGENT_SIGHT = BASICITEMS.register("reagentsight", () -> new ItemBase());
 
 	// Tartaric Gems
 	public static final RegistryObject<Item> PETTY_GEM = ITEMS.register("soulgempetty", () -> new ItemSoulGem("petty", 64));

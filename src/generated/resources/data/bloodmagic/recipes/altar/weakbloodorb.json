@@ -8,6 +8,6 @@
   },
   "upgradeLevel": 0,
   "altarSyphon": 2000,
-  "consumptionRate": 2,
+  "consumptionRate": 5,
   "drainRate": 1
 }

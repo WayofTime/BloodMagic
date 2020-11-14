@@ -276,11 +276,11 @@ public class BloodAltar// implements IFluidHandler
 
 		if (internalCounter % this.getChargingFrequency() == 0 && !this.isActive)
 		{
-//			int chargeInputted = Math.min(chargingRate, this.fluid.getAmount());
-//			chargeInputted = Math.min(chargeInputted, maxCharge - totalCharge);
-//			totalCharge += chargeInputted;
-//			this.fluid.setAmount(this.fluid.getAmount() - chargeInputted);
-//			tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
+			int chargeInputted = Math.min(chargingRate, this.fluid.getAmount());
+			chargeInputted = Math.min(chargeInputted, maxCharge - totalCharge);
+			totalCharge += chargeInputted;
+			this.fluid.setAmount(this.fluid.getAmount() - chargeInputted);
+			tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
 		}
 
 		if (internalCounter % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))

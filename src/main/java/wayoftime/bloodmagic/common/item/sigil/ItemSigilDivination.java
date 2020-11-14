@@ -20,6 +20,7 @@ import wayoftime.bloodmagic.altar.IBloodAltar;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.iface.IAltarReader;
 import wayoftime.bloodmagic.iface.ISigil;
+import wayoftime.bloodmagic.tile.TileIncenseAltar;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.NumeralHelper;
@@ -27,10 +28,12 @@ import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
 public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 {
+	private final boolean isSimple;
 
 	public ItemSigilDivination(boolean simple)
 	{
 		super(simple ? "divination" : "seer");
+		isSimple = simple;
 	}
 
 	@Override
@@ -51,7 +54,7 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 				super.onItemRightClick(world, player, hand);
 
 				Binding binding = getBinding(stack);
-				if (binding != null)
+				if (isSimple && binding != null)
 				{
 					int currentEssence = NetworkHelper.getSoulNetwork(binding).getCurrentEssence();
 					List<ITextComponent> toSend = Lists.newArrayList();
@@ -73,18 +76,21 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 						int currentEssence = altar.getCurrentBlood();
 						int capacity = altar.getCapacity();
 						altar.checkTier();
-						ChatUtil.sendNoSpam(player, new TranslationTextComponent(tooltipBase
-								+ "currentAltarTier", NumeralHelper.toRoman(tier)), new TranslationTextComponent(tooltipBase
-										+ "currentEssence", currentEssence), new TranslationTextComponent(tooltipBase
-												+ "currentAltarCapacity", capacity));
+						if (isSimple)
+						{
+							ChatUtil.sendNoSpam(player, new TranslationTextComponent(tooltipBase + "currentAltarTier", NumeralHelper.toRoman(tier)), new TranslationTextComponent(tooltipBase + "currentEssence", currentEssence), new TranslationTextComponent(tooltipBase + "currentAltarCapacity", capacity));
+						} else
+						{
+							ChatUtil.sendNoSpam(player, new TranslationTextComponent(tooltipBase + "currentAltarTier", NumeralHelper.toRoman(tier)), new TranslationTextComponent(tooltipBase + "currentEssence", currentEssence), new TranslationTextComponent(tooltipBase + "currentAltarCapacity", capacity));
+						}
+					} else if (tile != null && tile instanceof TileIncenseAltar)
+					{
+						TileIncenseAltar altar = (TileIncenseAltar) tile;
+						altar.recheckConstruction();
+						double tranquility = altar.tranquility;
+						ChatUtil.sendNoSpam(player, new TranslationTextComponent(tooltipBase + "currentTranquility", (int) ((100D * (int) (100 * tranquility)) / 100d)), new TranslationTextComponent(tooltipBase + "currentBonus", (int) (100 * altar.incenseAddition)));
 					}
-//                    else if (tile != null && tile instanceof TileIncenseAltar)
-//                    {
-//                        TileIncenseAltar altar = (TileIncenseAltar) tile;
-//                        altar.recheckConstruction();
-//                        double tranquility = altar.tranquility;
-//                        ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentTranquility", (int) ((100D * (int) (100 * tranquility)) / 100d)), new TextComponentTranslation(tooltipBase + "currentBonus", (int) (100 * altar.incenseAddition)));
-//                    } else if (tile != null && tile instanceof TileInversionPillar)
+//                    else if (tile != null && tile instanceof TileInversionPillar)
 //                    {
 //                        TileInversionPillar pillar = (TileInversionPillar) tile;
 //                        double inversion = pillar.getCurrentInversion();
@@ -98,8 +104,7 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 							int currentEssence = NetworkHelper.getSoulNetwork(binding).getCurrentEssence();
 							List<ITextComponent> toSend = Lists.newArrayList();
 							if (!binding.getOwnerId().equals(player.getGameProfile().getId()))
-								toSend.add(new TranslationTextComponent(tooltipBase
-										+ "otherNetwork", binding.getOwnerName()));
+								toSend.add(new TranslationTextComponent(tooltipBase + "otherNetwork", binding.getOwnerName()));
 							toSend.add(new TranslationTextComponent(tooltipBase + "currentEssence", currentEssence));
 							ChatUtil.sendNoSpam(player, toSend.toArray(new ITextComponent[toSend.size()]));
 						}

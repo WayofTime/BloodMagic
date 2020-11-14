@@ -32,14 +32,14 @@ public interface IBloodMagicAPI
 	 */
 	@Nonnull
 	IBloodMagicRecipeRegistrar getRecipeRegistrar();
-//
-//	/**
-//	 * Retrieves the instance of the value manager.
-//	 *
-//	 * @return the active {@link IBloodMagicValueManager} instance
-//	 */
-//	@Nonnull
-//	IBloodMagicValueManager getValueManager();
+
+	/**
+	 * Retrieves the instance of the value manager.
+	 *
+	 * @return the active {@link IBloodMagicValueManager} instance
+	 */
+	@Nonnull
+	IBloodMagicValueManager getValueManager();
 
 	/**
 	 * Registers an {@link IBlockState} as a given component for the Blood Altar.

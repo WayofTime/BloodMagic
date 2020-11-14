@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "bloodmagic:wornstonebrickpath"
+    },
+    {
+      "item": "bloodmagic:wornstonebrickpath"
+    },
+    {
+      "item": "bloodmagic:wornstonebrickpath"
+    },
+    {
+      "item": "bloodmagic:wornstonebrickpath"
+    }
+  ],
+  "result": {
+    "item": "bloodmagic:wornstonetilepath",
+    "count": 4
+  }
+}

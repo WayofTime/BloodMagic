@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "tag": "forge:dusts/glowstone"
+  },
+  "input1": {
+    "tag": "forge:glass"
+  },
+  "input2": {
+    "tag": "forge:glass"
+  },
+  "input3": {
+    "item": "bloodmagic:divinationsigil"
+  },
+  "output": {
+    "item": "bloodmagic:reagentsight"
+  },
+  "minimumDrain": 64.0,
+  "drain": 0.0
+}

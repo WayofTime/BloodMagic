@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "bloodmagic:woodbrickpath"
+    },
+    {
+      "item": "bloodmagic:woodbrickpath"
+    },
+    {
+      "item": "bloodmagic:woodbrickpath"
+    },
+    {
+      "item": "bloodmagic:woodbrickpath"
+    }
+  ],
+  "result": {
+    "item": "bloodmagic:woodtilepath",
+    "count": 4
+  }
+}

@@ -63,6 +63,7 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerDemonTool(BloodMagicItems.SENTIENT_AXE.get());
 		registerDemonTool(BloodMagicItems.SENTIENT_PICKAXE.get());
 		registerDemonTool(BloodMagicItems.SENTIENT_SHOVEL.get());
+		registerSacrificialKnife(BloodMagicItems.SACRIFICIAL_DAGGER.get());
 	}
 
 	private void registerCustomBlockPath(Block block, String newPath)
@@ -144,5 +145,15 @@ public class GeneratorItemModels extends ItemModelProvider
 			builder = builder.override().predicate(BloodMagic.rl("type"), type.ordinal()).model(willFile).end();
 
 		}
+	}
+
+	private void registerSacrificialKnife(Item item)
+	{
+		String path = item.getRegistryName().getPath();
+		ItemModelBuilder builder = getBuilder(path);
+
+		ModelFile baseKnifeFile = singleTexture("item/variants/" + path, mcLoc("item/handheld"), "layer0", modLoc("item/" + path));
+		ModelFile ceremonialKnifeFile = singleTexture("item/variants/" + path + "_ceremonial", mcLoc("item/handheld"), "layer0", modLoc("item/" + path + "_ceremonial"));
+		builder = builder.override().predicate(BloodMagic.rl("incense"), 0).model(baseKnifeFile).end().override().predicate(BloodMagic.rl("incense"), 1).model(ceremonialKnifeFile).end();
 	}
 }

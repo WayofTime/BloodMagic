@@ -19,14 +19,14 @@ public class BloodMagicAPI implements IBloodMagicAPI
 
 //	private final BloodMagicBlacklist blacklist;
 	private final BloodMagicRecipeRegistrar recipeRegistrar;
-//	private final BloodMagicValueManager valueManager;
+	private final BloodMagicValueManager valueManager;
 	private final Multimap<ComponentType, BlockState> altarComponents;
 
 	public BloodMagicAPI()
 	{
 //		this.blacklist = new BloodMagicBlacklist();
 		this.recipeRegistrar = new BloodMagicRecipeRegistrar();
-//		this.valueManager = new BloodMagicValueManager();
+		this.valueManager = new BloodMagicValueManager();
 		this.altarComponents = ArrayListMultimap.create();
 	}
 
@@ -43,13 +43,14 @@ public class BloodMagicAPI implements IBloodMagicAPI
 	{
 		return recipeRegistrar;
 	}
+
 //
-//	@Nonnull
-//	@Override
-//	public BloodMagicValueManager getValueManager()
-//	{
-//		return valueManager;
-//	}
+	@Nonnull
+	@Override
+	public BloodMagicValueManager getValueManager()
+	{
+		return valueManager;
+	}
 
 	@Override
 	public void registerAltarComponent(@Nonnull BlockState state, @Nonnull String componentType)

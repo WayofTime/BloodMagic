@@ -30,7 +30,8 @@
    	},
    	{
    	  "type": "crafting",
-      "recipe": "bloodmagic:sacrificial_dagger"
+      "recipe": "bloodmagic:sacrificial_dagger",
+      "anchor": "knife"
    	},
    	{
    	  "type": "text",

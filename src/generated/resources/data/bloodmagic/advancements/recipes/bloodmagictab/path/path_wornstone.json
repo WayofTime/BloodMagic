@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:path/path_wornstone"
+    ]
+  },
+  "criteria": {
+    "has_master_orb": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:masterbloodorb"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:path/path_wornstone"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_master_orb",
+      "has_the_recipe"
+    ]
+  ]
+}

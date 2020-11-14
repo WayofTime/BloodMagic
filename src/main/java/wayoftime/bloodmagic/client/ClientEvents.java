@@ -28,6 +28,7 @@ import wayoftime.bloodmagic.client.screens.ScreenAlchemyTable;
 import wayoftime.bloodmagic.client.screens.ScreenSoulForge;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.item.ItemSacrificialDagger;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilToggleable;
 import wayoftime.bloodmagic.common.item.soul.ItemSentientSword;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
@@ -79,6 +80,7 @@ public class ClientEvents
 			registerMultiWillTool(BloodMagicItems.LESSER_GEM.get());
 			registerMultiWillTool(BloodMagicItems.COMMON_GEM.get());
 			registerMultiWillTool(BloodMagicItems.GREATER_GEM.get());
+			registerSacrificialKnife(BloodMagicItems.SACRIFICIAL_DAGGER.get());
 
 			ItemModelsProperties.registerProperty(BloodMagicItems.SENTIENT_SWORD.get(), BloodMagic.rl("active"), new IItemPropertyGetter()
 			{
@@ -124,6 +126,23 @@ public class ClientEvents
 				if (item instanceof IMultiWillTool)
 				{
 					return ((IMultiWillTool) item).getCurrentType(stack).ordinal();
+				}
+				return 0;
+			}
+		});
+	}
+
+	public static void registerSacrificialKnife(Item item)
+	{
+		ItemModelsProperties.registerProperty(item, BloodMagic.rl("incense"), new IItemPropertyGetter()
+		{
+			@Override
+			public float call(ItemStack stack, ClientWorld world, LivingEntity entity)
+			{
+				Item item = stack.getItem();
+				if (item instanceof ItemSacrificialDagger)
+				{
+					return ((ItemSacrificialDagger) item).canUseForSacrifice(stack) ? 1 : 0;
 				}
 				return 0;
 			}
