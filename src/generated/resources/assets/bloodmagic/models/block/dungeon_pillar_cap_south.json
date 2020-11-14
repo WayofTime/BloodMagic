@@ -1,0 +1,57 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "bloodmagic:block/dungeon/dungeon_pillarheart",
+    "sideBottom": "bloodmagic:block/dungeon/dungeon_pillarbottom",
+    "end": "bloodmagic:block/dungeon/dungeon_pillarheart",
+    "sideTop": "bloodmagic:block/dungeon/dungeon_pillartop"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#sideTop"
+        },
+        "up": {
+          "texture": "#sideBottom"
+        },
+        "north": {
+          "texture": "#end"
+        },
+        "south": {
+          "texture": "#end"
+        },
+        "west": {
+          "texture": "#sideBottom",
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ],
+          "rotation": 270
+        },
+        "east": {
+          "texture": "#sideTop",
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ],
+          "rotation": 270
+        }
+      }
+    }
+  ]
+}

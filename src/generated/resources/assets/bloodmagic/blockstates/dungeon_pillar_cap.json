@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "bloodmagic:block/dungeon_pillar_cap_down"
+    },
+    "facing=up": {
+      "model": "bloodmagic:block/dungeon_pillar_cap"
+    },
+    "facing=north": {
+      "model": "bloodmagic:block/dungeon_pillar_cap_north"
+    },
+    "facing=south": {
+      "model": "bloodmagic:block/dungeon_pillar_cap_south"
+    },
+    "facing=west": {
+      "model": "bloodmagic:block/dungeon_pillar_cap_west"
+    },
+    "facing=east": {
+      "model": "bloodmagic:block/dungeon_pillar_cap_east"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "bloodmagic:block/dungeon_brick1"
+      },
+      {
+        "model": "bloodmagic:block/dungeon_brick2"
+      },
+      {
+        "model": "bloodmagic:block/dungeon_brick3"
+      }
+    ]
+  }
+}

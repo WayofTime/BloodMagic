@@ -341,6 +341,31 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.OBSIDIAN_PATH, "Obsidian Path");
 		addBlock(BloodMagicBlocks.OBSIDIAN_TILE_PATH, "Tiled Obsidian Path");
 
+		addBlock(BloodMagicBlocks.DUNGEON_BRICK_1, "Demon Bricks");
+		addBlock(BloodMagicBlocks.DUNGEON_BRICK_2, "Offset Demon Bricks");
+		addBlock(BloodMagicBlocks.DUNGEON_BRICK_3, "Long Demon Bricks");
+		addBlock(BloodMagicBlocks.DUNGEON_SMALL_BRICK, "Small Demon Bricks");
+		addBlock(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED, "Assorted Demon Bricks");
+
+		addBlock(BloodMagicBlocks.DUNGEON_STONE, "Demon Stone");
+		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_STONE, "Polished Demon Stone");
+		addBlock(BloodMagicBlocks.DUNGEON_TILE, "Demon Stone Tiles");
+		addBlock(BloodMagicBlocks.DUNGEON_TILE_SPECIAL, "Accented Demon Stone Tiles");
+
+		addBlock(BloodMagicBlocks.DUNGEON_BRICK_GATE, "Demon Brick Gate");
+		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_GATE, "Demon Stone Gate");
+
+		addBlock(BloodMagicBlocks.DUNGEON_BRICK_STAIRS, "Demon Brick Stairs");
+		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS, "Demon Stone Stairs");
+
+		addBlock(BloodMagicBlocks.DUNGEON_BRICK_WALL, "Demon Brick Wall");
+		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_WALL, "Demon Stone Wall");
+
+		addBlock(BloodMagicBlocks.DUNGEON_PILLAR_CAP, "Demon Stone Pillar Cap");
+		addBlock(BloodMagicBlocks.DUNGEON_PILLAR_CENTER, "Demon Stone Pillar");
+		addBlock(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL, "Accented Demon Stone Pillar");
+		addBlock(BloodMagicBlocks.DUNGEON_EYE, "Demon Eye");
+
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
 		addItem(BloodMagicItems.APPRENTICE_BLOOD_ORB, "Apprentice Blood Orb");

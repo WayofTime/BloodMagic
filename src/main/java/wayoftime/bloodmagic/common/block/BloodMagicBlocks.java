@@ -3,8 +3,12 @@ package wayoftime.bloodmagic.common.block;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.AbstractBlock.Properties;
 import net.minecraft.block.Block;
+import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.block.WallBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
@@ -22,6 +26,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.block.enums.BloodRuneType;
+import wayoftime.bloodmagic.common.block.base.BlockPillarCap;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.tile.contailer.ContainerAlchemicalReactionChamber;
@@ -36,6 +41,7 @@ public class BloodMagicBlocks
 
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
 	public static final DeferredRegister<Block> BASICBLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
+	public static final DeferredRegister<Block> DUNGEONBLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
 	public static final DeferredRegister<Item> ITEMS = BloodMagicItems.ITEMS;
 	public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, BloodMagic.MODID);
 	public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, BloodMagic.MODID);
@@ -107,8 +113,35 @@ public class BloodMagicBlocks
 	public static final RegistryObject<ContainerType<ContainerAlchemicalReactionChamber>> ARC_CONTAINER = CONTAINERS.register("arc_container", () -> IForgeContainerType.create(ContainerAlchemicalReactionChamber::new));
 	public static final RegistryObject<ContainerType<ContainerAlchemyTable>> ALCHEMY_TABLE_CONTAINER = CONTAINERS.register("alchemy_table_container", () -> IForgeContainerType.create(ContainerAlchemyTable::new));
 
-//	public static final RegistryObject<BloodstoneBlock> BLOOD_STONE = registerNoItem("blood_stone", () -> new BloodstoneBlock());
-//			
+	// Dungeon Blocks
+	public static final RegistryObject<Block> DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_BRICK_2 = DUNGEONBLOCKS.register("dungeon_brick2", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_BRICK_3 = DUNGEONBLOCKS.register("dungeon_brick3", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+
+	public static final RegistryObject<Block> DUNGEON_STONE = BLOCKS.register("dungeon_stone", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_EYE = DUNGEONBLOCKS.register("dungeon_eye", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool().setLightLevel((state) -> {
+		return 15;
+	})));
+	public static final RegistryObject<Block> DUNGEON_POLISHED_STONE = DUNGEONBLOCKS.register("dungeon_polished", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_TILE = DUNGEONBLOCKS.register("dungeon_tile", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_SMALL_BRICK = DUNGEONBLOCKS.register("dungeon_smallbrick", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_TILE_SPECIAL = DUNGEONBLOCKS.register("dungeon_tilespecial", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+
+	public static final RegistryObject<Block> DUNGEON_BRICK_ASSORTED = BLOCKS.register("dungeon_brick_assorted", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(20.0F, 50.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(3).setRequiresTool()));
+
+	public static final RegistryObject<Block> DUNGEON_BRICK_STAIRS = BLOCKS.register("dungeon_brick_stairs", () -> new StairsBlock(() -> DUNGEON_BRICK_1.get().getDefaultState(), Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_POLISHED_STAIRS = BLOCKS.register("dungeon_polished_stairs", () -> new StairsBlock(() -> DUNGEON_POLISHED_STONE.get().getDefaultState(), Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+
+	public static final RegistryObject<Block> DUNGEON_PILLAR_CENTER = BLOCKS.register("dungeon_pillar_center", () -> new RotatedPillarBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_PILLAR_SPECIAL = BLOCKS.register("dungeon_pillar_special", () -> new RotatedPillarBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_PILLAR_CAP = BLOCKS.register("dungeon_pillar_cap", () -> new BlockPillarCap(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+
+	public static final RegistryObject<Block> DUNGEON_BRICK_WALL = BLOCKS.register("dungeon_brick_wall", () -> new WallBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_POLISHED_WALL = BLOCKS.register("dungeon_polished_wall", () -> new WallBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_BRICK_GATE = BLOCKS.register("dungeon_brick_gate", () -> new FenceGateBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_POLISHED_GATE = BLOCKS.register("dungeon_polished_gate", () -> new FenceGateBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+
+	//
 ////	private static <T extends Block> RegistryObject<T> register(String name, Supplier<? extends T> sup, Function<RegistryObject<T>, Supplier<? extends Item>> itemCreator) 
 ////	{
 ////	    RegistryObject<T> ret = registerNoItem(name, sup);

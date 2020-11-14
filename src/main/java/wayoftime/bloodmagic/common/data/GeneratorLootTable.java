@@ -60,6 +60,11 @@ public class GeneratorLootTable extends LootTableProvider
 				this.registerDropSelfLootTable(block.get());
 			}
 
+			for (RegistryObject<Block> block : BloodMagicBlocks.DUNGEONBLOCKS.getEntries())
+			{
+				this.registerDropSelfLootTable(block.get());
+			}
+
 			registerDropSelfLootTable(BloodMagicBlocks.BLOOD_ALTAR.get());
 			registerNoDropLootTable(BloodMagicBlocks.ALCHEMY_ARRAY.get());
 			registerNoDropLootTable(BloodMagicBlocks.BLOOD_LIGHT.get());
@@ -83,6 +88,18 @@ public class GeneratorLootTable extends LootTableProvider
 			registerDropCrystalsLootTable(BloodMagicBlocks.DESTRUCTIVE_CRYSTAL_BLOCK.get(), BloodMagicItems.DESTRUCTIVE_CRYSTAL.get());
 			registerDropCrystalsLootTable(BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), BloodMagicItems.VENGEFUL_CRYSTAL.get());
 			registerDropCrystalsLootTable(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get(), BloodMagicItems.STEADFAST_CRYSTAL.get());
+
+			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get());
+			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_STONE.get());
+			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get());
+			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get());
+			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get());
+			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get());
+			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get());
+			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_BRICK_WALL.get());
+			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get());
+			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_BRICK_GATE.get());
+			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get());
 		}
 
 		private void registerNoDropLootTable(Block block)

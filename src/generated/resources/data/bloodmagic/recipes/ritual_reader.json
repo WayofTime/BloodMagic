@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gog",
+    "isi",
+    " s "
+  ],
+  "key": {
+    "s": {
+      "item": "bloodmagic:demonslate"
+    },
+    "g": {
+      "tag": "forge:glass"
+    },
+    "i": {
+      "tag": "forge:ingots/gold"
+    },
+    "o": {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 4
+    }
+  },
+  "result": {
+    "item": "bloodmagic:ritualtinkerer"
+  }
+}

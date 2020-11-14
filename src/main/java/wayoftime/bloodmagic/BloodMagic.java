@@ -92,6 +92,7 @@ public class BloodMagic
 		BloodMagicItems.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
 		BloodMagicItems.BASICITEMS.register(modBus);
 		BloodMagicBlocks.BASICBLOCKS.register(modBus);
+		BloodMagicBlocks.DUNGEONBLOCKS.register(modBus);
 		BloodMagicBlocks.FLUIDS.register(modBus);
 		BloodMagicBlocks.CONTAINERS.register(modBus);
 		BloodMagicEntityTypes.ENTITY_TYPES.register(modBus);

@@ -36,6 +36,11 @@ public class GeneratorItemModels extends ItemModelProvider
 			registerBlockModel(block.get());
 		}
 
+		for (RegistryObject<Block> block : BloodMagicBlocks.DUNGEONBLOCKS.getEntries())
+		{
+			registerBlockModel(block.get());
+		}
+
 		registerBlockModel(BloodMagicBlocks.BLANK_RITUAL_STONE.get());
 		registerBlockModel(BloodMagicBlocks.AIR_RITUAL_STONE.get());
 		registerBlockModel(BloodMagicBlocks.WATER_RITUAL_STONE.get());
@@ -51,6 +56,18 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerCustomBlockPath(BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), "crystal/vengefulcrystal1");
 		registerCustomBlockPath(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get(), "crystal/steadfastcrystal1");
 
+		registerCustomBlockPath(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), "dungeon_brick1");
+		registerBlockModel(BloodMagicBlocks.DUNGEON_STONE.get());
+		registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get());
+		registerBlockModel(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get());
+		registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get());
+		registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get());
+		registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get());
+		registerCustomBlockPath(BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), "dungeon_brick_wall_inventory");
+		registerCustomBlockPath(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), "dungeon_polished_wall_inventory");
+		registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_GATE.get());
+		registerBlockModel(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get());
+
 		registerToggleableItem(BloodMagicItems.GREEN_GROVE_SIGIL.get());
 		registerToggleableItem(BloodMagicItems.FAST_MINER_SIGIL.get());
 		registerToggleableItem(BloodMagicItems.MAGNETISM_SIGIL.get());
@@ -64,6 +81,7 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerDemonTool(BloodMagicItems.SENTIENT_PICKAXE.get());
 		registerDemonTool(BloodMagicItems.SENTIENT_SHOVEL.get());
 		registerSacrificialKnife(BloodMagicItems.SACRIFICIAL_DAGGER.get());
+
 	}
 
 	private void registerCustomBlockPath(Block block, String newPath)

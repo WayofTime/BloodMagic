@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "bloodmagic:block/dungeon/dungeon_pillarbottom",
+    "bottom": "bloodmagic:block/dungeon/dungeon_pillarheart",
+    "top": "bloodmagic:block/dungeon/dungeon_pillarheart"
+  }
+}

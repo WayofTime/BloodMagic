@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "bloodmagic:block/dungeon_stone"
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_mirrored"
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone",
+        "y": 180
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_mirrored",
+        "y": 180
+      }
+    ]
+  }
+}
