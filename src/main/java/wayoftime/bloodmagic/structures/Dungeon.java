@@ -10,6 +10,7 @@ import java.util.Random;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -28,8 +29,10 @@ public class Dungeon
 		Map<Direction, List<BlockPos>> availableDoorMap = new HashMap<>(); // Map of doors. The EnumFacing indicates
 																			// what way this door faces.
 		List<AreaDescriptor> descriptorList = new ArrayList<>();
-		Map<BlockPos, Pair<DungeonRoom, PlacementSettings>> roomMap = new HashMap<>(); // Placement positions in terms
-																						// of actual positions
+//		Map<BlockPos, Pair<DungeonRoom, PlacementSettings>> roomMap = new HashMap<>(); // Placement positions in terms
+//																						// of actual positions
+
+		List<Pair<BlockPos, Pair<DungeonRoom, PlacementSettings>>> roomList = new ArrayList<>();
 
 		PlacementSettings settings = new PlacementSettings();
 		Mirror mir = Mirror.NONE;
@@ -55,8 +58,12 @@ public class Dungeon
 //        BlockPos blockpos2 = blockpos.add(this.position);
 //        p_242689_3_.func_237144_a_(p_242689_1_, blockpos2, placementsettings, func_214074_b(this.seed));
 
+		List<Rotation> rotationInfo = new ArrayList();
+
+		int n = 1;
 		DungeonRoom room = getRandomRoom(rand);
-		roomMap.put(pos, Pair.of(room, settings.copy()));
+//		roomMap.put(pos, Pair.of(room, settings.copy()));
+		roomList.add(Pair.of(pos, Pair.of(room, settings.copy())));
 		descriptorList.addAll(room.getAreaDescriptors(settings, pos));
 		for (Direction facing : Direction.values())
 		{
@@ -71,9 +78,12 @@ public class Dungeon
 			}
 		}
 
+		rotationInfo.add(settings.getRotation());
+
 		// Initial AreaDescriptors and door positions are initialized. Time for fun!
 		for (int i = 0; i < 100; i++)
 		{
+			// Get which facing of doors are available.
 			List<Direction> facingList = new ArrayList<>();
 			for (Entry<Direction, List<BlockPos>> entry : availableDoorMap.entrySet())
 			{
@@ -89,13 +99,15 @@ public class Dungeon
 			Pair<Direction, BlockPos> removedDoor2 = null;
 			BlockPos roomLocation = null;
 
-			for (Direction doorFacing : facingList)
+			testDirection: for (Direction doorFacing : facingList)
 			{
 				Direction oppositeDoorFacing = doorFacing.getOpposite();
 				List<BlockPos> availableDoorList = availableDoorMap.get(doorFacing); // May need to copy here
 				Collections.shuffle(availableDoorList);
 
-				settings.setRotation(Rotation.values()[rand.nextInt(Rotation.values().length)]); // Same for the Mirror
+				Rotation randRotation = Rotation.values()[rand.nextInt(Rotation.values().length)];
+//				Rotation randRotation = Rotation.CLOCKWISE_90;
+				settings.setRotation(randRotation); // Same for the Mirror
 				DungeonRoom testingRoom = getRandomRoom(rand);
 
 				List<BlockPos> otherDoorList = testingRoom.getDoorOffsetsForFacing(settings, oppositeDoorFacing, BlockPos.ZERO);
@@ -121,13 +133,24 @@ public class Dungeon
 							}
 						}
 
-						roomMap.put(roomLocation, Pair.of(testingRoom, settings.copy()));
+//						roomMap.put(roomLocation, Pair.of(testingRoom, settings.copy()));
+						roomList.add(Pair.of(roomLocation, Pair.of(testingRoom, settings.copy())));
 						descriptorList.addAll(descriptors);
 						removedDoor1 = Pair.of(doorFacing, availableDoor);
 						removedDoor2 = Pair.of(oppositeDoorFacing, testDoor.add(roomLocation));
 
 						room = testingRoom;
+						n++;
+						rotationInfo.add(randRotation);
+						System.out.println("Placement: " + n);
 
+						for (Direction facing : Direction.values())
+						{
+							List<BlockPos> testingDoorList = testingRoom.getDoorOffsetsForFacing(settings, facing, BlockPos.ZERO);
+							System.out.println("Door Facing: " + facing + ", Door List: " + testingDoorList);
+						}
+
+						break testDirection;
 					}
 
 					break;
@@ -174,16 +197,24 @@ public class Dungeon
 		BMLog.DEBUG.info("Duration: " + duration + "(ns), " + duration / 1000000 + "(ms)");
 
 		// Building what I've got
-		for (Entry<BlockPos, Pair<DungeonRoom, PlacementSettings>> entry : roomMap.entrySet())
+		n = 0;
+//		for (Entry<BlockPos, Pair<DungeonRoom, PlacementSettings>> entry : roomMap.entrySet())
+		for (Pair<BlockPos, Pair<DungeonRoom, PlacementSettings>> entry : roomList)
 		{
+			n++;
 			BlockPos placementPos = entry.getKey();
 			DungeonRoom placedRoom = entry.getValue().getKey();
 			PlacementSettings placementSettings = entry.getValue().getValue();
 
 			placedRoom.placeStructureAtPosition(rand, placementSettings, world, placementPos);
+
+			world.setBlockState(placementPos, Blocks.REDSTONE_BLOCK.getDefaultState(), 3);
+			System.out.println("Supposed Rotation for " + n + ": " + rotationInfo.get(n - 1));
+			System.out.println("Placement: " + n + ", BlockPos: " + placementPos + ", Rotation: " + placementSettings.getRotation());
 		}
 
-		System.out.println(roomMap.size());
+//		System.out.println(roomMap.size());
+		System.out.println(roomList.size());
 
 		return false;
 	}
