@@ -1,7 +1,7 @@
 {
-  "dungeonWeight": 2,
+  "dungeonWeight": 4,
   "structureMap": {
-    "bloodmagic:t_corridor": {
+    "bloodmagic:spiral_staircase": {
       "x": 0,
       "y": 0,
       "z": 0
@@ -13,6 +13,23 @@
         "x": 5,
         "y": 0,
         "z": 0
+      },
+      {
+        "x": 5,
+        "y": 12,
+        "z": 0
+      }
+    ],
+    "south": [
+      {
+        "x": 5,
+        "y": 0,
+        "z": 14
+      },
+      {
+        "x": 5,
+        "y": 12,
+        "z": 10
       }
     ],
     "west": [
@@ -20,12 +37,27 @@
         "x": 0,
         "y": 0,
         "z": 5
+      },
+      {
+        "x": 0,
+        "y": 12,
+        "z": 5
       }
     ],
     "east": [
       {
         "x": 10,
         "y": 0,
+        "z": 5
+      },
+      {
+        "x": 10,
+        "y": 6,
+        "z": 5
+      },
+      {
+        "x": 10,
+        "y": 12,
         "z": 5
       }
     ]
@@ -39,8 +71,8 @@
       },
       "maximumOffset": {
         "x": 11,
-        "y": 5,
-        "z": 8
+        "y": 18,
+        "z": 11
       },
       "blockPosCache": [],
       "cache": true

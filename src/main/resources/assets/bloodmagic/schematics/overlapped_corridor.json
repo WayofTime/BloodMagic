@@ -1,7 +1,7 @@
 {
   "dungeonWeight": 2,
   "structureMap": {
-    "bloodmagic:t_corridor": {
+    "bloodmagic:overlapped_corridor": {
       "x": 0,
       "y": 0,
       "z": 0
@@ -15,17 +15,24 @@
         "z": 0
       }
     ],
+    "south": [
+      {
+        "x": 5,
+        "y": 0,
+        "z": 10
+      }
+    ],
     "west": [
       {
         "x": 0,
-        "y": 0,
+        "y": 4,
         "z": 5
       }
     ],
     "east": [
       {
         "x": 10,
-        "y": 0,
+        "y": 4,
         "z": 5
       }
     ]
@@ -33,13 +40,27 @@
   "descriptorList": [
     {
       "minimumOffset": {
-        "x": 0,
+        "x": 3,
         "y": 0,
         "z": 0
       },
       "maximumOffset": {
-        "x": 11,
+        "x": 8,
         "y": 5,
+        "z": 11
+      },
+      "blockPosCache": [],
+      "cache": true
+    },
+    {
+      "minimumOffset": {
+        "x": 0,
+        "y": 4,
+        "z": 3
+      },
+      "maximumOffset": {
+        "x": 11,
+        "y": 9,
         "z": 8
       },
       "blockPosCache": [],

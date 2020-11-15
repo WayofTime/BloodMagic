@@ -161,7 +161,7 @@ jar.finalizedBy('reobfJar')
 
 sourceSets.main.resources {
     srcDir 'src/generated/resources'
-    srcDir 'api/main/java'
+    srcDir 'src/api/java'
 }
 
 publishing {
