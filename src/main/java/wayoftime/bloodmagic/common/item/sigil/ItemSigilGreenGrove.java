@@ -27,8 +27,7 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 		if (PlayerHelper.isFakePlayer(player))
 			return false;
 
-		if (NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess()
-				&& applyBonemeal(stack, world, blockPos, player))
+		if (NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess() && applyBonemeal(stack, world, blockPos, player))
 		{
 			if (!world.isRemote)
 			{
@@ -70,11 +69,14 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 								if (worldIn.rand.nextInt(50) == 0)
 								{
 									BlockState preBlockState = worldIn.getBlockState(blockPos);
-									((IGrowable) state.getBlock()).grow(serverWorld, worldIn.rand, blockPos, state);
+									if (((IGrowable) state.getBlock()).canGrow(serverWorld, blockPos, preBlockState, worldIn.isRemote))
+									{
+										((IGrowable) state.getBlock()).grow(serverWorld, worldIn.rand, blockPos, state);
 
-									BlockState newState = worldIn.getBlockState(blockPos);
-									if (!newState.equals(preBlockState) && !worldIn.isRemote)
-										worldIn.playEvent(2005, blockPos, 0);
+										BlockState newState = worldIn.getBlockState(blockPos);
+										if (!newState.equals(preBlockState) && !worldIn.isRemote)
+											worldIn.playEvent(2005, blockPos, 0);
+									}
 								}
 							}
 						}
