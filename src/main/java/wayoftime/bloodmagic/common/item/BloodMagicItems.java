@@ -31,6 +31,7 @@ import wayoftime.bloodmagic.common.registration.impl.BloodOrbDeferredRegister;
 import wayoftime.bloodmagic.common.registration.impl.BloodOrbRegistryObject;
 import wayoftime.bloodmagic.orb.BloodOrb;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
+import wayoftime.bloodmagic.structures.ItemDungeonTester;
 import wayoftime.bloodmagic.will.EnumDemonWillType;
 
 public class BloodMagicItems
@@ -231,4 +232,9 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_POLISHED_WALL_BLOCK = ITEMS.register("dungeon_polished_wall", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DUNGEON_BRICK_GATE_BLOCK = ITEMS.register("dungeon_brick_gate", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DUNGEON_POLISHED_GATE_BLOCK = ITEMS.register("dungeon_polished_gate", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get(), new Item.Properties().group(BloodMagic.TAB)));
+
+	public static final RegistryObject<Item> DUNGEON_ORE_BLOCK = ITEMS.register("dungeon_ore", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ORE.get(), new Item.Properties().group(BloodMagic.TAB)));
+
+	public static final RegistryObject<Item> DUNGEON_TESTER = BASICITEMS.register("dungeon_tester", ItemDungeonTester::new);
+
 }

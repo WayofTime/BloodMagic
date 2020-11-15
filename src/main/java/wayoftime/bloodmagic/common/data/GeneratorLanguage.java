@@ -366,6 +366,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL, "Accented Demon Stone Pillar");
 		addBlock(BloodMagicBlocks.DUNGEON_EYE, "Demon Eye");
 
+		addBlock(BloodMagicBlocks.DUNGEON_ORE, "Demonite");
+
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
 		addItem(BloodMagicItems.APPRENTICE_BLOOD_ORB, "Apprentice Blood Orb");

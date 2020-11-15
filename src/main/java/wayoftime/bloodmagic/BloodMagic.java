@@ -53,6 +53,7 @@ import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.registry.ModTranquilityHandlers;
 import wayoftime.bloodmagic.ritual.RitualManager;
+import wayoftime.bloodmagic.structures.ModDungeons;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.tile.TileAlchemyTable;
@@ -127,6 +128,7 @@ public class BloodMagic
 		context.registerConfig(ModConfig.Type.CLIENT, ConfigManager.CLIENT_SPEC);
 
 		ModTranquilityHandlers.init();
+		ModDungeons.init();
 	}
 
 	private void registerRecipes(RegistryEvent.Register<IRecipeSerializer<?>> event)
