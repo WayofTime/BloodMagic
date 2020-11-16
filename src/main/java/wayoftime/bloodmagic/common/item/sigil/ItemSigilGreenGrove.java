@@ -27,12 +27,9 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 		if (PlayerHelper.isFakePlayer(player))
 			return false;
 
-		if (NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess() && applyBonemeal(stack, world, blockPos, player))
+		if (!world.isRemote && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess() && applyBonemeal(stack, world, blockPos, player))
 		{
-			if (!world.isRemote)
-			{
-				world.playEvent(2005, blockPos, 0);
-			}
+			world.playEvent(2005, blockPos, 0);
 			return true;
 		}
 
