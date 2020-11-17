@@ -29,9 +29,9 @@ import wayoftime.bloodmagic.block.enums.BloodRuneType;
 import wayoftime.bloodmagic.common.block.base.BlockPillarCap;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
-import wayoftime.bloodmagic.tile.contailer.ContainerAlchemicalReactionChamber;
-import wayoftime.bloodmagic.tile.contailer.ContainerAlchemyTable;
-import wayoftime.bloodmagic.tile.contailer.ContainerSoulForge;
+import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
+import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
+import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
 import wayoftime.bloodmagic.will.EnumDemonWillType;
 
 public class BloodMagicBlocks

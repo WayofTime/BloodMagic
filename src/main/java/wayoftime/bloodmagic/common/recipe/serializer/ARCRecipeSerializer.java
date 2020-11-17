@@ -23,7 +23,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.SerializerHelper;
 import wayoftime.bloodmagic.api.event.recipes.FluidStackIngredient;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeARC;
+import wayoftime.bloodmagic.api.recipe.RecipeARC;
 import wayoftime.bloodmagic.util.Constants;
 
 public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistryEntry<IRecipeSerializer<?>>

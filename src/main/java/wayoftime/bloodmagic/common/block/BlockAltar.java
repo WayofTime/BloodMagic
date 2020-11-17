@@ -16,7 +16,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
-import wayoftime.bloodmagic.iface.IAltarReader;
+import wayoftime.bloodmagic.api.item.IAltarReader;
 import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.util.Utils;
 

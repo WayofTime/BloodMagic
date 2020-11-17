@@ -13,7 +13,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigHandler;
-import wayoftime.bloodmagic.altar.IBloodAltar;
+import wayoftime.bloodmagic.api.tile.IBloodAltar;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;

@@ -1,4 +1,6 @@
-package wayoftime.bloodmagic.altar;
+package wayoftime.bloodmagic.api.tile;
+
+import wayoftime.bloodmagic.altar.AltarTier;
 
 public interface IBloodAltar
 {

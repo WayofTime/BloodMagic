@@ -18,7 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
+import wayoftime.bloodmagic.api.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.util.Constants;

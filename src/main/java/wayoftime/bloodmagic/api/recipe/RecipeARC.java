@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.impl.recipe;
+package wayoftime.bloodmagic.api.recipe;
 
 import java.util.ArrayList;
 import java.util.List;

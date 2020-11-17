@@ -1,22 +1,25 @@
-package wayoftime.bloodmagic.tile.contailer;
+package wayoftime.bloodmagic.tile.container;
 
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.IIntArray;
+import net.minecraft.util.IntArray;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
-import wayoftime.bloodmagic.orb.IBloodOrb;
-import wayoftime.bloodmagic.tile.TileAlchemyTable;
+import wayoftime.bloodmagic.tile.TileSoulForge;
+import wayoftime.bloodmagic.will.IDemonWill;
+import wayoftime.bloodmagic.will.IDemonWillGem;
 
-public class ContainerAlchemyTable extends Container
+public class ContainerSoulForge extends Container
 {
-	public final TileAlchemyTable tileTable;
+	public final IInventory tileForge;
+	public final IIntArray data;
 
 //	public ContainerSoulForge(InventoryPlayer inventoryPlayer, IInventory tileForge)
 //	{
@@ -24,28 +27,27 @@ public class ContainerAlchemyTable extends Container
 //
 //	}
 
-	public ContainerAlchemyTable(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
+	public ContainerSoulForge(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
 	{
-		this((TileAlchemyTable) playerInventory.player.world.getTileEntity(extraData.readBlockPos()), windowId, playerInventory);
+		this((TileSoulForge) playerInventory.player.world.getTileEntity(extraData.readBlockPos()), new IntArray(5), windowId, playerInventory);
 	}
 
-	public ContainerAlchemyTable(@Nullable TileAlchemyTable tile, int windowId, PlayerInventory playerInventory)
+	public ContainerSoulForge(@Nullable TileSoulForge tile, IIntArray data, int windowId, PlayerInventory playerInventory)
 	{
-		super(BloodMagicBlocks.ALCHEMY_TABLE_CONTAINER.get(), windowId);
-		this.tileTable = tile;
+		super(BloodMagicBlocks.SOUL_FORGE_CONTAINER.get(), windowId);
+		this.tileForge = tile;
 		this.setup(playerInventory, tile);
+		this.data = data;
 	}
 
 	public void setup(PlayerInventory inventory, IInventory tileForge)
 	{
-		this.addSlot(new Slot(tileTable, 0, 62, 15));
-		this.addSlot(new Slot(tileTable, 1, 80, 51));
-		this.addSlot(new Slot(tileTable, 2, 62, 87));
-		this.addSlot(new Slot(tileTable, 3, 26, 87));
-		this.addSlot(new Slot(tileTable, 4, 8, 51));
-		this.addSlot(new Slot(tileTable, 5, 26, 15));
-		this.addSlot(new SlotOrb(tileTable, TileAlchemyTable.orbSlot, 152, 51));
-		this.addSlot(new SlotOutput(tileTable, TileAlchemyTable.outputSlot, 44, 51));
+		this.addSlot(new Slot(tileForge, 0, 8, 15));
+		this.addSlot(new Slot(tileForge, 1, 80, 15));
+		this.addSlot(new Slot(tileForge, 2, 8, 87));
+		this.addSlot(new Slot(tileForge, 3, 80, 87));
+		this.addSlot(new SlotSoul(tileForge, TileSoulForge.soulSlot, 152, 51));
+		this.addSlot(new SlotOutput(tileForge, TileSoulForge.outputSlot, 44, 51));
 
 		for (int i = 0; i < 3; i++)
 		{
@@ -62,23 +64,6 @@ public class ContainerAlchemyTable extends Container
 	}
 
 	@Override
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player)
-	{
-		PlayerInventory inventoryPlayer = player.inventory;
-
-		if (slotId < 6 && slotId >= 0)
-		{
-			Slot slot = this.getSlot(slotId);
-			if (!slot.getHasStack() && inventoryPlayer.getItemStack().isEmpty())
-			{
-				((TileAlchemyTable) tileTable).toggleInputSlotAccessible(slotId);
-			}
-		}
-
-		return super.slotClick(slotId, dragType, clickTypeIn, player);
-	}
-
-	@Override
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
@@ -89,27 +74,27 @@ public class ContainerAlchemyTable extends Container
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 
-			if (index == 7)
+			if (index == 5)
 			{
-				if (!this.mergeItemStack(itemstack1, 8, 8 + 36, true))
+				if (!this.mergeItemStack(itemstack1, 6, 6 + 36, true))
 				{
 					return ItemStack.EMPTY;
 				}
 
 				slot.onSlotChange(itemstack1, itemstack);
-			} else if (index > 7)
+			} else if (index > 5)
 			{
-				if (itemstack1.getItem() instanceof IBloodOrb)
+				if (itemstack1.getItem() instanceof IDemonWill || itemstack1.getItem() instanceof IDemonWillGem)
 				{
-					if (!this.mergeItemStack(itemstack1, 6, 7, false))
+					if (!this.mergeItemStack(itemstack1, 4, 5, false))
 					{
 						return ItemStack.EMPTY;
 					}
-				} else if (!this.mergeItemStack(itemstack1, 0, 6, false))
+				} else if (!this.mergeItemStack(itemstack1, 0, 4, false))
 				{
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(itemstack1, 8, 8 + 36, false))
+			} else if (!this.mergeItemStack(itemstack1, 6, 42, false))
 			{
 				return ItemStack.EMPTY;
 			}
@@ -136,12 +121,12 @@ public class ContainerAlchemyTable extends Container
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn)
 	{
-		return this.tileTable.isUsableByPlayer(playerIn);
+		return this.tileForge.isUsableByPlayer(playerIn);
 	}
 
-	private class SlotOrb extends Slot
+	private class SlotSoul extends Slot
 	{
-		public SlotOrb(IInventory inventory, int slotIndex, int x, int y)
+		public SlotSoul(IInventory inventory, int slotIndex, int x, int y)
 		{
 			super(inventory, slotIndex, x, y);
 		}
@@ -149,7 +134,7 @@ public class ContainerAlchemyTable extends Container
 		@Override
 		public boolean isItemValid(ItemStack itemStack)
 		{
-			return itemStack.getItem() instanceof IBloodOrb;
+			return itemStack.getItem() instanceof IDemonWillGem || itemStack.getItem() instanceof IDemonWill;
 		}
 	}
 

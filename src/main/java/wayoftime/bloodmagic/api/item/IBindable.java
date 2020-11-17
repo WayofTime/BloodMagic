@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.iface;
+package wayoftime.bloodmagic.api.item;
 
 import javax.annotation.Nullable;
 

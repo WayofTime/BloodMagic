@@ -1,6 +1,6 @@
 package wayoftime.bloodmagic.core;
 
-import wayoftime.bloodmagic.api.impl.BloodMagicRecipeRegistrar;
+import wayoftime.bloodmagic.impl.BloodMagicRecipeRegistrar;
 
 public class RegistrarBloodMagicRecipes
 {

@@ -8,8 +8,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import wayoftime.bloodmagic.api.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.api.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffect;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectCrafting;
 

@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.tile.TileAlchemyTable;
-import wayoftime.bloodmagic.tile.contailer.ContainerAlchemyTable;
+import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 
 public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 {

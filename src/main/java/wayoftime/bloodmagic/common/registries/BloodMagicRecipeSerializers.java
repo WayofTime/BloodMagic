@@ -1,11 +1,11 @@
 package wayoftime.bloodmagic.common.registries;
 
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeARC;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.api.recipe.RecipeARC;
+import wayoftime.bloodmagic.api.recipe.RecipeAlchemyArray;
+import wayoftime.bloodmagic.api.recipe.RecipeAlchemyTable;
+import wayoftime.bloodmagic.api.recipe.RecipeBloodAltar;
+import wayoftime.bloodmagic.api.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.common.recipe.serializer.ARCRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.serializer.AlchemyArrayRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.serializer.AlchemyTableRecipeSerializer;

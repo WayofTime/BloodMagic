@@ -15,7 +15,7 @@ import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.event.SoulNetworkEvent;
-import wayoftime.bloodmagic.iface.IBindable;
+import wayoftime.bloodmagic.api.item.IBindable;
 import wayoftime.bloodmagic.orb.BloodOrb;
 import wayoftime.bloodmagic.orb.IBloodOrb;
 

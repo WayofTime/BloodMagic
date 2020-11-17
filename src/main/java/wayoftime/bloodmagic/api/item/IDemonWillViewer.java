@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.common.item;
+package wayoftime.bloodmagic.api.item;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
