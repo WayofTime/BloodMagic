@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.impl;
+package wayoftime.bloodmagic.impl;
 
 import java.util.Map;
 

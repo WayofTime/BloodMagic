@@ -22,7 +22,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeARC;
+import wayoftime.bloodmagic.api.recipe.RecipeARC;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.handler.event.ClientHandler;

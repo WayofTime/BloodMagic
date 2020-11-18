@@ -13,7 +13,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.api.SerializerHelper;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
+import wayoftime.bloodmagic.api.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.util.Constants;
 
 public class AlchemyArrayRecipeSerializer<RECIPE extends RecipeAlchemyArray>

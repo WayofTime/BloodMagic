@@ -13,7 +13,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
-import wayoftime.bloodmagic.tile.contailer.ContainerAlchemicalReactionChamber;
+import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.util.handler.event.ClientHandler;
 
 public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemicalReactionChamber>

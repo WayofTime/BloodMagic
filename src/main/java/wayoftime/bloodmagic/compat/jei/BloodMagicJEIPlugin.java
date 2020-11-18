@@ -16,7 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.api.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.compat.jei.alchemytable.AlchemyTableRecipeCategory;

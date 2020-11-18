@@ -16,7 +16,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.api.SerializerHelper;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.api.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.util.Constants;
 
 public class TartaricForgeRecipeSerializer<RECIPE extends RecipeTartaricForge>

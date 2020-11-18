@@ -4,7 +4,7 @@ import net.minecraft.block.FireBlock;
 import net.minecraft.block.GrassBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.tags.BlockTags;
-import wayoftime.bloodmagic.api.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.incense.EnumTranquilityType;
 import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
 import wayoftime.bloodmagic.incense.TranquilityStack;

@@ -27,7 +27,7 @@ import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.event.RitualEvent;
-import wayoftime.bloodmagic.iface.IBindable;
+import wayoftime.bloodmagic.api.item.IBindable;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumReaderBoundaries;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;

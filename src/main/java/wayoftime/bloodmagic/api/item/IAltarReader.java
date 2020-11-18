@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.iface;
+package wayoftime.bloodmagic.api.item;
 
 /**
  * Any item that implements this interface will not be pulled into the Altar on

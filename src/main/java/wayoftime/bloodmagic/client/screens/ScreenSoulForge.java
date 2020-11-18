@@ -10,7 +10,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.tile.TileSoulForge;
-import wayoftime.bloodmagic.tile.contailer.ContainerSoulForge;
+import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
 
 public class ScreenSoulForge extends ScreenBase<ContainerSoulForge>
 {

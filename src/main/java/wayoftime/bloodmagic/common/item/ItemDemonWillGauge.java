@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.item.IDemonWillViewer;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
 
 public class ItemDemonWillGauge extends Item implements IDemonWillViewer

@@ -12,7 +12,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.api.event.recipes.FluidStackIngredient;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeARC;
+import wayoftime.bloodmagic.api.recipe.RecipeARC;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 

@@ -29,7 +29,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
-import wayoftime.bloodmagic.common.item.IDemonWillViewer;
+import wayoftime.bloodmagic.api.item.IDemonWillViewer;
 import wayoftime.bloodmagic.tile.TileInventory;
 
 public class Utils

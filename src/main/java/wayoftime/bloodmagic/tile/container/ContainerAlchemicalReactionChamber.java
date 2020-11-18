@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.tile.contailer;
+package wayoftime.bloodmagic.tile.container;
 
 import java.util.Optional;
 

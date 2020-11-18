@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.impl;
+package wayoftime.bloodmagic.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +17,11 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.api.IBloodMagicRecipeRegistrar;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeARC;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.api.recipe.RecipeARC;
+import wayoftime.bloodmagic.api.recipe.RecipeAlchemyArray;
+import wayoftime.bloodmagic.api.recipe.RecipeAlchemyTable;
+import wayoftime.bloodmagic.api.recipe.RecipeBloodAltar;
+import wayoftime.bloodmagic.api.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 
 public class BloodMagicRecipeRegistrar implements IBloodMagicRecipeRegistrar

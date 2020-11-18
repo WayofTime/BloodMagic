@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.iface;
+package wayoftime.bloodmagic.api.item;
 
 import javax.annotation.Nonnull;
 
@@ -6,9 +6,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import wayoftime.bloodmagic.util.Constants;
 
+/**
+ * Interface for activatable items
+ */
 public interface IActivatable
 {
-
 	default boolean getActivated(ItemStack stack)
 	{
 		return !stack.isEmpty() && stack.hasTag() && stack.getTag().getBoolean(Constants.NBT.ACTIVATED);

@@ -13,7 +13,7 @@ import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.event.ItemBindEvent;
-import wayoftime.bloodmagic.iface.IBindable;
+import wayoftime.bloodmagic.api.item.IBindable;
 import wayoftime.bloodmagic.network.DemonAuraClientPacket;
 import wayoftime.bloodmagic.orb.BloodOrb;
 import wayoftime.bloodmagic.orb.IBloodOrb;

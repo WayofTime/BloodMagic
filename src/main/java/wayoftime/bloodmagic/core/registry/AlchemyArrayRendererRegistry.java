@@ -10,8 +10,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import wayoftime.bloodmagic.api.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeAlchemyArray;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.api.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.client.render.alchemyarray.AlchemyArrayRenderer;
 
 public class AlchemyArrayRendererRegistry

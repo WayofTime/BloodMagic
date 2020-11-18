@@ -4,6 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
+import wayoftime.bloodmagic.api.item.IBindable;
 
 @Cancelable
 public class ItemBindEvent extends Event
@@ -13,7 +14,7 @@ public class ItemBindEvent extends Event
 
 	/**
 	 * This event is called whenever a player attempts to bind a
-	 * {@link wayoftime.bloodmagic.iface.IBindable} item.
+	 * {@link IBindable} item.
 	 *
 	 * @param player    The player doing the binding
 	 * @param itemStack The {@link ItemStack} that the player is binding

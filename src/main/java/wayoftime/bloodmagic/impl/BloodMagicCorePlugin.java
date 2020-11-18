@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.impl;
+package wayoftime.bloodmagic.impl;
 
 import net.minecraft.block.Blocks;
 import wayoftime.bloodmagic.altar.ComponentType;

@@ -34,13 +34,13 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.event.recipes.FluidStackIngredient;
-import wayoftime.bloodmagic.api.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeARC;
-import wayoftime.bloodmagic.common.item.IARCTool;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.api.recipe.RecipeARC;
+import wayoftime.bloodmagic.api.item.IARCTool;
 import wayoftime.bloodmagic.common.item.inventory.InventoryWrapper;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.network.ARCTanksPacket;
-import wayoftime.bloodmagic.tile.contailer.ContainerAlchemicalReactionChamber;
+import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.MultiSlotItemHandler;
 

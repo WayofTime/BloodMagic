@@ -10,7 +10,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import wayoftime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.api.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 
