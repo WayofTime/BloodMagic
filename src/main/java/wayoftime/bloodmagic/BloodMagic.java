@@ -6,6 +6,8 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemGroup;
@@ -14,6 +16,8 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -35,6 +39,8 @@ import wayoftime.bloodmagic.api.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.api.impl.BloodMagicCorePlugin;
 import wayoftime.bloodmagic.client.ClientEvents;
 import wayoftime.bloodmagic.client.hud.Elements;
+import wayoftime.bloodmagic.client.model.MimicColor;
+import wayoftime.bloodmagic.client.model.MimicModelLoader;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.GeneratorBaseRecipes;
 import wayoftime.bloodmagic.common.data.GeneratorBlockStates;
@@ -63,6 +69,7 @@ import wayoftime.bloodmagic.tile.TileDemonCrystal;
 import wayoftime.bloodmagic.tile.TileDemonCrystallizer;
 import wayoftime.bloodmagic.tile.TileIncenseAltar;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
+import wayoftime.bloodmagic.tile.TileMimic;
 import wayoftime.bloodmagic.tile.TileSoulForge;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
 import wayoftime.bloodmagic.util.handler.event.WillHandler;
@@ -108,6 +115,7 @@ public class BloodMagic
 		modBus.addListener(this::processIMC);
 		// Register the doClientStuff method for modloading
 		modBus.addListener(this::doClientStuff);
+		modBus.addListener(this::loadModels);
 		modBus.addListener(this::gatherData);
 
 		modBus.addGenericListener(Fluid.class, this::registerFluids);
@@ -174,6 +182,7 @@ public class BloodMagic
 		event.getRegistry().register(TileEntityType.Builder.create(TileDemonCrucible::new, BloodMagicBlocks.DEMON_CRUCIBLE.get()).build(null).setRegistryName("demoncrucible"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileDemonCrystallizer::new, BloodMagicBlocks.DEMON_CRYSTALLIZER.get()).build(null).setRegistryName("demoncrystallizer"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileIncenseAltar::new, BloodMagicBlocks.INCENSE_ALTAR.get()).build(null).setRegistryName("incensealtar"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileMimic::new, BloodMagicBlocks.MIMIC.get(), BloodMagicBlocks.ETHEREAL_MIMIC.get()).build(null).setRegistryName("mimic"));
 	}
 
 	@SubscribeEvent
@@ -200,6 +209,12 @@ public class BloodMagic
 		}
 	}
 
+	private void loadModels(final ModelRegistryEvent event)
+	{
+		ModelLoaderRegistry.registerLoader(BloodMagic.rl("mimicloader"), new MimicModelLoader(BloodMagic.rl("block/solidopaquemimic")));
+		ModelLoaderRegistry.registerLoader(BloodMagic.rl("mimicloader_ethereal"), new MimicModelLoader(BloodMagic.rl("block/etherealopaquemimic")));
+	}
+
 	private void setup(final FMLCommonSetupEvent event)
 	{
 		// some preinit code
@@ -215,6 +230,8 @@ public class BloodMagic
 
 		ClientEvents.initClientEvents(event);
 		Elements.registerElements();
+		Minecraft.getInstance().getBlockColors().register(new MimicColor(), BloodMagicBlocks.MIMIC.get());
+		RenderTypeLookup.setRenderLayer(BloodMagicBlocks.MIMIC.get(), (RenderType) -> true);
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event)

@@ -44,6 +44,8 @@ public class Dungeon
 		settings.setIgnoreEntities(true);
 		settings.setChunk(null);
 
+		settings.addProcessor(new StoneToOreProcessor(0.2f));
+
 //		settings.setReplacedBlock(null);
 
 //		settings.setIgnoreStructureBlock(false);

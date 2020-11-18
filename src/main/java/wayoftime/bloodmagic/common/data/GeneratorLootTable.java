@@ -15,7 +15,9 @@ import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.BlockLootTables;
+import net.minecraft.data.loot.ChestLootTables;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.loot.ConstantRange;
 import net.minecraft.loot.ItemLootEntry;
 import net.minecraft.loot.LootParameterSet;
@@ -26,6 +28,7 @@ import net.minecraft.loot.LootTableManager;
 import net.minecraft.loot.ValidationTracker;
 import net.minecraft.loot.conditions.BlockStateProperty;
 import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.loot.functions.EnchantWithLevels;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.state.Property;
 import net.minecraft.util.IStringSerializable;
@@ -47,7 +50,27 @@ public class GeneratorLootTable extends LootTableProvider
 	@Override
 	protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> getTables()
 	{
-		return ImmutableList.of(Pair.of(BMBlocks::new, LootParameterSets.BLOCK));
+		return ImmutableList.of(Pair.of(BMBlocks::new, LootParameterSets.BLOCK), Pair.of(BMLootTables::new, LootParameterSets.CHEST));
+	}
+
+	private static class BMLootTables extends ChestLootTables
+	{
+		@Override
+		public void accept(BiConsumer<ResourceLocation, LootTable.Builder> acceptor)
+		{
+			acceptor.accept(BloodMagic.rl("test"), testLootTableGeneration());
+		}
+
+		private LootTable.Builder testLootTableGeneration()
+		{
+			LootTable.Builder table = LootTable.builder();
+			LootPool.Builder pool = LootPool.builder().name("test").addEntry(ItemLootEntry.builder(Items.BOOK).weight(10).acceptFunction(EnchantWithLevels.func_215895_a(ConstantRange.of(30)).func_216059_e()));
+
+			table.addLootPool(pool);
+//			table.build();
+
+			return table;
+		}
 	}
 
 	private static class BMBlocks extends BlockLootTables
@@ -100,6 +123,10 @@ public class GeneratorLootTable extends LootTableProvider
 			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get());
 			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_BRICK_GATE.get());
 			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get());
+
+			registerDropSelfLootTable(BloodMagicBlocks.MIMIC.get());
+			registerDropSelfLootTable(BloodMagicBlocks.ETHEREAL_MIMIC.get());
+
 		}
 
 		private void registerNoDropLootTable(Block block)

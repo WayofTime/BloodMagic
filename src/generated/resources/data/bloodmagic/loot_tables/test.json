@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "name": "test",
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 30,
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:book"
+        }
+      ]
+    }
+  ]
+}
