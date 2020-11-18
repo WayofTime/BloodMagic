@@ -105,7 +105,7 @@ public abstract class TileBase extends TileEntity
 //	}
 
 	@Override
-	public final SUpdateTileEntityPacket getUpdatePacket()
+	public SUpdateTileEntityPacket getUpdatePacket()
 	{
 		return new SUpdateTileEntityPacket(getPos(), -999, getUpdateTag());
 	}
@@ -118,20 +118,20 @@ public abstract class TileBase extends TileEntity
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public final void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
 	{
 		super.onDataPacket(net, pkt);
 		handleUpdateTag(getBlockState(), pkt.getNbtCompound());
 	}
 
 	@Override
-	public final CompoundNBT getUpdateTag()
+	public CompoundNBT getUpdateTag()
 	{
 		return write(new CompoundNBT());
 	}
 
 	@Override
-	public final void handleUpdateTag(BlockState state, CompoundNBT tag)
+	public void handleUpdateTag(BlockState state, CompoundNBT tag)
 	{
 		read(state, tag);
 	}

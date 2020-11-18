@@ -10,6 +10,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.arc.ItemARCToolBase;
 import wayoftime.bloodmagic.common.item.block.ItemBlockAlchemyTable;
+import wayoftime.bloodmagic.common.item.block.ItemBlockMimic;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilAir;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilBloodLight;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilDivination;
@@ -89,6 +90,9 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> WORN_STONE_TILE_PATH_ITEM = ITEMS.register("wornstonetilepath", () -> new BlockItem(BloodMagicBlocks.WORN_STONE_TILE_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> OBSIDIAN_PATH_ITEM = ITEMS.register("obsidianbrickpath", () -> new BlockItem(BloodMagicBlocks.OBSIDIAN_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> OBSIDIAN_TILE_PATH_ITEM = ITEMS.register("obsidiantilepath", () -> new BlockItem(BloodMagicBlocks.OBSIDIAN_TILE_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
+
+	public static final RegistryObject<Item> MIMIC_ITEM = ITEMS.register("mimic", () -> new ItemBlockMimic(BloodMagicBlocks.MIMIC.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> MIMIC_ETHEREAL_ITEM = ITEMS.register("ethereal_mimic", () -> new ItemBlockMimic(BloodMagicBlocks.ETHEREAL_MIMIC.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	// TODO: Need to rework the above instantiations for the ItemBlocks so that it's
 	// done with the Blocks.

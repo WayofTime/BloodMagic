@@ -82,6 +82,14 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerDemonTool(BloodMagicItems.SENTIENT_SHOVEL.get());
 		registerSacrificialKnife(BloodMagicItems.SACRIFICIAL_DAGGER.get());
 
+		registerCustomFullTexture(BloodMagicBlocks.MIMIC.get(), "solidopaquemimic");
+		registerCustomFullTexture(BloodMagicBlocks.ETHEREAL_MIMIC.get(), "etherealopaquemimic");
+	}
+
+	private void registerCustomFullTexture(Block block, String texturePath)
+	{
+		String path = block.getRegistryName().getPath();
+		getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/" + texturePath)));
 	}
 
 	private void registerCustomBlockPath(Block block, String newPath)

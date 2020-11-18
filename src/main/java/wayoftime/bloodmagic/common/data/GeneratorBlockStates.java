@@ -79,6 +79,22 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildPillarCap(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom"), BloodMagic.rl("block/dungeon/dungeon_pillartop"));
 
 		buildAssortedBlock(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), modLoc("dungeon_brick1"), modLoc("dungeon_brick2"), modLoc("dungeon_brick3"));
+
+		buildCubeAllWithTextureName("etherealopaquemimic");
+		buildCubeAllWithTextureName("sentientmimic");
+		buildCubeAllWithTextureName("solidclearmimic");
+		buildCubeAllWithTextureName("solidlightmimic");
+		buildCubeAllWithTextureName("solidopaquemimic");
+	}
+
+//	private void buildCustomLoader(Block block)
+//	{
+//		ModelFile modelFile = models().crop("", null);
+//	}
+
+	private void buildCubeAllWithTextureName(String texture)
+	{
+		models().cubeAll(texture, BloodMagic.rl("block/" + texture)).assertExistence();
 	}
 
 	private void buildAssortedBlock(Block block, ResourceLocation... modelResources)
