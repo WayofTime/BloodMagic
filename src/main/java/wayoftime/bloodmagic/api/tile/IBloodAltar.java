@@ -1,14 +1,18 @@
 package wayoftime.bloodmagic.api.tile;
 
-import wayoftime.bloodmagic.altar.AltarTier;
-
+/**
+ * Any Tile that implements this will be considered to be a Blood Altar
+ */
 public interface IBloodAltar
 {
 	int getCapacity();
 
 	int getCurrentBlood();
 
-	AltarTier getTier();
+	/**
+	 * @return - The actual human-readable tier (ordinal + 1) of the altar
+	 */
+	int getTier();
 
 	int getProgress();
 

@@ -4,8 +4,8 @@ import net.minecraft.block.Blocks;
 import wayoftime.bloodmagic.altar.ComponentType;
 import wayoftime.bloodmagic.api.IBloodMagicAPI;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
-import wayoftime.bloodmagic.incense.EnumTranquilityType;
-import wayoftime.bloodmagic.incense.TranquilityStack;
+import wayoftime.bloodmagic.api.incense.EnumTranquilityType;
+import wayoftime.bloodmagic.api.incense.TranquilityStack;
 
 public class BloodMagicCorePlugin
 {

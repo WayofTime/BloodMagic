@@ -20,13 +20,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.api.item.IMultiWillTool;
+import wayoftime.bloodmagic.api.will.IMultiWillTool;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
-import wayoftime.bloodmagic.will.IDemonWill;
-import wayoftime.bloodmagic.will.IDemonWillGem;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.IDemonWill;
+import wayoftime.bloodmagic.api.will.IDemonWillGem;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
 public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool

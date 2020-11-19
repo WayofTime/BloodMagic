@@ -18,11 +18,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.extensions.IForgeItem;
-import wayoftime.bloodmagic.core.data.Binding;
+import wayoftime.bloodmagic.api.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
-import wayoftime.bloodmagic.core.data.SoulTicket;
-import wayoftime.bloodmagic.orb.BloodOrb;
-import wayoftime.bloodmagic.orb.IBloodOrb;
+import wayoftime.bloodmagic.api.data.SoulTicket;
+import wayoftime.bloodmagic.api.item.BloodOrb;
+import wayoftime.bloodmagic.api.item.IBloodOrb;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 

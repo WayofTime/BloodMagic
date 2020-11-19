@@ -38,8 +38,8 @@ import wayoftime.bloodmagic.util.handler.event.ClientHandler;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
-import wayoftime.bloodmagic.will.IDiscreteDemonWill;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.IDiscreteDemonWill;
 
 public class ItemRitualReader extends Item
 {

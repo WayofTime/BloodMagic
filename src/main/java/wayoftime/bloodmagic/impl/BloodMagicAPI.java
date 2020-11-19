@@ -10,6 +10,7 @@ import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
 import wayoftime.bloodmagic.altar.ComponentType;
 import wayoftime.bloodmagic.api.IBloodMagicAPI;
+import wayoftime.bloodmagic.api.IBloodMagicRecipeRegistrar;
 import wayoftime.bloodmagic.util.BMLog;
 
 public class BloodMagicAPI implements IBloodMagicAPI
@@ -36,7 +37,7 @@ public class BloodMagicAPI implements IBloodMagicAPI
 //	{
 //		return blacklist;
 //	}
-//
+
 	@Nonnull
 	@Override
 	public BloodMagicRecipeRegistrar getRecipeRegistrar()

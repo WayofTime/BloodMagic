@@ -14,8 +14,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import wayoftime.bloodmagic.core.data.Binding;
-import wayoftime.bloodmagic.core.data.SoulTicket;
+import wayoftime.bloodmagic.api.data.Binding;
+import wayoftime.bloodmagic.api.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 

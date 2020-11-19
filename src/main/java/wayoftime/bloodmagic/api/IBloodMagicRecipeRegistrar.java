@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.api;
 
 /**
  * Allows recipe addition and removal.
+ * TODO: Get rid of this and fix all the recipe stuffs
  */
 public interface IBloodMagicRecipeRegistrar
 {

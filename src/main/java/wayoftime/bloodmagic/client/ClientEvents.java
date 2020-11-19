@@ -32,7 +32,7 @@ import wayoftime.bloodmagic.common.item.ItemSacrificialDagger;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilToggleable;
 import wayoftime.bloodmagic.common.item.soul.ItemSentientSword;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
-import wayoftime.bloodmagic.api.item.IMultiWillTool;
+import wayoftime.bloodmagic.api.will.IMultiWillTool;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.tile.TileDemonCrucible;

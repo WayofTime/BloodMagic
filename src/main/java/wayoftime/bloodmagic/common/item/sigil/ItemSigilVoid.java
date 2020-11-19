@@ -14,7 +14,7 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
-import wayoftime.bloodmagic.core.data.SoulTicket;
+import wayoftime.bloodmagic.api.data.SoulTicket;
 import wayoftime.bloodmagic.api.item.ISigil;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;

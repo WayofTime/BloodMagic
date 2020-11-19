@@ -12,7 +12,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
 import wayoftime.bloodmagic.util.BMLog;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
 
 public class WorldDemonWillHandler
 {

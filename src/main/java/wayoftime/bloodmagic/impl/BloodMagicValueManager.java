@@ -11,8 +11,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.ResourceLocation;
 import wayoftime.bloodmagic.api.IBloodMagicValueManager;
-import wayoftime.bloodmagic.incense.EnumTranquilityType;
-import wayoftime.bloodmagic.incense.TranquilityStack;
+import wayoftime.bloodmagic.api.incense.EnumTranquilityType;
+import wayoftime.bloodmagic.api.incense.TranquilityStack;
 import wayoftime.bloodmagic.util.BMLog;
 
 public class BloodMagicValueManager implements IBloodMagicValueManager

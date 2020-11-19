@@ -4,10 +4,9 @@ import javax.annotation.Nullable;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wayoftime.bloodmagic.block.enums.BloodRuneType;
 
 /**
- * Any block that implements this interface wil be considered as Blood Runes for the Blood Altar
+ * Any Block that implements this interface wil be considered as Blood Runes for the Blood Altar
  */
 public interface IBloodRune
 {

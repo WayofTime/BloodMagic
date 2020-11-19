@@ -1,9 +1,12 @@
-package wayoftime.bloodmagic.incense;
+package wayoftime.bloodmagic.api.incense;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * Any Block that implements this will be considered to be a valid path block for the Incense Altar
+ */
 public interface IIncensePath
 {
 	/**

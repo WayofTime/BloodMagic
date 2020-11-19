@@ -1,7 +1,7 @@
-package wayoftime.bloodmagic.will;
+package wayoftime.bloodmagic.api.will;
 
 /**
- * Implement this interface on a block that can accept and store Demonic Will.
+ * Implement this interface on a Block that can accept and store Demonic Will.
  */
 public interface IDemonWillConduit
 {

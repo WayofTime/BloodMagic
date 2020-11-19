@@ -18,7 +18,7 @@ import net.minecraft.network.datasync.IDataSerializer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
 
 public class Serializers
 {

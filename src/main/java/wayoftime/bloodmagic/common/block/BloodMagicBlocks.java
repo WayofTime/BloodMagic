@@ -28,14 +28,14 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.block.enums.BloodRuneType;
+import wayoftime.bloodmagic.api.tile.BloodRuneType;
 import wayoftime.bloodmagic.common.block.base.BlockPillarCap;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
 
 public class BloodMagicBlocks
 {

@@ -86,9 +86,9 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 	}
 
 	@Override
-	public AltarTier getTier()
+	public int getTier()
 	{
-		return bloodAltar.getTier();
+		return bloodAltar.getTier().toInt();
 	}
 
 	@Override

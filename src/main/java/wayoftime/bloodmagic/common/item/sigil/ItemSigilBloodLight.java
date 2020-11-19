@@ -12,7 +12,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
-import wayoftime.bloodmagic.core.data.SoulTicket;
+import wayoftime.bloodmagic.api.data.SoulTicket;
 import wayoftime.bloodmagic.entity.projectile.EntityBloodLight;
 import wayoftime.bloodmagic.api.item.ISigil;
 import wayoftime.bloodmagic.util.Constants;

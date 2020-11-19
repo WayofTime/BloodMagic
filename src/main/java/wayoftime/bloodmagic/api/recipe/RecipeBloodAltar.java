@@ -10,7 +10,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import wayoftime.bloodmagic.altar.AltarTier;
 
 public abstract class RecipeBloodAltar extends BloodMagicRecipe
 {
@@ -19,7 +18,7 @@ public abstract class RecipeBloodAltar extends BloodMagicRecipe
 	@Nonnull
 	private final ItemStack output;
 	@Nonnull
-	private final AltarTier minimumTier;
+	private final int minimumTier;
 	@Nonnegative
 	private final int syphon;
 	@Nonnegative
@@ -33,14 +32,14 @@ public abstract class RecipeBloodAltar extends BloodMagicRecipe
 		Preconditions.checkNotNull(input, "input cannot be null.");
 		Preconditions.checkNotNull(output, "output cannot be null.");
 		Preconditions.checkArgument(minimumTier >= 0, "minimumTier cannot be negative.");
-		Preconditions.checkArgument(minimumTier <= AltarTier.MAXTIERS, "minimumTier cannot be higher than max tier");
+		Preconditions.checkArgument(minimumTier <= 6, "minimumTier cannot be higher than max tier");
 		Preconditions.checkArgument(syphon >= 0, "syphon cannot be negative.");
 		Preconditions.checkArgument(consumeRate >= 0, "consumeRate cannot be negative.");
 		Preconditions.checkArgument(drainRate >= 0, "drain cannot be negative.");
 
 		this.input = input;
 		this.output = output;
-		this.minimumTier = AltarTier.values()[minimumTier];
+		this.minimumTier = minimumTier;
 		this.syphon = syphon;
 		this.consumeRate = consumeRate;
 		this.drainRate = drainRate;
@@ -66,8 +65,7 @@ public abstract class RecipeBloodAltar extends BloodMagicRecipe
 		return output;
 	}
 
-	@Nonnull
-	public AltarTier getMinimumTier()
+	public int getMinimumTier()
 	{
 		return minimumTier;
 	}
@@ -95,7 +93,7 @@ public abstract class RecipeBloodAltar extends BloodMagicRecipe
 	{
 		input.write(buffer);
 		buffer.writeItemStack(output);
-		buffer.writeInt(minimumTier.ordinal());
+		buffer.writeInt(minimumTier);
 		buffer.writeInt(syphon);
 		buffer.writeInt(consumeRate);
 		buffer.writeInt(drainRate);

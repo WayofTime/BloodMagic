@@ -23,7 +23,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.ItemActivationCrystal;
-import wayoftime.bloodmagic.core.data.Binding;
+import wayoftime.bloodmagic.api.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.event.RitualEvent;
@@ -41,7 +41,7 @@ import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
 
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone
 {

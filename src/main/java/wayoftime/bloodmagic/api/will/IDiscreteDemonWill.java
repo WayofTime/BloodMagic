@@ -1,7 +1,10 @@
-package wayoftime.bloodmagic.will;
+package wayoftime.bloodmagic.api.will;
 
 import net.minecraft.item.ItemStack;
 
+/**
+ * Interface for Items that contain a discrete amount of Will
+ */
 public interface IDiscreteDemonWill
 {
 	/**

@@ -1,5 +1,8 @@
-package wayoftime.bloodmagic.incense;
+package wayoftime.bloodmagic.api.incense;
 
+/**
+ * Holds the tranquility type and value for valid tranquility modifiers
+ */
 public class TranquilityStack
 {
 	public final EnumTranquilityType type;

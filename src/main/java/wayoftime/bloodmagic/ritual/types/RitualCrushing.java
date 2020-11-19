@@ -37,7 +37,7 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.util.Utils;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
 
 @RitualRegister("crushing")
 public class RitualCrushing extends Ritual

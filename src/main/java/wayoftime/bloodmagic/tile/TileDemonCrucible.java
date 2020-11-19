@@ -11,10 +11,10 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
-import wayoftime.bloodmagic.will.IDemonWillConduit;
-import wayoftime.bloodmagic.will.IDemonWillGem;
-import wayoftime.bloodmagic.will.IDiscreteDemonWill;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.IDemonWillConduit;
+import wayoftime.bloodmagic.api.will.IDemonWillGem;
+import wayoftime.bloodmagic.api.will.IDiscreteDemonWill;
 
 public class TileDemonCrucible extends TileInventory implements ITickableTileEntity, IDemonWillConduit, ISidedInventory
 {

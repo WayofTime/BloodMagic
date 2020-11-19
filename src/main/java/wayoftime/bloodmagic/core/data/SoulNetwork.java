@@ -15,6 +15,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.INBTSerializable;
+import wayoftime.bloodmagic.api.data.SoulTicket;
 import wayoftime.bloodmagic.event.SoulNetworkEvent;
 import wayoftime.bloodmagic.util.BMLog;
 import wayoftime.bloodmagic.util.BooleanResult;

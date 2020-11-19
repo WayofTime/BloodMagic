@@ -1,12 +1,12 @@
-package wayoftime.bloodmagic.orb;
+package wayoftime.bloodmagic.api.item;
 
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
- * Refactoring of the original BloodOrb. BloodOrbs are no longer registered due
- * to The Flattening.
+ * Base Blood Orb class object for blood orbs
  */
-public class BloodOrb extends net.minecraftforge.registries.ForgeRegistryEntry<BloodOrb>
+public final class BloodOrb extends ForgeRegistryEntry<BloodOrb>
 {
 	private final ResourceLocation name;
 	private final int tier;

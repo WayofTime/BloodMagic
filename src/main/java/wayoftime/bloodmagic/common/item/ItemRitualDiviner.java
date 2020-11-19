@@ -45,7 +45,7 @@ import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.util.handler.event.ClientHandler;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
 
 public class ItemRitualDiviner extends Item
 {

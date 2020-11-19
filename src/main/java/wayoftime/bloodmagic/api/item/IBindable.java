@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import wayoftime.bloodmagic.core.data.Binding;
+import wayoftime.bloodmagic.api.data.Binding;
 
 /**
  * Implement this interface on any Item that can be bound to a player.

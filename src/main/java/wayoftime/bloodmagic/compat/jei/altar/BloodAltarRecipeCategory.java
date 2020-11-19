@@ -119,7 +119,7 @@ public class BloodAltarRecipeCategory implements IRecipeCategory<RecipeBloodAlta
 	{
 		Minecraft mc = Minecraft.getInstance();
 		String[] infoString = new String[]
-		{ TextHelper.localize("jei.bloodmagic.recipe.requiredtier", NumeralHelper.toRoman(recipe.getMinimumTier().toInt())),
+		{ TextHelper.localize("jei.bloodmagic.recipe.requiredtier", NumeralHelper.toRoman(recipe.getMinimumTier() + 1)),
 				TextHelper.localize("jei.bloodmagic.recipe.requiredlp", recipe.getSyphon()) };
 		mc.fontRenderer.drawString(matrixStack, infoString[0], 90
 				- mc.fontRenderer.getStringWidth(infoString[0]) / 2, 0, Color.gray.getRGB());

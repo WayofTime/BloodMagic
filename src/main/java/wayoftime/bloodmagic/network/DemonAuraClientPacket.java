@@ -8,7 +8,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 import wayoftime.bloodmagic.util.handler.event.ClientHandler;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
 
 public class DemonAuraClientPacket
 {

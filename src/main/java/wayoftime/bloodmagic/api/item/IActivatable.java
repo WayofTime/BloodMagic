@@ -4,16 +4,16 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import wayoftime.bloodmagic.util.Constants;
 
 /**
- * Interface for activatable items
+ * Interface for activatable Items
+ * To find the NBT Tag, use -> Constants.NBT.ACTIVATED
  */
 public interface IActivatable
 {
 	default boolean getActivated(ItemStack stack)
 	{
-		return !stack.isEmpty() && stack.hasTag() && stack.getTag().getBoolean(Constants.NBT.ACTIVATED);
+		return !stack.isEmpty() && stack.hasTag() && stack.getTag().getBoolean("activated");
 	}
 
 	@Nonnull
@@ -24,7 +24,7 @@ public interface IActivatable
 			if (!stack.hasTag())
 				stack.setTag(new CompoundNBT());
 
-			stack.getTag().putBoolean(Constants.NBT.ACTIVATED, activated);
+			stack.getTag().putBoolean("activated", activated);
 		}
 
 		return stack;

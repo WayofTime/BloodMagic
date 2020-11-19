@@ -22,10 +22,10 @@ import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.api.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
 import wayoftime.bloodmagic.util.Constants;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
-import wayoftime.bloodmagic.will.IDemonWill;
-import wayoftime.bloodmagic.will.IDemonWillConduit;
-import wayoftime.bloodmagic.will.IDemonWillGem;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.IDemonWill;
+import wayoftime.bloodmagic.api.will.IDemonWillConduit;
+import wayoftime.bloodmagic.api.will.IDemonWillGem;
 
 public class TileSoulForge extends TileInventory
 		implements ITickableTileEntity, INamedContainerProvider, IDemonWillConduit

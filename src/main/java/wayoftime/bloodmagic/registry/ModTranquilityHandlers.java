@@ -5,9 +5,9 @@ import net.minecraft.block.GrassBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.tags.BlockTags;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.incense.EnumTranquilityType;
+import wayoftime.bloodmagic.api.incense.EnumTranquilityType;
 import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
-import wayoftime.bloodmagic.incense.TranquilityStack;
+import wayoftime.bloodmagic.api.incense.TranquilityStack;
 
 public class ModTranquilityHandlers
 {

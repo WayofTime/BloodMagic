@@ -3,8 +3,8 @@ package wayoftime.bloodmagic.common.item;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
-import wayoftime.bloodmagic.will.IDiscreteDemonWill;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.IDiscreteDemonWill;
 
 public class ItemDemonCrystal extends Item implements IDiscreteDemonWill
 {

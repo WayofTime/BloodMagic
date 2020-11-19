@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
-import wayoftime.bloodmagic.core.data.SoulTicket;
+import wayoftime.bloodmagic.api.data.SoulTicket;
 
 public class SoulNetworkEvent extends Event
 {

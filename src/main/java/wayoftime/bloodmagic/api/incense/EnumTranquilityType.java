@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.incense;
+package wayoftime.bloodmagic.api.incense;
 
 public enum EnumTranquilityType
 {

@@ -2,6 +2,9 @@ package wayoftime.bloodmagic.api.item;
 
 import net.minecraft.item.ItemStack;
 
+/**
+ * Interface for items that affect ARC operation
+ */
 public interface IARCTool
 {
 	default double getCraftingSpeedMultiplier(ItemStack stack)

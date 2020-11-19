@@ -23,7 +23,7 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.util.helper.PlayerSacrificeHelper;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
 
 @RitualRegister("feathered_knife")
 public class RitualFeatheredKnife extends Ritual

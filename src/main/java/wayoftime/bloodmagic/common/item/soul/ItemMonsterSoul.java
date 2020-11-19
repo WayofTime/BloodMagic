@@ -17,8 +17,8 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
-import wayoftime.bloodmagic.will.IDemonWill;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.IDemonWill;
 
 public class ItemMonsterSoul extends Item implements IDemonWill
 {

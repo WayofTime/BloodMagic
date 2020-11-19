@@ -29,9 +29,10 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.ItemDemonCrystal;
 import wayoftime.bloodmagic.tile.TileDemonCrystal;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.will.EnumDemonWillType;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
 public class BlockDemonCrystal extends Block
@@ -95,21 +96,21 @@ public class BlockDemonCrystal extends Block
 		ItemStack stack = ItemStack.EMPTY;
 		switch (type)
 		{
-		case CORROSIVE:
-			stack = EnumDemonWillType.CORROSIVE.getStack();
-			break;
-		case DEFAULT:
-			stack = EnumDemonWillType.DEFAULT.getStack();
-			break;
-		case DESTRUCTIVE:
-			stack = EnumDemonWillType.DESTRUCTIVE.getStack();
-			break;
-		case STEADFAST:
-			stack = EnumDemonWillType.STEADFAST.getStack();
-			break;
-		case VENGEFUL:
-			stack = EnumDemonWillType.VENGEFUL.getStack();
-			break;
+			case CORROSIVE:
+				stack =  new ItemStack(BloodMagicItems.CORROSIVE_CRYSTAL.get());
+				break;
+			case DEFAULT:
+				stack =  new ItemStack(BloodMagicItems.RAW_CRYSTAL.get());
+				break;
+			case DESTRUCTIVE:
+				stack = new ItemStack(BloodMagicItems.DESTRUCTIVE_CRYSTAL.get());
+				break;
+			case STEADFAST:
+				stack =  new ItemStack(BloodMagicItems.STEADFAST_CRYSTAL.get());
+				break;
+			case VENGEFUL:
+				stack =  new ItemStack(BloodMagicItems.VENGEFUL_CRYSTAL.get());
+				break;
 		}
 
 		stack.setCount(crystalNumber);

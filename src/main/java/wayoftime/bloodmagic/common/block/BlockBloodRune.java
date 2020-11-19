@@ -15,7 +15,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
-import wayoftime.bloodmagic.block.enums.BloodRuneType;
+import wayoftime.bloodmagic.api.tile.BloodRuneType;
 import wayoftime.bloodmagic.api.tile.IBloodRune;
 
 public class BlockBloodRune extends Block implements IBloodRune
