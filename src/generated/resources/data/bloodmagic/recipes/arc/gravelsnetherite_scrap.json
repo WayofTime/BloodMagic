@@ -1,7 +1,7 @@
 {
   "type": "bloodmagic:arc",
   "input": {
-    "tag": "bloodmagic:fragments/gold"
+    "tag": "bloodmagic:fragments/netherite_scrap"
   },
   "tool": {
     "tag": "bloodmagic:arc/resonator"
@@ -21,7 +21,7 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:goldgravel"
+    "item": "bloodmagic:gravel_netherite_scrap"
   },
   "consumeingredient": false
 }

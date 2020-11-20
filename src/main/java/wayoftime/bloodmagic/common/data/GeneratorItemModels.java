@@ -49,6 +49,7 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerBlockModel(BloodMagicBlocks.DUSK_RITUAL_STONE.get());
 		registerBlockModel(BloodMagicBlocks.DAWN_RITUAL_STONE.get());
 		registerBlockModel(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get());
+		registerBlockModel(BloodMagicBlocks.NETHER_SOIL.get());
 
 		registerCustomBlockPath(BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get(), "crystal/defaultcrystal1");
 		registerCustomBlockPath(BloodMagicBlocks.CORROSIVE_CRYSTAL_BLOCK.get(), "crystal/corrosivecrystal1");

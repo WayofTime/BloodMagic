@@ -35,8 +35,6 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import wayoftime.bloodmagic.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.impl.BloodMagicCorePlugin;
 import wayoftime.bloodmagic.client.ClientEvents;
 import wayoftime.bloodmagic.client.hud.Elements;
 import wayoftime.bloodmagic.client.model.MimicColor;
@@ -45,6 +43,7 @@ import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.GeneratorBaseRecipes;
 import wayoftime.bloodmagic.common.data.GeneratorBlockStates;
 import wayoftime.bloodmagic.common.data.GeneratorBlockTags;
+import wayoftime.bloodmagic.common.data.GeneratorFluidTags;
 import wayoftime.bloodmagic.common.data.GeneratorItemModels;
 import wayoftime.bloodmagic.common.data.GeneratorItemTags;
 import wayoftime.bloodmagic.common.data.GeneratorLanguage;
@@ -55,6 +54,8 @@ import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.impl.BloodMagicCorePlugin;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.registry.ModTranquilityHandlers;
@@ -205,6 +206,7 @@ public class BloodMagic
 			GeneratorBlockTags bmBlockTags = new GeneratorBlockTags(gen, event.getExistingFileHelper());
 			gen.addProvider(bmBlockTags);
 			gen.addProvider(new GeneratorItemTags(gen, bmBlockTags, event.getExistingFileHelper()));
+			gen.addProvider(new GeneratorFluidTags(gen, event.getExistingFileHelper()));
 
 		}
 	}

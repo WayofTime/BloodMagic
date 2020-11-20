@@ -57,6 +57,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildCubeAll(BloodMagicBlocks.EARTH_RITUAL_STONE.get());
 		buildCubeAll(BloodMagicBlocks.DUSK_RITUAL_STONE.get());
 		buildCubeAll(BloodMagicBlocks.DAWN_RITUAL_STONE.get());
+		buildFarmland(BloodMagicBlocks.NETHER_SOIL.get(), BloodMagic.rl("block/nether_soil"), new ResourceLocation("block/netherrack"));
 
 		buildFurnace(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get());
 
@@ -91,6 +92,18 @@ public class GeneratorBlockStates extends BlockStateProvider
 //	{
 //		ModelFile modelFile = models().crop("", null);
 //	}
+
+	private void buildFarmland(Block block, ResourceLocation top, ResourceLocation side)
+	{
+		String basePath = block.getRegistryName().getPath();
+		getVariantBuilder(block).forAllStates(state -> {
+			Builder builder = ConfiguredModel.builder();
+
+			ModelFile file = models().withExistingParent(basePath, "template_farmland").texture("top", top).texture("dirt", side);
+
+			return builder.modelFile(file).build();
+		});
+	}
 
 	private void buildCubeAllWithTextureName(String texture)
 	{

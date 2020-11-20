@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "moisture=0": {
+      "model": "bloodmagic:block/nether_soil"
+    },
+    "moisture=1": {
+      "model": "bloodmagic:block/nether_soil"
+    },
+    "moisture=2": {
+      "model": "bloodmagic:block/nether_soil"
+    },
+    "moisture=3": {
+      "model": "bloodmagic:block/nether_soil"
+    },
+    "moisture=4": {
+      "model": "bloodmagic:block/nether_soil"
+    },
+    "moisture=5": {
+      "model": "bloodmagic:block/nether_soil"
+    },
+    "moisture=6": {
+      "model": "bloodmagic:block/nether_soil"
+    },
+    "moisture=7": {
+      "model": "bloodmagic:block/nether_soil"
+    }
+  }
+}

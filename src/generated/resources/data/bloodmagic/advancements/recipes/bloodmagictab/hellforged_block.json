@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:hellforged_block"
+    ]
+  },
+  "criteria": {
+    "has_hellforged": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:ingot_hellforged"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:hellforged_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_hellforged",
+      "has_the_recipe"
+    ]
+  ]
+}

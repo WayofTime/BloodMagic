@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:smelting/ingot_netherite_scrap"
+    ]
+  },
+  "criteria": {
+    "has_netherite_dust": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:sand_netherite"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:smelting/ingot_netherite_scrap"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_netherite_dust",
+      "has_the_recipe"
+    ]
+  ]
+}
