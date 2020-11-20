@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import wayoftime.bloodmagic.ConfigHandler;
-import wayoftime.bloodmagic.api.tile.IBloodAltar;
+import wayoftime.bloodmagic.altar.IBloodAltar;
 import wayoftime.bloodmagic.event.SacrificeKnifeUsedEvent;
 
 public class PlayerSacrificeHelper

@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.data;
+package wayoftime.bloodmagic.core.data;
 
 import net.minecraft.command.ICommandSource;
 import net.minecraft.entity.Entity;

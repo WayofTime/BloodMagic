@@ -1,5 +1,7 @@
 package wayoftime.bloodmagic.altar;
 
+import wayoftime.bloodmagic.incense.EnumTranquilityType;
+
 import java.util.Locale;
 
 /**
@@ -21,5 +23,18 @@ public enum ComponentType
 	public String getKey()
 	{
 		return key;
+	}
+
+	public static ComponentType getType(String type)
+	{
+		for (ComponentType t : values())
+		{
+			if (t.name().equalsIgnoreCase(type))
+			{
+				return t;
+			}
+		}
+
+		return null;
 	}
 }

@@ -11,7 +11,7 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
-import wayoftime.bloodmagic.api.item.IBloodOrb;
+import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.tile.TileAlchemyTable;
 
 public class ContainerAlchemyTable extends Container

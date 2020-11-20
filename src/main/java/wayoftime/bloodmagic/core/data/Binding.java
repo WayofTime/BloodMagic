@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.data;
+package wayoftime.bloodmagic.core.data;
 
 import java.util.UUID;
 

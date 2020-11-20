@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import net.minecraft.util.ResourceLocation;
 import wayoftime.bloodmagic.common.registration.WrappedDeferredRegister;
-import wayoftime.bloodmagic.api.item.BloodOrb;
+import wayoftime.bloodmagic.common.item.BloodOrb;
 
 public class BloodOrbDeferredRegister extends WrappedDeferredRegister<BloodOrb>
 {

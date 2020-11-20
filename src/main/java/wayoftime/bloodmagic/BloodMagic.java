@@ -135,7 +135,7 @@ public class BloodMagic
 		ModLoadingContext context = ModLoadingContext.get();
 		context.registerConfig(ModConfig.Type.CLIENT, ConfigManager.CLIENT_SPEC);
 
-		ModTranquilityHandlers.init();
+//		ModTranquilityHandlers.init();
 		ModDungeons.init();
 	}
 

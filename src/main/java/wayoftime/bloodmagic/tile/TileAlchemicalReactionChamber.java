@@ -36,7 +36,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.event.recipes.FluidStackIngredient;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.api.recipe.RecipeARC;
-import wayoftime.bloodmagic.api.item.IARCTool;
+import wayoftime.bloodmagic.common.item.arc.IARCTool;
 import wayoftime.bloodmagic.common.item.inventory.InventoryWrapper;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.network.ARCTanksPacket;

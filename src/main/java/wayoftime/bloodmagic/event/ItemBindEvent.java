@@ -4,7 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
-import wayoftime.bloodmagic.api.item.IBindable;
+import wayoftime.bloodmagic.common.item.IBindable;
 
 @Cancelable
 public class ItemBindEvent extends Event

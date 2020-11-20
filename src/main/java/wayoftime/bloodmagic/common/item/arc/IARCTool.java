@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.item;
+package wayoftime.bloodmagic.common.item.arc;
 
 import net.minecraft.item.ItemStack;
 

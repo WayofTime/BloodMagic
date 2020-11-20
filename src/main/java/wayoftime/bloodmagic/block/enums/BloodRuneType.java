@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.tile;
+package wayoftime.bloodmagic.block.enums;
 
 import java.util.Locale;
 

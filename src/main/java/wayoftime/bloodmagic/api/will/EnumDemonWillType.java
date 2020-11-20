@@ -30,4 +30,17 @@ public enum EnumDemonWillType implements IStringSerializable
 	{
 		return this.toString();
 	}
+
+	public static EnumDemonWillType getType(String type)
+	{
+		for (EnumDemonWillType t : values())
+		{
+			if (t.name().equalsIgnoreCase(type))
+			{
+				return t;
+			}
+		}
+
+		return null;
+	}
 }

@@ -17,11 +17,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
-import wayoftime.bloodmagic.api.incense.EnumTranquilityType;
+import wayoftime.bloodmagic.incense.EnumTranquilityType;
 import wayoftime.bloodmagic.api.incense.IIncensePath;
 import wayoftime.bloodmagic.incense.IncenseAltarHandler;
 import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
-import wayoftime.bloodmagic.api.incense.TranquilityStack;
+import wayoftime.bloodmagic.incense.TranquilityStack;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.util.helper.PlayerSacrificeHelper;
 

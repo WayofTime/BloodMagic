@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.tile;
+package wayoftime.bloodmagic.altar;
 
 /**
  * Any Tile that implements this will be considered to be a Blood Altar

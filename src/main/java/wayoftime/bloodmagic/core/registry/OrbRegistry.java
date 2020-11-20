@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.altar.AltarTier;
-import wayoftime.bloodmagic.api.item.BloodOrb;
+import wayoftime.bloodmagic.common.item.BloodOrb;
 
 /**
  * This is only for those who wish to add a basic {@link BloodOrb}. If you need

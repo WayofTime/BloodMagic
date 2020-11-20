@@ -3,7 +3,7 @@ package wayoftime.bloodmagic.util.helper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import wayoftime.bloodmagic.api.data.Binding;
+import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.event.ItemBindEvent;
 import wayoftime.bloodmagic.util.Constants;
 

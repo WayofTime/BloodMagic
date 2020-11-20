@@ -10,14 +10,14 @@ import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import wayoftime.bloodmagic.core.data.BMWorldSavedData;
-import wayoftime.bloodmagic.api.data.Binding;
+import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
-import wayoftime.bloodmagic.api.data.SoulTicket;
+import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.event.SoulNetworkEvent;
-import wayoftime.bloodmagic.api.item.IBindable;
-import wayoftime.bloodmagic.api.item.BloodOrb;
-import wayoftime.bloodmagic.api.item.IBloodOrb;
+import wayoftime.bloodmagic.common.item.IBindable;
+import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.item.IBloodOrb;
 
 public class NetworkHelper
 {

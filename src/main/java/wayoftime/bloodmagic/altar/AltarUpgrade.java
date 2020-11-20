@@ -4,7 +4,7 @@ import java.util.EnumMap;
 
 import com.google.common.collect.Maps;
 
-import wayoftime.bloodmagic.api.tile.BloodRuneType;
+import wayoftime.bloodmagic.block.enums.BloodRuneType;
 
 public class AltarUpgrade
 {
