@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.providers;
+package wayoftime.bloodmagic.util.providers;
 
 import javax.annotation.Nonnull;
 

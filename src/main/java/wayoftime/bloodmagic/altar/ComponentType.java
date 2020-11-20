@@ -1,7 +1,5 @@
 package wayoftime.bloodmagic.altar;
 
-import wayoftime.bloodmagic.incense.EnumTranquilityType;
-
 import java.util.Locale;
 
 /**
@@ -11,7 +9,6 @@ public enum ComponentType
 {
 	GLOWSTONE, BLOODSTONE, BEACON, BLOODRUNE, CRYSTAL, NOTAIR;
 
-	public static final ComponentType[] VALUES = values();
 	private static final String BASE = "chat.bloodmagic.altar.comp.";
 	private String key;
 

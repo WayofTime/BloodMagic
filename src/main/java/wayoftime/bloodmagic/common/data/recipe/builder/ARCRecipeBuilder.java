@@ -14,9 +14,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
-import wayoftime.bloodmagic.api.SerializerHelper;
-import wayoftime.bloodmagic.api.event.recipes.FluidStackIngredient;
-import wayoftime.bloodmagic.api.recipe.RecipeARC;
+import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
+import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
+import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
 import wayoftime.bloodmagic.util.Constants;
 

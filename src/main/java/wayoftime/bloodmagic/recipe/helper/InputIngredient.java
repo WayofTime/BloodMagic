@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.event.recipes;
+package wayoftime.bloodmagic.recipe.helper;
 
 import java.util.List;
 import java.util.function.Predicate;

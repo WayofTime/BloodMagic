@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.text;
+package wayoftime.bloodmagic.util.text;
 
 import net.minecraft.util.text.ITextComponent;
 

@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api;
+package wayoftime.bloodmagic.recipe.helper;
 
 import javax.annotation.Nonnull;
 

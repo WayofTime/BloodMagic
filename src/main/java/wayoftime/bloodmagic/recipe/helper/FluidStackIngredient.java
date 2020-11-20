@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.event.recipes;
+package wayoftime.bloodmagic.recipe.helper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +23,6 @@ import net.minecraft.tags.TagCollectionManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
-import wayoftime.bloodmagic.api.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
 
 /**

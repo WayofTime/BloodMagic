@@ -45,7 +45,6 @@ public class BloodMagicAPI implements IBloodMagicAPI
 //	}
 
 	@Nonnull
-	@Override
 	public BloodMagicRecipeRegistrar getRecipeRegistrar()
 	{
 		return recipeRegistrar;

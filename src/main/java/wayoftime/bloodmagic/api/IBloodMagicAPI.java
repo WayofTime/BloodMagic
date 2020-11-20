@@ -41,14 +41,6 @@ public interface IBloodMagicAPI
 //	IBloodMagicBlacklist getBlacklist();
 
 	/**
-	 * Retrieves the instance of the recipe registrar.
-	 *
-	 * @return the active {@link IBloodMagicRecipeRegistrar} instance
-	 */
-	@Nonnull
-	IBloodMagicRecipeRegistrar getRecipeRegistrar();
-
-	/**
 	 * Retrieves the instance of the value manager.
 	 *
 	 * @return the active {@link IBloodMagicValueManager} instance
@@ -57,7 +49,7 @@ public interface IBloodMagicAPI
 	IBloodMagicValueManager getValueManager();
 
 	/**
-	 * Registers an {@link IBlockState} as a given component for the Blood Altar.
+	 * Registers a {@link BlockState} as a given component for the Blood Altar.
 	 * <p>
 	 * Valid component types:
 	 * <ul>
@@ -75,7 +67,7 @@ public interface IBloodMagicAPI
 	void registerAltarComponent(@Nonnull BlockState state, @Nonnull String componentType);
 
 	/**
-	 * Removes an {@link IBlockState} from the component mappings
+	 * Removes a {@link BlockState} from the component mappings
 	 * <p>
 	 * Valid component types:
 	 * <ul>

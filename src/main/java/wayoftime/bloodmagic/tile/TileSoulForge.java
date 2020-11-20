@@ -19,7 +19,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.api.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.api.will.EnumDemonWillType;

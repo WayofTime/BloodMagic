@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.text;
+package wayoftime.bloodmagic.util.text;
 
 public interface IHasTranslationKey
 {

@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.recipe;
+package wayoftime.bloodmagic.recipe;
 
 import javax.annotation.Nonnull;
 
@@ -7,7 +7,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import wayoftime.bloodmagic.api.inventory.IgnoredIInventory;
+import wayoftime.bloodmagic.recipe.helper.IgnoredIInventory;
 
 public abstract class BloodMagicRecipe implements IRecipe<IgnoredIInventory>
 {

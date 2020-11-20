@@ -38,7 +38,6 @@ public interface IDemonWill
 	 * Creates a new ItemStack with the specified number of will. Implementation
 	 * should respect the number requested.
 	 *
-	 * @param meta   - The meta of the ItemStack to create
 	 * @param number - The amount of Will to create the Stack with.
 	 * @return - An ItemStack with the set amount of Will
 	 */

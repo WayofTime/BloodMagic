@@ -1,11 +1,11 @@
 package wayoftime.bloodmagic.common.recipe;
 
 import net.minecraft.item.crafting.IRecipeType;
-import wayoftime.bloodmagic.api.recipe.RecipeARC;
-import wayoftime.bloodmagic.api.recipe.RecipeAlchemyArray;
-import wayoftime.bloodmagic.api.recipe.RecipeAlchemyTable;
-import wayoftime.bloodmagic.api.recipe.RecipeBloodAltar;
-import wayoftime.bloodmagic.api.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.recipe.RecipeARC;
+import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
+import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
+import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
+import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 
 public class BloodMagicRecipeType
 {

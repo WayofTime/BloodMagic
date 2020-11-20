@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.recipe;
+package wayoftime.bloodmagic.recipe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.item.ItemStack;
@@ -14,9 +16,11 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
-import wayoftime.bloodmagic.api.event.recipes.FluidStackIngredient;
+import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
+import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
+import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
 
-public abstract class RecipeARC extends BloodMagicRecipe
+public class RecipeARC extends BloodMagicRecipe
 {
 	public static final int MAX_RANDOM_OUTPUTS = 3;
 
@@ -32,12 +36,12 @@ public abstract class RecipeARC extends BloodMagicRecipe
 
 	private final List<Pair<ItemStack, Double>> addedItems;
 
-	protected RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid, boolean consumeIngredient)
+	public RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid, boolean consumeIngredient)
 	{
 		this(id, input, arc_tool, inputFluid, output, new ArrayList<Pair<ItemStack, Double>>(), outputFluid, consumeIngredient);
 	}
 
-	protected RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Double>> addedItems, FluidStack outputFluid, boolean consumeIngredient)
+	public RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Double>> addedItems, FluidStack outputFluid, boolean consumeIngredient)
 	{
 		super(id);
 		this.input = input;
@@ -162,5 +166,17 @@ public abstract class RecipeARC extends BloodMagicRecipe
 			outputFluid.writeToPacket(buffer);
 		}
 		buffer.writeBoolean(consumeIngredient);
+	}
+
+	@Override
+	public IRecipeSerializer<RecipeARC> getSerializer()
+	{
+		return BloodMagicRecipeSerializers.ARC.getRecipeSerializer();
+	}
+
+	@Override
+	public IRecipeType<RecipeARC> getType()
+	{
+		return BloodMagicRecipeType.ARC;
 	}
 }

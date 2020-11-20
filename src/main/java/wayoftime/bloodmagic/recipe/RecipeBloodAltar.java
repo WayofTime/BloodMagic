@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.recipe;
+package wayoftime.bloodmagic.recipe;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -6,12 +6,16 @@ import javax.annotation.Nonnull;
 import com.google.common.base.Preconditions;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
+import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 
-public abstract class RecipeBloodAltar extends BloodMagicRecipe
+public class RecipeBloodAltar extends BloodMagicRecipe
 {
 	@Nonnull
 	private final Ingredient input;
@@ -97,5 +101,17 @@ public abstract class RecipeBloodAltar extends BloodMagicRecipe
 		buffer.writeInt(syphon);
 		buffer.writeInt(consumeRate);
 		buffer.writeInt(drainRate);
+	}
+
+	@Override
+	public IRecipeSerializer<RecipeBloodAltar> getSerializer()
+	{
+		return BloodMagicRecipeSerializers.ALTAR.getRecipeSerializer();
+	}
+
+	@Override
+	public IRecipeType<RecipeBloodAltar> getType()
+	{
+		return BloodMagicRecipeType.ALTAR;
 	}
 }

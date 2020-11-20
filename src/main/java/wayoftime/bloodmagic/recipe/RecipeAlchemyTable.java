@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.recipe;
+package wayoftime.bloodmagic.recipe;
 
 import java.util.List;
 
@@ -8,11 +8,15 @@ import javax.annotation.Nonnull;
 import com.google.common.base.Preconditions;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
+import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
+import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 
-public abstract class RecipeAlchemyTable extends BloodMagicRecipe
+public class RecipeAlchemyTable extends BloodMagicRecipe
 {
 	@Nonnull
 	private final List<Ingredient> input;
@@ -82,5 +86,17 @@ public abstract class RecipeAlchemyTable extends BloodMagicRecipe
 		buffer.writeInt(syphon);
 		buffer.writeInt(ticks);
 		buffer.writeInt(minimumTier);
+	}
+
+	@Override
+	public IRecipeSerializer<RecipeAlchemyTable> getSerializer()
+	{
+		return BloodMagicRecipeSerializers.ALCHEMYTABLE.getRecipeSerializer();
+	}
+
+	@Override
+	public IRecipeType<RecipeAlchemyTable> getType()
+	{
+		return BloodMagicRecipeType.ALCHEMYTABLE;
 	}
 }

@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.recipe;
+package wayoftime.bloodmagic.recipe;
 
 import java.util.List;
 
@@ -8,11 +8,15 @@ import javax.annotation.Nonnull;
 import com.google.common.base.Preconditions;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
+import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
+import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 
-public abstract class RecipeTartaricForge extends BloodMagicRecipe
+public class RecipeTartaricForge extends BloodMagicRecipe
 {
 	@Nonnull
 	private final List<Ingredient> input;
@@ -72,6 +76,17 @@ public abstract class RecipeTartaricForge extends BloodMagicRecipe
 		buffer.writeItemStack(output);
 		buffer.writeDouble(minimumSouls);
 		buffer.writeDouble(soulDrain);
+	}
 
+	@Override
+	public IRecipeSerializer<RecipeTartaricForge> getSerializer()
+	{
+		return BloodMagicRecipeSerializers.TARTARIC.getRecipeSerializer();
+	}
+
+	@Override
+	public IRecipeType<RecipeTartaricForge> getType()
+	{
+		return BloodMagicRecipeType.TARTARICFORGE;
 	}
 }
