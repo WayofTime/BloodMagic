@@ -9,13 +9,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import wayoftime.bloodmagic.api.item.IBindable;
 import wayoftime.bloodmagic.core.data.BMWorldSavedData;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.event.SoulNetworkEvent;
-import wayoftime.bloodmagic.api.item.IBindable;
 import wayoftime.bloodmagic.orb.BloodOrb;
 import wayoftime.bloodmagic.orb.IBloodOrb;
 
@@ -161,6 +161,9 @@ public class NetworkHelper
 			return false;
 
 		SoulNetwork network = getSoulNetwork(binding);
+		if (network == null)
+			return false;
+
 		return network.getCurrentEssence() >= toSyphon;
 	}
 

@@ -14,6 +14,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.thread.EffectiveSide;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
@@ -52,14 +53,21 @@ public class ItemLavaCrystal extends ItemBindableBase
 		if (binding == null)
 			return -1;
 
-//		if (NetworkHelper.syphonFromContainer(stack, SoulTicket.item(stack, 25)))
-		if (NetworkHelper.canSyphonFromContainer(stack, 50))
-			return 200;
-		else
+		if (EffectiveSide.get().isServer())
 		{
-			PlayerEntity player = PlayerHelper.getPlayerFromUUID(binding.getOwnerId());
-			if (player != null)
-				player.addPotionEffect(new EffectInstance(Effects.NAUSEA, 99));
+			if (NetworkHelper.canSyphonFromContainer(stack, 50))
+				return 200;
+			else
+			{
+				PlayerEntity player = PlayerHelper.getPlayerFromUUID(binding.getOwnerId());
+				if (player != null)
+				{
+					player.addPotionEffect(new EffectInstance(Effects.NAUSEA, 99));
+				}
+			}
+		} else
+		{
+			return 200;
 		}
 
 		return -1;
@@ -100,11 +108,9 @@ public class ItemLavaCrystal extends ItemBindableBase
 		if (!player.canPlayerEdit(pos, facing, itemstack))
 			return ActionResultType.FAIL;
 
-		if (context.getWorld().isAirBlock(pos)
-				&& NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, SoulTicket.item(player.getHeldItem(hand), 100)).isSuccess())
+		if (context.getWorld().isAirBlock(pos) && NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, SoulTicket.item(player.getHeldItem(hand), 100)).isSuccess())
 		{
-			context.getWorld().playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, random.nextFloat()
-					* 0.4F + 0.8F);
+			context.getWorld().playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 0.8F);
 			context.getWorld().setBlockState(pos, Blocks.FIRE.getDefaultState(), 11);
 		} else
 			return ActionResultType.FAIL;

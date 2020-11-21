@@ -6,8 +6,6 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemGroup;
@@ -37,7 +35,6 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import wayoftime.bloodmagic.client.ClientEvents;
 import wayoftime.bloodmagic.client.hud.Elements;
-import wayoftime.bloodmagic.client.model.MimicColor;
 import wayoftime.bloodmagic.client.model.MimicModelLoader;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.GeneratorBaseRecipes;
@@ -225,6 +222,7 @@ public class BloodMagic
 		packetHandler.initialize();
 	}
 
+//	@OnlyIn(Dist.CLIENT)
 	private void doClientStuff(final FMLClientSetupEvent event)
 	{
 		// do something that can only be done on the client
@@ -232,8 +230,6 @@ public class BloodMagic
 
 		ClientEvents.initClientEvents(event);
 		Elements.registerElements();
-		Minecraft.getInstance().getBlockColors().register(new MimicColor(), BloodMagicBlocks.MIMIC.get());
-		RenderTypeLookup.setRenderLayer(BloodMagicBlocks.MIMIC.get(), (RenderType) -> true);
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event)

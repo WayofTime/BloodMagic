@@ -22,13 +22,11 @@ public class PlayerHelper
 	public static PlayerEntity getPlayerFromId(UUID uuid)
 	{
 		// TODO: Need to find a reliable way to get whether the side is Client or Server
-//		if (FMLCommonHandler.instance().)
-//			return null;
-//
-//		World w;
-//		Dist d;
-//		
-//		if(ServerLifecycleHooks.getCurrentServer().get)
+
+		if (ServerLifecycleHooks.getCurrentServer() == null)
+		{
+			return null;
+		}
 
 		return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID(uuid);
 
@@ -58,7 +56,6 @@ public class PlayerHelper
 	 */
 	public static boolean isFakePlayer(PlayerEntity player)
 	{
-		return player instanceof FakePlayer
-				|| (player != null && knownFakePlayers.contains(player.getClass().getCanonicalName()));
+		return player instanceof FakePlayer || (player != null && knownFakePlayers.contains(player.getClass().getCanonicalName()));
 	}
 }
