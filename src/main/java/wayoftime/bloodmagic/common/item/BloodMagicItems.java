@@ -95,6 +95,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> MIMIC_ETHEREAL_ITEM = ITEMS.register("ethereal_mimic", () -> new ItemBlockMimic(BloodMagicBlocks.ETHEREAL_MIMIC.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> NETHE_SOIL_ITEM = ITEMS.register("nether_soil", () -> new BlockItem(BloodMagicBlocks.NETHER_SOIL.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> GROWING_DOUBT_ITEM = ITEMS.register("growing_doubt", () -> new BlockItem(BloodMagicBlocks.GROWING_DOUBT.get(), new Item.Properties().group(BloodMagic.TAB)));
 	// TODO: Need to rework the above instantiations for the ItemBlocks so that it's
 	// done with the Blocks.
 

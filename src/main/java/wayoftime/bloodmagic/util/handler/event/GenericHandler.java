@@ -5,15 +5,19 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BlockEvent.BlockToolInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.item.IBindable;
+import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.event.ItemBindEvent;
-import wayoftime.bloodmagic.api.item.IBindable;
 import wayoftime.bloodmagic.network.DemonAuraClientPacket;
 import wayoftime.bloodmagic.orb.BloodOrb;
 import wayoftime.bloodmagic.orb.IBloodOrb;
@@ -72,6 +76,15 @@ public class GenericHandler
 
 			if (orb.getTier() > network.getOrbTier())
 				network.setOrbTier(orb.getTier());
+		}
+	}
+
+	@SubscribeEvent
+	public void onHoe(BlockToolInteractEvent event)
+	{
+		if (event.getToolType() == ToolType.HOE && Tags.Blocks.NETHERRACK.contains(event.getState().getBlock()))
+		{
+			event.setFinalState(BloodMagicBlocks.NETHER_SOIL.get().getDefaultState());
 		}
 	}
 

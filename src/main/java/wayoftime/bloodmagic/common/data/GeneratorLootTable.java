@@ -13,6 +13,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.CropsBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.BlockLootTables;
@@ -129,12 +130,26 @@ public class GeneratorLootTable extends LootTableProvider
 			registerDropSelfLootTable(BloodMagicBlocks.MIMIC.get());
 			registerDropSelfLootTable(BloodMagicBlocks.ETHEREAL_MIMIC.get());
 
+			registerCropDropLootTable(BloodMagicBlocks.GROWING_DOUBT.get(), BloodMagicItems.WEAK_BLOOD_SHARD.get());
 		}
 
 		private void registerNoDropLootTable(Block block)
 		{
 			LootPool.Builder builder = LootPool.builder().name(block.getRegistryName().toString());
 			this.registerLootTable(block, LootTable.builder().addLootPool(builder));
+		}
+
+		private void registerCropDropLootTable(Block block, Item item)
+		{
+			LootTable.Builder builder = LootTable.builder();
+
+			for (int i = 0; i < 7; i++)
+			{
+				ILootCondition.IBuilder harvestAge = BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(CropsBlock.AGE, i));
+				builder = builder.addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(item).acceptFunction(SetCount.builder(ConstantRange.of(1))).acceptCondition(harvestAge)));
+			}
+
+			this.registerLootTable(block, builder);
 		}
 
 		private void registerDropCrystalsLootTable(Block block, Item item)

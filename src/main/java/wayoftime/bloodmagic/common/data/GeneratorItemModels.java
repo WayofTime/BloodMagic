@@ -85,6 +85,7 @@ public class GeneratorItemModels extends ItemModelProvider
 
 		registerCustomFullTexture(BloodMagicBlocks.MIMIC.get(), "solidopaquemimic");
 		registerCustomFullTexture(BloodMagicBlocks.ETHEREAL_MIMIC.get(), "etherealopaquemimic");
+		this.crop(BloodMagicBlocks.GROWING_DOUBT.get().getRegistryName().getPath(), modLoc("block/creeping_doubt_8"));
 	}
 
 	private void registerCustomFullTexture(Block block, String texturePath)
