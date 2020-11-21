@@ -109,6 +109,10 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("itemGroup.bloodmagictab", "Blood Magic");
 
+		add("tooltip.bloodmagic.experienceTome", "A book used to store experience");
+		add("tooltip.bloodmagic.experienceTome.exp", "Exp: %0.3f");
+		add("tooltip.bloodmagic.experienceTome.expLevel", "Level: %d");
+
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");
 		add("tooltip.bloodmagic.diviner.blankRune", "Blank Runes: %d");
@@ -453,6 +457,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.EXPLOSIVE_POWDER, "Explosive Powder");
 
 		addItem(BloodMagicItems.BASIC_CUTTING_FLUID, "Basic Cutting Fluid");
+
+		addItem(BloodMagicItems.EXPERIENCE_TOME, "Tome of Peritia");
 
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");

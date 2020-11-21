@@ -10,6 +10,9 @@ Version 3.0.1
 - Added a few WIP items that cannot be used yet - they're part of the D*$)@ D*#@(@* system that I'm adding for Tier 4.
 - Added the API - It's still in flux, so expect it to change very soon!
 - Probably forgot something important.
+- Fixed a crash for the Lava Crystal that made it blow up the Client if used on a server. No, that was not the intended purpose!
+- Added the Ritual Tinkerer for Rituals.
+- Added the "Tome of Peritia" again - stores EXP.
 
 
 ------------------------------------------------------

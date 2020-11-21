@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ses",
+    "lbl",
+    "gog"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:enchanted_book"
+    },
+    "s": {
+      "tag": "forge:string"
+    },
+    "e": {
+      "tag": "forge:storage_blocks/lapis"
+    },
+    "g": {
+      "tag": "forge:ingots/gold"
+    },
+    "l": {
+      "item": "bloodmagic:infusedslate"
+    },
+    "o": {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 3
+    }
+  },
+  "result": {
+    "item": "bloodmagic:experiencebook"
+  }
+}

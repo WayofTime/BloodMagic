@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:experience_tome"
+    ]
+  },
+  "criteria": {
+    "has_magician_orb": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:magicianbloodorb"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:experience_tome"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_magician_orb",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -128,6 +128,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DAGGER_OF_SACRIFICE = BASICITEMS.register("daggerofsacrifice", () -> new ItemDaggerOfSacrifice());
 	public static final RegistryObject<Item> LAVA_CRYSTAL = BASICITEMS.register("lavacrystal", () -> new ItemLavaCrystal());
 	public static final RegistryObject<Item> WEAK_BLOOD_SHARD = BASICITEMS.register("weakbloodshard", () -> new ItemBase());
+	public static final RegistryObject<Item> EXPERIENCE_TOME = BASICITEMS.register("experiencebook", () -> new ItemExperienceBook());
 
 	// Ritual stuffs
 	public static final RegistryObject<Item> WEAK_ACTIVATION_CRYSTAL = BASICITEMS.register("activationcrystalweak", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.WEAK));
