@@ -41,7 +41,7 @@ import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.api.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone
 {

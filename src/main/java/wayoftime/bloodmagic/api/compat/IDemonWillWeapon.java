@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.will;
+package wayoftime.bloodmagic.api.compat;
 
 import java.util.List;
 

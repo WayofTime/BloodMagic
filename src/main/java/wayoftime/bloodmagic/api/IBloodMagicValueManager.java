@@ -21,10 +21,10 @@ public interface IBloodMagicValueManager
 	 * @param entityId The registry name of the entity.
 	 * @param value    The amount of LP per health point to receive upon sacrifice.
 	 */
-	void setSacrificialValue(@Nonnull ResourceLocation entityId, @Nonnegative int value);
+	default void setSacrificialValue(@Nonnull ResourceLocation entityId, @Nonnegative int value) {}
 
 	/**
-	 * Sets the Tranquility value of a given {@link IBlockState}.
+	 * Sets the Tranquility value of a given {@link BlockState}.
 	 * <p>
 	 * Valid tranquility types:
 	 * <ul>
@@ -37,9 +37,9 @@ public interface IBloodMagicValueManager
 	 * <li>LAVA</li>
 	 * </ul>
 	 *
-	 * @param state           The {@link IBlockState} to set the value of.
+	 * @param state           The {@link BlockState} to set the value of.
 	 * @param tranquilityType The type of Tranquility this block should provide.
 	 * @param value           The amount of tranquility this block should provide.
 	 */
-	void setTranquility(@Nonnull BlockState state, @Nonnull String tranquilityType, double value);
+	default void setTranquility(@Nonnull BlockState state, @Nonnull String tranquilityType, double value) {}
 }

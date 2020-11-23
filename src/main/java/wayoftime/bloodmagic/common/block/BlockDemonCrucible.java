@@ -18,8 +18,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.tile.TileDemonCrucible;
 import wayoftime.bloodmagic.util.Utils;
-import wayoftime.bloodmagic.api.will.IDemonWillGem;
-import wayoftime.bloodmagic.api.will.IDiscreteDemonWill;
+import wayoftime.bloodmagic.api.compat.IDemonWillGem;
+import wayoftime.bloodmagic.api.compat.IDiscreteDemonWill;
 
 public class BlockDemonCrucible extends Block
 {

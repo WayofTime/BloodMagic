@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.incense;
+package wayoftime.bloodmagic.api.compat;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;

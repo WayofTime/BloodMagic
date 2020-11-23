@@ -33,7 +33,7 @@ import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.util.DamageSourceBloodMagic;
 import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.api.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 @RitualRegister("lava")
 public class RitualLava extends Ritual

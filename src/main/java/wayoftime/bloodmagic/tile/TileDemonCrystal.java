@@ -11,7 +11,7 @@ import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.tile.base.TileTicking;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.api.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class TileDemonCrystal extends TileTicking
 {

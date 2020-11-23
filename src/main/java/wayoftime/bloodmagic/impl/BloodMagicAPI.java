@@ -12,7 +12,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import wayoftime.bloodmagic.altar.ComponentType;
 import wayoftime.bloodmagic.api.IBloodMagicAPI;
-import wayoftime.bloodmagic.api.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.incense.EnumTranquilityType;
 import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
 import wayoftime.bloodmagic.incense.TranquilityStack;

@@ -32,7 +32,7 @@ import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.ItemDemonCrystal;
 import wayoftime.bloodmagic.tile.TileDemonCrystal;
-import wayoftime.bloodmagic.api.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
 public class BlockDemonCrystal extends Block

@@ -3,9 +3,9 @@ package wayoftime.bloodmagic.will;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import wayoftime.bloodmagic.api.will.EnumDemonWillType;
-import wayoftime.bloodmagic.api.will.IDemonWill;
-import wayoftime.bloodmagic.api.will.IDemonWillGem;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.IDemonWill;
+import wayoftime.bloodmagic.api.compat.IDemonWillGem;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
 /**

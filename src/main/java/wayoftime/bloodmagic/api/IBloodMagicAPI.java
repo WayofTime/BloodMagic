@@ -28,8 +28,8 @@ public interface IBloodMagicAPI
 		}
 		catch (ReflectiveOperationException e)
 		{
-			LogManager.getLogger().warn("Unable to find BloodMagicAPI, things will start breaking now...");
-			return null;
+			LogManager.getLogger().warn("Unable to find BloodMagicAPI, using a dummy instance instead...");
+			return new IBloodMagicAPI() {};
 		}
 	});
 //	/**
@@ -46,7 +46,10 @@ public interface IBloodMagicAPI
 	 * @return the active {@link IBloodMagicValueManager} instance
 	 */
 	@Nonnull
-	IBloodMagicValueManager getValueManager();
+	default IBloodMagicValueManager getValueManager()
+	{
+		return new IBloodMagicValueManager() {};
+	}
 
 	/**
 	 * Registers a {@link BlockState} as a given component for the Blood Altar.
@@ -64,7 +67,7 @@ public interface IBloodMagicAPI
 	 * @param state         The state to register
 	 * @param componentType The type of Blood Altar component to register as.
 	 */
-	void registerAltarComponent(@Nonnull BlockState state, @Nonnull String componentType);
+	default void registerAltarComponent(@Nonnull BlockState state, @Nonnull String componentType) {}
 
 	/**
 	 * Removes a {@link BlockState} from the component mappings
@@ -82,7 +85,7 @@ public interface IBloodMagicAPI
 	 * @param state         The state to unregister
 	 * @param componentType The type of Blood Altar component to unregister from.
 	 */
-	void unregisterAltarComponent(@Nonnull BlockState state, @Nonnull String componentType);
+	default void unregisterAltarComponent(@Nonnull BlockState state, @Nonnull String componentType) {}
 
 	/**
 	 * Registers a {@link Predicate<BlockState>} for tranquility handling
@@ -102,7 +105,7 @@ public interface IBloodMagicAPI
 	 * @param tranquilityType Tranquility type that the handler holds
 	 * @param value The amount of tranquility that the handler has
 	 */
-	void registerTranquilityHandler(Predicate<BlockState> predicate, String tranquilityType, double value);
+	default void registerTranquilityHandler(Predicate<BlockState> predicate, String tranquilityType, double value) {}
 
 	/**
 	 * Gets the total Will that a Player contains
@@ -116,5 +119,8 @@ public interface IBloodMagicAPI
 	 * <li>STEADFAST</li>
 	 * </ul>
 	 */
-	double getTotalDemonWill(String willType, PlayerEntity player);
+	default double getTotalDemonWill(String willType, PlayerEntity player)
+	{
+		return 0;
+	}
 }

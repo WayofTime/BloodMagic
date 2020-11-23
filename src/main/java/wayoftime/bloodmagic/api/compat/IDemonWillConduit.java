@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.will;
+package wayoftime.bloodmagic.api.compat;
 
 /**
  * Implement this interface on a Block that can accept and store Demonic Will.

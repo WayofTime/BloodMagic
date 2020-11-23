@@ -18,7 +18,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import wayoftime.bloodmagic.altar.IBloodAltar;
 import wayoftime.bloodmagic.core.data.Binding;
-import wayoftime.bloodmagic.api.item.IAltarReader;
+import wayoftime.bloodmagic.api.compat.IAltarReader;
 import wayoftime.bloodmagic.tile.TileIncenseAltar;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
