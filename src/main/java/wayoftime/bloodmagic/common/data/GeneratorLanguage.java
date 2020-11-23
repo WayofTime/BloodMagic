@@ -109,6 +109,10 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("itemGroup.bloodmagictab", "Blood Magic");
 
+		add("tooltip.bloodmagic.experienceTome", "A book used to store experience");
+		add("tooltip.bloodmagic.experienceTome.exp", "Exp: %0.3f");
+		add("tooltip.bloodmagic.experienceTome.expLevel", "Level: %d");
+
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");
 		add("tooltip.bloodmagic.diviner.blankRune", "Blank Runes: %d");
@@ -454,6 +458,8 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addItem(BloodMagicItems.BASIC_CUTTING_FLUID, "Basic Cutting Fluid");
 
+		addItem(BloodMagicItems.EXPERIENCE_TOME, "Tome of Peritia");
+
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");
 
@@ -461,16 +467,19 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.COAL_SAND, "Coal Sand");
 		addItem(BloodMagicItems.IRON_SAND, "Iron Sand");
 		addItem(BloodMagicItems.GOLD_SAND, "Gold Sand");
+		addItem(BloodMagicItems.NETHERITE_SCRAP_SAND, "Netherite Scrap Sand");
 		addItem(BloodMagicItems.SULFUR, "Sulfur");
 		addItem(BloodMagicItems.SALTPETER, "Saltpeter");
 
 		// Fragments
 		addItem(BloodMagicItems.IRON_FRAGMENT, "Iron Ore Fragment");
 		addItem(BloodMagicItems.GOLD_FRAGMENT, "Gold Ore Fragment");
+		addItem(BloodMagicItems.NETHERITE_SCRAP_FRAGMENT, "Ancient Debris Fragment");
 
 		// Gravels
 		addItem(BloodMagicItems.IRON_GRAVEL, "Iron Gravel");
 		addItem(BloodMagicItems.GOLD_GRAVEL, "Gold Gravel");
+		addItem(BloodMagicItems.NETHERITE_SCRAP_GRAVEL, "Ancient Debris Gravel");
 
 //		addItem(BloodMagicItems , "");
 

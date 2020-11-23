@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "sss",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "tag": "bloodmagic:tiny_dusts/corrupted"
+    }
+  },
+  "result": {
+    "item": "bloodmagic:corrupted_dust"
+  }
+}

@@ -1,11 +1,13 @@
 package wayoftime.bloodmagic.common.data;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.CropsBlock;
 import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.WallBlock;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
@@ -57,6 +59,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildCubeAll(BloodMagicBlocks.EARTH_RITUAL_STONE.get());
 		buildCubeAll(BloodMagicBlocks.DUSK_RITUAL_STONE.get());
 		buildCubeAll(BloodMagicBlocks.DAWN_RITUAL_STONE.get());
+		buildFarmland(BloodMagicBlocks.NETHER_SOIL.get(), BloodMagic.rl("block/nether_soil"), new ResourceLocation("block/netherrack"));
 
 		buildFurnace(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get());
 
@@ -85,12 +88,33 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildCubeAllWithTextureName("solidclearmimic");
 		buildCubeAllWithTextureName("solidlightmimic");
 		buildCubeAllWithTextureName("solidopaquemimic");
+
+		buildCrop(BloodMagicBlocks.GROWING_DOUBT.get(), CropsBlock.AGE, 7, BloodMagic.rl("block/creeping_doubt_1"), BloodMagic.rl("block/creeping_doubt_2"), BloodMagic.rl("block/creeping_doubt_3"), BloodMagic.rl("block/creeping_doubt_4"), BloodMagic.rl("block/creeping_doubt_5"), BloodMagic.rl("block/creeping_doubt_6"), BloodMagic.rl("block/creeping_doubt_7"), BloodMagic.rl("block/creeping_doubt_8"));
 	}
 
-//	private void buildCustomLoader(Block block)
-//	{
-//		ModelFile modelFile = models().crop("", null);
-//	}
+	private void buildCrop(Block block, IntegerProperty prop, int maxAge, ResourceLocation... textures)
+	{
+		String basePath = block.getRegistryName().getPath();
+		VariantBlockStateBuilder builder = getVariantBuilder(block);
+
+		for (int i = 0; i <= maxAge; i++)
+		{
+			ModelFile modelFile = models().crop(basePath + "_" + (i + 1), textures[i]);
+			builder.partialState().with(prop, i).modelForState().modelFile(modelFile).addModel();
+		}
+	}
+
+	private void buildFarmland(Block block, ResourceLocation top, ResourceLocation side)
+	{
+		String basePath = block.getRegistryName().getPath();
+		getVariantBuilder(block).forAllStates(state -> {
+			Builder builder = ConfiguredModel.builder();
+
+			ModelFile file = models().withExistingParent(basePath, "template_farmland").texture("top", top).texture("dirt", side);
+
+			return builder.modelFile(file).build();
+		});
+	}
 
 	private void buildCubeAllWithTextureName(String texture)
 	{

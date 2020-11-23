@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:smelting/ingot_hellforged"
+    ]
+  },
+  "criteria": {
+    "has_hellforged_dust": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:sand_hellforged"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:smelting/ingot_hellforged"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_hellforged_dust",
+      "has_the_recipe"
+    ]
+  ]
+}

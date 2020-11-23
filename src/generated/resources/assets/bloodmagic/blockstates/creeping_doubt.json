@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "bloodmagic:block/creeping_doubt_1"
+    },
+    "age=1": {
+      "model": "bloodmagic:block/creeping_doubt_2"
+    },
+    "age=2": {
+      "model": "bloodmagic:block/creeping_doubt_3"
+    },
+    "age=3": {
+      "model": "bloodmagic:block/creeping_doubt_4"
+    },
+    "age=4": {
+      "model": "bloodmagic:block/creeping_doubt_5"
+    },
+    "age=5": {
+      "model": "bloodmagic:block/creeping_doubt_6"
+    },
+    "age=6": {
+      "model": "bloodmagic:block/creeping_doubt_7"
+    },
+    "age=7": {
+      "model": "bloodmagic:block/creeping_doubt_8"
+    }
+  }
+}

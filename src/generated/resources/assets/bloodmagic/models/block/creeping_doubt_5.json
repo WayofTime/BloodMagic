@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "bloodmagic:block/creeping_doubt_5"
+  }
+}

@@ -161,6 +161,9 @@ public class NetworkHelper
 			return false;
 
 		SoulNetwork network = getSoulNetwork(binding);
+		if (network == null)
+			return false;
+
 		return network.getCurrentEssence() >= toSyphon;
 	}
 

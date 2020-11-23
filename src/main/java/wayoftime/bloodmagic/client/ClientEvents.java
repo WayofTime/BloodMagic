@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.client;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -18,6 +19,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.client.model.MimicColor;
 import wayoftime.bloodmagic.client.render.block.RenderAlchemyArray;
 import wayoftime.bloodmagic.client.render.block.RenderAltar;
 import wayoftime.bloodmagic.client.render.block.RenderDemonCrucible;
@@ -65,6 +67,7 @@ public class ClientEvents
 		DeferredWorkQueue.runLater(() -> {
 			RenderType rendertype = RenderType.getCutoutMipped();
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.ALCHEMY_TABLE.get(), rendertype);
+			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.GROWING_DOUBT.get(), rendertype);
 
 			ClientEvents.registerContainerScreens();
 
@@ -90,6 +93,9 @@ public class ClientEvents
 					return ((ItemSentientSword) stack.getItem()).getActivated(stack) ? 1 : 0;
 				}
 			});
+
+			Minecraft.getInstance().getBlockColors().register(new MimicColor(), BloodMagicBlocks.MIMIC.get());
+			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.MIMIC.get(), (RenderType) -> true);
 		});
 	}
 

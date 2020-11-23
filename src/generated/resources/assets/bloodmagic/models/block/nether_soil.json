@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_farmland",
+  "textures": {
+    "top": "bloodmagic:block/nether_soil",
+    "dirt": "minecraft:block/netherrack"
+  }
+}

@@ -37,7 +37,8 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 	private void addVanillaRecipes(Consumer<IFinishedRecipe> consumer)
 	{
 //		ConditionalRecipe.builder().addRecipe(ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.SACRIFICIAL_DAGGER.get()).key('g', Tags.Items.GLASS).key('G', Tags.Items.INGOTS_GOLD).key('i', Tags.Items.INGOTS_IRON).patternLine("ggg").patternLine(" Gg").patternLine("i g").addCriterion("has_glass", hasItem(Items.GLASS))::build);
-
+		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.CORRUPTED_DUST.get()).key('s', BloodMagicTags.TINYDUST_CORRUPTED).patternLine("sss").patternLine("sss").patternLine("sss").addCriterion("has_tiny", hasItem(BloodMagicItems.CORRUPTED_DUST_TINY.get())).build(consumer, BloodMagic.rl("corrupted_dust"));
+		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.HELLFORGED_BLOCK.get()).key('s', BloodMagicTags.INGOT_HELLFORGED).patternLine("sss").patternLine("sss").patternLine("sss").addCriterion("has_hellforged", hasItem(BloodMagicItems.HELLFORGED_INGOT.get())).build(consumer, BloodMagic.rl("hellforged_block"));
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.SACRIFICIAL_DAGGER.get()).key('g', Tags.Items.GLASS).key('G', Tags.Items.INGOTS_GOLD).key('i', Tags.Items.INGOTS_IRON).patternLine("ggg").patternLine(" Gg").patternLine("i g").addCriterion("has_glass", hasItem(Items.GLASS)).build(consumer, BloodMagic.rl("sacrificial_dagger"));
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.BLOOD_ALTAR.get()).key('a', Tags.Items.STONE).key('b', Items.FURNACE).key('c', Tags.Items.INGOTS_GOLD).key('d', BloodMagicItems.MONSTER_SOUL_RAW.get()).patternLine("a a").patternLine("aba").patternLine("cdc").addCriterion("has_will", hasItem(BloodMagicItems.MONSTER_SOUL_RAW.get())).build(consumer, BloodMagic.rl("blood_altar"));
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.SOUL_FORGE.get()).key('s', Tags.Items.STONE).key('g', Tags.Items.INGOTS_GOLD).key('i', Tags.Items.INGOTS_IRON).key('o', Tags.Items.STORAGE_BLOCKS_IRON).patternLine("i i").patternLine("sgs").patternLine("sos").addCriterion("has_gold", hasItem(Items.GOLD_INGOT)).build(consumer, BloodMagic.rl("soul_forge"));
@@ -57,6 +58,8 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 		String basePath = "smelting/";
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(BloodMagicTags.DUST_IRON), Items.IRON_INGOT, 0, 200).addCriterion("has_iron_sand", hasItem(BloodMagicItems.IRON_SAND.get())).build(consumer, BloodMagic.rl(basePath + "ingot_iron"));
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(BloodMagicTags.DUST_GOLD), Items.GOLD_INGOT, 0, 200).addCriterion("has_gold_sand", hasItem(BloodMagicItems.GOLD_SAND.get())).build(consumer, BloodMagic.rl(basePath + "ingot_gold"));
+		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(BloodMagicTags.DUST_NETHERITE_SCRAP), Items.NETHERITE_SCRAP, 0, 200).addCriterion("has_netherite_dust", hasItem(BloodMagicItems.NETHERITE_SCRAP_SAND.get())).build(consumer, BloodMagic.rl(basePath + "ingot_netherite_scrap"));
+		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(BloodMagicTags.DUST_HELLFORGED), BloodMagicItems.HELLFORGED_INGOT.get(), 0, 200).addCriterion("has_hellforged_dust", hasItem(BloodMagicItems.HELLFORGED_SAND.get())).build(consumer, BloodMagic.rl(basePath + "ingot_hellforged"));
 	}
 
 	private void addBloodOrbRecipes(Consumer<IFinishedRecipe> consumer)
@@ -90,6 +93,9 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 		ShapelessRecipeBuilder.shapelessRecipe(BloodMagicBlocks.WORN_STONE_PATH.get(), 4).addIngredient(BloodMagicBlocks.STONE_PATH.get()).addIngredient(BloodMagicBlocks.STONE_PATH.get()).addIngredient(BloodMagicBlocks.STONE_PATH.get()).addIngredient(BloodMagicBlocks.STONE_PATH.get()).addIngredient(IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_MASTER.get())).addCriterion("has_master_orb", hasItem(BloodMagicItems.MASTER_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("path/path_wornstone"));
 
 		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.RITUAL_READER.get()).key('s', BloodMagicItems.DEMONIC_SLATE.get()).key('g', Tags.Items.GLASS).key('i', Tags.Items.INGOTS_GOLD).key('o', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_MASTER.get())).patternLine("gog").patternLine("isi").patternLine(" s ").addCriterion("has_master_orb", hasItem(BloodMagicItems.MASTER_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("ritual_reader"));
+
+		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.EXPERIENCE_TOME.get()).key('b', Items.ENCHANTED_BOOK).key('s', Tags.Items.STRING).key('e', Tags.Items.STORAGE_BLOCKS_LAPIS).key('g', Tags.Items.INGOTS_GOLD).key('l', BloodMagicItems.IMBUED_SLATE.get()).key('o', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_MAGICIAN.get())).patternLine("ses").patternLine("lbl").patternLine("gog").addCriterion("has_magician_orb", hasItem(BloodMagicItems.MAGICIAN_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("experience_tome"));
+//		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.MIMIC.get()).key('b', itemIn)
 //		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.SPEED_RUNE.get()).key('s', Items.GLASS).key('o', Ingredient.fromItems(Items.DIAMOND)).patternLine("sss").patternLine("sos").patternLine("sss").addCriterion("has_diamond", hasItem(Items.DIAMOND)).build(consumer, new ResourceLocation(BloodMagic.MODID, "speed_rune_from_standard"));
 //		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.SPEED_RUNE.get()).key('s', Items.GLASS).key('o', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_WEAK.get())).patternLine("sss").patternLine("sos").patternLine("sss").addCriterion("has_diamond", hasItem(Items.DIAMOND)).build(consumer, new ResourceLocation(BloodMagic.MODID, "speed_rune_from_orb"));
 	}

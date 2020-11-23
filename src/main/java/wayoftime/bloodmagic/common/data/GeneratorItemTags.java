@@ -23,6 +23,7 @@ public class GeneratorItemTags extends ItemTagsProvider
 	@Override
 	public void registerTags()
 	{
+		registerIngots();
 		registerOres();
 		registerDusts();
 		registerFragments();
@@ -58,6 +59,11 @@ public class GeneratorItemTags extends ItemTagsProvider
 
 	}
 
+	private void registerIngots()
+	{
+		getOrCreateBuilder(BloodMagicTags.INGOT_HELLFORGED).add(BloodMagicItems.HELLFORGED_INGOT.get());
+	}
+
 	private void registerOres()
 	{
 		getOrCreateBuilder(BloodMagicTags.ORE_COPPER);
@@ -72,18 +78,24 @@ public class GeneratorItemTags extends ItemTagsProvider
 		getOrCreateBuilder(BloodMagicTags.DUST_IRON).add(BloodMagicItems.IRON_SAND.get());
 		getOrCreateBuilder(BloodMagicTags.DUST_GOLD).add(BloodMagicItems.GOLD_SAND.get());
 		getOrCreateBuilder(BloodMagicTags.DUST_COAL).add(BloodMagicItems.COAL_SAND.get());
+		getOrCreateBuilder(BloodMagicTags.DUST_NETHERITE_SCRAP).add(BloodMagicItems.NETHERITE_SCRAP_SAND.get());
+		getOrCreateBuilder(BloodMagicTags.DUST_HELLFORGED).add(BloodMagicItems.HELLFORGED_SAND.get());
+		getOrCreateBuilder(BloodMagicTags.DUST_CORRUPTED).add(BloodMagicItems.CORRUPTED_DUST.get());
+		getOrCreateBuilder(BloodMagicTags.TINYDUST_CORRUPTED).add(BloodMagicItems.CORRUPTED_DUST_TINY.get());
 	}
 
 	private void registerFragments()
 	{
 		getOrCreateBuilder(BloodMagicTags.FRAGMENT_IRON).add(BloodMagicItems.IRON_FRAGMENT.get());
 		getOrCreateBuilder(BloodMagicTags.FRAGMENT_GOLD).add(BloodMagicItems.GOLD_FRAGMENT.get());
+		getOrCreateBuilder(BloodMagicTags.FRAGMENT_NETHERITE_SCRAP).add(BloodMagicItems.NETHERITE_SCRAP_FRAGMENT.get());
 	}
 
 	private void registerGravels()
 	{
 		getOrCreateBuilder(BloodMagicTags.GRAVEL_IRON).add(BloodMagicItems.IRON_GRAVEL.get());
 		getOrCreateBuilder(BloodMagicTags.GRAVEL_GOLD).add(BloodMagicItems.GOLD_GRAVEL.get());
+		getOrCreateBuilder(BloodMagicTags.GRAVEL_NETHERITE_SCRAP).add(BloodMagicItems.NETHERITE_SCRAP_GRAVEL.get());
 	}
 
 	private void registerFurnaceCells()

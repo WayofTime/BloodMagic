@@ -79,7 +79,7 @@
    	},
    	{
    	  "type": "text",
-   	  "text": "To upgrade the Blood Altar to Tier 4, place 9 $(item) Blood Runes$() one block down and two blocks away from the previous set of runes along each edge. Then place four solid blocks in each corner, starting above the new ring of runes, and then cap each pillar with $(item)Bloodstone Bricks$() and/or $(item)Large Bloodstone Bricks$()."
+   	  "text": "To upgrade the Blood Altar to Tier 4, place 7 $(item) Blood Runes$() one block down and two blocks away from the previous set of runes along each edge. Then place four solid blocks in each corner, starting above the new ring of runes, and then cap each pillar with $(item)Bloodstone Bricks$() and/or $(item)Large Bloodstone Bricks$()."
    	},
     {
    	  "type": "image",
@@ -89,7 +89,7 @@
    	  ],
    	  "title": "Tier 4 Altar",
    	  "border": true,
-   	  "text": "The Tier 4 Blood Altar, which has 64 total runes."
+   	  "text": "The Tier 4 Blood Altar, which has 56 total runes."
    	}
   ]
 }

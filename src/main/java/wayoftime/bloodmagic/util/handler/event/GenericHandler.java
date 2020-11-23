@@ -1,14 +1,26 @@
 package wayoftime.bloodmagic.util.handler.event;
 
+import java.util.Map.Entry;
+
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
+import net.minecraftforge.event.world.BlockEvent.BlockToolInteractEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.item.ItemExperienceBook;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
@@ -73,6 +85,57 @@ public class GenericHandler
 			if (orb.getTier() > network.getOrbTier())
 				network.setOrbTier(orb.getTier());
 		}
+	}
+
+	@SubscribeEvent
+	public void onHoe(BlockToolInteractEvent event)
+	{
+		if (event.getToolType() == ToolType.HOE && Tags.Blocks.NETHERRACK.contains(event.getState().getBlock()))
+		{
+			event.setFinalState(BloodMagicBlocks.NETHER_SOIL.get().getDefaultState());
+		}
+	}
+
+	// Experience Tome
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onExperiencePickup(PlayerXpEvent.PickupXp event)
+	{
+		PlayerEntity player = event.getPlayer();
+		Entry<EquipmentSlotType, ItemStack> entry = EnchantmentHelper.getRandomItemWithEnchantment(Enchantments.MENDING, player);
+
+		if (entry != null)
+		{
+			ItemStack itemStack = entry.getValue();
+			if (!itemStack.isEmpty() && itemStack.isDamaged())
+			{
+				int i = Math.min(xpToDurability(event.getOrb().xpValue), itemStack.getDamage());
+				event.getOrb().xpValue -= durabilityToXp(i);
+				itemStack.setDamage(itemStack.getDamage() - i);
+			}
+		}
+
+		if (!player.getEntityWorld().isRemote)
+		{
+			for (ItemStack stack : player.inventory.mainInventory)
+			{
+				if (stack.getItem() instanceof ItemExperienceBook)
+				{
+					ItemExperienceBook.addExperience(stack, event.getOrb().xpValue);
+					event.getOrb().xpValue = 0;
+					break;
+				}
+			}
+		}
+	}
+
+	private static int xpToDurability(int xp)
+	{
+		return xp * 2;
+	}
+
+	private static int durabilityToXp(int durability)
+	{
+		return durability / 2;
 	}
 
 	public static void sendPlayerDemonWillAura(PlayerEntity player)
