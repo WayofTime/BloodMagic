@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.ItemActivationCrystal;
-import wayoftime.bloodmagic.api.item.IBindable;
+import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.util.helper.RitualHelper;

@@ -8,9 +8,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
+/**
+ * Wrapper for any interactions with the SoulNetwork
+ * Contains a description on what the interaction is and any extra data
+ */
 public class SoulTicket
 {
-
 	private static final ITextComponent EMPTY = new StringTextComponent("");
 
 	private final ITextComponent description;

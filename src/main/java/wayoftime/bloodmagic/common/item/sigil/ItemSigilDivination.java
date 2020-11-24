@@ -16,10 +16,9 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import wayoftime.bloodmagic.api.tile.IBloodAltar;
+import wayoftime.bloodmagic.altar.IBloodAltar;
 import wayoftime.bloodmagic.core.data.Binding;
-import wayoftime.bloodmagic.api.item.IAltarReader;
-import wayoftime.bloodmagic.api.item.ISigil;
+import wayoftime.bloodmagic.api.compat.IAltarReader;
 import wayoftime.bloodmagic.tile.TileIncenseAltar;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
@@ -72,7 +71,7 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 					if (tile != null && tile instanceof IBloodAltar)
 					{
 						IBloodAltar altar = (IBloodAltar) tile;
-						int tier = altar.getTier().ordinal() + 1;
+						int tier = altar.getTier();
 						int currentEssence = altar.getCurrentBlood();
 						int capacity = altar.getCapacity();
 						altar.checkTier();

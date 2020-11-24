@@ -20,13 +20,13 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.api.recipe.RecipeBloodAltar;
+import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.block.enums.BloodRuneType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.core.data.Binding;
-import wayoftime.bloodmagic.api.item.IBindable;
-import wayoftime.bloodmagic.orb.BloodOrb;
-import wayoftime.bloodmagic.orb.IBloodOrb;
+import wayoftime.bloodmagic.common.item.IBindable;
+import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
@@ -201,7 +201,7 @@ public class BloodAltar// implements IFluidHandler
 			RecipeBloodAltar recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getBloodAltar(tileAltar.getWorld(), input);
 			if (recipe != null)
 			{
-				if (recipe.getMinimumTier().ordinal() <= altarTier.ordinal())
+				if (recipe.getMinimumTier() <= altarTier.ordinal())
 				{
 					this.isActive = true;
 					this.recipe = recipe;

@@ -36,12 +36,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.BMItemTier;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
-import wayoftime.bloodmagic.api.item.IMultiWillTool;
+import wayoftime.bloodmagic.api.compat.IMultiWillTool;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
-import wayoftime.bloodmagic.will.IDemonWill;
-import wayoftime.bloodmagic.will.IDemonWillWeapon;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.IDemonWill;
+import wayoftime.bloodmagic.api.compat.IDemonWillWeapon;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
 public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon, IMultiWillTool

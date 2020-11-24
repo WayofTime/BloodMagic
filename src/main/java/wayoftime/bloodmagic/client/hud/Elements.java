@@ -31,7 +31,7 @@ public class Elements
 				// Current tier
 				information.accept(Pair.of(new Sprite(new ResourceLocation(BloodMagic.MODID, "textures/gui/widgets.png"), 0, 46, 16, 16), altar -> altar == null
 						? "IV"
-						: NumeralHelper.toRoman(altar.getTier().toInt())));
+						: NumeralHelper.toRoman(altar.getTier())));
 				// Stored/Capacity
 				information.accept(Pair.of(new Sprite(new ResourceLocation(BloodMagic.MODID, "textures/gui/widgets.png"), 16, 46, 16, 16), altar -> String.format("%d/%d", altar == null
 						? 0
@@ -47,7 +47,7 @@ public class Elements
 				// Current tier
 				information.accept(Pair.of(new Sprite(new ResourceLocation(BloodMagic.MODID, "textures/gui/widgets.png"), 0, 46, 16, 16), altar -> altar == null
 						? "IV"
-						: NumeralHelper.toRoman(altar.getTier().toInt())));
+						: NumeralHelper.toRoman(altar.getTier())));
 				// Stored/Capacity
 				information.accept(Pair.of(new Sprite(new ResourceLocation(BloodMagic.MODID, "textures/gui/widgets.png"), 16, 46, 16, 16), altar -> String.format("%d/%d", altar == null
 						? 0

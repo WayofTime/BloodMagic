@@ -27,7 +27,7 @@ import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.event.RitualEvent;
-import wayoftime.bloodmagic.api.item.IBindable;
+import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumReaderBoundaries;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
@@ -41,7 +41,7 @@ import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone
 {

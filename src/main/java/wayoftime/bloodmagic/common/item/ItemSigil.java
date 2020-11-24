@@ -11,8 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.core.data.Binding;
-import wayoftime.bloodmagic.api.item.IBindable;
-import wayoftime.bloodmagic.api.item.ISigil;
+import wayoftime.bloodmagic.common.item.sigil.ISigil;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 

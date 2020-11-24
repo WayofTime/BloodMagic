@@ -13,8 +13,8 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.tile.TileSoulForge;
-import wayoftime.bloodmagic.will.IDemonWill;
-import wayoftime.bloodmagic.will.IDemonWillGem;
+import wayoftime.bloodmagic.api.compat.IDemonWill;
+import wayoftime.bloodmagic.api.compat.IDemonWillGem;
 
 public class ContainerSoulForge extends Container
 {

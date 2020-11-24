@@ -21,8 +21,6 @@ import net.minecraftforge.common.extensions.IForgeItem;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
-import wayoftime.bloodmagic.orb.BloodOrb;
-import wayoftime.bloodmagic.orb.IBloodOrb;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 

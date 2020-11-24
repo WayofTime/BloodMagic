@@ -9,7 +9,6 @@ public enum ComponentType
 {
 	GLOWSTONE, BLOODSTONE, BEACON, BLOODRUNE, CRYSTAL, NOTAIR;
 
-	public static final ComponentType[] VALUES = values();
 	private static final String BASE = "chat.bloodmagic.altar.comp.";
 	private String key;
 
@@ -21,5 +20,18 @@ public enum ComponentType
 	public String getKey()
 	{
 		return key;
+	}
+
+	public static ComponentType getType(String type)
+	{
+		for (ComponentType t : values())
+		{
+			if (t.name().equalsIgnoreCase(type))
+			{
+				return t;
+			}
+		}
+
+		return null;
 	}
 }

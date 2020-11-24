@@ -14,7 +14,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.altar.AltarTier;
 import wayoftime.bloodmagic.altar.BloodAltar;
-import wayoftime.bloodmagic.api.tile.IBloodAltar;
+import wayoftime.bloodmagic.altar.IBloodAltar;
 
 public class TileAltar extends TileInventory implements IBloodAltar, ITickableTileEntity
 {
@@ -86,9 +86,9 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 	}
 
 	@Override
-	public AltarTier getTier()
+	public int getTier()
 	{
-		return bloodAltar.getTier();
+		return bloodAltar.getTier().toInt();
 	}
 
 	@Override

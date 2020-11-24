@@ -55,7 +55,6 @@ import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.impl.BloodMagicCorePlugin;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
-import wayoftime.bloodmagic.registry.ModTranquilityHandlers;
 import wayoftime.bloodmagic.ritual.RitualManager;
 import wayoftime.bloodmagic.structures.ModDungeons;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
@@ -133,7 +132,6 @@ public class BloodMagic
 		ModLoadingContext context = ModLoadingContext.get();
 		context.registerConfig(ModConfig.Type.CLIENT, ConfigManager.CLIENT_SPEC);
 
-		ModTranquilityHandlers.init();
 		ModDungeons.init();
 	}
 

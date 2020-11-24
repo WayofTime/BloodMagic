@@ -19,13 +19,13 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.api.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
 import wayoftime.bloodmagic.util.Constants;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
-import wayoftime.bloodmagic.will.IDemonWill;
-import wayoftime.bloodmagic.will.IDemonWillConduit;
-import wayoftime.bloodmagic.will.IDemonWillGem;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.IDemonWill;
+import wayoftime.bloodmagic.api.compat.IDemonWillConduit;
+import wayoftime.bloodmagic.api.compat.IDemonWillGem;
 
 public class TileSoulForge extends TileInventory
 		implements ITickableTileEntity, INamedContainerProvider, IDemonWillConduit

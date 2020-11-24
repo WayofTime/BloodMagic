@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import net.minecraft.nbt.CompoundNBT;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class DemonWillHolder
 {

@@ -3,6 +3,11 @@ package wayoftime.bloodmagic.api;
 import javax.annotation.Nonnull;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.LazyValue;
+import org.apache.logging.log4j.LogManager;
+
+import java.util.function.Predicate;
 
 /**
  * The main interface between a plugin and Blood Magic's internals.
@@ -11,12 +16,22 @@ import net.minecraft.block.BlockState;
  * Magic. More advanced integration is out of the scope of this API and are
  * considered "addons".
  *
- * To get an instance of this without actually creating an
- * {@link IBloodMagicPlugin}, use {@link BloodMagicPlugin.Inject}.
+ * Use INSTANCE to get an instance of the API without actually implementing anything
  */
 public interface IBloodMagicAPI
 {
-
+	LazyValue<IBloodMagicAPI> INSTANCE = new LazyValue<>(() ->
+	{
+		try
+		{
+			return (IBloodMagicAPI) Class.forName("wayoftime.bloodmagic.impl.BloodMagicAPI").getDeclaredField("INSTANCE").get(null);
+		}
+		catch (ReflectiveOperationException e)
+		{
+			LogManager.getLogger().warn("Unable to find BloodMagicAPI, using a dummy instance instead...");
+			return new IBloodMagicAPI() {};
+		}
+	});
 //	/**
 //	 * Retrieves the instance of the blacklist.
 //	 *
@@ -26,23 +41,18 @@ public interface IBloodMagicAPI
 //	IBloodMagicBlacklist getBlacklist();
 
 	/**
-	 * Retrieves the instance of the recipe registrar.
-	 *
-	 * @return the active {@link IBloodMagicRecipeRegistrar} instance
-	 */
-	@Nonnull
-	IBloodMagicRecipeRegistrar getRecipeRegistrar();
-
-	/**
 	 * Retrieves the instance of the value manager.
 	 *
 	 * @return the active {@link IBloodMagicValueManager} instance
 	 */
 	@Nonnull
-	IBloodMagicValueManager getValueManager();
+	default IBloodMagicValueManager getValueManager()
+	{
+		return new IBloodMagicValueManager() {};
+	}
 
 	/**
-	 * Registers an {@link IBlockState} as a given component for the Blood Altar.
+	 * Registers a {@link BlockState} as a given component for the Blood Altar.
 	 * <p>
 	 * Valid component types:
 	 * <ul>
@@ -57,10 +67,10 @@ public interface IBloodMagicAPI
 	 * @param state         The state to register
 	 * @param componentType The type of Blood Altar component to register as.
 	 */
-	void registerAltarComponent(@Nonnull BlockState state, @Nonnull String componentType);
+	default void registerAltarComponent(@Nonnull BlockState state, @Nonnull String componentType) {}
 
 	/**
-	 * Removes an {@link IBlockState} from the component mappings
+	 * Removes a {@link BlockState} from the component mappings
 	 * <p>
 	 * Valid component types:
 	 * <ul>
@@ -75,6 +85,42 @@ public interface IBloodMagicAPI
 	 * @param state         The state to unregister
 	 * @param componentType The type of Blood Altar component to unregister from.
 	 */
-	void unregisterAltarComponent(@Nonnull BlockState state, @Nonnull String componentType);
+	default void unregisterAltarComponent(@Nonnull BlockState state, @Nonnull String componentType) {}
 
+	/**
+	 * Registers a {@link Predicate<BlockState>} for tranquility handling
+	 * <p>
+	 * Valid tranquility types:
+	 * <ul>
+	 * <li>PLANT</li>
+	 * <li>CROP</li>
+	 * <li>TREE</li>
+	 * <li>EARTHEN</li>
+	 * <li>WATER</li>
+	 * <li>FIRE</li>
+	 * <li>LAVA</li>
+	 * </ul>
+	 *
+	 * @param predicate Predicate to be used for the handler (goes to ITranquilityHandler)
+	 * @param tranquilityType Tranquility type that the handler holds
+	 * @param value The amount of tranquility that the handler has
+	 */
+	default void registerTranquilityHandler(Predicate<BlockState> predicate, String tranquilityType, double value) {}
+
+	/**
+	 * Gets the total Will that a Player contains
+	 * <p>
+	 * Valid tranquility types:
+	 * <ul>
+	 * <li>DEFAULT</li>
+	 * <li>CORROSIVE</li>
+	 * <li>DESTRUCTIVE</li>
+	 * <li>VENGEFUL</li>
+	 * <li>STEADFAST</li>
+	 * </ul>
+	 */
+	default double getTotalDemonWill(String willType, PlayerEntity player)
+	{
+		return 0;
+	}
 }

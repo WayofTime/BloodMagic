@@ -30,10 +30,9 @@ import wayoftime.bloodmagic.common.item.soul.ItemSoulGem;
 import wayoftime.bloodmagic.common.item.soul.ItemSoulSnare;
 import wayoftime.bloodmagic.common.registration.impl.BloodOrbDeferredRegister;
 import wayoftime.bloodmagic.common.registration.impl.BloodOrbRegistryObject;
-import wayoftime.bloodmagic.orb.BloodOrb;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.structures.ItemDungeonTester;
-import wayoftime.bloodmagic.will.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class BloodMagicItems
 {

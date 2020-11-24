@@ -14,7 +14,7 @@ import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.common.crafting.VanillaIngredientSerializer;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
-import wayoftime.bloodmagic.orb.BloodOrb;
+import wayoftime.bloodmagic.common.item.BloodOrb;
 
 public class IngredientBloodOrb extends Ingredient
 {

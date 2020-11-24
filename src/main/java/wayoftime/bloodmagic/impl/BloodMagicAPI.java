@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.impl;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
@@ -8,9 +9,15 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import wayoftime.bloodmagic.altar.ComponentType;
 import wayoftime.bloodmagic.api.IBloodMagicAPI;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.incense.EnumTranquilityType;
+import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
+import wayoftime.bloodmagic.incense.TranquilityStack;
 import wayoftime.bloodmagic.util.BMLog;
+import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
 public class BloodMagicAPI implements IBloodMagicAPI
 {
@@ -36,9 +43,8 @@ public class BloodMagicAPI implements IBloodMagicAPI
 //	{
 //		return blacklist;
 //	}
-//
+
 	@Nonnull
-	@Override
 	public BloodMagicRecipeRegistrar getRecipeRegistrar()
 	{
 		return recipeRegistrar;
@@ -55,15 +61,7 @@ public class BloodMagicAPI implements IBloodMagicAPI
 	@Override
 	public void registerAltarComponent(@Nonnull BlockState state, @Nonnull String componentType)
 	{
-		ComponentType component = null;
-		for (ComponentType type : ComponentType.VALUES)
-		{
-			if (type.name().equalsIgnoreCase(componentType))
-			{
-				component = type;
-				break;
-			}
-		}
+		ComponentType component = ComponentType.getType(componentType);
 
 		if (component != null)
 		{
@@ -76,15 +74,7 @@ public class BloodMagicAPI implements IBloodMagicAPI
 	@Override
 	public void unregisterAltarComponent(@Nonnull BlockState state, @Nonnull String componentType)
 	{
-		ComponentType component = null;
-		for (ComponentType type : ComponentType.VALUES)
-		{
-			if (type.name().equalsIgnoreCase(componentType))
-			{
-				component = type;
-				break;
-			}
-		}
+		ComponentType component = ComponentType.getType(componentType);
 
 		if (component != null)
 		{
@@ -92,6 +82,27 @@ public class BloodMagicAPI implements IBloodMagicAPI
 			altarComponents.remove(component, state);
 		} else
 			BMLog.API.warn("Invalid Altar component type: {}.", componentType);
+	}
+
+	@Override
+	public void registerTranquilityHandler(@Nonnull Predicate<BlockState> blockState, @Nonnull String tranquilityType, double value)
+	{
+		EnumTranquilityType type = EnumTranquilityType.getType(tranquilityType);
+
+		if (type != null)
+		{
+			IncenseTranquilityRegistry.registerTranquilityHandler((world, pos, block, state) -> blockState.test(state) ? new TranquilityStack(type, value) : null);
+		}
+		else
+		{
+			BMLog.API.warn("Invalid Tranquility type: {}.", tranquilityType);
+		}
+	}
+
+	@Override
+	public double getTotalDemonWill(String willType, PlayerEntity player)
+	{
+		return PlayerDemonWillHandler.getTotalDemonWill(EnumDemonWillType.getType(willType), player);
 	}
 
 	@Nonnull
