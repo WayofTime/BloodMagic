@@ -425,6 +425,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SENTIENT_AXE, "Sentient Axe");
 		addItem(BloodMagicItems.SENTIENT_PICKAXE, "Sentient Pickaxe");
 		addItem(BloodMagicItems.SENTIENT_SHOVEL, "Sentient Shovel");
+		addItem(BloodMagicItems.SENTIENT_SCYTHE, "Sentient Scythe");
 
 		addItem(BloodMagicItems.WEAK_ACTIVATION_CRYSTAL, "Weak Activation Crystal");
 		addItem(BloodMagicItems.AWAKENED_ACTIVATION_CRYSTAL, "Awakened Activation Crystal");

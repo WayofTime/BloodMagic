@@ -81,6 +81,7 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerDemonTool(BloodMagicItems.SENTIENT_AXE.get());
 		registerDemonTool(BloodMagicItems.SENTIENT_PICKAXE.get());
 		registerDemonTool(BloodMagicItems.SENTIENT_SHOVEL.get());
+		registerDemonTool(BloodMagicItems.SENTIENT_SCYTHE.get());
 		registerSacrificialKnife(BloodMagicItems.SACRIFICIAL_DAGGER.get());
 
 		registerCustomFullTexture(BloodMagicBlocks.MIMIC.get(), "solidopaquemimic");

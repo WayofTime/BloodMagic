@@ -79,6 +79,7 @@ public class ClientEvents
 			registerMultiWillTool(BloodMagicItems.SENTIENT_AXE.get());
 			registerMultiWillTool(BloodMagicItems.SENTIENT_PICKAXE.get());
 			registerMultiWillTool(BloodMagicItems.SENTIENT_SHOVEL.get());
+			registerMultiWillTool(BloodMagicItems.SENTIENT_SCYTHE.get());
 			registerMultiWillTool(BloodMagicItems.PETTY_GEM.get());
 			registerMultiWillTool(BloodMagicItems.LESSER_GEM.get());
 			registerMultiWillTool(BloodMagicItems.COMMON_GEM.get());

@@ -88,6 +88,15 @@ public class GenericHandler
 	}
 
 	@SubscribeEvent
+	public void onPlayerLeftClickAir(PlayerInteractEvent.LeftClickEmpty event)
+	{
+//		if (event.getItemStack().getItem() instanceof ItemSentientScythe)
+//		{
+//			((ItemSentientScythe) event.getItemStack().getItem()).onLeftClickAir(event.getItemStack(), event.getEntityLiving());
+//		}
+	}
+
+	@SubscribeEvent
 	public void onHoe(BlockToolInteractEvent event)
 	{
 		if (event.getToolType() == ToolType.HOE && Tags.Blocks.NETHERRACK.contains(event.getState().getBlock()))

@@ -173,6 +173,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> SENTIENT_AXE = ITEMS.register("soulaxe", () -> new ItemSentientAxe());
 	public static final RegistryObject<Item> SENTIENT_PICKAXE = ITEMS.register("soulpickaxe", () -> new ItemSentientPickaxe());
 	public static final RegistryObject<Item> SENTIENT_SHOVEL = ITEMS.register("soulshovel", () -> new ItemSentientShovel());
+	public static final RegistryObject<Item> SENTIENT_SCYTHE = ITEMS.register("soulscythe", () -> new ItemSentientScythe());
 
 	public static final RegistryObject<Item> RAW_CRYSTAL_BLOCK_ITEM = ITEMS.register("rawdemoncrystal", () -> new BlockItem(BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> CORROSIVE_CRYSTAL_BLOCK_ITEM = ITEMS.register("corrosivedemoncrystal", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_CRYSTAL_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
