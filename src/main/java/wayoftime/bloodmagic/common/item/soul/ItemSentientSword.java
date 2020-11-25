@@ -33,14 +33,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.common.item.BMItemTier;
-import wayoftime.bloodmagic.common.item.BloodMagicItems;
-import wayoftime.bloodmagic.api.compat.IMultiWillTool;
-import wayoftime.bloodmagic.util.Constants;
-import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IDemonWill;
 import wayoftime.bloodmagic.api.compat.IDemonWillWeapon;
+import wayoftime.bloodmagic.api.compat.IMultiWillTool;
+import wayoftime.bloodmagic.common.item.BMItemTier;
+import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.tags.BloodMagicTags;
+import wayoftime.bloodmagic.util.Constants;
+import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
 public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IMultiWillTool
@@ -73,12 +74,11 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 		super(BMItemTier.SENTIENT, 6, -2.6f, new Item.Properties().maxDamage(520).group(BloodMagic.TAB));
 	}
 
-//	@Override
-//	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
-//	{
-//		return RegistrarBloodMagicItems.ITEM_DEMON_CRYSTAL == repair.getItem()
-//				|| super.getIsRepairable(toRepair, repair);
-//	}
+	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return BloodMagicTags.CRYSTAL_DEMON.contains(repair.getItem()) || super.getIsRepairable(toRepair, repair);
+	}
 
 	public void recalculatePowers(ItemStack stack, World world, PlayerEntity player)
 	{
@@ -196,8 +196,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 			{
 				float absorption = attacker.getAbsorptionAmount();
 				attacker.addPotionEffect(new EffectInstance(Effects.ABSORPTION, absorptionTime[willBracket], 127, false, false));
-				attacker.setAbsorptionAmount((float) Math.min(absorption + target.getMaxHealth()
-						* 0.05f, maxAbsorptionHearts));
+				attacker.setAbsorptionAmount((float) Math.min(absorption + target.getMaxHealth() * 0.05f, maxAbsorptionHearts));
 			}
 			break;
 		case VENGEFUL:
@@ -361,9 +360,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 		{
 			if (i == 0 || attackingEntity.getEntityWorld().rand.nextDouble() < 0.4)
 			{
-				ItemStack soulStack = soul.createWill(willModifier * (this.getDropOfActivatedSword(stack)
-						* attackingEntity.getEntityWorld().rand.nextDouble() + this.getStaticDropOfActivatedSword(stack))
-						* killedEntity.getMaxHealth() / 20d);
+				ItemStack soulStack = soul.createWill(willModifier * (this.getDropOfActivatedSword(stack) * attackingEntity.getEntityWorld().rand.nextDouble() + this.getStaticDropOfActivatedSword(stack)) * killedEntity.getMaxHealth() / 20d);
 				soulList.add(soulStack);
 			}
 		}

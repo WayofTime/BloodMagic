@@ -53,6 +53,7 @@ import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IDemonWill;
 import wayoftime.bloodmagic.api.compat.IDemonWillWeapon;
 import wayoftime.bloodmagic.api.compat.IMultiWillTool;
+import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
@@ -82,14 +83,20 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 
 	public static double[] movementSpeed = new double[] { 0.05, 0.1, 0.15, 0.2, 0.25 };
 
-	public final double baseAttackDamage = 4;
-	public final double baseAttackSpeed = -3;
+	public final static double baseAttackDamage = 4;
+	public final static double baseAttackSpeed = -3;
 	private static Map<UUID, Boolean> hitMap = new HashMap<UUID, Boolean>();
 
 	public ItemSentientScythe()
 	{
-		super(BMItemTier.SENTIENT, 8, -3.1f, new Item.Properties().maxDamage(520).group(BloodMagic.TAB));
+		super(BMItemTier.SENTIENT, (int) baseAttackDamage, (float) baseAttackSpeed, new Item.Properties().maxDamage(520).group(BloodMagic.TAB));
 //		super(RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL, 8.0F, 3.1F);
+	}
+
+	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return BloodMagicTags.CRYSTAL_DEMON.contains(repair.getItem()) || super.getIsRepairable(toRepair, repair);
 	}
 
 	@Override
